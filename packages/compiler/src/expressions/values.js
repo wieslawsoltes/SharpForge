@@ -12,6 +12,11 @@ export function emitInterpolatedString(node) {
       const type = this.expr(part.expression);
       if (type === 'void')
         this.c.report(part.expression, 'CS0029', ['void', 'object']);
+      if (part.alignmentExpression) {
+        const width = this.constant(part.alignmentExpression);
+        if (!width || width.type !== 'int')
+          this.c.report(part.alignmentExpression, 'CS0150');
+      }
       this.emitConstant(part.format);
       this.emitConstant(part.alignment);
       this.emitConstant(type);

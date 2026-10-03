@@ -111,13 +111,15 @@ test('ordinary PRs have one core job while full qualification and releases remai
   const release = await readFile(new URL('../../.github/workflows/release.yml', import.meta.url), 'utf8');
   const jobs = new Map([...workflow.matchAll(/^  ([a-z][a-z-]*):\n([\s\S]*?)(?=^  [a-z][a-z-]*:\n|$(?![\s\S]))/gm)].filter(match => workflow.indexOf(match[0]) > workflow.indexOf('jobs:')).map(match => [match[1], match[2]]));
   assert.deepEqual([...jobs.keys()], ['core','core-platforms','build','packages','browser','native-il','native-msbuild','clr-wasm','ci-ok']);
-  const full = "github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')";
+  const full = "inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')";
   const core = jobs.get('core');
   assert.match(core, /^    runs-on: ubuntu-latest$/m);
   assert.doesNotMatch(core, /^    (if|strategy):/m);
   for (const command of ['npm run check','npm test','npm run build']) assert.ok(core.includes(`run: ${command}\n`), command);
   assert.doesNotMatch(core, /run: npm run (test:packages|test:dotnet|test:browser|bench)/);
-  assert.ok(core.includes('if: '+full+'\n        run: |\n          node --test tests/conformance/*.test.js'));
+  assert.ok(core.includes('run: npm test\n        if: '+full+'\n'));
+  assert.ok(core.includes('if: '+full+"\n        run: python -m unittest discover -s tests/conformance/browser -p 'test_*.py'"));
+  assert.doesNotMatch(core, /node --test/);
   assert.match(core, /if: always\(\)\n        run: node scripts\/conformance\/clean-checkout.js/);
   for (const [name, job] of jobs) if (name !== 'core') {
     const condition = job.match(/^    if: (.+)$/m)?.[1];
@@ -125,9 +127,10 @@ test('ordinary PRs have one core job while full qualification and releases remai
   }
   assert.match(jobs.get('core-platforms'), /os: \[windows-latest, macos-latest\]/);
   assert.match(workflow, /push:\n    branches: \[main\]/);
-  assert.match(workflow, /pull_request:\n    types: \[opened, synchronize, reopened, labeled\]/);
+  assert.match(workflow, /pull_request:\n    types: \[opened, synchronize, reopened, labeled, unlabeled\]/);
   for (const event of ['workflow_dispatch','merge_group','workflow_call']) assert.match(workflow, new RegExp('^  '+event+':','m'));
   assert.match(workflow, /github.event.pull_request.number \|\| github.ref/);
   assert.match(release, /qualification:\n    needs: policy\n    uses: \.\/\.github\/workflows\/ci.yml/);
+  assert.match(release, /uses: \.\/\.github\/workflows\/ci.yml\n    with:\n      qualification: true/);
   assert.match(release, /needs: qualification/);
 });

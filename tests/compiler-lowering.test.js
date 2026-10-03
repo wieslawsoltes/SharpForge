@@ -38,10 +38,10 @@ test('A02-T31 synthesized names follow the Roslyn patterns',()=>{
   assert.deepEqual(names.parseGeneratedName('<M>d__0'),{prefix:'M',kind:'d',suffix:'0'});assert.deepEqual(names.parseGeneratedName('<Name>k__BackingField'),{prefix:'Name',kind:'k',suffix:'BackingField'});assert.deepEqual(names.parseGeneratedName('CS$<>8__locals0'),{prefix:'',kind:'8',suffix:'locals0'});assert.equal(names.parseGeneratedName('Main'),null);
   assert.equal(names.parseGeneratedName('<M>d__0').kind,names.GeneratedNameKind.StateMachineType);assert.equal(names.isGeneratedName('<>c'),true);assert.equal(names.isGeneratedName('Program'),false);
   // The compiler's own auto-property backing fields already use the Roslyn name.
-  const {compilation}=bind('class C{public int Value{get;set;}} Console.WriteLine(new C().Value);');assert.equal(compilation.types[0].fields[0].name,names.backingFieldName('Value'));
+  const {compilation}=bind('Console.WriteLine(new C().Value); class C{public int Value{get;set;}}');assert.equal(compilation.types[0].fields[0].name,names.backingFieldName('Value'));
 });
 test('A02-T31 using statements lower to try/finally with a null-guarded Dispose',()=>{
-  const {unit,result}=bind('class R:IDisposable{public void Dispose(){}} using(R a=new R(),b=new R()){Console.WriteLine(1);}');assert.equal(result.success,true);
+  const {unit,result}=bind('using(R a=new R(),b=new R()){Console.WriteLine(1);} class R:IDisposable{public void Dispose(){}}');assert.equal(result.success,true);
   const body=unit('<Main>').body,lowered=unit('<Main>').lowered;assert(kinds(body).has('UsingStatement'));assert(!kinds(lowered).has('UsingStatement')&&!kinds(lowered).has('UsingResource'));
   assert.equal(dumpBoundTree(lowered.statements[0]),[
     'Block locals=[a:R]','  MultipleLocalDeclarations','    LocalDeclaration local=a:R','      ObjectCreationExpression : R','  TryStatement',

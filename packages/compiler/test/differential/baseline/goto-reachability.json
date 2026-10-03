@@ -1,0 +1,4 @@
+{
+  "goto-reachability/code-after-a-label-runs": ["diagnostics", "warnings", "bytecode", "cil"],
+  "goto-reachability/cs0162-in-methods-with-goto-and-labels": ["diagnostics", "warnings"]
+}

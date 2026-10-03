@@ -4,6 +4,7 @@
  * Bodies are produced later (generator.js); this pass only fixes names, slots and signatures so that bodies can
  * refer to members declared after them.
  */
+import { fileLocalClassName } from '../../binder/csharp11.js';
 import { SymbolKind, TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { backingFieldName } from '../../lowering/generated-names.js';
@@ -32,7 +33,10 @@ export const Declarations = Base =>
       for (const type of this.classes.keys()) this.declareMembers(type);
     }
     classNameOf(type) {
-      return type.toDisplayString();
+      if (!type.isFileLocal) return type.toDisplayString();
+      // Two files may declare a file-local type of the same name: the image class is named after the file too.
+      const uri = type.declarations?.[0]?.uri;
+      return fileLocalClassName(type, this.files.findIndex(file => file.source.uri === uri));
     }
     /** Classes the runtime can represent today: no base class but object and no interface that needs dispatch. */
     checkClassShape(type) {
@@ -45,8 +49,12 @@ export const Declarations = Base =>
       // refused where it is used ('interface dispatch'), and a call through a type parameter constrained to it is
       // bound to the implementing method of each construction (lowering/generics).
       const core = this.analysis.core,
-        dispatchFree = [core.iasyncDisposable, core.ienumerable],
-        needsDispatch = i => i.specialType !== 'System_IDisposable' && !dispatchFree.includes(i) && !this.isSource(i);
+        // ... nor do the comparison interfaces: no registry contract calls them back (a collection over a class that
+        // implements one is not shared with the construction over `object`, and sorting such a collection is refused).
+        // ... nor the awaiter interfaces: `await` calls the members of the awaiter's static type.
+        awaiterInterfaces = [core.inotifyCompletion, core.icriticalNotifyCompletion],
+        dispatchFree = [core.iasyncDisposable, core.ienumerable, core.icomparable, core.icomparableT, core.iequatableT, ...awaiterInterfaces],
+        needsDispatch = i => i.specialType !== 'System_IDisposable' && !dispatchFree.includes(i.originalDefinition ?? i) && !this.isSource(i);
       if (type.interfaces?.some(needsDispatch)) this.unsupported('interface implementation', at);
     }
     /** The image class of a source class symbol; for a generic class, of the construction `type` names. */
@@ -162,7 +170,8 @@ export const Declarations = Base =>
     }
     /** The image method of a source method symbol. */
     methodOf(symbol, syntax = null) {
-      const record = this.methods.get(symbol) ?? this.records.methodOf(definitionOf(symbol), syntax);
+      // The key is resolved here so that a construction declared by this reference is reported at the reference.
+      const record = this.methods.get(this.generics.keyOf(symbol, syntax)) ?? this.records.methodOf(definitionOf(symbol), syntax);
       if (!record && definitionOf(symbol).isExtern)
         return this.unsupported(`a call to the extern method '${symbol.toDisplayString()}' (the runtime has no platform invoke)`, syntax);
       return record ?? this.unsupported(`method '${symbol.toDisplayString()}'`, syntax);
