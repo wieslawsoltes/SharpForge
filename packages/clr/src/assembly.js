@@ -3,6 +3,7 @@ import { assemblyIdentityFromRow } from './identity.js';
 import { checkCancellation, loadError, LoadErrorCode } from './load-errors.js';
 import { MetadataTypeDefinitions } from './type-system/metadata-type-definitions.js';
 import { MetadataMethodDefinitions } from './type-system/metadata-method-definitions.js';
+import { MetadataParameters } from './type-system/metadata-parameters.js';
 import { MetadataGenericParameters } from './type-system/metadata-generic-parameters.js';
 
 function namedIdentityRow(row, reference) {
@@ -32,6 +33,7 @@ export class RuntimeModule {
   #bodyReads = 0;
   #typeDefinitions;
   #methodDefinitions;
+  #parameterDefinitions;
   #genericParameters;
   constructor(assembly, pe) {
     this.#assembly = assembly;
@@ -104,6 +106,13 @@ export class RuntimeModule {
     this.#assembly.ensureUsable();
     this.#methodDefinitions ??= new MetadataMethodDefinitions(this);
     return this.#methodDefinitions.forType(typeToken);
+  }
+
+  /** Frozen positional parameter/return metadata; raw constants are decoded only when requested. */
+  methodParameters(methodToken) {
+    this.#assembly.ensureUsable();
+    this.#parameterDefinitions ??= new MetadataParameters(this);
+    return this.#parameterDefinitions.forMethod(methodToken);
   }
 
   /** Ordered canonical GenericParam identities for a TypeDef; constraints are unresolved metadata tokens. */

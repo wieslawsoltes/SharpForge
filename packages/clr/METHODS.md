@@ -17,6 +17,9 @@ signature AST. A malformed blob, a non-method signature or a receiver/static fla
 mismatch produces `SFCLR005` only when the signature is requested. The original
 VAR/MVAR slots are preserved. No generic method instantiation is implied.
 
+Canonical [parameter metadata](PARAMETERS.md) adds positional and return
+descriptors, raw Param flags and lazy ECMA Constant values.
+
 `getMethodBody()` delegates to the module's existing body cache and returns a
 defensive snapshot, including copied IL bytes. A zero RVA returns `null`.
 `module.methodBodyReadCount` remains zero until a body is actually decoded and
