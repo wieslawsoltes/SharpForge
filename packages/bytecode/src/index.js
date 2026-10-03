@@ -1,4 +1,4 @@
-import {contracts,enumTypes,frameworkType} from '@sharpforge/framework';
+import {enumTypes,frameworkType} from '@sharpforge/framework';
 /** Versioned, structured-cloneable stack bytecode. Each instruction is three signed 32-bit words. */
 export const FORMAT_VERSION = 1;
 // Numeric conversion IDs occupy the low range; enum targets retain declared identity.
@@ -9,24 +9,8 @@ export const Binary = Object.freeze(Object.fromEntries(['+','-','*','/','%','=='
 export const BinaryName = Object.freeze(Object.keys(Binary));
 export const Unary = Object.freeze({ '-':0, '+':1, '!':2, '~':3 });
 export const UnaryName = Object.freeze(Object.keys(Unary));
-const definitions = [
- ['Console.WriteLine',0,1,'void',['any']],['Console.Write',1,1,'void',['any']],
- ['Math.Abs',1,1,'numeric',['number']],['Math.Min',2,2,'numeric',['number','number']],['Math.Max',2,2,'numeric',['number','number']],
- ['Math.Pow',2,2,'double',['number','number']],['Math.Sqrt',1,1,'double',['number']],['Math.Floor',1,1,'double',['number']],['Math.Ceiling',1,1,'double',['number']],['Math.Round',1,1,'double',['number']],
- ['GC.Collect',0,0,'void',[]],['GC.GetTotalMemory',0,1,'long',['bool']],['GC.CollectionCount',1,1,'int',['int']],
- ['int.Parse',1,1,'int',['string']],['double.Parse',1,1,'double',['string']],['Convert.ToInt32',1,1,'int',['any']],['Convert.ToDouble',1,1,'double',['any']],['Convert.ToString',1,1,'string',['any']],
- ['string.Concat',2,2,'string',['string','string']],['string.IsNullOrEmpty',1,1,'bool',['string']],
- ['Array.Reverse',1,1,'void',['array']],['Array.Sort',1,1,'void',['array']],
- ['string.Substring',2,3,'string',['string','int','int']],['string.Contains',2,2,'bool',['string','string']],['string.IndexOf',2,2,'int',['string','string']],
- ['string.StartsWith',2,2,'bool',['string','string']],['string.EndsWith',2,2,'bool',['string','string']],['string.ToUpper',1,1,'string',['string']],['string.ToLower',1,1,'string',['string']],['string.Trim',1,1,'string',['string']],['string.Replace',3,3,'string',['string','string','string']],
- ['object.ToString',1,1,'string',['any']],['Exception.Message',1,1,'string',['exception']],['Exception.new',1,1,'Exception',['string']],
- ['Debug.Assert',1,2,'void',['bool','string']],['Environment.TickCount',0,0,'int',[]],['$Math.Abs.Int32',1,1,'int',['int']]
-];
-// Append new intrinsics after framework entries so released builtin IDs do not move.
-const additions=[['string.Intern',1,1,'string',['string']],['string.IsInterned',1,1,'string',['string']],['string.get_Chars',2,2,'int',['string','int']],['object.ReferenceEquals',2,2,'bool',['object','object']],['Enum.HasFlag',2,2,'bool',['any','any']],['object.GetType',1,1,'System.Type',['any']],['Type.Name',1,1,'string',['System.Type']],['Type.FullName',1,1,'string',['System.Type']],...['int','double','bool','long'].map(type=>['$type.'+type+'.GetType',1,1,'System.Type',['any']])];
-export const Builtins = Object.freeze([...definitions.map(([name,min,max,result,params],id)=>Object.freeze({id,name,min,max,result,params})),...contracts.map(contract=>{const id=definitions.length+contract.id,count=contract.parameters.length+(!contract.isStatic&&contract.kind!=='constructor'?1:0);return Object.freeze({id,name:'$framework:'+contract.id,min:count,max:count,result:contract.result,params:[...(!contract.isStatic&&contract.kind!=='constructor'?[contract.owner]:[]),...contract.parameters],contract});}),...additions.map(([name,min,max,result,params],index)=>Object.freeze({id:definitions.length+contracts.length+index,name,min,max,result,params}))]);
-export const frameworkBuiltin = contract=>contract?Builtins[definitions.length+contract.id]:null;
-export const BuiltinMap = new Map(Builtins.map(b=>[b.name,b]));
+import {Builtins} from './builtins.js';
+export {Builtins,BuiltinMap,frameworkBuiltin,CONTRACT_BUILTIN_OFFSET,createBuiltinRegistry} from './builtins.js';
 export function disassemble(image, methodId) {
   const methods=methodId===undefined?image.methods:[image.methods[methodId]];
   return methods.map(m=>({name:m.qualifiedName,id:m.id,instructions:Array.from({length:m.code.length/3},(_,i)=>({offset:i,op:OpName[m.code[i*3]],a:m.code[i*3+1],b:m.code[i*3+2],point:m.code[i*3]===Op.SEQ?image.sequencePoints[m.code[i*3+1]]:null}))}));
