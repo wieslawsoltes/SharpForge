@@ -30,7 +30,16 @@ method signature's generic arity; mismatches produce `SFCLR012`, while arity ove
 
 The extended generic-parameter fixture captures four methods with four parameters
 covering value/reference/default-constructor and dependent/interface constraint
-tokens. Its new validation and benchmark evidence are pending a separate slot.
+tokens. SDK 10.0.201/CoreCLR 10.0.5 capture and all 13 affected method/generic
+tests pass on Node 24.21.0. Static checks pass; the structure report has 267
+existing findings and none in CLR. All local validation ran serially.
+The new method-parameter benchmark on a shared Apple M3 Pro/darwin-arm64 measured
+cold all-fixture median 40.708 µs / p95 119.750 µs and cached array access median
+0.001925 µs / p95 0.017029 µs. The prior type-parameter benchmark used the same
+expanded fixture image for both implementations: parent/head cold medians were
+35.166/32.292 µs, p95 77.042/73.291 µs; warm medians 0.034146/0.031488 µs,
+p95 0.053621/0.039825 µs. These are regression controls on a shared machine,
+not speedup claims. Exact allocations were not measured; JSON evidence is saved.
 Constraint resolution/enforcement and method instantiation remain unsupported;
 these metadata descriptors report `isLoaded: false` and load no executable body.
 
