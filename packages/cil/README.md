@@ -36,6 +36,11 @@ API. Its strings intentionally omit some binary distinctions; use the AST for
 round trips. `parseSignatureType(text, resolveToken)` adapts existing string-based
 emission, including nested generics, byrefs, modifiers and bounded arrays. Use an
 explicit AST or `valuetype Name` when a user-defined value type is not registered.
+The optional third argument `{ namedTypes: Map<string, AST> }` resolves declared
+names before parsing punctuation, including inside constructed types. The emitter
+uses this for synthesized classes such as `<>Cell(int)` and `ValueTuple(int;string)`.
+`readTypeSignature` accepts the historical standalone return-type forms (including
+byrefs and void); `decodeTypeSignature` defaults to the stricter TypeSpec context.
 `MetadataBuilder.typeSpec(ast)` interns TypeSpec rows by encoded bytes.
 
 | Capability | API | Evidence |
