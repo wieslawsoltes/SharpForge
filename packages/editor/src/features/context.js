@@ -28,8 +28,13 @@ export function createInsightContext(editor, options) {
     },
     async request(method, parameters = {}, requestOptions = {}) {
       if (!services.supports(method)) return undefined;
+      const maximum = options.maxSemanticCharacters ?? 2_000_000;
+      if (method !== 'readDocument' && !options.languageServicesInLargeFiles && (editor.model?.length ?? editor.value.length) > maximum) {
+        return undefined;
+      }
       const versions = workspaceVersions(workspace);
-      const result = await guard.run(requestOptions.key ?? method, value => services.invoke(method, value), parameters, requestOptions);
+      const validation = method === 'readDocument' ? {...requestOptions, validateResponseVersion: false} : requestOptions;
+      const result = await guard.run(requestOptions.key ?? method, value => services.invoke(method, value), parameters, validation);
       return result ? {...result, versions} : undefined;
     },
     navigate(location, navigationOptions = {}) {
@@ -50,7 +55,8 @@ export function createInsightContext(editor, options) {
     command(command) {
       if (services.supports('executeCommand')) return services.invoke('executeCommand', {
         command: command.command ?? command.id ?? command, arguments: command.arguments ?? [],
-        ...editorRevision(editor), signal: new AbortController().signal
+        uri: editor.uri, version: editor.model?.version ?? editor.sourceSnapshot().version,
+        signal: new AbortController().signal
       });
       return editor.request(command.command ?? command.id ?? command, command.arguments?.[0] ?? {uri: editor.uri, offset: editor.offset});
     }

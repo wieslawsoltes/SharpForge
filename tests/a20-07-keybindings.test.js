@@ -43,6 +43,11 @@ test('normalizes platform modifiers and real shifted punctuation without interce
   for (const stroke of ['Ctrl+Shift+[', 'Ctrl+Shift+]', 'Ctrl+Shift+\\', 'Alt+Shift+,', 'Alt+Shift+.']) {
     assert.equal(eventStroke(keyboardEvent(stroke)), normalizeStroke(stroke));
   }
+  for (const [digit, key] of [...')!@#$%^&*('].entries()) {
+    assert.equal(eventStroke({ key, code: `Digit${digit}`, ctrlKey: true, shiftKey: true }), `Ctrl+Shift+${digit}`);
+  }
+  assert.equal(eventStroke({ key: 'é', code: 'Digit2', ctrlKey: true, shiftKey: true }), 'Ctrl+Shift+É');
+  assert.equal(eventStroke({ key: '!', code: 'Digit8', ctrlKey: true, shiftKey: true }), 'Ctrl+Shift+!');
   assert.equal(eventStroke({ ...keyboardEvent('Ctrl+Alt+E'), getModifierState: key => key === 'AltGraph' }), null);
   assert.equal(eventStroke({ ...keyboardEvent('Ctrl+C'), isComposing: true }), null);
   assert.equal(eventStroke({ key: 'Dead' }), null);

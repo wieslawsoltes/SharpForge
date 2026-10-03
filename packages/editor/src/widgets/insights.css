@@ -157,6 +157,7 @@
 .sf-quick-info-signature { margin: 0; white-space: pre-wrap; }
 .sf-quick-info-diagnostic { margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--line, #525562); }
 .sf-action-bulb { position: absolute; left: 2px; z-index: 8; border: 0; background: transparent; cursor: pointer; }
+.sf-inline-action-bulb { border: 0; background: var(--surface, #252730); color: inherit; cursor: pointer; }
 .sf-code-actions { min-width: 260px; }
 .sf-code-actions > button { display: block; width: 100%; text-align: left; margin-top: 4px; }
 .sf-action-preview { width: 650px; max-width: 100%; height: 260px; margin-top: 6px; }
@@ -273,3 +274,6 @@ html[data-theme=light] .sf-semantic-property { color: #674492; }
   .sf-peek-definition header span { display: none; }
   .sf-diff-toolbar { flex-wrap: wrap; }
 }
+
+.sf-semantic-field, .sf-semantic-event { color: var(--syntax-variable, #9cdcfe); }
+.sf-semantic-namespace { color: var(--syntax-type, #4ec9b0); }

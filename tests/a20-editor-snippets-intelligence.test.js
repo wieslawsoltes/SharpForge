@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {expandSnippet, parseSnippet, CSHARP_SNIPPETS} from '../packages/editor/src/snippets/index.js';
+import {expandSnippet, parseSnippet, CSHARP_SNIPPETS, SnippetSession} from '../packages/editor/src/snippets/index.js';
+import {EditorModel} from '../packages/editor/src/model.js';
 import {rankCompletions, fuzzyCompletion, signatureCallContext, parameterLabelRange,
   smartNewline} from '../packages/editor/src/features/index.js';
 
@@ -38,6 +39,38 @@ test('all builtin snippets expand and all required C# and surrounding templates 
     assert(expanded.order.includes(0));
   }
   assert(CSHARP_SNIPPETS.filter(item => item.surround).every(item => expandSnippet(item.body, {TM_SELECTED_TEXT: 'Work();'}).text.includes('Work();')));
+});
+
+test('snippet primary edits and synchronous linked mirrors undo together through editor edit hooks', () => {
+  const model = new EditorModel('', {uri: 'a.cs'});
+  const session = Object.create(SnippetSession.prototype);
+  const editor = {
+    model, uri: 'a.cs', input: {readOnly: false, get selectionEnd() { return Math.max(model.primarySelection.anchor, model.primarySelection.active); }},
+    get value() { return model.value; }, get offset() { return Math.min(model.primarySelection.anchor, model.primarySelection.active); },
+    goto(start, end = start) { model.setSelections([{anchor: start, active: end}]); },
+    setDecorations() {},
+    applyEdits(edits, options) {
+      session.beforeEdit();
+      try { return model.applyEdits(edits, options); }
+      finally { session.afterEdit(); }
+    }
+  };
+  session.context = {editor};
+  session.popup = {close() {}};
+  model.onDidChange(change => session.changed(change));
+  session.insert('${1:name} + $1$0');
+  assert.equal(model.value, 'name + name');
+  editor.applyEdits([{start: 0, end: 4, text: 'updated'}], {source: 'typing', command: 'typing', undoStop: true});
+  assert.equal(model.value, 'updated + updated');
+  assert.equal(model.undoStack.depth, 2);
+  assert.equal(session.groupModel, null);
+  assert.equal(model.undo(), true);
+  assert.equal(model.value, 'name + name');
+  assert.equal(model.undo(), true);
+  assert.equal(model.value, '');
+  assert.equal(model.redo(), true);
+  assert.equal(model.redo(), true);
+  assert.equal(model.value, 'updated + updated');
 });
 
 test('completion fuzzy matches prefer prefix, preserve match positions, support filters and use bounded MRU', () => {

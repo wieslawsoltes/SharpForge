@@ -14,6 +14,10 @@ export class LargeFilePolicy {
 
   async load(blob, {signal = null, encoding = 'utf-8', chunkSize = 1024 * 1024, onProgress = null} = {}) {
     if (!blob || typeof blob.slice !== 'function') throw new TypeError('Expected a File or Blob');
+    if (!Number.isSafeInteger(chunkSize) || chunkSize < 1 || chunkSize > 8 * 1024 * 1024) {
+      throw new RangeError('Document load chunks must contain between 1 byte and 8 MiB');
+    }
+    if (!Number.isSafeInteger(blob.size) || blob.size < 0) throw new RangeError('Invalid document byte size');
     const generation = ++this.generation;
     const decoder = new TextDecoder(encoding, {fatal: true});
     const buffer = new TextBuffer('', {uri: this.editor.uri, encoding});

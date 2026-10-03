@@ -35,4 +35,4 @@ export function handleVisualStudioKey(editor, event) {
 
 export { NativeKeymapAdapter, getProfileBindings } from './keymaps/native.js';
 export { KeybindingService } from './keymaps/resolve.js';
-export { platformBindingInventory } from './keymaps/platform.js';
+export { platformBindingInventory, eventStroke, normalizeStroke, normalizeSequence } from './keymaps/platform.js';

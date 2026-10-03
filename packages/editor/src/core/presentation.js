@@ -1,4 +1,4 @@
-import {editorOptions} from '../options.js';
+import {defaultEditorOptions, editorOptions} from '../options.js';
 import {transformOffset} from '../selections.js';
 import {resolveEditorConfig, saveTextEdits} from '../editorconfig.js';
 
@@ -10,6 +10,7 @@ export class EditorPresentation {
     const {editor} = this;
     const anchor = editor.caretOffset;
     editor.options = editorOptions(overrides, editor.options);
+    if (Object.hasOwn(overrides, 'endOfLine')) editor.endOfLineExplicit = true;
     editor.optionsRevision++;
     editor.largeFile.update();
     editor.view.layout.reset();
@@ -20,12 +21,17 @@ export class EditorPresentation {
     editor.sync();
   }
   setReadOnly(value) {
+    this.editor.model.setReadOnly(value);
+    this.syncReadOnly();
+  }
+  syncReadOnly() {
     const {editor} = this;
-    editor.model.readOnly = !!value;
-    editor.input.readOnly = !!value;
-    editor.input.setAttribute('aria-readonly', String(!!value));
-    editor.element.classList.toggle('sf-readonly', !!value);
-    editor.keymapAdapter?.setReadOnly(!!value);
+    const readOnly = !!editor.model.readOnly;
+    if (readOnly) editor.inputController?.composition.cancel();
+    editor.input.readOnly = readOnly;
+    editor.input.setAttribute('aria-readonly', String(readOnly));
+    editor.element.classList.toggle('sf-readonly', readOnly);
+    editor.keymapAdapter?.setReadOnly(readOnly);
     editor.cursor();
   }
   refreshPreview() {
@@ -116,11 +122,20 @@ export class EditorPresentation {
     editor.sync();
   }
   applyEditorConfig(files, languageOptions = {}) {
-    this.updateOptions(resolveEditorConfig(this.editor.uri, files, languageOptions));
+    const {editor} = this;
+    const configured = resolveEditorConfig(editor.uri, files, languageOptions);
+    const baseline = {...defaultEditorOptions, endOfLine: editor.model.metadata.dominantEol, ...editor.optionDefaults};
+    const reset = {};
+    for (const name of ['insertSpaces', 'indentSize', 'tabSize', 'endOfLine', 'trimTrailingWhitespace', 'insertFinalNewline']) {
+      reset[name] = baseline[name];
+    }
+    this.updateOptions({...reset, ...configured});
+    editor.endOfLineExplicit = Object.hasOwn(configured, 'endOfLine') || Object.hasOwn(editor.optionDefaults ?? {}, 'endOfLine');
+    return editor.options;
   }
   prepareSave() {
     const {editor} = this;
-    const edits = saveTextEdits(editor.model, editor.options);
+    const edits = saveTextEdits(editor.model, {...editor.options, normalizeLineEndings: editor.endOfLineExplicit});
     if (edits.length) editor.applyEdits(edits, {source: 'save-normalize', undoStop: true});
     return editor.model.snapshot();
   }

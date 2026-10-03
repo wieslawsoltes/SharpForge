@@ -103,7 +103,9 @@ export function editorWorkspace(editor) {
   return {
     getDocument(uri) {
       if (uri !== editor.uri) return undefined;
-      return {uri, text: editor.value, version: editor.model?.version ?? editor.sourceSnapshot().version, readOnly: editor.input.readOnly};
+      const source = editor.model?.snapshot?.() ?? editor.sourceSnapshot();
+      return {uri, source, model: editor.model, get text() { return source.text; }, length: source.length,
+        version: source.version, readOnly: editor.input.readOnly};
     },
     listDocuments() { return [this.getDocument(editor.uri)]; },
     applyTransaction(plan) {
@@ -119,6 +121,6 @@ export function workspaceVersions(workspace) {
   const documents = workspace.listDocuments?.() ?? [...(workspace.documents?.values() ?? [])];
   return new Map(documents.map(document => {
     const uri = document.uri ?? document.source?.uri;
-    return [uri, readWorkspaceDocument(workspace, uri).version];
+    return [uri, document.version ?? document.source?.version ?? document.snapshot?.().version];
   }));
 }
