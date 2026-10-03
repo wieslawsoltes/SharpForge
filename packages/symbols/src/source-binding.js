@@ -2,6 +2,7 @@ import { utf8, equalBytes } from '@sharpforge/cil';
 import { sha256, sha1 } from './hash.js';
 import { PdbGuids, fail } from './contracts.js';
 import { lineIndex } from './source-span.js';
+import { decodeSource } from './source-encoding.js';
 export function verifySource(document, input) {
   const bytes = typeof input === 'string' ? utf8(input) : input;
   if (!(bytes instanceof Uint8Array)) fail('Source must be text or bytes');
@@ -18,23 +19,18 @@ export async function verifySourceAsync(document, input) {
 }
 export { sourceLinkUrl } from './source-link.js';
 /** Attach only checksum-verified source; never fetch Source Link implicitly. */
-export function bindSources(symbols, sources = {}) {
+export function bindSources(symbols, sources = {}, options = {}) {
   const byName = sources instanceof Map ? sources : new Map(Object.entries(sources)),
     documents = symbols.documents.map((d) => {
       const raw = byName.get(d.name) ?? d.embedded,
         bytes = typeof raw === 'string' ? utf8(raw) : raw,
         verified = bytes ? verifySource(d, bytes) : false;
-      let content = null;
-      if (verified) {
-        const hasUtf16 = (bytes[0] === 255 && bytes[1] === 254) || (bytes[0] === 254 && bytes[1] === 255);
-        content = hasUtf16
-          ? new TextDecoder(bytes[0] === 255 ? 'utf-16le' : 'utf-16be', { fatal: true }).decode(bytes)
-          : new TextDecoder('utf-8', { fatal: true }).decode(bytes);
-      }
+      const decoded = verified ? decodeSource(bytes, options) : null;
       return {
         ...d,
         verified,
-        text: content,
+        text: decoded?.text ?? null,
+        encoding: decoded?.encoding ?? null,
         reason:
           raw === undefined
             ? 'Source not supplied'

@@ -76,3 +76,4 @@ export { parseSignatureType } from './metadata/signature-parser.js';
 export { formatSignature, formatSignatureType } from './metadata/signature-format.js';
 export { encodeCustomAttribute } from './metadata/custom-attributes.js';
 export { customAttributeDiagnosticCatalog } from './metadata/custom-attribute-types.js';
+export { decodeCustomAttribute } from './metadata/custom-attribute-reader.js';

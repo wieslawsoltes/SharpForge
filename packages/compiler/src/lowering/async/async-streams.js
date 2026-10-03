@@ -39,7 +39,10 @@ export const AsyncStreamTranslation = Base =>
             return [...this.declareVariable(node.local, value, span), this.embedded(node.body)];
           });
         const loop = () => n.whileStatement(awaited(members.moveNext), body(), span),
-          start = this.memberCall(members.getEnumerator, this.expression(node.collection), [], node.syntax),
+          // An extension GetAsyncEnumerator is a static method that takes the collection as its argument.
+          start = members.isExtension
+            ? this.memberCall(members.getEnumerator, null, [this.expression(node.collection)], node.syntax)
+            : this.memberCall(members.getEnumerator, this.expression(node.collection), [], node.syntax),
           statements = [holder.init(start, span)];
         if (!members.dispose) statements.push(loop());
         else statements.push(this.protect(node.body, loop, () => n.block([n.expressionStatement(awaited(members.dispose))])));
