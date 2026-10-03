@@ -1,0 +1,54 @@
+/**
+ * Unused-symbol warnings: CS0168 and CS0219 (locals), CS8321 (local functions), CS0164 (labels),
+ * CS0169, CS0414 and CS0649 (fields).
+ */
+import { SymbolKind, TypeKind, Accessibility } from '../symbols/types.js';
+import { effectiveAccessibility } from '../binder/inheritance.js';
+import { accessRank, defaultText } from './analysis-helpers.js';
+
+/** Class mixin: Unused-symbol warnings: CS0168 and CS0219 (locals), CS8321 (local functions), CS0164 (labels), */
+export const UnusedSymbolWarnings = Base =>
+  class extends Base {
+    /** CS0168 / CS0219 (locals), CS8321 (local functions), CS0164 (labels), CS0169 / CS0414 / CS0649 (private fields). */
+    reportUnused() {
+      for (const body of this.bound.values()) {
+        const binder = body.binder;
+        if (!binder || binder.c.parent) continue;
+        for (const local of binder.allLocals ?? []) {
+          if (
+            local.reads ||
+            local.isPatternLocal ||
+            local.isForEach ||
+            local.isUsing ||
+            local.name === '_' ||
+            binder.usedBeforeDeclaration?.has(local.name)
+          )
+            continue;
+          const at = local.locations[0];
+          if (!at) continue;
+          if (!local.writes || local.isCatch) this.report(binder.c.uri, at, 'CS0168', [local.name]);
+          else if (!local.nonConstantWrite && !local.isOutVar) this.report(binder.c.uri, at, 'CS0219', [local.name]);
+        }
+        for (const f of binder.allLocalFunctions ?? [])
+          if (!f.method.uses) this.report(f.uri, f.method.locations[0], 'CS8321', [f.method.name]);
+        for (const l of binder.allLabels ?? []) if (!l.label.uses) this.report(l.uri, l.node, 'CS0164');
+      }
+      // Roslyn reports unused-field warnings only for a compilation without errors.
+      if (this.incomplete) return;
+      for (const type of this.assembly.types) {
+        if (type.typeKind !== TypeKind.Class && type.typeKind !== TypeKind.Struct) continue;
+        for (const f of type.getMembers()) {
+          if (f.kind !== SymbolKind.Field || f.isConst || f.isImplicitlyDeclared || !f.type || f.type.isErrorType()) continue;
+          const rank = Math.min(effectiveAccessibility(type), accessRank(f.declaredAccessibility)),
+            isPrivate = f.declaredAccessibility === Accessibility.Private,
+            isInternal = !isPrivate && rank <= accessRank(Accessibility.Internal);
+          if (!isPrivate && !isInternal) continue;
+          if (!f.reads && !f.writes) {
+            if (isPrivate) this.reportAt(f, 'CS0169', [f.toDisplayString()]);
+            else this.reportAt(f, 'CS0649', [f.toDisplayString(), defaultText(f.type)]);
+          } else if (!f.writes) this.reportAt(f, 'CS0649', [f.toDisplayString(), defaultText(f.type)]);
+          else if (!f.reads && isPrivate && !f.nonConstantWrite) this.reportAt(f, 'CS0414', [f.toDisplayString()]);
+        }
+      }
+    }
+  };

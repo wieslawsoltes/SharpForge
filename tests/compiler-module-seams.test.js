@@ -33,6 +33,6 @@ test('A02-T13 split compiler still compiles and runs through the public API',()=
   const il=api.compileToIL('Console.WriteLine(1);');assert.equal(il.success,true);assert(il.assembly.length>0);
 });
 test('A02-B02 an out-of-range integer literal reports one diagnostic',()=>{
-  for(const [source,code] of [['int x=0xFFFFFFFF;','SF1004'],['int x=4000000000;','SF1004'],['int x=2147483648;','SF2004']]){const d=api.compile(source).diagnostics.filter(x=>x.severity==='error');assert.deepEqual(d.map(x=>x.code),[code],source);}
+  for(const [source,code] of [['int x=0xFFFFFFFF;','CS0266'],['int x=4000000000;','CS0266'],['int x=2147483648;','CS0266']]){const d=api.compile(source).diagnostics.filter(x=>x.severity==='error');assert.deepEqual(d.map(x=>x.code),[code],source);}
   assert.equal(api.compile('int x=-2147483648;Console.WriteLine(x);').success,true);
 });

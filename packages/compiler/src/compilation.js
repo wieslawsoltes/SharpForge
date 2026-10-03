@@ -167,7 +167,7 @@ export class Compilation {
     // Programs outside the execution profile get the diagnostics of the type system (semantic-integration.js).
     const reconciled=reconcileWithSemanticAnalysis(this,featureDiagnostics);if(reconciled){this.diagnostics=reconciled.diagnostics;this.semanticAnalysis=reconciled.semantic;}
     const diagnostics=applySuppression(this.diagnostics,{sources:this.sources,directives:new Map(this.inputFiles.filter(f=>f.directives).map(f=>[f.source.uri,f.directives])),options:this.typedOptions}),errors=diagnostics.filter(d=>d.severity==='error').length;
-    return {success:errors===0,image:errors===0?image:null,diagnostics,symbols:this.symbols,references:this.references,
+    return {success:errors===0,image:errors===0?image:null,diagnostics,symbols:this.symbols,references:this.references,...(this.semanticAnalysis?{semantic:{analysed:true,complete:!this.semanticAnalysis.incomplete}}:{}),
       metrics:{compileMs:performance.now()-start,files:this.files.length,tokens:this.files.reduce((s,f)=>s+f.tokens.length,0),internedTokenHits:this.files.reduce((s,f)=>s+f.internedTokenHits,0),nodes:this.files.reduce((s,f)=>s+f.nodeCount,0),methods:this.methods.length,instructions:this.methods.reduce((s,m)=>s+(m.code?.length??0)/3,0),errors}};
   }
   declareField(owner,node){const type=this.resolveType(node.type,node,false,owner),isStatic=node.modifiers.includes('static')||node.modifiers.includes('const');

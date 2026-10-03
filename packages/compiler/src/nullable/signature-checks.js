@@ -45,7 +45,8 @@ const parameterIsCompatible = (derived, base) => compareTopLevel(derived, base) 
  */
 export function compareMethodNullability(derived, base, codes) {
   const results = [];
-  if (!returnIsCompatible(derived.returnTypeWithAnnotations, base.returnTypeWithAnnotations)) results.push({ code: codes.returnCode, args: [] });
+  if (!returnIsCompatible(derived.returnTypeWithAnnotations, base.returnTypeWithAnnotations))
+    results.push({ code: codes.returnCode, args: [] });
   derived.parameters.forEach((parameter, index) => {
     const other = base.parameters[index];
     if (!other) return;
@@ -88,7 +89,8 @@ export function checkNullableSignatures(type) {
       const position = member.setMethod ? 'both' : 'output';
       const relation = compareTopLevel(member.typeWithAnnotations, base.typeWithAnnotations);
       const mismatch = position === 'both' ? relation !== 'same' : relation === 'saferInput';
-      if (mismatch || nestedMismatch(member.typeWithAnnotations, base.typeWithAnnotations)) results.push({ code: 'CS8608', args: [], member });
+      if (mismatch || nestedMismatch(member.typeWithAnnotations, base.typeWithAnnotations))
+        results.push({ code: 'CS8608', args: [], member });
     }
   }
   for (const [declaration, implementation] of type.interfaceImplementations ?? []) {
