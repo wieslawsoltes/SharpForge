@@ -33,7 +33,8 @@ function checkExtern(member, add) {
     hasAttributes = !!member.boundAttributes?.length || !!member.associatedSymbol?.boundAttributes?.length;
   if (member.hasBody) add('CS0179', [display], at);
   else if (member.isAbstract) add('CS0180', [display], at);
-  else if (!hasAttributes)
+  // An extern partial method is an implementing part: Roslyn reports the partial-method rules for it, not CS0626.
+  else if (!hasAttributes && !(member.modifierWords ?? []).includes('partial'))
     add(member.methodKind === MethodKind.Constructor || member.methodKind === MethodKind.StaticConstructor ? 'CS0824' : 'CS0626', [display], at);
 }
 
