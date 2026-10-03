@@ -38,6 +38,8 @@ export function prepareDesignSources(input, options = {}) {
   });
   const supportedInitializers = new Map(parsedFiles.map(parsed => [parsed.source.uri, mapDesignInitializers(parsed)]));
   const syntaxErrors = parsedFiles.flatMap(parsed => parsed.diagnostics.filter(diagnostic => diagnostic.severity === 'error'
+    // Inheritance does not invalidate the parsed construction body; its compiler errors still block executable plans.
+    && diagnostic.code !== 'SF1014'
     && !(diagnostic.code === 'SF1018' && supportedInitializers.get(parsed.source.uri).some(span => span.start <= diagnostic.start
       && span.end >= diagnostic.start + diagnostic.length))));
   if (syntaxErrors.length) {

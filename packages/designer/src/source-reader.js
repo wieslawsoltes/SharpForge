@@ -202,6 +202,22 @@ export class SourceConstructionReader {
   assignment(expression, statement) {
     const {left, right, operator} = expression;
     const receiver = sourcePath(left.target);
+    if (operator === '=' && receiver === 'this' && ['Content', 'Child'].includes(left.name)
+      && !this.context.chosen.method.modifiers?.includes('static')) {
+      let content = this.lookup(right);
+      if (this.controlType(right)) {
+        const name = 'this_' + left.name;
+        this.control(name, right, statement, null);
+        content = this.lookup({kind: 'Name', name});
+      }
+      if (content?.node) {
+        this.root = content.node;
+        this.rootAssignment = {receiver: 'this', property: left.name, childId: content.node,
+          uri: statement.uri, span: {start: statement.start, end: statement.end}, capabilities: ['preview', 'navigate']};
+        this.own(content.node, right, 'root-content');
+        return true;
+      }
+    }
     if (operator === '=' && (left.kind === 'Name' || ['this', this.context.chosen.owner?.name].includes(receiver))) {
       return this.declare(left.name, right, statement, this.context.fields.get(left.name) ?? left);
     }
