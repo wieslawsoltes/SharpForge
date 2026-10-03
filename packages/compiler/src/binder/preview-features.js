@@ -13,8 +13,8 @@
  *     from them, ./closed-types.js checks the uses in bodies.
  *
  * Not bound, reported instead of guessed (SF2202 names the feature and its proposal):
- *   unions (SF-A02-T89), the `safe` modifier and `unsafe(...)` expressions (SF-A02-T92), extension indexers
- *   (SF-A02-T91).
+ *   unions (SF-A02-T89), the `safe` modifier and `unsafe(...)` expressions (SF-A02-T92).
+ * Extension indexers (SF-A02-T91) are bound by ./extension-indexers.js.
  *
  * The proposals name no diagnostic ids, so the rules use two SharpForge codes: SF2202 "preview feature is not
  * bound" and SF2203 "preview rule", each with the proposal reference in its message.
@@ -35,8 +35,6 @@ export function unboundPreviewConstructs(root) {
     const node = stack.pop();
     if (node.kind === 'UnionDeclaration') rows.push(['Unions', 'unions', node.identifier ?? node]);
     else if (node.kind === 'UnsafeExpression') rows.push(['UnsafeExpressions', 'unsafe expressions', node]);
-    else if (node.kind === 'IndexerDeclaration' && node.parent?.kind === 'ExtensionBlockDeclaration')
-      rows.push(['ExtensionIndexers', 'extension indexers', node.thisKeyword]);
     const safe = (node.modifiers ?? []).find?.(token => token.kind === 'SafeKeyword');
     if (safe) rows.push(['SafeModifier', 'the safe modifier', safe]);
     for (const child of node.childNodes()) stack.push(child);

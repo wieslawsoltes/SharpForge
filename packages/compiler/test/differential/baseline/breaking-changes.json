@@ -1,8 +1,8 @@
 {
   "breaking-changes/extension-type-name-csharp-13": ["diagnostics", "warnings", "bytecode", "cil"],
   "breaking-changes/extension-type-name-csharp-14": ["diagnostics", "warnings"],
-  "breaking-changes/field-keyword-csharp-13": ["warnings"],
-  "breaking-changes/field-keyword-csharp-14": ["diagnostics", "bytecode", "cil"],
+  "breaking-changes/field-keyword-csharp-13": ["diagnostics", "warnings", "bytecode", "cil"],
+  "breaking-changes/field-keyword-csharp-14": ["diagnostics", "warnings", "bytecode", "cil"],
   "breaking-changes/inferred-tuple-names-csharp-7": ["diagnostics", "warnings"],
   "breaking-changes/inferred-tuple-names-csharp-7-1": ["diagnostics", "warnings", "bytecode", "cil"],
   "breaking-changes/record-type-name-csharp-8": ["diagnostics", "warnings", "bytecode", "cil"],
