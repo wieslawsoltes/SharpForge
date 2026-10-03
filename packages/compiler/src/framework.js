@@ -1,6 +1,7 @@
 import {canonicalType,frameworkType,frameworkAssignable,findContracts,enumValue,enumTypes,eventsFor} from '@sharpforge/framework';
 import {Op,frameworkBuiltin} from '@sharpforge/bytecode';
 import {typeText} from './type-utils.js';
+import {emitValueArgument} from './codegen/value-arguments.js';
 const pathOf=e=>e?.kind==='Name'?e.name:e?.kind==='Member'&&pathOf(e.target)?pathOf(e.target)+'.'+e.name:null;
 /** Closed framework binder layer (class mixin, composed in method-compiler.js); ordinary user members retain precedence. */
 export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
@@ -55,10 +56,7 @@ export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
       return canonicalType(type);
     }
     emitFrameworkArguments(args,parameters,boxPrimitives=false) {
-      args.forEach((arg,i)=>{
-        if(frameworkType(parameters[i])?.kind==='delegate'&&this.delegateMethod(arg,parameters[i]))this.emitDelegate(arg,parameters[i]);
-        else {const type=this.typedExpr(arg,parameters[i]);this.checkAssign(parameters[i],type,arg);if(boxPrimitives&&parameters[i]==='object'&&['int','double','bool'].includes(type)){this.emitConstant(type);this.emitContract(findContracts('SharpForge.Runtime.Formatting','BoxValue',true)[0]);}}
-      });
+      args.forEach((arg,i)=>emitValueArgument(this,arg,parameters[i],boxPrimitives));
     }
     emitContract(contract) {
       const b=frameworkBuiltin(contract);this.emit(Op.BUILTIN,b.id,b.min);return contract.result;

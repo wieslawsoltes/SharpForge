@@ -4,6 +4,7 @@ import {evaluateConstant,ConstantError} from './constants.js';
 import {normalize,numeric,isReference,assignable,defaultValue,alwaysReturns,pathOf,typeText,usingSpan} from './type-utils.js';
 import {FrameworkCompiler} from './framework.js';
 import {ModernCompiler} from './modern.js';
+import {emitArrayCreation} from './codegen/legacy-array-creation.js';
 /** Core statement/expression compiler for the string-typed profile; framework and modern layers are composed below. */
 class CoreMethodCompiler {
   constructor(compilation,method){this.c=compilation;this.m=method;this.code=[];this.locals=[];this.scopes=[new Map()];this.assigned=new Set();this.loops=[];this.handlers=[];this.catchDepth=0;this.finallyScopes=[];this.checkedContext=null;this.constantDiagnostics=new Set();
@@ -239,12 +240,7 @@ class CoreMethodCompiler {
         node.args.forEach((arg,i)=>{const type=this.typedExpr(arg,method?.parameters[i]?.type);if(method)this.checkAssign(method.parameters[i]?.type??'error',type,arg);});
         if(method){if(method.symbol){this.c.reference(node.target,method.symbol);const reference=this.c.references.at(-1);reference.call=true;reference.callerId=this.m.symbol?.id??null;}this.emit(Op.CALL,method.id,count);return method.returnType;}
         for(let i=0;i<count;i++)this.emit(Op.POP);this.emitConstant(null);return 'error';}
-      case 'NewArray':{
-        let type=node.type;if(type==='var[]'){if(!node.values?.length)this.c.report(node,'CS0826');type=(node.values?.length?this.infer(node.values[0]):'error')+'[]';}
-        type=this.c.resolveType(type,node,false,this.m);const element=type.slice(0,-2);
-        if(node.length)this.checkAssign('int',this.expr(node.length),node.length);else this.emitConstant(node.values?.length??0);
-        this.emit(Op.NEWARR,this.c.constant(element));
-        if(node.values)node.values.forEach((value,i)=>{this.emit(Op.DUP);this.emitConstant(i);this.checkAssign(element,this.typedExpr(value,element),value);this.emit(Op.STELEM);this.emit(Op.POP);});return type;}
+      case 'NewArray':return emitArrayCreation(this,node);
       case 'New':{if(node.collectionInitializers?.length)this.c.report(node,'SF2013');
         const name=this.c.typeName(node.type,this.m);if(name==='Exception'){if(node.args.length>1)this.c.report(node,'CS1501',['Exception',node.args.length]);if(node.args.length)this.checkAssign('string',this.expr(node.args[0]),node.args[0]);else this.emitConstant('An exception was thrown.');this.emit(Op.BUILTIN,BuiltinMap.get('Exception.new').id,1);return 'Exception';}
         const type=this.c.findType(name,this.m);if(!type){this.c.report(node,'CS0246',[typeText(name)]);this.emitConstant(null);return 'error';}
