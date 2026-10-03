@@ -36,7 +36,7 @@
       "deliverable": "Implement exact integer widths (i1..u8, native int), IEEE r4/r8 and System.Decimal semantics through shared helpers in packages/runtime/src/execution/ used by BOTH engines; the source VM today models only Int32 and double.",
       "acceptance": "- [ ] Differential overflow, division, NaN, signed-zero and conversion tests in both engines.\n\n- [ ] Add positive, malformed/negative, cancellation/disposal and boundary tests where applicable.\n\n- [ ] Verify every affected execution/platform target independently; explicitly record unsupported targets.\n\n- [ ] Add or update a runnable example, API capability row and regression test.\n\n- [ ] Measure cold/warm latency, p95/p99 and allocations for performance-sensitive paths; keep correctness gates.\n\n- [ ] Record exact commits, tool versions and commands; no fixture simulator is reported as native qualification.",
       "dependencies": "- [SF-A00-T01](https://github.com/wieslawsoltes/SharpForge/issues/4)\n\n- [SF-A00-T04](https://github.com/wieslawsoltes/SharpForge/issues/7)",
-      "status": "pending",
+      "status": "implementation in progress; validation deferred until full E01 scope",
       "evidence": []
     },
     {
@@ -48,7 +48,7 @@
       "deliverable": "Execute virtual/interface/generic calls, delegates (ldftn/ldvirtftn/multicast), tail calls, constrained calls, calli and ref/out/in passing; the verifier in packages/cil/src/execution-profile.js currently rejects generics, filters, interface targets and most prefixes so each feature needs a paired allowlist change owned by A03.",
       "acceptance": "- [ ] Deep recursion, value receivers and invalid call targets agree with verified metadata.\n\n- [ ] Add positive, malformed/negative, cancellation/disposal and boundary tests where applicable.\n\n- [ ] Verify every affected execution/platform target independently; explicitly record unsupported targets.\n\n- [ ] Add or update a runnable example, API capability row and regression test.\n\n- [ ] Measure cold/warm latency, p95/p99 and allocations for performance-sensitive paths; keep correctness gates.\n\n- [ ] Record exact commits, tool versions and commands; no fixture simulator is reported as native qualification.",
       "dependencies": "- [SF-A00-T01](https://github.com/wieslawsoltes/SharpForge/issues/4)\n\n- [SF-A00-T04](https://github.com/wieslawsoltes/SharpForge/issues/7)\n\n- [SF-A04-T03](https://github.com/wieslawsoltes/SharpForge/issues/62)",
-      "status": "pending",
+      "status": "implementation in progress; validation deferred until full E01 scope",
       "evidence": []
     },
     {
@@ -60,7 +60,7 @@
       "deliverable": "Represent interior refs, byrefs, boxing and value copies without JS alias leaks.",
       "acceptance": "- [ ] GC during nested byref calls preserves valid refs and rejects expired stack refs.\n\n- [ ] Add positive, malformed/negative, cancellation/disposal and boundary tests where applicable.\n\n- [ ] Verify every affected execution/platform target independently; explicitly record unsupported targets.\n\n- [ ] Add or update a runnable example, API capability row and regression test.\n\n- [ ] Measure cold/warm latency, p95/p99 and allocations for performance-sensitive paths; keep correctness gates.\n\n- [ ] Record exact commits, tool versions and commands; no fixture simulator is reported as native qualification.",
       "dependencies": "- [SF-A00-T01](https://github.com/wieslawsoltes/SharpForge/issues/4)\n\n- [SF-A00-T04](https://github.com/wieslawsoltes/SharpForge/issues/7)",
-      "status": "pending",
+      "status": "implementation in progress; validation deferred until full E01 scope",
       "evidence": []
     },
     {
@@ -72,7 +72,7 @@
       "deliverable": "Implement filters, fault/finally, rethrow and cross-frame unwind at every instruction boundary.",
       "acceptance": "- [ ] Compare nested cleanup order and filter faults against native execution traces.\n\n- [ ] Add positive, malformed/negative, cancellation/disposal and boundary tests where applicable.\n\n- [ ] Verify every affected execution/platform target independently; explicitly record unsupported targets.\n\n- [ ] Add or update a runnable example, API capability row and regression test.\n\n- [ ] Measure cold/warm latency, p95/p99 and allocations for performance-sensitive paths; keep correctness gates.\n\n- [ ] Record exact commits, tool versions and commands; no fixture simulator is reported as native qualification.",
       "dependencies": "- [SF-A00-T01](https://github.com/wieslawsoltes/SharpForge/issues/4)\n\n- [SF-A00-T04](https://github.com/wieslawsoltes/SharpForge/issues/7)",
-      "status": "pending",
+      "status": "implementation in progress; validation deferred until full E01 scope",
       "evidence": []
     },
     {
@@ -324,8 +324,10 @@
       "deliverable": "Add execution/static-init.js: trigger rules for precise vs BeforeFieldInit types, reentrancy on the same context returning partially initialized state, failed cctor caching and TypeInitializationException wrapping with InnerException; today a failed cctor is marked 'failed' but later accesses do not rethrow.",
       "acceptance": "- [ ] Fixtures for cctor ordering across three mutually referencing types, throwing cctor accessed twice, and beforefieldinit laziness match .NET output.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implementation in progress",
-      "evidence": []
+      "status": "implemented and validated; ready for review",
+      "evidence": [
+        "runtime-a05-e04-validation.json"
+      ]
     },
     {
       "id": "SF-A05-T22",
@@ -336,8 +338,10 @@
       "deliverable": "Add execution/method-table.js so heap records reference a MethodTable object (token, base, interface map, vtable, element type, flags, instance size, GC reference bitmap) instead of a type-name string; typeOf() by name and name collisions across namespaces disappear.",
       "acceptance": "- [ ] Two types with the same simple name in different namespaces dispatch correctly; GetType() identity is reference-equal per type.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implementation in progress",
-      "evidence": []
+      "status": "implemented and validated; ready for review",
+      "evidence": [
+        "runtime-a05-e04-validation.json"
+      ]
     },
     {
       "id": "SF-A05-T24",
@@ -348,8 +352,10 @@
       "deliverable": "Add execution/handlers/tokens.js for ldtoken (type, method, field), Type.GetTypeFromHandle and GetType() returning stable runtime Type objects (reflection surface itself is owned by A04).",
       "acceptance": "- [ ] typeof(T)==x.GetType() comparisons and typeof(List<>) open generic tokens behave as in .NET.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implementation in progress",
-      "evidence": []
+      "status": "implemented and validated; ready for review",
+      "evidence": [
+        "runtime-a05-e04-validation.json"
+      ]
     },
     {
       "id": "SF-A05-T23",
@@ -360,8 +366,10 @@
       "deliverable": "Add execution/casting.js: classes, interfaces, arrays (covariance), generic variance (in/out), Nullable<T>, enums vs underlying, with a cast cache.",
       "acceptance": "- [ ] A table-driven test of 60 source/target pairs matches Type.IsAssignableFrom results from .NET.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implementation in progress",
-      "evidence": []
+      "status": "implemented and validated; ready for review",
+      "evidence": [
+        "runtime-a05-e04-validation.json"
+      ]
     },
     {
       "id": "SF-A05-T25",
@@ -372,8 +380,10 @@
       "deliverable": "Add execution/enums.js: enum boxing keeps enum type, ToString/HasFlag hooks, conversions and arithmetic on underlying type; source VM Op.ENUM currently pushes a bare number.",
       "acceptance": "- [ ] Boxed enum prints its member name; (object)MyEnum.A is MyEnum is true and is int is false.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implementation in progress",
-      "evidence": []
+      "status": "implemented and validated; ready for review",
+      "evidence": [
+        "runtime-a05-e04-validation.json"
+      ]
     },
     {
       "id": "SF-A05-T26",
@@ -384,8 +394,10 @@
       "deliverable": "Add execution/statics.js keyed by (field token, generic instantiation, scheduler context for [ThreadStatic]) replacing the flat statics Map; volatile. prefix accepted.",
       "acceptance": "- [ ] Generic<int>.Counter and Generic<string>.Counter are independent; [ThreadStatic] values differ per scheduler context.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implementation in progress",
-      "evidence": []
+      "status": "implemented and validated; ready for review",
+      "evidence": [
+        "runtime-a05-e04-validation.json"
+      ]
     },
     {
       "id": "SF-A05-T27",
@@ -396,8 +408,10 @@
       "deliverable": "Add execution/strings.js: ldstr interning table as weak-capable intern pool, String.Intern/IsInterned, reference equality rules, char indexing with surrogate correctness; ensure the strings Map root set does not leak across assembly unload.",
       "acceptance": "- [ ] ReferenceEquals(\"a\",\"a\") is true for literals and false for runtime-built strings; interned pool is released on VM stop.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implementation in progress",
-      "evidence": []
+      "status": "implemented and validated; ready for review",
+      "evidence": [
+        "runtime-a05-e04-validation.json"
+      ]
     },
     {
       "id": "SF-A05-T28",
@@ -408,10 +422,9 @@
       "deliverable": "Add tests/engine-parity.test.js running every language fixture through VirtualMachine and CilVirtualMachine and failing on differing output, exception type or exit code; list permitted divergences explicitly in tests/support/engine-parity-allowlist.js.",
       "acceptance": "- [ ] Parity suite runs in CI; allowlist has an owner and reason per entry; new fixtures are included automatically.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implemented; full E04 validation pending",
+      "status": "implemented and validated; ready for review",
       "evidence": [
-        "tests/engine-parity.test.js",
-        "tests/support/engine-parity-allowlist.js"
+        "runtime-a05-e04-validation.json"
       ],
       "parent": "SF-A05-E04",
       "parentIssue": 462
@@ -461,10 +474,11 @@
       "deliverable": "CilVirtualMachine.prototype.convert('conv.u8', -1) returns -1n (0xFFFFFFFFFFFFFFFF); ECMA-335 III.3.27 requires zero extension so (ulong)uint.MaxValue and (long)uintValue are wrong. Cause: cil-vm.js:173-177 takes BigInt(raw) of the signed number then asUintN(64) without first masking a 32-bit source when target is u8/u.",
       "acceptance": "- [ ] uint x = 0xFFFFFFFF; Console.WriteLine((ulong)x) prints 4294967295 in the CIL engine; regression test added.\n\n- [ ] Regression test reproduces the defect before the fix and passes after.",
       "dependencies": "",
-      "status": "implemented and validated; pull request pending",
+      "status": "implemented and validated; PR #1448, CI passed",
       "evidence": [
         "runtime-a05-bugs-validation.json"
-      ]
+      ],
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1448"
     },
     {
       "id": "SF-A05-B02",
@@ -475,10 +489,11 @@
       "deliverable": "convert('conv.i8', 1e30) returns 5076964154930102272n because cil-vm.js:177 applies BigInt.asIntN to the truncated value; only the i4 path has a deterministic out-of-range result (line 176). .NET saturates (long.MaxValue) on .NET 9+ and returned 0x8000000000000000 before; conv.u4 of 3e9 also returns -1294967296 inconsistent with documented policy.",
       "acceptance": "- [ ] Out-of-range float to i8/u8/u4/i2/i1 conversions follow one documented .NET-compatible table and are covered by fixtures.\n\n- [ ] Regression test reproduces the defect before the fix and passes after.",
       "dependencies": "",
-      "status": "implemented and validated; pull request pending",
+      "status": "implemented and validated; PR #1448, CI passed",
       "evidence": [
         "runtime-a05-bugs-validation.json"
-      ]
+      ],
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1448"
     },
     {
       "id": "SF-A05-B04",
@@ -489,10 +504,11 @@
       "deliverable": "matches() (cil-vm.js:90-94) treats records of kind 'exception' as matching only when systemType(r.type)===target or target is System.Exception; runtime faults are allocated with unqualified names like 'DivideByZeroException' (raise(), cil-vm.js:240) so catch(DivideByZeroException) [System.DivideByZeroException] and catch(ArithmeticException) never match. Found by code reading; reachable only with externally compiled (Roslyn) assemblies because the in-repo compiler rejects exception types other than Exception (CS0246).",
       "acceptance": "- [ ] try{int z=0;int y=1/z;}catch(DivideByZeroException){Console.WriteLine(\"ok\");} from a Roslyn-compiled fixture DLL prints ok in the CIL engine.\n\n- [ ] Regression test reproduces the defect before the fix and passes after.",
       "dependencies": "",
-      "status": "implemented and validated; pull request pending",
+      "status": "implemented and validated; PR #1448, CI passed",
       "evidence": [
         "runtime-a05-bugs-validation.json"
-      ]
+      ],
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1448"
     },
     {
       "id": "SF-A05-B03",
@@ -503,10 +519,11 @@
       "deliverable": "cil-vm.js:226 walks from the runtime type up the base chain picking the first method with the same name and signature, so a 'new virtual' method in a derived class is called through a base-typed reference where .NET calls the base slot. Cause: no vtable slots, name matching only. Found by code reading; not reproduced at runtime.",
       "acceptance": "- [ ] class A{public virtual int F()=>1;} class B:A{public new virtual int F()=>2;} A a=new B(); a.F() returns 1.\n\n- [ ] Regression test reproduces the defect before the fix and passes after.",
       "dependencies": "",
-      "status": "implemented and validated; pull request pending",
+      "status": "implemented and validated; PR #1448, CI passed",
       "evidence": [
         "runtime-a05-bugs-validation.json"
-      ]
+      ],
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1448"
     },
     {
       "id": "SF-A05-B06",
@@ -517,10 +534,11 @@
       "deliverable": "vm.js:51 returns this.heap.stats.liveBytes with a 32-bit truncation (bitwise or with zero) although the API returns Int64 and the CIL engine returns BigInt; heaps above 2 GiB wrap negative and the two engines disagree on type. vm.js:52 throws ArgumentOutOfRangeException for generation != 0 where .NET returns a count for 0..MaxGeneration.",
       "acceptance": "- [ ] GC.GetTotalMemory returns an Int64 value in both engines; GC.CollectionCount(1) and (2) return counts without throwing.\n\n- [ ] Regression test reproduces the defect before the fix and passes after.",
       "dependencies": "",
-      "status": "implemented and validated; pull request pending",
+      "status": "implemented and validated; PR #1448, CI passed",
       "evidence": [
         "runtime-a05-bugs-validation.json"
-      ]
+      ],
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1448"
     },
     {
       "id": "SF-A05-B05",
@@ -531,10 +549,11 @@
       "deliverable": "CilVirtualMachine.call() builds offsets:new Map(m.instructions.map(...)) per frame at cil-vm.js:74, making call cost O(method length) and dominating recursion benchmarks. Should be cached once on the method object.",
       "acceptance": "- [ ] Offsets map is computed once per method; a call-heavy benchmark (fib 25) improves measurably and allocation count per call drops.\n\n- [ ] Regression test reproduces the defect before the fix and passes after.",
       "dependencies": "",
-      "status": "implemented and validated; pull request pending",
+      "status": "implemented and validated; PR #1448, CI passed",
       "evidence": [
         "runtime-a05-bugs-validation.json"
-      ]
+      ],
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1448"
     }
   ]
 }
