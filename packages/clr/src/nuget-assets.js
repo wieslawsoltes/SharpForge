@@ -71,7 +71,7 @@ function assetGroups(files, prefix) {
 
 function selectGroup(groups, target) {
   const tfm = nearestTargetFramework(target, [...groups.keys()]);
-  return tfm === null ? null : { framework: tfm, paths: groups.get(tfm).filter(path => !path.endsWith('/_._')).sort() };
+  return tfm === null ? null : { framework: tfm, paths: groups.get(tfm).filter(path => /\.(dll|exe)$/i.test(path)).sort() };
 }
 
 /** Choose assets from a host-extracted in-memory package file list; never restore or download a package. */

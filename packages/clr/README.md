@@ -30,20 +30,38 @@ See `node packages/clr/examples/resolve.js` for a runnable example.
 paths, RID fallback order and configuration. It does not open those paths or
 resolve shared frameworks on the host. `selectNugetAssets` selects compile or
 runtime assets from an already-extracted package path list; `assetsFromProject`
-reads restore's decisions directly. Supported TFM families are netstandard,
-netcoreapp and net5+. Unknown families are diagnostics. Restore, archive decoding
-and downloading remain separate responsibilities.
+reads restore's decisions directly. `selectNugetPackage` reads an in-memory nupkg
+through the existing bounded archive package and returns selected asset bytes.
+Supported TFM families are netstandard, netcoreapp and net5+. Unknown families are
+diagnostics. Restore and downloading remain separate responsibilities.
 
 | Capability | Current evidence |
 | --- | --- |
-| Assembly display-name grammar | 162 native .NET 10.0.5 cases retained; JS comparison not yet run |
-| Public key tokens and row adapter | ECMA known-key regression authored; Microsoft-key/native metadata qualification pending |
-| Ordered offline resolver | Positive, mismatch, ambiguity, cancellation and disposal regressions authored; not yet run |
-| deps/runtimeconfig and RID fallback | Fixture regressions authored; published-app host-trace comparison pending |
-| NuGet asset selection | Fixture regressions authored; native 30-package selection matrix pending |
+| Assembly display-name grammar | 162 native .NET 10.0.5 cases pass JavaScript differential comparison |
+| Public key tokens and row adapter | ECMA known key and three native Microsoft keys pass; row shape/malformed token regressions pass |
+| Ordered offline resolver | Positive, mismatch, ambiguity, cancellation and disposal regressions pass |
+| deps/runtimeconfig and RID fallback | Application paths match native `dotnet exec --depsfile` host trace; RID/cycle regressions pass |
+| NuGet asset selection | 30 fixture package layouts match native NuGet FrameworkReducer; in-memory archive selection passes |
 | Execution targets | Host JavaScript services only; source VM, direct CIL, Rust native and Rust Wasm integration pending |
 
 Reference grammar: [.NET v10.0.5 AssemblyNameParser](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/Common/src/System/Reflection/AssemblyNameParser.cs).
 Metadata identity: ECMA-335 6th edition, II.22.2 and II.22.5.
-Native naming fixture source and inputs are in `tests/fixtures/clr-identity/`.
-All validation is deferred until the complete T01 scope is ready.
+Native fixture source and inputs are in `tests/fixtures/clr-identity/`. Capture
+with `node packages/clr/tools/capture-reference.mjs artifacts/clr-reference`;
+the harness uses the installed SDK's NuGet assembly and disables all package
+sources. These fixtures qualify identity/selection rules, not execution of
+third-party assemblies. Run the retained offline comparison with
+`node --test --test-concurrency=1 tests/clr-identity-*.test.js`.
+
+The first implementation has no previous CLR resolver benchmark baseline.
+`node --expose-gc packages/clr/tools/benchmark-identity.mjs` measured 10,000
+provider entries on Apple M3 Pro, Node 24.21.0, darwin-arm64:
+
+| Operation | Median µs | p95 µs | p99 µs |
+| --- | ---: | ---: | ---: |
+| Parse display name | 2.458 | 9.546 | 16.075 |
+| Cold indexed resolution | 2.590 | 11.703 | 36.027 |
+| Cached indexed resolution | 0.732 | 3.544 | 5.532 |
+
+The benchmark also records retained heap deltas; it does not claim exact
+allocation counts or an unmeasured speedup. Results vary by host and load.

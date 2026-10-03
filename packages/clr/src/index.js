@@ -6,3 +6,4 @@ export { AssemblyProvider, AssemblyResolver } from './resolver.js';
 export { readDependencyManifest } from './deps-json.js';
 export { runtimeFallbacks } from './probing-paths.js';
 export { nearestTargetFramework, selectNugetAssets, assetsFromProject } from './nuget-assets.js';
+export { selectNugetPackage } from './nuget-package.js';
