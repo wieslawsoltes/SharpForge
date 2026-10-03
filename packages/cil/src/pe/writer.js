@@ -53,6 +53,7 @@ export function writePortableExecutable(input, inputOptions = {}) {
   const options = peOptions(inputOptions);
   const optionalSize = options.pe32Plus ? 240 : 224;
   const sizeOfHeaders = align(0x80 + 24 + optionalSize + input.length * 40, options.fileAlignment);
+  if (options.firstSectionRva < align(sizeOfHeaders, options.sectionAlignment)) throw new CilError('PE sections overlap image headers');
   const sections = sectionLayout(input, options, sizeOfHeaders);
   const directories = dataDirectories(sections, options.directories ?? {});
   const sizeOfImage = align(sections.at(-1).rva + sections.at(-1).virtualSize, options.sectionAlignment);

@@ -25,7 +25,7 @@ export function canonicalWithSymbols(canonical, pe) {
     ranges.push([start, start + size]);
   }
   const clone = pe.bytes.slice(0, canonical.length);
-  for (const [at, size] of [[pe.optionalStart + 4, 4], [pe.optionalStart + 56, 4], [directory, 8],
+  for (const [at, size] of [[pe.optionalStart + 4, 8], [pe.optionalStart + 56, 4], [directory, 8],
     [section.headerOffset + 8, 4], [section.headerOffset + 16, 4]]) {
     clone.set(canonical.subarray(at, at + size), at);
   }
