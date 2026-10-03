@@ -30,9 +30,12 @@ export const eventMethods = {
     const keyword = this.take(),
       type = this.type(),
       explicit = this.explicitInterfaceSpecifier();
+    const nameToken = this.current,
+      bodies = this.accessorBodies;
     if (explicit || this.peek().kind === '{') {
       const identifier = this.id(),
         accessors = this.at('{') ? this.accessorList() : null;
+      this.accessorMemberForm(nameToken, bodies, -1);
       return this.n(
         'EventDeclaration',
         attributeLists,
@@ -45,6 +48,7 @@ export const eventMethods = {
         accessors ? null : this.expect(';')
       );
     }
+    this.memberForm(nameToken, false);
     return this.n(
       'EventFieldDeclaration',
       attributeLists,
