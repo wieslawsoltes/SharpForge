@@ -1,5 +1,6 @@
 import {executeSourceReference, sourceReturnReference} from './execution/source-references.js';
 import {isFatalFault,markUnhandled} from './execution/unhandled.js';
+import {stopVM} from './execution/vm-lifecycle.js';
 import {executeSourceMemory} from './execution/source-memory.js';
 import {collectAtInstruction} from './execution/gc-stress.js';
 import {faultFromException} from './execution/exception-object.js';
@@ -19,8 +20,8 @@ import { loadAssembly } from '@sharpforge/cil';
 import { Op, BinaryName, UnaryName, verifyImage } from '@sharpforge/bytecode';
 import { ManagedHeap, ManagedFault, isReference } from './heap.js';
 import {builtin} from './execution/source-builtins.js';
-import {literalString,stringRoots,clearStrings} from './execution/strings.js';
-import {binary,convert,unary,defaultValue,sourceEnum,enumToString,checkSourceArrayStore,runtimeTypeRoots,clearRuntimeTypes,runtimeTypeText} from './execution/source-ops.js';
+import {literalString,stringRoots} from './execution/strings.js';
+import {binary,convert,unary,defaultValue,sourceEnum,enumToString,checkSourceArrayStore,runtimeTypeRoots,runtimeTypeText} from './execution/source-ops.js';
 import {roots as exceptionRoots,makeFault,enterCatch,finalizers,finishReturn,transfer,resumeUnwind,handleFault,rethrow,endSourceFilter} from './execution/source-eh.js';
 export class VirtualMachine {
   constructor(image,options={}){
@@ -100,7 +101,7 @@ export class VirtualMachine {
   allFrames(){return this.scheduler.allFrames();}
   run(){if(this.state==='paused')this.state='running';while(this.state==='ready'||this.state==='running')this.runSlice({instructionBudget:100000,timeBudgetMs:100});return {state:this.state,output:this.output.join(''),exitCode:this.exitCode,fault:this.fault,stats:this.statistics()};}
   async runAsync(options={}){await this.scheduler.runAsync(options);return {state:this.state,output:this.output.join(''),returnValue:this.value(this.returnValue),exitCode:this.exitCode,fault:this.fault,stats:this.statistics()};}
-  stop(){clearRuntimeTypes(this);clearStrings(this);this.scheduler.cancelAll();this.platform.closeAll();this.state='terminated';this.pendingFault=null;this.frames=[];this.stack=[];this.currentPoint=null;}
+  stop(){stopVM(this);}
   statistics(){return {artifactFormat:this.image.il?'ECMA-335':'SharpForge IR',assembly:this.image.il?{bytes:this.image.il.assemblyBytes,loadMs:this.image.il.loadMs,decodeMs:this.image.il.decodeMs,verificationMs:this.image.il.verificationMs}:null,instructions:this.instructions,elapsedMs:this.elapsedMs,frames:this.frames.length,heap:{...this.heap.stats,maxBytes:this.heap.maxBytes,threshold:this.heap.threshold}};}
   snapshot(){return snapshotVM(this,'source');}
   restore(snapshot){return restoreVM(this,snapshot,'source');}

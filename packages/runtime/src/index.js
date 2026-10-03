@@ -6,3 +6,5 @@ export {applyDesignPatch} from './design-patch.js';
 
 export {serializeSnapshot, deserializeSnapshot, restoreSerializedSnapshot, portableSnapshotVersion, SnapshotFormatError}
   from './execution/snapshot-serialize.js';
+
+export {invalidateExecutionCode, executionCodeStatistics} from './execution/code-version.js';
