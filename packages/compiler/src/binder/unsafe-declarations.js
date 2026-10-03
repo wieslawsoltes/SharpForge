@@ -11,7 +11,6 @@
  */
 import { SymbolKind, TypeKind, PointerTypeSymbol, ArrayTypeSymbol } from '../symbols/types.js';
 import { isPointerType } from '../conversions/pointer.js';
-import { functionPointerKeywordSpan } from './function-pointers.js';
 import { isNullableType } from '../conversions/nullable.js';
 import { isUnmanagedType } from './constraints.js';
 
@@ -46,8 +45,9 @@ export function isUnsafeSymbol(member, type) {
   return false;
 }
 
-/** Where CS0214 is reported for a pointer type: the type, or `delegate*` of a function pointer type. */
-export const unsafeMarker = pointer => (pointer.kind === 'FunctionPointerType' ? functionPointerKeywordSpan(pointer) : pointer);
+/** Where CS0214 is reported for a pointer type: the type, or the `delegate*` of a function pointer type (as in Roslyn). */
+export const unsafeMarker = pointer =>
+  pointer.kind === 'FunctionPointerType' ? { start: pointer.delegateKeyword.span.start, end: pointer.asteriskToken.span.end } : pointer;
 
 /** The outermost PointerType or FunctionPointerType node inside a type syntax, or null. */
 export function findPointerSyntax(syntax) {

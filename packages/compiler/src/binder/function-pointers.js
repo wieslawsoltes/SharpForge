@@ -34,9 +34,6 @@ const refKindOf = parameter => {
   return modifiers.includes('in') ? RefKind.In : RefKind.None;
 };
 
-/** The span of `delegate*`, where Roslyn reports what concerns the pointer type as a whole. */
-export const functionPointerKeywordSpan = syntax => ({ start: syntax.delegateKeyword.span.start, end: syntax.asteriskToken.span.end });
-
 /**
  * Binds a FunctionPointerType syntax.
  * @param {(typeSyntax: object) => object} bindType binds a parameter or return type to a TypeWithAnnotations
