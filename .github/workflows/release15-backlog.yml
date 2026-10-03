@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [planning/release-0.15-scope]
-    paths: ['planning/release15.json', 'scripts/planning/release15.py', 'scripts/planning/test_release15.py', '.github/workflows/release15-backlog.yml']
+    paths: ['planning/release15.json', 'scripts/planning/release15.py', 'scripts/planning/test_release15.py', 'scripts/planning/projects.py', 'scripts/planning/test_projects.py', '.github/workflows/release15-backlog.yml']
 permissions:
   contents: read
   issues: write
@@ -26,7 +26,8 @@ jobs:
         run: |
           python scripts/planning/backlog.py
           python scripts/planning/release15.py
-          python -m unittest discover -s scripts/planning -p 'test_release15.py'
+          python scripts/planning/projects.py --project all
+          python -m unittest discover -s scripts/planning -p 'test_*.py'
       - name: Apply additive labels, scope comments and native release-slice links
         env:
           GH_TOKEN: ${{ github.token }}

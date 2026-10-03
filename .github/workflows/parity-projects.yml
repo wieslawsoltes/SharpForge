@@ -1,0 +1,52 @@
+name: Provision parity Projects with explicit authorization
+on:
+  workflow_dispatch:
+    inputs:
+      project:
+        description: 'release, portfolio, A00..A29 or all'
+        required: true
+        default: release
+        type: string
+      max_writes:
+        description: 'Maximum mutations this run (1..450); rerun partial batches'
+        required: true
+        default: '400'
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: sharpforge-project-provisioning
+  cancel-in-progress: false
+jobs:
+  projects:
+    if: github.repository == 'wieslawsoltes/SharpForge'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate offline plan and provisioning tests
+        run: |
+          python scripts/planning/backlog.py
+          python -m unittest discover -s scripts/planning -p 'test_*.py'
+      - name: Provision requested Projects batch
+        env:
+          GH_PROJECT_TOKEN: ${{ secrets.SHARPFORGE_PROJECTS_TOKEN }}
+          PROJECT_SELECTOR: ${{ inputs.project }}
+          MAX_WRITES: ${{ inputs.max_writes }}
+        run: |
+          if [ -z "$GH_PROJECT_TOKEN" ]; then
+            echo 'Configure an explicitly authorized SHARPFORGE_PROJECTS_TOKEN secret; repository GITHUB_TOKEN is not a Projects credential.'
+            exit 1
+          fi
+          python scripts/planning/projects.py --project "$PROJECT_SELECTOR" --max-writes "$MAX_WRITES" --apply
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: projects-provisioning-audit
+          path: planning/generated/projects-audit.json
+          if-no-files-found: warn
