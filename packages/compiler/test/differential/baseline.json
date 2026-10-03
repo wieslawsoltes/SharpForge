@@ -234,6 +234,8 @@
     "language-version/gate-params-collections-at-12",
     "language-version/gate-readonly-auto-properties-at-5",
     "language-version/gate-ref-for-at-7-2",
+    "language-version/gate-static-classes-at-1",
+    "language-version/gate-static-local-functions-at-7-3",
     "language-version/gate-switch-on-bool-at-1",
     "language-version/interpolated-string-in-5",
     "language-version/no-gate-method-group-conversions-at-1",
