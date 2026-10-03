@@ -1,3 +1,4 @@
+import {memoryCall} from './memory-calls.js';
 import {invokeAsyncIntrinsic} from './async-runtime.js';
 import {arrayCall} from './array-calls.js';
 import {invokeNumericIntrinsic} from './numeric-intrinsics.js';
@@ -101,6 +102,7 @@ export const intrinsicHandlers=new Map(intrinsicDefinitions.map(definition=>{
   }];
 }));
 export function invokeIntrinsic(vm,descriptor,args) {
+  const memory=memoryCall(vm,descriptor,args);if(memory.handled)return memory.value;
   const array=arrayCall(vm,descriptor,args);if(array.handled)return array.value;
   const async=invokeAsyncIntrinsic(vm,descriptor,args);if(async.handled)return async.value;
   const sync=vm.sync?.invoke(descriptor,args);if(sync?.handled)return sync.value;

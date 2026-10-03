@@ -8,16 +8,16 @@ const constructors = new Map([
 ]);
 
 export function isArrayStorage(data) {
-  return Array.isArray(data) || ArrayBuffer.isView(data) && !(data instanceof DataView);
+  return !!(Object.isFrozen(data) && data?.readonlySnapshotArray === true) || Array.isArray(data) || ArrayBuffer.isView(data) && !(data instanceof DataView);
 }
 
 /** Number of managed payload bytes, excluding the record header. */
 export function arrayStorageBytes(data) {
-  return ArrayBuffer.isView(data) ? data.byteLength : data.length * 8;
+  return ArrayBuffer.isView(data) || data?.readonlySnapshotArray ? data.byteLength : data.length * 8;
 }
 
 export function cloneArrayStorage(data) {
-  return data.slice();
+  return data?.readonlySnapshotArray ? data.toMutableArray() : data.slice();
 }
 
 export function primitiveArrayConstructor(element) {
@@ -42,7 +42,7 @@ export function primitiveArrayStorage(element, length, defaultValue = null) {
 }
 
 export function storageRead(data, index, element = null, context = {}) {
-  const value = data[index];
+  const value = data?.readonlySnapshotArray ? data.read(index) : data[index];
   if (!ArrayBuffer.isView(data) || !element) return value;
   const type = element.enumUnderlyingType ?? element;
   if (type.name === 'System.Boolean') return context.source ? !!value : value;
@@ -70,7 +70,7 @@ export function storageWrite(data, index, value) {
 }
 
 export function storageValues(data) {
-  return data.values();
+  return data[Symbol.iterator]();
 }
 
 /** A live byte view is only valid until the caller yields or crosses a heap barrier. */

@@ -2,6 +2,7 @@ import {resolveExecutionField} from '@sharpforge/cil';
 import {ManagedFault,isReference} from '../heap.js';
 import {checkArrayStore} from './casting.js';
 import {frameById} from './frame-lifetimes.js';
+import {readMemory,writeMemory,validateMemoryPointer} from './raw-memory.js';
 import {isArrayStorage,storageRead,storageWrite} from './array-storage.js';
 import {storageValue} from './storage.js';
 import {isValueTypeValue,replaceValueField,copyValue} from './value-types.js';
@@ -65,10 +66,11 @@ export function address(vm,kind,index,owner=null,options={}) {
   slot(vm,pointer);return pointer;
 }
 export function dereference(vm,pointer,write=false,replacement) {
+  if(pointer?.memoryPointer)return write?writeMemory(vm,pointer,replacement):readMemory(vm,pointer);
   const {base,value,table}=leaf(vm,pointer);
   if(!write) {if(value===undefined)throw invalid('Uninitialized address');return value;}
   if(pointer.readonly)throw invalid('Cannot write through a readonly managed pointer');
-  if(replacement?.byref&&!['arg','local'].includes(pointer.kind))throw invalid('Managed pointers cannot escape into heap or static storage');
+  if((replacement?.byref||replacement?.span)&&!['arg','local'].includes(pointer.kind))throw invalid('Managed pointers cannot escape into heap or static storage');
   // Callers have already popped operands. Nested copies may allocate private
   // framework values, so keep both the location and replacement rooted.
   const stored=vm.heap.withRoots([pointer,replacement,base.get()],()=>{
@@ -123,12 +125,13 @@ export function sourceFieldStore(vm,receiver,index,value) {
 }
 
 export function validatePointer(vm,pointer,{write=false,allowUninitialized=false}={}) {
+  if(pointer?.memoryPointer){validateMemoryPointer(vm,pointer,{write});return pointer;}
   const {value}=leaf(vm,pointer);
   if(write&&pointer.readonly)throw invalid('Cannot write through a readonly managed pointer');
   if(!allowUninitialized&&value===undefined)throw invalid('Uninitialized address');
   return pointer;
 }
-export function pointerType(vm,pointer) {return leaf(vm,pointer).table;}
+export function pointerType(vm,pointer) {return pointer?.memoryPointer?pointer.baseType:leaf(vm,pointer).table;}
 export function asReadonly(vm,pointer) {
   validatePointer(vm,pointer,{allowUninitialized:true});
   return Object.freeze({...pointer,readonly:true});
