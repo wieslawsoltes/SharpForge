@@ -60,3 +60,12 @@ Linux x64 and Windows x64 remain pending until their hosted jobs execute; the
 workflow declaration alone does not qualify an OS. Rust native/Wasm artifacts
 remain unsupported. Malformed C# that cannot be parsed is retained as a repro with
 explicit unsupported reduction rather than a false minimality claim.
+
+The workflow uses reviewed immutable action pins from the A29 supply policy.
+Qualification runs on the nightly schedule, manual dispatch or a PR explicitly
+labelled `full-ci`; an ordinary PR or main push does not start the native corpus.
+The retained evidence describes the commits in `qualification.json`, including
+the corpus at `76eb0bfafae911c24eeebab2341b79ea9c9aa963`. Workflow readiness
+changes have not run new local tests, builds or native captures. Validation of the
+larger integrated scope and reconciliation of known differences remain pending;
+merging the runner implementation does not complete cross-platform qualification.
