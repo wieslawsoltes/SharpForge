@@ -1,0 +1,215 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "methodId": {
+      "type": "string"
+    },
+    "encoding": {
+      "enum": [
+        "bytecode",
+        "cil"
+      ]
+    },
+    "offsetUnit": {
+      "const": "instruction"
+    },
+    "locals": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 1000000
+    },
+    "instructions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "opcode": {
+            "type": "string"
+          },
+          "operands": {
+            "type": "array",
+            "items": {},
+            "maxItems": 1000000
+          },
+          "resultType": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "inputTypes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1000000
+          },
+          "sourceEncoding": {
+            "enum": [
+              "bytecode",
+              "cil"
+            ]
+          }
+        },
+        "required": [
+          "offset",
+          "opcode",
+          "operands",
+          "resultType",
+          "inputTypes",
+          "sourceEncoding"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 1000000
+    },
+    "exceptionRegions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "enum": [
+              "catch",
+              "finally",
+              "fault",
+              "filter"
+            ]
+          },
+          "start": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "end": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "handlerStart": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "handlerEnd": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "catchType": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "filterStart": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          }
+        },
+        "required": [
+          "kind",
+          "start",
+          "end",
+          "handlerStart",
+          "handlerEnd",
+          "catchType",
+          "filterStart"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 1000000
+    },
+    "safepoints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "kind": {
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        },
+        "required": [
+          "offset",
+          "kind"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 1000000
+    },
+    "typeState": {
+      "enum": [
+        "resolved",
+        "unresolved"
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "methodId",
+    "encoding",
+    "offsetUnit",
+    "locals",
+    "instructions",
+    "exceptionRegions",
+    "safepoints",
+    "typeState"
+  ],
+  "additionalProperties": false,
+  "anyOf": [
+    {
+      "properties": {
+        "typeState": {
+          "const": "unresolved"
+        }
+      }
+    },
+    {
+      "properties": {
+        "typeState": {
+          "const": "resolved"
+        },
+        "instructions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "resultType": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "resultType"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
