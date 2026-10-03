@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-67dea107500c34a3dd7f",
+  "kind": "spec",
+  "sourceText": "class var { }\n\nd = var (var v) => v;              // error: contextual keyword 'var' cannot be used as explicit lambda return type\nd = @var (var v) => v;             // ok\nd = ref var (ref var v) => ref v;  // error: contextual keyword 'var' cannot be used as explicit lambda return type\nd = ref @var (ref var v) => ref v; // ok",
+  "sourceSHA256": "2b3528e2aef6954c61149d223f61960554ee1705b1bb651afd8f6453b38cc2d4",
+  "target": "library",
+  "featureId": "csharp-10-0-lambda-improvements",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/lambda-improvements.md",
+    "sha256": "43e4ead0e264a6e6580875a4178ad3f09374d22c739ffc682b6b5f5cfbfc752f",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/lambda-improvements.md",
+    "license": "NOASSERTION",
+    "offset": 5749
+  }
+}

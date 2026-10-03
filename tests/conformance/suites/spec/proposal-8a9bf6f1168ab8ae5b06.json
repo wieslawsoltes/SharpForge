@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-8a9bf6f1168ab8ae5b06",
+  "kind": "spec",
+  "sourceText": "delegate int DelegateNoDefault(int x);\ndelegate int DelegateWithDefault(int x = 1);\n\nint MethodNoDefault(int x) => x;\nint MethodWithDefault(int x = 2) => x;\nDelegateNoDefault d1 = MethodWithDefault; // no warning: source is a method group\nDelegateWithDefault d2 = MethodWithDefault; // no warning: source is a method group\nDelegateWithDefault d3 = MethodNoDefault; // no warning: source is a method group\nDelegateNoDefault d4 = (int x = 1) => x; // warning: source present, target missing\nDelegateWithDefault d5 = (int x = 2) => x; // warning: source present, target different\nDelegateWithDefault d6 = (int x) => x; // no warning: source missing, target present\n\ndelegate int DelegateNoParams(int[] xs);\ndelegate int DelegateWithParams(params int[] xs);\n\nint MethodNoParams(int[] xs) => xs.Length;\nint MethodWithParams(params int[] xs) => xs.Length;\nDelegateNoParams d7 = MethodWithParams; // no warning: source is a method group\nDelegateWithParams d8 = MethodNoParams; // no warning: source is a method group\nDelegateNoParams d9 = (params int[] xs) => xs.Length; // warning: source present, target missing\nDelegateWithParams d10 = (int[] xs) => xs.Length; // no warning: source missing, target present",
+  "sourceSHA256": "629207930ca3b85165a3a29e43eee379bd20597934fc23fcd0e46146b9c721f2",
+  "target": "library",
+  "featureId": "csharp-12-0-lambda-optional-parameters",
+  "langVersion": "12.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "sha256": "663ca72db438d27be03c24504ddcfa11032e0e1acc2a7f996cff23c10f67dc6e",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "license": "NOASSERTION",
+    "offset": 13161
+  }
+}

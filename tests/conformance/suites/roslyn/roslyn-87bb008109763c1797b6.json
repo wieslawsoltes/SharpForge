@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-87bb008109763c1797b6",
+  "kind": "diagnostics",
+  "sourceText": "\nnamespace Microsoft.Test.XmlGen.Protocols.Saml2\n{\n    using System;\n    using System.Collections.Generic;\n\n    public class ProxyRestriction \n    {\n        XmlGenIntegerAttribute count;\n        private List<XmlGenAttribute> Attributes { get; set; }\n\n        public ProxyRestriction()\n        {\n            for (int count = 0; count < 10; count++)\n            {\n            }\n\n            for (int i = 0; i < this.Attributes.Count; i++)\n            {\n                XmlGenAttribute attribute = this.Attributes[i];\n                if (attribute.LocalName == null)\n                {\n                    if (count is XmlGenIntegerAttribute)\n                    {\n                        count = (XmlGenIntegerAttribute)attribute;\n                    }\n                    else\n                    {\n                        count = new XmlGenIntegerAttribute(attribute);\n                        this.Attributes[i] = count;\n                    }\n                    break;\n                }\n            }\n\n            if (count == null)\n            {\n                this.Attributes.Add(new XmlGenIntegerAttribute(String.Empty, null, String.Empty, -1, false));\n            }\n        }\n    }\n\n    internal class XmlGenAttribute\n    {\n        public object LocalName { get; internal set; }\n    }\n\n    internal class XmlGenIntegerAttribute : XmlGenAttribute\n    {\n        public XmlGenIntegerAttribute(string empty1, object count, string empty2, int v, bool isPresent)\n        {\n        }\n\n        public XmlGenIntegerAttribute(XmlGenAttribute attribute)\n        {\n        }\n    }\n}\n\npublic class Program\n{\n    public static void Main() { }\n}",
+  "sourceSHA256": "9a041bf7c250de30900dd731841b4999f3ffe180e2b7bbd906441e22d51b182d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "sha256": "15bbd12edb525c2764339fc84bc1d7201034c05a5703e07d2fafeee8c74638ab",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "license": "MIT",
+    "method": "TestCollisionForLoopControlVariable",
+    "offset": 33657
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

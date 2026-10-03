@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ac72b9edf91ccaa9ebdb",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C3 : C1\n{\n    public override void M<U>(U u)\n    {\n        int x;\n        foreach (var kvp in u)\n        {\n            x = kvp.a + kvp.b;\n        }\n    }\n}\n\nclass C4 : C2\n{\n    public override void M<U>(U u)\n    {\n        int x;\n        foreach (var kvp in u)\n        {\n            x = kvp.c + kvp.d;\n        }\n    }\n}",
+  "sourceSHA256": "2f9f8f07a921d7265884c45cbca1f8206437fb2853006a4fa2d4229792617055",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "ConstraintAttributesAreNotSharedAcrossTypeRefs",
+    "offset": 12817
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { SystemRuntimeFacadeRef, ValueTupleRef, comp1.ToMetadataReference() })",
+  "options": "(src2,\n                references: new[] { SystemRuntimeFacadeRef, ValueTupleRef, comp1.ToMetadataReference() })",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

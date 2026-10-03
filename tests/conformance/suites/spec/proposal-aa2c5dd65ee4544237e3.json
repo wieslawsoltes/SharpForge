@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-aa2c5dd65ee4544237e3",
+  "kind": "spec",
+  "sourceText": "class C\n{\n    ref int M() => /*...*/;\n}\n\nvoid M1(C? c)\n{\n    c?.M() = 42; // equivalent to:\n    if (c is not null)\n        c.M() = 42;\n}\n\nint? M2(C? c)\n{\n    return c?.M() = 42; // equivalent to:\n    return c is null ? (int?)null : c.M() = 42;\n}",
+  "sourceSHA256": "84858129847a227e14afdca26b8f882282572f8577fb5164378a80e424a5d09f",
+  "target": "library",
+  "featureId": "csharp-14-0-null-conditional-assignment",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/null-conditional-assignment.md",
+    "sha256": "95de9584c9e9e98ae1f5d46ef4c79eb395665f25bc8d002b7af1a0c5a4ac6daa",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/null-conditional-assignment.md",
+    "license": "NOASSERTION",
+    "offset": 5520
+  }
+}

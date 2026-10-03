@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-2a007dcf3a9d8ddcd4b4",
+  "kind": "diagnostics",
+  "sourceText": "\nstruct S1\n{\n    readonly int x;\n\n    ref readonly S1 Test()\n    {\n        return ref this;\n    }\n\n    ref readonly int this[in int i] => ref x;\n}\n\n",
+  "sourceSHA256": "6bdb301defcf416314d0136d323a5a00d3fb1cf72245b0724e51c2aee9705bcb",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefReadonlyReturnTests.cs",
+    "sha256": "87f31f30239082ac067728f573ca1d7b0ba9ae37f73b80e7f9236b308df7d195",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefReadonlyReturnTests.cs",
+    "license": "MIT",
+    "method": "ReadonlyReturnByRefInStruct",
+    "offset": 33689
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, new[] { ValueTupleRef, SystemRuntimeFacadeRef })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8170",
+        "severity": "error"
+      },
+      {
+        "code": "CS8170",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,20): error CS8170: Struct members cannot return 'this' or other instance members by reference\n                //         return ref this;\n                Diagnostic(ErrorCode.ERR_RefReturnStructThis, \"this\").WithLocation(8, 20),\n                // (11,44): error CS8170: Struct members cannot return 'this' or other instance members by reference\n                //     in int this[in int i] => ref x;\n                Diagnostic(ErrorCode.ERR_RefReturnStructThis, \"x\").WithLocation(11, 44)\n            ",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

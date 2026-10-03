@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-4b6f22e635aacd2848c5",
+  "kind": "diagnostics",
+  "sourceText": "\npublic enum E { E1 = 1 }\n\npublic static class Extensions\n{\n    public static E M1(this E e, object obj) => e;\n\n    static void M2(E? e)\n    {\n        int x;\n        E e2 = e?.M1(x = 0) ?? e.Value.M1(x = 0);\n        x.ToString();\n    }\n}\n",
+  "sourceSHA256": "5d8e5961d01dc3feec15f0e8bf81ac37f3e7fb875c524e7357ceace7a69df116",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "NullCoalescing_CondAccess_NullableEnum",
+    "offset": 155018
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

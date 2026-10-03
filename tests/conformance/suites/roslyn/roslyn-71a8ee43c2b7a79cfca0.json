@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-71a8ee43c2b7a79cfca0",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.InteropServices;\n\n// Valid cases\n\n[assembly: ClassInterface(ClassInterfaceType.None)]\n\n[ClassInterface(ClassInterfaceType.AutoDispatch)]\npublic class Class1 {}\n\n[ClassInterface(ClassInterfaceType.AutoDual)]\npublic class Class2 {}\n\n[ClassInterface((short)0)]\npublic class Class4 {}\n\n[ClassInterface((short)1)]\npublic class Class5 {}\n\n[ClassInterface((short)2)]\npublic class Class6 {}\n\n\n// Invalid cases\n\n[ClassInterface((ClassInterfaceType)(-1))]\npublic class InvalidClass1 {}\n\n[ClassInterface((ClassInterfaceType)3)]\npublic class InvalidClass2 {}\n\n[ClassInterface((short)(-1))]\npublic class InvalidClass3 {}\n\n[ClassInterface((short)3)]\npublic class InvalidClass4 {}\n\n[ClassInterface(System.Int32.MaxValue)]\npublic class InvalidClass5 { }\n\n[ClassInterface(ClassInterfaceType.None)]\npublic interface InvalidTarget {}\n",
+  "sourceSHA256": "fdd9fb5082991daf837077c4d086a3df9879fb755d7340b6ffc50edecd4a74bd",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestClassInterfaceAttribute",
+    "offset": 206334
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS0592",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (26,17): error CS0591: Invalid value for argument to 'ClassInterface' attribute\n                // [ClassInterface((ClassInterfaceType)(-1))]\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, \"(ClassInterfaceType)(-1)\").WithArguments(\"ClassInterface\"),\n                // (29,17): error CS0591: Invalid value for argument to 'ClassInterface' attribute\n                // [ClassInterface((ClassInterfaceType)3)]\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, \"(ClassInterfaceType)3\").WithArguments(\"ClassInterface\"),\n                // (32,17): error CS0591: Invalid value for argument to 'ClassInterface' attribute\n                // [ClassInterface((short)(-1))]\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, \"(short)(-1)\").WithArguments(\"ClassInterface\"),\n                // (35,17): error CS0591: Invalid value for argument to 'ClassInterface' attribute\n                // [ClassInterface((short)3)]\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, \"(short)3\").WithArguments(\"ClassInterface\"),\n                // (38,17): error CS1503: Argument 1: cannot convert from 'int' to 'System.Runtime.InteropServices.ClassInterfaceType'\n                // [ClassInterface(System.Int32.MaxValue)]\n                Diagnostic(ErrorCode.ERR_BadArgType, \"System.Int32.MaxValue\").WithArguments(\"1\", \"int\", \"System.Runtime.InteropServices.ClassInterfaceType\"),\n                // (41,2): error CS0592: Attribute 'ClassInterface' is not valid on this declaration type. It is only valid on 'assembly, class' declarations.\n                // [ClassInterface(ClassInterfaceType.None)]\n                Diagnostic(ErrorCode.ERR_AttributeOnBadSymbolType, \"ClassInterface\").WithArguments(\"ClassInterface\", \"assembly, class\")",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

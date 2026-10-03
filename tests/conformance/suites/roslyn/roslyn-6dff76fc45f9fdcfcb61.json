@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6dff76fc45f9fdcfcb61",
+  "kind": "diagnostics",
+  "sourceText": "using System.Runtime.CompilerServices;\n[assembly: RefSafetyRules(11)]\n[module: RefSafetyRules(11)]\n",
+  "sourceSHA256": "c4a03ad7d5035403bad4e1d3282dd87b57fb0f860775f2527a02a3a95a8d319f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_RefSafetyRules.cs",
+    "sha256": "06b7140b15cfff9282c4f2ff75fcc8d6456e2a64b3dff42877935672790a0508",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_RefSafetyRules.cs",
+    "license": "MIT",
+    "method": "ExplicitAttribute_ReferencedInSource",
+    "offset": 3993
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "references: new[] { ref1 }, parseOptions: TestOptions.Regular.WithLanguageVersion(languageVersion))",
+  "options": "(source, references: new[] { ref1 }, parseOptions: TestOptions.Regular.WithLanguageVersion(languageVersion))",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8335",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (3,10): error CS8335: Do not use 'System.Runtime.CompilerServices.RefSafetyRulesAttribute'. This is reserved for compiler usage.\n                // [module: RefSafetyRules(11)]\n                Diagnostic(ErrorCode.ERR_ExplicitReservedAttr, \"RefSafetyRules(11)\").WithArguments(\"System.Runtime.CompilerServices.RefSafetyRulesAttribute\").WithLocation(3, 10)",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

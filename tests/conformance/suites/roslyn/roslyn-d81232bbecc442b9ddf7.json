@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d81232bbecc442b9ddf7",
+  "kind": "diagnostics",
+  "sourceText": "class Class\n{\n    private protected int Prop1 { get; private protected set; }\n    private int Prop2 { get; private protected set; }\n}",
+  "sourceSHA256": "d01b399b8345fa95dd7017c1f926ddae27a565658d96a77ce33bf8a94ff4131f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "sha256": "41afb2c44dc175c901c33c352afc3f75fc22224b4838d00075375c2ad4de40cd",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "license": "MIT",
+    "method": "ForbiddenAccessorProtection_01",
+    "offset": 19777
+  },
+  "langVersion": "7.2",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7_2)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0273",
+        "severity": "error"
+      },
+      {
+        "code": "CS0273",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (3,58): error CS0273: The accessibility modifier of the 'Class.Prop1.set' accessor must be more restrictive than the property or indexer 'Class.Prop1'\n                //     private protected int Prop1 { get; private protected set; }\n                Diagnostic(ErrorCode.ERR_InvalidPropertyAccessMod, \"set\").WithArguments(\"Class.Prop1.set\", \"Class.Prop1\").WithLocation(3, 58),\n                // (4,48): error CS0273: The accessibility modifier of the 'Class.Prop2.set' accessor must be more restrictive than the property or indexer 'Class.Prop2'\n                //     private int Prop2 { get; private protected set; }\n                Diagnostic(ErrorCode.ERR_InvalidPropertyAccessMod, \"set\").WithArguments(\"Class.Prop2.set\", \"Class.Prop2\").WithLocation(4, 48)\n                ",
+  "unsupported": []
+}

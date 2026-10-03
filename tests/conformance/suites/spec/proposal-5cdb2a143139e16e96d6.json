@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-5cdb2a143139e16e96d6",
+  "kind": "spec",
+  "sourceText": "partial class C1\n{\n    public partial string Prop { get; private set; }\n\n    // Error: accessor modifier mismatch in 'set' accessor of 'Prop'\n    public partial string Prop { get => field; set => field = value; }\n}\n\npartial class C2\n{\n    public partial string Prop { get; init; }\n\n    // Error: implementation of 'Prop' must have an 'init' accessor to match definition\n    public partial string Prop { get => field; set => field = value; }\n}\n\npartial class C3\n{\n    public partial string Prop { get; }\n\n    // Error: implementation of 'Prop' cannot have a 'set' accessor because the definition does not have a 'set' accessor.\n    public partial string Prop { get => field; set => field = value; }\n}\n\npartial class C4\n{\n    public partial string this[string s = \"a\"] { get; set; }\n    public partial string this[string s] { get => s; set { } } // ok\n\n    public partial string this[int i, string s = \"a\"] { get; set; }\n    public partial string this[int i, string s = \"a\"] { get => s; set { } } // CS1066: The default value specified for parameter 's' will have no effect because it applies to a member that is used in contexts that do not allow optional arguments\n}",
+  "sourceSHA256": "1d6825db84afe776732fcddcd1677236becc87b794be74a516454f089c338be5",
+  "target": "library",
+  "featureId": "csharp-13-0-partial-properties",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/partial-properties.md",
+    "sha256": "743e4ee38f66cc2149a2117435ea0179d508e3e253074e4f91240212206590ae",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/partial-properties.md",
+    "license": "NOASSERTION",
+    "offset": 7783
+  }
+}
