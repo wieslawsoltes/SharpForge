@@ -15,7 +15,11 @@ export function inferMemoryExpression(compiler, node) {
     const element = node.element === 'var' ? (node.values?.length ? compiler.infer(node.values[0]) : 'error') : node.element;
     return memoryTypeName('Span<' + element + '>');
   }
-  if (node.kind === 'NewRectangularArray') return memoryTypeName(node.type);
+  if (node.kind === 'NewRectangularArray') {
+    if (!node.type.startsWith('var[')) return memoryTypeName(node.type);
+    const first = node.values?.flat(Infinity)[0];
+    return (first ? compiler.infer(first) : 'error') + node.type.slice(3);
+  }
   if (node.kind === 'Index') return shape(compiler, node)?.element;
   if (node.kind === 'Member' && node.name === 'Length' && spanType(compiler.infer(node.target))) return 'int';
   if (node.kind === 'Call' && node.target.kind === 'Member' && node.target.name === 'Slice') {
@@ -57,7 +61,8 @@ function initializerShape(compiler, node, values, rank) {
 }
 
 function rectangularAllocation(compiler, node) {
-  const type = compiler.c.resolveType(node.type, node), {element, rank} = arrayType(type);
+  const type = compiler.c.resolveType(inferMemoryExpression(compiler, node), node);
+  const {element, rank} = arrayType(type);
   const initialized = node.values ? initializerShape(compiler, node, node.values, rank) : null;
   for (let dimension = 0; dimension < rank; dimension++) {
     const length = node.lengths?.[dimension];
