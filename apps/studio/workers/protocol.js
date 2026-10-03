@@ -21,6 +21,7 @@ export const workerMethods=Object.freeze({
     "format",
     "validateRefactoring",
     "validateDesigner",
+    "designAnalyze",
     "configureExtensions",
     "importAssembly",
     "completion",
