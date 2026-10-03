@@ -1,6 +1,6 @@
 import {decodeCoded,resolveExecutionField,genericTypeParts} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
-import {defaults} from './numeric-ops.js';
+import {storageDefault} from './storage.js';
 
 const threadFields = new WeakMap();
 function threadStaticFields(inspector) {
@@ -26,10 +26,11 @@ export function staticSlot(vm, token, frame = vm.top) {
   const field = resolveExecutionField(vm.inspector, token, contextArguments);
   if (!field.isStatic) throw new ManagedFault('InvalidProgramException', 'Expected a static field');
   const contextType = contextIdentity && genericTypeParts(contextIdentity).definition;
-  const genericIdentity = field.ownerInstance ?? (contextType === field.owner ? contextIdentity : null);
+  const instance = field.ownerInstance ?? (contextType === field.owner ? contextIdentity : null);
+  const genericIdentity = instance===null?null:vm.typeSystem.table(instance).name;
   const context = threadStaticFields(vm.inspector).has(field.resolvedToken) ? vm.scheduler?.currentId ?? 1 : null;
   const key = genericIdentity !== null || context !== null ? JSON.stringify([field.resolvedToken, genericIdentity, context]) : field.resolvedToken;
-  if (!vm.statics.has(key)) vm.statics.set(key, defaults(field.signature.type));
+  if (!vm.statics.has(key)) vm.statics.set(key, storageDefault(vm,field.signature.type));
   return {key, field, typeToken: field.ownerToken, genericIdentity, context};
 }
 

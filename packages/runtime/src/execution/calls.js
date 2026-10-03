@@ -2,7 +2,7 @@ import {methodOffsets} from './method-offsets.js';
 import {systemType,intrinsicDefinition} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {SUSPENDED} from '../platform.js';
-import {defaults} from './numeric-ops.js';
+import {storageDefault} from './storage.js';
 import {createExceptionState} from './eh.js';
 import {ensureTypeInitialized} from './static-init.js';
 
@@ -10,7 +10,7 @@ export function call(vm,token,args,extra={}) {
   if(vm.frames.length>=vm.options.maxFrames)throw new ManagedFault('StackOverflowException','Managed call depth exceeded');
   const method=vm.inspector.getMethod(token);
   if(!method.signature.isStatic&&args[0]===null)throw new ManagedFault('NullReferenceException','Instance method receiver is null');
-  vm.frames.push({id:++vm.frameId,method,args,locals:method.locals.map(type=>method.initLocals?defaults(type):undefined),stack:[],pc:0,lastOffset:0,offsets:methodOffsets(method),...createExceptionState(),needsInitialization:method.name!=='.cctor',...extra});
+  vm.frames.push({id:++vm.frameId,method,args,locals:method.locals.map(type=>method.initLocals?storageDefault(vm,type):undefined),stack:[],pc:0,lastOffset:0,offsets:methodOffsets(method),...createExceptionState(),needsInitialization:method.name!=='.cctor',...extra});
 }
 export function ensureInitialized(vm,typeToken,trigger='field',genericIdentity=null) {
   return ensureTypeInitialized(vm,typeToken,trigger,genericIdentity);
@@ -35,7 +35,7 @@ export function invoke(vm,instruction) {
     if(instruction.name==='newobj'&&contract){caller.stack.push(vm.platform.invoke(contract,args));return;}
     if(instruction.name==='newobj') {
       let ref;
-      if(target){const layout=vm.layout(descriptor.ownerToken);ref=vm.heap.object(layout.name,layout.fields.map(field=>defaults(field.type)));}
+      if(target){const layout=vm.layout(descriptor.ownerToken);ref=vm.heap.object(layout.methodTable,layout.fields.map(field=>storageDefault(vm,field.type)));}
       else if(systemType(descriptor.owner)==='System.Exception')ref=vm.heap.allocate('exception','System.Exception',[args[0]??null]);
       else throw new ManagedFault('NotSupportedException','External object construction is unavailable');
       args.unshift(ref);vm.heap.pins.push(ref);
