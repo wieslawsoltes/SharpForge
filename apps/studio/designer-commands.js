@@ -12,13 +12,13 @@ export function contributeDesignerCommands(registry, {documents, getActiveUri, t
   };
   const disposables = [
     registry.registerCommand(designerCommandIds.viewDesigner, 'View Designer', 'Shift+F7', (_id, uri) => open('design', uri), {
-      enabled: () => canView('design')
+      enabled: (_id, uri) => canView('design', uri)
     }),
     registry.registerCommand(designerCommandIds.viewCode, 'View Code', 'F7', (_id, uri) => open('code', uri), {
-      enabled: () => canView('code')
+      enabled: (_id, uri) => canView('code', uri)
     }),
     registry.registerCommand(designerCommandIds.openWithDesigner, 'Open With Designer', '', (_id, uri) => open('design', uri), {
-      enabled: () => canView('design')
+      enabled: (_id, uri) => canView('design', uri)
     })
   ];
   const keydown = event => {

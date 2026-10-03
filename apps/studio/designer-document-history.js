@@ -73,7 +73,8 @@ export class DesignerDocumentHistory {
     const expected = change => redo ? change.before : change.text;
     if (files.get(primary.uri)?.text !== expected(primary)) return false;
     for (const change of entry.changes) {
-      if (files.get(change.uri)?.text !== expected(change)) {
+      const file = files.get(change.uri);
+      if (file?.text !== expected(change) || file.readOnly || file.readonly) {
         throw new Error('Cannot undo the designer transaction because ' + change.uri + ' changed independently');
       }
     }
