@@ -77,6 +77,8 @@ if(update||reportOnly){
     const d=fixtures.find(f=>f.kind==='diagnostics'&&pinned.results.get(f.id).diagnostics.every(x=>x[3]==='error')),pin=pinned.results.get(d.id);
     const exact=()=>({success:false,image:null,diagnostics:pin.diagnostics.map(([code,start,length,severity])=>({code,start,length,severity}))});
     assert.equal(runFixture(d,pin,{compile:exact}).passed,true);
+    const repeated=()=>{const r=exact();r.diagnostics.push({...r.diagnostics[0],message:'another field at the same span'});return r;};
+    assert.equal(runFixture(d,pin,{compile:repeated}).passed,true,'capture compares distinct code/span/severity projections');
     const shifted=()=>{const r=exact();r.diagnostics[0].start++;return r;};
     assert.equal(runFixture(d,pin,{compile:shifted}).diagnostics,false);
     assert.equal(runFixture(d,pin,{compile:()=>({success:true,image:null,diagnostics:[]})}).diagnostics,false);

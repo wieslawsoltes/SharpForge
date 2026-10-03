@@ -86,6 +86,9 @@ export const FlowStatementBinding = Base =>
           this.report(syntax.expression, 'CS0186');
         }
         element ??= unknown;
+        // `foreach (var (a, b) in items)`: each element is deconstructed into the variables (binder/body/deconstruction.js).
+        if (syntax.kind === 'ForEachVariableStatement')
+          return this.forEachDeconstruction(syntax, { collection, elementType: element, enumeration, extensionGetEnumerator: extension });
         const bound = this.bindType(syntax.type.kind === 'RefType' ? syntax.type.type : syntax.type, { allowVar: true }),
           iterationType = bound.isVar ? element : bound.type;
         if (!bound.isVar && !element.isErrorType() && !iterationType.isErrorType()) {
@@ -228,7 +231,11 @@ export const FlowStatementBinding = Base =>
         if (!e.hasErrors)
           this.report(
             syntax.returnKeyword,
-            this.c.isAsync && this.c.declaredReturnType && this.c.declaredReturnType.equals(this.core.task) ? 'CS1997' : 'CS0127',
+            this.c.isAsync && this.c.declaredReturnType && this.c.declaredReturnType.equals(this.core.task)
+              ? 'CS1997'
+              : this.c.isLambda
+                ? 'CS8030'
+                : 'CS0127',
             this.c.isAsync && this.c.declaredReturnType?.equals(this.core.task)
               ? [this.c.method?.toDisplayString() ?? 'lambda expression', 'Task']
               : [

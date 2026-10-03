@@ -118,7 +118,9 @@ export const Declarations = Base =>
       const at = symbol.locations?.[0];
       switch (symbol.methodKind) {
         case MethodKind.Destructor:
-          return this.unsupported('finalizers', at);
+          // A finalizer is compiled like any method and never called: the runtime has no finalization, and .NET does
+          // not run finalizers at exit either. Its body is still lowered, so what it uses is still checked.
+          break;
         case MethodKind.EventAdd:
         case MethodKind.EventRemove:
           if (!symbol.hasBody) return undefined;

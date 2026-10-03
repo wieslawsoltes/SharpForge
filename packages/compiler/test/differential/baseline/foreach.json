@@ -1,6 +1,6 @@
 {
   "foreach/cs0030-element-type-mismatch": ["diagnostics", "warnings"],
-  "foreach/cs1579-foreach-over-int": ["warnings"],
+  "foreach/cs1579-foreach-over-int": ["diagnostics", "warnings"],
   "foreach/cs1656-assign-iteration-variable": ["diagnostics", "warnings"],
   "foreach/custom-enumerable": ["diagnostics", "warnings", "bytecode", "cil"],
   "foreach/over-array": ["diagnostics", "warnings", "bytecode", "cil"],

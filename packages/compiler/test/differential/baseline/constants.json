@@ -3,7 +3,7 @@
   "constants/const-in-switch": ["diagnostics", "warnings", "bytecode", "cil"],
   "constants/cs0110-circular-constant": ["diagnostics", "warnings"],
   "constants/cs0131-assign-const": ["diagnostics", "warnings"],
-  "constants/cs0133-non-constant-initializer": ["warnings"],
+  "constants/cs0133-non-constant-initializer": ["diagnostics", "warnings"],
   "constants/cs0145-const-without-value": ["diagnostics", "warnings"],
   "constants/cs0191-assign-readonly": ["diagnostics", "warnings"],
   "constants/folding": ["diagnostics", "warnings", "bytecode", "cil"],

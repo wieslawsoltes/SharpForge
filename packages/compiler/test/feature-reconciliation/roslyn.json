@@ -1,0 +1,143 @@
+{
+  "roslyn": "5.3.0-2.26153.122\u002B4d3023de605a78ba3e59e50c657eed70f125c68a",
+  "runtime": "10.0.5",
+  "rows": [
+    {
+      "source": "readonly struct S {}",
+      "langVersion": "7",
+      "outputKind": "library",
+      "diagnostics": [
+        {
+          "code": "CS8107",
+          "start": 0,
+          "length": 8,
+          "message": "Feature \u0027readonly structs\u0027 is not available in C# 7.0. Please use language version 7.2 or greater.",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "source": "readonly struct S {}",
+      "langVersion": "7.2",
+      "outputKind": "library",
+      "diagnostics": []
+    },
+    {
+      "source": "ref struct S {}",
+      "langVersion": "7",
+      "outputKind": "library",
+      "diagnostics": [
+        {
+          "code": "CS8107",
+          "start": 0,
+          "length": 3,
+          "message": "Feature \u0027ref structs\u0027 is not available in C# 7.0. Please use language version 7.2 or greater.",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "source": "ref struct S {}",
+      "langVersion": "7.2",
+      "outputKind": "library",
+      "diagnostics": []
+    },
+    {
+      "source": "readonly ref struct S {}",
+      "langVersion": "7",
+      "outputKind": "library",
+      "diagnostics": [
+        {
+          "code": "CS8107",
+          "start": 0,
+          "length": 8,
+          "message": "Feature \u0027readonly structs\u0027 is not available in C# 7.0. Please use language version 7.2 or greater.",
+          "severity": "error"
+        },
+        {
+          "code": "CS8107",
+          "start": 9,
+          "length": 3,
+          "message": "Feature \u0027ref structs\u0027 is not available in C# 7.0. Please use language version 7.2 or greater.",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "source": "readonly ref struct S {}",
+      "langVersion": "7.2",
+      "outputKind": "library",
+      "diagnostics": []
+    },
+    {
+      "source": "int x = 1; struct S {}",
+      "langVersion": "8",
+      "outputKind": "exe",
+      "diagnostics": [
+        {
+          "code": "CS8400",
+          "start": 0,
+          "length": 10,
+          "message": "Feature \u0027top-level statements\u0027 is not available in C# 8.0. Please use language version 9.0 or greater.",
+          "severity": "error"
+        },
+        {
+          "code": "CS0219",
+          "start": 4,
+          "length": 1,
+          "message": "The variable \u0027x\u0027 is assigned but its value is never used",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "source": "int x = 1; struct S {}",
+      "langVersion": "9",
+      "outputKind": "exe",
+      "diagnostics": [
+        {
+          "code": "CS0219",
+          "start": 4,
+          "length": 1,
+          "message": "The variable \u0027x\u0027 is assigned but its value is never used",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "source": "class P { static void Main() { var x = 1; } }",
+      "langVersion": "2",
+      "outputKind": "exe",
+      "diagnostics": [
+        {
+          "code": "CS8023",
+          "start": 31,
+          "length": 3,
+          "message": "Feature \u0027implicitly typed local variable\u0027 is not available in C# 2. Please use language version 3 or greater.",
+          "severity": "error"
+        },
+        {
+          "code": "CS0219",
+          "start": 35,
+          "length": 1,
+          "message": "The variable \u0027x\u0027 is assigned but its value is never used",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "source": "class P { static void Main() { var x = 1; } }",
+      "langVersion": "3",
+      "outputKind": "exe",
+      "diagnostics": [
+        {
+          "code": "CS0219",
+          "start": 35,
+          "length": 1,
+          "message": "The variable \u0027x\u0027 is assigned but its value is never used",
+          "severity": "warning"
+        }
+      ]
+    }
+  ]
+}

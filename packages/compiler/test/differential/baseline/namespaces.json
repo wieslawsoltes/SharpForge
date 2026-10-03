@@ -1,6 +1,6 @@
 {
   "namespaces/alias-and-namespace-of-the-same-target": ["diagnostics", "warnings", "bytecode", "cil"],
-  "namespaces/cs0101-duplicate-in-namespace": ["warnings"],
+  "namespaces/cs0101-duplicate-in-namespace": ["diagnostics", "warnings"],
   "namespaces/cs0104-ambiguous-reference": ["diagnostics", "warnings"],
   "namespaces/cs0104-framework-ambiguity": ["warnings"],
   "namespaces/cs0105-duplicate-using": ["diagnostics", "warnings"],

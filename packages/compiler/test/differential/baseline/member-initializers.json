@@ -18,7 +18,7 @@
   "member-initializers/read-only-targets": ["diagnostics", "warnings"],
   "member-initializers/static-add": ["diagnostics", "warnings"],
   "member-initializers/unassigned-variables-in-initializers": ["diagnostics", "warnings"],
-  "member-initializers/unknown-and-static-members": ["warnings"],
+  "member-initializers/unknown-and-static-members": ["diagnostics", "warnings"],
   "member-initializers/user-collection-add-overloads": ["diagnostics", "warnings", "bytecode", "cil"],
-  "member-initializers/value-conversion": ["warnings"]
+  "member-initializers/value-conversion": ["diagnostics", "warnings"]
 }

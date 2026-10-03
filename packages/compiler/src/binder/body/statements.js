@@ -177,20 +177,8 @@ export const StatementBinding = Base =>
         }
         case 'ForEachStatement':
           return this.forEach(syntax);
-        case 'ForEachVariableStatement': {
-          const collection = this.value(syntax.expression);
-          this.pushScope();
-          try {
-            for (const d of this.designationsIn(syntax.variable)) this.designation(d, unknown, {});
-            this.incomplete = this.d.incomplete = true;
-            const loop = this.enterLoop(),
-              body = this.embedded(syntax.statement);
-            this.exitLoop();
-            return stmt('ForEach', syntax, true, { collection, body, loop });
-          } finally {
-            this.popScope();
-          }
-        }
+        case 'ForEachVariableStatement':
+          return this.forEach(syntax);
         case 'SwitchStatement':
           return this.switchStatement(syntax);
         case 'ReturnStatement':

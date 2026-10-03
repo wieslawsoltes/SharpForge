@@ -1,5 +1,5 @@
 {
-  "language-version/collection-expression-in-11": ["warnings"],
+  "language-version/collection-expression-in-11": ["diagnostics", "warnings"],
   "language-version/default-literal-in-7-0": ["diagnostics", "warnings"],
   "language-version/expression-bodied-member-in-5": ["diagnostics", "warnings"],
   "language-version/file-scoped-namespace-in-9": ["diagnostics", "warnings"],
@@ -8,6 +8,7 @@
   "language-version/gate-expression-bodied-accessor-at-6": ["diagnostics", "warnings"],
   "language-version/gate-lambda-optional-parameters-at-11": ["warnings"],
   "language-version/gate-nameof-at-5": ["warnings"],
+  "language-version/gate-native-int-at-8": ["diagnostics"],
   "language-version/gate-params-collections-at-12": ["diagnostics", "warnings"],
   "language-version/gate-readonly-auto-properties-at-5": ["diagnostics", "warnings"],
   "language-version/gate-ref-for-at-7-2": ["diagnostics", "warnings"],
@@ -23,7 +24,7 @@
   "language-version/pattern-matching-in-6": ["diagnostics", "warnings"],
   "language-version/raw-string-in-10": ["diagnostics", "warnings"],
   "language-version/switch-expression-in-7-3": ["warnings"],
-  "language-version/target-typed-new-in-8": ["warnings"],
-  "language-version/top-level-statements-in-8": ["warnings"],
+  "language-version/target-typed-new-in-8": ["diagnostics", "warnings"],
+  "language-version/top-level-statements-in-8": ["diagnostics", "warnings"],
   "language-version/using-declaration-in-7-3": ["warnings"]
 }

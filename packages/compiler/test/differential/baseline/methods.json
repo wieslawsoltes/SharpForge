@@ -1,7 +1,7 @@
 {
-  "methods/cs0029-void-result-assigned": ["warnings"],
-  "methods/cs0126-return-without-value": ["warnings"],
-  "methods/cs0127-return-value-from-void": ["warnings"],
+  "methods/cs0029-void-result-assigned": ["diagnostics", "warnings"],
+  "methods/cs0126-return-without-value": ["diagnostics", "warnings"],
+  "methods/cs0127-return-value-from-void": ["diagnostics", "warnings"],
   "methods/cs0501-missing-body": ["diagnostics", "warnings"],
   "methods/cs1620-missing-ref": ["diagnostics", "warnings"],
   "methods/expression-bodied-and-local": ["diagnostics", "warnings", "bytecode", "cil"],
