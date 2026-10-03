@@ -8,16 +8,20 @@ function byteHash(bytes) {
 
 /** Hashes bytes without serializing them; collision buckets compare the owned bytes. */
 class ByteEntries {
-  constructor() {
+  constructor(writer, guid = false) {
+    this.writer = writer;
+    this.guid = guid;
     this.buckets = new Map();
   }
 
-  intern(bytes, append) {
+  intern(bytes) {
     if (!(bytes instanceof Uint8Array)) throw new CilError('Metadata heap value must be Uint8Array');
     const hash = byteHash(bytes);
     const entries = this.buckets.get(hash) ?? [];
     for (const entry of entries) if (equalBytes(entry.bytes, bytes)) return entry.index;
-    const index = append(bytes);
+    const index = this.guid ? this.writer.length / 16 + 1 : this.writer.length;
+    if (!this.guid) this.writer.compressed(bytes.length);
+    this.writer.bytes(bytes);
     entries.push({ bytes: bytes.slice(), index });
     this.buckets.set(hash, entries);
     return index;
@@ -34,8 +38,8 @@ export class MetadataHeaps {
     this.guids = new Writer().zero(16);
     this.stringMap = new Map([['', 0]]);
     this.userStringMap = new Map();
-    this.blobEntries = new ByteEntries();
-    this.guidEntries = new ByteEntries();
+    this.blobEntries = new ByteEntries(this.blobs);
+    this.guidEntries = new ByteEntries(this.guids, true);
   }
 
   string(value) {
@@ -49,20 +53,12 @@ export class MetadataHeaps {
   }
 
   blob(bytes) {
-    return this.blobEntries.intern(bytes, value => {
-      const index = this.blobs.length;
-      this.blobs.compressed(value.length).bytes(value);
-      return index;
-    });
+    return this.blobEntries.intern(bytes);
   }
 
   guid(bytes) {
     if (bytes?.length !== 16) throw new CilError('Metadata GUID must contain 16 bytes');
-    return this.guidEntries.intern(bytes, value => {
-      const index = this.guids.length / 16 + 1;
-      this.guids.bytes(value);
-      return index;
-    });
+    return this.guidEntries.intern(bytes);
   }
 
   userString(value) {
@@ -75,7 +71,7 @@ export class MetadataHeaps {
     for (let i = 0; i < value.length; i++) {
       const code = value.charCodeAt(i);
       bytes.u16(code);
-      if (code > 0xff || (code >= 1 && code <= 8) || (code >= 14 && code <= 31) || [39, 45, 127].includes(code)) special = 1;
+      if (code > 0xff || (code >= 1 && code <= 8) || (code >= 14 && code <= 31) || (code === 39 || code === 45 || code === 127)) special = 1;
     }
     bytes.u8(special);
     this.userStrings.compressed(bytes.length).bytes(bytes.finish());
