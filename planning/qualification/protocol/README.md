@@ -16,7 +16,9 @@ and unmodelled notifications/events fail; they are not silently schema-qualified
 
 A current production mismatch remains open in Project 6 / A13:
 `DebugAdapter` unsuccessful responses omit `body`, which Microsoft's pinned
-`ErrorResponse` schema requires. The standalone probe reports the actual message
+`ErrorResponse` schema requires. The retained clean-commit observation is
+[observed/unsupported-darwin-arm64.json](observed/unsupported-darwin-arm64.json).
+It records a nonzero failing probe, not qualification. The standalone probe reports the actual message
 and the schema failure; its process exits unsuccessfully. Tooling tests check that
 this failure is detected. They do not count it as passing protocol qualification.
 LSP unsupported requests must return JSON-RPC `-32601`. DAP defines unsuccessful
