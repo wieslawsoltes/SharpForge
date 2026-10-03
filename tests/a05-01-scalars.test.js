@@ -50,7 +50,7 @@ test('A05 T01 integer arithmetic and comparisons use signedness rather than JS m
   assert.throws(()=>scalarBinary('+',-1n,1n,'ulong',true),{name:'OverflowException'});
   assert.throws(()=>scalarBinary('/',-(1n<<63n),-1n,'long'),{name:'OverflowException'});
   assert.throws(()=>scalarBinary('/',1,0,'int'),{name:'DivideByZeroException',message:'Attempted to divide by zero'});
-  assert.equal(scalarBinary('%',-(1n<<63n),-1n,'long'),0n);
+  assert.throws(()=>scalarBinary('%',-(1n<<63n),-1n,'long'),{name:'OverflowException'});
 });
 
 test('A05 T01 r4 operations round to single precision and retain IEEE exceptional values',()=>{
