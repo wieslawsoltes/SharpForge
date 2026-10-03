@@ -77,16 +77,20 @@ test('SF-A02-T45 checked and unchecked blocks set the overflow context of the op
 });
 
 test('SF-A02-T45 CS1674 covers the resource declaration of a using statement, in and outside the execution profile', () => {
-  const inProfile = program(`
+  // A Dispose method without the interface: the type is still not disposable.
+  const closer = '\nclass Closer { public void Dispose() { } }\n';
+  const inProfile =
+    program(`
     static void Main() {
-      using (Program wrong = new Program()) { }
-    }`);
-  assert.deepEqual(codes(inProfile), ['CS1674 Program wrong = new Program()']);
-  const outside = program(`
+      using (Closer wrong = new Closer()) { }
+    }`) + closer;
+  assert.deepEqual(codes(inProfile), ['CS1674 Closer wrong = new Closer()']);
+  const outside =
+    program(`
     delegate void Marker();
     static void Main() {
-      using (Program wrong = new Program()) { }
-      using (new Program()) { }
-    }`);
-  assert.deepEqual(codes(outside), ['CS1674 Program wrong = new Program()', 'CS1674 new Program()']);
+      using (Closer wrong = new Closer()) { }
+      using (new Closer()) { }
+    }`) + closer;
+  assert.deepEqual(codes(outside), ['CS1674 Closer wrong = new Closer()', 'CS1674 new Closer()']);
 });
