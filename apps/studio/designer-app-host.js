@@ -1,6 +1,7 @@
 import {DesignerHostedApp} from './designer-app-host-session.js';
 import {DesignerAppHostError, assertAppSignal, awaitAppOperation, releaseAppResources} from './designer-app-host-errors.js';
-import {appProfile, appWorkspaceIdentity, captureAppSources, sameAppSources, appLaunchParameters} from './designer-app-host-source.js';
+import {appProfile, appWorkspaceIdentity, captureAppSources, sameAppSources,
+  captureAppCompilationUris, appLaunchParameters} from './designer-app-host-source.js';
 
 export {DesignerAppHostError} from './designer-app-host-errors.js';
 
@@ -99,6 +100,7 @@ export class DesignerAppHost {
         throw new DesignerAppHostError('Workspace or sources changed during app compilation; the result was discarded', 'SFDA0012');
       }
       appLaunchParameters(result, launchOptions);
+      launchOptions.compilationUris = captureAppCompilationUris(result.compilationUris, sourceProjection);
       const candidate = this.createCandidate(operation, launchOptions);
       operation.candidate = candidate;
       await candidate.start(result, operation.controller.signal);
@@ -121,6 +123,7 @@ export class DesignerAppHost {
     const candidate = new DesignerHostedApp({
       sessionId: options.sessionId, generation: options.generation, uri: options.uri, profile: options.profile, debug: options.debug,
       workspaceId: options.workspaceId, sourceProjection: options.sourceProjection, projectName: options.projectName,
+      compilationUris: options.compilationUris,
       sessions: this.sessions, compile: this.compile, sourceFiles: this.sourceFiles, getWorkspaceId: this.workspaceId,
       createWorker: this.createWorker, createWindow: this.createWindow, windowOptions: this.windowOptions, position: this.serial - 1,
       runtimeOptions: structuredClone(typeof this.runtimeOptions === 'function' ? this.runtimeOptions(options) : this.runtimeOptions),

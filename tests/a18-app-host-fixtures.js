@@ -81,7 +81,9 @@ export function createAppHostFixture(options = {}) {
   const source = {files: [{uri: 'View.cs', text: 'class View {}'}], workspace: 'Demo:1'};
   const workers = [], windows = [], builds = [], errors = [];
   const sessions = new RegistryStub();
-  const configuration = {build: {success: true, image: {entryPoint: 1}, assembly: new Uint8Array([1, 2])}, handler: null};
+  const configuration = {
+    build: {success: true, image: {entryPoint: 1}, assembly: new Uint8Array([1, 2]), compilationUris: ['View.cs']}, handler: null
+  };
   const host = new DesignerAppHost({
     sessions, sourceFiles: () => source.files, workspaceId: () => source.workspace, projectName: () => 'Demo',
     compile: async request => {
@@ -94,4 +96,3 @@ export function createAppHostFixture(options = {}) {
   });
   return {host, source, workers, windows, builds, errors, sessions, configuration};
 }
-

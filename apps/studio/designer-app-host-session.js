@@ -22,7 +22,7 @@ export class DesignerHostedApp {
     this.controls = new DesignerAppControls(this);
     this.state = this.controls.state({uiActive: false, codeVersion: 0, windows: []});
     this.ownership = new DesignerAppSourceOwnership({
-      workspaceId: this.workspaceId, sourceProjection: this.sourceProjection,
+      workspaceId: this.workspaceId, sourceProjection: this.sourceProjection, compilationUris: this.compilationUris,
       getWorkspaceId: this.getWorkspaceId, sourceFiles: this.sourceFiles, compile: this.compile,
       options: {workspaceId: this.workspaceId, projectName: this.projectName, profile: this.profile, debug: this.debug, uri: this.uri},
       assertCurrent: () => this.assertCurrent()
@@ -73,7 +73,7 @@ export class DesignerHostedApp {
     return {
       ...this.identity, ...this.state, runtimeSessionId: this.runtimeSessionId, request: this.requestChannel,
       projectName: this.projectName, profile: this.profile, workspaceId: this.workspaceId, uri: this.uri,
-      sourceProjection: this.ownership.projection,
+      sourceProjection: this.ownership.projection, compilationUris: this.ownership.compilationUris,
       getState: () => this.disposed ? {...this.identity, uiActive: false, state: 'terminated'} : {...this.state, ...this.identity},
       selectVisual: (ids, identity) => {
         this.assertIdentity(identity);
@@ -105,7 +105,7 @@ export class DesignerHostedApp {
 
   update() {
     if (this.registered && !this.disposed) this.sessions.update(this.sessionId, this.generation, {
-      ...this.state, sourceProjection: this.ownership.projection
+      ...this.state, sourceProjection: this.ownership.projection, compilationUris: this.ownership.compilationUris
     });
   }
 
@@ -239,7 +239,7 @@ export class DesignerHostedApp {
 
   snapshot() {
     return {...this.identity, ...this.state, runtimeSessionId: this.runtimeSessionId, workspaceId: this.workspaceId,
-      projectName: this.projectName, uri: this.uri, profile: this.profile};
+      projectName: this.projectName, uri: this.uri, profile: this.profile, compilationUris: this.ownership.compilationUris};
   }
 
   dispose() {
