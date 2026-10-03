@@ -9,7 +9,7 @@ a complete epic scope has been integrated, followed by targeted reruns only for 
 
 | Epic | Scope | Delivery |
 | --- | --- | --- |
-| SF-A05-E03 (#461) | T13–T20: interpreter modules, dispatch registry, shared intrinsic signatures, snapshot schema | In progress |
+| SF-A05-E03 (#461) | T13–T20: interpreter modules, dispatch registry, shared intrinsic signatures, snapshot schema | Implemented and validated; PR pending |
 | SF-A05-E04 (#462) | T21–T27: static initialization, runtime types, casts, tokens, enums, statics, strings | Pending |
 | SF-A05-E01 (#72) | T01–T06, T28–T31 and B01–B04/B06: execution correctness, parity, async, synchronization, preemption | Pending |
 | SF-A05-E02 (#73) | T07–T12 and B05: decode caches, numeric specialization, frames, profiling, Wasm tier, performance gates | Pending |
@@ -40,14 +40,16 @@ Run the replay example with `node examples/runtime/snapshot-replay.mjs`.
 
 | API/capability | Source VM | CIL VM | Regression evidence |
 | --- | --- | --- | --- |
-| Versioned in-memory snapshot and restore | Schema 1 | Schema 1 | `tests/a05-seams-snapshot.test.js` (validation pending) |
+| Versioned in-memory snapshot and restore | Schema 1 | Schema 1 | `tests/a05-seams-snapshot.test.js` |
 | Unknown execution-field detection | Explicit schema coverage | Explicit schema coverage | Same suite |
 | Portable serialized snapshots | Pending T06; no capability claim | Pending T06; no capability claim | Pending |
 
 ## Qualification
 
-Validation for E03 will include the unchanged CIL, managed-IL, source-runtime,
-compiler, language, debugger and scheduler suites; new seam tests; browser worker
-bundling and runtime checks; and package verification. Results and exact tool
-versions will be recorded after the complete epic is assembled. No native CLR
-qualification is implied by synthetic IL fixtures.
+E03 passed all 2,634 Node tests (zero skipped), syntax checks, worker bundling,
+package verification, the snapshot replay example, and Chromium managed-CIL,
+advanced-debugger, and runtime suites. Exact code commit, commands, tool versions
+and browser results are in `runtime-a05-e03-validation.json`. The original Node 16
+on the shell PATH and macOS temporary-directory symlinks required a Node 24 PATH
+and a physical TMPDIR for the existing test harness. No native CLR qualification
+is implied by synthetic IL fixtures.
