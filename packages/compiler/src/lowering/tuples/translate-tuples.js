@@ -3,6 +3,8 @@
  * and the default value. Tuples are objects of synthesized classes that are never changed after creation
  * (lowering/tuples/tuple-classes.js); a store into an element replaces the tuple in its variable (locations.js).
  */
+import {scalarStep} from '../../codegen/semantic/scalar-step.js';
+import {numeric} from '../../numeric.js';
 import { tupleElementIndex } from '../../binder/tuples.js';
 import { n } from '../../codegen/semantic/node-factory.js';
 import { isTupleElement } from './locations.js';
@@ -65,18 +67,23 @@ export const TupleTranslation = Base =>
     }
     exprCompoundAssignment(node) {
       if (!isTupleElement(node.left)) return super.exprCompoundAssignment(node);
-      if (node.method) return this.unsupported('compound assignment through a user-defined operator', node.syntax);
+      if (node.method && !numeric(this.imageType(node.left.type, node.syntax))) {
+        return this.unsupported('compound assignment through a user-defined operator', node.syntax);
+      }
       const location = this.location(node.left),
         type = this.imageType(node.left.type, node.syntax);
       return this.storeInto(location, n.binary(node.operator, location.read(), this.expression(node.right), type, !!node.isChecked));
     }
     exprIncrement(node) {
       if (!isTupleElement(node.operand)) return super.exprIncrement(node);
-      if (node.method) return this.unsupported('increment through a user-defined operator', node.syntax);
+      if (node.method && !numeric(this.imageType(node.operand.type, node.syntax))) {
+        return this.unsupported('increment through a user-defined operator', node.syntax);
+      }
       const location = this.location(node.operand),
         type = this.imageType(node.operand.type, node.syntax),
         before = this.temp(type, 'before'),
-        after = n.binary(node.operator[0], n.local(before), n.literal(1, type), type, !!node.isChecked),
+        after = scalarStep(node, n.local(before), type) ??
+          n.binary(node.operator[0], n.local(before), n.literal(1, type), type, !!node.isChecked),
         stored = this.storeInto({ ...location, locals: [], effects: [] }, after);
       return n.sequence(
         [...location.locals, before],

@@ -32,7 +32,9 @@ export const SynthesizedTextTranslation = Base =>
     }
     exprCall(node) {
       const method = node.method;
-      if (consoleOutput.has(method.builtin?.name) && node.args?.length === 1) {
+      const builtin = method.builtin ?? method.originalDefinition?.builtin;
+      const numericConsole = builtin?.numeric?.owner === 'System.Console' && ['Write', 'WriteLine'].includes(builtin.numeric.name);
+      if ((consoleOutput.has(builtin?.name) || numericConsole) && node.args?.length === 1) {
         const args = [{ ...node.args[0], expression: this.textOperand(node.args[0].expression) }];
         return super.exprCall({ ...node, args });
       }

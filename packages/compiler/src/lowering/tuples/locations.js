@@ -46,13 +46,15 @@ export const Locations = Base =>
       return { locals: receiver.locals, effects: receiver.effects, read: slot, write: value => n.assign(slot(), value) };
     }
     arrayElementLocation(node) {
-      if (node.indices.length !== 1) return this.unsupported('multi-dimensional arrays', node.syntax);
-      const array = this.once(this.expression(node.array), 'array'),
-        index = this.once(this.expression(node.indices[0]), 'index');
-      const slot = () => n.arrayElement(array.read(), index.read());
+      const lowered = this.target(node);
+      const rectangular = lowered.kind === 'IndexerAccess' && lowered.indexer?.memory?.kind === 'rect';
+      const array = this.once(rectangular ? lowered.receiver : lowered.expression, 'array');
+      const indices = (rectangular ? lowered.args : [lowered.index]).map(value => this.once(value, 'index'));
+      const slot = () => rectangular ? {...lowered, receiver: array.read(), args: indices.map(index => index.read())} :
+        n.arrayElement(array.read(), indices[0].read());
       return {
-        locals: [...array.locals, ...index.locals],
-        effects: [...array.effects, ...index.effects],
+        locals: [...array.locals, ...indices.flatMap(index => index.locals)],
+        effects: [...array.effects, ...indices.flatMap(index => index.effects)],
         read: slot,
         write: value => n.assign(slot(), value),
       };

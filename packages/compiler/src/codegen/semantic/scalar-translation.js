@@ -91,7 +91,8 @@ export const ScalarTranslation = Base => class extends Base {
   }
 
   exprUnary(node) {
-    if (!node.isLifted && numeric(this.imageType(node.type, node.syntax))) {
+    if (!node.isLifted && numeric(this.imageType(node.type, node.syntax)) &&
+      numeric(this.imageType(node.operand.type, node.syntax))) {
       return n.unary(node.operator, this.expression(node.operand), this.imageType(node.type), !!node.isChecked);
     }
     return super.exprUnary(node);
