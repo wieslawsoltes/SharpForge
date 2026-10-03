@@ -115,10 +115,7 @@ export const expressionMethods = {
       const operator = this.take();
       return this.n('RangeExpression', null, operator, this.canStartExpression() ? this.expression(P.Unary) : null);
     }
-    if (kind === 'await' && this.canStartExpression(this.peek()) && this.peek().kind !== '[') {
-      this.feature('Async', token);
-      return this.n('AwaitExpression', this.takeWord('await'), this.expression(P.Unary));
-    }
+    if (kind === 'await' && this.isAwaitExpression()) return this.awaitExpression();
     if (kind === '(' && this.isCast()) {
       const open = this.take(),
         type = this.type(),

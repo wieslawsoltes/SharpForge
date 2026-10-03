@@ -22,8 +22,7 @@ export const localStatementMethods = {
     if (kind === 'const' || kind === 'extern' || kind === 'readonly' || kind === 'volatile') return true;
     if (kind === 'static') return this.isLocalModifier(i + 1) || this.isLocalDeclaration(i + 1);
     if (kind === 'unsafe') return this.kindAt(i + 1) !== '{' && !this.isUnsafeExpression(i);
-    if (kind === 'async' && !this.tokens[i].flags)
-      return this.isLocalModifier(i + 1) || (this.isLocalDeclaration(i + 1) && ['(', '<'].includes(this.kindAt(this.scanType(i + 1) + 1)));
+    if (kind === 'async') return this.isAsyncModifier(i, false);
     return false;
   },
   /** `type name = value, ...` without the terminating semicolon (used by for, using and fixed). */
