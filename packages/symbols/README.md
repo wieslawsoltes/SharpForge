@@ -100,3 +100,16 @@ UTF-32 BOMs and byte-budget violations raise `SymbolError`. Decoding alone does
 not verify a document. `bindSources(symbols, sources, options)` accepts the same
 options, verifies exact raw bytes including BOMs and line endings first, and only
 then decodes trusted text; bound documents expose their selected `encoding`.
+
+`sourceLinkUrl(symbols, documentName, { ignoreCase: true, maxMappings: 10000 })`
+resolves the [Source Link mapping specification](https://github.com/dotnet/designs/blob/main/accepted/2020/diagnostics/source-link.md)
+without network access. Both path separators are normalized; exact matches win,
+then the longest wildcard prefix. Case-sensitive matching remains the default for
+backward compatibility; `ignoreCase` enables simple Unicode uppercase comparison
+without multi-character expansions. Captured path segments preserve casing and
+use percent-encoding, including literal percent signs and URI-reserved punctuation.
+Wildcards must terminate the document pattern and occur exactly once in its URL.
+Ambiguous normalized patterns, invalid Unicode, dot segments and selected URLs
+outside credential-free HTTPS raise `SymbolError`. Paths/URLs are limited to
+32,768 UTF-16 code units; `maxMappings` bounds a linear scan of the mapping table.
+This mapping capability does not fetch or grant access to an origin.
