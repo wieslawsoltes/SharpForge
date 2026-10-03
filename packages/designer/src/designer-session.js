@@ -14,12 +14,12 @@ export function normalizeDesignerViewState(value = {}, fallbackMode = 'code') {
     ratio: number(value.ratio, .5, .1, .9),
     swapped: value.swapped === true,
     collapsed: ['design', 'code'].includes(value.collapsed) ? value.collapsed : null,
-    zoom: number(value.zoom, .8, .1, 4),
+    zoom: number(value.zoom, .8, .1, 8),
     scrollLeft: number(value.scrollLeft, 0, 0, 1_000_000),
     scrollTop: number(value.scrollTop, 0, 0, 1_000_000),
     selection: Array.isArray(value.selection) ? [...new Set(value.selection.filter(id => typeof id === 'string'))].slice(0, 1000) : [],
     editingMode: ['pixel', 'layout'].includes(value.editingMode) ? value.editingMode : 'pixel',
-    snap: number(value.snap, 8, 1, 64),
+    snap: number(value.snap, 8, .25, 1024),
     preview: value.preview === true
   };
 }

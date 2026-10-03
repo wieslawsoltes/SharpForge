@@ -48,7 +48,7 @@ test('session rejects invalid identity and document assignment; view bounds are 
   session.setViewState({ratio: -3, zoom: Infinity, snap: 0, scrollTop: Number.NaN, mode: 'unknown'});
   assert.equal(session.viewState.ratio, .1);
   assert.equal(session.zoom, .8);
-  assert.equal(session.snap, 1);
+  assert.equal(session.snap, .25);
   assert.equal(session.viewState.scrollTop, 0);
   assert.equal(session.viewState.mode, 'code');
   assert.deepEqual(normalizeDesignerViewState({selection: ['a', 'a', 1]}).selection, ['a']);
