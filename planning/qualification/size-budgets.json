@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "reason": "Initial explicit ceilings; qualification records actual sizes and review proposes tighter per-artifact limits.",
+  "budgets": [
+    {
+      "id": "dist",
+      "maxBytes": 15000000
+    },
+    {
+      "id": "standalone",
+      "maxBytes": 6000000
+    },
+    {
+      "id": "worker:compiler.worker.js",
+      "maxBytes": 1000000
+    },
+    {
+      "id": "worker:runtime.worker.js",
+      "maxBytes": 1500000
+    },
+    {
+      "id": "package:@sharpforge/archive",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/bytecode",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/cil",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/compiler",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/compute",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/controls",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/debugger",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/designer",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/docking",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/editor",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/extensions",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/framework",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/language",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/msbuild",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/network",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/project-system",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/protocol",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/refactoring",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/runtime",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/symbols",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/syntax",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/templates",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/text",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/winui",
+      "maxBytes": 500000
+    },
+    {
+      "id": "package:@sharpforge/workspace",
+      "maxBytes": 500000
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SharpForge benchmark evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "runnerId",
+    "commit",
+    "environment",
+    "benchmarks",
+    "unsupported"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "runnerId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "commit": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40,64}$"
+    },
+    "producer": {
+      "type": "string"
+    },
+    "environment": {
+      "type": "object",
+      "required": [
+        "node",
+        "platform",
+        "arch",
+        "cpu",
+        "logicalCpus",
+        "osRelease",
+        "runnerName",
+        "commit"
+      ],
+      "properties": {
+        "node": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string"
+        },
+        "arch": {
+          "type": "string"
+        },
+        "cpu": {
+          "type": "string"
+        },
+        "logicalCpus": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "osRelease": {
+          "type": "string"
+        },
+        "runnerName": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "string"
+        },
+        "browser": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "unsupported": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "target",
+          "reason"
+        ],
+        "properties": {
+          "target": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "benchmarks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "area",
+          "engine",
+          "unit",
+          "samples",
+          "coldSamples",
+          "statistics",
+          "correctness",
+          "metrics"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_./:-]+$"
+          },
+          "area": {
+            "type": "string",
+            "pattern": "^A[0-9]{2}$"
+          },
+          "engine": {
+            "type": "string",
+            "minLength": 1
+          },
+          "unit": {
+            "const": "ms"
+          },
+          "samples": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 100000,
+            "items": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "coldSamples": {
+            "type": "array",
+            "maxItems": 100000,
+            "items": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "statistics": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "count",
+              "median",
+              "p95",
+              "p99",
+              "min",
+              "max"
+            ],
+            "properties": {
+              "count": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "median": {
+                "type": "number",
+                "minimum": 0
+              },
+              "p95": {
+                "type": "number",
+                "minimum": 0
+              },
+              "p99": {
+                "type": "number",
+                "minimum": 0
+              },
+              "min": {
+                "type": "number",
+                "minimum": 0
+              },
+              "max": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          },
+          "correctness": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "passed",
+              "checksum"
+            ],
+            "properties": {
+              "passed": {
+                "const": true
+              },
+              "checksum": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "metrics": {
+            "type": [
+              "object",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
