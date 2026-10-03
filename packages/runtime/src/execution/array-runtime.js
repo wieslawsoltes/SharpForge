@@ -8,6 +8,11 @@ import {storageDefault} from './storage.js';
 import {checkArrayStore} from './casting.js';
 import {number} from './numeric-ops.js';
 
+function argumentArray(vm, reference) {
+  if (reference === null) throw new ManagedFault('ArgumentNullException', 'Array argument is null');
+  return arrayRecord(vm, reference);
+}
+
 function writable(vm, reference) {
   return vm.heap.ensureWritable ? vm.heap.ensureWritable(reference) : vm.heap.get(reference).data;
 }
@@ -24,8 +29,8 @@ function range(record, start, count) {
 
 export function copyArray(vm, source, sourceIndex, destination, destinationIndex, length) {
   return vm.heap.withRoots([source, destination], () => {
-    const from = arrayRecord(vm, source);
-    const to = arrayRecord(vm, destination);
+    const from = argumentArray(vm, source);
+    const to = argumentArray(vm, destination);
     if (arrayShape(from).rank !== arrayShape(to).rank) throw new ManagedFault('RankException', 'Array ranks differ');
     const input = range(from, sourceIndex, length);
     const output = range(to, destinationIndex, length);
@@ -67,7 +72,7 @@ function indicesForOffset(record, offset) {
 }
 
 export function clearArray(vm, reference, start = null, length = null) {
-  const record = arrayRecord(vm, reference);
+  const record = argumentArray(vm, reference);
   const lower = arrayShape(record).lowerBounds[0];
   const bounds = range(record, start ?? lower, length ?? record.data.length);
   const data = writable(vm, reference);
@@ -76,7 +81,7 @@ export function clearArray(vm, reference, start = null, length = null) {
 }
 
 export function cloneArray(vm, reference) {
-  const record = arrayRecord(vm, reference);
+  const record = argumentArray(vm, reference);
   const shape = arrayShape(record);
   return vm.heap.withRoots([reference], () => {
     const clone = createArray(vm, record.methodTable.elementType, [...shape.lengths], [...shape.lowerBounds]);
@@ -86,6 +91,8 @@ export function cloneArray(vm, reference) {
 }
 
 function equalValue(vm, left, right) {
+  if (left === null || right === null) return left === right;
+  if (isReference(left) !== isReference(right)) return false;
   if (isReference(left) && isReference(right)) {
     const a = vm.heap.get(left);
     const b = vm.heap.get(right);
@@ -96,13 +103,14 @@ function equalValue(vm, left, right) {
   if (left?.valueType && right?.valueType) {
     return left.valueType === right.valueType && left.fields.every((value, index) => equalValue(vm, value, right.fields[index]));
   }
+  if(left?.enumType||right?.enumType)return left?.enumType===right?.enumType&&left?.value===right?.value;
   const a = number(left);
   const b = number(right);
   return a === b || typeof a === 'number' && typeof b === 'number' && Number.isNaN(a) && Number.isNaN(b);
 }
 
 export function indexOfArray(vm, reference, value, start = null, length = null, boxed = false) {
-  const record = arrayRecord(vm, reference);
+  const record = argumentArray(vm, reference);
   const shape = arrayShape(record);
   if (shape.rank !== 1) throw new ManagedFault('RankException', 'IndexOf requires a vector');
   const lower = shape.lowerBounds[0];
@@ -114,13 +122,13 @@ export function indexOfArray(vm, reference, value, start = null, length = null, 
     value = unboxValue(vm, value, element);
   }
   for (let index = bounds.offset; index < bounds.offset + bounds.length; index++) {
-    if (equalValue(vm, storageRead(record.data, index, element), value)) return index + lower;
+    if (equalValue(vm, storageRead(record.data, index, element, {source:!!vm.image&&!vm.inspector}), value)) return index + lower;
   }
   return lower - 1;
 }
 
 export function initializeArray(vm, reference, handle) {
-  const record = arrayRecord(vm, reference);
+  const record = argumentArray(vm, reference);
   if (!Object.isFrozen(handle) || handle?.runtimeHandle !== 'field' || handle.owner !== vm.snapshotOwner) {
     throw new ManagedFault('ArgumentException', 'InitializeArray requires an owned field handle');
   }
@@ -144,12 +152,15 @@ export function arrayRuntimeCall(vm, descriptor, args) {
   let value = null;
   switch (definition.operation) {
     case 'initialize': value = initializeArray(vm, args[0], args[1]); break;
-    case 'clone': value = cloneArray(vm, args[0]); break;
+    case 'clone':
+      arrayRecord(vm, args[0]); // Instance calls use NullReferenceException for a null receiver.
+      value = cloneArray(vm, args[0]);
+      break;
     case 'clear': clearArray(vm, args[0], args[1] ?? null, args[2] ?? null); break;
     case 'copy':
       if (args.length === 3) {
-        const from = arrayShape(arrayRecord(vm, args[0])).lowerBounds[0];
-        const to = arrayShape(arrayRecord(vm, args[1])).lowerBounds[0];
+        const from = arrayShape(argumentArray(vm, args[0])).lowerBounds[0];
+        const to = arrayShape(argumentArray(vm, args[1])).lowerBounds[0];
         copyArray(vm, args[0], from, args[1], to, args[2]);
       } else copyArray(vm, args[0], args[1], args[2], args[3], args[4]);
       break;
@@ -158,9 +169,14 @@ export function arrayRuntimeCall(vm, descriptor, args) {
       const previous = vm.dereference(args[0]);
       const length = arrayInteger(args[1], 'ArgumentOutOfRangeException');
       if (length < 0) throw new ManagedFault('ArgumentOutOfRangeException', 'Resize length is negative');
-      const replacement = vm.heap.withRoots([previous, args[0]], () => createArray(vm, definition.element, [length]));
-      if (previous !== null) copyArray(vm, previous, 0, replacement, 0, Math.min(length, arrayRecord(vm, previous).data.length));
-      vm.dereference(args[0], true, replacement);
+      if (previous !== null && length === arrayRecord(vm, previous).data.length) break;
+      vm.heap.withRoots([previous, args[0]], () => {
+        const replacement = createArray(vm, definition.element, [length]);
+        vm.heap.withRoots([replacement], () => {
+          if (previous !== null) copyArray(vm, previous, 0, replacement, 0, Math.min(length, arrayRecord(vm, previous).data.length));
+          vm.dereference(args[0], true, replacement);
+        });
+      });
       break;
     }
   }

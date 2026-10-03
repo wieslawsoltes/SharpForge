@@ -23,24 +23,29 @@ function scalarAccess(table) {
   return getters.get(table.name);
 }
 
+function checkedBytes(pointer, bytes) {
+  if (pointer.index > bytes.length) throw new ManagedFault('IndexOutOfRangeException', 'Memory address exceeds its allocation');
+  return bytes;
+}
+
 export function validateMemoryPointer(vm, pointer, {write = false} = {}) {
   if (!pointer?.memoryPointer || !Object.isFrozen(pointer) || pointer.vmOwner !== vm.snapshotOwner ||
       !Number.isSafeInteger(pointer.index) || pointer.index < 0 || pointer.baseType?.registry !== vm.heap.methodTables) {
     throw new ManagedFault('InvalidProgramException', 'Malformed or foreign memory address');
   }
   if (write && pointer.readonly) throw new ManagedFault('InvalidProgramException', 'Read-only memory address');
-  if (pointer.kind === 'stack') return stackRegion(vm, pointer).bytes;
+  if (pointer.kind === 'stack') return checkedBytes(pointer, stackRegion(vm, pointer).bytes);
   if (pointer.kind === 'pinned') {
     const record = pinnedRecord(vm, pointer);
     const data = write && vm.heap.ensureWritable ? vm.heap.ensureWritable(pointer.owner) : record.data;
-    return rawArrayBytes(data);
+    return checkedBytes(pointer, rawArrayBytes(data));
   }
   if (pointer.kind === 'reinterpret') {
     const layout = valueLayout(vm, pointer.sourceType);
     if (layout.containsReferences) throw new ManagedFault('NotSupportedException', 'Reinterpretation cannot contain references');
     const bytes = new Uint8Array(layout.size);
     writeValue(vm, new DataView(bytes.buffer), 0, vm.dereference(pointer.source), pointer.sourceType);
-    return bytes;
+    return checkedBytes(pointer, bytes);
   }
   throw new ManagedFault('InvalidProgramException', 'Unknown memory region');
 }
@@ -128,7 +133,10 @@ export function pointerBinary(vm, operation, left, right) {
 
 function readValue(vm, view, offset, table) {
   const access = scalarAccess(table);
-  if (access) return storage(view['get' + access](offset, true), table.enumUnderlyingType?.name ?? table.name, vm.options);
+  if (access) {
+    const value=storage(view['get' + access](offset, true), table.enumUnderlyingType?.name ?? table.name, vm.options);
+    return table.name==='System.Boolean'&&vm.image&&!vm.inspector?!!value:value;
+  }
   if (table.name === 'System.Decimal') {
     const flags = view.getUint32(offset, true);
     const coefficient = BigInt(view.getUint32(offset + 4, true)) << 64n |

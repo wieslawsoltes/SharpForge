@@ -8,14 +8,28 @@ export function storageDefault(vm,type) {return valueDefault(vm,type);}
 export function storageValue(vm,value,type,numericContext) {
   numericContext??=vm.options;
   const name=typeof type==='string'?type:type.name;
+  const opaque = name === 'typedref' || name === 'System.TypedReference' ? 'typedReference'
+    : name === 'System.RuntimeArgumentHandle' ? 'runtimeArgumentHandle'
+    : name === 'System.ArgIterator' ? 'argIterator' : null;
+  if (opaque && value?.[opaque]) {
+    if (!Object.isFrozen(value) || value.vmOwner !== vm.snapshotOwner) {
+      throw new ManagedFault('InvalidProgramException', 'Malformed or foreign runtime argument value');
+    }
+    return value;
+  }
   if(value?.memoryPointer&&(name.endsWith('*')||['nint','nuint','System.IntPtr','System.UIntPtr'].includes(name))) {
     if(!Object.isFrozen(value)||value.vmOwner!==vm.snapshotOwner)throw new ManagedFault('InvalidProgramException','Foreign native address');
+    if (name.endsWith('*')) {
+      const typeName = name.slice(0, -1);
+      const baseType = vm.inspector ? vm.typeSystem.table(typeName) : vm.heap.methodTables.get(typeName);
+      return Object.freeze({...value, baseType});
+    }
     return value;
   }
   if(value?.span) {
     const spanType=vm.heap.methodTables.get(type);
     if(!spanType.flags.refStruct||spanType.typeArguments[0]!==value.elementType||value.vmOwner!==vm.snapshotOwner)throw new ManagedFault('InvalidProgramException','Invalid Span storage');
-    return value;
+    return copyValue(vm, value, spanType);
   }
   if(value?.methodPointer&&(['nint','System.IntPtr'].includes(name)||/^method /.test(name))) {
     if(!Object.isFrozen(value)||value.vmOwner!==vm.snapshotOwner)throw new ManagedFault('InvalidProgramException','Method pointer belongs to another VM or is malformed');

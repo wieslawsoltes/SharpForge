@@ -39,8 +39,12 @@ export function copyValue(vm,value,type=null,numericContext,depth=0) {
   checkDepth(depth);
   const table=type===null?(isValueTypeValue(value)?tableFor(vm,value.valueType):null):tableFor(vm,type);
   if(value?.span) {
-    if(!table?.flags.refStruct||table.typeArguments[0]!==value.elementType||value.vmOwner!==vm.snapshotOwner)throw new ManagedFault('InvalidCastException','Span type mismatch');
-    return value;
+    const readonly = table?.name.startsWith('System.ReadOnlySpan');
+    if (!table?.flags.refStruct || table.typeArguments[0] !== value.elementType || value.vmOwner !== vm.snapshotOwner ||
+        !Object.isFrozen(value) || value.readonly && !readonly) {
+      throw new ManagedFault('InvalidCastException', 'Span type mismatch');
+    }
+    return readonly && !value.readonly ? Object.freeze({...value, readonly: true}) : value;
   }
   if(value?.nullableType&&table!==value.nullableType)throw new ManagedFault('InvalidCastException','Nullable type identity mismatch');
   if(table?.flags.nullable)return nullableValue(vm,table,value?.nullableType?value.value:value,value?.nullableType?value.hasValue:value!==null);
