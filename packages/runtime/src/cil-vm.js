@@ -10,8 +10,9 @@ import {snapshotVM,restoreVM} from './snapshot.js';
 import { AssemblyInspector, verifyCilAssembly, resolveExecutionField, CilError } from '@sharpforge/cil';
 import { ManagedHeap, ManagedFault, isReference } from './heap.js';
 import {compare as numericCompare,binary as numericBinary,convert as numericConvert,unary as numericUnary,indirect as numericIndirect} from './execution/numeric-ops.js';
-import {cilHandlers} from './execution/handlers/index.js';
-import {call,ensureInitialized,invoke,prepareCall} from './execution/calls.js';
+import {executeCilStep} from './execution/cil-step.js';
+import {invalidateExecutionCode} from './execution/code-version.js';
+import {call,ensureInitialized,invoke} from './execution/calls.js';
 import {CilTypeSystem} from './execution/type-system.js';
 import {throwFault,continueUnwind,exceptionRoots} from './execution/eh.js';
 import {runCilSlice} from './execution/cil-slice.js';
@@ -84,20 +85,11 @@ export class CilVirtualMachine {
   resumeUnwind(frame){return continueUnwind(this,frame);}
   raise(error){return throwFault(this,error);}
   *exceptionRoots(frame){yield* exceptionRoots(frame);}
-  step(){
-    const frame=this.top;
-    if(frame.needsInitialization&&!prepareCall(this,frame))return;
-    const instruction=frame.method.instructions[frame.pc++];
-    if(!instruction)throw new ManagedFault('InvalidProgramException','Instruction pointer is outside the method');
-    frame.lastOffset=instruction.offset;
-    const handler=cilHandlers.get(instruction.name);
-    if(!handler)throw new ManagedFault('NotSupportedException',`Opcode '${instruction.name}' is not executable`);
-    handler(this,frame,instruction);
-  }
+  step(){return executeCilStep(this);}
   runSlice(options){return runCilSlice(this,options);}
   allFrames(){return this.scheduler.allFrames();}
   run(){while(this.state==='ready'||this.state==='running')this.runSlice({instructionBudget:100000,timeBudgetMs:50});return {state:this.state,output:this.output.join(''),returnValue:this.resultValue(),exitCode:this.exitCode,fault:this.fault,stats:this.statistics()};}
   async runAsync(options={}){await this.scheduler.runAsync(options);return {state:this.state,output:this.output.join(''),returnValue:this.resultValue(),exitCode:this.exitCode,fault:this.fault,stats:this.statistics()};}
-  stop(){clearStrings(this);clearRuntimeTypes(this);this.scheduler.cancelAll();this.platform.closeAll();this.state='terminated';this.frames=[];this.pendingFault=null;stopCilMethodEvents(this);}
+  stop(){invalidateExecutionCode(this,'stop');clearStrings(this);clearRuntimeTypes(this);this.scheduler.cancelAll();this.platform.closeAll();this.state='terminated';this.frames=[];this.pendingFault=null;stopCilMethodEvents(this);}
   statistics(){return {artifactFormat:'ECMA-335',profile:this.report.profile,instructions:this.instructions,elapsedMs:this.elapsedMs,frames:this.frames.length,assembly:{bytes:this.inspector.pe.bytes.length,loadMs:this.loadMs},heap:{...this.heap.stats,maxBytes:this.heap.maxBytes,threshold:this.heap.threshold}};}
 }

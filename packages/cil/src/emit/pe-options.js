@@ -6,13 +6,14 @@ import { writeManagedResources } from '../pe/managed-resources.js';
 
 /** Canonical source-emitter PE options; method RVAs use the fixed .text address. */
 export function emissionPEOptions(image, options, framework) {
-  const outputKind = image.outputKind === 'library' ? 'library' : options.outputKind ?? 'console';
+  const requested = options.outputKind === 'module' ? 'netmodule' : options.outputKind;
+  const outputKind = image.outputKind === 'library' ? (requested === 'netmodule' ? 'netmodule' : 'library') : requested ?? 'console';
   if (image.outputKind !== 'library' && ['library', 'netmodule'].includes(outputKind)) {
     throw new CilError('PE output kind must match the compiled image');
   }
   const value = { platform: options.platform ?? 'anycpu', outputKind,
     subsystem: options.subsystem ?? (outputKind === 'windows' ? 'windows' : 'console'),
-    prefer32Bit: options.prefer32Bit ?? false, nativeEntryStub: framework === 'mscorlib4',
+    prefer32Bit: options.prefer32Bit ?? false, nativeEntryStub: framework === 'mscorlib4' && outputKind !== 'netmodule',
     strongName: strongNameOptions(options), deterministic: options.deterministic ?? true,
     managedResources: options.managedResources ?? [], win32Resources: options.win32Resources };
   peOptions(value);
@@ -26,7 +27,7 @@ export function debugPEOptions(options) {
   if (options.platform !== 'anycpu') result.platform = options.platform;
   if (options.prefer32Bit) result.prefer32Bit = true;
   if (options.subsystem !== 'console') result.subsystem = options.subsystem;
-  if (options.outputKind === 'windows') result.outputKind = 'windows';
+  if (['windows', 'netmodule'].includes(options.outputKind)) result.outputKind = options.outputKind;
   return Object.keys(result).length ? { peOptions: result } : {};
 }
 

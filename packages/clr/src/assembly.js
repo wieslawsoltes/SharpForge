@@ -2,6 +2,7 @@ import { readPE } from '@sharpforge/cil';
 import { assemblyIdentityFromRow } from './identity.js';
 import { checkCancellation, loadError, LoadErrorCode } from './load-errors.js';
 import { MetadataTypeDefinitions } from './type-system/metadata-type-definitions.js';
+import { MetadataGenericParameters } from './type-system/metadata-generic-parameters.js';
 
 function namedIdentityRow(row, reference) {
   if (!reference) return { MajorVersion: row[1], MinorVersion: row[2], BuildNumber: row[3], RevisionNumber: row[4],
@@ -29,6 +30,7 @@ export class RuntimeModule {
   #typeHandles = new Map();
   #bodyReads = 0;
   #typeDefinitions;
+  #genericParameters;
   constructor(assembly, pe) {
     this.#assembly = assembly;
     this.#pe = pe;
@@ -86,6 +88,20 @@ export class RuntimeModule {
     this.#assembly.ensureUsable();
     this.#typeDefinitions ??= new MetadataTypeDefinitions(this);
     return this.#typeDefinitions.get(token);
+  }
+
+  /** Ordered canonical GenericParam identities for a TypeDef; constraints are unresolved metadata tokens. */
+  genericParameters(typeToken) {
+    this.#assembly.ensureUsable();
+    this.#genericParameters ??= new MetadataGenericParameters(this);
+    return this.#genericParameters.forType(typeToken);
+  }
+
+  /** Canonical TypeDef-owned GenericParam token lookup; method parameters remain unsupported. */
+  genericParameter(token) {
+    this.#assembly.ensureUsable();
+    this.#genericParameters ??= new MetadataGenericParameters(this);
+    return this.#genericParameters.get(token);
   }
 
   /** Metadata decoding is lazy and counted once per method. Returned byte arrays are isolated copies. */
