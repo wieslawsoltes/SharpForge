@@ -46,7 +46,7 @@ export function wasmMethodRecord(state, method) {
 export function wasmFrameState(state, frame) {
   let current = state.frames.get(frame);
   if (!current || current.id !== frame.id || current.method !== frame.method) {
-    current = {id: frame.id, method: frame.method, active: false, nextEntry: null, lastDeopt: null};
+    current = {id: frame.id, method: frame.method, active: false, started: false, nextEntry: null, lastDeopt: null};
     state.frames.set(frame, current);
     const record = wasmMethodRecord(state, frame.method);
     if (record) record.calls++;

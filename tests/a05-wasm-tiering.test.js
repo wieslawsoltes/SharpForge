@@ -40,6 +40,18 @@ test('T11.3 a currently executing long loop enters Wasm at a backward target', a
   assert.equal(vm.run().returnValue, 100);
 });
 
+test('T11.3 a backward target at PC zero is OSR, not a new method entry', async () => {
+  const bytes = managedFixture({methods: [{name: 'Main', result: 'int', locals: ['int'], body: writer => writer
+    .mark('loop').op('ldloc.0').op('ldc.i4.1').op('add').op('stloc.0')
+    .op('ldloc.0').op('ldc.i4', 100).op('blt.s', 'loop').op('ldloc.0').op('ret')} ]});
+  const vm = new CilVirtualMachine(bytes, {wasmTiering: {callThreshold: 100, backedgeThreshold: 2}});
+  vm.runSlice({instructionBudget: 20, timeBudgetMs: 1000});
+  assert.equal((await prepareWasmTier(vm)).status, 'ready');
+  assert.equal(vm.run().returnValue, 100);
+  assert.equal(wasmTierStatistics(vm).entryTransitions, 0);
+  assert.equal(wasmTierStatistics(vm).osrTransitions, 1);
+});
+
 test('T11.4 debugger boundaries expose exact locals and snapshot replay', async () => {
   const bytes = loopFixture(10);
   const vm = new CilVirtualMachine(bytes, {wasmTiering: true, typedNumericStack: true});

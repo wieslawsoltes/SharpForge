@@ -11,6 +11,8 @@ function considerCompilation(vm, state, record) {
 
 function recordBackedge(vm, state, record, current, frame, index) {
   if (vm.top !== frame || frame.method !== current.method || frame.id !== current.id || frame.pc > index) return;
+  const instruction = frame.method.instructions[index];
+  if (instruction.name !== 'switch' && !instruction.operandKind.startsWith('br')) return;
   if (!frame.method.instructions[frame.pc]) return;
   record.backedges++;
   current.nextEntry = frame.pc;
@@ -25,10 +27,12 @@ export function executeTieredInstruction(vm, frame, plan, index) {
   if (!record) return plan.handlers[index](vm, frame, plan.instructions[index]);
   const current = wasmFrameState(state, frame);
   considerCompilation(vm, state, record);
-  if (!current.active && record.status === 'ready' && (index === 0 || current.nextEntry === index)) {
+  const entry = !current.started && index === 0;
+  if (!current.active && record.status === 'ready' && (entry || current.nextEntry === index)) {
     current.active = true;
-    state.statistics[index === 0 ? 'entryTransitions' : 'osrTransitions']++;
+    state.statistics[entry ? 'entryTransitions' : 'osrTransitions']++;
   }
+  current.started = true;
   current.nextEntry = null;
   const instruction = record.ir?.instructions[index];
   if (current.active && (!instruction || record.context.active ||
