@@ -4,10 +4,12 @@ Direct CIL arguments and locals are normalized at call entry, initialization and
 
 `scalarSlotLoads: false` retains generic load normalization for differential and performance comparisons. The cache stores only method metadata and booleans and is not snapshot state. Replacing a method's local or parameter metadata invalidates its plan. Uninitialized-slot faults and managed write notifications remain unchanged.
 
-PR #2804's method/field caches target different work and are not duplicated. This slice does not introduce a typed evaluation stack, specialized arithmetic, a small-long representation, or field-load normalization elision.
+PR #2804's method/field caches target different work and are not duplicated. Typed
+evaluation storage, arithmetic specialization and small-long lanes compose with
+these storage adapters through the T07 decode contribution.
 
 Tests and measurements are prepared but intentionally not executed before E02 assembly. The T08.4 throughput target remains unqualified; no speedup or platform pass is claimed.
-# Field loads
+## Field loads
 
 `loadField` applies the same immutable-scalar classification to resolved instance
 and static fields. Its metadata-only cache keys the resolved signature, including
