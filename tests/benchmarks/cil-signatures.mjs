@@ -7,7 +7,7 @@ const api = process.argv[2] ? await import(pathToFileURL(process.argv[2]).href) 
 const iterations = 2000;
 const samples = 31;
 const parameters = ['int', 'string', 'double', 'object', 'long', 'bool'];
-const signature = api.methodSignature('int', parameters, true);
+let signature;
 const actions = {
   encode: () => api.methodSignature('int', parameters, true),
   decode: () => api.readSignature(signature),
@@ -17,6 +17,7 @@ function allocationSize(node) {
   return node.selfSize + node.children.reduce((sum, child) => sum + allocationSize(child), 0);
 }
 for (const [name, action] of Object.entries(actions)) {
+  if (name === 'decode') signature = api.methodSignature('int', parameters, true);
   const coldStart = performance.now();
   action();
   const coldMicroseconds = (performance.now() - coldStart) * 1000;
