@@ -19,7 +19,7 @@ export function denominator(rows,snapshot) {
   const result=rows.map(row=>{
     const leafId=ownerFor(row),issue=issues.get(leafId);
     if(!issue||parents.has(leafId)||issue.area!==row.area)throw new Error(`Invalid inventory owner ${leafId}: ${row.key}`);
-    const engines=row.engines??(['BCL','WINUI','RUNTIME'].includes(row.domain)?vmEngines:row.domain==='CIL'?['js-cil-vm']:row.domain==='CSHARP'||row.domain==='DIAG'?['sharpforge-compiler']:['sharpforge-protocol']);
+    const engines=row.engines??(['BCL','WINUI','RUNTIME','DAP'].includes(row.domain)?vmEngines:row.domain==='CIL'?['js-cil-vm']:row.domain==='CSHARP'||row.domain==='DIAG'?['sharpforge-compiler']:['sharpforge-protocol']);
     return {id:row.gapId,leafId,area:row.area,platforms:row.platforms??platforms,engines,specRevisions:[row.specRevision]};
   });
   if(new Set(result.map(row=>row.id)).size!==result.length)throw new Error('Duplicate inventory capability ID');

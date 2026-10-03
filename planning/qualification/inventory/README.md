@@ -70,7 +70,17 @@ Runtime/GC fixtures exercise both JS VMs independently, including collection,
 finalization, weak references, modes, threading, cancellation, disposal, reflection,
 integer boundaries and arrays. All outcomes are retained, including compiler gaps
 and incorrect execution. Browser jobs run the same fixtures in actual Chromium
-under production CSP. Node and browser results have separate target records.
+under production CSP. Node and browser results have separate target records. The denominator includes
+Chromium, Firefox and WebKit independently. Only an actual engine-specific capture
+can supply evidence; Firefox/WebKit remain unknown until that capture exists.
+`SHARPFORGE_BROWSER_ENGINE` selects the shared launcher's engine. The probe checks
+the actual Playwright browser type, so an older Chromium-only launcher cannot
+mislabel its output. T06 can run this same command on its browser matrix:
+`python tests/conformance/inventory/browser_probe.py`.
+
+DAP request/capability obligations include both source and CIL VM backends. Current
+handler observations identify their source-VM context explicitly; CIL debugger
+behavior remains unknown until separately observed.
 Rust managed execution remains unknown; the inventory never substitutes a schema
 reader or JavaScript simulation for a Rust VM. Other hosts remain unknown until
 an independent artifact exists. The benchmark reports first/cold and 30 warm
@@ -96,5 +106,16 @@ exact obligation proof, artifact digest, commit ancestry and a closed leaf.
 
 Reference URLs, immutable commits, file hashes and licenses are in
 `references/manifest.json`. Reports record exact repository commit, dirty state,
-input digest, toolchain and commands. A successful inventory job means the complete
+input digest, toolchain and commands. Ordinary PRs do not launch native or browser inventory jobs. Main pushes matching
+the inventory paths, manual dispatch, and matching PRs carrying `full-ci` retain the
+full six-job native/Chromium qualification. Adding the label is an explicit trigger;
+PR-number concurrency cancels superseded runs. No successful core-only PR check
+claims native or browser inventory qualification.
+
+The inherited planning snapshot contains duplicate work IDs `SF-A01-T28` and
+`SF-A02-T18`. The shared rollup correctly refuses that snapshot; this inventory does
+not silently rename active ownership records or manufacture a passing rollup.
+The planning owner must reconcile those identities before full rollup integration.
+
+A successful inventory job means the complete
 catalog was processed; missing, unknown and unsupported capabilities remain gaps.

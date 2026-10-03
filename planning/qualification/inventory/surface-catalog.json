@@ -10,6 +10,8 @@
       "leafId": "SF-A00-T01.2",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -26,6 +28,8 @@
       "leafId": "SF-A00-T01.3",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -42,6 +46,8 @@
       "leafId": "SF-A00-T01.4",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -58,6 +64,8 @@
       "leafId": "SF-A00-T02.1",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -74,6 +82,8 @@
       "leafId": "SF-A00-T05.1",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -90,6 +100,8 @@
       "leafId": "SF-A13-T01",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -106,6 +118,8 @@
       "leafId": "SF-A13-T03",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -122,6 +136,8 @@
       "leafId": "SF-A13-T04",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -138,6 +154,8 @@
       "leafId": "SF-A13-T07",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -154,6 +172,8 @@
       "leafId": "SF-A13-T08",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -170,6 +190,8 @@
       "leafId": "SF-A18-T01",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -186,6 +208,8 @@
       "leafId": "SF-A18-T03",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -202,6 +226,8 @@
       "leafId": "SF-A18-T04",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -218,6 +244,8 @@
       "leafId": "SF-A18-T05",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -234,6 +262,8 @@
       "leafId": "SF-A18-T06",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -250,6 +280,8 @@
       "leafId": "SF-A18-T07",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -266,6 +298,8 @@
       "leafId": "SF-A18-T08",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -282,6 +316,8 @@
       "leafId": "SF-A18-T10",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -298,6 +334,8 @@
       "leafId": "SF-A18-T11",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -314,6 +352,8 @@
       "leafId": "SF-A19-T02",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -330,6 +370,8 @@
       "leafId": "SF-A19-T03",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -346,6 +388,8 @@
       "leafId": "SF-A19-T04",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -362,6 +406,8 @@
       "leafId": "SF-A19-T05",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -378,6 +424,8 @@
       "leafId": "SF-A19-T06",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -394,6 +442,8 @@
       "leafId": "SF-A19-T08",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -410,6 +460,8 @@
       "leafId": "SF-A19-T10",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -426,6 +478,8 @@
       "leafId": "SF-A20-T01",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -442,6 +496,8 @@
       "leafId": "SF-A20-T02",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -458,6 +514,8 @@
       "leafId": "SF-A20-T03",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -474,6 +532,8 @@
       "leafId": "SF-A20-T04",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -490,6 +550,8 @@
       "leafId": "SF-A20-T05",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -506,6 +568,8 @@
       "leafId": "SF-A20-T07",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -522,6 +586,8 @@
       "leafId": "SF-A20-T08",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -538,6 +604,8 @@
       "leafId": "SF-A20-T09",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -554,6 +622,8 @@
       "leafId": "SF-A20-T10",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -570,6 +640,8 @@
       "leafId": "SF-A22-T01",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -586,6 +658,8 @@
       "leafId": "SF-A22-T03",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -602,6 +676,8 @@
       "leafId": "SF-A22-T04",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -618,6 +694,8 @@
       "leafId": "SF-A22-T05",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -634,6 +712,8 @@
       "leafId": "SF-A22-T06",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -650,6 +730,8 @@
       "leafId": "SF-A22-T07",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -666,6 +748,8 @@
       "leafId": "SF-A23-T01",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -682,6 +766,8 @@
       "leafId": "SF-A23-T02",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -698,6 +784,8 @@
       "leafId": "SF-A23-T03",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -714,6 +802,8 @@
       "leafId": "SF-A23-T05",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -730,6 +820,8 @@
       "leafId": "SF-A23-T06",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -746,6 +838,8 @@
       "leafId": "SF-A23-T07",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -762,6 +856,8 @@
       "leafId": "SF-A23-T09",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -778,6 +874,8 @@
       "leafId": "SF-A24-T01",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -794,6 +892,8 @@
       "leafId": "SF-A24-T03",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -810,6 +910,8 @@
       "leafId": "SF-A24-T04",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -826,6 +928,8 @@
       "leafId": "SF-A24-T06",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -842,6 +946,8 @@
       "leafId": "SF-A24-T07",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -858,6 +964,8 @@
       "leafId": "SF-A24-T08",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -874,6 +982,8 @@
       "leafId": "SF-A25-T02",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -890,6 +1000,8 @@
       "leafId": "SF-A25-T03",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -906,6 +1018,8 @@
       "leafId": "SF-A25-T04",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -922,6 +1036,8 @@
       "leafId": "SF-A25-T05",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -938,6 +1054,8 @@
       "leafId": "SF-A25-T06",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -954,6 +1072,8 @@
       "leafId": "SF-A25-T07",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -970,6 +1090,8 @@
       "leafId": "SF-A25-T11",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -986,6 +1108,8 @@
       "leafId": "SF-A26-T02",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1002,6 +1126,8 @@
       "leafId": "SF-A26-T03",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1018,6 +1144,8 @@
       "leafId": "SF-A26-T04",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1034,6 +1162,8 @@
       "leafId": "SF-A26-T06",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1050,6 +1180,8 @@
       "leafId": "SF-A26-T07",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1066,6 +1198,8 @@
       "leafId": "SF-A26-T08",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1082,6 +1216,8 @@
       "leafId": "SF-A26-T10",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1098,6 +1234,8 @@
       "leafId": "SF-A27-T02.4",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1115,6 +1253,8 @@
       "leafId": "SF-A27-T03.6",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1132,6 +1272,8 @@
       "leafId": "SF-A27-T04.6",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1149,6 +1291,8 @@
       "leafId": "SF-A27-T05.6",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1166,6 +1310,8 @@
       "leafId": "SF-A27-T07.4",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1183,6 +1329,8 @@
       "leafId": "SF-A27-T08.3",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1200,6 +1348,8 @@
       "leafId": "SF-A27-T10.3",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1217,6 +1367,8 @@
       "leafId": "SF-A28-T02.5",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1234,6 +1386,8 @@
       "leafId": "SF-A28-T02.6",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1251,6 +1405,8 @@
       "leafId": "SF-A28-T03.3",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1268,6 +1424,8 @@
       "leafId": "SF-A28-T04",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1285,6 +1443,8 @@
       "leafId": "SF-A28-T05",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1302,6 +1462,8 @@
       "leafId": "SF-A28-T08",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1319,6 +1481,8 @@
       "leafId": "SF-A28-T14",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1336,6 +1500,8 @@
       "leafId": "SF-A29-T01.1",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1352,6 +1518,8 @@
       "leafId": "SF-A29-T01.3",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1368,6 +1536,8 @@
       "leafId": "SF-A29-T02.1",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1384,6 +1554,8 @@
       "leafId": "SF-A29-T02.2",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"
@@ -1400,6 +1572,8 @@
       "leafId": "SF-A29-T03.8",
       "platforms": [
         "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
         "node-linux-x64",
         "node-win32-x64",
         "node-darwin-arm64"

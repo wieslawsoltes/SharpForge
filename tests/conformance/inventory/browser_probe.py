@@ -1,4 +1,4 @@
-"""Run the same compiler/VM probes inside the production Chromium application.
+"""Run the same compiler/VM probes inside the production browser application.
 
 The result contains every observed failure. Gaps are data, not test-runner errors;
 only harness integrity and the known arithmetic/disposal/array canaries gate this
@@ -6,6 +6,8 @@ inventory job. This artifact is never labeled native execution evidence.
 """
 from pathlib import Path
 import json
+import os
+import hashlib
 import platform
 import subprocess
 import sys
@@ -33,14 +35,23 @@ const language=data.language.map(f=>{
 });
 return {runtime,language};
 }'''
+engine = os.environ.get('SHARPFORGE_BROWSER_ENGINE', 'chromium')
+if engine not in ('chromium', 'firefox', 'webkit'):
+    raise ValueError('Unsupported inventory browser engine: ' + engine)
+target = 'browser-' + engine
 with sync_playwright() as playwright, launch_browser(playwright, __file__) as browser:
+    # Older launchers default to Chromium. Never label that execution as another engine.
+    if browser.browser_type.name != engine:
+        raise RuntimeError('Requested ' + engine + ' but shared launcher started ' + browser.browser_type.name)
     page = browser.new_page()
     load_application(page)
     result = page.evaluate(script, {'fixtures': fixtures, 'language': language})
-    result.update(schemaVersion=1, platform='browser-chromium', host=platform.platform(), browser=browser.version,
+    result.update(schemaVersion=1, platform=target, host=platform.platform(), browser=browser.version,
+                  inputDigest=hashlib.sha256(json.dumps({'runner': runner, 'fixtures': fixtures, 'language': language}, sort_keys=True).encode('utf-8')).hexdigest(),
+                  command='python tests/conformance/inventory/browser_probe.py',
                   commit=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True, encoding='utf-8').strip(),
                   meaning='Per-fixture browser observations; gaps remain failures, not native or total parity evidence')
-    output = results_dir() / 'inventory' / 'browser-chromium'
+    output = results_dir() / 'inventory' / target
     output.mkdir(parents=True, exist_ok=True)
     (output / 'report.json').write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
     assert len(result['runtime']) == len(fixtures) * 2

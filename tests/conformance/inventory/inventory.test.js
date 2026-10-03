@@ -12,7 +12,7 @@ import { lspProbe, dapProbe } from '../../../scripts/conformance/inventory/ide.j
 import { executeProbe } from '../../../scripts/conformance/inventory/runtime-runner.js';
 import { validateDenominator } from '../../../scripts/conformance/inventory/generate.js';
 import { denominator } from '../../../scripts/conformance/inventory/denominator.js';
-import { root, inventoryRoot, probeRoot, readJSON, sha256 } from '../../../scripts/conformance/inventory/common.js';
+import { root, inventoryRoot, probeRoot, readJSON, sha256, platforms, vmEngines } from '../../../scripts/conformance/inventory/common.js';
 
 const row=(key,domain='TEST')=>({key,domain,area:'A29',status:'missing',specRevision:'ecma-335-6'});
 test('gap ledger retains identities across insert, reorder, remove and reintroduce',()=>{
@@ -85,4 +85,25 @@ test('rollup denominator binds all 30 areas to leaf IDs and never silently accep
   const generated=denominator(rows,snapshot);validateDenominator(generated,obligations);assert.equal(new Set(generated.rows.map(r=>r.area)).size,30);
   assert.throws(()=>validateDenominator({...generated,rows:generated.rows.slice(1)},obligations),/changed/);
   assert.throws(()=>denominator([{...rows[0],leafId:'SF-A29-T03'}],snapshot),/Invalid inventory owner/);
+});
+
+
+test('inventory obligations retain unqualified Firefox/WebKit and both DAP VM backends', async () => {
+  const obligations=await readJSON(path.join(inventoryRoot,'obligations.json'));
+  assert.deepEqual(platforms,['browser-chromium','browser-firefox','browser-webkit','node-linux-x64','node-win32-x64','node-darwin-arm64']);
+  for (const row of obligations.rows) for (const browser of ['browser-chromium','browser-firefox','browser-webkit']) assert.ok(row.platforms.includes(browser),row.id);
+  const dap=obligations.rows.filter(row=>row.id.startsWith('GAP-DAP-'));
+  assert.ok(dap.length>50);for(const row of dap)assert.deepEqual(row.engines,vmEngines);
+  assert.ok(obligations.rows.every(row=>!Object.hasOwn(row,'status')),'inventory rows must not turn target presence into passing evidence');
+});
+
+test('inventory native/browser jobs require full-ci on PRs and retain explicit dispatch', async () => {
+  const workflow=await readFile(path.join(root,'.github/workflows/inventory.yml'),'utf8');
+  assert.match(workflow,/pull_request:\n    types: \[opened, synchronize, reopened, labeled\]/);
+  assert.match(workflow,/push:\n    branches: \[main\]/);assert.match(workflow,/^  workflow_dispatch:/m);
+  assert.match(workflow,/github.event.pull_request.number \|\| github.ref/);
+  const jobs=workflow.slice(workflow.indexOf('jobs:'));
+  assert.equal([...jobs.matchAll(/^  [a-z-]+:/gm)].length,3);
+  const gate="    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')";
+  for(const job of ['linux','desktop','browser'])assert.ok(jobs.includes(`  ${job}:\n${gate}\n`),job);
 });

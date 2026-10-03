@@ -6,7 +6,7 @@ export { root, pin, sha256, readJSON };
 export const inventoryRoot = path.join(root, 'planning/qualification/inventory');
 export const probeRoot = path.join(root, 'tests/conformance/inventory/probes');
 export const artifactRoot = path.resolve(root, process.env.SHARPFORGE_RESULTS_DIR || 'artifacts/results', 'inventory');
-export const platforms = ['browser-chromium', 'node-linux-x64', 'node-win32-x64', 'node-darwin-arm64'];
+export const platforms = ['browser-chromium', 'browser-firefox', 'browser-webkit', 'node-linux-x64', 'node-win32-x64', 'node-darwin-arm64'];
 export const vmEngines = ['js-source-vm', 'js-cil-vm'];
 // One row per line keeps large reference diffs reviewable without expanding
 // every repeated field into many lines.

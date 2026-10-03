@@ -1,6 +1,7 @@
 name: Reference gap inventory
 on:
   pull_request:
+    types: [opened, synchronize, reopened, labeled]
     paths:
       - '.github/workflows/inventory.yml'
       - 'scripts/conformance/inventory/**'
@@ -19,12 +20,13 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: reference-inventory-${{ github.ref }}
+  group: reference-inventory-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 env:
   SHARPFORGE_RESULTS_DIR: artifacts/results
 jobs:
   linux:
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ubuntu-24.04
     container:
       image: mcr.microsoft.com/dotnet/sdk:10.0.201-noble@sha256:127d7d4d601ae26b8e04c54efb37e9ce8766931bded0ee59fcd799afd21d6850
@@ -61,6 +63,7 @@ jobs:
           path: artifacts/results/inventory/
           if-no-files-found: error
   desktop:
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ${{ matrix.os }}
     timeout-minutes: 25
     strategy:
@@ -99,6 +102,7 @@ jobs:
           path: artifacts/results/inventory/
           if-no-files-found: error
   browser:
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
