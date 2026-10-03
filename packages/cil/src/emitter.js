@@ -1,3 +1,4 @@
+import { emittedAssemblyName } from './emit/assembly-options.js';
 import { emissionPEOptions, debugPEOptions, finishEmittedPE } from './emit/pe-options.js';
 import { EmitterSignatures } from './emitter-signatures.js';
 import { emitPropertyMetadata } from './emitter-properties.js';
@@ -11,13 +12,12 @@ import { analyzeMethod, constantType, validateInput } from './analysis.js';
 const markerName='SharpForge.<>AllocationToken';
 const isValue=t=>['int','long','double','bool'].includes(t)||['enum','value'].includes(frameworkType(t)?.kind);
 const binaryCodes={'+':'add','-':'sub','*':'mul','/':'div','%':'rem','&':'and','|':'or','^':'xor','<<':'shl','>>':'shr'};
-function safeName(name) { if(typeof name!=='string'||!name||name.length>512||/[\0/\\]/.test(name))throw new CilError('Invalid assembly name');return name.replace(/\.dll$/i,''); }
 /** Emits genuine PE/CLI metadata and CIL bodies. No JS source, host eval or embedded executable bytecode. */
 export function emitAssembly(image,options={}) { return emitAssemblyDetailed(image,options).bytes; }
 export function emitAssemblyDetailed(image,options={}) {
   let {name=image.name??'Application',framework='net8',embedSources=true,includeDebug=true}=options;
   const peOptions=emissionPEOptions(image,options,framework);
-  validateInput(image);if(!['net8','mscorlib4'].includes(framework))throw new CilError('Supported reference profiles: net8, mscorlib4');name=safeName(name);const started=performance.now(),metadata=new MetadataBuilder(name,{framework});
+  validateInput(image);name=emittedAssemblyName(name,framework);const started=performance.now(),metadata=new MetadataBuilder(name,{...options,framework});
   const context={image,metadata,framework,typeTokens:new Map(),methodTokens:new Map(),fieldTokens:new Map(),staticTokens:[],allocTokens:new Map(),descriptors:[],helperToken:0};
   context.resolveType=t=>context.typeTokens.get(t)??metadata.typeRef(cliSystemName(t));
   const objectToken=context.resolveType('object');

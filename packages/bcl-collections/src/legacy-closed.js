@@ -3,6 +3,8 @@ import {sortItems} from './comparers/ordering.js';
 import {fail, integer, bclScalar, array, makeArray} from '@sharpforge/bcl-core';
 import {equal} from './object-equality.js';
 import {registerClosedCollections} from './legacy-contracts.js';
+import {dictionary} from './dictionary.js';
+import {reserveIndexed} from './indexed-storage.js';
 import {
   count, data, version, change, reserve, commitItems, write, queueItems, queueEnqueue, append, keyOf, indexMap
 } from './legacy-storage.js';
@@ -12,14 +14,17 @@ const families = Object.freeze(['List', 'HashSet', 'Queue', 'Stack', 'Dictionary
 function construct(p, descriptor, context) {
   const {native, values, family} = context;
   if (native.length === 1 && typeof native[0] === 'number') integer(p, native[0]);
-  const reference = p.make(descriptor.owner, {'$count': 0, '$version': 0});
+  const state = {'$count': 0, '$version': 0};
+  if (family === 'Dictionary') Object.assign(state, {'$used': 0, '$free': -1, '$slots': null});
+  const reference = p.make(descriptor.owner, state);
   p.heap.pins.push(reference);
   if (descriptor.parameters[0]?.endsWith('[]')) {
     const items = array(p, values[0]);
     const initial = family === 'HashSet' ? items.filter((value, index) => items.findIndex(item => equal(p, value, item)) === index) : items;
     commitItems(p, reference, initial);
   } else if (native[0]) {
-    reserve(p, reference, native[0], family === 'Dictionary' ? 2 : 1);
+    if (family === 'Dictionary') reserveIndexed(p, reference, native[0], 2);
+    else reserve(p, reference, native[0]);
   }
   return reference;
 }
@@ -47,61 +52,6 @@ function enumerator(p, descriptor, reference) {
   const position = type.family === 'Stack' ? count(p, owner) - 1 - index
     : type.family === 'Queue' ? (p.get(owner, '$head', 0) + index) % data(p, owner).length : index;
   return data(p, owner)[position];
-}
-
-function dictionarySet(p, descriptor, context, lookup) {
-  const {reference, values, size} = context;
-  const {map, key, index} = lookup;
-  const method = descriptor.name;
-  if (index !== undefined) {
-    if (method === 'Add') fail(p, 'ArgumentException', 'An item with the same key already exists');
-    if (method === 'TryAdd') return p.managed(false, 'bool');
-    write(p, reference, index * 2 + 1, values[1]);
-    change(p, reference);
-  } else {
-    reserve(p, reference, size + 1, 2);
-    write(p, reference, size * 2, values[0]);
-    write(p, reference, size * 2 + 1, values[1]);
-    p.set(reference, '$count', size + 1);
-    change(p, reference);
-    map.set(key, size);
-  }
-  p.bclIndexes.set(p.record(reference), {version: version(p, reference), index: map});
-  return method === 'TryAdd' ? p.managed(true, 'bool') : null;
-}
-
-function dictionary(p, descriptor, context) {
-  const {reference, values, size, type} = context;
-  const method = descriptor.name;
-  if (method === 'get_Keys' || method === 'get_Values') {
-    const keys = method === 'get_Keys';
-    const items = Array.from({length: size}, (_, index) => data(p, reference)[index * 2 + (keys ? 0 : 1)]);
-    return makeArray(p, keys ? type.key : type.element, items);
-  }
-  if (method === 'ContainsValue') {
-    const items = Array.from({length: size}, (_, index) => data(p, reference)[index * 2 + 1]);
-    return p.managed(items.some(value => equal(p, value, values[0])), 'bool');
-  }
-  if (values[0] === null) fail(p, 'ArgumentNullException', 'Dictionary key cannot be null');
-  const map = indexMap(p, reference, 2);
-  const key = keyOf(p, values[0]);
-  const index = map.get(key);
-  if (method === 'ContainsKey') return p.managed(index !== undefined, 'bool');
-  if (method === 'get_Item') {
-    if (index === undefined) fail(p, 'KeyNotFoundException', 'The given key was not present');
-    return data(p, reference)[index * 2 + 1];
-  }
-  if (method === 'Remove') {
-    if (index === undefined) return p.managed(false, 'bool');
-    const items = data(p, reference).slice(0, size * 2);
-    items.splice(index * 2, 2);
-    commitItems(p, reference, items, 2);
-    return p.managed(true, 'bool');
-  }
-  if (method === 'Add' || method === 'TryAdd' || method === 'set_Item') {
-    return dictionarySet(p, descriptor, context, {map, key, index});
-  }
-  fail(p, 'MissingMethodException', descriptor.owner + '.' + method);
 }
 
 function add(p, context) {
@@ -188,6 +138,7 @@ function invokeMember(p, descriptor, context) {
   const {reference, values, native, family, size, type} = context;
   const method = descriptor.name;
   if (method === 'get_Count') return size;
+  if (family === 'Dictionary') return dictionary(p, descriptor, context);
   if (method === 'get_Capacity') return data(p, reference).length;
   if (method === 'set_Capacity') {
     integer(p, native[0], size);
@@ -198,7 +149,7 @@ function invokeMember(p, descriptor, context) {
     return null;
   }
   if (method === 'Clear') {
-    if (size) commitItems(p, reference, [], family === 'Dictionary' ? 2 : 1);
+    if (size) commitItems(p, reference, []);
     if (family === 'Queue') p.set(reference, '$head', 0);
     return null;
   }
@@ -210,7 +161,6 @@ function invokeMember(p, descriptor, context) {
       : family === 'Stack' ? data(p, reference).slice(0, size).reverse() : data(p, reference).slice(0, size);
     return makeArray(p, type.element, items);
   }
-  if (family === 'Dictionary') return dictionary(p, descriptor, context);
   if (method === 'Contains' || method === 'IndexOf') {
     const index = family === 'HashSet' ? indexMap(p, reference).get(keyOf(p, values[0])) ?? -1
       : (family === 'Queue' ? queueItems(p, reference) : data(p, reference).slice(0, size))

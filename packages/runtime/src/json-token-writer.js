@@ -32,14 +32,14 @@ export function writeJsonTokens(input) {
     } else {
       append('{');
       let separator = false;
-      // The managed visitor produces null-prototype dictionaries. Object.keys
-      // preserves the released JSON.stringify ordering, including integer-like keys.
-      for (const key of Object.keys(value)) {
-        if (omitted(value[key])) continue;
+      // Dictionary maps carry managed enumeration order through integer property names.
+      const entries = value instanceof Map ? value : Object.entries(value);
+      for (const [key, item] of entries) {
+        if (omitted(item)) continue;
         if (separator) append(',');
         append(JSON.stringify(key));
         append(':');
-        write(value[key]);
+        write(item);
         separator = true;
       }
       append('}');
