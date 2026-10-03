@@ -30,6 +30,7 @@ export const memberMethods = {
     if (this.isId() && this.peek().kind === '(' && !modifiers.some(m => m.kind === 'ConstKeyword')) {
       this.partialMember(modifiers, 'ConstructorDeclaration', this.current);
       this.memberForm(this.current, true);
+      this.structConstructor();
       return this.constructorDeclaration(attributeLists, modifiers, owner);
     }
     if (!this.isId() && !this.isPredefined() && !this.atAny(['(', 'ref', 'delegate'])) {
@@ -71,6 +72,7 @@ export const memberMethods = {
       return this.n('PropertyDeclaration', attributeLists, modifiers, type, explicit, identifier, null, null, null, this.match(';'));
     }
     if (this.inInterface()) this.memberForm(nameToken, true);
+    if (this.at('=')) this.structFieldInitializer(nameToken);
     return this.n(
       'FieldDeclaration',
       attributeLists,

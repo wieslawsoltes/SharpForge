@@ -63,7 +63,6 @@ const notGated = {
   WithOnStructs: needsOperandTypes,
   WithOnAnonymousTypes: needsOperandTypes,
   InferredDelegateType: needsOperandTypes,
-  LambdaAttributes: 'the parser reads `[A] () => x` as a collection expression followed by a lambda (syntax package defect)',
   ImplicitImplementationOfNonPublicMembers: 'needs the interface implementation map',
   ImprovedInterpolatedStrings: needsOperandTypes,
   AutoDefaultStructs: 'needs definite assignment of struct fields in constructors',
