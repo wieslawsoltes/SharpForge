@@ -1,6 +1,4 @@
 import {createExecutionProfiler} from './execution/profiler.js';
-import {collectAtInstruction} from './execution/gc-stress.js';
-import {flushFramePool} from './execution/frame-pool.js';
 import {installRootProvider} from './execution/frame-roots.js';
 import {pushStackValue} from './execution/frame-stack.js';
 import {verificationFault} from './execution/verification-fault.js';
@@ -10,8 +8,7 @@ import {invokeDelegate} from './execution/delegate-calls.js';
 import {callRoots} from './execution/generic-calls.js';
 import {createArray} from './execution/arrays.js';
 import {SyncPrimitives} from './execution/sync-primitives.js';
-import {resumeArrayOperation,arrayContinuationRoots} from './execution/array-ops.js';
-import {validateSliceBudget} from './execution/slice-budget.js';
+import {arrayContinuationRoots} from './execution/array-ops.js';
 import {scalarFormat,isDecimal,isNativeInteger,numericTypeName,numericTypeNames,nativeIntegerBits} from '@sharpforge/bytecode';
 import {runtimeTypeRoots,clearRuntimeTypes,runtimeTypeText} from './execution/tokens.js';
 import {address,dereference} from './execution/managed-pointers.js';
@@ -24,7 +21,7 @@ import {snapshotVM,restoreVM} from './snapshot.js';
 import { AssemblyInspector, verifyCilAssembly, resolveExecutionField, callStorageType, CilError } from '@sharpforge/cil';
 import { ManagedHeap, ManagedFault, isReference } from './heap.js';
 import {float,number,compare as numericCompare,binary as numericBinary,convert as numericConvert,unary as numericUnary,indirect as numericIndirect} from './execution/numeric-ops.js';
-import {executeCilStep} from './execution/cil-step.js';
+import {executeCilStep,runCilSlice,cilExecutionState,setCilExecutionState} from './execution/cil-step.js';
 import {stopVM} from './execution/vm-lifecycle.js';
 import {call,ensureInitialized,invoke,invokeFunctionPointer} from './execution/calls.js';
 import {CilTypeSystem} from './execution/type-system.js';
@@ -57,6 +54,8 @@ export class CilVirtualMachine {
     for(const f of this.frames){for(const v of f.stack)yield* root(v);for(const v of f.args)yield* root(v);for(const v of f.locals)yield* root(v);yield f.returnObject;yield f.asyncBuilderTask;yield* exceptionRoots(f);yield* callRoots(f);yield* arrayContinuationRoots(f);}
   }
   get top(){return this.frames.at(-1);}
+  get state(){return cilExecutionState(this);}
+  set state(value){setCilExecutionState(this,value);}
   get typeSystem(){
     if(this._typeSystem?.inspector!==this.inspector){clearRuntimeTypes(this);this._typeSystem=new CilTypeSystem(this);this.layoutCache=this._typeSystem.layouts;}
     return this._typeSystem;
@@ -119,17 +118,7 @@ export class CilVirtualMachine {
   raise(error){return throwFault(this,error);}
   *exceptionRoots(frame){yield* exceptionRoots(frame);}
   step(){return executeCilStep(this);}
-  runSlice({instructionBudget=15000,timeBudgetMs=8,onInstruction=null}={}){
-    validateSliceBudget(instructionBudget,timeBudgetMs);
-    this.scheduler.beforeSlice();if(this.state==='ready')this.state='running';if(this.state!=='running')return this.state;const started=performance.now();let n=0;
-    if(this.pendingFault){const pending=this.pendingFault;this.pendingFault=null;pending.exceptionDebuggerResume=true;this.raise(pending);}
-    while(this.state==='running'&&this.frames.length&&n<instructionBudget){if((n&255)===0&&performance.now()-started>=timeBudgetMs)break;this.scheduler.beforeInstruction();if(this.state!=='running'||!this.frames.length)break;const frame=this.top,continuing=!!frame.intrinsicContinuation,instruction=frame.method.instructions[frame.pc];if(!continuing&&instruction&&onInstruction?.(instruction,frame)){this.state='paused';break;}if(!continuing){n++;this.instructions++;if(this.profiler)this.profiler.instruction(frame);}
-      try{if(this.instructions>this.options.maxInstructions||continuing&&this.instructions>=this.options.maxInstructions)throw new ManagedFault('InstructionLimitException','Program exceeded its instruction budget');if(continuing){const result=resumeArrayOperation(this,frame,{deadline:started+timeBudgetMs,workBudget:1});n+=result.work;this.instructions+=result.work;if(this.profiler)this.profiler.instruction(frame,result.work);if(!result.work)break;}else this.step();}catch(error){const fault=error instanceof ManagedFault?error:new ManagedFault('InvalidProgramException',error.message??String(error));fault.phase='first-chance';fault.frames??=[...this.frames].reverse().map(f=>({method:f.method.owner+'::'+f.method.name,methodToken:f.method.token,ilOffset:f.lastOffset}));this.raise(fault);}
-      flushFramePool(this);collectAtInstruction(this);
-      this.scheduler.afterInstruction();
-    }
-    this.elapsedMs+=performance.now()-started;if(this.profiler)this.profiler.boundary();return this.state;
-  }
+  runSlice(options){return runCilSlice(this,options);}
   allFrames(){return this.scheduler.allFrames();}
   run(){while(this.state==='ready'||this.state==='running')this.runSlice({instructionBudget:100000,timeBudgetMs:50});return {state:this.state,output:this.output.join(''),returnValue:this.resultValue(),exitCode:this.exitCode,fault:this.fault,stats:this.statistics()};}
   async runAsync(options={}){await this.scheduler.runAsync(options);return {state:this.state,output:this.output.join(''),returnValue:this.resultValue(),exitCode:this.exitCode,fault:this.fault,stats:this.statistics()};}
