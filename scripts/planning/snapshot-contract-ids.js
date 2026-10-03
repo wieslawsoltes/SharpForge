@@ -1,6 +1,7 @@
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {resolve} from 'node:path';
+import {isDeepStrictEqual} from 'node:util';
 import {contracts} from '@sharpforge/framework';
 import {Op,Binary,Unary,Builtins,CONTRACT_BUILTIN_OFFSET} from '@sharpforge/bytecode';
 export function snapshotContractIds(){
@@ -16,6 +17,6 @@ export function checkContractIds(expected,actual){
 export async function snapshotMain(args=process.argv.slice(2)){
   const directory=new URL('../../planning/contracts/',import.meta.url),actual=snapshotContractIds();
   if(args.includes('--write')){await mkdir(directory,{recursive:true});for(const [name,data]of Object.entries(actual))await writeFile(new URL(name+'-ids.lock.json',directory),JSON.stringify(data,null,2)+'\n');}
-  else{const expected={};for(const name of ['framework','bytecode'])expected[name]=JSON.parse(await readFile(new URL(name+'-ids.lock.json',directory),'utf8'));checkContractIds(expected,actual);console.log(`ABI locks match: ${actual.framework.length} contracts, ${actual.bytecode.Builtins.length} builtins`);}
+  else{const expected={};for(const name of ['framework','bytecode'])expected[name]=JSON.parse(await readFile(new URL(name+'-ids.lock.json',directory),'utf8'));checkContractIds(expected,actual);if(args.includes('--strict'))for(const name of ['framework','bytecode'])if(!isDeepStrictEqual(expected[name],actual[name]))throw new Error(name+' lock drift: regenerate the reviewed additive snapshot');console.log(`ABI locks match: ${actual.framework.length} contracts, ${actual.bytecode.Builtins.length} builtins`);}
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url))await snapshotMain();
