@@ -3,7 +3,8 @@
 // Every *.cs file under <input-root> produces <output-root>/<relative path>.json. A first-line comment of the form
 //   // roslyn: langversion=11 define=DEBUG;TRACE kind=script
 // selects parse options. Node entries are [kind, spanStart, spanEnd, children]; token entries are
-// [kind, spanStart, spanEnd, text, valueType, value, leadingTrivia, trailingTrivia, isMissing] with trivia as [kind, fullStart, fullEnd].
+// [kind, spanStart, spanEnd, text, valueType, value, leadingTrivia, trailingTrivia, isMissing] with trivia as [kind, fullStart, fullEnd];
+// documentation comment trivia carry their structure as a fourth element. `doc=diagnose` in the first-line comment reports XML diagnostics.
 using System.Globalization;
 using System.Reflection;
 using System.Text;
@@ -48,6 +49,7 @@ foreach (var file in files)
             if (pair[0] == "langversion" && LanguageVersionFacts.TryParse(pair[1], out var version)) options = options.WithLanguageVersion(version);
             else if (pair[0] == "define") options = options.WithPreprocessorSymbols(pair[1].Split(';'));
             else if (pair[0] == "kind" && pair[1] == "script") options = options.WithKind(SourceCodeKind.Script);
+            else if (pair[0] == "doc" && pair[1] == "diagnose") options = options.WithDocumentationMode(DocumentationMode.Diagnose);
         }
     }
     var tree = CSharpSyntaxTree.ParseText(SourceText.From(text), options);
@@ -111,7 +113,9 @@ static void WriteTrivia(StringBuilder json, SyntaxTriviaList list)
     {
         if (!first) json.Append(',');
         first = false;
-        json.Append('[').Append(Quote(trivia.Kind().ToString())).Append(',').Append(trivia.FullSpan.Start).Append(',').Append(trivia.FullSpan.End).Append(']');
+        json.Append('[').Append(Quote(trivia.Kind().ToString())).Append(',').Append(trivia.FullSpan.Start).Append(',').Append(trivia.FullSpan.End);
+        if (trivia.HasStructure && trivia.Kind() is SyntaxKind.SingleLineDocumentationCommentTrivia or SyntaxKind.MultiLineDocumentationCommentTrivia) { json.Append(','); WriteNode(json, trivia.GetStructure()!); }
+        json.Append(']');
     }
     json.Append(']');
 }
