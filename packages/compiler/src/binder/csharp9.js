@@ -12,7 +12,7 @@
  */
 import { SymbolKind, Accessibility } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
-import { attributesNamed } from './attributes.js';
+import { attributesNamed } from './bound-attributes.js';
 
 const compilerServices = 'System.Runtime.CompilerServices.';
 export const moduleInitializerAttribute = compilerServices + 'ModuleInitializerAttribute';
