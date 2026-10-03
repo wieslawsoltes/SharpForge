@@ -45,8 +45,8 @@ const parameterIsCompatible = (derived, base) => compareTopLevel(derived, base) 
  */
 export function compareMethodNullability(derived, base, codes) {
   const results = [];
-  if (!returnIsCompatible(derived.returnTypeWithAnnotations, base.returnTypeWithAnnotations))
-    results.push({ code: codes.returnCode, args: [] });
+  // Roslyn reports one mismatch per member: the return type when it disagrees, otherwise the parameters.
+  if (!returnIsCompatible(derived.returnTypeWithAnnotations, base.returnTypeWithAnnotations)) return [{ code: codes.returnCode, args: [] }];
   derived.parameters.forEach((parameter, index) => {
     const other = base.parameters[index];
     if (!other) return;

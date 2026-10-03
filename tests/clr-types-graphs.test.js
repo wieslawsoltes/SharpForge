@@ -72,4 +72,10 @@ test('CLR unresolved framework references and generic inheritance stay explicit 
   } });
   const cyclicModule = (await unconfigured.loadFromStream(cyclic)).manifestModule;
   await assert.rejects(unconfigured.types.load(cyclicModule, 0x01000001), /Circular TypeRef/);
+  const reentrant = new AssemblyLoadSession({ typeOptions: { resolveExternalType: async request => {
+    await Promise.resolve();
+    return request.resolveType(request.module, 0x01000001);
+  } } }).defaultContext;
+  const reentrantModule = (await reentrant.loadFromStream(managedFixture())).manifestModule;
+  await assert.rejects(reentrant.types.load(reentrantModule, 0x02000002), /Circular TypeRef/);
 });

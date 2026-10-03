@@ -62,7 +62,7 @@ export class RuntimeModule {
 
   blob(index) {
     this.#assembly.ensureUsable();
-    return this.#pe.metadata.blob(index).slice();
+    return new Uint8Array(this.#pe.metadata.blob(index));
   }
 
   /** Resolve a metadata owner list, including #- pointer table indirection. */
@@ -102,7 +102,7 @@ export class RuntimeModule {
     }
     const body = this.#bodies.get(token);
     return Object.freeze({
-      ...body, code: body.code.slice(),
+      ...body, code: new Uint8Array(body.code),
       handlers: Object.freeze(body.handlers.map(handler => Object.freeze({ ...handler }))),
     });
   }
@@ -131,7 +131,7 @@ export class RuntimeAssembly {
     const bytes = input instanceof ArrayBuffer ? new Uint8Array(input) : input;
     if (!(bytes instanceof Uint8Array) || bytes.length > maxBytes) throw loadError(LoadErrorCode.InvalidImage, 'Invalid assembly image');
     try {
-      const pe = readPE(bytes.slice(), { maxBytes, inspection: true });
+      const pe = readPE(new Uint8Array(bytes), { maxBytes, inspection: true });
       if (pe.metadata.counts[32] !== 1 || pe.metadata.counts[0] !== 1) {
         throw loadError(LoadErrorCode.InvalidImage, 'Assembly image must contain one Assembly and one Module row');
       }

@@ -64,7 +64,11 @@ function checkConversion(method, type, seen) {
   if (!fromSelf && !toSelf) return [{ member: method, code: 'CS0556', args: [] }];
   const other = fromSelf ? to : from;
   if (other.typeKind === TypeKind.Interface) return [{ member: method, code: 'CS0552', args: [method.toDisplayString()] }];
-  const duplicate = seen.find(earlier => earlier.parameters[0].type.equals(from) && earlier.returnType.equals(to));
+  // `explicit operator checked T` is declared next to `explicit operator T`: only the same form twice is a duplicate.
+  const isChecked = other => other.name === 'op_CheckedExplicit',
+    duplicate = seen.find(
+      earlier => isChecked(earlier) === isChecked(method) && earlier.parameters[0].type.equals(from) && earlier.returnType.equals(to),
+    );
   seen.push(method);
   return duplicate ? [{ member: method, code: 'CS0557', args: [type.toDisplayString()] }] : [];
 }
