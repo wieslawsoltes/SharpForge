@@ -1,5 +1,6 @@
 import {normalizeProperty} from './model.js';
 import {designRectangle, geometryInvariant} from './geometry-coordinates.js';
+import {DesignOrderSession} from './geometry-order-session.js';
 
 export const designArrangeActions = Object.freeze(['left', 'center', 'right', 'top', 'middle', 'bottom',
   'distribute-h', 'distribute-v', 'same-width', 'same-height', 'same-size']);
@@ -60,37 +61,9 @@ export function arrangeDesignSelection(document, rectangles, action) {
 
 /** Stable multi-selection ordering preserves order inside both selected and unselected sets. */
 export function reorderDesignSelection(document, direction, ids = document.selection) {
-  geometryInvariant(['front', 'back', 'forward', 'backward'].includes(direction), 'SFD_ORDER_ACTION', 'Unknown order command.');
-  const parent = document.parent(ids[0]);
-  geometryInvariant(parent && ids.every(id => document.parent(id)?.id === parent.id),
-    'SFD_ORDER_PARENT', 'Order commands require sibling controls.');
-  const selected = new Set(ids);
-  return document.change(`Order ${direction}`, candidate => {
-    const nodes = new Map(candidate.nodes.map(node => [node.id, node]));
-    const owner = nodes.get(parent.id);
-    let children = [...owner.children];
-    if (direction === 'front' || direction === 'back') {
-      const chosen = children.filter(id => selected.has(id));
-      const others = children.filter(id => !selected.has(id));
-      children = direction === 'front' ? [...others, ...chosen] : [...chosen, ...others];
-    } else if (direction === 'forward') {
-      for (let index = children.length - 2; index >= 0; index--) {
-        if (selected.has(children[index]) && !selected.has(children[index + 1])) {
-          [children[index], children[index + 1]] = [children[index + 1], children[index]];
-        }
-      }
-    } else {
-      for (let index = 1; index < children.length; index++) {
-        if (selected.has(children[index]) && !selected.has(children[index - 1])) {
-          [children[index], children[index - 1]] = [children[index - 1], children[index]];
-        }
-      }
-    }
-    owner.children = children;
-    if (owner.type.endsWith('.Canvas')) {
-      children.forEach((id, index) => { nodes.get(id).properties.ZIndex = index; });
-    }
-  });
+  const session = new DesignOrderSession(document, {ids, label: `Order ${direction}`});
+  session.update(direction);
+  return session.commit();
 }
 
 export function resetDesignLayout(document, ids = document.selection) {

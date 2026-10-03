@@ -87,14 +87,16 @@ export class DesignerSurfaceGeometry {
     this.stage = measure(view.stage);
     this.stageInverse = inverseMatrix(this.stage.matrix);
     const nodes = new Map(view.document.value.nodes.map(node => [node.id, node]));
-    this.ensureEntry = id => {
+    this.ensureEntry = (id, {force = false} = {}) => {
+      if (force) this.entries.delete(id);
       if (this.entries.has(id)) return this.entries.get(id);
       const node = nodes.get(id);
       if (!node) return null;
       const element = view.host.elements.get(node.id);
       if (!element || !element.isConnected) return null;
+      if (force) styles.delete(element);
       const parentId = view.document.parent(node.id)?.id;
-      const parent = parentId ? this.ensureEntry(parentId) : null;
+      const parent = parentId ? this.ensureEntry(parentId, {force}) : null;
       const measured = measure(element);
       const stageMatrix = multiplyMatrix(this.stageInverse, measured.matrix);
       const bounds = transformRectangle({Width: measured.width, Height: measured.height}, stageMatrix);
@@ -144,6 +146,12 @@ export class DesignerSurfaceGeometry {
   get(id) {
     this.refresh();
     return this.entries.get(id) ?? this.ensureEntry(id);
+  }
+
+  /** Refresh only edited controls and their ancestor path after a temporary layout write. */
+  remeasure(ids) {
+    this.refresh();
+    return ids.map(id => this.ensureEntry(id, {force: true}));
   }
 
   rect(id) {
