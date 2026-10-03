@@ -14,6 +14,12 @@ restoring a frame reconstructs its private planes. Filter frames sharing locals
 reuse one adapter. Frame pooling may call `releaseTypedNumericFrame` when retiring
 a frame; replacing its arrays also invalidates the cached attachment.
 
+Precise root scanners use `numericSlotRoot(array,index)` to read managed values
+without materializing scalar slots. It returns undefined for raw numeric entries
+and preserves ordinary array behavior for frames without numeric planes. Pools
+clear slots through the proxy's length/set operations so tags, cached values and
+managed references are released together.
+
 Proven integer and floating local stores bypass managed-pointer construction only
 when no write observer is installed. They preserve storage narrowing and the VM
 write revision. Observed stores retain the existing notification implementation.
