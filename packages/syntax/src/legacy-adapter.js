@@ -123,6 +123,7 @@ export class LegacyAdapter extends LegacyStatementAdapter {
   parameters(list) {
     return list.parameters.map(p => {
       this.attributes(p);
+      if (p.identifier.valueText === '__arglist') this.fail(p, 'SF1018', 'Variable arguments require semantic lowering');
       for (const modifier of p.modifiers) this.fail(modifier, 'SF1017', 'Parameter modifiers are not implemented');
       if (p.default) this.fail(p.default, 'SF1018', 'Optional parameters are not implemented in this profile');
       return this.node(
