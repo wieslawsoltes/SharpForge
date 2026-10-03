@@ -5,7 +5,7 @@
 import { TypeKind, ErrorTypeSymbol } from '../../symbols/types.js';
 import { LocalSymbol, LocalDeclarationKind } from '../../symbols/members.js';
 import { ConstantValue } from '../../constants/constant-value.js';
-import { defaultValue } from '../../constants/fold.js';
+import { defaultConstant } from '../../constants/default-constant.js';
 import { numericKind } from '../../conversions/numeric.js';
 import { isNullableType } from '../../conversions/nullable.js';
 
@@ -63,7 +63,7 @@ export class BinderCore {
     this.checked = false;
     this.localFunctions = [];
     this.usesGoto = false;
-    for (const p of context.parameters ?? context.method?.parameters ?? []) if (p.name) this.scopes[0].set(p.name, p);
+    for (const p of context.parameters ?? context.method?.parameters ?? []) if (p.name && !p.isDiscard) this.scopes[0].set(p.name, p);
     // Expression variables of a constructor initializer are in scope in the constructor body.
     for (const [name, symbol] of context.outerLocals ?? []) this.scopes[0].set(name, symbol);
   }
@@ -287,17 +287,7 @@ export class BinderCore {
       case 'DefaultExpression': {
         const type = this.bindType(syntax.type).type;
         const n = this.node('Default', syntax, type);
-        if (
-          !type.isErrorType() &&
-          !isNullableType(type) &&
-          (keywordOf(type) || type.typeKind === TypeKind.Enum || type.isReferenceType === true)
-        ) {
-          try {
-            n.constantValue = defaultValue(type.typeKind === TypeKind.Enum ? type : (keywordOf(type) ?? 'object'));
-          } catch {
-            n.constantValue = null;
-          }
-        }
+        n.constantValue = defaultConstant(type);
         return n;
       }
       case 'TypeOfExpression': {

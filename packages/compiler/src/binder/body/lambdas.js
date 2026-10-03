@@ -31,6 +31,8 @@ export const LambdaBinding = Base =>
       const bindWith = (parameterTypes, returnType, quiet, refKinds = null) => {
         const key = parameterTypes.map(t => t.toDisplayString()).join(',') + '=>' + (returnType ? returnType.toDisplayString() : '?');
         if (quiet && cache.has(key)) return cache.get(key);
+        // C# 9: when more than one parameter is named `_` they are discards, and `_` names none of them.
+        const hasDiscards = (parameterSyntax ?? []).filter(p => p.identifier.valueText === '_').length > 1;
         const parameters = (parameterSyntax ?? []).map((p, i) => {
           const mods = p.modifiers?.map(m => m.text) ?? [];
           const s = new ParameterSymbol({
@@ -46,6 +48,7 @@ export const LambdaBinding = Base =>
                   : (refKinds?.[i] ?? RefKind.None),
             syntax: p,
           });
+          s.isDiscard = hasDiscards && s.name === '_';
           return s;
         });
         const diagnostics = [],
@@ -225,20 +228,7 @@ export const LambdaBinding = Base =>
         { isExpression: true, node: syntax.switchKeyword },
       );
       const type = this.bestCommonType(arms.map(a => a.value));
-      if (!type) {
-        const n = this.node('SwitchExpression', syntax, null, { governing, arms, form: 'implicitNew' });
-        n.convert = to =>
-          arms.every(a => {
-            const c = this.conversions.classifyFromExpression(a.value, to);
-            return c.exists && c.isImplicit;
-          })
-            ? new Conversion(ConversionKind.Identity)
-            : null;
-        n.materialize = to =>
-          this.node('SwitchExpression', syntax, to, { governing, arms: arms.map(a => ({ ...a, value: this.convert(a.value, to) })) });
-        n.isTargetTypedSwitch = true;
-        return n;
-      }
+      if (!type) return this.targetTypedSwitch(syntax, governing, arms);
       return this.node('SwitchExpression', syntax, type, {
         governing,
         arms: arms.map(a => ({ ...a, value: this.convert(a.value, type) })),

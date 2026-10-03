@@ -9,6 +9,7 @@
 import { NamedTypeSymbol, TypeKind, Accessibility } from './types.js';
 import { MethodSymbol, PropertySymbol, FieldSymbol, ParameterSymbol, MethodKind, DeclarationModifiers } from './members.js';
 import { ConstantValue } from '../constants/constant-value.js';
+import { modernAttributes } from './attribute-types-modern.js';
 
 /** The values of System.AttributeTargets. */
 export const AttributeTargets = Object.freeze({
@@ -153,7 +154,7 @@ export function declareAttributeTypes(core) {
       }),
     );
   core.attribute.isAbstract = true;
-  for (const [namespaceName, name, validOn, allowMultiple, constructors, named] of attributes) {
+  for (const [namespaceName, name, validOn, allowMultiple, constructors, named] of [...attributes, ...modernAttributes(T)]) {
     const container = bridge.globalNamespace.ensureNamespace(namespaceName);
     let type = container.getTypeMembers(name, 0)[0];
     if (type) type._base = core.attribute;

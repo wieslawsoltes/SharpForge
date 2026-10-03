@@ -2,6 +2,7 @@
  * The source assembly: declares every type of every file (names, arity, containers, partial merging) and
  * builds the member list of a type on first use.
  */
+import { mergeGlobalUsings } from '../../binder/global-usings.js';
 import { mergePartialMembers } from './partial-members.js';
 import { synthesizeRecordMembers } from '../synthesized/records.js';
 import { TypeKind, Accessibility } from '../types.js';
@@ -36,7 +37,7 @@ export class SourceAssemblyCore {
   /** Declares every type of every file; `merged` is the global namespace lookups go through (source + references). */
   declare(merged) {
     this.merged = merged;
-    const globalUsings = this.files.flatMap(f => f.syntax.usings.filter(u => u.globalKeyword).map(u => u));
+    const globalUsings = mergeGlobalUsings(this.files);
     for (const file of this.files) {
       const uri = file.source.uri,
         unit = new Scope('unit', {
@@ -44,7 +45,8 @@ export class SourceAssemblyCore {
           sourceNamespace: this.globalNamespace,
           usings: {
             directives: [...file.syntax.usings.filter(u => !u.globalKeyword)],
-            global: globalUsings,
+            global: globalUsings.directives,
+            globalUris: globalUsings.uriOf,
             externs: [...file.syntax.externs],
             bound: null,
           },
@@ -222,7 +224,7 @@ export class SourceAssemblyCore {
           syntax.constraintClauses,
           t => this.bindType(t, scope).type,
           (n, c, a) => this.report(uri, n, c, a),
-          { ownerDisplay: type.toDisplayString() },
+          { ownerDisplay: type.toDisplayString(), useFeature: (node, feature) => this.host.useFeature?.(uri, node, feature) },
         );
       if (syntax.parameterList) this.primaryConstructor(type, syntax, scope, uri, members);
       for (const m of syntax.members ?? []) this.member(type, m, scope, uri, members);

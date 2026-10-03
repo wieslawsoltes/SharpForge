@@ -1,0 +1,7 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "module-initializers/run-before-main-in-declaration-order":{"hash":"b20e1bd1272bb707","kind":"output","langVersion":"14.0","diagnostics":[],"output":"First.cctor\nfirst\nsecond\nProgram.cctor\nmain\n"},
+  "module-initializers/before-top-level-statements":{"hash":"14c0617bf1a5fee8","kind":"output","langVersion":"14.0","diagnostics":[],"output":"a\nb\nmain 2\n"},
+  "module-initializers/declaration-rules":{"hash":"018f8b8801a0c49e","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS8814",54,17,"error"],["CS8815",104,17,"error"],["CS8815",167,17,"error"],["CS8815",218,17,"error"],["CS8816",282,17,"error"],["CS8814",342,17,"error"],["CS8814",404,17,"error"],["CS0592",560,17,"error"],["CS8813",592,17,"error"],["CS8816",670,17,"error"],["CS8814",750,17,"error"]]},
+  "module-initializers/module-initializer-in-csharp-8":{"hash":"a90d055d89fdbbbd","kind":"diagnostics","langVersion":"8.0","diagnostics":[["CS8400",50,17,"error"]]},
+  "module-initializers/cs0227-skip-locals-init-needs-unsafe":{"hash":"3205ac8ac9797ebe","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0227",40,14,"error"],["CS0227",85,14,"error"]]}
+}}
