@@ -1,17 +1,24 @@
 import {ManagedFault} from '../../heap.js';
 import {completeInitialization} from '../static-init.js';
+import {methodPointer} from '../calls.js';
+import {continueDelegate} from '../delegate-calls.js';
+import {unboxValue} from '../value-types.js';
+import {validatePointer} from '../managed-pointers.js';
 
 const handlers=new Map();
-for(const name of ['call','callvirt','newobj'])handlers.set(name,(vm,frame,instruction)=>vm.invoke(instruction));
-handlers.set('ldftn',(vm,frame,instruction)=>{
-  const descriptor=vm.inspector.resolveToken(instruction.operand),token=descriptor.resolvedToken??descriptor.token;
-  if(!vm.report.methods.includes(token))throw new ManagedFault('InvalidProgramException','Unverified delegate method');
-  vm.push(Object.freeze({methodPointer:true,token}));
-});
+for(const name of ['call','callvirt','calli','newobj'])handlers.set(name,(vm,frame,instruction)=>vm.invoke(instruction));
+handlers.set('ldftn',(vm,frame,instruction)=>vm.push(methodPointer(vm,instruction.operand)));
+handlers.set('ldvirtftn',(vm,frame,instruction)=>vm.push(methodPointer(vm,instruction.operand,vm.pop())));
+handlers.set('tail.',(vm,frame)=>{frame.tailCall=true;});
+handlers.set('constrained.',(vm,frame,instruction)=>{frame.constrainedType=instruction.operand;});
 handlers.set('ret',(vm,frame)=>{
-  const result=frame.method.signature.returnType==='void'?null:vm.pop();
+  let result=frame.method.signature.returnType==='void'?null:vm.pop();
+  if(result?.byref){validatePointer(vm,result);if(result.frameId===frame.id)throw new ManagedFault('InvalidProgramException','A return reference cannot outlive its local frame');}
   if(frame.initializes)completeInitialization(vm,frame);
-  vm.frames.pop();const value=frame.returnObject??result;
+  vm.frames.pop();
+  if(frame.valueConstructor)result=unboxValue(vm,frame.returnObject,frame.valueConstructorType);
+  const continuation=continueDelegate(vm,frame,result);if(continuation.continued)return;
+  const value=frame.valueConstructor?continuation.result:frame.returnObject??continuation.result;
   if(vm.top){if(frame.returnObject||frame.method.signature.returnType!=='void')vm.push(value);}
   else {vm.returnValue=value;vm.exitCode=frame.method.signature.returnType==='int'?Number(value)|0:0;vm.state='terminated';}
 });

@@ -1,10 +1,11 @@
 import {resolveExecutionField} from './field-profile.js';
-import {frameworkType} from '@sharpforge/framework';
+import {resolveExecutionMethod,supportedDelegateCall,callStorageType,methodGenericParameters,callSignatureKey} from './call-profile.js';
+import {verifyControlRegions} from './control-flow-profile.js';
 import { AssemblyInspector } from './inspector.js';
 import { CilError } from './binary.js';
 import {CilDispatchTable} from './dispatch-profile.js';
 // Broad decoding is deliberately separate from this managed execution allowlist.
-const simple = new Set(('volatile. ldtoken ldftn nop break ldnull dup pop ret switch ldstr newobj call callvirt throw rethrow endfinally ldlen newarr ldfld stfld ldsfld stsfld ldflda ldsflda ldobj stobj initobj ldelema ldelem stelem box unbox unbox.any cpobj sizeof castclass isinst ckfinite').split(' '));
+const simple = new Set(('volatile. tail. constrained. readonly. ldtoken ldftn ldvirtftn calli endfilter nop break ldnull dup pop ret switch ldstr newobj call callvirt throw rethrow endfinally ldlen newarr ldfld stfld ldsfld stsfld ldflda ldsflda ldobj stobj initobj ldelema ldelem stelem box unbox unbox.any cpobj sizeof castclass isinst ckfinite').split(' '));
 const arithmetic = /^(add|sub|mul)(\.ovf(\.un)?)?$|^(div|rem|shr)(\.un)?$|^(and|or|xor|shl|neg|not|ceq|cgt|clt)(\.un)?$/;
 const indexed = /^(ldarg|ldarga|starg|ldloc|ldloca|stloc)(\.[0-3s])?$/;
 const numeric = /^ldc\.(i4(\.(m1|[0-8]|s))?|i8|r4|r8)$/;
@@ -24,12 +25,12 @@ export function selectMethod(inspector,selection,args){
 }
 export function stackEffect(inspector,m,i){
   const n=i.name;
-  if(n==='volatile.'||n==='nop'||n==='break'||n==='endfinally'||n==='rethrow'||/^br(\.s)?$/.test(n)||/^leave/.test(n))return [0,0];
+  if(['volatile.','tail.','constrained.','readonly.'].includes(n)||n==='nop'||n==='break'||n==='endfinally'||n==='rethrow'||/^br(\.s)?$/.test(n)||/^leave/.test(n))return [0,0];
   if(n==='ldtoken'||n==='ldftn'||n==='sizeof'||n==='ldnull'||n==='ldstr'||numeric.test(n)||/^ld(arg|loc)/.test(n)||n==='ldsfld'||n==='ldsflda')return [0,1];
-  if(/^st(arg|loc)/.test(n)||n==='pop'||n==='stsfld'||n==='throw'||n==='switch'||/^br(true|false)/.test(n)||n==='initobj')return [1,0];
+  if(/^st(arg|loc)/.test(n)||n==='pop'||n==='stsfld'||n==='throw'||n==='endfilter'||n==='switch'||/^br(true|false)/.test(n)||n==='initobj')return [1,0];
   if(n==='dup')return [1,2];
   if(n==='ret')return [m.signature.returnType==='void'?0:1,0];
-  if(n==='call'||n==='callvirt'||n==='newobj'){const d=inspector.resolveToken(i.operand);return [d.signature.parameters.length+(n!=='newobj'&&!d.signature.isStatic?1:0),n==='newobj'||d.signature.returnType!=='void'?1:0];}
+  if(['call','callvirt','calli','newobj'].includes(n)){const signature=n==='calli'?inspector.signature(i.operand):resolveExecutionMethod(inspector,i.operand).signature;return [signature.parameters.length+(n!=='newobj'&&!signature.isStatic?1:0)+(n==='calli'?1:0),n==='newobj'||signature.returnType!=='void'?1:0];}
   if(n==='cpobj'||n==='stfld'||n==='stobj'||n.startsWith('stind.'))return [2,0];
   if(n==='stelem'||n.startsWith('stelem.'))return [3,0];
   if(n==='ldelema'||n==='ldelem'||n.startsWith('ldelem.'))return [2,1];
@@ -51,52 +52,53 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
     let m;try{m=inspector.getMethod(t);}catch(error){issue({token:t},null,'IL_METADATA',error.message);continue;}
     enqueueType(m.ownerToken);
     if(!m.hasBody||m.implFlags&3||m.flags&0x2000){issue(m,null,'IL_NATIVE','Native, runtime and abstract methods are not executable');continue;}
-    if(m.signature.genericArity||m.signature.callingConvention||m.signature.parameters.concat(m.locals,m.signature.returnType).some(t=>!frameworkType(t.replace(/\[\]$/,''))&&/[!*]|`[0-9]|\bpinned\b|\bmod(req|opt)\b/.test(t))){issue(m,null,'IL_SIGNATURE','Generic, native-pointer and modified signatures are inspection-only');continue;}
+    const illegalType=type=>{const value=callStorageType(type);return /typedref|\bpinned\b/.test(type)||value.replace(/method /g,'').replace(/ \*\(/g,'(').includes('*');};
+    if(m.signature.callingConvention||m.signature.parameters.concat(m.locals,m.signature.returnType).some(illegalType)){issue(m,null,'IL_SIGNATURE','Native pointers, varargs, typed references and pinned locals are inspection-only');continue;}
+    if(methodGenericParameters(inspector,m.token).length!==(m.signature.genericArity??0)){issue(m,null,'IL_GENERIC','Generic parameter metadata does not match method arity');continue;}
     const map=new Map(m.instructions.map((i,index)=>[i.offset,index]));
-    const prefixTails=new Set(m.instructions.filter((instruction,index)=>index>0&&m.instructions[index-1].name==='volatile.').map(instruction=>instruction.offset));
-    for(const instruction of m.instructions) {
-      const targets=instruction.name==='switch'?instruction.operand:instruction.operandKind.startsWith('br')?[instruction.operand]:[];
-      if(targets.some(target=>prefixTails.has(target)))issue(m,instruction,'IL_PREFIX','Control flow cannot enter a prefixed instruction after its prefix');
-    }
-    for(const handler of m.handlers)if([handler.start,handler.end,handler.target,handler.handlerEnd].some(offset=>prefixTails.has(offset)))issue(m,null,'IL_PREFIX','An exception region cannot split an instruction prefix');
-    for(const h of m.handlers)if(h.flags===1)issue(m,null,'IL_FILTER','Exception filters are inspection-only');
+    verifyControlRegions(inspector,m,issue);
     for(const i of m.instructions){
       if(!isExecutableOpcode(i.name)){issue(m,i,'IL_OPCODE',`Opcode '${i.name}' is inspection-only`);continue;}
-      if(['sizeof','cpobj','unbox'].includes(i.name)){try{const type=inspector.metadata.typeName(i.operand);const definition=inspector.types.find(definition=>definition.token===i.operand),isEnum=definition?.baseToken&&inspector.metadata.typeName(definition.baseToken)==='System.Enum'||frameworkType(type)?.kind==='enum';if(!primitiveSizes[type]&&!(i.name==='unbox'&&isEnum))issue(m,i,'IL_TYPE',`${i.name} is implemented only for fixed-width primitive types${i.name==='unbox'?' and enums':''}`);}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
-      if(i.name==='volatile.') {
-        const next=m.instructions[m.instructions.indexOf(i)+1];
-        if(!next||!['ldfld','stfld','ldsfld','stsfld','ldobj','stobj'].includes(next.name)&&!next.name.startsWith('ldind.')&&!next.name.startsWith('stind.'))issue(m,i,'IL_PREFIX','volatile. must precede a supported memory instruction');
-      }
+      if(i.name==='sizeof'){try{const type=inspector.metadata.typeName(i.operand);if(!primitiveSizes[type])issue(m,i,'IL_TYPE','sizeof is implemented only for fixed-width primitive types');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
+      if(['cpobj','unbox','unbox.any','box','castclass','isinst','ldobj','stobj','initobj','newarr','ldelema','ldelem','stelem'].includes(i.name)){try{if(inspector.resolveToken(i.operand).kind!=='type')throw new CilError('Instruction requires a type token');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
       if(i.name==='ldtoken'){try{const token=inspector.resolveToken(i.operand);if(!['type','method','field'].includes(token.kind))issue(m,i,'IL_TOKEN','ldtoken requires a type, method or field');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
       if(indexed.test(i.name)){
         const index=i.operand??Number(i.name.split('.').at(-1)),limit=i.name.includes('arg')?m.signature.parameters.length+(m.signature.isStatic?0:1):m.locals.length;
         if(!Number.isInteger(index)||index<0||index>=limit)issue(m,i,'IL_SLOT','Invalid argument/local slot');
       }
-      if(i.name==='ldftn'){try{const d=inspector.resolveToken(i.operand),target=d.resolvedToken??(d.token>>>24===6?d.token:null);if(!target)throw new CilError('External delegate target is not supported');pending.push(target);}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
-      if(['call','callvirt','newobj'].includes(i.name)){
-        try{const d=inspector.resolveToken(i.operand);if(d.kind!=='method')throw new CilError('Call operand is not a method');const target=d.resolvedToken??(d.token>>>24===6?d.token:null);
-          if(d.genericArguments)issue(m,i,'IL_GENERIC','Generic method instantiations are inspection-only');
+      if(i.name==='calli') {
+        try{const signature=inspector.signature(i.operand);if(i.operand>>>24!==17||signature.kind!=='method'||signature.callingConvention||signature.genericArity||signature.parameters.concat(signature.returnType).some(illegalType))throw new CilError('calli requires a managed non-vararg StandAloneSig');}catch(error){issue(m,i,'IL_SIGNATURE',error.message);}
+      }
+      if(['call','callvirt','newobj','ldftn','ldvirtftn'].includes(i.name)){
+        try{const d=resolveExecutionMethod(inspector,i.operand),target=d.resolvedToken;
+          if(d.signature.callingConvention||d.signature.parameters.concat(d.signature.returnType).some(illegalType))throw new CilError('Unsupported managed call signature');
+          if(['callvirt','ldvirtftn'].includes(i.name)&&d.signature.isStatic)throw new CilError(i.name+' requires an instance method');
+          const instructionIndex=m.instructions.indexOf(i),prefixes=[];for(let index=instructionIndex-1;index>=0&&m.instructions[index].name.endsWith('.');index--)prefixes.push(m.instructions[index]);
+          if(prefixes.some(prefix=>prefix.name==='tail.')&&callStorageType(d.signature.returnType)!==callStorageType(m.signature.returnType))throw new CilError('tail. call return type must match the containing method');
+          if(prefixes.some(prefix=>prefix.name==='constrained.')&&!target)for(const candidate of inspector.methods.values())if(candidate.hasBody&&candidate.name===d.name&&callSignatureKey(inspector.signature(candidate.token))===callSignatureKey(d.signature))pending.push(candidate.token);
+          if(d.signature.genericArity&&!d.genericArguments&& !['ldftn','ldvirtftn'].includes(i.name))throw new CilError('A generic method call requires MethodSpec arguments');
+          if(supportedDelegateCall(inspector,d)) { /* Runtime delegate methods have no IL body. */ }
           else if(target) {
-            if(i.name==='callvirt'&&(inspector.methods.get(target)?.flags&0x40)) {
+            if(['callvirt','ldvirtftn'].includes(i.name)&&(inspector.methods.get(target)?.flags&0x40)) {
               const targets=dispatch.targets(target);
               if(!targets.size)issue(m,i,'IL_DISPATCH','Virtual method has no executable implementation');
               for(const implementation of targets)pending.push(implementation);
             } else pending.push(target);
-          }else if(!supportedIntrinsic(d))issue(m,i,'IL_REFERENCE',`External member '${d.owner}::${d.name}' is not implemented`);
+          }else if(['callvirt','ldvirtftn'].includes(i.name)&&dispatch.externalTargets(d).size){for(const implementation of dispatch.externalTargets(d))pending.push(implementation);}else if(!supportedIntrinsic(d))issue(m,i,'IL_REFERENCE',`External member '${d.owner}::${d.name}' is not implemented`);
           if(i.name==='newobj'&&(d.name!=='.ctor'||d.signature.isStatic))issue(m,i,'IL_CTOR','newobj requires an instance constructor');
         }catch(error){issue(m,i,'IL_TOKEN',error.message);}
       }
       if(['ldsfld','stsfld','ldsflda','newobj'].includes(i.name)){try{enqueueType((i.name==='newobj'?inspector.resolveToken(i.operand):resolveExecutionField(inspector,i.operand)).ownerToken);}catch{/* Reported by token validation. */}}
       if(['ldfld','stfld','ldsfld','stsfld','ldflda','ldsflda'].includes(i.name)){try{const d=resolveExecutionField(inspector,i.operand);if(d.kind!=='field'||d.token>>>24!==4&&!d.resolvedToken)issue(m,i,'IL_FIELD','External fields are inspection-only');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
     }
-    const queue=[[0,0]],heights=new Map();for(const h of m.handlers)if(h.flags!==1)queue.push([map.get(h.target),h.flags===0?1:0]);
+    const queue=[[0,0]],heights=new Map();for(const h of m.handlers){queue.push([map.get(h.target),h.flags===0||h.flags===1?1:0]);if(h.flags===1)queue.push([map.get(h.catchType),1]);}
     while(queue.length&&issues.length<200){
       const [index,height]=queue.pop(),i=m.instructions[index];if(!i){issue(m,null,'IL_FLOW','Control flow leaves the method');continue;}
       if(heights.has(index)){if(heights.get(index)!==height)issue(m,i,'IL_STACK','Inconsistent evaluation stack height at join');continue;}heights.set(index,height);
       let pop,push;try{[pop,push]=stackEffect(inspector,m,i);}catch(error){issue(m,i,'IL_STACK',error.message);continue;}
       if(height<pop){issue(m,i,'IL_STACK','Evaluation stack underflow');continue;}const after=height-pop+push;if(after>m.maxStack)issue(m,i,'IL_STACK','Evaluation stack exceeds maxstack');
       if(i.name==='ret'){if(height!==pop)issue(m,i,'IL_STACK','Invalid return stack');continue;}
-      if(['throw','rethrow','endfinally'].includes(i.name)){if(i.name==='endfinally'&&height!==0)issue(m,i,'IL_STACK','endfinally requires an empty stack');continue;}
+      if(['throw','rethrow','endfinally','endfilter'].includes(i.name)){if(i.name==='endfilter'&&height!==1)issue(m,i,'IL_STACK','endfilter requires exactly one decision');if(i.name==='endfinally'&&height!==0)issue(m,i,'IL_STACK','endfinally requires an empty stack');continue;}
       if(i.operandKind.startsWith('br'))queue.push([map.get(i.operand),i.name.startsWith('leave')?0:after]);
       if(i.name==='switch')for(const target of i.operand)queue.push([map.get(target),after]);
       if(!/^(br|leave)(\.s)?$/.test(i.name))queue.push([index+1,after]);

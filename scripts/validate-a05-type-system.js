@@ -16,19 +16,22 @@ const usage=`Usage: node scripts/validate-a05-type-system.js [options]
   --fixture directory|Program.cs  Add a same-DLL .NET/CIL case (repeatable).
   --expected expected.txt        Expected stdout for the preceding fixture.
   --casts                        Include native Type.IsAssignableFrom/CastCache parity.
+  --unsafe                       Allow managed function-pointer C# fixtures.
+  --task identifier              Evidence task identifier (default SF-A05-E04).
   --output directory             Evidence directory (default artifacts/a05-type-system).
   --framework net10.0            Target framework (default installed SDK major).
   --dotnet executable            .NET executable (default DOTNET_PATH or dotnet).
 With no --fixture/--casts, run all four E04 fixtures plus the casts oracle.
 Directories contribute their .cs files; expected.txt is required unless overridden.
 Line endings are normalized to LF; all other output bytes must match.`;
-const options={fixtures:[],casts:false,output:resolve(root,'artifacts/a05-type-system'),dotnet:process.env.DOTNET_PATH??'dotnet',framework:process.env.DOTNET_TARGET_FRAMEWORK};
+const options={fixtures:[],casts:false,unsafe:false,task:'SF-A05-E04',output:resolve(root,'artifacts/a05-type-system'),dotnet:process.env.DOTNET_PATH??'dotnet',framework:process.env.DOTNET_TARGET_FRAMEWORK};
 const arguments_=process.argv.slice(2);
 for(let i=0;i<arguments_.length;i++) {
   const argument=arguments_[i];
   if(argument==='--help'){console.log(usage);process.exit(0);}
+  if(argument==='--unsafe'){options.unsafe=true;continue;}
   if(argument==='--casts'){options.casts=true;continue;}
-  if(!['--fixture','--expected','--output','--framework','--dotnet'].includes(argument)||!arguments_[i+1]||arguments_[i+1].startsWith('--'))throw new Error(usage);
+  if(!['--fixture','--expected','--output','--framework','--dotnet','--task'].includes(argument)||!arguments_[i+1]||arguments_[i+1].startsWith('--'))throw new Error(usage);
   const value=arguments_[++i];
   if(argument==='--fixture')options.fixtures.push({path:resolve(value)});
   else if(argument==='--expected') {
@@ -75,7 +78,7 @@ async function sourceFiles(path) {
 
 async function qualify(id,load) {
   const artifact=join(options.output,id),commandStart=commands.length;
-  const report={task:'SF-A05-E04',fixture:id,timestamp:new Date().toISOString(),...environmentEvidence,passed:false};
+  const report={task:options.task,fixture:id,timestamp:new Date().toISOString(),...environmentEvidence,passed:false};
   let directory;
   await mkdir(artifact,{recursive:true});
   try {
@@ -84,7 +87,7 @@ async function qualify(id,load) {
     report.sources=fixture.sources.map(source=>({path:source.path?relative(root,source.path):source.name,sha256:sha256(source.bytes),...(source.generatedFrom?{generatedFrom:relative(root,source.generatedFrom)}:{})}));
     report.expectedOutput=fixture.expectedOutput;
     directory=await mkdtemp(join(tmpdir(),'sharpforge-e04-'));
-    await writeFile(join(directory,'Qualification.csproj'),`<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><TargetFramework>${framework}</TargetFramework><ImplicitUsings>disable</ImplicitUsings><Nullable>disable</Nullable><Optimize>true</Optimize><DebugType>none</DebugType><Deterministic>true</Deterministic><GenerateAssemblyInfo>false</GenerateAssemblyInfo><NuGetAudit>false</NuGetAudit></PropertyGroup></Project>\n`);
+    await writeFile(join(directory,'Qualification.csproj'),`<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><TargetFramework>${framework}</TargetFramework><ImplicitUsings>disable</ImplicitUsings><Nullable>disable</Nullable><Optimize>true</Optimize><AllowUnsafeBlocks>${options.unsafe}</AllowUnsafeBlocks><DebugType>none</DebugType><Deterministic>true</Deterministic><GenerateAssemblyInfo>false</GenerateAssemblyInfo><NuGetAudit>false</NuGetAudit></PropertyGroup></Project>\n`);
     await writeFile(join(directory,'NuGet.Config'),'<configuration><packageSources><clear /></packageSources></configuration>\n');
     for(const source of fixture.sources){const path=join(directory,source.name);await mkdir(dirname(path),{recursive:true});await writeFile(path,source.bytes);}
     execute(options.dotnet,['restore','Qualification.csproj','--configfile','NuGet.Config','--verbosity','quiet'],{cwd:directory});
@@ -140,6 +143,6 @@ if(options.casts)reports.push(await qualify('assignability',async()=>{
     compare:()=>{const cache=new CastCache(castingRegistry());return {pairs:typePairs.length,output:typePairs.map(([source,target])=>cache.isAssignableFrom(target,source)?'True':'False').join('\n')+'\n'};}
   };
 }));
-const summary={task:'SF-A05-E04',timestamp:new Date().toISOString(),...environmentEvidence,passed:reports.every(report=>report.passed),fixtures:reports.map(report=>({fixture:report.fixture,passed:report.passed,qualification:report.qualification,evidence:join(report.fixture,'qualification.json')}))};
+const summary={task:options.task,timestamp:new Date().toISOString(),...environmentEvidence,passed:reports.every(report=>report.passed),fixtures:reports.map(report=>({fixture:report.fixture,passed:report.passed,qualification:report.qualification,evidence:join(report.fixture,'qualification.json')}))};
 await writeFile(join(options.output,'qualification.json'),JSON.stringify(summary,null,2)+'\n');
 if(!summary.passed)process.exitCode=1;
