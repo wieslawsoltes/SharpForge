@@ -19,3 +19,4 @@ export { win32VersionFromAssembly } from './pe/version-attributes.js';
 export { decodeMarshalDescriptor, marshalDiagnosticCatalog } from './metadata/marshal-descriptors.js';
 export { linkAssemblyModules } from './pe/module-linker.js';
 export { readAssemblyModules } from './pe/module-reader.js';
+export { decodeBinaryPermissionSet, securityDiagnosticCatalog } from './metadata/security-declarations.js';
