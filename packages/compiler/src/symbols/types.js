@@ -132,7 +132,9 @@ export class NamedTypeSymbol extends TypeSymbol {
   construct(...typeArguments){
     if(typeArguments.length===1&&Array.isArray(typeArguments[0]))typeArguments=typeArguments[0];const definition=this.originalDefinition;
     if(typeArguments.length!==definition.arity)throw new RangeError(`'${definition.metadataName}' takes ${definition.arity} type arguments, not ${typeArguments.length}`);
-    if(!definition.arity)return this;return new ConstructedNamedTypeSymbol(definition,typeArguments.map(twa),this.containingType);
+    if(!definition.arity)return this;const args=typeArguments.map(twa);
+    // A module whose instantiations carry their own members (the closed framework registry) supplies them here.
+    return definition.instanceProvider?.(definition,args)??new ConstructedNamedTypeSymbol(definition,args,this.containingType);
   }
   substitute(map){
     if(map.isEmpty||!this.isGenericType)return this;const container=this.containingType,newContainer=container?container.substitute(map):null,args=this.typeArguments.map(a=>a.substitute(map));
