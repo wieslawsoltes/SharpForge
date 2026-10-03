@@ -1240,6 +1240,10 @@
       "sha256": "a3744cffde1eac76b87cb72165099141634434ba51f7bec43b5870ad5a3df8cc"
     },
     {
+      "path": "dist/build.contrib.json",
+      "sha256": "067ca4ba7239c50e39711175f82bcaaf43a42b6a19959f6494267d9f19eec4c8"
+    },
+    {
       "path": "dist/commands/core.js",
       "sha256": "8f0a22dedb8ccb68011bb20c014b7701e0e55417e404c3f81e921519c40812b0"
     },
@@ -3448,8 +3452,16 @@
       "sha256": "6f92bcbe8946d991692ccb0167f0e7674537209b1a48f38e7876e0b26483319f"
     },
     {
+      "path": "dist/packages/archive/build.contrib.json",
+      "sha256": "f5549f0ace3724285d7ab5f43806a0a7539bb3b73065d3a74a8f3cb4d4eadff9"
+    },
+    {
       "path": "dist/packages/archive/package.json",
       "sha256": "e67cb79a2461944333ebe3f583705c2ba499dbc542f9ec34be8fa355e0264221"
+    },
+    {
+      "path": "dist/packages/archive/smoke.mjs",
+      "sha256": "606c62043c77f3830ef6e06cffcd8fe9e0e207e8b946d21dd1b4aba3a7e7818a"
     },
     {
       "path": "dist/packages/archive/src/deflate.js",
@@ -3468,8 +3480,16 @@
       "sha256": "508a583b48f42b05c015bc5dda030cf1324b726876a9f553425bae1b479238a8"
     },
     {
+      "path": "dist/packages/bytecode/build.contrib.json",
+      "sha256": "ce14e0150dd983636b38dda7432270da8bc99684532fd114356217971c30ff19"
+    },
+    {
       "path": "dist/packages/bytecode/package.json",
       "sha256": "3a4815e50844cb30c392ba0e58266a8dc27ab39ce8897972a4cbf4354a65b27a"
+    },
+    {
+      "path": "dist/packages/bytecode/smoke.mjs",
+      "sha256": "7300d8a12f40fd7b1d3970dc541a8c8dbeae77c11206aa91a3b4a1475656d478"
     },
     {
       "path": "dist/packages/bytecode/src/builtins.js",
@@ -3488,8 +3508,16 @@
       "sha256": "ce31e7326f34e981ab1073e5dcc335355b22a8232191eca8ec979c962838af5c"
     },
     {
+      "path": "dist/packages/cil/build.contrib.json",
+      "sha256": "2a369c7f451c7e4a111a145ceecf14ccaa7ae774f358b86884c00a18a7f81006"
+    },
+    {
       "path": "dist/packages/cil/package.json",
       "sha256": "6285282a5ce21823ef4a2e93e0e8173160503f857152bd546f638fa28f353429"
+    },
+    {
+      "path": "dist/packages/cil/smoke.mjs",
+      "sha256": "ad25daba7166f7a904a1f0a960ebb446298d2ea7f14a7574a6e935ca5cddce28"
     },
     {
       "path": "dist/packages/cil/src/analysis.js",
@@ -3552,8 +3580,16 @@
       "sha256": "2d55c87f207a6654ffc5a3a6dfe5f8a8b4b4f57e362f3dad61ea2e4c4de87e29"
     },
     {
+      "path": "dist/packages/compiler/build.contrib.json",
+      "sha256": "f025446e29f564b91c88043a38e989c00f5f1420e7134e81e1cd29cb2bb4931f"
+    },
+    {
       "path": "dist/packages/compiler/package.json",
       "sha256": "5ee546c9c84e592c5f1760269ac103a3c1681a5f0123cda759acdaba3d5b92eb"
+    },
+    {
+      "path": "dist/packages/compiler/smoke.mjs",
+      "sha256": "a0534343013d556403e2f3e5a01b57edf69924d476c49e64309c9f0f97ab3d19"
     },
     {
       "path": "dist/packages/compiler/src/async-lowering.js",
@@ -3584,6 +3620,10 @@
       "sha256": "cd9ce37f94a60781c3adc41624776b9ba86eb425999ef0c07feff6d01ccd2457"
     },
     {
+      "path": "dist/packages/compute/build.contrib.json",
+      "sha256": "28842e403448274192fe666dc950c60e3071f86b65643fdfa77424a2bba38fbc"
+    },
+    {
       "path": "dist/packages/compute/native/kernels.c",
       "sha256": "c8c2e8e8dd5c712e3e9cebcf7e8c63cbb25421dfd39e10c2b6cc64f445da6464"
     },
@@ -3594,6 +3634,10 @@
     {
       "path": "dist/packages/compute/package.json",
       "sha256": "3cfaaa9c82855f42f3d77db144e032f4367245f011c07028a1df6404f89c75de"
+    },
+    {
+      "path": "dist/packages/compute/smoke.mjs",
+      "sha256": "8b60b01fdc31535eddabb9709f44b2ecbfedf8d806fc6cf5afc8fce3809081f7"
     },
     {
       "path": "dist/packages/compute/src/index.js",
@@ -3620,8 +3664,16 @@
       "sha256": "9780076886a64eeae06c2402f41bb55c13abb97f1569c11918d864eae0b4a567"
     },
     {
+      "path": "dist/packages/controls/build.contrib.json",
+      "sha256": "d8835746df716c7d97da8a3c05ff4949859309e65c7ce8ea9fe0d384dd9ee915"
+    },
+    {
       "path": "dist/packages/controls/package.json",
       "sha256": "30f60c1316acad53d89a9d7aee86c19ff3908a9ebfd9cac88af9d6f22920a002"
+    },
+    {
+      "path": "dist/packages/controls/smoke.mjs",
+      "sha256": "9834234f9d63791423bc7aa679b6f70ed67e910bfd4981f07ea439334bcdf938"
     },
     {
       "path": "dist/packages/controls/src/commands.js",
@@ -3656,8 +3708,16 @@
       "sha256": "2ff2ade81e68488a2ce6365cb33d952494fc3d4ee108d30dce2ae2dd730649a3"
     },
     {
+      "path": "dist/packages/debugger/build.contrib.json",
+      "sha256": "f4c1f44785d7aea731877c09296b8ba5168dc67fef9ac2f2a1d5623028af1b39"
+    },
+    {
       "path": "dist/packages/debugger/package.json",
       "sha256": "a18c8c381ba38c3b9b83d222b0ffbd746b08844c12f7c3c1370839222ac7d62e"
+    },
+    {
+      "path": "dist/packages/debugger/smoke.mjs",
+      "sha256": "340b1202734179b6ec8c0036ebad38e22e86a073b4f97320ffbffbe636cd7673"
     },
     {
       "path": "dist/packages/debugger/src/advanced.js",
@@ -3704,8 +3764,16 @@
       "sha256": "dd6994a39b411088aef7eb3c950472882e6480bc4b380ec3846afa8ab0468607"
     },
     {
+      "path": "dist/packages/designer/build.contrib.json",
+      "sha256": "d292480b8c5bb0eec4b3854a8561d6b18e1af9f996a886bfae24de5782e09f73"
+    },
+    {
       "path": "dist/packages/designer/package.json",
       "sha256": "7509d180ed04e3596efc4de923817a167a46265182eb4ce8dfc3af6e8c0d0a31"
+    },
+    {
+      "path": "dist/packages/designer/smoke.mjs",
+      "sha256": "91c38d0263a1e3dbc44d91db1c8a040432c3265ce1fe935a71413141adab37fb"
     },
     {
       "path": "dist/packages/designer/src/codegen.js",
@@ -3732,8 +3800,16 @@
       "sha256": "d7c600871b37a0bcd02610edef9e5699e2faded353081b1628ad66ad54bf8dd9"
     },
     {
+      "path": "dist/packages/docking/build.contrib.json",
+      "sha256": "85e82129318b740174c8ffe91718a38b0ab43cb30792969c72a0e4218cc4eefa"
+    },
+    {
       "path": "dist/packages/docking/package.json",
       "sha256": "87b1cd97f58dbb931093e8252100b03a22f4bcda40460775c0b6fa69d70cd985"
+    },
+    {
+      "path": "dist/packages/docking/smoke.mjs",
+      "sha256": "d5e11a8f73a94d54cdc12d57d54a416de6ab2380d52cfbb475e6ba44b9a2f903"
     },
     {
       "path": "dist/packages/docking/src/host.js",
@@ -3760,8 +3836,16 @@
       "sha256": "c25476f93de7a1db5c1b6f18b3f2965b44f5f01f20ac6be55e471e3913983a24"
     },
     {
+      "path": "dist/packages/editor/build.contrib.json",
+      "sha256": "2ddea4d03a2e91f40e5dc2a8e6b8a2aacde2b6f69d754eaaf273c1e1d36912b0"
+    },
+    {
       "path": "dist/packages/editor/package.json",
       "sha256": "96c492e01d2908ccf18bafebbb0db03eb577f2e0f41ad19f94d4cad6759b1c9f"
+    },
+    {
+      "path": "dist/packages/editor/smoke.mjs",
+      "sha256": "20b3a66c4097d7b1e6362d590e2f8d8f75503f5a5611dab4c0d82bce70586569"
     },
     {
       "path": "dist/packages/editor/src/editor.css",
@@ -3812,8 +3896,16 @@
       "sha256": "2279c43434bebae367eba83f49b6c9b8bfb79d5a939bc6ea28f9325a1e21e2c6"
     },
     {
+      "path": "dist/packages/extensions/build.contrib.json",
+      "sha256": "9ae28b339599159cdb1d600753cd60ce105a5b88effc1721566189623bc12a93"
+    },
+    {
       "path": "dist/packages/extensions/package.json",
       "sha256": "b1bb5740f009596c03e7fd30c19ac7b833557abe9f9c72f5e56f33730188bd16"
+    },
+    {
+      "path": "dist/packages/extensions/smoke.mjs",
+      "sha256": "020b27025210dc88df1c11322490c6df413de7220889f7777ea654ca698f319c"
     },
     {
       "path": "dist/packages/extensions/src/index.js",
@@ -3828,8 +3920,16 @@
       "sha256": "3832c11a33c86a52c46e4d1240a7f093cd6f48df295d33973feb7374d80cd9d5"
     },
     {
+      "path": "dist/packages/framework/build.contrib.json",
+      "sha256": "ff6c8ee549ee5499d9e64160cbf0d8b8c66af75d87e11dc964531a51af4fccbe"
+    },
+    {
       "path": "dist/packages/framework/package.json",
       "sha256": "44fc2988f8d04016d8404c0c9c42810c2d745dd44c0800b5344407bc1da1d178"
+    },
+    {
+      "path": "dist/packages/framework/smoke.mjs",
+      "sha256": "26be315229408a0d6cb20630f44f6fd9074be2d87ef15732ae362ae89583f253"
     },
     {
       "path": "dist/packages/framework/src/animation-clock.js",
@@ -3888,8 +3988,16 @@
       "sha256": "65c1b7ce72e2276cb01ee0ad28448271f10dd0f472478e7f2c14eeace3685df0"
     },
     {
+      "path": "dist/packages/language/build.contrib.json",
+      "sha256": "99f0f3425af976f543b8732845da4811f331dd784f1851be96aaa829dda1199c"
+    },
+    {
       "path": "dist/packages/language/package.json",
       "sha256": "b442b35ca826f517b0f88d5f0c34ffd112b1ef4c6575f45ff3a41c67faef42dd"
+    },
+    {
+      "path": "dist/packages/language/smoke.mjs",
+      "sha256": "7300d8a12f40fd7b1d3970dc541a8c8dbeae77c11206aa91a3b4a1475656d478"
     },
     {
       "path": "dist/packages/language/src/index.js",
@@ -3908,8 +4016,16 @@
       "sha256": "6860910e6e7b773a6b4492c39cde3c4f53db7781b800b15bc843dd9740aa8c47"
     },
     {
+      "path": "dist/packages/msbuild/build.contrib.json",
+      "sha256": "b7316e2f0fa973c8342d99fff4ea54713214cab7bf4f3c2a082ccd8c49115f1d"
+    },
+    {
       "path": "dist/packages/msbuild/package.json",
       "sha256": "a4650e3ae5e8223abde3f3e038f3d016d7a2aacf7877e6c6d4f866408367c042"
+    },
+    {
+      "path": "dist/packages/msbuild/smoke.mjs",
+      "sha256": "05c9f3edd76e3130aa05214b339fde907f4bf38f3ed34800754bcfb33ea68769"
     },
     {
       "path": "dist/packages/msbuild/src/cli.js",
@@ -3960,8 +4076,16 @@
       "sha256": "fccf23d52f4f0a65a75bf257334ba9b5c69fb00c9378bc24223e4fa9294d7253"
     },
     {
+      "path": "dist/packages/network/build.contrib.json",
+      "sha256": "59a67be6d8c4fe9f1ff6c69e7a0803799bc1c8d9ae058fda27df1ded4dbff06c"
+    },
+    {
       "path": "dist/packages/network/package.json",
       "sha256": "e68e0f28755bb4f2b2512fe4edede14fa8f2ca2deab420a5f1d0f0a32773b2ff"
+    },
+    {
+      "path": "dist/packages/network/smoke.mjs",
+      "sha256": "4602f97649e4c810fd84ddc944466235c43fc715245f43b103404c071ea5816e"
     },
     {
       "path": "dist/packages/network/src/index.js",
@@ -3976,8 +4100,16 @@
       "sha256": "6e632f854dfb98d99b52bdbf37cfa8910cd2b64bdd0232383e6e30e50894c04d"
     },
     {
+      "path": "dist/packages/project-system/build.contrib.json",
+      "sha256": "5a9a8e2ed5a60792cbcaaa8ae53cd5f2c452367e387178ed8117ba065f6f442a"
+    },
+    {
       "path": "dist/packages/project-system/package.json",
       "sha256": "78f671a23f3fc149e03f1a3959803224866362b6bb1e469497f1f6ef2fd5e808"
+    },
+    {
+      "path": "dist/packages/project-system/smoke.mjs",
+      "sha256": "79688bb68caf474f4256a09ae41741d79aea0c6147949d5ecd90004d0afedb2b"
     },
     {
       "path": "dist/packages/project-system/src/archive.js",
@@ -4032,8 +4164,16 @@
       "sha256": "c15e4403a19c097be53d904e64857630ee4e4d6dd9379c35c85203c66095ca32"
     },
     {
+      "path": "dist/packages/protocol/build.contrib.json",
+      "sha256": "8ee87b064be47544176e509099fa973f6b189ada0c03ce3e6430c509bef09977"
+    },
+    {
       "path": "dist/packages/protocol/package.json",
       "sha256": "b2d52a7624831fc16ed0fb48523b3c762478545e024f62ccdd4072ba0bd00f0b"
+    },
+    {
+      "path": "dist/packages/protocol/smoke.mjs",
+      "sha256": "a01fc48d8ddacb4479e5b5d0616c8ed8f1d32455971013f7388a0c9ca379d108"
     },
     {
       "path": "dist/packages/protocol/src/dap.js",
@@ -4060,8 +4200,16 @@
       "sha256": "013eb39000cee96c98cad934b2349fd03ea8d8f79470409b14056f89e921d901"
     },
     {
+      "path": "dist/packages/refactoring/build.contrib.json",
+      "sha256": "09fe0e8e6df317b4208e6c7586ceb338a1c2431ca3a3b267d321bf465f07ef15"
+    },
+    {
       "path": "dist/packages/refactoring/package.json",
       "sha256": "849c66777309b89a36e3d4bd580dacee9d1bae05b4d8f073cc40959c76ee17af"
+    },
+    {
+      "path": "dist/packages/refactoring/smoke.mjs",
+      "sha256": "0849afdbb67c2b85da8ff5031e5bbe74a2ebae8554813f4e4e71827fbccfaeec"
     },
     {
       "path": "dist/packages/refactoring/src/index.js",
@@ -4080,8 +4228,16 @@
       "sha256": "1ffbaf453bef1b777b92ae3f1dfe7e327c5f9d26db9017b048a7ef34e35eefe5"
     },
     {
+      "path": "dist/packages/runtime/build.contrib.json",
+      "sha256": "c123cc9886f89a04815559b2672b5b23b1292fb4304099be3d24f2955c21da19"
+    },
+    {
       "path": "dist/packages/runtime/package.json",
       "sha256": "c83c7e1ac7f851ca7460ad98081f3fa1fdd9c19502ef40611fcc96baa6ae89d6"
+    },
+    {
+      "path": "dist/packages/runtime/smoke.mjs",
+      "sha256": "ed4e2b0296646ebc2519d99688e2309a0c66949a7c17e1455a283669421f73d6"
     },
     {
       "path": "dist/packages/runtime/src/animation.js",
@@ -4156,8 +4312,16 @@
       "sha256": "bcb822d7c71c986416794c0996de75b9f4ec602110630a49ff1cd79722b93b93"
     },
     {
+      "path": "dist/packages/symbols/build.contrib.json",
+      "sha256": "abd9ceffe19ecd32ac957439eb5f795cc505650bc6ef66ae353d48c8fd1915bc"
+    },
+    {
       "path": "dist/packages/symbols/package.json",
       "sha256": "cc128e140a5f55859114083a1c029d57ea56fb6524d7ac2fe82bd20cb1109647"
+    },
+    {
+      "path": "dist/packages/symbols/smoke.mjs",
+      "sha256": "6467afa30ed52b8dc90a6daa76da5052579357e4c14d1c3b3c48bb84a2bda6f7"
     },
     {
       "path": "dist/packages/symbols/src/deflate.js",
@@ -4180,8 +4344,16 @@
       "sha256": "57f0ba47298ec5b28188f4b6fa663d2f4e171bf4525116e5ed36364c8f9362ad"
     },
     {
+      "path": "dist/packages/syntax/build.contrib.json",
+      "sha256": "f29d8f126f56fefea0cd15336ac4dcb061ad31f9e096c17600e9177db325da41"
+    },
+    {
       "path": "dist/packages/syntax/package.json",
       "sha256": "ac7a6c1df3e1cf25b9498a11a85821981fc646f9730672979c5f7e33d8e4607e"
+    },
+    {
+      "path": "dist/packages/syntax/smoke.mjs",
+      "sha256": "7300d8a12f40fd7b1d3970dc541a8c8dbeae77c11206aa91a3b4a1475656d478"
     },
     {
       "path": "dist/packages/syntax/src/index.js",
@@ -4208,8 +4380,16 @@
       "sha256": "89df3995463ecf54a5e3c89e42f385ebba2515afc02d31779354b3e9c634a937"
     },
     {
+      "path": "dist/packages/templates/build.contrib.json",
+      "sha256": "678f2197a977072a556387e0d9874ce72d840575699c5046fee321d94f700774"
+    },
+    {
       "path": "dist/packages/templates/package.json",
       "sha256": "52963180743f501c3b8505901a113b5de143a34d1889627235f2321aaa68718e"
+    },
+    {
+      "path": "dist/packages/templates/smoke.mjs",
+      "sha256": "b1532ffc5d5a9f2f9a3716b22d0edb08312b0080f163f870ab104ab103a7f0ef"
     },
     {
       "path": "dist/packages/templates/src/index.js",
@@ -4224,8 +4404,16 @@
       "sha256": "06464b1c3ecabb8a80419f68d58aead960b8e82a5abc7d96f46930c66fc10d88"
     },
     {
+      "path": "dist/packages/text/build.contrib.json",
+      "sha256": "13d8ebddec0961f73c60f603df742a8b7d60b1adb5adc26efa6caa2bea83f9de"
+    },
+    {
       "path": "dist/packages/text/package.json",
       "sha256": "7473f059108beba68d139dc08e0693f44745aa50f9fbfd5122fc0844c09decf8"
+    },
+    {
+      "path": "dist/packages/text/smoke.mjs",
+      "sha256": "026c37a534290b3668a4a64e12b9b8eab530a474348b998cbfcde35ac2b53b8e"
     },
     {
       "path": "dist/packages/text/src/index.js",
@@ -4244,8 +4432,16 @@
       "sha256": "ab22e1ef5e35eefd8b8d1bc65dcc9eadfd30bf4a635f61b01c88923bc846b932"
     },
     {
+      "path": "dist/packages/winui/build.contrib.json",
+      "sha256": "025cb4489a883b41154c81286f91c7d446d1ef7ab358c7a03361d5d442745b79"
+    },
+    {
       "path": "dist/packages/winui/package.json",
       "sha256": "2ae893b4e490efc2ad51cfa55ab563969c9f23aa092a7d2730d460b8e2e5d617"
+    },
+    {
+      "path": "dist/packages/winui/smoke.mjs",
+      "sha256": "a123134ac15953abe058dba20c169b931b06972067b9605f34564c2ba5b51092"
     },
     {
       "path": "dist/packages/winui/src/animation-system.js",
@@ -4284,8 +4480,16 @@
       "sha256": "c5082eee8c91c5bf59acdc9a11137438270fbab321b9590a220e61b50b0b4552"
     },
     {
+      "path": "dist/packages/workspace/build.contrib.json",
+      "sha256": "af631cf93b2bb745b02aac809e3f3ca80702968f0dbdc4b95e5cba22eaef4693"
+    },
+    {
       "path": "dist/packages/workspace/package.json",
       "sha256": "ea4c022c13a1eadab6a07306ad39a2bae11d3b67c3b0d7023ed5e8acbf4dee8b"
+    },
+    {
+      "path": "dist/packages/workspace/smoke.mjs",
+      "sha256": "c50632eb8230d8ea269a439834ed28d49ebf9df08218956b89eaf6eb1a27656a"
     },
     {
       "path": "dist/packages/workspace/src/index.js",
