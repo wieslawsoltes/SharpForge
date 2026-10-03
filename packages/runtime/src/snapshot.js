@@ -51,6 +51,7 @@ const retain = value => value;
 const entries = (value, memo) => copyExecution([...value], memo);
 const common = [
   component('platform'), component('scheduler'), field('frames', copyFrames), component('heap'),
+  field('typeObjects', copyExecution, {optional: true}),
   field('statics'), field('fault'), field('pendingFault'), field('state', retain),
   field('instructions', retain), field('elapsedMs', retain), field('frameId', retain, {monotonic: true}),
   field('output'), field('outputCharacters', retain), field('returnValue'), field('exitCode', retain),

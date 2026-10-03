@@ -1,0 +1,17 @@
+True
+False
+True
+Derived
+TokenFixture.Derived
+True
+True
+True
+True
+True
+List`1
+True
+False
+True
+True
+String[]
+System.String[]
