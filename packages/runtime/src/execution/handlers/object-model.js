@@ -23,6 +23,7 @@ for(const name of ['ldfld','stfld','ldflda'])handlers.set(name,(vm,frame,instruc
 });
 handlers.set('box',(vm,frame,instruction)=>{
   const value=vm.pop(),table=vm.typeSystem.table(instruction.operand),type=table.name;
+  if(!table.flags.valueType){vm.push(castReference(vm.heap,value,table));return;}
   if(isReference(value)&&frameworkType(type)?.kind==='value'&&vm.heap.get(value).type===type) {
     vm.heap.withRoots([value],()=>{const record=vm.heap.get(value),copy=vm.heap.allocate(record.kind,record.type,[...record.data]);vm.push(vm.heap.allocate('box',table,[copy],[copy]));});return;
   }
@@ -37,6 +38,6 @@ for(const name of ['unbox','unbox.any'])handlers.set(name,(vm,frame,instruction)
   vm.push(name==='unbox'?vm.address('box',0,ref):vm.storage(record.data[0],type));
 });
 for(const name of ['castclass','isinst'])handlers.set(name,(vm,frame,instruction)=>{
-  vm.push(castReference(vm.heap,vm.pop(),instruction.operand,name==='castclass'));
+  vm.push(castReference(vm.heap,vm.pop(),vm.typeSystem.table(instruction.operand),name==='castclass'));
 });
 export {handlers};
