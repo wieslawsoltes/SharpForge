@@ -9,6 +9,7 @@
  * `callerInfoArguments` computes the constants of one call, which the binder records on the bound node as
  * `callerInfo` (parameter ordinal -> value) and code generation uses in place of the default value.
  */
+import { createLineMap } from '@sharpforge/syntax';
 import { SymbolKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 
@@ -153,6 +154,25 @@ function callLine(syntax, source) {
   return source.positionAt((anchor.span ?? anchor).start).line + 1;
 }
 
+/**
+ * The line and file a call is at for caller info: `#line` directives remap both (`#line 100 "other.cs"`); a
+ * `#line hidden` region keeps counting in the mapping before it, and `#line default` returns to the file itself.
+ * @param lineMap the file's `createLineMap` result (its entries are the active `#line` directives)
+ * @returns {{line:number, path:string}}
+ */
+export function callSite(syntax, lineMap, source, uri) {
+  const line = callLine(syntax, source),
+    offset = (syntax.span ?? syntax).start;
+  let mapping = null;
+  for (const entry of lineMap?.entries ?? []) {
+    if (entry.at > offset) break;
+    if (entry.mode !== 'hidden') mapping = entry;
+  }
+  if (!mapping || mapping.mode === 'default') return { line, path: uri };
+  const first = mapping.mode === 'span' ? mapping.start.line : mapping.line;
+  return { line: first + (line - 1 - mapping.from), path: mapping.file ?? uri };
+}
+
 /** Class mixin for the body binder: a call records the caller info it passes for omitted arguments. */
 export const CallerInfoBinding = Base =>
   class extends Base {
@@ -165,16 +185,24 @@ export const CallerInfoBinding = Base =>
       const node = super.elementAccessOn(target, args, syntax);
       return node.kind === 'IndexerAccess' && node.property.parameters ? this.withCallerInfo(node, node.property, node.mapping, args, syntax) : node;
     }
+    /** The `#line` map of a file, built once per analysis. */
+    lineMapOf(uri, source) {
+      const maps = (this.d.lineMaps ??= new Map());
+      if (!maps.has(uri)) maps.set(uri, createLineMap(source, this.d.files.find(file => file.source.uri === uri)?.directives ?? []));
+      return maps.get(uri);
+    }
     /** Records on `node` the caller info `signature` (a method or an indexer) receives for the arguments left out. */
     withCallerInfo(node, signature, mapping, args, syntax) {
       if (!mapping?.parameterOf) return node;
       const root = this.rootBinder.c,
-        source = this.d.sources.get(this.c.uri);
+        uri = this.c.uri ?? '',
+        source = this.d.sources.get(uri),
+        site = source ? callSite(syntax, this.lineMapOf(uri, source), source, uri) : { line: 0, path: uri };
       const values = callerInfoArguments(
         signature,
         mapping.parameterOf,
         args.map(argument => argument.syntax ?? null),
-        { member: root.method ?? root.initializerOf ?? null, line: source ? callLine(syntax, source) : 0, path: this.c.uri ?? '' },
+        { member: root.method ?? root.initializerOf ?? null, ...site },
       );
       if (values.size) node.callerInfo = values;
       return node;
@@ -186,9 +214,14 @@ export const CallerInfoChecks = Base =>
   class extends Base {
     bindAttributes() {
       super.bindAttributes();
+      // The line is supplied as an `int` constant: besides the standard conversions from `int` it reaches `uint` and
+      // `ulong` (a constant conversion; the smaller types cannot hold every line number).
+      const unsigned = new Set(['System_UInt32', 'System_UInt64']),
+        underlying = type => (type.originalDefinition?.specialType === 'System_Nullable_T' ? type.typeArguments[0].type : type);
       const isStandard = (from, to) => {
         const conversion = this.conversions.classifyImplicit(from, to);
-        return conversion.exists && !conversion.isUserDefined;
+        if (conversion.exists) return !conversion.isUserDefined;
+        return from === this.core.int && unsigned.has(underlying(to).specialType);
       };
       const types = { int: this.core.int, string: this.core.string };
       for (const type of this.assembly.types) {

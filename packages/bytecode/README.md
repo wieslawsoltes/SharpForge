@@ -11,3 +11,9 @@ import * as api from '@sharpforge/bytecode';
 ```
 
 Install its declared sibling packages together. npm publication is not part of this release. See the root project README and docs/embedding.md for integration.
+
+`createBuiltinRegistry(base = Builtins)` appends validated builtin contributions
+without changing existing slot identities. Sparse array reservations remain
+holes, including in the frozen `entries` snapshots; new IDs start at the base
+array's length. Non-array iterable bases remain supported. Rejected or cancelled
+contributions leave the registry unchanged.

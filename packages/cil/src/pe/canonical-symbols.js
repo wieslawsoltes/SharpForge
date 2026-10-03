@@ -1,3 +1,4 @@
+import { peChecksum } from './checksum.js';
 import { equalBytes } from '../binary.js';
 import { readPortableExecutable } from './reader.js';
 
@@ -6,6 +7,7 @@ export function canonicalWithSymbols(canonical, pe) {
   if (equalBytes(canonical, pe.bytes)) return true;
   if (pe.bytes.length <= canonical.length) return false;
   const original = readPortableExecutable(canonical);
+  if (original.checksum && pe.checksum !== peChecksum(pe.bytes)) return false;
   if (pe.sections.length !== original.sections.length) return false;
   const section = pe.sections.at(-1);
   const view = new DataView(pe.bytes.buffer, pe.bytes.byteOffset, pe.bytes.byteLength);
@@ -25,7 +27,7 @@ export function canonicalWithSymbols(canonical, pe) {
     ranges.push([start, start + size]);
   }
   const clone = new Uint8Array(pe.bytes.subarray(0, canonical.length));
-  for (const [at, size] of [[pe.optionalStart + 4, 8], [pe.optionalStart + 56, 4], [directory, 8],
+  for (const [at, size] of [[pe.optionalStart + 4, 8], [pe.optionalStart + 56, 4], [pe.optionalStart + 64, 4], [directory, 8],
     [section.headerOffset + 8, 4], [section.headerOffset + 16, 4]]) {
     clone.set(canonical.subarray(at, at + size), at);
   }
