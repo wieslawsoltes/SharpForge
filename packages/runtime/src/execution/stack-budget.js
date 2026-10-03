@@ -79,6 +79,19 @@ export class ManagedStackBudget {
     frame.stackContextId = contextId;
   }
 
+  replace(previous, next, contextId = this.vm.scheduler?.currentId ?? 1) {
+    const old = this.frames.get(previous.id);
+    if (!old || old.contextId !== contextId) throw new TypeError('Tail frame budget context mismatch');
+    const bytes = this.size(next);
+    const current = this.contexts.get(contextId) - old.bytes;
+    if (bytes > this.limit - current) throw overflow();
+    this.frames.delete(previous.id);
+    this.frames.set(next.id, {contextId, bytes});
+    this.contexts.set(contextId, current + bytes);
+    next.stackBytes = bytes;
+    next.stackContextId = contextId;
+  }
+
   release(frame) {
     const entry = this.frames.get(frame.id);
     if (!entry) return;
@@ -102,6 +115,11 @@ function budgetFor(vm) {
 /** Admit before pushing. A rejected frame changes neither totals nor live frames. */
 export function registerStackFrame(vm, frame) {
   budgetFor(vm).register(frame);
+}
+
+/** Validate a replacement before removing its caller's accounting. */
+export function replaceStackFrame(vm, previous, next) {
+  budgetFor(vm).replace(previous, next);
 }
 
 /** Release once on ret, exceptional exit, tail transfer or filter completion. */

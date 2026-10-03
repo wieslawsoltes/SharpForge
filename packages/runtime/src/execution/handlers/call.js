@@ -1,3 +1,4 @@
+import {jumpMethod} from '../tailcall.js';
 import {ManagedFault} from '../../heap.js';
 import {completeInitialization} from '../static-init.js';
 import {methodPointer} from '../calls.js';
@@ -6,7 +7,7 @@ import {unboxValue} from '../value-types.js';
 import {validatePointer} from '../managed-pointers.js';
 import {popFrame} from '../frame-stack.js';
 
-const handlers=new Map();
+const handlers=new Map([['jmp',jumpMethod]]);
 for(const name of ['call','callvirt','calli','newobj'])handlers.set(name,(vm,frame,instruction)=>vm.invoke(instruction));
 handlers.set('ldftn',(vm,frame,instruction)=>vm.push(methodPointer(vm,instruction.operand)));
 handlers.set('ldvirtftn',(vm,frame,instruction)=>vm.push(methodPointer(vm,instruction.operand,vm.pop())));

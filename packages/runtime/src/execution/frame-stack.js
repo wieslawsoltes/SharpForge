@@ -1,5 +1,5 @@
 import {registerFrame, releaseFrame} from './frame-lifetimes.js';
-import {registerStackFrame, releaseStackFrame} from './stack-budget.js';
+import {registerStackFrame, releaseStackFrame, replaceStackFrame} from './stack-budget.js';
 
 /** One admission boundary for byte budgets and pointer lifetime indexing. */
 export function pushFrame(vm, frame) {
@@ -22,5 +22,15 @@ export function popFrame(vm) {
     releaseFrame(vm, frame);
     releaseStackFrame(vm, frame);
   }
+  return frame;
+}
+
+/** Atomic budget admission ensures an oversized tail callee leaves its caller inspectable. */
+export function replaceFrame(vm, frame) {
+  const previous = vm.frames.at(-1);
+  replaceStackFrame(vm, previous, frame);
+  registerFrame(vm, frame);
+  vm.frames[vm.frames.length - 1] = frame;
+  releaseFrame(vm, previous);
   return frame;
 }

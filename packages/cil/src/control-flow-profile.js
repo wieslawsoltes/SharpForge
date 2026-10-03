@@ -43,7 +43,7 @@ export function verifyControlRegions(inspector,method,issue) {
   const containing=offset=>regions.filter(region=>inside(offset,region.start,region.end));
   for(const instruction of instructions) {
     const current=containing(instruction.offset),targets=instruction.name==='switch'?instruction.operand:instruction.operandKind.startsWith('br')?[instruction.operand]:[];
-    if(instruction.name==='ret'&&current.length)fail(instruction,'ret cannot exit a protected region, handler or filter');
+    if(['ret','jmp'].includes(instruction.name)&&current.length)fail(instruction,'ret cannot exit a protected region, handler or filter');
     if(instruction.name==='tail.'&&current.length)fail(instruction,'tail. cannot exit a protected region, handler or filter','IL_PREFIX');
     if(instruction.name==='rethrow'&&!current.some(region=>region.kind==='catch'))fail(instruction,'rethrow requires an enclosing catch handler');
     if(instruction.name==='endfinally'&&!current.some(region=>region.kind==='cleanup'))fail(instruction,'endfinally requires a finally or fault handler');

@@ -13,10 +13,13 @@ import {instantiatedMethod,bindCallArguments,resolveCallType} from './generic-ca
 import {constructDelegate,invokeDelegateOperation} from './delegate-calls.js';
 import {address,validatePointer,pointerType} from './managed-pointers.js';
 import {boxValue} from './value-types.js';
-import {pushFrame, popFrame} from './frame-stack.js';
+import {pushFrame, replaceFrame} from './frame-stack.js';
+import {eligibleTailCall, inheritedTailState} from './tailcall.js';
 
 export function call(vm, token, args, extra = {}) {
-  if (vm.options.maxFrames !== undefined && vm.frames.length >= vm.options.maxFrames) {
+  const replacement = extra.tail && eligibleTailCall(vm.top, args);
+  if (replacement) extra = {...inheritedTailState(vm.top), ...extra};
+  if (!replacement && vm.options.maxFrames !== undefined && vm.frames.length >= vm.options.maxFrames) {
     const fault = new ManagedFault('StackOverflowException', 'Explicit managed frame limit exceeded');
     fault.fatal = true;
     fault.runtimeOrigin = true;
@@ -24,7 +27,7 @@ export function call(vm, token, args, extra = {}) {
   }
   const method = instantiatedMethod(vm, token, extra.genericIdentity ?? null, extra.methodArguments ?? []);
   const values = bindCallArguments(vm, method, args);
-  pushFrame(vm, {
+  const frame = {
     id: ++vm.frameId,
     method,
     args: values,
@@ -36,7 +39,9 @@ export function call(vm, token, args, extra = {}) {
     ...createExceptionState(),
     needsInitialization: method.name !== '.cctor',
     ...extra
-  });
+  };
+  if (replacement) replaceFrame(vm, frame);
+  else pushFrame(vm, frame);
 }
 export function ensureInitialized(vm,typeToken,trigger='field',genericIdentity=null) {
   return ensureTypeInitialized(vm,typeToken,trigger,genericIdentity);
@@ -85,12 +90,7 @@ function startManagedCall(vm,descriptor,args,extra={}) {
     if(vm.heap.get(args[0]).kind!=='box')throw new ManagedFault('InvalidProgramException','Value receiver requires a managed reference');
     args[0]=address(vm,'box',0,args[0],{type:owner.name});
   }
-  if(extra.tail) {
-    const caller=vm.top;
-    if(args.some(value=>value?.byref&&value.frameId===caller.id))throw new ManagedFault('InvalidProgramException','Tail call would invalidate a managed reference');
-    const inherited={delegateContinuation:caller.delegateContinuation,returnObject:caller.returnObject,valueConstructor:caller.valueConstructor,valueConstructorType:caller.valueConstructorType};
-    popFrame(vm);extra={...inherited,...extra};
-  }
+
   vm.call(token,args,{...extra,genericIdentity,methodArguments:descriptor.methodArguments??[]});return SUSPENDED;
 }
 
