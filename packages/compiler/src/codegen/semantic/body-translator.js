@@ -25,6 +25,7 @@ import { memberLowerings } from '../../lowering/members/index.js';
 import { InitializerLowering } from '../../lowering/members/initializers.js';
 import { RecordTranslation } from '../../lowering/records/translate-records.js';
 import { StructuralPatternTranslation } from '../../lowering/patterns/translate-structural-patterns.js';
+import { languageLowerings } from '../../lowering/language-lowerings.js';
 
 export { Frame } from './frame.js';
 
@@ -220,6 +221,7 @@ const families = [
   InitializerLowering,
   RecordTranslation,
   StructuralPatternTranslation,
+  ...languageLowerings,
 ];
 
 export class BodyTranslator extends families.reduce(
