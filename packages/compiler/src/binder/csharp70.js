@@ -66,8 +66,14 @@ export const CSharp70Binding = Base =>
       if (syntax.kind !== 'ThrowExpression' || isThrowExpressionAllowed(syntax)) return super.expression(syntax, options);
       // The operand is still bound for its own diagnostics.
       this.value(syntax.expression);
-      this.report(syntax.throwKeyword, 'CS8115');
+      // Where the parser already rejected the `throw` (an operand of a binary operator is CS1525) nothing is added.
+      if (!this.hasSyntaxErrorAt(syntax.throwKeyword.span.start)) this.report(syntax.throwKeyword, 'CS8115');
       return this.bad(syntax);
+    }
+    /** True when the parser reported an error that starts at `position` of this binder's file. */
+    hasSyntaxErrorAt(position) {
+      const file = this.d.files?.find(candidate => candidate.source.uri === this.c.uri);
+      return !!file?.diagnostics.some(diagnostic => diagnostic.start === position && diagnostic.code !== 'CS8115');
     }
     /** An expression body `=> throw e` is a statement, also where no value is expected. */
     isStatementExpression(syntax) {

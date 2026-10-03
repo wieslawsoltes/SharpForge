@@ -143,7 +143,7 @@ export const PropertySymbolBuilder = Base =>
           syntax.constraintClauses,
           t => this.bindType(t, scope).type,
           (n, c, a) => this.report(uri, n, c, a),
-          { ownerDisplay: type.toDisplayString() },
+          { ownerDisplay: type.toDisplayString(), useFeature: (node, feature) => this.host.useFeature?.(uri, node, feature) },
         );
       let returnSyntax = syntax.returnType,
         refKind = RefKind.None;

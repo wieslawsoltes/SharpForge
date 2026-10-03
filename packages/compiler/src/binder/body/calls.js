@@ -82,7 +82,7 @@ export const CallBinding = Base =>
     errorNode(error, args, nameNode, offset = 0) {
       if (error.argument !== undefined && args[error.argument - offset]?.argumentSyntax) {
         const a = args[error.argument - offset].argumentSyntax;
-        return error.code === 'CS1739' || error.code === 'CS1740' || error.code === 'CS1744'
+        return error.code === 'CS1739' || error.code === 'CS1740' || error.code === 'CS1744' || error.code === 'CS8323'
           ? a.nameColon.name
           : error.code === 'CS1620' || error.code === 'CS1615'
             ? a.expression
@@ -284,7 +284,9 @@ export const CallBinding = Base =>
           }
           return { expression: a, parameter: p, refKind: a.refKind };
         }
-        const value = conversion && a.type && !a.hasErrors ? this.applyConversion(a, result.parameterTypes[i], conversion, a.syntax) : a;
+        // A `default` literal has no type of its own: it must take the parameter's, or it would be passed as a null reference.
+        const typed = a.type || a.literal === 'default';
+        const value = conversion && typed && !a.hasErrors ? this.applyConversion(a, result.parameterTypes[i], conversion, a.syntax) : a;
         if (a.form === 'lambda' && !a.hasErrors) this.finishLambda(a, result.parameterTypes[i]);
         return { expression: value, parameter: p, refKind: a.refKind ?? null };
       });

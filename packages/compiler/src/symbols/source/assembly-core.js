@@ -222,7 +222,7 @@ export class SourceAssemblyCore {
           syntax.constraintClauses,
           t => this.bindType(t, scope).type,
           (n, c, a) => this.report(uri, n, c, a),
-          { ownerDisplay: type.toDisplayString() },
+          { ownerDisplay: type.toDisplayString(), useFeature: (node, feature) => this.host.useFeature?.(uri, node, feature) },
         );
       if (syntax.parameterList) this.primaryConstructor(type, syntax, scope, uri, members);
       for (const m of syntax.members ?? []) this.member(type, m, scope, uri, members);
