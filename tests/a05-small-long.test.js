@@ -26,6 +26,11 @@ test('T08.3 Number lanes accept only exact signed-safe integer values', () => {
     assert.throws(() => smallInt64(value), {name: 'InvalidProgramException'});
     assert.throws(() => smallInt64Binary('add', value, 1), {name: 'InvalidProgramException'});
   }
+  for (const value of [null, undefined, true, '1', {}, 1.5]) {
+    assert.throws(() => smallInt64Binary('add', 1, value), {name: 'InvalidProgramException'});
+    assert.throws(() => smallInt64Compare(value, 1), {name: 'InvalidProgramException'});
+    assert.throws(() => smallInt64Unary('neg', value), {name: 'InvalidProgramException'});
+  }
 });
 
 test('T08.3 exact range exits, 64-bit wrap, unsigned overflow and division faults use the BigInt path', () => {

@@ -43,6 +43,12 @@ const smallOperations = Object.freeze({
 });
 const unsignedOperations = new Set(['add.ovf.un', 'sub.ovf.un', 'mul.ovf.un', 'div.un', 'rem.un', 'shr.un']);
 
+function exactOperand(value, context) {
+  if (typeof value !== 'bigint' && (typeof value !== 'number' || !Number.isSafeInteger(value))) {
+    numericFault(context, 'InvalidProgramException', 'Exact Int64 operands required');
+  }
+}
+
 /**
  * Private Int64 lane representation: exact safe integers use Number, wider bit
  * patterns use BigInt. Callers must retain the Int64 slot tag when using Number.
@@ -61,9 +67,8 @@ export function smallInt64(value, context) {
  * unsupported Number operation falls back to the existing full-width helper.
  */
 export function smallInt64Binary(name, left, right, context) {
-  if (typeof left === 'number' && !Number.isSafeInteger(left) || typeof right === 'number' && !Number.isSafeInteger(right)) {
-    numericFault(context, 'InvalidProgramException', 'Exact Int64 operands required');
-  }
+  exactOperand(left, context);
+  exactOperand(right, context);
   if (typeof left === 'number' && typeof right === 'number') {
     const unsigned = unsignedOperations.has(name);
     const operation = smallOperations[name];
@@ -77,6 +82,8 @@ export function smallInt64Binary(name, left, right, context) {
 
 /** Compare small/wide signed CLI bit patterns without changing unsigned ordering. */
 export function smallInt64Compare(left, right, unsigned = false) {
+  exactOperand(left);
+  exactOperand(right);
   if (typeof left === 'number' && typeof right === 'number') {
     if (unsigned && (left < 0) !== (right < 0)) return left < 0 ? 1 : -1;
     return left < right ? -1 : left > right ? 1 : 0;
@@ -86,6 +93,7 @@ export function smallInt64Compare(left, right, unsigned = false) {
 
 /** Int64 unary operations preserve exact safe values and fall back at boundaries. */
 export function smallInt64Unary(name, value, context) {
+  exactOperand(value, context);
   if (typeof value === 'number' && Number.isSafeInteger(value) && (name === 'neg' || name === 'not')) {
     const result = name === 'neg' ? -value : -value - 1;
     if (Number.isSafeInteger(result)) return result || 0;
