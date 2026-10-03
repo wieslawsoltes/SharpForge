@@ -3,21 +3,49 @@ on:
   push:
     tags: ['v*']
 permissions:
-  contents: write
+  contents: read
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
+  qualification:
+    uses: ./.github/workflows/ci.yml
   release:
+    needs: qualification
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
+      - name: Capture starting environment
+        run: node scripts/conformance/env-report.js
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm ci --ignore-scripts --no-audit --no-fund
-      - run: npm run check && npm test && npm run build
-      - run: npm run test:packages
-      - run: node scripts/standalone.js && cp SharpForge-standalone.html artifacts/
-      - run: cd dist && zip -r ../artifacts/SharpForge-browser.zip .
-      - name: Attach artifacts to tag release
+          cache: npm
+      - uses: actions/download-artifact@v4
+        with:
+          name: sharpforge-browser
+          path: .
+      - uses: actions/download-artifact@v4
+        with:
+          name: sharpforge-packages
+          path: artifacts
+      - name: Package the qualified build from this commit
+        run: cd dist && zip -r ../artifacts/SharpForge-browser.zip .
+      - name: Generate and verify release payload inventory and checksums
+        run: |
+          node scripts/conformance/source-manifest.js --generate
+          node scripts/conformance/source-manifest.js --verify
+          cd artifacts && sha256sum --check SHA256SUMS
+      - name: Require a clean checkout before publication
+        run: node scripts/conformance/clean-checkout.js
+      - name: Attach qualified artifacts to tag release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" artifacts/* --generate-notes --title "SharpForge $GITHUB_REF_NAME"
+        run: gh release create "$GITHUB_REF_NAME" artifacts/*.tgz artifacts/*.zip artifacts/*.html artifacts/SOURCE-MANIFEST.json artifacts/SHA256SUMS --verify-tag --generate-notes --title "SharpForge $GITHUB_REF_NAME"
+      - uses: ./.github/actions/qualification-evidence
+        if: always()
+        with:
+          name: release-evidence

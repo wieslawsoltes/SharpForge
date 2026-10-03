@@ -1,3 +1,4 @@
+import {resultPath} from './conformance/results.js';
 /** Full-framework .NET host differential tests; requires an installed dotnet runtime.
  * Unlike the WASM fixture, this uses the real installed framework without a test facade.
  */
@@ -21,4 +22,4 @@ try{for(let i=0;i<cases.length;i++){
  const run=spawnSync(dotnet,[path],{encoding:'utf8',timeout:15000,env:{...process.env,DOTNET_NOLOGO:'1'}}),expectedStatus=process.platform==='win32'?t.code:t.code&255;
  const output=run.stdout?.replaceAll('\r\n','\n'),passed=run.status===expectedStatus&&output===t.output;results.push({name:t.name,passed,expectedStatus,status:run.status,expectedOutput:t.output,output,stderr:run.stderr,error:run.error?.message});console.log(passed?'PASS':'FAIL',t.name);
 }}finally{await rm(directory,{recursive:true,force:true});}
-const report={timestamp:new Date().toISOString(),host:probe.stdout,results,passed:results.filter(r=>r.passed).length,failed:results.filter(r=>!r.passed).length};await writeFile(new URL('../docs/dotnet-results.json',import.meta.url),JSON.stringify(report,null,2)+'\n');console.log(`${report.passed}/${results.length} full-framework fixtures passed`);if(report.failed)process.exitCode=1;
+const report={timestamp:new Date().toISOString(),host:probe.stdout,results,passed:results.filter(r=>r.passed).length,failed:results.filter(r=>!r.passed).length};await writeFile(await resultPath('dotnet-results.json'),JSON.stringify(report,null,2)+'\n');console.log(`${report.passed}/${results.length} full-framework fixtures passed`);if(report.failed)process.exitCode=1;

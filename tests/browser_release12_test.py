@@ -2,14 +2,16 @@
 import os,json,time,traceback
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-from browser_harness import load_in_memory,wait_condition
+from conformance.browser.launch import launch_browser, results_dir
+RESULTS = results_dir()
+from browser_harness import load_application,wait_condition
 ROOT=Path(__file__).resolve().parents[1];checks=[]
 def truth(v,msg='assertion failed'):
  if not v:raise AssertionError(msg)
 def check(name,fn):
  start=time.perf_counter();fn();checks.append({'name':name,'passed':True,'milliseconds':round((time.perf_counter()-start)*1000,2)});print('PASS',name,flush=True)
-with sync_playwright() as p:
- b=p.chromium.launch(headless=True,**({'executable_path':os.environ['CHROMIUM_EXECUTABLE']} if os.getenv('CHROMIUM_EXECUTABLE') else {}),args=['--no-sandbox']);page=b.new_page(viewport={'width':1880,'height':1140});page.set_default_timeout(12000);errors=[];workers=[]
+with sync_playwright() as p, launch_browser(p, __file__) as browser:
+ b=browser;page=b.new_page(viewport={'width':1880,'height':1140});page.set_default_timeout(12000);errors=[];workers=[]
  page.on('pageerror',lambda e:errors.append(e.stack or str(e)));page.on('worker',lambda w:workers.append(w.url));page.on('dialog',lambda d:d.accept())
  def ev(code,arg=None):return page.evaluate(code,arg)
  def wait(code):return wait_condition(page,code,timeout=25000)
@@ -25,8 +27,7 @@ with sync_playwright() as p:
  def drag(locator,dx,dy):
   box=locator.bounding_box();truth(box,'element has no bounds');x,y=box['x']+box['width']/2,box['y']+box['height']/2;page.mouse.move(x,y);page.mouse.down();page.mouse.move(x+dx,y+dy,steps=8);page.mouse.up();page.wait_for_timeout(120)
  try:
-  if os.getenv('SHARPFORGE_BROWSER_URL'):page.goto(os.environ['SHARPFORGE_BROWSER_URL']);wait('window.sharpforge?.getState().metrics!==null')
-  else:load_in_memory(page)
+  load_application(page)
   ev('sharpforge.designer.open()');page.wait_for_timeout(300)
   check('all seven designer tools initialize with production preview and two runtime/compiler workers',lambda:truth(len(workers)==2 and page.locator('.design-preview [data-sf-id="action"]').count()==1 and 'Canvas' in page.locator('.design-tree').inner_text() and not errors,str(errors)))
   def toolbox():
@@ -74,7 +75,7 @@ with sync_playwright() as p:
    wait('sharpforge.getState().debug?.uiActive');ev('sharpforge.uiSettled()')
   for direct in [False,True]:
    def live(direct=direct):
-    start_live(direct);input_=app_node('Input');button=app_node('Button');ev('id=>sharpforge.dispatchUIEvent(id,"TextChanged",{value:"typed"})',input_['id']);ev('id=>sharpforge.dispatchUIEvent(id,"Click",{})',button['id']);wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Name==="Label"&&n.properties.Text==="typed:1")');ev('sharpforge.designer.open();');ev('sharpforge.designer.attach()');doc=ds()['document'];target=next(n for n in doc['nodes'] if n['properties'].get('Name')=='Button')['id'];ev('id=>{sharpforge.designer.select(id);sharpforge.designer.set("Width",250);sharpforge.designer.style("LiveStyle",{targetType:"Button",setters:{FontSize:24}});sharpforge.designer.reference("style","LiveStyle");}',target);ev('sharpforge.designer.apply()');truth(app_node('Input')['properties']['Text']=='typed');truth(app_node('Button')['id']==button['id']);truth(app_node('Button')['properties']['FontSize']==24);ev('id=>sharpforge.dispatchUIEvent(id,"Click",{})',button['id']);wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Name==="Label"&&n.properties.Text==="typed:2")');truth(ds()['live']);page.screenshot(path=str(ROOT/'docs/screenshots/release12-live-designer.png'))
+    start_live(direct);input_=app_node('Input');button=app_node('Button');ev('id=>sharpforge.dispatchUIEvent(id,"TextChanged",{value:"typed"})',input_['id']);ev('id=>sharpforge.dispatchUIEvent(id,"Click",{})',button['id']);wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Name==="Label"&&n.properties.Text==="typed:1")');ev('sharpforge.designer.open();');ev('sharpforge.designer.attach()');doc=ds()['document'];target=next(n for n in doc['nodes'] if n['properties'].get('Name')=='Button')['id'];ev('id=>{sharpforge.designer.select(id);sharpforge.designer.set("Width",250);sharpforge.designer.style("LiveStyle",{targetType:"Button",setters:{FontSize:24}});sharpforge.designer.reference("style","LiveStyle");}',target);ev('sharpforge.designer.apply()');truth(app_node('Input')['properties']['Text']=='typed');truth(app_node('Button')['id']==button['id']);truth(app_node('Button')['properties']['FontSize']==24);ev('id=>sharpforge.dispatchUIEvent(id,"Click",{})',button['id']);wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Name==="Label"&&n.properties.Text==="typed:2")');truth(ds()['live']);page.screenshot(path=str(RESULTS/'screenshots/release12-live-designer.png'))
    check(('direct CIL' if direct else 'source VM')+' live designer patch retains typed input, object identity, counter state and callbacks',live)
   def enc():
    start_live(False);ev('sharpforge.beginHotReload()');edit(live_src.replace('count++;','count += Step();').replace('static int count;','static int count; static int added; static int Step(){return 3;}'));result=ev('sharpforge.applyHotReload()');truth(ev('sharpforge.getState().debug.codeVersion')==1,str(result));ev('id=>sharpforge.dispatchUIEvent(id,"Click",{})',app_node('Button')['id']);wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Name==="Label"&&n.properties.Text==="initial:3")')
@@ -92,12 +93,11 @@ with sync_playwright() as p:
    radios=page.locator('.sf-winui input[type=radio]');radios.nth(0).check();radios.nth(1).check();wait('async()=> (await sharpforge.getUIScene()).nodes.filter(n=>n.type.endsWith("RadioButton")&&n.properties.IsChecked===true).length===1')
    page.locator('.sf-winui input[type=date]').fill('2026-11-12');wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Date==="2026-11-12")')
    page.locator('.sf-winui input[type=time]').fill('16:45');wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Time==="16:45")')
-   page.locator('.sf-winui [data-close-tab]').click();wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.type.endsWith("TabView")&&n.collections.TabItems.length===1)');truth(not errors,json.dumps(errors));page.screenshot(path=str(ROOT/'docs/screenshots/release12-controls.png'));cmd('stop')
+   page.locator('.sf-winui [data-close-tab]').click();wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.type.endsWith("TabView")&&n.collections.TabItems.length===1)');truth(not errors,json.dumps(errors));page.screenshot(path=str(RESULTS/'screenshots/release12-controls.png'));cmd('stop')
   check('new control gallery routes NumberBox, radio groups, date/time inputs and closable tabs into real managed state',gallery)
   def final_preview():
-   ev('sharpforge.designer.open()');new();select('canvas');a=ev('sharpforge.designer.add("TextBox","canvas")');ev('id=>{sharpforge.designer.set("Text","Design a live application",[id]);sharpforge.designer.set("Top",230,[id]);sharpforge.designer.set("Width",360,[id]);}',a);select('action');tool('designer-properties');page.screenshot(path=str(ROOT/'docs/screenshots/release12-designer.png'));truth(not errors,json.dumps(errors));truth(len(workers)==2)
+   ev('sharpforge.designer.open()');new();select('canvas');a=ev('sharpforge.designer.add("TextBox","canvas")');ev('id=>{sharpforge.designer.set("Text","Design a live application",[id]);sharpforge.designer.set("Top",230,[id]);sharpforge.designer.set("Width",360,[id]);}',a);select('action');tool('designer-properties');page.screenshot(path=str(RESULTS/'screenshots/release12-designer.png'));truth(not errors,json.dumps(errors));truth(len(workers)==2)
   check('all designer workflows finish without page errors and keep the same two real workers',final_preview)
-  (ROOT/'docs/browser-release12-validation.json').write_text(json.dumps({'checks':checks,'errors':errors,'workers':len(workers),'harness':'in-memory production modules and real workers'},indent=2));print(json.dumps({'passed':len(checks),'errors':errors}),flush=True)
+  (RESULTS/'browser-release12-validation.json').write_text(json.dumps({'checks':checks,'errors':errors,'workers':len(workers),'harness':'in-memory production modules and real workers' if os.getenv('SHARPFORGE_IN_MEMORY') == '1' else 'CSP HTTP and real workers'},indent=2));print(json.dumps({'passed':len(checks),'errors':errors}),flush=True)
  except Exception:
-  traceback.print_exc();print('PAGE_ERRORS',json.dumps(errors),flush=True);print('DESIGN',json.dumps(ds())[:2200],flush=True);print('DEBUG',json.dumps(ev('sharpforge.getState().debug'))[:1000],flush=True);page.screenshot(path=str(ROOT/'docs/screenshots/release12-failure.png'));raise
- finally:b.close()
+  traceback.print_exc();print('PAGE_ERRORS',json.dumps(errors),flush=True);print('DESIGN',json.dumps(ds())[:2200],flush=True);print('DEBUG',json.dumps(ev('sharpforge.getState().debug'))[:1000],flush=True);page.screenshot(path=str(RESULTS/'screenshots/release12-failure.png'));raise

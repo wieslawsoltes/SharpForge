@@ -1,11 +1,13 @@
 """Production IDE/VM/worker/SIMD and real loopback HTTP from Chromium.
-HTML navigation is not qualified by this in-memory harness. Fetch is NOT mocked.
+HTTP navigation uses the production CSP. Fetch is NOT mocked.
 """
 import os,json,time,threading,traceback
 from pathlib import Path
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from playwright.sync_api import sync_playwright
-from browser_harness import load_in_memory,wait_condition
+from conformance.browser.launch import launch_browser, results_dir
+RESULTS = results_dir()
+from browser_harness import load_application,wait_condition
 ROOT=Path(__file__).resolve().parents[1];checks=[];requests=[]
 class Handler(BaseHTTPRequestHandler):
  def log_message(self,*args):pass
@@ -26,8 +28,8 @@ def truth(v,msg='assertion failed'):
  if not v:raise AssertionError(msg)
 def check(name,fn):
  t=time.perf_counter();fn();checks.append({'name':name,'passed':True,'milliseconds':round((time.perf_counter()-t)*1000,2)});print('PASS',name,flush=True)
-with sync_playwright() as p:
- b=p.chromium.launch(**({'executable_path':os.environ['CHROMIUM_EXECUTABLE']} if os.getenv('CHROMIUM_EXECUTABLE') else {}),headless=True,args=['--no-sandbox']);page=b.new_page(viewport={'width':1840,'height':1120});page.set_default_timeout(15000);errors=[];workers=[];page.on('pageerror',lambda e:errors.append(e.stack or str(e)));page.on('worker',lambda w:workers.append(w.url));page.on('dialog',lambda d:d.accept())
+with sync_playwright() as p, launch_browser(p, __file__) as browser:
+ b=browser;page=b.new_page(viewport={'width':1840,'height':1120});page.set_default_timeout(15000);errors=[];workers=[];page.on('pageerror',lambda e:errors.append(e.stack or str(e)));page.on('worker',lambda w:workers.append(w.url));page.on('dialog',lambda d:d.accept())
  def ev(code,arg=None):return page.evaluate(code,arg)
  def wait(code):return wait_condition(page,code,timeout=30000)
  def state():return ev('sharpforge.getState()')
@@ -37,7 +39,7 @@ with sync_playwright() as p:
  def run():ev('sharpforge.run()');wait('sharpforge.getState().debug?.state==="terminated"');r=state()['debug'];truth(not r['fault'],str(r));return r
  def configure(value):return ev('s=>sharpforge.configureRuntime(s)',value)
  try:
-  load_in_memory(page)
+  load_application(page, [origin])
   def defaults():
    truth(len(workers)==2);truth(ev('sharpforge.getKeymap().id')=='visual-studio');s=ev('sharpforge.getRuntimeSettings()');truth(s['langVersion']=='14' and not s['enabled']);ev('sharpforge.openTool("runtime-settings")');truth(page.locator('#runtime-network').is_visible());truth(not page.locator('#runtime-network').is_checked());truth(page.locator('#runtime-backend').input_value()=='auto')
   check('stable default language, Visual Studio keys, and explicit-deny runtime panel',defaults)
@@ -82,17 +84,17 @@ with sync_playwright() as p:
    ev('sharpforge.openTool("runtime-settings")');page.locator('#runtime-network').check();page.locator('#runtime-origins').fill(origin+'/not-an-origin');page.locator('#runtime-apply').click();wait('document.getElementById("runtime-status").textContent.includes("exact")');truth(not ev('sharpforge.getRuntimeSettings().enabled'));page.locator('#runtime-origins').fill(origin);page.locator('#runtime-apply').click();wait('sharpforge.getRuntimeSettings().enabled');page.locator('#runtime-revoke').click();wait('!sharpforge.getRuntimeSettings().enabled');truth(ev('sharpforge.getRuntimeSettings().allowedOrigins').__len__()==0)
   check('runtime panel rejects path grants; explicit apply and revoke update real launch settings',panel_validation)
   def ui_compute():
-   load('winui-compute-monitor');ev('sharpforge.execute("winuiLayout");sharpforge.run()');wait('sharpforge.getState().debug?.uiActive');ev('sharpforge.uiSettled()');ev('async()=>{const s=await sharpforge.getUIScene();await sharpforge.dispatchUIEvent(s.nodes.find(n=>n.properties.Name==="ComputeButton").id,"Click",{});}');wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Text==="Completed: sum = 5000.0")');r=ev('sharpforge.getRuntimeInfo()');truth(r['compute']['completed']==1,str(r));truth(r['pendingExternal']==0);page.wait_for_timeout(6200);page.screenshot(path=str(ROOT/'docs/screenshots/release14-compute-ui.png'));stop()
+   load('winui-compute-monitor');ev('sharpforge.execute("winuiLayout");sharpforge.run()');wait('sharpforge.getState().debug?.uiActive');ev('sharpforge.uiSettled()');ev('async()=>{const s=await sharpforge.getUIScene();await sharpforge.dispatchUIEvent(s.nodes.find(n=>n.properties.Name==="ComputeButton").id,"Click",{});}');wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Text==="Completed: sum = 5000.0")');r=ev('sharpforge.getRuntimeInfo()');truth(r['compute']['completed']==1,str(r));truth(r['pendingExternal']==0);page.wait_for_timeout(6200);page.screenshot(path=str(RESULTS/'screenshots/release14-compute-ui.png'));stop()
   check('code-first WinUI async handler awaits real compute worker and updates the existing controls',ui_compute)
   def snapshot_barrier():
    r=ev('''async()=>{const {compileToIL}=await __sharpforgeTestImport('/packages/compiler/src/index.js');const {VirtualMachine}=await __sharpforgeTestImport('/packages/runtime/src/index.js');const c=compileToIL('using System.Threading.Tasks;using SharpForge.Runtime;class P{static async Task Main(){Console.WriteLine(await ParallelMath.SumAsync(new double[]{42.0}));}}');const vm=new VirtualMachine(c.image);try{const before=vm.snapshot();await vm.runAsync();try{vm.restore(before);return {error:null}}catch(e){return {error:e.message,output:vm.output.join("")}}}finally{vm.stop();}}''');truth(r['error'] and 'external' in r['error'].lower(),str(r));truth(r['output']=='42\n')
   check('pre-external managed snapshots cannot be restored after a completed host operation',snapshot_barrier)
   def screenshot():
-   load('parallel-compute');run();ev('sharpforge.openTool("runtime-settings")');page.wait_for_timeout(6200);page.screenshot(path=str(ROOT/'docs/screenshots/release14-runtime.png'));truth(page.locator('#runtime-metrics').inner_text().find('isolated')>=0 or 'spawned' in page.locator('#runtime-metrics').inner_text());truth(not errors,str(errors))
+   load('parallel-compute');run();ev('sharpforge.openTool("runtime-settings")');page.wait_for_timeout(6200);page.screenshot(path=str(RESULTS/'screenshots/release14-runtime.png'));truth(page.locator('#runtime-metrics').inner_text().find('isolated')>=0 or 'spawned' in page.locator('#runtime-metrics').inner_text());truth(not errors,str(errors))
   check('runtime inspector shows actual backend and job metrics without page errors',screenshot)
-  report={'passed':True,'checks':checks,'pageErrors':errors,'workerEvents':len(workers),'httpRequests':requests,'mode':'Production modules + real workers via in-memory HTML; actual browser Fetch to CORS-enabled local HTTP server; no fetch or compute test doubles'}
-  (ROOT/'docs/browser-release14-results.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({'passed':True,'checks':len(checks),'workerEvents':len(workers),'httpRequests':len(requests)},indent=2))
+  report={'passed':True,'checks':checks,'pageErrors':errors,'workerEvents':len(workers),'httpRequests':requests,'mode':('in-memory' if os.getenv('SHARPFORGE_IN_MEMORY') == '1' else 'CSP HTTP') + '; actual browser Fetch to CORS-enabled local HTTP server; no fetch or compute test doubles'}
+  (RESULTS/'browser-release14-results.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({'passed':True,'checks':len(checks),'workerEvents':len(workers),'httpRequests':len(requests)},indent=2))
  except Exception:
-  page.screenshot(path=str(ROOT/'docs/screenshots/release14-failure.png'));print(json.dumps({'errors':errors,'state':state()},default=str)[-12000:],flush=True);traceback.print_exc();raise
+  page.screenshot(path=str(RESULTS/'screenshots/release14-failure.png'));print(json.dumps({'errors':errors,'state':state()},default=str)[-12000:],flush=True);traceback.print_exc();raise
  finally:
-  b.close();server.shutdown();server.server_close()
+  pass;server.shutdown();server.server_close()

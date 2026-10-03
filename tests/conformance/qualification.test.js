@@ -1,0 +1,83 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {mkdtemp, mkdir, writeFile, readFile, rm, symlink, readdir} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {execFileSync} from 'node:child_process';
+import {checkoutStatus} from '../../scripts/conformance/clean-checkout.js';
+import {checkStatus} from '../../scripts/conformance/ci-status.js';
+import {probe} from '../../scripts/conformance/env-report.js';
+import {resultPath} from '../../scripts/conformance/results.js';
+import {writePlan} from '../../apps/cli/workspace.js';
+
+async function temporary(t) {
+  const root = await mkdtemp(join(tmpdir(), 'sf-qualification-'));
+  t.after(() => rm(root, {recursive: true, force: true}));
+  return root;
+}
+
+test('checkout guard rejects tracked, staged and untracked mutations, permits ignored evidence', async t => {
+  const root = await temporary(t), git = (...args) => execFileSync('git', args, {cwd: root, encoding: 'utf8'});
+  git('init', '-q'); git('config', 'user.email', 'fixture@example.invalid'); git('config', 'user.name', 'Fixture');
+  await writeFile(join(root, '.gitignore'), 'artifacts/\n'); await writeFile(join(root, 'source.js'), 'original\n');
+  git('add', '.'); git('commit', '-qm', 'fixture');
+  await mkdir(join(root, 'artifacts')); await writeFile(join(root, 'artifacts/report.json'), '{}');
+  assert.equal(checkoutStatus(root), '');
+  await writeFile(join(root, 'source.js'), 'modified\n');
+  assert.match(checkoutStatus(root), / M source.js/);
+  git('add', 'source.js'); assert.match(checkoutStatus(root), /M  source.js/);
+  await writeFile(join(root, 'unexpected.txt'), 'stray'); assert.match(checkoutStatus(root), /\?\? unexpected.txt/);
+});
+
+test('stable gate rejects failed, cancelled, skipped, missing and malformed prerequisites', () => {
+  checkStatus({core: {result: 'success'}, browser: {result: 'success'}});
+  for (const result of ['failure', 'cancelled', 'skipped', undefined]) {
+    assert.throws(() => checkStatus({core: {result: 'success'}, browser: {result}}), /browser=/);
+  }
+  for (const value of [null, {}, [], 'success']) assert.throws(() => checkStatus(value), /Missing/);
+});
+
+test('environment capture records unavailable/failed probes instead of claiming installed versions', () => {
+  const missing = probe('missing', [], () => ({error: new Error('ENOENT'), status: null}));
+  assert.equal(missing.available, false); assert.equal(missing.error, 'ENOENT');
+  assert.equal(probe('broken', [], () => ({status: 1, stderr: 'bad'})).available, false);
+  const present = probe('working', ['--version'], () => ({status: 0, stdout: 'v1\n'}));
+  assert.equal(present.available, true); assert.equal(present.stdout, 'v1');
+});
+
+test('results path creates custom directories including spaces and defaults outside tracked docs', async t => {
+  const root = await temporary(t);
+  const target = await resultPath('nested/result.json', join(root, 'with spaces'));
+  await writeFile(target, '{}'); assert.equal(await readFile(target, 'utf8'), '{}');
+  assert.match(await resultPath('probe.json', ''), /artifacts[/\\]results[/\\]probe.json$/);
+});
+
+test('CLI output accepts a symlinked ancestor, but rejects links at or inside the output root', async t => {
+  const root = await temporary(t), real = join(root, 'real'), alias = join(root, 'alias');
+  await mkdir(real); await symlink(real, alias, process.platform === 'win32' ? 'junction' : 'dir');
+  const plan = {records: [{path: 'Nested/Program.cs', text: 'Console.WriteLine(42);'}]};
+  await writePlan(join(alias, 'New/Workspace'), plan);
+  assert.equal(await readFile(join(real, 'New/Workspace/Nested/Program.cs'), 'utf8'), plan.records[0].text);
+  await assert.rejects(writePlan(alias, plan), /symbolic link/);
+  const output = join(real, 'Empty'), outside = join(real, 'Outside');
+  await mkdir(output); await mkdir(outside);
+  await symlink(outside, join(output, 'Nested'), process.platform === 'win32' ? 'junction' : 'dir');
+  await assert.rejects(writePlan(output, plan), /empty|symbolic link/);
+  assert.deepEqual(await readdir(outside), []);
+});
+
+test('browser matrix covers each discovered entry point and every OS without fail-fast', async () => {
+  const workflow = await readFile(new URL('../../.github/workflows/ci.yml', import.meta.url), 'utf8');
+  const runner = await readFile(new URL('./browser/run_suite.py', import.meta.url), 'utf8');
+  const entries = (await readdir(new URL('../', import.meta.url))).filter(name => /^browser_.*test\.py$/.test(name) || name === 'standalone_test.py');
+  assert.equal(entries.length, 15);
+  for (const name of entries) {
+    const source = await readFile(new URL('../' + name, import.meta.url), 'utf8');
+    assert.match(source, /launch_browser\(p, __file__\)/, name);
+    assert.doesNotMatch(source, /p\.chromium\.launch|ROOT\s*\/\s*['"]docs/);
+    if (!name.startsWith('browser_release')) assert.ok(runner.includes(name), name);
+  }
+  assert.match(workflow, /os: \[ubuntu-latest, windows-latest, macos-latest\]/);
+  assert.match(workflow, /suite: \[browser, managed, workspace, release05, release06, msbuild, release08, native-explorer, release09, release10, release11, release12, release13, release14, standalone\]/);
+  assert.match(workflow, /needs: \[core, build, packages, browser, native-il, native-msbuild, clr-wasm\]/);
+});
