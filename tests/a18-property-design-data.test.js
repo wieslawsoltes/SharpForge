@@ -5,9 +5,11 @@ import {
   designScene, projectDesignerAuthoringScene, generateDesignCode, generateDesignProject, stripDesignerOnlyData,
   designerAssets, designerAssetUri, normalizeDesignerAssetPath, DesignerAssetPreviewStore,
   DesignerOptionsService, defaultDesignerOptions, designerControlName, readExtendedDesignerSourceValue,
-  normalizeDesignerBrush, DesignerPropertyCommands, importDesignerAuthoringResources
+  normalizeDesignerBrush, DesignerPropertyCommands, importDesignerAuthoringResources, importDesignerTemplateResources,
+  addDesignerVisualState, recordDesignerStateProperty, pruneDesignerAuthoring, copyDesignerAuthoringNodeMetadata, referencedDesignerAssets
 } from '@sharpforge/designer';
 import {CONTROLS, MEDIA} from '@sharpforge/framework';
+import {DesignerAssetPreviewController} from '../apps/studio/designer-property-preview.js';
 
 const fixture = () => new DesignDocument(createDesign('Sample data'));
 
@@ -63,6 +65,19 @@ test('A18 project root registration requires compilation success and rejects unk
   assert.equal(createDesignerRoot('ContentDialog').node().type, CONTROLS + 'ContentDialog');
 });
 
+test('A18 recursive project-control compositions fail before exposing a misleading preview', () => {
+  const document = createDesignerRoot();
+  const descriptor = {type: 'Example.Recursive', baseType: CONTROLS + 'UserControl'};
+  const child = document.add('UserControl', 'layout');
+  document.change('Recursive project type', design => {
+    design.projectTypes = [descriptor];
+    design.nodes.find(node => node.id === child).projectType = descriptor.type;
+  });
+  const registry = new DesignerRootRegistry();
+  registry.register(descriptor, document, {analysisVersion: 1});
+  assert.throws(() => registry.project(document.value), /Recursive/);
+});
+
 test('A18 asset inventory generates stable escaped relative paths and rejects traversal and schemes', () => {
   const records = [{path: 'Images/My Icon.png', bytes: new Uint8Array([1, 2])}, {path: 'Views/Page.cs', text: ''}];
   const assets = designerAssets(records);
@@ -87,6 +102,80 @@ test('A18 asset previews revoke every authorized object URL on disposal', async 
   store.dispose();
   assert.deepEqual(revoked, ['blob:asset-1']);
   await assert.rejects(store.preview(asset), /closed/);
+});
+
+test('A18 concurrent asset previews share reads and respect memory and concurrency budgets', async () => {
+  const assets = designerAssets([{path: 'first.png'}, {path: 'second.png'}]);
+  const reads = [];
+  const completions = new Map();
+  let objects = 0;
+  const store = new DesignerAssetPreviewStore({maxConcurrent: 1, maxBytes: 3,
+    readAsset: path => { reads.push(path); return new Promise(resolve => completions.set(path, resolve)); },
+    makeBlob: bytes => bytes, createObjectURL: () => 'blob:' + ++objects, revokeObjectURL() {}});
+  const first = store.preview(assets[0]);
+  const duplicate = store.preview(assets[0]);
+  const second = store.preview(assets[1]);
+  const rejected = assert.rejects(second, /memory budget/);
+  await Promise.resolve();
+  assert.deepEqual(reads, ['first.png']);
+  completions.get('first.png')(new Uint8Array([1, 2]));
+  assert.deepEqual(await Promise.all([first, duplicate]), ['blob:1', 'blob:1']);
+  assert.deepEqual(reads, ['first.png', 'second.png']);
+  completions.get('second.png')(new Uint8Array([3, 4]));
+  await rejected;
+  assert.equal(objects, 1);
+  assert.equal(store.byteLength, 2);
+  store.dispose();
+});
+
+test('A18 closing an asset owner cancels queued previews and rejects malformed image payloads', async () => {
+  const [first, second] = designerAssets([{path: 'first.png'}, {path: 'second.png'}]);
+  let finish;
+  let objects = 0;
+  let reads = 0;
+  const store = new DesignerAssetPreviewStore({maxConcurrent: 1, maxEntries: 2,
+    readAsset: () => { reads++; return new Promise(resolve => { finish = resolve; }); },
+    makeBlob: bytes => bytes, createObjectURL: () => 'blob:' + ++objects, revokeObjectURL() {}});
+  const pending = assert.rejects(store.preview(first), /closed/);
+  const queued = assert.rejects(store.preview(second), /closed/);
+  await assert.rejects(store.preview({...second, path: 'third.png'}), /entry budget/);
+  store.dispose();
+  finish(new Uint8Array([1]));
+  await Promise.all([pending, queued]);
+  assert.equal(reads, 1);
+  assert.equal(objects, 0);
+  const invalid = new DesignerAssetPreviewStore({readAsset: async () => 'not bytes', makeBlob: value => value,
+    createObjectURL() {}, revokeObjectURL() {}});
+  await assert.rejects(invalid.preview(first), /requires bytes/);
+  await assert.rejects(invalid.preview({...first, mimeType: 'text/html'}), /recognized image type/);
+  assert.throws(() => new DesignerAssetPreviewStore({maxConcurrent: Infinity}), /between/);
+  invalid.dispose();
+});
+
+test('A18 opened designs preload authorized referenced assets before refreshing their surface', async () => {
+  const document = fixture();
+  const id = document.add('Image', 'canvas', {Source: 'Images/icon.png'});
+  new DesignerPropertyCommands(document).convertToResource('Source', 'IconUri', {ids: [id]});
+  let reads = 0;
+  let rendered = 0;
+  const store = new DesignerAssetPreviewStore({readAsset: async () => { reads++; return new Uint8Array([1]); },
+    makeBlob: bytes => bytes, createObjectURL: () => 'blob:loaded-image', revokeObjectURL() {}});
+  const view = {document, assetPreviews: store, records: () => [{path: 'Images/icon.png'}], error: error => { throw error; },
+    buildPreviewScene: () => projectDesignerAuthoringScene(document.value, designScene(document.value), {resolveAsset: uri => store.resolve(uri)}),
+    updatePreview: () => { rendered++; }};
+  const controller = new DesignerAssetPreviewController(view);
+  assert.equal((await controller.refresh()).loaded, 1);
+  assert.equal(view.buildPreviewScene().nodes.find(node => node.id === id).properties.Source, 'blob:loaded-image');
+  assert.equal((await controller.refresh()).loaded, 0);
+  assert.equal(reads, 1);
+  assert.equal(rendered, 1);
+  assert.doesNotMatch(document.serialize(), /blob:/);
+  const unknown = referencedDesignerAssets({nodes: [{id, properties: {Source: 'https://ungranted.example/image.png'}}]}, view.records());
+  assert.equal(unknown.assets.length, 0);
+  assert.equal(unknown.diagnostics[0].code, 'SFD1863');
+  controller.dispose();
+  assert.equal((await controller.refresh()).stale, true);
+  store.dispose();
 });
 
 test('A18 designer options persist, apply to new documents and preserve state after failed writes', () => {
@@ -133,4 +222,57 @@ test('A18 copied resource references avoid collisions and retain source resource
   assert.equal(design.resources.Size.value, 99);
   assert.equal(design.resources.Size_1.value, 160);
   assert.equal(source.node('action').resourceReferences.Width.key, 'Size');
+});
+
+test('A18 template clipboard imports remap resource keys before destination template reuse', () => {
+  const source = fixture();
+  const destination = fixture();
+  new DesignerPropertyCommands(source).convertToResource('Background', 'SurfaceBrush', {ids: ['canvas']});
+  destination.change('Other brush', design => {
+    design.resources = {SurfaceBrush: {kind: 'value', type: MEDIA + 'Brush', value: '#ffffff'}};
+  });
+  const template = {targetType: CONTROLS + 'Button', root: {id: 'part', type: CONTROLS + 'Border', properties: {}, children: [],
+    resourceReferences: {Background: {kind: 'static', key: 'SurfaceBrush'}}}};
+  const target = destination.snapshot();
+  const copied = importDesignerTemplateResources(source.value, target, structuredClone(template));
+  assert.equal(copied.root.resourceReferences.Background.key, 'SurfaceBrush_1');
+  assert.equal(template.root.resourceReferences.Background.key, 'SurfaceBrush');
+  assert.equal(target.resources.SurfaceBrush.value.Color.R, 255);
+  assert.equal(target.resources.SurfaceBrush_1.value.Color.R, 32);
+});
+
+test('A18 copying and deleting controls updates scoped states samples bindings and adaptive references', () => {
+  const source = fixture();
+  addDesignerVisualState(source, {nodeId: 'action'}, 'CommonStates', 'Pressed');
+  recordDesignerStateProperty(source, {nodeId: 'action'}, {group: 'CommonStates', state: 'Pressed',
+    nodeId: 'action', property: 'Width', value: 190});
+  setDesignerSampleData(source, 'action', {properties: {Content: 'Designer sample'}});
+  new DesignerPropertyCommands(source).bind('Content', {path: 'Content', elementName: 'ActionButton'}, ['action']);
+  source.setTemplate('PartScope', {targetType: 'Button', root: {id: 'action', type: 'Border', properties: {}, children: []}});
+  addDesignerVisualState(source, {template: 'PartScope'}, 'PartStates', 'Pressed');
+  recordDesignerStateProperty(source, {template: 'PartScope'}, {group: 'PartStates', state: 'Pressed',
+    nodeId: 'action', property: 'Opacity', value: 0.5});
+  source.change('Adaptive source', design => {
+    design.responsive = {version: 1, states: [{id: 'Wide', minWidth: 600, maxWidth: null, overrides: {action: {Width: 240}}}]};
+  });
+  const destination = source.snapshot();
+  const copy = structuredClone(source.node('action'));
+  copy.id = 'action_copy';
+  copy.properties.Name = 'ActionButton_copy';
+  destination.nodes.push(copy);
+  destination.nodes.find(node => node.id === 'canvas').children.push(copy.id);
+  copyDesignerAuthoringNodeMetadata(source.value, destination, new Map([['action', copy.id]]));
+  assert.equal(copy.states[0].states[0].setters[0].target, copy.id);
+  assert.equal(destination.nodes.find(node => node.id === 'action').states[0].states[0].setters[0].target, 'action');
+  assert.equal(copy.bindings.Content.elementName, 'ActionButton_copy');
+  assert.equal(destination.designTime.nodes[copy.id].properties.Content, 'Designer sample');
+  assert.equal(destination.responsive.states[0].overrides[copy.id].Width, 240);
+  destination.nodes = destination.nodes.filter(node => node.id !== 'action');
+  destination.nodes.find(node => node.id === 'canvas').children = destination.nodes.find(node => node.id === 'canvas').children
+    .filter(id => id !== 'action');
+  pruneDesignerAuthoring(destination, ['action']);
+  assert.equal(destination.designTime.nodes.action, undefined);
+  assert.equal(destination.responsive.states[0].overrides.action, undefined);
+  assert.equal(destination.templates.PartScope.states[0].states[0].setters[0].target, 'action');
+  assert.equal(new DesignDocument(destination).node(copy.id).states[0].states[0].setters[0].target, copy.id);
 });
