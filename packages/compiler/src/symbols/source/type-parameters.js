@@ -156,6 +156,8 @@ export function bindConstraintClauses(parameters, clauses, bindType, report, opt
           // `Enum`, `Delegate` and `MulticastDelegate` are constraints from C# 7.3 (the name may come from a using directive).
           if (constraintFeatures[type.specialType]) options.useFeature?.(c.type, constraintFeatures[type.specialType]);
           types.push(type);
+          // `where T : Shape?`: a nullable constraint type accepts nullable type arguments (nullable/constraint-checks.js).
+          if (c.type.kind === 'NullableType') (parameter.nullableConstraintTypes ??= new Set()).add(type);
           break;
         }
       }
