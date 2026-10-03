@@ -1,8 +1,8 @@
+import {storage} from './settings/storage.js';
+import {toolDefinitions} from './tools/definitions.js';
+export {toolDefinitions} from './tools/definitions.js';
 import { DockLayout, DockHost, createGroup, createSplit } from '../../packages/docking/src/index.js';
-export const toolDefinitions=[
-  ['runtime-settings','Language & Runtime'],['solution','Solution Explorer'],['symbols','Portable PDB Symbols'],['symbol-source','Symbol Source'],['threads','Threads'],['parallel-stacks','Parallel Stacks'],['hot-reload','Hot Reload'],['winui','WinUI Application'],['visual-tree','Live Visual Tree'],['debug-session','Debugger / Exception Settings'],['immediate','Immediate'],['properties','Properties'],['settings','Environment / Keyboard'],['msbuild','MSBuild'],['msbuild-inspector','MSBuild Evaluation'],['project-source','Project / Solution Source'],['diagnostics','Diagnostic Tools'],['output','Output'],['problems','Error List'],['debug','Locals'],['watch','Watch'],['stack','Call Stack'],['breakpoints','Breakpoints'],['assembly','Assembly Explorer'],['bytecode','IL Compiler Output'],['disassembly','MSIL Disassembly'],['heap','Managed Heap'],['object','Object Inspector'],['generated','Generated Sources'],['extensions','Generators & Analyzers'],['references','Find All References'],['calls','Call Hierarchy'],['outline','Document Outline'],['search','Find in Files'],['project','Project Properties'],['examples','Examples'],['layouts','Window Layouts']
-,['designer','WinUI Designer'],['designer-toolbox','Toolbox'],['designer-tree','Design Outline'],['designer-properties','Design Properties'],['designer-layout','Layout Editor'],['designer-styles','Styles & Templates'],['designer-source','Design Source']
-].map(([id,title])=>({id,title,kind:'tool'}));
+
 export function defaultDockLayout(){
   const documents=createGroup('documents',[],'document'),bottom=createGroup('tools-bottom',['output','problems','debug','watch','stack','breakpoints','bytecode','disassembly','assembly']);
   const root=createSplit('split-left','horizontal',createSplit('split-bottom','vertical',documents,bottom,.72),createSplit('split-right','vertical',createGroup('tools-left',['solution','outline']),createGroup('tools-right',['properties','diagnostics','project']),.68),.77);
@@ -22,8 +22,8 @@ export class StudioDocking {
     for(const [id,content] of this.content){content.dataset.tool=id;}
     this.layout=new DockLayout(toolDefinitions,defaultDockLayout());
     this.host=new DockHost(root,this.layout,{resolveContent:id=>this.resolve(id),onActivate,onError,onClose});
-    this.layout.subscribe(()=>{try{localStorage.setItem('sharpforge.docking.v1',this.layout.serialize());}catch{}});
-    this.pendingRestore=null;try{this.pendingRestore=localStorage.getItem('sharpforge.docking.v1');}catch{}
+    this.layout.subscribe(()=>{try{storage.setItem('sharpforge.docking.v1',this.layout.serialize());}catch{}});
+    this.pendingRestore=null;try{this.pendingRestore=storage.getItem('sharpforge.docking.v1');}catch{}
     this.mobile=false;this.media=matchMedia('(max-width: 700px)');this.mediaListener=()=>this.adapt();this.media.addEventListener('change',this.mediaListener);
   }
   resolve(id){if(this.content.has(id))return this.content.get(id);const element=this.createDocument(id.slice(7));this.content.set(id,element);return element;}
