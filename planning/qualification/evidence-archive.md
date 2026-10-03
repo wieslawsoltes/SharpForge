@@ -39,6 +39,11 @@ and `UPLOAD-PLAN.json`; the latter contains an exact `gh` argument array and
 prepublication checks, not a shell command. Preparation never edits originals
 and refuses an existing staging directory or evidence index.
 
+A local Markdown link that names a selected evidence path but climbs outside
+the repository is rejected with its document path and target. Correct that link
+in its owning document before preparing or migrating; the tool does not guess
+the intended destination. Unrelated links outside the repository are unchanged.
+
 The inventory includes the PDB interoperability and performance reports added
 after the initial 86-report proposal. That earlier staging directory retains its
 original snapshot and must not be relabeled or reused with the expanded policy.

@@ -35,6 +35,10 @@ export function rewriteMarkdown(text, path, manifest) {
     if (/^[a-z]+:/i.test(target) || target.startsWith('#')) return match;
     const [local, fragment] = target.split('#');
     const key = posix.normalize(posix.join(posix.dirname(path), local));
+    const intended = local.replace(/^(?:\.\.?\/)+/, '');
+    if (key.startsWith('../') && files.has(intended)) {
+      throw new Error(`Evidence link escapes repository: ${path} -> ${target}`);
+    }
     const file = files.get(key);
     if (!file) return match;
     relevant = true;
