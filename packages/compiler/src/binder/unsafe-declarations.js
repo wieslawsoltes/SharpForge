@@ -10,6 +10,7 @@
  */
 import { SymbolKind, TypeKind, PointerTypeSymbol, ArrayTypeSymbol } from '../symbols/types.js';
 import { isPointerType } from '../conversions/pointer.js';
+import { functionPointerKeywordSpan } from './function-pointers.js';
 import { isNullableType } from '../conversions/nullable.js';
 import { isUnmanagedType } from './constraints.js';
 
@@ -44,10 +45,13 @@ export function isUnsafeSymbol(member, type) {
   return false;
 }
 
-/** The outermost PointerType node inside a type syntax, or null. */
+/** Where CS0214 is reported for a pointer type: the type, or `delegate*` of a function pointer type. */
+export const unsafeMarker = pointer => (pointer.kind === 'FunctionPointerType' ? functionPointerKeywordSpan(pointer) : pointer);
+
+/** The outermost PointerType or FunctionPointerType node inside a type syntax, or null. */
 export function findPointerSyntax(syntax) {
   if (!syntax) return null;
-  if (syntax.kind === 'PointerType') return syntax;
+  if (syntax.kind === 'PointerType' || syntax.kind === 'FunctionPointerType') return syntax;
   for (const child of syntax.childNodes?.() ?? []) {
     const found = findPointerSyntax(child);
     if (found) return found;
@@ -133,7 +137,7 @@ export function checkUnsafeDeclarations(type, { allowUnsafe, core, evaluate }) {
     const isUnsafe = isUnsafeSymbol(member, type);
     for (const syntax of signatureTypeSyntaxes(member)) {
       const pointer = findPointerSyntax(syntax);
-      if (pointer && !isUnsafe) add('CS0214', [], pointer);
+      if (pointer && !isUnsafe) add('CS0214', [], unsafeMarker(pointer));
     }
     for (const { type: signatureType, node } of signatureTypes(member))
       if (node && pointsAtConstructedType(signatureType)) results.push({ feature: 'UnmanagedConstructedTypes', uri, node });
