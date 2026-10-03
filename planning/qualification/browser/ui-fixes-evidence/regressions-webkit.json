@@ -1,0 +1,98 @@
+{
+  "engine": "webkit",
+  "browserVersion": "26.0",
+  "checks": [
+    {
+      "id": "output-filter-label",
+      "status": "passed",
+      "details": null,
+      "milliseconds": 114.18200004845858
+    },
+    {
+      "id": "escape-tab-visual-studio",
+      "status": "passed",
+      "details": null,
+      "milliseconds": 358.7807500734925
+    },
+    {
+      "id": "escape-shift-tab-visual-studio",
+      "status": "passed",
+      "details": null,
+      "milliseconds": 185.2062908001244
+    },
+    {
+      "id": "escape-tab-vscode",
+      "status": "passed",
+      "details": null,
+      "milliseconds": 173.28758304938674
+    },
+    {
+      "id": "escape-shift-tab-vscode",
+      "status": "passed",
+      "details": null,
+      "milliseconds": 165.5211669858545
+    },
+    {
+      "id": "escape-tab-vim",
+      "status": "passed",
+      "details": null,
+      "milliseconds": 290.7579999882728
+    },
+    {
+      "id": "escape-shift-tab-vim",
+      "status": "passed",
+      "details": null,
+      "milliseconds": 176.06966593302786
+    },
+    {
+      "id": "escape-tab-emacs",
+      "status": "passed",
+      "details": null,
+      "milliseconds": 223.8941660616547
+    },
+    {
+      "id": "escape-shift-tab-emacs",
+      "status": "passed",
+      "details": null,
+      "milliseconds": 180.81087502650917
+    },
+    {
+      "id": "escape-tab-sublime",
+      "status": "passed",
+      "details": null,
+      "milliseconds": 226.99962509796023
+    },
+    {
+      "id": "escape-shift-tab-sublime",
+      "status": "passed",
+      "details": null,
+      "milliseconds": 278.84299983270466
+    },
+    {
+      "id": "ordinary-tab-and-intervening-edit",
+      "status": "passed",
+      "details": null,
+      "milliseconds": 279.2052498552948
+    },
+    {
+      "id": "escape-handler-disposal",
+      "status": "passed",
+      "details": {
+        "scope": "Synthetic DOM event disposal boundary, separately from native keyboard checks"
+      },
+      "milliseconds": 4.336832789704204
+    },
+    {
+      "id": "phone-repeated-touch-and-outside-dismiss",
+      "status": "passed",
+      "details": null,
+      "milliseconds": 1036.460000090301
+    },
+    {
+      "id": "csp-clean",
+      "status": "passed",
+      "details": null,
+      "milliseconds": 0.0008330680429935455
+    }
+  ]
+}

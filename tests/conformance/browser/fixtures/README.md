@@ -1,0 +1,1 @@
+This public test-only self-signed certificate/key is used only by the loopback qualification server. It is not installed in a trust store. The certificate covers localhost/127.0.0.1; Playwright ignores this certificate error only for local HTTPS test contexts. Deployed-site contexts validate public certificates normally. These files are not production credentials.
