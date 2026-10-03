@@ -2,7 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {compileToIL} from '@sharpforge/compiler';
-import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
+import {findContracts} from '@sharpforge/framework';
+import {VirtualMachine, CilVirtualMachine, ManagedFault} from '@sharpforge/runtime';
 import {dictionaryEntries} from '@sharpforge/bcl-collections';
 import {createClosedCollection} from './helpers/closed-collection.js';
 
@@ -50,19 +51,28 @@ for (const engine of ['source', 'cil']) {
     } finally { vm.stop(); }
   });
 
-  test(`SF-A08-B03 ${engine}: removed Dictionary values stop retaining managed objects`, () => {
-    const {vm, platform, reference, call} = createClosedCollection(engine, 'Dictionary', 'int, object');
+  test(`SF-A08-B03 ${engine}: removed Dictionary keys and values stop retaining managed objects`, () => {
+    const {vm, platform, reference, call} = createClosedCollection(engine, 'Dictionary', 'string, object');
     try {
+      const removedKey = platform.managed('removed key', 'string');
       const removed = platform.managed('removed value', 'string');
-      call('Add', 1, removed);
+      call('Add', removedKey, removed);
+      const retainedKey = platform.managed('retained key', 'string');
       const retained = platform.managed('retained value', 'string');
-      call('Add', 2, retained);
+      call('Add', retainedKey, retained);
+      const weakKey = platform.heap.createHandle(removedKey, {weak: true});
       const weak = platform.heap.createHandle(removed, {weak: true});
-      call('Remove', 1);
+      const writes = [];
+      vm.notifyWrite = event => writes.push(event);
+      call('Remove', removedKey);
       platform.heap.collect([reference]);
+      assert.equal(platform.heap.getHandle(weakKey), null);
       assert.equal(platform.heap.getHandle(weak), null);
-      assert.equal(platform.native(call('get_Item', 2)), 'retained value');
-      assert.deepEqual([...dictionaryEntries(platform, reference)], [[2, retained]]);
+      assert.equal(platform.native(call('get_Item', retainedKey)), 'retained value');
+      assert.deepEqual([...dictionaryEntries(platform, reference)], [[retainedKey, retained]]);
+      const cleared = writes.filter(event => event.kind === 'array' && event.value === null);
+      assert.equal(cleared.length, 2, 'Payload removal retains debugger write notifications');
+      platform.heap.releaseHandle(weakKey);
       platform.heap.releaseHandle(weak);
     } finally { vm.stop(); }
   });
@@ -83,5 +93,46 @@ for (const engine of ['source', 'cil']) {
       assert.equal(Boolean(platform.native(call('ContainsKey', 1))), false);
       assert.equal(call('get_Item', 6), 16);
     } finally { vm.stop(); }
+  });
+
+  test(`SF-A08-B03 ${engine}: JSON traverses only live Dictionary slots in native order`, () => {
+    const {vm, platform, reference, call} = createClosedCollection(engine, 'Dictionary', 'string, int');
+    try {
+      const key = value => platform.managed(value, 'string');
+      call('Add', key('a'), 1); call('Add', key('b'), 2); call('Add', key('c'), 3);
+      call('Remove', key('b')); call('Add', key('d'), 4); call('Remove', key('a'));
+      const serializer = findContracts('System.Text.Json.JsonSerializer', 'Serialize')
+        .find(member => member.parameters.length === 1 && member.parameters[0] === 'object');
+      assert(serializer);
+      assert.equal(platform.native(platform.invoke(serializer, [reference])), '{"d":4,"c":3}');
+    } finally { vm.stop(); }
+  });
+
+  test(`SF-A08-B03 ${engine}: failed slot growth leaves existing Dictionary entries intact`, () => {
+    const {vm, platform, reference, call} = createClosedCollection(engine, 'Dictionary', 'int, int');
+    const allocate = platform.heap.allocate;
+    try {
+      for (let key = 0; key < 4; key++) call('Add', key, key + 10);
+      const index = platform.bclIndexes.get(platform.record(reference)).index;
+      let reject = true;
+      platform.heap.allocate = function(kind, type, ...args) {
+        if (reject && type === 'int[]') {
+          reject = false;
+          throw new ManagedFault('OutOfMemoryException', 'Injected slot-storage allocation failure');
+        }
+        return allocate.call(this, kind, type, ...args);
+      };
+      assert.throws(() => call('Add', 4, 14), {name: 'OutOfMemoryException'});
+      assert.equal(call('get_Count'), 4);
+      assert.equal(Boolean(platform.native(call('ContainsKey', 4))), false);
+      assert.strictEqual(platform.bclIndexes.get(platform.record(reference)).index, index);
+      assert.deepEqual([...dictionaryEntries(platform, reference)], [[0, 10], [1, 11], [2, 12], [3, 13]]);
+      call('Add', 4, 14);
+      assert.equal(call('get_Item', 4), 14);
+      assert.equal(call('get_Count'), 5);
+    } finally {
+      platform.heap.allocate = allocate;
+      vm.stop();
+    }
   });
 }

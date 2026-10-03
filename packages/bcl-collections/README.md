@@ -20,16 +20,29 @@ public traversal seam without depending on the collection's backing layout.
 Hosts supply the same explicit `bclHost`, managed heap, property access,
 allocation and write-notification services as core modules. Collection backing
 arrays, counts, versions, queue positions and enumerator owners remain in the
-managed heap. Lookup caches belong to each platform and are invalidated by
-collection versions. Existing GC visibility and snapshot shapes are retained.
+managed heap. Lookup caches belong to each platform; Dictionary mutations update
+their existing index, while restored heap records rebuild a cache on first use.
+Dictionary free-slot metadata is also heap-owned and survives snapshot restore.
+Removed keys and values are cleared immediately so they stop retaining objects.
 
 This extraction preserves the released compatibility profile: element types are
 `int`, `double`, `bool`, `string` and `object`; Dictionary keys are `string` or
 `int`. Range and set inputs use arrays. It does not add open generic collections,
-custom comparers or additional members. The maximum collection size, ordinal
-sorting and array-rewrite mutation costs remain unchanged.
-Hash indexes are rebuilt after legacy removals; this work does not claim the
-performance or complete API parity tracked by the remaining A08 issues.
+custom comparers or additional members. Dictionary removal takes constant work
+and reuses freed entry slots in the order observed in the pinned .NET 10.0.5
+fixture. Key/value traversal skips holes in physical slot order. Keys and Values
+remain snapshots in this released profile, and mutation versions retain their
+existing behavior. Payload array limits remain unchanged; the managed Int32
+free-slot array has one extra cell per entry capacity. List and HashSet mutation
+costs and default sorting remain separate A08 work.
+
+`tests/a08-dictionary-removal.test.js` covers native slot reuse, cached-index and
+backing-array retention, managed-object release, failed growth and heap restore
+through both VMs. The root scheduler runs
+`node scripts/benchmarks/a08-collection-removal.mjs` on a quiet machine to measure
+100,000 removals through each VM platform. Compilation and initial insertion are
+outside its timed region; it also rejects index rebuilds or managed allocations.
+Performance qualification must use the resulting timings, not the unit tests.
 
 Object collection equality and hash keys retain boxed primitive type identity:
 boxed `int` 1 differs from boxed `double` 1.0, while equal boxes of the same type,
