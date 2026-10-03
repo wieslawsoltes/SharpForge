@@ -2,17 +2,12 @@
  * Patterns: constant, type, declaration, var, discard, relational, not/and/or and property patterns;
  * other forms are bound leniently so their variables enter scope.
  */
-import { SymbolKind, TypeKind, ErrorTypeSymbol } from '../../symbols/types.js';
+import { TypeKind, ErrorTypeSymbol } from '../../symbols/types.js';
 import { LocalDeclarationKind } from '../../symbols/members.js';
 import { ConversionKind } from '../../conversions/classify.js';
 import { typeTestOutcome } from '../../conversions/reference.js';
-import { lookupMembers } from '../inheritance.js';
 
 const unknown = ErrorTypeSymbol.unknown;
-const isSource = symbol => {
-  for (let s = symbol?.originalDefinition ?? symbol; s; s = s.containingSymbol) if (s.isSource || s.containingAssembly) return true;
-  return false;
-};
 
 /** Class mixin: Patterns: constant, type, declaration, var, discard, relational, not/and/or and property patterns; */
 export const PatternBinding = Base =>
@@ -114,24 +109,7 @@ export const PatternBinding = Base =>
           const type = syntax.type ? this.bindType(syntax.type).type : inputType,
             p = syntax.type ? this.typePattern(syntax, type, inputType) : { kind: 'RecursivePattern', syntax },
             properties = [];
-          for (const sub of syntax.propertyPatternClause?.subpatterns ?? []) {
-            const nameNode = sub.expressionColon?.expression ?? sub.expressionColon?.name ?? sub.nameColon?.name;
-            let memberType = unknown,
-              member = null;
-            if (nameNode?.kind === 'IdentifierName' && type && !type.isErrorType()) {
-              const found = lookupMembers(type, nameNode.identifier.valueText, this.core, { within: this.c.containingType }).members.find(
-                m => m.kind === SymbolKind.Field || m.kind === SymbolKind.Property,
-              );
-              if (found) {
-                member = found;
-                memberType = found.type;
-                if (found.kind === SymbolKind.Field)
-                  (found.originalDefinition ?? found).reads = ((found.originalDefinition ?? found).reads ?? 0) + 1;
-              } else if (isSource(type)) this.report(nameNode, 'CS0117', [this.display(type), nameNode.identifier.valueText]);
-              else this.incomplete = this.d.incomplete = true;
-            }
-            properties.push({ member, pattern: this.pattern(sub.pattern, memberType, null), syntax: sub });
-          }
+          for (const sub of syntax.propertyPatternClause?.subpatterns ?? []) properties.push(this.propertySubpattern(sub, type));
           const positional = syntax.positionalPatternClause ? this.positionalClause(syntax.positionalPatternClause, type) : null;
           if (syntax.designation) this.designation(syntax.designation, type ?? unknown, p);
           return { ...p, kind: 'RecursivePattern', inputType: type, properties, positional, hasPositional: !!syntax.positionalPatternClause };

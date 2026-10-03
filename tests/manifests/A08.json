@@ -1,9 +1,11 @@
 {
   "schemaVersion": 1,
   "area": "A08",
-  "nodeGlobs": [],
+  "nodeGlobs": [
+    "tests/a08-*.test.js"
+  ],
   "browserScripts": [],
   "requiredServices": [],
   "timeout": 300000,
-  "tags": []
+  "tags": ["bcl", "collections"]
 }

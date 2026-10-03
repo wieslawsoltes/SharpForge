@@ -14,8 +14,9 @@ import { SourceAssemblyCore } from './assembly-core.js';
 import { MemberSymbolBuilder } from './member-symbols.js';
 import { PropertySymbolBuilder } from './property-symbols.js';
 import { MemberConflicts } from './member-conflicts.js';
+import { ExtensionBlockBuilder } from './extension-blocks.js';
 
-const builders = [MemberSymbolBuilder, PropertySymbolBuilder, MemberConflicts];
+const builders = [MemberSymbolBuilder, PropertySymbolBuilder, MemberConflicts, ExtensionBlockBuilder];
 
 /**
  * `new SourceAssembly(files, host).declare(mergedGlobalNamespace)`.

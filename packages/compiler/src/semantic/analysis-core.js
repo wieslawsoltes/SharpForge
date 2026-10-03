@@ -166,7 +166,8 @@ export class AnalysisCore {
       return !type.hasUnknownConstraint && [...type.constraintTypes].every(c => this.closedHierarchy(c));
     if (type.typeKind === TypeKind.Delegate || type.elementType) return false;
     for (const t of baseTypeChain(type, this.core)) {
-      if (isSourceSymbol(t)) continue;
+      // The members of a source type and of an anonymous type are all known.
+      if (isSourceSymbol(t) || t.isAnonymousType) continue;
       if (['System_Object', 'System_ValueType', 'System_Enum'].includes(t.specialType)) continue;
       return false;
     }
@@ -232,6 +233,7 @@ export class AnalysisCore {
     for (const type of types) this.checkType(type);
     this.checkConstructions();
     for (const type of types) this.bindConstants(type);
+    this.checkUnsafeDeclarations();
     this.bindAttributes();
     this.checkSpecialMembers();
     this.checkConditionalMethods();

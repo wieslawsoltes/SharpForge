@@ -17,7 +17,8 @@ import { checkRefStructDeclarations, checkAsyncOrIteratorUse } from '../binder/r
 import { checkTypeModifierFeatures } from './type-modifier-features.js';
 import { checkVarianceSafety } from '../conversions/variance.js';
 import { checkNullableSignatures } from '../nullable/signature-checks.js';
-import { checkTypeModifiers } from '../binder/type-modifiers.js';
+import { uninitializedMembersWithoutConstructor } from '../nullable/uninitialized-members.js';
+import { checkTypeModifiers, signatureNameOf } from '../binder/type-modifiers.js';
 import { accessRank, baseOrSelf } from './analysis-helpers.js';
 
 /** Class mixin: Declaration-level checks of every source type: hiding, overrides, abstract members, interface */
@@ -121,6 +122,8 @@ export const DeclarationChecks = Base =>
       // Nullable reference type signature agreement between overrides/implementations and their bases.
       if (this.nullableAt(this.at(type).uri, this.at(type).start).warnings)
         for (const d of checkNullableSignatures(type)) this.reportAt(d.member, d.code, d.args, 'warning');
+      for (const d of uninitializedMembersWithoutConstructor(type))
+        if (this.nullableAt(this.at(d.member).uri, this.at(d.member).start).warnings) this.reportAt(d.member, d.code, d.args, 'warning');
     }
     /** CS0050-CS0059: a member may not expose a type less accessible than itself. */
     checkMemberAccessibility(m, type) {
@@ -159,7 +162,9 @@ export const DeclarationChecks = Base =>
         if (!type || type.isErrorType?.()) continue;
         for (const v of checkConstructedType(type, this.core)) {
           const index = v.type === type ? v.index : null,
-            node = index !== null && c.argSyntax[index] ? c.argSyntax[index] : c.syntax;
+            written = index !== null && c.argSyntax[index] ? c.argSyntax[index] : c.syntax,
+            // A static type argument in a member's signature is reported on the member's name, once.
+            node = v.code === 'CS0718' ? (signatureNameOf(c.syntax) ?? written) : written;
           this.report(c.scope.uri, node, v.code, v.args, v.severity);
         }
       }

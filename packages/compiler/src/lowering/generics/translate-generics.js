@@ -98,7 +98,8 @@ export const GenericTranslation = Base =>
       if (method?.kind === SymbolKind.Method && method.methodKind !== MethodKind.LocalFunction && receiverType) {
         if (this.isTypeParameter(receiverType)) {
           const target = this.memberOfClosedReceiver(method, receiverType, node.syntax);
-          if (target !== method) return super.exprCall({ ...node, method: target });
+          // The target was chosen from the closed receiver type: what it asks for is not written in this body.
+          if (target !== method) return this.g.generics.withClosedTarget(() => super.exprCall({ ...node, method: target }));
         }
         if (this.isConstruction(receiverType) && !this.g.isSource(method) && !this.isFrameworkGenericMember(method))
           return this.unsupported(`'${method.toDisplayString()}' on a constructed generic type`, node.syntax);
@@ -106,10 +107,12 @@ export const GenericTranslation = Base =>
       return super.exprCall(node);
     }
     exprPropertyAccess(node) {
-      return super.exprPropertyAccess(this.closedProperty(node));
+      const closed = this.closedProperty(node);
+      return closed === node ? super.exprPropertyAccess(node) : this.g.generics.withClosedTarget(() => super.exprPropertyAccess(closed));
     }
     propertyReference(node) {
-      return super.propertyReference(this.closedProperty(node));
+      const closed = this.closedProperty(node);
+      return closed === node ? super.propertyReference(node) : this.g.generics.withClosedTarget(() => super.propertyReference(closed));
     }
     /** A property read or written through a type parameter, rebound to the property of the closed type. */
     closedProperty(node) {
@@ -167,6 +170,17 @@ export const GenericTranslation = Base =>
       if (!shared?.erased || value.legacyType === 'object') return value;
       const result = this.temp(value.legacyType, 'awaited');
       return n.sequence([result], [n.assign(n.local(result), value)], n.local(result));
+    }
+    /**
+     * In generic code a branch that a constant condition rules out is not lowered, as Roslyn does not emit it: it
+     * would ask for constructions .NET never creates (a recursive call with a larger type argument behind a
+     * constant that is false).
+     */
+    stmtIf(node) {
+      const constant = node.condition?.constantValue;
+      if (this.g.generics.active.isEmpty || typeof constant?.value !== 'boolean') return super.stmtIf(node);
+      const live = constant.value ? node.then : node.otherwise;
+      return live ? this.embedded(live) : n.noOp();
     }
     exprInterpolatedString(node) {
       for (const part of node.parts ?? []) {
