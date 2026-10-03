@@ -25,7 +25,9 @@ export class WorkbenchEvents {
 
   emit(event) {
     if (this.disposed) return;
-    this.queue.push(Object.freeze({ ...event, sequence: ++this.sequence }));
+    const descriptors = Object.getOwnPropertyDescriptors(event);
+    descriptors.sequence = { value: ++this.sequence, enumerable: true };
+    this.queue.push(Object.freeze(Object.defineProperties({}, descriptors)));
     if (this.draining) return;
     this.draining = true;
     const failures = [];

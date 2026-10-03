@@ -29,6 +29,20 @@ test('project builds run independently and only the edited project rejects its s
   diagnostics.dispose();
 });
 
+test('live analysis cannot replace the cached executable returned by a clean build', async () => {
+  const built = compileResult();
+  const analysis = { success: true, diagnostics: [], symbols: [] };
+  const fake = fakeWorkers(message => message.method === 'build' ? built : analysis);
+  const builds = new BuildServices({ workerFactory: fake.factory });
+  const project = builds.register({ id: 'A', files: [] });
+  assert.equal(await project.build(), built);
+  assert.equal(await project.analyze(), analysis);
+  assert.equal(await project.build(), built);
+  assert.equal(project.assembly, built.assembly);
+  assert.deepEqual(fake.workers[0].requests.map(request => request.method), ['build', 'analyze']);
+  builds.dispose();
+});
+
 test('cancelling one project terminates only its worker and preserves other project diagnostics', async () => {
   const fake = fakeWorkers();
   const diagnostics = new DiagnosticsStore();

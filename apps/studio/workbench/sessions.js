@@ -28,7 +28,8 @@ export function createWorkbenchServices(options = {}) {
   const output = new OutputChannels(options.outputLimits);
   const diagnostics = new DiagnosticsStore(options.diagnosticLimits);
   const documents = new DocumentService({
-    records: options.records, createEditor: options.createEditor, saveDocument: options.saveDocument
+    records: options.records, createEditor: options.createEditor, createModel: options.createModel ?? options.modelFactory,
+    saveDocument: options.saveDocument
   });
   const defaultSnapshot = (projectId, project) => {
     const snapshot = project.snapshot ?? project;
@@ -90,7 +91,11 @@ export function createWorkbenchServices(options = {}) {
       createSession: () => {
         const project = builds.active?.project;
         if (!project) throw workbenchError('PROJECT_MISSING', 'Choose a project before launching');
-        return sessions.create({ projectId: project.id, name: project.name });
+        const profile = profiles.get(project.id);
+        return sessions.create({
+          projectId: project.id, name: project.name, profileId: profile.id,
+          renderer: profile.renderer, runtimeSettings: profile.runtimeSettings
+        });
       }
     }),
     compiler: {

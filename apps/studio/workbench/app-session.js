@@ -9,9 +9,10 @@ const controlMethods = new Set([
 
 /** One application, worker generation and runtime serial form an inseparable identity. */
 export class AppSession {
-  constructor({ id, projectId, name = projectId, runtimeSettings, renderer = 'auto' }, options = {}) {
+  constructor({ id, projectId, name = projectId, profileId = 'default', runtimeSettings, renderer = 'auto' }, options = {}) {
     this.id = requireIdentifier(id, 'Application id');
     this.projectId = requireIdentifier(projectId, 'Project id');
+    this.profileId = requireIdentifier(profileId, 'Launch profile id');
     this.name = name;
     this.renderer = renderer;
     this.events = new WorkbenchEvents();

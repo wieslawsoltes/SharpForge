@@ -12,6 +12,8 @@ export class BuildService {
     this.events = new WorkbenchEvents();
     this.revision = 0;
     this.result = null;
+    this.buildResult = null;
+    this.analysisResult = null;
     this.image = null;
     this.assembly = null;
     this.pdb = null;
@@ -64,7 +66,7 @@ export class BuildService {
   async build({ signal, force = false, background = false } = {}) {
     if (this.disposed) throw workbenchError('BUILD_DISPOSED', 'Build service is disposed');
     if (signal?.aborted) throw abortError(signal.reason);
-    if (!force && !this.dirty && this.result?.success && this.assembly) return this.result;
+    if (!force && !this.dirty && this.buildResult?.success && this.assembly) return this.buildResult;
     if (this.busy) throw workbenchError('BUILD_BUSY', `Project '${this.id}' is already building`);
     const epoch = ++this.buildEpoch;
     const revision = this.revision;
@@ -116,6 +118,8 @@ export class BuildService {
   applyResult(result, source = 'build') {
     if (!result || !Array.isArray(result.diagnostics)) throw new TypeError('Malformed compiler result');
     this.result = result;
+    if (source === 'build') this.buildResult = result;
+    else this.analysisResult = result;
     this.diagnostics?.replace(this.id, source, result.diagnostics, { revision: this.revision });
     if (source === 'build') {
       this.image = result.success ? result.image : null;
