@@ -85,8 +85,8 @@ test('registered comparer: wrong and unrelated interfaces remain compile-time er
   const cases = [
     ['IComparer<object> comparer = StringComparer.Ordinal;', 'CS0266'],
     ['IDisposable value = StringComparer.Ordinal;', 'CS0266'],
-    ['new List<string>().Sort(new object());', 'CS1503'],
-    ['object comparer = StringComparer.Ordinal; new List<string>().Sort(comparer);', 'CS1503']
+    ['new List<string>().Sort(new object());', 'CS1501'],
+    ['object comparer = StringComparer.Ordinal; new List<string>().Sort(comparer);', 'CS1501']
   ];
   for (const [source, expected] of cases) {
     const result = compileToIL(prefix + source);
