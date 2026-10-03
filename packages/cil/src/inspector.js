@@ -1,4 +1,4 @@
-import { readPE } from './pe.js';
+import { readPE, readManagedResources } from './pe.js';
 import { readSignature, token, decodeCoded } from './metadata.js';
 import { decodeInstructions } from './opcodes.js';
 import { CilError, Reader, text } from './binary.js';
@@ -77,7 +77,7 @@ export class AssemblyInspector {
     return {name,version:row?row.slice(1,5).join('.'):null,entryPoint:this.pe.entryPoint,bytes:this.pe.bytes.length,format:'ECMA-335 PE/CLI',profile:this.debug?.format??null,
       machine:this.pe.machine,cliFlags:this.pe.flags,streams:[...md.streams].map(([name,bytes])=>({name,bytes:bytes.length})),tables:{...md.counts},
       references:(md.rows[35]??[]).map(r=>({name:md.string(r[6]),version:r.slice(0,4).join('.')})),
-      resources:(md.rows[40]??[]).map(r=>({offset:r[0],flags:r[1],name:md.string(r[2]),implementation:decodeCoded('Implementation',r[3])})),
+      resources:readManagedResources(this.pe),
       customAttributes:(md.rows[12]??[]).map(r=>({parent:decodeCoded('HasCustomAttribute',r[0]),constructor:decodeCoded('CustomAttributeType',r[1]),blobBytes:md.blob(r[2]).length})),
       genericParameters:(md.rows[42]??[]).map(r=>({index:r[0],flags:r[1],owner:decodeCoded('TypeOrMethodDef',r[2]),name:md.string(r[3])})),
       types:this.types.map(t=>({...t,methods:t.methods.map(m=>m.token),fields:t.fields.map(f=>{try{return {...f,type:this.signature(f.token).type};}catch(error){return {...f,error:error.message};}})})),methods,diagnostics:[...this.diagnostics]};
