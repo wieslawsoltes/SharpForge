@@ -308,6 +308,7 @@ export class TypeBinder {
   finish(symbol, argSyntax, scope, syntax, options, container = null) {
     if (symbol.kind === SymbolKind.Namespace || symbol.kind === SymbolKind.TypeParameter) return symbol;
     if (symbol.containingAssembly && !options.quiet) this.host.useSite?.(symbol, scope.uri, syntax.identifier ?? syntax, { missingBases: false });
+    if (symbol.kind === SymbolKind.NamedType && !options.quiet && !options.isAliasQualifiedExpression) this.host.noteUse?.(symbol, scope.uri, syntax);
     if (symbol.kind === SymbolKind.NamedType && !options.quiet && !options.skipAccessCheck) {
       const within = scope.containingType;
       if (
