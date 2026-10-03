@@ -146,23 +146,6 @@ export const CallTranslation = Base =>
         collectionInitializers: [],
       };
     }
-    /** `new T(...) { A = x, B = y }`: the object is held in a temporary while its members are assigned in order. */
-    withInitializers(node, creation) {
-      const temp = this.temp(creation.legacyType, 'new'),
-        saved = this.initializerReceiver;
-      const effects = [n.assign(n.local(temp), creation)];
-      this.initializerReceiver = { read: () => n.local(temp) };
-      try {
-        for (const init of node.initializers ?? []) {
-          if (!init.target || !init.value) return this.unsupported('this object initializer form', node.syntax);
-          effects.push(n.assign(this.target(init.target), this.expression(init.value)));
-        }
-        if (node.collectionInitializers?.length) return this.unsupported('collection initializers', node.syntax);
-      } finally {
-        this.initializerReceiver = saved;
-      }
-      return n.sequence([temp], effects, n.local(temp));
-    }
     memberReceiver(node) {
       const receiver = node.receiver;
       if (!receiver) return null;

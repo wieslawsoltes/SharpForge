@@ -43,6 +43,16 @@ export const Initialization = Base =>
       }
       return n.block(statements);
     }
+    /**
+     * Declares every initializer method, then builds their bodies: an initializer may create an object of, or read a
+     * static of, any other class, so all of them must be known before the first body is lowered.
+     */
+    declareInitializers() {
+      const instanceWork = this.declareInstanceInitializers(),
+        typeWork = this.declareTypeInitializers();
+      this.buildTypeInitializers(typeWork);
+      this.buildInstanceInitializers(instanceWork);
+    }
     /** Declares `<init>` for every class with instance initializers, and a constructor for those that have none. */
     declareInstanceInitializers() {
       const work = [];
@@ -58,7 +68,9 @@ export const Initialization = Base =>
         this.implicitConstructors.set(type, implicit);
         this.bodies.push({ method: implicit, body: n.block([n.expressionStatement(n.call(method, n.thisReference(owner.name), []))]) });
       }
-      // Bodies are built once every initializer method is declared: an initializer may create another class.
+      return work;
+    }
+    buildInstanceInitializers(work) {
       for (const { type, method, initializers } of work) {
         const frame = this.memberFrame(method, { name: '.ctor' }, this.uriOf(type), null);
         this.bodies.push({ method, body: this.initializerBlock(initializers, frame) });
@@ -77,6 +89,9 @@ export const Initialization = Base =>
         this.typeInits.set(type, { ensure, precise: !!constructor });
         work.push({ type, done, ensure, initializers, constructor });
       }
+      return work;
+    }
+    buildTypeInitializers(work) {
       for (const { type, done, ensure, initializers, constructor } of work) {
         const frame = this.memberFrame(ensure, { name: '.cctor' }, this.uriOf(type), null);
         // The flag is set first, so initializers that read the class's own statics see the values assigned so far.

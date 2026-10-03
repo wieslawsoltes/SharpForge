@@ -38,8 +38,11 @@ export const Declarations = Base =>
       if (type.arity || type.typeParameters?.length) this.unsupported('user-defined generics', at);
       const base = type.baseType;
       if (base && base.specialType !== 'System_Object') this.unsupported('class inheritance', at);
-      // IDisposable and IAsyncDisposable need no dispatch: `using` and `await using` call the method of the static type.
-      const needsDispatch = i => i.specialType !== 'System_IDisposable' && i !== this.analysis.core.iasyncDisposable;
+      // Three interfaces need no dispatch: `using` and `await using` call the method of the static type, and a
+      // collection initializer only requires IEnumerable to be listed (its Add calls are bound statically).
+      const core = this.analysis.core,
+        dispatchFree = [core.iasyncDisposable, core.ienumerable],
+        needsDispatch = i => i.specialType !== 'System_IDisposable' && !dispatchFree.includes(i);
       if (type.interfaces?.some(needsDispatch)) this.unsupported('interface implementation', at);
     }
     /** The image class of a source class symbol. */
