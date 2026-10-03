@@ -1,42 +1,28 @@
 import {
   analyzeDesignSources, designSourceSnapshot, designSourceDiagnostic,
-  planDesignSourceUpdate, planDesignEventHandler, discoverProjectControls
+  planDesignSourceUpdate, planDesignEventHandler, DesignSyncError
 } from '@sharpforge/designer';
 import { registerDesignerValidation } from './designer-worker-validation.js';
 import {registerDesignerResourceSourceWorker} from './designer-resource-source-worker.js';
-
-function sameSources(left, right) {
-  if (!Array.isArray(left) || !Array.isArray(right) || left.length !== right.length) return false;
-  const files = new Map(left.map(file => [file.uri, file]));
-  if (files.size !== left.length || new Set(right.map(file => file.uri)).size !== right.length) return false;
-  return right.every(file => files.get(file.uri)?.text === file.text && files.get(file.uri)?.version === file.version);
-}
+import {DesignerWorkerAnalysisCache, designerAnalysisOptions, sameDesignerSources} from './designer-worker-cache.js';
+import {analyzeDesignerProjectCatalog, assertDesignerProjectTypes} from './designer-worker-catalog.js';
+import {DesignerWorkerQueue} from './designer-worker-queue.js';
+import {analyzeDesignerWorkerSources} from './designer-worker-analysis.js';
 
 /** Register an additive compiler-worker request; syntax and semantic graphs remain in the worker. */
 export function registerDesignerWorker(protocol, {maxCachedDocuments = 4, maxCachedCharacters = 512000, workspace = null} = {}) {
   const unregisterValidation = workspace ? registerDesignerValidation(protocol, workspace) : null;
   const unregisterResources = registerDesignerResourceSourceWorker(protocol);
-  const analyses = new Map();
-  const options = params => ({
-    uri: params.uri, previous: params.previous, className: params.className, methodName: params.methodName,
-    projectTypes: params.projectTypes ?? params.previous?.document?.projectTypes,
-    compilationOptions: { ...params.compilationOptions, outputKind: 'library' }
-  });
-  const retain = analysis => {
-    analyses.delete(analysis.uri);
-    analyses.set(analysis.uri, analysis);
-    const size = item => item.sources.reduce((sum, file) => sum + file.text.length, 0);
-    let characters = [...analyses.values()].reduce((sum, item) => sum + size(item), 0);
-    while (analyses.size && (analyses.size > maxCachedDocuments || characters > maxCachedCharacters)) {
-      const oldest = analyses.keys().next().value;
-      characters -= size(analyses.get(oldest));
-      analyses.delete(oldest);
-    }
-  };
+  const analyses = new DesignerWorkerAnalysisCache({maxDocuments: maxCachedDocuments, maxCharacters: maxCachedCharacters});
+  const queue = new DesignerWorkerQueue();
   const baseline = params => {
-    const cached = analyses.get(params.uri);
-    if (cached && sameSources(cached.sources, params.baselineSources)) return cached;
-    return analyzeDesignSources(params.baselineSources, options(params));
+    if (!sameDesignerSources(params.baselineSources, params.files)) {
+      throw new DesignSyncError('Source versions, files or edit permissions changed after analysis.', 'SFSYNC_CONFLICT');
+    }
+    const analysis = analyses.get(params, params.baselineSources)
+      ?? analyzeDesignSources(params.baselineSources, designerAnalysisOptions(params));
+    assertDesignerProjectTypes(analysis, analysis.document, params.revision ?? 0);
+    return analysis;
   };
   const serializePlan = plan => ({
     success: plan.compilationSucceeded !== false,
@@ -46,22 +32,22 @@ export function registerDesignerWorker(protocol, {maxCachedDocuments = 4, maxCac
   });
   const operations = {
     analyze(params) {
-      const analysis = analyzeDesignSources(params.files, options(params));
-      const snapshot = designSourceSnapshot(analysis);
-      const diagnostics = snapshot.diagnostics ?? [];
-      const success = !diagnostics.some(item => item.severity === 'error');
-      if (success) retain(analysis);
-      const projectTypes = discoverProjectControls({success: analysis.compilationSucceeded, files: analysis.sources, version: params.revision});
-      return {success, analysis: snapshot, diagnostics, projectTypes, generation: params.generation};
+      const {analysis, result} = analyzeDesignerWorkerSources(params);
+      if (result.success || result.previewAvailable) analyses.set({...params, uri: analysis.uri,
+        className: analysis.ownership.className, methodName: analysis.method.name, previous: result.analysis}, analysis);
+      return result;
     },
     catalog(params) {
-      const projectTypes = discoverProjectControls({success: params.success, files: params.files, version: params.revision});
-      return {success: params.success, projectTypes, revision: params.revision};
+      const catalog = analyzeDesignerProjectCatalog(params);
+      return {success: catalog.success, previewAvailable: catalog.previewAvailable, projectTypes: catalog.projectTypes,
+        diagnostics: catalog.diagnostics, previewDiagnostics: catalog.previewDiagnostics, revision: params.revision};
     },
     plan(params) {
       const analysis = baseline(params);
-      const plan = planDesignSourceUpdate(analysis, params.design, params.files, { requireCompilation: true });
-      retain(plan.analysis);
+      assertDesignerProjectTypes(analysis, params.design, params.revision ?? 0);
+      const plan = planDesignSourceUpdate(analysis, params.design, params.files, {requireCompilation: true, signal: params.signal});
+      analyses.set({...params, uri: plan.analysis.uri, className: plan.analysis.ownership.className,
+        methodName: plan.analysis.method.name, previous: designSourceSnapshot(plan.analysis)}, plan.analysis);
       return serializePlan(plan);
     },
     event(params) {
@@ -70,21 +56,21 @@ export function registerDesignerWorker(protocol, {maxCachedDocuments = 4, maxCac
         throw new Error('This event does not have a source handler');
       }
       const plan = planDesignEventHandler(analysis, params.nodeId, params.event, {
-        ...params.options, currentSources: params.files, requireCompilation: true
+        ...params.options, currentSources: params.files, requireCompilation: true, signal: params.signal
       });
       return {...serializePlan(plan), navigation: plan.navigation, existing: plan.existing,
         readOnly: plan.readOnly, handler: plan.handler};
     }
   };
-  const unregister = protocol.registerHandler('designAnalyze', params => {
+  const unregister = protocol.registerHandler('designAnalyze', async (params, _method, context = {}) => {
     try {
       const operation = operations[params.operation ?? 'analyze'];
       if (!operation || !Object.hasOwn(operations, params.operation ?? 'analyze')) throw new TypeError('Unknown designer worker operation');
-      return operation(params);
+      return await queue.run(params, context, operation);
     } catch (error) {
       return { success: false, generation: params.generation,
         diagnostics: error.details?.diagnostics ?? [designSourceDiagnostic(error, { uri: params.uri })] };
     }
   });
-  return () => { unregister(); unregisterResources(); unregisterValidation?.(); analyses.clear(); };
+  return () => { queue.dispose(); unregister(); unregisterResources(); unregisterValidation?.(); analyses.clear(); };
 }
