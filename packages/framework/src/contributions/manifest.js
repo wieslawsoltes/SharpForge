@@ -1,3 +1,4 @@
+import {registerBclModules} from '@sharpforge/bcl-core';
 import {registerCoreXaml} from './core-xaml.js';
 import {registerCoreControls} from './core-controls.js';
 import {registerCoreSystem} from './core-system.js';
@@ -14,3 +15,8 @@ export const contributionManifest=Object.freeze([
 /** A00-A21 blocks are stable regardless of the order modules are loaded. */
 export const areaReservations=Object.freeze(Array.from({length:22},(_,i)=>Object.freeze({name:'A'+String(i).padStart(2,'0'),start:65536+i*65536,size:65536})));
 export const idReservations=Object.freeze([...contributionManifest,...areaReservations]);
+
+/** New BCL modules use A07's reserved block without editing a central dispatcher. */
+export const bclExtensionContribution=Object.freeze({
+  name:'A07', register:registry=>registerBclModules(registry,{group:'extensions'})
+});
