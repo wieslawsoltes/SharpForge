@@ -86,3 +86,5 @@ structural diagnostics. See `examples/metadata/table-builder.mjs` for a runnable
 
 The [PE API](PE.md) supports AnyCPU/x86/x64/ARM64 output, console/library headers,
 desktop CLR import stubs, aligned multi-section layouts and all PE/CLI data directories.
+
+Embedded data emission and bounded inspection are documented in [RESOURCES.md](./RESOURCES.md).
