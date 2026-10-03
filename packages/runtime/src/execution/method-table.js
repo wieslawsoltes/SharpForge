@@ -34,7 +34,7 @@ export function runtimeTypeName(input) {
     if(!name.endsWith('>'))throw new TypeError('Unbalanced runtime type name');
     const arguments_=splitTypeArguments(name.slice(start+1,-1));
     let definition=name.slice(0,start).trim();
-    if(!/`\d+$/.test(definition))definition+='`'+arguments_.length;
+    if(!/`\d+$/.test(definition)){const short=definition.replace(/^System\.Collections\.Generic\./,'');definition+='`'+(genericNames.has(short)?short==='Dictionary'?2:1:arguments_.length);}
     return runtimeTypeName(definition)+'<'+arguments_.map(argument=>argument?runtimeTypeName(argument):'').join(', ')+'>';
   }
   const stem=name.replace(/`\d+$/,'');

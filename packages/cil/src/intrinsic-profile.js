@@ -35,9 +35,10 @@ add('System.Enum','ToString',[],'string',false,'enumToString');
 add('System.Enum','HasFlag',['System.Enum'],'bool',false,'enumHasFlag');
 for(const parameters of [[],['string']])add('System.Exception','.ctor',parameters,'void',false,'exceptionCtor');
 add('System.Exception','get_Message',[],'string',false,'exceptionMessage');
-add('System.Exception','get_InnerException',[],'System.Exception',false,'exceptionInner');
+for(const result of ['Exception','System.Exception'])add('System.Exception','get_InnerException',[],result,false,'exceptionInner');
 add('System.TypeInitializationException','get_Message',[],'string',false,'exceptionMessage');
-add('System.TypeInitializationException','get_InnerException',[],'System.Exception',false,'exceptionInner');
+for(const result of ['Exception','System.Exception'])add('System.TypeInitializationException','get_InnerException',[],result,false,'exceptionInner');
+for(const name of ['Sort','Reverse'])add('System.Array',name,['System.Array'],'void',true,'arrayMutate');
 add('System.String','.ctor',['char[]'],'void',false,'stringCtor');
 for(const count of [2,3,4])add('System.String','Concat',Array(count).fill('string'),'string',true,'stringConcat');
 add('System.String','Concat',['object','object'],'string',true,'stringConcat');
@@ -96,5 +97,5 @@ export function intrinsicDefinition(descriptor) {
   const contract=frameworkDefinitions.get(signatureKey(canonicalType(descriptor.owner),descriptor.name,signature.parameters.map(canonicalType),canonicalType(signature.returnType),signature.isStatic));
   if(contract)return contract;
   if(descriptor.genericArguments||signature.genericArity||signature.callingConvention)return null;
-  return builtinDefinitions.get(signatureKey(systemType(descriptor.owner),descriptor.name,signature.parameters,signature.returnType,signature.isStatic))??null;
+  return builtinDefinitions.get(signatureKey(systemType(descriptor.owner),descriptor.name,signature.parameters.map(type=>type==='Array'?'System.Array':type),signature.returnType,signature.isStatic))??null;
 }

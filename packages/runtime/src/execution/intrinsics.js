@@ -1,3 +1,4 @@
+import {mutateArray} from './array-ops.js';
 import {intrinsicDefinition,intrinsicDefinitions} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {float} from './numeric-ops.js';
@@ -11,6 +12,7 @@ function stringReceiver(context) {
   return value;
 }
 const implementations={
+  arrayMutate:({vm,descriptor,parameters})=>mutateArray(vm,descriptor.name,parameters[0]),
   console:({vm,descriptor,parameters})=>{vm.emitOutput((parameters.length?vm.format(parameters[0],descriptor.signature.parameters[0]):'')+(descriptor.name==='WriteLine'?'\n':''));return null;},
   objectCtor:()=>null,
   objectToString:({vm,self})=>vm.heap.string(runtimeTypeText(vm,self)??vm.format(self)),
