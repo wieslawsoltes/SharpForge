@@ -1,0 +1,333 @@
+{
+  "schemaVersion": 1,
+  "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+  "runnerId": "d232175fd1b51be6accee04e",
+  "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+  "environment": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M3 Pro",
+    "logicalCpus": 11,
+    "osRelease": "25.6.0",
+    "runnerName": "MacBook-Pro.local",
+    "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+    "browser": "143.0.7499.4"
+  },
+  "benchmarks": [
+    {
+      "id": "A20/browser-startup",
+      "area": "A20",
+      "engine": "chromium",
+      "unit": "ms",
+      "samples": [
+        880.3961668163538,
+        354.1119999717921,
+        353.9430000819266,
+        337.502459064126,
+        353.1060409732163
+      ],
+      "coldSamples": [
+        880.3961668163538,
+        354.1119999717921,
+        353.9430000819266,
+        337.502459064126,
+        353.1060409732163
+      ],
+      "statistics": {
+        "count": 5,
+        "median": 353.9430000819266,
+        "p95": 880.3961668163538,
+        "p99": 880.3961668163538,
+        "min": 337.502459064126,
+        "max": 880.3961668163538
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "real-studio-startup"
+      },
+      "metrics": {
+        "browser": "143.0.7499.4",
+        "traces": [
+          {
+            "path": "chromium-0.zip",
+            "sha256": "6b1b99ae9226e076321f972d3303093aec6d09a60f2b68051c4d7835ba64aa2e"
+          },
+          {
+            "path": "chromium-1.zip",
+            "sha256": "5168bacf35f92f896e44ded74cb9022e70c462defae86e0a1560c9c72e8b9638"
+          },
+          {
+            "path": "chromium-2.zip",
+            "sha256": "f288b4552010d2c4e980a031d8f0e3f01419036f564fe676704b936ecf11c081"
+          },
+          {
+            "path": "chromium-3.zip",
+            "sha256": "d7dc54419e13ab56c4fbe694bec0e02ce37f871df3b917e1e8d092c2bc94ba39"
+          },
+          {
+            "path": "chromium-4.zip",
+            "sha256": "4fa55e1676f1c3d6f217ab2f58f0a05ffc74a04e42a2cf3c1c03600f1569bd4f"
+          }
+        ],
+        "measurement": "fresh browser launch through first correct PE/CLI build; tracing enabled"
+      }
+    },
+    {
+      "id": "A20/browser-firstCompile",
+      "area": "A20",
+      "engine": "chromium",
+      "unit": "ms",
+      "samples": [
+        6.700000047683716,
+        5.5,
+        5.6000001430511475,
+        5.299999952316284,
+        5.400000095367432
+      ],
+      "coldSamples": [],
+      "statistics": {
+        "count": 5,
+        "median": 5.5,
+        "p95": 6.700000047683716,
+        "p99": 6.700000047683716,
+        "min": 5.299999952316284,
+        "max": 6.700000047683716
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "real-studio-firstCompile"
+      },
+      "metrics": {
+        "browser": "143.0.7499.4",
+        "traces": [
+          {
+            "path": "chromium-0.zip",
+            "sha256": "6b1b99ae9226e076321f972d3303093aec6d09a60f2b68051c4d7835ba64aa2e"
+          },
+          {
+            "path": "chromium-1.zip",
+            "sha256": "5168bacf35f92f896e44ded74cb9022e70c462defae86e0a1560c9c72e8b9638"
+          },
+          {
+            "path": "chromium-2.zip",
+            "sha256": "f288b4552010d2c4e980a031d8f0e3f01419036f564fe676704b936ecf11c081"
+          },
+          {
+            "path": "chromium-3.zip",
+            "sha256": "d7dc54419e13ab56c4fbe694bec0e02ce37f871df3b917e1e8d092c2bc94ba39"
+          },
+          {
+            "path": "chromium-4.zip",
+            "sha256": "4fa55e1676f1c3d6f217ab2f58f0a05ffc74a04e42a2cf3c1c03600f1569bd4f"
+          }
+        ],
+        "measurement": "worker-reported first compile plus IL emission time"
+      }
+    },
+    {
+      "id": "A20/browser-typing",
+      "area": "A20",
+      "engine": "chromium",
+      "unit": "ms",
+      "samples": [
+        41.89291689544916,
+        34.241250017657876,
+        33.942332956939936,
+        36.68462485074997,
+        29.36158305965364,
+        35.65199999138713,
+        29.713833006098866,
+        37.31612511910498,
+        45.04458303563297,
+        32.281167106702924,
+        26.648167055100203,
+        37.21045795828104,
+        28.19516696035862,
+        31.10066708177328,
+        31.64366609416902,
+        35.930957878008485,
+        35.048667108640075,
+        29.501541052013636,
+        29.35954206623137,
+        39.326041005551815,
+        36.162500036880374,
+        36.11533413641155,
+        35.35600006580353,
+        30.522374901920557,
+        29.163792030885816,
+        32.43516688235104,
+        28.990792110562325,
+        32.10587496869266,
+        29.124625027179718,
+        28.263666201382875,
+        27.565000113099813,
+        32.42041706107557,
+        32.708417158573866,
+        45.90833419933915,
+        39.98250002041459,
+        34.23587488941848,
+        34.14583392441273,
+        36.44958301447332,
+        33.512833062559366,
+        30.093124834820628,
+        30.304291984066367,
+        33.83933287113905,
+        27.436499949544668,
+        31.084624817594886,
+        30.77854192815721,
+        31.773708062246442,
+        30.75804212130606,
+        30.910833040252328,
+        26.862582890316844,
+        30.98312485963106
+      ],
+      "coldSamples": [],
+      "statistics": {
+        "count": 50,
+        "median": 32.19352103769779,
+        "p95": 41.89291689544916,
+        "p99": 45.90833419933915,
+        "min": 26.648167055100203,
+        "max": 45.90833419933915
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "real-studio-typing"
+      },
+      "metrics": {
+        "browser": "143.0.7499.4",
+        "traces": [
+          {
+            "path": "chromium-0.zip",
+            "sha256": "6b1b99ae9226e076321f972d3303093aec6d09a60f2b68051c4d7835ba64aa2e"
+          },
+          {
+            "path": "chromium-1.zip",
+            "sha256": "5168bacf35f92f896e44ded74cb9022e70c462defae86e0a1560c9c72e8b9638"
+          },
+          {
+            "path": "chromium-2.zip",
+            "sha256": "f288b4552010d2c4e980a031d8f0e3f01419036f564fe676704b936ecf11c081"
+          },
+          {
+            "path": "chromium-3.zip",
+            "sha256": "d7dc54419e13ab56c4fbe694bec0e02ce37f871df3b917e1e8d092c2bc94ba39"
+          },
+          {
+            "path": "chromium-4.zip",
+            "sha256": "4fa55e1676f1c3d6f217ab2f58f0a05ffc74a04e42a2cf3c1c03600f1569bd4f"
+          }
+        ],
+        "measurement": "real keyboard input through two animation frames; protocol overhead included"
+      }
+    },
+    {
+      "id": "A20/browser-toolActivation",
+      "area": "A20",
+      "engine": "chromium",
+      "unit": "ms",
+      "samples": [
+        46.056458028033376,
+        39.75900006480515,
+        37.86091599613428,
+        34.59933307021856,
+        37.34170808456838,
+        34.96858291327953,
+        38.138499949127436,
+        37.00587502680719,
+        38.14991586841643,
+        36.2039168830961,
+        46.885957941412926,
+        36.491042003035545,
+        35.309917060658336,
+        35.67816689610481,
+        30.69320903159678,
+        30.865166103467345,
+        36.80629190057516,
+        36.235665902495384,
+        35.26274999603629,
+        33.369624987244606,
+        45.5617499537766,
+        29.68395804055035,
+        36.61370906047523,
+        35.10887501761317,
+        30.08758299984038,
+        35.391208017244935,
+        37.28987509384751,
+        36.19079198688269,
+        29.8205001745373,
+        29.24329205416143,
+        50.46441708691418,
+        40.765250101685524,
+        37.537665804848075,
+        46.06762481853366,
+        37.433291086927056,
+        37.360083078965545,
+        38.41120796278119,
+        39.2319590318948,
+        35.902917152270675,
+        35.502666141837835,
+        44.42658415064216,
+        28.328416869044304,
+        35.08433303795755,
+        36.95037495344877,
+        26.978374924510717,
+        28.885750100016594,
+        29.352332931011915,
+        30.448083067312837,
+        29.369832947850227,
+        34.48537504300475
+      ],
+      "coldSamples": [],
+      "statistics": {
+        "count": 50,
+        "median": 36.19735443498939,
+        "p95": 46.06762481853366,
+        "p99": 50.46441708691418,
+        "min": 26.978374924510717,
+        "max": 50.46441708691418
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "real-studio-toolActivation"
+      },
+      "metrics": {
+        "browser": "143.0.7499.4",
+        "traces": [
+          {
+            "path": "chromium-0.zip",
+            "sha256": "6b1b99ae9226e076321f972d3303093aec6d09a60f2b68051c4d7835ba64aa2e"
+          },
+          {
+            "path": "chromium-1.zip",
+            "sha256": "5168bacf35f92f896e44ded74cb9022e70c462defae86e0a1560c9c72e8b9638"
+          },
+          {
+            "path": "chromium-2.zip",
+            "sha256": "f288b4552010d2c4e980a031d8f0e3f01419036f564fe676704b936ecf11c081"
+          },
+          {
+            "path": "chromium-3.zip",
+            "sha256": "d7dc54419e13ab56c4fbe694bec0e02ce37f871df3b917e1e8d092c2bc94ba39"
+          },
+          {
+            "path": "chromium-4.zip",
+            "sha256": "4fa55e1676f1c3d6f217ab2f58f0a05ffc74a04e42a2cf3c1c03600f1569bd4f"
+          }
+        ],
+        "measurement": "real dock click through visible panel and animation frame"
+      }
+    }
+  ],
+  "unsupported": [
+    {
+      "target": "firefox",
+      "reason": "Engine not requested in this independent run"
+    },
+    {
+      "target": "webkit",
+      "reason": "Engine not requested in this independent run"
+    }
+  ]
+}

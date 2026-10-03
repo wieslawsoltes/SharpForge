@@ -68,6 +68,7 @@ export const PropertySymbolBuilder = Base =>
           declaredAccessibility: access,
           modifiers: flags | (own.includes('readonly') ? DeclarationModifiers.ReadOnly : 0),
           syntax: a ?? syntax,
+          locations: a ? [{ uri, ...spanOf(a.keyword) }] : [],
           isInitOnly: keyword === 'init',
         });
         method.scope = scope;
@@ -208,7 +209,8 @@ export const PropertySymbolBuilder = Base =>
               containingSymbol: type,
               declaredAccessibility: Accessibility.Public,
               modifiers: 0,
-              isInitOnly: !get && type.typeKind === TypeKind.Class,
+              // A record class and a readonly record struct have init-only positional properties.
+              isInitOnly: !get && (type.typeKind === TypeKind.Class || type.isReadOnly),
               isImplicitlyDeclared: true,
             });
             a.isAutoAccessor = true;
