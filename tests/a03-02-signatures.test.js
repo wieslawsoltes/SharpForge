@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import {
-  Writer, CilError, MetadataBuilder, decodeSignature, decodeTypeSignature, encodeSignature, encodeTypeSignature,
+  Writer, CilError, MetadataBuilder, readMetadata, decodeSignature, decodeTypeSignature, encodeSignature, encodeTypeSignature,
   parseSignatureType, readSignature, readTypeSignature, fieldSignature, methodSignature, propertySignature,
   localSignature, methodSpecSignature, signatureType,
 } from '@sharpforge/cil';
@@ -133,6 +133,6 @@ test('MetadataBuilder deduplicates nested TypeSpec bytes', () => {
   assert.equal(builder.typeRef(name), first);
   assert.equal(builder.typeRef('Dictionary<string, List<int>>'), first);
   assert.equal(builder.rows[27].length, 1);
-  const blob = builder.blobs.finish();
-  assert.ok(blob.includes(0x15));
+  const metadata = readMetadata(builder.finish(null, new Uint8Array()));
+  assert.equal(decodeTypeSignature(metadata.blob(metadata.row(first)[0])).kind, 'genericInstance');
 });
