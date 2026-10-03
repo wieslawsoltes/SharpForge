@@ -39,6 +39,7 @@ test('A05 T26 generic field signatures substitute the declaring type arguments',
   const {bytes,refs}=genericFixture(w=>w.op('ret'),{parameterField:true}),vm=new CilVirtualMachine(bytes);
   assert.equal(resolveExecutionField(vm.inspector,refs[0]).signature.type,'int');
   assert.equal(resolveExecutionField(vm.inspector,refs[1]).signature.type,'string');
+  assert.equal(resolveExecutionField(vm.inspector,refs[0],['string']).signature.type,'int','MemberRef !0 belongs to its declaring type, not the caller');
   assert.equal(staticSlot(vm,refs[0]).field.owner,'Counter`1');
 });
 test('A05 T26 ldsflda retains its closed generic identity',()=>{
