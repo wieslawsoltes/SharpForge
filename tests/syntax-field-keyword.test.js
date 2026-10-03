@@ -34,6 +34,8 @@ test('T51 inside an accessor, a member access, an escaped name and a declared na
   assert.equal(fieldNodes(property), 2, 'only the bare uses: in the local function and in the return');
   const [nameofUse] = classMembersOf('int Q { get => nameof(field).Length; }');
   assert.equal(fieldNodes(nameofUse), 1);
+  const [interpolated] = classMembersOf('string S { get => $"{field} and {field:X2}"; }');
+  assert.equal(fieldNodes(interpolated), 2, 'also inside the holes of an interpolated string');
 });
 
 test('T51 LangVersion 13 treats field as an identifier', () => {

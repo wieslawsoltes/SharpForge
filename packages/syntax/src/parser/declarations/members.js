@@ -99,7 +99,9 @@ export const memberMethods = {
     if (!this.hasNameReportedModifier()) return;
     let i = this.i;
     if (this.kindAt(i) === 'event') i++;
-    if (this.isId(this.tokens[i]) && this.kindAt(i + 1) === '(') return this.modifierNameFeatures(this.memberModifiers, this.memberModifiersEnd, this.tokens[i]);
+    const from = this.memberModifiers,
+      to = this.memberModifiersEnd;
+    if (this.isId(this.tokens[i]) && this.kindAt(i + 1) === '(') return this.modifierNameFeatures(from, to, this.tokens[i]);
     let end = this.scanType(i);
     if (end <= i) return;
     while (this.isId(this.tokens[end]) && (this.kindAt(end + 1) === '.' || this.kindAt(end + 1) === '<')) {
@@ -108,7 +110,7 @@ export const memberMethods = {
       end = next + 1;
     }
     const name = this.tokens[end];
-    if (this.isId(name) || name.kind === 'this' || name.kind === 'operator') this.modifierNameFeatures(this.memberModifiers, this.memberModifiersEnd, name);
+    if (this.isId(name) || name.kind === 'this' || name.kind === 'operator') this.modifierNameFeatures(from, to, name);
   },
   /** True when the member's modifiers include `required`, or both `private` and `protected`: the two Roslyn reports at the name. */
   hasNameReportedModifier() {

@@ -36,6 +36,9 @@ export class Scanner {
     this.lastSnapshot = null;
     this.reused = 0;
     this.state = new DirectiveState(options.preprocessorSymbols ?? []);
+    // Callbacks handed to the literal scanners; created once so that scanning a token allocates no closure.
+    this.report = (at, length, code, message) => this.error(at, length, code, message);
+    this.scanHole = (offset, stops) => this.hole(offset, stops);
   }
   error(start, length, code, message, severity) {
     this.diagnostics.push(diagnostic(this.source, start, length, code, message, severity));
@@ -47,87 +50,103 @@ export class Scanner {
   token() {
     const text = this.text,
       start = this.i,
-      ch = text[start],
-      report = (at, length, code, message) => this.error(at, length, code, message);
+      ch = text[start];
     const raw = { kind: 'eof', start, end: start, value: undefined, literal: null, syntaxKind: 'EndOfFileToken' };
     if (start >= text.length) return raw;
-    if ((ch === '$' && /^\$+@?"/.test(text.slice(start, start + 64))) || (ch === '@' && text.startsWith('@$"', start))) {
-      const scan = scanInterpolated(text, start, report, (offset, stops) => this.hole(offset, stops));
-      raw.kind = 'interpolated';
-      raw.syntaxKind = 'InterpolatedStringToken';
-      raw.value = scan.parts;
-      raw.structure = scan.structure;
-      this.i = scan.end;
-      // A feature of an interpolated string covers the whole literal unless the scan gives it a span of its own.
-      for (const feature of scan.structure.features)
-        if (typeof feature === 'string') this.feature(feature, start, scan.end);
-        else this.feature(feature.id, feature.start, feature.end);
-    } else if (ch === '"' && text.startsWith('"""', start)) {
-      const scan = scanRawString(text, start, report);
-      this.i = scan.end;
-      raw.kind = 'string';
-      raw.syntaxKind = scan.multiline ? 'MultiLineRawStringLiteralToken' : 'SingleLineRawStringLiteralToken';
-      raw.value = scan.value;
-      raw.flags = { raw: true, multiline: scan.multiline };
-      this.feature('RawStringLiterals', start, scan.end);
-    } else if (ch === '"' || ch === "'" || (ch === '@' && text[start + 1] === '"')) {
-      const scan = scanString(text, start, report);
-      this.i = scan.end;
-      raw.kind = scan.kind;
-      raw.syntaxKind = scan.kind === 'char' ? 'CharacterLiteralToken' : 'StringLiteralToken';
-      raw.value = scan.value;
-      if (scan.verbatim) raw.flags = { verbatim: true };
-      for (const feature of scan.features) this.feature(feature.id, feature.start, feature.end);
-    } else if ((ch >= '0' && ch <= '9') || (ch === '.' && text[start + 1] >= '0' && text[start + 1] <= '9')) {
-      const scan = ch === '.' ? scanReal(text, start) : scanNumber(text, start);
-      this.i = scan.end;
-      raw.kind = scan.kind;
-      raw.syntaxKind = 'NumericLiteralToken';
-      raw.value = scan.value;
-      raw.literal = Object.freeze({ ...scan.literal, number: scan.value });
-      for (const e of scan.errors) this.error(start, scan.end - start, e.code, e.message, e.severity);
-      for (const e of scan.profile) this.profile.push(diagnostic(this.source, start, scan.end - start, e.code, e.message));
-      // Roslyn reports the features of a numeric literal with a zero-width span at its start.
-      for (const id of scan.features) this.feature(id, start, start);
-      if (!Number.isFinite(scan.value) && !scan.errors.length) this.error(start, scan.end - start, 'CS1013', 'Invalid numeric literal');
-    } else if (startsIdentifier(text, start)) {
-      const scan = scanIdentifier(text, start);
-      this.i = scan.end;
-      raw.value = ownText(scan.value);
-      raw.kind = !scan.verbatim && !scan.hasEscapes && keywords.has(scan.value) ? scan.value : 'identifier';
-      raw.syntaxKind = reservedKeywordKinds[raw.kind] ?? 'IdentifierToken';
-      if (scan.verbatim || scan.hasEscapes) raw.flags = { verbatim: scan.verbatim, escaped: scan.hasEscapes };
-      else if (raw.kind !== 'identifier') raw.fixed = true;
-    } else {
-      const op = scanOperator(text, start);
-      if (op) {
-        raw.kind = op;
-        raw.syntaxKind = punctuationKinds[op];
-        raw.fixed = true;
-        this.i = start + op.length;
-      } else {
-        const point = text.codePointAt(start);
-        this.i = start + (point > 0xffff ? 2 : 1);
-        this.error(start, this.i - start, 'CS1056', `Unexpected character '${text.slice(start, this.i)}'`);
-        raw.kind = 'bad';
-        raw.syntaxKind = 'BadToken';
-      }
-    }
-    if (raw.syntaxKind.endsWith('StringLiteralToken')) {
-      const suffix = utf8SuffixLength(text, this.i);
-      if (suffix) {
-        this.i += suffix;
-        const encoded = encodeUtf8(raw.value);
-        raw.bytes = encoded.bytes;
-        raw.flags = { ...raw.flags, utf8: true };
-        raw.syntaxKind = 'Utf8' + raw.syntaxKind;
-        this.feature('Utf8StringLiterals', start, this.i);
-        if (encoded.error) this.error(start, this.i - start, encoded.error.code, encoded.error.message);
-      }
-    }
+    if ((ch === '$' && /^\$+@?"/.test(text.slice(start, start + 64))) || (ch === '@' && text.startsWith('@$"', start))) this.interpolatedToken(raw);
+    else if (ch === '"' && text.startsWith('"""', start)) this.rawStringToken(raw);
+    else if (ch === '"' || ch === "'" || (ch === '@' && text[start + 1] === '"')) this.stringToken(raw);
+    else if ((ch >= '0' && ch <= '9') || (ch === '.' && text[start + 1] >= '0' && text[start + 1] <= '9')) this.numberToken(raw, ch === '.');
+    else if (startsIdentifier(text, start)) this.identifierToken(raw);
+    else this.operatorToken(raw);
+    if (raw.syntaxKind.endsWith('StringLiteralToken')) this.utf8Suffix(raw);
     this.i = Math.min(this.i, text.length);
     raw.end = this.i;
     return raw;
+  }
+  interpolatedToken(raw) {
+    const start = raw.start,
+      scan = scanInterpolated(this.text, start, this.report, this.scanHole);
+    raw.kind = 'interpolated';
+    raw.syntaxKind = 'InterpolatedStringToken';
+    raw.value = scan.parts;
+    raw.structure = scan.structure;
+    this.i = scan.end;
+    // A feature of an interpolated string covers the whole literal unless the scan gives it a span of its own.
+    for (const feature of scan.structure.features)
+      if (typeof feature === 'string') this.feature(feature, start, scan.end);
+      else this.feature(feature.id, feature.start, feature.end);
+  }
+  rawStringToken(raw) {
+    const scan = scanRawString(this.text, raw.start, this.report);
+    this.i = scan.end;
+    raw.kind = 'string';
+    raw.syntaxKind = scan.multiline ? 'MultiLineRawStringLiteralToken' : 'SingleLineRawStringLiteralToken';
+    raw.value = scan.value;
+    raw.flags = { raw: true, multiline: scan.multiline };
+    this.feature('RawStringLiterals', raw.start, scan.end);
+  }
+  stringToken(raw) {
+    const scan = scanString(this.text, raw.start, this.report);
+    this.i = scan.end;
+    raw.kind = scan.kind;
+    raw.syntaxKind = scan.kind === 'char' ? 'CharacterLiteralToken' : 'StringLiteralToken';
+    raw.value = scan.value;
+    if (scan.verbatim) raw.flags = { verbatim: true };
+    for (const feature of scan.features) this.feature(feature.id, feature.start, feature.end);
+  }
+  numberToken(raw, real) {
+    const start = raw.start,
+      scan = real ? scanReal(this.text, start) : scanNumber(this.text, start);
+    this.i = scan.end;
+    raw.kind = scan.kind;
+    raw.syntaxKind = 'NumericLiteralToken';
+    raw.value = scan.value;
+    raw.literal = Object.freeze({ ...scan.literal, number: scan.value });
+    for (const e of scan.errors) this.error(start, scan.end - start, e.code, e.message, e.severity);
+    for (const e of scan.profile) this.profile.push(diagnostic(this.source, start, scan.end - start, e.code, e.message));
+    // Roslyn reports the features of a numeric literal with a zero-width span at its start.
+    for (const id of scan.features) this.feature(id, start, start);
+    if (!Number.isFinite(scan.value) && !scan.errors.length) this.error(start, scan.end - start, 'CS1013', 'Invalid numeric literal');
+  }
+  identifierToken(raw) {
+    const scan = scanIdentifier(this.text, raw.start);
+    this.i = scan.end;
+    raw.value = ownText(scan.value);
+    raw.kind = !scan.verbatim && !scan.hasEscapes && keywords.has(scan.value) ? scan.value : 'identifier';
+    raw.syntaxKind = reservedKeywordKinds[raw.kind] ?? 'IdentifierToken';
+    if (scan.verbatim || scan.hasEscapes) raw.flags = { verbatim: scan.verbatim, escaped: scan.hasEscapes };
+    else if (raw.kind !== 'identifier') raw.fixed = true;
+  }
+  /** An operator or punctuation token, or a BadToken (CS1056) for a character that starts no token. */
+  operatorToken(raw) {
+    const text = this.text,
+      start = raw.start,
+      op = scanOperator(text, start);
+    if (op) {
+      raw.kind = op;
+      raw.syntaxKind = punctuationKinds[op];
+      raw.fixed = true;
+      this.i = start + op.length;
+      return;
+    }
+    const point = text.codePointAt(start);
+    this.i = start + (point > 0xffff ? 2 : 1);
+    this.error(start, this.i - start, 'CS1056', `Unexpected character '${text.slice(start, this.i)}'`);
+    raw.kind = 'bad';
+    raw.syntaxKind = 'BadToken';
+  }
+  /** The C# 11 `u8` suffix after a string literal: the token becomes a UTF-8 literal and carries its bytes. */
+  utf8Suffix(raw) {
+    const suffix = utf8SuffixLength(this.text, this.i);
+    if (!suffix) return;
+    this.i += suffix;
+    const encoded = encodeUtf8(raw.value);
+    raw.bytes = encoded.bytes;
+    raw.flags = { ...raw.flags, utf8: true };
+    raw.syntaxKind = 'Utf8' + raw.syntaxKind;
+    this.feature('Utf8StringLiterals', raw.start, this.i);
+    if (encoded.error) this.error(raw.start, this.i - raw.start, encoded.error.code, encoded.error.message);
   }
   /** Lexes tokens until `stop()` holds or the end of file. Returns { raws, tail } where tail is trivia before the stop. */
   sequence(stop) {
