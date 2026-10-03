@@ -20,7 +20,7 @@ async function sourceFixture(directory) {
   return {root, commit, archive: writeZip([{path: 'Source/package-lock.json', text: lock}])};
 }
 
-test('release preparation requests the GitHub JSON media type for zipballs and raw release assets', async t =>
+test('release preparation uses JSON Accept for zipballs and binary Accept for assets', async t =>
   temporary(async directory => {
     const source = await sourceFixture(directory);
     const api = 'https://api.github.com/repos/fixture/repository';
