@@ -20,7 +20,7 @@ test('CIL numeric seam: tagged floats retain precision, special values and immut
 });
 
 test('CIL numeric seam: initialized locals receive the declared primitive defaults', () => {
-  for (const type of ['int', 'uint', 'short', 'ushort', 'byte', 'sbyte', 'char', 'bool', 'nint', 'nuint']) assert.equal(defaults(type), 0, type);
+  for (const type of ['int', 'uint', 'short', 'ushort', 'byte', 'sbyte', 'char', 'bool', 'nint', 'nuint']) assert.equal(number(defaults(type)), 0, type);
   for (const type of ['long', 'ulong']) assert.equal(defaults(type), 0n, type);
   assert.deepEqual(defaults('double'), float(0));
   assert.deepEqual(defaults('float'), float(0, 'r4'));

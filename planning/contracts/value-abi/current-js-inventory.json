@@ -3,8 +3,8 @@
   "sources": {
     "packages/runtime/src/heap.js": "28b86fe51a4a4cd93b7701b682fa2363a07d8a9c6370fd734e96690b16fe853c",
     "packages/runtime/src/vm.js": "f12912ee9f65f9e3e1d71c732d43e4f85c13e021bf5ad19a1e044e9a40db8b7a",
-    "packages/runtime/src/cil-vm.js": "53e502a5e8995ab3a50dfe48d2b5ef5808668044868d5bee0c429a6a33491d95",
-    "packages/bytecode/src/index.js": "3446e25f24d3b2d097a81f8a362ba43dcaf9906e5f11d42cdd347514bd8ccacc",
+    "packages/runtime/src/cil-vm.js": "fd98e627f698c084b30c10a2fa9db09e8e4fc80a473b757d9e5d684304ff4929",
+    "packages/bytecode/src/index.js": "31a49f190de0741697c39a1af2794e12e2a2d6679506461cbd6b0e9dcd669998",
     "packages/bytecode/src/builtins.js": "5d58c7a4d87f01f65370c7b87a60a0cbfc8e67eb0568675a29f8f159049ec7bf"
   },
   "resultKinds": {
@@ -26,7 +26,7 @@
     },
     "numeric": {
       "source": "number",
-      "cil": "number | bigint | frozen {float: r4|r8, value: number}"
+      "cil": "number | bigint | frozen {float: r4|r8, value: number} | frozen {nativeInt: 32|64, value: number|bigint}"
     },
     "bool": {
       "source": "boolean",
@@ -46,10 +46,14 @@
     },
     "any": {
       "source": "number | bigint | boolean | null | undefined | {h,g} | enum carrier",
-      "cil": "number | bigint | null | undefined | {h,g} | float | byref | methodPointer"
+      "cil": "number | bigint | null | undefined | {h,g} | float | nativeInt | byref | methodPointer"
     }
   },
   "additionalShapes": [
+    {
+      "shape": "{nativeInt: 32|64, value: number|bigint}",
+      "meaning": "immutable CIL native-integer stack category; signed payload at the explicitly configured ABI width; not a portable pointer"
+    },
     {
       "shape": "{enumType, underlyingType, value}",
       "meaning": "source enum identity with signed or unsigned integer storage; not a heap reference"
