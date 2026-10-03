@@ -54,7 +54,6 @@ const notGated = {
   ImprovedInterpolatedStrings: 'needs interpolated string handler conversions, which are not bound yet (SF-A02-T75)',
   AutoDefaultStructs: 'below C# 11 Roslyn reports CS0171 for the unassigned field, not a language-version diagnostic; the binder does the same (pinned)',
   CacheStaticMethodGroupConversion: 'only changes code generation in Roslyn; there is no diagnostic',
-  InlineArrays: 'Roslyn gates the use of an inline array (element access, conversion to a span), which is not bound yet (SF-A02-T80)',
   LockObject: 'needs System.Threading.Lock in the framework registry (the type is unknown: CS0246)',
   FirstClassSpan: 'Roslyn reports nothing for the snippet below C# 14 (the conversion exists as a user-defined one); pinned',
   ExpressionOptionalAndNamedArguments:
@@ -92,7 +91,7 @@ test('A02-B01 every catalog row has exactly one snippet and is either gated or l
     assert(notGated[id].length > 10, `${id} needs a reason`);
   }
   const gated = languageFeatures.filter(row => row.version > 1 && !(row.id in notGated));
-  assert(gated.length >= 173, `only ${gated.length} rows are gated`);
+  assert(gated.length >= 174, `only ${gated.length} rows are gated`);
 });
 
 for (const row of languageFeatures) {

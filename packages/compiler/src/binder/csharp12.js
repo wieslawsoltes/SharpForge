@@ -2,9 +2,11 @@
  * C# 12 rules that are not a construct family of their own (SF-A02-T80).
  *
  *   Inline arrays - `[InlineArray(n)]` on a struct: CS9167 (the length is not positive), CS9169 (the struct does not
- *       declare exactly one instance field). Element access needs struct storage the runtime does not have.
+ *       declare exactly one instance field). Element access and foreach are bound in ./inline-arrays.js.
  *   Experimental - a use of a type or member marked `[Experimental("ID")]` is an error with that ID, unless the use
  *       is inside a declaration marked with the same ID.
+ *
+ *   Interceptors - `[InterceptsLocation]` is always rejected: diagnostics only (./interceptors.js).
  *
  * Collection expressions are in ./collection-expressions.js. Type aliases of any type, `ref readonly` parameters and
  * primary constructors are bound by the type binder, the by-reference rules and binder/members.
@@ -12,6 +14,7 @@
 import { SymbolKind, TypeKind } from '../symbols/types.js';
 import { formatMessage } from '../diagnostics/codes.js';
 import { attributesNamed } from './bound-attributes.js';
+import { checkInterceptor } from './interceptors.js';
 
 const inlineArrayAttribute = 'System.Runtime.CompilerServices.InlineArrayAttribute';
 const experimentalAttribute = 'System.Diagnostics.CodeAnalysis.ExperimentalAttribute';
@@ -60,6 +63,9 @@ export const CSharp12Rules = Base =>
         for (const symbol of [type, ...type.getMembers()]) {
           const id = constantOf(attributesNamed(symbol, experimentalAttribute)[0]?.arguments[0]);
           if (typeof id === 'string' && id) symbol.experimentalId = id;
+          if (symbol.kind !== SymbolKind.Method) continue;
+          const uri = symbol.uri ?? this.at(symbol).uri;
+          for (const row of checkInterceptor(symbol)) this.report(uri, row.at, row.code, row.args);
         }
       }
     }
