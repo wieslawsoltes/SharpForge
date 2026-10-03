@@ -29,7 +29,7 @@ export async function ab({root=repository,base,head='HEAD',ids,registry=null,pai
   for(const id of ids)for(let pair=0;pair<pairs;pair++)for(const side of pair%2?['head','base']:['base','head']){
    const argv=[fileURLToPath(new URL('./measure.js',import.meta.url)),'--root',trees[side],'--adapter',id,'--samples','1','--warmups',String(warmups),...(registry?['--registry',resolve(registry)]:[])],started=new Date().toISOString();
    const result=await run(process.execPath,argv,trees[side]);
-   const raw=JSON.parse(result.stdout),name=side+'-'+id.replaceAll('/','_')+'-'+pair;
+   const raw=JSON.parse(result.stdout),name=side+'-'+ids.indexOf(id)+'-'+id.replaceAll('/','_').slice(0,80)+'-'+pair;
    if(raw.commit!==commits[side])throw new Error('Measured commit changed');
    writeJson(join(output,name+'.json'),raw);await writeFile(join(output,name+'.stderr.txt'),result.stderr);
    captured[side].push(raw);order.push({side,id,pair,started,command:[process.execPath,...argv],artifact:name+'.json'});

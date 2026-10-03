@@ -1,6 +1,15 @@
 import {distribution,validateReport} from './core.js';
 /** Exact one-sided paired sign test. No random resampling or discarded outliers. */
-export function signProbability(positive,total){let p=2**(-total),sum=0;for(let k=0;k<=total;k++){if(k>=positive)sum+=p;p=p*(total-k)/(k+1);}return Math.min(1,sum);}
+export function signProbability(positive,total){
+ if(!Number.isSafeInteger(positive)||!Number.isSafeInteger(total)||positive<0||total<positive)throw new Error('Invalid sign counts');
+ if(positive===0)return 1;
+ if(positive===total)return 2**(-total);
+ if(positive<=total/2)return 1-signProbability(total-positive+1,total);
+ // Start in the upper tail, avoiding 2**(-total) underflow near the median.
+ let logP=-total*Math.LN2;for(let i=1;i<=total-positive;i++)logP+=Math.log((total-i+1)/i);
+ let p=Math.exp(logP),sum=p;for(let k=positive;k<total;k++){p*=((total-k)/(k+1));sum+=p;}
+ return Math.min(1,sum);
+}
 export function compare(base,head,{threshold=.05,alpha=.01,minSamples=20,quarantine=[]}={}){
  validateReport(base);validateReport(head);
  if(base.harnessCommit!==head.harnessCommit||base.runnerId!==head.runnerId||JSON.stringify({...base.environment,commit:null})!==JSON.stringify({...head.environment,commit:null}))throw new Error('A/B requires the same runner and environment');

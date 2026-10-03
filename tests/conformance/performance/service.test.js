@@ -38,6 +38,10 @@ test('paired controls detect injected 15% slowdown and pass 20 independent A/A t
   const result=compare(record(base),record(base.map(v=>v*1.15)));assert.equal(result.passed,false);assert.equal(result.rows[0].verdict,'regression');assert(result.rows[0].pValue<.01);assert.match(summary(result),/15.0%.*regression/);
  }
  assert.equal(signProbability(20,20),2**-20);
+ assert(Math.abs(signProbability(600,1200)-.5115140726343013)<1e-10);
+ assert(signProbability(60000,100000)<.01);
+ assert(signProbability(50000,100000)>.5);
+ assert.throws(()=>signProbability(2,1),/Invalid/);
 });
 test('comparison rejects mismatches; explicit quarantine retains the regression verdict and expiry',()=>{
  const a=record(Array(20).fill(10)),b=record(Array(20).fill(12));
@@ -95,10 +99,12 @@ test('A/B executes both real Git revisions independently and disposes its worktr
   writeFileSync(join(root,'package-lock.json'),JSON.stringify({name:'paired-service-fixture',version:'1.0.0',lockfileVersion:3,packages:{'':{name:'paired-service-fixture',version:'1.0.0'}}}));
   writeFileSync(join(root,'.gitignore'),'node_modules/\n');writeFileSync(join(root,'value.json'),'42');g('add','.');g('commit','-m','base');const base=g('rev-parse','HEAD');
   writeFileSync(join(root,'head-marker'),'separate actual revision');g('add','.');g('commit','-m','head');const head=g('rev-parse','HEAD');
-  const registry=join(dir,'registry.json');writeFileSync(registry,JSON.stringify([{id:'A29/process-fixture',area:'A29',engine:'node-service-integration-fixture',module:'fixture.mjs'}]));
+  const registry=join(dir,'registry.json');writeFileSync(registry,JSON.stringify(['A29/process-fixture','A29/process/fixture','A29/process_fixture'].map(id=>({id,area:'A29',engine:'node-service-integration-fixture',module:'fixture.mjs'}))));
   writeFileSync(join(dir,'fixture.mjs'),"import {readFileSync} from 'node:fs';import {join} from 'node:path';import assert from 'node:assert/strict';export async function create({root}){const value=JSON.parse(readFileSync(join(root,'value.json'),'utf8'));assert.equal(value,42);return async()=>{const start=performance.now();await new Promise(r=>setTimeout(r,3));return {ms:performance.now()-start,checksum:String(value)};};}");
-  const result=await ab({root,base,head,registry,ids:['A29/process-fixture'],pairs:3,warmups:0,threshold:1,output:join(dir,'result')});
+  const result=await ab({root,base,head,registry,ids:['A29/process/fixture','A29/process_fixture'],pairs:3,warmups:0,threshold:1,output:join(dir,'result')});
   assert.equal(result.baseCommit,base);assert.equal(result.headCommit,head);assert.equal(result.passed,true);
+  const order=JSON.parse(readFileSync(join(dir,'result/run.json'),'utf8')).order;assert.equal(new Set(order.map(r=>r.artifact)).size,12);
+  for(const entry of order)assert.equal(JSON.parse(readFileSync(join(dir,'result',entry.artifact),'utf8')).benchmarks[0].id,entry.id);
   assert.equal(g('worktree','list','--porcelain').split('worktree ').length-1,1);
   assert.equal(g('status','--porcelain'),'');
   const controller=new AbortController(),pending=ab({root,base,head,registry,ids:['A29/process-fixture'],pairs:20,warmups:0,output:join(dir,'cancel'),signal:controller.signal});
