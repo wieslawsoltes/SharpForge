@@ -1,9 +1,6 @@
 import assert from 'node:assert/strict';
-import {pathToFileURL, fileURLToPath} from 'node:url';
-// Point at a baseline worktree to compare the same workload across implementations.
-const root = process.argv[2] ?? fileURLToPath(new URL('../../', import.meta.url));
-const {createClosedCollection} = await import(pathToFileURL(root + '/tests/helpers/closed-collection.js'));
-const {findContracts} = await import(pathToFileURL(root + '/packages/framework/src/index.js'));
+import {createClosedCollection} from '../../tests/helpers/closed-collection.js';
+import {findContracts} from '@sharpforge/framework';
 const serialize = findContracts('System.Text.Json.JsonSerializer', 'Serialize', true)[0];
 const samples = [];
 for (const engine of ['source', 'cil']) {
