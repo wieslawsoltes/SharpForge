@@ -12,6 +12,7 @@ export function signProbability(positive,total){
 }
 export function compare(base,head,{threshold=.05,alpha=.01,minSamples=20,quarantine=[]}={}){
  validateReport(base);validateReport(head);
+ if(JSON.stringify(base.registry??null)!==JSON.stringify(head.registry??null))throw new Error('Registry identity mismatch');
  if(base.harnessCommit!==head.harnessCommit||base.runnerId!==head.runnerId||JSON.stringify({...base.environment,commit:null})!==JSON.stringify({...head.environment,commit:null}))throw new Error('A/B requires the same runner and environment');
  if(!Number.isFinite(threshold)||threshold<0||threshold>1||!(alpha>0&&alpha<1)||!Number.isInteger(minSamples)||minSamples<3)throw new Error('Invalid comparison policy');
  const ids=new Set(),rows=[];

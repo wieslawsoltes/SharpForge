@@ -30,7 +30,7 @@ Adapters register A05 source/CIL, A08 collections, A10 scalar/actual Wasm SIMD a
 A20 editor workloads. Add an area without root-package edits via --registry
 owner/perf.json to measure.js. Each descriptor has id, area, engine and module;
 module exports create({root,adapter}) returning an action that verifies correctness
-and returns {ms,checksum,metrics}. Registry modules are trusted executable benchmarks.
+and returns {ms,checksum,metrics}. Registry modules are trusted executable benchmarks. The registry and modules must be tracked in one clean owner checkout; its commit and raw file hashes are pinned before/after capture and included in comparisons.
 A/B also accepts --registry to execute the same owner adapter independently against both checkouts. Use --baseline ID to select the base commit from a committed reviewed baseline; --policy-ref selects its Git revision. Core defaults use the reviewed adapter list. process.js provides cancellable,
 bounded subprocess execution for external adapters.
 

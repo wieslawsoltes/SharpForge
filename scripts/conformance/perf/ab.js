@@ -1,3 +1,4 @@
+import {pinRegistry} from './registry.js';
 import {mkdtemp,mkdir,rm,writeFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
@@ -13,7 +14,7 @@ export async function ab({root=repository,base,head='HEAD',ids,registry=null,pai
  if(!base)throw new Error('An explicit baseline commit is required');
  const capturedHarness=pinCheckouts(root);
  integer(pairs,20,3,200);integer(warmups,3,0,100);
- const registered=[...adapters,...(registry?json(registry):[])];if(new Set(registered.map(a=>a.id)).size!==registered.length)throw new Error('Duplicate adapter registration');ids??=registered.map(a=>a.id);
+ const pinnedRegistry=pinRegistry(registry),registered=[...adapters,...pinnedRegistry.rows];if(new Set(registered.map(a=>a.id)).size!==registered.length)throw new Error('Duplicate adapter registration');ids??=registered.map(a=>a.id);
  if(!Array.isArray(ids)||!ids.length||new Set(ids).size!==ids.length||ids.some(id=>!registered.some(a=>a.id===id)))throw new Error('Unknown/duplicate adapter');
  const commits={base:git(root,'rev-parse','--verify',base+'^{commit}'),head:git(root,'rev-parse','--verify',head+'^{commit}')};
  const directory=await mkdtemp(join(tmpdir(),'sharpforge-perf-')),trees={},captured={base:[],head:[]},order=[];
@@ -31,12 +32,13 @@ export async function ab({root=repository,base,head='HEAD',ids,registry=null,pai
    const result=await run(process.execPath,argv,trees[side]);
    const raw=JSON.parse(result.stdout),name=side+'-'+ids.indexOf(id)+'-'+id.replaceAll('/','_').slice(0,80)+'-'+pair;
    if(raw.commit!==commits[side])throw new Error('Measured commit changed');
+   if(JSON.stringify(raw.registry??null)!==JSON.stringify(pinnedRegistry.identity))throw new Error('Measured registry changed');
    writeJson(join(output,name+'.json'),raw);await writeFile(join(output,name+'.stderr.txt'),result.stderr);
    captured[side].push(raw);order.push({side,id,pair,started,command:[process.execPath,...argv],artifact:name+'.json'});
   }
   for(const side of ['base','head'])if(clean(trees[side])!==commits[side])throw new Error('Checkout changed during benchmark');
-  const combine=side=>report(ids.map(id=>{const selected=captured[side].flatMap(x=>x.benchmarks).filter(x=>x.id===id),first=selected[0];if(selected.some(x=>x.correctness.checksum!==first.correctness.checksum))throw new Error('Nondeterministic correctness '+id);return benchmark({...first,samples:selected.flatMap(x=>x.samples),coldSamples:selected.flatMap(x=>x.coldSamples),checksum:first.correctness.checksum,metrics:{samples:selected.flatMap(x=>x.metrics?.samples??[])}});}),captured[side][0].environment);
-  capturedHarness.verify();
+  const combine=side=>report(ids.map(id=>{const selected=captured[side].flatMap(x=>x.benchmarks).filter(x=>x.id===id),first=selected[0];if(selected.some(x=>x.correctness.checksum!==first.correctness.checksum))throw new Error('Nondeterministic correctness '+id);return benchmark({...first,samples:selected.flatMap(x=>x.samples),coldSamples:selected.flatMap(x=>x.coldSamples),checksum:first.correctness.checksum,metrics:{samples:selected.flatMap(x=>x.metrics?.samples??[])}});}),captured[side][0].environment,{registry:pinnedRegistry.identity});
+  capturedHarness.verify();pinnedRegistry.verify();
   const before=combine('base'),after=combine('head'),result=compare(before,after,{threshold,minSamples:pairs,quarantine});
   writeJson(join(output,'base.json'),before);writeJson(join(output,'head.json'),after);writeJson(join(output,'comparison.json'),result);await writeFile(join(output,'summary.md'),summary(result));completed=true;return result;
  }finally{

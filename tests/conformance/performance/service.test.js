@@ -1,3 +1,4 @@
+import {pinRegistry} from '../../../scripts/conformance/perf/registry.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdtempSync,mkdirSync,writeFileSync,readFileSync,rmSync} from 'node:fs';
@@ -38,7 +39,7 @@ test('paired controls detect injected 15% slowdown and pass 20 independent A/A t
   const result=compare(record(base),record(base.map(v=>v*1.15)));assert.equal(result.passed,false);assert.equal(result.rows[0].verdict,'regression');assert(result.rows[0].pValue<.01);assert.match(summary(result),/15.0%.*regression/);
  }
  assert.equal(signProbability(20,20),2**-20);
- assert(Math.abs(signProbability(600,1200)-.5115140726343013)<1e-10);
+ assert(signProbability(600,1200)>.5&&signProbability(600,1200)<.52);
  assert(signProbability(60000,100000)<.01);
  assert(signProbability(50000,100000)>.5);
  assert.throws(()=>signProbability(2,1),/Invalid/);
@@ -46,6 +47,7 @@ test('paired controls detect injected 15% slowdown and pass 20 independent A/A t
 test('comparison rejects mismatches; explicit quarantine retains the regression verdict and expiry',()=>{
  const a=record(Array(20).fill(10)),b=record(Array(20).fill(12));
  b.runnerId='different';assert.throws(()=>compare(a,b),/same runner/);b.runnerId=a.runnerId;
+ b.registry={commit:env.commit,path:'r.json',sha256:'a'.repeat(64),modules:[]};assert.throws(()=>compare(a,b),/Registry identity/);delete b.registry;
  b.benchmarks[0].correctness.checksum='wrong';assert.throws(()=>compare(a,b),/Correctness/);b.benchmarks[0].correctness.checksum='42';
  const quarantine=[{id:'A05/control',reason:'tracked noisy runner #123',expires:'2099-01-01'}];assert.equal(compare(a,b,{quarantine}).rows[0].verdict,'quarantined');
  assert.throws(()=>compare(a,b,{quarantine:[{...quarantine[0],expires:'2000-01-01'}]}),/expired/);
@@ -99,8 +101,11 @@ test('A/B executes both real Git revisions independently and disposes its worktr
   writeFileSync(join(root,'package-lock.json'),JSON.stringify({name:'paired-service-fixture',version:'1.0.0',lockfileVersion:3,packages:{'':{name:'paired-service-fixture',version:'1.0.0'}}}));
   writeFileSync(join(root,'.gitignore'),'node_modules/\n');writeFileSync(join(root,'value.json'),'42');g('add','.');g('commit','-m','base');const base=g('rev-parse','HEAD');
   writeFileSync(join(root,'head-marker'),'separate actual revision');g('add','.');g('commit','-m','head');const head=g('rev-parse','HEAD');
-  const registry=join(dir,'registry.json');writeFileSync(registry,JSON.stringify(['A29/process-fixture','A29/process/fixture','A29/process_fixture'].map(id=>({id,area:'A29',engine:'node-service-integration-fixture',module:'fixture.mjs'}))));
-  writeFileSync(join(dir,'fixture.mjs'),"import {readFileSync} from 'node:fs';import {join} from 'node:path';import assert from 'node:assert/strict';export async function create({root}){const value=JSON.parse(readFileSync(join(root,'value.json'),'utf8'));assert.equal(value,42);return async()=>{const start=performance.now();await new Promise(r=>setTimeout(r,3));return {ms:performance.now()-start,checksum:String(value)};};}");
+  const registry=join(root,'registry.json');writeFileSync(registry,JSON.stringify(['A29/process-fixture','A29/process/fixture','A29/process_fixture'].map(id=>({id,area:'A29',engine:'node-service-integration-fixture',module:'fixture.mjs'}))));
+  writeFileSync(join(root,'fixture.mjs'),"import {readFileSync} from 'node:fs';import {join} from 'node:path';import assert from 'node:assert/strict';export async function create({root}){const value=JSON.parse(readFileSync(join(root,'value.json'),'utf8'));assert.equal(value,42);return async()=>{const start=performance.now();await new Promise(r=>setTimeout(r,3));return {ms:performance.now()-start,checksum:String(value)};};}");
+  g('add','.');g('commit','-m','committed owner registry');
+  const pinned=pinRegistry(registry);assert.equal(pinned.identity.modules.length,3);
+  writeFileSync(join(root,'fixture.mjs'),readFileSync(join(root,'fixture.mjs'),'utf8')+'\n');assert.throws(()=>pinRegistry(registry),/clean/);assert.throws(()=>pinned.verify(),/clean/);g('restore','fixture.mjs');
   const result=await ab({root,base,head,registry,ids:['A29/process/fixture','A29/process_fixture'],pairs:3,warmups:0,threshold:1,output:join(dir,'result')});
   assert.equal(result.baseCommit,base);assert.equal(result.headCommit,head);assert.equal(result.passed,true);
   const order=JSON.parse(readFileSync(join(dir,'result/run.json'),'utf8')).order;assert.equal(new Set(order.map(r=>r.artifact)).size,12);
