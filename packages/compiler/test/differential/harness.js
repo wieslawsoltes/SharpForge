@@ -6,6 +6,7 @@
  *   warnings    - the same for warning-severity diagnostics (reported separately);
  *   bytecode    - output fixtures only: stdout of the bytecode VM equals Roslyn's program output;
  *   cil         - output fixtures only: stdout of the CIL VM over the emitted assembly equals Roslyn's program output.
+ * (Profile diagnostics next to a semantic analysis do not make a diagnostics fixture unsupported; they are not compared.)
  * A fixture `passed` when its errors match and, for output fixtures, both back ends match; for diagnostics fixtures
  * the warnings must match as well. A fixture is `unsupported` - and can never pass on any axis - when the compiler
  * crashes or reports a non-Roslyn (SFxxxx profile) diagnostic for it, or when its pin is missing or stale.
@@ -18,7 +19,8 @@ import {loadFixtures,loadPinned,fixtureHash} from './corpus.js';
 export const AXES=Object.freeze(['diagnostics','warnings','bytecode','cil']);
 const INSTRUCTION_BUDGET=20_000_000;
 const key=d=>`${d[0]}@${d[1]}+${d[2]}`;
-const keys=(rows,severity)=>rows.filter(d=>d[3]===severity).map(key).sort();
+// The native capture uses Distinct after projecting code/span/severity; compare that same set on both sides.
+const keys=(rows,severity)=>[...new Set(rows.filter(d=>d[3]===severity).map(key))].sort();
 const same=(a,b)=>a.length===b.length&&a.every((v,i)=>v===b[i]);
 const brief=error=>String(error?.message??error).split('\n')[0].slice(0,200);
 
@@ -45,11 +47,14 @@ export function runFixture(fixture,pinned,options={}){
   let result;try{result=(options.compile??compile)(fixture.source,compileOptions);}catch(error){return unsupported('compiler crash: '+brief(error));}
   const actual=result.diagnostics.map(d=>[d.code,d.start,d.length,d.severity]);
   const foreign=actual.filter(d=>!/^CS\d{4}$/.test(String(d[0])));
-  if(foreign.length){row.details.actual=actual.map(key);return unsupported('profile diagnostics '+[...new Set(foreign.map(d=>d[0]))].join(' '));}
+  // A profile (SFxxxx) diagnostic means the program cannot run here. An output fixture is then unsupported. A diagnostics
+  // fixture is still comparable when the semantic analysis ran: its C# diagnostics are what Roslyn's are compared with.
+  if(foreign.length&&!(fixture.kind==='diagnostics'&&result.semantic?.analysed)){row.details.actual=actual.map(key);return unsupported('profile diagnostics '+[...new Set(foreign.map(d=>d[0]))].join(' '));}
+  const comparable=actual.filter(d=>/^CS\d{4}$/.test(String(d[0])));
   for(const [axis,severity] of [['diagnostics','error'],['warnings','warning']]){
     // Roslyn reports some diagnostics without a location (start -1, e.g. CS5001): for those only the code is compared.
     const unlocated=new Set(pinned.diagnostics.filter(d=>d[1]<0).map(d=>d[0])),normalize=rows=>rows.map(d=>unlocated.has(d[0])?[d[0],-1,0,d[3]]:d);
-    const want=keys(normalize(pinned.diagnostics),severity),got=keys(normalize(actual),severity);row[axis]=same(want,got);
+    const want=keys(normalize(pinned.diagnostics),severity),got=keys(normalize(comparable),severity);row[axis]=same(want,got);
     if(!row[axis])row.details[axis]={missing:want.filter(k=>!got.includes(k)),unexpected:got.filter(k=>!want.includes(k))};
   }
   if(fixture.kind==='output'){

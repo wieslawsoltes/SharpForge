@@ -148,6 +148,15 @@ function sourceTexts(sources){
   else for(const [uri,source] of Object.entries(sources))map.set(uri,textOf(source));
   return map;
 }
+/**
+ * The `#pragma warning` directives of a file, from the directive trivia of its syntax tree:
+ * `{start,end,action:'disable'|'restore',ids:string[]|null}` for every active disable/restore/enable directive.
+ */
+export function pragmaDirectivesFromSyntax(directives=[]){
+  const result=[];
+  for(const d of directives){const s=d.structure;if(!s||s.isActive===false||s.directive!=='pragma'||s.pragma!=='warning'||!s.action)continue;result.push({start:d.start,end:d.end,action:s.action==='disable'?'disable':'restore',ids:s.codes?.length?s.codes.map(normalizeDiagnosticId):null});}
+  return result;
+}
 /** Line/character of an offset, for the `range` of directive diagnostics. */
 function positionAt(text,offset){let line=0,start=0;for(let i=0;i<offset;i++){const ch=text[i];if(ch==='\r'){if(text[i+1]==='\n')i++;line++;start=i+1;}else if(ch==='\n'){line++;start=i+1;}}return {line,character:offset-start};}
 const within=(d,span)=>(span.uri===undefined||span.uri===d.uri)&&d.start>=span.start&&d.start+(d.length??0)<=span.end;
@@ -160,6 +169,11 @@ const defaultIsCompilerDiagnostic=d=>/^CS\d+$/.test(d.code)||hasDiagnosticCode(d
  *   on a record overrides the catalog's level for that code.
  * @param {object} [settings]
  * @param settings.sources file texts for `#pragma` handling: Map uri->SourceText|string, iterable of `{uri,text}`, or `{uri:text}`
+ * @param settings.directives Map uri -> the directive trivia the lexer recorded for that file (`parse().directives`); when
+ *   present for a file, its `#pragma warning` directives come from the syntax tree (inactive regions already excluded)
+ *   and the source text is not scanned again
+ * @param settings.pragmas Map uri -> `{directives,diagnostics}` already read for that file (diagnostics/pragma-trivia.js); takes
+ *   precedence over `directives` and over scanning the text
  * @param settings.options `{noWarn, warnAsError, warnNotAsError, warningLevel, treatWarningsAsErrors, preprocessorSymbols}`
  *   (a CompilationOptions works). Id lists are arrays or `;`/`,` separated strings of ids or numbers, normalised with
  *   `normalizeDiagnosticId`; `warnAsError:true` is the same as `treatWarningsAsErrors:true`; `warningLevel` defaults to 4.
@@ -171,9 +185,9 @@ const defaultIsCompilerDiagnostic=d=>/^CS\d+$/.test(d.code)||hasDiagnosticCode(d
  * @param settings.includeDirectiveDiagnostics also report the `#pragma` directive warnings of `sources` (CS1633, ...)
  * @param settings.isCompilerDiagnostic predicate for diagnostics SuppressMessage must not touch (default: catalog ids)
  */
-export function applySuppression(diagnostics,{sources=null,options={},suppressions=[],resolveTarget=null,includeDirectiveDiagnostics=false,isCompilerDiagnostic=defaultIsCompilerDiagnostic}={}){
+export function applySuppression(diagnostics,{sources=null,directives=null,pragmas=null,options={},suppressions=[],resolveTarget=null,includeDirectiveDiagnostics=false,isCompilerDiagnostic=defaultIsCompilerDiagnostic}={}){
   const texts=sourceTexts(sources),preprocessorSymbols=options?.preprocessorSymbols??[],parsed=new Map(),maps=new Map();
-  const parse=uri=>{if(!parsed.has(uri))parsed.set(uri,texts.has(uri)?parsePragmaDirectives(texts.get(uri),{preprocessorSymbols}):{directives:[],diagnostics:[]});return parsed.get(uri);};
+  const parse=uri=>{if(!parsed.has(uri))parsed.set(uri,pragmas?.has(uri)?pragmas.get(uri):directives?.has(uri)?{directives:pragmaDirectivesFromSyntax(directives.get(uri)),diagnostics:[]}:texts.has(uri)?parsePragmaDirectives(texts.get(uri),{preprocessorSymbols}):{directives:[],diagnostics:[]});return parsed.get(uri);};
   const mapOf=uri=>{if(!maps.has(uri))maps.set(uri,new PragmaWarningMap(parse(uri).directives));return maps.get(uri);};
   const warningLevel=options?.warningLevel??4,general=options?.treatWarningsAsErrors===true||options?.warnAsError===true;
   const specific=new Map();

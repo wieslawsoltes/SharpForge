@@ -60,7 +60,7 @@ export const diagnosticCases=[
  ['double to int','int x=1.2;','CS0029'],
  ['const write','const int x=1;x=2;','CS0131'],
  ['no entry','class A {}','CS5001'],
- ['unsupported long','long x=1;','CS0246'],
+ ['unsupported long','long x=1;','SF2200'],
  ['unsupported float literal','var x=1.2f;','SF1005'],
  ['invalid condition','if(1)Console.WriteLine(1);','CS0029']
 ];
