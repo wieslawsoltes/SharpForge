@@ -30,7 +30,7 @@ export const recoveryMethods = {
   separator(canStartElement) {
     if (this.at(',')) return this.take();
     if (this.at('eof') || !canStartElement.call(this)) return null;
-    this.error(this.current, 'CS1003', "Syntax error, ',' expected");
+    this.error(this.errorAnchor(), 'CS1003', "Syntax error, ',' expected");
     return this.missing(',');
   },
   /** Reports the current token as unexpected and skips it. */

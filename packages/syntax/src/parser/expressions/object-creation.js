@@ -1,16 +1,13 @@
 /**
- * `new` expressions: object creation with arguments and initializers, C# 9 target-typed `new()`, and array creation
- * with sizes, rank specifiers and initializers (`new T[n, m]`, `new T[n][]`). Anonymous objects and implicitly typed
- * arrays are parsed in anonymous-objects.js.
+ * `new` expressions: object creation with arguments and initializers, and array creation with sizes, rank
+ * specifiers and initializers (`new T[n, m]`, `new T[n][]`). Anonymous objects and implicitly typed arrays are parsed
+ * in anonymous-objects.js, the C# 9 target-typed `new()` in csharp9.js.
  */
 export const objectCreationMethods = {
   newExpression() {
     const start = this.current,
       keyword = this.take();
-    if (this.at('(') && !(this.scanTupleType(this.i) >= 0 && ['[', '?'].includes(this.kindAt(this.scanTupleType(this.i))))) {
-      this.feature('ImplicitObjectCreation', start);
-      return this.n('ImplicitObjectCreationExpression', keyword, this.argumentList(), this.at('{') ? this.objectOrCollectionInitializer() : null);
-    }
+    if (this.isImplicitObjectCreation()) return this.implicitObjectCreation(start, keyword);
     if (this.at('{')) return this.anonymousObjectCreation(start, keyword);
     if (this.at('[')) return this.implicitArrayCreation(start, keyword);
     const type = this.canStartNewType() ? this.type('new') : this.missingName();
