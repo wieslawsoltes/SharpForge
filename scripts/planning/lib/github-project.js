@@ -1,4 +1,4 @@
-import { ghTransport, GitHubError, withRetry } from './gh-retry.js';
+import { ghTransport, GitHubError } from './gh-retry.js';
 
 export class GitHubProject {
   constructor({ owner, repo = 'SharpForge', number = 4, transport = ghTransport() }) {
@@ -7,7 +7,6 @@ export class GitHubProject {
     this.base = `repos/${owner}/${repo}`;
   }
   async graphql(query, variables = {}) {
-    return withRetry(async () => {
       const result = await this.transport({ method: 'POST', path: 'graphql', body: { query, variables } });
       if (result.errors?.length) {
         const message = [...new Set(result.errors.map(e => e.message))].join('; ');
@@ -19,7 +18,6 @@ export class GitHubProject {
         throw new GitHubError(message, { status: /rate limit|abuse|secondary/i.test(message) ? 403 : 0, data: result.errors });
       }
       return result.data;
-    });
   }
   async project() {
     if (this.cachedProject) return this.cachedProject;
@@ -73,6 +71,7 @@ export class GitHubProject {
   }
   api(method, path, body) { return this.transport({ method, path: `${this.base}/${path}`, ...(body === undefined ? {} : { body }) }); }
   async ref(name) { try { return await this.api('GET', `git/ref/heads/${name}`); } catch (e) { if (e.status === 404) return null; throw e; } }
+  matchingRefs(prefix) { return this.api('GET', `git/matching-refs/heads/${prefix}`); }
   createRef(name, sha) { return this.api('POST', 'git/refs', { ref: `refs/heads/${name}`, sha }); }
   updateRef(name, sha) { return this.api('PATCH', `git/refs/heads/${name}`, { sha, force: false }); }
   deleteRef(name) { return this.api('DELETE', `git/refs/heads/${name}`); }

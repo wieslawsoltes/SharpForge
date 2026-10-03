@@ -41,6 +41,10 @@ export class FakeGitHub {
       if (!this.objects.has(body.sha)) this.error(422, 'Unknown commit');
       this.refs.set(body.ref, body.sha); return { ref: body.ref, object: { sha: body.sha } };
     }
+    if (method === 'GET' && suffix.startsWith('git/matching-refs/')) {
+      const prefix = 'refs/' + suffix.slice('git/matching-refs/'.length);
+      return [...this.refs].filter(([name]) => name.startsWith(prefix)).map(([ref, sha]) => ({ref, object: {sha}}));
+    }
     const refMatch = suffix.match(/^git\/(?:ref|refs)\/(heads\/.+)$/);
     if (refMatch) {
       const key = `refs/${refMatch[1]}`, sha = this.refs.get(key);

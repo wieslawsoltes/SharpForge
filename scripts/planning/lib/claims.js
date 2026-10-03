@@ -145,9 +145,13 @@ export class Claims {
   }
   async reap() {
     const expired = [];
+    // Claim refs remain authoritative even if the very first Project field write failed.
+    const managed = new Map((await this.client.matchingRefs('agent/')).map(ref => [ref.ref.replace(/^refs\/heads\//, ''), ref]));
     for (const item of await this.client.items()) {
-      if (!item.fields.Agent) continue;
-      let state; try { state = await this.state(item.content.number); } catch (error) { expired.push({ issue: item.content.number, error: error.message }); continue; }
+      let task; try { task = taskId(item); } catch (error) { if (item.fields.Agent) expired.push({ issue: item.content.number, error: error.message }); continue; }
+      const ref = managed.get(claimRef(task));
+      if (!ref && !item.fields.Agent) continue;
+      let state; try { state = { item, task, ref, record: ref ? await this.client.readRecord(ref.object.sha) : null }; } catch (error) { expired.push({ issue: item.content.number, error: error.message }); continue; }
       const expiry = state.record?.expires ?? `${item.fields['Lease expires']}T23:59:59.999Z`;
       if (!Number.isFinite(Date.parse(expiry))) { expired.push({ task: state.task, error: 'Missing or invalid lease expiry; manual reconciliation required' }); continue; }
       if (Date.parse(expiry) > this.now().getTime()) continue;
