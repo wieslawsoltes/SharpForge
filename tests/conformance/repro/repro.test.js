@@ -22,7 +22,13 @@ import { verifySource } from '../../../scripts/conformance/repro/source.js';
 import { dependencies, vendorCache, verifyCache } from '../../../scripts/conformance/repro/cache.js';
 import { compareBuilds } from '../../../scripts/conformance/repro/double-build.js';
 import { aggregate } from '../../../scripts/conformance/repro/aggregate.js';
-import { compareExamples, regenerate, generators } from '../../../scripts/conformance/repro/examples.js';
+import {
+  compareExamples,
+  regenerate,
+  generators,
+  exampleOutputs,
+  generatedMirrors,
+} from '../../../scripts/conformance/repro/examples.js';
 import { explain } from '../../../scripts/conformance/repro/offline.js';
 import { markdownLinks, checkLink } from '../../../scripts/conformance/repro/link-check.js';
 import { download } from '../../../scripts/conformance/repro/prepare.js';
@@ -316,6 +322,24 @@ test('T09 example freshness reports exact stale path and genuine generator order
     assert.equal(result.stale[0].path, 'output.txt');
     assert.equal(result.orderDependent[0].path, 'output.txt');
     assert.equal(compareExamples(committed, committed, committed).passed, true);
+  }));
+
+test('T09 freshness includes generated Studio mirrors even when disk examples are unchanged', async () =>
+  temporary(async (directory) => {
+    await mkdir(join(directory, 'examples'));
+    await mkdir(join(directory, 'apps/studio'), { recursive: true });
+    await writeFile(join(directory, 'examples/source.cs'), 'Console.WriteLine(42);');
+    for (const path of generatedMirrors) await writeFile(join(directory, path), 'generated');
+    const before = await exampleOutputs(directory, true);
+    await writeFile(join(directory, generatedMirrors[0]), 'stale mirror repaired');
+    const after = await exampleOutputs(directory, true);
+    const result = compareExamples(before, after, after);
+    assert.equal(result.passed, false);
+    assert.deepEqual(
+      result.stale.map((row) => row.path),
+      ['apps/studio/samples-designer.js'],
+    );
+    assert.deepEqual(result.orderDependent, []);
   }));
 
 test('T09 link parser covers inline, image, reference, balanced parentheses, HTML and ignores code', () => {

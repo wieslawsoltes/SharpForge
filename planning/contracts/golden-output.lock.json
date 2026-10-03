@@ -23,10 +23,10 @@
     },
     {
       "input": "examples/designer/CanvasCounter/DesignedView.g.cs",
-      "source": "a9a70b334c20d0b709d283aee7f6901a8dc33ec71f0af4df2ae8b19f7661245b",
-      "syntax": "71989011e9d6400881910f3d3c4b361aecfcbaaca8d17e0b3758f3f8369a3410",
+      "source": "7ebc04584042e1c5038490883d5b8671924d6da110633a577af80aca24b4839e",
+      "syntax": "d1551d70fac94eeac47f3089e7269b8d98e830d6e6ee93eb6d15399dae182655",
       "status": "not-emitted",
-      "diagnostics": "ce4ab99e2cde842a331aecb1b3c42ac285ff7b447e7cfeac6ab51001095faef1",
+      "diagnostics": "657067f8b70bcb5eeef957ac664036e249d5ae056d9e0b9d9849949319c7bc15",
       "assembly": null,
       "bytecode": null
     },
@@ -59,10 +59,10 @@
     },
     {
       "input": "examples/designer/GridWorkspace/DesignedView.g.cs",
-      "source": "573cfefc4cf9350cb95846cb3b9c8254fa87813abb700a817fb367fffbf8fbea",
-      "syntax": "69db9933b7f5903ec8b22383a36b714a703d29da07ffb70c09bafa0e46c15172",
+      "source": "4f89b85d8a05abfc11014e91af526780a37c4cae5bf2dad9b7de0ac804874e65",
+      "syntax": "f012c8e2301d5be0bc6aa8f3c5ca0c5ab80d316ec615a5b6f6ac4b9558f26a41",
       "status": "not-emitted",
-      "diagnostics": "d642db5e92c7113eda6d687cb5825935b1e6b1d285c404e8ee5366b10c9ed156",
+      "diagnostics": "660b459d0a8f97e99fa1dcc985dbc88d993d7f58f12c74fa2ef1eb6462b3471a",
       "assembly": null,
       "bytecode": null
     },
@@ -1981,11 +1981,11 @@
     },
     {
       "path": "dist/examples/designer/CanvasCounter.zip",
-      "sha256": "a95c6f50eb6d97aa3b1e8c2208350e4a6a9997ddacba33d94363f48e094760fc"
+      "sha256": "949d66fc8f3d28c9d406520a9863b72ce1e7ec2709eca5ea2453aa91847bb070"
     },
     {
       "path": "dist/examples/designer/CanvasCounter/DesignedView.g.cs",
-      "sha256": "a9a70b334c20d0b709d283aee7f6901a8dc33ec71f0af4df2ae8b19f7661245b"
+      "sha256": "7ebc04584042e1c5038490883d5b8671924d6da110633a577af80aca24b4839e"
     },
     {
       "path": "dist/examples/designer/CanvasCounter/DesignerApp.csproj",
@@ -2045,11 +2045,11 @@
     },
     {
       "path": "dist/examples/designer/GridWorkspace.zip",
-      "sha256": "9e01be8d71053cecb35168b05e2f6bfa49b13ed7f8c837560cd0fb9b564c6880"
+      "sha256": "78d6b0f6dd802c8a6ec08369407adca5709aab0bce9b806e7f25f2b580a28530"
     },
     {
       "path": "dist/examples/designer/GridWorkspace/DesignedView.g.cs",
-      "sha256": "573cfefc4cf9350cb95846cb3b9c8254fa87813abb700a817fb367fffbf8fbea"
+      "sha256": "4f89b85d8a05abfc11014e91af526780a37c4cae5bf2dad9b7de0ac804874e65"
     },
     {
       "path": "dist/examples/designer/GridWorkspace/DesignerApp.csproj",
@@ -2309,19 +2309,19 @@
     },
     {
       "path": "dist/examples/managed/Finally.exe",
-      "sha256": "bc4d66b0a32c04cc9422cb232bae64dc6e97636cea94265223ac31e2de4a9b33"
+      "sha256": "f39abbdcf0c4aeec33b9d1da12ff588af62c18601300b5d439b7921f65556c26"
     },
     {
       "path": "dist/examples/managed/Finally.sf.il",
-      "sha256": "ead8fb6094506a2aa0e01732f7b2064fc08f70272036a41e774b14e138b8fbd8"
+      "sha256": "ff1fa120351a64b671c3c7506bd19a3d2bc0530427c334ba6b8a140a1fce81c6"
     },
     {
       "path": "dist/examples/managed/Hello.exe",
-      "sha256": "29e9dee802ebba65c89aa3ea48cfd4bbdfbfefa42a9b5548f0ee676c1002ef0c"
+      "sha256": "7228786c6208376099e5b47cf8510429768c15cb4996009f6070cce7d440199a"
     },
     {
       "path": "dist/examples/managed/Hello.sf.il",
-      "sha256": "d8c41609a41b410631fc3a6f563e095867a63530109a1cd83533136ee13ec9a4"
+      "sha256": "18e6166f8acbb6f5cf829a2314a197ecf782cefe18e087f166bb83abaea1b3e7"
     },
     {
       "path": "dist/examples/managed/PortableSymbols.cs",
@@ -2361,11 +2361,11 @@
     },
     {
       "path": "dist/examples/managed/UsingResources.exe",
-      "sha256": "1ae95cad80816c7c6c17f8feb839409b0bc827940e3d0793dbf8887b75e094d2"
+      "sha256": "9e6eebdaf5535754120689bfd7b0b87672569b16c6b2ed7f22e9a3e38ff2a0a7"
     },
     {
       "path": "dist/examples/managed/UsingResources.sf.il",
-      "sha256": "363da649c2c1fef001eed873fa66bf6d3bd4daeecb2c32fb3f537124e781edbd"
+      "sha256": "f7c9ca119fa099b644ec43dbbd042175581a94a3f0128196f2e70d48d637be34"
     },
     {
       "path": "dist/examples/msbuild/IncrementalPipeline/Build.proj",
@@ -4537,7 +4537,7 @@
     },
     {
       "path": "dist/samples-designer.js",
-      "sha256": "5d3303b6729278a4222f32a7481d581f3e31970b9bcaea17be7cf349f18fc6bd"
+      "sha256": "b2e8f03edaaa4c46427a34a328c5a536b4746b85b2495080564d92cdf3e18c7f"
     },
     {
       "path": "dist/samples-release13.js",

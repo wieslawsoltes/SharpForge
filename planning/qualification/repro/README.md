@@ -42,7 +42,7 @@ allocation benchmark and do not claim a performance qualification.
 | Double build | `double-build.js` / `compareBuilds(a,b)` | Source, toolchain, output inventory or golden-output mismatch fails | Two isolated trees per host |
 | Cross-runner match | `aggregate.js` | Missing/duplicate/failed platform or any output mismatch fails | Linux x64 + macOS arm64 + Windows x64 |
 | Offline release rebuild | `offline.js --archive … --cache … --assets …` | Unverified source/cache, missing artifact, stale example or unexplained hash difference fails | Node host; Linux namespace separately qualified |
-| Committed example freshness | `examples.js` | Lists exact stale paths and generator-order differences | All six generators, forward and reverse |
+| Committed example freshness | `examples.js` | Lists exact stale paths and generator-order differences, including generated Studio mirrors | All six generators, forward and reverse |
 | Documentation links | `link-check.js` | Relative targets must exist in Git or in a verified release payload set | Local links; external HEAD requests only on schedule |
 
 Release workflow owner: replace shell `zip` with
@@ -107,3 +107,7 @@ cleanup. Tracked output is never restored to hide a mutation. Workflow reports
 and failure diagnostics live under ignored `artifacts/results/repro/` and are
 uploaded even on failure. Actual target qualification is recorded in the PR and
 retained runner reports; unrun targets remain unknown.
+
+The first real capture exposed existing stale generated examples. See
+[the reviewed prerequisite refresh](generated-example-refresh.md) for exact
+out-of-area paths, semantic changes and retained before/after evidence.

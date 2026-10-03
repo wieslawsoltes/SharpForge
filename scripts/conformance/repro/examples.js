@@ -1,6 +1,17 @@
 import { join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
-import { temporary, inventory, differences, run, cli, isMain, revision, git } from './common.js';
+import {
+  temporary,
+  inventory,
+  differences,
+  run,
+  cli,
+  isMain,
+  revision,
+  git,
+  readRegular,
+  hash,
+} from './common.js';
 import { createSourceArchive, extractSource } from './source.js';
 import { vendorCache, verifyCache } from './cache.js';
 import { npmCli } from '../node-tools.js';
@@ -14,14 +25,29 @@ export const generators = Object.freeze([
   'scripts/build-release13-examples.js',
   'scripts/build-release14-examples.js',
 ]);
-export async function regenerate(root, order, { signal, execute = run } = {}) {
+export const generatedMirrors = Object.freeze([
+  'apps/studio/samples-designer.js',
+  'apps/studio/samples-release13.js',
+  'apps/studio/samples-release14.js',
+]);
+export async function exampleOutputs(root, includeMirrors = false) {
+  const examples = await inventory(join(root, 'examples'));
+  if (!includeMirrors) return examples;
+  const output = examples.map((row) => ({ ...row, path: 'examples/' + row.path }));
+  for (const path of generatedMirrors) {
+    const bytes = await readRegular(join(root, path));
+    output.push({ path, bytes: bytes.length, sha256: hash(bytes) });
+  }
+  return output.sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
+}
+export async function regenerate(root, order, { signal, execute = run, includeMirrors = false } = {}) {
   for (const script of order)
     await execute(process.execPath, [script], {
       cwd: root,
       signal,
       env: { ...process.env, TZ: 'UTC', LC_ALL: 'C', npm_config_offline: 'true' },
     });
-  return inventory(join(root, 'examples'));
+  return exampleOutputs(root, includeMirrors);
 }
 export function compareExamples(committed, forward, reverse) {
   const stale = differences(committed, forward),
@@ -39,7 +65,7 @@ export async function verifyExamples({ root = process.cwd(), ref = 'HEAD', archi
     for (let index = 0; index < 2; index++) {
       const tree = join(temporaryRoot, `examples-${index}`);
       await extractSource({ ...source, root, destination: tree, reverse: !!index, signal });
-      if (index === 0) committed = await inventory(join(tree, 'examples'));
+      if (index === 0) committed = await exampleOutputs(tree, true);
       const selectedCache = cache ? resolve(cache) : join(temporaryRoot, 'cache');
       if (!cache && index === 0) await vendorCache({ root: tree, output: selectedCache, signal });
       await verifyCache(tree, selectedCache);
@@ -50,7 +76,12 @@ export async function verifyExamples({ root = process.cwd(), ref = 'HEAD', archi
         [npmCli(), 'ci', '--offline', '--ignore-scripts', '--cache', privateCache, '--no-audit', '--no-fund'],
         { cwd: tree, signal },
       );
-      results.push(await regenerate(tree, index ? [...generators].reverse() : generators, { signal }));
+      results.push(
+        await regenerate(tree, index ? [...generators].reverse() : generators, {
+          signal,
+          includeMirrors: true,
+        }),
+      );
     }
     return {
       schemaVersion: 1,
@@ -62,7 +93,8 @@ export async function verifyExamples({ root = process.cwd(), ref = 'HEAD', archi
       generators: [...generators],
       ...compareExamples(committed, ...results),
       files: committed.length,
-      scope: 'Exact committed examples regenerated in independent temporary trees in both generator orders.',
+      scope:
+        'Exact committed examples and generated Studio mirrors regenerated in independent temporary trees in both generator orders.',
     };
   });
 }

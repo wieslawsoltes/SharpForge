@@ -72,12 +72,13 @@ export async function doubleBuild({
         toolchain: reports[0].toolchain,
         epoch: source.epoch,
         ...comparison,
+        goldenComparison: comparison.golden,
         builds: reports.map(({ milliseconds, sourceArchive }) => ({ milliseconds, sourceArchive })),
         outputs: reports[0].outputs,
         golden: reports[0].golden,
-      scope:
-        'Two independent extracted trees; reversed extraction order and distinct input mtimes. ' +
-        'Cross-runner equality requires aggregate.js on independent runner reports.',
+        scope:
+          'Two independent extracted trees; reversed extraction order and distinct input mtimes. ' +
+          'Cross-runner equality requires aggregate.js on independent runner reports.',
       };
     await writeJSON(join(output, 'summary.json'), report);
     return report;
