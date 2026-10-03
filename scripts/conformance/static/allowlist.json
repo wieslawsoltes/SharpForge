@@ -341,7 +341,7 @@
       "path": "tests/conformance/qualification.test.js",
       "operation": "dynamic-import",
       "count": 1,
-      "sha256": "e2febfd9d7c3177fe2df252a7018fda03d476805d911d7419c4313adce9cf01e",
+      "sha256": "781c4708c6fa6185705256a2ca7e3077edc094fa190f512b92db15363605b441",
       "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
     },
     {

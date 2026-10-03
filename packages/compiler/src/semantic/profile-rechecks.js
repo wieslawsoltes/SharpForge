@@ -18,6 +18,12 @@ const rules = [
     codes: ['CS0160', 'CS1017', 'CS1058'],
   },
   {
+    // Labeled break and continue (binder/labeled-jumps.js): the target rules of the pinned preview proposal.
+    text: /\b(?:break|continue)\s+[\p{L}_@]/u,
+    applies: node => (node.kind === 'BreakStatement' || node.kind === 'ContinueStatement') && !!node.label,
+    codes: ['CS0139', 'CS0157'],
+  },
+  {
     // The `field` keyword next to a member named `field` (binder/field-keyword.js): the warning CS9258.
     text: /\bfield\b[^]*\bfield\b/,
     applies: node => node.kind === 'FieldExpression',
