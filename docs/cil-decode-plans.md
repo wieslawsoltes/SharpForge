@@ -45,5 +45,17 @@ and code-version modules without pulling in frame pooling, typed numeric stacks,
 token/PIC caches, source fusion or Wasm tiering. No throughput improvement,
 allocation-free execution or full T07 completion is claimed. Focused tests cover
 handler reuse, on/off execution parity, pause/budget boundaries, code replacement,
-Hot Reload, rejection paths and snapshot replay. Validation and performance
-measurement are pending the serial qualification slot.
+Hot Reload, rejection paths and snapshot replay.
+
+Serial validation initially passed 112 of 113 tests at `47812bd7`; the remaining
+fixture set a static verifier limit below its method size, so it never exercised
+runtime exhaustion. A one-instruction loop now admits that method and asserts
+failure on the sixth attempted instruction with a budget of five. All 11 decode
+tests then passed at `0d18e1c9`; production code was unchanged by the fixture fix.
+The initial batch also covered offset caches, EH/snapshots, method events,
+scheduled cancellation, delegates, small storage and the value ABI.
+
+Node 24.21.0 used the serial resource wrapper with a 512MB heap. Syntax/import
+checks passed across 1,859 modules; the non-strict structure report retained
+264 repository warnings. Performance and broader platform measurements remain
+pending; these checks do not qualify the T07 throughput targets.
