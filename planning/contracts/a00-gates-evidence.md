@@ -37,11 +37,40 @@ select none. Selection supplements complete contract and integration gates.
 ## Evidence and replay
 
 See [the runbook](../AGENTS.md) for executable claim, lock, heartbeat, evidence,
-handoff, resume and release commands. Evidence bundles contain TAP, the selected
-tool environment, and a manifest. The SHA-256 digest binds task, commit, command,
-summary, file names and bytes. Absolute home paths in captured logs are redacted.
-Handoff replay checks the published commit and reruns commands from a clean clone.
-It reports result and environment differences instead of silently accepting them.
+handoff, resume and release commands. Evidence capture refuses a dirty checkout, pins HEAD before the command, and
+requires the same clean HEAD afterward. A command that modifies tracked/untracked
+source or commits a new HEAD cannot produce qualified evidence. Generated ignored
+artifacts remain allowed. The SHA-256 digest binds the bundle protocol version,
+task, commit, portable command, summary, exact target obligations, file names and
+bytes. Immutable digest subdirectories retain multiple runs under
+`artifacts/evidence/<task>/<digest>/`; upload the entire task directory. Stdout TAP
+and stderr are stored separately, so stderr cannot fabricate test results. Home
+paths in both logs are redacted.
+
+A passing area suite alone makes no parity claims. Qualification producers emit a
+structured TAP comment from the actual command that exercised the target:
+
+```text
+# sharpforge-evidence: {"capabilityId":"feature.one","platform":"linux","engine":"source","specRevision":"csharp-14","status":"pass","testName":"source feature.one"}
+```
+
+The named TAP result must occur exactly once. A pass requires complete TAP
+statistics, a successful command, and an actual passing result without SKIP or
+TODO. Failure proofs reference a failing test; unknown/unsupported proofs require
+an explicit reason and can reference the corresponding availability probe. A
+producer must observe the real target it claims; this protocol binds that claim
+to retained executed output and does not turn a simulator into native evidence.
+`evidence-proof.schema.json` specifies these comments; version 2 bundles use
+`evidence-bundle.schema.json`. Old generic bundles cannot qualify target records.
+Changing capability, platform, engine, revision, status, or reason on a rollup
+record invalidates an artifact that did not explicitly prove that same obligation.
+
+Handoff commands are always rerun at the final committed HEAD. In particular,
+`--wip` commits first, recaptures each command, then pushes before posting. Each
+command records its tested commit, exact target proofs and evidence digest; prior passing summaries
+are never attributed to new WIP code. Failing WIP commands remain failures in the
+handoff. Replay checks the published commit, reruns commands, and reports result,
+environment, target proof, HEAD, or working-tree differences; it stops after source mutation.
 
 ## Inventory denominator
 
@@ -58,9 +87,9 @@ capabilities; parent issues do not count as additional capabilities.
 
 Evidence is an array of records with `schemaVersion`, `leafId`, `capabilityId`,
 `platform`, `engine`, `specRevision`, `status`, `commit`, `evidenceDigest`. Status
-is one of pass, fail, unknown, unsupported. There may be only one current record
-per obligation. An artifact index maps each evidence digest to its downloaded
-evidence directory; missing/changed artifacts or non-ancestor commits invalidate
+is one of pass, fail, unknown, unsupported. Unknown and unsupported records require a reason. There may be only one current
+record per obligation. An artifact index maps each evidence digest to its downloaded
+digest subdirectory; missing/changed artifacts or non-ancestor commits invalidate
 evidence to unknown. An open or reopened leaf also invalidates coverage. Unsupported
 is retained only with verified evidence and remains in the denominator.
 
@@ -82,3 +111,25 @@ node --test tests/a00-10-contract-gates.test.js tests/a00-11-evidence.test.js te
 node scripts/planning/import-graph.js
 node scripts/planning/contract-gate.js
 ```
+
+The inherited build/ABI integration was also validated by the root agent with
+2,764/2,764 Node tests on Node 24.21.0 and the Python environment. This is separate
+from the earlier T06 evidence that truthfully recorded two pending ABI fixes.
+
+Evidence hardening validation on macOS arm64 / Node 24.21.0:
+
+- Complete manifest-driven `npm test`: **2,812/2,812 pass**.
+- Focused evidence/rollup tests: **16/16 pass**; real Git repositories, a bare
+  remote, an HTTP fake project server, and a fresh clone are exercised.
+- `npm run check`: **382 modules, zero syntax errors**; all 30 manifests cover
+  82 Node files and 16 Python suites without missing or duplicate ownership.
+- `contract-gate.js`: all four checks pass (IDs, versions, schema fixtures,
+  manifest ownership). The claim-to-release walkthrough reports no audit gaps.
+
+Regression cases include dirty passing edits over a failing committed file,
+tracked/untracked mutations and commits during execution, target/status/reason
+reuse, changed artifact metadata and TAP bytes, absent/ambiguous/skipped/TODO
+proofs, incomplete/contradictory TAP statistics, stderr spoofing, retained failed
+and unavailable targets, stale WIP summaries, replay target changes, and replay
+source mutation. Windows/Linux execution of this hardening remains a CI
+qualification target; local Node fixtures are not native-runtime parity claims.
