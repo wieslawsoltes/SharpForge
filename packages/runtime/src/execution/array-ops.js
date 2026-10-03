@@ -1,4 +1,5 @@
 import {ManagedFault} from '../heap.js';
+import {defaultStringOrdering} from '@sharpforge/bcl-core';
 
 /** Shared source/CIL ordering for the registered one-dimensional array operations. */
 export function mutateArray(vm,name,reference) {
@@ -11,7 +12,7 @@ export function mutateArray(vm,name,reference) {
     if(a===null||b===null)return a===b?0:a===null?-1:1;
     if(typeof a==='number'&&typeof b==='number')return Number.isNaN(a)?Number.isNaN(b)?0:-1:Number.isNaN(b)?1:a<b?-1:a>b?1:0;
     if(typeof a==='bigint'&&typeof b==='bigint'||typeof a==='boolean'&&typeof b==='boolean')return a<b?-1:a>b?1:0;
-    return String(a).localeCompare(String(b),'en');
+    return defaultStringOrdering(vm.platform??vm).compare(String(a),String(b));
   });
   else throw new ManagedFault('MissingMethodException','Unsupported array operation');
   vm.heap.mutationRevision++;return null;

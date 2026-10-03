@@ -103,25 +103,28 @@ select `group: 'extensions'`. The explicit `StringComparer.Ordinal` path support
 nulls, empty strings, duplicates, embedded NUL and isolated/supplementary UTF-16
 surrogates. The interface signature allows later comparer implementations without
 changing this ABI. Unsupported custom implementations currently raise
-`NotSupportedException`, including when the list is empty. A null comparer keeps
-the released default behavior. Sort commits one collection version change.
+`NotSupportedException`, including when the list is empty. A null comparer uses
+the shared default ordering provider. Sort commits one collection version change.
 
-The default string comparator and `Array.BinarySearch` still use the released
-ordinal profile. **#829 remains open** for the invariant-culture default, and
-#2619/#2621/#2655 track culture comparison and general comparer dispatch. This
-increment does not use a host locale heuristic or claim complete culture support.
-The pinned .NET 10.0.5 corpus includes invariant and ordinal results, but only the
-ordinal results qualify this implementation. Both VM platforms consume the full
-capture. Compiled source exercises direct StringComparer calls; source interface
+Default List.Sort, Array.Sort and Array.BinarySearch strings share the BCL core
+host-backed `invariant-host` provider. The provider fixes English standard/root
+collation options and preserves comparator-zero search equality. This is a partial
+profile: the initial Node 24.21.0/ICU 78.3 probe matches all 9,409 pinned .NET 10.0.5
+corpus comparisons but differs on five additional normalization boundary pairs.
+**#829/#2619/#2621 remain open** for an exact backend and managed culture APIs;
+#2655 tracks general comparer dispatch. Explicit Ordinal remains UTF-16 based.
+Both VM platforms consume the full original capture without assuming a stable
+order for culturally equal keys. Compiled source exercises direct StringComparer calls; source interface
 locals/conversions and custom implementations remain explicitly diagnosed.
 Independently assembled CIL exercises interface Compare/List.Sort and runtime
 casts. Unsupported custom comparer objects are checked through both platforms,
 including an empty List. Browser and Rust native/Wasm qualification is pending.
 
 Run `node --expose-gc scripts/benchmarks/a08-default-string-sort.mjs` serially in
-the candidate and metadata baseline `85917302`, copying the identical runner to
+the candidate and Array comparer baseline `6c8be99e`, copying the identical runner to
 the baseline first. The bounded control uses 8,192 deterministic nullable strings
 by default, one warmup and five samples for each VM platform. It times only the
 default Sort dispatch and reports median/p95 plus managed allocation counts and
 bytes; compilation, input setup and output checks are excluded. This measures
-the existing default path, not explicit-comparer overhead or culture collation.
+the default path, including the chosen host collation backend, rather than
+explicit-comparer overhead. Record the host ICU version alongside its timings.

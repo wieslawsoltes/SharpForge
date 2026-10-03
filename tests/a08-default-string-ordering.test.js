@@ -116,6 +116,29 @@ for (const [engine, create] of Object.entries(engines)) {
       });
     } finally {vm.stop();}
   });
+
+  test(`default ordering ${engine}: search exposes the documented host normalization limitation`, async () => {
+    const boundaryURL = new URL('../packages/bcl-core/reference/culture-ordering-boundaries-net10.json', import.meta.url);
+    const reference = JSON.parse(await readFile(boundaryURL, 'utf8'));
+    const row = reference.pairs.find(pair => pair.id === 'reordered-acute-cedilla');
+    assert.equal(row.sign, -1, 'The unchanged native capture distinguishes this pair');
+    const vm = create(compile('Console.WriteLine(0);'));
+    const platform = vm.platform;
+    try {
+      platform.heap.withRoots([], () => {
+        const first = platform.heap.string(decode(row.left));
+        platform.heap.pins.push(first);
+        const second = platform.heap.string(decode(row.right));
+        platform.heap.pins.push(second);
+        const array = platform.heap.allocate('array', 'string[]', [first]);
+        platform.heap.pins.push(array);
+        const typed = contract('System.Array', 'BinarySearch', ['string[]', 'string']);
+        const withComparer = contract('System.Array', 'BinarySearch', ['System.Array', 'object', 'System.Collections.IComparer']);
+        assert.equal(platform.invoke(typed, [array, second]), 0, 'Host normalization merges the native distinction');
+        assert.equal(platform.invoke(withComparer, [array, second, null]), 0);
+      });
+    } finally {vm.stop();}
+  });
 }
 
 test('default ordering: independent CIL calls preserve explicit Ordinal behavior', () => {
