@@ -86,6 +86,24 @@ The machine is shared, allocations were not measured, and no equivalent previous
 implementation exists. Construction materializes its interface and method
 signatures once; cached identities avoid rebuilding them.
 
+`context.types.isAssignableFrom(target, source, {signal})` compares loaded
+TypeDesc identities without loading assemblies or executing an instance cast.
+It handles non-generic class inheritance, interface closure, value-type boxing
+to their declared bases, and array covariance/rank rules. Array elements use
+unboxed conversion rules, including matching CLI signed/unsigned integral
+categories and enum underlying types. Vectors also support the five registered
+generic collection contracts with the CLR's array-specific element conversion.
+This is separate from general generic variance.
+
+Results are cached with weak type keys. An uncached decision walks the bounded
+base/interface graph; GenericParam owners are indexed once per module to reject
+unimplemented generic definitions explicitly. `maxDepth` and `maxMetadataRows`
+apply, and cancellation is checked before cached results and during traversal.
+Unloaded descriptors, general generic variance/Nullable rules and pointer/byref/
+function-pointer casts report TypeLoad diagnostics. COM/type-equivalence and
+dynamic interface behavior are outside this metadata-only service. Full
+500-pair and executable cast qualification remains separate work under T03.7.
+
 `AssemblyLoadSession` owns a Default context and a registry of custom contexts.
 No process-global assembly registry is used. `createContext` accepts a name,
 collectibility flag, finite `AssemblyResolver`, optional asynchronous load
