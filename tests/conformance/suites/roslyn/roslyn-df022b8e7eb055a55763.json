@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-df022b8e7eb055a55763",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n class Program\n{\n    public static void Main()\n    {\n        var generic = new Generic<int>(0);\n    }\n}\npublic class Generic<T>\n{\n    public Generic(T value)\n    {\n        if (value is object obj && obj == null)\n        {\n            throw new Exception(\"Kaboom!\");\n        }\n    }\n}\n",
+  "sourceSHA256": "6f4649f9301060bf252ffca2e96fa6d59b1087e4980f8af3b8e978bd0b56e4cb",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "MatchToTypeParameterUnbox_02",
+    "offset": 109992
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: options)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

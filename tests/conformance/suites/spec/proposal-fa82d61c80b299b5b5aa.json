@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-fa82d61c80b299b5b5aa",
+  "kind": "spec",
+  "sourceText": "ref readonly Guid Method1()\n{\n}\n\nMethod2(in Method1()); // valid. Can pass as `in` argument.\n\nMethod3(ref Method1()); // not valid. Cannot pass as `ref` argument",
+  "sourceSHA256": "ebc0e0fe70eb12c45dc5916c2461cb32fe04f13ca46e23bfcc69d30730ca91b8",
+  "target": "library",
+  "featureId": "csharp-7-2-in-parameters-and-readonly-references",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/readonly-ref.md",
+    "sha256": "d859c5f6e0e030570288248c429a08d0e4b8d5c0eecd6bf9042317e99198122b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/readonly-ref.md",
+    "license": "NOASSERTION",
+    "offset": 14004
+  }
+}

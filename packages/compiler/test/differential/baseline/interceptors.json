@@ -1,0 +1,3 @@
+{
+  "interceptors/always-rejected": ["diagnostics", "warnings"]
+}

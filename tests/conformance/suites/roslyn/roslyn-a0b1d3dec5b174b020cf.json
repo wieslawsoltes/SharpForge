@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a0b1d3dec5b174b020cf",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Threading.Tasks;\n\npublic class P\n{\n    static async Task Main()\n    {\n        await Async1(F1(), G(F2(), stackalloc int[] { 1, 2, 3 }, await F3()));\n    }\n\n    static object F1() => 1;\n    static object F2() => 1;\n    static Task<object> F3() => Task.FromResult<object>(1);\n    static int G(object obj, Span<int> span, object o2) => span.Length;\n    static async Task Async1(Object obj, int i) { await Task.Delay(1); }\n}\n",
+  "sourceSHA256": "7a9531435c87d89509cdd9e8e961f936d3548241d9981d4e96ba87b6a1f07f9b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncSpillTests.cs",
+    "sha256": "d53a41f5a22e30f0369be8a24a0d430582966a9ef2840b365b86f1f68ce5f3b1",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncSpillTests.cs",
+    "license": "MIT",
+    "method": "ShouldNotSpillStackallocToField_03",
+    "offset": 389335
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: options)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

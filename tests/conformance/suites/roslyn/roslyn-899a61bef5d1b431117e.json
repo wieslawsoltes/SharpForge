@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-899a61bef5d1b431117e",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void Main()\n    {\n        _ = (null, default) != (default, null);\n    }\n}",
+  "sourceSHA256": "4db2b0cdfccf0a7c0e4947a7fa49cc350417297f814fd154c61ba86bf0087b6c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestNullsAndDefaults",
+    "offset": 46300
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0034",
+        "severity": "error"
+      },
+      {
+        "code": "CS0034",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,13): error CS0034: Operator '!=' is ambiguous on operands of type '<null>' and 'default'\n                //         _ = (null, default) != (default, null);\n                Diagnostic(ErrorCode.ERR_AmbigBinaryOps, \"(null, default) != (default, null)\").WithArguments(\"!=\", \"<null>\", \"default\").WithLocation(6, 13),\n                // (6,13): error CS0034: Operator '!=' is ambiguous on operands of type 'default' and '<null>'\n                //         _ = (null, default) != (default, null);\n                Diagnostic(ErrorCode.ERR_AmbigBinaryOps, \"(null, default) != (default, null)\").WithArguments(\"!=\", \"default\", \"<null>\").WithLocation(6, 13)\n                ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

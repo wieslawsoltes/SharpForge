@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d46fa0c9929f09ac2a9e",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public int x;\n    public int X\n    {\n        get => x;\n        set => x = value;\n    }\n    public event System.Action E\n    {\n        add => x = 1;\n        remove => x = 0;\n    }\n}",
+  "sourceSHA256": "70cd0c568223c2b79c44c22f3ba78e61d810f5bea74880e7992ffe1e15405fd7",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/PDB/PDBTests.cs",
+    "sha256": "aadcd07e0944d99a1634255c9107a08fdc0098047388f2d7dfc6d7410f6e5726",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/PDB/PDBTests.cs",
+    "license": "MIT",
+    "method": "ExpressionBodiedAccessor",
+    "offset": 296320
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nclass C\n{\n    public int x;\n    public int X\n    {\n        get => x;\n        set => x = value;\n    }\n    public event System.Action E\n    {\n        add => x = 1;\n        remove => x = 0;\n    }\n}\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

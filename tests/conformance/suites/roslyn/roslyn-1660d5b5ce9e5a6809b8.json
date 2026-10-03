@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1660d5b5ce9e5a6809b8",
+  "kind": "diagnostics",
+  "sourceText": "\nenum C { }\ndelegate void D();\ninterface I { }\n",
+  "sourceSHA256": "c3485ed82180548d0759d99a37964734df38e509ef9481674347e99bb1225eb4",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "sha256": "84a49b5872a45de355d4ac196b7221b2d05e37d0f4411cf7fa7566336209d2bb",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "license": "MIT",
+    "method": "ERR_MainClassNotClass",
+    "offset": 29582
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(\n                source,\n                options: TestOptions.ReleaseExe.WithMainTypeName(\"I\"))",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1558",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,11): error CS1558: 'I' does not have a suitable static Main method\n                // interface I { }\n                Diagnostic(ErrorCode.ERR_NoMainInClass, \"I\").WithArguments(\"I\").WithLocation(4, 11)\n                ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

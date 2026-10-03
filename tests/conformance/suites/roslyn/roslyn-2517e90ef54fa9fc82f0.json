@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-2517e90ef54fa9fc82f0",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void M1(out int x)\n    {\n        (_, var _, int _) = (1, 2, 3);\n        var (_, _) = (1, 2);\n        bool b = 3 is int _;\n        switch (3)\n        {\n            case int _:\n                break;\n        }\n        M1(out var _);\n        M1(out int _);\n        M1(out _);\n        x = 2;\n    }\n    static void M2()\n    {\n        const int _ = 3;\n        switch (3)\n        {\n            case _: // not a discard\n                break;\n        }\n    }\n}\n",
+  "sourceSHA256": "a996deb23d9ffbd690ce33353e2ffbf72a5228bd4ab2dcd485ab09b6a1eded57",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "VariousDiscardsInCSharp6",
+    "offset": 223471
+  },
+  "langVersion": "6",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular6)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8059",
+        "severity": "error"
+      },
+      {
+        "code": "CS8059",
+        "severity": "error"
+      },
+      {
+        "code": "CS8059",
+        "severity": "error"
+      },
+      {
+        "code": "CS8059",
+        "severity": "error"
+      },
+      {
+        "code": "CS8059",
+        "severity": "error"
+      },
+      {
+        "code": "CS8059",
+        "severity": "error"
+      },
+      {
+        "code": "CS8059",
+        "severity": "error"
+      },
+      {
+        "code": "CS8059",
+        "severity": "error"
+      },
+      {
+        "code": "CS8059",
+        "severity": "error"
+      },
+      {
+        "code": "CS8059",
+        "severity": "error"
+      },
+      {
+        "code": "CS8512",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (6,9): error CS8059: Feature 'tuples' is not available in C# 6. Please use language version 7.0 or greater.\n                    //         (_, var _, int _) = (1, 2, 3);\n                    Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion6, \"(_, var _, int _)\").WithArguments(\"tuples\", \"7.0\").WithLocation(6, 9),\n                    // (6,10): error CS8059: Feature 'discards' is not available in C# 6. Please use language version 7.0 or greater.\n                    //         (_, var _, int _) = (1, 2, 3);\n                    Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion6, \"_\").WithArguments(\"discards\", \"7.0\").WithLocation(6, 10),\n                    // (6,29): error CS8059: Feature 'tuples' is not available in C# 6. Please use language version 7.0 or greater.\n                    //         (_, var _, int _) = (1, 2, 3);\n                    Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion6, \"(1, 2, 3)\").WithArguments(\"tuples\", \"7.0\").WithLocation(6, 29),\n                    // (7,13): error CS8059: Feature 'tuples' is not available in C# 6. Please use language version 7.0 or greater.\n                    //         var (_, _) = (1, 2);\n                    Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion6, \"(_, _)\").WithArguments(\"tuples\", \"7.0\").WithLocation(7, 13),\n                    // (7,22): error CS8059: Feature 'tuples' is not available in C# 6. Please use language version 7.0 or greater.\n                    //         var (_, _) = (1, 2);\n                    Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion6, \"(1, 2)\").WithArguments(\"tuples\", \"7.0\").WithLocation(7, 22),\n                    // (8,20): error CS8059: Feature 'pattern matching' is not available in C# 6. Please use language version 7.0 or greater.\n                    //         bool b = 3 is int _;\n                    Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion6, \"is\").WithArguments(\"pattern matching\", \"7.0\").WithLocation(8, 20),\n                    // (11,13): error CS8059: Feature 'pattern matching' is not available in C# 6. Please use language version 7.0 or greater.\n                    //             case int _:\n                    Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion6, \"case\").WithArguments(\"pattern matching\", \"7.0\").WithLocation(11, 13),\n                    // (14,12): error CS8059: Feature 'out variable declaration' is not available in C# 6. Please use language version 7.0 or greater.\n                    //         M1(out var _);\n                    Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion6, \"out\").WithArguments(\"out variable declaration\", \"7.0\").WithLocation(14, 12),\n                    // (15,12): error CS8059: Feature 'out variable declaration' is not available in C# 6. Please use language version 7.0 or greater.\n                    //         M1(out int _);\n                    Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion6, \"out\").WithArguments(\"out variable declaration\", \"7.0\").WithLocation(15, 12),\n                    // (16,16): error CS8059: Feature 'discards' is not available in C# 6. Please use language version 7.0 or greater.\n                    //         M1(out _);\n                    Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion6, \"_\").WithArguments(\"discards\", \"7.0\").WithLocation(16, 16),\n                    // (24,18): warning CS8512: The name '_' refers to the constant, not the discard pattern. Use 'var _' to discard the value, or '@_' to refer to a constant by that name.\n                    //             case _: // not a discard\n                    Diagnostic(ErrorCode.WRN_CaseConstantNamedUnderscore, \"_\").WithLocation(24, 18)",
+  "unsupported": []
+}

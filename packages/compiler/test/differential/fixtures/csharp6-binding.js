@@ -282,6 +282,50 @@ const filterFixtures = feature('exception-filters', [
       }
     `,
   ),
+  out(
+    'filters-without-observable-timing',
+    cs`
+      using System;
+      class Program
+      {
+          static void Thrower(string message)
+          {
+              try { throw new Exception(message); }
+              finally { Console.WriteLine("inner finally " + message); }
+          }
+          static string Classify(string message, int limit)
+          {
+              int attempts = 0;
+              try
+              {
+                  attempts++;
+                  Thrower(message);
+                  return "no exception";
+              }
+              catch (Exception e) when (e.Message == "first") { return "first clause: " + e.Message; }
+              catch (Exception e) when (attempts < limit && e.Message != "skip") { return "second clause: " + e.Message; }
+              catch (Exception) when (limit == 0) { return "third clause"; }
+              finally { Console.WriteLine("outer finally " + message); }
+          }
+          static void Main()
+          {
+              Console.WriteLine(Classify("first", 5));
+              Console.WriteLine(Classify("other", 5));
+              Console.WriteLine(Classify("skip", 0));
+              try
+              {
+                  Console.WriteLine(Classify("skip", 3));
+              }
+              catch (Exception e) when (false) { Console.WriteLine("never " + e.Message); }
+              catch (Exception e) { Console.WriteLine("passed every filter: " + e.Message); }
+              bool flag = true;
+              try { throw new Exception("last"); }
+              catch when (!flag) { Console.WriteLine("not taken"); }
+              catch (Exception e) when (flag) { Console.WriteLine("taken " + e.Message); }
+          }
+      }
+    `,
+  ),
 ]);
 
 export const fixtures = [...nameofFixtures, ...usingStaticFixtures, ...filterFixtures];

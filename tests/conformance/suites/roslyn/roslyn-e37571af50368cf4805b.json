@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e37571af50368cf4805b",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    static void Main(string[] args)\n    {\n        using (var a = new { })\n        {\n        }\n        using (var b = new { p1 = 10 })\n        {\n        }\n        using (var c = new { p1 = 10.0, p2 = 'a' })\n        {\n        }\n        using (new { })\n        {\n            ;\n        }\n        using (new { f1 = \"12345\", f2 = 'S' })\n        {\n        }\n    }\n}\n",
+  "sourceSHA256": "3e99b61803e2ed5dcecd890a9f506ae53f9e8502536741bbee150a800b64174a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenUsingStatementTests.cs",
+    "sha256": "d8229f7c312c9ee5a778889d6e4283a10543e441e97b4e3da14145b6744b1b4e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenUsingStatementTests.cs",
+    "license": "MIT",
+    "method": "AnonymousAsUsing",
+    "offset": 66991
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1674",
+        "severity": "error"
+      },
+      {
+        "code": "CS1674",
+        "severity": "error"
+      },
+      {
+        "code": "CS1674",
+        "severity": "error"
+      },
+      {
+        "code": "CS1674",
+        "severity": "error"
+      },
+      {
+        "code": "CS1674",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n    // (6,16): error CS1674: '<empty anonymous type>': type used in a using statement must implement 'System.IDisposable'.\n    //         using (var a = new { })\n    Diagnostic(ErrorCode.ERR_NoConvToIDisp, \"var a = new { }\").WithArguments(\"<empty anonymous type>\"),\n    // (9,16): error CS1674: '<anonymous type: int p1>': type used in a using statement must implement 'System.IDisposable'.\n    //         using (var b = new { p1 = 10 })\n    Diagnostic(ErrorCode.ERR_NoConvToIDisp, \"var b = new { p1 = 10 }\").WithArguments(\"<anonymous type: int p1>\"),\n    // (12,16): error CS1674: '<anonymous type: double p1, char p2>': type used in a using statement must implement 'System.IDisposable'.\n    //         using (var c = new { p1 = 10.0, p2 = 'a' })\n    Diagnostic(ErrorCode.ERR_NoConvToIDisp, \"var c = new { p1 = 10.0, p2 = 'a' }\").WithArguments(\"<anonymous type: double p1, char p2>\"),\n    // (15,16): error CS1674: '<empty anonymous type>': type used in a using statement must implement 'System.IDisposable'.\n    //         using (new { })\n    Diagnostic(ErrorCode.ERR_NoConvToIDisp, \"new { }\").WithArguments(\"<empty anonymous type>\"),\n    // (19,16): error CS1674: '<anonymous type: string f1, char f2>': type used in a using statement must implement 'System.IDisposable'.\n    //         using (new { f1 = \"12345\", f2 = 'S' })\n    Diagnostic(ErrorCode.ERR_NoConvToIDisp, @\"new { f1 = \"\"12345\"\", f2 = 'S' }\").WithArguments(\"<anonymous type: string f1, char f2>\")\n    ",
+  "unsupported": []
+}

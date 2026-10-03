@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-e650d21086f72041b187",
+  "kind": "spec",
+  "sourceText": "delegate void M1(int i = 3);\nM1 m = (x = 3) => x + x; // Ok\n\ndelegate void M2(long i = 2);\nM2 m = (x = 3.0) => ...; //Error: cannot convert implicitly from long to double",
+  "sourceSHA256": "df3c133b2cd4bff382bf87b86a4dd077b78de6492a731d4e86792c69c89fc533",
+  "target": "library",
+  "featureId": "csharp-12-0-lambda-optional-parameters",
+  "langVersion": "12.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "sha256": "663ca72db438d27be03c24504ddcfa11032e0e1acc2a7f996cff23c10f67dc6e",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "license": "NOASSERTION",
+    "offset": 16126
+  }
+}

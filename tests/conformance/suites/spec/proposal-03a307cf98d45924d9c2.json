@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-03a307cf98d45924d9c2",
+  "kind": "spec",
+  "sourceText": "C c = new C();\n_ = c[..]; // Cannot apply indexing with [] to an expression of type 'C'\n\nclass C\n{\n    public int Length => 0;\n}\n\nstatic class E\n{\n    public static C Slice(this C c, int i, int j) => null!;\n}",
+  "sourceSHA256": "1901d0b9e972756a28be42a49a69e4a03d0f5fb7b647e6f625e84d05d22290d2",
+  "target": "library",
+  "featureId": "csharp-15-0-extension-indexers",
+  "langVersion": "preview",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-15.0/extension-indexers.md",
+    "sha256": "6fdfef3bd21d446da98e03ac7e0318fb3cdc6aa1029182357f71887752a4dd88",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/extension-indexers.md",
+    "license": "NOASSERTION",
+    "offset": 11950
+  }
+}

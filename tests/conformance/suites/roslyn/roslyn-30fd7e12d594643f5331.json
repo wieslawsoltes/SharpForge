@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-30fd7e12d594643f5331",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nusing System.Linq.Expressions;\n\npublic class Program\n{\n    static void  Main()\n    {\n        EventHandler eventHandler = delegate { };\n        Expression<Func<EventHandler>> testExpr = () => new EventHandler(delegate { });\n    }\n}",
+  "sourceSHA256": "190542463ce38a37ef71cea585c63432f4eeadd5ab128e7262fb6f6221bd2619",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenExprLambdaTests.cs",
+    "sha256": "6ded88d14b8dc1163d157ec2de9f3f9566d5ff0a7e20170d6687ea20cf6d1f00",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenExprLambdaTests.cs",
+    "license": "MIT",
+    "method": "AnonMethodInExprTree",
+    "offset": 159457
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1945",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,74): error CS1945: An expression tree may not contain an anonymous method expression\n                //        Expression<Func<EventHandler>> testExpr = () => new EventHandler(delegate { });\n                Diagnostic(ErrorCode.ERR_ExpressionTreeContainsAnonymousMethod, \"delegate { }\")\n            ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

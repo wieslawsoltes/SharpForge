@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f89b8ff1bb8eaeeb69d3",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C<T>\n{\n    void M(C<int*[]>[] param)\n    {\n        M(param);\n    }\n}\n",
+  "sourceSHA256": "059f664077ebd75048084a933d44cf6140bd998a7871e642e786ba09d5197695",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/UnsafeTests.cs",
+    "sha256": "424f034ea20a9add3b40a8a1c0094fffc5ef30885511f2c90ae10bd80b976073",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/UnsafeTests.cs",
+    "license": "MIT",
+    "method": "Invocation_PointerArray_Nested",
+    "offset": 4084
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, options: TestOptions.UnsafeDebugDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,14): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //     void M(C<int*[]>[] param)\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"int*\").WithLocation(4, 14),\n                // (6,9): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         M(param);\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"M(param)\").WithLocation(6, 9),\n                // (6,11): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         M(param);\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"param\").WithLocation(6, 11)\n                ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

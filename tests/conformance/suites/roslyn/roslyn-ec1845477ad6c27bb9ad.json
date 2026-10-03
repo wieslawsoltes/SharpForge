@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ec1845477ad6c27bb9ad",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Security.Permissions;\n\n[PermissionSetAttribute(SecurityAction.Deny, File = @\"NonExistentFile.xml\")]\n[PermissionSetAttribute(SecurityAction.Deny, File = null)]\npublic class MyClass\n{\n}",
+  "sourceSHA256": "94b21202e41fa59c6e94f6f55c66fd396247bee270e5e7abcacfc61feed200a8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Security.cs",
+    "sha256": "995f9a35982f60a6e97828d01cb24f09a40124463d1f9e4c6b48f42ec012d8ff",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Security.cs",
+    "license": "MIT",
+    "method": "CS7056ERR_PermissionSetAttributeInvalidFile_WithXmlReferenceResolver",
+    "offset": 97774
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugDll.WithXmlReferenceResolver(resolver))",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS7056",
+        "severity": "error"
+      },
+      {
+        "code": "CS7056",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,25): warning CS0618: 'System.Security.Permissions.SecurityAction.Deny' is obsolete: 'Deny is obsolete and will be removed in a future release of the .NET Framework. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'\n                // [PermissionSetAttribute(SecurityAction.Deny, File = @\"NonExistentFile.xml\")]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SecurityAction.Deny\").WithArguments(\"System.Security.Permissions.SecurityAction.Deny\", \"Deny is obsolete and will be removed in a future release of the .NET Framework. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.\"),\n                // (5,25): warning CS0618: 'System.Security.Permissions.SecurityAction.Deny' is obsolete: 'Deny is obsolete and will be removed in a future release of the .NET Framework. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'\n                // [PermissionSetAttribute(SecurityAction.Deny, File = null)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SecurityAction.Deny\").WithArguments(\"System.Security.Permissions.SecurityAction.Deny\", \"Deny is obsolete and will be removed in a future release of the .NET Framework. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.\"),\n                // (4,46): error CS7056: Unable to resolve file path 'NonExistentFile.xml' specified for the named argument 'File' for PermissionSet attribute\n                // [PermissionSetAttribute(SecurityAction.Deny, File = @\"NonExistentFile.xml\")]\n                Diagnostic(ErrorCode.ERR_PermissionSetAttributeInvalidFile, @\"File = @\"\"NonExistentFile.xml\"\"\").WithArguments(\"NonExistentFile.xml\", \"File\").WithLocation(4, 46),\n                // (5,46): error CS7056: Unable to resolve file path '<null>' specified for the named argument 'File' for PermissionSet attribute\n                // [PermissionSetAttribute(SecurityAction.Deny, File = null)]\n                Diagnostic(ErrorCode.ERR_PermissionSetAttributeInvalidFile, \"File = null\").WithArguments(\"<null>\", \"File\").WithLocation(5, 46)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

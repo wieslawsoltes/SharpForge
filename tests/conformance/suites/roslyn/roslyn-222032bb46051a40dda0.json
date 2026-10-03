@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-222032bb46051a40dda0",
+  "kind": "diagnostics",
+  "sourceText": "\npublic interface I1\n{\n    public I1 this[I1 args] { get; }\n}\n",
+  "sourceSHA256": "fa4f9d82d0bc3a141a1c63300875e475db7a45f3820165a44cfa0857b3a561c3",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/IndexerTests.cs",
+    "sha256": "d6f3580301daaab42ef936b2fef7c78c3bd97eff96ff76a0bb90acfc8c55ea98",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/IndexerTests.cs",
+    "license": "MIT",
+    "method": "MissingDefaultMemberAttribute_01",
+    "offset": 35457
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text1)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0656",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,15): error CS0656: Missing compiler required member 'System.Reflection.DefaultMemberAttribute..ctor'\n                //     public I1 this[I1 args] { get; }\n                Diagnostic(ErrorCode.ERR_MissingPredefinedMember, \"this\").WithArguments(\"System.Reflection.DefaultMemberAttribute\", \".ctor\").WithLocation(4, 15)\n                ",
+  "unsupported": []
+}

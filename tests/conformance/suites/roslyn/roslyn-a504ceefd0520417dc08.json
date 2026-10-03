@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a504ceefd0520417dc08",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass A : Attribute\n{\n    public A(int x) { Console.WriteLine(x); }\n}\n\nclass C\n{\n    [A(typeof(T))] // CS0246 - no 'T' in scope\n    void M<T>() { }\n\n    static void Main() { }\n}\n",
+  "sourceSHA256": "5a3c7ac7decebb7f1288777db074e7960a94f3be14dd1d419c10dea94766a348",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "MethodTypeParameterScope",
+    "offset": 297294
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0246",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,15): error CS0246: The type or namespace name 'T' could not be found (are you missing a using directive or an assembly reference?)\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"T\").WithArguments(\"T\")",
+  "unsupported": []
+}

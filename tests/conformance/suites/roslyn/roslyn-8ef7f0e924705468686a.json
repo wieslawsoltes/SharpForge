@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8ef7f0e924705468686a",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void Main()\n    {\n        (M(out var x).P, x) = (1, x);\n        System.Console.Write(x);\n    }\n    static C M(out int i) { i = 42; return new C(); }\n    int P { set { System.Console.Write($\"Written {value}. \"); } }\n}\n",
+  "sourceSHA256": "4241927a93282abbfdf72c9ea67a3f10506de5a983156ff50994df0b2b3394a7",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "OutVarAndUsageInDeconstructAssignment",
+    "offset": 232105
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1717",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,26): warning CS1717: Assignment made to same variable; did you mean to assign something else?\n                //         (M(out var x).P, x) = (1, x);\n                Diagnostic(ErrorCode.WRN_AssignmentToSelf, \"x\").WithLocation(6, 26)\n                ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}
