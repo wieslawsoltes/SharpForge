@@ -1,4 +1,4 @@
-import {invokeString} from './system/string.js';
+import {invokeLegacyStringMember} from './system/string.js';
 
 function parseInt32(host, args) {
   const text = String(host.value(args[0]) ?? '').trim();
@@ -66,7 +66,7 @@ function invokeLegacyString(host, args, name) {
     ? substringRangeDescriptor : stringDescriptors[name];
   // Legacy CIL also accepts Concat(object, object); retain managed object formatting.
   const values = name === 'string.Concat' ? args.map(value => host.format(value)) : args;
-  return invokeString(host.platform, descriptor, values).value;
+  return invokeLegacyStringMember(host.platform, descriptor, values).value;
 }
 
 const handlers = Object.freeze({
