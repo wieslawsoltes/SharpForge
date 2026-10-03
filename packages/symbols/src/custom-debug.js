@@ -1,23 +1,47 @@
 import { PdbGuids, fail } from './contracts.js';
-import * as enc from './cdi-enc.js';
-import * as compilation from './cdi-compilation.js';
-import * as core from './cdi-core.js';
+import { readSlots, writeSlots, readLambdas, writeLambdas, readStates, writeStates } from './cdi-enc.js';
+import {
+  readDynamic,
+  writeDynamic,
+  readTuple,
+  writeTuple,
+  readNamespace,
+  writeNamespace,
+  readOptions,
+  writeOptions,
+  readReferences,
+  writeReferences,
+  readTypeDocuments,
+  writeTypeDocuments,
+  readPrimaryConstructor,
+  writePrimaryConstructor,
+} from './cdi-compilation.js';
+import {
+  readEmbeddedSource,
+  writeEmbeddedSource,
+  readSourceLink,
+  writeSourceLink,
+  readAsync,
+  writeAsync,
+  readHoisted,
+  writeHoisted,
+} from './cdi-core.js';
 
 const codecs = new Map([
-  [PdbGuids.encSlots, [enc.readSlots, enc.writeSlots]],
-  [PdbGuids.encLambdas, [enc.readLambdas, enc.writeLambdas]],
-  [PdbGuids.encStates, [enc.readStates, enc.writeStates]],
-  [PdbGuids.dynamicLocals, [compilation.readDynamic, compilation.writeDynamic]],
-  [PdbGuids.tupleNames, [compilation.readTuple, compilation.writeTuple]],
-  [PdbGuids.defaultNamespace, [compilation.readNamespace, compilation.writeNamespace]],
-  [PdbGuids.compilationOptions, [compilation.readOptions, compilation.writeOptions]],
-  [PdbGuids.compilationReferences, [compilation.readReferences, compilation.writeReferences]],
-  [PdbGuids.typeDocuments, [compilation.readTypeDocuments, compilation.writeTypeDocuments]],
-  [PdbGuids.primaryConstructor, [compilation.readPrimaryConstructor, compilation.writePrimaryConstructor]],
-  [PdbGuids.embeddedSource, [core.readEmbeddedSource, core.writeEmbeddedSource]],
-  [PdbGuids.sourceLink, [core.readSourceLink, core.writeSourceLink]],
-  [PdbGuids.asyncSteps, [core.readAsync, core.writeAsync]],
-  [PdbGuids.hoistedScopes, [core.readHoisted, core.writeHoisted]],
+  [PdbGuids.encSlots, [readSlots, writeSlots]],
+  [PdbGuids.encLambdas, [readLambdas, writeLambdas]],
+  [PdbGuids.encStates, [readStates, writeStates]],
+  [PdbGuids.dynamicLocals, [readDynamic, writeDynamic]],
+  [PdbGuids.tupleNames, [readTuple, writeTuple]],
+  [PdbGuids.defaultNamespace, [readNamespace, writeNamespace]],
+  [PdbGuids.compilationOptions, [readOptions, writeOptions]],
+  [PdbGuids.compilationReferences, [readReferences, writeReferences]],
+  [PdbGuids.typeDocuments, [readTypeDocuments, writeTypeDocuments]],
+  [PdbGuids.primaryConstructor, [readPrimaryConstructor, writePrimaryConstructor]],
+  [PdbGuids.embeddedSource, [readEmbeddedSource, writeEmbeddedSource]],
+  [PdbGuids.sourceLink, [readSourceLink, writeSourceLink]],
+  [PdbGuids.asyncSteps, [readAsync, writeAsync]],
+  [PdbGuids.hoistedScopes, [readHoisted, writeHoisted]],
 ]);
 
 /** Decode standard Roslyn CDI fields; unknown kinds retain independent raw bytes. */
