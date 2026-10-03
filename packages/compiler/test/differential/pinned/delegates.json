@@ -1,6 +1,0 @@
-{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
-  "delegates/declared-delegate-and-method-groups":{"hash":"e7887eafbb142faa","kind":"output","langVersion":"14.0","diagnostics":[],"output":"42\n103\n10\n"},
-  "delegates/multicast-order-and-result":{"hash":"d97394bb04da2661","kind":"output","langVersion":"14.0","diagnostics":[],"output":"13\n123\n3\n123123\n"},
-  "delegates/removal-identity":{"hash":"8d2c23afabb7bf7e","kind":"output","langVersion":"14.0","diagnostics":[],"output":"1213\n123\n113\n13\n12\n1213\nTrue\nTrue\n"},
-  "delegates/func-and-action-arities":{"hash":"14832e814075f56d","kind":"output","langVersion":"14.0","diagnostics":[],"output":"37\nx1True\n23\n81\n"}
-}}

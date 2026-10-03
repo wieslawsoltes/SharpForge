@@ -1,1 +1,0 @@
-{"name":"@sharpforge/compute","version":"0.14.0","type":"module","description":"Bounded WebAssembly SIMD numerical kernels and real browser/Node worker pool","exports":"./src/index.js","files":["src","native","README.md","LICENSE"],"license":"MIT","engines":{"node":">=22"}}

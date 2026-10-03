@@ -1,5 +1,0 @@
-{
-  "method-group-arguments/cs1503-cs0123-method-group-argument-mismatch": ["diagnostics", "warnings"],
-  "method-group-arguments/method-groups-as-arguments": ["diagnostics", "warnings", "bytecode", "cil"],
-  "method-group-arguments/method-groups-as-arguments-in-generic-code": ["diagnostics", "warnings", "bytecode", "cil"]
-}

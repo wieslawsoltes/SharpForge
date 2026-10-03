@@ -1,4 +1,0 @@
-{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
-  "tuples/literals-and-deconstruction":{"hash":"802f39a17c59ef06","kind":"output","langVersion":"14.0","diagnostics":[],"output":"1one\ntwo2\n3 2\n20 10\nTrue\n"},
-  "tuples/cs8132-deconstruct-arity":{"hash":"07b9f65ada7c30e3","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS8132",14,22,"error"],["CS8130",25,1,"error"]]}
-}}

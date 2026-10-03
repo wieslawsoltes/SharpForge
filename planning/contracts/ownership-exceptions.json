@@ -1,7 +1,0 @@
-{
-  "version": 1,
-  "docsOnly": ["docs/**/*.md", "README.md", "CHANGELOG.md", "THIRD_PARTY_NOTICES.md"],
-  "generated": ["docs/*-results.json", "package-lock.json", "SOURCE-MANIFEST.json"],
-  "areaGenerated": ["tests/manifests/{area}.json"],
-  "policy": "Docs-only applies only if every changed file matches. Generated exceptions are exactly listed; new generated outputs are never inferred. Shared hot-file locks override normal area ownership."
-}

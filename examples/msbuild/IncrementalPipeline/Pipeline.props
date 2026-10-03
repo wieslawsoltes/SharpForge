@@ -1,1 +1,0 @@
-<Project><PropertyGroup><OutputDirectory>$([System.IO.Path]::Combine('$(MSBuildThisFileDirectory)', 'bin', 'pipeline'))</OutputDirectory></PropertyGroup></Project>

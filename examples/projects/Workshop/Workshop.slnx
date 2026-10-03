@@ -1,7 +1,0 @@
-<Solution>
-  <Folder Name="/src/">
-    <Project Path="Core/Core.csproj" />
-    <Project Path="App/App.csproj" />
-  </Folder>
-  <Folder Name="/Solution Items/"><File Path="Directory.Build.props" /></Folder>
-</Solution>

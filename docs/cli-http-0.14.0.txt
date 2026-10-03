@@ -1,7 +1,0 @@
-Local sample endpoint http://127.0.0.1:8787/data — Ctrl+C to stop. Grant this exact origin in SharpForge.
-Local endpoint reached
-42
-
-Project preview: source-combined references; no MSBuild tasks, NuGet restore or separate binary linking.
-
-exit=0

@@ -1,7 +1,0 @@
-# Fault transfer ABI 1
-
-`schema/fault.schema.json` defines `{schemaVersion,typeToken,messageHandle,exceptionHandle,frames,uncatchable,cause}`. `typeToken` is a symbolic `T:` type identity until a module token map resolves it. Message and exception handles are nullable because an out-of-memory fault may have no managed allocation. Frames contain method identity and optional instruction offset, most recent first. Source points and CIL byte offsets are not interchangeable; consumers must use method-body offset maps.
-
-`faultRecord(vm, fault)` adapts real ManagedFault objects from both VMs. It does not change dispatch. Source instruction-budget faults are uncatchable. CIL additionally treats output, stack and execution limits as fatal. A cancellation fault is catchable unless the VM has been stopped. A host JS Error becomes a managed error at HostOperations' completion boundary; native stacks and JS objects are never transferred.
-
-A fault inside finally replaces the outgoing fault unless caught inside the finally. `cause` is retained only when the producer explicitly attaches it; current VMs do not invent suppressed-exception history. Fixtures: nested-fault (second wins), rethrow (same managed fault), native callback rejection, instruction budget, catchable exception. Tests validate records from both actual VMs against the schema.

@@ -1,1 +1,0 @@
-{"name":"@sharpforge/network","version":"0.14.0","type":"module","description":"Explicit-origin, bounded HTTP and WebSocket client transports","exports":"./src/index.js","files":["src","README.md","LICENSE"],"license":"MIT","engines":{"node":">=22"}}

@@ -1,1 +1,0 @@
-class Generator : Microsoft.CodeAnalysis.ISourceGenerator { public void Initialize(Microsoft.CodeAnalysis.GeneratorInitializationContext c){} public void Execute(Microsoft.CodeAnalysis.GeneratorExecutionContext c){} }
