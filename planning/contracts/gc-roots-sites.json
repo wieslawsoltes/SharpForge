@@ -26,7 +26,7 @@
   {
     "id": "execution/source-eh.js:roots:1",
     "file": "packages/runtime/src/execution/source-eh.js",
-    "line": 6,
+    "line": 7,
     "provider": "urn value or fault. */ export function* roots(vm) { for (const frame of vm.fra"
   },
   {
@@ -42,6 +42,12 @@
     "provider": "tion* stringRoots(vm) { yield* pool(vm).roots(); } export function clearStrings("
   },
   {
+    "id": "gc/incremental-mark.js:roots:1",
+    "file": "packages/runtime/src/gc/incremental-mark.js",
+    "line": 164,
+    "provider": " this.statistics.barrierMarks++; } roots(extraRoots) { this.heap.visitR"
+  },
+  {
     "id": "host-operations.js:roots:1",
     "file": "packages/runtime/src/host-operations.js",
     "line": 5,
@@ -50,19 +56,19 @@
   {
     "id": "platform.js:roots:1",
     "file": "packages/runtime/src/platform.js",
-    "line": 17,
+    "line": 13,
     "provider": "perations=new HostOperations(this);} *roots(){yield* this.hostOperations.roots"
   },
   {
     "id": "platform.js:roots:2",
     "file": "packages/runtime/src/platform.js",
-    "line": 17,
+    "line": 13,
     "provider": "} *roots(){yield* this.hostOperations.roots();yield* this.animations.roots();y"
   },
   {
     "id": "platform.js:roots:3",
     "file": "packages/runtime/src/platform.js",
-    "line": 17,
+    "line": 13,
     "provider": "erations.roots();yield* this.animations.roots();yield this.application;yield* th"
   },
   {
@@ -74,25 +80,25 @@
   {
     "id": "vm.js:roots:1",
     "file": "packages/runtime/src/vm.js",
-    "line": 18,
+    "line": 20,
     "provider": "mage)});this.heap.rootProvider=()=>this.roots();this.stack=[];this.frames=[];thi"
   },
   {
     "id": "vm.js:roots:2",
     "file": "packages/runtime/src/vm.js",
-    "line": 22,
+    "line": 24,
     "provider": ";this.call(image.entryPoint,[]); } *roots(){yield* this.platform?.roots()??["
   },
   {
     "id": "vm.js:roots:3",
     "file": "packages/runtime/src/vm.js",
-    "line": 22,
+    "line": 24,
     "provider": "); } *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots"
   },
   {
     "id": "vm.js:roots:4",
     "file": "packages/runtime/src/vm.js",
-    "line": 22,
+    "line": 24,
     "provider": "orm?.roots()??[];yield* this.scheduler?.roots()??[];yield this.returnValue;yield"
   }
 ]

@@ -38,3 +38,7 @@ Snapshot heap copies retain old contents without making them current live object
 
 - `execution/strings.js:roots:1` — StringInternPool.roots yields strong interned references; weak interning deliberately yields none.
 - `execution/strings.js:roots:2` — stringRoots delegates to the pool for both VM root scans; stop clears the pool and snapshots retain its managed handles.
+
+## Reviewed A06 prerequisite root sites
+
+- `gc/incremental-mark.js:roots:1` — packages/runtime/src/gc/incremental-mark.js:164; reviewed collector prerequisite, pending runtime activation.
