@@ -11,7 +11,6 @@
  */
 import { SymbolKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
-import { attributesNamed } from './attributes.js';
 
 const namespaceName = 'System.Runtime.CompilerServices.';
 /** In precedence order: when several are applied, the first one is used and the others have no effect. */
@@ -27,6 +26,15 @@ const overridden = {
   path: { line: 'CS7082' },
   expression: { line: 'CS8960', path: 'CS8961', member: 'CS8962' },
 };
+
+/** The namespace-qualified name of an attribute class (`System.Runtime.CompilerServices.CallerLineNumberAttribute`). */
+function fullNameOf(type) {
+  const parts = [];
+  for (let symbol = type?.originalDefinition ?? type; symbol && symbol.name; symbol = symbol.containingSymbol) parts.unshift(symbol.name);
+  return parts.join('.');
+}
+// Not imported from ./attributes.js: that module binds attribute arguments with the body binder, which composes this one.
+const attributesNamed = (symbol, fullName) => symbol.boundAttributes.filter(attribute => fullNameOf(attribute.attributeClass) === fullName);
 
 /** The caller info attributes applied to a parameter, strongest first: `[{ kind, attribute, ...codes }]`. */
 function appliedTo(parameter) {
