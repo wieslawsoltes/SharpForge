@@ -1,13 +1,21 @@
+import {mutateArray} from './array-ops.js';
 import {Builtins} from '@sharpforge/bytecode';
 import {ManagedFault} from '../heap.js';
+import {internString,isInternedString,referenceEquals,stringChar} from './strings.js';
+import {enumHasFlag,enumInfo,enumValue} from './enums.js';
+import {objectType,typeName,runtimeTypeText} from './tokens.js';
 
 /** Invoke an intrinsic with heap/value/format/output/platform services; no image is required. */
 export function builtin(vm, id, args) {
   const entry = Builtins[id];
-  if (entry.contract) return vm.platform.invoke(entry.contract, args);
+  if (entry.contract) {
+    const result=vm.platform.invoke(entry.contract,args);
+    return enumInfo(vm,entry.contract.result)?enumValue(vm,entry.contract.result,result):result;
+  }
   const name = entry.name;
   return vm.heap.withRoots(args, () => {
     const a = vm.value(args[0]), b = vm.value(args[1]), c = vm.value(args[2]);
+    if(name.startsWith('$type.'))return objectType(vm,args[0],name.split('.')[1]);
     if (name.startsWith('Math.')) {
       const fn = {Abs: 'abs', Min: 'min', Max: 'max', Pow: 'pow', Sqrt: 'sqrt', Floor: 'floor', Ceiling: 'ceil', Round: 'round'}[name.slice(5)];
       if (fn === 'round') {
@@ -17,6 +25,13 @@ export function builtin(vm, id, args) {
       return Math[fn](...args);
     }
     switch (name) {
+      case 'string.Intern': return internString(vm,args[0]);
+      case 'string.IsInterned': return isInternedString(vm,args[0]);
+      case 'string.get_Chars': return stringChar(vm,args[0],args[1]);
+      case 'object.GetType': return objectType(vm,args[0]);
+      case 'Type.Name': case 'Type.FullName': {const text=typeName(vm,args[0],name==='Type.FullName');return text===null?null:vm.heap.string(text);}
+      case 'object.ReferenceEquals': return referenceEquals(args[0],args[1]);
+      case 'Enum.HasFlag': return enumHasFlag(vm,args[0],args[1]);
       case '$Math.Abs.Int32':
         if (a === -2147483648) throw new ManagedFault('OverflowException', 'Absolute value of Int32.MinValue is not representable');
         return Math.abs(a);
@@ -52,19 +67,10 @@ export function builtin(vm, id, args) {
         if (Number.isNaN(v)) throw new ManagedFault('FormatException', 'Cannot convert value to double');
         return v;
       }
-      case 'Convert.ToString': case 'object.ToString': return vm.heap.string(vm.format(args[0]));
+      case 'Convert.ToString': case 'object.ToString': return vm.heap.string(runtimeTypeText(vm,args[0])??vm.format(args[0]));
       case 'string.Concat': return vm.heap.string(vm.format(args[0]) + vm.format(args[1]));
       case 'string.IsNullOrEmpty': return a === null || a === '';
-      case 'Array.Reverse': case 'Array.Sort': {
-        const record = vm.heap.get(args[0]);
-        if (record.kind !== 'array') throw new ManagedFault('ArgumentException', 'Array required');
-        if (name === 'Array.Reverse') record.data.reverse();
-        else record.data.sort((a, b) => {
-          a = vm.value(a); b = vm.value(b);
-          return typeof a === 'number' && typeof b === 'number' ? a - b : String(a).localeCompare(String(b), 'en');
-        });
-        return null;
-      }
+      case 'Array.Reverse': case 'Array.Sort': return mutateArray(vm,name.slice(6),args[0]);
       case 'string.Substring':
         if (typeof a !== 'string') throw new ManagedFault('NullReferenceException', 'String is null');
         if (!Number.isInteger(b) || b < 0 || b > a.length || args.length === 3 && (!Number.isInteger(c) || c < 0 || b + c > a.length)) {

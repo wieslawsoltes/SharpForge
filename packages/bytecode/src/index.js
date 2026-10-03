@@ -1,6 +1,8 @@
 import {enumTypes,frameworkType} from '@sharpforge/framework';
 /** Versioned, structured-cloneable stack bytecode. Each instruction is three signed 32-bit words. */
 export const FORMAT_VERSION = 2;
+// Numeric conversion IDs occupy the low range; enum targets retain declared identity.
+export const EnumConvertBase = 65536;
 export const Op = Object.freeze(Object.fromEntries(['SEQ','CONST','LDLOC','STLOC','LDSTATIC','STSTATIC','LDFLD','STFLD','DUP','POP','BINARY','UNARY','JUMP','JFALSE','JTRUE','CALL','BUILTIN','RET','NEWOBJ','NEWARR','LDELEM','STELEM','LENGTH','THROW','RETHROW','CONVERT','NOP','ENDFINALLY','DELEGATE','ENUM'].map((n,i)=>[n,i])));
 export const OpName = Object.freeze(Object.keys(Op));
 export const Binary = Object.freeze(Object.fromEntries(['+','-','*','/','%','==','!=','<','<=','>','>=','&','|','^','<<','>>'].map((n,i)=>[n,i])));
@@ -36,7 +38,7 @@ export function verifyImage(image){
         case Op.LDFLD:need=1;break;case Op.STFLD:need=2;delta=-1;break;
         case Op.DUP:need=1;delta=1;break;case Op.POP:need=1;delta=-1;break;
         case Op.BINARY:need=2;delta=-1;if(!BinaryName[a])fail(m,pc,'Invalid binary operator');if(![0,1,2,3,5].includes(b)||b===5&&!['+','-','*'].includes(BinaryName[a]))fail(m,pc,'Invalid binary mode');break;
-        case Op.CONVERT:need=1;if(a!==0&&a!==1||![0,1].includes(b)||b===1&&a!==0)fail(m,pc,'Invalid numeric conversion');break;
+        case Op.CONVERT:need=1;if(a!==0&&a!==1&&!enumTypes[a-EnumConvertBase]||![0,1].includes(b)||b===1&&a===1)fail(m,pc,'Invalid numeric conversion');break;
         case Op.UNARY:need=1;if(!UnaryName[a]||![0,1,5].includes(b)||b===5&&a!==0)fail(m,pc,'Invalid unary operator');break;
         case Op.JUMP:break;case Op.JFALSE:case Op.JTRUE:need=1;delta=-1;break;
         case Op.CALL:if(!image.methods[a])fail(m,pc,'Invalid method');else if(b!==image.methods[a].parameters.length+(image.methods[a].isStatic?0:1))fail(m,pc,'Invalid argument count');need=b;delta=1-b;break;

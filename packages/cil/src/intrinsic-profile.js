@@ -21,12 +21,31 @@ for(const name of ['Write','WriteLine'])for(const type of primitive)add('System.
 add('System.Console','WriteLine',[],'void',true,'console');
 add('System.Object','.ctor',[],'void',false,'objectCtor');
 add('System.Object','ToString',[],'string',false,'objectToString');
+add('System.Object','GetType',[],'System.Type',false,'objectGetType');
+add('System.Type','GetTypeFromHandle',['System.RuntimeTypeHandle'],'System.Type',true,'typeFromHandle');
+for(const name of ['op_Equality','op_Inequality'])add('System.Type',name,['System.Type','System.Type'],'bool',true,'typeCompare');
+for(const parameter of ['System.Type','object'])add('System.Type','Equals',[parameter],'bool',false,'typeEquals');
+for(const owner of ['System.Type','System.Reflection.MemberInfo'])add(owner,'get_Name',[],'string',false,'typeName');
+add('System.Type','get_FullName',[],'string',false,'typeName');
+add('System.Type','get_TypeHandle',[],'System.RuntimeTypeHandle',false,'typeHandle');
+add('System.Type','ToString',[],'string',false,'typeString');
+for(const name of ['IsGenericType','IsGenericTypeDefinition','ContainsGenericParameters'])add('System.Type','get_'+name,[],'bool',false,'typeProperty');
+add('System.Object','ReferenceEquals',['object','object'],'bool',true,'objectReferenceEquals');
+add('System.Enum','ToString',[],'string',false,'enumToString');
+add('System.Enum','HasFlag',['System.Enum'],'bool',false,'enumHasFlag');
 for(const parameters of [[],['string']])add('System.Exception','.ctor',parameters,'void',false,'exceptionCtor');
 add('System.Exception','get_Message',[],'string',false,'exceptionMessage');
+for(const result of ['Exception','System.Exception'])add('System.Exception','get_InnerException',[],result,false,'exceptionInner');
+add('System.TypeInitializationException','get_Message',[],'string',false,'exceptionMessage');
+for(const result of ['Exception','System.Exception'])add('System.TypeInitializationException','get_InnerException',[],result,false,'exceptionInner');
+for(const name of ['Sort','Reverse'])add('System.Array',name,['System.Array'],'void',true,'arrayMutate');
+add('System.String','.ctor',['char[]'],'void',false,'stringCtor');
 for(const count of [2,3,4])add('System.String','Concat',Array(count).fill('string'),'string',true,'stringConcat');
 add('System.String','Concat',['object','object'],'string',true,'stringConcat');
 for(const name of ['op_Equality','op_Inequality','Equals'])add('System.String',name,['string','string'],'bool',true,'stringCompare');
 add('System.String','IsNullOrEmpty',['string'],'bool',true,'stringNullOrEmpty');
+add('System.String','Intern',['string'],'string',true,'stringIntern');
+add('System.String','IsInterned',['string'],'string',true,'stringIsInterned');
 add('System.String','get_Length',[],'int',false,'stringLength');
 add('System.String','get_Chars',['int'],'char',false,'stringChars');
 for(const name of ['ToUpperInvariant','ToLowerInvariant','ToUpper','ToLower','Trim','ToString'])add('System.String',name,[],'string',false,'stringTransform');
@@ -78,5 +97,5 @@ export function intrinsicDefinition(descriptor) {
   const contract=frameworkDefinitions.get(signatureKey(canonicalType(descriptor.owner),descriptor.name,signature.parameters.map(canonicalType),canonicalType(signature.returnType),signature.isStatic));
   if(contract)return contract;
   if(descriptor.genericArguments||signature.genericArity||signature.callingConvention)return null;
-  return builtinDefinitions.get(signatureKey(systemType(descriptor.owner),descriptor.name,signature.parameters,signature.returnType,signature.isStatic))??null;
+  return builtinDefinitions.get(signatureKey(systemType(descriptor.owner),descriptor.name,signature.parameters.map(type=>type==='Array'?'System.Array':type),signature.returnType,signature.isStatic))??null;
 }
