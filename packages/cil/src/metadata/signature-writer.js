@@ -4,6 +4,18 @@ import {
   signaturePrimitives, signatureBudget, signatureCount, checkSignatureType, checkMethodHeader,
 } from './signature-types.js';
 
+/** Signed compressed integers retain their chosen width when the rotated value is small. */
+export function writeSignedCompressed(writer, value) {
+  if (!Number.isInteger(value) || value < -0x10000000 || value > 0x0fffffff) {
+    throw new CilError('Invalid signed compressed integer');
+  }
+  const bits = value >= -64 && value <= 63 ? 7 : value >= -8192 && value <= 8191 ? 14 : 29;
+  const encoded = ((value & (2 ** (bits - 1) - 1)) * 2) + (value < 0 ? 1 : 0);
+  if (bits === 7) writer.u8(encoded);
+  else if (bits === 14) writer.u8(0x80 | (encoded >>> 8)).u8(encoded);
+  else writer.u8(0xc0 | (encoded >>> 24)).u8(encoded >>> 16).u8(encoded >>> 8).u8(encoded);
+  return writer;
+}
 
 function encoder(writer, options) {
   const budget = signatureBudget(options);
@@ -38,6 +50,19 @@ function encoder(writer, options) {
       type(node.type, depth + 1);
       values(node.arguments, 'Generic arguments');
       for (const argument of node.arguments) type(argument, depth + 1);
+    },
+    array(node, depth) {
+      const rank = signatureCount(node.rank, 'Array rank', 32);
+      if (!rank) throw new CilError('Array rank must be positive');
+      if (!Array.isArray(node.sizes) || !Array.isArray(node.lowerBounds) ||
+          node.sizes.length > rank || node.lowerBounds.length > rank) throw new CilError('Invalid array shape');
+      writer.u8(0x14);
+      type(node.element, depth + 1);
+      writer.compressed(rank);
+      values(node.sizes, 'Array sizes');
+      for (const size of node.sizes) writer.compressed(size);
+      values(node.lowerBounds, 'Array bounds');
+      for (const bound of node.lowerBounds) writeSignedCompressed(writer, bound);
     },
     functionPointer(node, depth) {
       if (node.signature?.kind !== 'method') throw new CilError('Function pointer requires a method signature');
