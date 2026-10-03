@@ -103,7 +103,8 @@ export const Declarations = Base =>
       this.eventFields.set(symbol, record);
     }
     declareMethod(owner, symbol) {
-      if (this.methods.has(symbol)) return;
+      // Synthesized record members are declared when code first refers to them (lowering/records/record-members.js).
+      if (this.methods.has(symbol) || symbol.recordMember) return;
       const at = symbol.locations?.[0];
       switch (symbol.methodKind) {
         case MethodKind.Destructor:
@@ -116,7 +117,8 @@ export const Declarations = Base =>
           break;
       }
       if (symbol.typeParameters?.length) this.unsupported('user-defined generics', at);
-      if (symbol.isAbstract || symbol.isVirtual || symbol.isOverride) this.unsupported('virtual dispatch', at);
+      const isVirtual = symbol.isAbstract || symbol.isVirtual || symbol.isOverride;
+      if (isVirtual && !this.records.dispatchesStatically(symbol)) this.unsupported('virtual dispatch', at);
       if (symbol.isExtern) this.unsupported('extern methods', at);
       const isConstructor = symbol.methodKind === MethodKind.Constructor;
       // The implicit parameterless constructor has nothing to run: creation allocates and runs the field initializers.
@@ -149,7 +151,8 @@ export const Declarations = Base =>
     }
     /** The image method of a source method symbol. */
     methodOf(symbol, syntax = null) {
-      const record = this.methods.get(definitionOf(symbol));
+      const definition = definitionOf(symbol),
+        record = this.methods.get(definition) ?? this.records.methodOf(definition, syntax);
       return record ?? this.unsupported(`method '${symbol.toDisplayString()}'`, syntax);
     }
   };

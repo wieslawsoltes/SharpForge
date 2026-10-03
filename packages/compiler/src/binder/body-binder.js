@@ -22,6 +22,7 @@ import { OperatorBinding } from './body/operators.js';
 import { TypeTestBinding } from './body/type-tests.js';
 import { TupleBinding } from './body/tuples.js';
 import { DeconstructionBinding } from './body/deconstruction.js';
+import { WithBinding } from './with-expression.js';
 import { LambdaBinding } from './body/lambdas.js';
 import { PatternBinding } from './body/patterns.js';
 import { StackAllocBinding } from './body/stackalloc.js';
@@ -39,6 +40,7 @@ const expressionFamilies = [
   TypeTestBinding,
   TupleBinding,
   DeconstructionBinding,
+  WithBinding,
   LambdaBinding,
   PatternBinding,
   StackAllocBinding,

@@ -515,6 +515,7 @@ export const roslynCodes=Object.freeze({
  CS8805:["ERR_SimpleProgramNotAnExecutable","error",0,"Program using top-level statements must be an executable."],
  CS8820:["ERR_StaticAnonymousFunctionCannotCaptureVariable","error",0,"A static anonymous function cannot contain a reference to '{0}'."],
  CS8852:["ERR_AssignmentInitOnly","error",0,"Init-only property or indexer '{0}' can only be assigned in an object initializer, or on 'this' or 'base' in an instance constructor or an 'init' accessor."],
+ CS8858:["ERR_CannotClone","error",0,"The receiver type '{0}' is not a valid record type and is not a struct type."],
  CS8892:["WRN_SyncAndAsyncEntryPoints","warning",5,"Method '{0}' will not be used as an entry point because a synchronous entry point '{1}' was found."],
  CS8914:["ERR_GlobalUsingInNamespace","error",0,"A global using directive cannot be used in a namespace declaration."],
  CS8915:["ERR_GlobalUsingOutOfOrder","error",0,"A global using directive must precede all non-global using directives."],
