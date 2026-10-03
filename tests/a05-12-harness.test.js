@@ -50,14 +50,16 @@ test('T12 preparation rejects foreign and stopped VMs, and reports disabled sour
 
 test('T12 deliberately slowed arithmetic handler produces a significant measured regression', async () => {
   const artifact = image(), fixture = {id: 'slowed-handler', expected: '60\n'};
-  const measure = slow => withVM(() => new VirtualMachine(artifact), async vm => {
-    prepareExecution(vm);
-    const initial = vm.snapshot(), original = vm.binary.bind(vm);
-    if (slow) vm.binary = (...args) => {
+  class SlowedArithmeticVM extends VirtualMachine {
+    binary(...args) {
       const until = performance.now() + 0.15;
       while (performance.now() < until) { /* Deliberate test-only interpreter handler delay. */ }
-      return original(...args);
-    };
+      return super.binary(...args);
+    }
+  }
+  const measure = slow => withVM(() => new (slow ? SlowedArithmeticVM : VirtualMachine)(artifact), async vm => {
+    prepareExecution(vm);
+    const initial = vm.snapshot();
     const values = [];
     for (let index = 0; index < 23; index++) {
       vm.restore(initial);
