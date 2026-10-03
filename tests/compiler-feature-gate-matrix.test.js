@@ -48,7 +48,6 @@ const notGated = {
   ExtensibleFixedStatement: needsOperandTypes,
   IndexingMovableFixedBuffers: needsOperandTypes,
   UnconstrainedTypeParameterInNullCoalescingOperator: needsOperandTypes,
-  DisposalPattern: needsOperandTypes,
   NameShadowingInNestedFunctions: 'below C# 8 Roslyn reports CS0136, not a language-version diagnostic',
   UnmanagedConstructedTypes: needsOperandTypes,
   ObsoleteOnPropertyAccessor: needsAttributeBinding,

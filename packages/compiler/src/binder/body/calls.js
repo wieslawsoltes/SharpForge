@@ -220,6 +220,7 @@ export const CallBinding = Base =>
       const method = result.method,
         nameNode = group?.nameNode ?? group?.syntax ?? syntax;
       if (method.containingType?.containingAssembly) this.d.reportUseSite(method.originalDefinition ?? method, this.c.uri, nameNode);
+      if (!this.quiet) this.d.noteUse?.(method, this.c.uri, syntax);
       if (group && !isExtension && !isDelegateInvoke) {
         if (method.methodKind !== MethodKind.LocalFunction) {
           if (method.isStatic) {

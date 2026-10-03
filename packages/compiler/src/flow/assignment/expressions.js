@@ -12,7 +12,11 @@ export const AssignmentExpressions = Base =>
     // ---- expressions ----
     /** Evaluates an expression for its effects and returns the state after it. */
     expr(e, state) {
-      if (!e || typeof e !== 'object' || !state) return state;
+      if (!e || typeof e !== 'object') return state;
+      if (!state) {
+        this.declareUnreachable(e);
+        return state;
+      }
       switch (e.kind) {
         case 'Local':
           this.read(e.local, e, state);
@@ -234,7 +238,10 @@ export const AssignmentExpressions = Base =>
     }
     /** Evaluates a boolean expression and returns the states when it is true and when it is false. */
     cond(e, state) {
-      if (!state) return { t: null, f: null };
+      if (!state) {
+        this.declareUnreachable(e);
+        return { t: null, f: null };
+      }
       if (e.constantValue && e.constantValue.type === 'bool' && e.constantValue.value !== null) {
         const s = this.expr(e, state);
         return e.constantValue.value ? { t: s, f: null } : { t: null, f: s };
@@ -281,6 +288,13 @@ export const AssignmentExpressions = Base =>
       }
       const s = this.expr(e, state);
       return { t: s, f: s?.clone() ?? null };
+    }
+    /** An operand that is never evaluated (`false && M(out var x)`) still declares its variables: they stay unassigned. */
+    declareUnreachable(e) {
+      if (typeof e.kind !== 'string') return;
+      if (e.kind === 'DeclarationExpression' && e.local) this.declare(e.local);
+      if (e.kind === 'IsPattern') this.patternLocals(e.pattern, null, false);
+      for (const child of boundChildren(e)) this.declareUnreachable(child);
     }
     patternLocals(p, state, definite) {
       if (!p) return;

@@ -25,6 +25,7 @@ export const LambdaBinding = Base =>
             ? []
             : null;
       const isAsync = (syntax.modifiers ?? []).some(m => m.text === 'async'),
+        isStaticFunction = (syntax.modifiers ?? []).some(m => m.text === 'static'),
         cache = new Map();
       const node = this.node('Lambda', syntax, null, { form: 'lambda', isAnonymousMethod, parameterSyntax, isAsync });
       const bindWith = (parameterTypes, returnType, quiet, refKinds = null) => {
@@ -57,6 +58,7 @@ export const LambdaBinding = Base =>
             isAsync,
             isIterator: false,
             isLambda: true,
+            staticFunction: isStaticFunction ? 'lambda' : null,
             isFieldInitializer: false,
             isStatic: this.c.isStatic,
             quiet: quiet ? diagnostics : this.quiet,
