@@ -209,13 +209,16 @@ locals. Malformed ranges, ambiguous fields and invalid query arguments throw
 `SymbolError`. Visual Basic, closure fields and compiler state reconstruction are
 not mapped by this capability.
 
-Indexes are private to the loaded symbol set and built lazily. `maxHoistedEntries`
+Relevant scope, field, method and body-length facts are snapshotted at load without
+copying the whole assembly. The private query index is built on its first use.
+`maxHoistedEntries`
 bounds metadata/index/expanded local entries (default 100,000; hard maximum
 1,000,000) before list expansion; field names are limited to 1,024 UTF-16 units.
 The index uses `metadata.list` for field/method ownership, including pointer-table
 indirection. Each type's fields are read once; each query scans only that method's
 hoisted locals and returns fresh records. Load a new symbol set after changing
-symbols; modifying returned records does not alter cached lookup results.
+symbols; modifying input bytes or returned records, including before the first
+query, does not alter lookup results. The lookup retains no borrowed bytes or ASTs.
 
 The naming convention and zero-length slot rule follow the primary Roslyn sources:
 [GeneratedNames](https://github.com/dotnet/roslyn/blob/main/src/Compilers/CSharp/Portable/Symbols/Synthesized/GeneratedNames.cs)

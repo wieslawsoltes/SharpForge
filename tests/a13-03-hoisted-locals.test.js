@@ -2,8 +2,16 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { readPE } from '@sharpforge/cil';
-import { loadSymbols, emitPortablePdb, attachPortablePdb, PdbGuids, SymbolError } from '@sharpforge/symbols';
+import { readPE, codedIndex } from '@sharpforge/cil';
+import {
+  loadSymbols,
+  emitPortablePdb,
+  attachPortablePdb,
+  PdbGuids,
+  SymbolError,
+  PortablePdbBuilder,
+  writeCustomDebugInformation,
+} from '@sharpforge/symbols';
 
 const directory = new URL('./fixtures/portable-pdb-hoisted-locals/', import.meta.url);
 const fixture = JSON.parse(readFileSync(new URL('reference.json', directory), 'utf8'));
@@ -102,24 +110,48 @@ test('invalid ranges and duplicate scope records cannot produce a mapping', () =
   const scopes = native.scopes.map((scope) => ({ ...scope }));
   scopes[0].end = length + 1;
   assert.throws(() => changedScopes(scopes).hoistedLocals(native.moveNext, 0), /Invalid hoisted local scope range/);
-  const symbols = load();
-  symbols.custom.push({ ...scopesRecord(symbols) });
-  assert.throws(() => symbols.hoistedLocals(native.moveNext, 0), /Duplicate hoisted local scope record/);
+  const builder = new PortablePdbBuilder();
+  const pe = readPE(assembly, { inspection: true });
+  builder.add(54, [native.moveNext & 0xffffff, native.kickoff & 0xffffff]);
+  const row = [
+    codedIndex('HasCustomDebugInformation', native.moveNext),
+    builder.guid(PdbGuids.hoistedScopes),
+    builder.blob(writeCustomDebugInformation(PdbGuids.hoistedScopes, { scopes: native.scopes })),
+  ];
+  builder.add(55, row);
+  builder.add(55, row);
+  const duplicate = builder.finish(pe.metadata.counts, pe.entryPoint).bytes;
+  assert.throws(
+    () => loadSymbols(attachPortablePdb(assembly, duplicate), duplicate),
+    /Duplicate hoisted local scope record/,
+  );
 });
 
-test('lookup indexes are lazy, bounded before expansion and results do not expose cached records', () => {
-  const bounded = load({ maxHoistedEntries: 1 });
-  Object.defineProperty(scopesRecord(bounded), 'scopes', {
-    get() {
-      throw Error('expanded before budget');
-    },
-  });
-  assert.throws(() => bounded.hoistedLocals(native.moveNext, 0), /index entry limit exceeded/);
-  const symbols = load();
+test('lookup snapshots are bounded at load and independent of caller data before the first query', () => {
+  assert.throws(() => load({ maxHoistedEntries: 1 }), /index entry limit exceeded/);
+  const original = load();
+  const counts = readPE(assembly, { inspection: true }).metadata.counts;
+  let entries = original.stateMachines.length * 2 + original.custom.length;
+  for (const table of [2, 4, 6]) entries += counts[table] ?? 0;
+  for (const record of original.custom) if (record.kind === PdbGuids.hoistedScopes) entries += record.scopes.length;
+  assert.throws(() => load({ maxHoistedEntries: entries }), /index entry limit exceeded/);
+  assert.deepEqual(
+    load({ maxHoistedEntries: entries + 2 }).hoistedLocals(native.moveNext, fixture.frames[1].offset).locals,
+    fixture.frames[1].locals,
+  );
+  const bytes = new Uint8Array(assembly);
+  const pdbBytes = new Uint8Array(pdb);
+  const symbols = loadSymbols(bytes, pdbBytes);
+  bytes.fill(0);
+  pdbBytes.fill(0);
+  scopesRecord(symbols).scopes[0].end = 0;
+  symbols.custom.push({ ...scopesRecord(symbols) });
+  symbols.stateMachines[0].moveNext = 0;
+  symbols.stateMachines.length = 0;
   const result = symbols.hoistedLocals(native.moveNext, fixture.frames[1].offset);
+  assert.deepEqual(result.locals, fixture.frames[1].locals);
   result.locals[0].name = 'changed';
   result.locals.push({ name: 'injected' });
-  scopesRecord(symbols).scopes[0].end = 0;
   assert.deepEqual(symbols.hoistedLocals(native.moveNext, fixture.frames[1].offset).locals, fixture.frames[1].locals);
   assert.deepEqual(load().hoistedLocals(native.moveNext, fixture.frames[1].offset).locals, fixture.frames[1].locals);
 });

@@ -4,18 +4,24 @@ function unavailable(reason, pair) {
   return { available: false, reason, moveNext: pair?.moveNext ?? null, kickoff: pair?.kickoff ?? null, locals: [] };
 }
 
-function scopeIndex(pe, symbols, limit) {
+function snapshotScopes(pe, symbols, limit) {
   let entries = symbols.stateMachines.length * 2 + symbols.custom.length;
   for (const table of [2, 4, 6]) entries += pe.metadata.counts[table] ?? 0;
   if (entries > limit) fail('Hoisted local index entry limit exceeded');
-  const scopes = new Map();
   for (const record of symbols.custom) {
     if (record.kind !== PdbGuids.hoistedScopes) continue;
     if (!Array.isArray(record.scopes)) fail('Invalid hoisted local scopes');
     entries += record.scopes.length;
     if (entries > limit) fail('Hoisted local index entry limit exceeded');
+  }
+  const scopes = new Map();
+  for (const record of symbols.custom) {
+    if (record.kind !== PdbGuids.hoistedScopes) continue;
     if (scopes.has(record.parent)) fail('Duplicate hoisted local scope record');
-    scopes.set(record.parent, record.scopes);
+    scopes.set(
+      record.parent,
+      record.scopes.map(({ start, end }) => ({ start, end })),
+    );
   }
   return { scopes, entries };
 }
@@ -46,18 +52,17 @@ function typeFields(metadata, owner) {
   return { csharp, fields };
 }
 
-function mapFields(pe, pair, scopes, fields) {
+function mapFields(pair) {
+  const { scopes, fields, bodyLength } = pair;
   if (!scopes) return unavailable('missing-hoisted-scopes', pair);
   if (!fields.csharp) return unavailable('unsupported-field-convention', pair);
-  if (!pe.metadata.row(pair.moveNext)[0]) fail('Hoisted local MoveNext has no IL body');
-  const length = pe.methodBody(pair.moveNext).code.length;
   for (const scope of scopes) {
     if (
       !Number.isInteger(scope.start) ||
       !Number.isInteger(scope.end) ||
       scope.start < 0 ||
       scope.end < scope.start ||
-      scope.end > length ||
+      scope.end > bodyLength ||
       (scope.start === scope.end && scope.start !== 0)
     ) {
       fail('Invalid hoisted local scope range');
@@ -78,19 +83,17 @@ function mapFields(pe, pair, scopes, fields) {
   return { available: true, reason: null, moveNext: pair.moveNext, kickoff: pair.kickoff, locals };
 }
 
-function buildIndex(pe, symbols, limit) {
-  if (!symbols.stateMachines.length) return new Map();
-  const budget = scopeIndex(pe, symbols, limit);
+function snapshotFacts(pe, symbols, limit) {
+  if (!symbols.bound || !symbols.stateMachines.length) return [];
+  const budget = snapshotScopes(pe, symbols, limit);
   let owners;
   const fields = new Map();
-  const methods = new Map();
+  const facts = [];
   for (const pair of symbols.stateMachines) {
-    if (methods.has(pair.moveNext) || methods.has(pair.kickoff)) fail('Ambiguous hoisted local method mapping');
     const scopes = budget.scopes.get(pair.moveNext);
+    const fact = { moveNext: pair.moveNext, kickoff: pair.kickoff, scopes, fields: null, bodyLength: 0 };
     if (!scopes) {
-      const missing = unavailable('missing-hoisted-scopes', pair);
-      methods.set(pair.moveNext, missing);
-      methods.set(pair.kickoff, missing);
+      facts.push(fact);
       continue;
     }
     owners ??= methodOwners(pe.metadata);
@@ -100,19 +103,17 @@ function buildIndex(pe, symbols, limit) {
     const candidates = fields.get(owner);
     budget.entries += candidates.fields.length;
     if (budget.entries > limit) fail('Hoisted local index entry limit exceeded');
-    const mapped = mapFields(pe, pair, scopes, candidates);
-    methods.set(pair.moveNext, mapped);
-    methods.set(pair.kickoff, mapped);
+    fact.fields = candidates;
+    if (candidates.csharp) {
+      if (!pe.metadata.row(pair.moveNext)[0]) fail('Hoisted local MoveNext has no IL body');
+      fact.bodyLength = pe.methodBody(pair.moveNext).code.length;
+    }
+    facts.push(fact);
   }
-  return methods;
+  return facts;
 }
 
-/** Lazy per-loaded-assembly index; missing metadata never becomes a guessed user local. */
-export function createHoistedLocalLookup(pe, symbols, { maxHoistedEntries = 100_000 } = {}) {
-  if (!Number.isInteger(maxHoistedEntries) || maxHoistedEntries < 0 || maxHoistedEntries > 1_000_000) {
-    fail('Invalid hoisted local index limit');
-  }
-  const bound = symbols.bound;
+function lookupFromFacts(facts, bound) {
   let index;
   return (methodToken, offset) => {
     if (
@@ -125,7 +126,10 @@ export function createHoistedLocalLookup(pe, symbols, { maxHoistedEntries = 100_
     )
       fail('Invalid hoisted local query');
     if (!bound) return unavailable('unbound-symbols');
-    index ??= buildIndex(pe, symbols, maxHoistedEntries);
+    if (!index) {
+      index = buildIndex(facts);
+      facts = null;
+    }
     const mapped = index.get(methodToken);
     if (!mapped) return unavailable('not-state-machine');
     const locals = [];
@@ -134,4 +138,23 @@ export function createHoistedLocalLookup(pe, symbols, { maxHoistedEntries = 100_
     }
     return { ...mapped, locals };
   };
+}
+
+function buildIndex(facts) {
+  const methods = new Map();
+  for (const pair of facts) {
+    if (methods.has(pair.moveNext) || methods.has(pair.kickoff)) fail('Ambiguous hoisted local method mapping');
+    const mapped = mapFields(pair);
+    methods.set(pair.moveNext, mapped);
+    methods.set(pair.kickoff, mapped);
+  }
+  return methods;
+}
+
+/** Snapshot bounded relevant facts at load; lazily index them without retaining borrowed bytes or ASTs. */
+export function createHoistedLocalLookup(pe, symbols, { maxHoistedEntries = 100_000 } = {}) {
+  if (!Number.isInteger(maxHoistedEntries) || maxHoistedEntries < 0 || maxHoistedEntries > 1_000_000) {
+    fail('Invalid hoisted local index limit');
+  }
+  return lookupFromFacts(snapshotFacts(pe, symbols, maxHoistedEntries), symbols.bound);
 }
