@@ -8,6 +8,7 @@ import { MethodKind } from '../../symbols/members.js';
 import { n } from './node-factory.js';
 
 const primitiveToString = new Set(['int', 'double', 'bool', 'string']);
+
 /** Class mixin: calls, creation, properties, indexers, events. */
 export const CallTranslation = Base =>
   class extends Base {
@@ -131,6 +132,8 @@ export const CallTranslation = Base =>
       return this.withInitializers(node, creation);
     }
     frameworkCreation(node) {
+      if (node.type.specialType === 'System_Object')
+        return this.unsupported("creating 'object' (the framework registry has no System.Object constructor)", node.syntax);
       const ctor = node.constructor;
       const name = this.imageType(node.type, node.syntax);
       if (!ctor || typeof ctor !== 'object' || !(ctor.contract || ctor.builtin))

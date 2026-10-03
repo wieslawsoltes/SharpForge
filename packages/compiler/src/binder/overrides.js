@@ -74,6 +74,18 @@ export function bindOverrides(type, core, conversions) {
         args: [member.toDisplayString(), accessWord[base.declaredAccessibility], base.toDisplayString()],
         member,
       });
+    else if (member.kind === SymbolKind.Property)
+      for (const [own, inherited] of [
+        [member.getMethod, base.getMethod],
+        [member.setMethod, base.setMethod],
+      ]) {
+        if (own && inherited && own.declaredAccessibility !== inherited.declaredAccessibility)
+          results.push({
+            code: 'CS0507',
+            args: [own.toDisplayString(), accessWord[inherited.declaredAccessibility], inherited.toDisplayString()],
+            member: own,
+          });
+      }
     const mt = member.kind === SymbolKind.Method ? member.returnType : member.type,
       bt = base.kind === SymbolKind.Method ? base.returnType : base.type;
     if (mt && bt && !mt.isErrorType() && !bt.isErrorType() && !sameReturn(member, base, mt, bt)) {
@@ -162,7 +174,11 @@ export function checkModifiers(member, type) {
     if (member.isAbstract && member.hasBody && !inInterface) r('CS0500', [display]);
     else if (!member.isAbstract && !member.isExtern && !partial && !member.hasBody && !member.isPrimaryConstructor) r('CS0501', [display]);
   }
-  if (type.isStatic && !member.isStatic && !(member.kind === SymbolKind.Method && member.isConstructor)) r('CS0708', [member.name]);
+  // Constructors, destructors, operators and indexers of a static class have codes of their own (binder/type-modifiers.js).
+  const hasOwnCode =
+    (member.kind === SymbolKind.Method && (member.isConstructor || member.methodKind === MethodKind.Destructor)) ||
+    (member.kind === SymbolKind.Property && member.isIndexer);
+  if (type.isStatic && !member.isStatic && !hasOwnCode) r('CS0708', [member.name]);
   return results;
 }
 /** True when a call to `method` on a receiver dispatches virtually (not `base.M()`, not a struct receiver's own method, not sealed-and-final types). */

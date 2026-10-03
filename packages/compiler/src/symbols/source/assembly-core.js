@@ -2,6 +2,7 @@
  * The source assembly: declares every type of every file (names, arity, containers, partial merging) and
  * builds the member list of a type on first use.
  */
+import { synthesizeRecordMembers } from '../synthesized/records.js';
 import { TypeKind, Accessibility } from '../types.js';
 import { FieldSymbol, DeclarationModifiers, accessibilityFromSyntax } from '../members.js';
 import { NamespaceSymbol, NamespaceExtent } from '../namespaces.js';
@@ -99,7 +100,7 @@ export class SourceAssemblyCore {
           access(modifiers) &&
           existing.declarations.some(d => access(words(d.syntax.modifiers)) && access(words(d.syntax.modifiers)) !== access(modifiers))
         )
-          this.report(uri, syntax.identifier, 'CS0262', [name]);
+          this.report(existing.declarations[0].uri, existing.declarations[0].syntax.identifier, 'CS0262', [name]);
         existing.declarations.push(declaration);
         this.declareNested(syntax, existing, declaration, file);
         return existing;
@@ -226,6 +227,7 @@ export class SourceAssemblyCore {
       for (const m of syntax.members ?? []) this.member(type, m, scope, uri, members);
     }
     this.implicitConstructors(type, members);
+    if (type.isRecord) synthesizeRecordMembers(type, members, this.core);
     this.reportConflicts(type, members);
     return members;
   }

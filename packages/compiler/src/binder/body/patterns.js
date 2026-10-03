@@ -79,7 +79,13 @@ export const PatternBinding = Base =>
           this.designation(syntax.designation, type, p);
           return { ...p, kind: 'DeclarationPattern' };
         }
+        case 'ListPattern':
+          return this.listPattern(syntax, inputType);
+        case 'SlicePattern':
+          return this.straySlicePattern(syntax);
         case 'VarPattern': {
+          if (syntax.designation?.kind === 'ParenthesizedVariableDesignation')
+            return this.varPositionalPattern(syntax.designation, inputType, syntax);
           const p = { kind: 'VarPattern', syntax };
           this.designation(syntax.designation, inputType ?? unknown, p);
           return p;
@@ -126,12 +132,9 @@ export const PatternBinding = Base =>
             }
             properties.push({ member, pattern: this.pattern(sub.pattern, memberType, null), syntax: sub });
           }
-          if (syntax.positionalPatternClause) {
-            this.incomplete = this.d.incomplete = true;
-            for (const sub of syntax.positionalPatternClause.subpatterns) this.pattern(sub.pattern, unknown, null);
-          }
+          const positional = syntax.positionalPatternClause ? this.positionalClause(syntax.positionalPatternClause, type) : null;
           if (syntax.designation) this.designation(syntax.designation, type ?? unknown, p);
-          return { ...p, kind: 'RecursivePattern', inputType: type, properties, hasPositional: !!syntax.positionalPatternClause };
+          return { ...p, kind: 'RecursivePattern', inputType: type, properties, positional, hasPositional: !!syntax.positionalPatternClause };
         }
         default:
           this.incomplete = this.d.incomplete = true;

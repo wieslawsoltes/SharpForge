@@ -116,13 +116,12 @@ test('SF-A02-T44 typed handlers preserve their CLI type and execute through the 
   assert.deepEqual(linesOf(source), ['1']);
 });
 
-test('SF-A02-T44 creating another exception class is reported, not turned into System.Exception', () => {
+test('SF-A02-T44 derived exception construction preserves its type and message', () => {
   const source = program(`
     static void Main() {
       try { throw new InvalidOperationException("state"); }
       catch (Exception e) { Console.WriteLine(e.Message); }
     }`);
   assert.deepEqual(codes(source), []);
-  const reported = notExecutable(source);
-  assert.match(reported.message, /exception class 'System\.InvalidOperationException' \(the runtime creates System\.Exception only\)/);
+  assert.deepEqual(linesOf(source), ['state']);
 });
