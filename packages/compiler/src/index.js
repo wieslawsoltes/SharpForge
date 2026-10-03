@@ -286,7 +286,7 @@ class MethodCompiler {
       case 'InterpolatedString':return 'string';case 'Literal':return node.type;case 'Name':return this.lookup(node.name)?.type??this.property(node)?.type??this.m.owner?.fields.find(f=>f.name===node.name)?.type??'error';
       case 'New':return normalize(node.type);case 'NewArray':return node.type==='var[]'?(node.values?.length?this.infer(node.values[0])+'[]':'error[]'):node.type;
       case 'Index':{const t=this.infer(node.target);return t.endsWith('[]')?t.slice(0,-2):'error';}
-      case 'Member':if(node.name==='Length')return 'int';if(node.name==='Message'&&this.infer(node.target)==='Exception')return 'string';return this.property(node)?.type??this.field(node)?.type??'error';
+      case 'Member':if(node.name==='Length')return 'int';if(node.name==='Message'&&this.infer(node.target)==='Exception'||['Name','FullName'].includes(node.name)&&this.infer(node.target)==='System.Type')return 'string';return this.property(node)?.type??this.field(node)?.type??'error';
       case 'Call':{if(this.isNameof(node))return 'string';const builtin=this.findBuiltin(node);if(builtin)return builtin.result==='numeric'?node.args.some(a=>this.infer(a)==='double')?'double':'int':builtin.result;return this.findMethod(node,false)?.returnType??'error';}
       case 'Assignment':return this.infer(node.left);case 'Conditional':return this.infer(node.whenTrue);case 'Unary':return node.operator==='!'?'bool':this.infer(node.operand);
       case 'Binary':if(['==','!=','<','>','<=','>=','&&','||'].includes(node.operator))return 'bool';{const l=this.infer(node.left),r=this.infer(node.right);if(node.operator==='+'&&(l==='string'||r==='string'))return 'string';return l==='double'||r==='double'?'double':l;}
@@ -295,7 +295,7 @@ class MethodCompiler {
   }
   findBuiltin(node){
     let name=pathOf(node.target);if(name?.startsWith('System.'))name=name.slice(7);if(BuiltinMap.has(name))return BuiltinMap.get(name);
-    if(node.target.kind==='Member'){const receiver=this.infer(node.target.target);if(frameworkType(receiver)?.kind==='enum'&&node.target.name==='HasFlag')return BuiltinMap.get('Enum.HasFlag');if(receiver==='string'&&BuiltinMap.has('string.'+node.target.name))return BuiltinMap.get('string.'+node.target.name);if(node.target.name==='ToString')return BuiltinMap.get('object.ToString');}return null;
+    if(node.target.kind==='Member'){const receiver=this.infer(node.target.target);if(frameworkType(receiver)?.kind==='enum'&&node.target.name==='HasFlag')return BuiltinMap.get('Enum.HasFlag');if(receiver==='string'&&BuiltinMap.has('string.'+node.target.name))return BuiltinMap.get('string.'+node.target.name);if(node.target.name==='GetType')return BuiltinMap.get('object.GetType');if(node.target.name==='ToString')return BuiltinMap.get('object.ToString');}return null;
   }
   findMethod(node,report=true){
     let candidates=[];const target=node.target;
@@ -333,6 +333,7 @@ class MethodCompiler {
       case 'Member':{
         const type=this.infer(node.target);
         if(node.name==='Length'&&(type==='string'||type.endsWith('[]'))){this.expr(node.target);this.emit(Op.LENGTH);return 'int';}
+        if(['Name','FullName'].includes(node.name)&&type==='System.Type'){this.expr(node.target);this.emit(Op.BUILTIN,BuiltinMap.get('Type.'+node.name).id,1);return 'string';}
         if(node.name==='Message'&&type==='Exception'){this.expr(node.target);this.emit(Op.BUILTIN,BuiltinMap.get('Exception.Message').id,1);return 'string';}
         if(pathOf(node)==='Environment.TickCount'||pathOf(node)==='System.Environment.TickCount'){this.emit(Op.BUILTIN,BuiltinMap.get('Environment.TickCount').id,0);return 'int';}
         const property=this.property(node);if(property)return this.readProperty(property,node);
@@ -359,7 +360,7 @@ class MethodCompiler {
         const builtin=this.findBuiltin(node);if(builtin){let count=0,types=[];const staticPath=pathOf(node.target)?.replace(/^System\./,'');if(staticPath!==builtin.name&&node.target.kind==='Member'){types.push(this.expr(node.target.target));count++;}
           for(const a of node.args){types.push(this.expr(a));count++;}if(count<builtin.min||count>builtin.max)this.c.report(node,'CS1501',`'${builtin.name}' expects ${builtin.min===builtin.max?builtin.min:builtInRange(builtin)} total arguments`);
           types.forEach((type,i)=>{const target=builtin.params[i];if(target==='number'){if(!numeric(type))this.c.report(node,'CS1503',`Argument ${i+1} must be numeric`);}else if(target==='array'){if(!type.endsWith('[]'))this.c.report(node,'CS1503','Argument must be an array');}else if(target&&target!=='any'&&target!=='exception')this.checkAssign(target,type,node.args[Math.max(0,i-(count-node.args.length))]??node);});
-          this.emit(Op.BUILTIN,builtin.name==='Math.Abs'&&types[0]==='int'?BuiltinMap.get('$Math.Abs.Int32').id:builtin.id,count);return builtin.result==='numeric'?(types.includes('double')?'double':'int'):builtin.result;
+          const selected=builtin.name==='object.GetType'&&['int','double','bool','long'].includes(types[0])?BuiltinMap.get('$type.'+types[0]+'.GetType'):builtin.name==='Math.Abs'&&types[0]==='int'?BuiltinMap.get('$Math.Abs.Int32'):builtin;this.emit(Op.BUILTIN,selected.id,count);return builtin.result==='numeric'?(types.includes('double')?'double':'int'):builtin.result;
         }
         const method=this.findMethod(node);let count=node.args.length;if(method&&!method.isStatic){if(node.target.kind==='Member')this.expr(node.target.target);else this.emit(Op.LDLOC,this.lookup('this')?.slot??0);count++;}
         node.args.forEach((arg,i)=>{const type=this.typedExpr(arg,method?.parameters[i]?.type);if(method)this.checkAssign(method.parameters[i]?.type??'error',type,arg);});
