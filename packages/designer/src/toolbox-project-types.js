@@ -40,6 +40,10 @@ export function validateProjectControl(descriptor) {
       descriptor.analysisVersion !== undefined && (!Number.isSafeInteger(descriptor.analysisVersion) || descriptor.analysisVersion < 0)) {
     throw new TypeError('Project control display name or analysis version is invalid');
   }
+  if (descriptor.previewOnly !== undefined && typeof descriptor.previewOnly !== 'boolean' ||
+      descriptor.previewOnly !== true && (descriptor.readOnly === true || descriptor.compilationSucceeded === false)) {
+    throw new TypeError('Read-only project metadata must retain its explicit preview-only marker');
+  }
   return {
     type: descriptor.type,
     baseType: baseControl,
@@ -130,6 +134,9 @@ export function discoverProjectControls({success, files = [], projectTypes, vers
   if (!success) return [];
   if (projectTypes) {
     if (!Array.isArray(projectTypes) || projectTypes.length > 512) throw new RangeError('Project control catalog exceeds 512 items');
+    if (projectTypes.some(descriptor => descriptor.previewOnly === true || descriptor.compilationSucceeded === false)) {
+      throw new TypeError('A successful compilation catalog cannot contain preview-only controls');
+    }
     return projectTypes.map(value => validateProjectControl({...value, analysisVersion: version}));
   }
   const types = declarations(files);

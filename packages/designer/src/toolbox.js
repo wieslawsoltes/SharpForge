@@ -1,6 +1,10 @@
 import {DesignDocument, childSlot, designControls} from './model.js';
 import {canonicalType, CONTROLS} from '@sharpforge/framework';
-import {discoverProjectControls, validateProjectControl} from './toolbox-project-types.js';
+import {discoverProjectControls, discoverPreviewProjectControls, validateProjectControl} from './toolbox-project-types.js';
+import {designerControlName} from './designer-options.js';
+import {normalizeToolboxTabs} from './toolbox-preferences.js';
+
+export {normalizeToolboxTabs} from './toolbox-preferences.js';
 
 const common = new Set(['Grid', 'StackPanel', 'Canvas', 'Border', 'TextBlock', 'TextBox', 'Button', 'CheckBox', 'ComboBox', 'Image']);
 
@@ -37,6 +41,7 @@ export class DesignerToolboxCatalog {
     if (!Number.isInteger(recentLimit) || recentLimit < 1 || recentLimit > 64) throw new RangeError('Invalid toolbox recent limit');
     this.recentLimit = recentLimit;
     this.project = new Map();
+    this.previews = new Map();
     this.recent = [];
     this.customTabs = new Map();
     this.version = -1;
@@ -51,10 +56,26 @@ export class DesignerToolboxCatalog {
       ...control, name: control.displayName, category: 'Project', project: true
     }]));
     this.project = project;
+    this.previews.clear();
     this.version = analysis.version ?? this.version + 1;
     this.recent = this.recent.filter(type => this.controls.has(type) || project.has(type));
     return true;
   }
+
+  updatePreviewAnalysis(analysis) {
+    if (analysis?.success !== false || analysis.previewAvailable !== true) return false;
+    if (Number.isFinite(analysis.version) && analysis.version <= this.version) return false;
+    const discovered = discoverPreviewProjectControls(analysis);
+    this.previews = new Map(discovered.map(control => [control.type, {
+      ...control, name: control.displayName, category: 'Project', project: true
+    }]));
+    this.version = analysis.version ?? this.version + 1;
+    this.recent = this.recent.filter(type => this.has(type));
+    return true;
+  }
+
+  has(type) { return this.controls.has(type) || this.project.has(type) || this.previews.has(type); }
+  projectControls() { return [...new Map([...this.project, ...this.previews]).values()]; }
 
   tabs() {
     return [{id: 'common', label: 'Common'}, {id: 'all', label: 'All WinUI'},
@@ -63,17 +84,27 @@ export class DesignerToolboxCatalog {
   }
 
   addTab(id, label, types) {
-    if (!/^[a-z][a-z0-9-]{0,39}$/.test(id) || this.tabs().some(tab => tab.id === id)) throw new TypeError('Toolbox tab id must be unique');
-    if (this.customTabs.size >= 16 || typeof label !== 'string' || !label.trim() || label.length > 80) {
-      throw new RangeError('Toolbox custom tab limit exceeded');
-    }
     if (!Array.isArray(types) || types.length > 512) throw new RangeError('Toolbox tab item limit exceeded');
     const values = types.map(type => this.control(type).type);
-    this.customTabs.set(id, {label, types: [...new Set(values)]});
+    this.restoreTabs({version: 1, tabs: [...this.snapshotTabs().tabs, {id, label, types: values}]});
+  }
+
+  removeTab(id) {
+    if (!this.customTabs.has(id)) throw new TypeError('Select a custom toolbox tab to remove');
+    return this.customTabs.delete(id);
+  }
+
+  snapshotTabs() {
+    return {version: 1, tabs: [...this.customTabs].map(([id, value]) => ({id, label: value.label, types: [...value.types]}))};
+  }
+
+  restoreTabs(value) {
+    const normalized = normalizeToolboxTabs(value);
+    this.customTabs = new Map(normalized.tabs.map(tab => [tab.id, {label: tab.label, types: tab.types}]));
   }
 
   control(type) {
-    const control = this.project.get(type) ?? this.controls.get(canonicalType(type));
+    const control = this.previews.get(type) ?? this.project.get(type) ?? this.controls.get(canonicalType(type));
     if (!control) throw new TypeError('Control is not available in this toolbox: ' + type);
     return control;
   }
@@ -82,11 +113,11 @@ export class DesignerToolboxCatalog {
     const query = String(search).trim().toLocaleLowerCase().slice(0, 256);
     let values;
     if (tab === 'all') values = [...this.controls.values()];
-    else if (tab === 'project') values = [...this.project.values()];
+    else if (tab === 'project') values = this.projectControls();
     else if (tab === 'recent') values = this.recent.map(type => this.control(type));
     else if (tab === 'common') values = [...this.controls.values()].filter(control => common.has(control.name));
     else if (this.customTabs.has(tab)) values = this.customTabs.get(tab).types
-      .filter(type => this.controls.has(type) || this.project.has(type)).map(type => this.control(type));
+      .filter(type => this.has(type)).map(type => this.control(type));
     else throw new TypeError('Unknown toolbox tab');
     return values.filter(control => (control.name + ' ' + control.type + ' ' + control.category).toLocaleLowerCase().includes(query));
   }
@@ -98,11 +129,22 @@ export class DesignerToolboxCatalog {
 }
 
 /** Inserts a framework/project control with one undo item and selects its new node. */
-export function insertToolboxControl(document, catalog, type, {properties = {}, accepts, parentId, recordRecent = true} = {}) {
+export function insertToolboxControl(document, catalog, type, {properties = {}, accepts, parentId, recordRecent = true, naming = 'type'} = {}) {
+  if (document.readOnly) throw new TypeError('This source preview is read only. Open its source to make changes.');
+  if (!['type', 'camelCase', 'none'].includes(naming)) throw new TypeError('Unknown toolbox naming preference');
   const control = catalog.control(type);
   const parent = parentId ? document.node(parentId) : toolboxInsertionParent(document, {accepts});
   if (!parent) throw new TypeError('Toolbox insertion target no longer exists');
   if (accepts && !accepts(parent.id)) throw new TypeError('Toolbox insertion target is locked or hidden');
+  if (!Object.hasOwn(properties, 'Name')) {
+    const names = document.value.nodes.map(node => node.properties.Name).filter(Boolean);
+    for (const node of document.value.nodes) {
+      for (const values of Object.values(node.collections ?? {})) {
+        for (const item of values) if (item?.properties?.Name) names.push(item.properties.Name);
+      }
+    }
+    properties = {...properties, Name: designerControlName(control.type, names, {naming})};
+  }
   if (!control.project) {
     const id = document.add(control.type, parent.id, properties);
     if (recordRecent) catalog.used(control.type);
