@@ -39,7 +39,9 @@ test('reference matching requires full method signature and preserves missing ov
 test('C# compile probe records actual positive, malformed and language-boundary decisions',()=>{
   assert.equal(compileProbe('class C { int M(){return 1;} }','1').accepted,true);
   assert.equal(compileProbe('class C { void M( }','14').accepted,false);
-  assert.equal(compileProbe('class C {}','7.3').accepted,false);
+  const expressionBody='class C { int M() => 1; }';
+  assert.equal(compileProbe(expressionBody,'6').accepted,true);
+  assert.equal(compileProbe(expressionBody,'5').accepted,false);
   const crash=compileProbe('','14',()=>{throw new Error('bounded crash')});assert.equal(crash.accepted,false);assert.equal(crash.error,'bounded crash');
 });
 test('pinned reference hashes and all C# history feature probes are present',async()=>{
