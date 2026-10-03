@@ -15,15 +15,15 @@ assert.ok(row, 'Native metadata fixture contains an Int32 constant');
 const parent = decodeCoded('HasConstant', row[1]);
 const expected = new DataView(metadata.blob(row[2]).buffer, metadata.blob(row[2]).byteOffset, 4).getInt32(0, true);
 const actions = { decode: () => metadata.constant(parent) };
-assert.equal(actions.decode().value, expected);
 const results = {};
 function allocationSize(node) {
   return node.selfSize + node.children.reduce((sum, child) => sum + allocationSize(child), 0);
 }
 for (const [name, action] of Object.entries(actions)) {
   const coldStart = performance.now();
-  action();
+  const initial = action();
   const coldMicroseconds = (performance.now() - coldStart) * 1000;
+  assert.equal(initial.value, expected);
   for (let index = 0; index < iterations; index++) action();
   const times = [];
   for (let sample = 0; sample < samples; sample++) {
