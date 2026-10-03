@@ -199,6 +199,31 @@ test('Markdown migration rewrites links relative to their documents and retains 
   assert.match(changed, /\(docs\/historical-evidence.md\)/);
 });
 
+test('nested evidence links rewrite at the repository boundary without changing unrelated escaping links', async t => {
+  const { stage } = await fixture(t);
+  const path = 'packages/symbols/interop/README.md';
+  const valid = '[report](../../../docs/result.json#retained)';
+  assert.ok(rewriteMarkdown(valid, path, stage.manifest).includes(`](${stage.manifest.files[0].url}#retained)`));
+  const unrelated = '[other project](../../../../other-project/docs/notes.md)';
+  assert.equal(rewriteMarkdown(unrelated, path, stage.manifest), unrelated);
+});
+
+test('escaping selected evidence links stop preparation and migration before downloads or source writes', async t => {
+  const path = 'packages/symbols/interop/README.md';
+  const { root, stage } = await fixture(t, { [path]: '[report](../../../docs/result.json)\n' });
+  const plan = await migrationPlan(root, stage.manifest);
+  const escaped = '[report](../../../../docs/result.json)\n';
+  await writeFile(join(root, path), escaped);
+  await assert.rejects(migrationPlan(root, stage.manifest), /Evidence link escapes repository: packages\/symbols\/interop\/README\.md/);
+  let downloaded = false;
+  await assert.rejects(migrate(root, stage, plan, { fetch: async () => { downloaded = true; throw new Error('Unexpected download'); } }),
+    /Evidence link escapes repository/);
+  assert.equal(downloaded, false);
+  assert.equal(await readFile(join(root, path), 'utf8'), escaped);
+  assert.equal(await readFile(join(root, 'docs/result.json'), 'utf8'), '{"historical":true}\r\n');
+  await assert.rejects(access(join(root, 'docs/historical-evidence.md')), /ENOENT/);
+});
+
 test('migration leaves originals intact on failed download or altered proposal', async t => {
   const { root, stage } = await fixture(t);
   const plan = await migrationPlan(root, stage.manifest);
