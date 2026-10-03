@@ -618,6 +618,7 @@ export const roslynCodes=Object.freeze({
  CS8917:["ERR_CannotInferDelegateType","error",0,"The delegate type could not be inferred."],
  CS8920:["ERR_GenericConstraintNotSatisfiedInterfaceWithStaticAbstractMembers","error",0,"The interface '{0}' cannot be used as type argument. Static member '{1}' does not have a most specific implementation in the interface."],
  CS8936:["ERR_FeatureNotAvailableInVersion10","error",0,"Feature '{0}' is not available in C# 10.0. Please use language version {1} or greater."],
+ CS8957:["ERR_NoImplicitConvTargetTypedConditional","error",0,"Conditional expression is not valid in language version {0} because a common type was not found between '{1}' and '{2}'. To use a target-typed conversion, upgrade to language version {3} or greater."],
  CS8958:["ERR_NonPublicParameterlessStructConstructor","error",0,"The parameterless struct constructor must be 'public'."],
  CS8978:["ERR_CannotBeMadeNullable","error",0,"'{0}' cannot be made nullable."],
  CS8980:["ERR_MisplacedSlicePattern","error",0,"Slice patterns may only be used once and directly inside a list pattern."],
