@@ -40,19 +40,10 @@ export const namespaceMethods = {
     const global = this.globalUsingKeyword(),
       using = this.take(),
       isStatic = this.usingStaticKeyword(),
-      unsafe = this.match('unsafe');
+      unsafe = this.usingUnsafeKeyword();
     let alias = null;
     if (this.isId() && this.peek().kind === '=') alias = this.n('NameEquals', this.n('IdentifierName', this.id()), this.take());
-    const targetStart = this.current,
-      target = alias ? this.type() : this.name();
-    if (
-      alias &&
-      target.kind !== 'IdentifierName' &&
-      target.kind !== 'QualifiedName' &&
-      target.kind !== 'GenericName' &&
-      target.kind !== 'AliasQualifiedName'
-    )
-      this.feature('UsingTypeAlias', targetStart, this.tokens[this.i - 1]);
+    const target = alias ? this.usingAliasTarget(!!unsafe) : this.name();
     return this.n('UsingDirective', global, using, isStatic, unsafe, alias, target, this.expect(';'));
   },
   /** `namespace Name { ... }` or the file-scoped `namespace Name;`. `membersBefore` counts the members that precede it in its parent. */
@@ -101,9 +92,12 @@ export const namespaceMethods = {
         members.push(reused);
         continue;
       }
-      if (!members.length && !usings.length && this.isExternAlias()) externs.push(this.externAlias());
+      // Extern aliases, usings, unit attributes and members are kept in that order in the tree, so a directive that
+      // comes after a later part cannot be added to its list: it is reported and skipped.
+      const attributed = !!unitAttributes && unitAttributes.length > 0;
+      if (!members.length && !usings.length && !attributed && this.isExternAlias()) externs.push(this.externAlias());
       else if (this.isUsingDirective(inNamespace)) {
-        if (!members.length) usings.push(this.usingDirective());
+        if (!members.length && !attributed) usings.push(this.usingDirective());
         else {
           this.error(
             this.current,

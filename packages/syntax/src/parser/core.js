@@ -52,6 +52,7 @@ export class Parser {
     this.memberName = null;
     this.containerKind = null;
     this.accessorBodies = 0;
+    this.typeDepth = 0;
     // The namespace-like node whose members are being parsed and the token that closes it (null for the end of file).
     this.namespaceKind = null;
     this.namespaceClose = null;
