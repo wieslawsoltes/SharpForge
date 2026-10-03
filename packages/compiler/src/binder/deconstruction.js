@@ -8,6 +8,7 @@
  */
 import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind } from '../symbols/types.js';
+import { tupleElements } from '../symbols/tuple-elements.js';
 import { extensionScopes, isValidReceiverConversion } from '../overload/extension-methods.js';
 import { lookupMembers } from './inheritance.js';
 
@@ -56,7 +57,7 @@ export function findDeconstruct(binder, type, count, receiver) {
 export function deconstructionOf(binder, type, count, receiver) {
   const display = binder.display(type);
   if (type.isTupleType && !type.isDefinition) {
-    const partTypes = type.typeArguments.map(argument => argument.type);
+    const partTypes = tupleElements(type).map(argument => argument.type);
     if (partTypes.length !== count) return { isArity: true, error: [{ code: DiagnosticId.CS8132, args: [partTypes.length, count] }] };
     return { kind: 'tuple', partTypes };
   }

@@ -12,6 +12,7 @@
  * expression that contains one is not checked for exhaustiveness.
  */
 import { SymbolKind, TypeKind } from '../symbols/types.js';
+import { tupleElements } from '../symbols/tuple-elements.js';
 import {
   scalarKind,
   universe,
@@ -182,7 +183,7 @@ function sampleAtom(atom, type) {
   const entries = [...atom.parts].filter(([key]) => key !== subtypePartKey).map(([key, part]) => [key, sampleSpace(part.space, part.type)]);
   if (type.isTupleType) {
     const byKey = new Map(entries);
-    return '(' + type.typeArguments.map((_, index) => byKey.get('Item' + (index + 1)) ?? '_').join(', ') + ')';
+    return '(' + tupleElements(type).map((_, index) => byKey.get('Item' + (index + 1)) ?? '_').join(', ') + ')';
   }
   const positional = entries.filter(([key]) => !key.startsWith('.')).map(([, text]) => text),
     properties = entries.filter(([key]) => key.startsWith('.')).map(([key, text]) => `${key.slice(1)}: ${text}`);

@@ -10,6 +10,7 @@
  */
 import { withCheckedOperators, checkedOperatorName } from './checked-operators.js';
 import { TypeKind, SymbolKind } from '../symbols/types.js';
+import { tupleElements } from '../symbols/tuple-elements.js';
 import { binaryNumericPromotion, unaryNumericPromotion, shiftPromotion, isIntegralKind, isNumericKind } from '../conversions/numeric.js';
 import { isNullableType, stripNullable } from '../conversions/nullable.js';
 import { baseTypeChain } from '../symbols/substitution.js';
@@ -305,7 +306,7 @@ export class OperatorResolver {
       )
         return builtin('object', core.object, core.object, core.bool);
       // Tuples compare element-wise (C# 7.3).
-      if (lt.isTupleType && rt.isTupleType && lt.typeArguments?.length === rt.typeArguments?.length)
+      if (lt.isTupleType && rt.isTupleType && tupleElements(lt).length === tupleElements(rt).length)
         return builtin('tuple', lt, rt, core.bool);
     }
     return null;
