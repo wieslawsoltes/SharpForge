@@ -56,9 +56,10 @@ Performance qualification must use the resulting timings, not the unit tests.
 
 `tests/a08-list-removal.test.js` covers the narrow List removal change on both VMs,
 including native result/capacity checks, slot notifications, invalid ranges, GC,
-allocation failure and heap restore. `scripts/benchmarks/a08-list-removal.mjs`
-accepts a worktree path for reproducible baseline/candidate comparisons of tail
-and middle-range removal; it reports backing replacements and slot writes.
+allocation failure and heap restore. Copy the same committed
+`scripts/benchmarks/a08-list-removal.mjs` runner to a baseline checkout for serial
+comparisons of tail and middle-range removal. It reports backing replacements
+and slot writes, and accepts an optional item count (default 2,000).
 
 Object collection equality and hash keys retain boxed primitive type identity:
 boxed `int` 1 differs from boxed `double` 1.0, while equal boxes of the same type,

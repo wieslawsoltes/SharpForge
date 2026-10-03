@@ -1,15 +1,10 @@
-// node scripts/benchmarks/a08-list-removal.mjs [worktree] [count=2000]
-// Run baseline ba89dd0b and candidate serially on the same quiet machine.
+// node scripts/benchmarks/a08-list-removal.mjs [count=2000]
+// Copy this same runner into the baseline checkout; run both serially on a quiet machine.
 import assert from 'node:assert/strict';
-import {resolve} from 'node:path';
-import {fileURLToPath, pathToFileURL} from 'node:url';
-import {execFileSync} from 'node:child_process';
+import {createClosedCollection} from '../../tests/helpers/closed-collection.js';
 
-const root = resolve(process.argv[2] ?? fileURLToPath(new URL('../../', import.meta.url)));
-const count = Number(process.argv[3] ?? 2000);
+const count = Number(process.argv[2] ?? 2000);
 assert(Number.isInteger(count) && count > 0 && count <= 100000, 'Count must be within 1..100000');
-const revision = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
-const {createClosedCollection} = await import(pathToFileURL(resolve(root, 'tests/helpers/closed-collection.js')));
 const samples = [];
 
 function run(engine, workload, sample) {
@@ -50,7 +45,7 @@ for (const engine of ['source', 'cil']) {
   }
 }
 console.log(JSON.stringify({
-  node: process.version, platform: process.platform, arch: process.arch, revision,
+  node: process.version, platform: process.platform, arch: process.arch,
   workload: 'List<int>.RemoveAt(last) and RemoveRange(middle) via VM platform; setup excluded',
   warmupsPerWorkload: 1, samplesPerWorkload: 5, samples
 }, null, 2));
