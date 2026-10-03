@@ -94,3 +94,4 @@ export {numericFormat} from './numeric/numeric-format.js';
 
 export {int64Binary, int64Compare, int64Unary} from './numeric/int64.js';
 export {checkedInteger, numericFault} from './numeric/checked.js';
+export {smallInteger, smallIntegerIndirect} from './numeric/small-int.js';
