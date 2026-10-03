@@ -157,3 +157,20 @@ Hosted Linux/Windows CoreCLR expected outputs and native WinUI execution remain
 pending. Their first verification uploads actual candidates while failing on
 missing baselines. The parent task must stay open until those outputs have been
 reviewed, committed, and passed in the independently pinned hosted jobs.
+
+The first hosted run identified platform-specific Roslyn executable bytes and
+container Git ownership checks. Compiler hashes are now pinned per runtime
+identifier. The Linux x64 and Windows x64 SDK archives were downloaded from
+Microsoft's release metadata URLs and their complete SHA-512 hashes verified
+before hashing `csc.dll`; the source URLs and hashes are retained in the toolchain
+manifest. All three SDKs contain the same 167 reference-assembly hashes. Linux's
+compiler version was also checked with ReadyToRun disabled on the local managed
+host; that is a compiler identity check, not native Linux execution qualification.
+The pinned container explicitly trusts its mounted Git checkout. Pin failures
+retain actual compiler/reference metadata in the failure report.
+
+Generic Node CI runs the nine host-only oracle tests. The three tests requiring
+the pinned SDK are in `oracle.native.js` and run explicitly in every oracle
+workflow job, with no fallback to another SDK and no passing skip. The complete
+12-test batch passes locally after these portability fixes; hosted execution and
+platform expected-store review remain required.
