@@ -13,3 +13,14 @@ node --test --test-concurrency=1 tests/a03-03-determinism.test.js
 ```
 
 The complete browser/native matrix remains the completed epic's qualification gate; this fixture does not claim it.
+
+For the serial before/current benchmark, use the existing driver with the prior CIL API path, then with the local
+static adapter (which enables deterministic finalization):
+
+```sh
+node --expose-gc tests/benchmarks/cil-pe.mjs /absolute/path/to/prior/packages/cil/src/index.js
+node --expose-gc tests/benchmarks/cil-pe.mjs ./cil-deterministic-api.mjs
+```
+
+Both measurements use the same 64 KiB section and metadata input. The current measurement includes full-content
+hashing, MVID/timestamp patching and PE checksum work; the baseline measures the preceding emitter behavior.

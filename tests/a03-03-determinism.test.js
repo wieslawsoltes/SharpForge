@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { compileToIL } from '@sharpforge/compiler';
+import { VirtualMachine, CilVirtualMachine } from '@sharpforge/runtime';
 import { readPE, buildId, deterministicContentId, peChecksum, finalizeDeterministicPE, loadAssembly } from '@sharpforge/cil';
 import { attachPortablePdb } from '@sharpforge/symbols';
 
@@ -43,6 +44,14 @@ for (const platform of ['anycpu', 'x86', 'x64', 'arm64']) {
     assert.equal(pe.checksum, peChecksum(first.assembly));
     assert.equal(pe.checksum, checksumReference(first.assembly, pe.optionalStart + 64));
     assert.equal(loadAssembly(first.assembly).entryPoint, first.image.entryPoint);
+    for (const Engine of [VirtualMachine, CilVirtualMachine]) {
+      const vm = new Engine(first.assembly);
+      try {
+        const result = vm.run();
+        assert.equal(result.state, 'terminated', result.fault?.message);
+        assert.equal(result.output, '42\n');
+      } finally { vm.stop(); }
+    }
   });
 }
 
