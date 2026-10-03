@@ -24,6 +24,14 @@ layout.dockRoot('output', 'bottom');
 
 Load the distributed `src/style.css`. Serve `examples/index.html` for a runnable standalone example with retained textareas, nine drop targets, whole-group floating, undo/redo and popouts.
 
+The example uses external JavaScript and CSS and is included in the package.
+In this repository, build the completed scope once with `npm run build`, start
+`node scripts/serve.js`, and open
+`http://127.0.0.1:4173/packages/docking/examples/index.html`.
+The production server applies the same Content Security Policy as Studio.
+Studio contributes `src/host/workbench.css` at order 1999 to extend its retained
+base host styles before the editor styles and later Studio theme overrides.
+
 ## Public API
 
 | API | Contract |
