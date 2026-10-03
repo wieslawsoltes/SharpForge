@@ -53,6 +53,8 @@ export class Parser {
     this.containerKind = null;
     this.accessorBodies = 0;
     this.typeDepth = 0;
+    // The index where the member modifiers of a top-level function end while that function is being parsed (see top-level.js).
+    this.topLevelModifiersEnd = 0;
     // True inside the accessors of a property from C# 14 on, where `field` is the backing-field keyword.
     this.fieldKeyword = false;
     // The namespace-like node whose members are being parsed and the token that closes it (null for the end of file).
