@@ -41,6 +41,11 @@ export class Parser {
     this.budgetExhausted = false;
     this.cancellation = options.cancellationToken ?? null;
     this.ticks = 0;
+    // Expression variables declared in initializers and query clauses need C# 7.3 (see csharp73.js).
+    this.restrictedVariables = false;
+    this.memberStart = 0;
+    this.memberErrors = 0;
+    this.statementStart = 0;
   }
   get current() {
     return this.tokens[this.i];

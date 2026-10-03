@@ -11,7 +11,7 @@ export const constructorMethods = {
         base = this.at('base');
       if (this.at('this') || base) {
         const keyword = this.take();
-        initializer = this.n(base ? 'BaseConstructorInitializer' : 'ThisConstructorInitializer', colon, keyword, this.argumentList());
+        initializer = this.n(base ? 'BaseConstructorInitializer' : 'ThisConstructorInitializer', colon, keyword, this.inInitializer(this.argumentList));
       } else {
         this.error(this.current, 'CS1018', "Keyword 'this' or 'base' expected");
         initializer = this.n('ThisConstructorInitializer', colon, this.missing('this'), this.argumentList());
