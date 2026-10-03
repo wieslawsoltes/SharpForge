@@ -47,7 +47,7 @@ class LauncherContracts(unittest.TestCase):
             session.close(AssertionError('fixture failure'))
             self.assertEqual(Path(context.tracing.stop.call_args.kwargs['path']).name, 'trace.zip')
             self.assertEqual(Path(page.screenshot.call_args.kwargs['path']).name, 'screenshot.png')
-            self.assertIn('fixture failure', (Path(directory) / 'failed/console.log').read_text())
+            self.assertIn('fixture failure', (Path(directory) / 'failed/console.log').read_text(encoding='utf-8'))
 
 
 if __name__ == '__main__':

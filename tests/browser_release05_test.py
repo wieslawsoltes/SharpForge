@@ -65,5 +65,5 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
  except Exception as error:
   traceback.print_exc();result={'passed':False,'checks':checks,'errors':errors,'failure':str(error)};page.screenshot(path=str(RESULTS/'screenshots/release05-failure.png'),full_page=True)
  finally:
-  (RESULTS/'browser-release05-results.json').write_text(json.dumps(result,indent=2)+'\n')
+  (RESULTS/'browser-release05-results.json').write_text(json.dumps(result,indent=2)+'\n', encoding='utf-8')
  if not result['passed']:raise SystemExit(1)

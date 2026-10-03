@@ -22,7 +22,7 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
             if message.type == 'error' else None)
     page.on('worker', lambda worker: workers.append(worker.url))
     page.on('dialog', lambda dialog: dialog.accept())
-    page.set_content(Path(os.getenv('SHARPFORGE_STANDALONE_PATH', str(ROOT / 'artifacts/SharpForge-standalone.html'))).read_text())
+    page.set_content(Path(os.getenv('SHARPFORGE_STANDALONE_PATH', str(ROOT / 'artifacts/SharpForge-standalone.html'))).read_text(encoding='utf-8'))
     page.wait_for_function(
         'window.sharpforge && window.sharpforge.getState().metrics !== null',
         timeout=15000)
@@ -50,7 +50,7 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
     fixtures = json.loads(subprocess.check_output([
         'node', '--input-type=module', '-e',
         "import {arithmeticLibrary} from './tests/managed-fixtures.js';import {formatILDocument} from '@sharpforge/cil';const bytes=arithmeticLibrary();console.log(JSON.stringify({bytes:[...bytes],text:formatILDocument(bytes).replace(': add',': mul')}));"
-    ], cwd=ROOT, text=True))
+    ], cwd=ROOT, text=True, encoding='utf-8'))
     before = page.evaluate('sharpforge.getState().files')
     summary = page.evaluate('bytes=>sharpforge.inspectAssembly(new Uint8Array(bytes))', fixtures['bytes'])
     assert summary['name'] == 'Arithmetic', summary
@@ -356,5 +356,5 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
         'caveat': 'Injected as HTML into an about:blank Chromium page. Native file-URL storage/persistence and normal network navigation were not tested.'
     }
     (RESULTS/ 'standalone-results.json').write_text(
-        json.dumps(report, indent=2) + '\n')
+        json.dumps(report, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(report, indent=2))
