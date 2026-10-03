@@ -120,11 +120,14 @@ Independently assembled CIL exercises interface Compare/List.Sort and runtime
 casts. Unsupported custom comparer objects are checked through both platforms,
 including an empty List. Browser and Rust native/Wasm qualification is pending.
 
-Run `node --expose-gc scripts/benchmarks/a08-default-string-sort.mjs` serially in
-the candidate and Array comparer baseline `6c8be99e`, copying the identical runner to
-the baseline first. The bounded control uses 8,192 deterministic nullable strings
-by default, one warmup and five samples for each VM platform. It times only the
-default Sort dispatch and reports median/p95 plus managed allocation counts and
-bytes; compilation, input setup and output checks are excluded. This measures
+Run `node --expose-gc scripts/benchmarks/a08-default-string-sort.mjs 8192 invariant-host`
+in the candidate and use `8192 released-ordinal` in Array comparer baseline
+`7f492561`, serially, copying the identical runner to the baseline first.
+The bounded control uses 8,192 deterministic nullable digit strings
+by default, one warmup and five samples for each VM platform. It initializes the
+per-platform provider before timing default Sort dispatch and reports median/p95
+plus managed allocation counts and bytes; compilation, input setup and output
+checks are excluded. Both profiles produce the same order for this input subset.
+This measures
 the default path, including the chosen host collation backend, rather than
 explicit-comparer overhead. Record the host ICU version alongside its timings.
