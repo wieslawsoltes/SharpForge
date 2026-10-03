@@ -1,4 +1,5 @@
 import { assemblyDefinitionOptions } from '../metadata/assembly-identity.js';
+import { canonicalStrongNameOptions } from './strong-name.js';
 import { readWin32Resources } from './win32-reader.js';
 import { readManagedResources } from './managed-resources.js';
 import { CilError } from '../binary.js';
@@ -10,7 +11,8 @@ export function canonicalEmissionOptions(pe, debug) {
     return { name: resource.name, bytes: resource.bytes, visibility: resource.flags === 1 ? 'public' : 'private' };
   });
   const entries = readWin32Resources(pe, { includeBytes: true });
-  return { ...debug.peOptions, ...assemblyDefinitionOptions(pe.metadata), name: debug.name, framework: debug.framework,
+  return { ...debug.peOptions, ...assemblyDefinitionOptions(pe.metadata), ...canonicalStrongNameOptions(pe),
+    name: debug.name, framework: debug.framework,
     embedSources: debug.sources.every(source => typeof source.text === 'string'), managedResources,
     ...(pe.directories.resource.size ? { win32Resources: { entries } } : {}) };
 }
