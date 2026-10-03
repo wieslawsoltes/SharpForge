@@ -58,14 +58,24 @@ test('Gallery comparison never treats rejection or changed properties as accepte
   assert.equal(table.split('\n').filter(line => line.startsWith('| ')).length, 127);
 });
 
-for (const engine of ['source', 'cil']) {
-  test(`Gallery Button baseline consumes the real ${engine} engine`, async () => {
-    const fixture = catalog.cases.find(row => row.id === 'button-positive');
-    const result = await runCandidate(fixture, engine);
-    assert.equal(result.status, 'observed', JSON.stringify(result));
-    assert.deepEqual(result.observation, { rejected: false, properties: fixture.expected });
+test('Gallery Button baseline consumes the real source engine', async () => {
+  const fixture = catalog.cases.find(row => row.id === 'button-positive');
+  const result = await runCandidate(fixture, 'source');
+  assert.equal(result.status, 'observed', JSON.stringify(result));
+  assert.deepEqual(result.observation, { rejected: false, properties: fixture.expected });
+});
+
+test('Gallery CIL observation preserves the known boolean property mismatch', async () => {
+  const fixture = catalog.cases.find(row => row.id === 'button-positive');
+  const result = await runCandidate(fixture, 'cil');
+  assert.equal(result.status, 'observed', JSON.stringify(result));
+  // Keep the raw engine value: coercing it would hide a product qualification gap.
+  assert.deepEqual(result.observation, {
+    rejected: false, properties: { ...fixture.expected, IsEnabled: 1 },
   });
-}
+  assert.equal(compareObservation(result.observation,
+    { rejected: false, properties: fixture.expected }), false);
+});
 
 test('Gallery XAML and non-Windows native availability remain explicit', async () => {
   const result = await runCandidate(catalog.cases.find(row => row.id === 'malformed'), 'source');

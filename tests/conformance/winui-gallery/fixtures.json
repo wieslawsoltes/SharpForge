@@ -22,7 +22,7 @@
       },
       "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
       "hashes": {
-        "source": "8ee6db5db300fb179f2ff5e3c8f3c87f3a0883cbc9da4c7951faab1260c3dfcd",
+        "source": "4bd1d900794a742551312f1292135cb84a76bb9055a90c085c80d16468b4b106",
         "xaml": "913ba7472c18359497ff673d45ab0b98419a168963c10472587454352c96ba8d"
       }
     },
@@ -47,7 +47,7 @@
       },
       "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
       "hashes": {
-        "source": "ec2f02093e7e9785b77b12675e42c50d8466c7d182668996462b96679f3d0290",
+        "source": "0072558ac2d93c25dee4f898ac3a0cf61937c508c74078dcce0e74e6f89faff4",
         "xaml": "4b989e0dc6832db0b7216a6b3ade48cd1eae947bd43b2ca05e38be36170149fd"
       }
     },
@@ -72,7 +72,7 @@
       },
       "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
       "hashes": {
-        "source": "0507b3d51349c53f364429adf76385f5fd3178cd79367c5f0dda304888628bf9",
+        "source": "97205fc1359aa93b7c56da819f35f97bebac288030eacb1fb3cbe31dbcdb4189",
         "xaml": "f588c3de2d3fe09e66bfc242be44ef55b4258f482042e849d499e2b9dd789689"
       }
     },
@@ -97,7 +97,7 @@
       },
       "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
       "hashes": {
-        "source": "a0d02ea1be171b3008033e9f47d16d291409f3b617a66d34a030da3e4be15bad",
+        "source": "d4a5ce20031ef7c1fa5acad8e2cf2d731b2320dd08f09aa2b89fb4f5803e71c7",
         "xaml": "d84d4a6c4bf9e939b69fd07d29d556ae6083505f537a660649361a0fc0ad7470"
       }
     },
@@ -122,7 +122,7 @@
       },
       "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
       "hashes": {
-        "source": "4880877ec8295ed67003a7ee3e2ecad370ecd9f1542fc77d7f2eaeb000d70ebf",
+        "source": "bdda769011118c9e0882c96c5381a5628712ceee19e3f49941ca0ef2bd76f0e9",
         "xaml": "12b59da816a9ebc4734e80ae7e498ceb150e1fd699b69c1225def2bef5caea82"
       }
     },
@@ -147,7 +147,7 @@
       },
       "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
       "hashes": {
-        "source": "5e6d8e8f2265232098b41bfa24724f058d79a22eedc4b188c6c7763c2c3271a1",
+        "source": "245b712177697f55e8bd40315788b4518782100a453dbe734fea33f2c000a293",
         "xaml": "33f72c09b7460af8441010b4e2c1bc1bbf04cf7b6991a61b220a4908c017dafc"
       }
     },
@@ -174,7 +174,7 @@
       },
       "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
       "hashes": {
-        "source": "40b4fcc472271a0ec1f06353153e84f6f82525016605c8ce00f077aff734a0e9",
+        "source": "8c77f2ac0a477e0f732332316a78e8cd42e28a95f701e2985d9277e15aa404cc",
         "xaml": "cc61b8a468cb11bb372a591cb8e3415b1440407633a04c2026068d8ef3cce3f7"
       }
     },
@@ -201,7 +201,7 @@
       },
       "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
       "hashes": {
-        "source": "69a349a1c77d5099b1536d8c69b43e0d5c1dedbea787a7fc40b9a51c02825444",
+        "source": "d7d3758e89c4b492534a1c198db61e1c337668e8772d615edd8637d4865bdf9f",
         "xaml": "c1d6b893a2b41077cb82f267090d825fab81cc73053ca9af61291715b2c2c810"
       }
     },
@@ -228,7 +228,7 @@
       },
       "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
       "hashes": {
-        "source": "c9efefa3ad1d03e579fec09a15267b0871c9bed5342127c20a9c69b50c4bd701",
+        "source": "fb4fb0e9802b9d88ae4cb5b7966452c893829f89918af7afe3a3528db5b25477",
         "xaml": "c9e348adc52a6abaa61e1ff71ea76c5613a556aa40662914c2d4e3aa3a52a656"
       }
     },
@@ -255,7 +255,7 @@
       },
       "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
       "hashes": {
-        "source": "e27c9c84b100f84f68e305d1d97c6bf9fd6b1d95a4f4cbf957d3705028e2ce9d",
+        "source": "c6f967062618f4205163491f89e91598484462ab829a0f65983c73c063142e43",
         "xaml": "b4fbca05be3bf64ae7f5b51e1728e970681f6ad5cc01b57713e3853016574a68"
       }
     },
@@ -280,7 +280,7 @@
       },
       "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
       "hashes": {
-        "source": "c79412828854625ff90c236bf6087a979b1f472facae1ba1e35aae7909b10a06",
+        "source": "36f0bf86d377dad0c225a3ab45c458ae97ba9db9cd64b82cc96b0507460dda53",
         "xaml": "c34dc62166db68bb6fa1c99622dc2103c3c0035a0c4a7a6b7d8946156012db9a"
       }
     },
@@ -305,7 +305,7 @@
       },
       "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
       "hashes": {
-        "source": "e7ae488858ad1a93064d48d9cc12824482cb2afe12269127d2ba664269495a56",
+        "source": "3f83c9ba5e17fec79e1ee8097d23440a97e04463f91a4854a1f15c85723c69f8",
         "xaml": "0af0d100df809badeca02b5c55c57d0c018ccd0928332371ac5fd2c063dc68ce"
       }
     },
@@ -328,7 +328,7 @@
       },
       "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
       "hashes": {
-        "source": "64c18f3b2084c1105efd290c4a952357309a83ea3f7fdad8904ff382fd3e1d55",
+        "source": "71299764fd0fc16f688aeb620e22a2315294770c3dc77cd661e10e9f7c69259e",
         "xaml": "92f2e2df873cb938ce73df52aa7533249c5916a69c28082eb048c2154ee5b06f"
       }
     },
@@ -351,7 +351,7 @@
       },
       "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
       "hashes": {
-        "source": "a9143c912bfb30c20e9baf1f512cc6d717ea88826fe4de3e20ded17056141aed",
+        "source": "f3e656bf9d3f04db6d670ca36544ed6fa5c170c7d924c0bca2cde58bcfcfff64",
         "xaml": "b390c8e253a466ba95795a5fa784cc05681668f41f39ae27bbfd0d6172e2c253"
       }
     },
@@ -376,7 +376,7 @@
       },
       "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
       "hashes": {
-        "source": "1b38b93a56f41ee3fb8fe656d8879966d578a426f8d5b65c5899320ad8184e76",
+        "source": "929e7876391bb7aff5e20fb9eb7206662241b4c4b99417778026d6c3b0769009",
         "xaml": "ce49b3a87ba85b1a643942b939373ec9f5156fc368392af145e452451ad596ed"
       }
     },
@@ -401,7 +401,7 @@
       },
       "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
       "hashes": {
-        "source": "06f59f92068e2bb3211bf59de7bb24ef223f800f69946dca0e205ae0fed408e5",
+        "source": "93dc57b92d8369cb77d4ab5e6f60e5ba82f2dd9de523f777044cb3c8285273dc",
         "xaml": "10b5d6bf365c6ae2688873b43f02e16acf4c19610b2c0dead92fa15bcbf32863"
       }
     },
@@ -426,7 +426,7 @@
       },
       "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
       "hashes": {
-        "source": "ca6d4f274719b275b5b77c899872d4d34714d15ad1afceb4e3a8e30a0d232af9",
+        "source": "e14afe6eb83ef2524f5ff2f70a7f483bdcccab7b907aec25f6c09f8a4dd71b5a",
         "xaml": "032c19f3e34de881e647ddf719cca25036d3b879116a50223aa6adfddd149cd3"
       }
     },
@@ -451,7 +451,7 @@
       },
       "adaptation": "Isolated control; removed Gallery wrapper, resources, x:Bind and event handlers. Boundary values are SharpForge-authored extensions.",
       "hashes": {
-        "source": "a69c6d687256663862a2c174906daa28127a95d0dc8acd4bc38446c5cc38f6ed",
+        "source": "01223cba093a5a3164d59929a1cd1aadf0bf116b965db7aa0df168e2461285a7",
         "xaml": "4e16823dfb98307d907e49e19f0a8a9ca9241d314e20766f43e2187151a37fde"
       }
     },

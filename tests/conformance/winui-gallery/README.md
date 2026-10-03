@@ -22,6 +22,12 @@ rendering, and Rust WinUI execution have no adapter in this suite and are report
 as unsupported. `STATUS.md` records the initial per-page coverage inventory.
 The report command regenerates a per-page status table with observed results.
 
+The Button CIL baseline currently exposes `IsEnabled` as integer `1` instead of
+boolean `true`. The adapter preserves this raw value and exact comparison rejects
+it; the focused test records the mismatch, not CIL property parity. This product
+gap remains open alongside the pending native capture. Adapted fixtures omit
+unused `Controls.Primitives` imports; ToggleButton retains its required import.
+
 ## Commands
 
 Run from the repository root with Node 24 and the repository workspace links:

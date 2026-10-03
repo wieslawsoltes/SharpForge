@@ -1,7 +1,6 @@
 // Adapted from the pinned MIT WinUI Gallery PasswordBox sample; see upstream.json.
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
 namespace GalleryCases {
 public class PasswordBoxBoundary {
     public static FrameworkElement Create() {
