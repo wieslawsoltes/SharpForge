@@ -20,3 +20,40 @@ and inspection only. Native SRM on .NET 10.0.5 confirms all four emitted platfor
 seven focused tests pass, including Portable PDB, deterministic bytes, malformed options
 and the explicit standalone execution diagnostic. Browser/cross-platform qualification
 remains open; reading architecture headers does not claim native execution on each target.
+
+## Linking metadata modules
+
+`compileToIL(source, { linkedModules: [moduleBytes, ...] })` links netmodules into an
+assembly manifest. It writes File rows with SHA-256 hashes (Assembly HashAlgId 0x800c),
+ModuleRef names, and ExportedType rows for public/nested-public definitions. Parent exports
+precede nested exports and preserve actual TypeDef row hints. Input order determines token
+order; repeated builds remain deterministic. Compiler-generated netmodule scaffolding is
+internal so modules can coexist; existing assembly scaffold visibility is unchanged.
+
+Low-level `linkAssemblyModules(metadataBuilder, byteInputs)` writes the same rows before
+`finish()`. Call it once, after local TypeDefs and before other File/ExportedType rows.
+It returns `{ name, fileToken, moduleRefToken, exportedTypes }` records; each export has
+`token`, full `name`, and `typeDefId`. It does not retain or mutate input bytes. Invalid
+inputs are rejected before modifying the builder. Existing matching ModuleRefs are reused.
+
+`readAssemblyModules(readPE(bytes))` returns metadata-only module records with `name`,
+`fileToken`, optional `moduleRefToken`, `hashAlgorithm`, copied `hashValue`, and flat
+`exportedTypes` records (`token`, `name`, `namespace`, `flags`, `typeDefId`, `implementation`).
+Nested exports retain their enclosing ExportedType token. Forwarded types and resource-only
+File rows are not linked modules. This reader never accesses paths or loads module code.
+
+Bounds: 128 input modules, 64 MiB aggregate input bytes, 65536 aggregate TypeDefs,
+16384 candidate public/nested-public exports, nesting depth 64 and bounded metadata names.
+Duplicate module file names (case-insensitive), duplicate exported names, assembly images,
+entry points, invalid nesting and excessive inputs produce CilError/SF3001. Netmodules
+cannot themselves contain an assembly manifest. Hash readers reject values over 64 bytes
+before copying. The writer uses existing metadata seams and the shared SHA-256 primitive;
+there is no new runtime dependency.
+
+This supplies manifest linking and inspection, not compiler external-type binding or CLR
+module resolution. Both JavaScript execution engines reject multi-module assemblies with
+an explicit unsupported diagnostic. Native SRM hash/type-row comparison is prepared under
+`tests/fixtures/a03-module-linking`; validation is pending its serial slot. Browser, native
+execution and inherited A00 qualification remain open under SF-A03-T03.10.
+
+Exported type implementation chains follow [ECMA-335 II.6.7 and II.22.14](https://ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf).
