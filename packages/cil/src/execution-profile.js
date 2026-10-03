@@ -5,6 +5,7 @@ import {numericFieldDefinition} from './numeric-field-profile.js';
 import {resolveExecutionField} from './field-profile.js';
 import {resolveExecutionMethod,supportedDelegateCall,callStorageType,methodGenericParameters,callSignatureKey} from './call-profile.js';
 import {verifyControlRegions} from './control-flow-profile.js';
+import {SizeOfProfile} from './sizeof-profile.js';
 import { AssemblyInspector } from './inspector.js';
 import { CilError } from './binary.js';
 import {CilDispatchTable} from './dispatch-profile.js';
@@ -48,6 +49,7 @@ export function stackEffect(inspector,m,i){
 export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethods=10000,...options}={}){
   const inspector=input instanceof AssemblyInspector?input:new AssemblyInspector(input,options),issues=[],visited=new Set(),pending=[],stackHeights={},entry=selectMethod(inspector,methodToken,args);
   const dispatch=new CilDispatchTable(inspector);
+  const sizes=new SizeOfProfile(inspector);
   const issue=(m,i,code,message,details={})=>{if(issues.length<200)issues.push({methodToken:m?.token,method:m?m.owner+'::'+m.name:undefined,offset:i?.offset,code,message,...details});};
   if(!(inspector.pe.flags&1)||inspector.pe.flags&0x10)issue(null,null,'IL_IMAGE','Only IL-only managed images are executable');pending.push(entry);
   // Static initializers can be reached by allocation, field access or method invocation.
@@ -68,7 +70,7 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
     for(const i of m.instructions){
       if(!isExecutableOpcode(i.name)){issue(m,i,'IL_OPCODE',`Opcode '${i.name}' is inspection-only`);continue;}
       if(i.name==='arglist'&&m.signature.callingConvention!==5)issue(m,i,'IL_VARARGS','arglist requires a vararg MethodDef');
-      if(i.name==='sizeof'){try{const type=inspector.metadata.typeName(i.operand);if(!primitiveSizes[type]&&!['System.IntPtr','System.UIntPtr','System.Decimal'].includes(type)&&i.operand>>>24!==2)issue(m,i,'IL_TYPE','sizeof requires a supported managed value type');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
+      if(i.name==='sizeof')sizes.verify(m,i,issue);
       if(['mkrefany','refanyval','cpobj','unbox','unbox.any','box','castclass','isinst','ldobj','stobj','initobj','newarr','ldelema','ldelem','stelem'].includes(i.name)){try{if(inspector.resolveToken(i.operand).kind!=='type')throw new CilError('Instruction requires a type token');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
       if(i.name==='ldtoken'){try{const token=inspector.resolveToken(i.operand);if(!['type','method','field'].includes(token.kind))issue(m,i,'IL_TOKEN','ldtoken requires a type, method or field');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
       if(indexed.test(i.name)){
