@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {findContracts} from '@sharpforge/framework';
 import {frameworkBuiltin} from '@sharpforge/bytecode';
+import {formatDoubleDefault} from '@sharpforge/bcl-core';
 import {CilVirtualMachine, VirtualMachine} from '@sharpforge/runtime';
 import {managedFixture} from './managed-fixtures.js';
 import {sourceImage, execute} from './fixtures/a07/legacy-builtin-engines.js';
@@ -29,14 +30,18 @@ function formatAssembly(format) {
   }]});
 }
 
-function runFormatter(value, format, engine, assembly) {
+function formatterMachine(value, format, engine, assembly) {
   const fixture = {
     name: frameworkBuiltin(formatContract).name,
     args: [value, format, 0, 'double'],
     result: 'string'
   };
-  const vm = engine === 'source' ? new VirtualMachine(sourceImage(fixture)) :
+  return engine === 'source' ? new VirtualMachine(sourceImage(fixture)) :
     new CilVirtualMachine(assembly, {arguments: [value]});
+}
+
+function runFormatter(value, format, engine, assembly) {
+  const vm = formatterMachine(value, format, engine, assembly);
   try {
     const result = vm.run();
     assert.equal(result.state, 'terminated', result.fault?.stack);
@@ -92,7 +97,23 @@ test('SF-A07-B03 reference pins fifty binary64 values and five required formats 
   }
 });
 
+test('SF-A07-B03 public default formatter matches all fifty native binary64 cases', () => {
+  for (const row of reference.rows) {
+    assert.equal(formatDoubleDefault(numberFromBits(row.bits)), row.output[''], row.name);
+  }
+});
+
 for (const engine of ['source', 'cil']) {
+  test(`SF-A07-B03 ${engine} rejects integer-only and unsupported double formats`, () => {
+    for (const format of ['D', 'X', 'Q']) {
+      const vm = formatterMachine(1.25, format, engine, engine === 'cil' ? formatAssembly(format) : null);
+      try {
+        assert.equal(vm.run().fault?.name, 'FormatException', format);
+      } finally {
+        vm.stop();
+      }
+    }
+  });
   for (const format of reference.formats) {
     test(`SF-A07-B03 ${engine} fifty doubles match .NET format ${JSON.stringify(format)}`, () => {
       const assembly = engine === 'cil' ? formatAssembly(format) : null;
