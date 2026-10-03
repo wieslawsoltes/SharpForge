@@ -1,7 +1,7 @@
 {
   "collections/collection-expression": ["diagnostics", "warnings", "bytecode", "cil"],
   "collections/cs0029-element-assignment": ["diagnostics", "warnings"],
-  "collections/cs1501-count-as-method-without-linq": ["warnings"],
+  "collections/cs1501-count-as-method-without-linq": ["diagnostics", "warnings"],
   "collections/cs1503-add-wrong-type": ["warnings"],
   "collections/cs1503-dictionary-key-type": ["warnings"],
   "collections/hashset": ["diagnostics", "warnings", "bytecode", "cil"],

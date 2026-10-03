@@ -4,8 +4,10 @@
  *
  * For an interface member, in order: an explicit implementation in the type (`void I.M()`), a public instance member
  * of the type with the same signature, then the same search in each base class (an inherited member implements the
- * interface too), and finally a default implementation in the interface itself (C# 8). A type that re-lists an
- * interface re-implements it: the search starts at that type again.
+ * interface too), and finally the most specific default implementation among the interfaces of the type (C# 8,
+ * ./interface-members.js): the member's own body or an explicit implementation in a derived interface. A type that
+ * re-lists an interface re-implements it: the search starts at that type again.
+ *   CS8705 two interfaces implement the member and neither derives from the other
  *   CS0535 not implemented            CS0738 a candidate has the wrong return type
  *   CS0736 the candidate is static    CS0737 the candidate is not public
  *   CS0539 explicit member not found in the interface      CS0540 the type does not implement that interface
@@ -16,6 +18,7 @@ import {DiagnosticId} from '../diagnostics/codes.js';
 import { TypeKind, SymbolKind, Accessibility, TypeCompareKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { baseTypeChain, allInterfacesOf } from '../symbols/substitution.js';
+import { mostSpecificImplementation } from './interface-members.js';
 
 const sameType = (a, b, ma, mb) => {
   if (!a || !b) return a === b;
@@ -48,7 +51,7 @@ export function implementableMembers(iface) {
     .filter(
       m =>
         (!m.isStatic || m.isAbstract) &&
-        ((m.kind === SymbolKind.Method && m.methodKind === MethodKind.Ordinary) ||
+        ((m.kind === SymbolKind.Method && (m.methodKind === MethodKind.Ordinary || m.methodKind === MethodKind.UserDefinedOperator)) ||
           m.kind === SymbolKind.Property ||
           m.kind === SymbolKind.Event) &&
         m.declaredAccessibility !== Accessibility.Private,
@@ -153,15 +156,22 @@ export function bindInterfaceImplementations(type, core) {
     const relisted = listed.some(i => i.equals(iface) || allInterfacesOf(i, core).some(x => x.equals(iface)));
     if (!relisted && inheritedFromBase.some(i => i.equals(iface))) continue;
     for (const member of implementableMembers(iface)) {
-      const found = findImplementation(type, iface, member, core);
-      if (found.member) {
-        map.set(member, found.member);
-        if (found.member.kind === SymbolKind.Property) {
-          if (member.getMethod && found.member.getMethod) map.set(member.getMethod, found.member.getMethod);
-          if (member.setMethod && found.member.setMethod) map.set(member.setMethod, found.member.setMethod);
+      const found = findImplementation(type, iface, member, core),
+        // Not implemented by the type or a base class: the most specific implementation among its interfaces (C# 8).
+        specific = found.member ? null : mostSpecificImplementation(type, member, core),
+        implementation = found.member ?? specific.member;
+      if (implementation) {
+        map.set(member, implementation);
+        if (implementation.kind === SymbolKind.Property) {
+          if (member.getMethod && implementation.getMethod) map.set(member.getMethod, implementation.getMethod);
+          if (member.setMethod && implementation.setMethod) map.set(member.setMethod, implementation.setMethod);
         }
-      } else if (found.defaultImplementation) map.set(member, member);
-      else for (const error of found.errors ?? [found.error]) diagnostics.push({ ...error, interface: iface, member });
+      } else if (specific.error) diagnostics.push({ ...specific.error, interface: iface, member });
+      else {
+        // No implementation at all, or a derived interface made the member abstract again.
+        const missing = found.defaultImplementation ? [{ code: DiagnosticId.CS0535, args: [type.toDisplayString(), member.toDisplayString()] }] : null;
+        for (const error of missing ?? found.errors ?? [found.error]) diagnostics.push({ ...error, interface: iface, member });
+      }
     }
   }
   return { map, diagnostics };

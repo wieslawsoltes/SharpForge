@@ -19,6 +19,7 @@ import { CSharp13Rules, CSharp13BodyRules } from './csharp13.js';
 import { CSharp14Rules } from './csharp14.js';
 import { PreviewFeatureRules } from './preview-features.js';
 import { ReservedTypeNames } from './reserved-type-names.js';
+import { InterpolatedStringHandlerBinding } from './interpolated-string-handlers.js';
 
 export const modernRules = Object.freeze([
   CSharp9Rules,
@@ -33,6 +34,7 @@ export const modernRules = Object.freeze([
 export const modernUseRules = Object.freeze([ExperimentalUses, CSharp13BodyRules]);
 export const modernBindings = Object.freeze([
   CSharp10Binding,
+  InterpolatedStringHandlerBinding,
   CSharp11Binding,
   Utf8StringBinding,
   CollectionExpressionBinding,
