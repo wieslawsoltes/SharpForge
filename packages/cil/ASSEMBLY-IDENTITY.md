@@ -15,5 +15,7 @@ This batch adds explicit assembly definition options only. AssemblyVersion/Assem
 source attributes, referenced assembly identities and net9/net10 reference-pack versions
 remain separate work under SF-A03-T03.8. Signing is independent of version/culture.
 
-Native `AssemblyName.GetAssemblyName` reference generation and focused tests are prepared
-under `tests/fixtures/a03-assembly-definition`; validation is pending its serial slot.
+Native `AssemblyName.GetAssemblyName` on .NET 10.0.5 confirms all five fixture identities
+under `tests/fixtures/a03-assembly-definition`. Focused tests pass for both JavaScript engines
+and all four emitted platforms, including composition with signing and resources. Browser
+and wider platform qualification remain separate.
