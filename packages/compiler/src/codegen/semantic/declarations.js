@@ -128,7 +128,8 @@ export const Declarations = Base =>
       }
       const isVirtual = symbol.isAbstract || symbol.isVirtual || symbol.isOverride;
       if (isVirtual && !this.records.dispatchesStatically(symbol)) this.unsupported('virtual dispatch', at);
-      if (symbol.isExtern) this.unsupported('extern methods', at);
+      // An extern method has no body to lower. Declaring one is harmless; calling it is reported (see methodOf).
+      if (symbol.isExtern) return undefined;
       const isConstructor = symbol.methodKind === MethodKind.Constructor;
       // The implicit parameterless constructor has nothing to run: creation allocates and runs the field initializers.
       if (isConstructor && symbol.isImplicitlyDeclared) return undefined;
@@ -162,6 +163,8 @@ export const Declarations = Base =>
     /** The image method of a source method symbol. */
     methodOf(symbol, syntax = null) {
       const record = this.methods.get(symbol) ?? this.records.methodOf(definitionOf(symbol), syntax);
+      if (!record && definitionOf(symbol).isExtern)
+        return this.unsupported(`a call to the extern method '${symbol.toDisplayString()}' (the runtime has no platform invoke)`, syntax);
       return record ?? this.unsupported(`method '${symbol.toDisplayString()}'`, syntax);
     }
   };

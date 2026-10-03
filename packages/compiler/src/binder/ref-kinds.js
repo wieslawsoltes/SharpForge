@@ -56,6 +56,8 @@ export function classifyVariable(expression, context = {}) {
     }
     case 'Discard':
     case 'DeclarationExpression':
+    case 'PointerIndirection':
+    case 'PointerElementAccess':
       return yes;
     case 'ArrayAccess':
     case 'PointerIndirection':
@@ -63,7 +65,9 @@ export function classifyVariable(expression, context = {}) {
     case 'This': {
       const t = context.containingType;
       if (!t || t.typeKind !== TypeKind.Struct) return { isVariable: false, isWritable: false, reason: 'this' };
-      if (t.isReadOnly || context.method?.isReadOnly) return { isVariable: true, isWritable: false, reason: 'this' };
+      // `readonly` on a constructor is an error of its own (CS0106); the constructor still assigns the fields.
+      const inReadOnlyMember = !!context.method?.isReadOnly && !context.method.isConstructor;
+      if (t.isReadOnly || inReadOnlyMember) return { isVariable: true, isWritable: false, reason: 'this' };
       return yes;
     }
     case 'FieldAccess': {

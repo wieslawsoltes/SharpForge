@@ -20,3 +20,42 @@ The browser loader supports the exact emitted `SharpForge.CIL/1` profile. It che
 The root source release includes the complete backend contract, public API examples, measurements, regression suite, independent .NET execution test harness and compatibility boundaries. The packages are local tarballs, not registry-published.
 
 0.6 emits actual checked arithmetic/conversion instructions and InterfaceImpl metadata for concrete IDisposable resources, alongside finally cleanup. The canonical loader reconstructs and verifies these supported forms.
+
+## Signature codecs
+
+`decodeSignature(bytes)` and `decodeTypeSignature(bytes)` return lossless ASTs.
+`encodeSignature(ast)` and `encodeTypeSignature(ast)` write those shapes without
+resolving names. Named types preserve `class` versus `valuetype` and their metadata
+tokens. Generic parameters retain type/method scope; modifiers retain nesting
+order; arrays retain rank, sizes and signed lower bounds. Method signatures retain
+calling convention, `hasThis`, `explicitThis`, generic arity and sentinel position.
+Primitive nodes are immutable and shared to avoid repeated allocations.
+
+`readSignature` and `readTypeSignature` retain the existing formatted inspection
+API. Its strings intentionally omit some binary distinctions; use the AST for
+round trips. `parseSignatureType(text, resolveToken)` adapts existing string-based
+emission, including nested generics, byrefs, modifiers and bounded arrays. Use an
+explicit AST or `valuetype Name` when a user-defined value type is not registered.
+The optional third argument `{ namedTypes: Map<string, AST> }` resolves declared
+names before parsing punctuation, including inside constructed types. The emitter
+uses this for synthesized classes such as `<>Cell(int)` and `ValueTuple(int;string)`.
+`readTypeSignature` accepts the historical standalone return-type forms (including
+byrefs and void); `decodeTypeSignature` defaults to the stricter TypeSpec context.
+`MetadataBuilder.typeSpec(ast)` interns TypeSpec rows by encoded bytes.
+
+| Capability | API | Evidence |
+| --- | --- | --- |
+| Primitive and constructed types | Type AST encoder/decoder | SRM BlobEncoder corpus |
+| Methods, fields, locals, properties, MethodSpec | Signature AST encoder/decoder | SRM and Roslyn corpus |
+| Existing string emission | Member signature adapters | Focused compatibility tests |
+| Native execution of every signature form | Not implied by binary interoperability | Engine-specific qualification remains separate |
+
+Malformed contexts, trailing bytes, null tokens, excessive depth/counts and array
+ranks above 32 throw `CilError`. The AST codecs accept `{ maxDepth, maxNodes, signal }`
+for bounded traversal and cancellation. No per-operation state survives disposal
+of the returned byte array or AST. Run `node examples/il/signatures.mjs` for an
+example and `node --test tests/a03-02-signatures.test.js` for the offline corpus.
+
+The [metadata API](METADATA.md) exposes all 53 named table schemas, typed row writers,
+deduplicated heaps, required sorting, uncompressed pointer lists and bounded II.22
+structural diagnostics. See `examples/metadata/table-builder.mjs` for a runnable example.

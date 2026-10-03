@@ -131,9 +131,11 @@ test('A02-T83 operator rules', () => {
 });
 
 test('A02-T83 limits are reported, not miscompiled', () => {
-  // Extension members over framework generic types need generic framework members over a type parameter.
-  const list = 'extension<T>(List<T> list) { public bool IsEmpty1 => list.Count == 0; }';
-  assert(codesOf(program(list, 'Console.WriteLine(new List<int>().IsEmpty1);')).some(code => code.startsWith('SF')));
+  // Over a framework generic type an extension property runs; an extension method call does not yet, like a classic
+  // generic extension method over List<T> (framework generics).
+  const list = 'extension<T>(List<T> list) { public bool IsEmpty1 => list.Count == 0; public void AddTwice(T item) { list.Add(item); list.Add(item); } }';
+  assert.equal(run(list, 'Console.WriteLine(new List<int>().IsEmpty1);'), 'True\n');
+  assert(codesOf(program(list, 'new List<int>().AddTwice(3);')).some(code => code.startsWith('SF')));
   // Instance (compound assignment) operators in an extension block are not bound: the use is an error, never a wrong call.
   const types = 'class Acc { public int V; }';
   assert.deepEqual(errors('extension(Acc a) { public void operator +=(int x) { a.V += x; } }', 'var a = new Acc(); a += 1;', types), ['CS0019:a += 1']);
