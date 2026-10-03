@@ -65,3 +65,12 @@ medians, p95, p99 and verdicts. Baseline update/review procedure is in perf-base
 | Reviewed history | committed raw arrays, environment, hashes and review reference | dirty baseline substitution rejected |
 
 Local measured qualification and raw sample retention: [macOS arm64 evidence](evidence/macos-arm64-2026-10-03/README.md). The initial budget policy is a review proposal, not an approved historical performance baseline.
+
+The workflow uses reviewed immutable action pins from the A29 supply policy.
+Only scheduled runs, manual dispatch and PRs explicitly labelled `full-ci` start
+the broad performance jobs; ordinary PRs and main pushes do not. Readiness changes
+have not run local tests, builds or new benchmarks. The retained macOS evidence
+continues to identify its original capture commits and does not qualify later
+compiler/runtime integrations. Linux/Windows, native CLR/Rust allocations and an
+approved historical baseline remain pending. Implementation merge does not imply
+that current product performance meets the proposed budgets.
