@@ -25,6 +25,10 @@ Generated package, native, browser and CLR-Wasm reports default to that director
 `SHARPFORGE_RESULTS_DIR` may override it. Standalone defaults to
 `artifacts/SharpForge-standalone.html`, configurable with `SHARPFORGE_STANDALONE_PATH`.
 The historical checked-in standalone and docs reports are not fresh CI evidence.
+`.gitattributes` pins LF for detected text so npm does not rewrite checked-out
+Windows shebangs, while binary fixtures retain their bytes. Filesystem consumers
+use URL objects or `fileURLToPath`; Windows native managed exits are compared as
+unsigned DWORD values, while POSIX compares the low eight bits.
 
 The pinned supported browser is Chromium from `tests/requirements.txt`. Browser
 caches are keyed by OS, architecture and the requirements hash, and Playwright's
