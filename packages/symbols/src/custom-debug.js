@@ -29,12 +29,12 @@ export function readCustomDebugInformation(kind, bytes, options = {}) {
   if (!(bytes instanceof Uint8Array) || bytes.length > limits.maxBytes)
     fail('Invalid or oversized custom debug information');
   const codec = codecs.get(kind?.toLowerCase());
-  return codec ? codec[0](bytes, limits) : { bytes: bytes.slice() };
+  return codec ? codec[0](bytes, limits) : { bytes: new Uint8Array(bytes) };
 }
 
 /** Encode structured CDI, or preserve an explicitly supplied raw payload byte-for-byte. */
 export function writeCustomDebugInformation(kind, record, options = {}) {
-  if (record.bytes instanceof Uint8Array) return record.bytes.slice();
+  if (record.bytes instanceof Uint8Array) return new Uint8Array(record.bytes);
   const codec = codecs.get(kind?.toLowerCase());
   if (!codec) fail('Unknown custom debug kind requires raw bytes');
   const bytes = codec[1](record);

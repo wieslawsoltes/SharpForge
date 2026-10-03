@@ -74,3 +74,15 @@ for (const size of [0, 1, 111, 112, 127, 128, 129, 1000]) {
     assert.deepEqual(readPortablePdb(output.bytes).documents[0].hash, new Uint8Array(createHash(name).update(bytes).digest()));
   });
 }
+
+test('Node Buffer inputs retain their identities across repeated checksum verification and attachment', () => {
+  const input = Buffer.from(emitted.bytes);
+  const expected = Buffer.from(input);
+  const assembly = attachPortablePdb(compiled.assembly, input, { embedded: true });
+  assert.deepEqual(input, expected);
+  const first = loadSymbols(assembly, input);
+  assert.deepEqual(input, expected);
+  const second = loadSymbols(assembly, input);
+  assert.equal(first.idHex, second.idHex);
+  assert.deepEqual(input, expected);
+});

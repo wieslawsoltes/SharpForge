@@ -8,7 +8,7 @@ function decodeCodeView(entry) {
   const bytes = entry.bytes;
   rejectUnsupportedSymbolFormat(bytes);
   if (bytes.length < 25 || text(bytes.subarray(0, 4)) !== 'RSDS') fail('Invalid CodeView record');
-  entry.guid = bytes.slice(4, 20);
+  entry.guid = new Uint8Array(bytes.subarray(4, 20));
   entry.age = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength).getUint32(20, true);
   const zero = bytes.indexOf(0, 24);
   if (zero < 0) fail('Unterminated PDB path');
@@ -36,7 +36,7 @@ function decodeChecksum(entry) {
   const zero = entry.bytes.indexOf(0);
   if (zero < 1) fail('Invalid PDB checksum');
   entry.algorithm = text(entry.bytes.subarray(0, zero));
-  entry.checksum = entry.bytes.slice(zero + 1);
+  entry.checksum = new Uint8Array(entry.bytes.subarray(zero + 1));
   const size = checksumSizes[entry.algorithm];
   if (size !== undefined && entry.checksum.length !== size) fail('Invalid PDB checksum length');
 }

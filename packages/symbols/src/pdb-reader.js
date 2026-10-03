@@ -15,7 +15,7 @@ export function readPortablePdb(input, { maxBytes = 64 * 1024 * 1024, maxSourceB
   if (!pdb || pdb.length < 32) fail('Not a standalone Portable PDB');
   if (Object.keys(md.rows).some((t) => +t < 48 || +t > 55)) fail('Portable PDB contains non-debug tables');
   const pr = new Reader(pdb),
-    id = pr.take(20).slice(),
+    id = new Uint8Array(pr.take(20)),
     entryPoint = pr.u32(),
     guids = md.streams.get('#GUID') ?? new Uint8Array();
   if (guids.length % 16) fail('Invalid GUID heap');
@@ -35,7 +35,7 @@ export function readPortablePdb(input, { maxBytes = 64 * 1024 * 1024, maxSourceB
       id: i + 1,
       name: parts.join(separator ? String.fromCharCode(separator) : ''),
       hashAlgorithm: guid(row[1]),
-      hash: md.blob(row[2]).slice(),
+      hash: new Uint8Array(md.blob(row[2])),
       language: guid(row[3]),
     };
   });
@@ -57,7 +57,7 @@ export function readPortablePdb(input, { maxBytes = 64 * 1024 * 1024, maxSourceB
   const constants = (md.rows[52] ?? []).map((r, i) => ({
     id: i + 1,
     name: md.string(r[0]),
-    signature: md.blob(r[1]).slice(),
+    signature: new Uint8Array(md.blob(r[1])),
     ...decodeConstant(md.blob(r[1])),
   }));
   const imports = (md.rows[53] ?? []).map((r, i) => ({
@@ -138,7 +138,7 @@ export function readPortablePdb(input, { maxBytes = 64 * 1024 * 1024, maxSourceB
       id: i + 1,
       parent: decodeCoded('HasCustomDebugInformation', r[0]),
       kind: guid(r[1]),
-      bytes: md.blob(r[2]).slice(),
+      bytes: new Uint8Array(md.blob(r[2])),
     };
     Object.assign(c, readCustomDebugInformation(c.kind, c.bytes, { maxBytes, maxSourceBytes }));
     if (c.kind === PdbGuids.embeddedSource) {
@@ -155,7 +155,7 @@ export function readPortablePdb(input, { maxBytes = 64 * 1024 * 1024, maxSourceB
     id,
     idHex: hex(id),
     entryPoint,
-    bytes: bytes.slice(),
+    bytes: new Uint8Array(bytes),
     metadata: md,
     documents,
     methods,
