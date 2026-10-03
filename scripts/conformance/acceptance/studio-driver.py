@@ -107,7 +107,7 @@ def dispatch(page, step):
     raise ValueError('Studio action unavailable: ' + action)
 
 
-def main():
+def main(dispatch_step=dispatch):
     with contextlib.redirect_stdout(sys.stderr), sync_playwright() as playwright, launch_browser(playwright, __file__) as browser:
         page = browser.new_page(viewport={'width': 1440, 'height': 1000})
         page.set_default_timeout(15000)
@@ -124,7 +124,7 @@ def main():
                     RPC.flush()
                     return
                 step = request['args']
-                result = dispatch(page, step)
+                result = dispatch_step(page, step)
                 check(not errors, str(errors))
                 page.screenshot(path=str(OUTPUT / (step['id'] + '.png')))
                 response = {'id': request['id'], 'result': {'value': result, 'browser': browser.version, 'screenshot': step['id'] + '.png'}}
