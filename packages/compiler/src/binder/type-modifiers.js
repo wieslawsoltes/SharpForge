@@ -174,3 +174,25 @@ export function checkTypeModifiers(type) {
   }
   return results;
 }
+
+const signatureOwners = new Set(['MethodDeclaration', 'PropertyDeclaration', 'IndexerDeclaration', 'EventDeclaration']);
+const fieldDeclarations = new Set(['FieldDeclaration', 'EventFieldDeclaration']);
+
+/**
+ * Where Roslyn reports a static type used as a type argument (CS0718) in the signature of a member: on the name of
+ * the field, method, property, event or parameter whose type contains it. Null for a type written anywhere else
+ * (a local, an expression, a base list, a constraint, a delegate declaration), where the diagnostic stays on the
+ * type argument.
+ */
+export function signatureNameOf(typeSyntax) {
+  for (let node = typeSyntax.parent; node; node = node.parent) {
+    const kind = node.kind;
+    if (kind === 'DelegateDeclaration') return null;
+    if (kind === 'Parameter') return node.parent?.parent?.kind === 'DelegateDeclaration' ? null : (node.identifier ?? null);
+    if (kind === 'VariableDeclaration') return fieldDeclarations.has(node.parent?.kind) ? (node.variables[0]?.identifier ?? null) : null;
+    if (signatureOwners.has(kind)) return node.identifier ?? null;
+    const isTypeSyntax = kind.endsWith('Type') || kind.endsWith('Name') || kind === 'TypeArgumentList' || kind === 'ArrayRankSpecifier';
+    if (!isTypeSyntax) return null;
+  }
+  return null;
+}

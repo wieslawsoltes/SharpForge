@@ -13,6 +13,7 @@ import {DiagnosticId} from '../diagnostics/codes.js';
 import { canonicalType, frameworkType, frameworkAssignable, enumValue } from '@sharpforge/framework';
 import { Conversion, ConversionKind } from '../conversions/classify.js';
 import { typeText } from '../type-utils.js';
+import { memberPath as pathOf } from './member-path.js';
 
 const valueKeywords = ['int', 'double', 'bool', 'void'];
 const collectionFamilies = ['List', 'HashSet'];
@@ -20,13 +21,6 @@ const methodGroupConversion = new Conversion(ConversionKind.MethodGroup);
 const objectCreationConversion = new Conversion(ConversionKind.ObjectCreation);
 const collectionConversion = new Conversion(ConversionKind.CollectionExpression);
 
-/** The dotted path of a name or member-access chain, or null. */
-function pathOf(node) {
-  if (node?.kind === 'Name') return node.name;
-  if (node?.kind !== 'Member') return null;
-  const target = pathOf(node.target);
-  return target ? target + '.' + node.name : null;
-}
 const isTargetTypedNew = node => node?.kind === 'New' && node.type === '<target>';
 const contractOf = symbol => symbol?.contract;
 
@@ -85,8 +79,8 @@ export const FrameworkQueries = Base =>
     /** The user methods a method group names, with the receiver expression of an instance group. */
     methodGroup(target) {
       if (target.kind === 'Name') {
-        const visible = m => m.name === target.name && (m.owner === this.m.owner || !m.owner) && (!this.m.isStatic || m.isStatic);
-        return { methods: this.c.methods.filter(visible), receiver: null };
+        const visible = m => (m.owner === this.m.owner || !m.owner) && (!this.m.isStatic || m.isStatic);
+        return { methods: this.c.methodIndex.named(target.name).filter(visible), receiver: null };
       }
       if (target.kind !== 'Member') return { methods: [], receiver: null };
       const owner = this.c.findType(pathOf(target.target), this.m);

@@ -8,6 +8,7 @@ import {supported,normalize,defaultValue,typeText} from './type-utils.js';
 import {formatMessage,defaultSeverity,featureNotAvailableCode} from './diagnostics/codes.js';
 import {MethodCompiler} from './method-compiler.js';
 import {BoundMethodPipeline} from './method-pipeline.js';
+import {MethodIndex} from './method-index.js';
 import {CompilationSymbols} from './symbols/compilation-symbols.js';
 import {collectUsingDirectives,bindUsings} from './binder/usings.js';
 import {findEntryPoint} from './binder/entry-point.js';
@@ -26,7 +27,7 @@ export class Compilation {
     this.syntaxFeatureFailures = syntaxChecks.unavailable;
     this.syntaxFeatureDiagnostics = syntaxChecks.diagnostics;
     this.inputFiles=parsedFiles;parsedFiles=lowerAsyncFiles(parsedFiles);this.files=parsedFiles;this.options=options;this.sources=new Map(parsedFiles.map(p=>[p.source.uri,p.source]));
-    this.diagnostics=parserDiagnosticsWithoutSuppressMessage(parsedFiles);for(const d of syntaxChecks.diagnostics)if(!this.diagnostics.some(existing=>existing.uri===d.uri&&existing.start===d.start&&existing.length===d.length&&existing.code===d.code&&existing.message===d.message))this.diagnostics.push(d);this.symbols=[];this.references=[];this.types=[];this.typeMap=new Map();this.methods=[];this.statics=[];this.constants=[];this.constantMap=new Map();this.sequencePoints=[];
+    this.diagnostics=parserDiagnosticsWithoutSuppressMessage(parsedFiles);for(const d of syntaxChecks.diagnostics)if(!this.diagnostics.some(existing=>existing.uri===d.uri&&existing.start===d.start&&existing.length===d.length&&existing.code===d.code&&existing.message===d.message))this.diagnostics.push(d);this.symbols=[];this.references=[];this.types=[];this.typeMap=new Map();this.methods=[];this.methodIndex=new MethodIndex();this.statics=[];this.constants=[];this.constantMap=new Map();this.sequencePoints=[];
     // 'bound' binds to a bound tree, analyses flow, lowers and then emits; 'legacy' is the fused string-typed method compiler.
     this.nullableMaps=new Map();this.fullNames=new Map();this.simpleNames=new Map();this.fileUsings=new Map();this.binderChains=new Map();this.pipeline=options.pipeline??globalThis.process?.env?.SHARPFORGE_PIPELINE??Compilation.defaultPipeline;this.semantic=new CompilationSymbols(this);this.boundPipeline=null;
   }
@@ -214,8 +215,8 @@ export class Compilation {
     if(!synthetic&&node.name==='.ctor'&&node.modifiers.includes('static'))this.report(node,DiagnosticId.SF2014);
     const scope=owner??{owner:null,node},parameters=node.parameters.map(p=>({...p,type:this.resolveType(p.type,p,false,scope)})),returnType=this.resolveType(node.returnType,node,false,scope),isStatic=node.modifiers.includes('static')||!owner;
     const method={id:this.methods.length,name:node.name,qualifiedName:(owner?owner.name+'.':'')+node.name,returnType,parameters,isStatic,owner,node,synthetic};
-    if(this.methods.some(m=>m.owner===owner&&m.name===method.name&&m.parameters.map(p=>p.type).join(',')===parameters.map(p=>p.type).join(',')))this.report(node,DiagnosticId.CS0111,[node.name,owner?.name??'<top-level>']);
-    if(!synthetic)method.symbol=this.symbol(node,'method',returnType,{owner:owner?.name,isStatic,bodyStart:node.start,bodyEnd:node.end,parameters:parameters.map(p=>({name:p.name,type:p.type}))});this.methods.push(method);owner?.methods.push(method);return method;
+    if(this.methodIndex.hasSignature(method))this.report(node,DiagnosticId.CS0111,[node.name,owner?.name??'<top-level>']);
+    if(!synthetic)method.symbol=this.symbol(node,'method',returnType,{owner:owner?.name,isStatic,bodyStart:node.start,bodyEnd:node.end,parameters:parameters.map(p=>({name:p.name,type:p.type}))});this.methods.push(method);this.methodIndex.add(method);owner?.methods.push(method);return method;
   }
 }
 /**

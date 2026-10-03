@@ -75,6 +75,6 @@ test('A02-T36 compiler diagnostics carry Roslyn message text',()=>{
   assert.deepEqual(messages('int x="a";'),["CS0029: Cannot implicitly convert type 'string' to 'int'"]);
   assert.deepEqual(messages('Console.WriteLine(y);'),["CS0103: The name 'y' does not exist in the current context"]);
   assert.deepEqual(messages('Foo f=null;'),["CS0246: The type or namespace name 'Foo' could not be found (are you missing a using directive or an assembly reference?)"]);
-  assert.deepEqual(messages('class C{int X;int X;} Console.WriteLine(1);'),["CS0102: The type 'C' already contains a definition for 'X'"]);
+  assert.deepEqual(messages('Console.WriteLine(1); class C{int X;int X;}'),["CS0102: The type 'C' already contains a definition for 'X'"]);
   const w=compile('int x=1;Console.WriteLine(x switch{1=>2});').diagnostics.find(d=>d.code==='CS8509');assert.equal(w.severity,'warning');
 });

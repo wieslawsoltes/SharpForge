@@ -34,5 +34,21 @@
   "language-version/gate-params-collections-at-12":{"hash":"b5145dac1960f2f8","kind":"diagnostics","langVersion":"12.0","diagnostics":[["CS9202",30,50,"error"]]},
   "language-version/no-gate-dynamic-at-3":{"hash":"d301c7f435d5ac75","kind":"diagnostics","langVersion":"3","diagnostics":[["CS0246",37,7,"error"]]},
   "language-version/no-gate-null-coalescing-at-1":{"hash":"b27709539f7f98f5","kind":"output","langVersion":"1","diagnostics":[],"output":""},
-  "language-version/no-gate-method-group-conversions-at-1":{"hash":"5250c89169f5a9ba","kind":"output","langVersion":"1","diagnostics":[],"output":""}
+  "language-version/no-gate-method-group-conversions-at-1":{"hash":"5250c89169f5a9ba","kind":"output","langVersion":"1","diagnostics":[],"output":""},
+  "language-version/gate-extensible-fixed-at-7-2":{"hash":"1a31e52f0cce9327","kind":"diagnostics","langVersion":"7.2","diagnostics":[["CS8320",124,1,"error"]]},
+  "language-version/gate-movable-fixed-buffers-at-7-2":{"hash":"41cd6b0bfa83b0e6","kind":"diagnostics","langVersion":"7.2","diagnostics":[["CS8320",99,6,"error"]]},
+  "language-version/gate-unmanaged-constructed-types-at-7-3":{"hash":"205ac7763d9198fe","kind":"diagnostics","langVersion":"7.3","diagnostics":[["CS0649",26,1,"warning"],["CS8370",73,1,"error"]]},
+  "language-version/gate-obsolete-accessor-at-7-3":{"hash":"d83a937a2079150e","kind":"diagnostics","langVersion":"7.3","diagnostics":[["CS8370",25,15,"error"]]},
+  "language-version/gate-null-pointer-pattern-at-7-3":{"hash":"6a46a5c057f4104e","kind":"diagnostics","langVersion":"7.3","diagnostics":[["CS8370",59,4,"error"]]},
+  "language-version/gate-extension-get-async-enumerator-at-8":{"hash":"dddf6f44cdf0bbfa","kind":"diagnostics","langVersion":"8.0","diagnostics":[["CS8400",218,1,"error"]]},
+  "language-version/gate-member-not-null-at-8":{"hash":"a3ce451f76814868","kind":"diagnostics","langVersion":"8.0","diagnostics":[["CS0414",30,5,"warning"],["CS8400",38,54,"error"]]},
+  "language-version/gate-with-on-structs-at-9":{"hash":"8b3c1696f3f7391b","kind":"diagnostics","langVersion":"9.0","diagnostics":[["CS8773",62,16,"error"]]},
+  "language-version/gate-with-on-anonymous-types-at-9":{"hash":"a4701cd12f341ac7","kind":"diagnostics","langVersion":"9.0","diagnostics":[["CS8773",68,16,"error"]]},
+  "language-version/gate-span-char-constant-pattern-at-10":{"hash":"a1480e9b908e6df4","kind":"diagnostics","langVersion":"10.0","diagnostics":[["CS8936",73,6,"error"]]},
+  "language-version/cs8314-generic-pattern-matching-at-7":{"hash":"28d38a4acfe4598a","kind":"diagnostics","langVersion":"7.0","diagnostics":[["CS8314",60,3,"error"]]},
+  "language-version/cs8904-static-member-variance-at-8":{"hash":"2ca3908cb5f1fe7f","kind":"diagnostics","langVersion":"8.0","diagnostics":[["CS8904",35,1,"error"]]},
+  "language-version/cs8704-non-public-implementation-at-9":{"hash":"320528c5868385e6","kind":"diagnostics","langVersion":"9.0","diagnostics":[["CS8704",62,1,"error"]]},
+  "language-version/cs0171-auto-default-structs-at-10":{"hash":"60531723d1ebd8b1","kind":"diagnostics","langVersion":"10.0","diagnostics":[["CS0649",22,1,"warning"],["CS0171",32,1,"error"]]},
+  "language-version/cs0854-expression-optional-arguments-at-13":{"hash":"8905440f2ec472d9","kind":"diagnostics","langVersion":"13.0","diagnostics":[["CS0854",124,3,"error"]]},
+  "language-version/no-gate-first-class-span-at-13":{"hash":"9a378c7d1e81bfbe","kind":"output","langVersion":"13.0","diagnostics":[],"output":""}
 }}
