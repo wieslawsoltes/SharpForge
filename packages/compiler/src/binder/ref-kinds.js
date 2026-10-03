@@ -108,6 +108,9 @@ export function classifyVariable(expression, context = {}) {
             receiver: expression.receiver,
           };
       }
+      // The members of an anonymous type have no setter; a `with` expression gives them their values in a new instance.
+      if (!p.setMethod && context.inObjectInitializer && expression.receiver?.kind === 'WithCopy' && p.containingType?.isAnonymousType)
+        return { isVariable: false, isWritable: true, isProperty: true, symbol: p };
       if (!p.setMethod) {
         // A get-only auto-property can be assigned in a constructor of its type.
         if (p.isAutoProperty && inConstructorOf(context, p) && (!expression.receiver || expression.receiver.kind === 'This'))

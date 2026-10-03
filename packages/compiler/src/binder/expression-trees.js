@@ -8,6 +8,7 @@
  *   CS8514  a switch expression              CS8188  a throw expression
  *   CS8074  an index initializer             CS8143  a tuple literal
  *   CS8110  a call of a local function       CS9307  named arguments out of position
+ *   below C# 14:  CS0853  a named argument   CS0854  an omitted optional argument
  *
  * The checks run when the lambda is bound against its final target, so a lambda converted to a delegate is not
  * touched. Nested lambdas are part of the tree and are checked with it.
@@ -27,14 +28,24 @@ const codeByKind = Object.freeze({
 });
 const isAscending = positions => positions.every((position, index) => index === 0 || position >= positions[index - 1]);
 
-function nodeProblem(node) {
+const hasNamedArgument = node => !!node.syntax?.argumentList?.arguments?.some(argument => argument.nameColon);
+const omitsOptionalArgument = (node, callee) =>
+  !!node.mapping?.parameterOf && !!callee?.parameters?.some((parameter, index) => parameter.isOptional && !node.mapping.parameterOf.includes(index));
+
+/**
+ * @param {boolean} allowsOptionalAndNamed C# 14 ('expression trees with optional and named arguments'): a call may
+ *   name its arguments in position and omit optional ones; below it both are errors (CS0853, CS0854)
+ */
+function nodeProblem(node, allowsOptionalAndNamed) {
   if (assignmentKinds.has(node.kind)) return 'CS0832';
   if (codeByKind[node.kind]) return codeByKind[node.kind];
-  if (node.kind === 'Call') {
-    if (node.method?.methodKind === MethodKind.LocalFunction) return 'CS8110';
-    if (node.mapping?.parameterOf && !isAscending(node.mapping.parameterOf)) return 'CS9307';
+  if (node.kind === 'Call' && node.method?.methodKind === MethodKind.LocalFunction) return 'CS8110';
+  if (node.kind !== 'Call' && node.kind !== 'ObjectCreation') return null;
+  if (!allowsOptionalAndNamed) {
+    if (hasNamedArgument(node)) return 'CS0853';
+    if (omitsOptionalArgument(node, node.method ?? node.constructor)) return 'CS0854';
   }
-  return null;
+  return node.kind === 'Call' && node.mapping?.parameterOf && !isAscending(node.mapping.parameterOf) ? 'CS9307' : null;
 }
 
 /** The lambda's own problems: its body form and modifiers. */
@@ -47,7 +58,7 @@ function lambdaProblem(lambda) {
  * The restrictions a bound lambda violates as an expression tree.
  * @returns {{code: string, syntax: object}[]} in tree order
  */
-export function expressionTreeProblems(lambda) {
+export function expressionTreeProblems(lambda, { allowsOptionalAndNamed = true } = {}) {
   const rows = [];
   const check = current => {
     const own = lambdaProblem(current);
@@ -61,7 +72,7 @@ export function expressionTreeProblems(lambda) {
         check(node);
         return false;
       }
-      const code = nodeProblem(node);
+      const code = nodeProblem(node, allowsOptionalAndNamed);
       if (code) rows.push({ code, syntax: node.syntax });
       for (const entry of node.initializers ?? [])
         if (entry.target?.isInitializerTarget && entry.target.kind !== 'FieldAccess' && entry.target.kind !== 'PropertyAccess')
@@ -81,6 +92,7 @@ export const ExpressionTreeBinding = Base =>
       super.finishLambda(lambda, delegateType);
       if (!first || !lambda.body || !expressionTreeDelegate(delegateType, this.core)) return;
       lambda.isExpressionTree = true;
-      for (const problem of expressionTreeProblems(lambda)) this.report(problem.syntax, problem.code, []);
+      const options = { allowsOptionalAndNamed: this.version.number >= 14 };
+      for (const problem of expressionTreeProblems(lambda, options)) this.report(problem.syntax, problem.code, []);
     }
   };

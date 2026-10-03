@@ -6,12 +6,21 @@ import { TypeKind, ErrorTypeSymbol } from '../../symbols/types.js';
 import { LocalDeclarationKind } from '../../symbols/members.js';
 import { ConversionKind } from '../../conversions/classify.js';
 import { typeTestOutcome } from '../../conversions/reference.js';
+import { isPointerType } from '../../conversions/pointer.js';
+import { containsTypeParameter } from '../../symbols/substitution.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 
 /** Class mixin: Patterns: constant, type, declaration, var, discard, relational, not/and/or and property patterns; */
 export const PatternBinding = Base =>
   class extends Base {
+    /** True for `Span<char>` and `ReadOnlySpan<char>`. */
+    isSpanOfChar(type) {
+      const definition = type.originalDefinition;
+      if (!definition || (definition !== this.core.span && definition !== this.core.readOnlySpan)) return false;
+      const argument = type.typeArguments?.[0];
+      return (argument?.type ?? argument)?.specialType === 'System_Char';
+    }
     /** Patterns: constant, type, declaration, var, discard, relational, not/and/or, parenthesized; others are bound leniently. */
     pattern(syntax, inputType, input) {
       switch (syntax.kind) {
@@ -49,6 +58,12 @@ export const PatternBinding = Base =>
             return { kind: 'ConstantPattern', syntax, hasErrors: true };
           }
           if (inputType && !inputType.isErrorType()) {
+            // C# 8: `p is null` for a pointer. C# 11: a string constant matched against a span of char.
+            if (e.literal === 'null' && isPointerType(inputType)) this.d.gate(this.c.uri, syntax.expression, 'NullPointerConstantPattern');
+            if (e.type?.specialType === 'System_String' && e.constantValue && this.isSpanOfChar(inputType)) {
+              this.d.gate(this.c.uri, syntax.expression, 'SpanCharConstantPattern');
+              return { kind: 'ConstantPattern', syntax, value: e, isSpanText: true };
+            }
             const c = this.conversions.classifyFromExpression(e, inputType);
             if (c.exists && c.isImplicit) return { kind: 'ConstantPattern', syntax, value: this.applyConversion(e, inputType, c) };
             const explicit = e.type ? this.conversions.classifyExplicit(inputType, e.type) : null;
@@ -133,6 +148,14 @@ export const PatternBinding = Base =>
     }
     typePattern(syntax, type, inputType) {
       if (type.isErrorType() || !inputType || inputType.isErrorType()) return { kind: 'TypePattern', syntax, testedType: type };
+      // C# 7.0 needs a conversion between the two types; C# 7.1 ('generic pattern-matching') lets an open type be tested for any type.
+      if (this.version.number < 7.1 && (containsTypeParameter(inputType) || containsTypeParameter(type))) {
+        const c = this.conversions.classifyExplicit(inputType, type);
+        if (!c.exists || c.isUserDefined) {
+          this.report(syntax.type ?? syntax, 'CS8314', [this.display(inputType), this.display(type), '7.0', '7.1']);
+          return { kind: 'TypePattern', syntax, testedType: type, hasErrors: true };
+        }
+      }
       const outcome = typeTestOutcome(inputType, type, this.core);
       if (outcome === 'never' && !(inputType.typeKind === TypeKind.TypeParameter || type.typeKind === TypeKind.TypeParameter)) {
         const c = this.conversions.classifyExplicit(inputType, type);
