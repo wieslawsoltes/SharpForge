@@ -74,3 +74,8 @@ export function verifyImage(image){
   }
   return errors;
 }
+
+export {numericTypeNames,NumericType,numericAliases,numericTypeName,numericTypeId,numericMode,decodeNumericMode,nativeIntegerBits,integerType} from './numeric/numeric-types.js';
+export {float,isNativeInteger,nativeInteger,number,isNumber,defaults,compare,binary,unary,convert,storage,indirect} from './numeric/numeric-ops.js';
+export {decimalMaxCoefficient,isDecimal,decimal,decimalZero,decimalFromBits,decimalBits,decimalParse,decimalFromInteger,decimalFromFloat,decimalToInteger,decimalToFloat,decimalCompare,decimalNegate,decimalAbs,decimalAdd,decimalMultiply,decimalDivide,decimalRemainder,decimalRound,decimalFormat,decimalBinary} from './numeric/decimal-ops.js';
+export {scalarConvert,scalarBinary,scalarUnary,encodeScalar,decodeScalar,scalarFormat} from './numeric/scalar-ops.js';

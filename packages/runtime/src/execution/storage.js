@@ -7,7 +7,7 @@ import {isAggregateType,isValueTypeValue,copyValue,valueDefault,boxValue} from '
 export function storageDefault(vm,type) {return valueDefault(vm,type);}
 export function storageValue(vm,value,type,numericContext) {
   const name=typeof type==='string'?type:type.name;
-  if(value?.methodPointer&&['nint','System.IntPtr'].includes(name)) {
+  if(value?.methodPointer&&(['nint','System.IntPtr'].includes(name)||/^method /.test(name))) {
     if(!Object.isFrozen(value)||value.vmOwner!==vm.snapshotOwner)throw new ManagedFault('InvalidProgramException','Method pointer belongs to another VM or is malformed');
     return value;
   }
