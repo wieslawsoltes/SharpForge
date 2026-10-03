@@ -3,7 +3,7 @@ import {childSlot, normalizeProperty} from './model.js';
 import {sourcePath, designIdentifier} from './source-text.js';
 import {controlSourceSymbol, isDesignControl} from './source-symbols.js';
 import {DesignSyncError, checkSourceCancellation, failSource} from './source-errors.js';
-import {readSourceValue} from './source-values.js';
+import {readSourceValue, readSourceStyleType} from './source-values.js';
 import {readSourceTemplate} from './source-templates.js';
 
 /** Construction reader indexes nodes and classifies each direct method statement exactly once. */
@@ -293,7 +293,7 @@ export class SourceConstructionReader {
     let targetType = CONTROLS + 'Button';
     if (expression.args.length) {
       if (expression.args.length !== 1) failSource('Unsupported Style constructor', expression, 'SFSYNC_OWNERSHIP');
-      targetType = canonicalType(this.readValue(expression.args[0]));
+      targetType = readSourceStyleType(expression.args[0], this);
       if (!frameworkType(targetType)) failSource('Style target type must be a supported constant', expression, 'SFSYNC_OWNERSHIP');
       this.explicitResourceTypes.add(key);
     }

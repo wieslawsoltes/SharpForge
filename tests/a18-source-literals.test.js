@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {DesignDocument, readDesignSource, planDesignSourceUpdate} from '@sharpforge/designer';
+import {
+  DesignDocument, readDesignSource, planDesignSourceUpdate, createDesign, generateDesignCode, normalizeDesignerBrush
+} from '@sharpforge/designer';
+import {MEDIA} from '@sharpforge/framework';
 
 function source(width, content = '"Run"') {
   return `using Microsoft.UI.Xaml;using Microsoft.UI.Xaml.Controls;
@@ -62,4 +65,37 @@ test('generated statements inherit tabs and touch no unrelated source', () => {
   const plan = planDesignSourceUpdate(analysis, document.value);
   assert.ok(plan.text.includes('\n\t\taction.Opacity = 0.7;\n\t\treturn window;'));
   assert.ok(plan.text.includes('// untouched 😀'));
+});
+
+test('closed WinUI gradient constructors reopen as typed values and preserve a no-op byte for byte', () => {
+  const document = new DesignDocument(createDesign('Gradient'));
+  const brush = normalizeDesignerBrush({valueType: MEDIA + 'LinearGradientBrush',
+    GradientStops: [{Color: '#80ff0000', Offset: 0}, {Color: '#ff0000ff', Offset: 1}]});
+  document.setProperty('Background', brush, ['action']);
+  const text = generateDesignCode(document.value, {target: 'winui'});
+  const analysis = readDesignSource(text);
+  const action = analysis.document.nodes.find(node => node.properties.Name === 'ActionButton');
+  assert.ok(action);
+  assert.deepEqual(action.properties.Background, brush);
+  assert.equal(analysis.bindings[action.id].properties.Background.dynamic, undefined);
+  const plan = planDesignSourceUpdate(analysis, analysis.document);
+  assert.equal(plan.text, text);
+  assert.equal(plan.edits.length, 0);
+  const changed = new DesignDocument(analysis.document);
+  changed.setStyle('Accent', {...changed.value.styles.Accent, setters: {Width: 200}});
+  const stylePlan = planDesignSourceUpdate(analysis, changed.value);
+  assert.ok(stylePlan.text.includes('Style(typeof(Microsoft.UI.Xaml.Controls.Button))'));
+  assert.equal(stylePlan.document.styles.Accent.setters.Width, 200);
+});
+
+test('a dynamic gradient stop is protected and is never evaluated by the source reader', () => {
+  const document = new DesignDocument(createDesign('DynamicGradient'));
+  document.setProperty('Background', normalizeDesignerBrush({valueType: MEDIA + 'LinearGradientBrush',
+    GradientStops: [{Color: '#ff0000', Offset: 0}, {Color: '#0000ff', Offset: 1}]}), ['action']);
+  const text = generateDesignCode(document.value, {target: 'winui'}).replace('Offset = 0', 'Offset = UserOffset()');
+  const analysis = readDesignSource(text);
+  const action = analysis.document.nodes.find(node => node.properties.Name === 'ActionButton');
+  assert.equal(analysis.bindings[action.id].properties.Background.dynamic, true);
+  assert.equal(action.properties.Background, undefined);
+  assert.equal(planDesignSourceUpdate(analysis, analysis.document).text, text);
 });

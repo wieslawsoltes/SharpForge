@@ -1,6 +1,7 @@
 import {canonicalType, frameworkType, enumValue, colorValues, XAML, CONTROLS, MEDIA} from '@sharpforge/framework';
 import {sourcePath} from './source-text.js';
 import {failSource} from './source-errors.js';
+import {readExtendedDesignerSourceValue} from './property-source-values.js';
 
 function decodeColor(hex) {
   const value = hex.length === 7 ? 'ff' + hex.slice(1) : hex.slice(1);
@@ -15,6 +16,15 @@ const binary = Object.freeze({
   '/': (left, right) => left / right,
   '%': (left, right) => left % right
 });
+
+/** Resolves a Style target from its closed string or typeof syntax without evaluating user code. */
+export function readSourceStyleType(node, state) {
+  if (node.kind !== 'TypeOfExpression') return canonicalType(readSourceValue(node, state));
+  const syntax = state.context.chosen.parsed.syntax.findNode(node.start, node.end);
+  if (syntax.kind !== 'TypeOfExpression') failSource('Style target type has no matching syntax', node, 'SFSYNC_OWNERSHIP');
+  const symbol = state.context.model.getTypeInfo(syntax.type).type;
+  return canonicalType(symbol?.legacy?.fullName ?? (symbol ? state.context.model.symbols.nameOf(symbol) : syntax.type.toString()));
+}
 
 /** Decodes only closed constants and registered framework value constructors; never executes source. */
 export function readSourceValue(node, state, depth = 0) {
@@ -58,6 +68,8 @@ function memberValue(node, state) {
 }
 
 function constructedValue(node, read) {
+  const extended = readExtendedDesignerSourceValue(node, read);
+  if (extended.handled) return extended.value;
   const type = canonicalType(node.type);
   const args = node.args.map(read);
   let value;
