@@ -54,15 +54,7 @@ export class DesignerSurfaceController {
     listen(view.scroller, 'focusout', event => {
       if (!view.scroller.contains(event.relatedTarget)) view.safe(() => this.finishKeyboard());
     });
-    listen(view.stage, 'dblclick', event => {
-      if (view.preview) return;
-      const hit = event.target.closest('[data-sf-id]')?.dataset.sfId;
-      const id = view.host.nodes.get(hit)?.designId ?? hit;
-      if (!id || !view.document.node(id)) return;
-      event.preventDefault();
-      event.stopPropagation();
-      view.safe(() => this.text.begin(id));
-    });
+    listen(view.stage, 'dblclick', event => this.doubleClick(event));
     listen(view.stage.ownerDocument.defaultView, 'blur', () => {
       this.cancelPointer?.();
       view.safe(() => this.finishKeyboard());
@@ -117,6 +109,21 @@ export class DesignerSurfaceController {
 
   pointerDown(event) {
     return this.gestures.pointerDown(event);
+  }
+
+  doubleClick(event) {
+    const view = this.view;
+    if (view.preview) return;
+    const hit = event.target.closest('[data-sf-id]')?.dataset.sfId;
+    const id = view.host.nodes.get(hit)?.designId ?? hit;
+    if (!id || !view.document.node(id)) return;
+    event.preventDefault();
+    event.stopPropagation();
+    if (view.componentDefinition?.(id)) {
+      view.safe(() => view.openComponent(id));
+      return;
+    }
+    view.safe(() => this.text.begin(id));
   }
 
   snaplines(parentId, excluded) {

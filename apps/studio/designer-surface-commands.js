@@ -30,6 +30,8 @@ export class DesignerSurfaceCommands {
     register('redo', () => this.view.canUndo?.(true) ?? document().redoStack.length > 0, () => this.view.undo(true));
     register('reset-layout', childSelection, () => resetDesignLayout(document()));
     register('inline-text', () => selected().length === 1 && childSelection(), () => controller.text.begin());
+    register('open-component', () => selected().length === 1 && Boolean(this.view.componentDefinition?.(selected()[0])),
+      () => this.view.openComponent(selected()[0]));
     for (const direction of ['front', 'back', 'forward', 'backward']) {
       register(`order:${direction}`, siblings, () => reorderDesignSelection(document(), direction));
     }
@@ -105,6 +107,7 @@ export class DesignerSurfaceCommands {
           ['same-size', 'Same size']].map(([id, label]) => item(`align:${id}`, label))},
         {label: 'Group into', children: ['Canvas', 'Grid', 'StackPanel'].map(type => item(`group:${type}`, type))},
         item('ungroup', 'Ungroup'), item('reset-layout', 'Reset layout'), null,
+        ...(this.enabled('open-component') ? [item('open-component', 'Open component document')] : []),
         item('edit-template', 'Edit template'), item('edit-style', 'Edit style'), item('view-code', 'View code'),
         item('go-handler', 'Go to handler'), item('inline-text', 'Edit text', 'F2'), null,
         item('cut', 'Cut', 'Ctrl+X'), item('copy', 'Copy', 'Ctrl+C'), item('paste', 'Paste', 'Ctrl+V'),
