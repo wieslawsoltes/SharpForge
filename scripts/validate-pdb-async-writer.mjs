@@ -29,6 +29,14 @@ try {
   await writeFile(join(project, 'Program.cs'), source);
   const output = join(temporary, 'output');
   const sdk = run(['--version']);
+  const sdkLine = run(['--list-sdks'])
+    .split(/\r?\n/)
+    .find((line) => line.startsWith(sdk + ' ['));
+  const sdkDirectory = sdkLine?.match(/\[(.*)\]$/)?.[1];
+  if (!sdkDirectory) throw Error('Could not locate the selected native compiler');
+  const compiler = join(sdkDirectory, sdk, 'Roslyn/bincore/csc.dll');
+  const compilerVersion = run([compiler, '-version']);
+  const compilerSha256 = digest(await readFile(compiler));
   run([
     'build',
     join(project, 'AsyncWriter.csproj'),
@@ -60,6 +68,8 @@ try {
     schemaVersion: 1,
     reference: {
       sdk,
+      compilerVersion,
+      compilerSha256,
       runtime: reference.runtime,
       mode: 'Debug',
       sourceSha256: digest(source),
