@@ -114,13 +114,19 @@ test('syntax check preserves Node handling of .mjs beside malformed package.json
   assert.equal(result.status, reference.status === 0 ? 0 : 1, result.stderr);
 });
 
-test('syntax check preserves inherited Node grammar options', context => {
-  const root = fixture(context, {'input.js': 'return 1;'});
-  const env = {...process.env, NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ''} --experimental-default-type=module`};
+test('syntax check preserves inherited Node diagnostic options', context => {
+  const root = fixture(context, {
+    'package.json': '{"type":"commonjs"}',
+    'input.js': 'function {',
+  });
+  const env = {...process.env, NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ''} --stack-trace-limit=1`};
   const reference = spawnSync(process.execPath, ['--check', join(root, 'input.js')], {encoding: 'utf8', env});
   const result = check(root, env);
-  assert.equal(result.status, reference.status === 0 ? 0 : 1, result.stderr);
+  assert.equal(reference.status, 1, reference.stderr);
   assert.equal(result.status, 1);
+  assert.equal(result.stderr.trim(), reference.stderr.trim());
+  assert.match(result.stderr, /SyntaxError/);
+  assert.ok(result.stderr.split('\n').filter(line => /^\s+at /.test(line)).length <= 1);
 });
 
 test('syntax check delegates symbolic links to Node realpath and package-mode handling', context => {
