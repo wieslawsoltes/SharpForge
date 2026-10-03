@@ -6,7 +6,7 @@
  * The expression and statement families are class mixins (translate-*.js) composed at the bottom of this file.
  */
 import { hoistedLocalFieldName, hoistedSynthesizedLocalFieldName } from '../../lowering/generated-names.js';
-import * as n from './node-factory.js';
+import { n } from './node-factory.js';
 import { ExpressionTranslation } from './translate-expressions.js';
 import { CallTranslation } from './translate-calls.js';
 import { FunctionTranslation } from './translate-functions.js';

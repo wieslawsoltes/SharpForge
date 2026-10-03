@@ -6,7 +6,7 @@
 import { BuiltinMap } from '@sharpforge/bytecode';
 import { SymbolKind } from '../../symbols/types.js';
 import { SharedEvaluations } from '../../lowering/decision-dag.js';
-import * as n from './node-factory.js';
+import { n } from './node-factory.js';
 
 /** Class mixin: patterns and switches. */
 export const PatternTranslation = Base =>

@@ -9,7 +9,7 @@
  */
 import { MethodKind } from '../../symbols/members.js';
 import { displayClassName, lambdaMethodName, localFunctionName, thisProxyFieldName } from '../../lowering/generated-names.js';
-import * as n from './node-factory.js';
+import { n } from './node-factory.js';
 import { Frame } from './frame.js';
 
 /** Class mixin: lambdas, local functions, delegate creation and combination. */

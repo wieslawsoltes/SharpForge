@@ -5,7 +5,7 @@
 import { SymbolKind } from '../../symbols/types.js';
 import { walk } from '../../bound/semantic-walker.js';
 import { yieldReturn, yieldBreak } from '../../lowering/iterators.js';
-import * as n from './node-factory.js';
+import { n } from './node-factory.js';
 
 const containsYield = node => {
   let found = false;

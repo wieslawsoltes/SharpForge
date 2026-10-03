@@ -26,7 +26,7 @@ import { Initialization } from './initialization.js';
 import { BodyTranslator } from './body-translator.js';
 import { Frame } from './frame.js';
 import { UnsupportedConstruct } from './unsupported.js';
-import * as n from './node-factory.js';
+import { n } from './node-factory.js';
 
 class GeneratorCore {
   /**

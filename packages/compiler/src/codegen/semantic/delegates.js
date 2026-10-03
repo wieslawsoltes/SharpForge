@@ -11,7 +11,7 @@
  * methods are built at the end (`finish`). Targets are compared by method number and receiver, which gives .NET's
  * delegate identity for `-=`.
  */
-import * as n from './node-factory.js';
+import { n } from './node-factory.js';
 
 export class DelegateClasses {
   /** @param generator `{program, types}`: the program model and the type mapper */

@@ -12,7 +12,7 @@ import { MethodKind } from '../../symbols/members.js';
 import { analyzeCaptures } from '../../lowering/closures.js';
 import { BodyTranslator } from './body-translator.js';
 import { Frame } from './frame.js';
-import * as n from './node-factory.js';
+import { n } from './node-factory.js';
 
 /** Class mixin: initializer methods and the points that run them. */
 export const Initialization = Base =>

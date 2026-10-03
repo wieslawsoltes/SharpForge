@@ -127,3 +127,11 @@ export const tryStatement = (tryBlock, catchBlocks, finallyBlock, syntax = hidde
   catchBlocks,
   finallyBlock,
 });
+
+/** Every builder under one name (`n.literal(...)`): the worker bundler has no namespace imports. */
+export const n = Object.freeze({
+  spanOf, hidden, newLocal, newParameter, literal, nullLiteral, local, parameter, thisReference, field, staticField, arrayElement, arrayLength, call,
+  frameworkCall, allocate, construct, newArray, unary, binary, equals, notEquals, logicalAnd, logicalOr, not, conditional, assign, compoundAssign,
+  increment, coalesce, convert, sequence, frameworkDelegate, block, noOp, declare, expressionStatement, ifStatement, whileStatement, returnStatement,
+  throwStatement, tryStatement,
+});

@@ -4,7 +4,7 @@
  */
 import { findContracts } from '@sharpforge/framework';
 import { TypeKind } from '../../symbols/types.js';
-import * as n from './node-factory.js';
+import { n } from './node-factory.js';
 
 const foldableTypes = new Set(['int', 'double', 'bool', 'string']);
 const boxValue = () => findContracts('SharpForge.Runtime.Formatting', 'BoxValue', true)[0];

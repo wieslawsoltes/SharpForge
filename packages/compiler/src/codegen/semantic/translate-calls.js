@@ -5,7 +5,7 @@
 import { BuiltinMap } from '@sharpforge/bytecode';
 import { TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
-import * as n from './node-factory.js';
+import { n } from './node-factory.js';
 
 const primitiveToString = new Set(['int', 'double', 'bool', 'string']);
 

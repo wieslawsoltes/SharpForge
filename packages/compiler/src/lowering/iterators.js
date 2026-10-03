@@ -16,7 +16,7 @@
  * Not lowered (reported as not executable): `yield` inside a try block, which needs the machine to run finally
  * blocks from Dispose, and conversions of arrays or framework collections to IEnumerable<T>.
  */
-import * as n from '../codegen/semantic/node-factory.js';
+import { n } from '../codegen/semantic/node-factory.js';
 
 export class IteratorClasses {
   /** @param generator `{program}` */
