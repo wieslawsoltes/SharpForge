@@ -121,7 +121,9 @@ export class TypeBinder {
         }
         continue;
       }
-      // unit / namespace
+      // unit / namespace: the file-local types of this file come first (C# 11).
+      const fileType = s.fileTypes?.get(name + '`' + arity);
+      if (fileType) return fileType;
       const ns = s.namespace,
         types = ns.getTypeMembers(name, arity);
       if (options.aliasConflicts && arity === 0 && (types.length || ns.getNamespace(name)) && this.usingsOf(s)?.aliases.has(name))

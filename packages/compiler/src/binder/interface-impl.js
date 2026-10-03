@@ -37,13 +37,16 @@ const parametersMatch = (a, b) =>
   a.parameters.every((p, i) => p.refKind === b.parameters[i].refKind && sameType(p.type, b.parameters[i].type, a, b));
 const typeOfMember = m => (m.kind === SymbolKind.Method ? m.returnType : m.type);
 const simpleName = m => m.simpleName ?? m.name;
-/** Members of an interface that need (or can take) an implementation: instance methods, properties, indexers and events. */
+/**
+ * Members of an interface that need (or can take) an implementation: instance methods, properties, indexers and
+ * events, and - C# 11 - the static abstract ones.
+ */
 export function implementableMembers(iface) {
   return iface
     .getMembers()
     .filter(
       m =>
-        !m.isStatic &&
+        (!m.isStatic || m.isAbstract) &&
         ((m.kind === SymbolKind.Method && m.methodKind === MethodKind.Ordinary) ||
           m.kind === SymbolKind.Property ||
           m.kind === SymbolKind.Event) &&
@@ -74,8 +77,9 @@ export function findImplementation(type, iface, member, core) {
     for (const c of t.getMembers(member.name)) {
       if (c.explicitInterfaceSyntax || !matches(c, member)) continue;
       const sameReturn = sameType(typeOfMember(c), typeOfMember(member), c, member);
-      if (c.isStatic) {
-        close ??= { code: 'CS0736', candidate: c };
+      // A static abstract member is implemented by a static member, an instance member by an instance member.
+      if (!!c.isStatic !== !!member.isStatic) {
+        close ??= { code: member.isStatic ? 'CS8928' : 'CS0736', candidate: c };
         continue;
       }
       if (c.declaredAccessibility !== Accessibility.Public) {
@@ -102,7 +106,7 @@ export function findImplementation(type, iface, member, core) {
     return {
       error: { code: 'CS0738', args: [typeName, memberName, close.candidate.toDisplayString(), typeOfMember(member).toDisplayString()] },
     };
-  if (close?.code === 'CS0736' || close?.code === 'CS0737')
+  if (close?.code === 'CS0736' || close?.code === 'CS0737' || close?.code === 'CS8928')
     return { error: { code: close.code, args: [typeName, memberName, close.candidate.toDisplayString()] } };
   if (close?.accessor) return { error: { code: 'CS0535', args: [typeName, memberName + '.' + close.accessor] } };
   if (member.kind === SymbolKind.Property && !member.isIndexer) {

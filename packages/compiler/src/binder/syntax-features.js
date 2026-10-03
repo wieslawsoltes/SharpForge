@@ -157,7 +157,7 @@ function typeConstraintFeatures(node, context, use) {
 
 function operatorFeatures(node, context, use) {
   const second = [...(node.parameterList?.parameters ?? [])][1];
-  if (shiftOperators.has(node.operatorToken.text) && second?.type && textOf(second.type) !== 'int') use('RelaxedShiftOperator', second.type);
+  if (shiftOperators.has(node.operatorToken.text) && second?.type && textOf(second.type) !== 'int') use('RelaxedShiftOperator', node.operatorToken);
 }
 
 function attributeFeatures(node, context, use) {

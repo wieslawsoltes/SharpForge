@@ -8,6 +8,7 @@
  * Results: `{kind:'builtin',family,leftType,rightType,resultType,isLifted}` |
  *          `{kind:'user',method,resultType,isLifted,conversions}` | `{kind:'error',code,args}`.
  */
+import { withCheckedOperators, checkedOperatorName } from './checked-operators.js';
 import { TypeKind, SymbolKind } from '../symbols/types.js';
 import { binaryNumericPromotion, unaryNumericPromotion, shiftPromotion, isIntegralKind, isNumericKind } from '../conversions/numeric.js';
 import { isNullableType, stripNullable } from '../conversions/nullable.js';
@@ -98,11 +99,15 @@ export class OperatorResolver {
     }
     return out;
   }
-  userDefined(name, operands, parameterCount) {
+  userDefined(name, operands, parameterCount, isChecked = false) {
     const candidates = [];
-    for (const o of operands)
-      for (const m of this.declared(o.type, name))
-        if (m.parameters.length === parameterCount && !candidates.includes(m)) candidates.push(m);
+    for (const o of operands) {
+      // C# 11: in a checked context `operator checked` replaces the unchecked operator with the same operands.
+      const declared = isChecked
+        ? withCheckedOperators(this.declared(o.type, name), this.declared(o.type, checkedOperatorName(name)))
+        : this.declared(o.type, name);
+      for (const m of declared) if (m.parameters.length === parameterCount && !candidates.includes(m)) candidates.push(m);
+    }
     if (!candidates.length) return null;
     const direct = this.overloads.resolve(candidates, operands, { keepBaseCandidates: true });
     if (direct.succeeded)
@@ -145,11 +150,11 @@ export class OperatorResolver {
     return { kind: 'inapplicable' };
   }
   /** Binary operator resolution for bound operands. */
-  binary(operator, left, right) {
+  binary(operator, left, right, { isChecked = false } = {}) {
     if (left.type?.isErrorType() || right.type?.isErrorType()) return { kind: 'error', suppressed: true };
     const name = binaryOperatorNames[operator];
     if (name) {
-      const user = this.userDefined(name, [left, right], 2);
+      const user = this.userDefined(name, [left, right], 2, isChecked);
       if (user?.kind === 'user') return user;
       if (user?.kind === 'error') return this.error(user.code, operator, left, right);
     }
@@ -335,7 +340,7 @@ export class OperatorResolver {
     return { ...user, isLogical: true, shortCircuitOperator: test };
   }
   /** Unary operator resolution: `+ - ! ~ ++ --` (and `true`/`false` for conditions). */
-  unary(operator, operand) {
+  unary(operator, operand, { isChecked = false } = {}) {
     const core = this.core,
       type = operand.type;
     if (type?.isErrorType()) return { kind: 'error', suppressed: true };
@@ -343,7 +348,7 @@ export class OperatorResolver {
     if (!type) return fail();
     const name = unaryOperatorNames[operator];
     if (name) {
-      const user = this.userDefined(name, [operand], 1);
+      const user = this.userDefined(name, [operand], 1, isChecked);
       if (user?.kind === 'user') return user;
       if (user?.kind === 'error') return { kind: 'error', code: 'CS0035', args: [operator, argumentDisplay(operand)] };
     }

@@ -223,7 +223,7 @@ export const MemberSymbolBuilder = Base =>
         case 'ConversionOperatorDeclaration': {
           const implicit = syntax.implicitOrExplicitKeyword.text === 'implicit',
             op = this.method(type, syntax, scope, uri, {
-              name: implicit ? 'op_Implicit' : 'op_Explicit',
+              name: implicit ? 'op_Implicit' : syntax.checkedKeyword ? 'op_CheckedExplicit' : 'op_Explicit',
               kind: MethodKind.Conversion,
               returnTypeSyntax: syntax.type,
             });
