@@ -32,7 +32,7 @@ const notGated = {
       'EmbeddedInteropTypes IndexedProperties CallerInfoAttributes AwaitExpression AwaitInCatchAndFinally ExtensionAddMethods ' +
       'ParameterlessStructInitializers Deconstruction GeneralizedAsyncReturnTypes IsPatternExpression CaseGuards OverrideWithConstraints ' +
       'PropertyPatterns PositionalPatterns NullForgivingOperator NullableDirective WithExpressions ' +
-      'UnmanagedCallingConventions AsyncMethodBuilderOverride CallerArgumentExpression ExtendedNameofScope NumericIntPtr ScopedRef ' +
+      'UnmanagedCallingConventions AsyncMethodBuilderOverride CallerArgumentExpression ExtendedNameofScope NumericIntPtr ' +
       'SlicePattern ExperimentalAttribute SpreadElement'
     )
       .split(' ')
@@ -40,6 +40,7 @@ const notGated = {
   ),
   // ---- features that need binding the compiler does not do for the gate ----
   Dynamic: 'below C# 4 Roslyn reports CS0246 for the type name `dynamic`, not a language-version diagnostic (pinned)',
+  ScopedRef: "Roslyn has no feature of this name: it reports `scoped` as 'ref fields' (CS8936 at the keyword); the walker does the same (pinned)",
   InferredTupleNames: 'Roslyn reports CS8306 where an inferred name is used, not a feature diagnostic; the binder does the same',
   NonTrailingNamedArguments: 'Roslyn reports CS1738 on the positional argument, naming the version; the binder does the same (pinned)',
   GenericPatternMatching: 'below C# 7.1 Roslyn reports CS8314 for the pattern, naming the version; the binder does the same (pinned)',
