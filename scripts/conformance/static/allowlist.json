@@ -219,6 +219,13 @@
       "reason": "Qualification adapter loads fixed compiler/build package entry points from the explicitly selected trusted checkout."
     },
     {
+      "path": "scripts/bench-pdb.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "b2bbde05d24b6b3348409d97635fce6bc19989844e2ae0bf84918f7bae8c6b80",
+      "reason": "PDB benchmark imports the symbols package from an explicitly selected trusted baseline checkout."
+    },
+    {
       "path": "scripts/bench/a03-metadata.js",
       "operation": "dynamic-import",
       "count": 1,
@@ -303,6 +310,20 @@
       "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
     },
     {
+      "path": "tests/benchmarks/cil-pe.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "e21b892d6adfad303b497ca6b85cf6f1012aaedec61289b4b1d9a592f01cd896",
+      "reason": "PE benchmark imports an operator-selected trusted CIL implementation, defaulting to the workspace package."
+    },
+    {
+      "path": "tests/benchmarks/cil-signatures.mjs",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "2db9238d68c510f869a17be100323c03774ef2828326c1ab7546d40225ec8790",
+      "reason": "Signature benchmark imports an operator-selected trusted implementation or the fixed workspace CIL package."
+    },
+    {
       "path": "tests/conformance/flaky/detect.test.js",
       "operation": "dynamic-import",
       "sha256": "e2eec7d15bd893248cedcf1b3efc3824359a9fdbf0f5ea134ca69d95ec71efc2",
@@ -315,6 +336,13 @@
       "count": 1,
       "sha256": "e2febfd9d7c3177fe2df252a7018fda03d476805d911d7419c4313adce9cf01e",
       "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    },
+    {
+      "path": "tests/fixtures/a03-pe/oracle/legacy.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "27b6522d243758a974d62eec74445356853d68751eafdaf0f13e9f0814c30dcb",
+      "reason": "Historical PE oracle generator loads the explicitly selected trusted implementation used to capture provenance."
     },
     {
       "path": "tests/fixtures/compiler-constant-conversion/capture.mjs",
