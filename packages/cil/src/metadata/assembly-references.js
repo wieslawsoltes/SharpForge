@@ -1,9 +1,12 @@
 import { CilError } from '../binary.js';
 import { normalizeAssemblyVersion, normalizeAssemblyCulture } from './assembly-identity.js';
 
+export const maxAssemblyReferences = 1024;
+export const maxAssemblyReferenceKeyBytes = 16384;
+
 /** Copy bounded reference identities; full public keys use the ECMA PublicKey flag. */
 export function assemblyReferenceRegistry(references = []) {
-  if (!Array.isArray(references) || references.length > 1024) throw new CilError('Invalid assembly reference identity count');
+  if (!Array.isArray(references) || references.length > maxAssemblyReferences) throw new CilError('Invalid assembly reference identity count');
   const registry = new Map();
   for (const reference of references) {
     const name = reference?.name;
@@ -12,7 +15,7 @@ export function assemblyReferenceRegistry(references = []) {
     }
     const flags = reference.flags ?? 0, key = reference.publicKeyOrToken ?? new Uint8Array();
     if (!Number.isInteger(flags) || flags < 0 || flags > 0x301 || (flags & ~0x301) || !(key instanceof Uint8Array)
-      || key.length > 16384 || (flags & 1 ? key.length < 16 : key.length !== 0 && key.length !== 8)) {
+      || key.length > maxAssemblyReferenceKeyBytes || (flags & 1 ? key.length < 16 : key.length !== 0 && key.length !== 8)) {
       throw new CilError('Invalid assembly reference flags or public key/token');
     }
     if (reference.version === undefined) throw new CilError('Assembly reference version must be explicit');
@@ -49,6 +52,12 @@ export function writeAssemblyReference(builder, name) {
 
 /** Recover AssemblyRef identity inputs for canonical replay without resolving or loading any assembly. */
 export function readAssemblyReferenceIdentities(metadata) {
-  return (metadata.rows[35] ?? []).map(row => ({ name: metadata.string(row[6]), version: row.slice(0, 4),
-    culture: metadata.string(row[7]), flags: row[4], publicKeyOrToken: new Uint8Array(metadata.blob(row[5])) }));
+  const rows = metadata.rows[35] ?? [];
+  if (rows.length > maxAssemblyReferences) throw new CilError('Invalid assembly reference identity count');
+  return rows.map(row => {
+    const key = metadata.blob(row[5]);
+    if (key.length > maxAssemblyReferenceKeyBytes) throw new CilError('Assembly reference public key/token exceeds size limit');
+    return { name: metadata.string(row[6]), version: row.slice(0, 4), culture: metadata.string(row[7]),
+      flags: row[4], publicKeyOrToken: new Uint8Array(key) };
+  });
 }

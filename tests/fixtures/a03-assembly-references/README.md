@@ -1,7 +1,7 @@
 # Input reference assembly identities
 
-Prepared for serial validation; native observations are not captured yet. The generator reads
-actual net9/net10 reference-pack System.Runtime and System.Console assemblies, then compiles
+Captured with .NET SDK 10.0.201 / runtime 10.0.5 on macOS ARM64. Both consumers match
+their source reference identities in `native.json`. The generator reads actual net9/net10 reference-pack System.Runtime and System.Console assemblies, then compiles
 consumers. The .NET oracle uses `Assembly.GetReferencedAssemblies` to independently inspect
 full-key AssemblyRef versions/cultures/tokens. No SHA-1 implementation is added.
 
