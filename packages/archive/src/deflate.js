@@ -1,3 +1,5 @@
+import {lengthBase as lb,lengthExtra as le,distanceBase as db,distanceExtra as de} from './deflate-codebook.js';
+export {deflateRaw} from './deflate-compress.js';
 /** Bounded RFC 1951 decoder. No platform compression support or network is required. */
 export function inflateRaw(input,expected,maxBytes=64*1024*1024){
   if(!(input instanceof Uint8Array)||!Number.isSafeInteger(expected)||expected<0||expected>maxBytes)throw new Error('Invalid or oversized compressed symbol data');
@@ -5,7 +7,7 @@ export function inflateRaw(input,expected,maxBytes=64*1024*1024){
   function read(n){while(bits<n){if(ip>=input.length)throw new Error('Truncated DEFLATE stream');buf|=input[ip++]<<bits;bits+=8;}const v=buf&((1<<n)-1);buf>>>=n;bits-=n;return v;}
   function table(lengths){const counts=new Uint16Array(16),next=new Uint16Array(16);for(const n of lengths){if(n>15)throw new Error('Invalid Huffman length');if(n)counts[n]++;}let code=0,remaining=1;for(let i=1;i<=15;i++){remaining=remaining*2-counts[i];if(remaining<0)throw new Error('Oversubscribed Huffman tree');code=(code+counts[i-1])<<1;next[i]=code;}const map=new Map();lengths.forEach((n,s)=>{if(n){let c=next[n]++,r=0;for(let i=0;i<n;i++){r=(r<<1)|(c&1);c>>>=1;}map.set((1<<n)|r,s);}});return map;}
   function symbol(t){let c=0;for(let n=1;n<=15;n++){c|=read(1)<<(n-1);const s=t.get((1<<n)|c);if(s!==undefined)return s;}throw new Error('Invalid Huffman code');}
-  const lb=[3,4,5,6,7,8,9,10,11,13,15,17,19,23,27,31,35,43,51,59,67,83,99,115,131,163,195,227,258],le=[0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,0],db=[1,2,3,4,5,7,9,13,17,25,33,49,65,97,129,193,257,385,513,769,1025,1537,2049,3073,4097,6145,8193,12289,16385,24577],de=[0,0,0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13];
+
   let final=0,blocks=0;
   while(!final){if(++blocks>Math.max(1024,input.length*2))throw new Error('DEFLATE block limit exceeded');final=read(1);const kind=read(2);if(kind===0){buf=0;bits=0;if(ip+4>input.length)throw new Error('Truncated stored block');const n=input[ip]|input[ip+1]<<8,inv=input[ip+2]|input[ip+3]<<8;ip+=4;if((n^inv)!==65535||ip+n>input.length||op+n>out.length)throw new Error('Invalid stored block');out.set(input.subarray(ip,ip+n),op);ip+=n;op+=n;continue;}if(kind===3)throw new Error('Reserved DEFLATE block');let ll,dd;
     if(kind===1){ll=Array.from({length:288},(_,i)=>i<144?8:i<256?9:i<280?7:8);dd=Array(32).fill(5);}else{const nl=read(5)+257,nd=read(5)+1,nc=read(4)+4;const realOrder=[16,17,18,0,8,7,9,6,10,5,11,4,12,3,13,2,14,1,15],cl=Array(19).fill(0);for(let i=0;i<nc;i++)cl[realOrder[i]]=read(3);const t=table(cl),lens=[];while(lens.length<nl+nd){const x=symbol(t);if(x<16)lens.push(x);else{if(x===16&&!lens.length)throw new Error('Invalid repeat');const n=x===16?read(2)+3:x===17?read(3)+3:read(7)+11,v=x===16?lens.at(-1):0;if(lens.length+n>nl+nd)throw new Error('Huffman repeat overflow');for(let i=0;i<n;i++)lens.push(v);}}ll=lens.slice(0,nl);dd=lens.slice(nl);}
