@@ -233,7 +233,7 @@ export class SourceAssemblyCore {
     if (type.isRecord) synthesizeRecordMembers(type, members, this.core);
     // Partial members become one symbol each before duplicates are looked for.
     for (const row of mergePartialMembers(type, members)) {
-      const at = row.member.locations?.[0];
+      const at = row.at ?? row.member.locations?.[0];
       if (at) this.report(at.uri, at, row.code, row.args);
     }
     this.reportConflicts(type, members);

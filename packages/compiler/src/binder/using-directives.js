@@ -67,8 +67,13 @@ export function bindUsingDirectives(binder, scope, createOuterScope) {
     if (directive.staticKeyword) {
       if (isNamespace) binder.report(at, target, 'CS7007', [symbol.toDisplayString()]);
       else bound.staticTypes.push(symbol);
-    } else if (isNamespace) bound.namespaces.push(symbol);
-    else binder.report(at, target, 'CS0138', [symbol.toDisplayString()]);
+    } else if (isNamespace) {
+      bound.namespaces.push(symbol);
+      // A namespace that exists only as the parent of a modelled one (System.Linq of System.Linq.Expressions) has
+      // types and extension methods the registry does not list: what it could supply is unknown, like an unmodelled using.
+      const isImplicit = origin === implicitUsingsUri;
+      if (!symbol.getTypeMembers().length && host.tolerateNamespace?.(textOf(target), { isImplicit })) host.unknownUsing?.();
+    } else binder.report(at, target, 'CS0138', [symbol.toDisplayString()]);
   }
   return bound;
 }

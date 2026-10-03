@@ -140,6 +140,7 @@ export const BodyBinding = Base =>
           if (member.methodKind === MethodKind.Constructor && member.initializerSyntax) {
             const binder = new BodyBinder(this, { ...context, parameters: member.parameters, isConstructorInitializer: true });
             this.bindConstructorInitializer(member, type, binder);
+            context.outerLocals = binder.scopes[0];
           }
           this.bindMethodBody(member, context);
         } else {
@@ -197,7 +198,12 @@ export const BodyBinding = Base =>
           }
         }
         for (const d of checkConstructorCycles(type, c => c.thisTarget ?? null))
-          this.report(this.at(d.ctor).uri, d.ctor.initializerSyntax?.thisOrBaseKeyword ?? this.at(d.ctor), d.code, d.args);
+        {
+          // A constructor that calls itself is reported at `this`, a longer cycle at the whole initializer.
+          const initializer = d.ctor.initializerSyntax,
+            at = (d.code === 'CS0768' ? initializer : initializer?.thisOrBaseKeyword) ?? this.at(d.ctor);
+          this.report(this.at(d.ctor).uri, at, d.code, d.args);
+        }
       }
       this.bindTopLevel();
     }

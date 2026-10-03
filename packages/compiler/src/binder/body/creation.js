@@ -128,6 +128,12 @@ export const CreationBinding = Base =>
         initializer,
       );
     }
+    /** An element of `new[] { ... }` converted to the best common type; a failed conversion is reported on the element. */
+    implicitArrayElement(value, elementType) {
+      const converted = this.convert(value, elementType, value.syntax);
+      if (value.form === 'lambda' && !converted.hasErrors) this.finishLambda(value, elementType);
+      return converted;
+    }
     arrayCreation(syntax) {
       const implicit = syntax.kind === 'ImplicitArrayCreationExpression',
         init = syntax.initializer;
@@ -145,7 +151,7 @@ export const CreationBinding = Base =>
           return this.bad(syntax);
         }
         return this.node('ArrayCreation', syntax, this.core.arrayOf(elementType, rank), {
-          elements: values.map(v => this.convert(v, elementType)),
+          elements: values.map(v => this.implicitArrayElement(v, elementType)),
         });
       }
       const typeSyntax = syntax.type,

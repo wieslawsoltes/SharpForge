@@ -17,14 +17,18 @@ import { ConstantBinding } from './semantic/constants.js';
 import { BodyBinding } from './semantic/body-binding.js';
 import { TopLevelPrograms } from './binder/top-level.js';
 import { UnusedSymbolWarnings } from './semantic/unused-symbols.js';
+import { AttributeBinding } from './binder/attributes.js';
+import { ObsoleteUses } from './binder/obsolete.js';
 
 const phases = [
   DeclarationChecks,
   MemberDeclarationChecks,
   ConstantBinding,
+  AttributeBinding,
   BodyBinding,
   TopLevelPrograms,
   MemberBodyChecks,
+  ObsoleteUses,
   UnusedSymbolWarnings,
 ];
 
