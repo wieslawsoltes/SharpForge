@@ -1,3 +1,4 @@
+import {nativeSize} from './native-int.js';
 import {ManagedFault} from '../heap.js';
 import {storageValue} from './storage.js';
 import {number,float} from './numeric-ops.js';
@@ -12,6 +13,9 @@ export function int64BitsToDouble(value) {const view=new DataView(new ArrayBuffe
 const bits={SingleToInt32Bits:singleToInt32Bits,DoubleToInt64Bits:doubleToInt64Bits,Int32BitsToSingle:int32BitsToSingle,Int64BitsToDouble:int64BitsToDouble};
 const signatures={SingleToInt32Bits:['float','int'],DoubleToInt64Bits:['double','long'],Int32BitsToSingle:['int','float'],Int64BitsToDouble:['long','double']};
 export function invokeNumericIntrinsic(vm,descriptor,args) {
+  if (['System.IntPtr', 'System.UIntPtr'].includes(descriptor.owner) && descriptor.name === 'get_Size') {
+    return {handled: true, value: nativeSize(vm.options)};
+  }
   if(descriptor.owner==='System.Object'&&descriptor.name==='.ctor'&&args.length===0)return {handled:true,value:vm.heap.object('System.Object',[])};
   if(descriptor.owner==='System.Console'&&['Write','WriteLine'].includes(descriptor.name)){const signature=descriptor.signature??descriptor;vm.emitOutput((args.length?vm.format(args[0],descriptor.formatType??signature.parameters[0]):'')+(descriptor.name==='WriteLine'?'\n':''));return {handled:true,value:null};}
   const signature=descriptor.signature??descriptor;
