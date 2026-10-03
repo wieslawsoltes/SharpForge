@@ -408,8 +408,13 @@
       "deliverable": "Add tests/engine-parity.test.js running every language fixture through VirtualMachine and CilVirtualMachine and failing on differing output, exception type or exit code; list permitted divergences explicitly in tests/support/engine-parity-allowlist.js.",
       "acceptance": "- [ ] Parity suite runs in CI; allowlist has an owner and reason per entry; new fixtures are included automatically.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "pending",
-      "evidence": []
+      "status": "implemented; full E04 validation pending",
+      "evidence": [
+        "tests/engine-parity.test.js",
+        "tests/support/engine-parity-allowlist.js"
+      ],
+      "parent": "SF-A05-E04",
+      "parentIssue": 462
     },
     {
       "id": "SF-A05-T29",
