@@ -41,7 +41,7 @@ test('T42 the legacy entry point keeps accepting statements after declarations',
   const source = 'class Counter { public int Value; } var counter = new Counter(); Console.WriteLine(counter.Value);';
   assert.deepEqual(parse(source).diagnostics, [], 'the back end has always run such programs');
   assert.deepEqual(
-    parse(source, undefined, { statementsAfterDeclarations: false }).diagnostics.map(diagnostic => diagnostic.code),
+    parse(source, undefined, { backEndProfile: false }).diagnostics.map(diagnostic => diagnostic.code),
     ['CS8803']
   );
 });

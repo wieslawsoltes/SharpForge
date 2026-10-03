@@ -236,6 +236,7 @@ export const expressionMethods = {
       const alias = this.n('IdentifierName', this.atWord('global') ? this.takeWord('global') : this.id());
       return this.n('AliasQualifiedName', alias, this.take(), this.simpleName(false));
     }
+    if (this.fieldKeyword && this.isFieldExpression()) return this.fieldExpression();
     return this.simpleName(false);
   }
 };
