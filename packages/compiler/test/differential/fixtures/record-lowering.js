@@ -194,5 +194,30 @@ export const fixtures = [
     }
   `,
     ),
+    diag(
+      'record-struct-members-bind',
+      cs`
+    record struct Size(int Width, int Height);
+    readonly record struct Fixed(int Value);
+    class Program
+    {
+        static void Main()
+        {
+            var a = new Size(1, 2);
+            a.Width = 3;
+            var (w, h) = a;
+            bool same = a == new Size(3, 2);
+            string text = a.ToString();
+            int wrong = a.Equals(a);
+            var (p, q, r) = a;
+            var f = new Fixed(1);
+            f.Value = 2;
+            Size none = null;
+            var b = a with { Height = "tall" };
+            System.Console.WriteLine(w + h + text + same + f.Value + b.Width);
+        }
+    }
+  `,
+    ),
   ]),
 ];
