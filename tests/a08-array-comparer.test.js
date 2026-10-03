@@ -31,19 +31,18 @@ function nativeCase(row) {
   const value = row.sign ? '(value < 0 ? -1 : value > 0 ? 1 : 0)' : 'value';
   return `try { int value = ${row.expression}; Console.WriteLine(${prefix} + ${value}); }
     catch (Exception error) {
-      Console.WriteLine(${prefix} + error.GetType().Name + "/" +
-        (error.InnerException == null ? "none" : error.InnerException.GetType().Name));
+      Console.WriteLine(${prefix} + error.GetType().Name);
     }`;
 }
 
 for (const [engine, create] of Object.entries(engines)) {
-  test(`array comparer ${engine}: non-generic calls and inner exceptions match native capture`, async () => {
+  test(`array comparer ${engine}: non-generic calls and outer exceptions match native capture`, async () => {
     const reference = JSON.parse(await readFile(oracleURL, 'utf8'));
     const cases = reference.cases.filter(row => !row.nativeOnly && !platformOnly.has(row.id));
     const program = 'IComparer cmp = StringComparer.Ordinal;object shared = new object();' + cases.map(nativeCase).join('\n');
     const result = create(compile(program)).run();
     assert.equal(result.state, 'terminated', JSON.stringify(result.fault));
-    const expected = cases.map(row => `${row.id}:${row.error ? row.error + '/' + (row.inner ?? 'none') : row.value}`).join('\n');
+    const expected = cases.map(row => `${row.id}:${row.error ?? row.value}`).join('\n');
     assert.equal(result.output, expected + '\n');
   });
 
@@ -79,7 +78,8 @@ for (const [engine, create] of Object.entries(engines)) {
 
   test(`array comparer ${engine}: NaN and wrapped faults retain managed identity and roots`, async () => {
     const reference = JSON.parse(await readFile(oracleURL, 'utf8'));
-    const platform = create(compile('Console.WriteLine(0);')).platform;
+    const vm = create(compile('Console.WriteLine(0);'));
+    const platform = vm.platform;
     const compare = contract(comparerType, 'Compare', ['object', 'object']);
     const search = contract('System.Array', 'BinarySearch', ['System.Array', 'object', comparerType]);
     const comparer = platform.invoke(contract('System.StringComparer', 'get_Ordinal'), []);
@@ -94,18 +94,35 @@ for (const [engine, create] of Object.entries(engines)) {
         const expected = reference.cases.find(row => row.id === id);
         assert.equal(Math.sign(platform.invoke(compare, [comparer, nan, right])), expected.value);
       }
-      const array = platform.heap.allocate('array', 'int[]', [1, 2, 3]);
-      platform.heap.pins.push(array);
-      const value = box('double', 2);
-      let fault;
-      try { platform.invoke(search, [array, value, comparer]); } catch (error) { fault = error; }
-      assert.equal(fault?.name, 'InvalidOperationException');
-      assert.ok(fault.reference, 'Wrapped managed fault owns an exception reference');
-      platform.heap.withRoots([fault.reference], () => {
-        platform.heap.collect();
-        const inner = platform.heap.get(fault.reference).data[1];
-        assert.equal(platform.heap.get(inner).methodTable.name, 'System.ArgumentException');
-      });
+      const allocate = (kind, type, data) => {
+        const result = platform.heap.allocate(kind, type, data);
+        platform.heap.pins.push(result);
+        return result;
+      };
+      const text = platform.heap.string('a');
+      platform.heap.pins.push(text);
+      const cases = [
+        ['mixed-search', allocate('array', 'int[]', [1, 2, 3]), box('double', 2)],
+        ['string-search-number', allocate('array', 'string[]', [text]), box('int', 2)],
+        ['opaque-search', allocate('array', 'object[]', [allocate('object', 'object', [])]), allocate('object', 'object', [])]
+      ];
+      for (const [id, array, value] of cases) {
+        const expected = reference.cases.find(row => row.id === id);
+        let fault;
+        try { platform.invoke(search, [array, value, comparer]); } catch (error) { fault = error; }
+        assert.equal(fault?.name, expected.error, id);
+        assert.ok(fault.reference, 'Wrapped managed fault owns an exception reference');
+        platform.heap.withRoots([fault.reference], () => {
+          platform.heap.collect();
+          const inner = platform.heap.get(fault.reference).data[1];
+          assert.equal(platform.heap.get(inner).methodTable.name, 'System.' + expected.inner, id);
+          if (engine === 'cil') {
+            const getter = {kind: 'method', owner: 'System.Exception', name: 'get_InnerException',
+              signature: {isStatic: false, parameters: [], returnType: 'System.Exception'}};
+            assert.equal(vm.intrinsic(getter, [fault.reference]), inner, id);
+          }
+        });
+      }
     });
   });
 
@@ -145,6 +162,9 @@ test('array comparer: reference pins capture source and exact released non-gener
   const source = await readFile(captureURL);
   assert.equal(reference.sourceSha256, createHash('sha256').update(source).digest('hex'));
   const descriptor = contract('System.Array', 'BinarySearch', ['System.Array', 'object', comparerType]);
+  assert.equal(contract(comparerType, 'Compare', ['object', 'object']).id, 524293);
+  assert.equal(contract('System.StringComparer', 'Compare', ['object', 'object']).id, 524294);
+  assert.equal(descriptor.id, 524295);
   assert.equal(descriptor.result, 'int');
   assert.equal(descriptor.isStatic, true);
   assert.equal(contract('System.StringComparer', 'get_Ordinal').id, 524291);

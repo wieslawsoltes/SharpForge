@@ -12,7 +12,10 @@ Array.BinarySearch(Array, object, IComparer) overload. Comparison signs are
 normalized; binary-search indices and complemented insertion positions are not.
 Both exception type and InnerException type are retained.
 
-Managed source/CIL tests generate calls from the captured expressions. NaN cases
+Managed source/CIL tests generate calls from the captured expressions and compare
+outer exception types. InnerException has no source lowering yet, so direct
+managed-platform tests check all three captured wrapped failures after collection,
+including the CIL InnerException getter. NaN cases
 use direct managed-platform boxes because source double.NaN fields are outside
 the current execution profile. Rank-two rejection uses a managed array header;
 this does not claim source multidimensional-array construction support. Capture
