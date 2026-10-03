@@ -47,7 +47,9 @@ export function runFixture(fixture,pinned,options={}){
   const foreign=actual.filter(d=>!/^CS\d{4}$/.test(String(d[0])));
   if(foreign.length){row.details.actual=actual.map(key);return unsupported('profile diagnostics '+[...new Set(foreign.map(d=>d[0]))].join(' '));}
   for(const [axis,severity] of [['diagnostics','error'],['warnings','warning']]){
-    const want=keys(pinned.diagnostics,severity),got=keys(actual,severity);row[axis]=same(want,got);
+    // Roslyn reports some diagnostics without a location (start -1, e.g. CS5001): for those only the code is compared.
+    const unlocated=new Set(pinned.diagnostics.filter(d=>d[1]<0).map(d=>d[0])),normalize=rows=>rows.map(d=>unlocated.has(d[0])?[d[0],-1,0,d[3]]:d);
+    const want=keys(normalize(pinned.diagnostics),severity),got=keys(normalize(actual),severity);row[axis]=same(want,got);
     if(!row[axis])row.details[axis]={missing:want.filter(k=>!got.includes(k)),unexpected:got.filter(k=>!want.includes(k))};
   }
   if(fixture.kind==='output'){

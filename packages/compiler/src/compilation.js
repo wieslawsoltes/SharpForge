@@ -121,7 +121,7 @@ export class Compilation {
     const library=this.options.outputKind==='library';
     // Entry point: top-level statements, else the one suitable static Main (binder/entry-point.js).
     const selection=findEntryPoint({methods:this.methods,topLevel:tops,isLibrary:library,mainTypeName:this.options.mainTypeName??null,types:this.types,root:this.files[0]?.root??{},asyncMainAvailable:node=>this.requireFeature(node,7.1,'async main')});
-    for(const d of selection.diagnostics)this.report(d.node,d.code,d.args);
+    for(const d of selection.diagnostics)this.report(d.node?.nameSpan?{uri:d.node.uri,start:d.node.nameSpan.start,end:d.node.nameSpan.end}:d.node,d.code,d.args);
     let entry=selection.method;
     if(selection.kind==='topLevel'){const {file,statements}=selection.topLevel;entry=this.declareMethod(null,{kind:'Method',name:'<Main>',returnType:'void',parameters:[],modifiers:['static'],body:{kind:'Block',statements,start:0,end:file.source.length,uri:file.source.uri},uri:file.source.uri,start:0,end:file.source.length});}
     // Per-type instance initializer routines execute before constructors.
