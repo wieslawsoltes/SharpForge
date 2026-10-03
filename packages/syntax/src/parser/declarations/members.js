@@ -118,15 +118,5 @@ export const memberMethods = {
     } finally {
       this.inAsync = saved;
     }
-  },
-  /** A block body, an expression body (`=> e;`) or a bare semicolon: returns [body, expressionBody, semicolonToken]. */
-  functionBody(feature) {
-    if (this.at('{')) return [this.block(), null, this.match(';')];
-    if (this.at('=>')) {
-      if (feature) this.feature(feature, this.current);
-      const arrow = this.take();
-      return [null, this.n('ArrowExpressionClause', arrow, this.expressionOrRef()), this.expect(';')];
-    }
-    return [null, null, this.expect(';')];
   }
 };

@@ -18,7 +18,7 @@ export const objectCreationMethods = {
       return this.n('ArrayCreationExpression', keyword, type, this.at('{') ? this.initializerExpression('ArrayInitializerExpression') : null);
     const args = this.at('(') ? this.argumentList() : null,
       initializer = this.at('{') ? this.objectOrCollectionInitializer() : null;
-    if (!args && !initializer) this.error(this.current, 'CS1526', 'A new expression requires an argument list or (), [], or {} after type');
+    if (!args && !initializer) this.error(this.errorAnchor(), 'CS1526', 'A new expression requires an argument list or (), [], or {} after type');
     return this.n('ObjectCreationExpression', keyword, type, args, initializer);
   }
 };
