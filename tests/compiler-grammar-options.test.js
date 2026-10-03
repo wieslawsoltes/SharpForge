@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { compile } from '@sharpforge/compiler';
+import { compile, SemanticModel } from '@sharpforge/compiler';
 import { parse } from '@sharpforge/syntax';
 import { SourceText } from '@sharpforge/text';
 
@@ -19,4 +19,12 @@ test('per-file language versions and preprocessor symbols reach parsing together
   const result = compile(files, { langVersion: '14', langVersionByUri: { 'Old.cs': '8' }, preprocessorSymbols: 'OLD;EXTRA' });
   assert.equal(result.success, true, JSON.stringify(result.diagnostics));
   assert.equal(compile(files, { langVersion: '8', preprocessorSymbols: [] }).success, false);
+});
+
+test('semantic model creation uses the same grammar and conditional compilation as compile', () => {
+  const files = [{ uri: 'Old.cs', text: `#if OLD\n${source}\n#else\n#error Wrong symbols\n#endif` }];
+  const options = { langVersion: '14', langVersionByUri: { 'Old.cs': '8' }, preprocessorSymbols: ['OLD'] };
+  const result = SemanticModel.create(files, options).result;
+  assert.equal(result.success, true, JSON.stringify(result.diagnostics));
+  assert.deepEqual(result.diagnostics, compile(files, options).diagnostics);
 });
