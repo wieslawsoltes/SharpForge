@@ -8,10 +8,11 @@
  *   Task<Animal>, Task<Box<int>>, Task<int[]>   ->  the registry's `Task<object>`
  *
  * Only arguments whose values the framework can treat as plain references are erased: classes without value
- * equality and arrays. A record, a delegate or a tuple has equality that differs from reference equality (and a
- * tuple is a value type on .NET), so a construction over one of them is not erased and stays unsupported.
+ * equality (source classes that do not define equality, framework classes) and arrays. A record, a delegate or a
+ * tuple has equality that differs from reference equality (and a tuple is a value type on .NET), so a construction
+ * over one of them is not erased and stays unsupported.
  */
-import { NamedTypeSymbol, ArrayTypeSymbol, TypeKind, TypeWithAnnotations, typeOf } from '../../symbols/types.js';
+import { NamedTypeSymbol, ConstructedNamedTypeSymbol, ArrayTypeSymbol, TypeKind, TypeWithAnnotations, typeOf } from '../../symbols/types.js';
 
 export class FrameworkConstructions {
   /** @param host the generator: `{isSource(symbol), analysis: {core}, bridge}` */
@@ -29,7 +30,21 @@ export class FrameworkConstructions {
     }
     if (type instanceof ArrayTypeSymbol) return type.rank === 1;
     if (!(type instanceof NamedTypeSymbol) || type.specialType) return false;
-    return type.typeKind === TypeKind.Class && this.host.isSource(type) && !type.isRecord && !type.isTupleType;
+    if (type.typeKind !== TypeKind.Class || type.isRecord || type.isTupleType) return false;
+    // A source class that defines its own equality is compared by it on .NET (`Contains`, `HashSet<T>`).
+    if (this.host.isSource(type)) return !this.definesEquality(type);
+    // A framework class is a plain reference too: `List<List<int>>`, `Dictionary<string, List<Animal>>`.
+    return !!(this.host.bridge.registryName(type) ?? this.imageTypeOf(type));
+  }
+  /** True when a source class or one of its base classes declares `Equals` or `GetHashCode`, or implements `IEquatable<T>`. */
+  definesEquality(type) {
+    for (let current = type, depth = 0; current && depth < 64; current = current.baseType, depth++) {
+      if (!this.host.isSource(current)) break;
+      const definition = current.originalDefinition;
+      if (definition.getMembers('Equals').length || definition.getMembers('GetHashCode').length) return true;
+      if (current.interfaces.some(candidate => candidate.name === 'IEquatable')) return true;
+    }
+    return false;
   }
   /**
    * The registry's symbol for a framework construction: the listed one, or the one over `object` for every erasable
@@ -39,7 +54,8 @@ export class FrameworkConstructions {
     if (!(type instanceof NamedTypeSymbol) || this.host.isSource(type)) return null;
     const definition = type.originalDefinition,
       provider = definition.instanceProvider;
-    if (!definition.arity || !provider) return null;
+    // Delegate types are lowered to image classes of their own: the registry's delegates are not shared.
+    if (!definition.arity || !provider || definition.typeKind === TypeKind.Delegate) return null;
     const construct = typeArguments =>
       provider(
         definition,
@@ -52,6 +68,19 @@ export class FrameworkConstructions {
     const object = this.host.analysis.core.object,
       shared = construct(typeArguments.map(argument => (this.isErasable(argument, definition) ? object : argument)));
     return shared ? { type: shared, erased: true } : null;
+  }
+  /**
+   * For a construction of a registry generic that no registry instantiation can run: the display name of the
+   * instantiation the registry would have to list (reference arguments over `object`). Null for any other type.
+   */
+  missingContract(type) {
+    if (!(type instanceof NamedTypeSymbol) || this.host.isSource(type)) return null;
+    const definition = type.originalDefinition;
+    if (!definition.arity || !definition.instanceProvider || definition.typeKind === TypeKind.Delegate) return null;
+    if (this.registryConstruction(type)) return null;
+    const object = this.host.analysis.core.object,
+      wanted = type.typeArguments.map(argument => (this.isErasable(typeOf(argument), definition) ? new TypeWithAnnotations(object) : argument));
+    return new ConstructedNamedTypeSymbol(definition, wanted).toDisplayString();
   }
   /** The image type name of a framework construction the registry does not list under its own symbol, or null. */
   imageTypeOf(type) {

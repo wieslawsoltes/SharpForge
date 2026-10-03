@@ -222,60 +222,11 @@ Kind: numeric; family: parallel.
 
 ## System.Array
 
-Kind: bcl14; family: array.
-
-- `static void Copy(int[], int[], int)`
-- `static void Copy(int[], int, int[], int, int)`
-- `static void Clear(int[], int, int)`
-- `static void Fill(int[], int)`
-- `static void Fill(int[], int, int, int)`
-- `static int IndexOf(int[], int)`
-- `static int LastIndexOf(int[], int)`
-- `static int BinarySearch(int[], int)`
-- `static void Copy(double[], double[], int)`
-- `static void Copy(double[], int, double[], int, int)`
-- `static void Clear(double[], int, int)`
-- `static void Fill(double[], double)`
-- `static void Fill(double[], double, int, int)`
-- `static int IndexOf(double[], double)`
-- `static int LastIndexOf(double[], double)`
-- `static int BinarySearch(double[], double)`
-- `static void Copy(bool[], bool[], int)`
-- `static void Copy(bool[], int, bool[], int, int)`
-- `static void Clear(bool[], int, int)`
-- `static void Fill(bool[], bool)`
-- `static void Fill(bool[], bool, int, int)`
-- `static int IndexOf(bool[], bool)`
-- `static int LastIndexOf(bool[], bool)`
-- `static int BinarySearch(bool[], bool)`
-- `static void Copy(string[], string[], int)`
-- `static void Copy(string[], int, string[], int, int)`
-- `static void Clear(string[], int, int)`
-- `static void Fill(string[], string)`
-- `static void Fill(string[], string, int, int)`
-- `static int IndexOf(string[], string)`
-- `static int LastIndexOf(string[], string)`
-- `static int BinarySearch(string[], string)`
-- `static void Copy(object[], object[], int)`
-- `static void Copy(object[], int, object[], int, int)`
-- `static void Clear(object[], int, int)`
-- `static void Fill(object[], object)`
-- `static void Fill(object[], object, int, int)`
-- `static int IndexOf(object[], object)`
-- `static int LastIndexOf(object[], object)`
-- `static int BinarySearch(object[], object)`
+Registered contracts and pinned reference status are maintained in [the BCL module inventory](bcl-api.md#registered-bcl-modules-and-pinned-reference-status).
 
 ## System.Random
 
-Kind: bcl14; family: random.
-
-- `System.Random .ctor()`
-- `System.Random .ctor(int)`
-- `static System.Random get_Shared()`
-- `int Next()`
-- `int Next(int)`
-- `int Next(int, int)`
-- `double NextDouble()`
+Registered contracts and pinned reference status are maintained in [the BCL module inventory](bcl-api.md#registered-bcl-modules-and-pinned-reference-status).
 
 ## System.Text.Json.JsonDocument
 

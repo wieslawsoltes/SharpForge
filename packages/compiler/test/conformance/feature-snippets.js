@@ -252,7 +252,8 @@ const csharp8 = {
     'class A { public virtual void M<T>(T? x) where T : struct { } } ' +
       'class B : A { public override void M<T>(T? x) where T : struct { } }',
   ),
-  NestedStackalloc: main('System.Span<int> s = true ? stackalloc int[1] : stackalloc int[2];'),
+  // A conditional operator over two stackallocs initializing a local is allowed before C# 8 (pinned); parentheses are not.
+  NestedStackalloc: main('System.Span<int> s = (stackalloc int[1]);'),
   NullableReferenceTypes: main('string? s = null;'),
   NullPointerConstantPattern: type('static unsafe bool M(int* p) { return p is null; }'),
   SwitchExpression: main('int a = 1; int b = a switch { 1 => 2, _ => 3 };'),

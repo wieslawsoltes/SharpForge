@@ -2,7 +2,8 @@
   "schemaVersion": 1,
   "area": "A13",
   "nodeGlobs": [
-    "tests/portable-pdb.test.js"
+    "tests/portable-pdb.test.js",
+    "tests/a13-01-*.test.js"
   ],
   "browserScripts": [],
   "requiredServices": [],
