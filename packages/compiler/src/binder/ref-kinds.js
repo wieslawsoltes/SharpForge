@@ -12,6 +12,7 @@
  * `argumentRefKind` reads the modifier of an Argument syntax, and `byRefEmission` describes how a back end passes
  * the argument (address of a local, field, element or temporary copy for `in` rvalues).
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { RefKind, SymbolKind, TypeKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 
@@ -167,33 +168,33 @@ export function checkWritable(expression, use, context = {}) {
   if (expression.type?.isErrorType?.() || expression.hasErrors) return null;
   const c = classifyVariable(expression, context),
     byRef = use === 'ref' || use === 'out';
-  if (byRef && c.isProperty) return { code: 'CS0206', args: [] };
+  if (byRef && c.isProperty) return { code: DiagnosticId.CS0206, args: [] };
   if (c.isWritable && (c.isVariable || !byRef)) return null;
   const name = c.symbol?.toDisplayString?.() ?? c.symbol?.name ?? '';
   switch (c.reason) {
     case 'readonlyLocal':
-      return { code: byRef ? 'CS1657' : 'CS1656', args: [c.symbol.name, c.detail] };
+      return { code: byRef ? DiagnosticId.CS1657 : DiagnosticId.CS1656, args: [c.symbol.name, c.detail] };
     case 'readonlyRef':
-      return { code: byRef ? 'CS8329' : 'CS8331', args: [c.detail, c.symbol.name] };
+      return { code: byRef ? DiagnosticId.CS8329 : DiagnosticId.CS8331, args: [c.detail, c.symbol.name] };
     case 'readonlyField':
-      return c.symbol.isStatic ? { code: byRef ? 'CS0199' : 'CS0198', args: [] } : { code: byRef ? 'CS0192' : 'CS0191', args: [] };
+      return c.symbol.isStatic ? { code: byRef ? DiagnosticId.CS0199 : DiagnosticId.CS0198, args: [] } : { code: byRef ? DiagnosticId.CS0192 : DiagnosticId.CS0191, args: [] };
     case 'readonlyFieldMember':
-      return { code: byRef ? 'CS1649' : 'CS1648', args: [name] };
+      return { code: byRef ? DiagnosticId.CS1649 : DiagnosticId.CS1648, args: [name] };
     case 'this':
-      return { code: byRef ? 'CS1605' : 'CS1604', args: ['this'] };
+      return { code: byRef ? DiagnosticId.CS1605 : DiagnosticId.CS1604, args: ['this'] };
     case 'rvalueStructMember':
-      return { code: 'CS1612', args: [describe(c.receiver)] };
+      return { code: DiagnosticId.CS1612, args: [describe(c.receiver)] };
     case 'noSetter':
-      return { code: 'CS0200', args: [name] };
+      return { code: DiagnosticId.CS0200, args: [name] };
     case 'initOnly':
-      return { code: 'CS8852', args: [name] };
+      return { code: DiagnosticId.CS8852, args: [name] };
     case 'methodGroup':
-      return { code: byRef ? 'CS1657' : 'CS1656', args: [expression.name ?? '', 'method group'] };
+      return { code: byRef ? DiagnosticId.CS1657 : DiagnosticId.CS1656, args: [expression.name ?? '', 'method group'] };
     case 'constant':
-      if (!byRef) return { code: use === 'increment' ? 'CS1059' : 'CS0131', args: [] };
+      if (!byRef) return { code: use === 'increment' ? DiagnosticId.CS1059 : DiagnosticId.CS0131, args: [] };
     // falls through
     default:
-      return { code: byRef ? 'CS1510' : use === 'increment' ? 'CS1059' : 'CS0131', args: [] };
+      return { code: byRef ? DiagnosticId.CS1510 : use === 'increment' ? DiagnosticId.CS1059 : DiagnosticId.CS0131, args: [] };
   }
 }
 const describe = e =>
