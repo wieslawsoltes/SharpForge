@@ -66,6 +66,24 @@ function declarations(files) {
   return types;
 }
 
+/**
+ * Enumerate direct UserControl declarations for worker-side named-class analysis. Candidates
+ * make no compilation or preview support claim; a separate capability analysis must qualify them.
+ */
+export function projectControlCandidates(files) {
+  if (!Array.isArray(files)) throw new TypeError('Project control source files are required');
+  const candidates = new Map();
+  for (const declaration of declarations(files)) {
+    const direct = declaration.bases.some(base => {
+      const name = declaration.aliases.get(base) ?? base;
+      return name === baseControl || name === 'UserControl' && declaration.imports.has('Microsoft.UI.Xaml.Controls');
+    });
+    if (direct) candidates.set(declaration.type + '\0' + declaration.uri, {type: declaration.type, uri: declaration.uri});
+  }
+  if (candidates.size > 512) throw new RangeError('Project control catalog exceeds 512 items');
+  return [...candidates.values()].sort((left, right) => left.type.localeCompare(right.type) || String(left.uri).localeCompare(String(right.uri)));
+}
+
 /** Discovers constructible UserControls only from a successful compilation snapshot. */
 export function discoverProjectControls({success, files = [], projectTypes, version = 0}) {
   if (!success) return [];
