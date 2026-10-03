@@ -169,7 +169,7 @@ export const ConversionBinding = Base =>
       return this.markRead(e);
     }
     markRead(e) {
-      if (e.kind === 'PropertyAccess' && !e.readChecked) {
+      if ((e.kind === 'PropertyAccess' || (e.kind === 'IndexerAccess' && e.property.containingType)) && !e.readChecked) {
         e.readChecked = true;
         const p = e.property;
         if (!p.getMethod && p.setMethod) this.report(e.syntax, 'CS0154', [p.toDisplayString()]);
