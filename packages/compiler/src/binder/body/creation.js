@@ -71,7 +71,7 @@ export const CreationBinding = Base =>
         return this.bad(syntax);
       }
       if (type.isStatic) {
-        this.report(typeNode, 'CS0712', [this.display(type)]);
+        this.report(typeNode === syntax.newKeyword ? typeNode : syntax, 'CS0712', [this.display(type)]);
         return this.bad(syntax);
       }
       if (type.typeKind === TypeKind.TypeParameter) {

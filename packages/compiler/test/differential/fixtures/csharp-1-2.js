@@ -5,5 +5,11 @@
 import { fixtures as jumps } from './jumps.js';
 import { fixtures as exceptionHandling } from './exception-handling.js';
 import { fixtures as statementLowering } from './statement-lowering.js';
+import { fixtures as typeModifiers } from './type-modifiers.js';
 
-export const fixtures = [...jumps, ...exceptionHandling, ...statementLowering];
+export const fixtures = [
+  ...jumps,
+  ...exceptionHandling,
+  ...statementLowering,
+  ...typeModifiers,
+];
