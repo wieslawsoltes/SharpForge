@@ -1,3 +1,4 @@
+import {invokeLegacyBclBuiltin} from '@sharpforge/bcl-core';
 import {mutateArray} from './array-ops.js';
 import {intrinsicDefinition,intrinsicDefinitions} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
@@ -5,6 +6,29 @@ import {float} from './numeric-ops.js';
 import {internString,isInternedString,referenceEquals,stringChar,stringFromChars} from './strings.js';
 import {enumToString,enumHasFlag} from './enums.js';
 import {objectType,typeFromHandle,typeEquals,typeName,typeHandle,typeProperty,runtimeTypeText} from './tokens.js';
+
+function legacyHost(vm, formatType = null) {
+  vm.legacyBclHosts ??= new Map();
+  if (!vm.legacyBclHosts.has(formatType)) {
+    vm.legacyBclHosts.set(formatType, {
+      platform: vm.platform,
+      heap: vm.heap,
+      value: value => vm.value(value),
+      format: value => vm.format(value, formatType),
+      runtimeTypeText: value => runtimeTypeText(vm, value),
+      fault: (type, message) => new ManagedFault(type, message)
+    });
+  }
+  return vm.legacyBclHosts.get(formatType);
+}
+
+function legacyString(context) {
+  const {vm, descriptor, self, parameters} = context;
+  const name = 'string.' + descriptor.name.replace('Invariant', '');
+  const args = descriptor.signature.isStatic ? parameters : [self, ...parameters];
+  const result = invokeLegacyBclBuiltin(legacyHost(vm), name, args);
+  return typeof result === 'boolean' ? Number(result) : result;
+}
 
 function stringReceiver(context) {
   const value=context.vm.value(context.self);
@@ -15,7 +39,7 @@ const implementations={
   arrayMutate:({vm,descriptor,parameters})=>mutateArray(vm,descriptor.name,parameters[0]),
   console:({vm,descriptor,parameters})=>{vm.emitOutput((parameters.length?vm.format(parameters[0],descriptor.signature.parameters[0]):'')+(descriptor.name==='WriteLine'?'\n':''));return null;},
   objectCtor:()=>null,
-  objectToString:({vm,self})=>vm.heap.string(runtimeTypeText(vm,self)??vm.format(self)),
+  objectToString:({vm,self})=>invokeLegacyBclBuiltin(legacyHost(vm),'object.ToString',[self]),
   objectGetType:({vm,self})=>objectType(vm,self),
   typeFromHandle:({vm,parameters})=>typeFromHandle(vm,parameters[0]),
   typeCompare:({vm,descriptor,parameters})=>typeEquals(vm,parameters[0],parameters[1])!==(descriptor.name==='op_Inequality')?1:0,
@@ -31,34 +55,23 @@ const implementations={
   exceptionMessage:({vm,self})=>vm.heap.get(self).data[0],
   exceptionInner:({vm,self})=>vm.heap.get(self).data[1]??null,
   stringCtor:({vm,parameters})=>stringFromChars(vm,parameters[0]),
-  stringConcat:({vm,parameters})=>vm.heap.string(parameters.map(value=>vm.format(value)).join('')),
+  stringConcat:legacyString,
   stringCompare:({descriptor,values})=>(values[0]===values[1])!==(descriptor.name==='op_Inequality')?1:0,
-  stringNullOrEmpty:({values})=>values[0]===null||values[0]===''?1:0,
+  stringNullOrEmpty:legacyString,
   stringIntern:({vm,parameters})=>internString(vm,parameters[0]),
   stringIsInterned:({vm,parameters})=>isInternedString(vm,parameters[0]),
   stringLength:context=>stringReceiver(context).length,
   stringChars:({vm,self,values})=>stringChar(vm,self,values[0]),
-  stringTransform:context=>{
-    const string=stringReceiver(context),{vm,descriptor,self}=context;
-    if(descriptor.name==='ToString')return self;
-    return vm.heap.string(string[{ToUpper:'toUpperCase',ToUpperInvariant:'toUpperCase',ToLower:'toLowerCase',ToLowerInvariant:'toLowerCase',Trim:'trim'}[descriptor.name]]());
+  stringTransform: context => {
+    if (context.descriptor.name === 'ToString') {
+      stringReceiver(context);
+      return context.self;
+    }
+    return legacyString(context);
   },
-  stringSubstring:context=>{
-    const string=stringReceiver(context),[at,length=string.length-at]=context.values;
-    if(!Number.isInteger(at)||!Number.isInteger(length)||at<0||length<0||at+length>string.length)throw new ManagedFault('ArgumentOutOfRangeException','Substring bounds');
-    return context.vm.heap.string(string.slice(at,at+length));
-  },
-  stringReplace:context=>{
-    const string=stringReceiver(context),{vm,values}=context;
-    if(values[0]===null||values[0]==='')throw new ManagedFault('ArgumentException','Invalid oldValue');
-    return vm.heap.string(string.split(values[0]).join(values[1]??''));
-  },
-  stringSearch:context=>{
-    const string=stringReceiver(context),{descriptor,values}=context;
-    if(values[0]===null)throw new ManagedFault('ArgumentNullException','Null string argument');
-    const result=string[{Contains:'includes',StartsWith:'startsWith',EndsWith:'endsWith',IndexOf:'indexOf'}[descriptor.name]](values[0]);
-    return typeof result==='boolean'?result?1:0:result;
-  },
+  stringSubstring:legacyString,
+  stringReplace:legacyString,
+  stringSearch:legacyString,
   math:({descriptor,values})=>{
     const name=descriptor.name,signature=descriptor.signature;
     let result;
@@ -82,23 +95,24 @@ const implementations={
     if(!Number.isInteger(values[0])||values[0]<0||values[0]>2)throw new ManagedFault('ArgumentOutOfRangeException','Generation must be between 0 and 2');
     return vm.heap.stats.collections;
   },
-  parse:({vm,descriptor,values})=>{
-    const text=String(values[0]??'').trim();
-    if(!/^[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?$/.test(text))throw new ManagedFault('FormatException','Invalid numeric text');
-    if(descriptor.signature.returnType==='double')return float(Number(text));
-    if(!/^[+-]?\d+$/.test(text))throw new ManagedFault('FormatException','Invalid integer text');
-    return vm.convert(descriptor.signature.returnType==='long'?'conv.ovf.i8':'conv.ovf.i4',BigInt(text));
+  parse: ({vm, descriptor, parameters, values}) => {
+    const type = descriptor.signature.returnType;
+    if (type === 'double') return float(invokeLegacyBclBuiltin(legacyHost(vm), 'double.Parse', parameters));
+    if (type === 'int') return invokeLegacyBclBuiltin(legacyHost(vm), 'int.Parse', parameters);
+    const text = String(values[0] ?? '').trim();
+    if (!/^[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?$/.test(text)) {
+      throw new ManagedFault('FormatException', 'Invalid numeric text');
+    }
+    if (!/^[+-]?\d+$/.test(text)) throw new ManagedFault('FormatException', 'Invalid integer text');
+    return vm.convert('conv.ovf.i8', BigInt(text));
   },
-  convertString:({vm,descriptor,parameters})=>vm.heap.string(vm.format(parameters[0],descriptor.signature.parameters[0])),
-  convertDouble:({values})=>{
-    const value=Number(values[0]);
-    if(Number.isNaN(value))throw new ManagedFault('FormatException','Invalid conversion');
-    return float(value);
+  convertString: ({vm, descriptor, parameters}) => {
+    const host = legacyHost(vm, descriptor.signature.parameters[0]);
+    return invokeLegacyBclBuiltin(host, 'Convert.ToString', parameters);
   },
-  convertInt32:({vm,values})=>{
-    const value=Number(values[0]),floor=Math.floor(value),rounded=value-floor===0.5?(floor%2===0?floor:floor+1):Math.round(value);
-    return vm.convert('conv.ovf.i4',float(rounded));
-  }
+  convertDouble: ({vm, parameters}) => float(invokeLegacyBclBuiltin(legacyHost(vm), 'Convert.ToDouble', parameters)),
+  convertInt32: ({vm, parameters}) => invokeLegacyBclBuiltin(legacyHost(vm), 'Convert.ToInt32', parameters)
+
 };
 
 /** Closed owner::name(signature) registry shared with verifier acceptance. */
