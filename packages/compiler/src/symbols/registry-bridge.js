@@ -4,6 +4,7 @@ import {builtinOwners, builtinMemberShape, builtinParameterType} from './registr
 import {NamedTypeSymbol,ConstructedNamedTypeSymbol,ArrayTypeSymbol,TypeWithAnnotations,TypeKind,Accessibility} from './types.js';
 import {MethodSymbol,FieldSymbol,PropertySymbol,EventSymbol,ParameterSymbol,MethodKind,DeclarationModifiers} from './members.js';
 import {NamespaceSymbol,NamespaceExtent} from './namespaces.js';
+import {attachOpenMembers} from './registry-open-members.js';
 import {declareCoreTypes,TypeProvider,specialTypeFromKeyword,coreTypeDescriptor,specialTypeIds} from './special-types.js';
 /**
  * Bridges the closed framework registry (packages/framework) and the bytecode builtin table to read-only,
@@ -59,7 +60,7 @@ export class RegistryBridge {
       let definition=nested(simple,arity);
       if(!definition){definition=new NamedTypeSymbol({name:simple,arity,typeKind:kind,baseType:()=>this.objectType});if(outer){(outer._nested??=[]).push(definition);definition.containingSymbol=outer;}else container.addType(definition);}
       // Constructing the definition with the arguments of a registry instantiation yields that instantiation.
-      definition.instanceProvider=(d,typeArguments)=>this.closedInstance(d,typeArguments);definition.instances??=[];const type=new RegistryConstructedType(definition,args.map(a=>new TypeWithAnnotations(this.typeFromName(a)??this.objectType)),this,name);definition.instances.push(type);this.remember(name,type);return type;
+      definition.instanceProvider=(d,typeArguments)=>this.closedInstance(d,typeArguments);definition.instances??=[];const type=new RegistryConstructedType(definition,args.map(a=>new TypeWithAnnotations(this.typeFromName(a)??this.objectType)),this,name);definition.instances.push(type);attachOpenMembers(this,definition);this.remember(name,type);return type;
     }
     const existing=nested(simple,0);if(existing){this.remember(name,existing);this.attach(existing,name);return existing;}
     const type=new NamedTypeSymbol({name:simple,typeKind:kind,isStatic:entry?.kind==='static',isAbstract:entry?.kind==='abstract',isSealed:kind!==TypeKind.Class,baseType:()=>this.baseOf(name),enumUnderlyingType:kind===TypeKind.Enum?this.byName.get('int'):null});

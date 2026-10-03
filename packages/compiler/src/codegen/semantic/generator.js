@@ -24,7 +24,7 @@ import { AsyncMethods, asyncResultType } from '../../lowering/async/async-method
 import { TupleClasses } from '../../lowering/tuples/tuple-classes.js';
 import { StructuralMembers } from '../../lowering/tuples/structural-members.js';
 import { RecordMembers } from '../../lowering/records/record-members.js';
-import { GenericInstantiations, InstantiationTable, GenericDeclarations, FrameworkConstructions } from '../../lowering/generics/index.js';
+import { GenericInstantiations, InstantiationTable, GenericDeclarations, FrameworkConstructions, imageTypeNameText } from '../../lowering/generics/index.js';
 import { stateMachineTypeName, stateMachineParameterProxyFieldName, thisProxyFieldName } from '../../lowering/generated-names.js';
 import { JumpIrEmitter } from './jump-emitter.js';
 import { ProgramModel } from './program-model.js';
@@ -91,7 +91,7 @@ class GeneratorCore {
   cellClass(type) {
     let cell = this.cells.get(type);
     if (!cell) {
-      const record = this.program.addClass(`<>Cell(${type})`);
+      const record = this.program.addClass(`<>Cell(${imageTypeNameText(type)})`);
       cell = { record, value: this.program.addField(record, 'Value', type) };
       this.cells.set(type, cell);
     }
