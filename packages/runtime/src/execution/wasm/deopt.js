@@ -9,6 +9,7 @@ export function wasmSafepoint(vm, frame = vm.top) {
 export function leaveWasmFrame(state, frameState, reason) {
   if (frameState.active) state.statistics.deoptimizations++;
   frameState.active = false;
+  frameState.nextEntry = null;
   frameState.lastDeopt = reason;
 }
 

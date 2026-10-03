@@ -49,6 +49,7 @@ export function executeTieredInstruction(vm, frame, plan, index) {
 
 /** Prewarm a method without executing IL; opt-in is required and failures produce fallback reports. */
 export async function prepareWasmTier(vm, method = vm.top?.method) {
+  if (!vm.inspector) return Object.freeze({status: 'fallback', reason: 'Wasm tiering requires the direct CIL backend.'});
   if (!wasmTierEnabled(vm)) return Object.freeze({status: 'disabled', reason: 'Wasm tiering is not enabled.'});
   if (!method) return Object.freeze({status: 'fallback', reason: 'No method was selected.'});
   method = instantiatedMethod(vm, typeof method === 'number' ? method : method.token,

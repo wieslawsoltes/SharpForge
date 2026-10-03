@@ -60,5 +60,5 @@ export function wasmStateCurrent(vm, state) {
 }
 
 export function wasmTierEnabled(vm) {
-  return !!vm.options.wasmTiering && vm.options.wasmTiering.enabled !== false;
+  return !!vm.inspector && !!vm.options.wasmTiering && vm.options.wasmTiering.enabled !== false;
 }
