@@ -15,7 +15,8 @@ export class DesignerToolRouter {
 
   route(session) {
     if (this.disposed) return;
-    const view = session ? this.resolveView(session.uri) : null;
+    const candidate = session ? this.resolveView(session.uri) : null;
+    const view = candidate?.initializationFailed ? null : candidate;
     for (const id of designerSidePanelIds) {
       const target = this.resolveTarget(id);
       if (!target) continue;

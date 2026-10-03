@@ -73,7 +73,6 @@ export class DesignerDocuments {
     const kind = /\.sfdesign\.json$/i.test(uri) ? 'design' : 'csharp';
     const document = kind === 'design' ? JSON.parse(file.text) : undefined;
     const session = this.registry.open(uri, {...this.sessionOptions(uri, kind), kind, document});
-    const stateBeforeConnect = {...session.viewState};
     let view;
     try {
       view = new DesignerDocumentView({
@@ -90,26 +89,34 @@ export class DesignerDocuments {
     if (kind === 'design') {
       session.applySelection({final: true});
       view.ready = Promise.resolve(session);
-    } else {
-      const operation = session.beginOperation('initialize-source');
-      view.ready = Promise.resolve().then(() => operation.current() ? view.tools.sourceSync.connect(uri) : null).then(() => {
-        if (!operation.current()) return null;
-        session.setViewState(stateBeforeConnect);
-        session.applySelection({final: true});
-        operation.finish();
-        this.router.route(this.active);
-        return session;
-      }).catch(error => {
-        if (!operation.current()) return null;
-        operation.finish();
-        session.status = error.message;
-        view.tools.sourceSync.report('blocked', error.message);
-        session.setViewState({mode: 'code'});
-        this.onError(error);
-        return null;
-      });
-    }
+    } else this.initializeView(view);
     return view;
+  }
+
+  initializeView(view) {
+    const session = view.session;
+    const stateBeforeConnect = {...session.viewState};
+    const operation = session.beginOperation('initialize-source');
+    view.initializationFailed = false;
+    view.ready = Promise.resolve().then(() => operation.current() ? view.tools.sourceSync.connect(session.uri) : null).then(() => {
+      if (!operation.current()) return null;
+      session.setViewState(stateBeforeConnect);
+      session.applySelection({final: true});
+      operation.finish();
+      this.router.route(this.active);
+      return session;
+    }).catch(error => {
+      if (!operation.current()) return null;
+      operation.finish();
+      view.initializationFailed = true;
+      session.status = error.message;
+      view.tools.sourceSync.report('blocked', error.message);
+      session.setViewState({mode: 'code'});
+      this.router.route(this.active);
+      this.onError(error);
+      return null;
+    });
+    return view.ready;
   }
 
   activate(uri) {
@@ -126,11 +133,14 @@ export class DesignerDocuments {
   /** Opens the same URI and tab. The compatibility check runs before navigation changes the active editor. */
   async open(uri = this.state.active, mode = 'design') {
     const compatibility = this.probe(uri);
-    if (!compatibility.compatible) throw new Error(compatibility.reason ?? 'This document has no supported designer view.');
+    if (!compatibility.compatible && !this.registry.get(uri)) {
+      throw new Error(compatibility.reason ?? 'This document has no supported designer view.');
+    }
     await this.openSource(uri);
     const view = this.views.get(uri) ?? this.createView(uri);
-    await view.ready;
+    const initialized = await view.ready;
     if (view.disposed) throw new Error('The document was closed while opening its designer');
+    if (!initialized && mode !== 'code') throw new Error(view.session.status || 'Repair source diagnostics before opening the design view');
     this.activate(uri);
     view.setMode(mode);
     return view.session;
@@ -138,7 +148,7 @@ export class DesignerDocuments {
 
   sourceChanged(uri) {
     const session = this.registry.get(uri);
-    if (session) {
+    if (session && !this.views.get(uri)?.initializationFailed) {
       session.sourceSync?.sourceChanged(uri);
       return;
     }
@@ -149,7 +159,9 @@ export class DesignerDocuments {
       if (this.disposed || !this.sources.has(uri)) return;
       this.probes.delete(uri);
       if (!this.probe(uri).compatible) return;
-      this.createView(uri);
+      const view = this.views.get(uri);
+      if (view?.initializationFailed) this.initializeView(view);
+      else if (!view) this.createView(uri);
       if (this.state.active === uri) this.activate(uri);
     }, 300);
     this.probeTimers.set(uri, timer);
