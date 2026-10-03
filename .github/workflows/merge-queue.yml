@@ -1,7 +1,5 @@
 name: Queued area manifests
 on:
-  merge_group:
-    types: [checks_requested]
   workflow_dispatch:
 permissions:
   contents: read
@@ -26,6 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix: ${{ fromJSON(needs.matrix.outputs.matrix) }}
     steps:

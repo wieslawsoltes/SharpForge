@@ -22,7 +22,7 @@ class ByteEntries {
     const index = this.guid ? this.writer.length / 16 + 1 : this.writer.length;
     if (!this.guid) this.writer.compressed(bytes.length);
     this.writer.bytes(bytes);
-    entries.push({ bytes: bytes.slice(), index });
+    entries.push({ bytes: new Uint8Array(bytes), index });
     this.buckets.set(hash, entries);
     return index;
   }

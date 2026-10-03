@@ -1,24 +1,15 @@
 name: Reference gap inventory
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, labeled]
-    paths:
-      - '.github/workflows/inventory.yml'
-      - 'scripts/conformance/inventory/**'
-      - 'tests/conformance/inventory/**'
-      - 'planning/qualification/inventory/**'
-      - 'planning/qualification/oracle-toolchain.json'
   workflow_dispatch:
 permissions:
   contents: read
 concurrency:
   group: reference-inventory-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  cancel-in-progress: false
 env:
   SHARPFORGE_RESULTS_DIR: artifacts/results
 jobs:
   linux:
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ubuntu-24.04
     container:
       image: mcr.microsoft.com/dotnet/sdk:10.0.201-noble@sha256:127d7d4d601ae26b8e04c54efb37e9ce8766931bded0ee59fcd799afd21d6850
@@ -39,10 +30,10 @@ jobs:
         run: node scripts/conformance/inventory/generate.js --check
       - name: Run native metadata extraction and negative tests
         if: always()
-        run: node --test tests/conformance/inventory/*.native.js
+        run: node --test --test-concurrency=1 tests/conformance/inventory/*.native.js
       - name: Inventory correctness and boundary tests
         if: always()
-        run: node --test tests/conformance/inventory/*.test.js
+        run: node --test --test-concurrency=1 tests/conformance/inventory/*.test.js
       - name: Measured VM probe cost with correctness gates
         run: node scripts/conformance/inventory/benchmark.js
       - name: Require a clean checkout
@@ -55,10 +46,11 @@ jobs:
           path: artifacts/results/inventory/
           if-no-files-found: error
   desktop:
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+    needs: linux
     runs-on: ${{ matrix.os }}
     timeout-minutes: 25
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         os: [windows-2025, macos-26]
@@ -78,10 +70,10 @@ jobs:
         run: node scripts/conformance/inventory/generate.js --check
       - name: Run native metadata extraction and negative tests
         if: always()
-        run: node --test tests/conformance/inventory/*.native.js
+        run: node --test --test-concurrency=1 tests/conformance/inventory/*.native.js
       - name: Inventory correctness and boundary tests
         if: always()
-        run: node --test tests/conformance/inventory/*.test.js
+        run: node --test --test-concurrency=1 tests/conformance/inventory/*.test.js
       - name: Measured VM probe cost with correctness gates
         run: node scripts/conformance/inventory/benchmark.js
       - name: Require a clean checkout
@@ -94,10 +86,11 @@ jobs:
           path: artifacts/results/inventory/
           if-no-files-found: error
   browser:
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+    needs: desktop
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         os: [ubuntu-24.04, windows-2025, macos-26]

@@ -11,8 +11,10 @@
  * Every function returns `{ member, code, args, at? }` rows; `at` is the syntax to report at when it is not the
  * member's name.
  */
-import { SymbolKind, RefKind, ArrayTypeSymbol } from '../../symbols/types.js';
+import { SymbolKind, RefKind, ArrayTypeSymbol, TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
+import { paramsCollectionShape } from '../../overload/params-collections.js';
+import { isSourceSymbol } from '../../semantic/analysis-helpers.js';
 
 const accessWords = new Set(['public', 'private', 'protected', 'internal']);
 // A field symbol's syntax is its declarator; the modifiers are on the declaration around it.
@@ -50,8 +52,26 @@ export function checkStaticConstructorDeclarations(type) {
   return rows;
 }
 
-/** A `params` parameter of a predefined non-array type (`params int`) can never be a collection. */
-const isCollectionType = type => !type || type.isErrorType?.() || type instanceof ArrayTypeSymbol || !type.specialType;
+/**
+ * The rule a `params` parameter type breaks, as `{code, args, whole}` (`whole`: reported on the parameter, not on
+ * `params`), or null: CS0225 for a type that is no collection; for a type that enumerates, CS1729 (`string`),
+ * CS0117 (no `Add`) and CS9228 (no parameterless constructor). See overload/params-collections.js for the valid types.
+ */
+function paramsTypeProblem(type) {
+  if (!type || type.isErrorType?.()) return null;
+  const shape = paramsCollectionShape(type);
+  if (type.specialType === 'System_String') return { code: 'CS1729', args: ['string', 0], whole: true };
+  const isClassLike = !type.specialType && !(type instanceof ArrayTypeSymbol) && type.typeKind !== TypeKind.Interface;
+  if (!shape) {
+    const enumerates = isClassLike && (type.allInterfaces ?? []).some(candidate => candidate.name === 'IEnumerable');
+    return enumerates ? { code: 'CS0117', args: [type.toDisplayString(), 'Add'], whole: true } : { code: 'CS0225', args: [] };
+  }
+  if (shape.kind !== 'collection' || !isSourceSymbol(type)) return null;
+  const constructors = type.getMembers('.ctor').filter(member => member.kind === SymbolKind.Method && !member.isStatic);
+  return constructors.length && !constructors.some(constructor => constructor.parameters.every(parameter => parameter.isOptional))
+    ? { code: 'CS9228', args: [], whole: true }
+    : null;
+}
 
 /** The rules of one parameter list; `list` is its syntax (the closing token carries CS1737). */
 function parameterListRows(member, parameters, list) {
@@ -62,7 +82,8 @@ function parameterListRows(member, parameters, list) {
     const hasDefault = !!parameter.defaultSyntax;
     if (parameter.isParams) {
       if (index !== parameters.length - 1) rows.push({ member, code: 'CS0231', args: [], at: parameter.syntax });
-      if (!isCollectionType(parameter.type)) rows.push({ member, code: 'CS0225', args: [], at: keywordOf(parameter, 'params') });
+      const problem = paramsTypeProblem(parameter.type);
+      if (problem) rows.push({ member, code: problem.code, args: problem.args, at: problem.whole ? parameter.syntax : keywordOf(parameter, 'params') });
       if (hasDefault) rows.push({ member, code: 'CS1751', args: [], at: keywordOf(parameter, 'params') });
       return;
     }
