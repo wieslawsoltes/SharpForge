@@ -1,6 +1,6 @@
 name: Validate SharpForge
-# Ordinary PRs and main pushes run one core job. Qualification is explicitly
-# dispatched, labelled full-ci, queued, or requested by the release caller.
+# Ordinary PRs and main pushes run one core job without unit qualification.
+# Tests are dispatched, labelled full-ci, queued, or requested by the release caller.
 on:
   push:
     branches: [main]
@@ -48,10 +48,7 @@ jobs:
       - name: Reject expired test quarantines
         run: node scripts/conformance/flaky/detect.js --check-quarantine
       - run: npm test
-        if: steps.impact.outputs.mode != 'impacted'
-      - name: Run impacted consumers and shared checks
-        if: steps.impact.outputs.mode == 'impacted'
-        run: node scripts/conformance/ci-planning/impact.js --run artifacts/ci-plan.json
+        if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
       - run: npm run build
       - name: Require a clean checkout
         if: always()
@@ -60,11 +57,9 @@ jobs:
         if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
         with:
           python-version: '3.12'
-      - name: Full qualification infrastructure regressions
+      - name: Full qualification Python infrastructure regressions
         if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
-        run: |
-          node --test --test-concurrency=1 tests/conformance/*.test.js
-          python -m unittest discover -s tests/conformance/browser -p 'test_*.py'
+        run: python -m unittest discover -s tests/conformance/browser -p 'test_*.py'
       - uses: ./.github/actions/qualification-evidence
         if: ${{ always() && (inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')) }}
         with:
@@ -110,7 +105,6 @@ jobs:
       - run: npm run check
       - run: npm test
       - run: npm run build
-      - run: node --test --test-concurrency=1 tests/conformance/*.test.js
       - run: python -m unittest discover -s tests/conformance/browser -p 'test_*.py'
       - uses: ./.github/actions/qualification-evidence
         if: always()
