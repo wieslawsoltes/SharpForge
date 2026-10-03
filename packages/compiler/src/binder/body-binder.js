@@ -19,6 +19,7 @@ import { NameBinding } from './body/names.js';
 import { CallBinding } from './body/calls.js';
 import { CreationBinding } from './body/creation.js';
 import { InitializerBinding } from './members/initializers.js';
+import { PrimaryConstructorBinding } from './members/primary-constructors.js';
 import { OperatorBinding } from './body/operators.js';
 import { TypeTestBinding } from './body/type-tests.js';
 import { TupleBinding } from './body/tuples.js';
@@ -44,6 +45,7 @@ const expressionFamilies = [
   LambdaBinding,
   PatternBinding,
   StackAllocBinding,
+  PrimaryConstructorBinding,
 ];
 const statementFamilies = [StatementBinding, DeclarationBinding, FlowStatementBinding, LocalFunctionBinding];
 const compose = (base, mixins) => mixins.reduce((composed, mixin) => mixin(composed), base);
