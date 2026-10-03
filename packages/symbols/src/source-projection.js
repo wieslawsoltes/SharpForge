@@ -1,8 +1,27 @@
 import { fail } from './contracts.js';
 import { lineIndex } from './source-span.js';
 
+function indexLocals(symbols) {
+  const byMethod = new Map(symbols.methods.map((method) => [method.token, []]));
+  for (const scope of symbols.scopes) {
+    const locals = byMethod.get(scope.methodToken);
+    if (!locals) continue;
+    for (const variable of scope.variables) {
+      locals.push({
+        name: variable.name,
+        slot: variable.index,
+        hidden: variable.hidden,
+        startOffset: scope.start,
+        endOffset: scope.end,
+      });
+    }
+  }
+  return byMethod;
+}
+
 /** Project validated documents into debugger sources and UTF-16 spans. */
 export function projectSources(symbols, documents, { includeUnverifiedPoints = false } = {}) {
+  const locals = indexLocals(symbols);
   const indexes = documents.map((d) => (d.verified ? lineIndex(d.text) : [])),
     sequencePoints = [];
   for (const m of symbols.methods)
@@ -36,17 +55,7 @@ export function projectSources(symbols, documents, { includeUnverifiedPoints = f
     sources: documents.filter((d) => d.verified).map((d) => ({ uri: d.name, text: d.text, version: 1 })),
     methods: symbols.methods.map((m) => ({
       token: m.token,
-      locals: symbols.scopes
-        .filter((s) => s.methodToken === m.token)
-        .flatMap((s) =>
-          s.variables.map((v) => ({
-            name: v.name,
-            slot: v.index,
-            hidden: v.hidden,
-            startOffset: s.start,
-            endOffset: s.end,
-          })),
-        ),
+      locals: locals.get(m.token),
     })),
   };
 }
