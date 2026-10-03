@@ -81,7 +81,9 @@ class SupplyToolingTests(unittest.TestCase):
         build, publish = release['jobs']['build'], release['jobs']['publish']
         self.assertEqual(build['permissions']['contents'], 'read')
         self.assertEqual(publish['permissions']['contents'], 'write')
-        self.assertEqual(publish['needs'], 'build')
+        self.assertEqual(publish['needs'], 'draft')
+        self.assertEqual(release['jobs']['draft']['needs'], 'build')
+        self.assertEqual(publish['environment']['name'], 'release')
         steps = build['steps']
         attest = next(index for index, step in enumerate(steps) if step.get('uses', '').startswith('actions/attest@'))
         prior = '\n'.join(step.get('run', '') for step in steps[:attest])
@@ -97,7 +99,12 @@ class SupplyToolingTests(unittest.TestCase):
             self.assertIn(name, subjects)
         self.assertTrue(any('attestation.js verify' in step.get('run', '') for step in steps[attest + 1:]))
         publish_scripts = '\n'.join(step.get('run', '') for step in publish['steps'])
-        self.assertLess(publish_scripts.index('attestation.js verify'), publish_scripts.index('gh release create'))
+        self.assertLess(publish_scripts.index('source-manifest.js --verify-payloads'),
+                        publish_scripts.index('release.js publish --execute'))
+        publication = (ROOT / 'scripts/conformance/release-policy/release.js').read_text()
+        self.assertLess(publication.index('await verifyReleaseProof'), publication.index("method: 'PATCH'"))
+        self.assertIn("'--draft'", publication)
+        self.assertIn("requireApproval: mode === 'publish'", publication)
         self.assertIn('node scripts/conformance/source-manifest.js --verify-payloads', publish_scripts.splitlines())
         self.assertNotIn('node scripts/conformance/source-manifest.js --verify', publish_scripts.splitlines())
 
@@ -126,6 +133,32 @@ class SupplyToolingTests(unittest.TestCase):
                              "contains(github.event.pull_request.labels.*.name, 'full-ci')")
         languages = security['jobs']['codeql']['strategy']['matrix']['language']
         self.assertEqual(set(languages), {'javascript-typescript', 'python'})
+
+
+    def test_release_policy_and_preview_jobs_keep_privilege_and_approval_boundaries(self):
+        release = workflows.parse_workflow((ROOT / '.github/workflows/release.yml').read_text())
+        self.assertEqual(release['jobs']['qualification']['uses'], './.github/workflows/ci.yml')
+        self.assertEqual(release['jobs']['qualification']['needs'], 'policy')
+        self.assertEqual(release['jobs']['build']['needs'], 'qualification')
+        policy_scripts = '\n'.join(step.get('run', '') for step in release['jobs']['policy']['steps'])
+        for script in ['release/version-check.js', 'release-policy/check-policy.js', 'release-policy/environment.js']:
+            self.assertIn(script, policy_scripts)
+        self.assertIn('environment:', (ROOT / '.github/workflows/release.yml').read_text())
+        self.assertNotIn('always()', release['jobs']['publish'].get('if', ''))
+        watcher = workflows.parse_workflow((ROOT / '.github/workflows/spec-watch.yml').read_text())
+        self.assertEqual(set(watcher['on']), {'schedule', 'workflow_dispatch'})
+        self.assertFalse(watcher['concurrency']['cancel-in-progress'])
+        self.assertEqual(watcher['jobs']['watch']['permissions']['issues'], 'write')
+        preview = workflows.parse_workflow((ROOT / '.github/workflows/preview.yml').read_text())
+        self.assertEqual(set(preview['on']), {'workflow_dispatch'})
+        self.assertNotIn('pages', preview['permissions'])
+        self.assertTrue(all(access == 'read' for access in preview['permissions'].values()))
+        core = workflows.parse_workflow((ROOT / '.github/workflows/ci.yml').read_text())['jobs']['core']
+        uploads = [step for step in core['steps'] if step.get('name') == 'Upload PR preview without a second build or deployment']
+        self.assertEqual(len(uploads), 1)
+        self.assertEqual(uploads[0]['if'], "github.event_name == 'pull_request'")
+        self.assertIn('artifacts/preview.json', uploads[0]['with']['path'])
+        self.assertEqual(sum(step.get('run') == 'npm run build' for step in core['steps']), 1)
 
     def test_browser_archive_requires_real_bounded_inputs(self):
         def create_archive(root):

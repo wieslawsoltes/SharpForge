@@ -49,6 +49,22 @@ jobs:
         if: ${{ always() && (github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')) }}
         with:
           name: core-ubuntu-latest
+      - name: Record provenance for the existing PR preview build
+        if: github.event_name == 'pull_request'
+        env:
+          PREVIEW_PR: ${{ github.event.pull_request.number }}
+          PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: node scripts/conformance/release-policy/preview.js --record
+      - name: Upload PR preview without a second build or deployment
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: preview-dist-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            dist/
+            artifacts/preview.json
+          if-no-files-found: error
+          retention-days: 7
   core-platforms:
     if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ${{ matrix.os }}
