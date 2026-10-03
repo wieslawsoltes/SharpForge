@@ -1,7 +1,7 @@
 import {CilError} from './binary.js';
 import {decodeCoded,token} from './metadata.js';
 import {genericTypeParts} from './field-profile.js';
-import {resolveExecutionMethod,instantiateSignature,callSignatureKey,substituteCallType} from './call-profile.js';
+import {resolveExecutionMethod,instantiateSignature,callSignatureKey,substituteCallType,normalizeCallType} from './call-profile.js';
 
 const virtual=0x40,newslot=0x100,final=0x20;
 const signatureKey=signature=>callSignatureKey(signature)+'/'+(signature.genericArity??0);
@@ -25,7 +25,7 @@ export class CilDispatchTable {
   }
   typeContext(input) {
     if(!input)return {name:'',type:null,arguments:[]};
-    const name=typeof input==='number'?this.inspector.metadata.typeName(input):input,parts=genericTypeParts(name),type=this.names.get(parts.definition);
+    const rawName=typeof input==='number'?this.inspector.metadata.typeName(input):input,name=rawName.includes('<')?normalizeCallType(rawName):rawName,parts=genericTypeParts(name),type=this.names.get(parts.definition);
     const arity=Number(parts.definition.match(/`(\d+)$/)?.[1]??0),args=parts.arguments.length?parts.arguments:Array.from({length:arity},(_,index)=>'!'+index);
     return {name:args.length?parts.definition+'<'+args.join(',')+'>':name,type,arguments:args};
   }
@@ -36,7 +36,7 @@ export class CilDispatchTable {
       const table={slots:new Map(),aliases:new Map(),declarations:new Map(),visible:new Map(),ancestors:new Set(),instances:new Set(name?[name]:[])};
       if(this.externalInterfaces.has(genericTypeParts(name).definition))for(const method of this.externalMethods) {
         const owner=genericTypeParts(method.owner);if(owner.definition!==genericTypeParts(name).definition)continue;
-        if(owner.arguments.length&&!owner.arguments.some(argument=>/!\d+/.test(argument))&&owner.arguments.join(',')!==context.arguments.join(','))continue;
+        if(owner.arguments.length&&!owner.arguments.some(argument=>/!\d+/.test(argument))&&normalizeCallType(owner.arguments.join(','))!==normalizeCallType(context.arguments.join(',')))continue;
         const signature=instantiateSignature(method.signature,context.arguments),slot='external:'+name+'::'+method.name+'::'+signatureKey(signature);
         table.declarations.set(slot,{token:method.token,name:method.name,owner:name,slot,signature,external:true});
       }
