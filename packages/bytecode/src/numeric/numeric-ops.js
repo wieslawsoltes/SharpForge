@@ -1,3 +1,4 @@
+import {smallIntegerIndirect} from './small-int.js';
 import {int64Binary, int64Unary} from './int64.js';
 import {numericAliases,nativeIntegerBits} from './numeric-types.js';
 import {isDecimal,decimalZero,decimalToInteger,decimalToFloat} from './decimal-ops.js';
@@ -143,6 +144,7 @@ export function convert(name, value, context = {}) {
     n = BigInt(unsignedSource || !checked && (target === 'u8'||target==='u'&&bits===64) ? raw >>> 0 : raw);
   }
   if (checked && (n < (signed ? -(1n << BigInt(bits - 1)) : 0n) || n > (signed ? (1n << BigInt(bits - 1)) - 1n : (1n << BigInt(bits)) - 1n))) throw createFault('OverflowException', 'Checked conversion overflow');
+  if (bits < 32) return smallIntegerIndirect(n, target, context);
   n = signed ? BigInt.asIntN(bits, n) : BigInt.asUintN(bits, n);
   return nativeTarget?nativeInteger(n,bits):bits === 64 ? BigInt.asIntN(64, n) : Number(n) | 0;
 }
