@@ -66,4 +66,5 @@ node scripts/limited.js node --test tests/a05-cil-method-events.test.js \
   tests/a05-cil-method-events-cancellation.test.js tests/a05-runtime-events.test.js
 ```
 
-No tests, builds or benchmarks were executed during this implementation.
+Syntax/import and non-strict structure checks also completed in the serial slot.
+No native/browser qualification or performance measurement was performed.
