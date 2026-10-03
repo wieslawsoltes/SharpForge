@@ -6,6 +6,7 @@
  * Display follows Roslyn's SymbolDisplayFormat families (see `SymbolDisplayFormat`).
  * The string adapter that keeps the string-typed profile working lives in ./legacy-types.js.
  */
+import {tupleDisplay} from './tuple-elements.js';
 export const SymbolKind=Object.freeze({Assembly:'Assembly',Namespace:'Namespace',NamedType:'NamedType',ArrayType:'ArrayType',PointerType:'PointerType',FunctionPointerType:'FunctionPointerType',DynamicType:'DynamicType',ErrorType:'ErrorType',TypeParameter:'TypeParameter',Method:'Method',Field:'Field',Property:'Property',Event:'Event',Parameter:'Parameter',Local:'Local',Label:'Label',Alias:'Alias',RangeVariable:'RangeVariable',Discard:'Discard'});
 export const TypeKind=Object.freeze({Class:'class',Struct:'struct',Interface:'interface',Enum:'enum',Delegate:'delegate',Array:'array',Pointer:'pointer',FunctionPointer:'functionPointer',TypeParameter:'typeParameter',Dynamic:'dynamic',Error:'error',Submission:'submission',Module:'module'});
 export const Accessibility=Object.freeze({NotApplicable:'notApplicable',Private:'private',ProtectedAndInternal:'privateProtected',Protected:'protected',Internal:'internal',ProtectedOrInternal:'protectedInternal',Public:'public'});
@@ -156,7 +157,7 @@ export class NamedTypeSymbol extends TypeSymbol {
   toDisplayString(format=SymbolDisplayFormat.ErrorMessage){
     const test=format===SymbolDisplayFormat.Test;
     if(this.isNullableValueType&&!this.isDefinition)return this.typeArguments[0].toDisplayString(format)+'?';
-    if(this.isTupleType&&!this.isDefinition&&this.arity>1)return '('+this.typeArguments.map((a,i)=>a.toDisplayString(format)+(this.tupleElementNames?.[i]?' '+this.tupleElementNames[i]:'')).join(', ')+')';
+    if(this.isTupleType&&!this.isDefinition&&this.arity>1)return tupleDisplay(this,a=>a.toDisplayString(format));
     if(test&&this.specialType==='System_Void')return 'void';
     if(!test){if(this.isNativeInteger)return this.specialType==='System_UIntPtr'?'nuint':'nint';const keyword=specialTypeKeyword(this.specialType);if(keyword)return keyword;}
     const outer=this.containingType,prefix=outer?outer.toDisplayString(format)+'.':format===SymbolDisplayFormat.MinimallyQualified?'':qualifiedName(this,format);

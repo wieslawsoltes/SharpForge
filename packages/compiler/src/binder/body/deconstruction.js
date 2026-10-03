@@ -15,7 +15,7 @@ import { ErrorTypeSymbol } from '../../symbols/types.js';
 import { LocalDeclarationKind } from '../../symbols/members.js';
 import { checkWritable } from '../ref-kinds.js';
 import { deconstructionOf } from '../deconstruction.js';
-import { maxTupleElements, tupleTypeOf } from '../tuples.js';
+import { tupleElements, tupleTypeOf } from '../tuples.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 
@@ -149,7 +149,7 @@ export const DeconstructionBinding = Base =>
       if (split.error) {
         failure.isArity = !!split.isArity;
         for (const problem of split.error) this.report(split.isArity ? source.whole : syntax, problem.code, problem.args);
-        if (split.isArity) this.reportSurplusVariables(target, type.typeArguments.length);
+        if (split.isArity) this.reportSurplusVariables(target, tupleElements(type).length);
         return null;
       }
       const parts = split.partTypes.map((partType, index) => part(index, partType, null));
@@ -178,7 +178,7 @@ export const DeconstructionBinding = Base =>
     targetsType(target) {
       if (target.kind !== 'Tuple') return target.type ?? null;
       const types = target.elements.map(element => this.targetsType(element));
-      if (types.includes(null) || types.length > maxTupleElements) return null;
+      if (types.includes(null)) return null;
       return tupleTypeOf(this.core.bridge, types, []);
     }
   };
