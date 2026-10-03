@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-55b42bab97eee3d77524",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class B : A\n{\n    internal object o2 = new { hello = 1, world = 2 };\n    public static string M2()\n    {\n        return \"world!\";\n    }\n}",
+  "sourceSHA256": "5cd5fc65fc4bb6204736fdc37fffb54dbb8f360e55c477f52cab47b9b8f7f9c2",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs",
+    "sha256": "a146aeb41311a33fd51733055804d5bdd45ba0e5302ca02348a06cb7e94dd243",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs",
+    "license": "MIT",
+    "method": "MultipleNetmodulesWithAnonymousTypes",
+    "offset": 222836
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { ref1 })",
+  "options": "(s2, options: TestOptions.ReleaseModule.WithModuleName(\"B\"), references: new[] { ref1 })",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

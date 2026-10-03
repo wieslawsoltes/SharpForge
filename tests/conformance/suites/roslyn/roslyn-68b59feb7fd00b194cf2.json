@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-68b59feb7fd00b194cf2",
+  "kind": "diagnostics",
+  "sourceText": "\nnamespace System.Runtime.InteropServices\n{\n    [DllImport] // Error\n    class DllImportAttribute {}\n}\nnamespace System\n{\n    [Object]   // Warning\n    public class Object : System.Attribute {}\n}\n",
+  "sourceSHA256": "b578bb5e0a5783e9a8711ceea0e92d7ab0c2e857a725996d05822bc6b32835ee",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "UserDefinedAttribute_Bug13264",
+    "offset": 326936
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0616",
+        "severity": "error"
+      },
+      {
+        "code": "CS0436",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,6): error CS0616: 'System.Runtime.InteropServices.DllImportAttribute' is not an attribute class\n                //     [DllImport] // Error\n                Diagnostic(ErrorCode.ERR_NotAnAttributeClass, \"DllImport\").WithArguments(\"System.Runtime.InteropServices.DllImportAttribute\"),\n                // (9,6): warning CS0436: The type 'System.Object' in '' conflicts with the imported type 'object' in 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using the type defined in ''.\n                //     [Object]   // Warning\n                Diagnostic(ErrorCode.WRN_SameFullNameThisAggAgg, \"Object\").WithArguments(\"\", \"System.Object\", \"mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089\", \"object\")",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

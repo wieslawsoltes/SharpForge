@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-38a0c2921faa5f7bd128",
+  "kind": "diagnostics",
+  "sourceText": "\ninterface I<T>\n{\n    T M();\n}\nclass Base : I<(int a, int b)>\n{\n    (int a, int b) I<(int a, int b)>.M() { return (1, 2); } // explicit implementation\n}\nclass Derived1 : Base, I<(int notA, int notB)>\n{\n    // error\n}\nclass Derived2 : Base, I<(int a, int b)>\n{\n    // ok\n}\n",
+  "sourceSHA256": "c093699ef2b12e3d5adf7b5d9ca74c29eaf7801b5defc92b5ee753df05c0ec87",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "ExplicitBaseImplementationNotConsideredImplementationForInterfaceWithDifferentTupleNames_01",
+    "offset": 1070490
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0535",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,24): error CS0535: 'Derived1' does not implement interface member 'I<(int notA, int notB)>.M()'\n                // class Derived1 : Base, I<(int notA, int notB)> { }\n                Diagnostic(ErrorCode.ERR_UnimplementedInterfaceMember, \"I<(int notA, int notB)>\").WithArguments(\"Derived1\", \"I<(int notA, int notB)>.M()\").WithLocation(10, 24)\n                ",
+  "unsupported": []
+}

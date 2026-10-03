@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-130b1b17ef0e3f269568",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nusing System.Linq;\n\npublic class Class2 : IDisposable\n{\n    public Class2(bool parameter = false)\n    {\n    }\n\n    public void Dispose()\n    {\n    }\n}\n\nclass X<T>\n{\n    IdentityAccessor<T> idAccessor = new IdentityAccessor<T>();\n    void Y<U>() where U : T\n    {\n        // BUG: The following line is the problem\n        if (GetT().FirstOrDefault(p => idAccessor.GetId(p) == Guid.Empty) is U u)\n        {\n        }\n    }\n\n    IEnumerable<T> GetT()\n    {\n        yield return default(T);\n    }\n}\nclass IdentityAccessor<T>\n{\n    public Guid GetId(T t)\n    {\n        return Guid.Empty;\n    }\n}",
+  "sourceSHA256": "2003180b137c5a1cbbd7312e0f1f9fe98b1abd74c510a2408c167d14158f0551",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "PatternCrash_01",
+    "offset": 11960
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugDll)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

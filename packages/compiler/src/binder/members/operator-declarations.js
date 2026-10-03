@@ -63,6 +63,7 @@ function checkConversion(method, type, seen) {
   if (fromSelf && toSelf) return [{ member: method, code: 'CS0555', args: [] }];
   if (!fromSelf && !toSelf) return [{ member: method, code: 'CS0556', args: [] }];
   const other = fromSelf ? to : from;
+  if (other.typeKind === TypeKind.Dynamic) return [{ member: method, code: 'CS1964', args: [method.toDisplayString()] }];
   if (other.typeKind === TypeKind.Interface) return [{ member: method, code: 'CS0552', args: [method.toDisplayString()] }];
   // `explicit operator checked T` is declared next to `explicit operator T`: only the same form twice is a duplicate.
   const isChecked = other => other.name === 'op_CheckedExplicit',
@@ -92,6 +93,8 @@ export function checkOperatorDeclarations(type) {
     if (!isOperator(method) && !isConversion(method)) continue;
     if (method.declaredAccessibility !== Accessibility.Public || !method.isStatic) {
       rows.push({ member: method, code: 'CS0558', args: [method.toDisplayString()] });
+      // A conversion to or from `dynamic` is reported whatever else is wrong with the declaration.
+      if (isConversion(method) && typesKnown(method)) rows.push(...checkConversion(method, type, []).filter(row => row.code === 'CS1964'));
       continue;
     }
     if (!typesKnown(method)) continue;

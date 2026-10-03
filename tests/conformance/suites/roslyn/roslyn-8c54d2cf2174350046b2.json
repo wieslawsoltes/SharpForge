@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8c54d2cf2174350046b2",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void M()\n    {\n        string s = \"11\";\n        object o = s + s;\n        (object, object) t = default;\n\n        bool b = o == s;\n        bool b2 = t == (s, s); // no warning\n    }\n}\n",
+  "sourceSHA256": "f470377b64ebd605057f67a475c42ffb1bd359e9dce459da8310f0ad05105b73",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestBadRefCompare",
+    "offset": 117431
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0252",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,18): warning CS0252: Possible unintended reference comparison; to get a value comparison, cast the left hand side to type 'string'\n                //         bool b = o == s;\n                Diagnostic(ErrorCode.WRN_BadRefCompareLeft, \"o == s\").WithArguments(\"string\").WithLocation(10, 18)\n                ",
+  "unsupported": []
+}

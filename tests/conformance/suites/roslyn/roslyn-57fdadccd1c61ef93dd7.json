@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-57fdadccd1c61ef93dd7",
+  "kind": "diagnostics",
+  "sourceText": "public class Base\n{\n    private internal int Field1;\n    internal private int Field2;\n    private internal protected int Field3;\n    internal protected private int Field4;\n    private public protected int Field5;\n    private readonly protected int Field6; // ok\n}\n",
+  "sourceSHA256": "ee06a1e51901023f515e09524fdb07214964ebda98aac9f99af813cc98cc5ff0",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "sha256": "41afb2c44dc175c901c33c352afc3f75fc22224b4838d00075375c2ad4de40cd",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "license": "MIT",
+    "method": "RejectIncompatibleModifiers",
+    "offset": 1355
+  },
+  "langVersion": "7.2",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7_2)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0107",
+        "severity": "error"
+      },
+      {
+        "code": "CS0107",
+        "severity": "error"
+      },
+      {
+        "code": "CS0107",
+        "severity": "error"
+      },
+      {
+        "code": "CS0107",
+        "severity": "error"
+      },
+      {
+        "code": "CS0107",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (3,26): error CS0107: More than one protection modifier\n                //     private internal int Field1;\n                Diagnostic(ErrorCode.ERR_BadMemberProtection, \"Field1\").WithLocation(3, 26),\n                // (4,26): error CS0107: More than one protection modifier\n                //     internal private int Field2;\n                Diagnostic(ErrorCode.ERR_BadMemberProtection, \"Field2\").WithLocation(4, 26),\n                // (5,36): error CS0107: More than one protection modifier\n                //     private internal protected int Field3;\n                Diagnostic(ErrorCode.ERR_BadMemberProtection, \"Field3\").WithLocation(5, 36),\n                // (6,36): error CS0107: More than one protection modifier\n                //     internal protected private int Field4;\n                Diagnostic(ErrorCode.ERR_BadMemberProtection, \"Field4\").WithLocation(6, 36),\n                // (7,34): error CS0107: More than one protection modifier\n                //     private public protected int Field5;\n                Diagnostic(ErrorCode.ERR_BadMemberProtection, \"Field5\").WithLocation(7, 34)\n                ",
+  "unsupported": []
+}

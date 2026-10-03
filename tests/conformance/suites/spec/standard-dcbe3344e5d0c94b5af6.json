@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-dcbe3344e5d0c94b5af6",
+  "kind": "spec",
+  "sourceText": "abstract class C<T>\n{\n    public virtual T F() {...}\n    public virtual C<T> G() {...}\n    public virtual void H(C<T> x) {...}\n}\n\nclass D : C<string>\n{\n    public override string F() {...}            // Ok\n    public override C<string> G() {...}         // Ok\n    public override void H(C<T> x) {...}        // Error, should be C<string>\n}\n\nclass E<T,U> : C<U>\n{\n    public override U F() {...}                 // Ok\n    public override C<U> G() {...}              // Ok\n    public override void H(C<T> x) {...}        // Error, should be C<U>\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0115",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "28394e0f2f869e2b275f0343f06a9baf1e3962f05f710d146436f6eb5b20897a",
+  "originalSource": "abstract class C<T>\n{\n    public virtual T F() {...}\n    public virtual C<T> G() {...}\n    public virtual void H(C<T> x) {...}\n}\n\nclass D : C<string>\n{\n    public override string F() {...}            // Ok\n    public override C<string> G() {...}         // Ok\n    public override void H(C<T> x) {...}        // Error, should be C<string>\n}\n\nclass E<T,U> : C<U>\n{\n    public override U F() {...}                 // Ok\n    public override C<U> G() {...}              // Ok\n    public override void H(C<T> x) {...}        // Error, should be C<U>\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "OverrideMethods1",
+    "replaceEllipsis": true,
+    "customEllipsisReplacements": [
+      "return default;",
+      "return default;",
+      null,
+      "return default;",
+      "return default;",
+      null,
+      "return default;",
+      "return default;",
+      null
+    ],
+    "expectedErrors": [
+      "CS0246",
+      "CS0115"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "OverrideMethods1",
+    "offsetInUnquotedMarkdown": 138188
+  }
+}

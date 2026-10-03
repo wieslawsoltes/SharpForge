@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9b21675e3bf91ab55172",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class Program\n{\n    public static void Main(string[] args)\n    {\n        System.Console.Write(A.M1());\n        System.Console.WriteLine(B.M2());\n    }\n}",
+  "sourceSHA256": "6a7a825dea5a272fdfefaa938f6b8c08e4e32ef8dfb4f1930eb9637df66af1ed",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs",
+    "sha256": "a146aeb41311a33fd51733055804d5bdd45ba0e5302ca02348a06cb7e94dd243",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs",
+    "license": "MIT",
+    "method": "MultipleNetmodulesWithAnonymousTypes",
+    "offset": 223060
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "references: new[] { ref1, ref2 })",
+  "options": "(s3, options: TestOptions.ReleaseExe.WithModuleName(\"C\"), references: new[] { ref1, ref2 })",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

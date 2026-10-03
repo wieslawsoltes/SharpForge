@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d66eb0c42be6ea31f654",
+  "kind": "diagnostics",
+  "sourceText": "\nunsafe struct Foo\n{\n    private fixed int Bar[2];\n\n    public int* M1 => &this.Bar[0];\n    public int* M2 => &Bar[1];\n}",
+  "sourceSHA256": "7b6c3dbade1c87704915fbbee3ec6df453b55db46dfb1e9a3bd9c62cdabdc581",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/FixedSizeBufferTests.cs",
+    "sha256": "5f39ababded2b14153c2b7df0aba5621d48ffeb53005371ba6aad3896c37e080",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/FixedSizeBufferTests.cs",
+    "license": "MIT",
+    "method": "FixedFieldDoesNotAllowAddressOfOperator",
+    "offset": 33014
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nunsafe struct Foo\n{\n    private fixed int Bar[2];\n\n    public int* M1 => &this.Bar[0];\n    public int* M2 => &Bar[1];\n}\", options: TestOptions.UnsafeReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0212",
+        "severity": "error"
+      },
+      {
+        "code": "CS0212",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,23): error CS0212: You can only take the address of an unfixed expression inside of a fixed statement initializer\n                //     public int* M1 => &this.Bar[0];\n                Diagnostic(ErrorCode.ERR_FixedNeeded, \"&this.Bar[0]\").WithLocation(6, 23),\n                // (7,23): error CS0212: You can only take the address of an unfixed expression inside of a fixed statement initializer\n                //     public int* M2 => &Bar[1];\n                Diagnostic(ErrorCode.ERR_FixedNeeded, \"&Bar[1]\").WithLocation(7, 23)",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

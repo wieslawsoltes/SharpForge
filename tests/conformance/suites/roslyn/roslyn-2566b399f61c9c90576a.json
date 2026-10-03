@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-2566b399f61c9c90576a",
+  "kind": "diagnostics",
+  "sourceText": "\nstruct Program\n{\n    struct S1\n    {\n        public int i;\n        public int ii { get; }\n    }\n\n    S1 x { get; }\n    S1 x2 { get; }\n\n\n    public Program(int dummy)\n    {\n        x.i = 1;\n        System.Console.WriteLine(x2.ii);\n    }\n\n    public void Goo()\n    {\n    }\n\n    static void Main(string[] args)\n    {\n\n    }\n}",
+  "sourceSHA256": "5497c0547627d25cbc9258e49b0c991636c8791604e617c5e285851817b91eab",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "sha256": "c8277ea97437cc26511c883985aea205067e653e658a9ad8e0fb3a0be387cf9c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "license": "MIT",
+    "method": "AutoPropInitialization4",
+    "offset": 43035
+  },
+  "langVersion": "10",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, parseOptions: TestOptions.Regular10)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1612",
+        "severity": "error"
+      },
+      {
+        "code": "CS9015",
+        "severity": "error"
+      },
+      {
+        "code": "CS9014",
+        "severity": "error"
+      },
+      {
+        "code": "CS0843",
+        "severity": "error"
+      },
+      {
+        "code": "CS0843",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n    // (16,9): error CS1612: Cannot modify the return value of 'Program.x' because it is not a variable\n    //         x.i = 1;\n    Diagnostic(ErrorCode.ERR_ReturnNotLValue, \"x\").WithArguments(\"Program.x\").WithLocation(16, 9),\n    // (16,9): error CS9015: Use of possibly unassigned field 'i'. Consider updating to language version '11.0' to auto-default the field.\n    //         x.i = 1;\n    Diagnostic(ErrorCode.ERR_UseDefViolationFieldUnsupportedVersion, \"x.i\").WithArguments(\"i\", \"11.0\").WithLocation(16, 9),\n    // (17,34): error CS9014: Use of possibly unassigned auto-implemented property 'x2'. Consider updating to language version '11.0' to auto-default the property.\n    //         System.Console.WriteLine(x2.ii);\n    Diagnostic(ErrorCode.ERR_UseDefViolationPropertyUnsupportedVersion, \"x2\").WithArguments(\"x2\", \"11.0\").WithLocation(17, 34),\n    // (14,12): error CS0843: Auto-implemented property 'Program.x' must be fully assigned before control is returned to the caller. Consider updating to language version '11.0' to auto-default the property.\n    //     public Program(int dummy)\n    Diagnostic(ErrorCode.ERR_UnassignedThisAutoPropertyUnsupportedVersion, \"Program\").WithArguments(\"Program.x\", \"11.0\").WithLocation(14, 12),\n    // (14,12): error CS0843: Auto-implemented property 'Program.x2' must be fully assigned before control is returned to the caller. Consider updating to language version '11.0' to auto-default the property.\n    //     public Program(int dummy)\n    Diagnostic(ErrorCode.ERR_UnassignedThisAutoPropertyUnsupportedVersion, \"Program\").WithArguments(\"Program.x2\", \"11.0\").WithLocation(14, 12)",
+  "unsupported": []
+}
