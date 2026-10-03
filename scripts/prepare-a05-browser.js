@@ -26,7 +26,8 @@ try{
   const build=await command(process.execPath,['scripts/build.js']);preparation.commands.push({command:[process.execPath,'scripts/build.js'],stdout:build.stdout,stderr:build.stderr,exitCode:0});
   const staging=resolve(root,'dist/a05-e01');await mkdir(staging,{recursive:true});
   // This location preserves the suite's ../packages imports after build rewrites package imports.
-  await copyFile(resolve(root,'tests/browser_e01_suite.js'),resolve(staging,'browser_e01_suite.js'));
+  const suiteFiles=['browser_e01_suite.js','browser_snapshot_suite.js'];
+  for(const file of suiteFiles)await copyFile(resolve(root,'tests',file),resolve(staging,file));
   const entry="import {runE01Browser} from './browser_e01_suite.js';\nself.onmessage=async({data})=>{try{const result=await runE01Browser(data,item=>self.postMessage({kind:'progress',item}));self.postMessage({kind:'result',result});}catch(error){self.postMessage({kind:'fatal',error:{name:error.name,message:error.message,stack:error.stack}});}};\n";
   await writeFile(resolve(staging,'entry.js'),entry);
   const bundle=await bundleWorker(resolve(staging,'entry.js'));await writeFile(resolve(output,'a05-e01.bundle.js'),bundle);
@@ -50,7 +51,8 @@ try{
   for(const fixture of external){const bytes=await readFile(fixture.path),expected=await readFile(fixture.expected,'utf8');assemblies.push({label:'External DLL '+basename(fixture.path),origin:'provided DLL and expected output; browser execution only',path:fixture.path,expectedPath:fixture.expected,base64:bytes.toString('base64'),sha256:sha(bytes),expectedSha256:sha(expected),output:expected,nativeIntBits});}
   const status=(await command('git',['status','--porcelain=v1'])).stdout,diff=(await command('git',['diff','--binary','HEAD'])).stdout;
   const manifest={schemaVersion:1,preparedCommit,preparedAt:new Date().toISOString(),worktreeStatus:status,trackedDiffSha256:sha(diff),runtimeBundleSha256:sha(bundle),
-    suiteSha256:sha(await readFile(resolve(root,'tests/browser_e01_suite.js'))),scalars,synchronization,assemblies,
+    suiteSha256:sha(await readFile(resolve(root,'tests/browser_e01_suite.js'))),
+    suiteFiles:Object.fromEntries(await Promise.all(suiteFiles.map(async file=>[file,sha(await readFile(resolve(root,'tests',file)))]))),scalars,synchronization,assemblies,
     awaitSource:'using System.Threading.Tasks;class P{static async Task Main(){int[] values=new int[3];values[0]=42;Console.WriteLine("start");await Task.Delay(10);GC.Collect();Console.WriteLine(values[0]);await Task.Delay(20);Console.WriteLine("end");}}',awaitOutput:'start\n42\nend\n'};
   await writeFile(resolve(output,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');
   preparation.passed=true;preparation.runtimeBundleSha256=manifest.runtimeBundleSha256;preparation.output=output;

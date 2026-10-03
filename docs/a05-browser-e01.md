@@ -19,7 +19,8 @@ browser. No npm dependency installation is required. The Python harness serves
 only its generated artifact directory on an ephemeral loopback port.
 
 Preparation rebuilds `dist`, bundles the harness worker and writes exact fixture
-inputs. The browser runner rejects a changed commit, tracked diff, suite, or
+inputs. The browser runner fingerprints both E01 and snapshot suite modules and
+rejects a changed commit, tracked diff, suite file, or
 bundle after preparation. Reports include the commit, dirty worktree status,
 bundle and fixture hashes, Python/Playwright/browser versions, every individual
 check, full errors and partial results on failure. A dirty tree is reported as
@@ -27,7 +28,10 @@ such; its bundle hash identifies the actual tested code.
 
 Coverage includes signed/unsigned and Decimal arithmetic, IEEE edge cases,
 native integer widths 32 and 64, await snapshot replay through collection and
-cancellation, Monitor recursion/wait/pulse, lock cleanup, Interlocked/Volatile,
+cancellation; fresh-VM JSON/structured-clone replay of stack Span/read-only slices,
+pending first-chance faults and nested finally calls; atomic typed schema rejection;
+and actual host-operation revision barriers. It also covers Monitor recursion/wait/pulse,
+lock cleanup, Interlocked/Volatile,
 and independently assembled rectangular-array CIL with lower bounds and an
 interior address surviving GC. Native integer configurations are emulated VM
 ABIs, not proof of two native host architectures.
