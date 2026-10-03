@@ -54,7 +54,6 @@ export const FunctionTranslation = Base =>
     /** A lambda converted to the delegate type `type`. */
     lambda(node, type) {
       if (!node.body) return this.unsupported('a lambda without a bound body', node.syntax);
-      if (node.isAsync) return this.unsupported('async lambdas', node.syntax);
       const info = this.g.delegates.classOf(type, node.syntax),
         root = this.frame.root,
         name = lambdaMethodName(root.name, root.ordinal, root.lambdas++),
@@ -62,20 +61,31 @@ export const FunctionTranslation = Base =>
         signature = { returnType: info.returnType, parameters: info.parameters.map((p, i) => ({ ...p, name: node.parameters[i]?.name ?? p.name })) };
       const node0 = n.spanOf(node.syntax, this.frame.uri);
       if (!captures.variables.length && !captures.usesThis) {
-        const method = this.g.program.addMethod(this.frame.method.owner, name, { ...signature, isStatic: true, node: node0 });
-        const frame = new Frame({ uri: this.frame.uri, method, captures: this.frame.captures, root });
-        this.g.queueBody({ frame, bound: node.body, parameters: node.parameters, returnsValue: info.returnType !== 'void' });
+        const method = this.g.program.addMethod(this.frame.method.owner, name, { ...signature, isStatic: true, node: node0 }),
+          target = this.bodyMethod(method, node.isAsync, node.syntax);
+        const frame = new Frame({ uri: this.frame.uri, method: target, captures: this.frame.captures, root });
+        this.g.queueBody({ frame, bound: node.body, parameters: node.parameters, returnsValue: target.returnType !== 'void' });
         return this.g.delegates.create(info, method, null);
       }
       const display = this.displayClass(captures),
         method = this.g.program.addMethod(display.record, name, { ...signature, isStatic: false, node: node0 });
+      const target = this.bodyMethod(method, node.isAsync, node.syntax);
       this.g.queueBody({
-        frame: this.displayFrame(method, display),
+        frame: this.displayFrame(target, display),
         bound: node.body,
         parameters: node.parameters,
-        returnsValue: info.returnType !== 'void',
+        returnsValue: target.returnType !== 'void',
       });
       return n.sequence([display.temp], display.effects, this.g.delegates.create(info, method, n.local(display.temp)));
+    }
+    /**
+     * The image method the body of a function is lowered into: the function's own method, or for an async function
+     * the body method of its kickoff (lowering/async/async-methods.js).
+     */
+    bodyMethod(method, isAsync, syntax) {
+      if (!isAsync) return method;
+      // Roslyn names the machine of a lambda or local function after its method: `<<Main>b__0_0>d`.
+      return this.g.asyncBody(method, { name: `<${method.name}>d`, syntax, uri: this.frame.uri });
     }
     exprLambda(node) {
       return node.boundAs ? this.lambda(node, node.boundAs) : this.unsupported('a lambda without a delegate type', node.syntax);
@@ -87,7 +97,6 @@ export const FunctionTranslation = Base =>
       if (root.localFunctions.has(symbol)) return;
       const at = symbol.locations?.[0];
       if (symbol.typeParameters?.length) this.unsupported('user-defined generics', at);
-      if (symbol.isAsync) this.unsupported('async methods outside the execution profile', at);
       if (!symbol.body) this.unsupported('extern methods', at);
       const captures = this.capturesOf(symbol),
         extra = [];
@@ -104,7 +113,8 @@ export const FunctionTranslation = Base =>
         node: n.spanOf(symbol.syntax, this.frame.uri),
         hasSource: true,
       });
-      const frame = new Frame({ uri: this.frame.uri, method, captures: this.frame.captures, root });
+      const target = this.bodyMethod(method, symbol.isAsync, at);
+      const frame = new Frame({ uri: this.frame.uri, method: target, captures: this.frame.captures, root });
       extra.forEach((e, i) => {
         const slot = n.newParameter(e.name, e.type, declared.length + i);
         if (e.isThis) frame.thisExpr = () => n.parameter(slot);
@@ -114,7 +124,7 @@ export const FunctionTranslation = Base =>
         }
       });
       root.localFunctions.set(symbol, { method, extra });
-      this.g.queueBody({ frame, bound: symbol.body, parameters: symbol.parameters, returnsValue: method.returnType !== 'void' });
+      this.g.queueBody({ frame, bound: symbol.body, parameters: symbol.parameters, returnsValue: target.returnType !== 'void' });
     }
     localFunction(symbol, syntax) {
       const entry = this.frame.root.localFunctions.get(symbol);

@@ -263,7 +263,7 @@ export const FlowStatementBinding = Base =>
             syntax.returnKeyword,
             this.c.isAsync && this.c.declaredReturnType && this.c.declaredReturnType.equals(this.core.task) ? 'CS1997' : 'CS0127',
             this.c.isAsync && this.c.declaredReturnType?.equals(this.core.task)
-              ? []
+              ? [this.c.method?.toDisplayString() ?? 'lambda expression', 'Task']
               : [
                   this.c.isLambda
                     ? this.c.isAnonymousMethod
