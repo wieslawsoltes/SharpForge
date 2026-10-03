@@ -1,7 +1,0 @@
-["standalone-build011", 0]
-["packages-final011", 0]
-["check-final011", 0]
-["test-final011", 0]
-["browser-final011", 0]
-["standalone011", 0]
-ALL GATES PASSED

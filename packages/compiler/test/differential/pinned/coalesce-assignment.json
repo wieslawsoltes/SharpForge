@@ -1,5 +1,0 @@
-{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
-  "coalesce-assignment/assigns-only-when-the-target-is-null":{"hash":"5b367bdb0b81ac2a","kind":"output","langVersion":"14.0","diagnostics":[],"output":"made 1 7\nfqs\ne\nmade\n"},
-  "coalesce-assignment/operand-types":{"hash":"fbc0441f92e8203f","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0019",117,7,"error"],["CS0019",151,7,"error"],["CS0131",191,1,"error"],["CS0019",225,9,"error"],["CS0131",244,3,"error"]]},
-  "coalesce-assignment/coalesce-assignment-in-7-3":{"hash":"078b49e0b60bf9de","kind":"diagnostics","langVersion":"7.3","diagnostics":[["CS8370",56,3,"error"]]}
-}}

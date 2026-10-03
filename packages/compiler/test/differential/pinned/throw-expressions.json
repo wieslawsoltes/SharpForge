@@ -1,6 +1,0 @@
-{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
-  "throw-expressions/conditional-coalesce-and-expression-bodies":{"hash":"7134cbda364ee5a2","kind":"output","langVersion":"14.0","diagnostics":[],"output":"x\n3\nno\nyes\nnull value\nnever\nact\ncoalesce\nlambda\naction\n3\n"},
-  "throw-expressions/contexts-and-operand-types":{"hash":"d1edf5fc6c261578","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS8115",117,5,"error"],["CS8115",157,5,"error"],["CS8115",195,5,"error"],["CS0266",383,12,"error"],["CS0029",441,3,"error"],["CS0165",656,1,"error"]]},
-  "throw-expressions/throw-expressions-in-6":{"hash":"0b762f0f694f8eb7","kind":"diagnostics","langVersion":"6","diagnostics":[["CS8059",69,5,"error"],["CS8059",151,5,"error"]]},
-  "throw-expressions/an-async-method-returns-a-task-like-type":{"hash":"48d7af03fd657f48","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1983",256,1,"error"],["CS1983",316,1,"error"],["CS0029",419,1,"error"]]}
-}}

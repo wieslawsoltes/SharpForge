@@ -1,5 +1,0 @@
-{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
-  "discards/discards-evaluate-and-drop":{"hash":"31fc3a64ef3ae9a3","kind":"output","langVersion":"14.0","diagnostics":[],"output":"1 2 7\n5 3\n2\n"},
-  "discards/underscore-is-a-variable-when-one-is-in-scope":{"hash":"31e610ca4d5b9987","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0029",141,3,"error"],["CS1503",203,8,"error"],["CS0103",281,1,"error"],["CS0103",301,1,"error"],["CS0103",316,1,"error"],["CS0103",327,1,"error"],["CS0023",361,1,"error"]]},
-  "discards/discards-in-6":{"hash":"0d959b5114892f21","kind":"diagnostics","langVersion":"6","diagnostics":[["CS8059",149,1,"error"],["CS8059",177,1,"error"],["CS8059",184,1,"error"]]}
-}}

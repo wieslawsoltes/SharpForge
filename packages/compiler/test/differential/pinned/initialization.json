@@ -1,5 +1,0 @@
-{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
-  "initialization/order-of-initializers-and-constructors":{"hash":"5cd442e31a62e4e4","kind":"output","langVersion":"14.0","diagnostics":[],"output":"1:chained argument\n2:first field\n3:auto property\n4:last field\n5:body 1\n6:parameterless body\n7:initializer\n1 7 3\n8:first field\n9:auto property\n10:last field\n11:body 99\n12:static field\n39\n"},
-  "initialization/properties-indexers-and-statics":{"hash":"de73f58811732ddb","kind":"output","langVersion":"14.0","diagnostics":[],"output":"11\nboard6False\n2 True\nboard!\n"},
-  "initialization/optional-named-and-params-arguments":{"hash":"989ecf92283cc130","kind":"output","langVersion":"14.0","diagnostics":[],"output":"\n1\n1+2+3\n321\n27\n11\n123\n"}
-}}

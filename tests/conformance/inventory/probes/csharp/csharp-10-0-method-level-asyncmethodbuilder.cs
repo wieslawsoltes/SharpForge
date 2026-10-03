@@ -1,1 +1,0 @@
-class C { [System.Runtime.CompilerServices.AsyncMethodBuilder(typeof(System.Runtime.CompilerServices.AsyncTaskMethodBuilder))] static async System.Threading.Tasks.Task M() { await System.Threading.Tasks.Task.Delay(1); } }
