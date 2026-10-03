@@ -25,6 +25,7 @@ import { DeconstructionBinding } from './body/deconstruction.js';
 import { WithBinding } from './with-expression.js';
 import { LambdaBinding } from './body/lambdas.js';
 import { PatternBinding } from './body/patterns.js';
+import { StructuralPatternBinding } from './body/structural-patterns.js';
 import { StackAllocBinding } from './body/stackalloc.js';
 import { StatementBinding } from './body/statements.js';
 import { DeclarationBinding } from './body/declarations.js';
@@ -43,6 +44,7 @@ const expressionFamilies = [
   WithBinding,
   LambdaBinding,
   PatternBinding,
+  StructuralPatternBinding,
   StackAllocBinding,
 ];
 const statementFamilies = [StatementBinding, DeclarationBinding, FlowStatementBinding, LocalFunctionBinding];

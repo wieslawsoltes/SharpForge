@@ -20,6 +20,7 @@ import { TupleTranslation } from '../../lowering/tuples/translate-tuples.js';
 import { SynthesizedTextTranslation } from '../../lowering/tuples/translate-text.js';
 import { DeconstructionTranslation } from '../../lowering/tuples/translate-deconstruction.js';
 import { RecordTranslation } from '../../lowering/records/translate-records.js';
+import { StructuralPatternTranslation } from '../../lowering/patterns/translate-structural-patterns.js';
 
 export { Frame } from './frame.js';
 
@@ -210,6 +211,7 @@ const families = [
   SynthesizedTextTranslation,
   DeconstructionTranslation,
   RecordTranslation,
+  StructuralPatternTranslation,
 ];
 
 export class BodyTranslator extends families.reduce(
