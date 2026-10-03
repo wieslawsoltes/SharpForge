@@ -7,5 +7,6 @@ export * from './loader.js';
 export * from './disassembler.js';
 export * from './inspector.js';
 export * from './execution-profile.js';
+export {intrinsicKey,intrinsicDefinitions,intrinsicDefinition} from './intrinsic-profile.js';
 export * from './il-document.js';
 export * from './decompiler.js';
