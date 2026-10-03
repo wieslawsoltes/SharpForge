@@ -1,14 +1,7 @@
-import {MethodSymbol, ParameterSymbol, DeclarationModifiers} from './members.js';
+import {MethodSymbol, DeclarationModifiers} from './members.js';
+import {contractParameters} from './registry-params.js';
 
-/** Adapt a closed registry parameter, retaining params metadata for ordinary overload binding. */
-export function registryParameter(bridge, typeName, index, isParams = false) {
-  return new ParameterSymbol({
-    name: 'arg' + index,
-    type: bridge.typeFromName(typeName) ?? bridge.objectType,
-    ordinal: index,
-    isParams
-  });
-}
+export {registryParameter} from './registry-params.js';
 
 /** Create and index the method symbol for one immutable ABI contract. */
 export function registryContractMethod(bridge, contract, kind, common) {
@@ -18,7 +11,7 @@ export function registryContractMethod(bridge, contract, kind, common) {
     methodKind: kind,
     returnType: contract.kind === 'constructor' ? bridge.byName.get('void')
       : bridge.typeFromName(contract.result) ?? bridge.objectType,
-    parameters: contract.parameters.map((type, index) => bridge.parameter(type, index, contract.paramsIndex === index)),
+    parameters: contractParameters(bridge, contract),
     modifiers: contract.isStatic ? DeclarationModifiers.Static : 0
   });
   method.contract = contract;

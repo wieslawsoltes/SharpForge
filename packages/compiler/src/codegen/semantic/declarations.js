@@ -51,7 +51,9 @@ export const Declarations = Base =>
       const core = this.analysis.core,
         // ... nor do the comparison interfaces: no registry contract calls them back (a collection over a class that
         // implements one is not shared with the construction over `object`, and sorting such a collection is refused).
-        dispatchFree = [core.iasyncDisposable, core.ienumerable, core.icomparable, core.icomparableT, core.iequatableT],
+        // ... nor the awaiter interfaces: `await` calls the members of the awaiter's static type.
+        awaiterInterfaces = [core.inotifyCompletion, core.icriticalNotifyCompletion],
+        dispatchFree = [core.iasyncDisposable, core.ienumerable, core.icomparable, core.icomparableT, core.iequatableT, ...awaiterInterfaces],
         needsDispatch = i => i.specialType !== 'System_IDisposable' && !dispatchFree.includes(i.originalDefinition ?? i) && !this.isSource(i);
       if (type.interfaces?.some(needsDispatch)) this.unsupported('interface implementation', at);
     }

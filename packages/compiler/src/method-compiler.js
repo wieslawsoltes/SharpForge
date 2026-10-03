@@ -138,7 +138,7 @@ class CoreMethodCompiler {
     const path=pathOf(node.target),owner=this.c.findType(path,this.m);if(owner)return owner.fields.find(f=>f.name===node.name&&f.isStatic)??null;
     const type=this.infer(node.target);return this.c.findType(type,this.m)?.fields.find(f=>f.name===node.name&&!f.isStatic)??null;
   }
-  isNameof(node){return node?.kind==='Call'&&node.target.kind==='Name'&&node.target.name==='nameof'&&!this.c.methods.some(m=>m.name==='nameof'&&(m.owner===this.m.owner||!m.owner));}
+  isNameof(node){return node?.kind==='Call'&&node.target.kind==='Name'&&node.target.name==='nameof'&&!this.c.methodIndex.named('nameof').some(m=>m.owner===this.m.owner||!m.owner);}
   nameof(node,bind=true){
     const argument=node.args[0];if(node.args.length!==1||!argument||!['Name','Member'].includes(argument.kind)){if(bind)this.c.report(node,'CS8081');return '';}
     // The restricted profile supports identifier/member chains, not arbitrary receiver expressions.
@@ -174,7 +174,7 @@ class CoreMethodCompiler {
   }
   findMethod(node,report=true){
     let candidates=[];const target=node.target;
-    if(target.kind==='Name')candidates=this.c.methods.filter(m=>m.name===target.name&&(m.owner===this.m.owner||!m.owner)&&(!this.m.isStatic||m.isStatic));
+    if(target.kind==='Name')candidates=this.c.methodIndex.named(target.name).filter(m=>(m.owner===this.m.owner||!m.owner)&&(!this.m.isStatic||m.isStatic));
     else if(target.kind==='Member'){const path=pathOf(target.target),type=this.c.findType(path,this.m);if(type)candidates=type.methods.filter(m=>m.name===target.name&&m.isStatic);else{const type=this.c.findType(this.infer(target.target),this.m);candidates=type?.methods.filter(m=>m.name===target.name&&!m.isStatic)??[];}}
     if(candidates.some(m=>m.accessor)){if(report)this.c.report(node,'CS0571',[pathOf(target)??target.name]);candidates=candidates.filter(m=>!m.accessor);}
     const types=node.args.map(a=>this.infer(a));candidates=candidates.filter(m=>m.parameters.length===types.length&&m.parameters.every((p,i)=>assignable(p.type,types[i])));

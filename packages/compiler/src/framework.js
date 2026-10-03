@@ -2,13 +2,7 @@ import {canonicalType,frameworkType,frameworkAssignable,findContracts,enumValue,
 import {Op,frameworkBuiltin} from '@sharpforge/bytecode';
 import {typeText} from './type-utils.js';
 import {emitValueArgument} from './codegen/value-arguments.js';
-/** The dotted path of a name or member-access chain, or null. The receiver's path is computed once per level. */
-function pathOf(node) {
-  if (node?.kind === 'Name') return node.name;
-  if (node?.kind !== 'Member') return null;
-  const target = pathOf(node.target);
-  return target ? target + '.' + node.name : null;
-}
+import {memberPath as pathOf} from './binder/member-path.js';
 /** Closed framework binder layer (class mixin, composed in method-compiler.js); ordinary user members retain precedence. */
 export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
     frameworkReceiver(node) {
@@ -29,7 +23,7 @@ export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
       const target=node.kind==='New'&&node.args.length===1?node.args[0]:node;
       let methods=[],receiver=null;
       if(target.kind==='Name'){
-        methods=this.c.methods.filter(m=>m.name===target.name&&(m.owner===this.m.owner||!m.owner)&&(!this.m.isStatic||m.isStatic));
+        methods=this.c.methodIndex.named(target.name).filter(m=>(m.owner===this.m.owner||!m.owner)&&(!this.m.isStatic||m.isStatic));
       } else if(target.kind==='Member') {
         const owner=this.c.findType(pathOf(target.target),this.m);
         if(owner)methods=owner.methods.filter(m=>m.isStatic&&m.name===target.name);
