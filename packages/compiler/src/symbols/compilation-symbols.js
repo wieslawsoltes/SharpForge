@@ -3,6 +3,7 @@ import {MethodSymbol,FieldSymbol,PropertySymbol,ParameterSymbol,MethodKind,modif
 import {NamespaceSymbol,NamespaceExtent,mergeGlobalNamespaces} from './namespaces.js';
 import {frameworkBridge} from './registry-bridge.js';
 import {LegacyTypeAdapter} from './legacy-types.js';
+import {FrameworkMembers} from '../binder/framework-members.js';
 /**
  * The symbols of one compilation: source symbols for the declaration records the Compilation builds
  * (types, fields, properties, methods - including synthesized ones), the framework symbols from the registry
@@ -16,6 +17,7 @@ export class CompilationSymbols {
     this.compilation=compilation;this.bridge=frameworkBridge();this.module=Object.freeze({name:compilation.options?.name??'Application',kind:'source'});
     this.sourceNamespace=new NamespaceSymbol('',null,NamespaceExtent.Source,this.module);this.globalNamespace=mergeGlobalNamespaces(this.sourceNamespace,this.bridge.globalNamespace);
     this.types=new LegacyTypeAdapter({bridge:this.bridge,sourceType:name=>{const record=compilation.typeMap.get(name);return record?this.type(record):null;}});this.records=new Map();
+    this.framework=new FrameworkMembers({bridge:this.bridge,typeOf:name=>this.typeOf(name)});
   }
   get typeProvider(){return this.bridge.typeProvider;}
   /** The TypeSymbol for a legacy type name ('int', 'Foo[]', ...); null for 'null'. */

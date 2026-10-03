@@ -1,4 +1,4 @@
-import {frameworkType,findContracts} from '@sharpforge/framework';
+import {frameworkType} from '@sharpforge/framework';
 import {typeText} from '../type-utils.js';
 import {LocalDeclarationKind} from '../symbols/members.js';
 import {BoundBadStatement,BoundNoOpStatement,BoundBlock,BoundLocalDeclaration,BoundMultipleLocalDeclarations,BoundExpressionStatement,BoundIfStatement,BoundWhileStatement,BoundDoStatement,BoundForStatement,BoundForEachStatement,BoundForEachEnumerator,BoundSwitchStatement,BoundSwitchSection,BoundSwitchLabel,BoundTryStatement,BoundCatchBlock,BoundUsingStatement,BoundUsingResource,BoundReturnStatement,BoundThrowStatement,BoundBreakStatement,BoundContinueStatement,BoundCheckedStatement,BoundConditionalAccessAssignment} from '../bound/nodes.js';
@@ -93,7 +93,7 @@ export const StatementBinder=Base=>class StatementBinder extends Base {
     }
   }
   bindForeach(node){
-    const collectionType=this.infer(node.expression),getEnumerator=findContracts(collectionType,'GetEnumerator',false)[0],labels=node.labels??[];
+    const collectionType=this.infer(node.expression),getEnumerator=this.frameworkMethod(collectionType,'GetEnumerator',false),labels=node.labels??[];
     if(getEnumerator)return this.bindEnumeratorForeach(node,getEnumerator);
     this.pushScope();const expression=this.bindExpression(node.expression),arrayType=expression.legacyType;if(!arrayType.endsWith('[]'))this.c.report(node,'CS1579',[typeText(arrayType),'GetEnumerator']);
     const element=arrayType.endsWith('[]')?arrayType.slice(0,-2):'error',local=this.local(node.name,node.type==='var'?element:this.c.resolveType(node.type,node,false,this.m),{...node,isIteration:true},false,{synthesizedKind:node.synthesizedKind,noSymbol:!!node.synthesizedKind});this.checkAssign(local.legacyType,element,node);
@@ -105,7 +105,7 @@ export const StatementBinder=Base=>class StatementBinder extends Base {
    * the iteration variable declaration from Current, the body and Dispose().
    */
   bindEnumeratorForeach(node,getEnumerator){
-    const name=this.syntheticName('$enumerator'),base={uri:node.uri,start:node.start,end:node.end},N=n=>({...base,kind:'Name',name:n}),M=(target,member)=>({...base,kind:'Member',target,name:member}),call=(target,member)=>({...base,kind:'Call',target:M(target,member),args:[]}),enumName=N(name),currentType=findContracts(getEnumerator.result,'get_Current',false)[0]?.result,labels=node.labels??[];
+    const name=this.syntheticName('$enumerator'),base={uri:node.uri,start:node.start,end:node.end},N=n=>({...base,kind:'Name',name:n}),M=(target,member)=>({...base,kind:'Member',target,name:member}),call=(target,member)=>({...base,kind:'Call',target:M(target,member),args:[]}),enumName=N(name),currentType=this.frameworkMethod(getEnumerator.result,'get_Current',false)?.result,labels=node.labels??[];
     const outer={...base,kind:'Block'},previous=this.scopeNode;this.scopeNode=outer;this.pushScope(outer);
     const declaration=this.bindStatement({...base,kind:'Local',declarations:[{...base,name,type:getEnumerator.result,hidden:true,synthesizedKind:'enumerator',initializer:call(node.expression,'GetEnumerator')}]});
     this.pushScope();this.loops.push({labels});const moveNext=this.bindBool(call(enumName,'MoveNext'));
@@ -123,7 +123,7 @@ export const StatementBinder=Base=>class StatementBinder extends Base {
     const declarations=node.resources.kind==='Local'?node.resources.declarations:[{...node.resources,kind:'Variable',name:this.syntheticName('$using'),type:'var',initializer:node.resources,hidden:true,synthesizedKind:'using'}];
     for(const d of declarations){
       const type=d.type==='var'?this.infer(d.initializer):this.c.typeName(d.type,this.m),owner=this.c.findType(type,this.m);if(!d.initializer)this.c.report(d,'CS0210');
-      if(!owner?.interfaces.includes('System.IDisposable')&&!(['network','bcl','bcl14'].includes(frameworkType(type)?.kind)&&findContracts(type,'Dispose',false).some(c=>!c.parameters.length)))this.c.report(d,'CS1674',[typeText(type)]);
+      if(!owner?.interfaces.includes('System.IDisposable')&&!(['network','bcl','bcl14'].includes(frameworkType(type)?.kind)&&this.framework.methods(type,'Dispose',false).some(m=>!m.parameters.length)))this.c.report(d,'CS1674',[typeText(type)]);
     }
     const resources=[],bindLevel=index=>{
       if(index>=declarations.length)return this.bindStatement(node.body)??this.statement(BoundNoOpStatement,null,{});

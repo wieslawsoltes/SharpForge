@@ -43,6 +43,8 @@ export function unificationDiagnostic(owner,referenceIdentity,definition){
   if(compareVersions(d.version,referenceIdentity.version)>0)return {code:d.version[0]===referenceIdentity.version[0]&&d.version[1]===referenceIdentity.version[1]?'CS1702':'CS1701',args:[referenceIdentity.getDisplayName(),owner.name,d.getDisplayName(),definition.name]};
   return {code:'CS1705',args:[owner.name,owner.identity.getDisplayName(),referenceIdentity.getDisplayName(),definition.name,d.getDisplayName()]};
 }
+/** The use-site diagnostics of a unified assembly reference. */
+export const unificationCodes=new Set(['CS1701','CS1702','CS1705']);
 const sameDiagnostic=(a,b)=>a.code===b.code&&a.args.length===b.args.length&&a.args.every((x,i)=>x===b.args[i]);
 
 /** The bound references of one compilation. */
@@ -80,7 +82,7 @@ export class ReferenceManager {
       entry.duplicateOf=equivalent;
       if(equivalent.assembly===entry.assembly||identity.equals(equivalent.assembly.identity)){equivalent.aliases=mergeAliases(entry.aliases,equivalent.aliases);continue;}
       const other=equivalent.display??equivalent.assembly.identity.getDisplayName();
-      if(identity.isStrongName)this._report('CS1703',[entry.display??identity.getDisplayName(),other]);else this._report('CS1704',[identity.name,other]);
+      if(identity.isStrongName)this._report('CS1703',[entry.display??identity.getDisplayName(),other]);else this._report('CS1704',[identity.name,entry.display??identity.getDisplayName()]);
     }
   }
   _bindAll(){
@@ -122,6 +124,11 @@ export class ReferenceManager {
     if(name===GlobalAlias)return {alias:null,diagnostic:{code:'CS1681',args:[]}};const target=this._namespaceOf(name);
     return target?{alias:new AliasSymbol(name,target,{isExtern:true,syntax}),diagnostic:null}:{alias:null,diagnostic:{code:'CS0430',args:[name]}};
   }
+  /** The display name of the assembly a type forwarder for `metadataName` points to when that assembly is not referenced, or null. */
+  forwardedToMissingAssembly(metadataName,alias=GlobalAlias){
+    for(const r of this.references){if(r.duplicateOf||!r.aliases.includes(alias))continue;const type=r.assembly.resolveType(metadataName);if(type instanceof ErrorTypeSymbol&&type.reason?.code==='CS0012')return type.reason.args[1];}
+    return null;
+  }
   /** The bound assembly with exactly this identity (an AssemblyIdentity or a display name), or null. */
   findAssembly(identity){const id=typeof identity==='string'?AssemblyIdentity.parse(identity):identity;return this.assemblies.find(a=>a.identity.equals(id))??null;}
   /** The assembly a reference identity binds to under the unification rules, or null. */
@@ -140,9 +147,10 @@ export class ReferenceManager {
    * The use-site diagnostics of an imported symbol, as {code,args} records: the reason of every error type in its
    * signature (CS0012, CS7069, CS0731, CS0518) and CS1701/CS1702/CS1705 when the symbol's assembly reaches a
    * type through a unified reference. For a type the base types and interfaces are checked; for a member its
-   * return, parameter, field, property or event types.
+   * return, parameter, field, property or event types. `options.missingBases: false` leaves out the errors of a
+   * type's base types and interfaces: Roslyn reports those where a member is looked up, not where the type is named.
    */
-  useSiteDiagnostics(symbol){
+  useSiteDiagnostics(symbol,options={}){
     const result=[],add=d=>{if(d&&!result.some(x=>sameDiagnostic(x,d)))result.push(d);},seen=new Set();
     const visit=(t,owner)=>{
       t=typeOf(t);if(!t||seen.has(t))return;seen.add(t);
@@ -157,7 +165,7 @@ export class ReferenceManager {
       }
     };
     if(symbol instanceof ErrorTypeSymbol)add(symbol.reason);
-    else if(symbol.kind===SymbolKind.NamedType){for(let t=symbol.originalDefinition,depth=0;t&&depth<64&&!(t instanceof ErrorTypeSymbol);t=typeOf(t.baseType)?.originalDefinition,depth++){const owner=t.containingAssembly;seen.clear();visit(t.baseType,owner);for(const i of t.interfaces)visit(i,owner);}}
+    else if(symbol.kind===SymbolKind.NamedType){const reported=result.length;for(let t=symbol.originalDefinition,depth=0;t&&depth<64&&!(t instanceof ErrorTypeSymbol);t=typeOf(t.baseType)?.originalDefinition,depth++){const owner=t.containingAssembly;seen.clear();visit(t.baseType,owner);for(const i of t.interfaces)visit(i,owner);}if(options.missingBases===false)return result.slice(0,reported).concat(result.slice(reported).filter(d=>unificationCodes.has(d.code)));}
     else{
       const owner=symbol.containingType?.originalDefinition.containingAssembly??null;
       visit(symbol.returnTypeWithAnnotations??symbol.typeWithAnnotations,owner);for(const p of symbol.parameters??[])visit(p.typeWithAnnotations,owner);
