@@ -7,6 +7,7 @@
   --wb-border: #60606b;
   --wb-accent: #75bfff;
   --wb-selected: #244f78;
+  --wb-selected-fg: var(--wb-fg);
   --wb-error: #ff9c9c;
   --wb-warning: #efcc79;
   --wb-success: #98d8a6;
@@ -61,6 +62,7 @@
     --wb-border: ButtonText;
     --wb-accent: LinkText;
     --wb-selected: Highlight;
+    --wb-selected-fg: HighlightText;
     --wb-error: CanvasText;
     --wb-warning: CanvasText;
     --wb-success: CanvasText;
