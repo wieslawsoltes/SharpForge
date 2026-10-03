@@ -39,6 +39,11 @@ function encoder(writer, options) {
       values(node.arguments, 'Generic arguments');
       for (const argument of node.arguments) type(argument, depth + 1);
     },
+    functionPointer(node, depth) {
+      if (node.signature?.kind !== 'method') throw new CilError('Function pointer requires a method signature');
+      writer.u8(0x1b);
+      method(node.signature, depth + 1);
+    },
   };
   function type(node, depth = 0, context = 'type') {
     budget(depth);
