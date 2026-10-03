@@ -13,9 +13,10 @@ function nextVersion(vm, owner, reason) {
   // Drop every cache together, including derived entries that refer to old tokens.
   if (previous) {
     previous.owner = null;
+    previous.registry = null;
     previous.decode = previous.tokens = previous.inline = previous.source = null;
   }
-  const state = {owner, epoch, reason, decode: null, tokens: null, inline: null, source: null,
+  const state = {owner, registry: vm.heap?.methodTables, epoch, reason, decode: null, tokens: null, inline: null, source: null,
     statistics: {decodePlans: 0, decodedInstructions: 0, decodeMilliseconds: 0, offsetMapAllocations: 0}};
   versions.set(vm, state);
   return state;
@@ -25,7 +26,8 @@ function nextVersion(vm, owner, reason) {
 export function executionCodeState(vm) {
   const owner = ownerOf(vm);
   const current = versions.get(vm);
-  return current?.owner === owner ? current : nextVersion(vm, owner, current ? 'owner-replaced' : 'initial');
+  if (current?.owner === owner && current.registry === vm.heap?.methodTables) return current;
+  return nextVersion(vm, owner, !current ? 'initial' : current.owner !== owner ? 'owner-replaced' : 'type-system-replaced');
 }
 
 /** Drop derived code caches after a committed edit, assembly replacement, or stop. Returns the new epoch. */

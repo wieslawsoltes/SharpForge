@@ -1,4 +1,5 @@
-import {callSignatureKey, resolveExecutionMethod} from '@sharpforge/cil';
+import {callSignatureKey} from '@sharpforge/cil';
+import {cachedMethod, verifiedMethod} from './token-cache.js';
 import {ManagedFault} from '../heap.js';
 
 function referencesFrame(value, frameId) {
@@ -28,14 +29,11 @@ export function inheritedTailState(frame) {
 
 /** jmp transfers current arguments and requires exact signature compatibility. */
 export function jumpMethod(vm, frame, instruction) {
-  const descriptor = resolveExecutionMethod(vm.inspector, instruction.operand, {
-    ownerToken: frame.method.ownerToken, genericIdentity: frame.genericIdentity,
-    typeArguments: frame.method.typeArguments, methodArguments: frame.methodArguments
-  });
+  const descriptor = cachedMethod(vm, instruction.operand, frame);
   if (frame.stack.length || callSignatureKey(descriptor.signature) !== callSignatureKey(frame.method.signature)) {
     throw new ManagedFault('InvalidProgramException', 'jmp requires an empty stack and matching method signature');
   }
-  if (!descriptor.resolvedToken || !vm.report.methods.includes(descriptor.resolvedToken)) {
+  if (!descriptor.resolvedToken || !verifiedMethod(vm, descriptor.resolvedToken)) {
     throw new ManagedFault('NotSupportedException', 'jmp target is unavailable: ' + descriptor.owner + '::' + descriptor.name);
   }
   if (!eligibleTailCall(frame, frame.args)) {

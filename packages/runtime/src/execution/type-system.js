@@ -1,7 +1,7 @@
 import {resolveCallType} from './generic-calls.js';
 import {exceptionMatches} from './exception-types.js';
-import {CilError,decodeCoded,resolveExecutionField} from '@sharpforge/cil';
-import {ManagedFault} from '../heap.js';
+import {CilError,decodeCoded} from '@sharpforge/cil';
+import {cachedField,cachedTypeName} from './token-cache.js';
 import {VirtualDispatch} from './vtable.js';
 import {MethodTableRegistry} from './method-table.js';
 import {castCacheFor} from './casting.js';
@@ -17,7 +17,7 @@ export class CilTypeSystem {
     this.initializers=new Map();
     this.dispatch=new VirtualDispatch(vm.inspector);
     const metadata=vm.inspector.metadata;
-    this.methodTables=new MethodTableRegistry({...vm.options,tokenResolver:token=>metadata.typeName(token)});
+    this.methodTables=new MethodTableRegistry({...vm.options,tokenResolver:token=>cachedTypeName(vm,token)});
     for(const type of this.types.values()) {
       this.initializers.set(type.token,type.methods.find(method=>method.name==='.cctor')??null);
       const base=type.baseToken?metadata.typeName(type.baseToken):null;
@@ -59,13 +59,9 @@ export class CilTypeSystem {
     return this.castCache.isAssignableFrom(target,record.methodTable);
   }
   field(token,ref) {
-    const record=ref===undefined?null:this.vm.heap.get(ref),arguments_=record?.methodTable.typeArguments.map(type=>type.name)??[];
-    const field=resolveExecutionField(this.vm.inspector,token,arguments_),resolved=field.resolvedToken;
-    if(field.kind!=='field')throw new CilError('Invalid field token');
-    if(ref===undefined)return {field,token:resolved};
-    const layout=this.layout(record.methodTable),index=layout.index.get(resolved);
-    if(index===undefined)throw new ManagedFault('InvalidProgramException','Field is not part of this object');
-    return {field,token:resolved,record,index};
+    const record=ref===undefined?null:this.vm.heap.get(ref);
+    const field=cachedField(this.vm,token,record?.methodTable);
+    return record?{...field,record}:field;
   }
   virtualTarget(ref,descriptor,target) {
     return this.dispatch.resolve(this.vm.heap.get(ref).methodTable.name,target,descriptor.ownerInstance);

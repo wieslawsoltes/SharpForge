@@ -27,5 +27,15 @@ snapshot fields; a fresh VM reconstructs them after portable restore. No host ca
 Qualification is deferred until the complete E02 integration is ready. `tests/a05-decode-plan.test.js`
 prepares exact operand, warm-allocation, owner replacement, Hot Reload and portable restore cases.
 `node scripts/benchmarks/a05-decode.mjs [output.json]` prepares cold-decode and warm-dispatch evidence.
-No speedup or completed cross-platform qualification is claimed. Token/virtual-call caches and source
-superinstructions are subsequent T07 slices; they will consume the same epoch owner.
+No speedup or completed cross-platform qualification is claimed. Virtual-call caches and source
+superinstructions are subsequent T07 slices; they consume the same epoch owner.
+
+`token-cache.js` caches raw tokens, user-string text, type names and resolved method/field descriptors.
+Closed caller methods and receiver MethodTables are separate substitution keys. Field entries contain
+the immutable descriptor and slot index, never a managed receiver or heap record. Every field access
+checks the current reference and reads its current storage, including after GC or snapshot restore.
+Verified method membership uses an epoch-owned Set. A replaced MethodTable registry also invalidates
+derived code state. The metadata-only field cache follows the design from PR #2804; its independent
+field-assembly fixture is reused for closed generics, reused tokens and restored storage.
+`tests/a05-token-cache.test.js` prepares warm-path zero-resolution and invalid receiver cases; execution
+and performance measurements remain deferred.

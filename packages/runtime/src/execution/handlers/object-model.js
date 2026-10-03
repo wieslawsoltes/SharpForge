@@ -1,4 +1,5 @@
 import {numericFieldDefinition} from '@sharpforge/cil';
+import {cachedMetadataToken} from '../token-cache.js';
 import {decimalConstants} from '../decimal-intrinsics.js';
 import {castReference} from '../casting.js';
 import {staticSlot,finishMemoryAccess} from '../statics.js';
@@ -9,7 +10,7 @@ import {fieldAccess,fieldAddress} from '../managed-pointers.js';
 const handlers=new Map();
 handlers.set('volatile.',(vm,frame)=>{frame.volatileAccess=true;});
 for(const name of ['ldsfld','stsfld','ldsflda'])handlers.set(name,(vm,frame,instruction)=>{
-  const constant=numericFieldDefinition(vm.inspector.resolveToken(instruction.operand));
+  const constant=numericFieldDefinition(cachedMetadataToken(vm,instruction.operand));
   if(constant){if(name!=='ldsfld')throw new ManagedFault('InvalidProgramException','Numeric constant fields are read-only');vm.push(decimalConstants[constant.name]);finishMemoryAccess(frame);return;}
   const slot=staticSlot(vm,instruction.operand,frame);
   if(vm.ensureInitialized(slot.typeToken,'field',slot.genericIdentity)){frame.pc--;return;}
