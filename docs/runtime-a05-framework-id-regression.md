@@ -13,8 +13,8 @@ membership, the committed member identity lock, builtin dispatch by ID and exact
 member lookup identity for every registered contract. Reserved IDs must remain
 stable even when later modules add contracts.
 
-This follow-up has not executed validation. The integration owner runs it in the
-sole serial validation slot:
+The integration owner passed all 144 tests in the following batch at `d8cab8f6`
+in the sole serial validation slot (Node 24.21.0; 512MB heap):
 
 ```sh
 node scripts/limited.js node --test tests/winui-contract-ids.test.js tests/winui-runtime.test.js tests/concurrency.test.js
