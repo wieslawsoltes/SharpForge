@@ -66,3 +66,15 @@ Run `node packages/clr/examples/contexts.mjs` for the two-version example.
 `node --expose-gc packages/clr/tools/benchmark-contexts.mjs` measures cold stream
 loading, warm identity binding and cached method-body copying. These new services
 have no previous loader implementation baseline.
+
+Apple M3 Pro / darwin-arm64 / Node 24.21.0, 4,096-byte native fixture:
+
+| Operation | Median µs | p95 µs | p99 µs |
+| --- | ---: | ---: | ---: |
+| Cold context and stream metadata load | 27.112 | 114.108 | 263.100 |
+| Warm assembly identity binding | 0.256 | 0.608 | 1.097 |
+| Cached method-body defensive copy | 0.272 | 0.478 | 0.833 |
+
+The JSON benchmark records retained heap deltas after allowing WeakRef's
+same-job keepalive to expire. Exact allocation counts are not measured, and
+negative retained deltas can result from collection of earlier work.

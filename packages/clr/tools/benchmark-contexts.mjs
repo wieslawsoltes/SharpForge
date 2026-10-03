@@ -11,6 +11,7 @@ const assembly = await session.defaultContext.loadFromStream(bytes);
 async function measure(name, operation, iterations) {
   for (let warmup = 0; warmup < 20; warmup++) await operation();
   const samples = [];
+  await new Promise(resolve => setImmediate(resolve));
   globalThis.gc?.();
   const before = process.memoryUsage().heapUsed;
   for (let sample = 0; sample < 100; sample++) {
@@ -18,6 +19,8 @@ async function measure(name, operation, iterations) {
     for (let index = 0; index < iterations; index++) await operation();
     samples.push((performance.now() - start) * 1000 / iterations);
   }
+  // WeakRef keeps newly observed targets alive until the next job, even after explicit GC.
+  await new Promise(resolve => setImmediate(resolve));
   globalThis.gc?.();
   const retainedHeapBytes = process.memoryUsage().heapUsed - before;
   samples.sort((left, right) => left - right);
