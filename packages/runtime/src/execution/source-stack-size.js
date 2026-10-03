@@ -7,15 +7,18 @@ const effects = new Map([
   [Op.DUP, 1], [Op.POP, -1], [Op.BINARY, -1], [Op.UNARY, 0], [Op.CONVERT, 0],
   [Op.JFALSE, -1], [Op.JTRUE, -1], [Op.RET, -1], [Op.NEWARR, 0],
   [Op.LDELEM, -1], [Op.STELEM, -2], [Op.LENGTH, 0], [Op.THROW, -1],
-  [Op.RETHROW, 0], [Op.DELEGATE, 0], [Op.LDIND, 0], [Op.STIND, -1]
+  [Op.ENDFILTER, -1], [Op.RETHROW, 0], [Op.DELEGATE, 0], [Op.LDIND, 0], [Op.STIND, -1]
 ]);
-const endings = new Set([Op.RET, Op.THROW, Op.RETHROW, Op.ENDFINALLY]);
+const endings = new Set([Op.RET, Op.THROW, Op.RETHROW, Op.ENDFINALLY, Op.ENDFILTER]);
 
 /** Maximum evaluation slots for an already verified source method, in O(IL). */
 export function sourceStackSlots(method, constants = []) {
   const heights = new Map();
   const queue = [[0, 0]];
-  for (const handler of method.handlers) queue.push([handler.target, 0]);
+  for (const handler of method.handlers) {
+    queue.push([handler.target, 0]);
+    if (handler.filter !== undefined) queue.push([handler.filter, 0]);
+  }
   let maximum = 0;
   while (queue.length) {
     const [offset, height] = queue.pop();
