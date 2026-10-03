@@ -8,6 +8,7 @@
  * one input-safe (CS1961), walking return types, parameter types (flipped), ref/out parameters (invariant),
  * constraints on generic methods and nested constructed types.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { Variance, TypeKind, SymbolKind, NamedTypeSymbol, ArrayTypeSymbol, RefKind, typeOf } from '../symbols/types.js';
 
 /**
@@ -88,7 +89,7 @@ export function varianceViolation(type, position) {
 }
 /**
  * Declaration-site validity of a variant interface or delegate.
- * @param type the interface/delegate definition  @returns [{code:'CS1961',args,member,parameter}] - args are
+ * @param type the interface/delegate definition  @returns [{code:DiagnosticId.CS1961,args,member,parameter}] - args are
  *   [member display, type parameter name, its declared variance, how the position needs it] as Roslyn formats them.
  */
 export function checkVarianceSafety(type) {
@@ -97,7 +98,7 @@ export function checkVarianceSafety(type) {
   const report = (violation, member, where) => {
     if (violation)
       results.push({
-        code: 'CS1961',
+        code: DiagnosticId.CS1961,
         args: [
           member.toDisplayString(),
           violation.parameter.name,
