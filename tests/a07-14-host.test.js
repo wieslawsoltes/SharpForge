@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {ManagedHeap, ManagedFault, isReference} from '@sharpforge/runtime';
-import {MAX, bclScalar, typeOf, text, string, bounded, integer, array, makeArray, equal, fail} from '@sharpforge/bcl-core';
+import {MAX, bclScalar, typeOf, text, string, bounded, integer, array, makeArray, equal, nativeEqual, fail} from '@sharpforge/bcl-core';
 
 function host() {
   const heap = new ManagedHeap();
@@ -53,6 +53,10 @@ test('BCL equality preserves NaN and generation-qualified references', () => {
   const first = platform.heap.object('Custom', []);
   assert.equal(equal(platform, first, {...first}), true);
   assert.equal(equal(platform, first, platform.heap.object('Custom', [])), false);
+  const boxed = platform.heap.allocate('box', 'int', [42]);
+  assert.equal(equal(platform, boxed, 42), true);
+  assert.equal(nativeEqual(platform, boxed, 42), false);
+  assert.equal(nativeEqual(platform, boxed, {...boxed}), true);
   platform.heap.collect();
   assert.throws(() => bclScalar(platform, first), {name: 'InvalidReferenceException'});
 });
