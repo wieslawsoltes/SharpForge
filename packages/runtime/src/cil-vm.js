@@ -14,15 +14,16 @@ import {runtimeTypeRoots,clearRuntimeTypes,runtimeTypeText} from './execution/to
 import {address,dereference} from './execution/managed-pointers.js';
 import {storageDefault,storageValue} from './execution/storage.js';
 import {enumToString} from './execution/enums.js';
-import {literalString,stringRoots,clearStrings} from './execution/strings.js';
+import {literalString,stringRoots} from './execution/strings.js';
 import {ManagedPlatform} from './platform.js';
 import {CooperativeScheduler} from './scheduler.js';
 import {snapshotVM,restoreVM} from './snapshot.js';
 import { AssemblyInspector, verifyCilAssembly, resolveExecutionField, CilError } from '@sharpforge/cil';
 import { ManagedHeap, ManagedFault, isReference } from './heap.js';
 import {float,number,compare as numericCompare,binary as numericBinary,convert as numericConvert,unary as numericUnary,indirect as numericIndirect} from './execution/numeric-ops.js';
-import {cilHandlers} from './execution/handlers/index.js';
-import {call,ensureInitialized,invoke,prepareCall,invokeFunctionPointer} from './execution/calls.js';
+import {executeCilStep} from './execution/cil-step.js';
+import {stopVM} from './execution/vm-lifecycle.js';
+import {call,ensureInitialized,invoke,invokeFunctionPointer} from './execution/calls.js';
 import {CilTypeSystem} from './execution/type-system.js';
 import {throwFault,continueUnwind,exceptionRoots} from './execution/eh.js';
 import {invokeIntrinsic} from './execution/intrinsics.js';
@@ -106,15 +107,7 @@ export class CilVirtualMachine {
   resumeUnwind(frame){return continueUnwind(this,frame);}
   raise(error){return throwFault(this,error);}
   *exceptionRoots(frame){yield* exceptionRoots(frame);}
-  step(){
-    if(!prepareCall(this))return;
-    const frame=this.top,instruction=frame.method.instructions[frame.pc++];
-    if(!instruction)throw new ManagedFault('InvalidProgramException','Instruction pointer is outside the method');
-    frame.lastOffset=instruction.offset;
-    const handler=cilHandlers.get(instruction.name);
-    if(!handler)throw new ManagedFault('NotSupportedException',`Opcode '${instruction.name}' is not executable`);
-    handler(this,frame,instruction);
-  }
+  step(){return executeCilStep(this);}
   runSlice({instructionBudget=15000,timeBudgetMs=8,onInstruction=null}={}){
     validateSliceBudget(instructionBudget,timeBudgetMs);
     this.scheduler.beforeSlice();if(this.state==='ready')this.state='running';if(this.state!=='running')return this.state;const started=performance.now();let n=0;
@@ -129,6 +122,6 @@ export class CilVirtualMachine {
   allFrames(){return this.scheduler.allFrames();}
   run(){while(this.state==='ready'||this.state==='running')this.runSlice({instructionBudget:100000,timeBudgetMs:50});return {state:this.state,output:this.output.join(''),returnValue:this.resultValue(),exitCode:this.exitCode,fault:this.fault,stats:this.statistics()};}
   async runAsync(options={}){await this.scheduler.runAsync(options);return {state:this.state,output:this.output.join(''),returnValue:this.resultValue(),exitCode:this.exitCode,fault:this.fault,stats:this.statistics()};}
-  stop(){clearStrings(this);clearRuntimeTypes(this);this.scheduler.cancelAll();this.platform.closeAll();this.state='terminated';this.frames=[];this.pendingFault=null;}
+  stop(){stopVM(this);}
   statistics(){return {artifactFormat:'ECMA-335',profile:this.report.profile,instructions:this.instructions,elapsedMs:this.elapsedMs,frames:this.frames.length,assembly:{bytes:this.inspector.pe.bytes.length,loadMs:this.loadMs},heap:{...this.heap.stats,maxBytes:this.heap.maxBytes,threshold:this.heap.threshold}};}
 }
