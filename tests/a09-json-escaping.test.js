@@ -73,6 +73,28 @@ for (const [engine, create] of Object.entries(engines)) {
     assert.equal(result.output, fixtures.map(fixture => fixture.scalar).join('\n') + '\n');
   });
 
+  test(`A09 ${engine}: registered string collections use the same default escaping`, async () => {
+    const fixture = (await reference()).cases.find(row => row.id === 'html');
+    const compiled = compileToIL('Console.WriteLine(0);');
+    assert.equal(compiled.success, true, JSON.stringify(compiled.diagnostics));
+    const platform = create(compiled).platform;
+    platform.heap.withRoots([], () => {
+      const value = platform.heap.string(input(fixture));
+      platform.heap.pins.push(value);
+      const tail = platform.heap.string('tail');
+      platform.heap.pins.push(tail);
+      const array = platform.heap.allocate('array', 'string[]', [value, tail, null]);
+      platform.heap.pins.push(array);
+      const reversed = platform.heap.allocate('array', 'string[]', [null, tail, value]);
+      platform.heap.pins.push(reversed);
+      for (const family of ['List', 'Queue', 'Stack', 'HashSet']) {
+        const member = contract(`${family}<string>`, '.ctor', ['string[]']);
+        const collection = platform.invoke(member, [family === 'Stack' ? reversed : array]);
+        assert.equal(serialize(platform, collection), fixture.array, family);
+      }
+    });
+  });
+
   test(`A09 ${engine}: escape expansion enforces the existing JSON output budget`, async () => {
     const compiled = compileToIL('Console.WriteLine(0);');
     assert.equal(compiled.success, true, JSON.stringify(compiled.diagnostics));
