@@ -43,6 +43,15 @@ const rules = [
     codes: ['CS8094'],
   },
   {
+    // A type (or alias) named `var`: `var x = e;` then declares a variable of that type instead of inferring one, which
+    // the execution pipeline does not know. The conversion errors of such declarations come from the analysis.
+    text: /\b(?:class|struct|interface|enum|record)\s+var\b|\bdelegate\b[^;(]*\bvar\s*[<(]|\busing\s+var\s*=/,
+    applies: node =>
+      (typeDeclarationKinds.has(node.kind) && node.identifier?.valueText === 'var') ||
+      (node.kind === 'UsingDirective' && node.alias?.name?.identifier?.valueText === 'var'),
+    codes: ['CS0029', 'CS0266', 'CS0037'],
+  },
+  {
     // C# 15 preview `closed` types (binder/preview-features.js): the provisional rules of the pinned proposals.
     text: /\bclosed\s+(?:class|enum)\b/,
     applies: node => (node.kind === 'ClassDeclaration' || node.kind === 'EnumDeclaration') && (node.modifiers ?? []).some(token => token.text === 'closed'),
@@ -71,15 +80,20 @@ function contains(node, applies) {
 }
 
 /**
- * True when one of the files has a construct whose rules only the semantic analysis checks.
+ * The diagnostic codes to take from the semantic analysis for these files: those of the rules whose construct one of
+ * the files has. Empty for almost every program, which is then not analysed at all.
  * @param {object[]} files parsed files `{ source: { text }, syntax }`
+ * @returns {Set<string>}
  */
-export function needsSemanticRules(files) {
+export function applicableRuleCodes(files) {
+  const codes = new Set(),
+    take = rule => rule.codes.forEach(code => codes.add(code));
   for (const file of files) {
-    if (unitRules.some(rule => rule.applies(file))) return true;
-    for (const rule of rules) {
-      if (rule.text.test(file.source.text) && contains(file.syntax, rule.applies)) return true;
-    }
+    for (const rule of unitRules) if (rule.applies(file)) take(rule);
+    for (const rule of rules) if (rule.text.test(file.source.text) && contains(file.syntax, rule.applies)) take(rule);
   }
-  return false;
+  return codes;
 }
+
+/** True when one of the files has a construct whose rules only the semantic analysis checks. */
+export const needsSemanticRules = files => applicableRuleCodes(files).size > 0;

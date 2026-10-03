@@ -47,6 +47,7 @@ import { CallerInfoBinding } from './caller-info.js';
 import { AnonymousTypeBinding } from './anonymous-types.js';
 import { ExtensionMethodBinding } from './extension-methods.js';
 import { DynamicBinding } from './dynamic.js';
+import { ComInteropBinding } from './com-interop.js';
 
 const expressionFamilies = [
   ConversionBinding,
@@ -82,6 +83,7 @@ const statementFamilies = [
   AnonymousTypeBinding,
   ExtensionMethodBinding,
   DynamicBinding,
+  ComInteropBinding,
   UnsafeBinding,
   ProtectedAccessBinding,
 ];
