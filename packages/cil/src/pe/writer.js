@@ -15,6 +15,8 @@ function sectionLayout(input, options, headers) {
     }
     if (!(section.data instanceof Uint8Array)) throw new CilError('PE section data must be Uint8Array');
     seen.add(section.name);
+    if (section.characteristics !== undefined && (!Number.isInteger(section.characteristics)
+      || section.characteristics < 0 || section.characteristics > 0xffffffff)) throw new CilError('Invalid PE section characteristics');
     const size = align(section.data.length, options.fileAlignment);
     const record = { ...section, offset, rva, size, virtualSize: section.data.length,
       characteristics: section.characteristics ?? sectionKinds[section.name] ?? 0x40000040 };

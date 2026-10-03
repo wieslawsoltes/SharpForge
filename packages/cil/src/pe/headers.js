@@ -27,6 +27,7 @@ export function peOptions(options = {}) {
   const subsystem = options.subsystem ?? (outputKind === 'windows' ? 'windows' : 'console');
   if (!['windows', 'console'].includes(subsystem)) throw new CilError('Invalid PE subsystem');
   const prefer32Bit = options.prefer32Bit ?? false;
+  if (typeof prefer32Bit !== 'boolean') throw new CilError('Prefer32Bit must be boolean');
   if (prefer32Bit && (platform !== 'anycpu' || ['library', 'netmodule'].includes(outputKind))) {
     throw new CilError('Prefer32Bit requires an AnyCPU executable');
   }
@@ -40,9 +41,14 @@ export function peOptions(options = {}) {
   if (!Number.isSafeInteger(firstSectionRva) || firstSectionRva < sectionAlignment || firstSectionRva % sectionAlignment) {
     throw new CilError('Invalid first PE section RVA');
   }
-  const imageBase = BigInt(options.imageBase ?? (target.pe32Plus ? 0x140000000n : 0x400000n));
+  const baseValue = options.imageBase ?? (target.pe32Plus ? 0x140000000n : 0x400000n);
+  if (typeof baseValue !== 'bigint' && !Number.isSafeInteger(baseValue)) throw new CilError('Invalid PE image base');
+  const imageBase = BigInt(baseValue);
   if (imageBase < 0n || imageBase % 65536n || imageBase > (target.pe32Plus ? 0xffffffffffffffffn : 0xffffffffn)) {
     throw new CilError('Invalid PE image base');
+  }
+  for (const value of [options.timestamp ?? 0, options.checksum ?? 0, options.nativeEntryPoint ?? 0]) {
+    if (!Number.isInteger(value) || value < 0 || value > 0xffffffff) throw new CilError('Invalid PE header value');
   }
   return { ...options, ...target, platform, outputKind, subsystem, prefer32Bit, fileAlignment, sectionAlignment, firstSectionRva,
     imageBase, corFlags: target.flags | (prefer32Bit ? CorFlags.Requires32Bit | CorFlags.Prefers32Bit : 0) };

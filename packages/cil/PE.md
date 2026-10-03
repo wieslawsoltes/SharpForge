@@ -1,6 +1,7 @@
 # PE image layout and platform targets
 
-The PE writer follows Microsoft's PE/COFF format and the ECMA-335 CLI header layout.
+The PE writer follows [Microsoft's PE/COFF format](https://learn.microsoft.com/en-us/windows/win32/debug/pe-format)
+and the ECMA-335 sixth edition CLI header layout.
 Platform options are accepted by `compileToIL`, `emitAssembly`, `emitAssemblyDetailed`
 and the low-level `writePE` wrapper. The section writer is `writePortableExecutable`.
 
