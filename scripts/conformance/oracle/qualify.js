@@ -138,7 +138,7 @@ export async function qualify(settings) {
       } catch (error) { report.failures.push(`winui: ${error.message}`); }
     }
     if (settings.mode !== 'capture' && report.observations.length) report.store = await verifyStore();
-  } catch (error) { report.failures.push(error.message); }
+  } catch (error) { if(error.actualToolchain)report.toolchain=error.actualToolchain;report.failures.push(error.message); }
   report.status = report.failures.length ? 'failed' : !report.observations.length ? 'unsupported' : settings.mode === 'capture' ? 'captured-not-baseline-qualified' : 'passed';
   report.finishedUTC = new Date().toISOString();
   await writeFile(path.join(results, 'report.json'), `${JSON.stringify(report, null, 2)}\n`);

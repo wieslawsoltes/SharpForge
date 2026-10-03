@@ -12,12 +12,13 @@ export const sha256 = value => createHash('sha256').update(value).digest('hex');
 export const readJSON = async file => JSON.parse(await readFile(file, 'utf8'));
 export const pin = await readJSON(path.join(root, 'planning/qualification/oracle-toolchain.json'));
 
-export function assertPins(actual, expected = pin) {
+export function assertPins(actual, expected = pin, target = platform) {
   for (const key of ['sdk', 'runtime', 'referencePack']) {
     if (actual[key] !== expected[key]) throw new Error(`Oracle ${key} mismatch: expected ${expected[key]}, resolved ${actual[key]}`);
   }
-  if (actual.roslyn.version !== expected.roslyn.version || actual.roslyn.sha256 !== expected.roslyn.sha256) throw new Error('Oracle Roslyn version/hash mismatch');
-  if (actual.referenceAssemblies.sha256 !== expected.referenceAssemblies.sha256 || actual.referenceAssemblies.count !== expected.referenceAssemblies.count) throw new Error('Oracle reference assembly hash/count mismatch');
+  const compilerHash = expected.roslyn.platformHashes?.[target];
+  if (!compilerHash || actual.roslyn.version !== expected.roslyn.version || actual.roslyn.sha256 !== compilerHash) throw new Error(`Oracle Roslyn version/hash mismatch for ${target}: expected ${expected.roslyn.version}/${compilerHash}, resolved ${JSON.stringify(actual.roslyn)}`);
+  if (actual.referenceAssemblies.sha256 !== expected.referenceAssemblies.sha256 || actual.referenceAssemblies.count !== expected.referenceAssemblies.count) throw new Error(`Oracle reference assembly hash/count mismatch: expected ${JSON.stringify(expected.referenceAssemblies)}, resolved ${JSON.stringify(actual.referenceAssemblies)}`);
 }
 
 export function assertImage(env = process.env, currentPlatform = process.platform) {
@@ -57,7 +58,7 @@ export async function resolveToolchain({ checkImage = true } = {}) {
     roslyn: { version: compilerVersion.stdout.trim(), sha256: sha256(await readFile(csc)) },
     referenceAssemblies: { count: names.length, sha256: sha256(JSON.stringify(referenceRows)) },
   };
-  assertPins(actual);
+  try { assertPins(actual); } catch(error) {error.actualToolchain=actual;throw error;}
   const image = checkImage ? assertImage() : { kind: 'test', pinnedImage: false };
   return {
     dotnet, csc, references: names.map(name => path.join(referenceDir, name)), actual,

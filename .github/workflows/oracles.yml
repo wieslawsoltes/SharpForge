@@ -35,11 +35,13 @@ jobs:
       SHARPFORGE_ORACLE_CONTAINER: mcr.microsoft.com/dotnet/sdk:10.0.201-noble@sha256:127d7d4d601ae26b8e04c54efb37e9ce8766931bded0ee59fcd799afd21d6850
     steps:
       - uses: actions/checkout@v4
+      - name: Trust the mounted checkout in the SDK container
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - uses: actions/setup-node@v4
         with:
           node-version: '22.23.3'
       - name: Native runner regression tests
-        run: node --test tests/conformance/oracle/*.test.js
+        run: node --test tests/conformance/oracle/*.test.js tests/conformance/oracle/*.native.js
       - name: Compile twice, execute twice and verify expected outputs
         if: always()
         run: node scripts/conformance/oracle/qualify.js --verify
@@ -69,7 +71,7 @@ jobs:
         with:
           dotnet-version: '10.0.201'
       - name: Native runner regression tests
-        run: node --test tests/conformance/oracle/*.test.js
+        run: node --test tests/conformance/oracle/*.test.js tests/conformance/oracle/*.native.js
       - name: Compile twice, execute twice and verify expected outputs
         if: always()
         run: node scripts/conformance/oracle/qualify.js --verify
