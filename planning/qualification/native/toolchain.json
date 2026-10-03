@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-10-03",
+  "nodes": [
+    {
+      "major": 22,
+      "version": "22.23.3",
+      "npm": "10.9.9",
+      "role": "minimum-supported"
+    },
+    {
+      "major": 26,
+      "version": "26.10.0",
+      "npm": "11.19.1",
+      "role": "current-release"
+    }
+  ],
+  "sdks": [
+    {
+      "major": 8,
+      "version": "8.0.425",
+      "runtime": "8.0.31",
+      "framework": "net8.0"
+    },
+    {
+      "major": 10,
+      "version": "10.0.201",
+      "runtime": "10.0.5",
+      "framework": "net10.0"
+    }
+  ],
+  "targets": [
+    { "platform": "linux", "architecture": "x64", "runner": "ubuntu-24.04" },
+    {
+      "platform": "linux",
+      "architecture": "arm64",
+      "runner": "ubuntu-24.04-arm"
+    },
+    { "platform": "win32", "architecture": "x64", "runner": "windows-2025" },
+    {
+      "platform": "win32",
+      "architecture": "arm64",
+      "runner": "windows-11-arm"
+    },
+    { "platform": "darwin", "architecture": "x64", "runner": "macos-15-intel" },
+    { "platform": "darwin", "architecture": "arm64", "runner": "macos-26" }
+  ],
+  "sources": {
+    "node": "https://nodejs.org/dist/index.json",
+    "dotnet8": "https://builds.dotnet.microsoft.com/dotnet/release-metadata/8.0/releases.json",
+    "dotnet10": "../oracle-toolchain.json",
+    "runners": "https://docs.github.com/en/actions/reference/runners/github-hosted-runners",
+    "filesystem": "https://nodejs.org/docs/latest-v22.x/api/fs.html",
+    "process": "https://nodejs.org/docs/latest-v22.x/api/child_process.html",
+    "sdkSelection": "https://learn.microsoft.com/en-us/dotnet/core/tools/global-json"
+  }
+}
