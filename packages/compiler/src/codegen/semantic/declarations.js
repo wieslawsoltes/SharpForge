@@ -112,8 +112,6 @@ export const Declarations = Base =>
     }
     declareMethod(owner, symbol) {
       // Synthesized record members are declared when code first refers to them (lowering/records/record-members.js).
-      // A generic method exists only as its constructions, declared when code refers to them (lowering/generics).
-      if (this.generics.isOpenMethod(symbol)) return undefined;
       if (this.methods.has(symbol) || symbol.recordMember) return;
       const at = symbol.locations?.[0];
       switch (symbol.methodKind) {

@@ -60,6 +60,8 @@ export class GenericInstantiations {
   constructor(host) {
     this.host = host;
     this.active = TypeMap.empty;
+    // True while the fields of a construction are declared: its methods wait until code refers to them.
+    this.deferMethods = false;
     this.ids = new DefinitionIds();
     this.types = new Map();
     this.methods = new Map();
@@ -183,7 +185,9 @@ export class GenericInstantiations {
       map = typeArguments ? base.with(definition.typeParameters, typeArguments) : base;
     instance = new MemberInstance(owner, definition, typeArguments, map);
     table.set(key, instance);
-    if (typeArguments) this.host.declareMethodInstance(instance);
+    // Methods are declared when code first refers to them: declaring every method of a construction with the class
+    // would never end for a signature that mentions a larger construction (`Box<Box<T>> Wrap()`).
+    if (definition.kind === SymbolKind.Method) this.host.declareMethodInstance(instance);
     return instance;
   }
   /** What a key stands for: `{definition, map}`, the symbol whose body is lowered and the substitution to lower it under. */

@@ -303,7 +303,8 @@ const outputs = [
             int total = 0;
             bag.Each(n => total += n);
             Console.WriteLine(total);
-            bag.Select<string>(n => "#" + n).Each(Print);
+            Sink<string> printer = Print;
+            bag.Select<string>(n => "#" + n).Each(printer);
             Transformer<int, bool> even = n => n % 2 == 0;
             Console.WriteLine(even(4) + " " + even(5));
             Console.WriteLine(Functions.Twice(3, v => v * v));
