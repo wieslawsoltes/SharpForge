@@ -8,6 +8,7 @@ import {storageDefault} from './storage.js';
 import {createExceptionState} from './eh.js';
 import {ensureTypeInitialized} from './static-init.js';
 import {enterCilMethod} from './cil-method-events.js';
+import {cachedMetadataToken,verifiedMethod} from './token-cache.js';
 
 export function call(vm,token,args,extra={}) {
   if(vm.frames.length>=vm.options.maxFrames)throw new ManagedFault('StackOverflowException','Managed call depth exceeded');
@@ -31,7 +32,7 @@ export function prepareCall(vm,frame=vm.top) {
   frame.needsInitialization=false;return true;
 }
 export function invoke(vm,instruction) {
-  const caller=vm.top,descriptor=vm.inspector.resolveToken(instruction.operand),target=descriptor.resolvedToken??(descriptor.token>>>24===6?descriptor.token:null);
+  const caller=vm.top,descriptor=cachedMetadataToken(vm,instruction.operand),target=descriptor.resolvedToken??(descriptor.token>>>24===6?descriptor.token:null);
   const count=descriptor.signature.parameters.length+(instruction.name!=='newobj'&&!descriptor.signature.isStatic?1:0);
   const instance=descriptor.genericIdentity??descriptor.ownerInstance??(caller.method.ownerToken===descriptor.ownerToken?caller.genericIdentity:null)??null;
   const genericIdentity=instance===null?null:vm.typeSystem.table(instance).name;
@@ -60,7 +61,7 @@ export function invoke(vm,instruction) {
     if(instruction.name==='callvirt'&&args[0]===null)throw new ManagedFault('NullReferenceException','Null virtual receiver');
     const dispatch=target&&instruction.name==='callvirt'&&(vm.inspector.methods.get(target)?.flags&0x40)?vm.typeSystem.virtualTarget(args[0],descriptor,target):target;
     if(dispatch) {
-      if(!vm.report.methods.includes(dispatch))throw new ManagedFault('NotSupportedException','Unverified virtual override; select its method directly');
+      if(!verifiedMethod(vm,dispatch))throw new ManagedFault('NotSupportedException','Unverified virtual override; select its method directly');
       vm.call(dispatch,args,{genericIdentity});
     } else {
       const value=vm.intrinsic(descriptor,args);

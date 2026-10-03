@@ -3,6 +3,7 @@
   "area": "A04",
   "nodeGlobs": [
     "tests/clr-context-*.test.js",
+    "tests/clr-generics-*.test.js",
     "tests/clr-identity-*.test.js",
     "tests/clr-methods-*.test.js",
     "tests/clr-types-*.test.js",

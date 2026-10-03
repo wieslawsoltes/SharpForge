@@ -1,3 +1,4 @@
+import {validateRegistryInterfaces} from './registry-assignability.js';
 /** CLI primitive spellings are intrinsic; all managed reference types must be declared. */
 export const intrinsicTypes=Object.freeze(['void','object','string','bool','char','byte','sbyte','short','ushort','int','uint','long','ulong','float','double','decimal','nint','nuint','System.Enum','System.ValueType','System.MulticastDelegate']);
 export function validateRegistry({types,contracts,origins=new Map()}){
@@ -10,5 +11,6 @@ export function validateRegistry({types,contracts,origins=new Map()}){
     const key=d.owner+'::'+d.name+'('+d.parameters.join(',')+')';if(signatures.has(key))fail('Duplicate member');signatures.add(key);
     for(const type of [...d.parameters,d.result])if(!exists(type))fail('Unknown type '+type);
   }
+  validateRegistryInterfaces(types);
   return true;
 }
