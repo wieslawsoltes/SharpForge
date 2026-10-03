@@ -3,6 +3,7 @@ import {convert as cilConvert,float} from './numeric-ops.js';
 import {ManagedFault, isReference} from '../heap.js';
 import {enumInfo,enumValue} from './enums.js';
 export {sourceEnum,enumToString} from './enums.js';
+export {runtimeTypeRoots,clearRuntimeTypes,runtimeTypeText} from './tokens.js';
 
 export function defaultValue(type,vm={}) {
   if(enumInfo(vm,type))return enumValue(vm,type,0);
