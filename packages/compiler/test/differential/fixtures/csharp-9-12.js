@@ -3,5 +3,7 @@
  * these epics are registered here, so the corpus has a single registration for both.
  */
 import { fixtures as targetTyping } from './target-typing.js';
+import { fixtures as topLevel } from './top-level.js';
+import { fixtures as globalUsings } from './global-usings.js';
 
-export const fixtures = [...targetTyping];
+export const fixtures = [...targetTyping, ...topLevel, ...globalUsings];
