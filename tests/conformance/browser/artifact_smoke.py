@@ -28,23 +28,26 @@ def child(mode):
 
 def verify():
     reports = []
-    for mode in ('failure', 'cancel'):
+    for mode in ('failure', 'cancel', 'cancel-file'):
         directory = results_dir() / ('artifact-smoke-' + mode)
         directory.mkdir(parents=True, exist_ok=True)
         (directory / 'ready').unlink(missing_ok=True)
+        cancel_file = directory / 'cancel.request' if mode == 'cancel-file' or (mode == 'cancel' and os.name == 'nt') else None
+        if cancel_file:
+            cancel_file.unlink(missing_ok=True)
         with (directory / 'process.log').open('w', encoding='utf8') as log:
             process = subprocess.Popen([sys.executable, __file__, mode], cwd=ROOT,
-                env={**os.environ, 'SHARPFORGE_RESULTS_DIR': str(directory)},
+                env={**os.environ, 'SHARPFORGE_RESULTS_DIR': str(directory), **({'SHARPFORGE_CANCEL_FILE': str(cancel_file)} if cancel_file else {})},
                 stdout=log, stderr=subprocess.STDOUT,
                 creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == 'nt' else 0)
             try:
-                if mode == 'cancel':
+                if mode.startswith('cancel'):
                     deadline = time.monotonic() + 30
                     while not (directory / 'ready').exists():
                         if process.poll() is not None or time.monotonic() >= deadline:
                             raise AssertionError('Cancellation child did not initialize')
                         time.sleep(.05)
-                    cancel(process)
+                    cancel(process, cancel_file)
                 assert process.wait(timeout=30) != 0, 'Forced failure unexpectedly passed'
             finally:
                 if process.poll() is None:

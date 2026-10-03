@@ -53,6 +53,13 @@ class BrowserSession:
         self.log = (self.directory / 'console.log').open('w', encoding='utf8')
         self.closed = False
         self.cancelled = None
+        self.cancel_file = Path(os.environ['SHARPFORGE_CANCEL_FILE']) if os.environ.get('SHARPFORGE_CANCEL_FILE') else None
+
+    def check_cancelled(self):
+        if self.cancel_file is not None and self.cancel_file.is_file():
+            self.cancelled = 'Browser qualification cancelled by cooperative request'
+        if self.cancelled:
+            raise KeyboardInterrupt(self.cancelled)
 
     def __getattr__(self, name):
         return getattr(self.browser, name)
@@ -134,11 +141,9 @@ class _CheckedPage:
         if not callable(value):
             return value
         def checked(*args, **kwargs):
-            if self._session.cancelled:
-                raise KeyboardInterrupt(self._session.cancelled)
+            self._session.check_cancelled()
             result = value(*args, **kwargs)
-            if self._session.cancelled:
-                raise KeyboardInterrupt(self._session.cancelled)
+            self._session.check_cancelled()
             return result
         return checked
 

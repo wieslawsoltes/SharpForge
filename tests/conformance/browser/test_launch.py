@@ -11,6 +11,22 @@ spec.loader.exec_module(launch)
 
 
 class LauncherContracts(unittest.TestCase):
+    def test_cooperative_cancel_preserves_driver_until_context_cleanup(self):
+        with tempfile.TemporaryDirectory() as directory:
+            cancel_file = Path(directory) / 'cancel.request'
+            with patch.dict(os.environ, {'SHARPFORGE_RESULTS_DIR': directory, 'SHARPFORGE_CANCEL_FILE': str(cancel_file)}):
+                browser = MagicMock()
+                browser.version = 'unit-test-browser'
+                session = launch.BrowserSession(browser, 'cancelled')
+                page = session.new_page()
+                page.wait_for_timeout(1)
+                cancel_file.write_text('cancel', encoding='utf-8')
+                with self.assertRaisesRegex(KeyboardInterrupt, 'cooperative request'):
+                    page.wait_for_timeout(1)
+                browser.close.assert_not_called()
+                session.close(KeyboardInterrupt('cooperative request'))
+                browser.close.assert_called_once()
+
     def test_managed_browser_default_and_empty_override(self):
         self.assertEqual(launch.launch_options({}), {'headless': True})
         self.assertEqual(launch.launch_options({'CHROMIUM_EXECUTABLE': '  '}), {'headless': True})
