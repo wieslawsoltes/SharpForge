@@ -1,7 +1,12 @@
 {
   "schemaVersion": 1,
   "styles": [],
-  "workers": [],
+  "workers": [
+    {
+      "entry": "packages/workspace/src/vfs/opfs.worker.js",
+      "order": 20
+    }
+  ],
   "assets": [
     {
       "source": "packages/workspace",
