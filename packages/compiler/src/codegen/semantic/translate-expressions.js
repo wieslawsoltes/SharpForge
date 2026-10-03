@@ -109,12 +109,20 @@ export const ExpressionTranslation = Base =>
       return n.binary(node.operator, left, right, this.imageType(node.type, node.syntax), !!node.isChecked);
     }
     exprConditional(node) {
-      return n.conditional(
-        this.expression(node.condition),
-        this.expression(node.whenTrue),
-        this.expression(node.whenFalse),
-        this.imageType(node.type, node.syntax),
-      );
+      const type = this.imageType(node.type, node.syntax);
+      return this.choose(this.expression(node.condition), this.expression(node.whenTrue), this.expression(node.whenFalse), type);
+    }
+    /**
+     * `condition ? whenTrue : whenFalse`. The branches of the operator meet on the evaluation stack, which holds one
+     * representation only: when an `object`-typed choice has a primitive branch, each branch is stored into an
+     * `object` temporary instead (the store is where a primitive is boxed).
+     */
+    choose(condition, whenTrue, whenFalse, type) {
+      const isPrimitive = value => ['int', 'double', 'bool'].includes(value.legacyType);
+      if (type !== 'object' || !(isPrimitive(whenTrue) || isPrimitive(whenFalse))) return n.conditional(condition, whenTrue, whenFalse, type);
+      const result = this.holder('object', 'choice'),
+        store = value => n.expressionStatement(n.assign(result.read(), value));
+      return n.sequence([], [result.init(n.nullLiteral('object')), n.ifStatement(condition, store(whenTrue), store(whenFalse))], result.read());
     }
     exprCoalesce(node) {
       if (node.leftConversion && !node.leftConversion.isIdentity) return this.unsupported('nullable value types', node.syntax);
@@ -178,7 +186,7 @@ export const ExpressionTranslation = Base =>
     autoPropertyField(node) {
       const property = node.property.originalDefinition ?? node.property;
       if (property.setMethod || !this.g.isSource(property)) return null;
-      const record = this.g.autoProperties.get(property);
+      const record = this.g.autoProperties.get(node.property);
       if (!record) return null;
       return record.isStatic ? n.staticField(record) : n.field(this.memberReceiver(node), record);
     }

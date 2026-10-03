@@ -87,7 +87,9 @@ export const NameBinding = Base =>
       if (this.d.isKnownFrameworkName(name)) return this.lenient(syntax);
       for (let type = this.c.containingType; type; type = type.containingType)
         if (this.reportAccessorByName(type, name, syntax.identifier)) return this.bad(syntax);
-      this.report(syntax.kind === 'GenericName' ? syntax : syntax.identifier, 'CS0103', [name]);
+      // A local of the file's top-level statements is in scope inside its types, where it cannot be used (CS8801).
+      const isTopLevelName = !this.rootBinder.c.isTopLevel && this.d.topLevelNames?.(this.c.uri).has(name);
+      this.report(syntax.kind === 'GenericName' ? syntax : syntax.identifier, isTopLevelName ? 'CS8801' : 'CS0103', [name]);
       return this.bad(syntax);
     }
     /** `alias::Name` in an expression: a namespace or type reached through a using alias, an extern alias or `global`. */
@@ -246,7 +248,7 @@ export const NameBinding = Base =>
       if (!nameSyntax || nameSyntax.identifier?.isMissing) return this.bad(syntax);
       const name = nameSyntax.identifier.valueText,
         typeArguments = this.typeArgumentsOf(nameSyntax);
-      let left = this.expression(syntax.expression, { ...options, invoked: false, memberAccessLeft: true });
+      let left = this.requireNaturalType(this.expression(syntax.expression, { ...options, invoked: false, memberAccessLeft: true }));
       if (left.hasErrors) {
         if (left.kind === 'Local') left.local.reads++;
         // A member named after a field of the enclosing type counts as a use of that field even though the access failed.

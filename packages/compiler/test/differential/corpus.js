@@ -23,7 +23,9 @@ import {fixtures as usingDirectives} from './fixtures/usings.js';
 import {fixtures as csharp12} from './fixtures/csharp-1-2.js';
 // The C# 1-2 epic registers its modules in fixtures/csharp-1-2.js; they join the corpus here, away from the list below
 // that every other change appends to.
-const usings=[...usingDirectives,...csharp12];
+import {fixtures as csharp912} from './fixtures/csharp-9-12.js';
+// ... and so do the C# 9-12 epics, in fixtures/csharp-9-12.js.
+const usings=[...usingDirectives,...csharp12,...csharp912];
 import {fixtures as lowering} from './fixtures/lowering.js';
 import {fixtures as featureGates} from './fixtures/feature-gates.js';
 import {fixtures as iteratorDisposal} from './fixtures/iterator-disposal.js';
