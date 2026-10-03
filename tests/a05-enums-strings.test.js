@@ -138,3 +138,18 @@ test('strings CIL: independent literal tokens intern but concatenation allocates
   const assembly=managedFixture({result:'bool',methods:[{name:'Main',result:'bool',body:(w,c)=>w.op('ldstr',0x70000000+c.md.userString('ab')).op('ldstr',0x70000000+c.md.userString('a')).op('ldstr',0x70000000+c.md.userString('b')).op('call',c.member('System.String','Concat','string',['string','string'])).op('call',c.member('System.Object','ReferenceEquals','bool',['object','object'])).op('ret')}]});
   const result=new CilVirtualMachine(assembly).run();assert.equal(result.state,'terminated',result.fault?.stack);assert.equal(result.returnValue,false);
 });
+
+test('enums: zero-initialized static fields preserve enum identity across all engines',()=>{
+  const compiled=compile('using Microsoft.UI.Xaml; class Program { static Visibility Value; static void Main() { Console.WriteLine(Value); } }');
+  for(const make of Object.values(paths)) {
+    const result=make(compiled).run();assert.equal(result.state,'terminated',result.fault?.stack);assert.equal(result.output,'Visible\n');
+  }
+});
+test('enums CIL: zero-initialized locals and arrays use the underlying zero value',()=>{
+  const assembly=enumFixture({locals:['Fixture.Choice'],result:'int',body:(w,c)=>w.op('ldloc.0').op('ldc.i4.1').op('newarr',c.enumToken).op('ldc.i4.0').op('ldelem',c.enumToken).op('add').op('ret')});
+  const result=new CilVirtualMachine(assembly).run();assert.equal(result.state,'terminated',result.fault?.stack);assert.equal(result.returnValue,0);
+});
+test('enums CIL: boxed enum managed addresses cannot be confused with underlying int boxes',()=>{
+  const assembly=enumFixture({result:'int',body:(w,c)=>w.op('ldc.i4.1').op('box',c.enumToken).op('unbox',c.enumToken).op('ldind.i4').op('ret')});
+  const result=new CilVirtualMachine(assembly).run();assert.equal(result.state,'terminated',result.fault?.stack);assert.equal(result.returnValue,1);
+});

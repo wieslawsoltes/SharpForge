@@ -1,11 +1,13 @@
+import {checkArrayStore} from './execution/casting.js';
+import {storageDefault,storageValue} from './execution/storage.js';
 import {enumToString} from './execution/enums.js';
 import {literalString,stringRoots,clearStrings} from './execution/strings.js';
 import {ManagedPlatform} from './platform.js';
 import {CooperativeScheduler} from './scheduler.js';
 import {snapshotVM,restoreVM} from './snapshot.js';
-import { AssemblyInspector, verifyCilAssembly, CilError } from '@sharpforge/cil';
+import { AssemblyInspector, verifyCilAssembly, resolveExecutionField, CilError } from '@sharpforge/cil';
 import { ManagedHeap, ManagedFault, isReference } from './heap.js';
-import {float,number,defaults,compare as numericCompare,binary as numericBinary,convert as numericConvert,unary as numericUnary,storage as numericStorage,indirect as numericIndirect} from './execution/numeric-ops.js';
+import {float,number,compare as numericCompare,binary as numericBinary,convert as numericConvert,unary as numericUnary,indirect as numericIndirect} from './execution/numeric-ops.js';
 import {cilHandlers} from './execution/handlers/index.js';
 import {call,ensureInitialized,invoke,prepareCall} from './execution/calls.js';
 import {CilTypeSystem} from './execution/type-system.js';
@@ -23,7 +25,7 @@ export class CilVirtualMachine {
     const entry=this.inspector.getMethod(this.report.entryPoint);this.returnType=entry.signature.returnType;if(!entry.signature.isStatic)throw new CilError('Host invocation requires a static method');
     this.heap=new ManagedHeap(options);this.heap.rootProvider=()=>this.roots();this.frames=[];this.statics=new Map();this.strings=new Map();this.initialized=new Map();this._typeSystem=null;this.layoutCache=this.typeSystem.layouts;this.frameId=0;
     this.snapshotOwner=Object.freeze({});this.writeRevision=0;this.onWrite=null;this.state='ready';this.instructions=0;this.elapsedMs=0;this.output=[];this.outputCharacters=0;this.fault=null;this.pendingFault=null;this.onException=null;this.returnValue=null;this.exitCode=0;this.onOutput=options.onOutput??(()=>{});this.loadMs=performance.now()-started;
-    for(const f of this.inspector.fields.values())if(f.isStatic)this.statics.set(f.token,defaults(this.inspector.signature(f.token).type));
+    for(const f of this.inspector.fields.values())if(f.isStatic)this.statics.set(f.token,storageDefault(this,resolveExecutionField(this.inspector,f.token).signature.type));
     const input=options.arguments??(entry.signature.parameters.length===1&&entry.signature.parameters[0]==='string[]'?[[]]:[]);
     if(input.length!==entry.signature.parameters.length)throw new CilError('Argument count does not match selected method');
     const args=[];this.heap.withRoots(args,()=>{for(let i=0;i<input.length;i++){const value=this.marshal(input[i],entry.signature.parameters[i]);args.push(value);this.heap.pins.push(value);}});
@@ -51,7 +53,7 @@ export class CilVirtualMachine {
     if(type==='object'&&value===null)return null;throw new CilError(`Host argument type '${type}' is not supported`);
   }
   // CLI storage locations narrow integers and round single precision on write/load.
-  storage(value,type){return numericStorage(value,type,numericContext);}
+  storage(value,type){return storageValue(this,value,type,numericContext);}
   slotType(frame,arg,index){return arg?(frame.method.signature.isStatic?frame.method.signature.parameters[index]:index===0?'object':frame.method.signature.parameters[index-1]):frame.method.locals[index];}
   indirect(value,name){return numericIndirect(value,name,numericContext);}
   resultValue(){const value=this.value(this.returnValue);return this.returnType==='uint'?Number(value)>>>0:this.returnType==='ulong'?BigInt.asUintN(64,value??0n):this.returnType==='bool'?!!value:value;}
@@ -88,6 +90,7 @@ export class CilVirtualMachine {
     if(slots&&(!Number.isInteger(address.index)||address.index<0||address.index>=slots.length))throw new ManagedFault('InvalidProgramException','Invalid managed address slot');
     old=slots?slots[address.index]:this.statics.get(address.index);
     if(write){
+      if(address.kind==='array')checkArrayStore(this.heap,this.heap.get(address.owner),value);
       if(slots)slots[address.index]=value;else this.statics.set(address.index,value);
       this.writeRevision++;
       if(address.owner)this.heap.mutationRevision++;

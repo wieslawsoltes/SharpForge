@@ -1,11 +1,12 @@
+import {storageDefault} from '../storage.js';
 import {CilError} from '@sharpforge/cil';
-import {defaults,number} from '../numeric-ops.js';
+import {number} from '../numeric-ops.js';
 
 const aliases={'System.Int32':'int','System.UInt32':'uint','System.Int64':'long','System.UInt64':'ulong','System.Boolean':'bool','System.Double':'double','System.Single':'float','System.String':'string','System.Object':'object','System.Char':'char','System.Byte':'byte','System.SByte':'sbyte','System.Int16':'short','System.UInt16':'ushort'};
 const handlers=new Map([
   ['newarr',(vm,frame,instruction)=>{
     const length=number(vm.pop()),type=vm.inspector.metadata.typeName(instruction.operand),alias=aliases[type]??type,ref=vm.heap.array(alias,length);
-    vm.heap.get(ref).data.fill(defaults(alias));vm.push(ref);
+    vm.heap.get(ref).data.fill(storageDefault(vm,alias));vm.push(ref);
   }],
   ['ldlen',vm=>{const record=vm.heap.get(vm.pop());if(record.kind!=='array')throw new CilError('ldlen requires an array');vm.push(record.data.length);}],
   ['ldelema',vm=>{const index=number(vm.pop()),ref=vm.pop();vm.indexed(ref,index);vm.push(vm.address('array',index,ref));}]
