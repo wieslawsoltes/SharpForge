@@ -109,6 +109,7 @@ function control(name, base = 'Control', props = {}, events = []) {
         const block=blocks.get(contribution?.name);active={...block,name:contribution?.name,next:block?.start};
         if(!block||typeof contribution.register!=='function')throw failure('Unknown reservation or malformed contribution');
         if(loaded.has(contribution.name))throw failure('Duplicate contribution');
+        if(block.legacy&&contracts.length!==block.start)throw failure('Released contribution order changed at id '+contracts.length);
         const value=contribution.register(api);if(value?.then)throw failure('Contribution must be synchronous');
         loaded.add(contribution.name);
       }

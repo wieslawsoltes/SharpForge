@@ -1,4 +1,4 @@
-import {storage} from './settings/storage.js';
+import {storage,storageKeys} from './settings/storage.js';
 import {TreeModel,TreeView} from '../../packages/controls/src/index.js';
 import {buildSolutionTree} from '../../packages/project-system/src/index.js';
 
@@ -30,9 +30,9 @@ export class SolutionExplorer {
  safe(action){return Promise.resolve().then(action).catch(error=>this.onError?.(error));}
  selected(){return this.model.selectionRoots().map(id=>this.model.nodes.get(id));}
  context(node,nodes,event){this.onCommand('context',node,nodes,event);}
- saveState(){if(!this.key||this.restoring)return;try{storage.setItem('sharpforge.explorer.'+this.key,JSON.stringify({version:1,tree:this.model.snapshot(),view:this.view,showAll:this.showAll,track:this.track}));}catch{}}
+ saveState(){if(!this.key||this.restoring)return;try{storage.setItem(storageKeys.explorer+this.key,JSON.stringify({version:1,tree:this.model.snapshot(),view:this.view,showAll:this.showAll,track:this.track}));}catch{}}
  render(force=false){const data=this.getData(),key=data.identity??data.name;let saved;
-  if(key!==this.key){this.restoring=true;this.key=key;this.scope=null;this.search.value='';try{saved=JSON.parse(storage.getItem('sharpforge.explorer.'+key));}catch{}this.showAll=saved?.showAll??false;this.view=saved?.view??(data.mode==='folder'?'folders':'solution');this.track=saved?.track??true;this.model.expanded.clear();this.model.selected.clear();this.model.seen=new Set();}
+  if(key!==this.key){this.restoring=true;this.key=key;this.scope=null;this.search.value='';try{saved=JSON.parse(storage.getItem(storageKeys.explorer+key));}catch{}this.showAll=saved?.showAll??false;this.view=saved?.view??(data.mode==='folder'?'folders':'solution');this.track=saved?.track??true;this.model.expanded.clear();this.model.selected.clear();this.model.seen=new Set();}
   let nodes=buildSolutionTree({...data,showAll:this.showAll,view:this.view});if(this.scope){const find=n=>n.id===this.scope?n:(n.children??[]).map(find).find(Boolean);const scoped=nodes.map(find).find(Boolean);if(scoped)nodes=[scoped];else this.scope=null;}
   this.tree.setAttribute('aria-busy',String(!!data.fileBusy));this.toolbar.querySelector('[data-explorer-action="add"]').disabled=!!data.fileBusy||!!data.readOnly;
   this.model.setNodes(nodes);this.model.setFilter(this.search.value);if(saved?.tree){try{this.model.restore(saved.tree);}catch{}}this.restoring=false;

@@ -1,4 +1,4 @@
-import {storage} from './settings/storage.js';
+import {storage,storageKeys} from './settings/storage.js';
 import {parseExpression} from '../../packages/syntax/src/index.js';
 import {escapeHtml as E} from '../../packages/editor/src/index.js';
 import {validateBreakpointRule} from '../../packages/debugger/src/breakpoint-rules.js';
@@ -7,7 +7,7 @@ const modeOptions=(mode)=>['none','all','uncaught'].map(m=>`<option value="${m}"
 /** Studio presentation for source/function/storage breakpoints and safe evaluation. No debugger semantics live here. */
 export class DebuggerTools {
  constructor(services){Object.assign(this,services);this.banner=document.createElement('div');this.banner.id='debug-stop-banner';this.banner.className='debug-stop-banner';this.banner.hidden=true;this.banner.setAttribute('role','status');this.banner.setAttribute('aria-live','polite');document.querySelector('#workspace').before(this.banner);}
- persist(){try{storage.setItem('sharpforge.debugger.settings.v1',JSON.stringify(this.state.debugSettings));}catch{}this.save();}
+ persist(){try{storage.setItem(storageKeys.debugger,JSON.stringify(this.state.debugSettings));}catch{}this.save();}
  async configure(patch){const next={...this.state.debugSettings,...patch};
   for(const key of ['stopOnEntry','recordHistory','stepOverProperties','breakpointsEnabled'])if(typeof next[key]!=='boolean')throw new TypeError(key+' must be Boolean');
   if(!['none','all','uncaught'].includes(next.exceptionBreak))throw new Error('Invalid exception mode');

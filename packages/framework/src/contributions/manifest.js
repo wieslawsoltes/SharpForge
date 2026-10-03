@@ -10,7 +10,7 @@ export const contributionManifest=Object.freeze([
   ['core-xaml',0,84,registerCoreXaml],['core-controls',84,299,registerCoreControls],
   ['core-system',383,84,registerCoreSystem],['core-controls-12',467,328,registerCoreControls12],
   ['bcl',795,507,registerBcl],['winui13',1302,211,registerWinUI13],['runtime14',1513,231,registerRuntime14]
-].map(([name,start,size,register])=>Object.freeze({name,start,size,register})));
+].map(([name,start,size,register])=>Object.freeze({name,start,size,register,legacy:true})));
 /** A00-A21 blocks are stable regardless of the order modules are loaded. */
 export const areaReservations=Object.freeze(Array.from({length:22},(_,i)=>Object.freeze({name:'A'+String(i).padStart(2,'0'),start:65536+i*65536,size:65536})));
 export const idReservations=Object.freeze([...contributionManifest,...areaReservations]);
