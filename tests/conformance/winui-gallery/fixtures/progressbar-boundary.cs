@@ -1,0 +1,21 @@
+// Adapted from the pinned MIT WinUI Gallery ProgressBar sample; see upstream.json.
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
+namespace GalleryCases {
+public class ProgressBarBoundary {
+    public static FrameworkElement Create() {
+        return new ProgressBar {
+            Name = "fixture",
+            Minimum = 0,
+            Maximum = 100,
+            Value = 100,
+            Width = 0
+        };
+    }
+    static void Main() {
+        Window window = new Window { Content = Create() };
+        window.Activate();
+    }
+}
+}
