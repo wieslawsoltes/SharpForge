@@ -55,7 +55,6 @@ const notGated = {
   NullPointerConstantPattern: needsOperandTypes,
   TargetTypedConditional: needsOperandTypes,
   ModuleInitializers: needsAttributeBinding,
-  ExtensionGetEnumerator: needsOperandTypes,
   ExtensionGetAsyncEnumerator: needsOperandTypes,
   MemberNotNull: needsAttributeBinding,
   VarianceSafetyForStaticInterfaceMembers: 'needs the variance check of interface members',

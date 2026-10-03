@@ -125,6 +125,7 @@ export const OperatorBinding = Base =>
           method: r.method,
           isLifted: r.isLifted,
           isLogical: !!r.isLogical,
+          shortCircuit: r.shortCircuitOperator ?? null,
         });
       }
       const l = this.operand(left, r.leftType),

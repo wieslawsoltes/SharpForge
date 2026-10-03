@@ -14,6 +14,7 @@ import { isNullableType, stripNullable } from '../conversions/nullable.js';
 import { baseTypeChain } from '../symbols/substitution.js';
 import { hasExplicitReferenceConversion } from '../conversions/reference.js';
 import { argumentDisplay } from './resolution.js';
+import { resolvePredefinedOperator } from './predefined-operators.js';
 
 export const binaryOperatorNames = Object.freeze({
   '+': 'op_Addition',
@@ -152,7 +153,14 @@ export class OperatorResolver {
       if (user?.kind === 'user') return user;
       if (user?.kind === 'error') return this.error(user.code, operator, left, right);
     }
-    return this.builtinBinary(operator, left, right) ?? this.error('CS0019', operator, left, right);
+    return this.builtinBinary(operator, left, right) ?? this.throughConversions(operator, [left, right]) ?? this.error('CS0019', operator, left, right);
+  }
+  /** A predefined operator applied through user-defined implicit conversions of the operands, or null. */
+  throughConversions(operator, operands) {
+    const found = resolvePredefinedOperator(this, operator, operands);
+    if (!found?.ambiguous) return found;
+    const code = operands.length === 1 ? 'CS0035' : 'CS0034';
+    return { kind: 'error', code, args: [operator, ...operands.map(argumentDisplay)] };
   }
   error(code, operator, left, right) {
     return { kind: 'error', code, args: [operator, argumentDisplay(left), argumentDisplay(right)] };
@@ -342,6 +350,8 @@ export class OperatorResolver {
     const t0 = stripNullable(type),
       lifted = t0 !== type,
       wrap = t => (lifted ? core.nullableOf(t) : t);
+    const converted = this.throughConversions(operator, [operand]);
+    if (converted) return converted;
     if (operator === '!') return t0.specialType === 'System_Boolean' ? builtin('bool', type, null, type, lifted) : fail();
     if (isEnum(t0)) {
       if (operator === '~' || operator === '++' || operator === '--') return builtin('enum', type, null, type, lifted);

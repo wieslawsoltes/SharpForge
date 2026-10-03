@@ -1,0 +1,8 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "member-indexers/compound-assignment-and-increment":{"hash":"fa6b12625056e868","kind":"output","langVersion":"14.0","diagnostics":[],"output":"make\n3 1 5 9 5 5 2 k!\n10 8 -2\n"},
+  "member-indexers/index-read-before-right-side":{"hash":"f3e1a3bbbaff7a0f","kind":"output","langVersion":"14.0","diagnostics":[],"output":"get 1\nset 1 1\nget 2\nset 2 0\nset 2 3\nget 0\nset 0 1\n3\n"},
+  "member-indexers/overloads-named-optional-and-params":{"hash":"342d5fbe5ffdf81c","kind":"output","langVersion":"14.0","diagnostics":[],"output":"1:7\n3:2\nk0 k3\n3\n"},
+  "member-indexers/static-and-instance-members-through-indexers":{"hash":"9764fb2544135500","kind":"output","langVersion":"14.0","diagnostics":[],"output":"4 5 6\n"},
+  "member-indexers/use-site-errors":{"hash":"7160a888b31df89b","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0200",267,4,"error"],["CS0154",293,6,"error"],["CS1501",309,10,"error"],["CS1503",335,3,"error"],["CS0200",353,4,"error"],["CS0154",369,6,"error"],["CS0021",419,4,"error"]]},
+  "member-indexers/declaration-errors":{"hash":"ad3f2893bb0c9da7","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0111",80,4,"error"],["CS0106",137,4,"error"],["CS1551",194,1,"error"],["CS0631",238,3,"error"]]}
+}}

@@ -59,8 +59,8 @@ test('T36 each form is rejected at C# 7.1 and accepted at 7.2', () => {
   assert.deepEqual(diagnosticsOf('readonly struct A { }', '7.1'), ['CS8302@0 "readonly"']);
   assert.deepEqual(diagnosticsOf('ref struct B { }', '7.1'), ['CS8302@0 "ref"']);
   assert.deepEqual(diagnosticsOf('public readonly ref struct B { }', '7.1'), ['CS8302@7 "readonly"', 'CS8302@16 "ref"']);
-  assert.deepEqual(diagnosticsOf('class N { private protected int a; }', '7.1'), ['CS8302@18 "protected"']);
-  assert.deepEqual(diagnosticsOf('class N { protected private int a; }', '7.1'), ['CS8302@20 "private"']);
+  assert.deepEqual(diagnosticsOf('class N { private protected int a; }', '7.1'), ['CS8302@32 "a"']);
+  assert.deepEqual(diagnosticsOf('class N { protected private int a; }', '7.1'), ['CS8302@32 "a"']);
   const all = 'readonly struct A { } ref struct B { } readonly ref struct C { } class N { private protected int a; protected private int b; }';
   assert.deepEqual(diagnosticsOf(all, '7.2'), []);
   assert.deepEqual(diagnosticsOf('class N { protected internal int a; struct S { } }', '1'), [], 'the C# 1 forms need nothing');

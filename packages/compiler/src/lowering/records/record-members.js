@@ -64,6 +64,7 @@ export class RecordMembers {
     if (!kind) return null;
     let method = this.methods.get(symbol);
     if (method) return method;
+    if (kind === RecordMember.EqualsObject) return this.host.unsupported('Equals(object) on a record (needs a run-time type test)', syntax);
     const type = symbol.containingType,
       owner = this.host.classOf(type, syntax),
       parameters = this.host.parametersOf(symbol);

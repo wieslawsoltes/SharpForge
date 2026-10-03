@@ -17,6 +17,7 @@ export const memberMethods = {
   },
   memberDeclarationAfterModifiers(attributeLists, modifiers, owner) {
     this.closedModifier(modifiers, 'member');
+    if (modifiers.length) this.memberNameFeatures();
     if (this.at('event')) {
       this.partialMember(modifiers, 'EventDeclaration', this.current);
       return this.eventDeclaration(attributeLists, modifiers);
@@ -88,6 +89,39 @@ export const memberMethods = {
     const declarators = this.variableDeclarators(first);
     this.restrictedVariables = saved;
     return declarators;
+  },
+  /**
+   * Records the modifier features Roslyn reports at the member name. The name is found by lookahead because the
+   * member kind is not known yet: after the type (and an explicit interface name) for most members, the name itself
+   * for a constructor, and the first declarator of an event.
+   */
+  memberNameFeatures() {
+    if (!this.hasNameReportedModifier()) return;
+    let i = this.i;
+    if (this.kindAt(i) === 'event') i++;
+    const from = this.memberModifiers,
+      to = this.memberModifiersEnd;
+    if (this.isId(this.tokens[i]) && this.kindAt(i + 1) === '(') return this.modifierNameFeatures(from, to, this.tokens[i]);
+    let end = this.scanType(i);
+    if (end <= i) return;
+    while (this.isId(this.tokens[end]) && (this.kindAt(end + 1) === '.' || this.kindAt(end + 1) === '<')) {
+      const next = this.kindAt(end + 1) === '<' ? this.scanTypeArguments(end + 1) : end + 1;
+      if (next < 0 || this.kindAt(next) !== '.') break;
+      end = next + 1;
+    }
+    const name = this.tokens[end];
+    if (this.isId(name) || name.kind === 'this' || name.kind === 'operator') this.modifierNameFeatures(from, to, name);
+  },
+  /** True when the member's modifiers include `required`, or both `private` and `protected`: the two Roslyn reports at the name. */
+  hasNameReportedModifier() {
+    let accessibility = 0;
+    for (let i = this.memberModifiers; i < this.memberModifiersEnd; i++) {
+      const token = this.tokens[i];
+      if (token.kind === 'identifier' && token.value === 'required') return true;
+      if (token.kind === 'private') accessibility |= 1;
+      else if (token.kind === 'protected') accessibility |= 2;
+    }
+    return accessibility === 3;
   },
   /** A token that cannot continue a member after its type: a misplaced modifier (CS1585) or anything else (CS1519). */
   invalidMemberToken() {

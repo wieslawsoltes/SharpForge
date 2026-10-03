@@ -1,5 +1,5 @@
 /**
- * The members the compiler synthesizes for a record (SF-A02-T08.6): `Equals(R)`, `GetHashCode()`, `ToString()`,
+ * The members the compiler synthesizes for a record (SF-A02-T08.6): `Equals(R)`, `Equals(object)`, `GetHashCode()`, `ToString()`,
  * `operator ==` / `!=` and, for a positional record, `Deconstruct`. (The primary constructor, the positional
  * properties and the copy constructor are declared with the type's other members, symbols/source/property-symbols.js.)
  *
@@ -12,6 +12,7 @@ import { MethodSymbol, ParameterSymbol, MethodKind, DeclarationModifiers } from 
 /** The kinds of synthesized record members. */
 export const RecordMember = Object.freeze({
   Equals: 'Equals',
+  EqualsObject: 'Equals(object)',
   GetHashCode: 'GetHashCode',
   ToString: 'ToString',
   Equality: 'op_Equality',
@@ -31,13 +32,13 @@ export function positionalProperties(type) {
 
 /**
  * Adds the synthesized members of a record to `members` (the member list of `type` while it is being built).
- * @param type the record type symbol  @param {object[]} members its declared members  @param core `{bool, int, string, void}`
+ * @param type the record type symbol  @param {object[]} members its declared members  @param core `{bool, int, string, object, void}`
  */
 export function synthesizeRecordMembers(type, members, core) {
   const isClass = type.typeKind === TypeKind.Class;
   const declare = (kind, returnType, parameters, modifiers = 0, methodKind = MethodKind.Ordinary) => {
     const method = new MethodSymbol({
-      name: kind,
+      name: kind === RecordMember.EqualsObject ? 'Equals' : kind,
       methodKind,
       returnType,
       parameters,
@@ -58,6 +59,8 @@ export function synthesizeRecordMembers(type, members, core) {
   if (!declares('Equals', takesSelf)) declare(RecordMember.Equals, core.bool, [parameter('other', type)]);
   // Overrides of object members: dispatched statically, since nothing derives from the record in a generated image.
   const override = isClass ? DeclarationModifiers.Override : DeclarationModifiers.Override | DeclarationModifiers.ReadOnly;
+  const takesObject = parameters => parameters.length === 1 && parameters[0].type === core.object;
+  if (!declares('Equals', takesObject)) declare(RecordMember.EqualsObject, core.bool, [parameter('obj', core.object)], override);
   if (!declares('GetHashCode', parameters => !parameters.length)) declare(RecordMember.GetHashCode, core.int, [], override);
   if (!declares('ToString', parameters => !parameters.length)) declare(RecordMember.ToString, core.string, [], override);
   for (const kind of [RecordMember.Equality, RecordMember.Inequality]) {

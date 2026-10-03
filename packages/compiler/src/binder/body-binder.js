@@ -28,6 +28,7 @@ import { LambdaBinding } from './body/lambdas.js';
 import { PatternBinding } from './body/patterns.js';
 import { StructuralPatternBinding } from './body/structural-patterns.js';
 import { StackAllocBinding } from './body/stackalloc.js';
+import { QueryBinding } from './queries.js';
 import { StatementBinding } from './body/statements.js';
 import { DeclarationBinding } from './body/declarations.js';
 import { FlowStatementBinding } from './body/flow-statements.js';
@@ -48,6 +49,7 @@ const expressionFamilies = [
   PatternBinding,
   StructuralPatternBinding,
   StackAllocBinding,
+  QueryBinding,
 ];
 const statementFamilies = [StatementBinding, DeclarationBinding, FlowStatementBinding, LocalFunctionBinding];
 const compose = (base, mixins) => mixins.reduce((composed, mixin) => mixin(composed), base);
