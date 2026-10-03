@@ -93,6 +93,9 @@ test('resume tokens must identify an existing MethodDef with an IL body', () => 
   const row = pe.metadata.rows[6].findIndex((method) => method[0] === 0) + 1;
   assert(row > 0);
   rejectStep({ resumeMethod: 0x06000000 | row }, /no IL body/);
+  const record = taskRecord();
+  record.kickoff += 0x100000000;
+  assert.throws(() => emit([record]), /Invalid async stepping MethodDef/);
 });
 
 test('catch offsets must be real catch entries and cannot point into the body', () => {
@@ -120,7 +123,7 @@ test('duplicate stepping CDI and duplicate state-machine pairs keep existing dia
   assert.throws(() => emit([record, record]), /Duplicate state machine/);
 });
 
-test('many awaits reuse one method and preserve ordered records and separate resume methods', () => {
+test('many awaits preserve ordered records and separate resume methods', () => {
   const record = taskRecord();
   const other = records().find((candidate) => candidate.moveNext !== record.moveNext && candidate.awaits);
   const offset = decodeInstructions(pe.methodBody(other.moveNext).code)[0].offset;

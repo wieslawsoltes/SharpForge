@@ -1,11 +1,15 @@
 import { decodeInstructions } from '@sharpforge/cil';
 import { PdbGuids, fail } from './contracts.js';
 
-function methodInstructions(pe, methodToken, bodies) {
+function requireMethod(pe, methodToken) {
   if (!Number.isInteger(methodToken) || methodToken < 0x06000001 || methodToken > 0x06ffffff) {
     fail('Invalid async stepping MethodDef token');
   }
   if ((methodToken & 0xffffff) > (pe.metadata.counts[6] ?? 0)) fail('Invalid async stepping MethodDef row');
+}
+
+function methodInstructions(pe, methodToken, bodies) {
+  requireMethod(pe, methodToken);
   if (!bodies.has(methodToken)) {
     if (!pe.metadata.row(methodToken)[0]) fail('Async stepping method has no IL body');
     const body = pe.methodBody(methodToken);
@@ -32,6 +36,7 @@ export function asyncSteppingRecords(pe, records, existing) {
     if (!Object.hasOwn(record, 'awaits') && !Object.hasOwn(record, 'catchHandlerOffset')) continue;
     const awaits = record.awaits === undefined ? [] : record.awaits;
     if (!Array.isArray(awaits) || awaits.length > 1_000_000) fail('Invalid async await record list');
+    requireMethod(pe, record.kickoff);
     const method = methodInstructions(pe, record.moveNext, bodies);
     const catchHandlerOffset = record.catchHandlerOffset === undefined ? -1 : record.catchHandlerOffset;
     if (catchHandlerOffset !== -1) {
