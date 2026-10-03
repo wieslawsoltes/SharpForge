@@ -38,4 +38,5 @@ for(const type of ['bool','char','sbyte','byte','short','ushort','int','uint','l
 for(const type of ['nint','nuint'])define('System.Convert','ToString',['object'],'string',true,'convertString',{formatType:type});
 define('System.Object','.ctor',[],'void',false,'object');
 for (const owner of ['System.IntPtr', 'System.UIntPtr']) define(owner, 'get_Size', [], 'int');
+define('System.Math', 'IEEERemainder', ['double', 'double'], 'double', true, 'math');
 export const numericIntrinsicDefinitions=Object.freeze(definitions);

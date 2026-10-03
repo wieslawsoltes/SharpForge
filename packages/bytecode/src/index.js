@@ -97,3 +97,4 @@ export {checkedInteger, numericFault} from './numeric/checked.js';
 export {smallInteger, smallIntegerIndirect} from './numeric/small-int.js';
 export {uint32Binary, uint32Compare} from './numeric/uint32.js';
 export {nativeBinary, nativeSize} from './numeric/native-int.js';
+export {floatBinary, floatCompare, finiteFloat, ieeeRemainder} from './numeric/float.js';

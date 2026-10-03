@@ -1,3 +1,4 @@
+import {ieeeRemainder} from './float.js';
 import {nativeSize} from './native-int.js';
 import {ManagedFault} from '../heap.js';
 import {storageValue} from './storage.js';
@@ -24,7 +25,8 @@ export function invokeNumericIntrinsic(vm,descriptor,args) {
     const name=descriptor.name,type=numericTypeName(signature.returnType);
     const values=args.map((value,index)=>{const raw=vm.value(value),integer=integerType(signature.parameters[index],vm.options);if(!integer)return raw;const n=integer.unsigned?BigInt.asUintN(integer.bits,BigInt(raw)):BigInt.asIntN(integer.bits,BigInt(raw));return integer.bits===64?n:Number(n);});
     let value;
-    if(name==='Abs') {
+    if (name === 'IEEERemainder') value = ieeeRemainder(values[0], values[1]);
+    else if(name==='Abs') {
       const input=values[0],integer=integerType(signature.parameters[0],vm.options);
       if(integer&&!integer.unsigned&&BigInt(input)===-(1n<<BigInt(integer.bits-1)))throw new ManagedFault('OverflowException','Absolute value exceeds its signed integer width');
       value=typeof input==='bigint'?(input<0n?-input:input):Math.abs(input);

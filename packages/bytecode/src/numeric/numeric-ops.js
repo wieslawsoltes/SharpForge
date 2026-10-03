@@ -1,3 +1,5 @@
+import {float, floatBinary, floatCompare} from './float.js';
+export {float} from './float.js';
 import {nativeInteger, isNativeInteger, nativeBinary} from './native-int.js';
 export {nativeInteger, isNativeInteger} from './native-int.js';
 import {uint32Binary} from './uint32.js';
@@ -17,7 +19,6 @@ const fault = (type, message) => Object.assign(new Error(message), {name: type})
 const error = message => Object.assign(new Error(message), {name: 'CilError'});
 const reference = value => value !== null && typeof value === 'object' && Number.isInteger(value.h) && Number.isInteger(value.g);
 
-export const float = (value, kind = 'r8') => {if(kind!=='r4'&&kind!=='r8')throw new TypeError('Invalid floating-point kind');return Object.freeze({float: kind, value: kind === 'r4' ? Math.fround(value) : Number(value)});};
 export const number = value => value?.float||isNativeInteger(value) ? value.value : value;
 export const isNumber = value => typeof value === 'number' || typeof value === 'bigint' || !!value?.float || isNativeInteger(value);
 export const defaults = (input,context) => { const type=numericAliases[input]??input; return type==='decimal'?decimalZero:type==='nint'||type==='nuint'?nativeInteger(0,nativeIntegerBits(context)):type === 'long' || type === 'ulong' ? 0n : type === 'double' ? float(0) : type === 'float' ? float(0, 'r4') : ['int', 'uint', 'short', 'ushort', 'byte', 'sbyte', 'char', 'bool'].includes(type) ? 0 : null; };
@@ -38,7 +39,7 @@ export function compare(a, b, op, unsigned = false, {fault: createFault = fault,
   a = number(a); b = number(b);
   if(nativeBits===64){a=BigInt(a);b=BigInt(b);}
   if(typeof a!==typeof b)throw createFault('InvalidProgramException','Mismatched numeric comparison categories');
-  if (floating && (Number.isNaN(a) || Number.isNaN(b))) return op === 'ne' || unsigned;
+  if (floating) return floatCompare(a, b, op, unsigned);
   if (unsigned && !floating) {
     a = typeof a === 'bigint' ? BigInt.asUintN(64, a) : a >>> 0;
     b = typeof b === 'bigint' ? BigInt.asUintN(64, b) : b >>> 0;
@@ -55,7 +56,7 @@ export function binary(name, a, b, {fault: createFault = fault, error: createErr
   if (floating) {
     if (!['add', 'sub', 'mul', 'div', 'rem'].includes(op) || checked || unsigned) throw createFault('InvalidProgramException', 'Invalid floating-point operation');
     if(typeof a!=='number'||typeof b!=='number'||nativeBits)throw createFault('InvalidProgramException','Mismatched floating-point operands');
-    return float({add: () => a + b, sub: () => a - b, mul: () => a * b, div: () => a / b, rem: () => a % b}[op](),floatKind);
+    return floatBinary(name, a, b, {kind: floatKind, fault: createFault});
   }
   const wide = typeof a === 'bigint';
   if (!nativeBits&&typeof b === 'bigint' !== wide && !['shl', 'shr'].includes(op)) throw createFault('InvalidProgramException', 'Mismatched integer widths');
