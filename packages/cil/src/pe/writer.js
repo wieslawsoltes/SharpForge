@@ -1,3 +1,4 @@
+import { finalizeDeterministicPE } from './determinism.js';
 import { desktopEntryStub } from './entry-stub.js';
 import { Writer, CilError, align, utf8 } from '../binary.js';
 import { peOptions, writeOptionalHeader, PEDirectoryNames } from './headers.js';
@@ -74,7 +75,8 @@ export function writePortableExecutable(input, inputOptions = {}) {
   }
   writer.zero(sizeOfHeaders - writer.length);
   for (const section of sections) writer.bytes(section.data).zero(section.size - section.data.length);
-  return writer.finish();
+  const bytes = writer.finish();
+  return options.deterministic ? finalizeDeterministicPE(bytes) : bytes;
 }
 
 /** Fill a CLI header in the first section, then emit an IL-only image. */
@@ -101,7 +103,8 @@ export function writeManagedPE(sectionBytes, metadataOffset, metadataLength, ent
   cli.setUint32(12, metadataLength, true);
   cli.setUint32(16, options.corFlags, true);
   cli.setUint32(20, entryToken, true);
-  return writePortableExecutable([{ name: '.text', data: section }, ...additionalSections], {
-    ...options, directories: { ...options.directories, cliHeader: { section: '.text', offset: 0, size: 72 } },
+  const bytes = writePortableExecutable([{ name: '.text', data: section }, ...additionalSections], {
+    ...options, deterministic: false, directories: { ...options.directories, cliHeader: { section: '.text', offset: 0, size: 72 } },
   });
+  return options.deterministic ? finalizeDeterministicPE(bytes) : bytes;
 }

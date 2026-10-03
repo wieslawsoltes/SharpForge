@@ -9,3 +9,5 @@ export { writePortableExecutable } from './pe/writer.js';
 export { PEMachine, CorFlags, PEPlatforms, PEDirectoryNames } from './pe/headers.js';
 export { writeManagedPE as writePE } from './pe/writer.js';
 export { readPortableExecutable as readPE } from './pe/reader.js';
+export { peChecksum } from './pe/checksum.js';
+export { deterministicContentId, finalizeDeterministicPE } from './pe/determinism.js';
