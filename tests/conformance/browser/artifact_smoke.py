@@ -51,14 +51,14 @@ def verify():
                     process.kill()
                     process.wait()
         target = directory / mode
-        assert 'intentional artifact smoke failure' in (target / 'console.log').read_text()
+        assert 'intentional artifact smoke failure' in (target / 'console.log').read_text(encoding='utf-8')
         assert (target / 'screenshot.png').read_bytes().startswith(b'\x89PNG\r\n\x1a\n')
         with zipfile.ZipFile(target / 'trace.zip') as trace:
             assert any(name.endswith('.trace') for name in trace.namelist())
             assert trace.testzip() is None
-        assert json.loads((target / 'session.json').read_text())['passed'] is False
+        assert json.loads((target / 'session.json').read_text(encoding='utf-8'))['passed'] is False
         reports.append({'mode': mode, 'passed': True, 'realChromium': True})
-    (results_dir() / 'artifact-smoke.json').write_text(json.dumps(reports, indent=2) + '\n')
+    (results_dir() / 'artifact-smoke.json').write_text(json.dumps(reports, indent=2) + '\n', encoding='utf-8')
     print('Real Chromium failure and cancellation artifacts verified')
 
 

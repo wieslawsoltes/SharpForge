@@ -144,7 +144,7 @@ try:
         command('stop')
         produced=subprocess.run(['node','--input-type=module','-e',
             'import {compileToIL} from "./packages/compiler/src/index.js"; console.log(JSON.stringify(Array.from(compileToIL("Console.WriteLine(123);",{embedSources:false}).assembly)))'],
-            cwd=ROOT,check=True,text=True,capture_output=True)
+            cwd=ROOT,check=True,text=True,capture_output=True, encoding='utf-8')
         data=json.loads(produced.stdout)
         page.evaluate('(data)=>window.sharpforge.importAssembly(new Uint8Array(data))',data)
         truth('Console.WriteLine' not in state()['files'][0]['text'])
@@ -182,6 +182,6 @@ try:
             command(c);truth(page.locator('#modal-backdrop').is_visible());page.click('#modal-close')
     checked('documentation and keyboard help dialogs',docs)
     checked('no browser JavaScript errors',lambda:truth(not errors,str(errors)))
-    REPORT.write_text(json.dumps({'browser':browser.version,'mode':mode,'workers':'real dedicated classic workers, statically bundled from production ESM','storage':'harness-only in-memory shim' if mode=='in-memory' else 'native browser storage','network':'not validated in in-memory mode' if mode=='in-memory' else 'HTTP static server','tests':checks,'total':len(checks),'passed':len(checks)},indent=2))
+    REPORT.write_text(json.dumps({'browser':browser.version,'mode':mode,'workers':'real dedicated classic workers, statically bundled from production ESM','storage':'harness-only in-memory shim' if mode=='in-memory' else 'native browser storage','network':'not validated in in-memory mode' if mode=='in-memory' else 'HTTP static server','tests':checks,'total':len(checks),'passed':len(checks)},indent=2), encoding='utf-8')
 finally:
     if server:server.terminate()

@@ -39,11 +39,11 @@ def load_application(page, connect_origins=()):
         return load_http(page, connect_origins)
 
     dist = ROOT / 'dist'
-    html = (dist / 'index.html').read_text()
-    html = html.replace('<link rel="stylesheet" href="./studio.css">', '<style>' + (dist / 'studio.css').read_text() + '</style>')
+    html = (dist / 'index.html').read_text(encoding='utf-8')
+    html = html.replace('<link rel="stylesheet" href="./studio.css">', '<style>' + (dist / 'studio.css').read_text(encoding='utf-8') + '</style>')
     html = html.replace('<script type="module" src="./studio.js"></script>', '')
     html = html.replace('<link rel="icon" href="./favicon.svg" type="image/svg+xml">', '')
-    sources = {'/' + str(p.relative_to(dist)): p.read_text() for p in dist.rglob('*.js')}
+    sources = {'/' + str(p.relative_to(dist)): p.read_text(encoding='utf-8') for p in dist.rglob('*.js')}
     page.set_content(html)
     page.evaluate(r"""sources => {
         const memory = new Map();

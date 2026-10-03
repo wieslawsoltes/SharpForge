@@ -16,7 +16,7 @@ class Handler(BaseHTTPRequestHandler):
  def respond(self,body):
   self.send_response(200);self.send_header('Access-Control-Allow-Origin','*');self.send_header('Content-Type','application/json');self.send_header('Content-Length',str(len(body)));self.end_headers()
   try:self.wfile.write(body)
-  except (BrokenPipeError,ConnectionResetError):pass
+  except (BrokenPipeError,ConnectionResetError,ConnectionAbortedError):pass
  def do_GET(self):
   requests.append({'path':self.path,'cookie':self.headers.get('Cookie'),'method':'GET'})
   if self.path=='/slow':time.sleep(.25)
@@ -93,7 +93,7 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
    load('parallel-compute');run();ev('sharpforge.openTool("runtime-settings")');page.wait_for_timeout(6200);page.screenshot(path=str(RESULTS/'screenshots/release14-runtime.png'));truth(page.locator('#runtime-metrics').inner_text().find('isolated')>=0 or 'spawned' in page.locator('#runtime-metrics').inner_text());truth(not errors,str(errors))
   check('runtime inspector shows actual backend and job metrics without page errors',screenshot)
   report={'passed':True,'checks':checks,'pageErrors':errors,'workerEvents':len(workers),'httpRequests':requests,'mode':('in-memory' if os.getenv('SHARPFORGE_IN_MEMORY') == '1' else 'CSP HTTP') + '; actual browser Fetch to CORS-enabled local HTTP server; no fetch or compute test doubles'}
-  (RESULTS/'browser-release14-results.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({'passed':True,'checks':len(checks),'workerEvents':len(workers),'httpRequests':len(requests)},indent=2))
+  (RESULTS/'browser-release14-results.json').write_text(json.dumps(report,indent=2)+'\n', encoding='utf-8');print(json.dumps({'passed':True,'checks':len(checks),'workerEvents':len(workers),'httpRequests':len(requests)},indent=2))
  except Exception:
   page.screenshot(path=str(RESULTS/'screenshots/release14-failure.png'));print(json.dumps({'errors':errors,'state':state()},default=str)[-12000:],flush=True);traceback.print_exc();raise
  finally:

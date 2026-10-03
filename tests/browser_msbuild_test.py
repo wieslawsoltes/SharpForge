@@ -17,7 +17,7 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
  page=browser.new_page(viewport={'width':1700,'height':1120});page.on('pageerror',lambda e:errors.append(e.stack or str(e)));page.on('dialog',lambda d:d.accept());workers=[];page.on('worker',lambda w:workers.append(w.url))
  try:
   load_application(page)
-  fixture={'App/App.csproj':(ROOT/'examples/msbuild/SdkWorkspace/App/App.csproj').read_text(),'App/Program.cs':'// Native disk example\nint answer = 42;\nConsole.WriteLine(answer);\n','Workspace.slnx':'<Solution><Configurations><BuildType Name="Debug"/><BuildType Name="Release"/></Configurations><Folder Name="/src/"><Project Path="App/App.csproj"/></Folder></Solution>','Directory.Build.props':(ROOT/'examples/msbuild/SdkWorkspace/Directory.Build.props').read_text()}
+  fixture={'App/App.csproj':(ROOT/'examples/msbuild/SdkWorkspace/App/App.csproj').read_text(encoding='utf-8'),'App/Program.cs':'// Native disk example\nint answer = 42;\nConsole.WriteLine(answer);\n','Workspace.slnx':'<Solution><Configurations><BuildType Name="Debug"/><BuildType Name="Release"/></Configurations><Folder Name="/src/"><Project Path="App/App.csproj"/></Folder></Solution>','Directory.Build.props':(ROOT/'examples/msbuild/SdkWorkspace/Directory.Build.props').read_text(encoding='utf-8')}
   page.evaluate(r'''({files,assembly})=>{
    const source=new Map(Object.entries(files).map(([path,text])=>[path,{path,text,hash:'h1'}]));let count=0,serial=0;const jobs=new Map();window.__nativeFixture={source,requests:[],slow:false,forceConflict:false};
    const copy=x=>JSON.parse(JSON.stringify(x));const workspace=()=>({root:'/test-double/native-workspace',name:'Native Workspace — transport test double',projects:['App/App.csproj'],solutions:['Workspace.slnx'],files:[...source.keys()].map(path=>({path,size:100,kind:path.endsWith('.cs')?'source':path.endsWith('.csproj')?'project':path.endsWith('.slnx')?'solution':'build'}))});
@@ -100,5 +100,5 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
  except Exception:
   traceback.print_exc();raise
  finally:
-  (RESULTS/'browser-msbuild-results.json').write_text(json.dumps({'passed':not errors and len(checks)>=32,'checks':checks,'errors':errors,'mode':('in-memory' if os.getenv('SHARPFORGE_IN_MEMORY') == '1' else 'CSP HTTP') + ' production UI with explicit native-client test double; no native engine execution'},indent=2)+'\n')
+  (RESULTS/'browser-msbuild-results.json').write_text(json.dumps({'passed':not errors and len(checks)>=32,'checks':checks,'errors':errors,'mode':('in-memory' if os.getenv('SHARPFORGE_IN_MEMORY') == '1' else 'CSP HTTP') + ' production UI with explicit native-client test double; no native engine execution'},indent=2)+'\n', encoding='utf-8')
 print('Browser MSBuild checks:',len(checks))

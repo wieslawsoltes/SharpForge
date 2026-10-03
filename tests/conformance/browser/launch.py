@@ -186,7 +186,7 @@ def load_http(page, connect_origins=()):
         session = _session
         server = subprocess.Popen(['node', 'scripts/serve.js'], cwd=ROOT,
             env={**os.environ, 'PORT': str(port), 'SHARPFORGE_CONNECT_ORIGINS': ','.join(connect_origins)},
-            stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, encoding='utf-8')
         _session.servers.append(server)
         def output():
             for line in server.stdout:

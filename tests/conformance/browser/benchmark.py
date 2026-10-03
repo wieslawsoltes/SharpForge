@@ -41,7 +41,7 @@ def benchmark(iterations):
               'warmDocumentAndCorrectAssertion': distribution(warm),
               'pythonAllocationBytes': {'current': current, 'peak': peak},
               'scope': 'Real Chromium launcher and Python harness, with tracing enabled. Python allocations exclude Chromium process memory. Three cold samples and small warm samples are diagnostic, not a statistical performance gate.'}
-    (results_dir() / 'launcher-performance.json').write_text(json.dumps(report, indent=2) + '\n')
+    (results_dir() / 'launcher-performance.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(report, indent=2))
 
 
