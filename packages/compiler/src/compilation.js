@@ -14,13 +14,14 @@ import {findEntryPoint} from './binder/entry-point.js';
 import {parseCompilationOptions} from './options.js';
 import {applySuppression} from './diagnostics/suppression.js';
 import {BuckStopsHereBinder,InContainerBinder,WithUsingsBinder} from './binder/binder.js';
-import {checkFeatures} from '@sharpforge/syntax';
 import {NullableContextMap} from './nullable/annotations.js';
 import {typeSyntaxSpan} from './binder/type-spans.js';
 import {reconcileWithSemanticAnalysis} from './semantic-integration.js';
 export class Compilation {
   constructor(parsedFiles, options={}) {
-    const syntaxChecks=syntaxFeatureChecks(parsedFiles,options);this.syntaxFeatureFailures=syntaxChecks.unavailable;
+    const syntaxChecks = syntaxFeatureChecks(parsedFiles, options);
+    this.syntaxFeatureFailures = syntaxChecks.unavailable;
+    this.syntaxFeatureDiagnostics = syntaxChecks.diagnostics;
     this.inputFiles=parsedFiles;parsedFiles=lowerAsyncFiles(parsedFiles);this.files=parsedFiles;this.options=options;this.sources=new Map(parsedFiles.map(p=>[p.source.uri,p.source]));
     this.diagnostics=parsedFiles.flatMap(p=>p.diagnostics);for(const d of syntaxChecks.diagnostics)if(!this.diagnostics.some(existing=>existing.uri===d.uri&&existing.start===d.start&&existing.length===d.length&&existing.code===d.code&&existing.message===d.message))this.diagnostics.push(d);this.symbols=[];this.references=[];this.types=[];this.typeMap=new Map();this.methods=[];this.statics=[];this.constants=[];this.constantMap=new Map();this.sequencePoints=[];
     // 'bound' binds to a bound tree, analyses flow, lowers and then emits; 'legacy' is the fused string-typed method compiler.
@@ -105,8 +106,6 @@ export class Compilation {
     const start=performance.now();
     // Options are validated once, up front (options.js): invalid values report the Roslyn codes.
     const parsed=parseCompilationOptions(this.options);this.typedOptions=parsed.options;for(const d of parsed.diagnostics)this.report(this.files[0]?.root??{},d.code,d.args);
-    // Parser-level language-version gating: every feature use the lexer and parser recorded is checked against the selected version.
-    const featureDiagnostics=this.inputFiles.flatMap(file=>file.features?.length?checkFeatures(file.source,file.features,this.selectedVersion({uri:file.source.uri})):[]);
     // Two-pass declarations allow forward calls and references across source files.
     for(const file of this.files)for(const decl of file.root.members.filter(n=>n.kind==='Class')){
       const namespace=decl.namespace??'',fullName=(namespace?namespace+'.':'')+decl.name;
@@ -164,10 +163,8 @@ export class Compilation {
       statics:this.statics.map(f=>({name:`${f.owner.name}.${f.name}`,type:f.type,value:defaultValue(f.type),...(f.backing?{backing:true}:{} )})),
       methods:this.methods.map(m=>({...(m.node?.uri&&m.node.body&&(!m.node.asyncRole||m.node.asyncRole==='body')&&!m.name.startsWith('<startup>')?{sourceRange:{uri:m.node.uri,start:m.node.start,end:m.node.end}}:{}),...(m.node.asyncRole?{asyncRole:m.node.asyncRole,asyncOrigin:m.node.asyncOrigin}:{}),id:m.id,name:m.name,qualifiedName:m.qualifiedName,owner:m.owner?.name??null,isStatic:m.isStatic,returnType:m.returnType,...(m.accessor?{accessor:m.accessor}:{}),...(m.implementsDispose?{implementsDispose:true}:{}),parameters:m.parameters.map(p=>({name:p.name,type:p.type})),locals:m.locals??[],code:m.code??new Int32Array(),handlers:m.handlers??[]}))};
     // Warning options (#pragma warning, nowarn, warnaserror, warning level) decide the final diagnostic list.
-    // A feature the binder gates itself keeps the binder's diagnostic; the parser's is added where nothing covers it.
-    for(const f of featureDiagnostics)if(!this.diagnostics.some(d=>d.uri===f.uri&&(d.code===f.code||d.code==='CS8652'||f.code==='CS8652')&&d.start<f.start+f.length&&f.start<d.start+d.length))this.diagnostics.push(f);
     // Programs outside the execution profile get the diagnostics of the type system (semantic-integration.js).
-    const reconciled=reconcileWithSemanticAnalysis(this,featureDiagnostics);if(reconciled){this.diagnostics=reconciled.diagnostics;this.semanticAnalysis=reconciled.semantic;}
+    const reconciled=reconcileWithSemanticAnalysis(this,this.syntaxFeatureDiagnostics);if(reconciled){this.diagnostics=reconciled.diagnostics;this.semanticAnalysis=reconciled.semantic;}
     const diagnostics=applySuppression(this.diagnostics,{sources:this.sources,directives:new Map(this.inputFiles.filter(f=>f.directives).map(f=>[f.source.uri,f.directives])),options:this.typedOptions}),errors=diagnostics.filter(d=>d.severity==='error').length;
     return {success:errors===0,image:errors===0?image:null,diagnostics,symbols:this.symbols,references:this.references,...(this.semanticAnalysis?{semantic:{analysed:true,complete:!this.semanticAnalysis.incomplete}}:{}),
       metrics:{compileMs:performance.now()-start,files:this.files.length,tokens:this.files.reduce((s,f)=>s+f.tokens.length,0),internedTokenHits:this.files.reduce((s,f)=>s+f.internedTokenHits,0),nodes:this.files.reduce((s,f)=>s+f.nodeCount,0),methods:this.methods.length,instructions:this.methods.reduce((s,m)=>s+(m.code?.length??0)/3,0),errors}};

@@ -68,7 +68,8 @@ const constructNames = {
   SF2099: 'statements outside the profile',
   SF2141: 'null-conditional access as a value',
 };
-const key = d => d.code + '|' + d.uri + '|' + d.start + '|' + d.length;
+// A diagnostic's arguments matter: distinct features can share a version code and source span.
+const key = d => d.code + '|' + d.uri + '|' + d.start + '|' + d.length + '|' + d.message;
 
 function internalFailure(compilation, error) {
   const source = compilation.files[0]?.source;

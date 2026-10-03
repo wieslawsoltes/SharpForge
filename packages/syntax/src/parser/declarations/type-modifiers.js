@@ -4,9 +4,10 @@
  */
 export const typeModifierMethods = {
   /** Records the features used by `modifiers` on a type of `kind` (a declaration node kind); `token` is the type keyword. */
-  typeModifierFeatures(modifiers, kind, token) {
+  typeModifierFeatures(modifiers, kind, token, keywordIndex) {
     const isStruct = kind === 'StructDeclaration' || kind === 'RecordStructDeclaration';
-    for (const modifier of modifiers) {
+    for (let index = 0; index < modifiers.length; index++) {
+      const modifier = modifiers[index];
       const feature =
         modifier.kind === 'PartialKeyword'
           ? 'PartialTypes'
@@ -17,7 +18,12 @@ export const typeModifierMethods = {
               : modifier.kind === 'ReadOnlyKeyword' && isStruct
                 ? 'ReadOnlyStructs'
                 : null;
-      if (feature) this.feature(feature, token);
+      if (feature) {
+        // Green modifiers have no positions; retain the original lexer token's UTF-16 span.
+        const anchor = feature === 'RefStructs' || feature === 'ReadOnlyStructs'
+          ? this.tokens[keywordIndex - modifiers.length + index] : token;
+        this.feature(feature, anchor);
+      }
     }
   }
 };

@@ -13,6 +13,7 @@ import { bindEnumMembers } from '../binder/enums.js';
 import { checkStructLayout, checkStructDeclaration } from '../binder/structs.js';
 import { checkReadOnlyDeclarations } from '../binder/readonly.js';
 import { checkRefStructDeclarations, checkAsyncOrIteratorUse } from '../binder/ref-struct.js';
+import { checkTypeModifierFeatures } from './type-modifier-features.js';
 import { checkVarianceSafety } from '../conversions/variance.js';
 import { checkNullableSignatures } from '../nullable/signature-checks.js';
 import { accessRank, baseOrSelf } from './analysis-helpers.js';
@@ -112,9 +113,7 @@ export const DeclarationChecks = Base =>
           if (target) this.report(target.uri, target.node, d.code, d.args);
           else this.reportAt(d.member, d.code, d.args);
         }
-      if (type.isReadOnly && type.typeKind === TypeKind.Struct)
-        this.gate(this.at(type).uri, this.at(type), 'readonlyStructs', { name: 'readonly structs', version: 7.2 });
-      if (type.isRefLikeType) this.gate(this.at(type).uri, this.at(type), 'refStructs', { name: 'ref structs', version: 7.2 });
+      checkTypeModifierFeatures(type, this.gate);
       // Nullable reference type signature agreement between overrides/implementations and their bases.
       if (this.nullableAt(this.at(type).uri, this.at(type).start).warnings)
         for (const d of checkNullableSignatures(type)) this.reportAt(d.member, d.code, d.args, 'warning');
