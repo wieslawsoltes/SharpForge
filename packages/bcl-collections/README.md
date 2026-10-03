@@ -13,6 +13,10 @@ Framework registration places this module between the core's `bcl-prefix` and
 collection modules. The collection package imports only the core public entry
 point; core does not depend on collections, framework or runtime.
 
+`dictionaryEntries(platform, reference)` yields managed `[key, value]` pairs in
+Dictionary enumeration order. Upper layers such as JSON serialization use this
+public traversal seam without depending on the collection's backing layout.
+
 Hosts supply the same explicit `bclHost`, managed heap, property access,
 allocation and write-notification services as core modules. Collection backing
 arrays, counts, versions, queue positions and enumerator owners remain in the
