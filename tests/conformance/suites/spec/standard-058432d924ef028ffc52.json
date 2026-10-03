@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-058432d924ef028ffc52",
+  "kind": "spec",
+  "sourceText": "int[][] a = new int[100][];",
+  "unsupported": [],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "fc1aa2da5476f3958bab3ea1c183c7a486dd78f7879b6548019fc09f80efd426",
+  "originalSource": "int[][] a = new int[100][];",
+  "metadata": {
+    "template": "standalone-console-without-using",
+    "name": "ArrayCreationExpressions3"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-expressions",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/expressions.md",
+    "sha256": "86fd8ab8c2608d09cc5267e037ef05a81a46241c464078f7ee9cbb6328c04e92",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/expressions.md",
+    "license": "MIT",
+    "example": "ArrayCreationExpressions3",
+    "offsetInUnquotedMarkdown": 221725
+  }
+}

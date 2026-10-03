@@ -1,3 +1,5 @@
+import {formatDoubleDefault} from './formatting/double-format.js';
+
 /** The legacy managed text/collection limit, measured in UTF-16 units or items. */
 export const MAX = 1_000_000;
 
@@ -40,7 +42,8 @@ export function text(platform, value, type) {
   const native = bclScalar(platform, value);
   if (native == null) return '';
   if (type === 'bool' || type === 'System.Boolean' || typeof native === 'boolean') return native ? 'True' : 'False';
-  if (typeof native === 'number' || typeof native === 'string') return String(native);
+  if (typeof native === 'number') return formatDoubleDefault(native);
+  if (typeof native === 'string') return native;
   return platform.vm.format(value);
 }
 

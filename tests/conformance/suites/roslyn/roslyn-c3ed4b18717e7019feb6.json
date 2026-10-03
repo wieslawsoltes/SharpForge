@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c3ed4b18717e7019feb6",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    void M()\n    {\n        _ = (this, this) == (0, 1); // constraint violated by tuple in source\n        _ = (this, this) == (this, this); // constraint violated by converted tuple\n    }\n    public static bool operator ==(C c, int i)\n        => throw null;\n    public static bool operator !=(C c, int i)\n        => throw null;\n    public override bool Equals(object o)\n        => throw null;\n    public override int GetHashCode()\n        => throw null;\n    public static implicit operator int(C c)\n        => throw null;\n}\nnamespace System\n{\n    public struct ValueTuple<T1, T2>\n        where T1 : class\n        where T2 : class\n    {\n        public T1 Item1;\n        public T2 Item2;\n\n        public ValueTuple(T1 item1, T2 item2)\n        {\n            this.Item1 = item1;\n            this.Item2 = item2;\n            throw null;\n        }\n    }\n}\n",
+  "sourceSHA256": "7f071d87fa348609ca74c8611618a26231966d494bbbb7164f1ba595a8505851",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestConstrainedValueTuple",
+    "offset": 98035
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0452",
+        "severity": "error"
+      },
+      {
+        "code": "CS0452",
+        "severity": "error"
+      },
+      {
+        "code": "CS0452",
+        "severity": "error"
+      },
+      {
+        "code": "CS0452",
+        "severity": "error"
+      },
+      {
+        "code": "CS0452",
+        "severity": "error"
+      },
+      {
+        "code": "CS0452",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,30): error CS0452: The type 'int' must be a reference type in order to use it as parameter 'T1' in the generic type or method '(T1, T2)'\n                //         _ = (this, this) == (0, 1); // constraint violated by tuple in source\n                Diagnostic(ErrorCode.ERR_RefConstraintNotSatisfied, \"0\").WithArguments(\"(T1, T2)\", \"T1\", \"int\").WithLocation(6, 30),\n                // (6,30): error CS0452: The type 'int' must be a reference type in order to use it as parameter 'T1' in the generic type or method '(T1, T2)'\n                //         _ = (this, this) == (0, 1); // constraint violated by tuple in source\n                Diagnostic(ErrorCode.ERR_RefConstraintNotSatisfied, \"0\").WithArguments(\"(T1, T2)\", \"T1\", \"int\").WithLocation(6, 30),\n                // (6,33): error CS0452: The type 'int' must be a reference type in order to use it as parameter 'T2' in the generic type or method '(T1, T2)'\n                //         _ = (this, this) == (0, 1); // constraint violated by tuple in source\n                Diagnostic(ErrorCode.ERR_RefConstraintNotSatisfied, \"1\").WithArguments(\"(T1, T2)\", \"T2\", \"int\").WithLocation(6, 33),\n                // (6,33): error CS0452: The type 'int' must be a reference type in order to use it as parameter 'T2' in the generic type or method '(T1, T2)'\n                //         _ = (this, this) == (0, 1); // constraint violated by tuple in source\n                Diagnostic(ErrorCode.ERR_RefConstraintNotSatisfied, \"1\").WithArguments(\"(T1, T2)\", \"T2\", \"int\").WithLocation(6, 33),\n                // (7,30): error CS0452: The type 'int' must be a reference type in order to use it as parameter 'T1' in the generic type or method '(T1, T2)'\n                //         _ = (this, this) == (this, this); // constraint violated by converted tuple\n                Diagnostic(ErrorCode.ERR_RefConstraintNotSatisfied, \"this\").WithArguments(\"(T1, T2)\", \"T1\", \"int\").WithLocation(7, 30),\n                // (7,36): error CS0452: The type 'int' must be a reference type in order to use it as parameter 'T2' in the generic type or method '(T1, T2)'\n                //         _ = (this, this) == (this, this); // constraint violated by converted tuple\n                Diagnostic(ErrorCode.ERR_RefConstraintNotSatisfied, \"this\").WithArguments(\"(T1, T2)\", \"T2\", \"int\").WithLocation(7, 36)\n                ",
+  "unsupported": []
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a2aa140a5eb21ead0334",
+  "kind": "diagnostics",
+  "sourceText": "\n\nclass C\n{\n    static void Main()\n    {\n    }\n\n    static (int a1, int a2, int a3, int a4, int a5, int a6, int a7, int Item1) M8()\n    {\n        return (801, 802, 803, 804, 805, 806, 807, 808);\n    }\n}\n",
+  "sourceSHA256": "d7dc1f712c9f98b195e3acfde28874e2144df7a3c739544b611dc95b0a6cbc8c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "DefaultAndFriendlyElementNames_08",
+    "offset": 555010
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8125",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,73): error CS8125: Tuple member name 'Item1' is only allowed at position 1.\n                //     static (int a1, int a2, int a3, int a4, int a5, int a6, int a7, int Item1) M8()\n                Diagnostic(ErrorCode.ERR_TupleReservedElementName, \"Item1\").WithArguments(\"Item1\", \"1\").WithLocation(9, 73)\n                ",
+  "unsupported": []
+}

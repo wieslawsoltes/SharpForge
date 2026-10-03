@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-5930b768aa93c8684223",
+  "kind": "spec",
+  "sourceText": "> Foo(new Span<int>(...), await e2);\n> ```\n\n## Explanations\nThese explanations and samples help explain why many of the safety rules above exist\n\n### Method Arguments Must Match\n<a name=\"method-arguments-must-match\"></a>\n\nWhen invoking a method where there is an `out` or `ref` parameter that is a `ref struct` then all of the `ref struct` parameters need to have the same lifetime. This is necessary because C# must make all of its decisions around lifetime safety based on the information available in the signature of the method and the lifetime of the values at the call site. \n\nWhen there are `ref` parameters that are `ref struct` then there is the potential that they could swap around their contents. Hence at the call site we must ensure all of these **potential** swaps are compatible. If the language didn't enforce that then it will allow for bad code like the following.\n",
+  "sourceSHA256": "a87a00b32554d0ceba1c9f4c69eea1fe815d60e7974185a57fcd0bee71987acb",
+  "target": "library",
+  "featureId": "csharp-7-2-span-and-ref-like-types",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/span-safety.md",
+    "sha256": "73bc8deb74ee9ac75ab2d74292a7014712fd627abe8dcc3f61ad9cfd6c1cdc30",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/span-safety.md",
+    "license": "NOASSERTION",
+    "offset": 16633
+  }
+}

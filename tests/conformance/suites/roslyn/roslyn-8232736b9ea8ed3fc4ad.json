@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8232736b9ea8ed3fc4ad",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class Test\n{\n    public static void Main()\n    {\n        var obj = new TestRef();\n\n        obj.M1<int>();      // valid\n        obj.M2<int>();      // invalid\n    }\n}",
+  "sourceSHA256": "af2f2e65ddda6ca9c14f3c256ff2906209e4837687cf1a87456544b7e76aeada",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/UnmanagedTypeModifierTests.cs",
+    "sha256": "d8425d45c0db1398d31b1b3ec364712c75315d7b1d94690f26bff0e291c3cdc0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/UnmanagedTypeModifierTests.cs",
+    "license": "MIT",
+    "method": "LoadingUnmanagedTypeModifier_ModreqWithoutAttribute",
+    "offset": 10289
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { reference })",
+  "options": "(code, references: new[] { reference })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0570",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,13): error CS0570: 'T' is not supported by the language\n                //         obj.M2<int>();      // invalid\n                Diagnostic(ErrorCode.ERR_BindToBogus, \"M2<int>\").WithArguments(\"T\").WithLocation(9, 13)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

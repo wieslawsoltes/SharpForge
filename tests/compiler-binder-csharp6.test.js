@@ -109,11 +109,33 @@ test('A02-T61 the language-version gates of nameof are reported where Roslyn rep
   assert.deepEqual(reported(through, { langVersion: '12' }), []);
 });
 
-test('A02-T61 an exception filter is valid C# that the runtime cannot execute yet: SF2200, no image', () => {
-  const source = inMain('try { } catch (Exception e) when (e.Message == "a") { }');
+test('A02-T61 a filter whose timing cannot be observed runs: evaluated in the handler, a rejected one rethrows', () => {
+  const source = inMain(
+    'int limit = 2; try { throw new Exception("a"); } ' +
+      'catch (Exception e) when (e.Message == "b") { Console.WriteLine("first"); } ' +
+      'catch (Exception e) when (limit > 1 && e.Message == "a") { Console.WriteLine("second " + e.Message); }',
+  );
   const result = compile(source);
-  assert.equal(result.success, false);
-  assert.equal(result.image, null);
-  const unsupported = result.diagnostics.find(d => d.code === 'SF2200');
-  assert.match(unsupported.message, /exception filters/);
+  assert.equal(result.success, true, result.diagnostics.map(d => d.code + ' ' + d.message).join('; '));
+  assert.equal(new VirtualMachine(result.image, { maxInstructions: 1_000_000 }).run().output, 'second a\n');
+});
+
+test('A02-T61 a filter that could tell when it runs is SF2200: calls, division, variables a finally block or a lambda changes', () => {
+  const refused = [
+    'try { } catch (Exception e) when (e.Message.Length == 1) { }',
+    'try { } catch (Exception e) when (Check()) { }',
+    'int k = 0; try { } catch (Exception e) when (1 / k == 0) { }',
+    'int k = 0; try { try { } finally { k = 1; } } catch (Exception e) when (k == 1) { }',
+    'int k = 0; Action a = () => k++; try { a(); } catch (Exception e) when (k == 1) { }',
+  ];
+  for (const body of refused) {
+    const source = `using System; class P { static bool Check() { return true; } static void Main() { ${body} } }`;
+    const result = compile(source);
+    assert.equal(result.success, false, body);
+    assert.equal(result.image, null, body);
+    assert.match(result.diagnostics.find(d => d.code === 'SF2200').message, /an exception filter that calls code.*no filter handlers/, body);
+  }
+  // A variable assigned in the try body itself is fine: that happens before the throw in both orders.
+  const body = 'int k = 0; try { k = 1; throw new Exception("x"); } catch (Exception e) when (k == 1) { Console.WriteLine(k); }';
+  assert.equal(compile(`using System; class P { static void Main() { ${body} } }`).success, true);
 });

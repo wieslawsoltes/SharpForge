@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6ff78b0d44c41de8a653",
+  "kind": "diagnostics",
+  "sourceText": "\nclass @c\n{\n    static void Main(string[] args)\n    {\n        System.Collections.Generic.IEnumerable<string> getGoo(int count, out bool output)\n        {\n            output = false;\n            for (int i = 0; i < count; i++)\n            {\n                foreach (var val in getGoo(3, out var bar))\n                yield return \"goo\";\n            }\n            yield return \"goo\";\n        }\n\n        getGoo(1, out bool myBool);\n    }\n}",
+  "sourceSHA256": "59015c423349b73e15077174d5509b3b4c3bc2635289de44216ab45b008952dc",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "LocalIEnumerableFunctionWithOutParameter2",
+    "offset": 42999
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nclass @c\n{\n    static void Main(string[] args)\n    {\n        System.Collections.Generic.IEnumerable<string> getGoo(int count, out bool output)\n        {\n            output = false;\n            for (int i = 0; i < count; i++)\n            {\n                foreach (var val in getGoo(3, out var bar))\n                yield return \"\"goo\"\";\n            }\n            yield return \"\"goo\"\";\n        }\n\n        getGoo(1, out bool myBool);\n    }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1623",
+        "severity": "error"
+      },
+      {
+        "code": "CS0177",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,83): error CS1623: Iterators cannot have ref, in or out parameters\n                //         System.Collections.Generic.IEnumerable<string> getGoo(int count, out bool goobar)\n                Diagnostic(ErrorCode.ERR_BadIteratorArgType, \"output\"),\n                // (6,56): error CS0177: The out parameter 'goobar' must be assigned to before control leaves the current method\n                //         System.Collections.Generic.IEnumerable<string> getGoo(int count, out bool goobar)\n                Diagnostic(ErrorCode.ERR_ParamUnassigned, \"getGoo\").WithArguments(\"output\").WithLocation(6, 56)",
+  "unsupported": []
+}

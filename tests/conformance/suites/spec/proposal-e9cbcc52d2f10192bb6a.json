@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-e9cbcc52d2f10192bb6a",
+  "kind": "spec",
+  "sourceText": "void Example(ref Span<int> p)\n{\n    Span<int> local = stackalloc int[42];\n    ref Span<int> refLocal = ref local;\n\n    // Error:\n    // The safe-context of refLocal is narrower than p. For a non-ref reassignment \n    // this would be allowed as its safe to assign wider lifetimes to narrower ones.\n    // In the case of ref reassignment though this rule prevents it as the \n    // safe-context values are different.\n    refLocal = ref p;\n\n    // If it were allowed this would be legal as the safe-context of refLocal\n    // is *caller-context* and that is satisfied by stackalloc. At the same time\n    // it would be assigning through p and escaping the stackalloc to the calling\n    // method\n    // \n    // This is equivalent of saying p = stackalloc int[13]!!! \n    refLocal = stackalloc int[13];\n}",
+  "sourceSHA256": "fda187b6707f0e7e1617f2b7b348dd5f7a73e181df4b34e4546ddc2046f42090",
+  "target": "library",
+  "featureId": "csharp-11-0-ref-fields",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/low-level-struct-improvements.md",
+    "sha256": "48173c4aaa1ffb3cbd8f7602f52fbf0b38a57f1e4fc50a725ba5305f30a5ff54",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/low-level-struct-improvements.md",
+    "license": "NOASSERTION",
+    "offset": 95276
+  }
+}

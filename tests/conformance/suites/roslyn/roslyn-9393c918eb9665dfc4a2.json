@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9393c918eb9665dfc4a2",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass A : Attribute\n{\n  public A(ProtectionLevel p){}\n}\n\nenum ProtectionLevel\n{\n  Privacy = 0\n}\n\nclass F\n{\n  int ProtectionLevel;\n\n  [A(ProtectionLevel.Privacy)]\n  public int test;\n}\n",
+  "sourceSHA256": "7640f46572e1eb5e8376aa6d04dfe7ff08704771c17cc6b1091428b41ee19ecd",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "AttributeArgumentError_CS0120",
+    "offset": 258469
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0120",
+        "severity": "error"
+      },
+      {
+        "code": "CS0169",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0649",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (16,6): error CS0120: An object reference is required for the non-static field, method, or property 'F.ProtectionLevel'\n                //   [A(ProtectionLevel.Privacy)]\n                Diagnostic(ErrorCode.ERR_ObjectRequired, \"ProtectionLevel\").WithArguments(\"F.ProtectionLevel\"),\n                // (14,7): warning CS0169: The field 'F.ProtectionLevel' is never used\n                //   int ProtectionLevel;\n                Diagnostic(ErrorCode.WRN_UnreferencedField, \"ProtectionLevel\").WithArguments(\"F.ProtectionLevel\"),\n                // (17,14): warning CS0649: Field 'F.test' is never assigned to, and will always have its default value 0\n                //   public int test;\n                Diagnostic(ErrorCode.WRN_UnassignedInternalField, \"test\").WithArguments(\"F.test\", \"0\")\n                ",
+  "unsupported": []
+}

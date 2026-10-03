@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0a3fe5988b1a81eb05aa",
+  "kind": "diagnostics",
+  "sourceText": "C.M();\n\nnamespace System.Diagnostics.CodeAnalysis\n{\n    [AttributeUsage(AttributeTargets.All, Inherited = false)]\n    public sealed class ExperimentalAttribute : Attribute\n    {\n        public ExperimentalAttribute(string diagnosticId) { }\n\n        public string UrlFormat { get; set; }\n    }\n}\n\n[System.Diagnostics.CodeAnalysis.Experimental(\"DiagID1\")]\npublic class C\n{\n    public static void M() { }\n}",
+  "sourceSHA256": "c991788d3a9ccbfc65700d8217cb567d0ad3632801a8fce4f90f438e23dcb41d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/CommandLine/CommandLineTests.cs",
+    "sha256": "cbdf91ffc05170dabd895bb72ba57cb5450229a47e357efa38ac2225316d51ca",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/CommandLine/CommandLineTests.cs",
+    "license": "MIT",
+    "method": "ExperimentalAttribute_SuppressedWithGlobalNoWarn",
+    "offset": 791405
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(src, options: TestOptions.DebugExe.WithGeneralDiagnosticOption(ReportDiagnostic.Suppress))",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

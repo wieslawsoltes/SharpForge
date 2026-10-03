@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e2ec95f6b995890dd197",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class Container\n{\n    private protected class PrivateProtected {}\n    internal void M1(PrivateProtected x) {} // error: conflicting access\n    protected void M2(PrivateProtected x) {} // error: conflicting access\n}\n",
+  "sourceSHA256": "a6b58766485950722d6a10a8d542fbcec1d76a317a396b5a8dabc958d644aea2",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "sha256": "41afb2c44dc175c901c33c352afc3f75fc22224b4838d00075375c2ad4de40cd",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "license": "MIT",
+    "method": "AtLeastAsRestrictiveNegative_01",
+    "offset": 22885
+  },
+  "langVersion": "7.2",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7_2)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0051",
+        "severity": "error"
+      },
+      {
+        "code": "CS0051",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,20): error CS0051: Inconsistent accessibility: parameter type 'Container.PrivateProtected' is less accessible than method 'Container.M2(Container.PrivateProtected)'\n                //     protected void M2(PrivateProtected x) {} // error: conflicting access\n                Diagnostic(ErrorCode.ERR_BadVisParamType, \"M2\").WithArguments(\"Container.M2(Container.PrivateProtected)\", \"Container.PrivateProtected\").WithLocation(6, 20),\n                // (5,19): error CS0051: Inconsistent accessibility: parameter type 'Container.PrivateProtected' is less accessible than method 'Container.M1(Container.PrivateProtected)'\n                //     internal void M1(PrivateProtected x) {} // error: conflicting access\n                Diagnostic(ErrorCode.ERR_BadVisParamType, \"M1\").WithArguments(\"Container.M1(Container.PrivateProtected)\", \"Container.PrivateProtected\").WithLocation(5, 19)\n                ",
+  "unsupported": []
+}

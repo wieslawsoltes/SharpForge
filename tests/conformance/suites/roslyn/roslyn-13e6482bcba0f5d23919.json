@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-13e6482bcba0f5d23919",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Threading.Tasks;\n\npublic static class Program\n{\n    static async Task Main()\n    {\n        Exception ex = new ArgumentException();\n        try\n        {\n            throw ex;\n        }\n        catch (Exception e) when (e switch { InvalidOperationException => true, _ => false })\n        {\n            return;\n        }\n        catch (Exception)\n        {\n            Console.WriteLine(\"correct\");\n        }\n    }\n}\n",
+  "sourceSHA256": "6c6b56b031f949af21972f46563eb766a742ede7fd518b814f47450f5ba803d1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "SwitchExpressionAsExceptionFilter_03",
+    "offset": 132750
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}
