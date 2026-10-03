@@ -86,7 +86,9 @@ export function adaptFacts(text, provenance, namespace, shim) {
       expected: { exitCode: 0 },
       unsupported: [...new Set(unsupported)],
       adaptation:
-        'Original method body in standalone Main; no base fixture/helpers imported. Native compilation preflight detects unresolved dependencies; scalar assertions, reference identity and exact exception assertions execute.',
+        'Original method body in standalone Main; no base fixture/helpers imported. ' +
+        'Native compilation preflight detects unresolved dependencies; ' +
+        'scalar assertions, reference identity and exact exception assertions execute.',
     });
   }
   return cases;

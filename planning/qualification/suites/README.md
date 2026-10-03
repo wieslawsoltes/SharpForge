@@ -6,7 +6,9 @@ Tasks: [T21 #491](https://github.com/wieslawsoltes/SharpForge/issues/491),
 [T24 #494](https://github.com/wieslawsoltes/SharpForge/issues/494).
 
 This is implementation ahead of qualification. Corpus extraction was executed;
-compiler, VM, CLR and platform qualification were **not** executed for this batch.
+Portable extractor/corpus tests passed (8/8); compiler, VM, CLR and platform qualification
+were **not** executed for this batch. Strict structure reports 257 pre-existing violations
+and zero violations in this batch. See `portable-validation.json` and retained logs.
 No imported case has a fabricated passing result. Dependency/qualification status
 remains unchanged. Rust native/Wasm execution is unsupported pending A27 artifacts.
 
@@ -109,5 +111,5 @@ for unsupported inputs. These are case-level family rates, not branch coverage.
   complete programs. Ellipsis is unsupported. Reference diagnostics for incomplete fragments
   do not establish the full feature's semantics or change the inventory's qualification.
 
-Pending: portable unit batch, native adapter batch, complete suite executions, actual
+Pending: native adapter batch, complete suite executions, actual
 Windows/Linux/macOS runs, corpus results review and proposal distribution licensing.
