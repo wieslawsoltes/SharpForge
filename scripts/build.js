@@ -2,7 +2,7 @@ import { mkdir, rm, cp, readFile, writeFile, readdir } from 'node:fs/promises';
 import { dirname, resolve, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { bundleWorker } from './bundle-worker.js';
-import { loadBuildContributions } from './build-contributions.js';
+import { loadBuildContributions, concatenateStyles } from './build-contributions.js';
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..'),dist=resolve(root,'dist');
 const contributions=await loadBuildContributions(root);
 await rm(dist,{recursive:true,force:true});await mkdir(dist,{recursive:true});
@@ -12,7 +12,7 @@ for (const asset of contributions.assets) {
 }
 async function rewrite(directory){for(const entry of await readdir(directory,{withFileTypes:true})){const path=resolve(directory,entry.name);if(entry.isDirectory())await rewrite(path);else if(entry.name.endsWith('.js')){let text=await readFile(path,'utf8');if(dirname(path)===dist)text=text.replaceAll("'../../packages/","'./packages/");text=text.replace(/(['"])@sharpforge\/([\w-]+)\1/g,(_,quote,name)=>{let target=relative(dirname(path),resolve(dist,'packages',name,'src/index.js')).split(sep).join('/');if(!target.startsWith('.'))target='./'+target;return quote+target+quote;});await writeFile(path,text);}}}
 await rewrite(dist);
-await writeFile(resolve(dist,'studio.css'),(await Promise.all(contributions.styles.map(({source})=>readFile(resolve(root,source),'utf8')))).join('\n'));
+await writeFile(resolve(dist,'studio.css'),await concatenateStyles(contributions.styles,root));
 
 for (const worker of contributions.workers) {
  const path=resolve(dist,worker.entry);
