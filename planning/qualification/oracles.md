@@ -189,3 +189,15 @@ exactly as observed. The WinUI compatibility manifest now places
 attribute. A failed native launch retains the built host and structured process
 error for diagnosis. Windows WinUI execution and the refreshed Unicode baselines
 remain pending; no failed observation was promoted.
+
+Hosted run [37128462298](https://github.com/wieslawsoltes/SharpForge/actions/runs/37128462298)
+ran clean merge commit `3306de923331b9166984f0156e78f568e67c441f`. All
+12 regression tests passed on each host. Linux recorded 19 observations and
+Windows recorded 20, including two matching executions of the actual WinUI
+controls/dispatcher host. Unicode stdout is exact UTF-8 with native LF/CRLF
+retained. WinUI measured cleared/local dependency properties, negative Width
+ArgumentException, malformed XAML XamlParseException, child removal, dispatcher
+order [1,2], cancelled work remaining unexecuted, and window closure. The only
+qualification failures were the five missing refreshed baselines; their reviewed
+actual bytes are now committed. The next native run must compare these committed
+records successfully before this scope is marked qualified.
