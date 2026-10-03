@@ -1,4 +1,4 @@
-// langversion 10: expect CS8936 at 48 "$\"{\n            x}\""
+// langversion 10: expect CS8967 at 65 "}"
 class C
 {
     void M()

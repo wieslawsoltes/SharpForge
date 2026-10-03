@@ -140,7 +140,7 @@ class Builder {
       case 'ThrowStatement':this.mark(node);this.expr(node.expression);this.terminate({kind:'throw',node});this.dead();return;
       case 'BreakStatement':case 'ContinueStatement':{
         this.mark(node);const isContinue=node.kind==='ContinueStatement',candidates=[...this.jumps].reverse(),target=node.label?candidates.find(j=>j.labels.includes(node.label)&&(!isContinue||j.continueTarget)):isContinue?candidates.find(j=>j.continueTarget):candidates[0];
-        if(target){this.leave(target.depth);this.jump(isContinue?target.continueTarget:target.breakTarget);}else this.terminate({kind:'throw',node});this.dead();return;}
+        if(target){this.leave(target.depth);this.jump(isContinue?target.continueTarget:target.breakTarget);this.dead();}return;}
       case 'ConditionalAccessAssignment':{this.mark(node);this.expr(node.receiver);const assign=this.block(),join=this.block();this.terminate({kind:'branch',whenTrue:assign,whenFalse:join,condition:null});this.current=assign;this.expr(node.assignment);this.start(join);return;}
       default:this.mark(node);for(const c of node.children){if(c.isExpression)this.expr(c);else this.stmt(c);}
     }

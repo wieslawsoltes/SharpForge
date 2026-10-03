@@ -1,4 +1,4 @@
-// langversion 7.3: expect CS8370 at 49 ".."
+// langversion 7.3: expect CS8370 at 48 "1..2"
 class C
 {
     void M()

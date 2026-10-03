@@ -162,7 +162,7 @@ test('roundtrip: toFullString equals the input for every repository source in LF
     files++;
   }
   assert(files > 250);
-  for (const file of filesUnder(fixtureRoot)) assert(sources.some(s => file.endsWith(s.name)), 'matrix and reference fixtures are part of the corpus');
+  for (const file of filesUnder(fixtureRoot)) assert(sources.some(s => file.replaceAll('\\', '/').endsWith(s.name)), 'matrix and reference fixtures are part of the corpus');
 });
 test('roundtrip: files with errors, directives and unusual trivia', () => {
   for (const text of ['', ' ', '\n', BOM, '// only a comment', '/* unterminated', '"unterminated', "'x", '#if A\n#else\n', '#region\n', 'int x = 1 /* a */ // b', 'class C {\r\n#if false\r\n junk "\r\n#endif\r\n}\r\n', '$"{a,3:N2} {{b}}"', '@"a""b"', 'x = 1e;', '0x', "'ab'", '\u0000', 'a\tb\vc\fd', 'x ?.y', 'a >> = b', '#!shebang\nx();', '#:sdk Foo\nx();', 'class C { /// <summary>\n /// text\n void M(); }'])

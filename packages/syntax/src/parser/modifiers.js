@@ -70,13 +70,11 @@ export const modifierMethods = {
       if (seen.has(kind)) this.error(token, 'CS1004', `Duplicate '${kind}' modifier`);
       seen.add(kind);
       if (token.kind === 'identifier') {
-        if (kind === 'required') this.feature('RequiredMembers', token);
-        else if (kind === 'closed') this.closedAt = token;
+        if (kind === 'closed') this.closedAt = token;
         else if (kind === 'safe') this.safeModifier(token);
         list.push(this.takeWord(kind));
         continue;
       }
-      this.privateProtectedFeature(seen, kind, token);
       list.push(kind === 'partial' || kind === 'async' ? this.takeWord(kind) : this.take());
     }
     return list;

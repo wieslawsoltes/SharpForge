@@ -1,6 +1,6 @@
 class C
 {
-    void M()
+    void M(int a)
     {
         int x = a >>> 1;
     }

@@ -12,6 +12,7 @@ import { Accessibility } from './types.js';
 import { declareSpanTypes } from './span-types.js';
 import { declareAsyncEnumeration } from './async-enumeration.js';
 import { declareCoreTypeRelations } from './core-type-relations.js';
+import { declareExceptionTypes } from './exception-types.js';
 
 const keywordNames = [
   'object',
@@ -69,6 +70,7 @@ export class CoreTypes {
     this.ireadOnlyListT = bridge.coreType('System_Collections_Generic_IReadOnlyList_T');
     this.ireadOnlyCollectionT = bridge.coreType('System_Collections_Generic_IReadOnlyCollection_T');
     this.augment();
+    declareExceptionTypes(this);
     Object.assign(this, declareSpanTypes(this), declareCoreTypeRelations(this));
     this.task = bridge.coreType('System_Threading_Tasks_Task');
     this.taskT = bridge.coreType('System_Threading_Tasks_Task_T');
@@ -117,6 +119,10 @@ export class CoreTypes {
     method(o, 'Equals', this.bool, [['obj', o]], V);
     method(o, 'GetHashCode', this.int, [], V);
     method(o, 'GetType', bridge.coreType('System_Type'));
+    if (!o.getMembers('.ctor').length) {
+      const constructor = { name: '.ctor', methodKind: MethodKind.Constructor, returnType: this.void, parameters: [] };
+      o.addMember(new MethodSymbol({ ...constructor, declaredAccessibility: Accessibility.Public, isImplicitlyDeclared: true }));
+    }
     method(
       o,
       'Equals',

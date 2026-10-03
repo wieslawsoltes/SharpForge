@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "reason": "Initial review proposal: exact artifacts measured at e3bf896bcc74802ea7031267635140cb6eae1744; 15 percent headroom rounded up to 1 KiB, never a derived runtime exemption.",
+  "budgets": [
+    {
+      "id": "dist",
+      "observedBytes": 15026880,
+      "maxBytes": 17281024
+    },
+    {
+      "id": "standalone",
+      "observedBytes": 3194784,
+      "maxBytes": 3674112
+    },
+    {
+      "id": "worker:compiler.worker.js",
+      "observedBytes": 437605,
+      "maxBytes": 503808
+    },
+    {
+      "id": "worker:runtime.worker.js",
+      "observedBytes": 727971,
+      "maxBytes": 837632
+    },
+    {
+      "id": "package:@sharpforge/archive",
+      "observedBytes": 8339,
+      "maxBytes": 10240
+    },
+    {
+      "id": "package:@sharpforge/bytecode",
+      "observedBytes": 4904,
+      "maxBytes": 6144
+    },
+    {
+      "id": "package:@sharpforge/cil",
+      "observedBytes": 42836,
+      "maxBytes": 50176
+    },
+    {
+      "id": "package:@sharpforge/compiler",
+      "observedBytes": 26563,
+      "maxBytes": 30720
+    },
+    {
+      "id": "package:@sharpforge/compute",
+      "observedBytes": 12914,
+      "maxBytes": 15360
+    },
+    {
+      "id": "package:@sharpforge/controls",
+      "observedBytes": 11025,
+      "maxBytes": 13312
+    },
+    {
+      "id": "package:@sharpforge/debugger",
+      "observedBytes": 39895,
+      "maxBytes": 46080
+    },
+    {
+      "id": "package:@sharpforge/designer",
+      "observedBytes": 20116,
+      "maxBytes": 23552
+    },
+    {
+      "id": "package:@sharpforge/docking",
+      "observedBytes": 12414,
+      "maxBytes": 14336
+    },
+    {
+      "id": "package:@sharpforge/editor",
+      "observedBytes": 201945,
+      "maxBytes": 232448
+    },
+    {
+      "id": "package:@sharpforge/extensions",
+      "observedBytes": 5459,
+      "maxBytes": 7168
+    },
+    {
+      "id": "package:@sharpforge/framework",
+      "observedBytes": 18698,
+      "maxBytes": 21504
+    },
+    {
+      "id": "package:@sharpforge/language",
+      "observedBytes": 4704,
+      "maxBytes": 6144
+    },
+    {
+      "id": "package:@sharpforge/msbuild",
+      "observedBytes": 21834,
+      "maxBytes": 25600
+    },
+    {
+      "id": "package:@sharpforge/network",
+      "observedBytes": 6281,
+      "maxBytes": 8192
+    },
+    {
+      "id": "package:@sharpforge/project-system",
+      "observedBytes": 23917,
+      "maxBytes": 27648
+    },
+    {
+      "id": "package:@sharpforge/protocol",
+      "observedBytes": 11202,
+      "maxBytes": 13312
+    },
+    {
+      "id": "package:@sharpforge/refactoring",
+      "observedBytes": 6338,
+      "maxBytes": 8192
+    },
+    {
+      "id": "package:@sharpforge/runtime",
+      "observedBytes": 58334,
+      "maxBytes": 67584
+    },
+    {
+      "id": "package:@sharpforge/symbols",
+      "observedBytes": 12612,
+      "maxBytes": 15360
+    },
+    {
+      "id": "package:@sharpforge/syntax",
+      "observedBytes": 10467,
+      "maxBytes": 12288
+    },
+    {
+      "id": "package:@sharpforge/templates",
+      "observedBytes": 9699,
+      "maxBytes": 11264
+    },
+    {
+      "id": "package:@sharpforge/text",
+      "observedBytes": 3274,
+      "maxBytes": 4096
+    },
+    {
+      "id": "package:@sharpforge/winui",
+      "observedBytes": 25031,
+      "maxBytes": 29696
+    },
+    {
+      "id": "package:@sharpforge/workspace",
+      "observedBytes": 3154,
+      "maxBytes": 4096
+    }
+  ],
+  "measurementCommit": "e3bf896bcc74802ea7031267635140cb6eae1744"
+}

@@ -3,7 +3,6 @@
  * abstract and static virtual interface members (methods, properties, events and operators) and `checked` operator
  * declarations. Each is recorded where Roslyn reports it.
  */
-const typeKeywords = new Set(['class', 'struct', 'interface', 'enum']);
 export const csharp11Methods = {
   /**
    * `file` is a modifier before a member of a type or namespace from C# 11 on. At the top level of a file, where a
@@ -20,11 +19,7 @@ export const csharp11Methods = {
   /** Records the file-types feature at the name of the type declaration that starts at the cursor (at its keyword). */
   fileTypeName(modifiers) {
     if (!modifiers.some(modifier => modifier.kind === 'FileKeyword')) return;
-    const kind = this.current.kind;
-    let name = null;
-    if (typeKeywords.has(kind)) name = this.peek();
-    else if (kind === 'delegate') name = this.tokens[Math.max(this.scanType(this.i + 1), 0)];
-    else if (this.isWord(this.current, 'record')) name = this.peek().kind === 'class' || this.peek().kind === 'struct' ? this.peek(2) : this.peek();
+    const name = this.typeNameAhead();
     if (name) this.feature('FileTypes', name);
   },
   /** An attribute name parsed from token index `start`: a generic one (`Attr<T>`, `N.Attr<T>`) is a C# 11 feature over the whole name. */
