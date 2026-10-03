@@ -13,17 +13,17 @@
       "input": "examples/designer/CanvasCounter/DesignedView.g.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0123: Method group must match Microsoft.UI.Xaml.RoutedEventHandler (object, Microsoft.UI.Xaml.RoutedEventArgs) -> void",
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS0123: No overload for 'OnAction' matches delegate 'Microsoft.UI.Xaml.RoutedEventHandler'",
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/designer/CanvasCounter/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0131: The left-hand side must be a variable, field or array element",
-        "CS1061: 'error' does not contain member 'Text'",
-        "CS1501: No applicable method 'DesignedView.Create' accepts these argument types"
+        "CS0131: The left-hand side of an assignment must be a variable, property or indexer",
+        "CS1061: 'error' does not contain a definition for 'Text' and no accessible extension method 'Text' accepting a first argument of type 'error' could be found (are you missing a using directive or an assembly reference?)",
+        "CS1501: No overload for method 'Create' takes 0 arguments"
       ]
     },
     {
@@ -40,15 +40,15 @@
       "input": "examples/designer/GridWorkspace/DesignedView.g.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0123: Method group must match Microsoft.UI.Xaml.RoutedEventHandler (object, Microsoft.UI.Xaml.RoutedEventArgs) -> void",
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS0123: No overload for 'OnAction' matches delegate 'Microsoft.UI.Xaml.RoutedEventHandler'",
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/designer/GridWorkspace/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1501: No applicable method 'DesignedView.Create' accepts these argument types"
+        "CS1501: No overload for method 'Create' takes 0 arguments"
       ]
     },
     {
@@ -94,14 +94,14 @@
       "input": "examples/features-0.10/portable-symbols/Calculator.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/features-0.10/portable-symbols/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1501: No applicable method 'Calculator.Twice' accepts these argument types"
+        "CS1501: No overload for method 'Twice' takes 1 arguments"
       ]
     },
     {
@@ -178,9 +178,9 @@
       "input": "examples/features-0.6/immutable-schema.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0246: Cannot construct unknown type 'Reading'",
-        "CS1061: 'error' does not contain member 'Name'",
-        "CS1061: 'error' does not contain member 'Value'"
+        "CS0246: The type or namespace name 'Reading' could not be found (are you missing a using directive or an assembly reference?)",
+        "CS1061: 'error' does not contain a definition for 'Name' and no accessible extension method 'Name' accepting a first argument of type 'error' could be found (are you missing a using directive or an assembly reference?)",
+        "CS1061: 'error' does not contain a definition for 'Value' and no accessible extension method 'Value' accepting a first argument of type 'error' could be found (are you missing a using directive or an assembly reference?)"
       ]
     },
     {
@@ -222,40 +222,39 @@
       "input": "examples/features-0.8/explorer-members/Models/Counter.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/features-0.8/explorer-members/Models/Counter.Operations.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0019: Operator '+' cannot be applied to 'error' and 'int'",
-        "CS0131: The left-hand side must be a variable, field or array element",
-        "CS0165: Use of unassigned local 'undefined'",
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS0019: Operator '+' cannot be applied to operands of type 'error' and 'int'",
+        "CS0131: The left-hand side of an assignment must be a variable, property or indexer",
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/features-0.8/explorer-members/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0246: Cannot construct unknown type 'Counter'",
-        "CS1061: 'error' does not contain member 'Value'",
-        "CS1501: No applicable method 'counter.Add' accepts these argument types"
+        "CS0246: The type or namespace name 'Counter' could not be found (are you missing a using directive or an assembly reference?)",
+        "CS1061: 'error' does not contain a definition for 'Value' and no accessible extension method 'Value' accepting a first argument of type 'error' could be found (are you missing a using directive or an assembly reference?)",
+        "CS1501: No overload for method 'Add' takes 1 arguments"
       ]
     },
     {
       "input": "examples/features-0.9/debug-callsite/Answers.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/features-0.9/debug-callsite/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1501: No applicable method 'Answers.Get' accepts these argument types"
+        "CS1501: No overload for method 'Get' takes 0 arguments"
       ]
     },
     {
@@ -277,14 +276,14 @@
       "input": "examples/features-0.9/debug-function/MathBox.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/features-0.9/debug-function/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1501: No applicable method 'MathBox.AddOne' accepts these argument types"
+        "CS1501: No overload for method 'AddOne' takes 1 arguments"
       ]
     },
     {
@@ -311,46 +310,43 @@
       "input": "examples/msbuild/LocalPackages/Consumer/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1061: 'error' does not contain member 'Answer'"
+        "CS1061: 'error' does not contain a definition for 'Answer' and no accessible extension method 'Answer' accepting a first argument of type 'error' could be found (are you missing a using directive or an assembly reference?)"
       ]
     },
     {
       "input": "examples/msbuild/LocalPackages/Producer/Value.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/msbuild/MultiTarget/Runtime.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1061: 'error' does not contain member 'FrameworkDescription'",
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS1061: 'error' does not contain a definition for 'FrameworkDescription' and no accessible extension method 'FrameworkDescription' accepting a first argument of type 'error' could be found (are you missing a using directive or an assembly reference?)",
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/msbuild/SdkWorkspace/App/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0103: The name 'x' does not exist in the current context",
-        "CS1003: ')' expected",
-        "CS1003: Unexpected trailing interpolation input",
-        "CS1061: 'error' does not contain member 'Answer'",
-        "CS1501: No applicable method 'Numbers.Sum' accepts these argument types"
+        "CS0103: The name 'BuildTag' does not exist in the current context",
+        "CS0103: The name 'Numbers' does not exist in the current context",
+        "CS0246: The type or namespace name 'NativeExample' could not be found (are you missing a using directive or an assembly reference?)",
+        "SF2098: Expression 'SimpleLambdaExpression' is not implemented by this profile"
       ]
     },
     {
       "input": "examples/msbuild/SdkWorkspace/Library/Numbers.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0246: The type or namespace name 'IEnumerable<T>' could not be found in this compiler profile",
-        "CS0246: The type or namespace name 'System.Func`2<T, int>' could not be found in this compiler profile",
-        "CS1003: ';' expected",
-        "CS1003: 'identifier' expected",
-        "CS1031: Type expected",
-        "CS1501: No applicable method 'values.Sum' accepts these argument types",
-        "CS5001: Program does not contain a suitable static Main method or top-level statements",
+        "CS0246: The type or namespace name 'IEnumerable<T>' could not be found (are you missing a using directive or an assembly reference?)",
+        "CS0246: The type or namespace name 'System.Func<T, int>' could not be found (are you missing a using directive or an assembly reference?)",
+        "CS1501: No overload for method 'Sum' takes 1 arguments",
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point",
+        "SF1012: Generic methods are not implemented in this profile",
         "SF1012: Only registered closed framework generic types are supported"
       ]
     },
@@ -358,22 +354,19 @@
       "input": "examples/particles/Particle.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/particles/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0019: Operator '*' cannot be applied to 'error' and 'int'",
-        "CS0019: Operator '+' cannot be applied to 'error' and 'int'",
-        "CS0131: The left-hand side must be a variable, field or array element",
-        "CS0165: Use of unassigned local 'undefined'",
-        "CS0246: Cannot construct unknown type 'Particle'",
-        "CS0246: The type or namespace name 'Particle' could not be found in this compiler profile",
-        "CS0246: The type or namespace name 'Particle[]' could not be found in this compiler profile",
-        "CS1061: 'Particle' does not contain member 'Position'",
-        "CS1061: 'Particle' does not contain member 'Velocity'"
+        "CS0019: Operator '*' cannot be applied to operands of type 'error' and 'int'",
+        "CS0019: Operator '+' cannot be applied to operands of type 'error' and 'int'",
+        "CS0131: The left-hand side of an assignment must be a variable, property or indexer",
+        "CS0246: The type or namespace name 'Particle' could not be found (are you missing a using directive or an assembly reference?)",
+        "CS1061: 'Particle' does not contain a definition for 'Position' and no accessible extension method 'Position' accepting a first argument of type 'Particle' could be found (are you missing a using directive or an assembly reference?)",
+        "CS1061: 'Particle' does not contain a definition for 'Velocity' and no accessible extension method 'Velocity' accepting a first argument of type 'Particle' could be found (are you missing a using directive or an assembly reference?)"
       ]
     },
     {
@@ -385,14 +378,14 @@
       "input": "examples/projects/CheckedResources/App/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1501: No applicable method 'Arithmetic.Wrapped' accepts these argument types"
+        "CS1501: No overload for method 'Wrapped' takes 0 arguments"
       ]
     },
     {
       "input": "examples/projects/CheckedResources/Library/Arithmetic.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
@@ -409,117 +402,109 @@
       "input": "examples/projects/DebuggerWorkshop/Answers.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/projects/DebuggerWorkshop/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1501: No applicable method 'Answers.Get' accepts these argument types"
+        "CS1501: No overload for method 'Get' takes 0 arguments"
       ]
     },
     {
       "input": "examples/projects/ExplorerWorkshop/App/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0246: Cannot construct unknown type 'Counter'",
-        "CS1061: 'error' does not contain member 'Value'",
-        "CS1501: No applicable method 'Answer.Value' accepts these argument types",
-        "CS1501: No applicable method 'counter.Add' accepts these argument types"
+        "CS0246: The type or namespace name 'Counter' could not be found (are you missing a using directive or an assembly reference?)",
+        "CS1061: 'error' does not contain a definition for 'Value' and no accessible extension method 'Value' accepting a first argument of type 'error' could be found (are you missing a using directive or an assembly reference?)",
+        "CS1501: No overload for method 'Add' takes 1 arguments",
+        "CS1501: No overload for method 'Value' takes 0 arguments"
       ]
     },
     {
       "input": "examples/projects/ExplorerWorkshop/App/Scratch.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0019: Operator 'is' cannot be applied to 'error' and 'error'",
-        "CS0103: The name 'C' does not exist in the current context",
         "CS0103: The name 'This' does not exist in the current context",
-        "CS0103: The name 'a' does not exist in the current context",
         "CS0103: The name 'not' does not exist in the current context",
-        "CS0103: The name 'note' does not exist in the current context",
-        "CS0103: The name 'valid' does not exist in the current context",
-        "CS0201: Only assignment, call, increment, decrement and new expressions can be used as statements",
-        "CS1003: ';' expected",
-        "CS1525: Invalid expression term '#.'",
+        "CS0201: Only assignment, call, increment, decrement, await, and new object expressions can be used as a statement",
+        "CS0246: The type or namespace name 'a' could not be found (are you missing a using directive or an assembly reference?)",
+        "CS0246: The type or namespace name 'valid' could not be found (are you missing a using directive or an assembly reference?)",
+        "CS1002: ; expected",
+        "CS1040: Preprocessor directives must appear as the first non-whitespace character on a line",
         "CS1525: Invalid expression term ','",
-        "SF1001: Preprocessor directives are not supported by this compiler profile",
-        "SF2006: Operator 'is' is not implemented"
+        "SF2098: Expression 'IsPatternExpression' is not implemented by this profile"
       ]
     },
     {
       "input": "examples/projects/ExplorerWorkshop/Library/Models/Counter.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/projects/ExplorerWorkshop/Library/Models/Counter.Operations.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0019: Operator '+' cannot be applied to 'error' and 'int'",
-        "CS0131: The left-hand side must be a variable, field or array element",
-        "CS0165: Use of unassigned local 'undefined'",
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS0019: Operator '+' cannot be applied to operands of type 'error' and 'int'",
+        "CS0131: The left-hand side of an assignment must be a variable, property or indexer",
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/projects/ExplorerWorkshop/Shared/Answer.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/projects/Generated/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0131: The left-hand side must be a variable, field or array element",
-        "CS0246: Cannot construct unknown type 'Customer'",
-        "CS1061: 'error' does not contain member 'Id'"
+        "CS0131: The left-hand side of an assignment must be a variable, property or indexer",
+        "CS0246: The type or namespace name 'Customer' could not be found (are you missing a using directive or an assembly reference?)",
+        "CS1061: 'error' does not contain a definition for 'Id' and no accessible extension method 'Id' accepting a first argument of type 'error' could be found (are you missing a using directive or an assembly reference?)"
       ]
     },
     {
       "input": "examples/projects/Library/Arithmetic.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/projects/Library/Arithmetic.Names.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0103: The name 'Offset' does not exist in this nameof context",
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS0103: The name 'Offset' does not exist in the current context",
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/projects/Linked/Shared/Value.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/projects/Linked/Source/Ignored.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0103: The name 'C' does not exist in the current context",
-        "CS0103: The name 'not' does not exist in the current context",
-        "CS0201: Only assignment, call, increment, decrement and new expressions can be used as statements",
-        "CS1003: ';' expected",
-        "CS1525: Invalid expression term '#'",
-        "SF1001: Preprocessor directives are not supported by this compiler profile"
+        "CS0246: The type or namespace name 'not' could not be found (are you missing a using directive or an assembly reference?)",
+        "CS1002: ; expected",
+        "CS1040: Preprocessor directives must appear as the first non-whitespace character on a line"
       ]
     },
     {
       "input": "examples/projects/Linked/Source/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1501: No applicable method 'Value.Answer' accepts these argument types"
+        "CS1501: No overload for method 'Answer' takes 0 arguments"
       ]
     },
     {
@@ -531,14 +516,14 @@
       "input": "examples/projects/SymbolWorkshop/Calculator.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/projects/SymbolWorkshop/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1501: No applicable method 'Calculator.Twice' accepts these argument types"
+        "CS1501: No overload for method 'Twice' takes 1 arguments"
       ]
     },
     {
@@ -555,23 +540,23 @@
       "input": "examples/projects/Workshop/App/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1501: No applicable method 'Calculator.Add' accepts these argument types"
+        "CS1501: No overload for method 'Add' takes 2 arguments"
       ]
     },
     {
       "input": "examples/projects/Workshop/Core/Calculator.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0019: Operator '+' cannot be applied to 'int' and 'error'",
+        "CS0019: Operator '+' cannot be applied to operands of type 'int' and 'error'",
         "CS0103: The name 'Bias' does not exist in the current context",
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/projects/Workshop/Core/Calculator.State.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
@@ -638,8 +623,8 @@
       "input": "examples/release14/CsharpPreviewCollections/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS8652: Collection expression constructor arguments requires LangVersion=preview; selected 14",
-        "CS8652: Labeled break and continue requires LangVersion=preview; selected 14"
+        "CS8652: The feature 'Collection expression constructor arguments' is currently in Preview and *unsupported*. To use Preview features, use the 'preview' language version.",
+        "CS8652: The feature 'Labeled break and continue' is currently in Preview and *unsupported*. To use Preview features, use the 'preview' language version."
       ]
     },
     {
@@ -666,7 +651,7 @@
       "input": "examples/templates/class-library/ClassLibraryExample/Calculator.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
@@ -683,42 +668,42 @@
       "input": "examples/templates/console-library-solution/ConsoleLibrarySolutionExample/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1501: No applicable method 'Calculator.Add' accepts these argument types"
+        "CS1501: No overload for method 'Add' takes 2 arguments"
       ]
     },
     {
       "input": "examples/templates/console-library-solution/ConsoleLibrarySolutionExample.Core/Calculator.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/item-gallery/ItemGallery/CardControl.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/class/ClassExample.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/disposable-class/DisposableClassExample.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/partial-class/PartialClassExample.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
@@ -726,84 +711,84 @@
       "status": "not-emitted",
       "diagnostics": [
         "CS0103: The name 'Value' does not exist in the current context",
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/static-class/StaticClassExample.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/view-model/ViewModelExample.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/winui-counter-page/WinuiCounterPageExample.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/winui-custom-control/WinuiCustomControlExample.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/winui-flyout/WinuiFlyoutExample.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/winui-grid-page/WinuiGridPageExample.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/winui-page/WinuiPageExample.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/winui-resources/WinuiResourcesExample.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/winui-settings-page/WinuiSettingsPageExample.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/winui-user-control/WinuiUserControlExample.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/winui-window/WinuiWindowExample.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
@@ -815,83 +800,78 @@
       "input": "examples/templates/winui-blank/WinuiBlankExample/Pages/MainPage.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/winui-blank/WinuiBlankExample/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0246: Cannot construct unknown type 'MainPage'",
-        "CS0246: The type or namespace name 'MainPage' could not be found in this compiler profile",
-        "CS1061: 'MainPage' does not contain member 'View'"
+        "CS0246: The type or namespace name 'MainPage' could not be found (are you missing a using directive or an assembly reference?)",
+        "CS1061: 'MainPage' does not contain a definition for 'View' and no accessible extension method 'View' accepting a first argument of type 'MainPage' could be found (are you missing a using directive or an assembly reference?)"
       ]
     },
     {
       "input": "examples/templates/winui-controls-library/WinuiControlsLibraryExample/CardControl.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/winui-library-solution/WinuiLibrarySolutionExample/Pages/MainPage.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/winui-library-solution/WinuiLibrarySolutionExample/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0246: Cannot construct unknown type 'CardControl'",
-        "CS0246: The type or namespace name 'CardControl' could not be found in this compiler profile",
-        "CS1061: 'CardControl' does not contain member 'View'",
-        "CS1501: No applicable method 'card.SetCaption' accepts these argument types"
+        "CS0246: The type or namespace name 'CardControl' could not be found (are you missing a using directive or an assembly reference?)",
+        "CS1061: 'CardControl' does not contain a definition for 'View' and no accessible extension method 'View' accepting a first argument of type 'CardControl' could be found (are you missing a using directive or an assembly reference?)",
+        "CS1501: No overload for method 'SetCaption' takes 1 arguments"
       ]
     },
     {
       "input": "examples/templates/winui-library-solution/WinuiLibrarySolutionExample.Controls/CardControl.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/winui-navigation/WinuiNavigationExample/Pages/MainPage.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/winui-navigation/WinuiNavigationExample/Pages/SettingsPage.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     },
     {
       "input": "examples/templates/winui-navigation/WinuiNavigationExample/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0246: Cannot construct unknown type 'Shell'",
-        "CS0246: The type or namespace name 'Shell' could not be found in this compiler profile",
-        "CS1061: 'Shell' does not contain member 'View'"
+        "CS0246: The type or namespace name 'Shell' could not be found (are you missing a using directive or an assembly reference?)",
+        "CS1061: 'Shell' does not contain a definition for 'View' and no accessible extension method 'View' accepting a first argument of type 'Shell' could be found (are you missing a using directive or an assembly reference?)"
       ]
     },
     {
       "input": "examples/templates/winui-navigation/WinuiNavigationExample/Shell.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0246: Cannot construct unknown type 'MainPage'",
-        "CS0246: Cannot construct unknown type 'SettingsPage'",
-        "CS0246: The type or namespace name 'MainPage' could not be found in this compiler profile",
-        "CS0246: The type or namespace name 'SettingsPage' could not be found in this compiler profile",
-        "CS1061: 'MainPage' does not contain member 'View'",
-        "CS1061: 'SettingsPage' does not contain member 'View'",
-        "CS5001: Program does not contain a suitable static Main method or top-level statements"
+        "CS0246: The type or namespace name 'MainPage' could not be found (are you missing a using directive or an assembly reference?)",
+        "CS0246: The type or namespace name 'SettingsPage' could not be found (are you missing a using directive or an assembly reference?)",
+        "CS1061: 'MainPage' does not contain a definition for 'View' and no accessible extension method 'View' accepting a first argument of type 'MainPage' could be found (are you missing a using directive or an assembly reference?)",
+        "CS1061: 'SettingsPage' does not contain a definition for 'View' and no accessible extension method 'View' accepting a first argument of type 'SettingsPage' could be found (are you missing a using directive or an assembly reference?)",
+        "CS5001: Program does not contain a static 'Main' method suitable for an entry point"
       ]
     }
   ]
