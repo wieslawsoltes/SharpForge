@@ -1,0 +1,10 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "extension-methods/cs1929-receiver-of-another-type":{"hash":"a05e7cb39c0bf566","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1929",253,1,"error"],["CS1929",272,1,"error"],["CS1929",291,3,"error"],["CS1929",312,6,"error"]]},
+  "extension-methods/cs1929-numeric-conversion-is-not-enough":{"hash":"b308836b90cd62cb","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1929",265,1,"error"],["CS1929",284,1,"error"],["CS1929",302,1,"error"]]},
+  "extension-methods/cs1929-reference-types":{"hash":"27448ef6456bc8cb","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1929",425,1,"error"],["CS1929",443,1,"error"],["CS1929",461,1,"error"],["CS1929",479,5,"error"]]},
+  "extension-methods/cs1929-best-overload":{"hash":"d5b0ae01fcf3c869","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1929",231,1,"error"],["CS1929",250,1,"error"]]},
+  "extension-methods/cs1929-user-conversion-is-not-enough":{"hash":"6b31e81a39d16402","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1929",308,1,"error"]]},
+  "extension-methods/cs1510-ref-this-receiver":{"hash":"7d29a237c94f3ae9","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1510",186,1,"error"]]},
+  "extension-methods/cs0411-generic-array-receiver":{"hash":"c96c4595176a4213","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0411",172,4,"error"]]},
+  "extension-methods/valid-receiver-conversions":{"hash":"4b95f5f3e96b4149","kind":"output","langVersion":"14.0","diagnostics":[],"output":"1 4 2 7\na! obj obj 3\n"}
+}}
