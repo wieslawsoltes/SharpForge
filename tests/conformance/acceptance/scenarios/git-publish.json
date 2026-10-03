@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "git-publish",
+  "targets": [
+    "cli",
+    "studio"
+  ],
+  "timeoutMs": 30000,
+  "steps": [
+    {
+      "id": "init",
+      "action": "git-init"
+    },
+    {
+      "id": "commit",
+      "action": "git-commit"
+    },
+    {
+      "id": "branch",
+      "action": "git-branch"
+    },
+    {
+      "id": "merge",
+      "action": "git-merge"
+    },
+    {
+      "id": "publish",
+      "action": "publish"
+    }
+  ]
+}
