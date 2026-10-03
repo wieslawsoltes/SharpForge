@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
 import { compileToIL } from '@sharpforge/compiler';
 import { readPE, buildId, deterministicContentId, peChecksum, finalizeDeterministicPE, loadAssembly } from '@sharpforge/cil';
 import { attachPortablePdb } from '@sharpforge/symbols';
@@ -104,4 +105,15 @@ test('A03 checksum excludes its four bytes even with an odd PE header offset', (
   new DataView(bytes.buffer).setUint32(0x3c, peOffset + 1, true);
   const checksumOffset = pe.optionalStart + 65;
   assert.equal(peChecksum(bytes), checksumReference(bytes, checksumOffset));
+});
+
+
+test('A03 deterministic identity matches native System.Reflection.Metadata BlobContentId', () => {
+  const reference = JSON.parse(readFileSync(new URL('./fixtures/a03-determinism/srm.json', import.meta.url), 'utf8'));
+  assert.match(reference.runtime, /^\.NET /);
+  for (const value of reference.cases) {
+    const identity = deterministicContentId(Buffer.from(value.input, 'base64'));
+    assert.equal(Buffer.from(identity.id).toString('hex'), value.guid);
+    assert.equal(identity.timestamp, value.timestamp);
+  }
 });
