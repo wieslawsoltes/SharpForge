@@ -45,8 +45,10 @@ export const Declarations = Base =>
       // refused where it is used ('interface dispatch'), and a call through a type parameter constrained to it is
       // bound to the implementing method of each construction (lowering/generics).
       const core = this.analysis.core,
-        dispatchFree = [core.iasyncDisposable, core.ienumerable],
-        needsDispatch = i => i.specialType !== 'System_IDisposable' && !dispatchFree.includes(i) && !this.isSource(i);
+        // ... nor do the comparison interfaces: no registry contract calls them back (a collection over a class that
+        // implements one is not shared with the construction over `object`, and sorting such a collection is refused).
+        dispatchFree = [core.iasyncDisposable, core.ienumerable, core.icomparable, core.icomparableT, core.iequatableT],
+        needsDispatch = i => i.specialType !== 'System_IDisposable' && !dispatchFree.includes(i.originalDefinition ?? i) && !this.isSource(i);
       if (type.interfaces?.some(needsDispatch)) this.unsupported('interface implementation', at);
     }
     /** The image class of a source class symbol; for a generic class, of the construction `type` names. */
