@@ -66,8 +66,11 @@
       "command": "npm test",
       "exitCode": 0,
       "file": "full.log",
-      "sha256": "89cd47e8a20f4118d5224f1ffa7b217fafa9448d2799b423d532b400fabddce4",
-      "bytes": 318832
+      "sha256": "63e6839a0aa2ca91172dc2d7fd494acec539742d6fbb43a70bb0e3b6a384adc3",
+      "bytes": 318824,
+      "originalCaptureSha256": "89cd47e8a20f4118d5224f1ffa7b217fafa9448d2799b423d532b400fabddce4",
+      "originalCaptureBytes": 318832,
+      "normalization": "Git text attributes normalized CRLF to LF; committed log content hash is recorded separately from original capture."
     },
     {
       "command": "npm run build",
