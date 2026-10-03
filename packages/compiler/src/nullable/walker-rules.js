@@ -9,6 +9,7 @@
  *   new T[] { null } likewise for the elements of an array initializer (CS8625 / CS8601)
  *   (T)x through an identity or reference conversion still denotes the variable x
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { NOT_NULL, MAYBE_NULL, joinFlow } from './flow-state.js';
 import { NullableAnnotation } from '../symbols/types.js';
 import { allowsNull } from './attributes.js';
@@ -60,7 +61,7 @@ export const NullableRules = Base =>
     /** `throw e`: a null operand throws NullReferenceException instead of the exception meant. */
     thrown(operand, flow) {
       const state = this.expression(operand, flow);
-      if (state === MAYBE_NULL && !operand.suppressed) this.warn(operand.syntax, 'CS8597');
+      if (state === MAYBE_NULL && !operand.suppressed) this.warn(operand.syntax, DiagnosticId.CS8597);
     }
     /**
      * `x ?? y` tests x for null: where y is evaluated x is null, and where it is not x is not null. After the

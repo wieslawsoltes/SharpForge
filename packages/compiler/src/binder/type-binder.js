@@ -23,7 +23,7 @@ import { isAccessible } from './accessibility.js';
 import { assemblyConflict, dottedName } from './reference-lookup.js';
 import { bindUsingDirectives, bindAliasTarget } from './using-directives.js';
 import { constructType } from '../symbols/substitution.js';
-import { maxTupleElements, tupleNameProblems, tupleTypeOf } from './tuples.js';
+import { tupleNameProblems, tupleTypeOf } from './tuples.js';
 import { bindFunctionPointerType } from './function-pointers.js';
 
 export class Scope {
@@ -361,7 +361,9 @@ export class TypeBinder {
           this.host.useFeature?.(scope.uri, syntax, 'NativeInt');
           return plain(this.core.keyword(name));
         }
-        if (name === 'dynamic' && !this.lookup(name, 0, scope)) return plain(DynamicTypeSymbol.instance);
+        // 'dynamic' is a type from C# 4; before that it is an ordinary name (CS0246 unless something declares it).
+        const hasDynamic = (this.host.languageVersionAt?.(scope.uri) ?? 4) >= 4;
+        if (name === 'dynamic' && hasDynamic && !this.lookup(name, 0, scope)) return plain(DynamicTypeSymbol.instance);
       }
       // falls through
       case 'GenericName':
@@ -405,7 +407,7 @@ export class TypeBinder {
       case 'TupleType': {
         const elements = syntax.elements.map(e => this.bindType(e.type, scope, options)),
           names = syntax.elements.map(e => e.identifier?.valueText ?? null);
-        if (elements.length < 2 || elements.length > maxTupleElements) return twa(error('ValueTuple', elements.length));
+        if (elements.length < 2) return twa(error('ValueTuple', elements.length));
         if (!options.quiet)
           for (const problem of tupleNameProblems(names)) this.report(scope, syntax.elements[problem.index].identifier, problem.code, problem.args);
         return twa(tupleTypeOf(this.core.bridge, elements, names));
