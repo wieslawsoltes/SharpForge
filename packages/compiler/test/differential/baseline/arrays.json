@@ -5,6 +5,7 @@
   "arrays/cs0029-element-type": ["diagnostics", "warnings"],
   "arrays/cs0029-string-index": ["diagnostics", "warnings"],
   "arrays/cs0826-no-best-type": ["diagnostics", "warnings"],
+  "arrays/index-from-end-and-range": ["diagnostics", "warnings", "bytecode", "cil"],
   "arrays/jagged": ["diagnostics", "warnings", "bytecode", "cil"],
   "arrays/loops-over-arrays": ["diagnostics", "warnings", "bytecode", "cil"]
 }

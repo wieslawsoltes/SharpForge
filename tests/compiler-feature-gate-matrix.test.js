@@ -42,7 +42,8 @@ const notGated = {
   ),
   // ---- features that need binding the compiler does not do for the gate ----
   Dynamic: 'below C# 4 Roslyn reports CS0246 for the type name `dynamic`, not a language-version diagnostic (pinned)',
-  InferredTupleNames: 'needs the binder to know that a tuple element name was inferred where it is used',
+  InferredTupleNames: 'Roslyn reports CS8306 where an inferred name is used, not a feature diagnostic; the binder does the same',
+  NonTrailingNamedArguments: 'Roslyn reports CS1738 on the positional argument, naming the version; the binder does the same (pinned)',
   GenericPatternMatching: needsOperandTypes,
   ImprovedOverloadCandidates: 'changes which candidates overload resolution keeps; there is no construct to report',
   ExtensibleFixedStatement: needsOperandTypes,

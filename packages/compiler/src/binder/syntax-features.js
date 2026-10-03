@@ -115,16 +115,6 @@ function parameterFeatures(node, context, use) {
   if (has(node, 'params') && node.type && node.type.kind !== 'ArrayType') use('ParamsCollections', node);
 }
 
-function argumentListFeatures(node, context, use) {
-  const args = [...node.arguments];
-  for (let i = 0; i + 1 < args.length; i++) {
-    if (args[i].nameColon && args.slice(i + 1).some(later => !later.nameColon)) {
-      use('NonTrailingNamedArguments', args[i].nameColon);
-      return;
-    }
-  }
-}
-
 function stackAllocFeatures(node, context, use) {
   const parent = context.parent,
     declarator = context.ancestors.at(-2);
@@ -210,8 +200,6 @@ const detectors = {
   ParenthesizedLambdaExpression: functionFeatures,
   AnonymousMethodExpression: functionFeatures,
   Parameter: parameterFeatures,
-  ArgumentList: argumentListFeatures,
-  BracketedArgumentList: argumentListFeatures,
   StackAllocArrayCreationExpression: stackAllocFeatures,
   ImplicitStackAllocArrayCreationExpression: stackAllocFeatures,
   FieldDeclaration: fieldFeatures,

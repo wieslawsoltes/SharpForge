@@ -3,9 +3,10 @@
  *
  * The `default` literal (7.1) has no type of its own: it takes the type it is converted to, and where the language
  * supplies no target it is an error -
- *   CS8716  no target type: `default.M()`, `foreach (var x in default)`, `lock (default)`, `default as T`, `default is T`
+ *   CS8716  no target type: `default.M()`, `-default`, `foreach (var x in default)`, `lock (default)`, `default as T`,
+ *           `default is T`
  *   CS8315  `default == default`: both operands need the other's type
- *   CS8310  an operator other than `==` / `!=` applied to `default`
+ *   CS8310  a binary operator other than `==` / `!=` applied to `default`
  *   CS8505  `default` as a pattern (`e is default`, `case default:`)
  * Converted to a type with a constant default it is a constant (`const int k = default;`).
  *
@@ -52,6 +53,11 @@ function needsNaturalType(syntax) {
       return parent.left === node;
     case 'IsPatternExpression':
       return parent.expression === node;
+    case 'UnaryPlusExpression':
+    case 'UnaryMinusExpression':
+    case 'BitwiseNotExpression':
+    case 'LogicalNotExpression':
+      return parent.operand === node;
     default:
       return false;
   }
@@ -81,11 +87,6 @@ export const CSharp7xBinding = Base =>
       // The other operand is still bound for its own diagnostics.
       if (!left) this.value(syntax.left);
       if (!right) this.value(syntax.right);
-      this.report(syntax, 'CS8310', [operator, 'default']);
-      return this.bad(syntax);
-    }
-    unary(syntax, operator) {
-      if (!isDefaultLiteral(syntax.operand)) return super.unary(syntax, operator);
       this.report(syntax, 'CS8310', [operator, 'default']);
       return this.bad(syntax);
     }

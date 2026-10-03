@@ -2,7 +2,7 @@
  * Binding of bodies: methods, accessors, constructors with their initializers, field and property
  * initializers and top-level statements, followed by the flow passes over each bound body.
  */
-import { SymbolKind, TypeKind, RefKind, Accessibility, NamedTypeSymbol } from '../symbols/types.js';
+import { SymbolKind, TypeKind, RefKind, Accessibility, NamedTypeSymbol, ErrorTypeSymbol } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { checkImplicitBaseCall, checkConstructorCycles, constructorInitializerKind } from '../binder/constructors.js';
 import { BodyBinder } from '../binder/body-binder.js';
@@ -43,8 +43,11 @@ export const BodyBinding = Base =>
           !declared.isErrorType() &&
           !['IAsyncEnumerable', 'IAsyncEnumerator'].includes(declared.name) &&
           isClosedType(declared)
-        )
+        ) {
           this.report(context.uri, method.locations[0], 'CS1983');
+          // What the body returns is not checked against a type that cannot be the result of an async method.
+          returnType = ErrorTypeSymbol.unknown;
+        }
       }
       const binder = new BodyBinder(this, {
         ...context,
