@@ -14,7 +14,7 @@ runner, preserving its aggregate executed test count. `npm test -- --area A20`
 selects an area; `--list` emits resolved manifests without running tests. `--browser`
 also executes that area's registered Python suites. Browser services are declared
 in `requiredServices` for CI provisioning and must be available before execution.
-Use `--` to forward Node runner flags. The timeout passed to Node is the largest
+Node test files execute serially (`--test-concurrency=1`), including historical task aliases. Use `--` to forward other Node runner flags; concurrent overrides are rejected. The timeout passed to Node is the largest
 selected manifest timeout; an area invocation uses that area's exact timeout.
 
 `node scripts/planning/ci-matrix.js` validates and emits `{ "include": [...] }`

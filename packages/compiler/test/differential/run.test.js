@@ -13,7 +13,7 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {loadFixtures,loadPinned,loadBaseline,saveBaseline,loadLegacyBaseline,fixtureHash} from './corpus-store.js';
+import {loadFixtures,loadPinned,loadBaseline,saveBaseline,fixtureHash} from './corpus-store.js';
 import {report,formatReport,baselineOf,compareBaseline,runFixture,AXES} from './harness.js';
 
 const UPDATE_COMMAND='node packages/compiler/test/differential/run.test.js --update-baseline';
@@ -90,9 +90,7 @@ if(update||reportOnly){
   });
 
   test('A02-T40 baseline: no fixture regressed and every newly passing fixture is recorded',()=>{
-    // A pass that an open branch still recorded in the legacy baseline.json counts as recorded (baseline-store.js).
-    const {regressions,improvements:found,stale}=compareBaseline(current(),loadBaseline()),legacy=loadLegacyBaseline();
-    const improvements=found.filter(entry=>!legacy[entry.axis].has(entry.id));
+    const {regressions,improvements,stale}=compareBaseline(current(),loadBaseline());
     assert.equal(regressions.length,0,`${regressions.length} fixture(s) in the baseline no longer match Roslyn:\n${show(regressions)}\nFix the compiler, or if the change is intended regenerate the baseline with:\n  ${UPDATE_COMMAND}`);
     assert.equal(stale.length,0,`the baseline lists ${stale.length} unknown fixture(s):\n${show(stale)}\nRegenerate it with:\n  ${UPDATE_COMMAND}`);
     assert.equal(improvements.length,0,`${improvements.length} fixture(s) newly match Roslyn but are not in the baseline:\n${show(improvements)}\nAdd them by running:\n  ${UPDATE_COMMAND}`);

@@ -11,6 +11,7 @@ import {ciMatrix} from '../scripts/planning/ci-matrix.js';
 import {taskPlan, loadTasks} from '../scripts/run.js';
 import {loadBuildContributions, concatenateStyles} from '../scripts/build-contributions.js';
 import {discoverPackages, validatePacked} from '../scripts/verify-packages.js';
+import {serialTestArgs} from '../scripts/planning/run-tests.js';
 const root=repositoryRoot;
 const json=async path=>JSON.parse(await readFile(path,'utf8'));
 async function write(root,path,value){const target=join(root,path);await mkdir(resolve(target,'..'),{recursive:true});await writeFile(target,typeof value==='string'?value:JSON.stringify(value));}
@@ -74,10 +75,15 @@ test('A00 T06 every historical npm name dispatches to its original commands with
   assert.equal(pkg.scripts[name],`node scripts/run.js ${name}`);
   const plan=await taskPlan(name);assert(plan.length);
   if(name==='test'){assert.deepEqual(plan[0].args,['scripts/planning/run-tests.js']);continue;}
-  if(name==='check'){assert.deepEqual(plan.map(p=>p.args[0]),['scripts/planning/check-test-manifests.js','scripts/check.js']);continue;}
+  if(name==='check'){
+   assert.deepEqual(plan.map(p=>p.args),[
+    ['scripts/planning/check-test-manifests.js'],['scripts/check.js'],
+    ['scripts/conformance/static/check-imports.js','--output','artifacts/security/static-imports.json']
+   ]);continue;
+  }
   if(name==='standalone'){assert.deepEqual(plan.map(p=>p.args[0]),['scripts/build.js','scripts/standalone.js']);continue;}
   const [executable,...args]=command.split(' ');assert.equal(plan[0].command,executable==='node'?process.execPath:process.env.PYTHON||'python');
-  if(!args.some(arg=>arg.includes('*')))assert.deepEqual(plan[0].args,args);
+  if(!args.some(arg=>arg.includes('*')))assert.deepEqual(plan[0].args,executable==='node'?serialTestArgs(args):args);
   else assert(plan[0].args.includes('--test')&&plan[0].args.some(arg=>arg.endsWith('.test.js'))&&!plan[0].args.some(arg=>arg.includes('*')));
  }
  const literal='literal $(do-not-run) `nor-this` spaces';assert.equal((await taskPlan('cli',[literal]))[0].args.at(-1),literal);
@@ -127,4 +133,22 @@ test('A00 T06 twenty-six contributed packages pack, install offline, and run the
  const script=`import {verifyPackages} from ${JSON.stringify(new URL('../scripts/verify-packages.js',import.meta.url).href)};await verifyPackages(${JSON.stringify(dir)});`;
  const result=spawnSync(process.execPath,['--input-type=module','--eval',script],{encoding:'utf8',timeout:120000,env:{...process.env,SHARPFORGE_RESULTS_DIR:join(dir,'results')}});
  assert.equal(result.status,0,result.stderr);const report=await json(join(dir,'results/package-results.json'));assert.equal(report.passed,true);assert.equal(report.tarballs.length,26);assert.equal(Object.keys(report.packages).length,26);
+});
+
+test('A00 serial Node policy preserves script arguments and rejects concurrent overrides', () => {
+ assert.deepEqual(serialTestArgs(['script.js','--test','--test-concurrency=4']),['script.js','--test','--test-concurrency=4']);
+ assert.deepEqual(serialTestArgs(['--test','--test-concurrency','1','a.test.js']),['--test','--test-concurrency=1','a.test.js']);
+ for(const args of [['--test-concurrency=2'],['--test-concurrency','4'],['--test-concurrency']])
+  assert.throws(()=>serialTestArgs(['--test',...args]),/must be 1/);
+});
+test('A00 manifest runner prevents overlapping test files', async t => {
+ const dir=await fixture(t);await write(dir,'package.json',{type:'module'});
+ const source=`import test from 'node:test';import {mkdirSync,rmdirSync} from 'node:fs';
+ test('exclusive shared validation resource',async()=>{mkdirSync('validation-slot');try{
+ await new Promise(resolve=>setTimeout(resolve,100));}finally{rmdirSync('validation-slot');}});`;
+ await write(dir,'tests/one.test.js',source);await write(dir,'tests/two.test.js',source);
+ await write(dir,'tests/manifests/A20.json',manifest('A20',{nodeGlobs:['tests/*.test.js']}));
+ const result=spawnSync(process.execPath,[join(root,'scripts/planning/run-tests.js'),'--root',dir,'--area','A20'],
+  {encoding:'utf8',env:{...process.env,NODE_TEST_CONTEXT:undefined}});
+ assert.equal(result.status,0,result.stdout+result.stderr);
 });

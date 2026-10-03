@@ -43,6 +43,30 @@ uses this for synthesized classes such as `<>Cell(int)` and `ValueTuple(int;stri
 byrefs and void); `decodeTypeSignature` defaults to the stricter TypeSpec context.
 `MetadataBuilder.typeSpec(ast)` interns TypeSpec rows by encoded bytes.
 
+`encodeCustomAttribute(parameterTypes, values, namedArguments, options)` emits
+ECMA-335 II.23.3 blobs. Types accept signature ASTs or primitive names; enums use
+`{ kind: 'enum', name, underlying }`, arrays use `{ kind: 'szarray', element }`,
+and boxed objects use `{ type, value }` (plain `null` encodes a null boxed string).
+Named arguments are `{ name, isField, type, value }`. `System.Type` values are
+serialized type-name strings or null. Integers outside JavaScript's safe range
+require `BigInt`. A constructor token can replace `parameterTypes` when `options.metadata`
+is supplied; external enum storage requires `options.enumUnderlyingType(name, token)`.
+Unknown enums, invalid values, cancellation and size/depth limits produce coded
+`CilError`s. The optional limits are `maxBytes`, `maxStringBytes`, `maxArrayLength`,
+`maxNodes` and `maxDepth`; work and storage are linear in the encoded argument data.
+This API writes attribute blobs; emitting source attributes and pseudo-attribute
+flags/tables is tracked separately. The native gate is
+`node packages/cil/tools/validate-custom-attributes.mjs`.
+
+`decodeCustomAttribute(bytes, parameterTypes, options)` accepts the same type and
+constructor-token contracts. It returns `{ success, constructorArguments,
+namedArguments, diagnostics }`; malformed blobs return stable MD0100–MD0110 errors
+without throwing. Typed constants are `{ kind, type, value }`; arrays contain typed
+constants, Type values retain their serialized name, and large integers use BigInt.
+Enums require known storage rather than an assumed Int32 width. The compiler importer
+reuses this codec through its existing result adapter, preserving its historical
+Int32 fallback when callers cannot resolve enum storage.
+
 | Capability | API | Evidence |
 | --- | --- | --- |
 | Primitive and constructed types | Type AST encoder/decoder | SRM BlobEncoder corpus |

@@ -16,7 +16,9 @@ export const expressionMethods = {
     }
   },
   expressionOrRef() {
-    return this.at('ref') ? this.n('RefExpression', this.take(), this.expression()) : this.expression();
+    // `ref int () => ref x` is a lambda with a ref return type, not a ref expression.
+    const isRef = this.at('ref') && this.lambdaShape(this.i) !== 'typed';
+    return isRef ? this.n('RefExpression', this.take(), this.expression()) : this.expression();
   },
   /** Parses an expression whose binary operators all bind at least as tightly as `min`. */
   expression(min = P.Expression) {

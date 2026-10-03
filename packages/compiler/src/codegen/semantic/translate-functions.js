@@ -151,6 +151,8 @@ export const FunctionTranslation = Base =>
         method = node.conversion.method ?? node.method ?? group.selected ?? (group.methods?.length === 1 ? group.methods[0] : null),
         info = this.g.delegates.classOf(node.type, node.syntax);
       if (!method) return this.unsupported('this method group conversion', node.syntax);
+      // The delegate would have to bind the receiver as the first argument of a static method.
+      if (group.isExtensionDelegate) return this.unsupported('a delegate over an extension method', node.syntax);
       const definition = method.originalDefinition ?? method;
       if (definition.methodKind === MethodKind.LocalFunction) return this.localFunctionDelegate(definition, info, node.syntax);
       if (!this.g.isSource(definition)) return this.unsupported('delegates over framework methods', node.syntax);

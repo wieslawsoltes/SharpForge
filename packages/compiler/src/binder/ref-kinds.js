@@ -54,8 +54,12 @@ export function classifyVariable(expression, context = {}) {
         return { isVariable: true, isWritable: false, reason: 'readonlyRef', symbol: p, detail: 'variable' };
       return yes;
     }
+    // The object an initializer fills in is a fresh variable, also when its type is a struct.
+    case 'ImplicitReceiver':
     case 'Discard':
     case 'DeclarationExpression':
+    case 'PointerIndirection':
+    case 'PointerElementAccess':
       return yes;
     case 'ArrayAccess':
     case 'PointerIndirection':
@@ -74,7 +78,9 @@ export function classifyVariable(expression, context = {}) {
       if (f.isReadOnly && !inConstructorOf(context, f)) return { isVariable: true, isWritable: false, reason: 'readonlyField', symbol: f };
       if (f.isStatic || !expression.receiver || expression.receiver.type?.isValueType !== true) return yes;
       // An instance field of a struct is a variable exactly when the struct expression is.
-      const outer = classifyVariable(expression.receiver, context);
+      // ... and the object an initializer fills in (`new S { X = 1 }`) is a fresh variable whatever created it.
+      const isInitializedObject = expression.isInitializerTarget && !expression.receiver.isInitializerTarget,
+        outer = isInitializedObject ? yes : classifyVariable(expression.receiver, context);
       if (!outer.isVariable) return no('rvalueStructMember', { symbol: expression.receiver.symbol ?? f, receiver: expression.receiver });
       if (!outer.isWritable)
         return {
