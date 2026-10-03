@@ -151,7 +151,9 @@ function constantFeatures(node, context, use) {
 function localDeclarationFeatures(node, context, use) {
   if (node.awaitKeyword && node.usingKeyword) use('AsyncUsing', node.awaitKeyword);
   constantFeatures(node, context, use);
-  if (context.inAsyncOrIterator && node.declaration.type.kind === 'RefType') use('RefUnsafeInIteratorAsync', node.declaration.type);
+  // Roslyn names each ref local, not its type.
+  if (context.inAsyncOrIterator && node.declaration.type.kind === 'RefType')
+    for (const variable of node.declaration.variables) use('RefUnsafeInIteratorAsync', variable.identifier);
 }
 
 function typeConstraintFeatures(node, context, use) {
@@ -162,7 +164,7 @@ function typeConstraintFeatures(node, context, use) {
 
 function operatorFeatures(node, context, use) {
   const second = [...(node.parameterList?.parameters ?? [])][1];
-  if (shiftOperators.has(node.operatorToken.text) && second?.type && textOf(second.type) !== 'int') use('RelaxedShiftOperator', second.type);
+  if (shiftOperators.has(node.operatorToken.text) && second?.type && textOf(second.type) !== 'int') use('RelaxedShiftOperator', node.operatorToken);
 }
 
 function attributeFeatures(node, context, use) {
