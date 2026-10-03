@@ -1,7 +1,5 @@
 import {primitiveSizes} from '@sharpforge/cil';
-import {ManagedFault} from '../../heap.js';
 import {storageDefault} from '../storage.js';
-import {enumInfo} from '../enums.js';
 import {finishMemoryAccess} from '../statics.js';
 
 const handlers=new Map([
@@ -11,7 +9,6 @@ const handlers=new Map([
   ['stobj',(vm,frame,instruction)=>{const value=vm.pop();vm.dereference(vm.pop(),true,vm.storage(value,vm.inspector.metadata.typeName(instruction.operand)));}],
   ['initobj',(vm,frame,instruction)=>{
     const address=vm.pop(),name=vm.inspector.metadata.typeName(instruction.operand),type={'System.Int32':'int','System.Int64':'long','System.Double':'double','System.Single':'float','System.Boolean':'bool'}[name]??name;
-    if(instruction.operand>>>24===2&&!enumInfo(vm,name))throw new ManagedFault('NotSupportedException','Value-type initobj is inspection-only');
     vm.dereference(address,true,storageDefault(vm,type));
   }]
 ]);
