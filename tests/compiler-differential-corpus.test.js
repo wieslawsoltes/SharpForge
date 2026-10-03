@@ -4,8 +4,15 @@ import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, readdirSync, rmSyn
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { discoverFixtures, fixtureModuleNames, validateFixtures, fixturesDirectory } from '../packages/compiler/test/differential/fixture-discovery.js';
-import { loadBaseline, saveBaseline, BASELINE_AXES, baselineDirectory } from '../packages/compiler/test/differential/baseline-store.js';
-import { loadFixtures } from '../packages/compiler/test/differential/corpus.js';
+import {
+  loadBaseline,
+  saveBaseline,
+  loadLegacyBaseline,
+  BASELINE_AXES,
+  baselineDirectory,
+} from '../packages/compiler/test/differential/baseline-store.js';
+import { loadFixtures, savePinned } from '../packages/compiler/test/differential/corpus-store.js';
+import { loadFixtures as loadRegisteredFixtures } from '../packages/compiler/test/differential/corpus.js';
 
 // SF-A02-T40: the differential corpus is discovered from fixtures/ and its baseline is stored per feature, so that
 // parallel pull requests do not meet on one registry line or one baseline file.
@@ -122,4 +129,36 @@ test('A02-T40 baseline: the checked-in baseline only names fixtures of the corpu
     assert.ok(baseline[axis].length > 0, `${axis} has entries`);
     for (const id of baseline[axis]) assert.ok(ids.has(id), `${axis}: ${id} is not a fixture`);
   }
+});
+
+test('A02-T40 baseline: passes recorded in the legacy baseline.json are accepted and never required', t => {
+  const directory = scratch(t);
+  assert.deepEqual([...loadLegacyBaseline(join(directory, 'baseline.json')).diagnostics], []);
+  writeFileSync(join(directory, 'baseline.json'), '{"diagnostics":["alpha/one"],"cil":["alpha/two"]}');
+  const legacy = loadLegacyBaseline(join(directory, 'baseline.json'));
+  assert.deepEqual(Object.keys(legacy), [...BASELINE_AXES]);
+  assert.ok(legacy.diagnostics.has('alpha/one') && legacy.cil.has('alpha/two') && !legacy.bytecode.has('alpha/one'));
+});
+
+test('A02-T40 pins: a pinned fixture keeps its line and new fixtures are appended', t => {
+  const directory = join(scratch(t), 'pinned');
+  const fixtures = ['alpha/one', 'alpha/two', 'alpha/three'].map(id => fixture(id));
+  const results = new Map(fixtures.map(f => [f.id, { hash: f.id }]));
+  const idsOf = () => Object.keys(JSON.parse(readFileSync(join(directory, 'alpha.json'), 'utf8')).fixtures);
+  savePinned({ version: '1.0' }, fixtures, results, directory);
+  assert.deepEqual(idsOf(), ['alpha/one', 'alpha/two', 'alpha/three']);
+  // The same fixtures arrive in another order (another module order) together with a new one.
+  const reordered = [fixtures[2], fixture('alpha/zero'), fixtures[0], fixtures[1]];
+  results.set('alpha/zero', { hash: 'zero' });
+  savePinned({ version: '1.0' }, reordered, results, directory);
+  assert.deepEqual(idsOf(), ['alpha/one', 'alpha/two', 'alpha/three', 'alpha/zero']);
+  // A fixture that was removed loses its line; the others stay where they were.
+  savePinned({ version: '1.0' }, [fixtures[2], fixtures[0]], results, directory);
+  assert.deepEqual(idsOf(), ['alpha/one', 'alpha/three']);
+});
+
+test('A02-T40 transition: the registry in corpus.js and discovery yield the same fixtures', () => {
+  // corpus.js is kept unchanged while open branches still add imports to it; discovery is what the harness uses.
+  const registered = new Set(loadRegisteredFixtures().map(f => f.id));
+  for (const id of registered) assert.ok(loadFixtures().some(f => f.id === id), id + ' is discovered');
 });

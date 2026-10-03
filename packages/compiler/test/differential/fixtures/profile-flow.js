@@ -115,3 +115,5 @@ export const fixtures=[
   diag('several-declarators',main('int a = 1, b, c = 2;\nConsole.WriteLine(c);'))
 ])
 ];
+/** The name the legacy registry (corpus.js) imports this list under. */
+export const profileFlow=fixtures;
