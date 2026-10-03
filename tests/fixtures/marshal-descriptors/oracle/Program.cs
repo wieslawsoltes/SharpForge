@@ -49,13 +49,33 @@ public static class Program
         var records = new List<object>();
         void Add(string name, BlobHandle blob, MarshalAsAttribute attribute)
         {
+            // CoreCLR builds without COM support omit these properties from synthesized MarshalAs.
+            // Read the actual Roslyn tail with SRM so the fixture still covers COM metadata, not execution.
+            var srmTail = new Dictionary<string, object>();
+            var reader = metadata.GetBlobReader(blob);
+            int nativeType = reader.ReadByte();
+            if (nativeType == (int)UnmanagedType.SafeArray && reader.RemainingBytes > 0)
+            {
+                srmTail["variantType"] = reader.ReadCompressedInteger();
+                if (reader.RemainingBytes > 0) srmTail["userDefinedType"] = reader.ReadSerializedString()!;
+            }
+            if (nativeType == (int)UnmanagedType.Interface && reader.RemainingBytes > 0)
+                srmTail["iidParameterIndex"] = reader.ReadCompressedInteger();
+            if (nativeType == (int)UnmanagedType.CustomMarshaler)
+            {
+                srmTail["guid"] = reader.ReadSerializedString()!;
+                srmTail["nativeTypeName"] = reader.ReadSerializedString()!;
+                srmTail["managedTypeName"] = reader.ReadSerializedString()!;
+                srmTail["cookie"] = reader.ReadSerializedString()!;
+            }
             records.Add(new {
-                name, blob = Convert.ToHexString(metadata.GetBlobBytes(blob)), type = (int)attribute.Value,
+                name, blob = Convert.ToHexString(metadata.GetBlobBytes(blob)), type = (int)attribute.Value, srmTail,
                 elementType = (int)attribute.ArraySubType, sizeConstant = attribute.SizeConst,
                 sizeParameterIndex = attribute.SizeParamIndex, iidParameterIndex = attribute.IidParameterIndex,
                 variantType = (int)attribute.SafeArraySubType,
                 userDefinedType = attribute.SafeArrayUserDefinedSubType?.AssemblyQualifiedName,
-                managedTypeName = attribute.MarshalType, cookie = attribute.MarshalCookie
+                managedTypeName = nativeType == (int)UnmanagedType.CustomMarshaler ? null : attribute.MarshalType,
+                cookie = nativeType == (int)UnmanagedType.CustomMarshaler ? null : attribute.MarshalCookie
             });
         }
         foreach (var field in typeof(Fields).GetFields())

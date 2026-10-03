@@ -23,14 +23,17 @@ try {
     const decoded = decodeMarshalDescriptor(Buffer.from(record.blob, 'hex'));
     assert.equal(decoded.type, record.type);
     for (const key of ['sizeConstant', 'sizeParameterIndex', 'iidParameterIndex', 'variantType', 'managedTypeName', 'cookie']) {
-      if (Object.hasOwn(decoded, key)) assert.equal(decoded[key], record[key], record.name + ':' + key);
+      if (Object.hasOwn(decoded, key)) assert.equal(decoded[key], record.srmTail[key] ?? record[key], record.name + ':' + key);
     }
     if (decoded.elementType && decoded.elementType.type !== 0x50) assert.equal(decoded.elementType.type, record.elementType);
+    if (decoded.userDefinedType) assert.equal(decoded.userDefinedType, record.srmTail.userDefinedType);
   }
   const source = (await readFile(new URL('oracle/Program.cs', fixture), 'utf8')).replaceAll('\r\n', '\n');
   actual.sdk = run(['--version']).trim();
   actual.sourceSha256 = createHash('sha256').update(source).digest('hex');
+  actual.reflectionLimitations = 'COM subtype/IID and custom strings use SRM BlobReader; this CoreCLR host omits COM fields '
+    + 'and returns an overlong MarshalType string. Those reflection properties are not claimed as passing.';
   if (process.argv.includes('--capture-fixtures')) await writeFile(new URL('native.json', fixture), JSON.stringify(actual, null, 2) + '\n');
   console.log(JSON.stringify({ runtime: actual.runtime, sdk: actual.sdk, descriptors: actual.records.length,
-    verified: 'Roslyn descriptor bytes and reflection MarshalAs properties; no native imports invoked' }));
+    verified: 'Roslyn descriptor bytes, reflection scalar/array properties and SRM extended tails; no native imports invoked' }));
 } finally { await rm(scratch, { recursive: true, force: true }); }

@@ -19,10 +19,10 @@ test('native Roslyn descriptor bytes decode to reflection MarshalAs properties',
     const descriptor = decodeMarshalDescriptor(Buffer.from(record.blob, 'hex'));
     assert.equal(descriptor.type, record.type, record.name);
     for (const key of ['sizeConstant', 'sizeParameterIndex', 'iidParameterIndex', 'variantType', 'managedTypeName', 'cookie']) {
-      if (Object.hasOwn(descriptor, key)) assert.equal(descriptor[key], record[key], record.name + ':' + key);
+      if (Object.hasOwn(descriptor, key)) assert.equal(descriptor[key], record.srmTail[key] ?? record[key], record.name + ':' + key);
     }
     if (descriptor.elementType && descriptor.elementType.type !== 0x50) assert.equal(descriptor.elementType.type, record.elementType);
-    if (descriptor.userDefinedType) assert.equal(descriptor.userDefinedType, record.userDefinedType);
+    if (descriptor.userDefinedType) assert.equal(descriptor.userDefinedType, record.srmTail.userDefinedType);
   }
 });
 

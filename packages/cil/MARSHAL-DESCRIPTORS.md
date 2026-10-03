@@ -49,3 +49,11 @@ Reference grammar: [Roslyn marshalling serializer](https://github.com/dotnet/ros
 [CoreCLR native-type parser](https://github.com/dotnet/runtime/blob/main/src/coreclr/vm/mlinfo.cpp),
 and [.NET UnmanagedType](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Runtime/InteropServices/UnmanagedType.cs).
 Pinned native captures and their source hash are in `tests/fixtures/marshal-descriptors`.
+
+Validation: SDK 10.0.201 / CoreCLR 10.0.5 on macOS ARM64 captured 14 descriptors;
+all 7 focused Node tests pass. COM subtype/IID and custom string properties use
+native SRM BlobReader because this host's synthesized MarshalAs attributes omit
+COM fields and return an overlong custom type string. Those reflection properties
+are not claimed as passing. Static checks pass (1895 syntax / 1891 static modules)
+with no introduced structure findings. No full platform matrix or throughput
+benchmark was run for this new, opt-in inspection API.
