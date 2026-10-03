@@ -48,8 +48,8 @@ test('A02-T41 async Main needs C# 7.1 and loses to a synchronous Main',()=>{
 });
 test('A02-T41 top-level statements are the entry point; Main is then ignored with CS7022',()=>{
   assert.equal(output('Console.WriteLine("top");'),'top\n');
-  assert.deepEqual(check('class A{static void Main(){Console.WriteLine("main");}} Console.WriteLine("top");'),[true,"CS7022:warning The entry point of the program is global code; ignoring 'A.Main()' entry point."]);
-  assert.equal(output('class A{static void Main(){Console.WriteLine("main");}} Console.WriteLine("top");'),'top\n');
+  assert.deepEqual(check('Console.WriteLine("top"); class A{static void Main(){Console.WriteLine("main");}}'),[true,"CS7022:warning The entry point of the program is global code; ignoring 'A.Main()' entry point."]);
+  assert.equal(output('Console.WriteLine("top"); class A{static void Main(){Console.WriteLine("main");}}'),'top\n');
   assert.deepEqual(check([{uri:'A.cs',text:'Console.WriteLine(1);'},{uri:'B.cs',text:'Console.WriteLine(2);'}]).slice(0,2),[false,'CS8802:error Only one compilation unit can have top-level statements.']);
   const second=compile([{uri:'A.cs',text:'Console.WriteLine(1);'},{uri:'B.cs',text:'Console.WriteLine(2);'}]).diagnostics.find(d=>d.code==='CS8802');assert.equal(second.uri,'B.cs');
   assert.deepEqual(check('Console.WriteLine(1);',{outputKind:'library'}).slice(0,2),[false,'CS8805:error Program using top-level statements must be an executable.']);
