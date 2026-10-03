@@ -27,6 +27,9 @@ export function createSourceFetcher(options = {}) {
           reason: 'Source checksum algorithm or hash is unsupported',
         });
       }
+      if (size >= 48 && !globalThis.crypto?.subtle) {
+        return sourceResult(SourceStatus.unsupportedHash, { reason: 'SHA-384/512 verification requires WebCrypto' });
+      }
       const expected = { hashAlgorithm: document.hashAlgorithm, hash: new Uint8Array(document.hash) };
       return transport.read(url, {
         signal,

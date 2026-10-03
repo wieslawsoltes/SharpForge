@@ -11,10 +11,16 @@ export function verifySource(document, input) {
   return false;
 }
 export async function verifySourceAsync(document, input) {
-  if ([PdbGuids.sha256, PdbGuids.sha1].includes(document.hashAlgorithm)) return verifySource(document, input);
-  const algorithm = { [PdbGuids.sha384]: 'SHA-384', [PdbGuids.sha512]: 'SHA-512' }[document.hashAlgorithm];
-  if (!algorithm || !globalThis.crypto?.subtle) return false;
   const bytes = typeof input === 'string' ? utf8(input) : input;
+  if (!(bytes instanceof Uint8Array)) fail('Source must be text or bytes');
+  const algorithm = {
+    [PdbGuids.sha1]: 'SHA-1',
+    [PdbGuids.sha256]: 'SHA-256',
+    [PdbGuids.sha384]: 'SHA-384',
+    [PdbGuids.sha512]: 'SHA-512',
+  }[document.hashAlgorithm];
+  if (!algorithm) return false;
+  if (!globalThis.crypto?.subtle) return verifySource(document, bytes);
   return equalBytes(new Uint8Array(await crypto.subtle.digest(algorithm, bytes)), document.hash);
 }
 export function sourceLinkUrl(symbols, documentName) {
