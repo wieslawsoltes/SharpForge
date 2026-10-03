@@ -17,3 +17,23 @@ remain separate work under SF-A03-T03.8. Signing is independent of version/cultu
 
 Native `AssemblyName.GetAssemblyName` reference generation and focused tests are prepared
 under `tests/fixtures/a03-assembly-definition`; validation is pending its serial slot.
+
+## Input reference identities
+
+High-level emission accepts `referenceAssemblies: [Uint8Array, ...]` with full PE assembly
+bytes. It reads their Assembly definitions once at the emission boundary, then uses their
+real name/version/culture/full public key for requested AssemblyRefs. Full keys are marked
+with the ECMA PublicKey flag; token computation/verification is left to consuming runtimes.
+Inputs are bounded to 1024 assemblies and 64 MiB total. This controls emitted identities;
+it does not add external-type binding or methods to the compiler's supported CIL profile.
+
+Both emission and `MetadataBuilder` also accept `assemblyReferences` identity records:
+`{ name, version, culture, flags, publicKeyOrToken }`, where version is explicit, flags
+support PublicKey/Retargetable/WindowsRuntime, and key bytes are copied. Duplicate names
+(case-insensitive), malformed keys/tokens and unknown flags are rejected. Full cryptographic
+key validation is not performed by the metadata writer.
+
+Existing `net8`/`mscorlib4` fallback identities are unchanged. New `net9` and `net10` profiles
+require supplied identity data for each referenced framework assembly; missing input fails
+explicitly. Canonical replay reconstructs those records from actual AssemblyRef metadata.
+Native reference-pack/GetReferencedAssemblies validation remains pending its queued slot.

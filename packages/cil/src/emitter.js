@@ -1,23 +1,21 @@
-import { emittedAssemblyName } from './emit/assembly-options.js';
-import { emissionPEOptions, debugPEOptions, finishEmittedPE } from './emit/pe-options.js';
+import { prepareEmission } from './emit/emission-context.js';
+import { debugPEOptions, finishEmittedPE } from './emit/pe-options.js';
 import { EmitterSignatures } from './emitter-signatures.js';
 import { emitPropertyMetadata } from './emitter-properties.js';
 import {frameworkType,enumTypes} from '@sharpforge/framework';
 import { EnumConvertBase, Op, BinaryName, UnaryName, Builtins } from '@sharpforge/bytecode';
 import { Writer, CilError, align, utf8 } from './binary.js';
-import { MetadataBuilder, token, codedIndex, cliSystemName } from './metadata.js';
+import { token, codedIndex, cliSystemName } from './metadata.js';
 import { CilWriter } from './opcodes.js';
 import { TEXT_RVA, writeMethodBody } from './pe.js';
-import { analyzeMethod, constantType, validateInput } from './analysis.js';
+import { analyzeMethod, constantType } from './analysis.js';
 const markerName='SharpForge.<>AllocationToken';
 const isValue=t=>['int','long','double','bool'].includes(t)||['enum','value'].includes(frameworkType(t)?.kind);
 const binaryCodes={'+':'add','-':'sub','*':'mul','/':'div','%':'rem','&':'and','|':'or','^':'xor','<<':'shl','>>':'shr'};
 /** Emits genuine PE/CLI metadata and CIL bodies. No JS source, host eval or embedded executable bytecode. */
 export function emitAssembly(image,options={}) { return emitAssemblyDetailed(image,options).bytes; }
 export function emitAssemblyDetailed(image,options={}) {
-  let {name=image.name??'Application',framework='net8',embedSources=true,includeDebug=true}=options;
-  const peOptions=emissionPEOptions(image,options,framework);
-  validateInput(image);name=emittedAssemblyName(name,framework);const started=performance.now(),metadata=new MetadataBuilder(name,{...options,framework});
+  const {name,framework,embedSources,includeDebug,peOptions,metadata,started}=prepareEmission(image,options);
   const context={image,metadata,framework,typeTokens:new Map(),methodTokens:new Map(),fieldTokens:new Map(),staticTokens:[],allocTokens:new Map(),descriptors:[],helperToken:0};
   context.resolveType=t=>context.typeTokens.get(t)??metadata.typeRef(cliSystemName(t));
   const objectToken=context.resolveType('object');
