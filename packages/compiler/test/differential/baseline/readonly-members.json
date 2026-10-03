@@ -1,0 +1,4 @@
+{
+  "readonly-members/declaration-and-body-rules": ["diagnostics", "warnings"],
+  "readonly-members/readonly-members-in-7-3": ["diagnostics", "warnings"]
+}

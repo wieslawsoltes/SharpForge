@@ -1,6 +1,7 @@
 /**
- * Reading the attributes the attribute binder recorded on a symbol (`boundAttributes`, see ./attributes.js). Kept
- * apart from the binder so that the modules interpreting a well-known attribute do not depend on the body binder.
+ * Reading the attributes the attribute binder (./attributes.js) recorded on a symbol as `boundAttributes`.
+ * These helpers have no dependencies, so the body binder and the language rules can use them without importing the
+ * attribute binder, which itself binds bodies.
  */
 
 /** The namespace-qualified name of a named type, without type arguments (`System.ObsoleteAttribute`). */

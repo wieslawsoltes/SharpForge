@@ -67,7 +67,8 @@ export function checkConstraints(parameters, typeArguments, { core, display, out
     }
     if (parameter.hasReferenceTypeConstraint && argument.isReferenceType !== true) push('CS0452', [display, parameter.name, name]);
     if (parameter.hasUnmanagedTypeConstraint) {
-      if (!isUnmanagedType(argument)) push('CS8377', [display, parameter.name, name]);
+      // A nullable value type is a struct of unmanaged fields, but the constraint also demands a non-nullable type.
+      if (!isUnmanagedType(argument) || isNullableType(argument)) push('CS8377', [display, parameter.name, name]);
     } else if (parameter.hasValueTypeConstraint && (argument.isValueType !== true || isNullableType(argument)))
       push('CS0453', [display, parameter.name, name]);
     if (parameter.hasNotNullConstraint && (isNullableType(argument) || argument.isAnnotatedReference))
