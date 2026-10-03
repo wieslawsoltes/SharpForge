@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "SF-A29-T07.1 through SF-A29-T07.7",
   "status": "local qualification; proposed policy, no approved historical baseline",
-  "implementationCommit": "6d87bd3b826b85ed6f66f1d9faf8e6474714f308",
+  "implementationCommit": "dc7927908ca3a15886b5f01248c053e41060a3ef",
   "environment": {
     "node": "v24.21.0",
     "platform": "darwin",
@@ -11,7 +11,7 @@
     "logicalCpus": 11,
     "osRelease": "25.6.0",
     "runnerName": "MacBook-Pro.local",
-    "commit": "e3bf896bcc74802ea7031267635140cb6eae1744"
+    "commit": "dc7927908ca3a15886b5f01248c053e41060a3ef"
   },
   "validation": {
     "npmCheck": {
@@ -20,7 +20,7 @@
       "browserScripts": 17,
       "unassigned": 0,
       "duplicate": 0,
-      "modules": 408,
+      "modules": 409,
       "syntaxErrors": 0
     },
     "npmTest": {
@@ -29,7 +29,7 @@
       "skipped": 0,
       "node": "v24.21.0",
       "python": "3.14.7",
-      "durationMs": 20118.116958
+      "durationMs": 27287.735292
     },
     "actionlint": "passed .github/workflows/perf.yml",
     "build": "passed",
@@ -301,8 +301,8 @@
       "bytes": 169476
     },
     "current.json": {
-      "sha256": "a573217ebb6fb000e676f8991fd92612da8fd64bd41b78619cd081aa60aa53f3",
-      "bytes": 74053
+      "sha256": "1ee243289e29d65f973891fa44082c5c93d2074e11bfd0316c9e9d4beda2e3ec",
+      "bytes": 74114
     },
     "legacy/benchmark-compute14.js.normalized.json": {
       "sha256": "52fbfc3e1d94856f9c570a9bed6b529b5d4af3dd19487077b44c1f059e511a73",

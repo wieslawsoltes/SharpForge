@@ -6,12 +6,12 @@ contains no approved historical performance baseline and no remote CI result.
 The [machine-readable index](qualification.json) binds every retained report to
 its bytes and preserves each actual capture commit.
 
-All 2,835 Node tests pass at implementation commit `6d87bd3`, including 13 service
+All 2,835 Node tests pass at implementation commit `dc79279`, including 13 service
 regressions covering raw schema, mismatches, quarantine expiry, timeout/cancellation,
 process descendants, dirty/racing product and harness commits, managed counters,
-artifact boundaries, trace digest tampering and committed-only baseline reads.
+artifact boundaries, trace digest tampering and committed-only baseline reads. Independent review also added registry-file provenance, colliding adapter names, and large-sample probability-tail regressions.
 `npm run check` passes: 30 area manifests, 84 Node files, 17 browser scripts,
-408 JavaScript modules, no syntax errors or unassigned tests. Actionlint passes.
+409 JavaScript modules, no syntax errors or unassigned tests. Actionlint passes.
 Production build, standalone generation and all 25 installed-package smoke tests
 pass. All 29 artifact size checks pass.
 

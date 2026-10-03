@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "harnessCommit": "e3bf896bcc74802ea7031267635140cb6eae1744",
+  "harnessCommit": "dc7927908ca3a15886b5f01248c053e41060a3ef",
   "runnerId": "0496ac14920a9c411b97ae8d",
-  "commit": "e3bf896bcc74802ea7031267635140cb6eae1744",
+  "commit": "dc7927908ca3a15886b5f01248c053e41060a3ef",
   "environment": {
     "node": "v24.21.0",
     "platform": "darwin",
@@ -11,7 +11,7 @@
     "logicalCpus": 11,
     "osRelease": "25.6.0",
     "runnerName": "MacBook-Pro.local",
-    "commit": "e3bf896bcc74802ea7031267635140cb6eae1744"
+    "commit": "dc7927908ca3a15886b5f01248c053e41060a3ef"
   },
   "benchmarks": [
     {
@@ -20,37 +20,37 @@
       "engine": "source",
       "unit": "ms",
       "samples": [
-        2.9425840000000107,
-        3.1712079999999787,
-        1.8410829999999692,
-        1.510499999999979,
-        3.5077499999999873,
-        1.358333000000016,
-        2.1797500000000127,
-        4.020083,
-        1.9845419999999763,
-        1.618249999999989,
-        1.8938339999999698,
-        3.2584999999999695,
-        1.3937500000000114,
-        3.7611249999999927,
-        4.152083000000005,
-        3.1699590000000057,
-        2.461541000000011,
-        1.2506669999999644,
-        1.2931669999999826,
-        1.74170799999996
+        2.7048749999999586,
+        2.9126249999999914,
+        1.8416669999999726,
+        4.225666999999987,
+        1.3559999999999945,
+        2.861417000000017,
+        2.7487500000000296,
+        2.1816670000000045,
+        1.2824999999999704,
+        2.225999999999999,
+        2.6103749999999764,
+        2.2448329999999714,
+        3.9390000000000214,
+        3.266917000000035,
+        12.17916600000001,
+        2.9635829999999714,
+        11.440624999999955,
+        2.8793340000000853,
+        3.8017920000000913,
+        4.8904999999999745
       ],
       "coldSamples": [
-        10.743708000000026
+        10.069958999999983
       ],
       "statistics": {
         "count": 20,
-        "median": 2.0821459999999945,
-        "p95": 4.020083,
-        "p99": 4.152083000000005,
-        "min": 1.2506669999999644,
-        "max": 4.152083000000005
+        "median": 2.8703755000000513,
+        "p95": 11.440624999999955,
+        "p99": 12.17916600000001,
+        "min": 1.2824999999999704,
+        "max": 12.17916600000001
       },
       "correctness": {
         "passed": true,
@@ -59,7 +59,7 @@
       "metrics": {
         "samples": [
           {
-            "nodeHeapDeltaBytes": 3728408,
+            "nodeHeapDeltaBytes": 3769944,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -67,8 +67,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.1799570000000017,
-              "maxPauseMs": 0.030292000000031294
+              "totalPauseMs": 0.13483300000007148,
+              "maxPauseMs": 0.03008399999998801
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -76,7 +76,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3726960,
+            "nodeHeapDeltaBytes": -3958480,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -84,8 +84,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.15654200000000174,
-              "maxPauseMs": 0.04816699999997809
+              "totalPauseMs": 0.8765400000000341,
+              "maxPauseMs": 0.7737500000000068
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -93,7 +93,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -3962480,
+            "nodeHeapDeltaBytes": 3708832,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -101,8 +101,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.07491899999979523,
-              "maxPauseMs": 0.01858399999997573
+              "totalPauseMs": 0.1028739999999857,
+              "maxPauseMs": 0.02908300000001418
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -110,7 +110,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3704232,
+            "nodeHeapDeltaBytes": -3751592,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -118,8 +118,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.050041999999848485,
-              "maxPauseMs": 0.006874999999979536
+              "totalPauseMs": 0.11858199999988983,
+              "maxPauseMs": 0.034958000000017364
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -127,7 +127,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -3903296,
+            "nodeHeapDeltaBytes": 3471000,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -135,8 +135,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.10966699999994489,
-              "maxPauseMs": 0.028624999999976808
+              "totalPauseMs": 0.05412399999994477,
+              "maxPauseMs": 0.011041999999974905
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -144,7 +144,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3245024,
+            "nodeHeapDeltaBytes": -3954552,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -152,8 +152,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.059126999999989494,
-              "maxPauseMs": 0.010499999999979082
+              "totalPauseMs": 0.11191599999995105,
+              "maxPauseMs": 0.033666000000039276
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -161,7 +161,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -3971072,
+            "nodeHeapDeltaBytes": 3444088,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -169,8 +169,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.08812399999993659,
-              "maxPauseMs": 0.03737499999999727
+              "totalPauseMs": 0.1989569999999503,
+              "maxPauseMs": 0.08183300000001736
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -178,7 +178,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3947448,
+            "nodeHeapDeltaBytes": -3961072,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -186,8 +186,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.11599999999998545,
-              "maxPauseMs": 0.0332920000000172
+              "totalPauseMs": 0.08770599999991191,
+              "maxPauseMs": 0.02345900000000256
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -195,7 +195,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -3956208,
+            "nodeHeapDeltaBytes": 3443944,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -203,8 +203,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.058664999999905376,
-              "maxPauseMs": 0.011166000000002896
+              "totalPauseMs": 0.06537400000007665,
+              "maxPauseMs": 0.018000000000029104
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -212,7 +212,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3475120,
+            "nodeHeapDeltaBytes": 3444056,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -220,8 +220,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.04920999999990272,
-              "maxPauseMs": 0.006249999999965894
+              "totalPauseMs": 0.1310020000000236,
+              "maxPauseMs": 0.030833999999970274
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -229,7 +229,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3517280,
+            "nodeHeapDeltaBytes": -3952416,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -237,8 +237,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.08220799999980954,
-              "maxPauseMs": 0.030249999999966803
+              "totalPauseMs": 0.0988760000000184,
+              "maxPauseMs": 0.0342499999999859
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -246,7 +246,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -3955168,
+            "nodeHeapDeltaBytes": 3483872,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -254,8 +254,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.16395800000003646,
-              "maxPauseMs": 0.034041000000001986
+              "totalPauseMs": 0.0801250000000664,
+              "maxPauseMs": 0.023083999999983007
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -263,7 +263,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3443912,
+            "nodeHeapDeltaBytes": -3964184,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -271,8 +271,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.059540999999967426,
-              "maxPauseMs": 0.012541999999996278
+              "totalPauseMs": 0.09804200000002083,
+              "maxPauseMs": 0.024333000000012817
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -280,7 +280,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -3898856,
+            "nodeHeapDeltaBytes": 3443056,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -288,8 +288,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.1016229999999041,
-              "maxPauseMs": 0.03495799999996052
+              "totalPauseMs": 0.06008299999996325,
+              "maxPauseMs": 0.01312499999994543
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -297,7 +297,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -5565544,
+            "nodeHeapDeltaBytes": -9532856,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -305,8 +305,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.13858199999998533,
-              "maxPauseMs": 0.03766699999999901
+              "totalPauseMs": 0.08512500000006185,
+              "maxPauseMs": 0.023874999999975444
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -314,7 +314,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3444152,
+            "nodeHeapDeltaBytes": 3478936,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -322,8 +322,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.1651239999999916,
-              "maxPauseMs": 0.02837499999998272
+              "totalPauseMs": 0.04954199999974662,
+              "maxPauseMs": 0.011916999999925793
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -331,7 +331,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -4419096,
+            "nodeHeapDeltaBytes": -3667840,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -339,8 +339,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.11970800000000281,
-              "maxPauseMs": 0.02704199999999446
+              "totalPauseMs": 0.19212499999991905,
+              "maxPauseMs": 0.04224999999996726
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -348,7 +348,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3443904,
+            "nodeHeapDeltaBytes": 3487120,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -356,8 +356,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.0541240000001153,
-              "maxPauseMs": 0.012083000000018274
+              "totalPauseMs": 0.10804100000007111,
+              "maxPauseMs": 0.027124999999955435
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -365,7 +365,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3445416,
+            "nodeHeapDeltaBytes": 3476640,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -373,8 +373,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.05195500000007769,
-              "maxPauseMs": 0.009249999999951797
+              "totalPauseMs": 0.21366599999987557,
+              "maxPauseMs": 0.11837500000001455
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -382,7 +382,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -3935176,
+            "nodeHeapDeltaBytes": -3956080,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -390,8 +390,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.06604399999997668,
-              "maxPauseMs": 0.016000000000019554
+              "totalPauseMs": 0.1449600000000828,
+              "maxPauseMs": 0.03537499999993088
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -413,7 +413,7 @@
             "max": 40,
             "relativeSpread": 0
           },
-          "maxPauseMs": 0.04816699999997809,
+          "maxPauseMs": 0.7737500000000068,
           "collectionCounts": [
             10,
             10,
@@ -445,37 +445,37 @@
       "engine": "cil",
       "unit": "ms",
       "samples": [
-        9.441750000000013,
-        12.545249999999953,
-        11.803375000000017,
-        9.088750000000005,
-        9.901958000000036,
-        10.850874999999974,
-        12.760583999999994,
-        15.38983300000001,
-        9.912500000000023,
-        10.65316699999994,
-        8.678207999999927,
-        7.927000000000021,
-        8.218375000000037,
-        9.867208000000005,
-        9.632458000000042,
-        8.954833000000008,
-        8.969333000000006,
-        7.7732500000000755,
-        7.411666999999966,
-        10.400541999999973
+        25.005707999999913,
+        18.043958999999973,
+        14.476415999999972,
+        12.38650000000007,
+        12.174458000000072,
+        17.77029200000004,
+        15.72466600000007,
+        16.748959000000013,
+        14.557292000000075,
+        13.315375000000017,
+        14.879000000000019,
+        11.16095800000005,
+        28.87466699999993,
+        12.899124999999913,
+        14.735415999999987,
+        10.346415999999977,
+        13.578041999999982,
+        12.033166999999935,
+        9.56454199999996,
+        11.47033399999998
       ],
       "coldSamples": [
-        21.959208999999987
+        44.41650000000004
       ],
       "statistics": {
         "count": 20,
-        "median": 9.749833000000024,
-        "p95": 12.760583999999994,
-        "p99": 15.38983300000001,
-        "min": 7.411666999999966,
-        "max": 15.38983300000001
+        "median": 14.027228999999977,
+        "p95": 25.005707999999913,
+        "p99": 28.87466699999993,
+        "min": 9.56454199999996,
+        "max": 28.87466699999993
       },
       "correctness": {
         "passed": true,
@@ -484,7 +484,7 @@
       "metrics": {
         "samples": [
           {
-            "nodeHeapDeltaBytes": 3380720,
+            "nodeHeapDeltaBytes": 5676880,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -492,8 +492,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.2172510000000898,
-              "maxPauseMs": 0.04958399999998164
+              "totalPauseMs": 0.5236269999996921,
+              "maxPauseMs": 0.15474999999992178
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -501,7 +501,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -12702416,
+            "nodeHeapDeltaBytes": 3571872,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -509,8 +509,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.262916999999959,
-              "maxPauseMs": 0.07054200000004585
+              "totalPauseMs": 0.39237500000024284,
+              "maxPauseMs": 0.06512499999996635
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -518,7 +518,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3423448,
+            "nodeHeapDeltaBytes": 3422856,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -526,8 +526,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.3170409999999606,
-              "maxPauseMs": 0.07462500000002592
+              "totalPauseMs": 0.6251260000002503,
+              "maxPauseMs": 0.3520420000000968
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -535,7 +535,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3279928,
+            "nodeHeapDeltaBytes": 3192784,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -543,8 +543,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.20620800000006057,
-              "maxPauseMs": 0.05020799999999781
+              "totalPauseMs": 0.3353749999999991,
+              "maxPauseMs": 0.06045799999992596
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -552,7 +552,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3218256,
+            "nodeHeapDeltaBytes": 3064296,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -560,8 +560,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.2514169999999467,
-              "maxPauseMs": 0.056958999999949356
+              "totalPauseMs": 0.23962399999993522,
+              "maxPauseMs": 0.03633300000001327
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -569,7 +569,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3336544,
+            "nodeHeapDeltaBytes": 4052864,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -577,8 +577,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.25233199999985345,
-              "maxPauseMs": 0.04787499999997635
+              "totalPauseMs": 0.7712899999999081,
+              "maxPauseMs": 0.34829099999990376
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -586,7 +586,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -9567336,
+            "nodeHeapDeltaBytes": -9715408,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -594,8 +594,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.22558399999996936,
-              "maxPauseMs": 0.04312499999997499
+              "totalPauseMs": 0.3737109999998438,
+              "maxPauseMs": 0.0801249999999527
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -603,7 +603,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 6326888,
+            "nodeHeapDeltaBytes": 6016136,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -611,8 +611,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 1.0056240000001253,
-              "maxPauseMs": 0.4954579999999851
+              "totalPauseMs": 0.366460000000302,
+              "maxPauseMs": 0.06854200000009314
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -620,7 +620,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -11091872,
+            "nodeHeapDeltaBytes": 5325168,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -628,8 +628,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.2567930000001297,
-              "maxPauseMs": 0.07679200000006858
+              "totalPauseMs": 0.5021260000000893,
+              "maxPauseMs": 0.14758400000005167
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -637,7 +637,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 4461168,
+            "nodeHeapDeltaBytes": 3029896,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -645,8 +645,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.28416599999991377,
-              "maxPauseMs": 0.07129200000008495
+              "totalPauseMs": 0.2875420000000304,
+              "maxPauseMs": 0.07466699999997672
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -654,7 +654,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 2853200,
+            "nodeHeapDeltaBytes": -13551520,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -662,8 +662,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.22191499999973985,
-              "maxPauseMs": 0.05270899999993617
+              "totalPauseMs": 0.35141600000008566,
+              "maxPauseMs": 0.08420900000010079
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -671,7 +671,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 2841160,
+            "nodeHeapDeltaBytes": 2769696,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -679,8 +679,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.17891599999984464,
-              "maxPauseMs": 0.047667000000046755
+              "totalPauseMs": 0.2927909999998519,
+              "maxPauseMs": 0.05816600000002836
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -688,7 +688,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 2859776,
+            "nodeHeapDeltaBytes": 2829376,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -696,8 +696,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.2087509999997792,
-              "maxPauseMs": 0.0550829999999678
+              "totalPauseMs": 0.45412499999997635,
+              "maxPauseMs": 0.20262500000001182
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -705,7 +705,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 2829944,
+            "nodeHeapDeltaBytes": 2833264,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -713,8 +713,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.29658500000005006,
-              "maxPauseMs": 0.05670899999995527
+              "totalPauseMs": 0.540166999999883,
+              "maxPauseMs": 0.2134169999999358
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -722,7 +722,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 2757424,
+            "nodeHeapDeltaBytes": 2863344,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -730,8 +730,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.2845000000000937,
-              "maxPauseMs": 0.0750830000000633
+              "totalPauseMs": 0.4613750000003165,
+              "maxPauseMs": 0.07375000000001819
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -739,7 +739,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 2786184,
+            "nodeHeapDeltaBytes": 2797680,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -747,8 +747,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.21362599999986287,
-              "maxPauseMs": 0.06137499999999818
+              "totalPauseMs": 0.19779299999981959,
+              "maxPauseMs": 0.03729199999997945
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -756,7 +756,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 2865440,
+            "nodeHeapDeltaBytes": -13532904,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -764,8 +764,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.23762500000009368,
-              "maxPauseMs": 0.053167000000030384
+              "totalPauseMs": 0.2856659999997646,
+              "maxPauseMs": 0.07170799999994415
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -773,7 +773,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 2892408,
+            "nodeHeapDeltaBytes": 2831160,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -781,8 +781,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.14945999999963533,
-              "maxPauseMs": 0.02158299999996416
+              "totalPauseMs": 0.3605409999997846,
+              "maxPauseMs": 0.0699170000000322
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -790,7 +790,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 2827256,
+            "nodeHeapDeltaBytes": 2806648,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -798,8 +798,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.1288320000001022,
-              "maxPauseMs": 0.0251660000000129
+              "totalPauseMs": 0.20729100000005474,
+              "maxPauseMs": 0.041958000000022366
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -807,7 +807,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -13448048,
+            "nodeHeapDeltaBytes": 2813744,
             "managed": {
               "operations": 500,
               "allocations": 500,
@@ -815,8 +815,8 @@
               "allocationsPerOperation": 1,
               "bytesPerOperation": 40,
               "collections": 10,
-              "totalPauseMs": 0.19591800000011972,
-              "maxPauseMs": 0.05037500000003092
+              "totalPauseMs": 0.2499999999998863,
+              "maxPauseMs": 0.07333300000004783
             },
             "nativeAllocations": {
               "status": "unsupported",
@@ -838,7 +838,7 @@
             "max": 40,
             "relativeSpread": 0
           },
-          "maxPauseMs": 0.4954579999999851,
+          "maxPauseMs": 0.3520420000000968,
           "collectionCounts": [
             10,
             10,
@@ -870,37 +870,37 @@
       "engine": "source",
       "unit": "ms",
       "samples": [
-        1.6717920000000959,
-        1.7401670000000422,
-        3.2649169999999685,
-        2.9382920000000468,
-        1.701082999999926,
-        2.2100410000000466,
-        1.206666000000041,
-        1.1773330000000897,
-        1.247624999999971,
-        1.214207999999985,
-        1.6712499999999864,
-        2.844957999999906,
-        1.0142079999999396,
-        0.8435419999999567,
-        1.0185000000000173,
-        0.8854579999999714,
-        2.074583000000075,
-        1.1981250000000045,
-        0.8676249999999754,
-        0.8278749999999491
+        1.7660420000001977,
+        1.8356659999999465,
+        1.5209580000000642,
+        1.010291000000052,
+        1.0231670000000577,
+        3.5083750000001146,
+        0.9985420000000431,
+        2.722541000000092,
+        2.371541999999863,
+        1.3730829999999514,
+        3.1576250000000528,
+        0.8730829999999514,
+        1.5319999999999254,
+        1.4341660000000047,
+        1.400957999999946,
+        0.88474999999994,
+        1.1236249999999472,
+        1.3832080000001952,
+        1.980874999999969,
+        1.184624999999869
       ],
       "coldSamples": [
-        8.976541999999995
+        11.8627919999999
       ],
       "statistics": {
         "count": 20,
-        "median": 1.230916499999978,
-        "p95": 2.9382920000000468,
-        "p99": 3.2649169999999685,
-        "min": 0.8278749999999491,
-        "max": 3.2649169999999685
+        "median": 1.4175619999999753,
+        "p95": 3.1576250000000528,
+        "p99": 3.5083750000001146,
+        "min": 0.8730829999999514,
+        "max": 3.5083750000001146
       },
       "correctness": {
         "passed": true,
@@ -909,7 +909,7 @@
       "metrics": {
         "samples": [
           {
-            "nodeHeapDeltaBytes": -12816832,
+            "nodeHeapDeltaBytes": 3354840,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -926,7 +926,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3369152,
+            "nodeHeapDeltaBytes": -12939088,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -943,7 +943,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3406776,
+            "nodeHeapDeltaBytes": 3208440,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -960,7 +960,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3314632,
+            "nodeHeapDeltaBytes": 3209344,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -977,7 +977,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3181560,
+            "nodeHeapDeltaBytes": 3138456,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -994,7 +994,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -12885360,
+            "nodeHeapDeltaBytes": 3070224,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1011,7 +1011,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3179520,
+            "nodeHeapDeltaBytes": 3019368,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1028,7 +1028,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3179592,
+            "nodeHeapDeltaBytes": -13117112,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1045,7 +1045,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3180360,
+            "nodeHeapDeltaBytes": 2991824,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1062,7 +1062,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3179528,
+            "nodeHeapDeltaBytes": 2885280,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1079,7 +1079,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -13004992,
+            "nodeHeapDeltaBytes": 2902496,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1096,7 +1096,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 3124480,
+            "nodeHeapDeltaBytes": 2706896,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1113,7 +1113,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 2698088,
+            "nodeHeapDeltaBytes": -13420496,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1130,7 +1130,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 2698168,
+            "nodeHeapDeltaBytes": 2705888,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1147,7 +1147,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 2698000,
+            "nodeHeapDeltaBytes": 2705824,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1164,7 +1164,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 2698040,
+            "nodeHeapDeltaBytes": 2706056,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1181,7 +1181,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -13382280,
+            "nodeHeapDeltaBytes": 2705920,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1198,7 +1198,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 2681992,
+            "nodeHeapDeltaBytes": 2708544,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1215,7 +1215,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 2688768,
+            "nodeHeapDeltaBytes": -13403536,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1232,7 +1232,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 2682088,
+            "nodeHeapDeltaBytes": 2712904,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1295,37 +1295,37 @@
       "engine": "cil",
       "unit": "ms",
       "samples": [
-        8.742500000000064,
-        7.907791999999972,
-        8.598208,
-        9.689208000000008,
-        6.853084000000081,
-        9.087916999999948,
-        6.361750000000029,
-        9.464375000000018,
-        7.262207999999987,
-        7.299957999999947,
-        7.256333000000041,
-        6.236374999999953,
-        7.688499999999976,
-        7.856791000000044,
-        6.507665999999972,
-        6.20799999999997,
-        7.764332999999965,
-        7.082166000000029,
-        6.4552079999999705,
-        7.358084000000076
+        10.53774999999996,
+        18.594583000000057,
+        10.774374999999964,
+        13.652082999999948,
+        7.457791999999927,
+        13.58183299999996,
+        17.24683300000015,
+        16.99304099999995,
+        9.04466699999989,
+        5.909250000000156,
+        7.668666999999914,
+        7.312875000000076,
+        12.640874999999824,
+        6.475333999999975,
+        6.998041999999941,
+        8.328374999999824,
+        8.13149999999996,
+        6.244042000000036,
+        7.213666999999987,
+        8.500249999999824
       ],
       "coldSamples": [
-        13.302458000000001
+        15.646124999999984
       ],
       "statistics": {
         "count": 20,
-        "median": 7.3290210000000116,
-        "p95": 9.464375000000018,
-        "p99": 9.689208000000008,
-        "min": 6.20799999999997,
-        "max": 9.689208000000008
+        "median": 8.414312499999824,
+        "p95": 17.24683300000015,
+        "p99": 18.594583000000057,
+        "min": 5.909250000000156,
+        "max": 18.594583000000057
       },
       "correctness": {
         "passed": true,
@@ -1334,7 +1334,7 @@
       "metrics": {
         "samples": [
           {
-            "nodeHeapDeltaBytes": -2794896,
+            "nodeHeapDeltaBytes": -3091024,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1351,7 +1351,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 12793584,
+            "nodeHeapDeltaBytes": -3743176,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1368,7 +1368,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 12711040,
+            "nodeHeapDeltaBytes": -3823952,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1385,7 +1385,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -20427984,
+            "nodeHeapDeltaBytes": 12735200,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1402,7 +1402,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 12757160,
+            "nodeHeapDeltaBytes": 12759064,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1419,7 +1419,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -20329336,
+            "nodeHeapDeltaBytes": -20439736,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1436,7 +1436,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 12710736,
+            "nodeHeapDeltaBytes": 12752360,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1453,7 +1453,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 12805168,
+            "nodeHeapDeltaBytes": -20326048,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1470,7 +1470,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -20331376,
+            "nodeHeapDeltaBytes": 12649288,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1487,7 +1487,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 12646232,
+            "nodeHeapDeltaBytes": 12646632,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1504,7 +1504,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 12646856,
+            "nodeHeapDeltaBytes": -20361008,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1521,7 +1521,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 12647736,
+            "nodeHeapDeltaBytes": 12646824,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1538,7 +1538,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 12685480,
+            "nodeHeapDeltaBytes": -20377072,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1555,7 +1555,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -20287840,
+            "nodeHeapDeltaBytes": 12686288,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1572,7 +1572,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 12654200,
+            "nodeHeapDeltaBytes": 12654632,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1589,7 +1589,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 12683968,
+            "nodeHeapDeltaBytes": -20397080,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1606,7 +1606,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -20338856,
+            "nodeHeapDeltaBytes": 12677072,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1623,7 +1623,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 12647672,
+            "nodeHeapDeltaBytes": 12647120,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1640,7 +1640,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -20371400,
+            "nodeHeapDeltaBytes": -20280424,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1657,7 +1657,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 12646320,
+            "nodeHeapDeltaBytes": 12647096,
             "managed": {
               "operations": 500,
               "allocations": 9,
@@ -1720,37 +1720,37 @@
       "engine": "scalar",
       "unit": "ms",
       "samples": [
-        0.25404200000002675,
-        0.39108299999998053,
-        0.5215410000000702,
-        0.26774999999997817,
-        0.2622079999999869,
-        0.2535000000000309,
-        0.2713340000000244,
-        0.26900000000000546,
-        0.26966700000002675,
-        0.2717079999999896,
-        0.29416700000001583,
-        0.33137499999998,
-        0.2733339999999771,
-        0.2817499999999882,
-        0.4204589999999371,
-        0.2688750000000937,
-        0.2658329999999296,
-        0.2667500000000018,
-        0.3293340000000171,
-        0.26654199999995853
+        0.3397500000000946,
+        0.2639999999998963,
+        0.2644169999998667,
+        0.27520800000002055,
+        0.4691250000000764,
+        0.49879200000009405,
+        0.7055000000000291,
+        0.4715410000001157,
+        0.27433300000006966,
+        0.2691660000000411,
+        0.26616600000011204,
+        0.26812500000005457,
+        0.26870899999994435,
+        0.2687499999999545,
+        0.26691699999992125,
+        0.2684589999998934,
+        0.26708400000006804,
+        0.5802499999999782,
+        0.4987499999999727,
+        0.514417000000094
       ],
       "coldSamples": [
-        0.9246669999999995
+        1.833708999999999
       ],
       "statistics": {
         "count": 20,
-        "median": 0.27050050000002557,
-        "p95": 0.4204589999999371,
-        "p99": 0.5215410000000702,
-        "min": 0.2535000000000309,
-        "max": 0.5215410000000702
+        "median": 0.2717495000000554,
+        "p95": 0.5802499999999782,
+        "p99": 0.7055000000000291,
+        "min": 0.2639999999998963,
+        "max": 0.7055000000000291
       },
       "correctness": {
         "passed": true,
@@ -1931,37 +1931,37 @@
       "engine": "wasm-simd",
       "unit": "ms",
       "samples": [
-        0.14991699999995944,
-        0.1352919999999358,
-        0.11016699999993307,
-        0.10362499999996544,
-        0.4449580000000424,
-        0.14924999999993815,
-        0.1256670000000213,
-        0.06979200000000674,
-        0.07054200000004585,
-        0.06641700000000128,
-        0.13245900000003985,
-        0.0684999999999718,
-        0.06533300000000963,
-        0.08787500000005366,
-        0.17899999999997362,
-        0.07345799999995961,
-        0.0625,
-        0.06266600000003564,
-        0.1133750000000191,
-        0.05891599999995378
+        0.10999999999989996,
+        0.12316699999996672,
+        0.08091699999999946,
+        0.16195799999991323,
+        0.22591600000009748,
+        0.17287499999997635,
+        0.1563340000000153,
+        0.1762499999999818,
+        0.09154100000000653,
+        0.10400000000004184,
+        0.07845800000018244,
+        0.06224999999994907,
+        0.06166599999983191,
+        0.06412499999987631,
+        0.06062500000007276,
+        0.10487499999999272,
+        0.06558300000006057,
+        0.07170900000005531,
+        0.06358300000010786,
+        0.06400000000007822
       ],
       "coldSamples": [
-        2.399874999999952
+        0.7799580000000788
       ],
       "statistics": {
         "count": 20,
-        "median": 0.09575000000000955,
-        "p95": 0.17899999999997362,
-        "p99": 0.4449580000000424,
-        "min": 0.05891599999995378,
-        "max": 0.4449580000000424
+        "median": 0.086229000000003,
+        "p95": 0.1762499999999818,
+        "p99": 0.22591600000009748,
+        "min": 0.06062500000007276,
+        "max": 0.22591600000009748
       },
       "correctness": {
         "passed": true,
@@ -1969,6 +1969,30 @@
       },
       "metrics": {
         "samples": [
+          {
+            "nodeHeapDeltaBytes": 1072,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1072,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1072,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
           {
             "nodeHeapDeltaBytes": 1072,
             "managed": null,
@@ -2042,31 +2066,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 752,
-            "managed": null,
-            "nativeAllocations": {
-              "status": "unsupported",
-              "reason": "No native allocator instrumentation"
-            }
-          },
-          {
-            "nodeHeapDeltaBytes": 752,
-            "managed": null,
-            "nativeAllocations": {
-              "status": "unsupported",
-              "reason": "No native allocator instrumentation"
-            }
-          },
-          {
-            "nodeHeapDeltaBytes": 752,
-            "managed": null,
-            "nativeAllocations": {
-              "status": "unsupported",
-              "reason": "No native allocator instrumentation"
-            }
-          },
-          {
-            "nodeHeapDeltaBytes": 752,
+            "nodeHeapDeltaBytes": 19976,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2142,37 +2142,37 @@
       "engine": "node",
       "unit": "ms",
       "samples": [
-        9.4926660000001,
-        10.493124999999964,
-        8.496374999999944,
-        9.151082999999971,
-        15.08770800000002,
-        7.021207999999888,
-        6.214874999999893,
-        6.890625,
-        6.792666000000054,
-        9.395957999999837,
-        8.277165999999852,
-        9.029459000000088,
-        6.5877499999999145,
-        6.279332999999951,
-        10.525957999999946,
-        8.265749999999798,
-        7.218124999999873,
-        8.782999999999902,
-        6.151542000000063,
-        6.1702090000001135
+        10.809375000000045,
+        8.640582999999879,
+        10.379374999999982,
+        9.47416700000008,
+        8.811709000000064,
+        7.60391699999991,
+        6.97504200000003,
+        7.34741699999995,
+        8.091667000000143,
+        6.529332999999951,
+        7.216333000000077,
+        8.893542000000025,
+        8.374209000000064,
+        7.978041999999959,
+        9.692291000000068,
+        6.948583000000099,
+        6.72395900000015,
+        8.362583000000086,
+        6.44420799999989,
+        6.32770800000003
       ],
       "coldSamples": [
-        14.234500000000025
+        20.655459000000064
       ],
       "statistics": {
         "count": 20,
-        "median": 8.271457999999825,
-        "p95": 10.525957999999946,
-        "p99": 15.08770800000002,
-        "min": 6.151542000000063,
-        "max": 15.08770800000002
+        "median": 8.034854500000051,
+        "p95": 10.379374999999982,
+        "p99": 10.809375000000045,
+        "min": 6.32770800000003,
+        "max": 10.809375000000045
       },
       "correctness": {
         "passed": true,
@@ -2181,7 +2181,7 @@
       "metrics": {
         "samples": [
           {
-            "nodeHeapDeltaBytes": 12677656,
+            "nodeHeapDeltaBytes": 11730952,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2189,7 +2189,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -19046392,
+            "nodeHeapDeltaBytes": 11788872,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2197,7 +2197,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 11912008,
+            "nodeHeapDeltaBytes": -19230832,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2205,7 +2205,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 11952448,
+            "nodeHeapDeltaBytes": 11727248,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2213,7 +2213,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -18286512,
+            "nodeHeapDeltaBytes": 11791344,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2221,7 +2221,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 11694184,
+            "nodeHeapDeltaBytes": -19632992,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2229,7 +2229,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 11686952,
+            "nodeHeapDeltaBytes": 11727480,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2237,7 +2237,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -19655128,
+            "nodeHeapDeltaBytes": 11727232,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2245,7 +2245,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 11739768,
+            "nodeHeapDeltaBytes": -19102104,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2253,7 +2253,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 11698448,
+            "nodeHeapDeltaBytes": 11727248,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2261,7 +2261,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 11686736,
+            "nodeHeapDeltaBytes": 11727248,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2269,7 +2269,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -18892648,
+            "nodeHeapDeltaBytes": -19376672,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2277,7 +2277,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 11686736,
+            "nodeHeapDeltaBytes": 11727248,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2285,7 +2285,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 11686736,
+            "nodeHeapDeltaBytes": 11727248,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2293,7 +2293,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -19308544,
+            "nodeHeapDeltaBytes": -19640104,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2301,7 +2301,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 11594832,
+            "nodeHeapDeltaBytes": 11727248,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2309,7 +2309,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 11686736,
+            "nodeHeapDeltaBytes": 11727248,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2317,7 +2317,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": -19215160,
+            "nodeHeapDeltaBytes": -19377976,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2325,7 +2325,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 11764264,
+            "nodeHeapDeltaBytes": 11726528,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2333,7 +2333,7 @@
             }
           },
           {
-            "nodeHeapDeltaBytes": 11686736,
+            "nodeHeapDeltaBytes": 11727248,
             "managed": null,
             "nativeAllocations": {
               "status": "unsupported",
@@ -2353,5 +2353,6 @@
       "target": "native-rust/clr/wasm-runtime",
       "reason": "These adapters execute JS VMs and compute SIMD only; no native runtime performance claim"
     }
-  ]
+  ],
+  "registry": null
 }
