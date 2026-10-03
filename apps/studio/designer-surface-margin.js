@@ -1,5 +1,31 @@
 import {DesignMarginSession, geometryInvariant, guideSettings} from '@sharpforge/designer';
 
+function gridAxis(style, property, start, span, gap, inset, available) {
+  const tracks = String(style[property] ?? '').split(/\s+/).map(Number.parseFloat).filter(Number.isFinite);
+  if (!tracks.length) return {offset: inset, size: available - inset};
+  const first = Math.min(start, tracks.length - 1);
+  const count = Math.max(1, Math.min(span, tracks.length - first));
+  return {offset: inset + tracks.slice(0, first).reduce((sum, value) => sum + value, 0) + first * gap,
+    size: tracks.slice(first, first + count).reduce((sum, value) => sum + value, 0) + (count - 1) * gap};
+}
+
+/** Grid anchors are relative to their occupied cell/span, rather than the whole Grid's origin. */
+export function marginLayoutBounds(entry, parent) {
+  const result = {bounds: {...entry.rectangle}, parentBounds: {Width: parent.width, Height: parent.height}};
+  if (!parent.node.type.endsWith('.Grid')) return result;
+  const style = parent.style;
+  const number = property => Number.parseFloat(style[property]) || 0;
+  const properties = entry.node.properties;
+  const horizontal = gridAxis(style, 'gridTemplateColumns', properties.Column ?? 0, properties.ColumnSpan ?? 1,
+    number('columnGap'), number('paddingLeft') + number('borderLeftWidth'), parent.width);
+  const vertical = gridAxis(style, 'gridTemplateRows', properties.Row ?? 0, properties.RowSpan ?? 1,
+    number('rowGap'), number('paddingTop') + number('borderTopWidth'), parent.height);
+  result.bounds.Left -= horizontal.offset;
+  result.bounds.Top -= vertical.offset;
+  result.parentBounds = {Width: horizontal.size, Height: vertical.size};
+  return result;
+}
+
 /** A click toggles an anchor; a drag edits that margin with reversible real-layout feedback. */
 export class DesignerMarginDrag {
   constructor(controller) {

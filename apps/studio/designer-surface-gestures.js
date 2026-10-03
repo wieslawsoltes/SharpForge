@@ -1,6 +1,7 @@
 import {DesignGeometrySession, geometryInvariant, rectanglePoints, boundsOfPoints, toggleDesignAnchor,
   transformRectangle, inverseMatrix, guideSettings, DesignSnaplines} from '@sharpforge/designer';
 import {DesignerOrderGesture} from './designer-surface-order.js';
+import {marginLayoutBounds} from './designer-surface-margin.js';
 
 /** Pointer/keyboard gesture ownership is explicit; no temporary document or history mutation is needed. */
 export class DesignerSurfaceGestures {
@@ -185,8 +186,8 @@ export class DesignerSurfaceGestures {
   anchor(id, side) {
     const entry = this.controller.geometry.get(id);
     const parent = this.controller.geometry.get(this.view.document.parent(id)?.id);
-    return toggleDesignAnchor(this.view.document, {id, side, bounds: entry.rectangle,
-      parentBounds: {Width: parent.width, Height: parent.height}});
+    geometryInvariant(entry && parent, 'SFD_ANCHOR_MEASUREMENT', 'Margin anchors require measured child and parent layout.');
+    return toggleDesignAnchor(this.view.document, {id, side, ...marginLayoutBounds(entry, parent)});
   }
 
   nudge(event) {

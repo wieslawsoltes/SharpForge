@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createDesign, DesignDocument, DesignMarginSession, DesignOrderSession, convertCanvasToGrid} from '@sharpforge/designer';
-import {DesignerMarginDrag} from '../apps/studio/designer-surface-margin.js';
+import {DesignerMarginDrag, marginLayoutBounds} from '../apps/studio/designer-surface-margin.js';
 import {DesignerSurfaceGestures} from '../apps/studio/designer-surface-gestures.js';
 import {DesignerSurfaceController} from '../apps/studio/designer-surface-controller.js';
 import {DesignerAccessibility} from '../apps/studio/designer-accessibility.js';
@@ -80,6 +80,17 @@ test('anchor pointer path distinguishes drag, toggle click and cancellation with
   handlers.done();
   assert.deepEqual(calls, [['action', 'left']]);
   assert.deepEqual(document.snapshot(), before);
+});
+
+test('Grid anchors use their occupied cell and preserve padding, gaps and spanning geometry', () => {
+  const entry = {node: {properties: {Column: 1, Row: 1, ColumnSpan: 2}},
+    rectangle: {Left: 132, Top: 68, Width: 80, Height: 30}};
+  const parent = {node: {type: 'Microsoft.UI.Xaml.Controls.Grid'}, width: 620, height: 205,
+    style: {gridTemplateColumns: '100px 200px 300px', gridTemplateRows: '50px 150px', columnGap: '10px', rowGap: '5px',
+      paddingLeft: '8px', borderLeftWidth: '2px', paddingTop: '4px', borderTopWidth: '1px'}};
+  assert.deepEqual(marginLayoutBounds(entry, parent), {
+    bounds: {Left: 12, Top: 8, Width: 80, Height: 30}, parentBounds: {Width: 510, Height: 150}
+  });
 });
 
 test('held ordering keeps stable block order and creates only one optimistic history entry', () => {
