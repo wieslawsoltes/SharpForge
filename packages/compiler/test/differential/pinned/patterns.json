@@ -1,0 +1,5 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "patterns/constant-relational-logical":{"hash":"55884f79686a9501","kind":"output","langVersion":"14.0","diagnostics":[],"output":"zeronegativedigitpowerotherlarge\nTrue\nTrue\nTrue\ntext4\n"},
+  "patterns/switch-expression-shared-evaluation":{"hash":"2d6dd6453617fa91","kind":"output","langVersion":"14.0","diagnostics":[],"output":"origin 2\ny-axis 2\nx-axis 2\nfirst quadrant 2\nelsewhere 2\n"},
+  "patterns/switch-statement-patterns-and-when":{"hash":"d35ecc615d38bc8b","kind":"output","langVersion":"14.0","diagnostics":[],"output":"negative,small,too large\neven 500,odd\nanswer\n1\nsecond or third\n"}
+}}

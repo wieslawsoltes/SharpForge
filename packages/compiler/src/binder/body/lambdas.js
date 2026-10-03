@@ -66,7 +66,9 @@ export const LambdaBinding = Base =>
         let body;
         if (syntax.block) body = child.block(syntax.block);
         else {
-          const e = child.expression(syntax.expressionBody.expression ?? syntax.expressionBody);
+          // The body of a lambda is the expression itself; only member declarations wrap it in an arrow clause.
+          const bodySyntax = syntax.expressionBody.kind === 'ArrowExpressionClause' ? syntax.expressionBody.expression : syntax.expressionBody;
+          const e = child.expression(bodySyntax);
           if (returnType && returnType.specialType !== 'System_Void' && child.c.returnType) {
             const v = child.asValue(e);
             body = child.convert(v, child.c.returnType);
@@ -145,6 +147,15 @@ export const LambdaBinding = Base =>
           node.bodyErrors = true;
           return null;
         }
+        // A block whose end is reachable returns nothing: it cannot become a delegate that returns a value.
+        const returnsValue = invoke.returnType && invoke.returnType.specialType !== 'System_Void' && !invoke.returnType.isErrorType?.();
+        if (syntax.block && r.body.completes && returnsValue && !isAsync && !r.child.usesGoto) {
+          const what = isAnonymousMethod ? 'anonymous method' : 'lambda expression';
+          const at = syntax.arrowToken ?? syntax.delegateKeyword ?? syntax;
+          node.lastConversionError = [{ node: at, code: 'CS1643', args: [what, this.display(to)] }];
+          node.bodyErrors = true;
+          return null;
+        }
         return new Conversion(ConversionKind.AnonymousFunction);
       };
       node.bindFinal = to => {
@@ -179,6 +190,9 @@ export const LambdaBinding = Base =>
       if (r) {
         lambda.body = r.body;
         lambda.boundAs = delegateType;
+        // Lowering needs the symbols the body was bound with: its parameters and the locals it declares.
+        lambda.parameters = r.child.c.parameters;
+        lambda.locals = r.child.locals;
       }
     }
     switchExpression(syntax) {

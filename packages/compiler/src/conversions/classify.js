@@ -6,13 +6,14 @@
  * literals, constant narrowing, the 0-to-enum conversion, method groups, anonymous functions, interpolated strings,
  * tuple literals, throw). The result is an immutable `Conversion` whose `kind` follows Roslyn's ConversionKind.
  */
-import { TypeKind, NamedTypeSymbol, ArrayTypeSymbol, TypeParameterSymbol, TypeCompareKind } from '../symbols/types.js';
+import { TypeKind, NamedTypeSymbol, TypeParameterSymbol, TypeCompareKind } from '../symbols/types.js';
 import { numericKind, implicitNumericConversion, explicitNumericConversion } from './numeric.js';
 import { implicitConstantConversion } from './constant-narrowing.js';
 import { nativeIntegerKind, isNativeIdentity, isIntPtrFamily } from './native-int.js';
 import { isNullableType, stripNullable, acceptsNullLiteral } from './nullable.js';
 import { hasImplicitReferenceConversion, hasBoxingConversion, hasExplicitReferenceConversion, hasUnboxingConversion } from './reference.js';
 import { resolveUserDefinedConversion } from './user-defined.js';
+import { hasImplicitSpanConversion, hasExplicitSpanConversion } from './span.js';
 
 export const ConversionKind = Object.freeze(
   Object.fromEntries(
@@ -45,6 +46,7 @@ export const ConversionKind = Object.freeze(
       'Unboxing',
       'ExplicitUserDefined',
       'ExplicitTuple',
+      'ExplicitTupleLiteral',
       'ExplicitDynamic',
       'ExplicitSpan',
       'IntPtr',
@@ -130,14 +132,6 @@ const K = ConversionKind;
 const simple = Object.fromEntries(Object.keys(K).map(k => [k, make(k)]));
 const isEnum = t => t.typeKind === TypeKind.Enum;
 const isTuple = t => t instanceof NamedTypeSymbol && t.isTupleType && !t.isDefinition;
-const spanOf = (t, name) =>
-  t instanceof NamedTypeSymbol &&
-  !t.isDefinition &&
-  t.originalDefinition.name === name &&
-  t.originalDefinition.arity === 1 &&
-  t.originalDefinition.containingNamespace?.name === 'System'
-    ? t.typeArguments[0].type
-    : null;
 
 export class Conversions {
   /** @param core CoreTypes  @param {{numericIntPtr?:boolean,firstClassSpans?:boolean}} [options] language-version dependent rules (C# 11, C# 14) */
@@ -154,6 +148,10 @@ export class Conversions {
         return c.exists && !c.isIdentity;
       },
     };
+  }
+  /** C# 14 first-class spans: span conversions are standard conversions. */
+  get firstClassSpans() {
+    return this.options.firstClassSpans !== false;
   }
   static noConversion = NONE;
   static identity = IDENTITY;
@@ -191,19 +189,7 @@ export class Conversions {
       const parts = from.typeArguments.map((x, i) => this.classifyImplicit(x.type, to.typeArguments[i].type));
       if (parts.every(p => p.exists && p.isImplicit)) return new Conversion(K.ImplicitTuple, { underlying: parts });
     }
-    if (this.options.firstClassSpans !== false) {
-      // C# 14 first-class spans: T[] -> Span<T> / ReadOnlySpan<U>, Span<T> -> ReadOnlySpan<U>, string -> ReadOnlySpan<char>.
-      const ros = spanOf(to, 'ReadOnlySpan'),
-        span = spanOf(to, 'Span');
-      if (from instanceof ArrayTypeSymbol && from.isSZArray) {
-        if (span && span.equals(from.elementType)) return simple.ImplicitSpan;
-        if (ros && (ros.equals(from.elementType) || hasImplicitReferenceConversion(from.elementType, ros, this.core)))
-          return simple.ImplicitSpan;
-      }
-      const fromSpan = spanOf(from, 'Span');
-      if (fromSpan && ros && (ros.equals(fromSpan) || hasImplicitReferenceConversion(fromSpan, ros, this.core))) return simple.ImplicitSpan;
-      if (from.specialType === 'System_String' && ros && ros.specialType === 'System_Char') return simple.ImplicitSpan;
-    }
+    if (this.firstClassSpans && hasImplicitSpanConversion(from, to, this.core)) return simple.ImplicitSpan;
     return NONE;
   }
   /** Standard explicit conversions (the implicit ones included). */
@@ -234,6 +220,7 @@ export class Conversions {
       const parts = from.typeArguments.map((x, i) => this.classifyExplicit(x.type, to.typeArguments[i].type));
       if (parts.every(p => p.exists)) return new Conversion(K.ExplicitTuple, { underlying: parts });
     }
+    if (this.firstClassSpans && hasExplicitSpanConversion(from, to, this.core)) return simple.ExplicitSpan;
     // Before C# 11 plain IntPtr/UIntPtr convert through their own operators; they are classified as IntPtr conversions.
     if (((isIntPtrFamily(from) && (b || isEnum(to))) || (isIntPtrFamily(to) && (a || isEnum(from)))) && !(a && b)) return simple.IntPtr;
     return NONE;
@@ -256,6 +243,8 @@ export class Conversions {
   }
   userDefined(from, to, explicit) {
     if (from.typeKind === TypeKind.Interface && to.typeKind === TypeKind.Interface) return NONE;
+    // Where a span conversion exists (here: only explicitly), the operators of the span types are not considered.
+    if (this.firstClassSpans && hasExplicitSpanConversion(from, to, this.core)) return NONE;
     const found = resolveUserDefinedConversion(from, to, { explicit }, this.standard, this.core);
     if (!found) return NONE;
     if (found.ambiguous)
@@ -278,7 +267,9 @@ export class Conversions {
     if (!to || to.isErrorType()) return NONE;
     switch (expression.literal) {
       case 'null':
-        return acceptsNullLiteral(to) || (to instanceof TypeParameterSymbol && to.isReferenceType === true) ? simple.NullLiteral : NONE;
+        // As in Roslyn, null to a reference type is an implicit reference conversion; only T? takes the null literal conversion.
+        if (isNullableType(to)) return simple.NullLiteral;
+        return acceptsNullLiteral(to) || (to instanceof TypeParameterSymbol && to.isReferenceType === true) ? simple.ImplicitReference : NONE;
       case 'default':
         return simple.DefaultLiteral;
     }
@@ -293,11 +284,10 @@ export class Conversions {
         return c ?? NONE;
       }
       case 'tupleLiteral': {
-        const target = isNullableType(to) ? stripNullable(to) : to;
-        if (isTuple(target) && target.typeArguments.length === expression.elements.length) {
-          const parts = expression.elements.map((e, i) => this.classifyFromExpression(e, target.typeArguments[i].type));
-          if (parts.every(p => p.exists && p.isImplicit)) return new Conversion(K.ImplicitTupleLiteral, { underlying: parts });
-        }
+        // A literal of exactly the target type is an identity; otherwise its elements convert one by one.
+        if (expression.type && this.isIdentity(expression.type, to)) return IDENTITY;
+        const literal = this.tupleLiteralConversion(expression, stripNullable(to), false);
+        if (literal) return isNullableType(to) ? new Conversion(K.ImplicitNullable, { underlying: literal, steps: ['wrap'] }) : literal;
         if (!expression.type) return NONE;
         break;
       }
@@ -308,16 +298,19 @@ export class Conversions {
     }
     const from = expression.type;
     if (!from) return NONE;
+    const constant = expression.constantValue;
+    // Roslyn classifies an int constant converted to nint as a constant conversion, not as the numeric one.
+    if (constant?.isIntegral && !constant.isEnum && this.kindOf(from) === 'int' && this.kindOf(to) === 'nint' && !this.isIdentity(from, to))
+      return simple.ImplicitConstant;
     const typed = this.classifyStandardImplicit(from, to);
     if (typed.exists) return typed;
-    const constant = expression.constantValue;
     if (constant && !constant.isNull) {
       const target = stripNullable(to),
         a = this.kindOf(from),
         b = this.kindOf(target),
         wrap = c => (target === to ? c : new Conversion(K.ImplicitNullable, { underlying: c, steps: ['wrap'] }));
       // The literal 0 (any numeric constant zero, as Roslyn accepts) converts to every enum type.
-      if (isEnum(target) && a && !constant.isEnum && isZero(constant)) return wrap(simple.ImplicitEnumeration);
+      if (isEnum(target) && a && !constant.isEnum && isZero(constant)) return simple.ImplicitEnumeration;
       if (
         a &&
         b &&
@@ -334,7 +327,24 @@ export class Conversions {
   classifyCastFromExpression(expression, to) {
     const implicit = this.classifyFromExpression(expression, to);
     if (implicit.exists) return implicit;
+    if (to && !to.isErrorType() && expression.form === 'tupleLiteral') {
+      const literal = this.tupleLiteralConversion(expression, stripNullable(to), true);
+      if (literal) return isNullableType(to) ? new Conversion(K.ExplicitNullable, { underlying: literal, steps: ['wrap'] }) : literal;
+    }
     return expression.type ? this.classifyExplicit(expression.type, to) : NONE;
+  }
+  /**
+   * The element-wise conversion of a tuple literal to the tuple type `target`: ImplicitTupleLiteral when every element
+   * converts implicitly, ExplicitTupleLiteral (casts only) when every element converts at all, otherwise null.
+   */
+  tupleLiteralConversion(expression, target, forCast) {
+    if (!isTuple(target) || target.typeArguments.length !== expression.elements.length) return null;
+    const classify = (element, type) => (forCast ? this.classifyCastFromExpression(element, type) : this.classifyFromExpression(element, type));
+    const parts = expression.elements.map((element, index) => classify(element, target.typeArguments[index].type));
+    if (!parts.every(part => part.exists)) return null;
+    const isImplicit = parts.every(part => part.isImplicit);
+    if (!isImplicit && !forCast) return null;
+    return new Conversion(isImplicit ? K.ImplicitTupleLiteral : K.ExplicitTupleLiteral, { underlying: parts });
   }
   hasImplicit(from, to) {
     return this.classifyImplicit(from, to).exists;

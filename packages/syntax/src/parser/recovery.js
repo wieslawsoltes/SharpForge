@@ -22,6 +22,17 @@ export const recoveryMethods = {
   skipUntil(stop) {
     while (!this.at('eof') && !stop(this.current)) this.skip();
   },
+  /**
+   * The separator after a list element. A `,` is consumed; when it is absent but `canStartElement` says another element
+   * starts at the cursor, the list continues with a missing `,` reported as CS1003 at that token (Roslyn's rule for
+   * separated lists). Returns null when the list ends here.
+   */
+  separator(canStartElement) {
+    if (this.at(',')) return this.take();
+    if (this.at('eof') || !canStartElement.call(this)) return null;
+    this.error(this.current, 'CS1003', "Syntax error, ',' expected");
+    return this.missing(',');
+  },
   /** Reports the current token as unexpected and skips it. */
   skipUnexpected(code = 'CS1525', message = `Unexpected token '${this.current.text}'`) {
     this.error(this.current, code, message);

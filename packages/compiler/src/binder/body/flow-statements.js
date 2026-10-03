@@ -32,7 +32,7 @@ export const FlowStatementBinding = Base =>
               m => m.kind === SymbolKind.Method && !m.isStatic && !m.parameters.length && m.declaredAccessibility === 'public',
             );
             if (getEnumerator && getEnumerator.returnType && !getEnumerator.returnType.isErrorType()) {
-              const current = lookupMembers(getEnumerator.returnType, 'Current', this.core, {}).members.find(
+              const current = lookupMembers(getEnumerator.returnType, 'Current', this.core, { within: this.c.containingType }).members.find(
                 m => m.kind === SymbolKind.Property,
               );
               if (current) element = current.type;
@@ -98,6 +98,7 @@ export const FlowStatementBinding = Base =>
       try {
         const type = governing.hasErrors ? null : governing.type,
           pendingNames = [];
+        if (type?.specialType === 'System_Boolean') this.d.gate(this.c.uri, syntax.expression, 'SwitchOnBool');
         for (const section of syntax.sections)
           for (const s of section.statements)
             if (s.kind === 'LocalDeclarationStatement')
@@ -273,10 +274,14 @@ export const FlowStatementBinding = Base =>
           );
         return stmt('Return', syntax, false, { expression: e });
       }
-      const refError = checkRefReturn(this.c.returnRefKind, isRefReturn, e.hasErrors ? null : e, this.variableContext);
+      const refError = checkRefReturn(this.c.returnRefKind, isRefReturn, e.hasErrors ? null : e, {
+        ...this.variableContext,
+        escapeCheckedByFlow: !this.c.isLambda,
+      });
       if (refError && !e.hasErrors)
         this.report(refError.code === 'CS8150' || refError.code === 'CS8149' ? syntax : expressionSyntax, refError.code, refError.args);
       if (isRefReturn) {
+        this.markAliased(e);
         if (!e.hasErrors && e.type && !e.type.equals(type) && !type.isErrorType())
           this.report(expressionSyntax, 'CS8151', [this.display(type)]);
         return stmt('Return', syntax, false, { expression: e, isRef: true });
