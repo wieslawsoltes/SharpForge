@@ -1,3 +1,5 @@
+import {migrateDesignerLayout} from './designer-layout-migration.js';
+import {designerDockPreset} from './designer-layout-preset.js';
 import {storage,storageKeys} from './settings/storage.js';
 import {toolDefinitions} from './tools/definitions.js';
 export {toolDefinitions} from './tools/definitions.js';
@@ -32,7 +34,7 @@ export class StudioDocking {
     for(const id of [...this.layout.panels.keys()])if(id.startsWith('source:')&&!ids.has(id)){if(this.host.popouts.has(id))this.host.returnPopout(id);this.host.contents.get(id)?.remove();this.host.contents.delete(id);this.content.delete(id);this.layout.unregister(id);}
     for(const file of files){const id='source:'+file.uri;if(!this.layout.panels.has(id))this.layout.register({id,title:file.uri.split('/').at(-1),description:file.uri,kind:'document'});}
     for(const uri of tabs){const id='source:'+uri;if(ids.has(id)&&this.layout.locate(id).kind==='closed'){const group=this.layout.groups().find(g=>g.kind==='document');this.layout.open(id,group?.id);}}
-    if(this.pendingRestore){const snapshot=this.pendingRestore;this.pendingRestore=null;try{this.layout.restore(snapshot);}catch{/* Workspace source identities changed. Retain a valid default layout. */}}
+    if(this.pendingRestore){const snapshot=this.pendingRestore;this.pendingRestore=null;try{this.layout.restore(migrateDesignerLayout(snapshot,{knownPanels:this.layout.panels.values(),activeUri:active}));}catch{/* Workspace source identities changed. Retain a valid default layout. */}}
     if(active&&this.layout.panels.has('source:'+active))this.layout.open('source:'+active);
     if(files.some(f=>!this.host.contents.has('source:'+f.uri)&&tabs.includes(f.uri)))this.host.render();
     this.adapt();
@@ -43,15 +45,7 @@ export class StudioDocking {
   reset(preset='coding'){
     const defaults=defaultDockLayout(),docs=[...this.layout.panels.keys()].filter(id=>id.startsWith('source:'));let documentGroup;const walk=n=>{if(n.type==='group'&&n.id==='documents')documentGroup=n;else if(n.type==='split'){walk(n.first);walk(n.second);}};walk(defaults.root);documentGroup.panels=docs;documentGroup.active=docs[0]??null;
     if(preset==='build'){const bottom=createGroup('tools-bottom',['msbuild-inspector','problems','output']),right=createGroup('tools-right',['msbuild','project']);documentGroup.panels.push('project-source');defaults.root=createSplit('split-left','horizontal',createGroup('tools-left',['solution','outline']),createSplit('split-right','horizontal',createSplit('split-bottom','vertical',documentGroup,bottom,.65),right,.60),.16);const placed=new Set([...docs,'project-source','solution','outline',...bottom.panels,...right.panels]);defaults.closed=toolDefinitions.map(p=>p.id).filter(id=>!placed.has(id));defaults.activePanel='msbuild';}
-    if(preset==='designer'){
-      const toolbox=createGroup('design-left',['designer-toolbox','solution']);
-      const outline=createGroup('design-outline',['designer-tree']);
-      const surface=createGroup('design-surface',['designer',...docs,'designer-source'],'document');
-      const properties=createGroup('design-properties',['designer-properties','designer-layout','designer-styles']);
-      defaults.root=createSplit('design-columns','horizontal',createSplit('design-left-stack','vertical',toolbox,outline,.50),createSplit('design-main','horizontal',surface,properties,.73),.16);
-      const placed=new Set(['designer-toolbox','solution','designer-tree','designer','designer-source','designer-properties','designer-layout','designer-styles',...docs]);
-      defaults.closed=toolDefinitions.map(p=>p.id).filter(id=>!placed.has(id));defaults.activePanel='designer';
-    }
+    if(preset==='designer')Object.assign(defaults,designerDockPreset(this.layout,toolDefinitions));
     this.layout.restore(defaults);if(preset==='debug'){this.layout.dock('debug','tools-right','center');this.layout.dock('watch','tools-right','bottom');this.layout.open('stack');}if(preset==='winui'){this.layout.dock('winui','documents','right');this.layout.open('winui');this.layout.open('visual-tree');}if(preset==='decompile'){this.layout.dock('assembly','documents','center');this.layout.open('assembly');}this.mobile=false;this.adapt();
   }
   adapt(){

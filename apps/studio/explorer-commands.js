@@ -17,7 +17,7 @@ export class ExplorerCommands {
  folder(node){return node?.kind==='folder'?node.path:node?.kind==='project'?base(node.path):node?.project?base(node.project):node?.path?base(node.path):'';}
  menu(node,selection=[]){const nodes=this.nodes(node,selection),files=this.files(nodes),single=nodes.length===1,canChange=()=>this.editable(),change=()=>this.editable()===true&&files.length===nodes.length&&files.length>0,canProject=!!node?.project||node?.kind==='project',c=this.context();
   const action=(label,id,shortcut='',enabled=true)=>({label,shortcut,enabled,action:()=>this.run(id,node,nodes)});
-  const items=[];
+  const items=this.host.designerMenu?.(node)??[];
   if(single&&node?.kind==='source'||single&&['file','assembly','project-file','generated','project-reference','symbol'].includes(node?.kind))items.push(action(node.kind==='assembly'?'Open in Decompiler':'Open','open','Enter'));
   if(node?.kind==='source')items.push(action('Open in New Vertical Tab Group','split'),action('Open in Separate Window','popout'));
   if(node?.kind==='project'||node?.kind==='solution'){
