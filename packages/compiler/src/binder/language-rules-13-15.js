@@ -4,6 +4,7 @@
  */
 import { ConditionalAssignmentBinding } from './conditional-assignment.js';
 import { CSharp14Binding } from './csharp14.js';
+import { LabeledJumpBinding } from './labeled-jumps.js';
 import { FieldKeywordBinding } from './field-keyword.js';
 import { ExtensionMemberBinding } from './extension-members.js';
 import { ParamsCollectionBinding } from './params-collections.js';
@@ -13,5 +14,6 @@ export const languageRules13to15 = Object.freeze([
   ParamsCollectionBinding,
   ExtensionMemberBinding,
   CSharp14Binding,
+  LabeledJumpBinding,
   FieldKeywordBinding,
 ]);

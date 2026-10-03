@@ -7,7 +7,7 @@ import { MethodKind } from '../symbols/members.js';
 import { inheritConstraints } from '../symbols/source/type-parameters.js';
 import { checkHiding, effectiveAccessibility, isAtLeastAsAccessible } from '../binder/inheritance.js';
 import { bindOverrides, checkAbstractImplementation, checkModifiers } from '../binder/overrides.js';
-import { bindInterfaceImplementations } from '../binder/interface-impl.js';
+import { bindInterfaceImplementations, nonPublicImplicitImplementations } from '../binder/interface-impl.js';
 import { checkConstructedType } from '../binder/constraints.js';
 import { bindEnumMembers } from '../binder/enums.js';
 import { checkStructLayout, checkStructDeclaration } from '../binder/structs.js';
@@ -93,6 +93,14 @@ export const DeclarationChecks = Base =>
           this.report(this.at(d.member).uri, d.member.explicitInterfaceSyntax, d.code, d.args);
         else this.reportAt(d.member, d.code, d.args);
       }
+      if (version < 10)
+        for (const d of nonPublicImplicitImplementations(type, impl.map)) {
+          // The getter of an expression-bodied property is the expression itself.
+          const property = d.implementation.associatedSymbol,
+            at = d.implementation.locations?.[0] ?? property?.syntax?.expressionBody?.expression ?? this.at(property ?? type),
+            args = [...d.args, Number.isInteger(version) ? version + '.0' : String(version), '10.0'];
+          this.report(this.at(property ?? d.implementation).uri, at, 'CS8704', args);
+        }
       for (const d of checkStructLayout(type)) this.reportAt(d.field, d.code, d.args);
       for (const d of checkStructDeclaration(type, version)) {
         if (d.feature) this.gate(this.at(d.member).uri, this.at(d.member), d.feature.name, d.feature);
@@ -101,12 +109,16 @@ export const DeclarationChecks = Base =>
       for (const d of checkReadOnlyDeclarations(type)) this.reportAt(d.member, d.code, d.args);
       for (const d of checkInterfaceMemberKinds(type)) this.reportAt(d.member, d.code, d.args);
       for (const d of checkRefStructDeclarations(type, version)) {
-        if (d.feature) this.gate(this.at(type).uri, this.at(type), d.feature.name, d.feature);
+        if (d.feature) {
+          // Roslyn names the first interface of the base list for the ref struct interfaces gate.
+          const base = d.onInterfaces ? type.declarations.find(part => part.syntax.baseList)?.syntax.baseList.types[0] : null;
+          this.gate(this.at(type).uri, base ? (base.type ?? base) : this.at(type), d.feature.name, d.feature);
+        }
         else if (d.onType && d.member.typeSyntax) this.report(this.at(d.member).uri, d.member.typeSyntax, d.code, d.args);
         else this.reportAt(d.member, d.code, d.args);
       }
       if (type.typeKind === TypeKind.Interface || type.typeKind === TypeKind.Delegate)
-        for (const d of checkVarianceSafety(type)) {
+        for (const d of checkVarianceSafety(type, { staticMembers: version < 9 })) {
           const target =
             d.where && typeof d.where === 'object' && d.where.syntax?.type
               ? { uri: this.at(d.where).uri, node: d.where.syntax.type }
