@@ -1,0 +1,29 @@
+{
+  "node": "v24.21.0",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "units": "milliseconds",
+  "coldFrameworkImport": {
+    "samples": 25,
+    "median": 12.704583,
+    "p95": 17.982167000000004,
+    "p99": 20.855459
+  },
+  "warmFrameworkRegistration": {
+    "samples": 100,
+    "median": 1.8647499999999582,
+    "p95": 3.02150000000006,
+    "p99": 4.032040999999936
+  },
+  "warmCommandDispatch": {
+    "samples": 1000,
+    "median": 0.0002080000001569715,
+    "p95": 0.0002919999999448919,
+    "p99": 0.0011670000001231529
+  },
+  "allocations": {
+    "method": "V8 sampling heap profiler, 1024-byte interval, collected objects included; approximate allocated bytes",
+    "registrations": 10,
+    "sampledBytes": 34500096
+  }
+}
