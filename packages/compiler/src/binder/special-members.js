@@ -15,6 +15,7 @@
  * member-operator modules (binder/members/operator-declarations.js, lowering/members/operators.js).
  */
 import {DiagnosticId} from '../diagnostics/codes.js';
+import { isComImport } from './com-interop.js';
 import { SymbolKind, TypeKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 
@@ -31,7 +32,8 @@ function checkDestructor(type, member, isFirst, add) {
 function checkExtern(member, add) {
   const display = member.toDisplayString(),
     at = member.locations[0],
-    hasAttributes = !!member.boundAttributes?.length || !!member.associatedSymbol?.boundAttributes?.length;
+    // An attribute says where the code is (DllImport); the members of a COM class are implemented by its wrapper.
+    hasAttributes = !!member.boundAttributes?.length || !!member.associatedSymbol?.boundAttributes?.length || isComImport(member.containingType);
   if (member.hasBody) add(DiagnosticId.CS0179, [display], at);
   else if (member.isAbstract) add(DiagnosticId.CS0180, [display], at);
   // An extern partial method is an implementing part: Roslyn reports the partial-method rules for it, not CS0626.

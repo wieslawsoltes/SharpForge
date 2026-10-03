@@ -2,6 +2,7 @@ import {DiagnosticId} from '../diagnostics/codes.js';
 import {frameworkType} from '@sharpforge/framework';
 import {typeText,usingSpan} from '../type-utils.js';
 import {LocalDeclarationKind} from '../symbols/members.js';
+import {directlyLabeledStatement} from './labeled-jumps.js';
 import {BoundBadStatement,BoundNoOpStatement,BoundBlock,BoundLocalDeclaration,BoundMultipleLocalDeclarations,BoundExpressionStatement,BoundIfStatement,BoundWhileStatement,BoundDoStatement,BoundForStatement,BoundForEachStatement,BoundForEachEnumerator,BoundSwitchStatement,BoundSwitchSection,BoundSwitchLabel,BoundTryStatement,BoundCatchBlock,BoundUsingStatement,BoundUsingResource,BoundReturnStatement,BoundThrowStatement,BoundBreakStatement,BoundContinueStatement,BoundCheckedStatement,BoundConditionalAccessAssignment} from '../bound/nodes.js';
 /**
  * Statement binding: syntax to bound statements. Scopes are binder scopes (see binder.js); loops and switches are
@@ -24,11 +25,7 @@ export const StatementBinder=Base=>class StatementBinder extends Base {
   }
   bindStatement(node){
     if(!node)return null;
-    if(node.kind==='Labeled'){
-      const labels=[];let body=node;while(body.kind==='Labeled'){if(labels.includes(body.label)||this.loops.some(l=>l.labels?.includes(body.label)))this.c.report(body,DiagnosticId.CS0140,[body.label]);labels.push(body.label);body=body.body;}
-      if(!['While','Do','For','Foreach','Switch'].includes(body.kind))this.c.report(node,DiagnosticId.SF2142);
-      return this.bindStatement({...body,labels});
-    }
+    if(node.kind==='Labeled')return this.bindStatement(directlyLabeledStatement(node,this.loops,(at,code,args)=>this.c.report(at,code,args)));
     if(node.kind==='ExpressionStatement'&&node.expression.kind==='Assignment'&&['ConditionalMember','ConditionalIndex'].includes(node.expression.left.kind))return this.bindConditionalAccessAssignment(node);
     switch(node.kind){
       case 'Block':return this.bindBlock(node);
