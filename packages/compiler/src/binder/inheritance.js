@@ -55,10 +55,10 @@ export function resolveBases(type,{typeBinder,core,report}){
   // Circular base class: walk the declared chain; a chain that returns to this type is a cycle.
   if(baseType){
     const seen=new Set([type]);let cyclic=false;
-    for(let t=baseType.originalDefinition;t;){if(t===type){cyclic=true;break;}if(seen.has(t))break;seen.add(t);const next=t.isSource?(t._baseState===2?t._declaredBase:declaredBaseQuiet(t,typeBinder)):t.baseType;t=next?.originalDefinition??null;}
+    for(let t=baseType.originalDefinition;t;){if(t===type){cyclic=true;break;}if(seen.has(t))break;seen.add(t);const next=t.isSource?(t._baseState===2?t.cycleBase??t._declaredBase:declaredBaseQuiet(t,typeBinder)):t.baseType;t=next?.originalDefinition??null;}
     // A type nested in its own base is a cycle as well.
     for(let c=baseType.originalDefinition.containingType;c&&!cyclic;c=c.containingType)if(c===type)cyclic=true;
-    if(cyclic){repAt('CS0146',[baseType.toDisplayString(),type.toDisplayString()]);baseType=null;type.hasCircularBase=true;}
+    if(cyclic){repAt('CS0146',[baseType.toDisplayString(),type.toDisplayString()]);type.cycleBase=baseType;baseType=null;type.hasCircularBase=true;}
   }
   if(kind===TypeKind.Interface){
     const cyclic=interfaces.filter(i=>{const seen=new Set(),walk=t=>{if(t.originalDefinition===type)return true;if(seen.has(t.originalDefinition))return false;seen.add(t.originalDefinition);const list=t.originalDefinition.isSource&&t.originalDefinition._baseState!==2?declaredInterfacesQuiet(t.originalDefinition,typeBinder):t.interfaces;return list.some(walk);};return walk(i);});

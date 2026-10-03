@@ -96,6 +96,7 @@ export class TypeBinder{
         if(!found){
           const other=this.lookup(name,arity,scope,{...options,all:true});
           if(other?.wrongArity)return this.arityError(scope,syntax,other.wrongArity,arity);
+          if(this.host.isKnownFrameworkName?.(name)){const e=error(name,arity);e.isFrameworkGap=true;return e;}
           const missing={node:syntax.kind==='GenericName'?syntax:syntax.identifier,code:'CS0246',args:[name+(arity?'<>':'')]};
           if(options.quietMissingNamespace){const e=error(name,arity);e.missing=missing;return e;}
           if(!options.quiet)this.report(scope,missing.node,missing.code,missing.args);return error(name,arity);
@@ -142,7 +143,7 @@ export class TypeBinder{
   /** Applies type arguments and accessibility to a looked-up symbol. */
   finish(symbol,argSyntax,scope,syntax,options,container=null){
     if(symbol.kind===SymbolKind.Namespace||symbol.kind===SymbolKind.TypeParameter)return symbol;
-    if(symbol.kind===SymbolKind.NamedType&&!options.quiet&&!options.skipAccessCheck){const within=scope.containingType;if(symbol.locations?.length&&!isAccessible(symbol.originalDefinition,within?.originalDefinition??null))this.report(scope,syntax.identifier??syntax,'CS0122',[symbol.toDisplayString()]);}
+    if(symbol.kind===SymbolKind.NamedType&&!options.quiet&&!options.skipAccessCheck){const within=scope.containingType;if(symbol.locations?.length&&!isAccessible(symbol.originalDefinition,within?.originalDefinition??null,{withinModule:this.host.module}))this.report(scope,syntax.identifier??syntax,'CS0122',[symbol.toDisplayString()]);}
     if(!argSyntax.length){
       // A nested type named from inside a generic container keeps the container's own type parameters.
       if(container instanceof ConstructedNamedTypeSymbol&&symbol instanceof NamedTypeSymbol)return new ConstructedNamedTypeSymbol(symbol.originalDefinition,symbol.originalDefinition.typeArguments,container);

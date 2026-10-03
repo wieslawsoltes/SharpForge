@@ -222,7 +222,7 @@ export class SourceAssembly{
     if(syntax.expressionBody)getMethod=accessor('get',null);
     for(const a of accessors){const k=a.keyword.text;if(k==='get'){if(getMethod)this.report(uri,a.keyword,'CS1007');else getMethod=accessor('get',a);}else if(k==='set'||k==='init'){if(setMethod)this.report(uri,a.keyword,'CS1007');else setMethod=accessor(k,a);}}
     const property=new PropertySymbol({name,type:propertyType,parameters,getMethod,setMethod,refKind,containingSymbol:type,declaredAccessibility:m.access,modifiers:flags,locations:[{uri,...spanOf(indexer?syntax.thisKeyword:syntax.identifier)}],syntax});
-    property.scope=scope;property.uri=uri;property.isAutoProperty=isAuto;property.initializerSyntax=syntax.initializer?.value??null;property.isInitOnly=!!setMethod?.isInitOnly;property.typeSyntax=typeSyntax;
+    property.scope=scope;property.uri=uri;property.isAutoProperty=isAuto;property.initializerSyntax=syntax.initializer?.value??null;property.typeSyntax=typeSyntax;
     if(syntax.explicitInterfaceSpecifier){property.explicitInterfaceSyntax=syntax.explicitInterfaceSpecifier.name;property.simpleName=name;property.name=syntax.explicitInterfaceSpecifier.name.toString().replace(/\s+/g,'')+'.'+name;property.declaredAccessibility=Accessibility.Private;for(const a of [getMethod,setMethod])if(a){a.declaredAccessibility=Accessibility.Private;a.name=property.name.replace(/[^.]+$/,'')+a.name;}}
     if(isAuto){const backing=new FieldSymbol({name:`<${name}>k__BackingField`,type:propertyType,containingSymbol:type,declaredAccessibility:Accessibility.Private,modifiers:(flags&DeclarationModifiers.Static)|(setMethod&&!setMethod.isInitOnly?0:DeclarationModifiers.ReadOnly),associatedSymbol:property,isImplicitlyDeclared:true});property.backingField=backing;}
     if(property.initializerSyntax)this.bodies.push(property);
@@ -244,7 +244,7 @@ export class SourceAssembly{
       if((syntax.members??[]).some(x=>(x.kind==='PropertyDeclaration'||x.kind==='FieldDeclaration')&&(x.identifier?.valueText===p.name||x.declaration?.variables.some(v=>v.identifier.valueText===p.name))))continue;
       const mk=(get)=>{const a=new MethodSymbol({name:(get?'get_':'set_')+p.name,methodKind:get?MethodKind.PropertyGet:MethodKind.PropertySet,returnType:get?p.typeWithAnnotations:this.core.void,parameters:get?[]:[new ParameterSymbol({name:'value',type:p.typeWithAnnotations})],containingSymbol:type,declaredAccessibility:Accessibility.Public,modifiers:0,isInitOnly:!get&&type.typeKind===TypeKind.Class,isImplicitlyDeclared:true});a.isAutoAccessor=true;return a;};
       const property=new PropertySymbol({name:p.name,type:p.typeWithAnnotations,getMethod:mk(true),setMethod:mk(false),containingSymbol:type,declaredAccessibility:Accessibility.Public,modifiers:0,locations:p.locations,syntax:p.syntax,isImplicitlyDeclared:true});
-      property.isAutoProperty=true;property.isInitOnly=type.typeKind===TypeKind.Class;property.isPositional=true;members.push(property);
+      property.isAutoProperty=true;property.isPositional=true;members.push(property);
     }
   }
   implicitConstructors(type,members){

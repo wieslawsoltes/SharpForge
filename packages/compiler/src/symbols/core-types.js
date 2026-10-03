@@ -7,6 +7,8 @@
 import {ConstructedNamedTypeSymbol,ArrayTypeSymbol,TypeWithAnnotations,TypeKind} from './types.js';
 import {frameworkBridge} from './registry-bridge.js';
 import {specialTypeFromKeyword} from './special-types.js';
+import {MethodSymbol,PropertySymbol,ParameterSymbol,MethodKind,DeclarationModifiers} from './members.js';
+import {Accessibility} from './types.js';
 
 const keywordNames=['object','void','bool','char','sbyte','byte','short','ushort','int','uint','long','ulong','decimal','float','double','string'];
 export class CoreTypes{
@@ -23,7 +25,28 @@ export class CoreTypes{
     this.ienumerator=bridge.coreType('System_Collections_IEnumerator');this.ienumeratorT=bridge.coreType('System_Collections_Generic_IEnumerator_T');
     this.ilistT=bridge.coreType('System_Collections_Generic_IList_T');this.icollectionT=bridge.coreType('System_Collections_Generic_ICollection_T');
     this.ireadOnlyListT=bridge.coreType('System_Collections_Generic_IReadOnlyList_T');this.ireadOnlyCollectionT=bridge.coreType('System_Collections_Generic_IReadOnlyCollection_T');
+    this.augment();
     this.task=bridge.coreType('System_Threading_Tasks_Task');this.taskT=bridge.coreType('System_Threading_Tasks_Task_T');this.type=bridge.coreType('System_Type');this.attribute=bridge.coreType('System_Attribute');
+  }
+  /**
+   * Members every C# program may use but the closed registry does not list: the System.Object surface (so user types
+   * can call and override Equals/GetHashCode/ToString), Enum.HasFlag and the Nullable<T> members. Added once per bridge.
+   */
+  augment(){
+    const bridge=this.bridge;if(bridge.coreAugmented)return;bridge.coreAugmented=true;
+    const method=(owner,name,returnType,parameters=[],modifiers=0)=>{if(owner.getMembers(name).some(m=>m.kind==='Method'&&m.parameters.length===parameters.length&&!!(m.modifiers&DeclarationModifiers.Static)===!!(modifiers&DeclarationModifiers.Static)))return;owner.addMember(new MethodSymbol({name,returnType,parameters:parameters.map(([n,t])=>new ParameterSymbol({name:n,type:t})),declaredAccessibility:Accessibility.Public,modifiers,isImplicitlyDeclared:true}));};
+    const V=DeclarationModifiers.Virtual,S=DeclarationModifiers.Static,o=this.object;
+    for(const m of o.getMembers('ToString'))m.modifiers|=V;
+    method(o,'ToString',this.string,[],V);method(o,'Equals',this.bool,[['obj',o]],V);method(o,'GetHashCode',this.int,[],V);method(o,'GetType',bridge.coreType('System_Type'));
+    method(o,'Equals',this.bool,[['objA',o],['objB',o]],S);method(o,'ReferenceEquals',this.bool,[['objA',o],['objB',o]],S);
+    method(this.enumType,'HasFlag',this.bool,[['flag',this.enumType]]);method(this.enumType,'CompareTo',this.int,[['target',o]]);
+    const n=this.nullable,t=n.typeParameters[0];
+    if(!n.getMembers('HasValue').length){
+      const getter=(name,type)=>{const get=new MethodSymbol({name:'get_'+name,methodKind:MethodKind.PropertyGet,returnType:type,declaredAccessibility:Accessibility.Public,modifiers:DeclarationModifiers.ReadOnly,isImplicitlyDeclared:true});n.addMember(get);n.addMember(new PropertySymbol({name,type,getMethod:get,declaredAccessibility:Accessibility.Public,isImplicitlyDeclared:true}));};
+      getter('HasValue',this.bool);getter('Value',t);
+      n.addMember(new MethodSymbol({name:'GetValueOrDefault',returnType:t,parameters:[],declaredAccessibility:Accessibility.Public,modifiers:DeclarationModifiers.ReadOnly,isImplicitlyDeclared:true}));
+      n.addMember(new MethodSymbol({name:'GetValueOrDefault',returnType:t,parameters:[new ParameterSymbol({name:'defaultValue',type:t})],declaredAccessibility:Accessibility.Public,modifiers:DeclarationModifiers.ReadOnly,isImplicitlyDeclared:true}));
+    }
   }
   /** The type a C# type keyword denotes (including nint/nuint), or null. */
   keyword(word){return this.byKeyword.get(word)??null;}
