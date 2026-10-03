@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "targetFramework": "net10.0",
+  "referencePack": "10.0.5",
+  "roslyn": {
+    "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "sha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16",
+    "platformHashes": {
+      "darwin-arm64": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16",
+      "linux-x64": "4913fa70d10c99901edbb825fdedcc92465be08665016a5d258ea45f953624f0",
+      "win32-x64": "149fd48d7ad64c5ba9658572c8c59ab27a1b40e0834f764ab54f4584b7e8ac1a"
+    }
+  },
+  "referenceAssemblies": {
+    "algorithm": "sha256(JSON.stringify(sorted [{name,sha256}]))",
+    "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362",
+    "count": 167
+  },
+  "nugetSource": "https://api.nuget.org/v3/index.json",
+  "windowsAppSDK": "1.8.260921001",
+  "platforms": {
+    "coreclr": [
+      "darwin-arm64",
+      "linux-x64",
+      "win32-x64"
+    ],
+    "winui": [
+      "win32-x64"
+    ]
+  },
+  "images": {
+    "linux": {
+      "runner": "ubuntu-24.04",
+      "container": "mcr.microsoft.com/dotnet/sdk:10.0.201-noble@sha256:127d7d4d601ae26b8e04c54efb37e9ce8766931bded0ee59fcd799afd21d6850",
+      "architectureDigests": {
+        "linux-x64": "sha256:c804b88aaca8d6b76f65998427adec3101dcbbf2e52e705e2509eb81263aab0c",
+        "linux-arm64": "sha256:ba9a05e2c5ce6eec597c6e8fe23815b1f11180d8588cf6877ad329bd8597921d"
+      }
+    },
+    "windows": {
+      "runner": "windows-2025",
+      "imageOS": "win25-vs2026",
+      "imageVersion": "20260925.250.1",
+      "minimumBuild": 19041
+    },
+    "macos": {
+      "runner": "macos-26",
+      "imageOS": "macos26",
+      "imageVersion": "20260907.0351.1"
+    }
+  },
+  "licenses": {
+    "dotnet": "https://github.com/dotnet/sdk/blob/v10.0.201/LICENSE.TXT",
+    "roslyn": "https://github.com/dotnet/roslyn/blob/main/License.txt",
+    "windowsAppSDK": "https://www.nuget.org/packages/Microsoft.WindowsAppSDK/1.8.260921001/License"
+  },
+  "provenance": {
+    "containerManifest": "https://mcr.microsoft.com/v2/dotnet/sdk/manifests/10.0.201-noble",
+    "retrievedUTC": "2026-10-03T13:10:35Z",
+    "windowsImageEvidence": "GitHub Actions run 37124380717, env.json ImageOS/ImageVersion; exact version is enforced on hosted runners and drift fails closed.",
+    "macosImageEvidence": "GitHub Actions run 37125167557, artifact 11275065779 env.json; image version drift fails closed.",
+    "sdkArchives": [
+      {
+        "rid": "linux-x64",
+        "url": "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.201/dotnet-sdk-10.0.201-linux-x64.tar.gz",
+        "sha512": "a33354e3291aa21ea5e1983733f001d45264c31ee3c0dc4a85509d4cb6d4896cfec57fd2143a7b54c93bc42b328e059b16802b4085257a367ef2652f1c8fa424",
+        "compilerSHA256": "4913fa70d10c99901edbb825fdedcc92465be08665016a5d258ea45f953624f0",
+        "referenceAssemblySHA256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+      },
+      {
+        "rid": "win-x64",
+        "url": "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.201/dotnet-sdk-10.0.201-win-x64.zip",
+        "sha512": "15f511296c0ea28a61bafcc2efbc66cd4d22d15a2db44597b9b2254a9eafb57047bbe2feca8106a17ba7ae8af19a3a6847a375b6740e0bf6ab0874ade8af0bca",
+        "compilerSHA256": "149fd48d7ad64c5ba9658572c8c59ab27a1b40e0834f764ab54f4584b7e8ac1a",
+        "referenceAssemblySHA256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+      }
+    ],
+    "sdkReleaseMetadata": "https://builds.dotnet.microsoft.com/dotnet/release-metadata/10.0/releases.json"
+  }
+}

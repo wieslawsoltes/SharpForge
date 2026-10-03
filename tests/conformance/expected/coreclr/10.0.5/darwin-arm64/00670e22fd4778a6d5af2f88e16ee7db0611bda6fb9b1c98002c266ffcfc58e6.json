@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "fixtureId": "negative-exit",
+  "inputHash": "00670e22fd4778a6d5af2f88e16ee7db0611bda6fb9b1c98002c266ffcfc58e6",
+  "oracleId": "coreclr",
+  "toolVersion": "10.0.5",
+  "target": "darwin-arm64",
+  "toolchain": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "roslyn": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "referencePack": "10.0.5",
+    "windowsAppSDK": null
+  },
+  "langVersion": "12.0",
+  "result": {
+    "stdout": "",
+    "stderr": "",
+    "exitCode": 253,
+    "signal": null,
+    "unhandledException": null
+  }
+}
