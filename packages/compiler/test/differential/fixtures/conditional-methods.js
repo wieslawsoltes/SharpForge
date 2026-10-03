@@ -100,5 +100,56 @@ export const fixtures = [
     }
   `,
     ),
+    out(
+      'attribute-found-through-an-alias',
+      cs`
+    #define SHOWN
+    using System;
+    using Cond = System.Diagnostics.ConditionalAttribute;
+    class Program
+    {
+        [Cond("HIDDEN")]
+        static void Hidden() { Console.WriteLine("hidden"); }
+        [Cond("SHOWN")]
+        static void Shown() { Console.WriteLine("shown"); }
+        [global::System.Diagnostics.Conditional("HIDDEN")]
+        static void Qualified() { Console.WriteLine("qualified"); }
+        static void Main()
+        {
+            Hidden();
+            Shown();
+            Qualified();
+            Console.WriteLine("done");
+        }
+    }
+  `,
+    ),
+    diag(
+      'attribute-resolved-by-symbol',
+      cs`
+    using System;
+    using Cond = System.Diagnostics.ConditionalAttribute;
+    namespace Mine
+    {
+        class ConditionalAttribute : Attribute
+        {
+            public ConditionalAttribute(string text) { }
+        }
+    }
+    [Cond("DEBUG")]
+    class NotAnAttribute { }
+    [Cond("DEBUG")]
+    class TraceAttribute : Attribute { }
+    [Cond("not an identifier")]
+    class BadSymbolAttribute : Attribute { }
+    class Program
+    {
+        [Cond("DEBUG")] static int ViaAlias() { return 1; }
+        [Mine.Conditional("DEBUG")] static int NotTheFrameworkAttribute() { return 1; }
+        [Cond("DEBUG")] Program() { }
+        static void Main() { }
+    }
+  `,
+    ),
   ]),
 ];

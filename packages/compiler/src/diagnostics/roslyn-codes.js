@@ -396,6 +396,7 @@ export const roslynCodes=Object.freeze({
  CS1678:["ERR_BadParamType","error",0,"Parameter {0} is declared as type '{1}{2}' but should be '{3}{4}'"],
  CS1681:["ERR_GlobalExternAlias","error",0,"You cannot redefine the global extern alias"],
  CS1688:["ERR_CantConvAnonMethNoParams","error",0,"Cannot convert anonymous method block without a parameter list to delegate type '{0}' because it has one or more out parameters"],
+ CS1689:["ERR_ConditionalOnNonAttributeClass","error",0,"Attribute '{0}' is only valid on methods or attribute classes"],
  CS1692:["WRN_InvalidNumber","warning",1,"Invalid number"],
  CS1695:["WRN_IllegalPPChecksum","warning",1,"Invalid #pragma checksum syntax; should be #pragma checksum \"filename\" \"{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}\" \"XXXX...\""],
  CS1696:["WRN_EndOfPPLineExpected","warning",1,"Single-line comment or end-of-line expected"],

@@ -23,23 +23,14 @@ import { attributeLocations, compilationLocations, describeTargets, knownLocatio
 import { isAccessible } from './accessibility.js';
 import { BodyBinder } from './body-binder.js';
 import { isSourceSymbol } from '../semantic/analysis-helpers.js';
+import { attributesNamed } from './bound-attributes.js';
+
+export { attributesNamed, fullNameOf } from './bound-attributes.js';
 
 const defaultUsage = Object.freeze({ validOn: AttributeTargets.All, allowMultiple: false, inherited: true });
 const unknownUsage = Object.freeze({ validOn: AttributeTargets.All, allowMultiple: true, inherited: true, isUnknown: true });
 /** Bound expression kinds that are never an attribute argument, whatever their operands. */
 const neverConstant = new Set(['Call', 'ObjectCreation', 'Local', 'Parameter', 'PropertyAccess', 'This', 'Assignment', 'Lambda']);
-
-/** The namespace-qualified name of a named type, without type arguments (`System.ObsoleteAttribute`). */
-export function fullNameOf(type) {
-  const parts = [];
-  for (let s = type?.originalDefinition ?? type; s && s.name; s = s.containingSymbol) parts.unshift(s.name);
-  return parts.join('.');
-}
-
-/** The bound attributes of a symbol whose class has the full name `fullName`. */
-export function attributesNamed(symbol, fullName) {
-  return (symbol?.boundAttributes ?? []).filter(attribute => fullNameOf(attribute.attributeClass) === fullName);
-}
 
 const constantOf = argument => {
   const value = argument?.constantValue;

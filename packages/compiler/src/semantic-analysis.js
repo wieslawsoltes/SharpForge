@@ -19,6 +19,7 @@ import { UnusedSymbolWarnings } from './semantic/unused-symbols.js';
 import { AttributeBinding } from './binder/attributes.js';
 import { ObsoleteUses } from './binder/obsolete.js';
 import { SpecialMemberChecks } from './binder/special-members.js';
+import { ConditionalMethodChecks } from './binder/csharp2-misc.js';
 
 const phases = [
   DeclarationChecks,
@@ -26,6 +27,7 @@ const phases = [
   ConstantBinding,
   AttributeBinding,
   SpecialMemberChecks,
+  ConditionalMethodChecks,
   BodyBinding,
   MemberBodyChecks,
   ObsoleteUses,
