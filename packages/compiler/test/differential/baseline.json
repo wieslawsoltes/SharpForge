@@ -316,6 +316,7 @@
     "namespaces/cs0432-unknown-alias-qualifier",
     "namespaces/cs0576-alias-conflicts-with-namespace",
     "namespaces/cs0576-alias-conflicts-with-type",
+    "namespaces/cs1529-using-after-declaration",
     "namespaces/cs1537-duplicate-alias",
     "namespaces/cs7007-using-static-a-namespace",
     "namespaces/nested-and-qualified",

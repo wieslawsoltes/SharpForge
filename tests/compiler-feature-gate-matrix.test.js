@@ -33,7 +33,7 @@ const notGated = {
       'PragmaWarning PragmaChecksum AliasQualifiedNames ExpressionTrees QueryContinuation QueryJoin QueryGroupBy QueryOrderBy QueryLet ' +
       'EmbeddedInteropTypes IndexedProperties CallerInfoAttributes AwaitExpression AwaitInCatchAndFinally ExtensionAddMethods ' +
       'ParameterlessStructInitializers Deconstruction GeneralizedAsyncReturnTypes IsPatternExpression CaseGuards OverrideWithConstraints ' +
-      'PropertyPatterns PositionalPatterns NullForgivingOperator NullableDirective TopLevelStatements PragmaWarningEnable WithExpressions ' +
+      'PropertyPatterns PositionalPatterns NullForgivingOperator NullableDirective TopLevelStatements WithExpressions ' +
       'UnmanagedCallingConventions AsyncMethodBuilderOverride CallerArgumentExpression ExtendedNameofScope NumericIntPtr ScopedRef ' +
       'SlicePattern ExperimentalAttribute SpreadElement'
     )
@@ -53,7 +53,6 @@ const notGated = {
   UnmanagedConstructedTypes: needsOperandTypes,
   ObsoleteOnPropertyAccessor: needsAttributeBinding,
   NullPointerConstantPattern: needsOperandTypes,
-  AsyncUsing: 'the parser records `await using` as AsyncStreams, so it is reported with that feature name',
   TargetTypedConditional: needsOperandTypes,
   ModuleInitializers: needsAttributeBinding,
   ExtensionGetEnumerator: needsOperandTypes,
