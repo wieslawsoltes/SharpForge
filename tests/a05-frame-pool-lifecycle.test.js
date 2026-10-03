@@ -47,7 +47,8 @@ for (const cancel of [false, true]) {
 }
 
 test('CIL: retirement clears late fields and stop preserves fatal inspection until disposal', () => {
-  const vm = new CilVirtualMachine(managedFixture(), {maxInstructions: 0});
+  const vm = new CilVirtualMachine(managedFixture());
+  vm.options.maxInstructions = 0;
   const frame = vm.top, reference = vm.heap.object('System.Object', []);
   frame.returnObject = reference;
   frame.genericIdentity = 'Fixture.Program';
@@ -67,13 +68,14 @@ test('CIL: retirement clears late fields and stop preserves fatal inspection unt
 
 for (const engine of ['source', 'cil']) {
   test(`${engine}: exception unwinding releases callee roots before reuse`, () => {
-    const result = compileToIL('class Program { static void Fail() { object x = new object(); throw new Exception("expected"); } static int Main() { int caught = 0; for (int i = 0; i < 5; i++) { try { Fail(); } catch (Exception) { caught++; } } return caught; } }');
+    const result = compileToIL('class Program { static void Fail() { int[] x = new int[1]; throw new Exception("expected"); } static int Main() { int caught = 0; for (int i = 0; i < 5; i++) { try { Fail(); } catch (Exception) { caught++; } } return caught; } }');
     assert(result.success, JSON.stringify(result.diagnostics));
     const vm = engine === 'cil' ? new CilVirtualMachine(result.assembly) : new VirtualMachine(result.image);
     assert.equal(vm.run().state, 'terminated', vm.fault?.message);
     assert.equal(vm.returnValue, 5);
     assert(framePoolStatistics(vm).reused >= 4);
-    assert.equal(framePoolStatistics(vm).released, 6);
+    // The emitted entry wrapper, Main, and five Fail invocations all retire.
+    assert.equal(framePoolStatistics(vm).released, 7);
     vm.stop();
   });
 }
