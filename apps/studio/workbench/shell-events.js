@@ -13,7 +13,7 @@ export function subscribeShellServices(shell) {
       invalidate('outline', 'toolbox', 'properties', 'code-definition', 'solution-view');
     }
     if (['changed', 'added', 'removed', 'reset'].includes(event.type)) {
-      shell.bookmarks.trackChanges();
+      shell.bookmarks.trackChanges(event);
       invalidate('outline', 'class-view', 'bookmarks', 'code-definition', 'solution-view');
       shell.taskListDirty = true;
     }

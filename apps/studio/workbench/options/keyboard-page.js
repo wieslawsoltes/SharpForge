@@ -1,4 +1,5 @@
 import {button, element, field, input, select} from '../ui.js';
+import {EDITOR_KEYMAPS} from '@sharpforge/editor';
 
 const scopes = ['Global', 'Text Editor', 'Solution Explorer', 'Designer', 'Debugging'];
 
@@ -13,14 +14,27 @@ function stroke(event) {
   return modifiers.join('+');
 }
 
-/** Conflict reporting compares normalized sequences within each scope, including existing scheme bindings. */
+/** Apply persisted replacements and removals by stable binding id before editing or resolving shortcuts. */
+export function effectiveBindings(defaults, overrides) {
+  const result = new Map(defaults.map(binding => [binding.id, binding]));
+  for (const binding of overrides) {
+    const id = binding.removed ? binding.id.replace(/^removed:/u, '') : binding.id;
+    if (binding.removed) result.delete(id);
+    else result.set(id, binding);
+  }
+  return [...result.values()];
+}
+
+/** Global bindings overlap editor/tool scopes; unrelated specific scopes remain independent. */
 export function keyboardConflicts(bindings, candidate) {
   const normalize = value => (Array.isArray(value) ? value.join(' ') : value).replace(/,\s*/g, ' ').toLowerCase().trim();
   return bindings.filter(binding => binding.command !== candidate.command &&
-    (binding.scope ?? 'Global') === (candidate.scope ?? 'Global') && normalize(binding.keys) === normalize(candidate.keys));
+    !binding.removed && ((binding.scope ?? 'Global') === (candidate.scope ?? 'Global') ||
+      (binding.scope ?? 'Global') === 'Global' || (candidate.scope ?? 'Global') === 'Global') &&
+    normalize(binding.keys) === normalize(candidate.keys));
 }
 
-export function keyboardOptionsPage({registry, keybindings, schemes = ['visual-studio', 'vscode', 'resharper']}) {
+export function keyboardOptionsPage({registry, keybindings, schemes = EDITOR_KEYMAPS.map(item => ({value: item.id, label: item.label}))}) {
   return {id: 'Environment.keyboard', category: 'Environment', title: 'Keyboard', keywords: ['shortcuts', 'mapping', 'scheme'],
     render(host, {draft, update}) {
       const document = host.ownerDocument;
@@ -30,7 +44,7 @@ export function keyboardOptionsPage({registry, keybindings, schemes = ['visual-s
       const commands = element(document, 'select', {size: 8, 'aria-label': 'Commands'});
       const existing = element(document, 'select', {size: 4, 'aria-label': 'Current shortcuts'});
       const conflicts = element(document, 'p', {role: 'status'});
-      const currentBindings = () => [...(keybindings?.list() ?? []), ...draft.keyboard.bindings];
+      const currentBindings = () => effectiveBindings(keybindings?.list() ?? [], draft.keyboard.bindings);
       const keys = input(document, 'Press shortcut keys', '', () => {}, {readonly: true});
       keys.addEventListener('keydown', event => {
         event.preventDefault();

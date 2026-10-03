@@ -7,7 +7,7 @@ export const workbenchMenus = Object.freeze([
     'workbench.replaceFiles', 'definition', 'references', 'rename', 'workbench.goToAll']},
   {id: 'view', title: 'View', mnemonic: 'v', commands: ['commands', 'tool:solution', 'tool:problems', 'tool:output',
     'tool:task-list', 'tool:class-view', 'tool:object-browser', 'tool:properties', 'tool:toolbox',
-    'tool:outline', 'tool:bookmarks', 'tool:calls', 'tool:code-definition', 'tool:references', 'tool:command-window']},
+    'tool:outline', 'tool:bookmarks', 'tool:calls', 'tool:code-definition', 'tool:references', 'tool:command-window', 'workbench.toolbars']},
   {id: 'project', title: 'Project', mnemonic: 'p', commands: ['projectProperties', 'workbench.configuration']},
   {id: 'build', title: 'Build', mnemonic: 'b', commands: ['build', 'nativeMSBuild', 'nativeEvaluate', 'nativeCancel']},
   {id: 'debug', title: 'Debug', mnemonic: 'd', commands: ['debug', 'run', 'stop', 'pause', 'next', 'stepIn', 'stepOut',

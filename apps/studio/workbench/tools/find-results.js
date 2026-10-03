@@ -1,12 +1,12 @@
 import {VirtualTable} from './virtual-table.js';
 import {button, checkbox, element, field, input, select, copyText, runAction} from '../ui.js';
 
-export function mountFindResults(host, {search, navigate, tasks, onError, initial, replace = false}) {
+export function mountFindResults(host, {search, navigate, tasks, onError, initial, instanceId, scopeSelector, replace = false}) {
   const document = host.ownerDocument;
   let result = initial;
-  let scope = 'solution';
+  let scope = scopeSelector?.value ?? 'solution';
   let regex = false, matchCase = false, wholeWord = false, keepResults = false;
-  let instance = initial?.id ?? 'find-results-1';
+  let instance = initial?.id ?? instanceId ?? 'find-results-1';
   let operation;
   const selected = new Set();
   const toolbar = element(document, 'div', {className: 'wb-tool-controls'});
@@ -52,13 +52,14 @@ export function mountFindResults(host, {search, navigate, tasks, onError, initia
   }, onError);
   toolbar.append(field(document, 'Find what', query));
   if (replace) toolbar.append(field(document, 'Replace with', replacement));
-  toolbar.append(select(document, 'Look in', [{value: 'solution', label: 'Entire solution'}, {value: 'project', label: 'Current project'},
+  if (scopeSelector) scopeSelector.mount(toolbar, () => { scope = scopeSelector.value; });
+  else toolbar.append(select(document, 'Look in', [{value: 'solution', label: 'Entire solution'}, {value: 'project', label: 'Current project'},
     {value: 'document', label: 'Current document'}, {value: 'open', label: 'Open documents'}], scope, value => { scope = value; }));
   toolbar.append(field(document, 'File types', globs), checkbox(document, 'Regex', regex, value => { regex = value; }),
     checkbox(document, 'Match case', matchCase, value => { matchCase = value; }),
     checkbox(document, 'Whole word', wholeWord, value => { wholeWord = value; }),
     checkbox(document, 'Keep results', keepResults, value => { keepResults = value; }));
-  toolbar.append(select(document, 'Find Results window', ['find-results-1', 'find-results-2'], instance, value => {
+  toolbar.append(select(document, 'Find Results window', [...new Set([instance, 'find-results-1', 'find-results-2'])], instance, value => {
     instance = value;
     const snapshot = search.results.get(value);
     if (snapshot) render(snapshot);
