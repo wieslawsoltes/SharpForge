@@ -21,10 +21,12 @@ Commands execute once; a pending chord consumes an invalid second stroke and
 reports it. Escape cancels a prefix. Timeouts and disposal release timers.
 Composition, dead keys and AltGraph do not trigger bindings.
 
+`eventStroke`, `normalizeStroke`, and `normalizeSequence` are public utilities for shortcut recorders and persisted bindings. They normalize modifiers and observed shifted punctuation without treating IME or AltGraph input as a shortcut.
+
 The service exposes bindings per command, commands per sequence and exact/prefix
 conflicts including Global versus Text Editor shadowing. `setBindings` validates
 the whole proposed table before replacing the active table. Context predicates
-use a bounded parser, with no dynamic code evaluation.
+use a bounded parser, with no dynamic code evaluation. `addFilter(predicate)` returns a disposable host filter and removes matching bindings from resolution without consuming unrelated chord prefixes. Filters survive binding-table replacement and are cleared on disposal.
 
 `docs/vs-inventory.json` pins the reference, registered defaults, known unbound
 commands, retained compatibility choices and platform alternatives. The reference
@@ -74,20 +76,35 @@ macros are unsupported. Unknown Ex commands report their names. The behavioral
 suite lists unsupported features with reasons; it tests the native model rather
 than the retained third-party CodeMirror files.
 
+Visual blocks use the same visual-column geometry as native box editing. Partial
+tabs split into unselected spaces, wide graphemes remain whole, vertical motions
+retain their display column through short lines, and block registers keep their
+row fragments. Change, insert, append, replace, shift, yank and put operate on the
+selected rows as one history operation. `I` leaves rows before the block untouched;
+`A` pads them, while `$A` appends at each line end. Blocks are limited to 10,000
+rows and the configured register character budget. The reference for these
+semantics is [Vim's visual-block operator contract](https://vimhelp.org/visual.txt.html#blockwise-operators).
+
 Profile switches replace only the binding table and modal dispatch. Buffers,
 selections, folds, breakpoints, composition and undo history remain attached to
 the editor. Leaving Vim closes its explicit undo group without replacing the
 model or cancelling an IME composition. Switching documents clears pending
 chords and closes a group against the old document before changing models.
+Returning to an unfinished Vim insert/replace session opens a fresh explicit
+history group, so intervening edits made with another profile stay separate.
 
 ## Runnable example and validation
 
-Open `packages/editor/examples/keymaps.html` through the repository's browser
-harness. The example creates one editor and switches all five profiles over that
-same document. Named commands can be invoked independently of keybindings.
+Build the complete scope once, run `node scripts/serve.js`, and open
+`/packages/editor/examples/keymaps.html` on the displayed origin. The
+[example instructions](../packages/editor/examples/README.md) explain the built
+module-worker graph and production CSP. The example creates one editor and
+switches all five profiles over that same document. Named commands can be
+invoked independently of keybindings.
 
 The focused suites are `tests/a20-07-keybindings.test.js`,
-`tests/a20-09-profiles.test.js` and `tests/editor-vim.test.js`. They use the real
+`tests/a20-09-profiles.test.js`, `tests/editor-vim.test.js`, and
+`tests/a20-vim-blocks.test.js`. They use the real
 native text model; view/provider seams in Node fixtures are not browser evidence.
 The editor benchmark scope records model timings separately from actual browser
 keystroke-to-paint latency. No native Visual Studio, Vim executable, NVDA or

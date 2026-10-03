@@ -4,12 +4,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SharpForge virtual editor</title>
 <link rel="stylesheet" href="../src/editor.css">
-<style>
-  body { margin: 20px; color: #e6e8ed; background: #202128; font: 14px system-ui; }
-  nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
-  button { padding: 6px 10px; }
-  #editor { height: 70vh; border: 1px solid #5b5768; }
-</style>
+<link rel="stylesheet" href="./examples.css">
 <h1>Virtual editor and shared document views</h1>
 <nav>
   <button id="wrap">Toggle wrap</button>
@@ -22,8 +17,5 @@
 </nav>
 <div id="editor"></div>
 <p id="status" role="status"></p>
-<script type="importmap">
-{"imports":{"@sharpforge/text":"../../text/src/index.js","@sharpforge/syntax":"../../syntax/src/index.js"}}
-</script>
 <script type="module" src="./virtual-view.js"></script>
 </html>
