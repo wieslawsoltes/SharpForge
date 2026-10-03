@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "repository": "wieslawsoltes/SharpForge",
+  "release": "0.15",
+  "tracker": "SF-R015",
+  "audited_main": "7f0ca223d1b9a07725078260020019cfb276c241",
+  "selections": {
+    "A10": [1,2,3,5,7,8,9,10,11,12], "A11": [1,2,6],
+    "A12": [1,2,3,4,5,10,11,12], "A15": [2,7,8], "A16": [4,7,9],
+    "A17": [1,2,3,4,5,6,9,10,11,12], "A18": [1,2,3,4,5,10,12],
+    "A19": [1,2,3,4,5,6,7,11,12], "A24": [1,4,10,11],
+    "A25": [1,2,3,4,5,6,7,8,9,12], "A26": [1,2,3,4,5,7,8,9,10,11,12],
+    "A29": [1,6,7,8,9]
+  },
+  "new_tasks": [
+    {
+      "id": "SF-R015-T01", "area": "A00", "parent": "SF-A00-T11", "priority": "P0",
+      "title": "Reconcile 0.15 source provenance and publish a verified implementation inventory",
+      "paths": ["planning/release15-evidence/**"], "dependencies": [],
+      "deliverable": "Audit current Git refs and any explicitly supplied 0.15 snapshot, map exact commits to release requirements, and distinguish implemented, partial, absent and unqualified behavior. Do not rebuild a duplicate feature or treat conversational claims as recovered code.",
+      "acceptance": [
+        "Record source/archive hashes, provenance and relevant changed paths; absent earlier snapshots are explicitly absent, not silently relabeled 0.14.",
+        "For every requirement, link the existing implementation issue and identify a runnable test or a concrete missing-test task.",
+        "Preserve current main and CI fixes; propose focused recovery PRs to the appropriate owning area instead of mixing product edits into this audit.",
+        "Inventory includes document designer lifecycle, two apps/two instances, app-only HTML downloads, real Git auth, GPU fallbacks and numerical/network operations.",
+        "Provide exact commands, environments, last verified commits, failing logs and remaining blockers; no artifact link without a real asset and integrity check."
+      ]
+    },
+    {
+      "id": "SF-R015-T02", "area": "A10", "parent": "SF-A10-T08", "priority": "P1",
+      "title": "Enforce fair numeric-worker and memory budgets across concurrent app sessions",
+      "paths": ["packages/compute/src/session-budget.js", "packages/compute/src/session-budget/**", "tests/r015-compute-budget*"],
+      "dependencies": ["SF-A00-T04", "SF-A19-T01", "SF-A10-T07"],
+      "deliverable": "Implement the cross-app resource-admission layer for the existing numeric pool. Consume A19 session IDs and A00 cancellation/lifetime contracts; retain A10 ownership of pool scheduling. This is the multi-app slice of adaptive scheduling, not a second worker pool.",
+      "acceptance": [
+        "Two apps and two instances share an explicit browser-wide worker and queued-byte budget, while managed heaps and inputs remain isolated.",
+        "Fair dispatch prevents a large/background job from starving small foreground tasks; nested submissions cannot multiply worker counts beyond the budget.",
+        "Cancel, dispose or crash one app without terminating other apps; reject stale completions and release transferred/shared-buffer ownership once.",
+        "Retain scalar/SIMD threshold selection and report actual workers, copied/shared bytes, allocations and per-app quotas.",
+        "Benchmark cold/warm, p95/p99 UI latency and throughput for one versus four apps with identical inputs; retain raw data including regressions.",
+        "A19 owns session lifecycle, A11 owns managed scheduling, A12 owns network quotas and A06 owns GC. Changes to shared registries/runtime dispatch require an A00 handoff, not edits from this task."
+      ]
+    },
+    {
+      "id": "SF-R015-T03", "area": "A26", "parent": "SF-A26-T06", "priority": "P1",
+      "title": "Ship JS and Wasm-SIMD app-publish profiles without blocking on the future Rust port",
+      "paths": ["packages/publish/src/profiles/**", "tests/r015-publish-profiles*"],
+      "dependencies": ["SF-A26-T01", "SF-A26-T02", "SF-A26-T03", "SF-A26-T04", "SF-A26-T05", "SF-A26-T07", "SF-A26-T08"],
+      "deliverable": "Deliver the 0.15 subset of backend-selectable application publishing using the existing JavaScript managed runtime and optional Wasm SIMD numeric backend. Keep the broader parent open for Rust/Wasm runtime publishing; do not remove its Rust dependency or call numeric Wasm a Rust runtime.",
+      "acceptance": [
+        "Publish selected console, library-entry and WinUI projects with dependency closure and runtime-only assets; downloaded output does not boot the IDE.",
+        "Embed nested numeric-worker and SIMD assets, validate safe HTML/script escaping and produce deterministic bytes plus checksums.",
+        "Run the downloaded HTML offline and over supported HTTP/HTTPS origins; test missing SIMD, missing WebGPU and absent cross-origin isolation as separate cases.",
+        "Reject unsupported native APIs, absent entry points and unavailable backends before download; report supported profiles explicitly.",
+        "No repository token, development credential, recovery buffer or implicit network/storage grant is included.",
+        "Rust execution remains tracked by SF-A27 and the parent issue; this child can close only with JS/SIMD-specific evidence, never by closing the broader parent."
+      ]
+    },
+    {
+      "id": "SF-R015-T04", "area": "A29", "parent": "SF-A29-T12", "priority": "P1",
+      "title": "Qualify the 0.15 Git-to-designer-to-multi-app-to-downloaded-HTML release scenario",
+      "paths": ["tests/conformance/release15/**", "scripts/conformance/release15/**", "planning/qualification/release15/**"],
+      "dependencies": ["SF-R015-T01", "SF-R015-T02", "SF-R015-T03", "SF-A18-T01", "SF-A18-T02", "SF-A18-T10", "SF-A19-T02", "SF-A19-T07", "SF-A25-T03", "SF-A25-T06", "SF-A26-T11", "SF-A17-T06", "SF-A12-T10"],
+      "deliverable": "Own only the cross-area acceptance fixture and release evidence. Exercise merged area implementations together; implementation defects return to their existing owner issues. The wider full-parity product-acceptance parent remains open.",
+      "acceptance": [
+        "Open a remote multi-project solution, edit two compatible C# documents in Design/Split/Code, and preserve dirty buffers, undo, keymaps, caret and breakpoints.",
+        "Start two project apps and two instances of one app; debug/hot-reload/design-attach one while others keep working; stop/restart must not cross-route output, grants or late callbacks.",
+        "Run numeric jobs and real HTTP/WebSocket requests concurrently; test fairness, cancellation and permission revocation without cross-app effects.",
+        "Exercise WinUI drawing on supported WebGPU hardware and each fallback separately, with device-loss captures and adapter/backend records; unavailable hardware is explicitly unqualified.",
+        "Publish both projects concurrently, verify filenames, checksums and dependency closure, then start the actual downloaded HTML files offline and served without Studio globals.",
+        "Exercise private-repository PAT and supported browser OAuth/device flows on a controlled provider account, including cancellation, logout and non-fast-forward rejection; never store secrets in evidence or generated apps.",
+        "Keyboard/DPI/light/dark regression includes the supplied Designer button alignment defect and per-document designer switching.",
+        "Extract the exact release source archive, rebuild artifacts/packages and examples, compare hashes, and publish remaining incompatibilities and every failed/unsupported platform.",
+        "A passing mock, IDE standalone test or fixture simulator is not accepted as an app-export, native SDK, provider-auth or physical-GPU pass."
+      ]
+    }
+  ],
+  "project_policy": {
+    "release_title": "SharpForge — 0.15 delivery",
+    "portfolio_title": "SharpForge — Full-parity portfolio",
+    "area_title": "SharpForge — {id} — {name}",
+    "preserve_status_and_assignments": true,
+    "native_parents": "retain area hierarchy; release membership is cross-project, not reparenting",
+    "fields": ["SF Work ID", "SF Area", "SF Release", "SF Role", "SF Dependencies", "Agent", "Branch", "Lease expires", "File locks", "Evidence"],
+    "views": [
+      "Release: group by SF Area, filter SF Release=0.15",
+      "Agents: group by Agent; show Status, Branch, Lease expires, File locks",
+      "Blocked: use native dependencies and explicit task evidence",
+      "Epics: native sub-issue progress; do not count parents as leaf throughput"
+    ]
+  }
+}

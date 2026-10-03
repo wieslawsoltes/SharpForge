@@ -1,0 +1,42 @@
+name: Track 0.15 scope in parity backlog
+on:
+  workflow_dispatch:
+  push:
+    branches: [planning/release-0.15-scope]
+    paths: ['planning/release15.json', 'scripts/planning/release15.py', 'scripts/planning/test_release15.py', '.github/workflows/release15-backlog.yml']
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: sharpforge-backlog-provisioning
+  cancel-in-progress: false
+jobs:
+  scope:
+    if: github.repository == 'wieslawsoltes/SharpForge'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Generate existing backlog and validate release overlay
+        run: |
+          python scripts/planning/backlog.py
+          python scripts/planning/release15.py
+          python -m unittest discover -s scripts/planning -p 'test_release15.py'
+      - name: Apply additive labels, scope comments and native release-slice links
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/planning/release15.py --apply
+      - name: Verify remote idempotency and read-back
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/planning/release15.py --apply
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: release15-backlog-state
+          path: planning/generated/
