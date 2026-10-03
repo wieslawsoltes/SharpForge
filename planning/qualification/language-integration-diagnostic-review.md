@@ -7,3 +7,5 @@ A targeted compiler inspection of the three differential fixtures confirmed that
 The `namespaces/file-scoped` output fixture reaches the semantic generator's explicit unsupported `typeof` expression. Its former warning-only baseline entry did not establish execution support and is removed. No execution pass is added; `typeof` emission remains a compiler/runtime capability gap.
 
 C# 8 parsing now records `AsyncUsing` itself, so its feature gate is asserted. A generated type referenced from another document still rejects unsupported nested-record emission; the workspace regression retains that failure while checking the actual contextual grammar and parse-cache invalidation.
+
+Hosted core 37142064324 at d0ab4bb reported zero differential regressions and one newly matching diagnostic fixture, `syntax/cs1026-missing-close-paren`. That single observed diagnostic pass is now recorded in the baseline; no other axis is changed.

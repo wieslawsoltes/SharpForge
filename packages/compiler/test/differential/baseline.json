@@ -405,6 +405,7 @@
     "switch/switch-expression-unmatched-throws",
     "switch/switch-return-in-method",
     "syntax/cs1003-missing-comma-or-colon",
+    "syntax/cs1026-missing-close-paren",
     "syntax/cs1525-invalid-expression-term",
     "unused-warnings/cs0168-catch-variable",
     "unused-warnings/cs0168-declared-never-used",
