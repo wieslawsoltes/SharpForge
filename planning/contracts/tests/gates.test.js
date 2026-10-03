@@ -42,9 +42,22 @@ test('contract removal needs label and relevant version bump; append passes; dup
   assert.equal(check({[path]:[]},['contract-change'],{...versions,framework:2}).errors.length,0);
   assert.match(check({[path]:[...before[path],{id:1,name:'b'}]}).errors.join('\n'),/duplicate/);
   const schema='planning/contracts/schema/type-identity.json';
-  const input={before:{[schema]:{type:'object',properties:{a:{type:'string'}},required:['a']}},beforeVersions:versions,afterVersions:versions};
+  const input={before:{[schema]:{type:'object',additionalProperties:false,properties:{a:{type:'string'}},required:['a']}},beforeVersions:versions,afterVersions:versions};
   assert.equal(checkContractChange({...input,after:{[schema]:{...input.before[schema],properties:{...input.before[schema].properties,b:{type:'number'}}}}}).errors.length,0);
   assert.match(checkContractChange({...input,after:{[schema]:{...input.before[schema],required:['a','b']}}}).errors.join('\n'),/version bump/);
+});
+test('schema constraints cannot hide as additive keys or exclusive-union array appends; revisions cannot be repointed',()=>{
+  const path='planning/contracts/example.schema.json',check=(before,after)=>checkContractChange({before:{[path]:before},after:{[path]:after},beforeVersions:versions,afterVersions:versions});
+  for(const [before,after] of [
+    [{type:'string'},{type:'string',allOf:[{maxLength:0}]}],
+    [{allOf:[]},{allOf:[{maxLength:0}]}],
+    [{oneOf:[{type:'string'}]},{oneOf:[{type:'string'},{type:'string'}]}],
+    [{type:'array'},{type:'array',uniqueItems:true}],
+    [{type:'string'},{type:'string',not:{type:'string'}}],
+    [{type:'object'},{type:'object',if:{required:['x']},then:{required:['y']}}],
+  ])assert.equal(check(before,after).errors.length,2);
+  const registry='planning/contracts/spec-revisions.json',before={schemaVersion:1,revisions:[{id:'csharp-14',version:'14'}]};
+  assert.match(checkContractChange({before:{[registry]:before},after:{[registry]:{...before,revisions:[{id:'csharp-14',version:'15'}]}},beforeVersions:versions,afterVersions:{...versions,metadata:2},labels:['contract-change']}).errors.join('\n'),/immutable/);
 });
 test('gate emits every check including failure and stops on prior cancellation',()=>{
   const root=mkdtempSync(join(tmpdir(),'sf-gate-'));
