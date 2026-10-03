@@ -9,7 +9,9 @@ function fixture() {
   const base={token:0x02000001,name:'Example.Base',baseToken:0x01000001,flags:0,fields:[{token:0x04000001,isStatic:false}],methods:[],interfaces:[]};
   const derived={token:0x02000002,name:'Example.Derived',baseToken:base.token,flags:0,fields:[{token:0x04000002,isStatic:false}],methods:[],interfaces:[0x01000002]};
   const names=new Map([[base.token,base.name],[derived.token,derived.name],[0x01000001,'System.Object'],[0x01000002,'Example.Interface']]);
-  const vm={heap:new ManagedHeap(),inspector:{types:[base,derived],metadata:{typeName:token=>names.get(token)},signature:()=>({type:'int'}),resolveToken:token=>({kind:'field',token,signature:{type:'int'}})}};
+  const fields=new Map([base,derived].flatMap(type=>type.fields.map(field=>[field.token,{...field,owner:type.name,ownerToken:type.token}])));
+  fields.set(0x04000003,{token:0x04000003,owner:'Example.Unrelated',ownerToken:0x02000003,isStatic:false});
+  const vm={heap:new ManagedHeap(),inspector:{fields,types:[base,derived],metadata:{typeName:token=>names.get(token)},signature:()=>({type:'int'}),resolveToken:token=>({...fields.get(token),kind:'field',token,signature:{type:'int'}})}};
   return {vm,base,derived,system:new CilTypeSystem(vm)};
 }
 test('A05 CIL type membership is indexed before execution',()=>{
