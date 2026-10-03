@@ -1,4 +1,5 @@
 {
+  "interpolation-binding/cs0150-cs0266-cs0029-alignments-that-are-not-int-constants": ["diagnostics", "warnings"],
   "interpolation-binding/cs8094-cs1503-cs8917-holes-without-a-value": ["diagnostics", "warnings"],
   "interpolation-binding/cs8773-constant-interpolated-string-in-csharp-9": ["diagnostics", "warnings"],
   "interpolation-binding/holes-alignment-format-and-nesting": ["diagnostics", "warnings", "bytecode", "cil"]

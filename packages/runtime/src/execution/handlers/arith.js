@@ -1,3 +1,4 @@
+import {finiteFloat} from '@sharpforge/bytecode';
 import {ManagedFault} from '../../heap.js';
 
 const handlers=new Map();
@@ -19,8 +20,6 @@ for(const target of ['i1','u1','i2','u2','i4','u4','i8','u8','i','u','r4','r8'])
 }
 handlers.set('conv.r.un',vm=>vm.push(vm.convert('conv.r.un',vm.pop())));
 handlers.set('ckfinite',vm=>{
-  const value=vm.pop();
-  if(!value?.float||!Number.isFinite(value.value))throw new ManagedFault('ArithmeticException','Non-finite floating-point value');
-  vm.push(value);
+  vm.push(finiteFloat(vm.pop(), {fault: (name, message) => new ManagedFault(name, message)}));
 });
 export {handlers};

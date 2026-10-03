@@ -1,0 +1,390 @@
+{
+  "schemaVersion": 1,
+  "allow": [
+    {
+      "path": "apps/cli/main.js",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "d30c2510a65703c075e208ce16fede86fd4fa2158466b34a73a43cf837a5e353",
+      "reason": "Trusted CLI lazily loads the fixed MSBuild and workspace command modules; no user-selected JavaScript."
+    },
+    {
+      "path": "packages/bcl-core/scripts/benchmark.js",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "44bc60683500c8107ae8712d23203e0a412dd75d664a53ac3a6de97db7a39c90",
+      "reason": "Operator-selected trusted checkout supplies fixed compiler and runtime packages for BCL benchmarking."
+    },
+    {
+      "path": "packages/bcl-core/scripts/inventory.js",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "2f7089351c60d65f61f6e44a227987b5356fb14094703eab07421cb315cc4b73",
+      "reason": "Inventory generation loads fixed BCL registry and framework workspace modules without invoking native tools."
+    },
+    {
+      "path": "packages/cil/smoke.mjs",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "ad25daba7166f7a904a1f0a960ebb446298d2ea7f14a7574a6e935ca5cddce28",
+      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+    },
+    {
+      "path": "packages/compiler/smoke.mjs",
+      "operation": "dynamic-import",
+      "count": 3,
+      "sha256": "4f5a19db3d1a4bc04a98286be2bd61675e13d3b1a0abe410973bb16759e358a8",
+      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+    },
+    {
+      "path": "packages/compiler/test/differential/fixture-discovery.js",
+      "operation": "dynamic-import",
+      "sha256": "bf074cc53ec6cd467b4f6000cf3d8a2dc7811e78852a4e1726495cc74b74e94d",
+      "count": 1,
+      "reason": "Differential runner imports checked-in fixture modules from its trusted fixture directory; overrides are executable host input."
+    },
+    {
+      "path": "packages/compute/smoke.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "8b60b01fdc31535eddabb9709f44b2ecbfedf8d806fc6cf5afc8fce3809081f7",
+      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+    },
+    {
+      "path": "packages/compute/src/pool.js",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "271682986d6eab158c473519b24300cc365b9b1d72a6275ac300b163b929b456",
+      "reason": "Fixed node:worker_threads imports select the Node adapter; workers run the trusted generated numerical kernel, not managed source."
+    },
+    {
+      "path": "packages/controls/smoke.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "9834234f9d63791423bc7aa679b6f70ed67e910bfd4981f07ea439334bcdf938",
+      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+    },
+    {
+      "path": "packages/debugger/smoke.mjs",
+      "operation": "dynamic-import",
+      "count": 3,
+      "sha256": "340b1202734179b6ec8c0036ebad38e22e86a073b4f97320ffbffbe636cd7673",
+      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+    },
+    {
+      "path": "packages/debugger/src/evaluation.js",
+      "operation": "eval",
+      "count": 1,
+      "sha256": "2f1e1254c9c7c801343770513f1851255037c9b60c8e411cf6de18358e4be944",
+      "reason": "The interpreter method is named eval(n); it walks managed watch expressions and is not the JavaScript global eval."
+    },
+    {
+      "path": "packages/designer/smoke.mjs",
+      "operation": "dynamic-import",
+      "count": 3,
+      "sha256": "91c38d0263a1e3dbc44d91db1c8a040432c3265ce1fe935a71413141adab37fb",
+      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+    },
+    {
+      "path": "packages/docking/smoke.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "d5e11a8f73a94d54cdc12d57d54a416de6ab2380d52cfbb475e6ba44b9a2f903",
+      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+    },
+    {
+      "path": "packages/editor/smoke.mjs",
+      "operation": "dynamic-import",
+      "count": 3,
+      "sha256": "20b3a66c4097d7b1e6362d590e2f8d8f75503f5a5611dab4c0d82bce70586569",
+      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+    },
+    {
+      "path": "packages/extensions/smoke.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "020b27025210dc88df1c11322490c6df413de7220889f7777ea654ca698f319c",
+      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+    },
+    {
+      "path": "packages/framework/smoke.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "26be315229408a0d6cb20630f44f6fd9074be2d87ef15732ae362ae89583f253",
+      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+    },
+    {
+      "path": "packages/msbuild/smoke.mjs",
+      "operation": "dynamic-import",
+      "count": 3,
+      "sha256": "05c9f3edd76e3130aa05214b339fde907f4bf38f3ed34800754bcfb33ea68769",
+      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+    },
+    {
+      "path": "packages/network/smoke.mjs",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "4602f97649e4c810fd84ddc944466235c43fc715245f43b103404c071ea5816e",
+      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+    },
+    {
+      "path": "packages/project-system/smoke.mjs",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "79688bb68caf474f4256a09ae41741d79aea0c6147949d5ecd90004d0afedb2b",
+      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+    },
+    {
+      "path": "packages/protocol/smoke.mjs",
+      "operation": "dynamic-import",
+      "count": 5,
+      "sha256": "a01fc48d8ddacb4479e5b5d0616c8ed8f1d32455971013f7388a0c9ca379d108",
+      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+    },
+    {
+      "path": "packages/symbols/smoke.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "6467afa30ed52b8dc90a6daa76da5052579357e4c14d1c3b3c48bb84a2bda6f7",
+      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+    },
+    {
+      "path": "packages/syntax/bench/corpus.bench.js",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "2c207cdf518e86df8c5f469180521d3176ab2eb08ca45d0d092e065f6993a8d1",
+      "reason": "Benchmark explicitly loads a trusted selected checkout and legacy oracle; benchmark paths are executable host input."
+    },
+    {
+      "path": "packages/templates/smoke.mjs",
+      "operation": "dynamic-import",
+      "count": 3,
+      "sha256": "b1532ffc5d5a9f2f9a3716b22d0edb08312b0080f163f870ab104ab103a7f0ef",
+      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+    },
+    {
+      "path": "packages/text/smoke.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "026c37a534290b3668a4a64e12b9b8eab530a474348b998cbfcde35ac2b53b8e",
+      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+    },
+    {
+      "path": "packages/winui/smoke.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "a123134ac15953abe058dba20c169b931b06972067b9605f34564c2ba5b51092",
+      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+    },
+    {
+      "path": "packages/workspace/smoke.mjs",
+      "operation": "dynamic-import",
+      "count": 3,
+      "sha256": "c50632eb8230d8ea269a439834ed28d49ebf9df08218956b89eaf6eb1a27656a",
+      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+    },
+    {
+      "path": "planning/contracts/tests/claim-race.test.js",
+      "operation": "dynamic-import",
+      "sha256": "a3caa5c8039b2089d67bbf9cffe05a65b8c0a3701a526ae83fc6b5ce47533349",
+      "count": 7,
+      "reason": "Planning contract tests import fixed Node, workspace and checked-in planning modules in isolated test phases."
+    },
+    {
+      "path": "planning/contracts/tests/golden-output.test.js",
+      "operation": "dynamic-import",
+      "sha256": "61bed5d579fbc322b8d5460a529f138e9843d3ef6c4e7ad8303b6ef946b9f3eb",
+      "count": 1,
+      "reason": "Planning contract tests import fixed Node, workspace and checked-in planning modules in isolated test phases."
+    },
+    {
+      "path": "planning/contracts/tests/governance.test.js",
+      "operation": "dynamic-import",
+      "sha256": "058761c95196b3a676a1aff0dbe519953136eb66944650a6377d759a274cd08b",
+      "count": 8,
+      "reason": "Planning contract tests import fixed Node, workspace and checked-in planning modules in isolated test phases."
+    },
+    {
+      "path": "planning/qualification/integration-performance/compiler-adapters/compiler.mjs",
+      "operation": "dynamic-import",
+      "sha256": "769d2f2dc7f2fe3984c2446278d84ef9beba29ad9125811b0bfc3cf63e40e2d7",
+      "count": 1,
+      "reason": "Qualification adapter loads fixed compiler/build package entry points from the explicitly selected trusted checkout."
+    },
+    {
+      "path": "planning/qualification/integration-performance/size/measure.mjs",
+      "operation": "dynamic-import",
+      "sha256": "26851a5b20595deb28624b0f6888ed0f4bd271caf9ac6d389ab770d19dfb6681",
+      "count": 2,
+      "reason": "Qualification adapter loads fixed compiler/build package entry points from the explicitly selected trusted checkout."
+    },
+    {
+      "path": "scripts/bench-pdb.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "b2bbde05d24b6b3348409d97635fce6bc19989844e2ae0bf84918f7bae8c6b80",
+      "reason": "PDB benchmark imports the symbols package from an explicitly selected trusted baseline checkout."
+    },
+    {
+      "path": "scripts/bench/a03-metadata.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "f5c0d240c6de36f1690000ff878f442e2a1f553d31ca6db9f734a0db570e105e",
+      "reason": "Metadata benchmark loads the operator-selected trusted CIL module or fixed workspace entry point; CLI module overrides execute host code."
+    },
+    {
+      "path": "scripts/benchmarks/a05-call-offsets.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "cedea79fa062454c4cc41d7b60c34aa6640897d98b03e39b7faa271082cddb06",
+      "reason": "Benchmark explicitly loads the runtime from a trusted baseline checkout selected by the operator."
+    },
+    {
+      "path": "scripts/build-managed-examples.js",
+      "operation": "dynamic-import",
+      "count": 3,
+      "sha256": "85bc00e5b80943203b8fb5d6a77867927f7610b4bb5736cf507dbf96d92a3a9c",
+      "reason": "Build command loads fixed compiler, fixture, and Node filesystem modules to generate example artifacts."
+    },
+    {
+      "path": "scripts/conformance/perf/measure.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "69ccad2e710bcdf478b36edf4605822937cf12851353c6ff471d1f58852dce7c",
+      "reason": "Performance registry names trusted workload adapters; custom registries are executable host configuration."
+    },
+    {
+      "path": "scripts/conformance/perf/workloads.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "299d73898635ba80e64b84252f29d22477c424de01c2e4b59778a56352546749",
+      "reason": "Benchmark loads explicit package entry points from the selected trusted source checkout."
+    },
+    {
+      "path": "scripts/planning/golden-output.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "68530c1b74ca5cd2a5e89781a9563a3a7e34574808f976bebe5925d2ba0205f1",
+      "reason": "Golden output generator loads compiler entry points from the selected trusted source checkout."
+    },
+    {
+      "path": "scripts/planning/impacted-tests.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "1a37c1837e752a940ba57e3891e9ae2641da2ae076c96d35d9f98b4339f7c550",
+      "reason": "Planning CLI loads the fixed manifest module from the explicitly selected trusted checkout."
+    },
+    {
+      "path": "scripts/serve.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "239e943b8a4bc6a3baaedd4d5a798e047fa4355d2991d70533d66f7b071ad942",
+      "reason": "Development server imports the fixed local build command only when the built index is missing."
+    },
+    {
+      "path": "scripts/validate-a05-type-system.js",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "29989ce590f21800671044d9f10ea4e44cedfbfbec693b86cb7c5663bed16f95",
+      "reason": "Oracle validation loads an operator-selected trusted fixture module and fixed runtime adapter."
+    },
+    {
+      "path": "scripts/validate-clr-wasm.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "ea570c69c09623ed14792eaceb8cb2b2d29ec3c1b7bc2c2bb2714b72f145c159",
+      "reason": "Validation loads dotnet.js from the operator-selected trusted installed .NET Wasm SDK."
+    },
+    {
+      "path": "tests/a00-03-studio-registries.test.js",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "8c06f5de014f18b14d1e99e819b0c95ba2d497bef474620188f4bff8fbb5d724",
+      "reason": "Registry test enumerates trusted checked-in Studio automation modules and imports the fixed Node worker module."
+    },
+    {
+      "path": "tests/a00-integration-contracts.test.js",
+      "operation": "dynamic-import",
+      "count": 3,
+      "sha256": "007c94cc9a7e9baef77d27a089f3ad90c3370d07a5059a317626cb246b6e6cd1",
+      "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    },
+    {
+      "path": "tests/benchmarks/cil-pe.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "e21b892d6adfad303b497ca6b85cf6f1012aaedec61289b4b1d9a592f01cd896",
+      "reason": "PE benchmark imports an operator-selected trusted CIL implementation, defaulting to the workspace package."
+    },
+    {
+      "path": "tests/benchmarks/cil-signatures.mjs",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "2db9238d68c510f869a17be100323c03774ef2828326c1ab7546d40225ec8790",
+      "reason": "Signature benchmark imports an operator-selected trusted implementation or the fixed workspace CIL package."
+    },
+    {
+      "path": "tests/conformance/flaky/detect.test.js",
+      "operation": "dynamic-import",
+      "sha256": "e2eec7d15bd893248cedcf1b3efc3824359a9fdbf0f5ea134ca69d95ec71efc2",
+      "count": 3,
+      "reason": "Regression imports fixed Node filesystem, OS and path modules to create an isolated fail-then-pass fixture."
+    },
+    {
+      "path": "tests/conformance/qualification.test.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "e2febfd9d7c3177fe2df252a7018fda03d476805d911d7419c4313adce9cf01e",
+      "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    },
+    {
+      "path": "tests/fixtures/a03-pe/oracle/legacy.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "27b6522d243758a974d62eec74445356853d68751eafdaf0f13e9f0814c30dcb",
+      "reason": "Historical PE oracle generator loads the explicitly selected trusted implementation used to capture provenance."
+    },
+    {
+      "path": "tests/fixtures/compiler-constant-conversion/capture.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "bc515d6b2e276b2c40dbb76a23c67ca92c023fcf1cb8f51670e3fb052aea7e9f",
+      "reason": "Oracle capture imports fixed oracle modules from the operator-selected trusted checkout."
+    },
+    {
+      "path": "tests/msbuild-examples.test.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "dd16f281206623069647047ed09edc3be93710e094bf0e03f43adbbf65282cb0",
+      "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    },
+    {
+      "path": "tests/network14.test.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "36d871fb95a12e80cd1219b3b04d0a8887ddd1cb5a374382bace5cc2fda0c6b6",
+      "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    },
+    {
+      "path": "tests/protocol.test.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "79d08e4426e364a0aa6b52a05e65238f3d2b4a87d272debef7a8d31bc52c0d47",
+      "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    },
+    {
+      "path": "tests/support/engine-parity-fixtures.js",
+      "operation": "dynamic-import",
+      "count": 3,
+      "sha256": "2a4d51e38ebd471b91d4532de016c4fbc57e7fbffe5de6e91356b3fcf5977750",
+      "reason": "Parity fixture registry loads explicitly selected trusted fixture modules; fixture paths are host code, not managed input."
+    },
+    {
+      "path": "tests/workspace-io.test.js",
+      "operation": "dynamic-import",
+      "count": 3,
+      "sha256": "62dca80988a0899c6e2c93143435f7da4a1644d49db94ce1c7225a172d93e979",
+      "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    }
+  ]
+}
