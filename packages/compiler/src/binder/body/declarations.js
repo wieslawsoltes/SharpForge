@@ -151,7 +151,7 @@ export const DeclarationBinding = Base =>
         if (init) {
           local.writes++;
           local.hasInitializer = true;
-          if (value && !(value.constantValue || value.literal || value.kind === 'Default')) local.nonConstantWrite = true;
+          if (value && !(value.constantValue || value.literal || value.kind === 'Default' || value.isCompileTimeValue)) local.nonConstantWrite = true;
           if (isUsing || isFixed) local.nonConstantWrite = true;
         }
         if (isConst && value && !value.hasErrors) {

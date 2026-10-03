@@ -2,6 +2,7 @@ import {frameworkType} from '@sharpforge/framework';
 import {ManagedFault, isReference} from './heap.js';
 import {JSON_DEPTH_LIMIT, JSON_NODE_LIMIT} from './json-limits.js';
 import {escapeJsonStrings} from './json-escaping.js';
+import {writeJsonTokens} from './json-token-writer.js';
 
 /** Serialize the existing primitive, array and closed-collection profile with bounded default string escaping. */
 export function serializeJson(platform, input) {
@@ -52,5 +53,5 @@ export function serializeJson(platform, input) {
       seen.delete(identity);
     }
   };
-  return escapeJsonStrings(JSON.stringify(visit(input, 0)));
+  return escapeJsonStrings(writeJsonTokens(visit(input, 0)));
 }

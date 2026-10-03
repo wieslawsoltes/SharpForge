@@ -288,5 +288,11 @@ Default string escaping is pinned to System.Text.Json on .NET 10.0.5, including
 non-ASCII text, HTML-sensitive characters, dictionary keys and invalid UTF-16
 surrogate replacement. Serialization retains its existing one-million UTF-16
 unit output budget; escape expansion beyond that budget raises `JsonException`.
-Numeric formatting remains a separate open part of [#838](https://github.com/wieslawsoltes/SharpForge/issues/838).
+Binary64 numeric tokens use the shared invariant .NET formatter, preserving
+negative zero, shortest round-trip digits and uppercase, padded exponents.
+The .NET 10.0.5 numeric oracle covers fifty bit patterns through scalar, mixed
+array and dictionary serialization in both JavaScript VMs. The existing
+`JsonException` policy for nonfinite input is retained; native .NET reports
+`ArgumentException`. This change does not qualify Single/Decimal formatting or
+correct the existing CIL boolean-box unwrapping behavior.
 Custom encoders and arbitrary object reflection are not supported.
