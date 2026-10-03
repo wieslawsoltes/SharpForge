@@ -8,6 +8,7 @@ import { ConditionalAccessLowering } from './conditional-access.js';
 import { ThrowExpressionLowering } from './throw-expressions.js';
 import { AnonymousTypeLowering } from './anonymous-types.js';
 import { UnsignedShiftLowering } from './unsigned-shift.js';
+import { DynamicLowering } from './dynamic.js';
 
 // One entry per line: batches that add a lowering then change different lines.
 export const languageLowerings = Object.freeze([
@@ -16,4 +17,5 @@ export const languageLowerings = Object.freeze([
   ThrowExpressionLowering,
   AnonymousTypeLowering,
   UnsignedShiftLowering,
+  DynamicLowering,
 ]);

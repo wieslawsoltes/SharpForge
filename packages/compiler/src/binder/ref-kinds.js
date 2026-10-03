@@ -123,6 +123,10 @@ export function classifyVariable(expression, context = {}) {
       return expression.accessKind === 'index' ? classifyVariable(expression.access, context) : no('notVariable');
     case 'EventAccess':
       return { isVariable: true, isWritable: true };
+    case 'DynamicMemberAccess':
+    case 'DynamicElementAccess':
+      // Whether the member can be written is known only at run time.
+      return { isVariable: false, isWritable: true, isProperty: true };
     case 'Call':
       if (expression.method?.refKind && expression.method.refKind !== RefKind.None)
         return { isVariable: true, isWritable: expression.method.refKind === RefKind.Ref };
