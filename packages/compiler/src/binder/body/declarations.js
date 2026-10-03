@@ -9,6 +9,8 @@ import { implementsInterface } from '../../symbols/substitution.js';
 import { checkRefLocalInitializer, checkRefWritability, recordRefLocal } from '../ref-locals.js';
 import { checkAsyncOrIteratorUse, isRefLike, checkArrayElementType } from '../ref-struct.js';
 import { numericKind } from '../../conversions/numeric.js';
+import { isAsyncDisposable } from '../async-streams.js';
+import { reportAwaitOutsideAsync } from '../async.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 const isSourceType = t => {
@@ -30,7 +32,8 @@ export const DeclarationBinding = Base =>
         isAwait: !!syntax.awaitKeyword,
         isScoped: modifiers.includes('scoped'),
       });
-      return stmt('LocalDeclaration', syntax, true, { declarations: d });
+      if (syntax.awaitKeyword) reportAwaitOutsideAsync(this, syntax.awaitKeyword);
+      return stmt('LocalDeclaration', syntax, true, { declarations: d, isUsing, isAwait: !!syntax.awaitKeyword });
     }
     /** `Type a = x, b = y` (locals, for-initializers, using and fixed declarations). */
     variableDeclaration(syntax, { isConst = false, isUsing = false, isAwait = false, isFixed = false, isScoped = false }) {
@@ -231,12 +234,12 @@ export const DeclarationBinding = Base =>
     /** A `using` resource must convert to IDisposable (or, for ref structs, have a Dispose method; IAsyncDisposable for await using). */
     checkDisposable(type, node, isAwait, value) {
       if (!type || type.isErrorType?.() || value?.hasErrors || value?.literal === 'null') return;
-      if (implementsInterface(type, this.core.idisposable, this.core)) return;
+      if (isAwait ? isAsyncDisposable(type, this.core) : implementsInterface(type, this.core.idisposable, this.core)) return;
       if (type.typeKind === TypeKind.TypeParameter && type.constraintTypes.length) return;
-      const pattern = lookupMembers(type, isAwait ? 'DisposeAsync' : 'Dispose', this.core, {}).members.some(
+      const pattern = lookupMembers(type, 'Dispose', this.core, {}).members.some(
         m => m.kind === SymbolKind.Method && !m.isStatic && m.parameters.every(p => p.isOptional || p.isParams),
       );
-      if (pattern && (isRefLike(type) || isAwait)) return;
+      if (!isAwait && pattern && isRefLike(type)) return;
       // Registry types do not list their interfaces completely: only source types and primitives are known not to be disposable.
       if (
         !isSourceType(type) &&
@@ -248,6 +251,7 @@ export const DeclarationBinding = Base =>
         this.incomplete = this.d.incomplete = true;
         return;
       }
-      this.report(node, isAwait ? 'CS8410' : 'CS1674', [this.display(type)]);
+      const syncCode = isAsyncDisposable(type, this.core) ? 'CS8418' : 'CS1674';
+      this.report(node, isAwait ? 'CS8410' : syncCode, [this.display(type)]);
     }
   };
