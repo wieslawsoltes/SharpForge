@@ -43,7 +43,7 @@ export const StructuralPatternTranslation = Base =>
      */
     deconstructedParts(positional, input, decision) {
       const syntax = positional.parts[0]?.syntax,
-        method = this.g.methodOf(positional.method.originalDefinition ?? positional.method, syntax),
+        method = this.g.methodOf(positional.method, syntax),
         types = positional.parts.map(part => part.type),
         cells = types.map(type => this.g.cellClass(this.imageType(type, syntax)));
       if (types.length > maxTupleElements) return this.unsupported('a positional pattern with more than seven parts', syntax);

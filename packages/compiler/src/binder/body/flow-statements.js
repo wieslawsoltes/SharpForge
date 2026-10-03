@@ -127,16 +127,15 @@ export const FlowStatementBinding = Base =>
       this.pushScope();
       this.enterLabels([]);
       try {
-        const type = governing.hasErrors ? null : governing.type,
-          pendingNames = [];
+        const type = governing.hasErrors ? null : governing.type;
         if (type?.specialType === 'System_Boolean') this.d.gate(this.c.uri, syntax.expression, 'SwitchOnBool');
-        for (const section of syntax.sections)
-          for (const s of section.statements)
-            if (s.kind === 'LocalDeclarationStatement')
-              for (const v of s.declaration.variables) this.pending.at(-1).add(v.identifier.valueText);
+        // The sections of a switch are one declaration space: a local of one section is in scope in the others.
+        // Pattern variables of the labels belong to their section and are removed from the scope when it ends.
+        const switchScope = this.scopes.at(-1);
+        for (const section of syntax.sections) for (const name of this.namesDeclaredIn(section.statements)) this.pending.at(-1).add(name);
         syntax.sections.forEach((section, index) => {
-          const labels = [];
-          this.pushScope();
+          const labels = [],
+            shared = new Set(switchScope.keys());
           for (const label of section.labels) {
             if (label.kind === 'DefaultSwitchLabel') {
               if (hasDefault) this.report(label, 'CS0152', ['default']);
@@ -166,6 +165,7 @@ export const FlowStatementBinding = Base =>
               when = label.whenClause ? this.condition(label.whenClause.condition) : null;
             labels.push({ ...p, when });
           }
+          const ofLabels = [...switchScope.keys()].filter(name => !shared.has(name));
           const body = this.block(section, { statements: section.statements, scoped: false });
           if (body.completes && section.statements.length) {
             const last = section.labels.at(-1),
@@ -176,7 +176,7 @@ export const FlowStatementBinding = Base =>
             this.report(last, index === syntax.sections.length - 1 ? 'CS8070' : 'CS0163', [text]);
           }
           if (body.completes) anyCompletes = true;
-          this.popScope();
+          for (const name of ofLabels) switchScope.delete(name);
           sections.push({ labels, body, syntax: section });
         });
       } finally {
@@ -231,7 +231,11 @@ export const FlowStatementBinding = Base =>
         if (!e.hasErrors)
           this.report(
             syntax.returnKeyword,
-            this.c.isAsync && this.c.declaredReturnType && this.c.declaredReturnType.equals(this.core.task) ? 'CS1997' : 'CS0127',
+            this.c.isAsync && this.c.declaredReturnType && this.c.declaredReturnType.equals(this.core.task)
+              ? 'CS1997'
+              : this.c.isLambda
+                ? 'CS8030'
+                : 'CS0127',
             this.c.isAsync && this.c.declaredReturnType?.equals(this.core.task)
               ? [this.c.method?.toDisplayString() ?? 'lambda expression', 'Task']
               : [

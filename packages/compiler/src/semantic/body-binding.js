@@ -1,8 +1,9 @@
 /**
- * Binding of bodies: methods, accessors, constructors with their initializers, field and property
- * initializers and top-level statements, followed by the flow passes over each bound body.
+ * Binding of bodies: methods, accessors, constructors with their initializers and field and property
+ * initializers, followed by the flow passes over each bound body. Top-level statements are bound in
+ * ../binder/top-level.js.
  */
-import { SymbolKind, TypeKind, RefKind, Accessibility, NamedTypeSymbol } from '../symbols/types.js';
+import { SymbolKind, TypeKind, RefKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { checkImplicitBaseCall, checkConstructorCycles, constructorInitializerKind } from '../binder/constructors.js';
 import { BodyBinder } from '../binder/body-binder.js';
@@ -12,7 +13,7 @@ import { analyzeRefSafety } from '../flow/ref-safety.js';
 import { NullableWalker } from '../nullable/walker.js';
 import { checkIteratorBody } from '../binder/iterators.js';
 import { checkAsyncBody } from '../binder/async.js';
-import { isSourceSymbol, isClosedType, containsAwait } from './analysis-helpers.js';
+import { isSourceSymbol, isClosedType } from './analysis-helpers.js';
 
 /** Class mixin: Binding of bodies: methods, accessors, constructors with their initializers, field and property */
 export const BodyBinding = Base =>
@@ -139,6 +140,7 @@ export const BodyBinding = Base =>
           if (member.methodKind === MethodKind.Constructor && member.initializerSyntax) {
             const binder = new BodyBinder(this, { ...context, parameters: member.parameters, isConstructorInitializer: true });
             this.bindConstructorInitializer(member, type, binder);
+            context.outerLocals = binder.scopes[0];
           }
           this.bindMethodBody(member, context);
         } else {
@@ -196,7 +198,12 @@ export const BodyBinding = Base =>
           }
         }
         for (const d of checkConstructorCycles(type, c => c.thisTarget ?? null))
-          this.report(this.at(d.ctor).uri, d.ctor.initializerSyntax?.thisOrBaseKeyword ?? this.at(d.ctor), d.code, d.args);
+        {
+          // A constructor that calls itself is reported at `this`, a longer cycle at the whole initializer.
+          const initializer = d.ctor.initializerSyntax,
+            at = (d.code === 'CS0768' ? initializer : initializer?.thisOrBaseKeyword) ?? this.at(d.ctor);
+          this.report(this.at(d.ctor).uri, at, d.code, d.args);
+        }
       }
       this.bindTopLevel();
     }
@@ -240,64 +247,5 @@ export const BodyBinding = Base =>
       else ctor.baseTarget = r.method;
       this.bound.set({ kind: 'ConstructorInitializer', ctor }, call);
       ctor.initializerCall = call;
-    }
-    /** Top-level statements are the body of the synthesized `<Main>$`; top-level methods become its local functions. */
-    bindTopLevel() {
-      const byFile = new Map();
-      for (const item of this.assembly.topLevel) {
-        if (!byFile.has(item.file)) byFile.set(item.file, []);
-        byFile.get(item.file).push(item);
-      }
-      for (const [file, items] of byFile) {
-        const statements = items.filter(i => i.statement).map(i => i.statement);
-        if (!statements.length) continue;
-        const scope = items[0].scope,
-          uri = file.source.uri,
-          usesAwait = statements.some(s => containsAwait(s));
-        const program = (this.programType ??= Object.assign(
-          new NamedTypeSymbol({
-            name: 'Program',
-            typeKind: TypeKind.Class,
-            containingSymbol: this.assembly.globalNamespace,
-            declaredAccessibility: Accessibility.Internal,
-            baseType: () => this.core.object,
-            isImplicitlyDeclared: true,
-          }),
-          { isSource: true },
-        ));
-        const binder = new BodyBinder(this, {
-          uri,
-          scope,
-          containingType: program,
-          method: null,
-          isStatic: true,
-          isFieldInitializer: false,
-          isTopLevel: true,
-          isAsync: usesAwait,
-          returnType: null,
-          parameters: [
-            {
-              name: 'args',
-              kind: SymbolKind.Parameter,
-              type: this.core.arrayOf(this.core.string),
-              refKind: RefKind.None,
-              isImplicitlyDeclared: true,
-            },
-          ],
-        });
-        const body = binder.block({ statements, span: file.syntax.span, kind: 'Block' }, { statements });
-        body.locals = binder.locals;
-        body.binder = binder;
-        this.bound.set(file, body);
-        for (const d of analyzeDefiniteAssignment(null, body, {
-          core: this.core,
-          languageVersion: this.versionOf(uri).number,
-          containingType: null,
-        }))
-          this.report(uri, d.node, d.code, d.args);
-        for (const d of analyzeRefSafety(null, body)) this.report(uri, d.node, d.code, d.args);
-        if (this.nullableMaps.get(uri)?.anyWarnings ?? this.nullableAt(uri, 0).warnings)
-          for (const d of new NullableWalker(this, uri).analyze(null, body)) this.report(uri, d.node, d.code, d.args, 'warning');
-      }
     }
   };

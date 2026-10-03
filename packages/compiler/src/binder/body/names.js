@@ -10,6 +10,8 @@ import { lookupMembers } from '../inheritance.js';
 import { tupleElement, tupleElementProblem } from '../tuples.js';
 import { checkConstructedType } from '../constraints.js';
 import { staticMembersOfTypeParameter } from '../interface-members.js';
+import { accessorNamed, isOperatorMethod } from '../special-methods.js';
+import { staticImportsNamed } from '../csharp6.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 const isSource = symbol => {
@@ -30,13 +32,18 @@ export const NameBinding = Base =>
         const local = this.lookupLocal(name);
         if (local && (!arity || local.kind === SymbolKind.Method)) {
           if (local.kind === SymbolKind.Local) return this.localNode(local, syntax);
-          if (local.kind === SymbolKind.Parameter) return this.node('Parameter', syntax, local.type, { parameter: local });
+          if (local.kind === SymbolKind.Parameter) {
+            if (this.isOuterByRefParameter(local)) this.report(syntax, 'CS1628', [name]);
+            return this.node('Parameter', syntax, local.type, { parameter: local });
+          }
           if (local.kind === SymbolKind.Method)
             return this.node('MethodGroup', syntax, null, { methods: [local], receiver: null, name, form: 'methodGroup', typeArguments });
         }
         if (!arity && this.isPending(name)) {
           this.report(syntax, 'CS0841', [name]);
-          (this.rootBinder.usedBeforeDeclaration ??= new Set()).add(name);
+          // The use still counts for the unused-variable warnings: an assignment as a write, anything else as a read.
+          const isWrite = syntax.parent?.kind === 'SimpleAssignmentExpression' && syntax.parent.left === syntax;
+          (this.rootBinder.usedBeforeDeclaration ??= new Map()).set(name, isWrite && !this.rootBinder.usedBeforeDeclaration.has(name));
           return this.bad(syntax);
         }
         if (!arity && name === '_' && options.allowDiscard) return this.node('Discard', syntax, null, { isOutVarOrDiscard: true });
@@ -56,6 +63,7 @@ export const NameBinding = Base =>
       if (symbol && !symbol.ambiguous && !symbol.wrongArity) {
         if (symbol.kind === SymbolKind.Namespace) return this.node('NamespaceExpression', syntax, null, { namespace: symbol });
         const type = arity ? this.bindType(syntax).type : symbol;
+        if (!arity && !this.quiet) this.d.noteUse?.(symbol, this.c.uri, syntax);
         return this.node('TypeExpression', syntax, null, { referencedType: type });
       }
       if (symbol?.ambiguous) {
@@ -66,33 +74,38 @@ export const NameBinding = Base =>
       for (const level of this.typeScope.namespaceChain) {
         const usings = level.scope.usings ? this.d.typeBinder.usingsOf(level.scope) : null;
         if (!usings) continue;
-        const members = usings.staticTypes.flatMap(t => t.getMembers(name).filter(m => m.isStatic));
+        const { members, ambiguous } = staticImportsNamed(usings.staticTypes, name);
+        if (ambiguous) {
+          this.report(syntax, 'CS0229', ambiguous.map(member => member.toDisplayString()));
+          return this.bad(syntax);
+        }
         if (members.length)
-          return (
-            this.memberResult(
-              members.filter(m => m.kind === members[0].kind),
-              syntax,
-              null,
-              members[0].containingType,
-              name,
-              typeArguments,
-              options,
-              false,
-            ) ?? this.bad(syntax)
-          );
+          return this.memberResult(members, syntax, null, members[0].containingType, name, typeArguments, options, false) ?? this.bad(syntax);
       }
       if (name === 'nameof' && options.invoked) return this.node('NameOfMarker', syntax, null, {});
       if (name === 'var' || name === 'dynamic') return this.lenient(syntax);
       if (this.d.isKnownFrameworkName(name)) return this.lenient(syntax);
-      this.report(syntax.kind === 'GenericName' ? syntax : syntax.identifier, 'CS0103', [name]);
+      for (let type = this.c.containingType; type; type = type.containingType)
+        if (this.reportAccessorByName(type, name, syntax.identifier)) return this.bad(syntax);
+      // A local of the file's top-level statements is in scope inside its types, where it cannot be used (CS8801).
+      const isTopLevelName = !this.rootBinder.c.isTopLevel && this.d.topLevelNames?.(this.c.uri).has(name);
+      this.report(syntax.kind === 'GenericName' ? syntax : syntax.identifier, isTopLevelName ? 'CS8801' : 'CS0103', [name]);
       return this.bad(syntax);
     }
     /** `alias::Name` in an expression: a namespace or type reached through a using alias, an extern alias or `global`. */
     aliasQualifiedName(syntax) {
-      const symbol = this.d.typeBinder.bindNamespaceOrType(syntax, this.typeScope);
+      // Roslyn reports no obsolete use for a type named through `alias::` in an expression.
+      const symbol = this.d.typeBinder.bindNamespaceOrType(syntax, this.typeScope, { isAliasQualifiedExpression: true });
       if (symbol.kind === SymbolKind.Namespace) return this.node('NamespaceExpression', syntax, null, { namespace: symbol });
       if (symbol.isErrorType()) return symbol.isFrameworkGap ? this.lenient(syntax) : this.bad(syntax);
       return this.node('TypeExpression', syntax, null, { referencedType: symbol });
+    }
+    /** CS0571 when `name` is the metadata name of an accessor of `type` (`get_X`, `add_E`); returns whether it was reported. */
+    reportAccessorByName(type, name, node) {
+      const membersNamed = (owner, memberName) => lookupMembers(owner, memberName, this.core, { within: this.c.containingType }).members,
+        accessor = accessorNamed(type, name, membersNamed);
+      if (accessor) this.report(node, 'CS0571', [accessor]);
+      return !!accessor;
     }
     localNode(local, syntax) {
       const n = this.node('Local', syntax, local.type, { local });
@@ -106,6 +119,7 @@ export const NameBinding = Base =>
         nameNode = syntax.kind === 'SimpleMemberAccessExpression' ? syntax.name : syntax;
       if (first.kind === SymbolKind.NamedType) {
         const t = typeArguments ? this.construct(first, typeArguments, nameNode) : first;
+        if (!this.quiet) this.d.noteUse?.(first, this.c.uri, nameNode);
         return this.node('TypeExpression', syntax, null, { referencedType: t });
       }
       const viaType = receiver?.kind === 'TypeExpression',
@@ -119,6 +133,10 @@ export const NameBinding = Base =>
       };
       if (first.kind === SymbolKind.Method) {
         const methods = members.filter(m => m.kind === SymbolKind.Method);
+        if (methods.every(isOperatorMethod)) {
+          this.report(nameNode, 'CS0571', [first.toDisplayString()]);
+          return this.bad(syntax);
+        }
         return this.node('MethodGroup', syntax, null, {
           methods,
           receiver: viaType ? null : receiver,
@@ -147,6 +165,9 @@ export const NameBinding = Base =>
         return this.bad(syntax);
       }
       if (first.containingType?.containingAssembly) this.d.reportUseSite(first, this.c.uri, nameNode);
+      // Inside its class a field-like event names its backing field, which is not the obsolete symbol.
+      const ownEvent = first.kind === SymbolKind.Event && first.containingType?.originalDefinition === this.c.containingType?.originalDefinition;
+      if (!this.quiet && !ownEvent) this.d.noteUse?.(first, this.c.uri, syntax);
       const isStatic = first.isStatic;
       let r = null;
       if (isStatic) {
@@ -165,14 +186,17 @@ export const NameBinding = Base =>
       } else {
         if (viaType) {
           if (receiver.syntax?.kind === 'IdentifierName' && receiver.colorColor) r = receiver.colorColor;
-          else {
+          else if (!options.nameofOperand) {
             used();
             this.report(syntax, 'CS0120', [first.toDisplayString()]);
             return this.bad(syntax);
           }
         } else {
           r = instanceReceiver();
-          if (!r) {
+          // `nameof` names a member without evaluating it; reaching through an instance member needs C# 12.
+          if (!r && options.nameofOperand) {
+            if (options.memberAccessLeft) this.d.gate(this.c.uri, syntax, 'InstanceMemberInNameof');
+          } else if (!r) {
             used();
             this.report(syntax, this.c.isFieldInitializer && !this.c.isStatic && !outer ? 'CS0236' : 'CS0120', [first.toDisplayString()]);
             return this.bad(syntax);
@@ -224,7 +248,7 @@ export const NameBinding = Base =>
       if (!nameSyntax || nameSyntax.identifier?.isMissing) return this.bad(syntax);
       const name = nameSyntax.identifier.valueText,
         typeArguments = this.typeArgumentsOf(nameSyntax);
-      let left = this.expression(syntax.expression, { ...options, invoked: false, memberAccessLeft: true });
+      let left = this.requireNaturalType(this.expression(syntax.expression, { ...options, invoked: false, memberAccessLeft: true }));
       if (left.hasErrors) {
         if (left.kind === 'Local') left.local.reads++;
         // A member named after a field of the enclosing type counts as a use of that field even though the access failed.
@@ -276,6 +300,7 @@ export const NameBinding = Base =>
             this.report(nameSyntax, 'CS0122', [found.inaccessible[0].toDisplayString()]);
             return this.bad(syntax);
           }
+          if (this.reportAccessorByName(type, name, nameSyntax)) return this.bad(syntax);
           if (!isSource(type) && type.typeKind !== TypeKind.Enum)
             return this.reportMissingFrameworkMember(type, name, nameSyntax, syntax, 'CS0117');
           this.report(nameSyntax, 'CS0117', [this.display(type), name]);
@@ -285,23 +310,22 @@ export const NameBinding = Base =>
       }
       left = this.asValue(left);
       if (left.hasErrors) return this.bad(syntax);
+      if (left.kind === 'MethodGroup' && left.methods.length) {
+        this.report(syntax.expression, 'CS0119', [left.methods[0].toDisplayString(), 'method']);
+        return this.bad(syntax);
+      }
+      if (left.literal === 'default') {
+        this.report(syntax.expression, 'CS8716');
+        return this.bad(syntax);
+      }
       if (left.kind === 'MethodGroup' || left.form === 'lambda' || left.literal) {
-        this.report(syntax, 'CS0023', [
-          '.',
-          left.literal === 'null'
-            ? '<null>'
-            : left.literal === 'default'
-              ? 'default'
-              : left.form === 'lambda'
-                ? 'lambda expression'
-                : 'method group',
-        ]);
+        this.report(syntax, 'CS0023', ['.', left.literal === 'null' ? '<null>' : left.form === 'lambda' ? 'lambda expression' : 'method group']);
         return this.bad(syntax);
       }
       const type = left.type;
       if (!type) return this.bad(syntax);
       if (type.specialType === 'System_Void') {
-        this.report(syntax, 'CS0023', ['.', 'void']);
+        this.report(syntax.operatorToken ?? syntax, 'CS0023', ['.', 'void']);
         return this.bad(syntax);
       }
       return this.instanceMember(left, type, name, nameSyntax, syntax, typeArguments, options);
@@ -334,6 +358,7 @@ export const NameBinding = Base =>
         this.report(nameSyntax, 'CS0122', [found.inaccessible[0].toDisplayString()]);
         return this.bad(syntax);
       }
+      if (this.reportAccessorByName(lookupType, name, nameSyntax)) return this.bad(syntax);
       // A base type in an assembly that is not referenced: the lookup cannot be completed (CS0012) and finds nothing.
       const missingBase = this.d.missingBaseReason(lookupType);
       if (missingBase) {

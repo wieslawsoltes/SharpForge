@@ -7,9 +7,26 @@ import { checkOperatorDeclarations } from './operator-declarations.js';
 import { checkIndexerDeclarations } from './indexer-declarations.js';
 import { checkRequiredDeclarations, chainingProblem } from './required-members.js';
 import { checkInitAccessors } from './init-accessors.js';
+import {
+  checkPropertyDeclarations,
+  checkConstantDeclarations,
+  checkStaticConstructorDeclarations,
+  checkParameterDeclarations,
+} from './basic-declarations.js';
+import { checkPrimaryConstructorChaining, primaryParameterWarnings } from './primary-constructors.js';
 
 /** The member rules, in the order their diagnostics are produced. Add a rule here to have it run for every source type. */
-export const memberChecks = [checkIndexerDeclarations, checkOperatorDeclarations, checkInitAccessors, checkRequiredDeclarations];
+export const memberChecks = [
+  checkPropertyDeclarations,
+  checkConstantDeclarations,
+  checkStaticConstructorDeclarations,
+  checkParameterDeclarations,
+  checkIndexerDeclarations,
+  checkOperatorDeclarations,
+  checkInitAccessors,
+  checkRequiredDeclarations,
+  checkPrimaryConstructorChaining,
+];
 
 /** Class mixin (analysis phase): member declaration rules. */
 export const MemberDeclarationChecks = Base =>
@@ -28,6 +45,20 @@ export const MemberDeclarationChecks = Base =>
 /** Class mixin (analysis phase, after body binding): rules that need the bound constructor initializers. */
 export const MemberBodyChecks = Base =>
   class extends Base {
+    bindBodies() {
+      super.bindBodies();
+      // Whether a primary constructor parameter is read or captured is known once every body is bound.
+      const initializers = new Map();
+      for (const [member, bound] of this.bound) {
+        const type = bound?.kind === 'Initializer' ? member.containingType : null;
+        if (type?.primaryConstructor) initializers.set(type, [...(initializers.get(type) ?? []), bound]);
+      }
+      for (const type of this.assembly.types) {
+        if (!type.primaryConstructor) continue;
+        const uri = this.at(type).uri;
+        for (const row of primaryParameterWarnings(type, initializers.get(type) ?? [])) this.report(uri, row.at, row.code, row.args);
+      }
+    }
     bindConstructorInitializer(ctor, type, binder) {
       super.bindConstructorInitializer(ctor, type, binder);
       const problem = chainingProblem(ctor);

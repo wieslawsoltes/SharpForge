@@ -25,6 +25,8 @@ import { memberLowerings } from '../../lowering/members/index.js';
 import { InitializerLowering } from '../../lowering/members/initializers.js';
 import { RecordTranslation } from '../../lowering/records/translate-records.js';
 import { StructuralPatternTranslation } from '../../lowering/patterns/translate-structural-patterns.js';
+import { languageLowerings } from '../../lowering/language-lowerings.js';
+import { GenericTranslation } from '../../lowering/generics/index.js';
 
 export { Frame } from './frame.js';
 
@@ -220,6 +222,9 @@ const families = [
   InitializerLowering,
   RecordTranslation,
   StructuralPatternTranslation,
+  ...languageLowerings,
+  // Last: what depends on a type argument is decided before any other family sees the node.
+  GenericTranslation,
 ];
 
 export class BodyTranslator extends families.reduce(
