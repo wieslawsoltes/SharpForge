@@ -19,6 +19,7 @@
  *
  * Nothing here runs: creating a coclass and calling with an omitted `ref` are SF2200 (codegen/semantic).
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { attributesNamed } from './bound-attributes.js';
@@ -50,19 +51,19 @@ export function checkComDeclarations(type) {
     add = (code, args, node) => rows.push({ code, args, node });
   for (const guid of attributesNamed(type, INTEROP + 'GuidAttribute')) {
     const value = guid.arguments?.[0]?.constantValue?.value;
-    if (typeof value === 'string' && !guidFormat.test(value)) add('CS0591', ['Guid'], guid.arguments[0].syntax);
+    if (typeof value === 'string' && !guidFormat.test(value)) add(DiagnosticId.CS0591, ['Guid'], guid.arguments[0].syntax);
   }
   const [comImport] = attributesNamed(type, INTEROP + 'ComImportAttribute');
   if (!comImport || (type.typeKind !== TypeKind.Class && type.typeKind !== TypeKind.Interface)) return rows;
-  if (!attributesNamed(type, INTEROP + 'GuidAttribute').length) add('CS0596', [], comImport.syntax.name);
+  if (!attributesNamed(type, INTEROP + 'GuidAttribute').length) add(DiagnosticId.CS0596, [], comImport.syntax.name);
   if (type.typeKind !== TypeKind.Class) return rows;
   const display = type.toDisplayString();
-  if (type.baseSyntax) add('CS0424', [display], type.locations[0]);
+  if (type.baseSyntax) add(DiagnosticId.CS0424, [display], type.locations[0]);
   for (const member of type.getMembers()) {
     if (member.kind !== SymbolKind.Method || member.isImplicitlyDeclared || !member.locations?.[0]) continue;
-    if (member.methodKind === MethodKind.Constructor && !member.isExtern) add('CS0669', [], member.locations[0]);
+    if (member.methodKind === MethodKind.Constructor && !member.isExtern) add(DiagnosticId.CS0669, [], member.locations[0]);
     else if (member.methodKind !== MethodKind.Constructor && !member.isExtern && !member.isAbstract)
-      add('CS0423', [display, member.toDisplayString()], member.locations[0]);
+      add(DiagnosticId.CS0423, [display, member.toDisplayString()], member.locations[0]);
   }
   return rows;
 }
