@@ -1,4 +1,5 @@
 import {enumTypes,frameworkType} from '@sharpforge/framework';
+export {smallInteger, smallIntegerIndirect} from './numeric/small-int.js';
 export {managedExceptionTypes, exceptionTypeName, exceptionBaseType, exceptionHResult, exceptionMatches} from './exception-types.js';
 /** Versioned, structured-cloneable stack bytecode. Each instruction is three signed 32-bit words. */
 export const FORMAT_VERSION = 2;
