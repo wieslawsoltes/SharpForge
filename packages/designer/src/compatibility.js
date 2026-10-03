@@ -15,8 +15,6 @@ export const designerCompatibilityCodes = Object.freeze({
 
 const preferredMethods = Object.freeze(['Create', 'InitializeComponent', 'Main']);
 const uiKinds = new Set(['control', 'shape', 'window']);
-const closing = new Map([[')', '('], [']', '['], ['}', '{']]);
-const opening = new Set(['(', '[', '{']);
 
 function result(uri, code, reason, method = null) {
   return {
@@ -34,17 +32,20 @@ function result(uri, code, reason, method = null) {
 function pairTokens(tokens) {
   const pairs = new Int32Array(tokens.length).fill(-1);
   const stack = [];
+  const methodTokens = [];
   let invalid = false;
   for (let index = 0; index < tokens.length; index++) {
-    const kind = tokens[index].kind;
-    if (opening.has(kind)) stack.push(index);
-    else if (closing.has(kind)) {
+    const {kind, value} = tokens[index];
+    if (value === 'Create' || value === 'InitializeComponent' || value === 'Main') methodTokens.push(index);
+    if (kind === '(' || kind === '[' || kind === '{') stack.push(index);
+    else if (kind === ')' || kind === ']' || kind === '}') {
       const start = stack.pop();
-      if (start === undefined || tokens[start].kind !== closing.get(kind)) invalid = true;
+      const expected = kind === ')' ? '(' : kind === ']' ? '[' : '{';
+      if (start === undefined || tokens[start].kind !== expected) invalid = true;
       else { pairs[start] = index; pairs[index] = start; }
     }
   }
-  return {pairs, invalid: invalid || stack.length !== 0};
+  return {pairs, methodTokens, invalid: invalid || stack.length !== 0};
 }
 
 function signatureStart(tokens, nameIndex) {
@@ -112,12 +113,12 @@ export function probeDesignSource(text, uri = 'Program.cs', {maxCharacters = 2_0
   }
   const scanner = new Scanner(new SourceText(text, uri), undefined, {cancellationToken});
   const {raws: tokens} = scanner.sequence();
-  const {pairs, invalid} = pairTokens(tokens);
+  const {pairs, methodTokens, invalid} = pairTokens(tokens);
   if (invalid || scanner.diagnostics.some(diagnostic => diagnostic.severity === 'error')) {
     return result(uri, codes.syntax, 'Complete the C# tokens and balanced method body before opening the design view.');
   }
   const methods = [];
-  for (let index = 0; index < tokens.length; index++) {
+  for (const index of methodTokens) {
     const method = candidate(tokens, index, pairs, text, uri);
     if (method) methods.push(method);
   }
