@@ -23,7 +23,7 @@ export function loadToken(vm,metadataToken) {
   catch {throw new ManagedFault('InvalidProgramException','Invalid ldtoken metadata token');}
   if(!['type','method','field'].includes(descriptor.kind))
     throw new ManagedFault('InvalidProgramException','ldtoken requires a type, method, or field token');
-  const table=tableFor(vm,descriptor.kind==='type'?metadataToken:descriptor.owner);
+  const table=vm.typeSystem.table(descriptor.kind==='type'?metadataToken:descriptor.owner);
   return Object.freeze({runtimeHandle:descriptor.kind,owner:vm.snapshotOwner,table,
     token:descriptor.resolvedToken??metadataToken,
     ...(descriptor.kind==='type'?{}:{name:descriptor.name,definitionToken:descriptor.definitionToken??descriptor.resolvedToken??metadataToken}),

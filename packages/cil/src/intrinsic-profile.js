@@ -11,10 +11,10 @@ import {canonicalType,contracts,types} from '@sharpforge/framework';
 const aliases={object:'System.Object',string:'System.String',Exception:'System.Exception',int:'System.Int32',double:'System.Double',long:'System.Int64',bool:'System.Boolean',decimal:'System.Decimal',float:'System.Single',uint:'System.UInt32',ulong:'System.UInt64',nint:'System.IntPtr',nuint:'System.UIntPtr'};
 export const systemType=name=>aliases[name]??name;
 /** Include return type and staticness: parameter-only keys can accept invalid MemberRefs. */
-const signatureType=type=>type.replace(/[A-Za-z_][\w.+`]+/g,name=>numericAliases[name]??({'System.Object':'object','System.String':'string','System.Void':'void'}[name])??name);
+const signatureType=type=>type.replace(/[A-Za-z_][\w.+`]+/g,name=>numericAliases[name]??({'System.Object':'object','System.String':'string','System.Void':'void','System.Exception':'Exception'}[name])??name);
 function signatureKey(owner,name,parameters,result,isStatic) {
   parameters=parameters.map(signatureType);result=signatureType(result);
-  return owner+'::'+name+'('+JSON.stringify(parameters)+'):'+JSON.stringify(result)+':'+(isStatic?'static':'instance');
+  return signatureType(owner)+'::'+name+'('+JSON.stringify(parameters)+'):'+JSON.stringify(result)+':'+(isStatic?'static':'instance');
 }
 export function intrinsicKey(descriptor) {
   const signature=descriptor.signature;
@@ -48,7 +48,7 @@ for(const name of ['IsGenericType','IsGenericTypeDefinition','ContainsGenericPar
 add('System.Object','ReferenceEquals',['object','object'],'bool',true,'objectReferenceEquals');
 add('System.Enum','ToString',[],'string',false,'enumToString');
 add('System.Enum','HasFlag',['System.Enum'],'bool',false,'enumHasFlag');
-for(const d of exceptionIntrinsicDefinitions)add(d.owner,d.name,d.parameters,d.returnType,d.isStatic,d.implementation);
+for(const d of exceptionIntrinsicDefinitions){add(d.owner,d.name,d.parameters,d.returnType,d.isStatic,d.implementation);if(d.name==='get_Message')add(d.owner,'GetType',[],'System.Type',false,'objectGetType');}
 for(const name of ['Sort','Reverse'])add('System.Array',name,['System.Array'],'void',true,'arrayMutate');
 add('System.String','.ctor',['char[]'],'void',false,'stringCtor');
 for(const count of [2,3,4])add('System.String','Concat',Array(count).fill('string'),'string',true,'stringConcat');
