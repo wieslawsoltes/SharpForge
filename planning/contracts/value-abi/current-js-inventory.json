@@ -5,7 +5,7 @@
     "packages/runtime/src/vm.js": "f12912ee9f65f9e3e1d71c732d43e4f85c13e021bf5ad19a1e044e9a40db8b7a",
     "packages/runtime/src/cil-vm.js": "b1dee881f5aa7908052bded39f7e491017a582cee49d36febb9f600d2a109cc9",
     "packages/bytecode/src/index.js": "3446e25f24d3b2d097a81f8a362ba43dcaf9906e5f11d42cdd347514bd8ccacc",
-    "packages/bytecode/src/builtins.js": "7bcda26c34a67c2becc3462c0ad5012f6eacf26920010da3df0cbf7e98e228f0"
+    "packages/bytecode/src/builtins.js": "52bdae4e1dc6b2e0c418d6fa38cbb980e616891a03415143a656e6def8060d2b"
   },
   "resultKinds": {
     "int": {
