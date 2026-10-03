@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "commit": "b8b2eab7203317b42b7fc92976d5d582c18b3c62",
+    "path": "planning/qualification/inventory/csharp-features.json",
+    "sha256": "b321c8918a1f4fb3838c6298ba9c98704d96c7b0b9b9949acee31cd6affc47cb"
+  },
+  "rows": [
+    {
+      "id": "csharp-15-0-collection-expression-arguments",
+      "name": "Collection expression arguments",
+      "specRevision": "csharp-15-preview-2026-10-03",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/collection-expression-arguments.md",
+      "probeSHA256": "f29ed2ea17b3c6f99bf316e216faaee66e5da448965178016327f608c587d0b1",
+      "preview": true,
+      "probe": "tests/conformance/release-policy/fixtures/csharp-15-0-collection-expression-arguments.cs",
+      "supportedProfile": true,
+      "referenceQualification": "unknown",
+      "reason": "Pinned released Roslyn does not support this frozen C# 15 preview proposal; its SharpForge probe outcome is retained without reference qualification."
+    },
+    {
+      "id": "csharp-15-0-unions",
+      "name": "Unions",
+      "specRevision": "csharp-15-preview-2026-10-03",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/unions.md",
+      "probeSHA256": "2448b6d49627ce1b3f10c4ee3118d7243abf5b33e49bacbf62bb7b67fda36643",
+      "preview": true,
+      "probe": "tests/conformance/release-policy/fixtures/csharp-15-0-unions.cs",
+      "supportedProfile": false,
+      "referenceQualification": "unknown",
+      "reason": "Pinned released Roslyn does not support this frozen C# 15 preview proposal; its SharpForge probe outcome is retained without reference qualification."
+    },
+    {
+      "id": "csharp-15-0-closed-hierarchies",
+      "name": "Closed hierarchies",
+      "specRevision": "csharp-15-preview-2026-10-03",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/closed-hierarchies.md",
+      "probeSHA256": "42025446aa1978a94c65538d36b1da6b896c4b48d971f8b6135967c1b6b6275b",
+      "preview": true,
+      "probe": "tests/conformance/release-policy/fixtures/csharp-15-0-closed-hierarchies.cs",
+      "supportedProfile": false,
+      "referenceQualification": "unknown",
+      "reason": "Pinned released Roslyn does not support this frozen C# 15 preview proposal; its SharpForge probe outcome is retained without reference qualification."
+    },
+    {
+      "id": "csharp-15-0-extension-indexers",
+      "name": "Extension indexers",
+      "specRevision": "csharp-15-preview-2026-10-03",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/extension-indexers.md",
+      "probeSHA256": "836c1f737d45f745e8c2ae25032915baf662addc5f61869732c6d8d0c12eb836",
+      "preview": true,
+      "probe": "tests/conformance/release-policy/fixtures/csharp-15-0-extension-indexers.cs",
+      "supportedProfile": false,
+      "referenceQualification": "unknown",
+      "reason": "Pinned released Roslyn does not support this frozen C# 15 preview proposal; its SharpForge probe outcome is retained without reference qualification."
+    },
+    {
+      "id": "csharp-15-0-labeled-break-and-continue",
+      "name": "Labeled break and continue",
+      "specRevision": "csharp-15-preview-2026-10-03",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/labeled-break-continue.md",
+      "probeSHA256": "8b32d97bd721cf2f5e32d0855e42830b91e316ca0cffe2dcbaa79db9366e9b24",
+      "preview": true,
+      "probe": "tests/conformance/release-policy/fixtures/csharp-15-0-labeled-break-and-continue.cs",
+      "supportedProfile": true,
+      "referenceQualification": "unknown",
+      "reason": "Pinned released Roslyn does not support this frozen C# 15 preview proposal; its SharpForge probe outcome is retained without reference qualification."
+    }
+  ]
+}
