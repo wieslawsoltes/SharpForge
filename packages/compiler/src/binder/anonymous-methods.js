@@ -10,6 +10,7 @@
  *   - A ref, out or in parameter of the enclosing method cannot be used inside it (CS1628; the rule is the same for
  *     lambdas and local functions).
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { RefKind, SymbolKind } from '../symbols/types.js';
 
 const refWords = { ref: RefKind.Ref, out: RefKind.Out, in: RefKind.In };
@@ -31,7 +32,7 @@ export const anonymousFunctionAnchor = (syntax, fallback = null) => syntax.deleg
 export function anonymousMethodSignatureErrors(syntax, parameterSyntax, invoke) {
   if (syntax.kind !== 'AnonymousMethodExpression') return null;
   if (!parameterSyntax) {
-    return invoke.parameters.some(parameter => parameter.refKind === RefKind.Out) ? [{ node: syntax.delegateKeyword, code: 'CS1688', args: [] }] : null;
+    return invoke.parameters.some(parameter => parameter.refKind === RefKind.Out) ? [{ node: syntax.delegateKeyword, code: DiagnosticId.CS1688, args: [] }] : null;
   }
   if (parameterSyntax.length !== invoke.parameters.length) return null;
   for (let i = 0; i < parameterSyntax.length; i++) {
@@ -39,7 +40,7 @@ export function anonymousMethodSignatureErrors(syntax, parameterSyntax, invoke) 
       expected = invoke.parameters[i].refKind ?? RefKind.None;
     if (declared === expected || (!byReference(declared) && !byReference(expected))) continue;
     const node = parameterSyntax[i].identifier ?? parameterSyntax[i];
-    return [byReference(expected) ? { node, code: 'CS1676', args: [i + 1, expected] } : { node, code: 'CS1677', args: [i + 1, declared] }];
+    return [byReference(expected) ? { node, code: DiagnosticId.CS1676, args: [i + 1, expected] } : { node, code: DiagnosticId.CS1677, args: [i + 1, declared] }];
   }
   return null;
 }
