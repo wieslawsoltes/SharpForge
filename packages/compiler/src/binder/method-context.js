@@ -78,7 +78,7 @@ export class MethodBinderContext {
     const path=pathOf(node.target),owner=this.c.findType(path,this.m);if(owner)return owner.fields.find(f=>f.name===node.name&&f.isStatic)??null;
     const type=this.infer(node.target);return this.c.findType(type,this.m)?.fields.find(f=>f.name===node.name&&!f.isStatic)??null;
   }
-  isNameof(node){return node?.kind==='Call'&&node.target.kind==='Name'&&node.target.name==='nameof'&&!this.c.methods.some(m=>m.name==='nameof'&&(m.owner===this.m.owner||!m.owner));}
+  isNameof(node){return node?.kind==='Call'&&node.target.kind==='Name'&&node.target.name==='nameof'&&!this.c.methodIndex.named('nameof').some(m=>m.owner===this.m.owner||!m.owner);}
   findBuiltin(node){
     let name=pathOf(node.target);if(name?.startsWith('System.'))name=name.slice(7);if(BuiltinMap.has(name))return BuiltinMap.get(name);
     if(node.target.kind==='Member'){const receiver=this.infer(node.target.target);if(frameworkType(receiver)?.kind==='enum'&&node.target.name==='HasFlag')return BuiltinMap.get('Enum.HasFlag');if(receiver==='string'&&BuiltinMap.has('string.'+node.target.name))return BuiltinMap.get('string.'+node.target.name);if(node.target.name==='GetType')return BuiltinMap.get('object.GetType');if(node.target.name==='ToString')return BuiltinMap.get('object.ToString');}return null;
@@ -86,7 +86,7 @@ export class MethodBinderContext {
   /** Overload selection among the user's methods; reports CS0571/CS1501/CS0121 when `report` is set. */
   findMethod(node,report=true){
     let candidates=[];const target=node.target;
-    if(target.kind==='Name')candidates=this.c.methods.filter(m=>m.name===target.name&&(m.owner===this.m.owner||!m.owner)&&(!this.m.isStatic||m.isStatic));
+    if(target.kind==='Name')candidates=this.c.methodIndex.named(target.name).filter(m=>(m.owner===this.m.owner||!m.owner)&&(!this.m.isStatic||m.isStatic));
     else if(target.kind==='Member'){const path=pathOf(target.target),type=this.c.findType(path,this.m);if(type)candidates=type.methods.filter(m=>m.name===target.name&&m.isStatic);else{const type=this.c.findType(this.infer(target.target),this.m);candidates=type?.methods.filter(m=>m.name===target.name&&!m.isStatic)??[];}}
     if(candidates.some(m=>m.accessor)){if(report)this.c.report(node,DiagnosticId.CS0571,[pathOf(target)??target.name]);candidates=candidates.filter(m=>!m.accessor);}
     const types=node.args.map(a=>this.infer(a));candidates=candidates.filter(m=>m.parameters.length===types.length&&m.parameters.every((p,i)=>assignable(p.type,types[i])));

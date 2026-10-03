@@ -58,7 +58,7 @@ export function readMetadata(bytes) {
   const strings=streams.get('#Strings')??new Uint8Array([0]),blobs=streams.get('#Blob')??new Uint8Array([0]),us=streams.get('#US')??new Uint8Array([0]);const stringCache=new Map();
   const result={version,streams,...tableData,
     list(owner,column){return metadataList(this,owner,column);},
-    guid(index){const data=streams.get('#GUID')??new Uint8Array();if(index===0)return new Uint8Array(16);if(!Number.isInteger(index)||index<1||index*16>data.length)throw new CilError('Invalid GUID heap index');return data.slice((index-1)*16,index*16);},
+    guid(index){const data=streams.get('#GUID')??new Uint8Array();if(index===0)return new Uint8Array(16);if(!Number.isInteger(index)||index<1||index*16>data.length)throw new CilError('Invalid GUID heap index');return new Uint8Array(data.subarray((index-1)*16,index*16));},
     row(t){const value=rows[t>>>24]?.[(t&0xffffff)-1];if(!value)throw new CilError(`Invalid metadata token 0x${t.toString(16)}`);return value;},
     string(index){if(stringCache.has(index))return stringCache.get(index);if(index>=strings.length)throw new CilError('Invalid string heap index');let end=index;while(end<strings.length&&strings[end])end++;if(end===strings.length)throw new CilError('Unterminated metadata string');const s=text(strings.subarray(index,end));stringCache.set(index,s);return s;},
     blob(index){if(index>=blobs.length)throw new CilError('Invalid blob heap index');const br=new Reader(blobs,index);return br.take(br.compressed());},
@@ -74,3 +74,6 @@ export { decodeSignature, decodeTypeSignature } from './metadata/signatures.js';
 export { encodeSignature, encodeTypeSignature } from './metadata/signature-writer.js';
 export { parseSignatureType } from './metadata/signature-parser.js';
 export { formatSignature, formatSignatureType } from './metadata/signature-format.js';
+export { encodeCustomAttribute } from './metadata/custom-attributes.js';
+export { customAttributeDiagnosticCatalog } from './metadata/custom-attribute-types.js';
+export { decodeCustomAttribute } from './metadata/custom-attribute-reader.js';

@@ -39,7 +39,7 @@ export async function prepare({
     api = `https://api.github.com/repos/${repository}`;
   await mkdir(output, { recursive: false });
   const archive = join(output, 'source.zip'),
-    bytes = await download(`${api}/zipball/${source.commit}`, { token });
+    bytes = await download(`${api}/zipball/${source.commit}`, { token, accept: 'application/vnd.github+json' });
   verifySource(bytes, await sourceTree(root, source.commit));
   await writeFile(archive, bytes);
   await temporary(async (directory) => {

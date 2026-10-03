@@ -34,6 +34,12 @@ export const namespaceMethods = {
       end = this.scanType(type);
     return !(end > type && this.isId(this.tokens[end]));
   },
+  /** Roslyn reports an extern alias that follows a using, an attribute or a member on its `extern` keyword and skips the directive. */
+  misplacedExternAlias() {
+    this.error(this.current, 'CS0439', 'An extern alias declaration must precede all other elements defined in the namespace');
+    for (let count = 0; count < 3; count++) this.skip();
+    if (this.at(';')) this.skip();
+  },
   externAlias() {
     this.feature('ExternAlias', this.current);
     return this.n('ExternAliasDirective', this.take(), this.takeWord('alias'), this.id(), this.expect(';'));
@@ -87,6 +93,7 @@ export const namespaceMethods = {
       outerClose = this.namespaceClose;
     this.namespaceKind = kind;
     this.namespaceClose = close;
+    let reportUnexpected = true;
     while (!this.at('eof') && !(close && this.at(close))) {
       const before = this.i,
         reused = this.blend ? this.reuse(reusableNamespaceMembers, 'namespace', inNamespace) : null;
@@ -97,8 +104,10 @@ export const namespaceMethods = {
       // Extern aliases, usings, unit attributes and members are kept in that order in the tree, so a directive that
       // comes after a later part cannot be added to its list: it is reported and skipped.
       const attributed = !!unitAttributes && unitAttributes.length > 0;
-      if (!members.length && !usings.length && !attributed && this.isExternAlias()) externs.push(this.externAlias());
-      else if (this.isUsingDirective(inNamespace)) {
+      if (this.isExternAlias()) {
+        if (!members.length && !usings.length && !attributed) externs.push(this.externAlias());
+        else this.misplacedExternAlias();
+      } else if (this.isUsingDirective(inNamespace)) {
         if (!members.length && !attributed) usings.push(this.usingDirective());
         else {
           // The misplaced directive is parsed only to find its end; Roslyn reports the error over all of it.
@@ -123,17 +132,27 @@ export const namespaceMethods = {
       )
         unitAttributes.push(this.attributeList());
       else if (!inNamespace && this.at('}')) this.skipUnexpected('CS1022', 'Type or namespace definition, or end-of-file expected');
-      else if (!this.canStartMember() && !this.canStartStatement() && !this.at('namespace')) {
-        // Roslyn reports a token that starts nothing as CS1022 at compilation-unit level and as CS1525 elsewhere. The back
-        // end profile keeps CS1525 everywhere: recorded compiler evidence (planning/contracts) pins that code.
-        if (inNamespace || this.options.backEndProfile) this.skipUnexpected('CS1525', `Invalid expression term '${this.current.text}'`);
-        else this.skipUnexpected('CS1022', 'Type or namespace definition, or end-of-file expected');
-      }
-      else members.push(this.namespaceMember(inNamespace, members.length));
+      else if (!this.canStartNamespaceMember(inNamespace)) {
+        // Roslyn reports a token that starts nothing as CS1022: every one at compilation-unit level, and inside a namespace
+        // only the first of a run (statement keywords included: a namespace holds no statements). The back end profile
+        // keeps CS1525 everywhere: recorded compiler evidence (planning/contracts) pins that code.
+        if (this.options.backEndProfile) this.skipUnexpected('CS1525', `Invalid expression term '${this.current.text}'`);
+        else if (!inNamespace || reportUnexpected) this.skipUnexpected('CS1022', 'Type or namespace definition, or end-of-file expected');
+        else this.skip();
+        reportUnexpected = false;
+        this.guardProgress(before);
+        continue;
+      } else members.push(this.namespaceMember(inNamespace, members.length));
+      reportUnexpected = true;
       this.guardProgress(before);
     }
     this.namespaceKind = outerKind;
     this.namespaceClose = outerClose;
+  },
+  /** Whether the current token can start a member here; statements exist only at compilation-unit level (and in the back end profile). */
+  canStartNamespaceMember(inNamespace) {
+    if (this.canStartMember() || this.at('namespace')) return true;
+    return (!inNamespace || !!this.options.backEndProfile) && this.canStartStatement();
   },
   /** A namespace, type, delegate, member declaration or (at compilation-unit level) a global statement. */
   namespaceMember(inNamespace, membersBefore) {

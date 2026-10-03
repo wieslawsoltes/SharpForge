@@ -33,21 +33,6 @@ function baselineFileNames(directory) {
     .sort(byCodeUnit);
 }
 
-/** The single-file baseline that preceded the per-feature files. */
-export const legacyBaselinePath = join(dirname(fileURLToPath(import.meta.url)), 'baseline.json');
-
-/**
- * The passes recorded in the legacy `baseline.json`, as `{axis: Set<id>}` (empty sets when the file is gone).
- * Transition only: branches that were open when the baseline was split still record their new passes there. Those
- * entries are accepted as recorded, so merging such a branch does not turn the check red; nothing is required of
- * them (a regression is judged against the per-feature files alone) and the tools never write the file. Delete
- * `baseline.json` once no open branch changes it.
- */
-export function loadLegacyBaseline(path = legacyBaselinePath) {
-  const document = existsSync(path) ? JSON.parse(readFileSync(path, 'utf8')) : {};
-  return Object.fromEntries(BASELINE_AXES.map(axis => [axis, new Set(document[axis] ?? [])]));
-}
-
 /** The checked-in baseline `{diagnostics,warnings,bytecode,cil}` (sorted arrays of fixture ids), or empty lists. */
 export function loadBaseline(directory = baselineDirectory) {
   const baseline = Object.fromEntries(BASELINE_AXES.map(axis => [axis, []]));
