@@ -478,6 +478,7 @@ export const roslynCodes=Object.freeze({
  CS8173:["ERR_RefAssignmentMustHaveIdentityConversion","error",0,"The expression must be of type '{0}' because it is being assigned by reference"],
  CS8174:["ERR_ByReferenceVariableMustBeInitialized","error",0,"A declaration of a by-reference variable must have an initializer"],
  CS8175:["ERR_AnonDelegateCantUseLocal","error",0,"Cannot use ref local '{0}' inside an anonymous method, lambda expression, or query expression"],
+ CS8186:["ERR_MustDeclareForeachIteration","error",0,"A foreach loop must declare its iteration variables."],
  CS8198:["ERR_ExpressionTreeContainsOutVariable","error",0,"An expression tree may not contain an out argument variable declaration."],
  CS8203:["ERR_BadAssemblyName","error",0,"Invalid assembly name: {0}"],
  CS8302:["ERR_FeatureNotAvailableInVersion7_1","error",0,"Feature '{0}' is not available in C# 7.1. Please use language version {1} or greater."],
