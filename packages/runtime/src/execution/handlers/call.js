@@ -1,12 +1,10 @@
-import {ManagedFault} from '../../heap.js';
 import {completeInitialization} from '../static-init.js';
+import {delegateMethodPointer} from '../delegate-targets.js';
 
 const handlers=new Map();
 for(const name of ['call','callvirt','newobj'])handlers.set(name,(vm,frame,instruction)=>vm.invoke(instruction));
 handlers.set('ldftn',(vm,frame,instruction)=>{
-  const descriptor=vm.inspector.resolveToken(instruction.operand),token=descriptor.resolvedToken??descriptor.token;
-  if(!vm.report.methods.includes(token))throw new ManagedFault('InvalidProgramException','Unverified delegate method');
-  vm.push(Object.freeze({methodPointer:true,token}));
+  vm.push(delegateMethodPointer(vm,instruction.operand));
 });
 handlers.set('ret',(vm,frame)=>{
   const result=frame.method.signature.returnType==='void'?null:vm.pop();
