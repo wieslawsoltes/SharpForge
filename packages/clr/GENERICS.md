@@ -58,6 +58,16 @@ node scripts/limited.js node --test --test-concurrency=1 tests/clr-generics-subs
 node scripts/limited.js node packages/clr/tools/benchmark-substitution.mjs
 ```
 
-Native and focused validation results are recorded when the scheduled slot is
-complete. This host JavaScript service does not qualify source VM, direct CIL or
-Rust native/Wasm generic execution.
+The captured SDK 10.0.201/CoreCLR 10.0.5 oracle contains 17 member signatures; all
+match JavaScript substitution, and all seven focused tests pass on Node 24.21.0.
+Static checks pass; the structure check reports 264 existing findings and none
+in CLR. Validation ran sequentially through the limiter with one local run slot.
+
+The first implementation has no prior equivalent benchmark. On a shared Apple
+M3 Pro/darwin-arm64 with Node 24.21.0, the 17-signature benchmark measured median
+3.331 µs and p95 5.380 µs per substitution, including validation and immutable
+normalization. Exact allocations were not measured; no speedup is claimed.
+The committed JSON records the host and measured percentiles.
+
+This host JavaScript service does not qualify source VM, direct CIL or Rust
+native/Wasm generic execution.
