@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "commit": "e328f265395f4d8b9ecd2d20252222d0bab0614e",
+  "workingTree": "clean",
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "architecture": "x64"
+  },
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "--test",
+        "tests/a18-qualification-corpus.test.js",
+        "tests/a18-qualification-fuzz.test.js",
+        "tests/a18-qualification-report.test.js"
+      ],
+      "summary": {
+        "tests": 81,
+        "passed": 81,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "exitCode": 0,
+        "complete": true
+      },
+      "durationMs": 12462.344645,
+      "logSha256": "ccc3b7bd75e8bcfdd3bd8947a507607598dbb6f9f0dc31290f589124915585ff"
+    },
+    {
+      "argv": [
+        "node",
+        "examples/a18-qualification/report.mjs",
+        "--evidence"
+      ],
+      "exitCode": 0,
+      "summary": {
+        "fixtures": 51,
+        "accepted": 49,
+        "rejectedWithoutWrite": 2,
+        "sourceExecuted": 44,
+        "cilExecuted": 44
+      },
+      "reportSha256": "d1e36b34bd5aeec6546e3c967e63b22abf861cb6c7e9769a32509c55f77a33ab"
+    }
+  ],
+  "scope": {
+    "sourceFixtures": 51,
+    "randomizedSequences": 1000,
+    "firstSeed": "0x18c0ffee",
+    "lastSeed": "0x18c103d5",
+    "fixtureExecutions": {
+      "source": 44,
+      "cil": 44
+    },
+    "randomizedExecutions": {
+      "source": 1000,
+      "cil": 1000
+    }
+  },
+  "validationCheckout": "Fresh detached worktree of the exact committed revision; no tracked or untracked modifications.",
+  "reference": "Repository public package contracts at the tested revision; no Microsoft native reference was captured.",
+  "targets": {
+    "source": "qualified for this corpus",
+    "cil": "qualified for this corpus",
+    "browser": "unqualified: no DOM or rendering checks",
+    "nativeWinUI": "unavailable: no Windows App SDK host or reference capture",
+    "rustNative": "unqualified: no designer host adapter exercised",
+    "rustWasm": "unqualified: no designer host adapter exercised"
+  },
+  "benchmark": "designer-roundtrip-latency.json",
+  "note": "This is retained local evidence, not a planning parity proof or a claim that broader issue acceptance is complete."
+}
