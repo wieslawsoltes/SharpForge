@@ -2,6 +2,8 @@ import {frameworkType} from '@sharpforge/framework';
 import {ManagedFault,isReference} from '../heap.js';
 import {defaults,storage as numericStorage} from './numeric-ops.js';
 import {enumInfo,enumUnderlying,enumValue} from './enums.js';
+import {explicitLayout} from './explicit-layout.js';
+import {createExplicitValue,copyExplicitValue,replaceExplicitField} from './explicit-values.js';
 
 const aliases={'System.Void':'void','System.Boolean':'bool','System.Char':'char','System.SByte':'sbyte','System.Byte':'byte','System.Int16':'short','System.UInt16':'ushort','System.Int32':'int','System.UInt32':'uint','System.Int64':'long','System.UInt64':'ulong','System.Single':'float','System.Double':'double','System.Decimal':'decimal','System.IntPtr':'nint','System.UIntPtr':'nuint'};
 export const isValueTypeValue=value=>!!value?.valueType&&Array.isArray(value.fields);
@@ -14,6 +16,7 @@ function checkDepth(depth) {if(depth>128)throw new ManagedFault('InvalidProgramE
 export function createValue(vm,type,fields=null,depth=0) {
   checkDepth(depth);const table=tableFor(vm,type);
   if(!isAggregateType(table))throw new ManagedFault('InvalidProgramException','Aggregate value type required');
+  explicitLayout(vm,table);
   if(fields!==null&&(!Array.isArray(fields)||fields.length!==table.fields.length))throw new ManagedFault('InvalidProgramException','Struct field count does not match its type');
   return vm.heap.withRoots(fields??[],()=>{
     const copied=[];
@@ -21,7 +24,7 @@ export function createValue(vm,type,fields=null,depth=0) {
       const value=fields===null?valueDefault(vm,field.type,depth+1):copyValue(vm,fields[index],field.type,undefined,depth+1);
       copied.push(value);vm.heap.pins.push(value);
     }
-    return Object.freeze({valueType:table,fields:Object.freeze(copied)});
+    return createExplicitValue(vm,table,copied)??Object.freeze({valueType:table,fields:Object.freeze(copied)});
   });
 }
 export function valueDefault(vm,type,depth=0) {
@@ -53,6 +56,7 @@ export function copyValue(vm,value,type=null,numericContext,depth=0) {
   if(isValueTypeValue(value)) {
     let actual;try{actual=tableFor(vm,value.valueType);}catch{throw new ManagedFault('InvalidProgramException','Value belongs to another VM');}
     if(table!==actual)throw new ManagedFault('InvalidCastException','Value type identity mismatch');
+    if(value.explicitBytes)return copyExplicitValue(vm,value);
     return createValue(vm,actual,value.fields,depth+1);
   }
   if(table&&isAggregateType(table))throw new ManagedFault('InvalidCastException','A struct value is required');
@@ -80,6 +84,10 @@ export function copyValue(vm,value,type=null,numericContext,depth=0) {
 }
 export function replaceValueField(vm,value,index,replacement) {
   if(!isValueTypeValue(value)||!Number.isInteger(index)||index<0||index>=value.fields.length)throw new ManagedFault('InvalidProgramException','Invalid value-type field');
+  if(value.explicitBytes) {
+    const copied = copyValue(vm,replacement,value.valueType.fields[index].type);
+    return replaceExplicitField(vm,value,index,copied);
+  }
   const fields=[...value.fields];fields[index]=replacement;return createValue(vm,value.valueType,fields);
 }
 export function boxValue(vm,value,type) {
