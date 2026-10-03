@@ -13,3 +13,4 @@ export {exportSpeedscope, exportRuntimeTrace} from './execution/profile-export.j
 export {invalidateExecutionCode, executionCodeStatistics} from './execution/code-version.js';
 export {prepareWasmTier, deoptWasmTier, disposeWasmTier, wasmTierStatistics} from './execution/wasm/tiering.js';
 export {wasmSafepoint} from './execution/wasm/deopt.js';
+export {prepareExecution} from './execution/prepare.js';
