@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { compileToIL } from '@sharpforge/compiler';
 import { VirtualMachine, CilVirtualMachine } from '@sharpforge/runtime';
 import { writeWin32Resources, readWin32Resources, readPE, Writer, Reader, loadAssembly } from '@sharpforge/cil';
@@ -108,4 +109,25 @@ test('A03 Win32 resource copies own Buffer payloads from offset subarrays', () =
   for (const resource of readWin32Resources(readPE(bytes), { includeBytes: true })) resource.bytes.fill(0);
   assert.equal(loadAssembly(bytes).entryPoint, compiled.image.entryPoint);
   assert.deepEqual(carrier, before);
+});
+
+
+test('A03 fresh Win32 payloads match independent LLVM resource tree and byte observations', () => {
+  const reference = JSON.parse(readFileSync(new URL('./fixtures/a03-win32-resources/llvm.json', import.meta.url), 'utf8'));
+  assert.match(reference.version, /LLVM version 22\.1\.8/);
+  const result = compileToIL('public class VersionedLibrary {}', {
+    outputKind: 'library', name: 'SF-Win32', portablePdb: false,
+    win32Resources: { icon: icon(), version: { fileVersion: '1.2.345.65535', productName: 'SharpForge' },
+      manifest: '<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0"/>' },
+  });
+  assert(result.success, JSON.stringify(result.diagnostics));
+  const observed = [...reference.output.matchAll(/Type: [^\n]+ \(ID (\d+)\) \[([\s\S]*?)(?=\n  Type:|\n\]\n|$)/g)].map(match => {
+    const body = match[2];
+    const hex = [...body.matchAll(/^\s*[0-9A-F]+: ([0-9A-F ]+)\s+\|/gm)].map(line => line[1].replaceAll(' ', '')).join('');
+    return { type: Number(match[1]), name: Number(body.match(/Name: \(ID (\d+)\)/)[1]),
+      language: Number(body.match(/Language: \(ID (\d+)\)/)[1]), codePage: Number(body.match(/Codepage: (\d+)/)[1]),
+      size: Number(body.match(/DataSize: (\d+)/)[1]), bytes: new Uint8Array(Buffer.from(hex, 'hex')) };
+  });
+  assert.equal(observed.length, 4);
+  assert.deepEqual(readWin32Resources(readPE(result.assembly), { includeBytes: true }), observed);
 });
