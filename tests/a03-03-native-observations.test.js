@@ -12,7 +12,7 @@ test('A03 fresh output headers match native PEReader and matching-host reflectio
     if (platform === 'desktop') continue;
     const name = `${platform}-${outputKind}`;
     const compiled = compileToIL(outputKind === 'library' ? 'public class Library {}' : 'Console.WriteLine(42);',
-      { platform, name, outputKind });
+      { platform, name, outputKind: outputKind === 'console' ? 'exe' : outputKind });
     assert(compiled.success, JSON.stringify(compiled.diagnostics));
     const pe = readPE(compiled.assembly);
     assert.equal(pe.machine, expected.machine, name);

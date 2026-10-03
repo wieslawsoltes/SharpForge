@@ -25,3 +25,13 @@ node --test --test-concurrency=1 tests/a03-03-*.test.js
 
 The legacy fixture generator takes the old module path, destination JSON and source
 commit as its three arguments. Do not generate it from the replacement writer.
+
+`evidence.json` records the local gates, exact host and unavailable native targets. The serial
+benchmark artifacts compare baseline `9e403349` with implementation `22ff9302`; run
+`node --expose-gc tests/benchmarks/cil-pe.mjs [OLD_CIL_ENTRY_PATH]` for each side.
+The generic layout/range checks and richer directory objects increase the median write
+from 0.0657 to 0.0826 ms and read from 0.0894 to 0.1035 ms for a 64 KiB section.
+Write p95 changes 0.1302 to 0.1581 ms; read p95 changes 0.2686 to 0.2318 ms.
+Median heap deltas change 4,016 to 18,712 bytes (write), and 13,584 to 42,152 bytes (read).
+Output size remains 66,560 bytes. The before/current read also includes the prerequisite
+metadata reader changes. This is a disclosed feature/correctness cost, not a speedup claim.

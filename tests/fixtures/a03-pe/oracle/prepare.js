@@ -9,7 +9,7 @@ for (const platform of ['anycpu', 'x86', 'x64', 'arm64']) {
   for (const outputKind of ['console', 'library']) {
     const name = `${platform}-${outputKind}`;
     const source = outputKind === 'library' ? 'public class Library {}' : 'Console.WriteLine(42);';
-    const compiled = compileToIL(source, { platform, name, outputKind });
+    const compiled = compileToIL(source, { platform, name, outputKind: outputKind === 'console' ? 'exe' : outputKind });
     if (!compiled.success) throw new Error(JSON.stringify(compiled.diagnostics));
     writeFileSync(join(output, `${name}.dll`), compiled.assembly);
   }
