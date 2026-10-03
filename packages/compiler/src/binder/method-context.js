@@ -18,7 +18,7 @@ export class MethodBinderContext {
   /** @param compilation the Compilation; @param method the method declaration record being bound. */
   constructor(compilation,method){
     this.c=compilation;this.m=method;this.sym=compilation.semantic;this.loops=[];this.catchDepth=0;this.finallyScopes=[];this.constantDiagnostics=new Set();this.scopeNode=null;this.synthesized=0;this.boundMap=new Map();this.scopeSpans=[];
-    this.methodSymbol=this.sym.method(method);const root=new BuckStopsHereBinder(compilation,BinderFlags.None),container=compilation.containerBinder?.(method,root)??new InContainerBinder(method.owner?this.sym.type(method.owner):this.sym.globalNamespace,root);
+    this.methodSymbol=this.sym.method(method);const container=compilation.containerBinder?.(method)??new InContainerBinder(method.owner?this.sym.type(method.owner):this.sym.globalNamespace,new BuckStopsHereBinder(compilation,BinderFlags.None));
     this.methodBinder=new InMethodBinder(this.methodSymbol,container);this.thisParameter=null;this.parameters=new Map();this.scope=new LocalScopeBinder(this.methodBinder,method.node);this.scopeSpans.push({binder:this.scope,start:method.node.start,end:method.node.end});
     // Parameters (and `this`) are the outermost variables; declaring them records their IDE symbols and reports duplicates.
     if(!method.isStatic){this.thisParameter=new ParameterSymbol({name:'this',type:this.sym.type(method.owner),isThis:true});this.thisParameter.legacyType=method.owner.name;this.thisParameter.declaredAt=method.node.start;}

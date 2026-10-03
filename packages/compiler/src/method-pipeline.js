@@ -21,7 +21,7 @@ export class BoundMethodPipeline {
   /** Binds and analyses the body of a declared method. */
   bindMethod(method){
     const binder=new MethodBodyBinder(this.c,method),body=binder.bindBody(),unit={kind:'body',method,binder,body};this.units.push(unit);
-    analyzeMethodFlow(this.c,method,body,binder);return unit;
+    unit.flow=analyzeMethodFlow(this.c,method,body,binder);return unit;
   }
   /**
    * Binds static field initializers into a synthesized method (a library .cctor or the startup method).
