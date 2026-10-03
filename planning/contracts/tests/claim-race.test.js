@@ -139,3 +139,75 @@ test('recorded live Project 4 fields support text, date and single-select projec
   await claims.release(options);
   assert.deepEqual((await client.item(1)).fields, { Status: 'Ready' });
 });
+
+test('reaper discovers an expired authoritative claim after the first Agent field write failed', async () => {
+  const {claims, fake, advance} = setup();
+  fake.failures.push({remaining: 1, status: 403, message: 'first projection failed', match: r => r.path === 'graphql' && /mutation Set/.test(r.body.query)});
+  await assert.rejects(claims.claim(options), /projection failed/);
+  assert.equal(fake.issues[0].fields.Agent, undefined);
+  advance(25 * 3600000);
+  const expired = await claims.reap();
+  assert.equal(expired.length, 1); assert.equal(expired[0].agent, options.agent);
+  assert.ok(fake.issues[0].labels.includes('lease:expired'));
+  assert.ok(fake.refs.has('refs/heads/agent/SF-A00-T07.1'));
+  await claims.reap();
+  assert.equal(fake.issues[0].comments.length, 1);
+});
+
+test('ambiguous DELETE response never deletes a replacement mutex owner', async () => {
+  const {EventEmitter} = await import('node:events');
+  const {ghTransport} = await import('../../../scripts/planning/lib/gh-retry.js');
+  let owner = 'first', calls = 0;
+  const transport = ghTransport({retry: {wait: async () => {}, random: () => 0}, spawnProcess: () => {
+    const child = new EventEmitter(); child.stdout = new EventEmitter(); child.stderr = new EventEmitter();
+    child.stdin = {end() { queueMicrotask(() => {
+      calls++; owner = null; // The server accepted DELETE before its response was lost.
+      if (calls === 1) owner = 'replacement'; // Another operation acquired the now-free name.
+      child.stdout.emit('data', 'HTTP/2.0 503 Service Unavailable\r\n\r\n{"message":"response lost after commit"}');
+      child.emit('close', 1);
+    }); }};
+    return child;
+  }});
+  await assert.rejects(transport({method: 'DELETE', path: 'repos/test/SharpForge/git/refs/heads/agent-ops/SF-A00-T07.1'}), error => error.ambiguous && error.exitCode === 75);
+  assert.equal(calls, 1); assert.equal(owner, 'replacement');
+});
+
+test('transport owns a total five-attempt read budget; mutation 5xx/network failures fail closed', async () => {
+  const {EventEmitter} = await import('node:events');
+  const {ghTransport} = await import('../../../scripts/planning/lib/gh-retry.js');
+  for (const [kind, status, expected] of [['query', 503, 5], ['mutation', 503, 1], ['mutation', 0, 1], ['mutation', 429, 5]]) {
+    let calls = 0;
+    const transport = ghTransport({retry: {wait: async () => {}, random: () => 0}, spawnProcess: () => {
+      const child = new EventEmitter(); child.stdout = new EventEmitter(); child.stderr = new EventEmitter();
+      child.stdin = {end() { queueMicrotask(() => {
+        calls++;
+        if (status) child.stdout.emit('data', `HTTP/2.0 ${status} Error\r\n\r\n{"message":"${status === 429 ? 'rate limit' : 'response lost'}"}`);
+        else child.stderr.emit('data', 'connection reset after request');
+        child.emit('close', 1);
+      }); }};
+      return child;
+    }});
+    const client = new GitHubProject({owner: 'test', transport});
+    await assert.rejects(client.graphql(`${kind} Probe { node { id } }`));
+    assert.equal(calls, expected, `${kind}/${status}`);
+  }
+});
+
+
+test('partial GraphQL mutation data with rate-limit errors is never replayed', async () => {
+  const {EventEmitter} = await import('node:events');
+  const {ghTransport} = await import('../../../scripts/planning/lib/gh-retry.js');
+  let calls = 0;
+  const transport = ghTransport({retry: {wait: async () => {}}, spawnProcess: () => {
+    const child = new EventEmitter(); child.stdout = new EventEmitter(); child.stderr = new EventEmitter();
+    child.stdin = {end() {queueMicrotask(() => {
+      calls++;
+      child.stdout.emit('data', 'HTTP/2.0 200 OK\r\n\r\n' + JSON.stringify({data: {first: {id: 'written'}}, errors: [{type: 'RATE_LIMIT', message: 'rate limit for second operation'}]}));
+      child.emit('close', 1);
+    });}};
+    return child;
+  }});
+  const client = new GitHubProject({owner: 'test', transport});
+  await assert.rejects(client.graphql('mutation { first: write { id } second: write { id } }'), /rate limit/);
+  assert.equal(calls, 1);
+});
