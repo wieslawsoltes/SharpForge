@@ -37,8 +37,10 @@ snapshot restore and debugger Hot Reload. The warm-loop assertion requires zero
 additional `resolveToken` calls with decode plans both enabled and disabled.
 These are prepared regressions, not measured performance evidence.
 
-No tests, builds or benchmarks have run for this slice. The integration owner runs
-validation through the sole serial queue:
+Serial validation at `21cc0fee` passed all 106 tests in the command below under
+Node 24.21.0, one worker and a 512 MB heap cap. This revision includes the merged
+decode-plan and virtual-slot changes. Static/manifests and build validation use
+the required core check; benchmarks and broad qualification remain staged:
 
 ```sh
 node scripts/limited.js node --test tests/a05-token-cache.test.js tests/a05-decode-plan.test.js tests/a05-delegate-targets.test.js tests/a05-statics.test.js tests/a05-tokens.test.js tests/a05-t01-small-storage.test.js tests/a05-cil-method-events.test.js
