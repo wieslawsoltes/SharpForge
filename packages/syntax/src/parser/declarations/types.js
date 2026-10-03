@@ -1,3 +1,4 @@
+import { reusableMembers } from '../../incremental/blender.js';
 /** Class, struct and interface declarations with type parameters, full base lists and constraint clauses. */
 const kinds = { class: 'ClassDeclaration', struct: 'StructDeclaration', interface: 'InterfaceDeclaration' };
 export const typeDeclarationMethods = {
@@ -34,7 +35,7 @@ export const typeDeclarationMethods = {
   typeBody(owner) {
     const members = [], async = this.inAsync; this.inAsync = false;
     while (!this.at('}') && !this.at('eof') && !this.at('namespace')) {
-      const before = this.i;
+      const before = this.i, reused = this.blend ? this.reuse(reusableMembers, 'member', owner) : null; if (reused) { members.push(reused); continue; }
       if (!this.canStartMember()) { this.skipUnexpected('CS1519', `Invalid token '${this.current.text}' in class, record, struct, or interface member declaration`); continue; }
       members.push(this.memberDeclaration(owner)); this.guardProgress(before);
     }

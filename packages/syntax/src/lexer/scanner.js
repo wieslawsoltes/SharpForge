@@ -10,7 +10,7 @@ import { scanIdentifier, startsIdentifier } from './identifiers.js';
 import { scanTrivia } from './trivia.js';
 import { DirectiveState, unterminatedDirectives } from '../directives/conditional.js';
 import { scanInterpolated } from '../interpolation.js';
-import { legacyGreenToken } from '../green.js';
+import { legacyGreenToken, ownText } from '../green.js';
 const nestingLimit = 200, empty = Object.freeze([]), fixedTokens = new WeakMap();
 /** Per-cache tables for keyword and punctuation tokens with no leading trivia or one leading space, keyed by the (pre-hashed) kind. */
 const fixedFor = cache => { let tables = fixedTokens.get(cache); if (!tables) fixedTokens.set(cache, tables = [new Map(), new Map()]); return tables; };
@@ -47,7 +47,7 @@ export class Scanner {
       for (const id of scan.features) this.feature(id, start, scan.end);
       if (!Number.isFinite(scan.value) && !scan.errors.length) this.error(start, scan.end - start, 'CS1013', 'Invalid numeric literal');
     } else if (startsIdentifier(text, start)) {
-      const scan = scanIdentifier(text, start); this.i = scan.end; raw.value = scan.value;
+      const scan = scanIdentifier(text, start); this.i = scan.end; raw.value = ownText(scan.value);
       raw.kind = !scan.verbatim && !scan.hasEscapes && keywords.has(scan.value) ? scan.value : 'identifier'; raw.syntaxKind = reservedKeywordKinds[raw.kind] ?? 'IdentifierToken';
       if (scan.verbatim || scan.hasEscapes) raw.flags = { verbatim: scan.verbatim, escaped: scan.hasEscapes }; else if (raw.kind !== 'identifier') raw.fixed = true;
     } else {
@@ -91,7 +91,7 @@ export class Scanner {
   finish(raws, fullStart) {
     const text = this.text, cache = this.cache, tokens = [], fixed = fixedFor(cache);
     for (const raw of raws) {
-      const { kind, start, end, value } = raw, tokenText = raw.fixed ? kind : text.slice(start, end), fullText = start === fullStart ? tokenText : text.slice(fullStart, end);
+      const { kind, start, end, value } = raw, tokenText = raw.fixed ? kind : ownText(text.slice(start, end)), fullText = start === fullStart ? tokenText : ownText(text.slice(fullStart, end));
       // Interned by full text; the rare spelling shared by two kinds falls back to a kind-qualified key.
       const lead = start - fullStart, table = raw.fixed && (lead === 0 || lead === 1 && text.charCodeAt(fullStart) === 32) ? fixed[lead] : null;
       let green = table ? table.get(kind) : cache.map.get(fullText);

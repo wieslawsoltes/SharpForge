@@ -1,17 +1,19 @@
 import { accessibilityModifiers } from './modifiers.js';
+import { reusableStatements } from '../incremental/blender.js';
 /** Statements, local declarations and local functions. Every statement node starts with its (usually empty) attribute lists, as in Roslyn. */
 const statementKeywords = new Set(['{', ';', 'if', 'switch', 'while', 'do', 'for', 'foreach', 'return', 'break', 'continue', 'throw', 'try', 'goto', 'lock', 'fixed', 'using', 'checked', 'unchecked', 'unsafe', 'const', 'static', 'extern', 'readonly', 'volatile', 'ref', 'void']);
 const localFollowers = new Set(['=', ';', ',', ')', '(', '<', '[', 'in', 'eof', '}']);
 export const statementMethods = {
   canStartStatement(token = this.current) { return statementKeywords.has(token.kind) || this.canStartExpression(token) || this.isPredefined(token); },
   block(attributeLists = null) {
-    const open = this.expect('{'), statements = [], saved = this.colonDepth; this.colonDepth = 0;
+    // Statements never inherit the expression context (conditional colon, tuple or declaration position) the block appears in.
+    const open = this.expect('{'), statements = [], saved = this.colonDepth, tuple = this.tupleContext, declaration = this.declarationContext; this.colonDepth = 0; this.tupleContext = false; this.declarationContext = 0;
     while (!this.at('}') && !this.at('eof') && !accessibilityModifiers.has(this.current.kind) && !this.at('namespace')) {
-      const before = this.i;
+      const before = this.i, reused = this.blend ? this.reuse(reusableStatements, 'statement') : null; if (reused) { statements.push(reused); continue; }
       if (!this.canStartStatement()) { this.skipUnexpected('CS1525', `Invalid expression term '${this.current.text}'`); continue; }
       statements.push(this.statement()); this.guardProgress(before);
     }
-    this.colonDepth = saved; return this.n('Block', attributeLists, open, statements, this.expect('}'));
+    this.colonDepth = saved; this.tupleContext = tuple; this.declarationContext = declaration; return this.n('Block', attributeLists, open, statements, this.expect('}'));
   },
   /** True when a local variable declaration or local function starts at `i` (a type followed by an identifier). */
   isLocalDeclaration(i = this.i) {
