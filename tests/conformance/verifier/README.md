@@ -2,27 +2,37 @@
 
 Task: SF-A29-T27 (#497).
 
-`fixtures.json` contains accepting/rejecting hand-assembled IL pairs for 16
-tracked Partition III rules, with section references to ECMA-335 sixth edition.
-They cover stack depth, return contracts, local/argument slot boundaries,
-operand types, exception placement, joins and instruction prefixes. Both
-`.maxstack` exhaustion and exact capacity are represented. These are declared
-fixture expectations, not captured oracle results.
+`fixtures.json` contains 177 distinct accepting/rejecting IL cases for 93 named
+Partition III constraints, with ECMA-335 sixth-edition section references. It
+maps all 95 method-body verification diagnostics in the pinned ILVerify
+inventory. Shared upstream accepting methods are referenced once across related
+constraints, rather than duplicated to increase counts. Cases include exact
+stack capacity, slot boundaries, operand types, protected control flow, object
+initialization, generic constraints, delegates, access checks and prefixes.
+These are declared fixture expectations, not captured oracle results.
 
 `upstream.json` pins dotnet/runtime v10.0.5 commit
 `081d220c0a773ffb7c6bea6b48727833576a65ef`. The unmodified MIT-licensed ILVerify
 corpus is retained under `upstream/`, along with its license, test convention
-README and verifier diagnostic enum. It indexes 296 named method cases and 111
-diagnostic IDs. Type-level and specially named upstream fixtures remain in the
-raw source; the method index is not a claim that every upstream test is adapted.
-The authored runner currently assembles the small isolated pairs, not the entire
-multi-assembly upstream test harness.
+README and verifier diagnostic enum. The declaration-based index contains 317
+named method tests. Calls to test methods are not separate tests. Type-level
+and specially named proxy fixtures remain in the raw source; they are not
+silently treated as executable method coverage. The runner selects exactly one
+concrete method per case from either authored or unmodified upstream IL.
 
-ILVerify diagnostic IDs are **not** normative ECMA rule IDs. `ruleTable()` emits
-the tracked section mappings and the full diagnostic inventory, showing missing
-pairs explicitly. This is an initial executable corpus, not exhaustive
-Partition III coverage. #497 must remain open until missing rules and oracle
-agreement are qualified.
+ILVerify diagnostic IDs are **not** normative ECMA rule IDs. `rules.json`
+classifies the full 111-diagnostic enum: 95 mapped verification diagnostics,
+14 metadata/signature/encoding diagnostics, one optional sanity check, and one
+`localloc` instruction-correctness check. `localloc` is always unverifiable, so
+it cannot have an ILVerify-accepting verification case; its distinct stack rule
+is not hidden behind a false accepting result. The optional throw/catch subtype
+check runs only with ILVerify's `--sanity-checks`, not normal CLI verification.
+
+The versioned constraint inventory identifies each positive/negative case and
+section mapping. It does not imply coverage of every opcode/type combination.
+No mapped verification constraint is missing an authored pair; all 93 oracle
+agreements remain pending capture. #497 stays open until that native evidence
+and the relevant platform qualifications are recorded.
 
 ## Offline checks and reports
 

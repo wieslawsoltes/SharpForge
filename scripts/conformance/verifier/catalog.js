@@ -16,7 +16,8 @@ export function validateCases(cases) {
     if (!/^[a-z0-9-]+$/.test(row.id) || ids.has(row.id)) throw new Error('Duplicate or invalid case identity');
     ids.add(row.id);
     if (!/^[a-z0-9-]+$/.test(row.rule ?? '')) throw new Error('Invalid rule identity');
-    if (!/^fixtures\/[a-z0-9-]+\.il$/.test(row.source) || !/^[a-f0-9]{64}$/.test(row.sha256)) {
+    const sourcePath = /^(?:fixtures\/[a-z0-9-]+|upstream\/src\/tests\/ilverify\/ILTests\/[A-Za-z]+)\.il$/;
+    if (!sourcePath.test(row.source) || !/^[a-f0-9]{64}$/.test(row.sha256)) {
       throw new Error('Invalid IL identity');
     }
     if (!['accept', 'reject'].includes(row.polarity) || !/^III\.\d[\d.]*$/.test(row.section)) {
@@ -25,9 +26,12 @@ export function validateCases(cases) {
     if (!Array.isArray(row.expectedErrors) || (row.polarity === 'reject') !== (row.expectedErrors.length > 0)) {
       throw new Error('Rule polarity requires explicit verifier diagnostics');
     }
-    const pair = rules.get(row.rule) ?? new Set();
-    pair.add(row.polarity);
-    rules.set(row.rule, pair);
+    for (const rule of row.rules ?? [row.rule]) {
+      if (!/^[a-z0-9-]+$/.test(rule)) throw new Error('Invalid associated rule');
+      const pair = rules.get(rule) ?? new Set();
+      pair.add(row.polarity);
+      rules.set(rule, pair);
+    }
   }
   if ([...rules.values()].some(pair => pair.size !== 2)) throw new Error('Each tracked rule needs an accepting and rejecting case');
   return rules;
@@ -36,6 +40,7 @@ export function validateCases(cases) {
 export async function loadCorpus() {
   const manifest = await readJSON(path.join(directory, 'fixtures.json'));
   const upstream = await readJSON(path.join(directory, 'upstream.json'));
+  const inventory = await readJSON(path.join(directory, 'rules.json'));
   validateCases(manifest.cases);
   for (const row of manifest.cases) {
     if (sha256(await readFile(path.join(directory, row.source))) !== row.sha256) throw new Error(`Stale IL fixture: ${row.id}`);
@@ -45,7 +50,14 @@ export async function loadCorpus() {
     const bytes = await readFile(path.join(directory, 'upstream', row.path));
     if (bytes.length !== row.bytes || sha256(bytes) !== row.sha256) throw new Error(`Stale upstream IL: ${row.path}`);
   }
-  return { ...manifest, upstream };
+  for (const rule of manifest.rules) {
+    for (const polarity of ['accept', 'reject']) {
+      const fixture = manifest.cases.find(row => row.id === rule[polarity]);
+      if (!fixture?.rules.includes(rule.id) || fixture.polarity !== polarity) throw new Error('Broken rule-case link');
+    }
+  }
+  const inventoryHash = sha256(JSON.stringify({ specification: manifest.specification, rules: manifest.rules, inventory }));
+  return { ...manifest, upstream, inventory, inventoryHash };
 }
 
 /** A tool invocation failure or a zero-method include filter is never a rejection oracle. */
@@ -68,6 +80,9 @@ export function checkOracle(row, observation) {
 export function validateCapture(capture, catalog, toolPin) {
   if (capture.schemaVersion !== 1 || capture.oracle !== 'ilverify' || capture.version !== toolPin.version ||
       capture.toolSHA256 !== toolPin.files.find(file => file.path === toolPin.entry).sha256) throw new Error('ILVerify pin mismatch');
+  if (capture.inventoryHash !== catalog.inventoryHash || capture.sanityChecks !== false) {
+    throw new Error('Stale verifier rule inventory or oracle mode');
+  }
   if (!pin.platforms.coreclr.includes(capture.target) || capture.sdk !== pin.sdk || capture.runtime !== pin.runtime ||
       capture.references?.count !== pin.referenceAssemblies.count ||
       capture.references?.sha256 !== pin.referenceAssemblies.sha256) throw new Error('Verifier reference toolchain mismatch');
@@ -89,20 +104,17 @@ export function validateCapture(capture, catalog, toolPin) {
 
 export function ruleTable(catalog, capture = null) {
   const lines = ['# ECMA-335 verifier rule coverage', '',
-    'ILVerify diagnostic IDs are not ECMA rule IDs. Section mappings below identify the authored seed rules.', '',
+    'ILVerify diagnostic IDs are not ECMA rule IDs. Section mappings identify the versioned method-body constraints.', '',
     '| Rule | ECMA-335 section | Accept | Reject | Oracle |', '| --- | --- | --- | --- | --- |'];
-  for (const rule of new Set(catalog.cases.map(row => row.rule))) {
-    const cases = catalog.cases.filter(row => row.rule === rule);
-    const polarity = kind => cases.find(row => row.polarity === kind).id;
+  for (const rule of catalog.rules) {
     const status = capture ? 'captured' : 'not run';
-    lines.push(`| ${rule} | ${cases[0].section} | ${polarity('accept')} | ${polarity('reject')} | ${status} |`);
+    lines.push(`| ${rule.id} | ${rule.section} | ${rule.accept} | ${rule.reject} | ${status} |`);
   }
   lines.push('', '## Pinned upstream diagnostic inventory', '',
-    '| ILVerify diagnostic | Imported rejecting methods | Authored pair |', '| --- | ---: | --- |');
-  for (const diagnostic of catalog.upstream.diagnostics) {
-    const count = catalog.upstream.cases.filter(row => row.expectedErrors.includes(diagnostic.id)).length;
-    const pair = catalog.cases.some(row => row.expectedErrors.includes(diagnostic.id));
-    lines.push(`| ${diagnostic.id} | ${count} | ${pair ? 'present; qualification pending' : 'missing'} |`);
+    '| ILVerify diagnostic | Classification | Paired constraints |', '| --- | --- | --- |');
+  for (const diagnostic of catalog.inventory.diagnostics) {
+    const pairs = diagnostic.rules.join(', ') || 'not a method-body verifiability rule';
+    lines.push(`| ${diagnostic.id} | ${diagnostic.classification} | ${pairs} |`);
   }
   return `${lines.join('\n')}\n`;
 }

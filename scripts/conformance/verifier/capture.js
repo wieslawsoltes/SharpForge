@@ -8,6 +8,11 @@ import { assertDeterministic } from '../oracle/roslyn-compile.js';
 import { loadCorpus, directory, parseILVerify, validateCapture } from './catalog.js';
 import { checkTools } from './tools.js';
 
+export function methodPattern(method) {
+  const name = method.replace('::', '.');
+  return name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '$';
+}
+
 async function captureCase(fixture, context) {
   const { tools, toolchain, temporary, output, signal } = context;
   const assembly = path.join(temporary, `${fixture.id}.dll`);
@@ -16,7 +21,7 @@ async function captureCase(fixture, context) {
   await writeFile(path.join(output, 'raw', `${fixture.id}.ilasm.json`), `${JSON.stringify(assembled, null, 2)}\n`);
   if (assembled.exitCode !== 0 || assembled.signal) throw new Error(`ILAsm failed for ${fixture.id}`);
   const verifyArgs = ['--fx-version', pin.runtime, tools.ilverify, assembly, '--system-module', 'System.Runtime',
-    '--include', 'Test\\.Run$', '--statistics'];
+    '--include', methodPattern(fixture.method), '--statistics'];
   for (const reference of toolchain.references) verifyArgs.push('--reference', reference);
   const observations = [];
   for (let repeat = 0; repeat < 2; repeat++) {
@@ -47,14 +52,23 @@ export async function captureVerifier(options = {}) {
   await mkdir(path.join(output, 'assemblies'), { recursive: true });
   try {
     const cases = [];
+    const failures = [];
     for (const fixture of catalog.cases) {
-      cases.push(await captureCase(fixture, { tools, toolchain, temporary, output, signal: options.signal }));
+      try {
+        cases.push(await captureCase(fixture, { tools, toolchain, temporary, output, signal: options.signal }));
+      } catch (error) {
+        if (options.signal?.aborted) throw error;
+        failures.push({ id: fixture.id, message: error.message });
+      }
     }
     const capture = { schemaVersion: 1, oracle: 'ilverify', version: tools.verifierPin.version,
+      inventoryHash: catalog.inventoryHash, sanityChecks: false,
       target: platform, sdk: pin.sdk, runtime: pin.runtime, references: toolchain.actual.referenceAssemblies,
       toolSHA256: tools.verifierPin.files.find(file => file.path === tools.verifierPin.entry).sha256,
       ilasmSHA256: tools.assemblerPin.sha256, environment: toolchain.environment, cases };
     await writeFile(path.join(output, 'oracle.json'), `${JSON.stringify(capture, null, 2)}\n`);
+    await writeFile(path.join(output, 'capture-failures.json'), `${JSON.stringify(failures, null, 2)}\n`);
+    if (failures.length) throw new Error(`${failures.length} native fixture captures failed; see capture-failures.json`);
     validateCapture(capture, catalog, tools.verifierPin);
     return { status: 'captured', output, cases: cases.length };
   } finally { await rm(temporary, { recursive: true, force: true }); }

@@ -5,6 +5,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { compileToIL } from '@sharpforge/compiler';
 import { loadCorpus, validateCases, parseILVerify, checkOracle, validateCapture, ruleTable } from '../../../scripts/conformance/verifier/catalog.js';
+import { methodPattern } from '../../../scripts/conformance/verifier/capture.js';
 import { verifyCandidate } from '../../../scripts/conformance/verifier/candidate.js';
 import { verifierPin, checkTools } from '../../../scripts/conformance/verifier/tools.js';
 import { reportVerifier } from '../../../scripts/conformance/verifier/report.js';
@@ -16,9 +17,9 @@ const catalog = await loadCorpus();
 test('Verifier fixtures retain real upstream provenance and an accepting/rejecting pair per tracked rule', () => {
   assert.equal(catalog.upstream.commit, '081d220c0a773ffb7c6bea6b48727833576a65ef');
   assert.equal(catalog.upstream.license, 'MIT');
-  assert(catalog.upstream.cases.length >= 296);
+  assert(catalog.upstream.cases.length >= 317);
   assert(catalog.upstream.diagnostics.length >= 100);
-  assert.equal(validateCases(catalog.cases).size, 16);
+  assert.equal(validateCases(catalog.cases).size, 93);
   assert.throws(() => validateCases([]), /size/);
   assert.throws(() => validateCases(catalog.cases.slice(1)), /accepting and rejecting/);
   assert.throws(() => validateCases([...catalog.cases, catalog.cases[0]]), /Duplicate/);
@@ -45,6 +46,7 @@ test('ILVerify parser distinguishes acceptance, rule rejection, tool failure and
 // Synthetic captures validate the envelope only. They are never oracle evidence.
 function syntheticCapture() {
   return { schemaVersion: 1, oracle: 'ilverify', version: verifierPin.version,
+    inventoryHash: catalog.inventoryHash, sanityChecks: false,
     target: 'darwin-arm64', sdk: pin.sdk, runtime: pin.runtime, references: pin.referenceAssemblies,
     toolSHA256: verifierPin.files.find(file => file.path === verifierPin.entry).sha256,
     cases: catalog.cases.map(row => ({ id: row.id, inputHash: row.inputHash, assemblySHA256: 'a'.repeat(64),
@@ -62,6 +64,8 @@ test('Verifier evidence rejects stale, duplicate, unpinned or incorrectly reject
     capture => { capture.cases[0].oracle.accepted = false; },
     capture => { capture.cases[0].oracle.errors = ['ReturnVoid']; },
     capture => { capture.target = 'unknown'; },
+    capture => { capture.sanityChecks = true; },
+    capture => { capture.inventoryHash = '0'.repeat(64); },
     capture => { capture.cases[1].oracle.errors = []; },
   ]) {
     const capture = structuredClone(syntheticCapture());
@@ -88,7 +92,31 @@ test('Unavailable tools and missing oracle reports never become passing agreemen
     assert(rows.every(row => row.status === 'missing-oracle'));
     const report = JSON.parse(await readFile(path.join(output, 'results.json')));
     assert(report.unsupported.some(row => row.engine === 'rust-wasm'));
-    assert(ruleTable(catalog).includes('missing'));
+    assert(ruleTable(catalog).includes('metadata-or-encoding'));
     assert(ruleTable(catalog).includes('not run'));
   } finally { await rm(output, { recursive: true, force: true }); }
+});
+
+test('Every mapped verification diagnostic has paired constraints without padding repeated methods', () => {
+  const ids = new Set(catalog.rules.map(row => row.id));
+  assert.equal(ids.size, 93);
+  const relevant = catalog.inventory.diagnostics.filter(row => row.classification === 'partition-iii');
+  assert.equal(relevant.length, 95);
+  assert(relevant.every(row => row.rules.length > 0 && row.rules.every(id => ids.has(id))));
+  const unique = new Set(catalog.cases.map(row => JSON.stringify([row.sha256, row.method, row.polarity, row.expectedErrors])));
+  assert.equal(unique.size, catalog.cases.length);
+  assert.equal(catalog.inventory.diagnostics.filter(row => row.classification === 'metadata-or-encoding').length, 14);
+  assert.equal(catalog.inventory.diagnostics.filter(row => row.classification === 'optional-sanity').length, 1);
+  assert.equal(catalog.inventory.diagnostics.filter(row => row.classification === 'instruction-correctness').length, 1);
+});
+
+test('Native method filters quote literal upstream names and constructor punctuation', () => {
+  const simple = new RegExp(methodPattern('Test::Run'));
+  assert(simple.test('[assembly]Test.Run'));
+  assert(!simple.test('[assembly]TestXRun'));
+  const constructor = new RegExp(methodPattern('Test::.ctor'));
+  assert(constructor.test('[assembly]Test..ctor'));
+  const upstream = new RegExp(methodPattern('Leave.ToSameFilter_Valid'));
+  assert(upstream.test('[assembly]ExceptionRegionTests.Leave.ToSameFilter_Valid'));
+  assert(!upstream.test('[assembly]ExceptionRegionTests.LeaveXToSameFilter_Valid'));
 });
