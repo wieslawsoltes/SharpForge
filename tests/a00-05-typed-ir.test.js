@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {compileToIL} from '@sharpforge/compiler';
 import {AssemblyInspector} from '@sharpforge/cil';
-import {Op} from '@sharpforge/bytecode';
+import {Op,FORMAT_VERSION} from '@sharpforge/bytecode';
 import {methodBody,validateBody} from '../scripts/planning/schema/adapters.js';
 import {mergeType} from '../scripts/planning/schema/lower-method-body.js';
 import {validate} from '../scripts/planning/schema/validate.js';
@@ -20,7 +20,7 @@ test('A00 normalized loop operations and declared types do not depend on encodin
   const bodies=lowered('class P { static int Main() { int n=0; while(n<3) { n=n+1; } return n; } }');
   for(const encoding of ['bytecode','cil']){const methods=bodies.filter(b=>b.encoding===encoding),operations=new Set(methods.flatMap(b=>b.instructions.map(i=>i.opcode)));for(const op of ['constant','load-local','store-local','compare','branch-if','binary','return'])assert(operations.has(op),encoding+' '+op);assert(methods.some(b=>b.safepoints.some(s=>s.kind===1)));for(const body of methods)validateBody(body,{requireExecutable:true});}
 });
-function imageWith(code){const method={id:0,name:'Main',qualifiedName:'P.Main',owner:'P',isStatic:true,returnType:'void',parameters:[],locals:[],handlers:[],code:Int32Array.from(code.flat())};return {formatVersion:1,methods:[method],constants:[true,42,'text',null],types:[],statics:[],sequencePoints:[],entryPoint:0};}
+function imageWith(code){const method={id:0,name:'Main',qualifiedName:'P.Main',owner:'P',isStatic:true,returnType:'void',parameters:[],locals:[],handlers:[],code:Int32Array.from(code.flat())};return {formatVersion:FORMAT_VERSION,methods:[method],constants:[true,42,'text',null],types:[],statics:[],sequencePoints:[],entryPoint:0};}
 test('A00 source type propagation rejects conflicting branch joins',()=>{
   const image=imageWith([[Op.CONST,0,0],[Op.JFALSE,4,0],[Op.CONST,1,0],[Op.JUMP,5,0],[Op.CONST,2,0],[Op.POP,0,0],[Op.CONST,3,0],[Op.RET,0,0]]);
   assert.throws(()=>methodBody(image.methods[0],'bytecode',{image}),{code:'SCHEMA_TYPE_CONFLICT'});

@@ -40,7 +40,7 @@ export class RegistryBridge {
     for(const [keyword] of Object.entries({object:1,void:1,bool:1,char:1,sbyte:1,byte:1,short:1,ushort:1,int:1,uint:1,long:1,ulong:1,decimal:1,float:1,double:1,string:1,nint:1,nuint:1}))this.byName.set(keyword,this.typeProvider.getCoreType(specialTypeFromKeyword(keyword)));
     this.byName.set('Exception',this.typeProvider.getCoreType('System_Exception'));this.keywords=new Map([...this.byName].filter(([k])=>!k.includes('.')).map(([k,v])=>[v,k]));
     for(const name of this.types.keys())this.declare(name);
-    for(const owner of this.builtinsByOwner.keys())if(!this.byName.has(owner)){const dot=owner.lastIndexOf('.'),type=this.globalNamespace.ensureNamespace(owner.slice(0,dot)).addType(new NamedTypeSymbol({name:owner.slice(dot+1),isStatic:true,baseType:()=>this.objectType}));this.remember(owner,type);this.attach(type,owner);}
+    for(const owner of this.builtinsByOwner.keys())if(!this.byName.has(owner)){const dot=owner.lastIndexOf('.'),type=this.globalNamespace.ensureNamespace(owner.slice(0,dot)).addType(new NamedTypeSymbol({name:owner.slice(dot+1),isStatic:owner!=='System.Type',baseType:()=>this.objectType}));this.remember(owner,type);this.attach(type,owner);}
   }
   get objectType(){return this.typeProvider.getCoreType('System_Object');}
   /** A special or well-known type by id, declared in the bridge's core library on first use (Nullable<T>, IEnumerable<T>, Func<...>, ...). */

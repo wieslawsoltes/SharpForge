@@ -1,5 +1,5 @@
 {
-  "diagnostics":[
+  "diagnostics": [
     "accessibility/cs0122-private-nested-type",
     "arithmetic/bitwise",
     "arithmetic/compound-assignment",
@@ -306,6 +306,7 @@
     "jumps/switch-fall-through",
     "lambdas/delegates",
     "lambdas/func-and-action",
+    "language-version/collection-expression-in-11",
     "language-version/default-literal-in-7-0",
     "language-version/expression-bodied-member-in-5",
     "language-version/file-scoped-namespace-in-9",
@@ -324,6 +325,8 @@
     "language-version/nullable-reference-types-in-7-3",
     "language-version/pattern-matching-in-6",
     "language-version/raw-string-in-10",
+    "language-version/target-typed-new-in-8",
+    "language-version/top-level-statements-in-8",
     "linq/cs1061-linq-without-using",
     "loops/break-continue",
     "loops/cs0029-while-int-condition",
@@ -549,6 +552,7 @@
     "switch/switch-expression-unmatched-throws",
     "switch/switch-return-in-method",
     "syntax/cs1003-missing-comma-or-colon",
+    "syntax/cs1026-missing-close-paren",
     "syntax/cs1525-invalid-expression-term",
     "tuple-lowering/element-access-and-assignment-errors",
     "tuple-lowering/element-name-rules",
@@ -585,7 +589,7 @@
     "using-dispose/using-declaration",
     "using-dispose/using-statement"
   ],
-  "warnings":[
+  "warnings": [
     "accessibility/cs0050-inconsistent-accessibility",
     "accessibility/cs0122-default-private-method",
     "accessibility/cs0122-private-constructor",
@@ -1269,7 +1273,7 @@
     "using-dispose/using-declaration",
     "using-dispose/using-statement"
   ],
-  "bytecode":[
+  "bytecode": [
     "arithmetic/bitwise",
     "arithmetic/compound-assignment",
     "arithmetic/double-ops",
@@ -1491,7 +1495,7 @@
     "using-dispose/using-declaration",
     "using-dispose/using-statement"
   ],
-  "cil":[
+  "cil": [
     "arithmetic/bitwise",
     "arithmetic/compound-assignment",
     "arithmetic/double-ops",

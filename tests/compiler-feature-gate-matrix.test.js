@@ -33,7 +33,7 @@ const notGated = {
       'PragmaWarning PragmaChecksum AliasQualifiedNames ExpressionTrees QueryContinuation QueryJoin QueryGroupBy QueryOrderBy QueryLet ' +
       'EmbeddedInteropTypes IndexedProperties CallerInfoAttributes AwaitExpression AwaitInCatchAndFinally ExtensionAddMethods ' +
       'ParameterlessStructInitializers Deconstruction GeneralizedAsyncReturnTypes IsPatternExpression CaseGuards OverrideWithConstraints ' +
-      'PropertyPatterns PositionalPatterns NullForgivingOperator NullableDirective TopLevelStatements WithExpressions ' +
+      'PropertyPatterns PositionalPatterns NullForgivingOperator NullableDirective WithExpressions ' +
       'UnmanagedCallingConventions AsyncMethodBuilderOverride CallerArgumentExpression ExtendedNameofScope NumericIntPtr ScopedRef ' +
       'SlicePattern ExperimentalAttribute SpreadElement'
     )
@@ -72,13 +72,6 @@ const notGated = {
   OverloadResolutionPriority: needsAttributeBinding,
   FirstClassSpan: needsOperandTypes,
   ExpressionOptionalAndNamedArguments: 'needs expression-tree conversion of lambdas',
-  // ---- preview features the parser does not recognise yet ----
-  ExtensionIndexers: 'preview syntax the parser does not record',
-  Unions: 'preview syntax the parser does not record',
-  ClosedClasses: 'preview syntax the parser does not record',
-  ClosedEnums: 'preview syntax the parser does not record',
-  SafeModifier: 'preview syntax the parser does not record',
-  UnsafeExpressions: 'preview syntax the parser does not record',
 };
 
 /**
@@ -94,7 +87,12 @@ function gateDiagnostics(result, row) {
   const names = [row.name, binderNames[row.id]].filter(Boolean).map(name => `'${name.toLowerCase()}'`);
   return result.diagnostics.filter(d => d.code === row.code && names.some(name => d.message.toLowerCase().includes(name)));
 }
-const compileAt = (row, version) => compile(featureSnippets[row.id], { langVersion: versionText(version) });
+// Exercise feature gates on an already parsed tree. Text-input grammar selection is tested separately: contextual
+// words such as `record` and `extension` intentionally parse as identifiers below their introduction versions.
+const compileAt = (row, version) => {
+  const file = parse(new SourceText(featureSnippets[row.id]), undefined, { languageVersion: 'preview' });
+  return compile([file], { langVersion: versionText(version) });
+};
 
 test('A02-B01 every catalog row has exactly one snippet and is either gated or listed as not gated', () => {
   const ids = languageFeatures.map(row => row.id);
