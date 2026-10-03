@@ -1,6 +1,6 @@
 import {scanInterpolated} from './interpolation.js';
 import { diagnostic, BoundedCache } from '@sharpforge/text';
-export const keywords = new Set(('using namespace class public private internal protected static readonly const sealed partial void int double float bool string object char long decimal uint ulong short byte var new null true false if else while do for foreach in break continue return throw try catch finally this base get set enum struct interface async await virtual override abstract is as typeof default switch case out ref params lock unchecked checked').split(' '));
+export const keywords = new Set(('using namespace class public private internal protected static readonly const sealed partial void int double float bool string object char long decimal uint ulong short ushort byte sbyte nint nuint var new null true false if else while do for foreach in break continue return throw try catch finally this base get set enum struct interface async await virtual override abstract is as typeof default switch case out ref params lock unchecked checked').split(' '));
 const operators = ['..', '>>=', '<<=', '??=', '=>', '==', '!=', '<=', '>=', '&&', '||', '++', '--', '+=', '-=', '*=', '/=', '%=', '??', '?.', '<<', '>>', '&=', '|=', '^=', '::'];
 const identifierStart = /[\p{L}_]/u, identifierPart = /[\p{L}\p{N}\p{Mn}\p{Mc}\p{Pc}]/u;
 const escapes = { e: '\x1b', n: '\n', r: '\r', t: '\t', '0': '\0', b: '\b', f: '\f', v: '\v', '\\': '\\', "'": "'", '"': '"' };
@@ -51,13 +51,21 @@ export function lex(source, cache = new BoundedCache()) {
         if (text[i] === '.' && /\d/.test(text[i + 1] ?? '')) { i++; while (/[\d_]/.test(text[i] ?? '')) i++; }
         if (/[eE]/.test(text[i] ?? '')) { i++; if (/[+-]/.test(text[i] ?? '')) i++; while (/[\d_]/.test(text[i] ?? '')) i++; }
       }
-      const raw = text.slice(numericStart, i).replaceAll('_', ''); kind = /[.eE]/.test(raw) && !/^0[xX]/.test(raw) ? 'double' : 'integer';
-      value = Number(raw);
-      if (/[fF]/.test(text[i] ?? '')) { kind = 'double'; i++; error(start, i - start, 'SF1005', 'Single-precision float literals are not implemented'); }
-      else if (/[dD]/.test(text[i] ?? '')) { kind = 'double'; i++; }
-      else if (/[mMlLuU]/.test(text[i] ?? '')) { while (/[mMlLuU]/.test(text[i] ?? '')) i++; error(start, i - start, 'SF1003', 'decimal, long and unsigned literals are not implemented'); }
-      if (!Number.isFinite(value)) error(start, i - start, 'CS1013', 'Invalid numeric literal');
-      if (kind === 'integer' && value > 2147483648) error(start, i - start, 'SF1004', 'This profile supports signed 32-bit integer literals');
+      const raw=text.slice(numericStart,i).replaceAll('_',''),based=/^0[xXbB]/.test(raw),real=!based&&/[.eE]/.test(raw);
+      const suffixStart=i;while(/[fFdDmMlLuU]/.test(text[i]??''))i++;
+      const suffix=text.slice(suffixStart,i).toUpperCase();
+      try {
+        if(raw.length>4096||!['','F','D','M','L','U','UL','LU'].includes(suffix)||based&&['F','D','M'].includes(suffix)||real&&['L','U','UL','LU'].includes(suffix))throw new Error();
+        if(suffix==='M'){kind='scalar';value=Object.freeze({scalar:'decimal',value:raw});}
+        else if(real||suffix==='F'||suffix==='D') {
+          const n=Number(raw);if(!Number.isFinite(n)||suffix==='F'&&!Number.isFinite(Math.fround(n)))throw new Error();
+          kind=suffix==='F'?'scalar':'double';value=kind==='scalar'?Object.freeze({scalar:'float',value:String(n)}):n;
+        } else {
+          const n=BigInt(raw);if(n>18446744073709551615n)throw new Error();
+          const type=suffix==='UL'||suffix==='LU'?'ulong':suffix==='L'?(n<=9223372036854775807n?'long':'ulong'):suffix==='U'?(n<=4294967295n?'uint':'ulong'):n<=2147483647n?'int':n<=4294967295n?'uint':n<=9223372036854775807n?'long':'ulong';
+          kind=type==='int'?'integer':'scalar';value=type==='int'?Number(n):Object.freeze({scalar:type,value:n.toString()});
+        }
+      }catch {error(start,i-start,'CS1021','Integral or real constant is invalid or too large');kind='integer';value=0;}
     } else if (identifierStart.test(text[i]) || (text[i] === '@' && identifierStart.test(text[i + 1] ?? ''))) {
       const escaped = text[i] === '@'; if (escaped) i++;
       const s = i++; while (i < text.length && identifierPart.test(text[i])) i++;

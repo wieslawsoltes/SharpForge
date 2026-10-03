@@ -6,7 +6,7 @@ import {enumHasFlag,enumInfo,enumValue} from './enums.js';
 import {objectType,typeName,runtimeTypeText} from './tokens.js';
 
 /** Invoke an intrinsic with heap/value/format/output/platform services; no image is required. */
-export function builtin(vm, id, args) {
+export function builtin(vm, id, args,types=[]) {
   const entry = Builtins[id];
   if (entry.contract) {
     const result=vm.platform.invoke(entry.contract,args);
@@ -35,8 +35,8 @@ export function builtin(vm, id, args) {
       case '$Math.Abs.Int32':
         if (a === -2147483648) throw new ManagedFault('OverflowException', 'Absolute value of Int32.MinValue is not representable');
         return Math.abs(a);
-      case 'Console.WriteLine': vm.emitOutput((args.length ? vm.format(args[0]) : '') + '\n'); return null;
-      case 'Console.Write': vm.emitOutput(vm.format(args[0])); return null;
+      case 'Console.WriteLine': vm.emitOutput((args.length ? vm.format(args[0],types[0]) : '') + '\n'); return null;
+      case 'Console.Write': vm.emitOutput(vm.format(args[0],types[0])); return null;
       case 'GC.Collect': vm.heap.collect(); return null;
       case 'GC.GetTotalMemory':
         if (a === true) vm.heap.collect();
@@ -67,8 +67,8 @@ export function builtin(vm, id, args) {
         if (Number.isNaN(v)) throw new ManagedFault('FormatException', 'Cannot convert value to double');
         return v;
       }
-      case 'Convert.ToString': case 'object.ToString': return vm.heap.string(runtimeTypeText(vm,args[0])??vm.format(args[0]));
-      case 'string.Concat': return vm.heap.string(vm.format(args[0]) + vm.format(args[1]));
+      case 'Convert.ToString': case 'object.ToString': return vm.heap.string(runtimeTypeText(vm,args[0])??vm.format(args[0],types[0]));
+      case 'string.Concat': return vm.heap.string(vm.format(args[0],types[0]) + vm.format(args[1]));
       case 'string.IsNullOrEmpty': return a === null || a === '';
       case 'Array.Reverse': case 'Array.Sort': return mutateArray(vm,name.slice(6),args[0]);
       case 'string.Substring':

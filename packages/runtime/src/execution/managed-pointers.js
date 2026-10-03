@@ -60,7 +60,7 @@ export function address(vm,kind,index,owner=null,options={}) {
     leaf(vm,pointer);return pointer;
   }
   const pointer=Object.freeze({byref:true,vmOwner:vm.snapshotOwner,kind,index,owner,
-    frameId:['arg','local'].includes(kind)?options.frameId??vm.top?.id:null,
+    frameId:['arg','local'].includes(kind)?options.frameId??vm.top?.filterOwnerId??vm.top?.id:null,
     baseType:options.type?vm.heap.methodTables.get(options.type):null,
     path:Object.freeze([]),readonly:!!options.readonly});
   slot(vm,pointer);return pointer;

@@ -1,7 +1,7 @@
 import { SourceText, diagnostic } from '@sharpforge/text';
 import { lex } from './lexer.js';
 const modifiers = new Set(['public','private','protected','internal','static','readonly','const','sealed','partial','virtual','override','abstract','async']);
-const typeKeywords = new Set(['int','double','float','bool','string','object','char','void','var','long','decimal','uint','ulong','short','byte']);
+const typeKeywords = new Set(['int','double','float','bool','string','object','char','void','var','long','decimal','uint','ulong','short','ushort','byte','sbyte','nint','nuint']);
 const precedence = { '??=':1, '=':1, '+=':1, '-=':1, '*=':1, '/=':1, '%=':1, '&=':1, '|=':1, '^=':1, '??':3, '||':4, '&&':5, '|':6, '^':7, '&':8, '==':9, '!=':9, '<':10, '>':10, '<=':10, '>=':10, 'is':10, 'as':10, '<<':11, '>>':11, '+':12, '-':12, '*':13, '/':13, '%':13 };
 export class Parser {
   constructor(lexed) { Object.assign(this, lexed); this.diagnostics = [...lexed.diagnostics]; this.i = 0; this.depth = 0; this.nodeCount = 0; this.namespaceName=''; }
@@ -68,7 +68,7 @@ export class Parser {
     if(!predefined&&this.tokens[i]?.kind!=='identifier')return false;
     i++;while(this.tokens[i]?.kind==='.'&&this.tokens[i+1]?.kind==='identifier')i+=2;
     if(this.tokens[i]?.kind!==')')return false;
-    return predefined||['identifier','integer','double','string','char','true','false','null','this','base','new','default','checked','unchecked','(','!','~'].includes(this.tokens[i+1]?.kind);
+    return predefined||['identifier','integer','double','scalar','string','char','true','false','null','this','base','new','default','checked','unchecked','(','!','~'].includes(this.tokens[i+1]?.kind);
   }
   methodOrField(owner) {
     const start=this.current, mods=this.parseModifiers();
@@ -158,7 +158,7 @@ export class Parser {
     if(t.kind==='interpolated'){
       const parts=t.value.map(part=>{if(part.text!==undefined)return {...part};const inner=lex(new SourceText(part.expression,this.source.uri)),p=new Parser({...inner,source:this.source,tokens:inner.tokens.map(x=>({...x,start:x.start+part.start,end:x.end+part.start,fullStart:x.fullStart+part.start})),diagnostics:[]});const expression=p.expression();if(!p.at('eof'))p.error(p.current,'CS1003','Unexpected trailing interpolation input');for(const d of inner.diagnostics)this.error({start:part.start,end:part.end},d.code,d.message);this.diagnostics.push(...p.diagnostics);return {...part,expression};});return this.node('InterpolatedString',t,{parts});
     }
-    if(['integer','double','string','char','true','false','null'].includes(t.kind)&&!(['double','string','char'].includes(t.kind)&&t.text===t.kind))return this.node('Literal',t,{value:t.kind==='true'?true:t.kind==='false'?false:t.kind==='null'?null:t.value,type:t.kind==='integer'?'int':t.kind==='true'||t.kind==='false'?'bool':t.kind});
+    if(['integer','double','scalar','string','char','true','false','null'].includes(t.kind)&&!(['double','string','char'].includes(t.kind)&&t.text===t.kind))return this.node('Literal',t,{value:t.kind==='true'?true:t.kind==='false'?false:t.kind==='null'?null:t.value,literalText:t.text,type:t.kind==='scalar'?t.value.scalar:t.kind==='integer'?'int':t.kind==='true'||t.kind==='false'?'bool':t.kind});
     if(t.kind==='identifier'&&['Vector','List','HashSet','Queue','Stack','Dictionary','Task'].includes(t.value)&&this.at('<')){let at=this.i,depth=0;do{const k=this.tokens[at++]?.kind;depth+=k==='<'?1:k==='>'?-1:k==='>>'?-2:0;}while(depth>0&&at<this.tokens.length);if(depth===0&&this.tokens[at]?.kind==='.'){this.i--;const name=this.type();return this.node('Name',t,{name,nameSpan:{start:t.start,end:this.tokens[this.i-1].end}});}}
     if(['identifier','this','base'].includes(t.kind)||typeKeywords.has(t.kind))return this.node('Name',t,{name:t.value??t.kind,escaped:t.text.startsWith('@'),nameSpan:{start:t.start,end:t.end}});
     if(t.kind==='unchecked'||t.kind==='checked'){this.expect('(');const expression=this.expression();this.expect(')');return this.node(t.kind==='checked'?'Checked':'Unchecked',t,{expression});}

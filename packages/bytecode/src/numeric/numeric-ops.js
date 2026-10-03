@@ -147,6 +147,7 @@ export function convert(name, value, context = {}) {
 
 /** CLI storage locations narrow integers and round single precision on write/load. */
 export function storage(value, type, context) {
+  if(typeof value==='boolean'&&(type==='bool'||type==='System.Boolean'))return value?1:0;
   type = numericAliases[type] ?? type;
   if((type==='nint'||type==='nuint')&&isNativeInteger(value)&&context?.nativeIntBits===undefined)context={...context,nativeIntBits:value.nativeInt};
   if(type==='decimal'){if(!isDecimal(value))throw (context?.fault??fault)('InvalidProgramException','Decimal storage requires a Decimal value');return value;}

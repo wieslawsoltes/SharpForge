@@ -1,3 +1,4 @@
+import {numericIntrinsicDefinitions} from './numeric-intrinsic-profile.js';
 import {canonicalType,contracts,types} from '@sharpforge/framework';
 
 const aliases={object:'System.Object',string:'System.String',Exception:'System.Exception',int:'System.Int32',double:'System.Double',long:'System.Int64',bool:'System.Boolean'};
@@ -16,7 +17,7 @@ function add(owner,name,parameters,returnType,isStatic,implementation,contract=n
   const key=intrinsicKey(descriptor);
   definitions.set(key,Object.freeze({key,descriptor,implementation,contract}));
 }
-const primitive=['int','uint','long','ulong','double','float','bool','char','string','object'];
+const primitive=['int','uint','long','ulong','double','float','bool','char','string','object','System.Decimal'];
 for(const name of ['Write','WriteLine'])for(const type of primitive)add('System.Console',name,[type],'void',true,'console');
 add('System.Console','WriteLine',[],'void',true,'console');
 add('System.Object','.ctor',[],'void',false,'objectCtor');
@@ -62,6 +63,8 @@ for(const type of ['int','double','bool','string','object'])add('System.Convert'
 for(const type of ['int','double','string'])add('System.Convert','ToDouble',[type],'double',true,'convertDouble');
 for(const type of primitive)add('System.Convert','ToString',[type],'string',true,'convertString');
 for(const [owner,result] of [['System.Int32','int'],['System.Double','double'],['System.Int64','long']])add(owner,'Parse',['string'],result,true,'parse');
+
+for(const d of numericIntrinsicDefinitions)add(d.owner,d.name,d.parameters,d.returnType,d.isStatic,d.implementation);
 
 const builtinDefinitions=new Map(definitions),frameworkDefinitions=new Map();
 
