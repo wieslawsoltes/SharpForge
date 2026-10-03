@@ -32,12 +32,19 @@ env:
   DOTNET_NOLOGO: "1"
   SHARPFORGE_RESULTS_DIR: artifacts/results
   SHARPFORGE_STANDALONE_PATH: artifacts/SharpForge-standalone.html
+defaults:
+  run:
+    shell: bash
 jobs:
   sdk:
     if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     name: SDK ${{ matrix.sdk }} / ${{ matrix.target.platform }}-${{ matrix.target.architecture }}
     runs-on: ${{ matrix.target.runner }}
     timeout-minutes: 45
+    env:
+      NATIVE_PLATFORM: ${{ matrix.target.platform }}
+      NATIVE_ARCH: ${{ matrix.target.architecture }}
+      NATIVE_VERSION: ${{ matrix.sdk }}
     strategy:
       fail-fast: false
       matrix:
@@ -61,10 +68,10 @@ jobs:
           dotnet-version: ${{ matrix.sdk }}
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Execute actual SDK, emitted IL, MSBuild, cancellation and allocation fixtures
-        run: node scripts/conformance/native/qualify.js --suite sdk --version ${{ matrix.sdk }} --platform ${{ matrix.target.platform }} --architecture ${{ matrix.target.architecture }} --measure
+        run: node scripts/conformance/native/qualify.js --suite sdk --version "$NATIVE_VERSION" --platform "$NATIVE_PLATFORM" --architecture "$NATIVE_ARCH" --measure
       - name: Preserve setup failures as explicit failed cells
         if: always()
-        run: node scripts/conformance/native/finalize.js sdk ${{ matrix.sdk }} ${{ matrix.target.platform }} ${{ matrix.target.architecture }}
+        run: node scripts/conformance/native/finalize.js sdk "$NATIVE_VERSION" "$NATIVE_PLATFORM" "$NATIVE_ARCH"
       - name: Require unchanged tracked output
         if: always()
         run: node scripts/conformance/clean-checkout.js
@@ -79,6 +86,10 @@ jobs:
     name: Node ${{ matrix.node }} / ${{ matrix.target.platform }}-${{ matrix.target.architecture }}
     runs-on: ${{ matrix.target.runner }}
     timeout-minutes: 45
+    env:
+      NATIVE_PLATFORM: ${{ matrix.target.platform }}
+      NATIVE_ARCH: ${{ matrix.target.architecture }}
+      NATIVE_VERSION: ${{ matrix.node }}
     strategy:
       fail-fast: false
       matrix:
@@ -99,10 +110,10 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Run core check, test, build and actual host filesystem/process probes
-        run: node scripts/conformance/native/qualify.js --suite host --version ${{ matrix.node }} --platform ${{ matrix.target.platform }} --architecture ${{ matrix.target.architecture }} --core --measure
+        run: node scripts/conformance/native/qualify.js --suite host --version "$NATIVE_VERSION" --platform "$NATIVE_PLATFORM" --architecture "$NATIVE_ARCH" --core --measure
       - name: Preserve setup failures as explicit failed cells
         if: always()
-        run: node scripts/conformance/native/finalize.js host ${{ matrix.node }} ${{ matrix.target.platform }} ${{ matrix.target.architecture }}
+        run: node scripts/conformance/native/finalize.js host "$NATIVE_VERSION" "$NATIVE_PLATFORM" "$NATIVE_ARCH"
       - name: Require unchanged tracked output
         if: always()
         run: node scripts/conformance/clean-checkout.js

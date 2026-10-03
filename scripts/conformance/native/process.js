@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { access, chmod, mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import { request } from "node:http";
 import { setTimeout as delay } from "node:timers/promises";
 import {
   NativeWorkspace,
@@ -14,6 +15,21 @@ export const childFixture = join(
   root,
   "tests/conformance/native/fixtures/process-child.mjs",
 );
+function rawHttpStatus(url, headers) {
+  return new Promise((resolveStatus, reject) => {
+    // Fetch may normalize or suppress Host. Exercise the actual wire header.
+    const outgoing = request(url, { headers, timeout: 2000 }, (response) => {
+      response.once("error", reject);
+      response.once("end", () => resolveStatus(response.statusCode));
+      response.resume();
+    });
+    outgoing.once("error", reject);
+    outgoing.once("timeout", () =>
+      outgoing.destroy(new Error("Native HTTP fixture timed out")),
+    );
+    outgoing.end();
+  });
+}
 export async function waitForFile(path, { timeout = 15000 } = {}) {
   const deadline = Date.now() + timeout;
   while (Date.now() < deadline) {
@@ -116,7 +132,10 @@ export const processChecks = {
     temporary(async (directory) => {
       const denied = join(directory, "denied");
       await mkdir(denied);
-      await writeFile(join(directory, "Program.cs"), "return 0;");
+      await writeFile(
+        join(directory, "Program.cs"),
+        "class P { static int Main() { return 0; } }",
+      );
       return readOnly(denied, async (policy) => {
         await assert.rejects(
           writeFile(join(denied, "probe.txt"), "not permitted"),
@@ -167,11 +186,7 @@ export const processChecks = {
           403,
         );
         assert.equal(
-          (
-            await fetch(url, {
-              headers: { ...headers, Host: "untrusted.example" },
-            })
-          ).status,
+          await rawHttpStatus(url, { ...headers, Host: "untrusted.example" }),
           403,
         );
         assert.equal(

@@ -897,6 +897,352 @@
       "licenseFile": "tests/fixtures/portable-pdb/LICENSE",
       "licenseSHA256": "3139c517c09e23a2839e85318f59d6c3a0d196b98d9dbcc67809de98bfd3831d",
       "notice": "Portable PDB interoperability fixture"
+    },
+    {
+      "path": "packages/compiler/test/references/assemblies/Consumer.Lib1.dll",
+      "sha256": "2cf92c9d6578b87aa22729c4f48bb035dbfdafb6063d3890baa024d11dbbadcb",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/packages/compiler/test/references/fixtures.js",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/compiler/test/references/tools/generate.mjs",
+        "packages/compiler/test/references/tools/Program.cs",
+        "packages/compiler/test/references/pinned.json"
+      ]
+    },
+    {
+      "path": "packages/compiler/test/references/assemblies/Consumer.Lib2.dll",
+      "sha256": "4fdf9bf57c0d27524b00e9b9e757ed17bd83022e67b2e84f21886ca0f0f0dd6f",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/packages/compiler/test/references/fixtures.js",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/compiler/test/references/tools/generate.mjs",
+        "packages/compiler/test/references/tools/Program.cs",
+        "packages/compiler/test/references/pinned.json"
+      ]
+    },
+    {
+      "path": "packages/compiler/test/references/assemblies/Facade.dll",
+      "sha256": "2cb96db5fbb73e13b847bffbef8adbf057e16c71ae5e4f3244e1c96e67fa0463",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/packages/compiler/test/references/fixtures.js",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/compiler/test/references/tools/generate.mjs",
+        "packages/compiler/test/references/tools/Program.cs",
+        "packages/compiler/test/references/pinned.json"
+      ]
+    },
+    {
+      "path": "packages/compiler/test/references/assemblies/FacadeConsumer.dll",
+      "sha256": "8e433b6621cf95578662feba6738a6bd8d08025bddf6935d265df85322b87ab7",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/packages/compiler/test/references/fixtures.js",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/compiler/test/references/tools/generate.mjs",
+        "packages/compiler/test/references/tools/Program.cs",
+        "packages/compiler/test/references/pinned.json"
+      ]
+    },
+    {
+      "path": "packages/compiler/test/references/assemblies/Lib.1.0.0.0.dll",
+      "sha256": "1569abfbf9e6d7c68c43bee4b9a401c6465551da0fc7ec2d31394169d33d416b",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/packages/compiler/test/references/fixtures.js",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/compiler/test/references/tools/generate.mjs",
+        "packages/compiler/test/references/tools/Program.cs",
+        "packages/compiler/test/references/pinned.json"
+      ]
+    },
+    {
+      "path": "packages/compiler/test/references/assemblies/Lib.1.0.0.0.other.dll",
+      "sha256": "e8fe7c1e5393a23cec8181f07a89eba1385ed0902724f5f348f44cf8df5ce793",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/packages/compiler/test/references/fixtures.js",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/compiler/test/references/tools/generate.mjs",
+        "packages/compiler/test/references/tools/Program.cs",
+        "packages/compiler/test/references/pinned.json"
+      ]
+    },
+    {
+      "path": "packages/compiler/test/references/assemblies/Lib.1.0.0.5.dll",
+      "sha256": "57406fd80da52d492caf5362cffdc4f388767908e72db1632fada18c54e9503d",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/packages/compiler/test/references/fixtures.js",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/compiler/test/references/tools/generate.mjs",
+        "packages/compiler/test/references/tools/Program.cs",
+        "packages/compiler/test/references/pinned.json"
+      ]
+    },
+    {
+      "path": "packages/compiler/test/references/assemblies/Lib.2.0.0.0.dll",
+      "sha256": "e68c2615d14a379f8ed670d2501cb7720fe0ac54a9f3e22f2ccc252f5d326122",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/packages/compiler/test/references/fixtures.js",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/compiler/test/references/tools/generate.mjs",
+        "packages/compiler/test/references/tools/Program.cs",
+        "packages/compiler/test/references/pinned.json"
+      ]
+    },
+    {
+      "path": "packages/compiler/test/references/assemblies/Weak.1.0.0.0.dll",
+      "sha256": "faa4980f4e75c754ee97e814aa922d2819800d5af06ed5c9e50ee57300c6cae7",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/packages/compiler/test/references/fixtures.js",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/compiler/test/references/tools/generate.mjs",
+        "packages/compiler/test/references/tools/Program.cs",
+        "packages/compiler/test/references/pinned.json"
+      ]
+    },
+    {
+      "path": "packages/compiler/test/references/assemblies/Weak.2.0.0.0.dll",
+      "sha256": "e1efd14af3bcd196ce087c00da7c98e2ea113bdf6dcedfbbada7fca423a3f045",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/packages/compiler/test/references/fixtures.js",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "packages/compiler/test/references/tools/generate.mjs",
+        "packages/compiler/test/references/tools/Program.cs",
+        "packages/compiler/test/references/pinned.json"
+      ]
+    },
+    {
+      "path": "tests/fixtures/a05/runtime-faults/RuntimeFaults.dll",
+      "sha256": "82e58cbf47f6a4f34f1a92e8b92acaf99e2b8d3e133ca28fdc40ce763680be73",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/tests/fixtures/a05/runtime-faults/Program.cs",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "tests/fixtures/a05/runtime-faults/provenance.json",
+        "scripts/validate-a05-faults.mjs"
+      ]
+    },
+    {
+      "path": "tests/fixtures/metadata/ConsumerOfV1.dll",
+      "sha256": "3f72910a4b4eff320888ab1d6e2cbfa8490cb1ac011077e70c29d8465efb09f1",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/tests/fixtures/metadata/src/Consumer.cs",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "tests/fixtures/metadata/README.md",
+        "tests/fixtures/metadata/build-fixtures.mjs"
+      ]
+    },
+    {
+      "path": "tests/fixtures/metadata/ConsumerOfV2.dll",
+      "sha256": "bcca11b43099baa76851825cad13f1e1669a2e1680ae057c6096ed666f78c1d2",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/tests/fixtures/metadata/src/Consumer.cs",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "tests/fixtures/metadata/README.md",
+        "tests/fixtures/metadata/build-fixtures.mjs"
+      ]
+    },
+    {
+      "path": "tests/fixtures/metadata/CycleA.dll",
+      "sha256": "77128ac6b1423dfca859f38d496095b98b9986e6934a3ea91837dab0826847a7",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/tests/fixtures/metadata/src/Forwarding.cs",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "tests/fixtures/metadata/README.md",
+        "tests/fixtures/metadata/build-fixtures.mjs"
+      ]
+    },
+    {
+      "path": "tests/fixtures/metadata/CycleB.dll",
+      "sha256": "192ece1dfd92b05a387eec2409ee61e83acf19b930fd642e9268c3efb7c77773",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/tests/fixtures/metadata/src/Forwarding.cs",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "tests/fixtures/metadata/README.md",
+        "tests/fixtures/metadata/build-fixtures.mjs"
+      ]
+    },
+    {
+      "path": "tests/fixtures/metadata/CycleConsumer.dll",
+      "sha256": "a3aff21b1634ecbabc9724640645404127de20de68be08bf5c1e2bf290476845",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/tests/fixtures/metadata/src/Forwarding.cs",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "tests/fixtures/metadata/README.md",
+        "tests/fixtures/metadata/build-fixtures.mjs"
+      ]
+    },
+    {
+      "path": "tests/fixtures/metadata/Facade.dll",
+      "sha256": "7ca78a83b23069a42b3bbee5a4ce7a6abd80791cf73f6968c205a8d650cdd963",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/tests/fixtures/metadata/src/Forwarding.cs",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "tests/fixtures/metadata/README.md",
+        "tests/fixtures/metadata/build-fixtures.mjs"
+      ]
+    },
+    {
+      "path": "tests/fixtures/metadata/FacadeConsumer.dll",
+      "sha256": "ee9ea01a369bbffcd972f824b0f88b1a9640be61dafe38deec2377bdb855b9fe",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/tests/fixtures/metadata/src/Forwarding.cs",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "tests/fixtures/metadata/README.md",
+        "tests/fixtures/metadata/build-fixtures.mjs"
+      ]
+    },
+    {
+      "path": "tests/fixtures/metadata/MiniStandard.dll",
+      "sha256": "8055d7a0f6a6d0851043330f146164937e5c3a90122aa96a63285c4d318fad49",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/tests/fixtures/metadata/src/MiniStandard.cs",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "tests/fixtures/metadata/README.md",
+        "tests/fixtures/metadata/build-fixtures.mjs"
+      ]
+    },
+    {
+      "path": "tests/fixtures/metadata/VersionedLib.1.0.0.0.dll",
+      "sha256": "d3e89149184c3159f00008b67e50a629d7f26f317ba4e0ceb721a63ccd4bee88",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/tests/fixtures/metadata/src/VersionedLib.cs",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "tests/fixtures/metadata/README.md",
+        "tests/fixtures/metadata/build-fixtures.mjs"
+      ]
+    },
+    {
+      "path": "tests/fixtures/metadata/VersionedLib.1.0.0.5.dll",
+      "sha256": "57154ba023d7705516a675da5506bdb02bfab86b915bfc4d59e84fe1705a3fb6",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/tests/fixtures/metadata/src/VersionedLib.cs",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "tests/fixtures/metadata/README.md",
+        "tests/fixtures/metadata/build-fixtures.mjs"
+      ]
+    },
+    {
+      "path": "tests/fixtures/metadata/VersionedLib.2.0.0.0.dll",
+      "sha256": "777fdd29101aed52df9fbafc3c7c68274c9d17799876c21dfa1038bb0c155bc9",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/tests/fixtures/metadata/src/VersionedLib.cs",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "tests/fixtures/metadata/README.md",
+        "tests/fixtures/metadata/build-fixtures.mjs"
+      ]
+    },
+    {
+      "path": "tests/fixtures/metadata/WeakLib.1.0.0.0.dll",
+      "sha256": "59676a7f90e5a52acd1234711dab2587b016e49ad3750e9fa38dca4aca5731c5",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/tests/fixtures/metadata/src/VersionedLib.cs",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "tests/fixtures/metadata/README.md",
+        "tests/fixtures/metadata/build-fixtures.mjs"
+      ]
+    },
+    {
+      "path": "tests/fixtures/metadata/WeakLib.2.0.0.0.dll",
+      "sha256": "315881cafdbd60ff8acb2e9a8a38b2953f2b35c3374b4b18294703d1de32b13e",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/ff607380dbb14f03d9803c9ef534532f6379b6f2/tests/fixtures/metadata/src/VersionedLib.cs",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets",
+      "provenance": [
+        "tests/fixtures/metadata/README.md",
+        "tests/fixtures/metadata/build-fixtures.mjs"
+      ]
     }
   ]
 }

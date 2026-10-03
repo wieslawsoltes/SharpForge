@@ -129,6 +129,63 @@ test("T10 missing observations remain unknown; runner labels never imply an OS-v
     ),
   );
 });
+test("T10 shared capability registry preserves every tool-specific unknown obligation", async () => {
+  const registry = JSON.parse(
+    await readFile(
+      new URL(
+        "../../../planning/contracts/platform-capabilities.json",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+  );
+  const revisions = JSON.parse(
+    await readFile(
+      new URL(
+        "../../../planning/contracts/spec-revisions.json",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+  );
+  const evidence = JSON.parse(
+    await readFile(
+      new URL(
+        "../../../planning/qualification/native/evidence.json",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+  );
+  assert.deepEqual(evidence, []);
+  assert(revisions.revisions.some((revision) => revision.id === specRevision));
+  const identities = registry.rows
+    .flatMap((row) => {
+      assert.equal(row.status, "unknown");
+      return row.platforms.flatMap((platform) =>
+        row.engines.flatMap((engine) =>
+          row.specRevisions.map((revision) =>
+            [row.id, row.leafId, platform, engine, revision].join("|"),
+          ),
+        ),
+      );
+    })
+    .sort();
+  assert.deepEqual(
+    identities,
+    obligations()
+      .map((row) =>
+        [
+          row.capabilityId,
+          row.leafId,
+          row.platform + "-" + row.architecture,
+          row.engine + "@" + row.version,
+          specRevision,
+        ].join("|"),
+      )
+      .sort(),
+  );
+});
 test("T10 matrix retains exact run/commit/OS evidence and rejects duplicate independent cells", () => {
   const fixture = parserFixture(),
     matrix = matrixReport([fixture]);

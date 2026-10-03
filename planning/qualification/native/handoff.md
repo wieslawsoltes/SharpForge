@@ -37,6 +37,7 @@ Next batch, from the final reviewed integration commit:
    the committed planning file. No new OS version is inferred as tested.
 
 The matrix is a native qualification artifact, not a board-wide parity rollup.
-Integrating the additive capability IDs and `sharpforge-native-platform-v1` into
-the shared T12 evidence registry is an A00 shared-owner step; this scope does not
-alter that registry or manufacture target proofs from parser tests.
+The later [consolidation](consolidation.md) integrates the additive capability IDs
+and `sharpforge-native-platform-v1` into the shared registry under the integration
+owner's explicit narrow authorization. Every registration remains unknown, with
+empty evidence and artifact-index inputs. Parser tests do not manufacture proofs.

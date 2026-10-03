@@ -31,7 +31,8 @@ import { qualifySdk } from "./sdk.js";
 
 async function hostMeasurements(signal) {
   return temporary(async (directory) => {
-    await writeFile(join(directory, "Program.cs"), "return 42;");
+    const source = "class P { static int Main() { return 42; } }";
+    await writeFile(join(directory, "Program.cs"), source);
     const workspace = await NativeWorkspace.open(directory),
       reads = [],
       processes = [],
@@ -40,7 +41,7 @@ async function hostMeasurements(signal) {
       abortIfNeeded(signal);
       const heap = process.memoryUsage().heapUsed,
         start = performance.now();
-      assert.equal((await workspace.read("Program.cs")).text, "return 42;");
+      assert.equal((await workspace.read("Program.cs")).text, source);
       reads.push(performance.now() - start);
       retainedHeap.push(process.memoryUsage().heapUsed - heap);
       const result = await productCli(["check", "Program.cs"], directory, {
