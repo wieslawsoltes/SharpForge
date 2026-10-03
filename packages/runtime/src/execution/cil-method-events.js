@@ -54,8 +54,16 @@ export function flushCilMethodEvents(vm) {
   if (!observer) return;
   const live = new Set();
   for (const frame of liveFrames(vm)) live.add(frame.id);
+  let discarded = null;
   for (const active of observer.active.values()) {
-    if (!live.has(active.frame)) leaveCilMethod(vm, {id: active.frame}, 'canceled');
+    if (live.has(active.frame)) continue;
+    if (!discarded) discarded = [];
+    discarded.push(active.frame);
+  }
+  // An entire parked stack can disappear together. Close callees before callers,
+  // matching the order of ordinary returns, exception unwind and explicit stop.
+  if (discarded) for (let index = discarded.length - 1; index >= 0; index--) {
+    leaveCilMethod(vm, {id: discarded[index]}, 'canceled');
   }
   observer.log.flush();
 }

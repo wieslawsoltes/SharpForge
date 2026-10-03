@@ -21,6 +21,11 @@ frame identifier. Normal return emits `MethodLeave`; exceptional
 unwind, discarded cooperative frames and explicit stop carry corresponding
 `reason` values. Retained fault/debugger frames remain open until discarded or
 stopped. Intrinsic helpers without managed frames do not invent method events.
+Parked cooperative frames stay open while waiting. When scheduler cancellation
+discards their stacks, the next host slice closes the missing frames with
+`reason: 'canceled'`, innermost first. Repeated reconciliation and later stop do
+not emit another leave for those frames. A normal wake-up instead emits ordinary
+returns when the methods complete.
 
 VM construction records the initial entry and initializer calls before a host
 can subscribe. Use `{replay: true}` to receive that retained history. Callbacks
@@ -50,10 +55,15 @@ not change the event observer.
 
 Prepared regressions cover actual calls, exceptional unwind, output/instruction
 equivalence, debugger pause, stop, overflow, malformed configuration, callback
-failures and snapshot replay. Root alone runs the serial validation queue:
+failures and snapshot replay. Independently assembled CIL additionally schedules
+a real `Task.Run(Action)` delegate, parks its nested call in `Thread.Sleep`, and
+covers both cancellation and normal virtual-time wake-up. Cancellation checks
+discarded frames, suppressed continuation effects, and balanced exact-once leaves.
+Root alone runs the serial validation queue through the resource limiter:
 
 ```sh
-node --max-old-space-size=512 --test --test-concurrency=1 tests/a05-cil-method-events.test.js tests/a05-runtime-events.test.js
+node scripts/limited.js node --test tests/a05-cil-method-events.test.js \
+  tests/a05-cil-method-events-cancellation.test.js tests/a05-runtime-events.test.js
 ```
 
 No tests, builds or benchmarks were executed during this implementation.
