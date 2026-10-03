@@ -1255,4 +1255,17 @@ Registered families: <code>environment</code>.
 
 No pinned reference inventory is included for these families; registered rows alone do not establish API coverage.
 
+### Module <code>stringComparer</code>
+
+Registered families: <code>stringComparer</code>, <code>orderingComparer</code>.
+
+| ABI ID | Registered signature | Registry status |
+| --- | --- | --- |
+| 524290 | <code>int System.Collections.Generic.IComparer`1&lt;string&gt;::Compare(string, string)</code> | implemented |
+| 524291 | <code>int System.Collections.Generic.IComparer`1&lt;object&gt;::Compare(object, object)</code> | implemented |
+| 524292 | <code>static System.StringComparer System.StringComparer::get_Ordinal()</code> | implemented |
+| 524293 | <code>int System.StringComparer::Compare(string, string)</code> | implemented |
+
+No pinned reference inventory is included for these families; registered rows alone do not establish API coverage.
+
 <!-- bcl-module-inventory:end -->
