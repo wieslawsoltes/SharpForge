@@ -34,7 +34,7 @@ export class TypeDesc {
   get genericDefinition() { return this.#state.genericDefinition ?? null; }
   get genericArguments() { return this.#state.genericArguments ?? empty; }
   get genericParameters() {
-    return this.#state.genericParameters ?? (this.metadataToken >>> 24 === 2 ? this.module.genericParameters(this.metadataToken) : empty);
+    return this.#state.genericParameters ??= (this.metadataToken >>> 24 === 2 ? this.module.genericParameters(this.metadataToken) : empty);
   }
   get genericParameterPosition() { return this.#state.position ?? -1; }
   get genericParameterOwner() { return this.#state.owner ?? null; }
