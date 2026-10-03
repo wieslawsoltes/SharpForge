@@ -1,3 +1,4 @@
+import {createException} from './exception-object.js';
 import {ManagedFault} from '../heap.js';
 
 const triggers=new Set(['field','static-method','constructor','instance-method']);
@@ -71,10 +72,10 @@ export function failInitialization(vm,frame,error) {
   const fault=vm.heap.withRoots([inner.reference],()=>{
     if(!inner.reference) {
       const text=vm.heap.string(inner.message);
-      inner.reference=vm.heap.allocate('exception',inner.name,[text],[text]);
+      inner.reference=createException(vm,inner.name,text);
     }
     return vm.heap.withRoots([inner.reference],()=>{
-      const text=vm.heap.string(message),reference=vm.heap.allocate('exception','System.TypeInitializationException',[text,inner.reference],[text,inner.reference]);
+      const text=vm.heap.string(message),reference=createException(vm,'System.TypeInitializationException',text,inner.reference);
       const wrapped=new ManagedFault('TypeInitializationException',message,reference);
       wrapped.innerException=inner;wrapped.typeName=name;wrapped.frames=inner.frames;return wrapped;
     });

@@ -1,3 +1,4 @@
+import {faultFromException} from './execution/exception-object.js';
 import {callSource} from './execution/source-calls.js';
 import {createArray,arrayAddress} from './execution/arrays.js';
 import {SyncPrimitives} from './execution/sync-primitives.js';
@@ -83,7 +84,7 @@ export class VirtualMachine {
           case Op.LDELEM:{const index=Number(number(this.stack.pop())),ref=this.stack.pop();this.stack.push(sourceCopy(this,this.indexed(ref,index).data[index]));break;}
           case Op.STELEM:{const value=this.stack.pop(),index=Number(number(this.stack.pop())),ref=this.stack.pop();this.heap.withRoots([ref,value],()=>{const r=this.indexed(ref,index),oldValue=r.data[index],stored=sourceStore(this,value,r.methodTable.elementType.name,sourceInputTypes(this,frame).at(-1));checkSourceArrayStore(this,r,stored);this.heap.writeData(r,index,stored);this.stack.push(sourceCopy(this,stored));this.notifyWrite({kind:'array',handle:ref.h,generation:ref.g,index,value:stored,oldValue});});break;}
           case Op.LENGTH:{const r=this.heap.get(this.stack.pop());if(r.kind!=='array'&&r.kind!=='string')throw new ManagedFault('InvalidProgramException','Length requires an array or string');this.stack.push(r.data.length);break;}
-          case Op.THROW:{const ref=this.stack.pop();if(ref===null)throw new ManagedFault('NullReferenceException','A null exception was thrown');const r=this.heap.get(ref);throw new ManagedFault(r.type,this.format(r.data[0]),ref);}
+          case Op.THROW:throw faultFromException(this,this.stack.pop());
           case Op.RETHROW:rethrow(frame);break;
           default:throw new ManagedFault('InvalidProgramException','Unknown instruction');
         }

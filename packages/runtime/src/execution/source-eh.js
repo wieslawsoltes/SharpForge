@@ -1,3 +1,4 @@
+import {prepareException} from './exception-object.js';
 import {cancelArrayOperation} from './array-ops.js';
 import {ManagedFault} from '../heap.js';
 import {popFrame} from './frame-stack.js';
@@ -93,13 +94,7 @@ export function rethrow(frame) {
 export function handleFault(vm, error) {
   const fault = vm.makeFault(error);
   vm.fault = fault;
-  if (!fault.reference) {
-    try {
-      const message = vm.heap.string(fault.message);
-      fault.reference = vm.heap.allocate('exception', fault.name, [message], [message]);
-    } catch { /* Preserve the original failure if its managed representation cannot be allocated. */ }
-  }
-  fault.frames ??= vm.frames.slice().reverse().map(f => ({method: vm.image.methods[f.methodId].qualifiedName, point: f.point}));
+  try { prepareException(vm, fault); } catch { vm.state = 'faulted'; return; }
   while (vm.frames.length) {
     const frame = vm.top, method = vm.image.methods[frame.methodId], pc = frame.pc - 1;
     const handler = method.handlers.filter(h => h.kind !== 'finally' && pc >= h.start && pc < h.end && exceptionMatches(fault.name, h.type)).sort((a, b) => (a.end - a.start) - (b.end - b.start))[0];

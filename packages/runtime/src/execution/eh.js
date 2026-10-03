@@ -1,3 +1,4 @@
+import {prepareException, faultFromException} from './exception-object.js';
 import {cancelArrayOperation} from './array-ops.js';
 import {ManagedFault} from '../heap.js';
 import {failInitialization} from './static-init.js';
@@ -103,19 +104,11 @@ export function continueUnwind(vm,frame,leave=null) {
 /** Raise a runtime fault, or execute throw/rethrow through the first-chance boundary. */
 export function throwFault(vm,error,instruction=null) {
   if(instruction?.name==='rethrow')throw [...(vm.top.caught??[])].reverse().find(caught=>instruction.offset>=caught.start&&instruction.offset<caught.end)?.fault??new ManagedFault('InvalidProgramException','No active catch');
-  if(instruction?.name==='throw') {
-    const ref=vm.pop();
-    if(ref===null)throw new ManagedFault('NullReferenceException','Null exception');
-    const record=vm.heap.get(ref);
-    if(record.kind!=='exception'&&!vm.matches(ref,'System.Exception'))throw new ManagedFault('InvalidProgramException','Thrown value is not an exception');
-    throw new ManagedFault(record.type,vm.format(record.data[0]),ref);
-  }
+  if(instruction?.name==='throw')throw faultFromException(vm,vm.pop());
+
   const fault=error instanceof ManagedFault?error:new ManagedFault('InvalidProgramException',error.message??String(error));vm.fault=fault;
   if(fatalFaults.has(fault.name)){vm.state='faulted';return;}
-  if(!fault.reference) {
-    try{const message=vm.heap.string(fault.message);fault.reference=vm.heap.allocate('exception',fault.name,[message],[message]);}
-    catch{vm.state='faulted';return;}
-  }
+  try{prepareException(vm,fault);}catch{vm.state='faulted';return;}
   if(!vm.top){vm.state='faulted';return;}
   vm.top.volatileAccess=false;vm.fault=null;
   const search={error:fault,frames:[...vm.frames].reverse().map(frame=>({id:frame.id,offset:frame.lastOffset})),cursor:0,clause:0,selection:null};
