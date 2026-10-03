@@ -14,8 +14,10 @@ export function createBuiltinTable(definitions, contracts, releasedRanges) {
       result: contract.result, params, contract
     });
   }
+  // Runtime opcodes follow the released ranges, not a later extension's sparse ID.
+  let runtimeId = contractOffset + releasedRanges.reduce((end, range) => Math.max(end, range.start + range.size), 0);
   for (const [name, min, max, result, params] of runtimeBuiltinDefinitions) {
-    const id = entries.length;
+    const id = runtimeId++;
     entries[id] = Object.freeze({id, name, min, max, result, params: Object.freeze(params)});
   }
   return Object.freeze(entries);
