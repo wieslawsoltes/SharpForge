@@ -39,3 +39,10 @@ export function standaloneScript(html) {
   if (scripts.length !== 1 || /\bsrc\s*=/i.test(scripts[0][1])) throw new Error('Invalid standalone entry script');
   return scripts[0][2];
 }
+
+/** HTTP enforces the header for every HTML response; refresh only our generated metadata. */
+export function hostedHtml(html, { allowedOrigins = [] } = {}) {
+  const options = { allowedOrigins, inlineScript: standaloneScript(html) };
+  const generated = /<meta\s+data-sharpforge-csp="(?:browser|standalone)"\s/i.test(html);
+  return { body: generated ? installCsp(html, options) : html, policy: browserCsp(options) };
+}

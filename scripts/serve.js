@@ -1,4 +1,4 @@
-import {browserCsp,connectOrigins,installCsp,standaloneScript} from './conformance/security/csp.js';
+import {browserCsp,connectOrigins,hostedHtml} from './conformance/security/csp.js';
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { dirname, resolve, extname, sep } from 'node:path';
@@ -10,7 +10,7 @@ try{await stat(resolve(root,'index.html'));}catch{await import('./build.js');}
 const allowedOrigins=connectOrigins(process.env.SHARPFORGE_CONNECT_ORIGINS),csp=browserCsp({allowedOrigins});
 const server=createServer(async(req,res)=>{try{const url=new URL(req.url,'http://localhost'),pathname=decodeURIComponent(url.pathname),path=resolve(root,'.'+pathname);if(path!==root&&!path.startsWith(root+sep)){res.writeHead(403);res.end('Forbidden');return;}let file=path;const s=await stat(file);if(s.isDirectory())file=resolve(file,'index.html');const body=await readFile(file);
 let responseBody=body,responseCsp=csp;
-if(extname(file)==='.html'){const html=body.toString('utf8'),options={allowedOrigins,inlineScript:standaloneScript(html)};responseBody=installCsp(html,options);responseCsp=browserCsp(options);}
+if(extname(file)==='.html'){const result=hostedHtml(body.toString('utf8'),{allowedOrigins});responseBody=result.body;responseCsp=result.policy;}
 res.writeHead(200,{'Content-Type':mime[extname(file)]??'application/octet-stream','Cache-Control':'no-cache','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','Content-Security-Policy':responseCsp});res.end(responseBody);
 }catch{res.writeHead(404,{'Content-Type':'text/plain'});res.end('Not found');}});
 server.listen(port,host,()=>console.log(`SharpForge Studio: http://${host}:${port}`));

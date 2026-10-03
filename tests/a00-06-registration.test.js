@@ -74,7 +74,12 @@ test('A00 T06 every historical npm name dispatches to its original commands with
   assert.equal(pkg.scripts[name],`node scripts/run.js ${name}`);
   const plan=await taskPlan(name);assert(plan.length);
   if(name==='test'){assert.deepEqual(plan[0].args,['scripts/planning/run-tests.js']);continue;}
-  if(name==='check'){assert.deepEqual(plan.map(p=>p.args[0]),['scripts/planning/check-test-manifests.js','scripts/check.js']);continue;}
+  if(name==='check'){
+   assert.deepEqual(plan.map(p=>p.args),[
+    ['scripts/planning/check-test-manifests.js'],['scripts/check.js'],
+    ['scripts/conformance/static/check-imports.js','--output','artifacts/security/static-imports.json']
+   ]);continue;
+  }
   if(name==='standalone'){assert.deepEqual(plan.map(p=>p.args[0]),['scripts/build.js','scripts/standalone.js']);continue;}
   const [executable,...args]=command.split(' ');assert.equal(plan[0].command,executable==='node'?process.execPath:process.env.PYTHON||'python');
   if(!args.some(arg=>arg.includes('*')))assert.deepEqual(plan[0].args,args);

@@ -257,7 +257,7 @@
       "path": "scripts/serve.js",
       "operation": "dynamic-import",
       "count": 1,
-      "sha256": "15d15b26d5c9e52d0cdcecafd1c9aa012049a403441752cc9d3f35dadc2b83d9",
+      "sha256": "239e943b8a4bc6a3baaedd4d5a798e047fa4355d2991d70533d66f7b071ad942",
       "reason": "Development server imports the fixed local build command only when the built index is missing."
     },
     {

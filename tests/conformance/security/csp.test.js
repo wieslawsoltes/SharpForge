@@ -5,10 +5,21 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createServer } from 'node:http';
 import { createBrowserCsp } from '../../../packages/network/src/index.js';
-import { browserCsp, installCsp, metaCsp, scriptHash, standaloneScript } from '../../../scripts/conformance/security/csp.js';
+import { browserCsp, installCsp, metaCsp, scriptHash, standaloneScript, hostedHtml } from '../../../scripts/conformance/security/csp.js';
 import { inspectPolicy, probe } from '../../../scripts/conformance/security/header-probe.js';
 
 const document = '<!doctype html><html><head><meta charset="utf-8"><title>Fixture</title></head><body></body></html>';
+
+test('HTTP headers protect headless HTML and keep generated metadata grants in sync', () => {
+  const fragment = '<h1>Valid implicit-head HTML</h1>';
+  const response = hostedHtml(fragment);
+  assert.equal(response.body, fragment);
+  assert.equal(inspectPolicy(response.body, { header: response.policy }).delivery, 'header');
+  const allowedOrigins = ['https://api.example.test'];
+  const generated = hostedHtml(installCsp(document), { allowedOrigins });
+  assert.equal(inspectPolicy(generated.body, { allowedOrigins }).passed, true);
+  assert.equal(generated.policy, browserCsp({ allowedOrigins }));
+});
 
 test('static-host metadata derives from the network policy and precedes resources', () => {
   const allowedOrigins = ['https://api.example.test'], full = createBrowserCsp(allowedOrigins);
