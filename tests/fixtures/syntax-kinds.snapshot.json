@@ -554,4 +554,12 @@
 "CrefParameterList":8905,
 "CrefBracketedParameterList":8906,
 "CrefParameter":8907,
-"ExtensionBlockDeclaration":8908}
+"ExtensionBlockDeclaration":8908,
+"LessThanSlashToken":8425,
+"SlashGreaterThanToken":8426,
+"XmlCommentStartToken":8427,
+"XmlCommentEndToken":8428,
+"XmlCDataStartToken":8429,
+"XmlCDataEndToken":8430,
+"XmlProcessingInstructionStartToken":8431,
+"XmlProcessingInstructionEndToken":8432}

@@ -31,7 +31,8 @@ export const tokenKindNames = Object.freeze([
   'ReferenceKeyword', 'LoadKeyword', 'NullableKeyword', 'EnableKeyword', 'WarningsKeyword', 'AnnotationsKeyword', 'OmittedTypeArgumentToken', 'OmittedArraySizeExpressionToken',
   'EndOfDirectiveToken', 'EndOfDocumentationCommentToken', 'EndOfFileToken', 'BadToken', 'IdentifierToken', 'NumericLiteralToken', 'CharacterLiteralToken', 'StringLiteralToken',
   'XmlEntityLiteralToken', 'XmlTextLiteralToken', 'XmlTextLiteralNewLineToken', 'InterpolatedStringToken', 'InterpolatedStringTextToken', 'SingleLineRawStringLiteralToken', 'MultiLineRawStringLiteralToken', 'Utf8StringLiteralToken',
-  'Utf8SingleLineRawStringLiteralToken', 'Utf8MultiLineRawStringLiteralToken', 'InterpolatedStringStartToken', 'InterpolatedStringEndToken', 'InterpolatedVerbatimStringStartToken', 'InterpolatedSingleLineRawStringStartToken', 'InterpolatedMultiLineRawStringStartToken', 'InterpolatedRawStringEndToken'
+  'Utf8SingleLineRawStringLiteralToken', 'Utf8MultiLineRawStringLiteralToken', 'InterpolatedStringStartToken', 'InterpolatedStringEndToken', 'InterpolatedVerbatimStringStartToken', 'InterpolatedSingleLineRawStringStartToken', 'InterpolatedMultiLineRawStringStartToken', 'InterpolatedRawStringEndToken',
+  'LessThanSlashToken', 'SlashGreaterThanToken', 'XmlCommentStartToken', 'XmlCommentEndToken', 'XmlCDataStartToken', 'XmlCDataEndToken', 'XmlProcessingInstructionStartToken', 'XmlProcessingInstructionEndToken'
 ]);
 export const triviaKindNames = Object.freeze([
   'EndOfLineTrivia', 'WhitespaceTrivia', 'SingleLineCommentTrivia', 'MultiLineCommentTrivia', 'DocumentationCommentExteriorTrivia', 'SingleLineDocumentationCommentTrivia', 'MultiLineDocumentationCommentTrivia', 'DisabledTextTrivia',
@@ -87,6 +88,7 @@ export function syntaxKindName(id) { return names.get(id); }
 const tokenSet = new Set(tokenKindNames), triviaSet = new Set(triviaKindNames), nodeSet = new Set(nodeKindNames);
 export function isTokenKind(kind) { return tokenSet.has(kind); }
 export function isTriviaKind(kind) { return triviaSet.has(kind); }
-export function isNodeKind(kind) { return nodeSet.has(kind); }
+/** Node kinds, including the two documentation comment kinds, which name both a trivia and its structure node. */
+export function isNodeKind(kind) { return nodeSet.has(kind) || kind === 'SingleLineDocumentationCommentTrivia' || kind === 'MultiLineDocumentationCommentTrivia'; }
 export function isKeywordKind(kind) { return tokenSet.has(kind) && kind.endsWith('Keyword'); }
 export function isDirectiveKind(kind) { return triviaSet.has(kind) && kind.endsWith('DirectiveTrivia'); }

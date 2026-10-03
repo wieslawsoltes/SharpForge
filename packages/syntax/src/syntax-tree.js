@@ -5,9 +5,19 @@ import { createNode } from './red.js';
 import { checkFeatures } from './feature-gate.js';
 import { parseLanguageVersion, languageVersionDiagnostic } from './langversion.js';
 import { createLineMap } from './directives/misc.js';
+import { parseDocumentationComment, documentationCommentKinds } from './lexer/doc-comments.js';
+import { diagnostic } from '@sharpforge/text';
+/** XML documentation warnings (CS1570, CS1584) for every documentation comment in the token stream. */
+export function documentationDiagnostics(source, tokens) {
+  const out = [];
+  for (const token of tokens) for (const piece of token.leadingTrivia) if (documentationCommentKinds.has(piece.kind))
+    for (const d of parseDocumentationComment(source.text.slice(piece.start, piece.end), piece.kind).diagnostics) out.push(diagnostic(source, piece.start + d.start, d.end - d.start, d.code, d.message, 'warning'));
+  return out;
+}
 /**
  * An immutable parsed document: source text, parse options, the lossless tree and its diagnostics.
- * Options: languageVersion, preprocessorSymbols, script, fileBasedProgram and `cache` (a BoundedCache shared across trees
+ * Options: languageVersion, preprocessorSymbols, script, fileBasedProgram, documentationMode ('parse' by default;
+ * 'diagnose' also reports malformed XML documentation comments as CS1570 / CS1584 warnings) and `cache` (a BoundedCache shared across trees
  * so green tokens and nodes are interned between versions of a document).
  */
 export class SyntaxTree {
@@ -22,6 +32,7 @@ export class SyntaxTree {
       if (!version) { const invalid = languageVersionDiagnostic(options.languageVersion); diagnostics.push({ uri: source.uri, version: source.version, start: 0, length: 0, code: invalid.code, message: invalid.message, severity: 'error', range: { start: source.positionAt(0), end: source.positionAt(0) } }); }
       else diagnostics.push(...checkFeatures(source, parsed.features, version));
     }
+    if (options.documentationMode === 'diagnose') diagnostics.push(...documentationDiagnostics(source, lexed.tokens));
     diagnostics.sort((a, b) => a.start - b.start);
     return new SyntaxTree(source, Object.freeze({ ...options, cache }), parsed.green, Object.freeze(diagnostics), Object.freeze(parsed.features), lexed.directives);
   }

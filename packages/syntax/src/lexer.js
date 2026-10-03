@@ -10,6 +10,7 @@ export * from './lexer/raw-strings.js';
 export * from './lexer/utf8-suffix.js';
 export * from './lexer/identifiers.js';
 export * from './lexer/trivia.js';
+export * from './lexer/doc-comments.js';
 export * from './directives/conditional.js';
 export * from './directives/misc.js';
 export * from './directives/script.js';

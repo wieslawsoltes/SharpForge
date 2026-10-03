@@ -15,7 +15,7 @@ export function fixtureOptions(text) {
   const options = { fileBasedProgram: false }, first = text.split('\n')[0];
   if (first.startsWith('// roslyn:')) for (const setting of first.slice(10).trim().split(/\s+/)) {
     const [key, value] = setting.split('=');
-    if (key === 'langversion') options.languageVersion = value; else if (key === 'define') options.preprocessorSymbols = value.split(';'); else if (key === 'kind' && value === 'script') options.script = true;
+    if (key === 'langversion') options.languageVersion = value; else if (key === 'doc' && value === 'diagnose') options.documentationMode = 'diagnose'; else if (key === 'define') options.preprocessorSymbols = value.split(';'); else if (key === 'kind' && value === 'script') options.script = true;
   }
   return options;
 }
@@ -37,27 +37,35 @@ export function compareTokenValue(token, reference) {
 }
 /**
  * Compares a SharpForge tree with a Roslyn dump: node and token kinds, spans, leading/trailing trivia kinds and spans,
- * token text and values, and error codes. Returns a list of problems (empty when the trees agree).
+ * token text and values, error codes, and the structure of documentation comment trivia (which Roslyn positions
+ * relative to the comment, so its offsets are shifted onto the trivia). Returns a list of problems (empty when the trees agree).
  */
 export function compareWithReference(tree, reference, text, limit = 8) {
   const problems = [], path = [];
-  const visit = (mine, theirs) => {
+  const firstOffset = node => { while (Array.isArray(node[3])) node = node[3][0]; return node[6].length ? node[6][0][1] : node[1]; };
+  const visit = (mine, theirs, shift = 0) => {
     if (problems.length >= limit) return;
-    const isNode = Array.isArray(theirs[3]), where = () => `${path.join('/')} @${theirs[1]}..${theirs[2]} ${JSON.stringify(text.slice(theirs[1], Math.min(theirs[2], theirs[1] + 40)))}`;
+    const isNode = Array.isArray(theirs[3]), start = theirs[1] + shift, end = theirs[2] + shift, where = () => `${path.join('/')} @${start}..${end} ${JSON.stringify(text.slice(start, Math.min(end, start + 40)))}`;
     const span = mine.span;
     if (mine.kind !== theirs[0]) { problems.push(`kind ${mine.kind} != ${theirs[0]} at ${where()}`); return; }
-    if (span.start !== theirs[1] || span.end !== theirs[2]) { problems.push(`span of ${mine.kind} ${span.start}..${span.end} != ${theirs[1]}..${theirs[2]} at ${where()}`); return; }
+    // Roslyn reports the spans of nodes inside a structured trivia without the leading comment exterior; token spans are exact.
+    if ((span.start !== start || span.end !== end) && !(shift && isNode)) { problems.push(`span of ${mine.kind} ${span.start}..${span.end} != ${start}..${end} at ${where()}`); return; }
     if (!isNode) {
-      const trivia = list => JSON.stringify(list.map(t => [t.kind, t.span.start, t.span.end]));
-      if (trivia(mine.leadingTrivia) !== JSON.stringify(theirs[6])) problems.push(`leading trivia ${trivia(mine.leadingTrivia)} != ${JSON.stringify(theirs[6])} at ${where()}`);
-      if (trivia(mine.trailingTrivia) !== JSON.stringify(theirs[7])) problems.push(`trailing trivia ${trivia(mine.trailingTrivia)} != ${JSON.stringify(theirs[7])} at ${where()}`);
+      const trivia = list => JSON.stringify(list.map(t => [t.kind, t.span.start, t.span.end])), reference = list => JSON.stringify(list.map(t => [t[0], t[1] + shift, t[2] + shift]));
+      if (trivia(mine.leadingTrivia) !== reference(theirs[6])) problems.push(`leading trivia ${trivia(mine.leadingTrivia)} != ${reference(theirs[6])} at ${where()}`);
+      if (trivia(mine.trailingTrivia) !== reference(theirs[7])) problems.push(`trailing trivia ${trivia(mine.trailingTrivia)} != ${reference(theirs[7])} at ${where()}`);
       if (mine.isMissing !== theirs[8]) problems.push(`missing flag differs at ${where()}`);
       const value = compareTokenValue(mine, theirs); if (value) problems.push(`${value} at ${where()}`);
+      const all = [...mine.leadingTrivia, ...mine.trailingTrivia]; [...theirs[6], ...theirs[7]].forEach((entry, index) => {
+        if (!entry[3] || !all[index]) return; const structure = all[index].structure;
+        if (!structure || !structure.isNode) { problems.push(`no documentation structure at ${where()}`); return; }
+        path.push('#doc'); visit(structure, entry[3], entry[1] + shift - firstOffset(entry[3])); path.pop();
+      });
       return;
     }
     const children = mine.childNodesAndTokens(); path.push(theirs[0]);
     if (children.length !== theirs[3].length) problems.push(`children [${children.map(c => c.kind).join(' ')}] != [${theirs[3].map(c => c[0]).join(' ')}] in ${where()}`);
-    else for (let i = 0; i < children.length; i++) visit(children[i], theirs[3][i]);
+    else for (let i = 0; i < children.length; i++) visit(children[i], theirs[3][i], shift);
     path.pop();
   };
   visit(tree.root, reference.tree);

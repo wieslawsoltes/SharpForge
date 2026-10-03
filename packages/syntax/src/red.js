@@ -1,4 +1,5 @@
 import { greenText } from './green.js';
+import { documentationCommentStructure } from './lexer/doc-comments.js';
 /**
  * Red facade: positioned, parent-linked views computed lazily over green nodes.
  * Lists are transparent, as in Roslyn: a list element's parent is the node that owns the list.
@@ -10,7 +11,13 @@ export class SyntaxTrivia {
   constructor(green, token, position) { this.green = green; this.token = token; this.position = position; }
   get kind() { return this.green.kind; }
   get text() { return this.green.text; }
-  get structure() { return this.green.structure; }
+  /** Directive trivia: the directive's parsed fields. Documentation comments: the red XML structure node (see lexer/doc-comments.js), with `parentTrivia` set. */
+  get structure() {
+    const parsed = documentationCommentStructure(this.green); if (!parsed) return this.green.structure;
+    if (!this._structure) { this._structure = createNode(parsed.green, null, this.position); this._structure.parentTrivia = this; }
+    return this._structure;
+  }
+  get hasStructure() { return !!this.green.structure || !!documentationCommentStructure(this.green); }
   get span() { return { start: this.position, end: this.position + this.green.fullWidth }; }
   get fullSpan() { return this.span; }
   get isTrivia() { return true; }
