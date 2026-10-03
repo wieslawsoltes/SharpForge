@@ -27,8 +27,8 @@ snapshot fields; a fresh VM reconstructs them after portable restore. No host ca
 Qualification is deferred until the complete E02 integration is ready. `tests/a05-decode-plan.test.js`
 prepares exact operand, warm-allocation, owner replacement, Hot Reload and portable restore cases.
 `node scripts/benchmarks/a05-decode.mjs [output.json]` prepares cold-decode and warm-dispatch evidence.
-No speedup or completed cross-platform qualification is claimed. Virtual-call caches and source
-superinstructions are subsequent T07 slices; they consume the same epoch owner.
+No speedup or completed cross-platform qualification is claimed. Source superinstructions are a
+subsequent T07 slice; they consume the same epoch owner.
 
 `token-cache.js` caches raw tokens, user-string text, type names and resolved method/field descriptors.
 Closed caller methods and receiver MethodTables are separate substitution keys. Field entries contain
@@ -39,3 +39,12 @@ derived code state. The metadata-only field cache follows the design from PR #28
 field-assembly fixture is reused for closed generics, reused tokens and restored storage.
 `tests/a05-token-cache.test.js` prepares warm-path zero-resolution and invalid receiver cases; execution
 and performance measurements remain deferred.
+
+`inline-cache.js` caches call-site targets by exact receiver MethodTable, concrete caller and instruction
+offset. One receiver takes the monomorphic path; up to four distinct bindings are retained by default
+(`inlineCacheSize`, range 1–16). Another binding permanently selects the megamorphic dispatch fallback
+for that epoch. `inlineCaches:false` selects uncached resolution. Receivers are always validated before
+looking up a cached target; metadata entries cannot keep objects alive. Interface/default/explicit slots
+still use the existing dispatch implementation on a miss. Code-owner and registry changes drop every site.
+The deferred `a05-inline-cache.mjs` benchmark records raw cached/uncached virtual and interface timings
+and fails its evidence result if the issue's 3× median threshold is unmet. That threshold has not been measured.

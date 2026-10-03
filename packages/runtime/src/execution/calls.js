@@ -1,4 +1,5 @@
-import {constrainedTarget, objectOverride} from './handlers/constrained.js';
+import {constrainedTarget} from './handlers/constrained.js';
+import {resolveVirtualCall} from './inline-cache.js';
 import {splitVarargs, attachVarargs, varargsCall} from './varargs.js';
 import {memoryCall} from './memory-calls.js';
 import {createException} from './exception-object.js';
@@ -149,13 +150,12 @@ export function invoke(vm,instruction) {
       return;
     }
     if(constrained!==undefined&&constrained!==null){descriptor=constrainedTarget(vm,descriptor,args,constrained);target=descriptor.resolvedToken;}
-    if(instruction.name==='callvirt'&&args[0]===null)throw new ManagedFault('NullReferenceException','Null virtual receiver');
-    if(instruction.name==='callvirt'&&!target){const override=objectOverride(vm,descriptor,args[0]);if(override){descriptor=override;target=override.resolvedToken;}}
-    const receiverType=args[0]?.byref?pointerType(vm,args[0]).name:isReference(args[0])?vm.heap.get(args[0]).methodTable.name:null;
-    const dispatch=target&&instruction.name==='callvirt'&&(vm.inspector.methods.get(target)?.flags&0x40)?vm.typeSystem.dispatch.resolve(receiverType,target,descriptor.ownerInstance):target??(instruction.name==='callvirt'?vm.typeSystem.dispatch.externalTarget(receiverType,descriptor):null);
+    const virtual=instruction.name==='callvirt'?resolveVirtualCall(vm,caller,instruction,descriptor,args[0]):null;
+    const dispatch=virtual?virtual.target:target;
+    if(virtual)descriptor=virtual.descriptor;
     if(dispatch) {
       if(!verifiedMethod(vm,dispatch))throw new ManagedFault('NotSupportedException','Unverified virtual override; select its method directly');
-      startManagedCall(vm,{...descriptor,...vm.inspector.methods.get(dispatch),resolvedToken:dispatch},args,{tail});
+      startManagedCall(vm,virtual?descriptor:{...descriptor,...vm.inspector.methods.get(dispatch),resolvedToken:dispatch},args,{tail});
     } else {
       const value=vm.intrinsic(descriptor,args);
       if(descriptor.signature.returnType!=='void'&&value!==SUSPENDED)caller.stack.push(value);
