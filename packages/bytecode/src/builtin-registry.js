@@ -1,11 +1,16 @@
-/** Append validated contributions while preserving sparse ID reservations in array bases and snapshots. */
-export function createBuiltinRegistry(base) {
-  // Array spread fills reserved holes with undefined. Slice preserves their absence.
-  const entries = Array.isArray(base) ? base.slice() : [...base];
-  const byName = new Map(entries.filter(Boolean).map(entry => [entry.name, entry]));
+import {copyBuiltinArraySlots} from './builtin-registry-array.js';
+
+/** Append validated contributions; only the known default table opts into occupied-slot copies. */
+export function createBuiltinRegistry(base, useOccupiedSlots = false) {
+  // Custom arrays retain their own slice/species/accessor/proxy behavior.
+  const entries = useOccupiedSlots ? copyBuiltinArraySlots(base) : Array.isArray(base) ? base.slice() : [...base];
+  const byName = useOccupiedSlots ? new Map() : new Map(entries.filter(Boolean).map(entry => [entry.name, entry]));
+  if (useOccupiedSlots) {
+    for (const entry of Object.values(entries)) if (entry) byName.set(entry.name, entry);
+  }
   return {
     get entries() {
-      return Object.freeze(entries.slice());
+      return Object.freeze(useOccupiedSlots ? copyBuiltinArraySlots(entries) : entries.slice());
     },
     get(name) {
       return byName.get(name) ?? null;

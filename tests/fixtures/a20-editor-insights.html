@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Editor insight provider integration fixture</title>
+<link rel="stylesheet" href="../../packages/editor/src/widgets/insights.css">
+<style>
+  :root { --text: #f2f2f5; --surface: #262936; --surface2: #303444; --editor: #1e2028; --line: #616776; }
+  body { margin: 0; background: #181a20; color: #eee; font: 14px system-ui; }
+  #editor { position: relative; margin: 30px; width: 1000px; height: 600px; }
+  #source { box-sizing: border-box; width: 100%; height: 420px; background: #1e2028; color: #eee; font: 14px/22px monospace; }
+  #zones { position: absolute; left: 20px; right: 20px; top: 80px; pointer-events: none; }
+  #zones > * { pointer-events: auto; }
+</style>
+<script type="importmap">
+{"imports":{"@sharpforge/text":"../../packages/text/src/index.js","@sharpforge/syntax":"../../packages/syntax/src/index.js"}}
+</script>
+<div id="editor"><textarea id="source" aria-label="Source editor"></textarea><div id="zones"></div></div>
+<script type="module" src="./a20-editor-insights-fixture.js"></script>
+</html>
