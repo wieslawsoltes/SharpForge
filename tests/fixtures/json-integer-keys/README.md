@@ -19,3 +19,7 @@ the equivalent one-character string, which has identical native JSON bytes.
 An independent assembled CIL fixture uses a genuine boxed `System.Char` and
 compares the complete mixed-object dictionary with the original native row.
 Both compiler pipelines also assert the unchanged source diagnostic.
+
+The source harness also replaces exactly one typed `JsonException` catch with
+`Exception`, because typed catches remain unsupported. A separate uncaught cycle
+case verifies the actual runtime fault name against the unchanged native oracle.
