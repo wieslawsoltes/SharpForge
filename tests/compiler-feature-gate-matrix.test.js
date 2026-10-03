@@ -66,7 +66,7 @@ const notGated = {
   InlineArrays: needsOperandTypes,
   LockObject: needsOperandTypes,
   FirstClassSpan: needsOperandTypes,
-  ExpressionOptionalAndNamedArguments: 'needs expression-tree conversion of lambdas',
+  ExpressionOptionalAndNamedArguments: 'Roslyn reports CS0853 / CS0854 below C# 14, not a feature diagnostic (expression-tree-arguments fixtures)',
 };
 
 /**
