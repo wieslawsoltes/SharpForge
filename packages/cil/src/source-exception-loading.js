@@ -13,11 +13,12 @@ export function loadSourceHandlers(context) {
     return previous < 0 ? undefined : previous + 1;
   })();
   return body.handlers.map(handler => {
+    const flags = handler.flags ?? 0;
     const start = startToPc.get(handler.start);
     const end = spans.findIndex(span => span[0] + span[1] === handler.end);
     const handlerEnd = boundary(handler.handlerEnd);
     if (start === undefined || end < 0 || handlerEnd === undefined) throw new CilError('Unsupported exception boundaries');
-    if (handler.flags === 2) {
+    if (flags === 2) {
       const target = startToPc.get(handler.target);
       if (target === undefined || handlerEnd <= target) throw new CilError('Unsupported finally-region encoding');
       return {kind: 'finally', start, end, target, handlerEnd};
@@ -29,11 +30,11 @@ export function loadSourceHandlers(context) {
     if (slot === null || slot < 0 || slot >= method.locals.length || target === undefined || handlerEnd <= target) {
       throw new CilError('Unsupported catch-region encoding');
     }
-    if (handler.flags === 0) {
+    if (flags === 0) {
       const name = metadata.typeName(handler.catchType);
       return {start, end, target, handlerEnd, slot, type: name === 'System.Exception' ? 'Exception' : name};
     }
-    if (handler.flags !== 1) throw new CilError('Unsupported source exception clause');
+    if (flags !== 1) throw new CilError('Unsupported source exception clause');
     const cast = byOffset.get(handler.catchType);
     const store = cast && byOffset.get(cast.offset + cast.size);
     const load = store && byOffset.get(store.offset + store.size);
