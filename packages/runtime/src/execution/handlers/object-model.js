@@ -1,5 +1,5 @@
+import {castReference} from '../casting.js';
 import {staticSlot,finishMemoryAccess} from '../statics.js';
-import {CilError} from '@sharpforge/cil';
 import {frameworkType} from '@sharpforge/framework';
 import {ManagedFault,isReference} from '../../heap.js';
 import {isNumber} from '../numeric-ops.js';
@@ -22,21 +22,21 @@ for(const name of ['ldfld','stfld','ldflda'])handlers.set(name,(vm,frame,instruc
   finishMemoryAccess(frame);
 });
 handlers.set('box',(vm,frame,instruction)=>{
-  const value=vm.pop(),type=vm.inspector.metadata.typeName(instruction.operand);
+  const value=vm.pop(),table=vm.typeSystem.table(instruction.operand),type=table.name;
   if(isReference(value)&&frameworkType(type)?.kind==='value'&&vm.heap.get(value).type===type) {
-    vm.heap.withRoots([value],()=>{const record=vm.heap.get(value),copy=vm.heap.allocate(record.kind,record.type,[...record.data]);vm.push(vm.heap.allocate('box',type,[copy],[copy]));});return;
+    vm.heap.withRoots([value],()=>{const record=vm.heap.get(value),copy=vm.heap.allocate(record.kind,record.type,[...record.data]);vm.push(vm.heap.allocate('box',table,[copy],[copy]));});return;
   }
   if(!isNumber(value))throw new ManagedFault('NotSupportedException','Only primitive and registered immutable WinUI value boxing is implemented');
-  vm.push(vm.heap.allocate('box',type,[vm.storage(value,type)]));
+  vm.push(vm.heap.allocate('box',table,[vm.storage(value,type)]));
 });
 for(const name of ['unbox','unbox.any'])handlers.set(name,(vm,frame,instruction)=>{
-  const ref=vm.pop(),type=vm.inspector.metadata.typeName(instruction.operand),record=vm.heap.get(ref);
-  if(record.kind!=='box'||record.type!==type)throw new ManagedFault('InvalidCastException','Boxed type mismatch');
+  const ref=vm.pop(),table=vm.typeSystem.table(instruction.operand),type=table.name;
+  if(name==='unbox.any'&&!table.flags.valueType){vm.push(castReference(vm.heap,ref,table));return;}
+  const record=vm.heap.get(ref);
+  if(record.kind!=='box'||record.methodTable!==table)throw new ManagedFault('InvalidCastException','Boxed type mismatch');
   vm.push(name==='unbox'?vm.address('box',0,ref):vm.storage(record.data[0],type));
 });
 for(const name of ['castclass','isinst'])handlers.set(name,(vm,frame,instruction)=>{
-  const ref=vm.pop(),type=vm.inspector.metadata.typeName(instruction.operand),ok=ref===null||vm.matches(ref,type);
-  if(!ok&&name==='castclass')throw new ManagedFault('InvalidCastException','Incompatible reference type');
-  vm.push(ok?ref:null);
+  vm.push(castReference(vm.heap,vm.pop(),instruction.operand,name==='castclass'));
 });
 export {handlers};

@@ -1,6 +1,7 @@
 import {primitiveSizes} from '@sharpforge/cil';
 import {ManagedFault} from '../../heap.js';
-import {defaults} from '../numeric-ops.js';
+import {storageDefault} from '../storage.js';
+import {enumInfo} from '../enums.js';
 import {finishMemoryAccess} from '../statics.js';
 
 const handlers=new Map([
@@ -10,8 +11,8 @@ const handlers=new Map([
   ['stobj',(vm,frame,instruction)=>{const value=vm.pop();vm.dereference(vm.pop(),true,vm.storage(value,vm.inspector.metadata.typeName(instruction.operand)));}],
   ['initobj',(vm,frame,instruction)=>{
     const address=vm.pop(),name=vm.inspector.metadata.typeName(instruction.operand),type={'System.Int32':'int','System.Int64':'long','System.Double':'double','System.Single':'float','System.Boolean':'bool'}[name]??name;
-    if(instruction.operand>>>24===2)throw new ManagedFault('NotSupportedException','Value-type initobj is inspection-only');
-    vm.dereference(address,true,defaults(type));
+    if(instruction.operand>>>24===2&&!enumInfo(vm,name))throw new ManagedFault('NotSupportedException','Value-type initobj is inspection-only');
+    vm.dereference(address,true,storageDefault(vm,type));
   }]
 ]);
 for(const suffix of ['i1','u1','i2','u2','i4','u4','i8','i','r4','r8','ref']) {
@@ -20,6 +21,6 @@ for(const suffix of ['i1','u1','i2','u2','i4','u4','i8','i','r4','r8','ref']) {
   handlers.set('stind.'+suffix,vm=>{const value=vm.pop();vm.dereference(vm.pop(),true,vm.indirect(value,'stind.'+suffix));});
 }
 for(const [opcode,handler] of handlers)if(['ldobj','stobj'].includes(opcode)||opcode.startsWith('ldind.')||opcode.startsWith('stind.')) {
-  handlers.set(opcode,(vm,frame,instruction)=>{handler(vm,frame,instruction);finishMemoryAccess(frame);});
+  handlers.set(opcode,(vm,frame,instruction)=>{try{handler(vm,frame,instruction);}finally{finishMemoryAccess(frame);}});
 }
 export {handlers};
