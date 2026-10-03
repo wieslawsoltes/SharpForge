@@ -1,3 +1,4 @@
+import {objectEquals, objectHashCode, objectToString} from './object-intrinsics.js';
 import {memoryCall} from './memory-calls.js';
 import {varargsCall} from './varargs.js';
 import {exceptionConstructor, exceptionIntrinsic} from './exception-intrinsics.js';
@@ -24,7 +25,9 @@ const implementations={
   arrayMutate:({vm,descriptor,parameters})=>mutateArray(vm,descriptor.name,parameters[0]),
   console:({vm,descriptor,parameters})=>{vm.emitOutput((parameters.length?vm.format(parameters[0],descriptor.signature.parameters[0]):'')+(descriptor.name==='WriteLine'?'\n':''));return null;},
   objectCtor:()=>null,
-  objectToString:({vm,self})=>vm.heap.string(runtimeTypeText(vm,self)??vm.format(self)),
+  objectToString:({vm,self})=>objectToString(vm,self),
+  objectEquals:({vm,self,parameters})=>objectEquals(vm,self,parameters[0])?1:0,
+  objectHashCode:({vm,self})=>objectHashCode(vm,self),
   objectGetType:({vm,self})=>objectType(vm,self),
   typeFromHandle:({vm,parameters})=>typeFromHandle(vm,parameters[0]),
   typeCompare:({vm,descriptor,parameters})=>typeEquals(vm,parameters[0],parameters[1])!==(descriptor.name==='op_Inequality')?1:0,

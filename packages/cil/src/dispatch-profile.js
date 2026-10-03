@@ -114,6 +114,13 @@ export class CilDispatchTable {
   }
   externalTargets(descriptor) {
     const targets=new Set(),owner=genericTypeParts(descriptor.owner).definition;
+    if (['System.Object', 'System.ValueType', 'System.Enum'].includes(owner)) {
+      for (const method of this.inspector.methods.values()) {
+        if (method.flags & virtual && method.hasBody && method.name === descriptor.name &&
+            signatureKey(this.inspector.signature(method.token)) === signatureKey(descriptor.signature)) targets.add(method.token);
+      }
+      return targets;
+    }
     for(const type of this.types.values()) {
       if(type.flags&0xa0)continue;
       const table=this.table(type.token);

@@ -1,3 +1,4 @@
+import {constrainedTarget, objectOverride} from './handlers/constrained.js';
 import {splitVarargs, attachVarargs, varargsCall} from './varargs.js';
 import {memoryCall} from './memory-calls.js';
 import {createException} from './exception-object.js';
@@ -5,7 +6,7 @@ import {arrayCall} from './array-calls.js';
 import {invokeNumericIntrinsic} from './numeric-intrinsics.js';
 import {stringFromChars} from './strings.js';
 import {methodOffsets} from './method-offsets.js';
-import {systemType,intrinsicDefinition,resolveExecutionMethod,callSignatureKey,supportedIntrinsic,supportedDelegateCall} from '@sharpforge/cil';
+import {systemType,intrinsicDefinition,resolveExecutionMethod,supportedIntrinsic,supportedDelegateCall} from '@sharpforge/cil';
 import {ManagedFault,isReference} from '../heap.js';
 import {SUSPENDED} from './suspension.js';
 import {storageDefault} from './storage.js';
@@ -13,7 +14,7 @@ import {createExceptionState} from './eh.js';
 import {ensureTypeInitialized} from './static-init.js';
 import {instantiatedMethod,bindCallArguments,resolveCallType} from './generic-calls.js';
 import {constructDelegate,invokeDelegateOperation} from './delegate-calls.js';
-import {address,validatePointer,pointerType} from './managed-pointers.js';
+import {address,pointerType} from './managed-pointers.js';
 import {boxValue} from './value-types.js';
 import {pushFrame, replaceFrame} from './frame-stack.js';
 import {eligibleTailCall, inheritedTailState} from './tailcall.js';
@@ -66,6 +67,7 @@ export function methodPointer(vm,token,receiver=undefined) {
     if(receiver===null)throw new ManagedFault('NullReferenceException','Null virtual function receiver');
     if(descriptor.signature.isStatic)throw new ManagedFault('InvalidProgramException','ldvirtftn requires an instance method');
     const type=vm.heap.get(receiver).methodTable.name;
+    if(!descriptor.resolvedToken)descriptor=objectOverride(vm,descriptor,receiver)??descriptor;
     const external=!descriptor.resolvedToken?vm.typeSystem.dispatch.externalTarget(type,descriptor):null;
     if(external)descriptor={...descriptor,...vm.inspector.methods.get(external),resolvedToken:external,ownerInstance:null};
     const target=descriptor.resolvedToken;
@@ -109,23 +111,6 @@ export function invokeFunctionPointer(vm,pointer,args,extra={}) {
   return vm.intrinsic(descriptor,args);
 }
 
-function constrainedTarget(vm,descriptor,args,type) {
-  const receiver=args[0];validatePointer(vm,receiver);
-  const table=vm.typeSystem.table(resolveCallType(vm,type));
-  if(pointerType(vm,receiver)!==table)throw new ManagedFault('InvalidProgramException','constrained. receiver type mismatch');
-  if(!table.flags.valueType){args[0]=vm.dereference(receiver);return descriptor;}
-  const external=descriptor.resolvedToken?null:vm.typeSystem.dispatch.externalTarget(table.name,descriptor),target=descriptor.resolvedToken??external;
-  if(target) {
-    const resolved=external??vm.typeSystem.dispatch.resolve(table.name,target,descriptor.ownerInstance);
-    const method=vm.inspector.methods.get(resolved);
-    if(method&&vm.typeSystem.table(method.ownerToken).flags.valueType)return {...descriptor,...method,resolvedToken:resolved,ownerInstance:table.typeArguments.length?table.name:null};
-  } else {
-    const definition=vm.typeSystem.types.get(table.definitionToken),candidate=definition?.methods.find(method=>method.name===descriptor.name&&callSignatureKey({...vm.inspector.signature(method.token),isStatic:descriptor.signature.isStatic})===callSignatureKey(descriptor.signature));
-    if(candidate)return {...descriptor,...candidate,resolvedToken:candidate.token,ownerInstance:table.typeArguments.length?table.name:null};
-  }
-  args[0]=boxValue(vm,vm.dereference(receiver),table.name);return descriptor;
-}
-
 export function invoke(vm,instruction) {
   const caller=vm.top;
 
@@ -165,6 +150,7 @@ export function invoke(vm,instruction) {
     }
     if(constrained!==undefined&&constrained!==null){descriptor=constrainedTarget(vm,descriptor,args,constrained);target=descriptor.resolvedToken;}
     if(instruction.name==='callvirt'&&args[0]===null)throw new ManagedFault('NullReferenceException','Null virtual receiver');
+    if(instruction.name==='callvirt'&&!target){const override=objectOverride(vm,descriptor,args[0]);if(override){descriptor=override;target=override.resolvedToken;}}
     const receiverType=args[0]?.byref?pointerType(vm,args[0]).name:isReference(args[0])?vm.heap.get(args[0]).methodTable.name:null;
     const dispatch=target&&instruction.name==='callvirt'&&(vm.inspector.methods.get(target)?.flags&0x40)?vm.typeSystem.dispatch.resolve(receiverType,target,descriptor.ownerInstance):target??(instruction.name==='callvirt'?vm.typeSystem.dispatch.externalTarget(receiverType,descriptor):null);
     if(dispatch) {
