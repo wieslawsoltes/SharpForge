@@ -1,6 +1,8 @@
+import { canonicalEmissionOptions } from './pe/canonical-options.js';
+import { canonicalWithSymbols } from './pe/canonical-symbols.js';
 import {contractForMember,frameworkType,enumTypes} from '@sharpforge/framework';
 import { Op, Binary, Unary, BuiltinMap, frameworkBuiltin, EnumConvertBase, FORMAT_VERSION, verifyImage } from '@sharpforge/bytecode';
-import { CilError, text, equalBytes } from './binary.js';
+import { CilError, text } from './binary.js';
 import { token, decodeCoded, readSignature, cliSystemName } from './metadata.js';
 import { readPE } from './pe.js';
 import { decodeInstructions } from './opcodes.js';
@@ -54,7 +56,7 @@ export function loadAssembly(bytes,options={}) {
     for(const h of body.handlers){if(h.flags===2){const start=startToPc.get(h.start),end=info.spans.findIndex(s=>s[0]+s[1]===h.end),target=startToPc.get(h.target),handlerEnd=startToPc.get(h.handlerEnd)??info.spans.findIndex(s=>s[0]+s[1]===h.handlerEnd)+1;if(start===undefined||end<0||target===undefined||handlerEnd<=target)throw new CilError('Unsupported finally-region encoding');method.handlers.push({kind:'finally',start,end,target,handlerEnd});continue;}const prefix=byOffset.get(h.target),slot=prefix?nativeLocal(prefix,'stloc'):null,target=prefix?startToPc.get(h.target+prefix.size):undefined,start=startToPc.get(h.start),end=info.spans.findIndex(s=>s[0]+s[1]===h.end);if(slot===null||slot<0||slot>=method.locals.length||target===undefined||start===undefined||end<0||metadata.typeName(h.catchType)!=='System.Exception')throw new CilError('Unsupported catch-region encoding');method.handlers.push({start,end,target,slot,type:'Exception'});}
   }
   const errors=verifyImage(image);if(errors.length)throw new CilError('Decoded CIL verification failed: '+errors.join('; '));
-  const decodedAt=performance.now();const canonical=emitAssembly(image,{name:debug.name,framework:debug.framework,embedSources:debug.sources.every(s=>typeof s.text==='string')});if(!canonicalWithSymbols(canonical,pe))throw new CilError('Assembly is not canonical for the supported CIL profile; modified scaffolding, signatures, references or instructions are rejected');
+  const decodedAt=performance.now();const canonical=emitAssembly(image,canonicalEmissionOptions(pe,debug));if(!canonicalWithSymbols(canonical,pe))throw new CilError('Assembly is not canonical for the supported CIL profile; modified scaffolding, signatures, references or instructions are rejected');
   image.il={format:'ECMA-335',profile:'SharpForge.CIL/1',assemblyBytes:pe.bytes.length,decodeMs:decodedAt-started,verificationMs:performance.now()-decodedAt,loadMs:performance.now()-started,methodTokens:debug.methods.map(m=>m.token),offsets:debug.methods.map(m=>m.spans.map(s=>s[0]))};
   return image;
 }
@@ -104,16 +106,3 @@ function decodeSpan(span,c) {
   throw new CilError('CIL sequence is not a supported superinstruction',span[0]?.offset);
 }
 
-/** Debug payloads are non-executable. Permit only a well-formed append-only debug
- * directory while preserving byte-for-byte verification of all executable data. */
-function canonicalWithSymbols(canonical,pe){
-  if(equalBytes(canonical,pe.bytes))return true;
-  if(pe.sections.length!==1||pe.bytes.length<=canonical.length)return false;
-  const original=readPE(canonical),section=pe.sections[0],cs=original.sections[0],v=new DataView(pe.bytes.buffer,pe.bytes.byteOffset,pe.bytes.byteLength);
-  const dir=pe.optionalStart+(pe.magic===0x10b?96:112)+6*8,rva=v.getUint32(dir,true),length=v.getUint32(dir+4,true);
-  if(!length||length%28||length>28*1024||rva!==section.rva+canonical.length-section.offset)return false;
-  const offset=pe.offsetOf(rva,length);if(offset!==canonical.length)return false;
-  const ranges=[];for(let at=offset;at<offset+length;at+=28){const kind=v.getUint32(at+12,true),size=v.getUint32(at+16,true),dataRva=v.getUint32(at+20,true),start=v.getUint32(at+24,true);if(![2,16,17,19].includes(kind))return false;if(!size){if(kind!==16)return false;continue;}if(start<offset+length||start+size>pe.bytes.length||dataRva!==section.rva+start-section.offset)return false;if(ranges.some(([a,b])=>a<start+size&&start<b))return false;ranges.push([start,start+size]);}
-  const clone=pe.bytes.slice(0,canonical.length);for(const [at,size]of [[pe.optionalStart+4,4],[pe.optionalStart+56,4],[dir,8],[section.headerOffset+8,4],[section.headerOffset+16,4]])clone.set(canonical.subarray(at,at+size),at);
-  return equalBytes(clone,canonical);
-}

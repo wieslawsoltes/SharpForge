@@ -17,6 +17,7 @@ import {
   PointerTypeSymbol,
   NamedTypeSymbol,
   ConstructedNamedTypeSymbol,
+  DynamicTypeSymbol,
 } from '../symbols/types.js';
 import { isAccessible } from './accessibility.js';
 import { assemblyConflict, dottedName } from './reference-lookup.js';
@@ -122,7 +123,9 @@ export class TypeBinder {
         }
         continue;
       }
-      // unit / namespace
+      // unit / namespace: the file-local types of this file come first (C# 11).
+      const fileType = s.fileTypes?.get(name + '`' + arity);
+      if (fileType) return fileType;
       const ns = s.namespace,
         types = ns.getTypeMembers(name, arity);
       if (options.aliasConflicts && arity === 0 && (types.length || ns.getNamespace(name)) && this.usingsOf(s)?.aliases.has(name))
@@ -357,7 +360,7 @@ export class TypeBinder {
           this.host.useFeature?.(scope.uri, syntax, 'NativeInt');
           return plain(this.core.keyword(name));
         }
-        if (name === 'dynamic' && !this.lookup(name, 0, scope)) return plain(this.core.object);
+        if (name === 'dynamic' && !this.lookup(name, 0, scope)) return plain(DynamicTypeSymbol.instance);
       }
       // falls through
       case 'GenericName':

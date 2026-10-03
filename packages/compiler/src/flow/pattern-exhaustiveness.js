@@ -219,7 +219,11 @@ export function checkSwitchArms(type, arms, site) {
   const example = sampleSpace(uncovered, type);
   let code = 'CS8509';
   if (isEmpty(subtract(all, coveredIgnoringWhen, forExhaustiveness))) code = 'CS8846';
-  else if (onlyUnnamedEnumValues(uncovered, type)) code = 'CS8524';
+  else if (onlyUnnamedEnumValues(uncovered, type)) {
+    // C# 15 preview (provisional, proposals/closed-enums.md): handling every member of a closed enum is exhaustive.
+    if (type.isClosedEnum) return diagnostics;
+    code = 'CS8524';
+  }
   diagnostics.push({ code, args: [example], node: site.node });
   return diagnostics;
 }

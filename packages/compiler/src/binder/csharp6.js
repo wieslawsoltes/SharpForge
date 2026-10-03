@@ -9,6 +9,8 @@ import { ConstantValue } from '../constants/constant-value.js';
 
 const nameKinds = new Set(['IdentifierName', 'GenericName']);
 const missingMemberCodes = new Set([DiagnosticId.CS0117, DiagnosticId.CS1061]);
+/** The largest magnitude of an interpolation alignment: beyond it the format item is invalid at run time. */
+const alignmentLimit = 32767;
 /** What may stand to the left of a `.` inside a `nameof` argument, besides a name or another member access. */
 const qualifierKinds = new Set(['PredefinedType', 'ThisExpression', 'BaseExpression', 'AliasQualifiedName']);
 
@@ -49,6 +51,12 @@ export function staticImportsNamed(staticTypes, name) {
   const isGroup = found[0].kind === SymbolKind.Method;
   if (!isGroup && found.length > 1) return { members, ambiguous: [found[0], found[1]] };
   return { members, ambiguous: null };
+}
+
+/** The text of a literal part of an interpolated string: `{{` and `}}` stand for one brace. */
+export function interpolatedText(content) {
+  const text = content.textToken.value ?? content.textToken.valueText;
+  return text.replace(/\{\{/g, '{').replace(/\}\}/g, '}');
 }
 
 /**
@@ -114,6 +122,58 @@ export const CSharp6Binding = Base =>
       if (!operand.hasErrors) return { operand, errors: [] };
       for (const row of collected) this.report(row.node, row.code, row.args);
       return { operand, errors: collected.filter(row => this.d.isError(row.code)) };
+    }
+    /**
+     * `$"text {value,alignment:format}"`: every hole is a value, an alignment is an `int` constant (CS0150; CS8094
+     * beyond the range a format item allows). A string whose holes are all constant strings, without
+     * alignment or format, is itself a constant (a C# 10 feature).
+     */
+    interpolatedString(syntax) {
+      const parts = [],
+        alignments = [];
+      // Constant also below C# 10: the language-version gate reports the feature there, not a second error.
+      let text = '',
+        isConstant = true;
+      for (const content of syntax.contents) {
+        if (content.kind !== 'Interpolation') {
+          text += interpolatedText(content);
+          continue;
+        }
+        const part = this.interpolationHole(content);
+        parts.push(part);
+        alignments.push(content.alignmentClause ? this.interpolationAlignment(content.alignmentClause.value) : null);
+        const value = part.constantValue;
+        if (!value || typeof value.value !== 'string' || content.alignmentClause || content.formatClause) isConstant = false;
+        else text += value.value;
+      }
+      // `alignments` holds, per hole, the constant alignment or null.
+      const node = this.node('InterpolatedString', syntax, this.core.string, { parts, alignments, form: 'interpolatedString' });
+      if (isConstant) node.constantValue = ConstantValue.string(text);
+      return node;
+    }
+    /** The value of one hole, with its alignment checked; a hole without a value is reported as Roslyn reports it. */
+    interpolationHole(content) {
+      const value = this.value(content.expression);
+      if (value.hasErrors) return value;
+      if (value.type?.specialType === 'System_Void') {
+        this.report(content.expression, DiagnosticId.CS1503, [1, 'void', 'object']);
+        return this.bad(content.expression);
+      }
+      // A lambda or method group goes into the hole as `object`, through its natural type from C# 10.
+      return value.type ? value : this.convert(value, this.core.object, content.expression);
+    }
+    /** Checks an alignment and returns its constant value, or null after an error. */
+    interpolationAlignment(syntax) {
+      const alignment = this.convert(this.value(syntax), this.core.int, syntax);
+      if (alignment.hasErrors) return null;
+      const constant = alignment.constantValue;
+      if (!constant) {
+        this.report(syntax, DiagnosticId.CS0150);
+        return null;
+      }
+      const width = Number(constant.value);
+      if (Math.abs(width) > alignmentLimit) this.report(syntax, DiagnosticId.CS8094, [alignmentLimit]);
+      return width;
     }
     /** `a?.M();` is a statement; `a?.Name;` is not (CS0201): what follows the last `?.` decides. */
     isStatementExpression(syntax) {

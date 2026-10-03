@@ -1,0 +1,4 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "null-conditional-element/arrays-and-indexers":{"hash":"ab83c17828fae201","kind":"output","langVersion":"14.0","diagnostics":[],"output":"-1\n8\ny\nnone\n2\nTrue\n"},
+  "null-conditional-element/cs0021-cs0029-invalid-element-access":{"hash":"2e50dc1229106d99","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0021",112,3,"error"],["CS0029",136,3,"error"],["CS0266",158,5,"error"]]}
+}}

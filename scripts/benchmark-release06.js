@@ -18,7 +18,7 @@ const text=Array.from({length:20000},(_,i)=>`int value${i}=${i}; // line ${i}\n`
 measure('Index 20,000 source lines (full lex + bracket map)',()=>{const i=new SyntaxHighlightIndex(text);assert(i.lexed.tokens.length>20000);},{iterations:9,details:{utf16Characters:text.length}});
 const index=new SyntaxHighlightIndex(text);let scroll=1000;
 measure('Indexed 440px viewport lookup',()=>{const view=index.window({scrollTop:(scroll++%19000)*22,height:440});assert(view.characters<2000);assert(view.runs.length<500);},{batch:1000,details:{totalTokens:index.lexed.tokens.length,note:'DOM painting, native text input and lexical rebuild are excluded.'}});
-const source='class R:IDisposable{public void Dispose(){Console.WriteLine("cleanup");}} using var r=new R();int sum=0;for(int i=0;i<100;i++){sum=checked(sum+i);}Console.WriteLine(sum);';
+const source='using var r=new R();int sum=0;for(int i=0;i<100;i++){sum=checked(sum+i);}Console.WriteLine(sum); class R:IDisposable{public void Dispose(){Console.WriteLine("cleanup");}}';
 const compiled=compileToIL(source);assert(compiled.success,JSON.stringify(compiled.diagnostics));const expected='4950\ncleanup\n';
 measure('Checked/using compile to real PE/CLI',()=>assert(compileToIL(source).success));
 measure('Checked/using original IR execution',()=>assert.equal(new VirtualMachine(compiled.image).run().output,expected));

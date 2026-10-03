@@ -5,6 +5,7 @@
 import { findContracts } from '@sharpforge/framework';
 import { TypeKind } from '../../symbols/types.js';
 import { n } from './node-factory.js';
+import { interpolatedText } from '../../binder/csharp6.js';
 
 const foldableTypes = new Set(['int', 'double', 'bool', 'string']);
 const boxValue = () => findContracts('SharpForge.Runtime.Formatting', 'BoxValue', true)[0];
@@ -105,6 +106,8 @@ export const ExpressionTranslation = Base =>
         return n.call(this.g.methodOf(node.method, node.syntax), null, [left, right]);
       }
       if (node.family === 'delegate') return this.delegateArithmetic(node, left, right);
+      const delegateEquality = this.delegateEquality(node, left, right);
+      if (delegateEquality) return delegateEquality;
       if (node.operator === '>>>') return this.unsupported('the unsigned right shift operator', node.syntax);
       return n.binary(node.operator, left, right, this.imageType(node.type, node.syntax), !!node.isChecked);
     }
@@ -264,19 +267,20 @@ export const ExpressionTranslation = Base =>
       for (const content of node.syntax.contents) {
         let part;
         if (content.kind === 'Interpolation') {
-          const bound = node.parts[index++];
+          const width = node.alignments?.[index],
+            bound = node.parts[index++];
           if (bound.type?.typeKind === TypeKind.Enum) return this.unsupported('formatting an enum value', content);
           const format = content.formatClause ? n.literal(content.formatClause.formatStringToken.valueText, 'string') : n.nullLiteral('string');
-          const alignment = content.alignmentClause ? this.alignmentOf(content.alignmentClause) : n.literal(0, 'int');
+          const alignment = content.alignmentClause ? this.alignmentOf(content.alignmentClause, width) : n.literal(0, 'int');
           part = this.interpolationHole(bound, format, alignment);
-        } else part = n.literal(content.textToken.value ?? content.textToken.valueText, 'string');
+        } else part = n.literal(interpolatedText(content), 'string');
         result = n.binary('+', result, part, 'string');
       }
       return result;
     }
-    alignmentOf(clause) {
-      const text = clause.value.toString().trim(),
-        value = Number(text);
+    /** The alignment of a hole: the constant the binder computed, else the literal as written. */
+    alignmentOf(clause, width = null) {
+      const value = width ?? Number(clause.value.toString().trim());
       return Number.isInteger(value) ? n.literal(value, 'int') : this.unsupported('a computed interpolation alignment', clause);
     }
     /** One formatted interpolation hole (lowering/conditional-access.js refines it for value-typed `a?.b`). */
