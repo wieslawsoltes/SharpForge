@@ -31,7 +31,12 @@ export function bindVarargsInvocation(binder, syntax) {
   }
   const optional = args.at(-1)?.expression;
   if (optional?.kind !== 'InvocationExpression' || optional.expression.kind !== 'ArgListExpression') return undefined;
-  const call = binder.invocation({...syntax, argumentList: {...syntax.argumentList, arguments: args.slice(0, -1)}});
+  // Red syntax nodes expose children through prototype getters, so object spreading drops them.
+  const fixedArguments = Object.create(syntax.argumentList);
+  Object.defineProperty(fixedArguments, 'arguments', {value: args.slice(0, -1)});
+  const fixedCall = Object.create(syntax);
+  Object.defineProperty(fixedCall, 'argumentList', {value: fixedArguments});
+  const call = binder.invocation(fixedCall);
   if (call.hasErrors) return call;
   if (!call.method?.isVararg) { binder.report(syntax, 'CS1501', [call.method?.name ?? '', args.length]); return binder.bad(syntax); }
   const varargs = optional.argumentList.arguments.map(argument => binder.value(argument.expression));
