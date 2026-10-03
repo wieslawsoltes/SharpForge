@@ -2,6 +2,7 @@
  * Definite assignment through expressions: reads, assignments, by-reference arguments, short-circuit
  * operators and the when-true / when-false states of conditions.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { RefKind } from '../../symbols/types.js';
 import { join, boundChildren } from './state.js';
 import { autoDefaultVersion } from './analyzer-core.js';
@@ -23,14 +24,14 @@ export const AssignmentExpressions = Base =>
           return state;
         case 'Parameter':
           if (e.parameter.refKind === RefKind.Out && this.outs.includes(e.parameter) && !this.isAssigned(e.parameter, state)) {
-            this.report(e.syntax, 'CS0269', [e.parameter.name], e.parameter);
+            this.report(e.syntax, DiagnosticId.CS0269, [e.parameter.name], e.parameter);
             state.add(e.parameter);
           }
           return state;
         case 'This':
           // `this` as a whole (a call on it, passing it on) needs every field of the struct under construction.
           if (this.thisVariable && !this.isAssigned(this.thisVariable, state)) {
-            this.report(e.syntax, 'CS0188', [autoDefaultVersion], 'this');
+            this.report(e.syntax, DiagnosticId.CS0188, [autoDefaultVersion], 'this');
             state.add(this.thisVariable);
           }
           return state;
@@ -44,7 +45,7 @@ export const AssignmentExpressions = Base =>
           const slot = this.autoPropertySlot(e);
           if (!slot) return this.expr(e.receiver, state);
           // Reported once per property; the property stays unassigned, so the constructor's exits still report it.
-          if (!this.slotAssigned(slot, state)) this.report(e.syntax, 'CS9014', [e.property.toDisplayString(), autoDefaultVersion], slot.key);
+          if (!this.slotAssigned(slot, state)) this.report(e.syntax, DiagnosticId.CS9014, [e.property.toDisplayString(), autoDefaultVersion], slot.key);
           return state;
         }
         case 'Assignment':
@@ -153,10 +154,10 @@ export const AssignmentExpressions = Base =>
     reportUnassignedField(e, slot, state) {
       if (slot.variable === this.thisVariable) {
         // Reported once per field; the field stays unassigned, so the constructor's exits still report CS0171.
-        this.report(e.syntax, 'CS9015', [e.field.toDisplayString(), autoDefaultVersion], slot.key);
+        this.report(e.syntax, DiagnosticId.CS9015, [e.field.toDisplayString(), autoDefaultVersion], slot.key);
         return;
       }
-      this.report(e.syntax, 'CS0170', [e.field.name], slot.key);
+      this.report(e.syntax, DiagnosticId.CS0170, [e.field.name], slot.key);
       state.add(slot.key);
     }
     /** The backing-field slot of an auto-property of the struct under construction, or null. */
@@ -175,7 +176,7 @@ export const AssignmentExpressions = Base =>
     }
     read(local, node, state) {
       if (!this.own.has(local) || this.isAssigned(local, state)) return;
-      this.report(node.syntax, 'CS0165', [local.name], local);
+      this.report(node.syntax, DiagnosticId.CS0165, [local.name], local);
       state.add(local);
     }
     /** Evaluates the sub-expressions of an assignment target that run before the right-hand side (receivers, indices). */
