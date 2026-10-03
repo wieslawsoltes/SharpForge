@@ -8,14 +8,16 @@
  *     so the variable stays visible after the statement and conflicts with other locals of that list;
  *   - in the condition of `while` and `do` and in the collection of `foreach`: that statement only;
  *   - in a `for` header and in `using`: the statement (the binder already opens a scope there);
- *   - in a lambda body, a query clause, a field initializer or constructor arguments: that body or initializer.
+ *   - in a lambda body, a query clause, an arm of a switch expression, a field initializer or constructor arguments:
+ *     that body, clause, arm or initializer.
  * Like any local, the name is reserved in its whole scope: a use before the declaration is CS0841 and a nested
  * declaration of the same name is CS0136. `expressionVariableNames` finds the names a statement adds to its list.
  *
  * `_` is a discard only where no variable named `_` is in scope; a discard is gated as 'discards' below C# 7.
  */
 
-const functionKinds = new Set(['SimpleLambdaExpression', 'ParenthesizedLambdaExpression', 'AnonymousMethodExpression']);
+/** Expressions that are a scope of their own: function bodies and the arms of a switch expression. */
+const scopeKinds = new Set(['SimpleLambdaExpression', 'ParenthesizedLambdaExpression', 'AnonymousMethodExpression', 'SwitchExpressionArm']);
 
 /** The expressions of a statement whose variables belong to the enclosing statement list. */
 function leakingExpressions(statement) {
@@ -44,7 +46,7 @@ function collectDesignations(node, names) {
     names.push(node.identifier.valueText);
     return;
   }
-  if (functionKinds.has(node.kind)) return;
+  if (scopeKinds.has(node.kind)) return;
   // Only the first `from` of a query is evaluated in the enclosing scope; every other clause is a lambda body.
   if (node.kind === 'QueryExpression') {
     if (node.fromClause) collectDesignations(node.fromClause, names);
