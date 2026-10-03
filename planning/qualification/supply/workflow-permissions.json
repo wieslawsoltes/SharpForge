@@ -21,6 +21,10 @@
     ],
     ".github/workflows/spec-watch.yml#watch": [
       "issues"
+    ],
+    ".github/workflows/lease-reaper.yml#reconcile": [
+      "contents",
+      "issues"
     ]
   },
   "scope": "Explicit job-level write grants only. Release build cannot write repository contents."
