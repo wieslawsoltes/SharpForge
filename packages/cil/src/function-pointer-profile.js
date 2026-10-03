@@ -33,6 +33,12 @@ function verifyValue(value, signature, instruction, fail) {
   if (value.some(key => key !== expected)) fail(instruction, 'Managed function pointer signature is not proven compatible');
 }
 
+function storesDeclaredPointer(inspector, instruction) {
+  if (!['stsfld', 'stfld'].includes(instruction.name)) return false;
+  try { return inspector.signature(instruction.operand).type?.startsWith('method ') === true; }
+  catch { return true; } // Token failures become diagnostics in the transfer below.
+}
+
 function transfer(inspector, method, instruction, state, effects, fail) {
   const next = {stack: [...state.stack], locals: [...state.locals], args: [...state.args]};
   const name = instruction.name;
@@ -57,14 +63,12 @@ function transfer(inspector, method, instruction, state, effects, fail) {
   }
   if (name === 'dup') { next.stack.push(next.stack.at(-1) ?? unknown); return next; }
   if (name === 'conv.i' || name === 'conv.u') return next;
-  if (name === 'calli') {
-    const signature = inspector.signature(instruction.operand);
-    verifyValue(next.stack.at(-1) ?? unknown, signature, instruction, fail);
-  }
   let result = unknown;
-  if (['call', 'callvirt', 'newobj'].includes(name)) {
-    const signature = resolveExecutionMethod(inspector, instruction.operand).signature;
-    const start = next.stack.length - signature.parameters.length;
+  if (['call', 'callvirt', 'newobj', 'calli'].includes(name)) {
+    const signature = name === 'calli' ? inspector.signature(instruction.operand) :
+      resolveExecutionMethod(inspector, instruction.operand).signature;
+    if (name === 'calli') verifyValue(next.stack.at(-1) ?? unknown, signature, instruction, fail);
+    const start = next.stack.length - signature.parameters.length - (name === 'calli' ? 1 : 0);
     signature.parameters.forEach((type, index) => {
       const pointer = parseFunctionPointerType(type);
       if (pointer) verifyValue(next.stack[start + index] ?? unknown, pointer, instruction, fail);
@@ -75,6 +79,9 @@ function transfer(inspector, method, instruction, state, effects, fail) {
     if (signature) verifyValue(next.stack.at(-1) ?? unknown, signature, instruction, fail);
   } else if (['ldsfld', 'ldfld'].includes(name)) {
     result = declaredPointer(inspector.signature(instruction.operand).type);
+  } else if (['stsfld', 'stfld'].includes(name)) {
+    const signature = parseFunctionPointerType(inspector.signature(instruction.operand).type);
+    if (signature) verifyValue(next.stack.at(-1) ?? unknown, signature, instruction, fail);
   }
   const [pop, push] = effects(inspector, method, instruction);
   next.stack.length = Math.max(0, next.stack.length - pop);
@@ -86,7 +93,8 @@ function transfer(inspector, method, instruction, state, effects, fail) {
 /** Bounded CFG analysis tracks pointer signatures through locals, arguments and joins. */
 export function verifyManagedFunctionPointers(inspector, method, issue, effects) {
   if (!method.instructions.some(instruction => ['calli', 'ldftn', 'ldvirtftn'].includes(instruction.name)) &&
-      !method.signature.parameters.some(type => type.startsWith('method '))) return;
+      !method.signature.parameters.concat(method.locals, method.signature.returnType).some(type => type.startsWith('method ')) &&
+      !method.instructions.some(instruction => storesDeclaredPointer(inspector, instruction))) return;
   const fail = (instruction, message) => issue(method, instruction, 'IL_CALLI', message);
   const offsets = new Map(method.instructions.map((instruction, index) => [instruction.offset, index]));
   const args = method.signature.parameters.map(declaredPointer);
