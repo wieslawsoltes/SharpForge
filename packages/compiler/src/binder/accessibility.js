@@ -116,7 +116,7 @@ function protectedAccessible(originalContainingType,state,throughType){
 export function isAccessible(symbol,within=null,options={}){return check(symbol,within,options).ok;}
 /**
  * The diagnostic an access to `symbol` from `within` deserves: null when accessible, otherwise
- * `{code:DiagnosticId.CS0122,args:[symbol]}` or `{code:DiagnosticId.CS1540,args:[member,qualifierType,accessingType]}` (display strings).
+ * `{code:'CS0122',args:[symbol]}` or `{code:'CS1540',args:[member,qualifierType,accessingType]}` (display strings).
  * Constructors never yield CS1540: Roslyn reports CS0122 for a protected constructor called on the wrong type.
  */
 export function checkAccess(symbol,within=null,options={}){

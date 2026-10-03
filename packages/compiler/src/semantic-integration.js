@@ -13,7 +13,7 @@ import { formatMessage, isFeatureGateCode } from './diagnostics/codes.js';
 import { suspiciousUsings, usingDiagnosticClassifier } from './binder/using-check.js';
 import { featureDiagnosticCodes, newestLanguageVersion } from './binder/feature-check.js';
 import { generateFromSemanticAnalysis, isEntryPointCandidate } from './codegen/semantic/generator.js';
-import { needsSemanticRules, semanticRuleCodes } from './semantic/profile-rechecks.js';
+import { applicableRuleCodes } from './semantic/profile-rechecks.js';
 
 /** Profile diagnostics that mark a construct the execution profile cannot run (as opposed to option and API errors). */
 export const isProfileConstructDiagnostic = code =>
@@ -122,7 +122,8 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   if (!compiled && !gatesVersion && !outside.length && !hasReferences && nothingToGenerate) return null;
   const usings = compiled && !gatesVersion && !hasReferences ? suspiciousUsings(compilation) : null,
     // ... and for the few language rules the pipeline does not check on constructs it compiles.
-    rechecked = compiled && needsSemanticRules(files);
+    ruleCodes = compiled ? applicableRuleCodes(files) : null,
+    rechecked = !!ruleCodes?.size;
   if (compiled && !gatesVersion && !hasReferences && !usings && !rechecked) return null;
   let result;
   try {
@@ -164,9 +165,15 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   const unchanged = () => (featureGates.length ? { diagnostics: merge(legacy, featureGates), semantic: result } : null);
   if (compiled && (!hasReferences || !errors.length)) {
     // The image stands; the analysis only adds what it found in the using directives and alias declarations.
-    const taken = d => isUsingDiagnostic(d) || d.code === DiagnosticId.CS0576 || (rechecked && semanticRuleCodes.has(d.code));
+    const taken = d => isUsingDiagnostic(d) || d.code === DiagnosticId.CS0576 || (rechecked && ruleCodes.has(d.code));
     const extra = [...semantic.filter(taken), ...featureGates];
-    return extra.length ? { diagnostics: merge(legacy, extra), semantic: result } : null;
+    if (!extra.length) return null;
+    if (!extra.some(d => d.severity === 'error')) return { diagnostics: merge(legacy, extra), semantic: result };
+    // A rule of the analysis rejects the program: its warnings describe the program too (the pipeline bound it wrongly,
+    // so what it found unused or unreachable need not be).
+    const standing = legacy.filter(d => d.severity !== 'warning' || owned(d)),
+      warnings = result.incomplete ? [] : semantic.filter(d => d.severity === 'warning');
+    return { diagnostics: merge(standing, [...extra, ...warnings]), semantic: result };
   }
   if (errors.length) {
     // Both binders reject the program: without profile constructs (or references) the pipeline's diagnostics stand,
