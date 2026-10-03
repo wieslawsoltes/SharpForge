@@ -139,4 +139,20 @@ for (const engine of ['source', 'cil']) {
       assert.deepEqual(finish(), ['inserted', 'existing', 'inserted', null]);
     } finally { vm.stop(); }
   });
+
+  test(`SF-A08-B03 ${engine}: AddRange reads aliased object storage safely across growth`, () => {
+    const {vm, platform, reference, call} = createClosedCollection(engine, 'List', 'object');
+    try {
+      call('set_Capacity', 2);
+      call('Add', platform.managed('first', 'string'));
+      call('Add', platform.managed('second', 'string'));
+      const original = platform.get(reference, '$data');
+      platform.heap.threshold = platform.heap.stats.liveBytes;
+      call('AddRange', original);
+      assert.notStrictEqual(platform.get(reference, '$data'), original);
+      assert.deepEqual(platform.heap.get(original).data.map(value => platform.native(value)), ['first', 'second']);
+      const current = platform.heap.get(platform.get(reference, '$data')).data.map(value => platform.native(value));
+      assert.deepEqual(current, ['first', 'second', 'first', 'second']);
+    } finally { vm.stop(); }
+  });
 }
