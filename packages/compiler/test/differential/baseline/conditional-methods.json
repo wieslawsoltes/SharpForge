@@ -1,0 +1,5 @@
+{
+  "conditional-methods/calls-are-omitted-with-their-arguments": ["diagnostics", "warnings", "bytecode", "cil"],
+  "conditional-methods/declaration-rules": ["diagnostics", "warnings"],
+  "conditional-methods/undef-removes-a-symbol": ["diagnostics", "warnings", "bytecode", "cil"]
+}
