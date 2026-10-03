@@ -13,11 +13,11 @@ import { CSharp12Rules, ExperimentalUses } from './csharp12.js';
 import { CollectionExpressionBinding } from './collection-expressions.js';
 import { RefReadonlyParameterBinding } from './ref-readonly-parameters.js';
 import { InlineArrayBinding } from './inline-arrays.js';
-import { CSharp13Rules } from './csharp13.js';
+import { CSharp13Rules, CSharp13BodyRules } from './csharp13.js';
 import { ReservedTypeNames } from './reserved-type-names.js';
 
 export const modernRules = Object.freeze([CSharp9Rules, CSharp11Rules, CSharp12Rules, CSharp13Rules, ReservedTypeNames]);
-export const modernUseRules = Object.freeze([ExperimentalUses]);
+export const modernUseRules = Object.freeze([ExperimentalUses, CSharp13BodyRules]);
 export const modernBindings = Object.freeze([
   CSharp10Binding,
   CSharp11Binding,
