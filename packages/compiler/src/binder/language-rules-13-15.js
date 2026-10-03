@@ -3,7 +3,9 @@
  * the rules of ./language-rules.js, which appends this list to its own. A new rule is one import and one line here.
  */
 import { ConditionalAssignmentBinding } from './conditional-assignment.js';
+import { ParamsCollectionBinding } from './params-collections.js';
 
 export const languageRules13to15 = Object.freeze([
   ConditionalAssignmentBinding,
+  ParamsCollectionBinding,
 ]);

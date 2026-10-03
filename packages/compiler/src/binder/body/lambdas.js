@@ -64,6 +64,7 @@ export const LambdaBinding = Base =>
             isAsync,
             isIterator: false,
             isLambda: true,
+            isAnonymousMethod,
             staticFunction: isStaticFunction ? 'lambda' : null,
             isFieldInitializer: false,
             isStatic: this.c.isStatic,
@@ -80,7 +81,8 @@ export const LambdaBinding = Base =>
           const e = child.expression(bodySyntax);
           if (returnType && returnType.specialType !== 'System_Void' && child.c.returnType) {
             const v = child.asValue(e);
-            body = child.convert(v, child.c.returnType);
+            // A lambda the compiler builds for a query clause is not an anonymous function of the program (no CS1662).
+            body = syntax.isQueryLambda ? child.convert(v, child.c.returnType) : child.convertReturned(v, child.c.returnType, bodySyntax);
             if (v.form === 'lambda' && !body.hasErrors) child.finishLambda(v, child.c.returnType);
             child.returns.push(v);
           } else if (
