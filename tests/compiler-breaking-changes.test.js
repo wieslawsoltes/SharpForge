@@ -13,7 +13,6 @@ const knownGaps = {
   'breaking-changes/foreach-capture-csharp-4': 'needs anonymous methods over List<Func<int>> in the execution profile',
   'breaking-changes/foreach-capture-csharp-5': 'needs anonymous methods over List<Func<int>> in the execution profile',
   'breaking-changes/target-typed-conditional-csharp-9': 'needs Nullable<T> at run time',
-  'breaking-changes/field-keyword-csharp-13': "below C# 14 'field' is reported as a gated feature instead of binding to the member (SF-A02-T84)",
 };
 
 const fixtures = new Map(loadFixtures().map(fixture => [fixture.id, fixture])),
