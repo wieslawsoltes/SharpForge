@@ -1,3 +1,4 @@
+import {arrayType, spanType} from '@sharpforge/bytecode';
 import {languageVersion,hasBackingField,rewriteBackingField} from './modern.js';
 import {lowerAsyncFiles} from './async-lowering.js';
 import {frameworkType,taskResult,findContracts} from '@sharpforge/framework';
@@ -97,7 +98,7 @@ export class Compilation {
   resolveType(type,node,allowVar=false,context=null){
     const written=type;
     if(typeof type==='string'){const ambiguous=this.lookupType(type.replace(/(\[\])+$/,''),context)?.ambiguous;if(ambiguous)this.report(this.typeSpan(node,written),'CS0104',[type.replace(/(\[\])+$/,''),ambiguous[0].fullName,ambiguous[1].fullName]);}
-    type=this.typeName(type,context);const element=type.endsWith('[]')?type.slice(0,-2):type;if(element==='var'&&allowVar)return type;if((!supported.has(element)&&!this.typeMap.has(element)&&!frameworkType(element))||element==='var')this.report(this.typeSpan(node,written),'CS0246',[typeText(element)]);return type;}
+    type=this.typeName(type,context);const element=arrayType(type)?.element??spanType(type)?.element??type;if(element==='var'&&allowVar)return type;if((!supported.has(element)&&!this.typeMap.has(element)&&!frameworkType(element))||element==='var')this.report(this.typeSpan(node,written),'CS0246',[typeText(element)]);return type;}
   build(){
     if(this.pipeline==='verify')return verifyPipelines(this.inputFiles,this.options);
     const start=performance.now();

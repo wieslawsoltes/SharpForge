@@ -1,3 +1,8 @@
+import {bindVectorExpression} from './array-expressions.js';
+import {integral} from '../numeric.js';
+import {bindScalarExpression, bindScalarTyped} from './scalar-expressions.js';
+import {bindMemoryExpression, bindMemoryTyped, bindMemoryIndex} from './memory-expressions.js';
+import {numericTypeNames} from '@sharpforge/bytecode';
 import {canonicalType,frameworkType,findContracts,enumValue,eventsFor} from '@sharpforge/framework';
 import {BuiltinMap} from '@sharpforge/bytecode';
 import {numeric,isReference,assignable,pathOf,typeText} from '../type-utils.js';
@@ -11,7 +16,7 @@ import {BoundLiteral,BoundDefaultExpression,BoundLocal,BoundParameter,BoundThisR
  * `bindLValue` binds an assignment target, `bindBool` a condition. Reads of locals are not checked for definite
  * assignment here - that is flow analysis (flow/definite-assignment.js).
  */
-const primitive=t=>['int','double','bool'].includes(t);
+const primitive=t=>[...numericTypeNames,'bool'].includes(t);
 export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
   bindBool(node){const bound=this.bindExpression(node);this.checkAssign('bool',bound.legacyType,node);return bound;}
   /** A reference to a local, parameter or `this`. */
@@ -19,6 +24,8 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
   /** The implied `this` receiver of an unqualified instance member access. */
   implicitThis(syntax){const self=this.thisParameter;return this.node(BoundThisReference,null,{},self?.legacyType??this.m.owner?.name??'error',self?null:{hasErrors:true});}
   bindTyped(node,type){
+    const memory=bindMemoryTyped(this,node,type);if(memory!==undefined)return memory;
+    const scalar=bindScalarTyped(this,node,type);if(scalar!==undefined)return scalar;
     if(node?.kind==='New'&&node.type==='<target>'){this.c.requireFeature(node,9,'Target-typed new');if(!type||['void','var','error','null','int','double','bool','string'].includes(type)){this.c.report(node,'CS8754',['new()']);return this.bad(node);}return this.bindExpression({...node,type});}
     if(node?.kind==='CollectionExpression')return this.bindCollectionExpression(node,type);
     if(node?.kind==='Conditional'&&type)return this.bindExpression({...node,whenTrue:this.contextualize(node.whenTrue,type),whenFalse:this.contextualize(node.whenFalse,type)});
@@ -27,6 +34,9 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
   contextualize(node,type){if(node?.kind==='New'&&node.type==='<target>'){this.c.requireFeature(node,9,'Target-typed new');return {...node,type};}if(node?.kind==='CollectionExpression')return {...node,targetType:type};return node;}
   bindExpression(node){
     if(!node)return this.bad(null);
+    const vector=bindVectorExpression(this,node);if(vector!==undefined)return vector;
+    const memory=bindMemoryExpression(this,node);if(memory!==undefined)return memory;
+    const scalar=bindScalarExpression(this,node);if(scalar!==undefined)return scalar;
     if(node.kind==='BoundTemp')return this.node(BoundLocal,null,{local:node.local},node.type);
     if(node.kind==='CollectionExpression')return this.bindCollectionExpression(node,node.targetType);
     if(node.kind==='New'&&node.type==='<target>')return this.bindTyped(node,null);
@@ -108,7 +118,7 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
       const args=node.args.map(a=>{const bound=this.bindExpression(a);types.push(bound.legacyType);count++;return bound;});
       if(count<builtin.min||count>builtin.max)this.c.report(node,'CS1501',[builtin.name,count]);
       types.forEach((type,i)=>{const target=builtin.params[i];if(target==='number'){if(!numeric(type))this.c.report(node,'CS1503',[i+1,typeText(type),'double']);}else if(target==='array'){if(!type.endsWith('[]'))this.c.report(node,'CS1503',[i+1,typeText(type),'System.Array']);}else if(target&&target!=='any'&&target!=='exception')this.checkAssign(target,type,node.args[Math.max(0,i-(count-node.args.length))]??node);});
-      return this.node(BoundCall,node,{receiver,method:this.sym.builtin(builtin),args,intrinsic:builtin.name==='object.GetType'&&['int','double','bool','long'].includes(types[0])?BuiltinMap.get('$type.'+types[0]+'.GetType'):builtin.name==='Math.Abs'&&types[0]==='int'?BuiltinMap.get('$Math.Abs.Int32'):builtin},builtin.result==='numeric'?(types.includes('double')?'double':'int'):builtin.result);
+      return this.node(BoundCall,node,{receiver,method:this.sym.builtin(builtin),args,intrinsic:builtin.name==='object.GetType'&&[...numericTypeNames,'bool'].includes(types[0])?BuiltinMap.get('$type.'+types[0]+'.GetType'):builtin.name==='Math.Abs'&&types[0]==='int'?BuiltinMap.get('$Math.Abs.Int32'):builtin},builtin.result==='numeric'?(types.includes('double')?'double':'int'):builtin.result);
     }
     const method=this.findMethod(node);let receiver=null;
     if(method&&!method.isStatic)receiver=node.target.kind==='Member'?this.bindExpression(node.target.target):this.implicitThis(node);
@@ -151,6 +161,8 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
   bindLoad(target){if(target.kind==='PropertyAccess'&&target.property.legacy)this.propertyAccess(target.property.legacy,target.syntax,'get');}
   /** Binds an assignment target. `allowReadOnly` permits initialising a getter-only auto-property in its constructor. */
   bindLValue(node,allowReadOnly=false){
+    const vector=bindVectorExpression(this,node);if(vector!==undefined)return vector;
+    const memory=bindMemoryIndex(this,node,true);if(memory!==undefined)return memory;
     const framework=this.bindFrameworkLValue(node);if(framework)return framework;
     if(node.kind==='Name'){const l=this.lookup(node.name);if(l){if(l.isConst)this.c.report(node,'CS0131');if(l.isUsing)this.c.report(node,'CS1656',[node.name,'using variable']);if(l.isForEach)this.c.report(node,'CS1656',[node.name,'foreach iteration variable']);if(l.ideSymbol)this.c.reference(node,l.ideSymbol);return this.variable(node,l);}}
     const property=this.property(node);
@@ -185,14 +197,14 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
   constantPattern(node){
     if(this.isNameof(node))return {value:this.nameof(node),type:'string'};
     const result=this.constant(node);
-    if(result&&['int','string','bool','null'].includes(result.type)){
+    if(result&&(integral(result.type)||['string','bool','null'].includes(result.type))){
       const visit=n=>{if(!n||typeof n!=='object')return;if(n.kind==='Name'){const local=this.lookup(n.name);if(local?.constant&&local.ideSymbol)this.c.reference(n,local.ideSymbol);}for(const [key,value]of Object.entries(n))if(!['green','tokens','source'].includes(key))for(const child of Array.isArray(value)?value:[value])if(child&&typeof child==='object'&&child.kind)visit(child);};visit(node);return result;
     }
     this.c.report(node??this.m.node,'CS0150');return {value:null,type:'error'};
   }
   /** Binds the governing expression and the labels of a switch; `groups` is one label list per section or arm (null = default). */
   bindSwitchDispatch(node,groups){
-    const expression=this.bindExpression(node.expression),type=expression.legacyType;if(!['int','string','bool'].includes(type))this.c.report(node,'CS0151');
+    const expression=this.bindExpression(node.expression),type=expression.legacyType;if(!integral(type)&&!['string','bool'].includes(type))this.c.report(node,'CS0151');
     const seen=new Set();let hasDefault=false;
     const labels=groups.map(group=>group.map(label=>{
       if(label===null){if(hasDefault)this.c.report(node,'CS0152',['default']);hasDefault=true;return null;}
@@ -203,7 +215,7 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
   }
   bindSwitchExpression(node){
     const type=this.switchType(node),dispatch=this.bindSwitchDispatch(node,node.arms.map(a=>[a.pattern]));
-    const arms=node.arms.map((arm,i)=>{const value=this.bindExpression(arm.expression);this.checkAssign(type,value.legacyType,arm);return this.node(BoundSwitchExpressionArm,arm,{pattern:dispatch.labels[i][0],value},value.legacyType);});
+    const arms=node.arms.map((arm,i)=>{const value=this.bindTyped(arm.expression,type);this.checkAssign(type,value.legacyType,arm);return this.node(BoundSwitchExpressionArm,arm,{pattern:dispatch.labels[i][0],value},value.legacyType);});
     if(!dispatch.hasDefault)this.c.report(node,'CS8509',['_']);
     return this.node(BoundSwitchExpression,node,{expression:dispatch.expression,arms},type);
   }
