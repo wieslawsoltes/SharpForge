@@ -7,7 +7,7 @@
 import {out,diag,feature} from './kit.js';
 const program=body=>`using System;\nclass Program\n{\n${body}}\n`;
 const main=body=>program(`    static void Main()\n    {\n${body.split('\n').map(l=>l?'        '+l:l).join('\n')}\n    }\n`);
-export const profileFlow=[
+export const fixtures=[
 ...feature('flow-assignment',[
   out('if-else-both-assign',main('bool b = int.Parse("1") > 0;\nint x;\nif (b) x = 1; else x = 2;\nConsole.WriteLine(x);')),
   diag('if-without-else',main('bool b = int.Parse("1") > 0;\nint x;\nif (b) x = 1;\nConsole.WriteLine(x);')),
@@ -115,3 +115,5 @@ export const profileFlow=[
   diag('several-declarators',main('int a = 1, b, c = 2;\nConsole.WriteLine(c);'))
 ])
 ];
+/** The name the legacy registry (corpus.js) imports this list under. */
+export const profileFlow=fixtures;

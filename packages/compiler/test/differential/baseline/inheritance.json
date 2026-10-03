@@ -1,0 +1,16 @@
+{
+  "inheritance/cs0029-cs0030-reference-conversions": ["diagnostics", "warnings"],
+  "inheritance/cs0108-cs0109-hiding": ["diagnostics", "warnings"],
+  "inheritance/cs0108-hides-inherited": ["diagnostics", "warnings"],
+  "inheritance/cs0114-hides-virtual": ["diagnostics", "warnings"],
+  "inheritance/cs0115-no-method-to-override": ["diagnostics", "warnings"],
+  "inheritance/cs0146-circular-base": ["diagnostics", "warnings"],
+  "inheritance/cs0239-cs0507-overrides": ["diagnostics", "warnings"],
+  "inheritance/cs0266-base-to-derived": ["diagnostics", "warnings"],
+  "inheritance/cs0506-override-non-virtual": ["diagnostics", "warnings"],
+  "inheritance/cs0509-derive-from-sealed": ["diagnostics", "warnings"],
+  "inheritance/cs0513-cs0500-abstract": ["diagnostics", "warnings"],
+  "inheritance/cs0534-abstract-not-implemented": ["diagnostics", "warnings"],
+  "inheritance/cs0540-cs0539-explicit-implementation": ["diagnostics", "warnings"],
+  "inheritance/cs7036-base-constructor": ["diagnostics", "warnings"]
+}

@@ -43,7 +43,7 @@ const keywordOf = type =>
 export class BinderCore {
   /**
    * @param driver `{core,conversions,overloads,operators,typeBinder,report(uri,node,code,args),versionOf(uri),gate(uri,node,key,fallback),nullableAt(uri,pos)}`
-   * @param context `{uri,scope,containingType,method,isStatic,returnType,returnRefKind,isAsync,isIterator,isFieldInitializer,parent}`
+   * @param context `{uri,scope,containingType,method,isStatic,returnType,returnRefKind,isAsync,isIterator,isFieldInitializer,parent,outerLocals}`
    */
   constructor(driver, context) {
     this.d = driver;
@@ -64,6 +64,8 @@ export class BinderCore {
     this.localFunctions = [];
     this.usesGoto = false;
     for (const p of context.parameters ?? context.method?.parameters ?? []) if (p.name) this.scopes[0].set(p.name, p);
+    // Expression variables of a constructor initializer are in scope in the constructor body.
+    for (const [name, symbol] of context.outerLocals ?? []) this.scopes[0].set(name, symbol);
   }
   // ---- infrastructure ----
   report(node, code, args = []) {
@@ -102,8 +104,9 @@ export class BinderCore {
     }
     return null;
   }
+  /** True when a local of this name is declared later in an enclosing scope, also of an enclosing function. */
   isPending(name) {
-    for (let i = this.pending.length - 1; i >= 0; i--) if (this.pending[i].has(name)) return true;
+    for (let b = this; b; b = b.c.parent) for (let i = b.pending.length - 1; i >= 0; i--) if (b.pending[i].has(name)) return true;
     return false;
   }
   declare(name, symbol, node) {

@@ -1,0 +1,4 @@
+{
+  "string-operations/concatenation-and-equality": ["diagnostics", "warnings", "bytecode", "cil"],
+  "string-operations/switch-on-string": ["diagnostics", "warnings", "bytecode", "cil"]
+}
