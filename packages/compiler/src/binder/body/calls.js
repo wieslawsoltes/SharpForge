@@ -12,6 +12,7 @@ import { lookupMembers } from '../inheritance.js';
 import { checkWritable, argumentRefKind } from '../ref-kinds.js';
 import { checkConstructedMethod } from '../constraints.js';
 import { isVirtualCall } from '../overrides.js';
+import { isCallOmitted } from '../csharp2-misc.js';
 import { receiverPassing } from '../readonly.js';
 
 const unknown = ErrorTypeSymbol.unknown;
@@ -306,6 +307,8 @@ export const CallBinding = Base =>
               ? group.receiverType
               : null,
       });
+      // A call to a [Conditional] method whose symbols are not defined in this file is not executed.
+      if (isCallOmitted(method, this.d.definedSymbols(this.c.uri))) n.isOmitted = true;
       if (receiver && receiver.type?.isValueType === true && !method.isStatic) {
         const passing = receiverPassing(receiver, method, this.variableContext);
         n.receiverPassing = passing.mode;

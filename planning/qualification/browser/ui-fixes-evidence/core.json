@@ -1,0 +1,39 @@
+{
+  "source": {
+    "commit": "0e3dc9a0e6ff6eb7d5fd5ec1664fa15ab33ea403",
+    "dirty": false
+  },
+  "command": [
+    "npm",
+    "test"
+  ],
+  "environment": {
+    "node": "24.21.0",
+    "python": "3.14.7",
+    "pathIncludes": "/private/tmp/sharpforge-browser-matrix-venv/bin"
+  },
+  "exitCode": 0,
+  "tests": 2828,
+  "passed": 2828,
+  "failed": 0,
+  "cancelled": 0,
+  "skipped": 0,
+  "todo": 0,
+  "durationMilliseconds": 17300.891416,
+  "log": {
+    "path": "artifacts/core-tests-final.log",
+    "bytes": 206935,
+    "sha256": "8a433dd7a510d1890e40757bd951b8a6220415b06c673d10de95f30001dff79a"
+  },
+  "summaryLines": [
+    "\u2714 CLI writePlan validates duplicate/case/traversing destinations before creating output directory (2.418125ms)",
+    "\u2139 tests 2828",
+    "\u2139 suites 0",
+    "\u2139 pass 2828",
+    "\u2139 fail 0",
+    "\u2139 cancelled 0",
+    "\u2139 skipped 0",
+    "\u2139 todo 0",
+    "\u2139 duration_ms 17300.891416"
+  ]
+}
