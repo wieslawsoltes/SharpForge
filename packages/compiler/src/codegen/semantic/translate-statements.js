@@ -281,8 +281,9 @@ export const StatementTranslation = Base =>
       if (this.frame.hoist && containsYield(node)) return this.unsupported('yield inside a try block', node.syntax);
       const catches = node.catches.map(clause => {
         if (clause.filter) return this.unsupported('exception filters', node.syntax);
-        if (clause.type && clause.type.specialType !== 'System_Object' && this.imageType(clause.type, node.syntax) !== 'Exception')
-          return this.unsupported('typed exception handlers', node.syntax);
+        // The runtime keeps no type on a thrown object and enters the innermost handler for every exception.
+        if (!clause.type.equals(this.g.analysis.core.exception))
+          return this.unsupported(`a catch clause for '${clause.type.toDisplayString()}' (the runtime catches System.Exception only)`, clause.syntax);
         let variable = null;
         const body = this.scoped(() => {
           if (!clause.local) return this.statement(clause.block);

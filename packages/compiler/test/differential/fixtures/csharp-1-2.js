@@ -3,5 +3,6 @@
  * registered here, so the corpus has a single registration for the whole epic.
  */
 import { fixtures as jumps } from './jumps.js';
+import { fixtures as exceptionHandling } from './exception-handling.js';
 
-export const fixtures = [...jumps];
+export const fixtures = [...jumps, ...exceptionHandling];

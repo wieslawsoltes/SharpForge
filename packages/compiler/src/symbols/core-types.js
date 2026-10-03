@@ -11,6 +11,7 @@ import { MethodSymbol, PropertySymbol, ParameterSymbol, MethodKind, DeclarationM
 import { Accessibility } from './types.js';
 import { declareSpanTypes } from './span-types.js';
 import { declareCoreTypeRelations } from './core-type-relations.js';
+import { declareExceptionTypes } from './exception-types.js';
 
 const keywordNames = [
   'object',
@@ -68,6 +69,7 @@ export class CoreTypes {
     this.ireadOnlyListT = bridge.coreType('System_Collections_Generic_IReadOnlyList_T');
     this.ireadOnlyCollectionT = bridge.coreType('System_Collections_Generic_IReadOnlyCollection_T');
     this.augment();
+    declareExceptionTypes(this);
     Object.assign(this, declareSpanTypes(this), declareCoreTypeRelations(this));
     this.task = bridge.coreType('System_Threading_Tasks_Task');
     this.taskT = bridge.coreType('System_Threading_Tasks_Task_T');

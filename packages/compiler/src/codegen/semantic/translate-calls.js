@@ -8,6 +8,10 @@ import { MethodKind } from '../../symbols/members.js';
 import { n } from './node-factory.js';
 
 const primitiveToString = new Set(['int', 'double', 'bool', 'string']);
+const derivesFrom = (type, ancestor) => {
+  for (let current = type.baseType; current; current = current.baseType) if (current.equals(ancestor)) return true;
+  return false;
+};
 
 /** Class mixin: calls, creation, properties, indexers, events. */
 export const CallTranslation = Base =>
@@ -128,7 +132,10 @@ export const CallTranslation = Base =>
     }
     frameworkCreation(node) {
       const ctor = node.constructor,
-        name = this.imageType(node.type, node.syntax);
+        exception = this.g.analysis.core.exception;
+      if (!node.type.equals(exception) && derivesFrom(node.type, exception))
+        return this.unsupported(`exception class '${node.type.toDisplayString()}' (the runtime creates System.Exception only)`, node.syntax);
+      const name = this.imageType(node.type, node.syntax);
       if (!ctor || typeof ctor !== 'object' || !(ctor.contract || ctor.builtin))
         return this.unsupported(`creating '${node.type.toDisplayString()}' (constructor not in the framework registry)`, node.syntax);
       this.checkFrameworkParameters(ctor, node.syntax);
