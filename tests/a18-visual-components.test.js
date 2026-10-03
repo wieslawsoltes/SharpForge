@@ -18,14 +18,15 @@ function fixture() {
   return {view, controller, event, calls};
 }
 
-test('component double-click opens the defining document and ordinary controls retain inline editing', () => {
+test('component double-click opens the defining document and ordinary text controls retain inline editing', () => {
   const {view, controller, event, calls} = fixture();
   DesignerSurfaceController.prototype.doubleClick.call(controller, event);
   assert.deepEqual(calls, [['prevent-default'], ['stop-propagation'], ['component', 'action']]);
   calls.length = 0;
   view.componentDefinition = () => null;
+  view.host.nodes.set('instance', {designId: 'title'});
   DesignerSurfaceController.prototype.doubleClick.call(controller, event);
-  assert.deepEqual(calls, [['prevent-default'], ['stop-propagation'], ['text', 'action']]);
+  assert.deepEqual(calls, [['prevent-default'], ['stop-propagation'], ['text', 'title']]);
   calls.length = 0;
   view.preview = true;
   DesignerSurfaceController.prototype.doubleClick.call(controller, event);

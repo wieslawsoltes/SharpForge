@@ -20,7 +20,7 @@ The A18 surface consumes `@sharpforge/designer` and the retained `WinUIHost`. Th
 | Guides | `guideSettings`, `setUserGuide`, `updateGuideSettings` | Versioned settings are serialized in `document.designer.guides`; up to 256 guides and configurable grid/guide/sibling snapping. |
 | Preview environment | `DesignPreviewEnvironment` | Session-only resolution, scale, light/dark palette, high-contrast palette and RTL. Source serialization and history remain untouched. |
 | Adaptive authoring | `setResponsiveState`, `applyResponsivePreview`, `generateResponsiveMethods` | Up to 64 bounded width ranges and normalized property overrides. The highest matching minimum width wins. |
-| Inline text | `DesignerInlineText` | F2/double-click edits Text or scalar Content with rendered font properties; Enter commits once, Escape cancels. |
+| Inline text | `DesignerInlineText` | F2 or slow second click edits Text or scalar Content with rendered font properties; Enter commits once, Escape cancels. Fast double-click creates/navigates the declared default event, with component navigation taking precedence. Protected expressions and object/container content disable inline commands. |
 | Draw tool | `DesignerDrawCreate` | Alt+click a Toolbox item to select its drawing tool. A normal click inserts immediately. Dragging from the Toolbox previews insertion before committing. |
 | Surface navigation | `anchoredDesignZoom`, `fitDesignBounds`, `DesignerSurfaceZoom` | 10–800% zoom, pointer anchor, fit with 10% padding, Ctrl+0, middle-button or Space-drag pan. |
 | Context commands | `DesignerSurfaceCommands` | One registry supplies menu and keyboard enablement, including order, align, layout, resources, semantic source navigation and clipboard commands. |

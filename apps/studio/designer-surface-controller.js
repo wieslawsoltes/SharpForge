@@ -10,6 +10,7 @@ import {DesignerUserGuides} from './designer-surface-guides.js';
 import {DesignerSurfaceCommands} from './designer-surface-commands.js';
 import {DesignerSurfaceGestures} from './designer-surface-gestures.js';
 import {DesignerMarginDrag} from './designer-surface-margin.js';
+import {activateDesignerEvent, defaultDesignerEvent} from './designer-event-actions.js';
 
 /** Explicit integration seam for visual surface authoring; legacy DesignerTools delegates here. */
 export class DesignerSurfaceController {
@@ -32,6 +33,8 @@ export class DesignerSurfaceController {
     this.disposed = false;
     this.lastDocument = view.document;
     this.multiply = multiplyMatrix;
+    this.lastClick = null;
+    this.doubleClickInterval = null;
   }
 
   install() {
@@ -59,6 +62,7 @@ export class DesignerSurfaceController {
       if (!view.scroller.contains(event.relatedTarget)) view.safe(() => this.finishKeyboard());
     });
     listen(view.stage, 'dblclick', event => this.doubleClick(event));
+    listen(view.stage, 'click', event => this.click(event));
     listen(view.stage.ownerDocument.defaultView, 'blur', () => {
       this.cancelPointer?.();
       view.safe(() => this.finishKeyboard());
@@ -88,6 +92,7 @@ export class DesignerSurfaceController {
       this.gestures.finishKeyboard(true);
       this.text.cancel();
       this.lastDocument = this.view.document;
+      this.lastClick = null;
       this.preview.environment.update({state: null});
     }
     if (event.kind !== 'selection') this.geometry.invalidate();
@@ -115,6 +120,22 @@ export class DesignerSurfaceController {
     return this.gestures.pointerDown(event);
   }
 
+  click(event) {
+    if (this.view.preview) return;
+    const hit = event.target.closest('[data-sf-id]')?.dataset.sfId;
+    const id = this.view.host.nodes.get(hit)?.designId ?? hit;
+    if (!id || !this.view.document.node(id)) return;
+    const previous = this.lastClick;
+    this.lastClick = {id, time: event.timeStamp, x: event.clientX, y: event.clientY};
+    const interval = previous?.id === id ? event.timeStamp - previous.time : null;
+    this.doubleClickInterval = {id, interval};
+    const samePoint = previous && Math.hypot(event.clientX - previous.x, event.clientY - previous.y) <= 4;
+    if (event.detail === 1 && interval >= 450 && interval <= 1500 && samePoint && !this.view.componentDefinition?.(id)) {
+      this.lastClick = null;
+      this.view.safe(() => this.text.begin(id));
+    }
+  }
+
   doubleClick(event) {
     const view = this.view;
     if (view.preview) return;
@@ -124,10 +145,15 @@ export class DesignerSurfaceController {
     event.preventDefault();
     event.stopPropagation();
     if (view.componentDefinition?.(id)) {
+      this.lastClick = null;
       view.safe(() => view.openComponent(id));
       return;
     }
-    view.safe(() => this.text.begin(id));
+    const slow = this.doubleClickInterval?.id === id && this.doubleClickInterval.interval >= 400;
+    const eventName = slow ? null : defaultDesignerEvent(view, id);
+    this.lastClick = null;
+    if (eventName) return view.safe(() => activateDesignerEvent(view, id, eventName));
+    return view.safe(() => this.text.begin(id));
   }
 
   snaplines(parentId, excluded) {
