@@ -1,6 +1,6 @@
 import {DesignMarginSession, geometryInvariant, guideSettings} from '@sharpforge/designer';
 
-function gridAxis(style, property, start, span, gap, inset, available) {
+function gridAxis(style, {property, start, span, gap, inset, available}) {
   const tracks = String(style[property] ?? '').split(/\s+/).map(Number.parseFloat).filter(Number.isFinite);
   if (!tracks.length) return {offset: inset, size: available - inset};
   const first = Math.min(start, tracks.length - 1);
@@ -16,10 +16,10 @@ export function marginLayoutBounds(entry, parent) {
   const style = parent.style;
   const number = property => Number.parseFloat(style[property]) || 0;
   const properties = entry.node.properties;
-  const horizontal = gridAxis(style, 'gridTemplateColumns', properties.Column ?? 0, properties.ColumnSpan ?? 1,
-    number('columnGap'), number('paddingLeft') + number('borderLeftWidth'), parent.width);
-  const vertical = gridAxis(style, 'gridTemplateRows', properties.Row ?? 0, properties.RowSpan ?? 1,
-    number('rowGap'), number('paddingTop') + number('borderTopWidth'), parent.height);
+  const horizontal = gridAxis(style, {property: 'gridTemplateColumns', start: properties.Column ?? 0, span: properties.ColumnSpan ?? 1,
+    gap: number('columnGap'), inset: number('paddingLeft') + number('borderLeftWidth'), available: parent.width});
+  const vertical = gridAxis(style, {property: 'gridTemplateRows', start: properties.Row ?? 0, span: properties.RowSpan ?? 1,
+    gap: number('rowGap'), inset: number('paddingTop') + number('borderTopWidth'), available: parent.height});
   result.bounds.Left -= horizontal.offset;
   result.bounds.Top -= vertical.offset;
   result.parentBounds = {Width: horizontal.size, Height: vertical.size};
