@@ -2,7 +2,8 @@
 
 Tasks: #4 / T01, #7 / T04, #8 / T05; atomic leaves #1032–1038 and #1055–1069.
 Baseline product tree: `7f0ca223d1b9a07725078260020019cfb276c241` (preserves the CI fix after audited `011f2bc3bdd84f8db82a928d117100017211ca78`).
-Scheduler integration: `e964ff7` cherry-picks `d387dd1af25b3b2d1f0832d507dc63415e88b8eb`, preserving this baseline's frame-root implementation while moving resumed-fault roots before the active-context skip. The strict CIL await-fault fixture first reproduced collection of the resumed exception and now passes. No other runtime/compiler dispatch was changed by this contract scope.
+Implementation commit: `5a7c68cdf2d516ee21826862e807e8af3d0f43e3`.
+Scheduler integration: `e964ff7be8626bc8c7a0c6d4a33bd36cb9f769f1` cherry-picks `d387dd1af25b3b2d1f0832d507dc63415e88b8eb`, preserving this baseline's frame-root implementation while moving resumed-fault roots before the active-context skip. The strict CIL await-fault fixture first reproduced collection of the resumed exception and now passes. No other runtime/compiler dispatch was changed by this contract scope.
 
 Toolchain: Node v24.21.0 (`/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node`), rustc 1.90.0 (1159e78c4 2025-09-14), Cargo.lock pins 15 transitive Rust crates. Shell-default Node v16 is unsupported and was not used for qualification. Run with Node >=22 in CI.
 
