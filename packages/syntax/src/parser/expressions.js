@@ -25,26 +25,30 @@ export const expressionMethods = {
       this.skip();
       return this.missingName();
     }
-    const left = this.binary(this.unary(min), min);
+    const start = this.i,
+      left = this.binary(this.unary(min), min, start);
     this.leave();
     return left;
   },
-  binary(left, min) {
+  /** Extends `left`, whose tokens start at index `start`, with the binary, conditional and assignment operators that bind at least as tightly as `min`. */
+  binary(left, min, start) {
     for (;;) {
       const operator = this.operatorAt(),
         text = operator.text,
-        start = this.current;
+        operatorToken = this.current;
       if (assignmentOperators[text]) {
         if (min > P.Assignment) break;
-        const token = this.takeOperator(operator);
-        if (text === '??=') this.feature('CoalesceAssignmentExpression', start);
-        else if (text === '>>>=') this.feature('UnsignedRightShift', start, this.tokens[this.i - 1]);
+        const token = this.takeOperator(operator),
+          target = left;
+        if (text === '??=') this.feature('CoalesceAssignmentExpression', operatorToken);
+        else if (text === '>>>=') this.feature('UnsignedRightShift', operatorToken, this.tokens[this.i - 1]);
         left = this.n(
           assignmentOperators[text],
           left,
           token,
           text === '=' && this.at('ref') ? this.expressionOrRef() : this.expression(P.Assignment)
         );
+        if (text === '=' && target.kind === 'TupleExpression') this.mixedDeconstruction(target, start);
         continue;
       }
       if (text === '?') {
@@ -63,9 +67,7 @@ export const expressionMethods = {
       }
       if (text === '..') {
         if (min > P.Range) break;
-        this.feature('RangeOperator', start);
-        const token = this.take();
-        left = this.n('RangeExpression', left, token, this.canStartExpression() ? this.expression(P.Unary) : null);
+        left = this.rangeExpression(left);
         continue;
       }
       if (this.isWithExpression()) {
@@ -84,7 +86,7 @@ export const expressionMethods = {
         left = this.n('AsExpression', left, this.take(), this.type('afterIs'));
         continue;
       }
-      if (text === '>>>') this.feature('UnsignedRightShift', start, this.tokens[this.i + operator.count - 1]);
+      if (text === '>>>') this.feature('UnsignedRightShift', operatorToken, this.tokens[this.i + operator.count - 1]);
       const token = this.takeOperator(operator);
       left = this.n(kind, left, token, text === '??' ? this.coalesceOperand(precedence) : this.expression(precedence + 1));
     }
@@ -97,15 +99,11 @@ export const expressionMethods = {
       const lambda = this.anonymousFunction(min);
       if (lambda) return lambda;
     }
+    if (kind === '^') return this.indexExpression();
+    if (kind === '..') return this.rangeExpression(null);
     if (Object.hasOwn(prefixOperators, kind)) {
-      if (kind === '^') this.feature('IndexOperator', token);
       const operator = this.take();
       return this.n(prefixOperators[kind], operator, this.expression(P.Unary));
-    }
-    if (kind === '..') {
-      this.feature('RangeOperator', token);
-      const operator = this.take();
-      return this.n('RangeExpression', null, operator, this.canStartExpression() ? this.expression(P.Unary) : null);
     }
     if (kind === 'await' && this.isAwaitExpression()) return this.awaitExpression();
     if (kind === '(' && this.isCast()) {
