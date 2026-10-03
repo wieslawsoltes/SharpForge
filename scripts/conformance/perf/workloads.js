@@ -15,7 +15,7 @@ export async function workload(root,adapter){
  const module=name=>import(pathToFileURL(join(root,'packages',name,'src/index.js')).href);
  if(['vm','dictionary'].includes(adapter.kind)){
   const [{compileToIL},{VirtualMachine,CilVirtualMachine}]=await Promise.all([module('compiler'),module('runtime')]);
-  const source=adapter.kind==='vm'?'class N{public int Value;public N(int n){Value=n;}} int sum=0;for(int i=0;i<500;i++){var n=new N(i);sum+=n.Value;if(i%50==0)GC.Collect();}Console.WriteLine(sum);':'var d=new Dictionary<int,int>();for(int i=0;i<500;i++)d.Add(i,i+1);int sum=0;for(int i=0;i<500;i++)sum+=d[i];Console.WriteLine(sum);';
+  const source=adapter.kind==='vm'?'int sum=0;for(int i=0;i<500;i++){var n=new N(i);sum+=n.Value;if(i%50==0)GC.Collect();}Console.WriteLine(sum); class N{public int Value;public N(int n){Value=n;}}':'var d=new Dictionary<int,int>();for(int i=0;i<500;i++)d.Add(i,i+1);int sum=0;for(int i=0;i<500;i++)sum+=d[i];Console.WriteLine(sum);';
   const compiled=compileToIL(source);assert(compiled.success,JSON.stringify(compiled.diagnostics));
   const expected=adapter.kind==='vm'?'124750\n':'125250\n';
   return ()=>{const vm=adapter.engine==='source'?new VirtualMachine(compiled.image):new CilVirtualMachine(compiled.assembly),before=beginAllocation(vm),started=performance.now(),result=vm.run(),ms=performance.now()-started;assert.equal(result.state,'terminated');assert.equal(result.output,expected);return {ms,checksum:expected,metrics:finishAllocation(before,vm,500)};};
