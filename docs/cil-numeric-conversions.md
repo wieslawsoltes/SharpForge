@@ -59,6 +59,9 @@ The optional `error(message)` and `fault(name, message)` factories preserve
 runtime diagnostics. Valid conversions retain the saturation and stack-bit
 rules above. `tests/a05-conversion-policy.test.js` adds public policy, malformed
 opcode, source-tag and injected-error regressions; existing independently
-assembled numeric conversion tests cover guest execution. Execution of this
-increment is queued in the serial validation slot. Full T01.6 native-oracle,
-source/reloaded and platform qualification remains pending.
+assembled numeric conversion tests cover guest execution. The serial slot passed
+149 policy/conversion/numeric-seam/storage/value-ABI tests at `2f1a7769` on Node
+24.21.0 (resource wrapper, 512MB, one test file/run). Syntax/import checks passed
+with 1,858 syntax modules and no errors; the non-strict structure report retained
+264 repository warnings. Full T01.6 native-oracle, source/reloaded and platform
+qualification remains pending.

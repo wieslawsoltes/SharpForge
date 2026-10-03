@@ -48,3 +48,18 @@ export function hasExplicitSpanConversion(from, to, core) {
   const element = from.elementType;
   return hasImplicitReferenceConversion(element, target, core) || hasExplicitReferenceConversion(element, target, core);
 }
+
+/**
+ * The element types a span inference relates (csharp-14.0/first-class-span-types, "Type inference"): `V` is a
+ * `Span<V1>` and `U` is an array `U1[]` or a `Span<U1>`, or `V` is a `ReadOnlySpan<V1>` and `U` is an array, a
+ * `Span<U1>` or a `ReadOnlySpan<U1>`.
+ * @returns {null|{source: object, target: object, isSpanTarget: boolean}} `source` is `U1`, `target` is `V1`
+ */
+export function spanInferencePair(u, v) {
+  const spanTarget = spanElementType(v, 'Span'),
+    target = spanTarget ?? spanElementType(v, 'ReadOnlySpan');
+  if (!target) return null;
+  const fromArray = u instanceof ArrayTypeSymbol && u.isSZArray ? u.elementType : null,
+    source = fromArray ?? spanElementType(u, 'Span') ?? (spanTarget ? null : spanElementType(u, 'ReadOnlySpan'));
+  return source ? { source, target, isSpanTarget: !!spanTarget } : null;
+}
