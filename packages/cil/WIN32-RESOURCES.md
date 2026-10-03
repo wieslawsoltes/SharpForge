@@ -68,5 +68,7 @@ constructors, reuses the typed custom-attribute decoder, and ignores attributes 
 parents. Bounds are 4096 CustomAttribute rows, 65536 TypeDefs/MethodDefs for local constructor
 ownership, 256 signature bytes, 32 KiB attribute blobs, and 8192 UTF-16 string code units;
 name heap scans are bounded before decoding. Returned values are strings and retain no input
-byte views. Native Roslyn/LLVM projection evidence is prepared under
-`tests/fixtures/a03-version-attributes`; its serial validation is pending.
+byte views. Roslyn 5.3.0 metadata and LLVM 22.1.8 independently captured resource bytes confirm
+the projected FileVersion and descriptive strings. All 15 projection/Win32 tests pass.
+Evidence is under `tests/fixtures/a03-version-attributes`; Windows Explorer and broader
+browser/platform qualification remain open.
