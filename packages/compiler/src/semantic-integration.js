@@ -1,14 +1,9 @@
 /**
- * Reconciles the execution pipeline with the semantic analysis of SF-A02-E01.
- *
- * The bytecode profile executes a subset of C#. A program outside that subset used to get only profile diagnostics
- * (SF1xxx/SF2xxx "not implemented in this profile") plus whatever errors the string-typed binder produced while
- * stumbling over the constructs it does not know. With the type system in place the compiler can say more:
- *   - the program is not valid C#: report the diagnostics a C# compiler reports (and no profile noise);
- *   - the program is valid C#: keep the profile diagnostics, drop the stumbling errors, add the semantic warnings and
- *     one SF2200 at emit time naming what the runtime profile cannot execute - the image is never produced;
- *   - the analysis could not decide (it met framework members the closed registry does not list): nothing changes.
- * Programs the profile executes are not analysed here at all, so their images and diagnostics are untouched.
+ * Reconciles the execution pipeline with semantic analysis and lowering (SF-A02-E01/E02).
+ * Programs outside the direct execution profile can be generated from semantic bound trees. Invalid programs retain
+ * C# diagnostics, and unsupported runtime constructs report SF2200 without an image. Explicit metadata references
+ * are always analysed, including when unused, so invalid metadata and reference binding errors cannot pass silently.
+ * Programs already emitted retain their image; using and feature diagnostics are added where analysis requires them.
  */
 import { diagnostic } from '@sharpforge/text';
 import { SemanticAnalysis } from './semantic-analysis.js';
@@ -76,7 +71,7 @@ const constructNames = {
   SF2099: 'statements outside the profile',
   SF2141: 'null-conditional access as a value',
 };
-const key = d => d.code + '|' + d.uri + '|' + d.start + '|' + d.length;
+const key = d => d.code + '|' + d.uri + '|' + d.start + '|' + d.length + '|' + d.message;
 
 function internalFailure(compilation, error) {
   const source = compilation.files[0]?.source;
@@ -123,10 +118,10 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   // Nor is a program without an entry point: nothing can be generated for it, so the pipeline's diagnostics stand.
   const nothingToGenerate = onlyStandingErrors(legacy, files) || hasNoEntryPoint(legacy);
   if (!compiled && !gatesVersion && !outside.length && !hasReferences && nothingToGenerate) return null;
-  const usings = compiled && !gatesVersion ? suspiciousUsings(compilation) : null,
+  const usings = compiled && !gatesVersion && !hasReferences ? suspiciousUsings(compilation) : null,
     // ... and for the few language rules the pipeline does not check on constructs it compiles.
     rechecked = compiled && needsSemanticRules(files);
-  if (compiled && !gatesVersion && !usings && !rechecked) return null;
+  if (compiled && !gatesVersion && !hasReferences && !usings && !rechecked) return null;
   let result;
   try {
     const analysis = new SemanticAnalysis(files, {
@@ -165,7 +160,7 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   const overlaps = (a, b) => a.uri === b.uri && a.code === b.code && a.start < b.start + b.length && b.start < a.start + a.length;
   const featureGates = semantic.filter(d => featureDiagnosticCodes.has(d.code) && !legacy.some(l => overlaps(l, d)));
   const unchanged = () => (featureGates.length ? { diagnostics: merge(legacy, featureGates), semantic: result } : null);
-  if (compiled) {
+  if (compiled && (!hasReferences || !errors.length)) {
     // The image stands; the analysis only adds what it found in the using directives and alias declarations.
     const taken = d => isUsingDiagnostic(d) || d.code === 'CS0576' || (rechecked && semanticRuleCodes.has(d.code));
     const extra = [...semantic.filter(taken), ...featureGates];
@@ -177,7 +172,7 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
     // ... or the program has async functions: the pipeline binds those after a source-level rewrite into a kickoff and
     // a body, which moves and renames what its binder reports.
     const rewritten = compilation.methods.some(m => m.node?.asyncRole) || legacy.some(d => asyncRewriteCodes.has(d.code));
-    if (!outside.length && !hasReferences && !rewritten && !errors.some(isNamespaceDiagnostic)) return unchanged();
+    if (result.incomplete && !outside.length && !hasReferences && !rewritten && !errors.some(isNamespaceDiagnostic)) return unchanged();
     // Not valid C#: the semantic diagnostics replace the errors the string-typed binder derived from the constructs it does not
     // know. The profile diagnostics stay (the program still names constructs the profile lacks), except a literal-range one
     // that sits on the very literal a C# error is reported for (one diagnostic per literal).
@@ -203,7 +198,7 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   if (generated?.image) return { diagnostics: merge(standing, semantic), semantic: result, image: generated.image };
   // Valid C# that needs a runtime capability the profile lacks: one SF2200 naming the construct, no image.
   const names = [...new Set(profile.map(d => constructNames[d.code] ?? d.code))],
-    construct = generated?.unsupported.construct ?? names.join('; '),
+    construct = generated?.unsupported.construct ?? (names.join('; ') || 'referenced types or members outside the execution profile'),
     where = generated?.unsupported.syntax ?? null,
     first = profile[0] ?? legacy.find(d => d.severity === 'error'),
     span = where?.span ?? where,

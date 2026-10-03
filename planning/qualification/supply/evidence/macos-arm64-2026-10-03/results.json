@@ -1,0 +1,238 @@
+{
+  "schemaVersion": 1,
+  "workId": "SF-A29-T08",
+  "sourceCommit": "b6a47980eaffe24f01f94da36d1e43d836366de9",
+  "capturedAt": "2026-10-03T16:12:51.095422+00:00",
+  "platform": {
+    "os": "macOS-26.6-arm64-arm-64bit-Mach-O",
+    "arch": "arm64",
+    "node": "v24.21.0",
+    "python": "3.14.7",
+    "actionlint": "1.7.12"
+  },
+  "actionlintArchiveSHA256": "aba9ced2dee8d27fecca3dc7feb1a7f9a52caefa1eb46f3271ea66b6e0e6953f",
+  "checks": {
+    "core": {
+      "passed": 2834,
+      "failed": 0
+    },
+    "nodeSupply": {
+      "passed": 12,
+      "failed": 0
+    },
+    "pythonSupply": {
+      "passed": 8,
+      "failed": 0
+    },
+    "installedPackages": {
+      "passed": 25,
+      "smokeCommit": "938ef79",
+      "qualification": "Product/package inputs unchanged from smoke commit through sourceCommit; only supply scripts and tests changed"
+    },
+    "cycloneDX": {
+      "status": "pass",
+      "specVersion": "1.6",
+      "components": 906,
+      "validator": "Official complete schema; jsonschema 4.26.0"
+    },
+    "workflowLint": {
+      "status": "pass",
+      "documents": 6
+    },
+    "actionlint": {
+      "status": "pass"
+    },
+    "check": {
+      "status": "pass",
+      "javascriptModules": 405
+    },
+    "structure": {
+      "status": "advisory",
+      "newSupplyFindings": 0,
+      "inheritedFindings": "See structure-advisory.log; not suppressed or rebaselined"
+    },
+    "vendor": {
+      "status": "pass",
+      "upstreamFiles": 11,
+      "distributedFiles": 3
+    },
+    "licenses": {
+      "status": "pass",
+      "assetFiles": 84
+    },
+    "secrets": {
+      "status": "pass",
+      "see": [
+        "secret-source.json",
+        "secret-built.json",
+        "secret-with-evidence.json"
+      ]
+    },
+    "build": {
+      "status": "pass"
+    },
+    "standalone": {
+      "status": "pass",
+      "bytes": 3194784
+    },
+    "buildSeals": {
+      "status": "pass"
+    },
+    "sourceManifest": {
+      "status": "pass"
+    },
+    "pipRequireHashes": {
+      "status": "pass",
+      "tamperedWheel": "Actual pip rejected local owned wheel with altered hash"
+    }
+  },
+  "leafEvidence": {
+    "1167": [
+      "actionlint",
+      "workflowLint",
+      "nodeSupply"
+    ],
+    "1168": [
+      "pipRequireHashes",
+      "pythonSupply"
+    ],
+    "1169": [
+      "cycloneDX",
+      "nodeSupply",
+      "pythonSupply"
+    ],
+    "1170": [
+      "vendor",
+      "nodeSupply"
+    ],
+    "1171": [
+      "licenses",
+      "nodeSupply"
+    ],
+    "1172": [
+      "secrets",
+      "nodeSupply"
+    ],
+    "1173": [
+      "buildSeals",
+      "sourceManifest",
+      "nodeSupply",
+      "pythonSupply"
+    ],
+    "1174": [
+      "workflowLint",
+      "actionlint",
+      "pythonSupply"
+    ]
+  },
+  "notExecuted": [
+    "Linux/Windows security matrix",
+    "Hosted CodeQL analysis",
+    "GitHub OIDC attestation creation",
+    "Positive gh attestation verify against published release assets",
+    "Release publication",
+    "GitHub push-protection setting changes"
+  ],
+  "files": [
+    {
+      "path": "node-supply.log",
+      "bytes": 1351,
+      "sha256": "288240512214db4c2fd892fd1d51fd9048314ed12fdb8346bbb350fdbf679a1b"
+    },
+    {
+      "path": "python-supply.log",
+      "bytes": 106,
+      "sha256": "dc02b45a6b2d63b05a3e64f578fef33dd1a1036554a7f1cb2c1654eddeb38030"
+    },
+    {
+      "path": "core.log",
+      "bytes": 207591,
+      "sha256": "b320c10f72984e50c1df851ef1be7299e967a62c0db23aaa8cf9164cdf95694a"
+    },
+    {
+      "path": "check.log",
+      "bytes": 203,
+      "sha256": "81153abef28ecd834c42a93504f96622f95e02e7631088130e79523e110aee97"
+    },
+    {
+      "path": "structure-advisory.log",
+      "bytes": 7580,
+      "sha256": "34b49edc1de3ecb3cf86c0d80047a9888a05582c363da72744700ec892bd20e4"
+    },
+    {
+      "path": "packages.log",
+      "bytes": 2669,
+      "sha256": "148510c7087138a344a83af1f2a719eb7a90ef6695c84b36debb80616f48d43c"
+    },
+    {
+      "path": "vendor.json",
+      "bytes": 2486,
+      "sha256": "6bfc2eccd4e40b62bb156dcc087f586e6745c260e219c3eafe9730f69e073903"
+    },
+    {
+      "path": "licenses.json",
+      "bytes": 288,
+      "sha256": "643430978df513aec2df8a187d0509ba630f0ff6e695f1383ba6709431507c49"
+    },
+    {
+      "path": "secret-source.json",
+      "bytes": 101,
+      "sha256": "67224c5739cdcea9b96d62b710b9f1e7e95d4ae1ef9e6aef517f203e72e495b4"
+    },
+    {
+      "path": "secret-built.json",
+      "bytes": 101,
+      "sha256": "2785c905ba57ca0ba1306fe3661205009c73e8ada0e9fa5b24400fb8b7d95ed5"
+    },
+    {
+      "path": "performance.json",
+      "bytes": 7374,
+      "sha256": "5a36e78dea6c67a2a501c89c72366ec0dcc5a8999a943f07a1a9c43659ac1b72"
+    },
+    {
+      "path": "SBOM.cdx.json",
+      "bytes": 458070,
+      "sha256": "6da75a7774d0b678273647b59317aa231f6da65773be61214cd59b6574c25044"
+    },
+    {
+      "path": "browser-build-manifest.json",
+      "bytes": 151823,
+      "sha256": "8bb2fbd18f96c1985d24064e8a1c51f10fdb34477c53f8d56f6766ebba7b7e28"
+    },
+    {
+      "path": "package-build-manifest.json",
+      "bytes": 4503,
+      "sha256": "f0a0e36b2083454bc8ecd0daca4ac6a3a4ac485405f743cf65499704d7b6237f"
+    },
+    {
+      "path": "SOURCE-MANIFEST.json",
+      "bytes": 4725,
+      "sha256": "bc77e773006ddc82f31c965bc9043d13e18d4ab2a1d6faa34c4b14fb93988b91"
+    },
+    {
+      "path": "SHA256SUMS",
+      "bytes": 2685,
+      "sha256": "0d9107ee5e73b5beefaaa6840bbd70552d3e698acdea28341f5766948a51c807"
+    },
+    {
+      "path": "attestation-subjects.txt",
+      "bytes": 1162,
+      "sha256": "c4b2370eaf422a45f25f9ad0d6a847d66f80e5414c5b850d6b1b0ce4fff4b0e4"
+    },
+    {
+      "path": "pip-install.log",
+      "bytes": 1752,
+      "sha256": "d5f10cdbe7067b60bfa142a197ce4571da60cb69d79d0105a65ed57bc2df78b9"
+    },
+    {
+      "path": "installed-python-license-observations.json",
+      "bytes": 3733,
+      "sha256": "220a61f687ecba219eac194ede2100c818378f58517745c4ddb7e48cff73a036"
+    },
+    {
+      "path": "secret-with-evidence.json",
+      "bytes": 101,
+      "sha256": "feb1add127c9d31c4470257de0405f2c1384a6d0ce4dc902c18105494b810869"
+    }
+  ]
+}

@@ -8,8 +8,8 @@
  *   - an int literal may carry 2147483648 (the lexer admits it for `-2147483648`), so int arithmetic is folded in
  *     long and narrowed here: CS0220 when checked, wrap-around otherwise;
  *   - int.MinValue / -1 is CS0220 in both contexts;
- *   - (int) of an out-of-range double is CS0220 when checked and int.MinValue when unchecked (also for NaN/infinity,
- *     which report CS0221 when checked).
+ *   - (int) of a finite out-of-range double is CS0220 when checked (NaN/infinity report CS0221).
+ * Unchecked floating constants follow Roslyn's zero result, independently of CoreCLR's saturating runtime casts.
  */
 import {formatMessage} from './diagnostics/codes.js';
 import {ConstantValue,foldUnary,foldBinary,foldConversion,isFoldError} from './constants/fold.js';
@@ -62,10 +62,7 @@ export function evaluateConstant(node, {resolve=()=>null, checked=true, maxNodes
       if(n.type==='double')return plain(n,foldConversion(x.type==='int'?long(x):double(x),'double'));
       if(x.type==='int')return int(n,BigInt(Math.trunc(x.value)),check);
       const value=Math.trunc(x.value);
-      // Unchecked double-to-int saturates and maps NaN to 0, matching the runtime conversion (so constants agree with execution).
-      if(!check)return {type:'int',value:Number.isNaN(value)?0:Math.max(-2147483648,Math.min(2147483647,value))|0};
-      if(!Number.isFinite(value))return plain(n,foldConversion(double(x),'int',{checked:true}));
-      if(value<-2147483648||value>2147483647)throw new ConstantError(n,'CS0220',[]);
+      if(Number.isFinite(value)&&(value<-2147483648||value>2147483647)&&check)throw new ConstantError(n,'CS0220',[]);
       return plain(n,foldConversion(double(x),'int',{checked:check}));
     }
     if(n.kind==='Conditional'){

@@ -53,6 +53,8 @@ export class Parser {
     this.containerKind = null;
     this.accessorBodies = 0;
     this.typeDepth = 0;
+    // The index where the member modifiers of a top-level function end while that function is being parsed (see top-level.js).
+    this.topLevelModifiersEnd = 0;
     // True inside the accessors of a property from C# 14 on, where `field` is the backing-field keyword.
     this.fieldKeyword = false;
     // The namespace-like node whose members are being parsed and the token that closes it (null for the end of file).
@@ -144,15 +146,18 @@ export class Parser {
   expect(kind) {
     if (this.at(kind)) return this.take();
     const [code, message] = expected[kind] ?? ['CS1003', `Syntax error, '${kind}' expected`];
-    this.error(this.errorAnchor(), code, message);
+    this.error(kind === ':' ? this.current : this.errorAnchor(), code, message);
     return this.missing(kind);
   }
-  /** Roslyn: a missing-token error sits at the end of the previous token when a line break (or the end) follows it, else on the current token. */
+  /** Roslyn anchors a missing token before a following line break, otherwise on the current token. */
   errorAnchor() {
     const previous = this.tokens[this.i - 1];
     if (!previous || this.current.start <= previous.end) return this.current;
-    const lineBreak = this.current.kind === 'eof' || /[\r\n\u0085\u2028\u2029]/.test(this.source.text.slice(previous.end, this.current.start));
-    return lineBreak ? { start: previous.end, end: previous.end } : this.current;
+    const trivia = this.source.text.slice(previous.end, this.current.start);
+    const followsLineBreak = /[\r\n\u0085\u2028\u2029]/.test(trivia);
+    return this.current.kind === 'eof' || followsLineBreak
+      ? { start: previous.end, end: previous.end }
+      : this.current;
   }
   id() {
     if (this.isId()) return this.take('IdentifierToken');

@@ -9,3 +9,10 @@ Method bodies now lower both encodings to a typed, common operation vocabulary. 
 Bytecode image schema applies to JSON.parse(serializeImage(image)), including {$int32:[words]} code. Semantic verifier-only checks: length divisible by three, opcode membership, stack-height flow, branch/constant/method/field indices, entry point resolution, handler slot and instruction ranges. Structural schema validation is required before deserializeImage (which would otherwise coerce numbers into Int32). Root schemaVersion/formatVersion negotiation must precede semantic use.
 
 Golden generator is deterministic, uses fixed source fixture files and excludes elapsed times/tool timestamps. CI entry is tests/a00-05-metadata.test.js; `node scripts/planning/gen-schema-fixtures.js --check` compares committed bytes. JS validator accepts only the documented schema subset and fails on unknown keywords. Rust reader independently checks the same subset with locked dependencies; it is schema qualification only, not Rust runtime qualification.
+
+The integrated A05 runtime corrects `GC.GetTotalMemory` to an Int64 result.
+Bytecode format 2 and `bytecode-image.v2.schema.json` describe this changed
+builtin signature while retaining every numeric ID. Format 1 schema remains
+available for archival structural validation; the current interpreter rejects
+format 1 images, which must be recompiled. The Rust structural reader checks the
+version constant declared by the selected schema.

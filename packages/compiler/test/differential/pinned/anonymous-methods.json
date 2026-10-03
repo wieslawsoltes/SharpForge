@@ -1,0 +1,6 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "anonymous-methods/parameterless-form-fits-any-signature":{"hash":"e3407eba423bc6ce","kind":"output","langVersion":"14.0","diagnostics":[],"output":"42\n7\n-1\nnotified\nTrue\n"},
+  "anonymous-methods/captures-and-multicast":{"hash":"146ec8fe21abe098","kind":"output","langVersion":"14.0","diagnostics":[],"output":"11 12 101\nabcab\n"},
+  "anonymous-methods/signature-rules":{"hash":"4573dd47be24a691","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1688",180,8,"error"],["CS1676",302,5,"error"],["CS1593",343,8,"error"],["CS1661",409,8,"error"],["CS1678",425,4,"error"],["CS1643",472,8,"error"],["CS8030",548,6,"error"],["CS1660",592,8,"error"],["CS8917",629,8,"error"]]},
+  "anonymous-methods/body-rules":{"hash":"a7bfe8fcf8663858","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0219",157,5,"warning"],["CS1628",205,5,"error"],["CS1628",254,6,"error"],["CS0136",379,5,"error"],["CS0165",455,5,"error"]]}
+}}

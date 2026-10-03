@@ -20,6 +20,7 @@ import { formatMessage, defaultSeverity, hasDiagnosticCode } from '../diagnostic
 import { NullableContextMap } from '../nullable/annotations.js';
 import { bindCompilationReferences } from '../metadata-import/compilation-references.js';
 import { spanOf, frameworkNames, isSourceSymbol } from './analysis-helpers.js';
+import { definedSymbols } from '../binder/csharp2-misc.js';
 import { isBclNamespace } from '../symbols/bcl-namespaces.js';
 import { bindAllUsings } from '../binder/using-directives.js';
 
@@ -231,6 +232,11 @@ export class AnalysisCore {
       core: this.core,
       unexecutable: this.unexecutable,
     };
+  }
+  /** The preprocessor symbols defined in the file `uri` (the option plus its #define directives). */
+  definedSymbols(uri) {
+    this.definedByUri ??= new Map(this.files.map(file => [file.source.uri, definedSymbols(file, this.options)]));
+    return this.definedByUri.get(uri) ?? new Set();
   }
   at(symbol) {
     return symbol.locations?.[0] ?? this.assembly.types[0]?.locations[0];
