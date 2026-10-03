@@ -1,4 +1,7 @@
-import {MAX, integer, makeArray, bclScalar} from '@sharpforge/bcl-core';
+import {MAX, integer, makeArray} from '@sharpforge/bcl-core';
+import {keyOf} from './object-equality.js';
+
+export {keyOf} from './object-equality.js';
 
 export function count(p, reference) {
   return p.get(reference, '$count', 0);
@@ -75,13 +78,6 @@ export function append(p, reference, value) {
   write(p, reference, size, value);
   p.set(reference, '$count', size + 1);
   change(p, reference);
-}
-
-export function keyOf(p, value) {
-  const scalar = bclScalar(p, value);
-  if (scalar === null) return 'null';
-  if (p.bclHost.isReference(scalar)) return 'r:' + scalar.h + ':' + scalar.g;
-  return typeof scalar + ':' + String(scalar);
 }
 
 export function indexMap(p, reference, slots = 1) {
