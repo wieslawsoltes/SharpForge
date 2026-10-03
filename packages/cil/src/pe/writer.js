@@ -1,3 +1,4 @@
+import { desktopEntryStub } from './entry-stub.js';
 import { Writer, CilError, align, utf8 } from '../binary.js';
 import { peOptions, writeOptionalHeader, PEDirectoryNames } from './headers.js';
 
@@ -76,7 +77,15 @@ export function writeManagedPE(sectionBytes, metadataOffset, metadataLength, ent
   if (!(sectionBytes instanceof Uint8Array) || sectionBytes.length < 72) throw new CilError('Missing CLI header reservation');
   if (!Number.isInteger(metadataOffset) || metadataOffset < 72 || !Number.isInteger(metadataLength) || metadataLength < 1
     || metadataOffset + metadataLength > sectionBytes.length) throw new CilError('Invalid CLI metadata range');
-  const section = sectionBytes.slice();
+  let section = sectionBytes.slice();
+  let additionalSections = options.sections ?? [];
+  if (options.nativeEntryStub) {
+    const stub = desktopEntryStub(section, options);
+    section = stub.section;
+    options.nativeEntryPoint = stub.nativeEntryPoint;
+    options.directories = { ...options.directories, ...stub.directories };
+    additionalSections = [...additionalSections, { name: '.reloc', data: stub.relocation }];
+  }
   const cli = new DataView(section.buffer);
   cli.setUint32(0, 72, true);
   cli.setUint16(4, 2, true);
@@ -85,7 +94,7 @@ export function writeManagedPE(sectionBytes, metadataOffset, metadataLength, ent
   cli.setUint32(12, metadataLength, true);
   cli.setUint32(16, options.corFlags, true);
   cli.setUint32(20, entryToken, true);
-  return writePortableExecutable([{ name: '.text', data: section }, ...(options.sections ?? [])], {
+  return writePortableExecutable([{ name: '.text', data: section }, ...additionalSections], {
     ...options, directories: { ...options.directories, cliHeader: { section: '.text', offset: 0, size: 72 } },
   });
 }
