@@ -295,7 +295,11 @@ export const slotNames = Object.freeze({
   ConversionOperatorMemberCref: ['implicitOrExplicitKeyword', 'operatorKeyword', 'checkedKeyword', 'type', 'parameters'],
   CrefParameterList: ['openToken', 'parameters', 'closeToken'],
   CrefBracketedParameterList: ['openToken', 'parameters', 'closeToken'],
-  CrefParameter: ['refKindKeyword', 'readOnlyKeyword', 'type']
+  CrefParameter: ['refKindKeyword', 'readOnlyKeyword', 'type'],
+  ExtensionBlockDeclaration: ['attributeLists', 'modifiers', 'keyword', 'typeParameterList', 'parameterList', 'constraintClauses', 'openBraceToken', 'members', 'closeBraceToken', 'semicolonToken'],
+  UnionDeclaration: ['attributeLists', 'modifiers', 'keyword', 'identifier', 'typeParameterList', 'caseTypes', 'baseList', 'constraintClauses', 'openBraceToken', 'members', 'closeBraceToken', 'semicolonToken'],
+  UnionCaseTypeList: ['openParenToken', 'types', 'closeParenToken'],
+  UnsafeExpression: ['unsafeKeyword', 'openParenToken', 'expression', 'closeParenToken']
 });
 /** Slot shapes per node kind, one digit per slot: 0 required child, 1 list, 2 separated list, 3 optional child. */
 export const slotTypes = Object.freeze({
@@ -355,7 +359,7 @@ export const slotTypes = Object.freeze({
   UnknownAccessorDeclaration: '110333',
   ParameterList: '020',
   BracketedParameterList: '020',
-  Parameter: '11303',
+  Parameter: '11333',
   IncompleteMember: '113',
   IdentifierName: '0',
   QualifiedName: '000',
@@ -591,7 +595,11 @@ export const slotTypes = Object.freeze({
   ConversionOperatorMemberCref: '00303',
   CrefParameterList: '020',
   CrefBracketedParameterList: '020',
-  CrefParameter: '330'
+  CrefParameter: '330',
+  ExtensionBlockDeclaration: '1103013133',
+  UnionDeclaration: '110030313133',
+  UnionCaseTypeList: '020',
+  UnsafeExpression: '0000'
 });
 const unwrap = value => Array.isArray(value) ? (value.length ? new GreenNode('SyntaxList', value.map(unwrap)) : null) : value && value.green ? value.green : value ?? null;
 const make = (kind, children) => createNode(new GreenNode(kind, children.map(unwrap)), null, 0);
@@ -2827,6 +2835,76 @@ export class CrefParameterSyntax extends SyntaxNode {
   withType(value) { return this.withSlot(2, value); }
 }
 registerNodeClass(['CrefParameter'], CrefParameterSyntax);
+export class ExtensionBlockDeclarationSyntax extends SyntaxNode {
+  get attributeLists() { return this.list(0); }
+  withAttributeLists(value) { return this.withSlot(0, value); }
+  get modifiers() { return this.list(1); }
+  withModifiers(value) { return this.withSlot(1, value); }
+  get keyword() { return this.slot(2); }
+  withKeyword(value) { return this.withSlot(2, value); }
+  get typeParameterList() { return this.slot(3); }
+  withTypeParameterList(value) { return this.withSlot(3, value); }
+  get parameterList() { return this.slot(4); }
+  withParameterList(value) { return this.withSlot(4, value); }
+  get constraintClauses() { return this.list(5); }
+  withConstraintClauses(value) { return this.withSlot(5, value); }
+  get openBraceToken() { return this.slot(6); }
+  withOpenBraceToken(value) { return this.withSlot(6, value); }
+  get members() { return this.list(7); }
+  withMembers(value) { return this.withSlot(7, value); }
+  get closeBraceToken() { return this.slot(8); }
+  withCloseBraceToken(value) { return this.withSlot(8, value); }
+  get semicolonToken() { return this.slot(9); }
+  withSemicolonToken(value) { return this.withSlot(9, value); }
+}
+registerNodeClass(['ExtensionBlockDeclaration'], ExtensionBlockDeclarationSyntax);
+export class UnionDeclarationSyntax extends SyntaxNode {
+  get attributeLists() { return this.list(0); }
+  withAttributeLists(value) { return this.withSlot(0, value); }
+  get modifiers() { return this.list(1); }
+  withModifiers(value) { return this.withSlot(1, value); }
+  get keyword() { return this.slot(2); }
+  withKeyword(value) { return this.withSlot(2, value); }
+  get identifier() { return this.slot(3); }
+  withIdentifier(value) { return this.withSlot(3, value); }
+  get typeParameterList() { return this.slot(4); }
+  withTypeParameterList(value) { return this.withSlot(4, value); }
+  get caseTypes() { return this.slot(5); }
+  withCaseTypes(value) { return this.withSlot(5, value); }
+  get baseList() { return this.slot(6); }
+  withBaseList(value) { return this.withSlot(6, value); }
+  get constraintClauses() { return this.list(7); }
+  withConstraintClauses(value) { return this.withSlot(7, value); }
+  get openBraceToken() { return this.slot(8); }
+  withOpenBraceToken(value) { return this.withSlot(8, value); }
+  get members() { return this.list(9); }
+  withMembers(value) { return this.withSlot(9, value); }
+  get closeBraceToken() { return this.slot(10); }
+  withCloseBraceToken(value) { return this.withSlot(10, value); }
+  get semicolonToken() { return this.slot(11); }
+  withSemicolonToken(value) { return this.withSlot(11, value); }
+}
+registerNodeClass(['UnionDeclaration'], UnionDeclarationSyntax);
+export class UnionCaseTypeListSyntax extends SyntaxNode {
+  get openParenToken() { return this.slot(0); }
+  withOpenParenToken(value) { return this.withSlot(0, value); }
+  get types() { return this.list(1, true); }
+  withTypes(value) { return this.withSlot(1, value); }
+  get closeParenToken() { return this.slot(2); }
+  withCloseParenToken(value) { return this.withSlot(2, value); }
+}
+registerNodeClass(['UnionCaseTypeList'], UnionCaseTypeListSyntax);
+export class UnsafeExpressionSyntax extends SyntaxNode {
+  get unsafeKeyword() { return this.slot(0); }
+  withUnsafeKeyword(value) { return this.withSlot(0, value); }
+  get openParenToken() { return this.slot(1); }
+  withOpenParenToken(value) { return this.withSlot(1, value); }
+  get expression() { return this.slot(2); }
+  withExpression(value) { return this.withSlot(2, value); }
+  get closeParenToken() { return this.slot(3); }
+  withCloseParenToken(value) { return this.withSlot(3, value); }
+}
+registerNodeClass(['UnsafeExpression'], UnsafeExpressionSyntax);
 /** Factories returning detached nodes; children may be red or green elements, arrays for lists, or null. */
 export const SyntaxFactory = Object.freeze({
   compilationUnit(externs, usings, attributeLists, members, endOfFileToken) { return make('CompilationUnit', [externs, usings, attributeLists, members, endOfFileToken]); },
@@ -3046,5 +3124,9 @@ export const SyntaxFactory = Object.freeze({
   operatorMemberCref(operatorKeyword, checkedKeyword, operatorToken, parameters) { return make('OperatorMemberCref', [operatorKeyword, checkedKeyword, operatorToken, parameters]); },
   conversionOperatorMemberCref(implicitOrExplicitKeyword, operatorKeyword, checkedKeyword, type, parameters) { return make('ConversionOperatorMemberCref', [implicitOrExplicitKeyword, operatorKeyword, checkedKeyword, type, parameters]); },
   crefParameterList(kind, openToken, parameters, closeToken) { return make(kind, [openToken, parameters, closeToken]); },
-  crefParameter(refKindKeyword, readOnlyKeyword, type) { return make('CrefParameter', [refKindKeyword, readOnlyKeyword, type]); }
+  crefParameter(refKindKeyword, readOnlyKeyword, type) { return make('CrefParameter', [refKindKeyword, readOnlyKeyword, type]); },
+  extensionBlockDeclaration(attributeLists, modifiers, keyword, typeParameterList, parameterList, constraintClauses, openBraceToken, members, closeBraceToken, semicolonToken) { return make('ExtensionBlockDeclaration', [attributeLists, modifiers, keyword, typeParameterList, parameterList, constraintClauses, openBraceToken, members, closeBraceToken, semicolonToken]); },
+  unionDeclaration(attributeLists, modifiers, keyword, identifier, typeParameterList, caseTypes, baseList, constraintClauses, openBraceToken, members, closeBraceToken, semicolonToken) { return make('UnionDeclaration', [attributeLists, modifiers, keyword, identifier, typeParameterList, caseTypes, baseList, constraintClauses, openBraceToken, members, closeBraceToken, semicolonToken]); },
+  unionCaseTypeList(openParenToken, types, closeParenToken) { return make('UnionCaseTypeList', [openParenToken, types, closeParenToken]); },
+  unsafeExpression(unsafeKeyword, openParenToken, expression, closeParenToken) { return make('UnsafeExpression', [unsafeKeyword, openParenToken, expression, closeParenToken]); }
 });

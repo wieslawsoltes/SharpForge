@@ -7,8 +7,9 @@ export const basicPatternMethods = {
   isExpression(left, keyword) {
     const start = this.current;
     if (this.atWord('_') && !this.isDesignationAhead(this.i + 1) && !['(', '{', '.'].includes(this.peek().kind)) return this.n('IsExpression', left, keyword, this.n('IdentifierName', this.take('IdentifierToken')));
-    const pattern = this.pattern(false), type = pattern.kind === 'TypePattern' ? pattern.children[0] : pattern.kind === 'ConstantPattern' ? this.expressionAsType(pattern.children[0]) : null;
-    if (type) return this.n('IsExpression', left, keyword, type);
+    const recorded = this.features.length, pattern = this.pattern(false), type = pattern.kind === 'TypePattern' ? pattern.children[0] : pattern.kind === 'ConstantPattern' ? this.expressionAsType(pattern.children[0]) : null;
+    // A bare type after `is` is the C# 1 type test, not a C# 9 type pattern.
+    if (type) { for (let k = this.features.length - 1; k >= recorded; k--) if (this.features[k].id === 'TypePattern') this.features.splice(k, 1); return this.n('IsExpression', left, keyword, type); }
     this.feature('PatternMatching', start); return this.n('IsPatternExpression', left, keyword, pattern);
   },
   /** Converts a name-like expression (`A.B<C>`) to the equivalent type syntax, or returns null. */

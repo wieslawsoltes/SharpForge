@@ -6,6 +6,8 @@ import { ownText } from '../green.js';
 export const recoveryMethods = {
   /** Skips the current token; its full text becomes skipped-token trivia on the next consumed token. */
   skip() { const token = this.tokens[this.i]; if (token.kind === 'eof') return false; this.skippedTokens.push(token); this.i++; return true; },
+  /** Skips every remaining token (used when the nesting budget is exhausted). */
+  skipRest() { const tokens = this.tokens, last = tokens.length - 1; while (this.i < last) this.skippedTokens.push(tokens[this.i++]); },
   /** Skips tokens until `stop(token)` holds or the end of file. */
   skipUntil(stop) { while (!this.at('eof') && !stop(this.current)) this.skip(); },
   /** Reports the current token as unexpected and skips it. */
@@ -21,6 +23,5 @@ export const recoveryMethods = {
     const trivia = this.trivia(pieces);
     return this.skippedTokens.length ? Object.freeze([this.takeSkipped(), ...trivia]) : trivia;
   },
-  /** Skips everything left in this parser's token window (used by nested interpolation parsers). */
-  skipRest() { while (this.skip()); }
+  /** The pending skipped tokens are also flushed by interpolation parsers, whose window ends at a synthetic end-of-file token. */
 };

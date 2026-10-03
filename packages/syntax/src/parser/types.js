@@ -6,7 +6,7 @@
 const expressionStarts = new Set(['identifier', 'integer', 'double', 'string', 'char', 'interpolated', '(', '!', '-', '+', '~', '++', '--', '&', '*', '^', '..', '[', 'new', 'this', 'base', 'typeof', 'default', 'checked', 'unchecked',
   'sizeof', 'delegate', 'throw', 'ref', 'stackalloc', 'true', 'false', 'null', 'await', 'async', 'var', 'get', 'set', 'partial', 'static', '__arglist', '__makeref', '__reftype', '__refvalue']);
 export const typeMethods = {
-  canStartExpression(token = this.current) { return expressionStarts.has(token.kind) || this.isPredefined(token) && token.kind !== 'void'; },
+  canStartExpression(token = this.current) { return expressionStarts.has(token.kind) || this.isPredefined(token) && token.kind !== 'void' || token.kind === 'unsafe' && (token === this.current ? this.isUnsafeExpression(this.i) : token === this.tokens[this.i + 1] && this.isUnsafeExpression(this.i + 1)); },
   /** Scans a (possibly alias-qualified, generic, dotted) name at `i`; returns the index after it or -1. `info.generic` reports type arguments. */
   scanName(i, info) {
     if (!this.isId(this.tokens[i])) return -1; i++;

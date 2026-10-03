@@ -1,6 +1,7 @@
 /** Enum declarations: underlying type, member initialisers, attributes on members and a trailing comma. */
 export const enumMethods = {
   enumDeclaration(attributeLists, modifiers) {
+    this.closedModifier(modifiers, 'EnumDeclaration');
     const keyword = this.take(), identifier = this.id(), baseList = this.at(':') ? this.baseList() : null;
     if (this.at(';')) return this.n('EnumDeclaration', attributeLists, modifiers, keyword, identifier, baseList, null, null, null, this.take());
     const open = this.expect('{'), members = [];

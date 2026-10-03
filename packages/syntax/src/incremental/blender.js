@@ -69,7 +69,7 @@ export const blenderMethods = {
     const node = blend.find(old, accept); if (!node) return null;
     const green = node.green, width = green.fullWidth; if (!width || green.flags & dirty) return null;
     if (position < blend.start && position + width >= blend.start) return null;
-    if (context === 'member') { const parent = node.parent; if (!containers.has(parent.kind) || parent.kind === 'EnumDeclaration' || parent.identifier?.valueText !== owner) return null; }
+    if (context === 'member') { const parent = node.parent; if (!containers.has(parent.kind) || parent.kind === 'EnumDeclaration' || (parent.identifier?.valueText ?? null) !== (owner ?? null)) return null; }
     else if (context === 'statement') { if (blend.asyncOf(node) !== this.inAsync) return null; }
     else { if ((node.parent.kind !== 'CompilationUnit') !== owner) return null; const first = this.tokens[this.i].kind; if (first === '[' || first === 'extern' || first === 'using') return null; }
     const next = tokens.indexAt(position + width); if (next <= this.i || tokens.leadAt(next) !== position + width) return null;
