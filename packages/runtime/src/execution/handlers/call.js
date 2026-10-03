@@ -1,3 +1,5 @@
+import {continueExceptionEvent} from '../exception-events.js';
+import {markUnhandled} from '../unhandled.js';
 import {jumpMethod} from '../tailcall.js';
 import {ManagedFault} from '../../heap.js';
 import {completeInitialization} from '../static-init.js';
@@ -20,6 +22,8 @@ handlers.set('ret',(vm,frame)=>{
   popFrame(vm);
   if(frame.valueConstructor)result=unboxValue(vm,frame.returnObject,frame.valueConstructorType);
   const continuation=continueDelegate(vm,frame,result);if(continuation.continued)return;
+  const event=continueExceptionEvent(vm,frame);
+  if(event){if(!event.continued){if(event.phase==='unhandled')markUnhandled(vm,event.fault);else vm.raise(event.fault);}return;}
   const value=frame.valueConstructor?continuation.result:frame.returnObject??continuation.result;
   if(vm.top){if(frame.returnObject||frame.method.signature.returnType!=='void')vm.push(value);}
   else {vm.returnValue=value;vm.exitCode=frame.method.signature.returnType==='int'?Number(value)|0:0;vm.state='terminated';}

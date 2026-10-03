@@ -1,3 +1,4 @@
+import {markUnhandled} from './execution/unhandled.js';
 import {retainsContextFrames, releaseContextFrames, finishContext, cancelContexts} from './execution/context-lifetimes.js';
 import {managedDelegateSignature} from '@sharpforge/cil';
 import {callRoots} from './execution/generic-calls.js';
@@ -97,7 +98,29 @@ export class CooperativeScheduler {
     this.vm.call(method,m.isStatic?args:[receiver,...args]);return SUSPENDED;
   }
   postAsyncFault(error){this.unhandledFault=error;}
-  flushAsyncFault(){if(!this.unhandledFault||this.suppressed)return false;const fault=this.unhandledFault;this.vm.fault=fault;this.cancelAll();this.vm.frames=[];if(!this.vm.inspector)this.vm.stack=[];this.vm.fault=fault;this.vm.state='faulted';return true;}
+  flushAsyncFault(){
+    if(!this.unhandledFault||this.suppressed)return false;
+    const fault=this.unhandledFault;
+    this.vm.heap.withRoots([fault.reference],()=>{
+      this.cancelAll();
+      this.vm.frames=[];
+      if(!this.vm.inspector)this.vm.stack=[];
+      this.vm.pendingFault=null;
+      this.vm.fault=null;
+      this.vm.state='running';
+      this.parked=false;
+      this.enabled=true;
+      const id=this.nextId++;
+      this.currentId=id;
+      const context={id,name:'Unhandled asynchronous exception',kind:'exception-event',status:'running',
+        frozen:false,parentId:null,task:null,thread:null,wait:null,...this.capture()};
+      this.contexts.set(id,context);
+      markUnhandled(this.vm,fault);
+      Object.assign(context,this.capture());
+      if(this.vm.state==='faulted'){context.status='faulted';context.preserveFrames=true;}
+    });
+    return true;
+  }
   wait(ref,{pushResult=true,voidResult=false,forceYield=false}={}){
     const t=this.taskRecord(ref);if(terminal.has(t.status)&&!forceYield){if(t.status!=='completed')throw this.failure(t);return voidResult?null:t.result;}
     if(this.suppressed)throw new ManagedFault('InvalidOperationException','A pending task cannot be awaited during synchronous function evaluation');
@@ -159,12 +182,12 @@ export class CooperativeScheduler {
     return null;
   }
   beforeSlice(){if(this.flushAsyncFault())return;if(!this.enabled||this.suppressed)return;if(['running','ready'].includes(this.vm.state)&&this.current?.frozen){this.save();this.current.status='ready';const next=this.choose();if(next){this.load(next);return;}this.parked=true;this.vm.state='waiting';this.vm.frames=[];if(!this.vm.inspector)this.vm.stack=[];}if(this.vm.state!=='waiting')return;this.turn++;this.poll();const next=this.choose();if(next)this.load(next);}
-  beforeInstruction(){if(!this.enabled||this.suppressed)return;const c=this.current;if(c?.resumeFault){const error=c.resumeFault;c.resumeFault=null;if(this.vm.onException?.(error)){this.vm.pendingFault=error;this.vm.state='paused';return;}if(this.vm.inspector)this.vm.raise(error);else this.vm.handleFault(error);}}
+  beforeInstruction(){if(!this.enabled||this.suppressed)return;const c=this.current;if(c?.resumeFault){const error=c.resumeFault;c.resumeFault=null;if(this.vm.inspector)this.vm.raise(error);else this.vm.handleFault(error);}}
   afterInstruction(){if(!this.enabled||this.suppressed)return;this.turn++;this.steps++;this.save();if(this.flushAsyncFault())return;if(this.vm.state==='paused')return;
     const c=this.current;if(!c)return;
     if(['faulted','terminated'].includes(this.vm.state)){
       if(this.vm.fault&&/LimitException$/.test(this.vm.fault.name)){this.cancelAll({preserveCurrent:true});this.vm.state='faulted';return;}
-      this.finish(c);if(c.preserveFrames){this.cancelAll({preserveCurrent:true});this.vm.state='faulted';return;}if(this.flushAsyncFault())return;
+      this.finish(c);if(this.flushAsyncFault())return;if(c.preserveFrames){this.cancelAll({preserveCurrent:true});this.vm.state='faulted';return;}
     }
     this.poll();if(c.status==='waiting'&&c.eagerParent){this.preferred=c.eagerParent;c.eagerParent=null;}
     if(c.status==='running'&&!c.frozen&&this.steps<this.quantum&&!this.preferred)return;

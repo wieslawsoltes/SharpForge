@@ -18,6 +18,7 @@ export function eligibleTailCall(frame, args) {
 export function inheritedTailState(frame) {
   return {
     delegateContinuation: frame.delegateContinuation,
+    exceptionEventContinuation: frame.exceptionEventContinuation,
     returnObject: frame.returnObject,
     valueConstructor: frame.valueConstructor,
     valueConstructorType: frame.valueConstructorType,

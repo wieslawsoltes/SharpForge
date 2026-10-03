@@ -1,3 +1,4 @@
+import {exceptionEventRoots} from './exception-events.js';
 import {genericTypeParts,substituteCallType,callStorageType} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {validatePointer,asReadonly,pointerType} from './managed-pointers.js';
@@ -27,6 +28,7 @@ export function bindCallArguments(vm,method,args) {
 }
 
 export function* callRoots(frame) {
+  yield* exceptionEventRoots(frame);
   const continuation=frame.delegateContinuation;
   if(continuation){yield* continuation.delegates;for(const value of continuation.args)yield value?.byref?value.owner:value;}
 }

@@ -1,3 +1,4 @@
+import {invokeExceptionEvent,clearExceptionEvents} from './execution/exception-events.js';
 import {delegatesEqual} from './execution/delegate-calls.js';
 import {invokeJson} from './json.js';
 import {HostOperations} from './host-operations.js';
@@ -118,6 +119,7 @@ export class ManagedPlatform {
     // Resolve only once and keep the common BCL path independent of networking/SIMD.
     const type=frameworkType(d.owner),kind=type?.kind;let handled;
     switch(kind){
+      case 'exception-events':handled=invokeExceptionEvent(this.vm,d,args);break;
       case 'bcl':handled=invokeBcl(this,d,args);break;
       case 'network':handled=invokeNetwork(this,d,args);break;
       case 'numeric':handled=invokeNumeric(this,d,args);break;
@@ -153,7 +155,7 @@ export class ManagedPlatform {
       nodes.push(node);
     }return {version:1,windows:[...this.windows.keys()],nodes};}
   updateLayout(changes){if(!Array.isArray(changes)||changes.length>10000)throw new RangeError('Layout update limit');const visible=new Set(this.scene().nodes.map(n=>n.id));for(const c of changes){if(!visible.has(c.id)||!Number.isFinite(c.width)||!Number.isFinite(c.height)||c.width<0||c.height<0||c.width>100000||c.height>100000)throw new TypeError('Invalid visual layout measurement');}for(const c of changes){const [h,g]=c.id.split(':').map(Number),ref=Object.freeze({h,g});for(const [name,value]of [['ActualWidth',c.width],['ActualHeight',c.height]])if(Object.hasOwn(propertiesFor(this.record(ref).type),name))this.set(ref,name,this.managed(value,'double'));}return changes.length;}
-  closeAll(){this.hostOperations.dispose();this.httpTransport?.dispose();this.computePool?.dispose();this.windows.clear();this.pending=[];this.command({op:'reset',snapshot:{version:1,windows:[],nodes:[]}});}
+  closeAll(){clearExceptionEvents(this);this.hostOperations.dispose();this.httpTransport?.dispose();this.computePool?.dispose();this.windows.clear();this.pending=[];this.command({op:'reset',snapshot:{version:1,windows:[],nodes:[]}});}
   dispatchEvent(id,event,payload={}){if(typeof id!=='string'||typeof event!=='string'||!payload||typeof payload!=='object')throw new TypeError('Invalid UI event');const [h,g]=id.split(':').map(Number),ref=Object.freeze({h,g}),r=this.record(ref),known=eventsFor(r.type);if(!Object.hasOwn(known,event))throw new ManagedFault('InvalidOperationException','Unregistered event');const visible=this.scene().nodes.some(n=>n.id===id);if(!visible)throw new ManagedFault('InvalidOperationException','Event target is not in an active visual tree');if(this.native(this.get(ref,'IsEnabled',true))===false||this.native(this.get(ref,'IsEnabled',true))===0||this.native(this.get(ref,'IsHitTestVisible',true))===false||this.native(this.get(ref,'IsHitTestVisible',true))===0)return [];
     if((r.type===CONTROLS+'InfoBar'&&event==='Closed')||(r.type===CONTROLS+'ContentDialog'&&event.endsWith('ButtonClick')))this.set(ref,'IsOpen',this.managed(false,'bool'));
     const inputKeys={TextChanged:'Text',PasswordChanged:'Password',Toggled:'IsOn',Checked:'IsChecked',Unchecked:'IsChecked',ValueChanged:'Value',SelectionChanged:'SelectedIndex',Expanding:'IsExpanded',Collapsed:'IsExpanded',DateChanged:'Date',TimeChanged:'Time'};

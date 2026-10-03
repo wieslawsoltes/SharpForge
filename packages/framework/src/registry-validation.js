@@ -1,5 +1,5 @@
-/** CLI primitive spellings are intrinsic; all managed reference types must be declared. */
-export const intrinsicTypes=Object.freeze(['void','object','string','bool','char','byte','sbyte','short','ushort','int','uint','long','ulong','float','double','decimal','nint','nuint','System.Enum','System.ValueType','System.MulticastDelegate']);
+/** CLI primitives and runtime-owned core types do not require framework declarations. */
+export const intrinsicTypes=Object.freeze(['void','object','string','bool','char','byte','sbyte','short','ushort','int','uint','long','ulong','float','double','decimal','nint','nuint','System.Enum','System.ValueType','System.MulticastDelegate','System.Exception']);
 export function validateRegistry({types,contracts,origins=new Map()}){
   const known=new Set(intrinsicTypes),signatures=new Set(),ids=new Set();
   const exists=type=>typeof type==='string'&&(known.has(type)||types.has(type)||type.endsWith('[]')&&exists(type.slice(0,-2)));
