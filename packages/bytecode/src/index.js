@@ -91,3 +91,5 @@ export {decimalMaxCoefficient,isDecimal,decimal,decimalZero,decimalFromBits,deci
 export {scalarConvert,scalarBinary,scalarUnary,encodeScalar,decodeScalar,scalarFormat} from './numeric/scalar-ops.js';
 
 export {numericFormat} from './numeric/numeric-format.js';
+
+export {managedExceptionTypes,exceptionTypeName,exceptionBaseType,exceptionHResult,exceptionMatches} from './exception-types.js';

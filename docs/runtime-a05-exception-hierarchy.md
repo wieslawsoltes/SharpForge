@@ -1,0 +1,7 @@
+# Exception ancestry (T04.3)
+
+The bytecode package exports frozen `managedExceptionTypes` metadata and the `exceptionTypeName`, `exceptionBaseType`, `exceptionHResult` and `exceptionMatches` helpers. The runtime keeps its existing `execution/exception-types.js` import seam. Both engines use the same canonical framework chains; matching never strips a user-defined namespace merely because its final component resembles a framework type.
+
+Framework names and HRESULTs follow .NET 10 [CoreLib constants](https://github.com/dotnet/runtime/blob/v10.0.0/src/libraries/Common/src/System/HResults.cs). `System.Runtime.AmbiguousImplementationException` derives directly from `Exception`, while `ExecutionEngineException` derives from `SystemException` ([CoreLib declarations](https://github.com/dotnet/runtime/tree/v10.0.0/src/libraries/System.Private.CoreLib/src/System)). Internal invalid-reference faults map to `InvalidProgramException`; internal runtime/assertion faults map to `Exception`. Resource-limit fault objects keep their diagnostic names and use `ExecutionEngineException` for managed type identity.
+
+Source EH now checks the catch type against this hierarchy. The source parser/binder's typed-catch and `when` support is completed in the separate T04.6 slice. Focused tests cover arithmetic/system bases, unrelated siblings, aliases, custom namespaces and direct source handler selection. Full execution and native qualification remain deferred until all E01 work is assembled.
