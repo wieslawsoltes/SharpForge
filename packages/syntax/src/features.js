@@ -188,6 +188,17 @@ const table = [
       'expressions'
   ]
 ];
+/**
+ * Features whose unavailability Roslyn reports with a diagnostic of their own rather than the generic "feature is not
+ * available in C# n": [code, severity, message]. `{0}` in a message is the selected language version.
+ */
+const dedicatedDiagnostics = {
+  AttributesOnBackingFields: [
+    'CS8371',
+    'warning',
+    'Field-targeted attributes on auto-properties are not supported in language version {0}. Please use language version 7.3 or greater.'
+  ]
+};
 function build() {
   const rows = [];
   for (const [version, list] of table)
@@ -195,7 +206,8 @@ function build() {
       const [rawId, name] = entry.split('|'),
         id = rawId.replace(/^-/, ''),
         preview = version === 15,
-        index = order.indexOf(version);
+        index = order.indexOf(version),
+        dedicated = dedicatedDiagnostics[id];
       rows.push(
         Object.freeze({
           id,
@@ -203,13 +215,15 @@ function build() {
           version,
           preview,
           messageId: rawId.startsWith('-') ? null : 'IDS_Feature' + id,
-          code: preview ? 'CS8652' : index > 0 ? selectedVersionCodes[order[index - 1]] : null
+          code: dedicated ? dedicated[0] : preview ? 'CS8652' : index > 0 ? selectedVersionCodes[order[index - 1]] : null,
+          severity: dedicated ? dedicated[1] : 'error',
+          dedicatedMessage: dedicated ? dedicated[2] : null
         })
       );
     }
   return Object.freeze(rows);
 }
-/** Every catalog row: { id, name, version, preview, messageId, code }. */
+/** Every catalog row: { id, name, version, preview, messageId, code, severity, dedicatedMessage }. */
 export const languageFeatures = build();
 const byId = new Map(languageFeatures.map(row => [row.id, row]));
 /** Looks up a catalog row by feature id; undefined for unknown ids. */

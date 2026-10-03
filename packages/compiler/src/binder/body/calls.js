@@ -7,7 +7,7 @@ import { MethodKind, LocalDeclarationKind } from '../../symbols/members.js';
 import { ConstantValue } from '../../constants/constant-value.js';
 import { convertMethodGroup } from '../../conversions/method-group.js';
 import { delegateInvoke } from '../../overload/type-inference.js';
-import { resolveExtensionInvocation, extensionScopes } from '../../overload/extension-methods.js';
+import { resolveExtensionInvocation, extensionScopes, receiverRefKind } from '../../overload/extension-methods.js';
 import { lookupMembers } from '../inheritance.js';
 import { checkWritable, argumentRefKind } from '../ref-kinds.js';
 import { checkConstructedMethod } from '../constraints.js';
@@ -92,6 +92,7 @@ export const CallBinding = Base =>
     invocation(syntax) {
       const target = this.expression(syntax.expression, { invoked: true });
       if (target.kind === 'NameOfMarker') {
+        this.d.gate(this.c.uri, syntax.expression, 'Nameof');
         const a = syntax.argumentList.arguments[0];
         if (!a) return this.bad(syntax);
         const saved = this.quiet;
@@ -168,11 +169,10 @@ export const CallBinding = Base =>
           const ext = resolveExtensionInvocation(group.name, group.receiver, args, scopes, this.d.overloads, {
             typeArguments: group.typeArguments,
           });
-          if (ext.succeeded)
-            return this.finishCall(ext, null, [Object.assign({ ...group.receiver }, { refKind: null, name: null }), ...args], syntax, {
-              isExtension: true,
-              group,
-            });
+          if (ext.succeeded) {
+            const receiverArgument = Object.assign({ ...group.receiver }, { refKind: receiverRefKind([ext.method]), name: null });
+            return this.finishCall(ext, null, [receiverArgument, ...args], syntax, { isExtension: true, group });
+          }
           if (!result && ext.found) {
             if (ext.error && scopes.flatMap(s => s.methods).every(isSource)) {
               const offset = ext.extensionArgumentOffset ?? 1;
@@ -182,6 +182,11 @@ export const CallBinding = Base =>
                 const receiverType = this.display(group.receiver.type);
                 const wanted = this.display(candidate.parameters[0].type);
                 this.report(group.receiver.syntax, 'CS1929', [receiverType, group.name, candidate.toDisplayString(), wanted]);
+                return this.bad(syntax);
+              }
+              if (ext.error.code === 'CS1929') {
+                // Applicable by its arguments, but the receiver needs more than an identity, reference or boxing conversion.
+                this.report(group.receiver.syntax, ext.error.code, ext.error.args);
                 return this.bad(syntax);
               }
               this.report(
@@ -214,14 +219,25 @@ export const CallBinding = Base =>
           if (!this.d.registryIsComplete(group.methods[0].containingType, group.name)) return this.lenient(syntax);
         }
         const e = result.error;
-        this.report(this.errorNode(e, args, nameNode), e.code, e.args);
+        if (!this.reportLambdaBodyErrors(e, args)) this.report(this.errorNode(e, args, nameNode), e.code, e.args);
         return this.bad(syntax);
       }
       return this.finishCall(result, group.receiver, args, syntax, { group });
     }
+    /**
+     * A lambda argument that fits its parameter's delegate type except for errors in its own body reports those
+     * errors instead of CS1503. @returns {boolean} true when the errors were reported
+     */
+    reportLambdaBodyErrors(error, args) {
+      const argument = error.code === 'CS1503' && error.argument !== undefined ? args[error.argument] : null;
+      if (!argument || argument.form !== 'lambda' || !argument.bodyErrors || !argument.lastConversionError?.length) return false;
+      for (const found of argument.lastConversionError) this.report(found.node ?? argument.syntax, found.code, found.args);
+      return true;
+    }
     finishCall(result, receiver, args, syntax, { group = null, isDelegateInvoke = false, isExtension = false } = {}) {
       const method = result.method,
         nameNode = group?.nameNode ?? group?.syntax ?? syntax;
+      if (method.containingType?.containingAssembly) this.d.reportUseSite(method.originalDefinition ?? method, this.c.uri, nameNode);
       if (group && !isExtension && !isDelegateInvoke) {
         if (method.methodKind !== MethodKind.LocalFunction) {
           if (method.isStatic) {
@@ -348,9 +364,14 @@ export const CallBinding = Base =>
           return n;
         }
       }
-      const indexers = lookupMembers(type, 'this[]', this.core, { within: this.c.containingType })
+      let indexers = lookupMembers(type, 'this[]', this.core, { within: this.c.containingType })
         .members.concat(isSource(type) ? [] : lookupMembers(type, 'Item', this.core, { within: this.c.containingType }).members)
         .filter(m => m.kind === SymbolKind.Property && m.parameters.length);
+      // Indexers overload on their parameter lists: every indexer of the declaring type is a candidate (SF-A02-T10.2).
+      if (indexers.length === 1 && isSource(type)) {
+        const declared = (indexers[0].containingType ?? type).getMembers('this[]').filter(m => m.kind === SymbolKind.Property && m.parameters.length);
+        if (declared.length > 1) indexers = declared;
+      }
       if (!indexers.length) {
         if (!isSource(type) && type.typeKind !== TypeKind.TypeParameter && !this.d.registryIsComplete(type, 'this[]'))
           return this.lenient(syntax);

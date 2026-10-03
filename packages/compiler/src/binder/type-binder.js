@@ -18,6 +18,8 @@ import {
   ConstructedNamedTypeSymbol,
 } from '../symbols/types.js';
 import { isAccessible } from './accessibility.js';
+import { assemblyConflict, dottedName } from './reference-lookup.js';
+import { bindUsingDirectives, bindAliasTarget } from './using-directives.js';
 import { constructType } from '../symbols/substitution.js';
 
 export class Scope {
@@ -71,60 +73,18 @@ export class TypeBinder {
   report(scope, node, code, args = []) {
     this.host.report(scope.uri, node, code, args);
   }
-  /** Binds the using directives of a unit or namespace scope on first use: `{aliases:Map,namespaces:[],staticTypes:[]}`. */
+  /** The bound using directives of a unit or namespace scope (bound on first use): see ./using-directives.js. */
   usingsOf(scope) {
-    const u = scope.usings;
-    if (!u) return null;
-    if (u.bound) return u.bound;
-    const bound = (u.bound = { aliases: new Map(), namespaces: [], staticTypes: [] });
-    // Directives are bound in the scope that contains them, without seeing each other (aliases cannot use sibling usings).
-    const outer = new Scope(scope.kind, { namespace: scope.namespace, usings: null, uri: scope.uri }, scope.parent),
-      seen = new Set();
-    for (const d of [...(u.global ?? []), ...u.directives]) {
-      const target = d.namespaceOrType,
-        alias = d.alias?.name?.identifier?.valueText ?? null;
-      if (alias) {
-        if (bound.aliases.has(alias)) {
-          this.report(scope, d.alias.name, 'CS1537', [alias]);
-          continue;
-        }
-        bound.aliases.set(alias, { syntax: d, scope: outer, target: undefined });
-        continue;
-      }
-      const symbol = this.bindNamespaceOrType(target, outer, { quietMissingNamespace: true });
-      if (!symbol || symbol.kind === SymbolKind.ErrorType) {
-        if (symbol?.missing && !this.host.tolerateNamespace?.(target.toString().replace(/\s+/g, '')))
-          this.report(scope, symbol.missing.node, symbol.missing.code, symbol.missing.args);
-        continue;
-      }
-      const key = (d.staticKeyword ? 'static ' : '') + symbol.toDisplayString();
-      if (seen.has(key)) {
-        this.host.report(scope.uri, target, 'CS0105', [symbol.toDisplayString()]);
-        continue;
-      }
-      seen.add(key);
-      if (d.staticKeyword) {
-        if (symbol.kind === SymbolKind.Namespace) this.report(scope, target, 'CS7007', [symbol.toDisplayString()]);
-        else bound.staticTypes.push(symbol);
-      } else if (symbol.kind !== SymbolKind.Namespace) this.report(scope, target, 'CS0138', [symbol.toDisplayString()]);
-      else bound.namespaces.push(symbol);
-    }
-    return bound;
+    const outer = () => new Scope(scope.kind, { namespace: scope.namespace, usings: null, uri: scope.uri }, scope.parent);
+    return bindUsingDirectives(this, scope, outer);
   }
   aliasTarget(entry) {
-    if (entry.target === undefined) {
-      entry.target = null;
-      const t = entry.syntax.namespaceOrType;
-      entry.target =
-        t.kind === 'IdentifierName' || t.kind === 'QualifiedName' || t.kind === 'AliasQualifiedName' || t.kind === 'GenericName'
-          ? this.bindNamespaceOrType(t, entry.scope)
-          : this.bindType(t, entry.scope).type;
-    }
-    return entry.target;
+    return bindAliasTarget(this, entry);
   }
   /**
    * Looks a simple name up as a type or namespace through the scope chain.
-   * @returns a symbol, or `{ambiguous:[a,b]}`, or null
+   * @returns a symbol, or `{ambiguous:[a,b]}`, or null; with `options.aliasConflicts`, `{aliasConflict:namespace}` when
+   *   a using alias of the scope has the name of a member of that scope's namespace (CS0576)
    */
   lookup(name, arity, scope, options = {}) {
     for (let s = scope; s; s = s.parent) {
@@ -161,6 +121,8 @@ export class TypeBinder {
       // unit / namespace
       const ns = s.namespace,
         types = ns.getTypeMembers(name, arity);
+      if (options.aliasConflicts && arity === 0 && (types.length || ns.getNamespace(name)) && this.usingsOf(s)?.aliases.has(name))
+        return { aliasConflict: ns };
       if (types.length > 1 && types[0] !== types[1])
         return types.some(t => t.locations?.length) && !types.every(t => t.locations?.length)
           ? types.find(t => t.locations?.length)
@@ -199,7 +161,11 @@ export class TypeBinder {
           args = syntax.kind === 'GenericName' ? syntax.typeArgumentList.arguments : [],
           arity = args.length;
         if (syntax.identifier.isMissing) return error('');
-        let found = this.lookup(name, arity, scope, options);
+        let found = this.lookup(name, arity, scope, { ...options, aliasConflicts: true });
+        if (found?.aliasConflict) {
+          if (!options.quiet) this.report(scope, syntax.identifier, 'CS0576', [found.aliasConflict.toDisplayString(), name]);
+          return error(name, arity);
+        }
         if (!found) {
           const other = this.lookup(name, arity, scope, { ...options, all: true });
           if (other?.wrongArity) return this.arityError(scope, syntax, other.wrongArity, arity);
@@ -234,9 +200,17 @@ export class TypeBinder {
         return this.finish(found, args, scope, syntax, options);
       }
       case 'QualifiedName': {
-        const left = this.bindNamespaceOrType(syntax.left, scope, options);
+        const left = this.bindNamespaceOrType(syntax.left, scope, { ...options, quietMissingNamespace: true });
         if (!left || left.kind === SymbolKind.ErrorType) {
-          return left?.missing ? left : error(syntax.right.identifier.valueText);
+          if (!left?.missing) {
+            const e = error(syntax.right.identifier.valueText);
+            e.isFrameworkGap = !!left?.isFrameworkGap;
+            return e;
+          }
+          if (this.reportForwardedType(syntax, scope, options)) return error(syntax.right.identifier.valueText);
+          if (options.quietMissingNamespace) return left;
+          if (!options.quiet) this.report(scope, left.missing.node, left.missing.code, left.missing.args);
+          return error(syntax.right.identifier.valueText);
         }
         return this.member(left, syntax.right, scope, options);
       }
@@ -247,10 +221,16 @@ export class TypeBinder {
         else
           for (let s = scope; s && !root; s = s.parent) {
             const u = this.usingsOf(s);
-            if (u?.aliases.has(alias)) root = this.aliasTarget(u.aliases.get(alias));
+            if (u?.externAliases.has(alias)) root = u.externAliases.get(alias);
+            else if (u?.aliases.has(alias)) root = this.aliasTarget(u.aliases.get(alias));
           }
         if (!root) {
-          this.report(scope, syntax.alias, 'CS0432', [alias]);
+          if (!options.quiet) this.report(scope, syntax.alias, 'CS0432', [alias]);
+          return error(alias);
+        }
+        if (root.kind !== SymbolKind.Namespace) {
+          // `A::B` needs a namespace alias; an alias of a type is used with `.`.
+          if (root.kind !== SymbolKind.ErrorType && !options.quiet) this.report(scope, syntax.alias, 'CS0431', [alias]);
           return error(alias);
         }
         return this.member(root, syntax.name, scope, options);
@@ -259,17 +239,36 @@ export class TypeBinder {
         return this.bindType(syntax, scope, options).type;
     }
   }
+  /** CS1069 for `Namespace.Type` when a referenced assembly forwards the type to an assembly that is not referenced. */
+  reportForwardedType(syntax, scope, options) {
+    const name = dottedName(syntax),
+      assembly = name ? this.host.forwardedToMissingAssembly?.(name) : null;
+    if (!assembly) return false;
+    const right = syntax.right.identifier;
+    if (!options.quiet) this.report(scope, right, 'CS1069', [right.valueText, name.slice(0, name.lastIndexOf('.')), assembly]);
+    return true;
+  }
   member(container, right, scope, options) {
     const name = right.identifier.valueText,
       args = right.kind === 'GenericName' ? right.typeArgumentList.arguments : [],
       arity = args.length;
     if (right.identifier.isMissing) return error('');
     if (container.kind === SymbolKind.Namespace) {
-      const types = container.getTypeMembers(name, arity);
+      const types = container.getTypeMembers(name, arity),
+        conflict = assemblyConflict(types);
+      if (conflict) {
+        if (!options.quiet) this.report(scope, right.identifier, 'CS0433', conflict);
+        return error(name, arity);
+      }
       let found = types[0] ?? (arity === 0 ? container.getNamespace(name) : null);
       if (!found) {
         const wrong = container.getTypeMembers(name)[0];
         if (wrong) return this.arityError(scope, right, wrong, arity);
+        if (this.host.isFrameworkGap?.(container.toDisplayString(), name)) {
+          const e = error(name, arity);
+          e.isFrameworkGap = true;
+          return e;
+        }
         const missing = {
           node: right.kind === 'GenericName' ? right : right.identifier,
           code: 'CS0234',
@@ -305,7 +304,7 @@ export class TypeBinder {
   /** Applies type arguments and accessibility to a looked-up symbol. */
   finish(symbol, argSyntax, scope, syntax, options, container = null) {
     if (symbol.kind === SymbolKind.Namespace || symbol.kind === SymbolKind.TypeParameter) return symbol;
-    if (symbol.containingAssembly && !options.quiet) this.host.useSite?.(symbol, scope.uri, syntax.identifier ?? syntax);
+    if (symbol.containingAssembly && !options.quiet) this.host.useSite?.(symbol, scope.uri, syntax.identifier ?? syntax, { missingBases: false });
     if (symbol.kind === SymbolKind.NamedType && !options.quiet && !options.skipAccessCheck) {
       const within = scope.containingType;
       if (
@@ -380,6 +379,7 @@ export class TypeBinder {
           return twa(this.core.nullableOf(element), NullableAnnotation.Annotated);
         }
         // T? on an unconstrained type parameter or reference type is an annotation (C# 8 nullable reference types).
+        if (!options.quiet) this.host.useFeature?.(scope.uri, syntax.questionToken ?? syntax, 'NullableReferenceTypes');
         return twa(t, NullableAnnotation.Annotated);
       }
       case 'TupleType': {

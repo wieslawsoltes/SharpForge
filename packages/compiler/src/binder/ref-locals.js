@@ -114,6 +114,8 @@ export function checkRefReturn(methodRefKind, returnIsRef, expression, context) 
   const writable = checkRefWritability(expression, methodRefKind === RefKind.RefReadOnly, context);
   if (writable)
     return { code: writable.code === 'CS0192' ? 'CS8160' : writable.code === 'CS0199' ? 'CS8161' : writable.code, args: writable.args };
+  // Whether the referent may leave the method is decided by ref safety (flow/ref-safety.js) for method bodies.
+  if (context.escapeCheckedByFlow) return null;
   const r = refReturnability(expression, context);
   return r === 'returnable' ? null : r;
 }
