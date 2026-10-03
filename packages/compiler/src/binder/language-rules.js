@@ -6,5 +6,6 @@
 import { ExpressionVariableBinding } from './expression-variables.js';
 import { CSharp8Binding } from './csharp8.js';
 import { IndexRangeBinding } from './index-range.js';
+import { ConditionalAssignmentBinding } from './conditional-assignment.js';
 
-export const languageRules = [ExpressionVariableBinding, IndexRangeBinding, CSharp8Binding];
+export const languageRules = [ExpressionVariableBinding, IndexRangeBinding, CSharp8Binding, ConditionalAssignmentBinding];
