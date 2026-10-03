@@ -84,19 +84,24 @@ required fields are rejected before restoring execution state. Every own VM fiel
 must be registered; adding an execution field without a schema entry fails the
 schema coverage test and snapshot capture.
 
-Snapshots remain in-memory and scoped to their original VM. Host operations retain
-the existing revision checks. Source restore pauses execution; CIL restore retains
+In-memory snapshots are scoped to their original VM. The staged T06 portable codec
+can transfer state to a fresh VM with the same code, entry point, ABI and host-operation
+revision; see `runtime-a05-portable-snapshots.md`. Host operations retain the existing revision checks. Source restore pauses execution; CIL restore retains
 the captured run state. Managed frame identifiers remain monotonic. Frames retain
 code metadata while mutable execution state is copied with shared fault aliases.
 Maps, sets, and typed buffer views are copied without aliasing the live execution.
+Schema 4 adds explicit generic cache keys, memory allocation identities, stack regions
+and pin leases. Derived frame indexes and stack byte counters rebuild after restore.
+Unchanged immutable heap records are shared across captures; restored backing remains mutable.
 
 Run the replay example with `node examples/runtime/snapshot-replay.mjs`.
 
 | API/capability | Source VM | CIL VM | Regression evidence |
 | --- | --- | --- | --- |
-| Versioned in-memory snapshot and restore | Schema 1 | Schema 1 | `tests/a05-seams-snapshot.test.js` |
+| Versioned in-memory snapshot and restore | Schema 4, staged | Schema 4, staged | `tests/a05-seams-snapshot.test.js` |
 | Unknown execution-field detection | Explicit schema coverage | Explicit schema coverage | Same suite |
-| Portable serialized snapshots | Pending T06; no capability claim | Pending T06; no capability claim | Pending |
+| Portable serialized snapshots | Implemented; qualification deferred | Implemented; qualification deferred | `tests/a05-snapshot-portable.test.js`, `tests/snapshot-replay.test.js` |
+| Shared heap captures | Implemented; qualification deferred | Implemented; qualification deferred | `tests/a05-snapshot-cow.test.js`, `scripts/snapshots/benchmark-cow.js` |
 
 ## Qualification
 
