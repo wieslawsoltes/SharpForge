@@ -28,10 +28,14 @@ export const GenericTranslation = Base =>
     isTypeParameter(type) {
       return type?.typeKind === TypeKind.TypeParameter;
     }
-    /** True for a closed construction of a source generic class (its image class has a synthesized name). */
+    /**
+     * True for a construction whose run-time type name is not the .NET one: a closed construction of a source generic
+     * class (its image class has a synthesized name) or a framework generic that shares the construction over `object`.
+     */
     isConstruction(type) {
       const closed = this.closedType(type);
-      return !!closed && this.g.generics.isGenericClass(closed);
+      if (!closed) return false;
+      return this.g.generics.isGenericClass(closed) || !!this.g.frameworkConstructions.registryConstruction(closed)?.erased;
     }
     /**
      * The member of the closed receiver type that a member reached through a type parameter stands for, as a symbol
@@ -150,6 +154,19 @@ export const GenericTranslation = Base =>
       const left = operand(node.left),
         right = operand(node.right);
       return super.exprBinary(left === node.left && right === node.right ? node : { ...node, left, right });
+    }
+    /**
+     * `await` of a task whose construction is shared with `Task<object>`: the contract yields `object`, and the CIL
+     * emitter types the stack from the contract. The result goes through a temporary of its own image type, so a
+     * member access on it resolves against the right class.
+     */
+    exprAwait(node) {
+      const value = super.exprAwait(node),
+        task = this.closedType(node.operand?.type),
+        shared = task ? this.g.frameworkConstructions.registryConstruction(task) : null;
+      if (!shared?.erased || value.legacyType === 'object') return value;
+      const result = this.temp(value.legacyType, 'awaited');
+      return n.sequence([result], [n.assign(n.local(result), value)], n.local(result));
     }
     exprInterpolatedString(node) {
       for (const part of node.parts ?? []) {

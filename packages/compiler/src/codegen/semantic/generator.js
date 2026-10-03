@@ -23,7 +23,7 @@ import { AsyncMethods, asyncResultType } from '../../lowering/async/async-method
 import { TupleClasses } from '../../lowering/tuples/tuple-classes.js';
 import { StructuralMembers } from '../../lowering/tuples/structural-members.js';
 import { RecordMembers } from '../../lowering/records/record-members.js';
-import { GenericInstantiations, InstantiationTable, GenericDeclarations } from '../../lowering/generics/index.js';
+import { GenericInstantiations, InstantiationTable, GenericDeclarations, FrameworkConstructions } from '../../lowering/generics/index.js';
 import { stateMachineTypeName, stateMachineParameterProxyFieldName, thisProxyFieldName } from '../../lowering/generated-names.js';
 import { JumpIrEmitter } from './jump-emitter.js';
 import { ProgramModel } from './program-model.js';
@@ -55,6 +55,7 @@ class GeneratorCore {
     this.records = this.structural.register(new RecordMembers(this));
     // Records are kept per construction: a table resolves a symbol to its key first (lowering/generics).
     this.generics = new GenericInstantiations(this);
+    this.frameworkConstructions = new FrameworkConstructions(this);
     const table = () => new InstantiationTable(this.generics);
     this.classes = new Map();
     this.fields = table();

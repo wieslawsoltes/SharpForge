@@ -95,7 +95,8 @@ export class TypeMapper {
         break;
     }
     if (type.originalDefinition?.specialType === 'System_Nullable_T') unsupported('nullable value types', syntax);
-    const registry = this.host.bridge.registryName(type);
+    // A framework generic over a type the registry does not list shares the construction over `object` (lowering/generics).
+    const registry = this.host.bridge.registryName(type) ?? this.host.frameworkConstructions.imageTypeOf(type);
     if (registry) return registry;
     return unsupported(`type '${type.toDisplayString()}' (not in the framework registry)`, syntax);
   }
