@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "tasks": {
+    "a02:bench:complexity": {
+      "description": "Compile time and inference work for chained and nested expressions, by depth",
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "packages/compiler/bench/compile-complexity.bench.js"
+          ]
+        }
+      ]
+    }
+  }
+}

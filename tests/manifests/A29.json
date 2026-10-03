@@ -21,7 +21,8 @@
     "tests/conformance/browser/mobile_test.py",
     "tests/conformance/browser/standalone_file_test.py",
     "tests/conformance/browser/test_matrix.py",
-    "tests/conformance/browser/perf_test.py"
+    "tests/conformance/browser/perf_test.py",
+    "tests/conformance/browser/xss_test.py"
   ],
   "requiredServices": [
     "studio-http",

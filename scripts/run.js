@@ -3,7 +3,7 @@ import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {filesUnder, isMain} from './planning/test-manifests.js';
 import {globPattern} from './planning/lib/paths.js';
-import {runProcess} from './planning/run-tests.js';
+import {runProcess, serialTestArgs} from './planning/run-tests.js';
 import {npmCli} from './conformance/node-tools.js';
 export const taskRoot = fileURLToPath(new URL('../', import.meta.url));
 const object = value => value && typeof value === 'object' && !Array.isArray(value);
@@ -63,7 +63,8 @@ export async function taskPlan(name, args = [], root = taskRoot) {
         const command = step.command === 'node' || step.command === 'npm' ? process.execPath : step.command === 'python' ? process.env.PYTHON || 'python' : step.command;
         const prefix = step.command === 'npm' ? [npmCli()] : [];
         if (prefix.some(path => !path)) throw new Error('Cannot locate npm CLI');
-        plan.push({command, args: [...prefix, ...expanded, ...tail]});
+        const argv = [...prefix, ...expanded, ...tail];
+        plan.push({command, args: step.command === 'node' ? serialTestArgs(argv) : argv});
       }
     }
   }
