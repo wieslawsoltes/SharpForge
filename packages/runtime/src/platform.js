@@ -1,3 +1,4 @@
+import {float} from './execution/numeric-ops.js';
 import {invokeExceptionEvent,clearExceptionEvents} from './execution/exception-events.js';
 import {delegatesEqual} from './execution/delegate-calls.js';
 import {invokeJson} from './json.js';
@@ -32,7 +33,7 @@ export class ManagedPlatform {
     this.vm.notifyWrite?.({kind:'field',handle:ref.h,generation:ref.g,index:index+1,value,oldValue:old,property:key});return value;
   }
   native(v){if(v?.byref)return this.native(this.vm.dereference(v));return this.vm.value(v);}
-  managed(v,type){if(v===null||v===undefined)return null;if(type==='string')return this.heap.string(String(v));if(this.vm.inspector){if(type==='double')return {float:'r8',value:Number(v)};if(type==='bool')return v?1:0;}return v;}
+  managed(v,type){if(v===null||v===undefined)return null;if(type==='string')return this.heap.string(String(v));if(this.vm.inspector){if(type==='double')return float(Number(v));if(type==='bool')return v?1:0;}return v;}
   make(type,values={},kind='host'){const data=[];return this.heap.withRoots(Object.values(values),()=>{for(const [k,v]of Object.entries(values)){data.push(k,v);if(isReference(v))this.heap.pins.push(v);}return this.heap.allocate(kind,type,data);});}
   command(command){if(command.op==='set'&&this.animations){const [h,g]=String(command.id).split(':').map(Number),ref={h,g},prop=['Left','Top'].includes(command.property)?'$'+command.property:command.property;if(this.animations.bases.has(this.animations.key(ref,prop)))command={...command,value:this.exportValue(this.get(ref,prop))};}const value={...command,sequence:++this.sequence};if(this.transaction){if(this.transaction.length>=this.maxCommands)throw new ManagedFault('ExecutionLimitException','UI transaction command limit exceeded');this.transaction.push(value);}else this.options.onUICommand?.(value);}
   beginTransaction(){if(this.transaction)throw new ManagedFault('InvalidOperationException','Nested platform transaction');const t=[];this.transaction=t;return t;}
