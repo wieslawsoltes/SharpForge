@@ -1,3 +1,4 @@
+import {emitReferenceExpression, prepareReference, loadReference, storeReference} from './reference-emission.js';
 import {emitScalarExpression, emitScalarBinary} from './scalar-expressions.js';
 import {emitMemoryExpression, prepareMemoryTarget} from './memory-expressions.js';
 import {loadMemoryReference, storeMemoryReference} from '../memory-expressions.js';
@@ -132,6 +133,7 @@ export class IrEmitter {
     this.emit(Op.BINARY,Binary[operator],binaryMode(operator,left,classifyBinary(operator,left,right).result,checked));
   }
   expr(node){
+    if(emitReferenceExpression(this,node))return;
     if(emitMemoryExpression(this,node)||emitScalarExpression(this,node))return;
     switch(node.kind){
       case 'Literal':this.emitConstant(node.value,node.legacyType);break;
@@ -213,6 +215,7 @@ export class IrEmitter {
   // ---- assignment targets ------------------------------------------------------------------------------------
   /** Evaluates the receiver and index of an assignment target once into temporaries and describes how to load and store it. */
   prepare(node){
+    const reference=prepareReference(this,node);if(reference)return reference;
     const memory=prepareMemoryTarget(this,node);if(memory)return memory;
     const type=node.legacyType;
     switch(node.kind){
@@ -233,6 +236,7 @@ export class IrEmitter {
     }
   }
   loadRef(ref){
+    if(loadReference(this,ref))return;
     if(loadMemoryReference(this,ref))return;
     if(ref.kind==='framework'){if(!ref.get){this.emitConstant(null);return;}if(ref.receiver!==null)this.emit(Op.LDLOC,ref.receiver);if(ref.key!==undefined)this.emit(Op.LDLOC,ref.key);this.emitContract(ref.get);}
     else if(ref.kind==='property'){if(!ref.property.isStatic)this.emit(Op.LDLOC,ref.receiver);this.emit(Op.CALL,ref.property.get.id,ref.property.isStatic?0:1);}
@@ -240,6 +244,7 @@ export class IrEmitter {
     else{this.emit(Op.LDLOC,ref.receiver);if(ref.kind==='field')this.emit(Op.LDFLD,ref.index);else{this.emit(Op.LDLOC,ref.index);this.emit(Op.LDELEM);}}
   }
   storeRef(ref){
+    if(storeReference(this,ref))return;
     if(storeMemoryReference(this,ref))return;
     if(ref.kind==='framework'){
       const value=this.temp(ref.type);this.emit(Op.STLOC,value);this.emit(Op.POP);

@@ -1,3 +1,4 @@
+import {executeSourceReference, sourceReturnReference} from './execution/source-references.js';
 import {isFatalFault,markUnhandled} from './execution/unhandled.js';
 import {executeSourceMemory} from './execution/source-memory.js';
 import {collectAtInstruction} from './execution/gc-stress.js';
@@ -64,14 +65,13 @@ export class VirtualMachine {
       this.sourcePause=false;if(!continuing){frame.pc++;count++;this.instructions++;}
       try{
         if(this.instructions>this.options.maxInstructions||continuing&&this.instructions>=this.options.maxInstructions)throw new ManagedFault('InstructionLimitException','Program exceeded its instruction budget');
-        if(continuing){const result=resumeArrayOperation(this,frame,{deadline:started+timeBudgetMs,workBudget:1});count+=result.work;this.instructions+=result.work;if(result.done&&result.returns)this.stack.push(result.value);if(!result.work)break;}else switch(op){
+        if(continuing){const result=resumeArrayOperation(this,frame,{deadline:started+timeBudgetMs,workBudget:1});count+=result.work;this.instructions+=result.work;if(result.done&&result.returns)this.stack.push(result.value);if(!result.work)break;}else if(!executeSourceReference(this,frame,op,a,b))switch(op){
           case Op.ENUM:this.stack.push(sourceEnum(this,a,b));break;case Op.DELEGATE:{const receiver=this.stack.pop();this.stack.push(this.heap.withRoots([receiver],()=>this.platform.delegate(this.image.constants[b],a,receiver)));break;}case Op.SEQ:case Op.NOP:break;case Op.ENDFINALLY:this.resumeUnwind(frame);break;case Op.ENDFILTER:endSourceFilter(this,this.stack.pop());break;
           case Op.CONST:this.stack.push(this.constant(a));break;
           case Op.LDLOC:if(frame.locals[a]===undefined)throw new ManagedFault('InvalidProgramException','Read of uninitialized local');this.stack.push(sourceCopy(this,frame.locals[a]));break;
           case Op.STLOC:{const oldValue=frame.locals[a];frame.locals[a]=sourceStore(this,this.stack.at(-1),method.locals[a].type,sourceInputTypes(this,frame).at(-1));this.stack[this.stack.length-1]=sourceCopy(this,frame.locals[a]);this.notifyWrite({kind:'local',frameId:frame.id,index:a,value:frame.locals[a],oldValue});break;}
           case Op.LDSTATIC:this.stack.push(sourceCopy(this,this.statics[a]));break;
           case Op.STSTATIC:{const oldValue=this.statics[a];this.statics[a]=sourceStore(this,this.stack.at(-1),this.image.statics[a].type,sourceInputTypes(this,frame).at(-1));this.stack[this.stack.length-1]=sourceCopy(this,this.statics[a]);this.notifyWrite({kind:'static',index:a,value:this.statics[a],oldValue});break;}
-          case Op.ADDRESS:{const kind=a&3,readonly=!!(a&4);let pointer;if(kind===3){const index=this.stack.pop(),ref=this.stack.pop();pointer=arrayAddress(this,ref,[index],{readonly});}else pointer=this.address(['local','static','field'][kind],b,kind===2?this.stack.pop():null,{readonly});this.stack.push(pointer);break;}
           case Op.LDFLD:this.stack.push(sourceFieldValue(this,this.stack.pop(),a));break;
           case Op.STFLD:{const value=this.stack.pop(),ref=this.stack.pop();this.heap.withRoots([ref,value],()=>{const stored=sourceFieldStore(this,ref,a,sourceStore(this,value,sourceFieldType(this,ref,a),sourceInputTypes(this,frame).at(-1)));this.stack.push(sourceCopy(this,stored));});break;}
           case Op.DUP:this.stack.push(this.stack.at(-1));break;case Op.POP:this.stack.pop();break;
@@ -81,7 +81,7 @@ export class VirtualMachine {
           case Op.JUMP:this.transfer(frame,'jump',a);break;case Op.JFALSE:if(!this.stack.pop())this.transfer(frame,'jump',a);break;case Op.JTRUE:if(this.stack.pop())this.transfer(frame,'jump',a);break;
           case Op.CALL:{const args=this.stack.splice(this.stack.length-b,b);this.call(a,args,sourceInputTypes(this,frame).slice(-b));break;}
           case Op.BUILTIN:{const args=this.stack.splice(this.stack.length-b,b),value=this.builtin(a,args,sourceInputTypes(this,frame).slice(-b));if(value!==SUSPENDED)this.stack.push(value);break;}
-          case Op.RET:{const result=sourceStore(this,this.stack.pop(),method.returnType,sourceInputTypes(this,frame).at(-1));this.transfer(frame,'return',Infinity,result);break;}
+          case Op.RET:{const result=sourceStore(this,this.stack.pop(),method.returnType,sourceInputTypes(this,frame).at(-1));this.transfer(frame,'return',Infinity,sourceReturnReference(this,frame,result));break;}
           case Op.NEWOBJ:this.stack.push(sourceNewObject(this,this.image.types[a].name));break;
           case Op.NEWARR:{const length=this.stack.pop(),type=this.image.constants[a];this.stack.push(createArray(this,type,[length]));break;}
           case Op.LDELEM:{const index=Number(number(this.stack.pop())),ref=this.stack.pop();this.stack.push(sourceCopy(this,arrayGet(this,ref,[index])));break;}

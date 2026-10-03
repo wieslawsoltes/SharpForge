@@ -1,3 +1,4 @@
+import {analyzeReferenceInstruction} from './reference-analysis.js';
 import {analyzeMemoryInstruction} from './memory-analysis.js';
 import {enumTypes,frameworkAssignable} from '@sharpforge/framework';
 import { numericTypeNames,numericTypeName,decodeNumericMode, EnumConvertBase, Op, BinaryName, Builtins, verifyImage } from '@sharpforge/bytecode';
@@ -9,12 +10,11 @@ export function analyzeMethod(image,method) {
   const count=method.code.length/3,states=Array(count),outputs=Array(count),queue=[[0,[]]],typeMap=new Map(image.types.map(t=>[t.name,t]));let maxStack=0;
   for(const h of method.handlers){queue.push([h.target,[]]);if(h.filter!==undefined)queue.push([h.filter,[]]);}let work=0;
   function transfer(pc,input) {const stack=[...input],op=method.code[pc*3],a=method.code[pc*3+1],b=method.code[pc*3+2],pop=()=>{if(!stack.length)throw new CilError(`Stack underflow in ${method.qualifiedName}:${pc}`);return stack.pop();};
-    if(analyzeMemoryInstruction(stack,{op,a,b},image.constants))return stack;
+    if(analyzeReferenceInstruction(stack,{op,a,b},image,method,typeMap)||analyzeMemoryInstruction(stack,{op,a,b},image.constants))return stack;
     switch(op){
       case Op.ENUM:stack.push(enumTypes[a]);break;case Op.DELEGATE:pop();stack.push(image.constants[b]);break;case Op.CONST:stack.push(constantType(image.constants[a],b));break;
       case Op.LDLOC:stack.push(method.locals[a].type);break;case Op.LDSTATIC:stack.push(image.statics[a].type);break;
       case Op.STLOC:pop();stack.push(method.locals[a].type);break;case Op.STSTATIC:pop();stack.push(image.statics[a].type);break;
-      case Op.ADDRESS:{const kind=a&3;let type;if(kind===0)type=method.locals[b].type;else if(kind===1)type=image.statics[b].type;else if(kind===2){const receiver=pop().replace(/&$/,'');type=typeMap.get(receiver)?.fields[b]?.type;}else {pop();const array=pop();if(array.endsWith('[]'))type=array.slice(0,-2);}if(!type)throw new CilError('Unknown managed address type');stack.push(type+'&');break;}
       case Op.LDFLD:{const receiver=pop(),field=typeMap.get(receiver)?.fields[a];if(!field)throw new CilError(`Cannot resolve field ${receiver}:${a}`);stack.push(field.type);break;}
       case Op.STFLD:{pop();const receiver=pop(),field=typeMap.get(receiver)?.fields[a];if(!field)throw new CilError('Unknown store field');stack.push(field.type);break;}
       case Op.DUP:stack.push(stack.at(-1));break;case Op.POP:pop();break;

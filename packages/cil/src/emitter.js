@@ -1,3 +1,4 @@
+import {emitReferenceInstruction} from './reference-emission.js';
 import {sourceHandlerLayout,emitSourceHandlerEntry,sourceHandlerZones,nativeSourceHandlers} from './source-exception-regions.js';
 import {emitMemoryInstruction} from './memory-emission.js';
 import {emitScalarConstant,emitScalarConversion,emitScalarBinary,emitScalarUnary,scalarMarker} from './scalar-emission.js';
@@ -33,7 +34,7 @@ export function emitAssemblyDetailed(image,{name=image.name??'Application',frame
   }
   for(const t of typeDescriptors){metadata.add(2,[t.flags,metadata.string(t.name),metadata.string(t.namespace),t.name==='<Module>'?0:codedIndex('TypeDefOrRef',objectToken),t.fieldStart,t.methodStart]);for(const f of t.fields)metadata.add(4,[(f.isStatic?0x10:0)|(f.backing?1:6),metadata.string(f.name),metadata.blob(fieldSignature(f.type,context.resolveType))]);}
   for(const t of typeDescriptors)for(const name of t.original?.interfaces??[])metadata.add(9,[t.token&0xffffff,codedIndex('TypeDefOrRef',context.resolveType(name))]);
-  let paramRow=1;for(const d of context.descriptors){d.row=metadata.add(6,[0,0,d.flags,metadata.string(d.name),metadata.blob(methodSignature(d.returnType,d.parameters.map(p=>p.type),d.isStatic,context.resolveType)),paramRow]);if(d.row!==d.token)throw new CilError('Method token allocation mismatch');for(let i=0;i<d.parameters.length;i++){metadata.add(8,[0,i+1,metadata.string(d.parameters[i].name)]);paramRow++;}}
+  let paramRow=1;for(const d of context.descriptors){d.row=metadata.add(6,[0,0,d.flags,metadata.string(d.name),metadata.blob(methodSignature(d.returnType,d.parameters.map(p=>p.type),d.isStatic,context.resolveType)),paramRow]);if(d.row!==d.token)throw new CilError('Method token allocation mismatch');for(let i=0;i<d.parameters.length;i++){metadata.add(8,[d.parameters[i].refKind==='out'?2:d.parameters[i].refKind==='in'?1:0,i+1,metadata.string(d.parameters[i].name)]);paramRow++;}}
   for(const descriptor of typeDescriptors){const properties=descriptor.original?.properties??[];if(!properties.length)continue;
     metadata.add(21,[descriptor.token&0xffffff,(metadata.rows[23]?.length??0)+1]);
     for(const property of properties){const signature=methodSignature(property.type,[],property.isStatic,context.resolveType);signature[0]|=8;
@@ -72,10 +73,9 @@ function emitMethod(c,d) {
     emitSourceHandlerEntry(w,c,handlers,pc,prefixes);
     const begin=w.length;starts[pc]=begin;const op=m.code[pc*3],a=m.code[pc*3+1],b=m.code[pc*3+2],input=analysis.states[pc];
     const top=input.at(-1),left=input.at(-2);let terminal=false;
-    if(!emitMemoryInstruction(w,c,{op,a,b,input,scratch:getScratch}))switch(op){
+    if(!emitReferenceInstruction(w,c,{op,a,b,input,scratch:getScratch})&&!emitMemoryInstruction(w,c,{op,a,b,input,scratch:getScratch}))switch(op){
       case Op.ENUM:w.integer(b).op('box',c.resolveType(enumTypes[a])).op('unbox.any',c.resolveType(enumTypes[a]));break;case Op.DELEGATE:{const type=c.image.constants[b];w.op('ldftn',c.methodTokens.get(a)).op('newobj',c.external(type,'.ctor','void',['object','nint'],false));break;}case Op.SEQ:w.op('nop');break;case Op.NOP:w.op('nop').op('nop');break;case Op.ENDFINALLY:w.op('endfinally');terminal=true;break;case Op.ENDFILTER:w.op('endfilter');terminal=true;break;
       case Op.CONST:{const value=c.image.constants[a],type=constantType(value,b);if(value?.scalar)emitScalarConstant(w,c,value);else if(type==='null')w.op('ldnull');else if(type==='string')w.op('ldstr',0x70000000|c.metadata.userString(value));else if(type==='double')w.op('ldc.r8',value);else {w.integer(value===true?1:value===false?0:value);if(type==='bool')w.op('conv.u1');}break;}
-      case Op.ADDRESS:{const kind=a&3;if(kind===0)w.op('ldloca',b);else if(kind===1)w.op('ldsflda',c.staticTokens[b]);else if(kind===2){const field=c.fieldTokens.get(top.replace(/&$/,'')+':'+b);if(!field)throw new CilError('Unknown addressed field');w.op('ldflda',field);}else {if(a&4)w.op('readonly.');w.op('ldelema',c.resolveType(left.slice(0,-2)));}if(a&4)w.integer(4).op('pop');break;}
       case Op.LDLOC:w.local('ldloc',a);break;
       case Op.STLOC:convert(top,m.locals[a].type);w.op('dup').local('stloc',a);break;
       case Op.LDSTATIC:w.op('ldsfld',c.staticTokens[a]);break;
