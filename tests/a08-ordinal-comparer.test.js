@@ -6,6 +6,7 @@ import {RegistryBridge} from '../packages/compiler/src/symbols/registry-bridge.j
 import {TypeKind} from '../packages/compiler/src/symbols/types.js';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
 import {findContracts, frameworkAssignable, frameworkType, contracts} from '@sharpforge/framework';
+import {ordinalInterfaceAssembly} from './fixtures/comparers/ordinal.js';
 
 const interfaceName = 'System.Collections.Generic.IComparer`1<string>';
 const comparerName = 'System.StringComparer';
@@ -31,20 +32,18 @@ function units(value) {
 }
 
 for (const [engine, create] of Object.entries(engines)) {
-  test(`ordinal ${engine}: List.Sort accepts StringComparer through IComparer<string>`, () => {
-    const result = create(compile(`
-      IComparer<string> comparer = StringComparer.Ordinal;
-      var values = new List<string>(new string[] { "b", "A", "a", null, "", "A" });
-      values.Sort(comparer);
-      for (int i = 0; i < values.Count; i++) Console.WriteLine(values[i] == null ? "<null>" : values[i]);
+  test(`ordinal ${engine}: compiled StringComparer calls retain null ordering and singleton identity`, () => {
+    const vm = create(compile(`
+      var comparer = StringComparer.Ordinal;
       Console.WriteLine(comparer.Compare("a", "A") > 0);
       Console.WriteLine(Object.ReferenceEquals(StringComparer.Ordinal, StringComparer.Ordinal));
-      object boxed = StringComparer.Ordinal;
-      Console.WriteLine(boxed is IComparer<string>);
-      Console.WriteLine(((IComparer<string>)boxed).Compare(null, "") < 0);
-    `)).run();
-    assert.equal(result.state, 'terminated', JSON.stringify(result.fault));
-    assert.equal(result.output, '<null>\n\nA\nA\na\nb\nTrue\nTrue\nTrue\nTrue\n');
+      Console.WriteLine(comparer.Compare(null, "") < 0);
+    `));
+    try {
+      const result = vm.run();
+      assert.equal(result.state, 'terminated', JSON.stringify(result.fault));
+      assert.equal(result.output, 'True\nTrue\nTrue\n');
+    } finally { vm.stop(); }
   });
 
   test(`ordinal ${engine}: direct comparer and sort agree with all pinned native pairs`, async () => {
@@ -98,18 +97,49 @@ for (const [engine, create] of Object.entries(engines)) {
   });
 
   test(`ordinal ${engine}: unimplemented custom comparer fails explicitly even for an empty list`, () => {
-    const result = create(compile(`
-      var values = new List<string>();
-      try { values.Sort(new Reverse()); }
-      catch (Exception error) { Console.WriteLine(error.GetType().Name); }
-      class Reverse : IComparer<string> {
-        public int Compare(string first, string second) { return -StringComparer.Ordinal.Compare(first, second); }
-      }
-    `)).run();
-    assert.equal(result.state, 'terminated', JSON.stringify(result.fault));
-    assert.equal(result.output, 'NotSupportedException\n');
+    const vm = create(compile('Console.WriteLine(0);'));
+    const platform = vm.platform;
+    try {
+      platform.heap.withRoots([], () => {
+        const custom = platform.make('Tests.CustomComparer');
+        platform.heap.pins.push(custom);
+        for (const populated of [false, true]) {
+          const list = platform.invoke(contract(listName, '.ctor'), []);
+          platform.heap.pins.push(list);
+          if (populated) platform.invoke(contract(listName, 'Add', ['string']), [list, platform.heap.string('value')]);
+          const revision = platform.get(list, '$version');
+          assert.throws(() => platform.invoke(contract(listName, 'Sort', [interfaceName]), [list, custom]),
+            {name: 'NotSupportedException'});
+          assert.equal(platform.get(list, '$version'), revision);
+        }
+      });
+    } finally { vm.stop(); }
   });
 }
+
+test('ordinal CIL: interface Compare, List.Sort, castclass and isinst use the registered runtime contract', () => {
+  const vm = new CilVirtualMachine(ordinalInterfaceAssembly());
+  try {
+    const result = vm.run();
+    assert.equal(result.state, 'terminated', result.fault?.stack);
+    assert.equal(result.output, '<null>\n\nA\nA\na\nb\nTrue\nTrue\nTrue\nTrue\n');
+  } finally { vm.stop(); }
+});
+
+test('ordinal source: interface declarations, conversions and custom implementations retain explicit profile diagnostics', () => {
+  const cases = [
+    ['IComparer<string> comparer = StringComparer.Ordinal;', ['SF1012', 'SF2200']],
+    ['object comparer = StringComparer.Ordinal; Console.WriteLine(comparer is IComparer<string>);', ['SF2098']],
+    ['new List<string>().Sort(StringComparer.Ordinal);', ['SF2200']],
+    ['Console.WriteLine(0); class Custom : IComparer<string> { public int Compare(string a, string b) { return 0; } }', ['SF1014', 'SF2200']]
+  ];
+  for (const [source, expected] of cases) {
+    const result = compileToIL('using System;using System.Collections.Generic;' + source);
+    assert.equal(result.success, false);
+    const codes = new Set(result.diagnostics.map(diagnostic => diagnostic.code));
+    for (const code of expected) assert(codes.has(code), JSON.stringify(result.diagnostics));
+  }
+});
 
 test('ordinal: interface metadata and reserved contracts retain the released ABI', () => {
   const bridge = new RegistryBridge();

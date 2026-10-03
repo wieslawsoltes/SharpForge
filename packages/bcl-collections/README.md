@@ -104,8 +104,12 @@ ordinal profile. **#829 remains open** for the invariant-culture default, and
 #2619/#2621/#2655 track culture comparison and general comparer dispatch. This
 increment does not use a host locale heuristic or claim complete culture support.
 The pinned .NET 10.0.5 corpus includes invariant and ordinal results, but only the
-ordinal results qualify this implementation. Both source and direct CIL tests
-consume the capture; browser and Rust native/Wasm qualification is pending.
+ordinal results qualify this implementation. Both VM platforms consume the full
+capture. Compiled source exercises direct StringComparer calls; source interface
+locals/conversions and custom implementations remain explicitly diagnosed.
+Independently assembled CIL exercises interface Compare/List.Sort and runtime
+casts. Unsupported custom comparer objects are checked through both platforms,
+including an empty List. Browser and Rust native/Wasm qualification is pending.
 
 Run `node --expose-gc scripts/benchmarks/a08-default-string-sort.mjs` serially in
 the candidate and metadata baseline `85917302`, copying the identical runner to
