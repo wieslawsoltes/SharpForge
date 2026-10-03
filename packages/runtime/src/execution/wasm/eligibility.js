@@ -1,6 +1,7 @@
 import {numericTypeName} from '@sharpforge/bytecode';
 import {callStorageType, resolveExecutionMethod} from '@sharpforge/cil';
 import {cilHandlers} from '../handlers/index.js';
+import {verifiedMethod} from '../token-cache.js';
 import {lowerWasmIR} from './ir.js';
 
 const primitives = new Set(['void', 'bool', 'char', 'byte', 'sbyte', 'short', 'ushort', 'int', 'uint',
@@ -20,7 +21,10 @@ function supportedType(vm, type) {
 function methodReasons(vm, method, limit) {
   const reasons = [];
   const reject = (code, message, instruction = null) => reasons.push(Object.freeze({code, message, offset: instruction?.offset ?? null}));
-  if (!vm.report?.success) reject('WASM_UNVERIFIED', 'Tiering requires successful CIL verification.');
+  if (!vm.report?.success || !verifiedMethod(vm, method.token) ||
+      vm.inspector.getMethod(method.token).instructions !== method.instructions) {
+    reject('WASM_UNVERIFIED', 'Tiering requires a canonical, successfully verified CIL body.');
+  }
   if (!method.instructions?.length) reject('WASM_NO_BODY', 'The method has no CIL body.');
   if (method.instructions?.length > limit) reject('WASM_SIZE', `The method exceeds the ${limit} instruction compilation limit.`);
   if (method.handlers?.length) reject('WASM_EH', 'Methods with exception regions remain interpreted.');
@@ -38,7 +42,8 @@ function methodReasons(vm, method, limit) {
     if (['call', 'callvirt', 'newobj'].includes(name)) {
       const descriptor = resolveExecutionMethod(vm.inspector, instruction.operand, method);
       const signature = descriptor.signature ?? descriptor.raw?.signature;
-      if (!signature || [...signature.parameters, signature.returnType].some(type => !supportedType(vm, type))) {
+      if (!signature || name === 'newobj' && !supportedType(vm, descriptor.owner) ||
+          [...signature.parameters, signature.returnType].some(type => !supportedType(vm, type))) {
         reject('WASM_CALL', 'Call signatures with byrefs or unsupported value types remain interpreted.', instruction);
       }
     }
