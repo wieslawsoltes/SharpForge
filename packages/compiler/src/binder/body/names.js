@@ -301,6 +301,8 @@ export const NameBinding = Base =>
             return this.bad(syntax);
           }
           if (this.reportAccessorByName(type, name, nameSyntax)) return this.bad(syntax);
+          const extension = this.staticExtensionMember(left, type, name, syntax, typeArguments, options);
+          if (extension) return extension;
           if (!isSource(type) && type.typeKind !== TypeKind.Enum)
             return this.reportMissingFrameworkMember(type, name, nameSyntax, syntax, 'CS0117');
           this.report(nameSyntax, 'CS0117', [this.display(type), name]);
@@ -366,6 +368,8 @@ export const NameBinding = Base =>
         this.report(nameSyntax, 'CS1061', [this.display(type), name]);
         return this.bad(syntax);
       }
+      const extension = this.instanceExtensionMember(left, type, name, syntax, typeArguments, options);
+      if (extension) return extension;
       // A predefined type whose member names are all known cannot have the member: extension methods are next.
       const isKnownGap = isKnownMissingMember(type, name) && !this.importsUnknownNamespaces();
       // On a type that is not fully known a missing member proves nothing. An array is the exception when an
@@ -398,6 +402,13 @@ export const NameBinding = Base =>
         return this.reportMissingFrameworkMember(type, name, nameSyntax, syntax, 'CS1061');
       this.report(nameSyntax, 'CS1061', [this.display(type), name]);
       return this.bad(syntax);
+    }
+    /** Seams of binder/extension-members.js: a member the type lacks, found among the extension members in scope (or null). */
+    instanceExtensionMember() {
+      return null;
+    }
+    staticExtensionMember() {
+      return null;
     }
     /** True when a using directive in scope names a namespace the registry does not model (it may bring extension methods). */
     importsUnknownNamespaces() {

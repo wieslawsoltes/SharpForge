@@ -28,6 +28,7 @@ const pipelineCodes = new Set([
   'CS1558',
   'CS4009',
   'CS9273',
+  'CS8803',
   'CS1617',
   'CS2019',
   'CS8630',

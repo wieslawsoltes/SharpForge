@@ -101,7 +101,11 @@ export const DeclarationChecks = Base =>
       for (const d of checkReadOnlyDeclarations(type)) this.reportAt(d.member, d.code, d.args);
       for (const d of checkInterfaceMemberKinds(type)) this.reportAt(d.member, d.code, d.args);
       for (const d of checkRefStructDeclarations(type, version)) {
-        if (d.feature) this.gate(this.at(type).uri, this.at(type), d.feature.name, d.feature);
+        if (d.feature) {
+          // Roslyn names the first interface of the base list for the ref struct interfaces gate.
+          const base = d.onInterfaces ? type.declarations.find(part => part.syntax.baseList)?.syntax.baseList.types[0] : null;
+          this.gate(this.at(type).uri, base ? (base.type ?? base) : this.at(type), d.feature.name, d.feature);
+        }
         else if (d.onType && d.member.typeSyntax) this.report(this.at(d.member).uri, d.member.typeSyntax, d.code, d.args);
         else this.reportAt(d.member, d.code, d.args);
       }

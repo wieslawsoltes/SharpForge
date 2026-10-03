@@ -1,6 +1,7 @@
 import { readPE } from '@sharpforge/cil';
 import { assemblyIdentityFromRow } from './identity.js';
 import { checkCancellation, loadError, LoadErrorCode } from './load-errors.js';
+import { MetadataTypeDefinitions } from './type-system/metadata-type-definitions.js';
 
 function namedIdentityRow(row, reference) {
   if (!reference) return { MajorVersion: row[1], MinorVersion: row[2], BuildNumber: row[3], RevisionNumber: row[4],
@@ -27,6 +28,7 @@ export class RuntimeModule {
   #bodies = new Map();
   #typeHandles = new Map();
   #bodyReads = 0;
+  #typeDefinitions;
   constructor(assembly, pe) {
     this.#assembly = assembly;
     this.#pe = pe;
@@ -60,7 +62,7 @@ export class RuntimeModule {
 
   blob(index) {
     this.#assembly.ensureUsable();
-    return this.#pe.metadata.blob(index).slice();
+    return new Uint8Array(this.#pe.metadata.blob(index));
   }
 
   /** Context-local canonical handle; the strong assembly edge keeps collectible metadata alive. */
@@ -71,6 +73,13 @@ export class RuntimeModule {
       this.#typeHandles.set(token, Object.freeze({ kind: 'TypeDefinitionHandle', module: this, metadataToken: token }));
     }
     return this.#typeHandles.get(token);
+  }
+
+  /** Canonical named TypeDef identity, independent of inheritance and executable method loading. */
+  typeDefinition(token) {
+    this.#assembly.ensureUsable();
+    this.#typeDefinitions ??= new MetadataTypeDefinitions(this);
+    return this.#typeDefinitions.get(token);
   }
 
   /** Metadata decoding is lazy and counted once per method. Returned byte arrays are isolated copies. */
@@ -87,7 +96,7 @@ export class RuntimeModule {
     }
     const body = this.#bodies.get(token);
     return Object.freeze({
-      ...body, code: body.code.slice(),
+      ...body, code: new Uint8Array(body.code),
       handlers: Object.freeze(body.handlers.map(handler => Object.freeze({ ...handler }))),
     });
   }
@@ -116,7 +125,7 @@ export class RuntimeAssembly {
     const bytes = input instanceof ArrayBuffer ? new Uint8Array(input) : input;
     if (!(bytes instanceof Uint8Array) || bytes.length > maxBytes) throw loadError(LoadErrorCode.InvalidImage, 'Invalid assembly image');
     try {
-      const pe = readPE(bytes.slice(), { maxBytes, inspection: true });
+      const pe = readPE(new Uint8Array(bytes), { maxBytes, inspection: true });
       if (pe.metadata.counts[32] !== 1 || pe.metadata.counts[0] !== 1) {
         throw loadError(LoadErrorCode.InvalidImage, 'Assembly image must contain one Assembly and one Module row');
       }

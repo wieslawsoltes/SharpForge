@@ -187,10 +187,9 @@ export const PropertySymbolBuilder = Base =>
       type.primaryConstructor = ctor;
       members.push(ctor);
       const base = syntax.baseList?.types.find(t => t.kind === 'PrimaryConstructorBaseType');
-      if (base) {
-        ctor.baseArgumentsSyntax = base.argumentList;
-        this.bodies.push(ctor);
-      }
+      if (base) ctor.baseArgumentsSyntax = base.argumentList;
+      // Bound later for its base arguments and for the default values of its optional parameters.
+      if (base || parameters.some(p => p.defaultSyntax)) this.bodies.push(ctor);
       // Positional record parameters become public init-only (record class) or settable (record struct) properties.
       if (type.isRecord)
         for (const p of parameters) {

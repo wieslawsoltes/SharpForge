@@ -72,11 +72,29 @@ static int Double(int v) => v * 2;
   assert.deepEqual(linesOf(source), ['12']);
 });
 
-test('SF-A02-T70 limit: CS8803 is reported by the semantic analysis, not for a program the pipeline compiles alone', () => {
-  const codes = source =>
-    compile(source)
-      .diagnostics.filter(d => d.severity === 'error')
-      .map(d => d.code);
-  assert.deepEqual(codes('struct D { }\nSystem.Console.WriteLine(1);\n').includes('CS8803'), true);
-  assert.deepEqual(codes('class D { }\nSystem.Console.WriteLine(1);\n'), []);
+test('SF-A02-T70 CS8803 is reported on every compile path, also for a program the execution pipeline compiles alone', () => {
+  const errors = (source, options) =>
+    compile(source, options)
+      .diagnostics.filter(d => d.severity === 'error' && d.code.startsWith('CS'))
+      .map(d => `${d.code}@${d.start}+${d.length}`);
+  const statement = 'System.Console.WriteLine(1);';
+  for (const declaration of ['struct D { }', 'class D { }', 'namespace N { }', 'enum E { A }', 'delegate void F();']) {
+    const source = `${declaration}\n${statement}\n`;
+    assert.deepEqual(errors(source), [`CS8803@${source.indexOf(statement)}+${statement.length}`], declaration);
+    assert.equal(compile(source).image, null, declaration);
+    assert.deepEqual(errors(`${statement}\n${declaration}\n`), [], declaration);
+  }
+  // Reported once per file, at the first misplaced statement, and next to other errors of the program.
+  const twice = 'class D { }\nint x = 1;\nclass E { }\nx++;\nstring s = x;\n';
+  assert.deepEqual(errors(twice), [`CS8803@${twice.indexOf('int x')}+10`, `CS0029@${twice.lastIndexOf('x;')}+1`]);
+  // A local function is a statement; a using directive and an extern alias are not declarations.
+  assert.deepEqual(errors('class D { }\nint F() => 1;\nSystem.Console.WriteLine(F());\n').map(e => e.slice(0, 6)), ['CS8803']);
+  assert.deepEqual(errors('using System;\nConsole.WriteLine(1);\nclass D { }\n'), []);
+  // Each file is checked on its own; a library reports the statement itself as CS8805 as well.
+  const files = [
+    { uri: 'a.cs', text: 'class A { static void Main() { } }\n' },
+    { uri: 'b.cs', text: 'class B { }\nSystem.Console.WriteLine(1);\n' },
+  ];
+  const reported = compile(files).diagnostics.filter(d => d.code === 'CS8803');
+  assert.deepEqual(reported.map(d => d.uri), ['b.cs']);
 });

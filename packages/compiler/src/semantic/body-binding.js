@@ -132,11 +132,10 @@ export const BodyBinding = Base =>
         if (!type) continue;
         if (member.kind === SymbolKind.Method) {
           if (member.isPrimaryConstructor) {
-            this.bindConstructorInitializer(
-              member,
-              type,
-              new BodyBinder(this, this.context(member, type, { parameters: member.parameters })),
-            );
+            const binder = new BodyBinder(this, this.context(member, type, { parameters: member.parameters }));
+            // A primary constructor has no body, so its optional parameters are bound here (`record R(int X = 1)`).
+            for (const p of member.parameters) if (p.defaultSyntax) this.bindParameterDefault(p, binder);
+            if (member.baseArgumentsSyntax) this.bindConstructorInitializer(member, type, binder);
             continue;
           }
           const context = this.context(member, type);
