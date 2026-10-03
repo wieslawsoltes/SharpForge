@@ -19,6 +19,7 @@ import { isSourceSymbol } from '../../semantic/analysis-helpers.js';
 import { lookupMembers } from '../inheritance.js';
 import { isAccessible } from '../accessibility.js';
 import { checkWritable } from '../ref-kinds.js';
+import { requiredMembersLeftUnset } from './required-members.js';
 
 const isNamedAssignment = item => item.kind === 'SimpleAssignmentExpression' && item.left.kind === 'IdentifierName';
 const isBraceInitializer = syntax => syntax.kind === 'ObjectInitializerExpression' || syntax.kind === 'CollectionInitializerExpression';
@@ -46,8 +47,16 @@ export const InitializerBinding = Base =>
     }
     /** The creation node with its bound initializer attached. */
     withInitializer(creation, initializer) {
-      if (!initializer) return creation;
-      return { ...creation, ...this.initializerLists(creation, creation.type, initializer) };
+      const bound = initializer ? { ...creation, ...this.initializerLists(creation, creation.type, initializer) } : creation;
+      if (creation.kind === 'ObjectCreation') this.checkRequiredMembers(bound);
+      return bound;
+    }
+    /** CS9035 for each required member the creation leaves unset, CS9036 for one given a nested initializer. */
+    checkRequiredMembers(creation) {
+      const { unset, nested } = requiredMembersLeftUnset(creation.type, creation.constructor, creation.initializers, this.core);
+      const at = creation.syntax.type ?? creation.syntax.newKeyword ?? creation.syntax;
+      for (const member of unset) this.report(at, 'CS9035', [member.toDisplayString()]);
+      for (const { member, entry } of nested) this.report(entry.value.syntax, 'CS9036', [member.toDisplayString()]);
     }
     /**
      * `{initializers}` for an object initializer, `{collectionInitializers}` for a collection initializer. As in Roslyn,

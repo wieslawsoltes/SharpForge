@@ -396,6 +396,7 @@ export class BinderCore {
       isFieldInitializer: this.c.isFieldInitializer,
       isStatic: this.c.isStatic,
       inObjectInitializer: this.inObjectInitializer,
+      isLambda: !!this.c.isLambda,
     };
   }
 }

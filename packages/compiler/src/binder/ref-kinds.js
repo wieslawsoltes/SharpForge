@@ -22,7 +22,8 @@ export function argumentRefKind(argumentSyntax) {
 }
 const inConstructorOf = (context, field) => {
   const m = context.method;
-  if (!m || !context.containingType || !field.containingType) return false;
+  // A lambda in a constructor runs later: it is not initialization code.
+  if (!m || context.isLambda || !context.containingType || !field.containingType) return false;
   if (context.containingType.originalDefinition !== field.containingType.originalDefinition) return false;
   if (context.isFieldInitializer) return context.isStatic === field.isStatic;
   return field.isStatic
