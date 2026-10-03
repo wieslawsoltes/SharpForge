@@ -13,4 +13,4 @@ export * from './decompiler.js';
 export {CilDispatchTable} from './dispatch-profile.js';
 
 export {resolveExecutionField,genericTypeParts,substituteTypeArguments} from './field-profile.js';
-export {substituteCallType,callStorageType,instantiateSignature,callSignatureKey,resolveExecutionMethod,methodGenericParameters,managedDelegateSignature,supportedDelegateCall} from './call-profile.js';
+export {normalizeCallType,substituteCallType,callStorageType,instantiateSignature,callSignatureKey,resolveExecutionMethod,methodGenericParameters,managedDelegateSignature,supportedDelegateCall} from './call-profile.js';
