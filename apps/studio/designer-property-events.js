@@ -3,10 +3,13 @@ import {
 } from '../../packages/designer/src/index.js';
 import {eventsFor} from '../../packages/framework/src/index.js';
 import {propertyButton, propertyDialog, propertyElement, propertyField, propertyInput, propertySelect, runPropertyAction} from './designer-property-dom.js';
+import {activateDesignerEvent, bindDesignerEventActivation} from './designer-event-actions.js';
 
 function eventSource(controller, id, event) {
   if (controller.view.resources?.scope) return {capability: 'navigate', reason: 'template'};
-  return controller.view.sourceSync?.session?.analysis?.bindings?.[id]?.events?.[event];
+  const analysis = controller.view.sourceSync?.session?.analysis;
+  const binding = analysis?.bindings?.[id]?.events?.[event];
+  return analysis?.readOnly ? {...binding, capability: 'navigate', reason: 'readOnly'} : binding;
 }
 
 function eventAccess(controller, id, event) {
@@ -26,6 +29,7 @@ export function renderDesignerEvents(controller, parent) {
     root.dataset.designerEvent = event;
     const error = propertyElement(document, 'p', '', 'design-editor-error');
     error.hidden = true;
+    bindDesignerEventActivation(root, () => runPropertyAction(() => activateDesignerEvent(controller.view, node.id, event), error));
     const available = controller.view.sourceSync?.handlerCandidates?.(node, event) ?? controller.view.designerHandlers?.(node, event) ?? [];
     const candidates = compatibleDesignerHandlers(node.type, event, available);
     const access = eventAccess(controller, node.id, event);

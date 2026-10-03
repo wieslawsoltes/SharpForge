@@ -1,6 +1,7 @@
 import {
   CONTROLS, XAML, canonicalType, frameworkAssignable, frameworkManifest, frameworkType, propertiesFor
 } from '@sharpforge/framework';
+import {designerDefaultEvent} from './metadata-events.js';
 
 const namesByCategory = Object.freeze({
   Identity: ['Name', 'Title', 'Tag'],
@@ -43,7 +44,7 @@ export function createDesignerMetadata(manifest = frameworkManifest) {
     if (!schema.Height) delete defaults.Height;
     return Object.freeze({type: type.name, name, category, defaultSize: Object.freeze([...size]),
       defaultProperties: Object.freeze(defaults), root: type.kind === 'window' || ['Page', 'UserControl', 'ContentDialog'].includes(name),
-      baseType: types.get(type.name)?.base});
+      baseType: types.get(type.name)?.base, defaultEvent: designerDefaultEvent(type, types)});
   }));
 }
 
