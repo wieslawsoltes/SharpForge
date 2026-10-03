@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {CilVirtualMachine} from '@sharpforge/runtime';
 import {wasmEligibility} from '../packages/runtime/src/execution/wasm/eligibility.js';
+import {interpretWasmInstruction} from '../packages/runtime/src/execution/wasm/interpret-ir.js';
+import {cilHandlers} from '../packages/runtime/src/execution/handlers/index.js';
 import {managedFixture} from './managed-fixtures.js';
 
 function inspect(method, options) {
@@ -42,4 +44,22 @@ test('T11.1 loops retain exact backward PC targets for OSR', () => {
     .op('ldloc.0').op('ldc.i4.8').op('blt.s', 'loop').op('ldloc.0').op('ret')});
   assert.equal(report.eligible, true, JSON.stringify(report.reasons));
   assert.deepEqual(report.ir.instructions[8].targets, [2]);
+});
+
+test('T11.1 typed IR roundtrip retains branch behavior and final evaluation values', () => {
+  const bytes = managedFixture({methods: [{name: 'Main', result: 'int', locals: ['int'], body: writer => writer
+    .op('ldc.i4.0').op('stloc.0').mark('loop').op('ldloc.0').op('ldc.i4.1').op('add').op('stloc.0')
+    .op('ldloc.0').op('ldc.i4.8').op('blt.s', 'loop').op('ldloc.0').op('ret')} ]});
+  const reference = new CilVirtualMachine(bytes);
+  const vm = new CilVirtualMachine(bytes);
+  const {ir} = wasmEligibility(vm, vm.top.method);
+  let budget = 1000;
+  while (vm.frames.length) {
+    assert.ok(budget-- > 0);
+    const frame = vm.top;
+    const instruction = ir.instructions[frame.pc++];
+    frame.lastOffset = instruction.offset;
+    interpretWasmInstruction(vm, frame, instruction, cilHandlers.get(instruction.name));
+  }
+  assert.equal(vm.returnValue, reference.run().returnValue);
 });

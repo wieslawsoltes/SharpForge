@@ -20,8 +20,9 @@ function recordBackedge(vm, state, record, current, frame, index) {
 /** Execute exactly one CIL instruction; a live backward target is an OSR entry. */
 export function executeTieredInstruction(vm, frame, plan, index) {
   const state = wasmTierState(vm);
+  if (!wasmTierEnabled(vm) || state.disposed) return plan.handlers[index](vm, frame, plan.instructions[index]);
   const record = wasmMethodRecord(state, frame.method);
-  if (!wasmTierEnabled(vm) || state.disposed || !record) return plan.handlers[index](vm, frame, plan.instructions[index]);
+  if (!record) return plan.handlers[index](vm, frame, plan.instructions[index]);
   const current = wasmFrameState(state, frame);
   considerCompilation(vm, state, record);
   if (!current.active && record.status === 'ready' && (index === 0 || current.nextEntry === index)) {
@@ -53,9 +54,14 @@ export async function prepareWasmTier(vm, method = vm.top?.method) {
   method = instantiatedMethod(vm, typeof method === 'number' ? method : method.token,
     method.genericIdentity ?? null, method.methodArguments ?? []);
   const state = wasmTierState(vm);
+  if (state.disposed) return Object.freeze({status: 'fallback', reason: 'Wasm tier has been disposed for this code epoch.'});
   const record = wasmMethodRecord(state, method);
   if (!record) return Object.freeze({status: 'fallback', reason: 'Wasm code-cache capacity reached.'});
-  const promise = compileWasmMethod(vm, state, record);
+  let promise = compileWasmMethod(vm, state, record);
+  if (!promise && record.status === 'cold' && !state.disposed) {
+    await Promise.all([...state.records].filter(item => item.status === 'compiling').map(item => item.promise));
+    promise = compileWasmMethod(vm, state, record);
+  }
   if (promise) await promise;
   return Object.freeze({status: record.status, reason: record.reason, eligibility: record.eligibility});
 }
@@ -63,7 +69,7 @@ export async function prepareWasmTier(vm, method = vm.top?.method) {
 /** Force interpreter re-entry at the current canonical safepoint, without changing PC or values. */
 export function deoptWasmTier(vm, reason = 'explicit') {
   const state = wasmTierState(vm);
-  for (const frame of vm.frames) {
+  for (const frame of vm.allFrames()) {
     const current = state.frames.get(frame);
     if (current) leaveWasmFrame(state, current, reason);
   }
