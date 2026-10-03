@@ -20,7 +20,10 @@ export const throwMethods = {
     this.feature('ThrowExpression', token);
     const keyword = this.take(),
       node = this.n('ThrowExpression', keyword, this.expression(Precedence.Coalescing));
-    if (min > Precedence.Coalescing) this.error(token, 'CS1525', "Invalid expression term 'throw'");
+    // Roslyn attaches CS1525 to the throw expression node, so the span runs to the end of its operand.
+    if (min > Precedence.Coalescing) {
+      this.error({ start: token.start, end: this.tokens[this.i - 1].end }, 'CS1525', "Invalid expression term 'throw'");
+    }
     else if (!allowed) this.error(token, 'CS8115', 'A throw expression is not allowed in this context.');
     return node;
   }
