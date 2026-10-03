@@ -1,4 +1,4 @@
-import {equal, fail, integer} from '../host.js';
+import {nativeEqual as equal, fail, integer} from '../host.js';
 
 const owner = 'System.Array';
 
