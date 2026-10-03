@@ -65,7 +65,6 @@ const notGated = {
   SpanCharConstantPattern: needsOperandTypes,
   InlineArrays: needsOperandTypes,
   LockObject: needsOperandTypes,
-  OverloadResolutionPriority: needsAttributeBinding,
   FirstClassSpan: needsOperandTypes,
   ExpressionOptionalAndNamedArguments: 'needs expression-tree conversion of lambdas',
 };

@@ -1,14 +1,11 @@
 /**
  * C# 10 rules that are not a construct family of their own (SF-A02-T75).
  *
- *   Constant interpolated strings - `$"{A}b"` is a constant when every hole is a constant of type string without an
- *       alignment or a format (`interpolatedString`). The use of such a constant below C# 10 is gated where a
- *       constant is required.
+ *   Constant interpolated strings are folded where interpolated strings are bound (./csharp6.js).
  *   Extended property patterns - `{ A.B: p }` is bound as `{ A: { B: p } }` (`propertySubpattern`).
  *   `[CallerArgumentExpression]` is bound and lowered with the other caller info attributes (./caller-info.js).
  */
 import { SymbolKind, ErrorTypeSymbol } from '../symbols/types.js';
-import { ConstantValue } from '../constants/constant-value.js';
 import { lookupMembers } from './inheritance.js';
 import { isSourceSymbol } from '../semantic/analysis-helpers.js';
 
@@ -27,45 +24,9 @@ function memberPath(expression) {
   return path;
 }
 
-/**
- * The text a literal part of an interpolated string contributes: `{{` and `}}` stand for one brace, except in a raw
- * string, whose braces are literal.
- * @param stringSyntax the InterpolatedStringExpression  @param content one of its InterpolatedStringText parts
- */
-export function interpolationText(stringSyntax, content) {
-  const text = content.textToken.value ?? content.textToken.valueText,
-    isRaw = stringSyntax.stringStartToken.text.endsWith('"""');
-  return isRaw ? text : text.replace(/\{\{/g, '{').replace(/\}\}/g, '}');
-}
-
-const isStringConstant = part => !!part.constantValue && part.type?.specialType === 'System_String';
-
 /** Class mixin of the body binder: C# 10 expression rules. */
 export const CSharp10Binding = Base =>
   class extends Base {
-    /** `$"..."`: binds the holes; the string is a constant when its holes are string constants without formatting. */
-    interpolatedString(syntax) {
-      const parts = [];
-      let text = '',
-        isConstant = true;
-      for (const content of syntax.contents) {
-        if (content.kind !== 'Interpolation') {
-          text += interpolationText(syntax, content);
-          continue;
-        }
-        const part = this.value(content.expression);
-        parts.push(part);
-        if (content.alignmentClause) this.convert(this.value(content.alignmentClause.value), this.core.int);
-        if (content.alignmentClause || content.formatClause || !isStringConstant(part)) isConstant = false;
-        else text += part.constantValue.value ?? '';
-      }
-      const node = this.node('InterpolatedString', syntax, this.core.string, { parts, form: 'interpolatedString' });
-      if (isConstant && !parts.some(part => part.hasErrors)) {
-        node.constantValue = ConstantValue.string(text);
-        node.isConstantInterpolation = parts.length > 0;
-      }
-      return node;
-    }
     /**
      * One `Name: pattern` of a property pattern. C# 10 allows a member path, `A.B: pattern`, which means
      * `A: { B: pattern }`: it is bound to exactly that nesting, so later passes see ordinary property patterns.
