@@ -188,3 +188,22 @@ documents unverified. The caller owns the supplied fetch client's lifetime.
 Local projection builds one method-token index per binding call. Scope processing
 is linear in methods, scopes and variables, preserves scope/variable order, and
 does not retain stale results between bindings.
+
+`emitPortablePdb(assembly, { stateMachines })` accepts explicit records
+`{ moveNext, kickoff, catchHandlerOffset, awaits }`, where method references are
+MethodDef tokens and each await is `{ yieldOffset, resumeOffset, resumeMethod }`.
+Omitting both stepping fields keeps the record table-only (including iterator
+links). An explicit empty await list emits a stepping record with no awaits;
+`catchHandlerOffset` defaults to `-1` for no debugger catch handler.
+
+The writer validates yield/resume offsets against IL instruction boundaries in
+the exact supplied assembly and requires a nonnegative catch offset to identify a
+catch-clause entry. Missing/bodyless methods, operand offsets, end-of-body offsets,
+malformed or over-budget await lists, duplicate pairs and duplicate stepping CDI
+are rejected. Each referenced body is decoded once per emission; await validation
+is linear in records plus decoded instructions, with a one-million-await limit
+per record and the CIL decoder's instruction limit per method. Existing raw CDI
+input remains available through `debug.custom` and its existing codec validation.
+This API consumes explicit producer data. It does not infer Roslyn states or
+stepping offsets from SharpForge's preserved-stack async roles, nor reconstruct
+hoisted fields, logical frames or async-iterator state.

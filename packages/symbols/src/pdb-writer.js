@@ -7,6 +7,7 @@ import { writeSequencePoints } from './sequence-points.js';
 import { writeStateMachines, appendCustomRecords } from './custom-debug-writer.js';
 import { writeImportScopes } from './import-writer.js';
 import { writeMethodScopes } from './scope-writer.js';
+import { asyncSteppingRecords } from './pdb-writer-async.js';
 import { lineIndex, sourceSpan } from './source-span.js';
 /** Emit independent standard symbols for the exact emitted PE's tokens/offsets. */
 export function emitPortablePdb(assembly, debug, { embedSources = true, sourceLink = null } = {}) {
@@ -68,7 +69,9 @@ export function emitPortablePdb(assembly, debug, { embedSources = true, sourceLi
       b.guid(PdbGuids.sourceLink),
       b.blob(utf8(JSON.stringify(sourceLink))),
     ]);
-  writeStateMachines(b, debug.stateMachines ?? [], pe.metadata.counts);
-  appendCustomRecords(b, debug.custom ?? [], pe.metadata.counts, cdi);
+  const stateMachines = debug.stateMachines ?? [];
+  writeStateMachines(b, stateMachines, pe.metadata.counts);
+  const custom = asyncSteppingRecords(pe, stateMachines, debug.custom ?? []);
+  appendCustomRecords(b, custom, pe.metadata.counts, cdi);
   return b.finish(pe.metadata.counts, pe.entryPoint);
 }
