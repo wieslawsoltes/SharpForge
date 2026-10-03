@@ -13,7 +13,7 @@ export function runChild(command,args,{cwd,env={},stdin='',signal,timeoutMs=1000
     const timer=setTimeout(()=>stop('budget-exceeded','Process time budget exceeded'),timeoutMs);
     for(const stream of ['stdout','stderr'])child[stream].on('data',data=>{bytes+=data.length;if(bytes>maxOutputBytes)stop('budget-exceeded','Process output budget exceeded');else chunks[stream].push(data);});
     child.on('error',error=>{failure??=new ProcessFailure('host-error',error.message);});child.stdin.on('error',error=>{if(error.code!=='EPIPE')stop('host-error',error.message);});child.stdin.end(stdin);
-    child.on('close',(exitCode,exitSignal)=>{clearTimeout(timer);clearTimeout(force);signal?.removeEventListener('abort',abort);const result={stdout:Buffer.concat(chunks.stdout).toString('utf8'),stderr:Buffer.concat(chunks.stderr).toString('utf8'),exitCode,signal:exitSignal,elapsedMs:performance.now()-start};if(failure){failure.result=result;reject(failure);}else resolve(result);});
+    child.on('close',(exitCode,exitSignal)=>{clearTimeout(timer);clearTimeout(force);signal?.removeEventListener('abort',abort);const result={stdout:Buffer.concat(chunks.stdout).toString('utf8'),stderr:Buffer.concat(chunks.stderr).toString('utf8'),stdoutBase64:Buffer.concat(chunks.stdout).toString('base64'),stderrBase64:Buffer.concat(chunks.stderr).toString('base64'),exitCode,signal:exitSignal,elapsedMs:performance.now()-start};if(failure){failure.result=result;reject(failure);}else resolve(result);});
     if(signal?.aborted)abort();
   });
 }

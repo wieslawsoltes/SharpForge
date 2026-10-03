@@ -8,6 +8,11 @@ compiler difference. Managed faults preserve exception types/messages. Transport
 limits and cancellation failures are host differences. Same-seed repeat drift is
 fixture-nondeterminism; unexplained mismatches fail as unclassified.
 
+Roslyn receives a UTF-8 BOM as an encoding transport marker; the program text is
+otherwise unchanged. Native stdout/stderr bytes are retained as Base64 alongside
+UTF-8 decoded text, so host codepage discrepancies remain inspectable. No source
+API injection or silent mojibake normalization is used.
+
 The adapters return `engine`, `status`, `phase`, `stdout`, `stderr`, `exitCode`,
 `exception`, `diagnostics`, `artifactHash` and separate metrics. Status is
 completed, compile-error, runtime-error, host-error, cancelled, budget-exceeded

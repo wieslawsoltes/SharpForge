@@ -24,7 +24,7 @@ export async function runCLR(kind,fixture,{toolchain,compiled,signal,sharedCompi
   try{
     toolchain??=await resolveToolchain();phase='compile';const at=performance.now();
     if(kind==='roslyn'){
-      const output=await compileOnce({id:fixture.id,source:'Program.cs',sourceBytes:Buffer.from(fixture.sourceText),langVersion:fixture.langVersion},toolchain,{signal,timeoutMs:fixture.limits.timeoutMs,maxOutputBytes:fixture.limits.maxOutputBytes});compileMs=performance.now()-at;assembly=output.assembly;
+      const output=await compileOnce({id:fixture.id,source:'Program.cs',sourceBytes:Buffer.from('\uFEFF'+fixture.sourceText),langVersion:fixture.langVersion},toolchain,{signal,timeoutMs:fixture.limits.timeoutMs,maxOutputBytes:fixture.limits.maxOutputBytes});compileMs=performance.now()-at;assembly=output.assembly;
       if(!assembly)return result(engine,{status:'compile-error',phase,exitCode:null,diagnostics:output.result.diagnostics.map(d=>({code:d.id,severity:d.severity,span:d.span})),metrics:{compileMs},toolchain:toolchain.actual});
     }else{
       const output=compiled??compileSharp(fixture);compileMs=compiled?(sharedCompileMs??0):performance.now()-at;assembly=output.assembly;
@@ -33,7 +33,7 @@ export async function runCLR(kind,fixture,{toolchain,compiled,signal,sharedCompi
     phase='execute';const raw=await executeCLR(assembly,fixture,toolchain,{signal,temporaryRoot});
     const match=/^Unhandled exception\. ([A-Za-z_][A-Za-z0-9_.+`]*)(?:: ([^\r\n]*))?/m.exec(raw.stderr),exception=match?{type:match[1],message:match[2]??''}:null;
     const hostFailure=raw.signal&&!exception;
-    return result(engine,{status:hostFailure?'host-error':exception?'runtime-error':'completed',phase,stdout:raw.stdout,stderr:raw.stderr,exitCode:exception?null:raw.exitCode,exitCodeKind:'process',exception,artifactHash:sha256(assembly),...(hostFailure?{error:'Native process exited on '+raw.signal}:{}),metrics:{compileMs,executeMs:raw.elapsedMs,managedAllocations:null},toolchain:toolchain.actual,environment:toolchain.environment});
+    return result(engine,{status:hostFailure?'host-error':exception?'runtime-error':'completed',phase,stdout:raw.stdout,stderr:raw.stderr,stdoutBase64:raw.stdoutBase64,stderrBase64:raw.stderrBase64,exitCode:exception?null:raw.exitCode,exitCodeKind:'process',exception,artifactHash:sha256(assembly),...(hostFailure?{error:'Native process exited on '+raw.signal}:{}),metrics:{compileMs,executeMs:raw.elapsedMs,managedAllocations:null},toolchain:toolchain.actual,environment:toolchain.environment});
   }catch(error){return {...failure(engine,error,phase),artifactHash:assembly?sha256(assembly):null,metrics:{compileMs:compileMs??null}};}
 }
 export const runSharpCLR=(fixture,options)=>runCLR('sharpforge',fixture,options);
