@@ -81,7 +81,7 @@ export async function largeScenePerformance({page, context, results}) {
 /** The reference helper executes both managed engines and compares their actual DOM geometry with the designer at 0.5px. */
 export async function layoutReferences(page) {
   const result = await page.evaluate(async () => {
-    const {runDesignerLayoutReferences} = await import(new URL('designer-layout-reference.js', location.href).href);
+    const {runDesignerLayoutReferences} = await import('./designer-layout-reference.js');
     const root = document.createElement('div');
     root.dataset.a18LayoutReference = '';
     Object.assign(root.style, {position: 'absolute', left: '0', top: '0', width: '1800px', pointerEvents: 'none'});
