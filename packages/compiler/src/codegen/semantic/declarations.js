@@ -80,7 +80,6 @@ export const Declarations = Base =>
       this.fields.set(symbol, record);
     }
     declareProperty(owner, symbol) {
-      if (symbol.parameters?.length && symbol.refKind && symbol.refKind !== 'none') this.unsupported('ref returns', symbol.locations?.[0]);
       for (const accessor of [symbol.getMethod, symbol.setMethod]) if (accessor) this.declareMethod(owner, accessor);
       if (!symbol.isAutoProperty) return;
       // An auto-property: the backing field exists even when the symbol table did not materialise one.
@@ -129,7 +128,7 @@ export const Declarations = Base =>
       const name = isConstructor ? '.ctor' : symbol.methodKind === MethodKind.StaticConstructor ? '<cctor>' : symbol.name;
       const record = this.program.addMethod(owner, name, {
         isStatic: symbol.isStatic,
-        returnType: isConstructor || symbol.methodKind === MethodKind.StaticConstructor ? 'void' : this.types.imageType(symbol.returnType, at),
+        returnType: isConstructor || symbol.methodKind === MethodKind.StaticConstructor ? 'void' : this.types.imageType(symbol.returnType, at) + (isByReference(symbol) ? '&' : ''),
         parameters: this.parametersOf(symbol),
         node: this.nodeOf(symbol),
         hasSource: !symbol.isImplicitlyDeclared,
@@ -142,8 +141,8 @@ export const Declarations = Base =>
       return symbol.parameters.map(p => {
         if (p.isParams) this.paramsParameters.add(p);
         const type = this.types.imageType(p.type, p.locations?.[0] ?? symbol.locations?.[0]);
-        // A by-reference parameter receives the cell that holds the argument variable (lowering/by-reference.js).
-        return { name: p.name, type: isByReference(p) ? this.cellClass(type).record.name : type };
+        // A by-reference signature preserves the managed location through every engine.
+        return {name: p.name, type: isByReference(p) ? type + '&' : type, refKind: p.refKind};
       });
     }
     accessorOf(symbol) {

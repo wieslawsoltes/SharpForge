@@ -1,106 +1,139 @@
-/**
- * `ref`, `out` and `in` parameters of source methods (the lowering half of SF-A02-T04.2; needed by `Deconstruct`
- * methods, SF-A02-T08.5).
- *
- * The runtime has no managed pointers. A by-reference parameter is lowered to a parameter that holds a heap cell -
- * the cell class closures already use for captured variables - and the variable an argument names lives in such a
- * cell from its declaration on, exactly as if a lambda had captured it. Caller and callee then share one storage
- * location, so every by-reference effect is visible when C# makes it visible: assignments before an exception,
- * aliasing between two arguments, reads through a closure during the call.
- *
- * Only variables can be shared this way. A field or an array element passed with `ref` or `out` would need a
- * pointer into the object and is reported as not executable; passed as `in` its value is copied, which differs from
- * C# only if the callee changes that same field while it runs.
- */
-import { walk } from '../bound/semantic-walker.js';
-import { n } from '../codegen/semantic/node-factory.js';
-import { lowered } from './tuples/translate-tuples.js';
+/** Managed-pointer adaptation of the shared argument lowering used by closures and Deconstruct. */
+import {n} from '../codegen/semantic/node-factory.js';
+import {lowered} from './tuples/translate-tuples.js';
 
-const none = 'none';
+export const isByReference = entry => !!entry?.refKind && entry.refKind !== 'none';
+const readonly = entry => ['in', 'ref readonly', 'ref readonly parameter'].includes(entry?.refKind);
+const indirect = pointer => ({kind: 'ManagedIndirect', legacyType: pointer.legacyType.slice(0, -1),
+  isExpression: true, pointer});
+const address = (target, immutable = false) => ({kind: 'ManagedAddress', legacyType: target.legacyType + '&',
+  isExpression: true, target, readonly: immutable});
 
-/** True for a parameter (or argument entry) passed by reference. */
-export const isByReference = entry => !!entry?.refKind && entry.refKind !== none;
-
-/** The variable symbol an argument expression names, or null. */
-function variableOf(expression) {
-  switch (expression?.kind) {
-    case 'Local':
-    case 'DeclarationExpression':
-      return expression.local ?? null;
-    case 'Parameter':
-      return expression.parameter;
-    default:
-      return null;
+/** Uses real managed locations for ref/out/in, including fields, array elements and returned references. */
+export const ByReferenceTranslation = Base => class extends Base {
+  declareParameters(parameters, firstOrdinal = 0) {
+    const prologue = super.declareParameters(parameters, firstOrdinal);
+    parameters.forEach((symbol, index) => {
+      if (!isByReference(symbol)) return;
+      const type = this.imageType(symbol.type, symbol.syntax);
+      const slot = n.newParameter(symbol.name, type + '&', firstOrdinal + index);
+      this.frame.vars.set(symbol, () => indirect(n.parameter(slot)));
+    });
+    return prologue;
   }
-}
 
-/**
- * Adds to a capture analysis every local and by-value parameter that is passed by reference somewhere in `body`
- * (including its lambdas and local functions): such a variable lives in a cell.
- * @param {object} body a bound body  @param analysis the CaptureAnalysis of that body (`captured`: Set of symbols)
- */
-export function markVariablesPassedByReference(body, analysis) {
-  walk(body, node => {
-    if (node.kind === 'LocalFunction' && node.method?.body) markVariablesPassedByReference(node.method.body, analysis);
-    for (const argument of Array.isArray(node.args) ? node.args : []) {
-      if (!isByReference(argument)) continue;
-      const variable = variableOf(argument.expression);
-      // A by-reference parameter passed on is already a cell.
-      if (variable && !isByReference(variable)) analysis.captured.add(variable);
-    }
-    return true;
-  });
-}
+  declareVariable(symbol, initializer, syntax = n.hidden) {
+    if (!isByReference(symbol)) return super.declareVariable(symbol, initializer, syntax);
+    const type = this.imageType(symbol.type, symbol.syntax);
+    const variable = this.addBlockLocal(n.newLocal(symbol.name, type + '&', syntax, {hidden: false}));
+    this.frame.vars.set(symbol, () => indirect(n.local(variable)));
+    return [n.declare([[variable, initializer]], syntax)];
+  }
 
-/** Class mixin: by-reference parameters and arguments. */
-export const ByReferenceTranslation = Base =>
-  class extends Base {
-    /** A by-reference parameter holds a cell; the variable it stands for is the cell's value. */
-    declareParameters(parameters, firstOrdinal = 0) {
-      const prologue = super.declareParameters(parameters, firstOrdinal);
-      parameters.forEach((symbol, index) => {
-        if (!isByReference(symbol)) return;
-        const cell = this.g.cellClass(this.imageType(symbol.type, symbol.syntax)),
-          slot = n.newParameter(symbol.name, cell.record.name, firstOrdinal + index);
-        this.frame.cells.set(symbol, () => n.parameter(slot));
-        this.frame.vars.set(symbol, () => n.field(n.parameter(slot), cell.value));
-      });
-      return prologue;
-    }
-    arguments(node, method) {
-      const args = node.args ?? [],
-        parameters = method?.parameters ?? [];
-      if (!args.some(isByReference) && !parameters.some(isByReference)) return super.arguments(node, method);
-      if (!method || !this.g.isSource(method.originalDefinition ?? method))
-        return this.unsupported('ref, out and in arguments of framework methods', node.syntax);
-      const positions = node.mapping?.parameterOf,
-        covered = new Set();
-      const cells = args.map((argument, index) => {
-        const parameter = parameters[positions ? positions[index] : index];
-        covered.add(parameter);
-        if (!isByReference(parameter)) return argument;
-        const cell = this.cellArgument(argument, parameter);
-        return { ...argument, refKind: none, expression: lowered(cell, parameter.type, argument.expression.syntax) };
-      });
-      if (parameters.some(parameter => isByReference(parameter) && !covered.has(parameter)))
-        return this.unsupported('an omitted by-reference argument', node.syntax);
-      return super.arguments({ ...node, args: cells }, method);
-    }
-    /** The cell passed for one by-reference parameter. */
-    cellArgument(argument, parameter) {
-      const expression = argument.expression,
-        cell = this.g.cellClass(this.imageType(parameter.type, expression.syntax));
-      if (expression.kind === 'Discard') return n.allocate(cell.record);
-      const variable = variableOf(expression);
-      if (variable) {
-        if (expression.kind === 'DeclarationExpression') this.declarePending(variable);
-        const held = this.frame.cells.get(variable);
-        if (held) return held();
+  stmtLocalDeclaration(node) {
+    if (!node.declarations.some(declaration => isByReference(declaration.local))) return super.stmtLocalDeclaration(node);
+    const statements = [];
+    for (const declaration of node.declarations) {
+      const symbol = declaration.local;
+      if (!isByReference(symbol)) {
+        statements.push(super.stmtLocalDeclaration({...node, declarations: [declaration]}));
+        continue;
       }
-      if (parameter.refKind !== 'in') return this.unsupported('passing a field or an array element by reference', expression.syntax);
-      // `in`: the callee only reads, so it gets a cell holding a copy of the value.
-      const temp = this.temp(cell.record.name, 'in');
-      const fill = [n.assign(n.local(temp), n.allocate(cell.record)), n.assign(n.field(n.local(temp), cell.value), this.expression(expression))];
-      return n.sequence([temp], fill, n.local(temp));
+      const value = this.addressExpression(declaration.value, readonly(symbol));
+      statements.push(...this.declareVariable(symbol, value, this.span(node.syntax)));
     }
-  };
+    return n.block(statements);
+  }
+
+  arguments(node, method) {
+    const args = node.args ?? [], parameters = method?.parameters ?? [];
+    if (!args.some(isByReference) && !parameters.some(isByReference)) return super.arguments(node, method);
+    const positions = node.mapping?.parameterOf, covered = new Set();
+    const values = args.map((argument, index) => {
+      const parameter = parameters[positions ? positions[index] : index];
+      covered.add(parameter);
+      if (!isByReference(parameter)) return argument;
+      const pointer = this.referenceArgument(argument, parameter);
+      return {...argument, refKind: 'none', expression: lowered(pointer, parameter.type, argument.expression.syntax)};
+    });
+    if (parameters.some(parameter => isByReference(parameter) && !covered.has(parameter))) {
+      return this.unsupported('an omitted by-reference argument', node.syntax);
+    }
+    return super.arguments({...node, args: values}, method);
+  }
+
+  referenceArgument(argument, parameter) {
+    let expression = argument.expression;
+    if (expression.kind === 'DeclarationExpression') {
+      this.declarePending(expression.local);
+      expression = {...expression, kind: 'Local'};
+    }
+    if (expression.kind === 'Discard' || parameter.refKind === 'in' && !isByReference(argument)) {
+      const type = this.imageType(parameter.type, expression.syntax), temp = this.temp(type, 'reference');
+      const value = expression.kind === 'Discard' ? this.defaultValue(type) : this.expression(expression);
+      return n.sequence([temp], [n.assign(n.local(temp), value)], address(n.local(temp), readonly(parameter)));
+    }
+    return this.addressExpression(expression, readonly(parameter));
+  }
+
+  addressExpression(node, immutable = false) {
+    if (node.kind === 'Ref') return this.addressExpression(node.operand, immutable);
+    if (node.kind === 'RefConditional') {
+      const left = this.addressExpression(node.whenTrue, immutable);
+      return n.conditional(this.expression(node.condition), left, this.addressExpression(node.whenFalse, immutable), left.legacyType);
+    }
+    const target = this.target(node);
+    return address(target, immutable);
+  }
+
+  exprRef(node) { return this.addressExpression(node.operand); }
+  exprRefConditional(node) { return indirect(this.addressExpression(node)); }
+
+  stmtReturn(node) {
+    return node.isRef ? n.returnStatement(this.addressExpression(node.expression), this.span(node.syntax)) : super.stmtReturn(node);
+  }
+
+  expressionBody(expression, isReturn, syntax) {
+    if (isReturn && this.frame.method.returnType.endsWith('&')) {
+      return this.withPending(n.returnStatement(this.addressExpression(expression), this.span(syntax)));
+    }
+    return super.expressionBody(expression, isReturn, syntax);
+  }
+
+  exprCall(node) {
+    const value = super.exprCall(node);
+    return isByReference(node.method) ? indirect(value) : value;
+  }
+
+  exprPropertyAccess(node) {
+    if (!isByReference(node.property)) return super.exprPropertyAccess(node);
+    const method = this.g.methodOf(node.property.getMethod, node.syntax);
+    return indirect(n.call(method, node.property.isStatic ? null : this.memberReceiver(node), []));
+  }
+
+  exprIndexerAccess(node) {
+    return isByReference(node.property) ? indirect(super.exprIndexerAccess(node)) : super.exprIndexerAccess(node);
+  }
+
+  target(node) {
+    if (node.kind === 'Call' && isByReference(node.method) ||
+        ['PropertyAccess', 'IndexerAccess'].includes(node.kind) && isByReference(node.property)) return this.expression(node);
+    return super.target(node);
+  }
+
+  exprRefAssignment(node) {
+    return this.exprAssignment({...node, isRef: true});
+  }
+
+  exprAssignment(node) {
+    if (node.isRef) {
+      const target = this.target(node.left);
+      if (target.kind !== 'ManagedIndirect') return this.unsupported('reference reassignment of this location', node.syntax);
+      return indirect(n.assign(target.pointer, this.addressExpression(node.right)));
+    }
+    if (node.left.kind === 'IndexerAccess' && isByReference(node.left.property)) {
+      return n.assign(this.target(node.left), this.expression(node.right));
+    }
+    return super.exprAssignment(node);
+  }
+};

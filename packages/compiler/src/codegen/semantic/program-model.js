@@ -121,7 +121,7 @@ export class ProgramModel {
         isStatic: m.isStatic,
         returnType: m.returnType,
         ...(m.accessor ? { accessor: m.accessor } : {}),
-        parameters: m.parameters.map(p => ({ name: p.name, type: p.type })),
+        parameters: m.parameters.map(p => ({name: p.name, type: p.type, ...(p.refKind && p.refKind !== 'none' ? {refKind: p.refKind} : {})})),
         locals: m.locals,
         code: m.code,
         handlers: m.handlers,

@@ -13,7 +13,6 @@
 import { walk } from '../bound/semantic-walker.js';
 import { SymbolKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
-import { markVariablesPassedByReference } from './by-reference.js';
 
 /** What one lambda or local function captures. */
 class FunctionCaptures {
@@ -131,6 +130,5 @@ export function analyzeCaptures(body) {
   scan(body, null, analysis);
   closeOverCallees(analysis);
   for (const fn of analysis.functions.values()) for (const variable of fn.variables) analysis.captured.add(variable);
-  markVariablesPassedByReference(body, analysis);
   return analysis;
 }

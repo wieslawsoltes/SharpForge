@@ -1,3 +1,4 @@
+import {validatePointer, pointerType, asReadonly} from './managed-pointers.js';
 import {ManagedFault} from '../heap.js';
 import {sourceStore} from './source-storage.js';
 import {frameState} from './source-eh.js';
@@ -15,7 +16,18 @@ export function callSource(vm, methodId, args, types = []) {
   const locals = Array(method.locals.length).fill(undefined);
   vm.heap.withRoots(args, () => {
     for (let index = 0; index < args.length; index++) {
-      locals[index] = sourceStore(vm, args[index], method.locals[index].type, types[index]);
+      let argument = args[index];
+      const type = method.locals[index].type;
+      if(type.endsWith('&')) {
+        const parameter = method.parameters[index - (method.isStatic ? 0 : 1)];
+        const readOnly = ['in', 'ref readonly', 'ref readonly parameter'].includes(parameter?.refKind);
+        validatePointer(vm,argument,{write:!readOnly,allowUninitialized:parameter?.refKind==='out'});
+        if(pointerType(vm,argument)!==vm.heap.methodTables.get(type.slice(0,-1))) {
+          throw new ManagedFault('InvalidProgramException','Managed reference argument type mismatch');
+        }
+        if(readOnly)argument=asReadonly(vm,argument);
+      }
+      locals[index] = sourceStore(vm, argument, type, types[index]);
       vm.heap.pins.push(locals[index]);
     }
     if (!method.isStatic && args[0] === null) {

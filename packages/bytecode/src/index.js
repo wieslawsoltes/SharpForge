@@ -1,3 +1,4 @@
+import {referenceStackEffect} from './reference-verification.js';
 import {exceptionRegionEntries} from './exception-regions.js';
 import {Op, OpName} from './opcodes.js';
 import {memoryStackEffect} from './memory-verification.js';
@@ -35,7 +36,7 @@ export function verifyImage(image){
     queue.push(...exceptionRegionEntries(m,fail));
     while(queue.length){const [pc,height]=queue.pop();if(pc<0||pc>=n){fail(m,pc,'Control flow leaves the method');continue;}if(heights.has(pc)){if(heights.get(pc)!==height)fail(m,pc,'Inconsistent stack height at join');continue;}heights.set(pc,height);
       const op=m.code[pc*3],a=m.code[pc*3+1],b=m.code[pc*3+2];let need=0,delta=0;
-      const memory=memoryStackEffect(op,a,b,image.constants);
+      const memory=referenceStackEffect(op,a,b,image,m)??memoryStackEffect(op,a,b,image.constants);
       if(memory){need=memory.need;delta=memory.delta;if(!memory.valid)fail(m,pc,'Invalid memory instruction');}
       else switch(op){
         case Op.ENUM:if(!enumTypes[a])fail(m,pc,'Invalid enum type');delta=1;break;case Op.DELEGATE:need=1;if(!image.methods[a]||frameworkType(image.constants[b])?.kind!=='delegate')fail(m,pc,'Invalid delegate');break;case Op.NOP:break;case Op.ENDFINALLY:if(height!==0)fail(m,pc,'Finally must have an empty stack');break;
@@ -44,7 +45,6 @@ export function verifyImage(image){
         case Op.CONST:if(a<0||a>=image.constants.length)fail(m,pc,'Invalid constant');else if(image.constants[a]?.scalar){try{decodeScalar(image.constants[a]);}catch{fail(m,pc,'Invalid scalar constant');}}delta=1;break;
         case Op.LDLOC:case Op.STLOC:if(a<0||a>=m.locals.length)fail(m,pc,'Invalid local');if(op===Op.LDLOC)delta=1;else need=1;break;
         case Op.LDSTATIC:case Op.STSTATIC:if(a<0||a>=image.statics.length)fail(m,pc,'Invalid static');if(op===Op.LDSTATIC)delta=1;else need=1;break;
-        case Op.ADDRESS:if(a<0||a>7||b<0||(a&3)===0&&b>=m.locals.length||(a&3)===1&&b>=image.statics.length||(a&3)===3&&b!==0)fail(m,pc,'Invalid managed address');need=(a&3)===2?1:(a&3)===3?2:0;delta=1-need;break;
         case Op.LDFLD:need=1;break;case Op.STFLD:need=2;delta=-1;break;
         case Op.DUP:need=1;delta=1;break;case Op.POP:need=1;delta=-1;break;
         case Op.BINARY:need=2;delta=-1;if(!BinaryName[a])fail(m,pc,'Invalid binary operator');if(b>=16?(()=>{try{decodeNumericMode(b);return false;}catch{return true;}})():![0,1,2,3,5].includes(b)||b===5&&!['+','-','*'].includes(BinaryName[a]))fail(m,pc,'Invalid binary mode');break;

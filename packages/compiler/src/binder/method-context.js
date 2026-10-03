@@ -1,3 +1,4 @@
+import {bindAddressArgument} from './reference-arguments.js';
 import {ScalarQueries} from '../scalar-queries.js';
 import {inferScalarExpression, scalarConditionalType} from '../scalar-expressions.js';
 import {inferMemoryExpression} from '../memory-expressions.js';
@@ -27,6 +28,7 @@ export class MethodBinderContext extends ScalarQueries(class {}) {
     if(!method.isStatic){this.thisParameter=new ParameterSymbol({name:'this',type:this.sym.type(method.owner),isThis:true});this.thisParameter.legacyType=method.owner.name;this.thisParameter.declaredAt=method.node.start;}
     this.methodSymbol.parameters.forEach((parameter,i)=>{const p=method.parameters[i];if(this.parameters.has(p.name)||p.name==='this'&&this.thisParameter)this.c.report(p,'CS0136',[p.name]);parameter.legacyType=p.type;parameter.declaredAt=p.start;parameter.ideSymbol=this.c.symbol({...p,name:p.name},'local',p.type,{method:this.m.qualifiedName,scopeStart:this.m.node.start,scopeEnd:this.m.node.end});this.parameters.set(p.name,parameter);});
   }
+  bindAddressArgument(argument,targetType){return bindAddressArgument(this,argument,targetType);}
   // ---- types -------------------------------------------------------------------------------------------------
   /** The TypeSymbol for a legacy type name. */
   type(name){return this.sym.typeOf(name);}
