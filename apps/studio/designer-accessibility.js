@@ -92,7 +92,17 @@ export class DesignerAccessibility {
   }
 
   reportError(error) {
-    this.sourceDiagnostics = [designSourceDiagnostic(error, {uri: this.view.sourceSync.snapshot().uri ?? this.view.path})];
+    const uri = this.view.sourceSync?.snapshot?.().uri ?? this.view.path;
+    const diagnostics = error.diagnostics ?? (error.diagnostic ? [error.diagnostic] : null);
+    this.sourceDiagnostics = diagnostics ? diagnostics.map(diagnostic => {
+      const binding = this.view.sourceSync?.session?.analysis?.bindings?.[diagnostic.nodeId];
+      const location = diagnostic.span ?? binding?.declaration ?? {start: 0, end: 0};
+      const start = diagnostic.start ?? location.start ?? 0;
+      const length = diagnostic.length ?? location.length ?? (location.end === undefined ? 0 : location.end - start);
+      const span = {start, end: start + length};
+      return {...diagnostic, uri: diagnostic.uri ?? uri, source: diagnostic.source ?? 'Designer', span,
+        start, length};
+    }) : [designSourceDiagnostic(error, {uri})];
     this.publish();
     this.announce(error.message ?? String(error));
   }

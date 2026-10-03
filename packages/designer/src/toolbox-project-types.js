@@ -4,6 +4,27 @@ import {SourceText} from '@sharpforge/text';
 const baseControl = 'Microsoft.UI.Xaml.Controls.UserControl';
 const qualifiedName = /^(?:[A-Za-z_][A-Za-z0-9_]*\.)*[A-Za-z_][A-Za-z0-9_]*$/;
 
+function previewEvidence(descriptor) {
+  const evidence = descriptor.rootAssignment;
+  const span = value => value && Number.isSafeInteger(value.start) && Number.isSafeInteger(value.end) &&
+    value.start >= 0 && value.end >= value.start && value.end <= 16_000_000;
+  if (descriptor.readOnly !== true || descriptor.compilationSucceeded !== false || !descriptor.uri || !evidence ||
+      evidence.receiver !== 'this' || !['Content', 'Child'].includes(evidence.property) || evidence.owner !== descriptor.type ||
+      evidence.uri !== descriptor.uri || evidence.baseType !== baseControl || !span(evidence.span) || !span(evidence.baseSpan) ||
+      typeof evidence.childId !== 'string' || evidence.childId.length > 128 || typeof evidence.methodName !== 'string' ||
+      evidence.methodName.length > 256 || typeof evidence.baseUri !== 'string' || evidence.baseUri.length > 4096 ||
+      !Array.isArray(evidence.capabilities) || !evidence.capabilities.includes('preview') ||
+      evidence.capabilities.some(value => !['preview', 'navigate'].includes(value))) {
+    throw new TypeError('Preview-only controls require explicit read-only source ownership evidence');
+  }
+  return {
+    receiver: 'this', property: evidence.property, childId: evidence.childId, uri: evidence.uri,
+    owner: evidence.owner, methodName: evidence.methodName, baseType: baseControl, baseUri: evidence.baseUri,
+    span: {start: evidence.span.start, end: evidence.span.end}, baseSpan: {start: evidence.baseSpan.start, end: evidence.baseSpan.end},
+    capabilities: [...new Set(evidence.capabilities)]
+  };
+}
+
 /** Checks the serializable, non-executing descriptor used by project toolbox items. */
 export function validateProjectControl(descriptor) {
   if (!descriptor || typeof descriptor.type !== 'string' || !qualifiedName.test(descriptor.type)) {
@@ -15,12 +36,18 @@ export function validateProjectControl(descriptor) {
   if (descriptor.uri !== undefined && (typeof descriptor.uri !== 'string' || descriptor.uri.length > 4096)) {
     throw new TypeError('Project control source URI is invalid');
   }
+  if (descriptor.displayName !== undefined && (typeof descriptor.displayName !== 'string' || descriptor.displayName.length > 128) ||
+      descriptor.analysisVersion !== undefined && (!Number.isSafeInteger(descriptor.analysisVersion) || descriptor.analysisVersion < 0)) {
+    throw new TypeError('Project control display name or analysis version is invalid');
+  }
   return {
     type: descriptor.type,
     baseType: baseControl,
     displayName: descriptor.displayName || descriptor.type.split('.').at(-1),
     ...(descriptor.uri ? {uri: descriptor.uri} : {}),
-    ...(descriptor.analysisVersion !== undefined ? {analysisVersion: descriptor.analysisVersion} : {})
+    ...(descriptor.analysisVersion !== undefined ? {analysisVersion: descriptor.analysisVersion} : {}),
+    ...(descriptor.previewOnly === true ? {previewOnly: true, readOnly: true, compilationSucceeded: false,
+      rootAssignment: previewEvidence(descriptor)} : {})
   };
 }
 
@@ -64,6 +91,38 @@ function declarations(files) {
     }
   }
   return types;
+}
+
+/**
+ * Enumerate direct UserControl declarations for worker-side named-class analysis. Candidates
+ * make no compilation or preview support claim; a separate capability analysis must qualify them.
+ */
+export function projectControlCandidates(files) {
+  if (!Array.isArray(files)) throw new TypeError('Project control source files are required');
+  const candidates = new Map();
+  for (const declaration of declarations(files)) {
+    const direct = declaration.bases.some(base => {
+      const name = declaration.aliases.get(base) ?? base;
+      return name === baseControl || name === 'UserControl' && declaration.imports.has('Microsoft.UI.Xaml.Controls');
+    });
+    if (direct) candidates.set(declaration.type + '\0' + declaration.uri, {type: declaration.type, uri: declaration.uri});
+  }
+  if (candidates.size > 512) throw new RangeError('Project control catalog exceeds 512 items');
+  return [...candidates.values()].sort((left, right) => left.type.localeCompare(right.type) || String(left.uri).localeCompare(String(right.uri)));
+}
+
+/** Accept only worker-qualified inheritance previews; a failed build always remains failed. */
+export function discoverPreviewProjectControls({success, previewAvailable, projectTypes, version = 0}) {
+  if (success !== false || previewAvailable !== true) return [];
+  if (!Array.isArray(projectTypes) || projectTypes.length > 512) throw new RangeError('Project preview catalog exceeds 512 items');
+  const seen = new Set();
+  return projectTypes.map(descriptor => {
+    if (descriptor.previewOnly !== true || seen.has(descriptor.type)) {
+      throw new TypeError('Project preview controls require unique explicitly preview-only descriptors');
+    }
+    seen.add(descriptor.type);
+    return validateProjectControl({...descriptor, analysisVersion: version});
+  }).sort((left, right) => left.type.localeCompare(right.type));
 }
 
 /** Discovers constructible UserControls only from a successful compilation snapshot. */
