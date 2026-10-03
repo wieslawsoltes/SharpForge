@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {CilVirtualMachine} from '@sharpforge/runtime';
-import {Writer, codedIndex, verifyCilAssembly} from '@sharpforge/cil';
+import {Writer, codedIndex, signatureType, verifyCilAssembly} from '@sharpforge/cil';
 import {controlFixture} from './support/control-fixture.js';
 import {argumentHandle, typedReference, typedReferenceValue, varargsCall} from '../packages/runtime/src/execution/varargs.js';
 import {validateVarargsSnapshot} from '../packages/runtime/src/execution/varargs-snapshot-validation.js';
@@ -67,4 +67,14 @@ test('T02.9 snapshot preflight rejects packet corruption without using live fram
   validateVarargsSnapshot(vm, snapshot);
   snapshot.frames.at(-1).varargs[0].index++;
   assert.throws(() => validateVarargsSnapshot(vm, snapshot), /varargs snapshot/);
+});
+
+
+test('T02.9 metadata writer preserves typed-reference element and argument value types', () => {
+  for (const type of ['typedref', 'System.TypedReference']) {
+    assert.deepEqual([...signatureType(new Writer(), type, () => 0x01000001).finish()], [0x16]);
+  }
+  for (const type of ['System.ArgIterator', 'System.RuntimeArgumentHandle']) {
+    assert.deepEqual([...signatureType(new Writer(), type, () => 0x01000001).finish()], [0x11, 5]);
+  }
 });
