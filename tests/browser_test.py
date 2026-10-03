@@ -4,10 +4,12 @@ Use SHARPFORGE_IN_MEMORY=1 only on restricted runners; default is normal HTTP.
 import json,os,subprocess,time,traceback
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-from browser_harness import load_in_memory
+from conformance.browser.launch import launch_browser, results_dir
+RESULTS = results_dir()
+from browser_harness import load_application
 ROOT=Path(__file__).resolve().parents[1]
-REPORT=ROOT/'docs'/'browser-results.json'
-SHOTS=ROOT/'docs'/'screenshots'
+REPORT=RESULTS/'browser-results.json'
+SHOTS=RESULTS/'screenshots'
 SHOTS.mkdir(parents=True,exist_ok=True)
 checks=[]
 def checked(name, action):
@@ -19,22 +21,14 @@ def truth(value,message='assertion failed'):
     if not value: raise AssertionError(message)
 server=None
 mode='in-memory' if os.getenv('SHARPFORGE_IN_MEMORY')=='1' else 'http'
-if mode=='http':
-    server=subprocess.Popen(['node','scripts/serve.js'],cwd=ROOT,env={**os.environ,'PORT':'4179'},stdout=subprocess.DEVNULL)
-    time.sleep(0.5)
 try:
- with sync_playwright() as p:
-    executable=os.getenv('CHROMIUM_EXECUTABLE')
-    browser=p.chromium.launch(**({'executable_path':executable} if executable else {}),headless=True,args=['--no-sandbox'])
+ with sync_playwright() as p, launch_browser(p, __file__) as browser:
     page=browser.new_page(viewport={'width':1536,'height':960},device_scale_factor=1)
     errors=[]; workers=[]
     page.on('pageerror',lambda e:errors.append(str(e)))
     page.on('console',lambda m:errors.append(m.text) if m.type=='error' else None)
     page.on('worker',lambda w:workers.append(w.url))
-    if mode=='in-memory':load_in_memory(page)
-    else:
-        page.goto('http://127.0.0.1:4179/',wait_until='networkidle')
-        page.wait_for_function('window.sharpforge && window.sharpforge.getState().metrics !== null')
+    load_application(page)
     state=lambda:page.evaluate('window.sharpforge.getState()')
     wait=lambda expr:page.wait_for_function(expr,timeout=15000)
     command=lambda cmd:page.evaluate('(cmd)=>window.sharpforge.execute(cmd)',cmd)
@@ -133,7 +127,7 @@ try:
             command('assemblyExport')
         downloaded=event.value
         truth(downloaded.suggested_filename.endswith('.dll'))
-        destination=ROOT/'docs'/'browser-export.dll'
+        destination=RESULTS/'browser-export.dll'
         downloaded.save_as(str(destination))
         truth(destination.read_bytes()[:2]==b'MZ')
     checked('File command downloads a real IL assembly',export_assembly)
@@ -150,7 +144,7 @@ try:
         command('stop')
         produced=subprocess.run(['node','--input-type=module','-e',
             'import {compileToIL} from "./packages/compiler/src/index.js"; console.log(JSON.stringify(Array.from(compileToIL("Console.WriteLine(123);",{embedSources:false}).assembly)))'],
-            cwd=ROOT,check=True,text=True,capture_output=True)
+            cwd=ROOT,check=True,text=True,capture_output=True, encoding='utf-8')
         data=json.loads(produced.stdout)
         page.evaluate('(data)=>window.sharpforge.importAssembly(new Uint8Array(data))',data)
         truth('Console.WriteLine' not in state()['files'][0]['text'])
@@ -188,7 +182,6 @@ try:
             command(c);truth(page.locator('#modal-backdrop').is_visible());page.click('#modal-close')
     checked('documentation and keyboard help dialogs',docs)
     checked('no browser JavaScript errors',lambda:truth(not errors,str(errors)))
-    REPORT.write_text(json.dumps({'browser':browser.version,'mode':mode,'workers':'real dedicated classic workers, statically bundled from production ESM','storage':'harness-only in-memory shim' if mode=='in-memory' else 'native browser storage','network':'not validated in in-memory mode' if mode=='in-memory' else 'HTTP static server','tests':checks,'total':len(checks),'passed':len(checks)},indent=2))
-    browser.close()
+    REPORT.write_text(json.dumps({'browser':browser.version,'mode':mode,'workers':'real dedicated classic workers, statically bundled from production ESM','storage':'harness-only in-memory shim' if mode=='in-memory' else 'native browser storage','network':'not validated in in-memory mode' if mode=='in-memory' else 'HTTP static server','tests':checks,'total':len(checks),'passed':len(checks)},indent=2), encoding='utf-8')
 finally:
     if server:server.terminate()

@@ -2,15 +2,16 @@
 import json,os,time,traceback
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-from browser_harness import load_in_memory
+from conformance.browser.launch import launch_browser, results_dir
+RESULTS = results_dir()
+from browser_harness import load_application
 ROOT=Path(__file__).resolve().parents[1]
 checks=[]
 def truth(value,message='assertion failed'):
  if not value:raise AssertionError(message)
 def check(name,fn):
  start=time.perf_counter();fn();checks.append({'name':name,'passed':True,'milliseconds':round((time.perf_counter()-start)*1000,2)});print('PASS',name,flush=True)
-with sync_playwright() as p:
- browser=p.chromium.launch(headless=True,executable_path=os.getenv('CHROMIUM_EXECUTABLE'),args=['--no-sandbox'])
+with sync_playwright() as p, launch_browser(p, __file__) as browser:
  page=browser.new_page(viewport={'width':1728,'height':1050},device_scale_factor=1);page.set_default_timeout(15000)
  errors=[];workers=[];page.on('pageerror',lambda e:errors.append(e.stack or str(e)));page.on('worker',lambda w:workers.append(w.url))
  def state():return page.evaluate('sharpforge.getState()')
@@ -27,8 +28,7 @@ with sync_playwright() as p:
  def value(name):return page.evaluate('(name)=>sharpforge.evaluate(name)',name)['result']
  def editor():return ev('sharpforge.getEditorState("Program.cs")')
  try:
-  if os.getenv('SHARPFORGE_BROWSER_URL'):page.goto(os.environ['SHARPFORGE_BROWSER_URL']);wait('window.sharpforge?.getState().metrics!==null')
-  else:load_in_memory(page)
+  load_application(page)
   check('two real workers and default F5 run-to-breakpoint policy',lambda:truth(len(workers)==2 and ev('sharpforge.getDebugSettings().stopOnEntry') is False))
   def exact_screenshot():
    sample('recursion');bps([{'line':20}]);page.locator('#start').click();d=paused();truth(d['reason']['reason']=='breakpoint',str(d['reason']));truth(d['point']['line']==20 and d['frames'][0]['line']==20);truth(d['output']=='');truth(d['breakpoints'][0]['hits']==1);truth(editor()['executionLine']==20);truth(editor()['selectedFrameLine'] is None);truth(page.locator('#debug-stop-banner').get_attribute('data-phase')=='before');truth(page.locator('[data-source-uri="Program.cs"] .sf-line.breakpoint.execution[data-line="20"]').count()==1);truth('Console.WriteLine' in ''.join(page.locator('.sf-current-statement').all_text_contents()))
@@ -130,20 +130,20 @@ with sync_playwright() as p:
   def all_count():
    ids=ev('(()=>{const l=sharpforge.getLayout(),a=[...l.closed,...Object.values(l.autoHide).flat()];function walk(n){if(n.type==="group")a.push(...n.panels);else{walk(n.first);walk(n.second);}}walk(l.root);for(const f of l.floating)walk(f.root);return [...new Set(a.filter(id=>!id.startsWith("source:")))];})()');truth(len(ids)==44,str(ids))
   check('all 44 independent workbench tools are available',all_count)
-  manifest=json.loads((ROOT/'examples/features-0.9/manifest.json').read_text())
+  manifest=json.loads((ROOT/'examples/features-0.9/manifest.json').read_text(encoding='utf-8'))
   def shipped_example(example):
    cmd('stop');page.evaluate('(id)=>sharpforge.loadSample(id,true)',example['id']);truth(ev('sharpforge.getBreakpoints()')==example['debug'].get('breakpoints',{}));ev('sharpforge.run()');truth(finished()['output']==example['expectedOutput'])
   for example in manifest:check('production workers run shipped '+example['id'],lambda example=example:shipped_example(example))
   def final_shot():
-   sample('recursion');bps([{'line':20}]);debug();ev('sharpforge.openTool("breakpoints")');wait('document.querySelectorAll("#toasts .toast").length===0');page.mouse.move(880,34);page.screenshot(path=str(ROOT/'docs/screenshots/release09-breakpoint.png'),full_page=True)
+   sample('recursion');bps([{'line':20}]);debug();ev('sharpforge.openTool("breakpoints")');wait('document.querySelectorAll("#toasts .toast").length===0');page.mouse.move(880,34);page.screenshot(path=str(RESULTS/'screenshots/release09-breakpoint.png'),full_page=True)
   check('capture requested Fibonacci breakpoint with exact statement and stop explanation',final_shot)
   def caller_shot():
-   ev('sharpforge.setFunctionBreakpoints([{name:"Program.Fibonacci(int)",condition:"n == 2"}]);sharpforge.setBreakpoints("Program.cs",[])');d=debug();truth(d['reason']['reason']=='function breakpoint');caller=d['frames'][-1];page.evaluate('(id)=>sharpforge.selectDebugFrame(id)',caller['id']);ev('sharpforge.openTool("stack")');page.screenshot(path=str(ROOT/'docs/screenshots/release09-callstack.png'),full_page=True);cmd('debugSettings');page.screenshot(path=str(ROOT/'docs/screenshots/release09-settings.png'),full_page=True)
+   ev('sharpforge.setFunctionBreakpoints([{name:"Program.Fibonacci(int)",condition:"n == 2"}]);sharpforge.setBreakpoints("Program.cs",[])');d=debug();truth(d['reason']['reason']=='function breakpoint');caller=d['frames'][-1];page.evaluate('(id)=>sharpforge.selectDebugFrame(id)',caller['id']);ev('sharpforge.openTool("stack")');page.screenshot(path=str(RESULTS/'screenshots/release09-callstack.png'),full_page=True);cmd('debugSettings');page.screenshot(path=str(RESULTS/'screenshots/release09-settings.png'),full_page=True)
   check('capture separate executing and inspected caller locations and debugger settings',caller_shot)
   check('no page JavaScript errors',lambda:truth(not errors,str(errors)))
-  result={'passed':True,'browser':browser.version,'mode':'http' if os.getenv('SHARPFORGE_BROWSER_URL') else 'in-memory-production-workers','workers':len(workers),'checks':checks,'errors':errors}
+  result={'passed':True,'browser':browser.version,'mode':'http' if os.getenv('SHARPFORGE_IN_MEMORY') != '1' else 'in-memory-production-workers','workers':len(workers),'checks':checks,'errors':errors}
  except Exception as e:
-  traceback.print_exc();result={'passed':False,'checks':checks,'errors':errors,'failure':str(e)};print('STATE',json.dumps(state().get('debug'),ensure_ascii=False)[:14000]);page.screenshot(path=str(ROOT/'docs/screenshots/release09-failure.png'),full_page=True,timeout=5000)
+  traceback.print_exc();result={'passed':False,'checks':checks,'errors':errors,'failure':str(e)};print('STATE',json.dumps(state().get('debug'),ensure_ascii=False)[:14000]);page.screenshot(path=str(RESULTS/'screenshots/release09-failure.png'),full_page=True,timeout=5000)
  finally:
-  (ROOT/'docs/browser-release09-results.json').write_text(json.dumps(result,indent=2)+'\n');browser.close()
+  (RESULTS/'browser-release09-results.json').write_text(json.dumps(result,indent=2)+'\n', encoding='utf-8')
  if not result['passed']:raise SystemExit(1)
