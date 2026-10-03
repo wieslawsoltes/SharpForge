@@ -27,11 +27,16 @@ export const StatementBinding = Base =>
       while (syntax.kind === 'ParenthesizedExpression') return false;
       return statementExpressionKinds.has(syntax.kind) || syntax.kind.endsWith('AssignmentExpression');
     }
+    /** The names of the locals a statement list declares: reserved in the whole list, before and after the declaration. */
+    namesDeclaredIn(statements) {
+      const names = [];
+      for (const s of statements)
+        if (s.kind === 'LocalDeclarationStatement') for (const v of s.declaration.variables) names.push(v.identifier.valueText);
+      return names;
+    }
     /** Binds a block with its own scope. Local functions and labels are visible in the whole block. */
     block(syntax, { statements = syntax.statements, scoped = true } = {}) {
-      const pending = [];
-      for (const s of statements)
-        if (s.kind === 'LocalDeclarationStatement') for (const v of s.declaration.variables) pending.push(v.identifier.valueText);
+      const pending = this.namesDeclaredIn(statements);
       if (scoped) this.pushScope(pending);
       else for (const n of pending) this.pending.at(-1).add(n);
       this.enterLabels(statements, scoped);

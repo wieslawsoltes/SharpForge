@@ -123,8 +123,12 @@ export const namespaceMethods = {
       )
         unitAttributes.push(this.attributeList());
       else if (!inNamespace && this.at('}')) this.skipUnexpected('CS1022', 'Type or namespace definition, or end-of-file expected');
-      else if (!this.canStartMember() && !this.canStartStatement() && !this.at('namespace'))
-        this.skipUnexpected('CS1525', `Invalid expression term '${this.current.text}'`);
+      else if (!this.canStartMember() && !this.canStartStatement() && !this.at('namespace')) {
+        // Roslyn reports a token that starts nothing as CS1022 at compilation-unit level and as CS1525 elsewhere. The back
+        // end profile keeps CS1525 everywhere: recorded compiler evidence (planning/contracts) pins that code.
+        if (inNamespace || this.options.backEndProfile) this.skipUnexpected('CS1525', `Invalid expression term '${this.current.text}'`);
+        else this.skipUnexpected('CS1022', 'Type or namespace definition, or end-of-file expected');
+      }
       else members.push(this.namespaceMember(inNamespace, members.length));
       this.guardProgress(before);
     }
@@ -143,6 +147,15 @@ export const namespaceMethods = {
     if (this.at('namespace')) return this.namespaceDeclaration(attributeLists, modifiers, membersBefore);
     const type = this.typeLikeDeclaration(attributeLists, modifiers);
     if (type) return type;
+    // `new T(...);` at compilation-unit level is an object-creation statement: `new` is a modifier only before `Type name`.
+    const creation = !inNamespace && modifiers.length === 1 && modifiers[0].text === 'new' && !this.isId(this.tokens[this.scanType(this.i)]);
+    const shape = inNamespace || creation ? null : this.topLevelDeclarationShape();
+    if (shape === 'property') return this.memberDeclarationAfterModifiers(attributeLists, modifiers, null);
+    if (shape === 'function' && modifiers.length) {
+      const modifiersEnd = this.memberModifiersEnd;
+      this.reset(mark);
+      return this.globalFunction(attributeLists, modifiersEnd);
+    }
     const memberish =
       inNamespace || modifiers.some(m => memberOnly.has(m.text)) || this.at('event') || this.at('~') || this.atAny(['implicit', 'explicit']);
     if (memberish) return this.memberDeclarationAfterModifiers(attributeLists, modifiers, null);

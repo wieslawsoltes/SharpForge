@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "commit": "b6a47980eaffe24f01f94da36d1e43d836366de9",
+  "kind": "packages",
+  "files": [
+    {
+      "path": "artifacts/sharpforge-archive-0.14.0.tgz",
+      "bytes": 8339,
+      "sha256": "b56f4b6afd780e97496917f007836828a65d4e8b066eb06235b811b5ab1ec591"
+    },
+    {
+      "path": "artifacts/sharpforge-bytecode-0.14.0.tgz",
+      "bytes": 4904,
+      "sha256": "4f66bf78407ada2358f20af274032155e3ecb36b03ddee0b6eda8b6824bc4bb2"
+    },
+    {
+      "path": "artifacts/sharpforge-cil-0.14.0.tgz",
+      "bytes": 42836,
+      "sha256": "9440809657916740785a54635d53d964023597a0104dd708c1355e95f44eb637"
+    },
+    {
+      "path": "artifacts/sharpforge-compiler-0.14.0.tgz",
+      "bytes": 26563,
+      "sha256": "85e587176c35956698e2a4467a77674956358cd3bac1c58cca2610e8d99e46c8"
+    },
+    {
+      "path": "artifacts/sharpforge-compute-0.14.0.tgz",
+      "bytes": 12914,
+      "sha256": "7497fa9fb8aeae9147ea6d4edce3d846398965f66fe49c6b7d60724ac7ffe946"
+    },
+    {
+      "path": "artifacts/sharpforge-controls-0.14.0.tgz",
+      "bytes": 11025,
+      "sha256": "e5d9222526f97d8c1b51a5911e78f004f15dd091678ebb7a57f8b04b3345b737"
+    },
+    {
+      "path": "artifacts/sharpforge-debugger-0.14.0.tgz",
+      "bytes": 39895,
+      "sha256": "a7d4555a9081ea618e4e3cb53824c8932754c0492b3db7e2116372fddc01e39b"
+    },
+    {
+      "path": "artifacts/sharpforge-designer-0.14.0.tgz",
+      "bytes": 20116,
+      "sha256": "1afe43ae3a0638eb9f382c0dfbcb1888e98ab4f36ebcd61c9a84e105b68b4bfe"
+    },
+    {
+      "path": "artifacts/sharpforge-docking-0.14.0.tgz",
+      "bytes": 12414,
+      "sha256": "a24200afad9d0f974d8f25bdc109f51de3a74bdc7d32491856f12688a4b7eef1"
+    },
+    {
+      "path": "artifacts/sharpforge-editor-0.14.0.tgz",
+      "bytes": 204314,
+      "sha256": "bccc88f49c99119969d90840d8b4b4942ec823a55f299633719e091c4025a7ef"
+    },
+    {
+      "path": "artifacts/sharpforge-extensions-0.14.0.tgz",
+      "bytes": 5459,
+      "sha256": "e7e22d95c09dab0223887884b27ebf5f66a4ede3ccd1acfe716cf851a5a0c03d"
+    },
+    {
+      "path": "artifacts/sharpforge-framework-0.14.0.tgz",
+      "bytes": 18698,
+      "sha256": "658780deec3916c0f277091652aca2edf96228d0825b2cf8dcf12e3f6d0195a5"
+    },
+    {
+      "path": "artifacts/sharpforge-language-0.14.0.tgz",
+      "bytes": 4704,
+      "sha256": "42c9c8f738c2d6a25f171340a77394f045890ee47ca974bb57e42c15c4e184a8"
+    },
+    {
+      "path": "artifacts/sharpforge-msbuild-0.14.0.tgz",
+      "bytes": 21834,
+      "sha256": "60f77cd3ec78d5af58fb15bb9e6ced8ee93d4ec40f858a1b1793f07d5be41bc6"
+    },
+    {
+      "path": "artifacts/sharpforge-network-0.14.0.tgz",
+      "bytes": 6281,
+      "sha256": "d5b7f51a67cf41bcca5cbf1bc50e3c1c5c45fa79957f526eb0711e4cec41b440"
+    },
+    {
+      "path": "artifacts/sharpforge-project-system-0.14.0.tgz",
+      "bytes": 23917,
+      "sha256": "4e8767fb36f97586031a47a7d72496a79fc7852fe2d8e324893b7165de591ab5"
+    },
+    {
+      "path": "artifacts/sharpforge-protocol-0.14.0.tgz",
+      "bytes": 11202,
+      "sha256": "6ed44eb002b32bf75c4d101b39ed94ce410021786b5b2bc7ac114e7be330a86f"
+    },
+    {
+      "path": "artifacts/sharpforge-refactoring-0.14.0.tgz",
+      "bytes": 6338,
+      "sha256": "bb83f0e6b2e68f021013b383a105430bd961024c8b26ebc6eaeee94f22b8dfb7"
+    },
+    {
+      "path": "artifacts/sharpforge-runtime-0.14.0.tgz",
+      "bytes": 58334,
+      "sha256": "de4df57ab55641575dbe270ebe95712a948f60ca732ef575cb3542a4206a4652"
+    },
+    {
+      "path": "artifacts/sharpforge-symbols-0.14.0.tgz",
+      "bytes": 12612,
+      "sha256": "73d2fba0e9311beca4dee8cd3bf10d17aae5bb786eebf5fcb52a33e8ff6a59ed"
+    },
+    {
+      "path": "artifacts/sharpforge-syntax-0.14.0.tgz",
+      "bytes": 10467,
+      "sha256": "cacf2a6b0d270dc3245c8cdc115f90691e1420361c30285bf6917832aab18d02"
+    },
+    {
+      "path": "artifacts/sharpforge-templates-0.14.0.tgz",
+      "bytes": 9699,
+      "sha256": "c5e9769764fb9644a2ba13b381ead8ec404abd00b44c73d708f8b9bd138a811b"
+    },
+    {
+      "path": "artifacts/sharpforge-text-0.14.0.tgz",
+      "bytes": 3274,
+      "sha256": "113fc69c55453243f279c5ef8a0591787cd2f9f2b46b5732f962de9b8659fd6a"
+    },
+    {
+      "path": "artifacts/sharpforge-winui-0.14.0.tgz",
+      "bytes": 25031,
+      "sha256": "fe254abe430d5d0cc74a7c4c1e68ef222ab6d22f96c9fcd99a37b211f81b438a"
+    },
+    {
+      "path": "artifacts/sharpforge-workspace-0.14.0.tgz",
+      "bytes": 3154,
+      "sha256": "a9d97557a1a2a63e8b39123647ca470484a838a4504f748361171c70a4b7c2c7"
+    }
+  ]
+}
