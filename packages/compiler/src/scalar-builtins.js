@@ -1,3 +1,4 @@
+import {compileMemoryConversion} from './memory-expressions.js';
 import {nativeProperty} from './native-properties.js';
 import {Op,Builtins,NumericType,numericMode,numericIntrinsicDefinitions,numericTypeName,integerType,float as scalarFloat,decimalParse} from '@sharpforge/bytecode';
 import {numeric,implicitNumeric,constantFits} from './numeric.js';
@@ -94,6 +95,7 @@ export function installScalarCompiler(C) {
       this.assigned=new Set([...yesAssigned].filter(slot=>this.assigned.has(slot)));this.patch(done);return type;
     },
     typedExpr(node,type) {
+      const memory=compileMemoryConversion(this,node,type);if(memory!==undefined)return memory;
       type=short(type);
       if(node?.kind==='Conditional'&&numeric(type))return this.scalarConditional(node,type);
       const actual=originalTyped.call(this,node,type);

@@ -1,3 +1,4 @@
+import {loadMemorySpan} from './memory-loading.js';
 import {scalarSpan} from './scalar-loading.js';
 import {numericAliases,Builtins,numericTypeName,numericTypeNames} from '@sharpforge/bytecode';
 import {contractForMember,frameworkType,enumTypes} from '@sharpforge/framework';
@@ -62,6 +63,7 @@ export function loadAssembly(bytes,options={}) {
   return image;
 }
 function decodeSpan(span,c) {
+  const memory=loadMemorySpan(span,c);if(memory)return memory;
   if(span.at(-2)?.name==='ldstr'&&span.at(-1)?.name==='pop'){
     const marker=c.metadata.userString(span.at(-2).operand);
     if(marker==='SharpForge.Formatting.Format4'){
