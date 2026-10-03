@@ -45,14 +45,17 @@ time. Emission is O(1) in ring capacity with a bounded payload; flush is bounded
 by retained events times current subscribers. None of these costs has been
 measured in this implementation slice.
 
-Prepared tests exercise a host adapter around a real direct-CIL program, ring
-overflow, immutable payloads, cancellation/disposal, reentrant callbacks and
-malformed inputs. Root owns serial qualification:
+Serial validation passed 22 event-log and value-ABI tests at `f3edb587`, including
+a host adapter around real direct-CIL execution, ring overflow, immutable
+payloads, cancellation/disposal, reentrant callbacks and malformed inputs:
 
 ```sh
-node --max-old-space-size=512 --test --test-concurrency=1 tests/a05-runtime-events.test.js
+SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_TEST_CONCURRENCY=1 SHARPFORGE_MAX_OLD_SPACE_MB=512 \
+  node scripts/limited.js node --test --test-concurrency=1 \
+  tests/a05-runtime-events.test.js tests/a00-01-value-abi.test.js
 ```
 
-No tests, builds, browser runs or benchmarks were executed for this slice.
-Browser/platform qualification, automatic hooks, profile totals, speedscope
+`npm run check` passed with 1,729 syntax-checked modules and no import errors.
+The non-strict structure report completed with 264 repository warnings. Browser
+runs and benchmarks remain staged. Automatic hooks, profile totals, speedscope
 export and profiler overhead remain in the original E02 acceptance scope.
