@@ -45,7 +45,7 @@ export const OperatorBinding = Base =>
         ]);
         return this.bad(syntax);
       }
-      return this.applyConversion(e, type, c, syntax, true);
+      return this.applyConversion(e, type, this.checkedConversion(c), syntax, true);
     }
     unary(syntax, operator) {
       // `-2147483648` and `-9223372036854775808` are literals in their own right.
@@ -83,10 +83,10 @@ export const OperatorBinding = Base =>
     }
     /** Operator resolution for bound operands; binder/extension-members.js adds the extension operators in scope. */
     resolveUnaryOperator(operator, operand) {
-      return this.d.operators.unary(operator, operand);
+      return this.d.operators.unary(operator, operand, { isChecked: this.checked });
     }
     resolveBinaryOperator(operator, left, right) {
-      return this.d.operators.binary(operator, left, right);
+      return this.d.operators.binary(operator, left, right, { isChecked: this.checked });
     }
     binary(syntax, operator) {
       const left = this.value(syntax.left),

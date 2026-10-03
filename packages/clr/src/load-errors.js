@@ -10,6 +10,7 @@ export const LoadErrorCode = Object.freeze({
   Disposed: 'SFCLR008',
   Cancelled: 'SFCLR009',
   UnsupportedFramework: 'SFCLR010',
+  RecursiveResolution: 'SFCLR011',
 });
 
 const exceptionTypes = Object.freeze({
