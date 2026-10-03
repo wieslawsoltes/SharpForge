@@ -62,7 +62,11 @@ for (const engine of ['source', 'cil']) {
       const revision = platform.get(reference, '$version');
       const allocations = platform.heap.stats.allocations;
       const writes = [];
-      vm.onWrite = event => { if (event.kind === 'array') writes.push(event); };
+      const fields = [];
+      vm.onWrite = event => {
+        if (event.kind === 'array') writes.push(event);
+        else if (event.kind === 'field') fields.push([event.property, event.oldValue, event.value]);
+      };
       call('Sort');
       assert.strictEqual(platform.get(reference, '$data'), storage);
       assert.strictEqual(platform.heap.get(storage).data, items);
@@ -71,6 +75,7 @@ for (const engine of ['source', 'cil']) {
       assert.deepEqual(writes.map(event => [event.index, event.oldValue, event.value]),
         [[0, 3, 1], [1, 1, 1], [2, 2, 2], [3, 1, 3]]);
       assert(writes.every(event => event.handle === storage.h && event.generation === storage.g));
+      assert.deepEqual(fields, [['$count', 4, 4], ['$version', revision, revision + 1]]);
       assert.equal(call('get_Count'), 4);
       assert.equal(call('get_Capacity'), 64);
       assert.equal(platform.get(reference, '$version'), revision + 1);

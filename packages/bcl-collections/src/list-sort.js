@@ -10,6 +10,7 @@ export function sortList(platform, reference, comparer = null) {
     // An observer may collect after overwriting a value still needed later in this permutation.
     // Keep every pending value rooted once for the operation, including during write notifications.
     for (let index = 0; index < items.length; index++) writeArray(platform, storage, index, items[index]);
+    platform.set(reference, '$count', items.length);
     change(platform, reference);
     return null;
   });
