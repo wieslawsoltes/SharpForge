@@ -7,5 +7,6 @@ import { fixtures as topLevel } from './top-level.js';
 import { fixtures as globalUsings } from './global-usings.js';
 import { fixtures as csharp9Rules } from './csharp9-rules.js';
 import { fixtures as csharp10Rules } from './csharp10-rules.js';
+import { fixtures as csharp11Rules } from './csharp11-rules.js';
 
-export const fixtures = [...targetTyping, ...topLevel, ...globalUsings, ...csharp9Rules, ...csharp10Rules];
+export const fixtures = [...targetTyping, ...topLevel, ...globalUsings, ...csharp9Rules, ...csharp10Rules, ...csharp11Rules];

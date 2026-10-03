@@ -45,7 +45,7 @@ export const OperatorBinding = Base =>
         ]);
         return this.bad(syntax);
       }
-      return this.applyConversion(e, type, c, syntax, true);
+      return this.applyConversion(e, type, this.checkedConversion(c), syntax, true);
     }
     unary(syntax, operator) {
       // `-2147483648` and `-9223372036854775808` are literals in their own right.
@@ -64,7 +64,7 @@ export const OperatorBinding = Base =>
       }
       const operand = this.value(syntax.operand);
       if (operand.hasErrors) return this.bad(syntax, { operand });
-      const r = this.d.operators.unary(operator, operand);
+      const r = this.d.operators.unary(operator, operand, { isChecked: this.checked });
       if (r.kind === 'error') {
         if (!r.suppressed) this.report(syntax, r.code, r.args);
         return this.bad(syntax);
@@ -117,7 +117,7 @@ export const OperatorBinding = Base =>
           this.report(syntax, 'CS0019', [operator, this.operandDisplay(left), this.operandDisplay(right)]);
           return this.bad(syntax);
         }
-      const r = this.d.operators.binary(operator, left, right);
+      const r = this.d.operators.binary(operator, left, right, { isChecked: this.checked });
       if (r.kind === 'error') {
         if (!r.suppressed) this.report(syntax, r.code, r.args);
         return this.bad(syntax);
@@ -331,7 +331,7 @@ export const OperatorBinding = Base =>
       this.markRead(operand);
       this.markWrite(operand, null);
       if (operand.kind === 'Local') operand.local.nonConstantWrite = true;
-      const r = this.d.operators.unary(operator, operand);
+      const r = this.d.operators.unary(operator, operand, { isChecked: this.checked });
       if (r.kind === 'error') {
         if (!r.suppressed) this.report(syntax, r.code, r.args);
         return this.bad(syntax);
