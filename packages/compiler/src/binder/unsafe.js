@@ -9,17 +9,24 @@
  *   *p, p->m     the operand is a pointer (CS0193) and not `void*` (CS0242)
  *   p[i]         one index (CS0196) of an integral type
  *   fixed        the local is a pointer (CS0209) with an initializer (CS0210): an array, a string, or the address of
- *                a moveable variable (CS0213 for one that is already fixed), CS8385 for anything else; the local is
- *                read-only (CS1656)
+ *                a moveable variable (CS0213 for one that is already fixed), a value whose type has an instance
+ *                `ref T GetPinnableReference()` (C# 7.3), CS8385 for anything else; the local is read-only (CS1656)
  *
  * Pointer arithmetic and comparisons are in overload/pointer-operators.js, pointer conversions in
  * conversions/pointer.js, declaration-level rules in ./unsafe-declarations.js. Nothing here is executable: the image
  * has typed slots and fields only, so code generation reports pointers as a runtime gap.
  */
-import { RefKind, PointerTypeSymbol, ArrayTypeSymbol } from '../symbols/types.js';
+import { RefKind, SymbolKind, PointerTypeSymbol, ArrayTypeSymbol } from '../symbols/types.js';
+import { lookupMembers } from './inheritance.js';
 import { LocalDeclarationKind } from '../symbols/members.js';
 import { isPointerType, isVoidPointer } from '../conversions/pointer.js';
-import { isUnsafeSymbol, isManagedType, findPointerSyntax } from './unsafe-declarations.js';
+import {
+  isUnsafeSymbol,
+  isManagedType,
+  findPointerSyntax,
+  isUnmanagedConstructedType,
+  pointsAtConstructedType,
+} from './unsafe-declarations.js';
 
 const pointerExpressions = new Set(['AddressOfExpression', 'PointerIndirectionExpression', 'PointerMemberAccessExpression']);
 
@@ -68,6 +75,7 @@ export const UnsafeBinding = Base =>
       if (at) {
         this.requireUnsafe(at);
         this.warnManagedPointee(bound.type, at);
+        if (pointsAtConstructedType(bound.type)) this.d.gate(this.c.uri, at, 'UnmanagedConstructedTypes');
       }
       return bound;
     }
@@ -95,6 +103,7 @@ export const UnsafeBinding = Base =>
       if (syntax.kind === 'SizeOfExpression') {
         const size = super.expression(syntax, options);
         if (!size.constantValue && !size.hasErrors && !this.inUnsafeContext) this.report(syntax, 'CS0233', [syntax.type.toString().trim()]);
+        if (isUnmanagedConstructedType(super.bindType(syntax.type).type)) this.d.gate(this.c.uri, syntax, 'UnmanagedConstructedTypes');
         return size;
       }
       if (!pointerExpressions.has(syntax.kind)) return super.expression(syntax, options);
@@ -141,6 +150,7 @@ export const UnsafeBinding = Base =>
         return this.bad(syntax);
       }
       if (isManagedType(operand.type)) this.report(syntax, 'CS8500', [this.display(operand.type)]);
+      else if (isUnmanagedConstructedType(operand.type)) this.d.gate(this.c.uri, syntax, 'UnmanagedConstructedTypes');
       return this.node('AddressOf', syntax, new PointerTypeSymbol(operand.type), { operand });
     }
     /** A pointer has no members: `p.M` is CS1061 (`p->M` is the member of what it points at). */
@@ -161,6 +171,9 @@ export const UnsafeBinding = Base =>
         this.report(syntax, 'CS0242');
         return this.bad(syntax);
       }
+      // C# 7.3: a fixed-size buffer of a moveable variable is indexed without pinning it first.
+      if (target.kind === 'FieldAccess' && target.field.isFixedSizeBuffer && target.receiver && !isFixedVariable(target.receiver))
+        this.d.gate(this.c.uri, target.syntax, 'IndexingMovableFixedBuffers');
       let index = null;
       for (const type of [this.core.int, this.core.uint, this.core.long, this.core.ulong]) {
         const conversion = this.conversions.classifyFromExpression(args[0], type);
@@ -219,6 +232,15 @@ export const UnsafeBinding = Base =>
         this.popScope();
       }
     }
+    /** C# 7.3: the `T` of an accessible instance method `ref T GetPinnableReference()` of `type`, or null. */
+    pinnableElementType(type) {
+      if (!type || type.isErrorType?.()) return null;
+      const method = lookupMembers(type, 'GetPinnableReference', this.core, { within: this.c.containingType }).members.find(
+        member => member.kind === SymbolKind.Method && !member.isStatic && !member.parameters.length && !member.typeParameters?.length,
+      );
+      const returnsReference = method && (method.refKind ?? RefKind.None) !== RefKind.None;
+      return returnsReference && method.returnType && !method.returnType.isErrorType?.() ? method.returnType : null;
+    }
     /** The pointer a fixed statement initializer yields, converted to the declared pointer type. */
     fixedInitializer(init, pointerType) {
       let pointer;
@@ -231,6 +253,7 @@ export const UnsafeBinding = Base =>
         if (type instanceof ArrayTypeSymbol) element = type.elementType;
         else if (type?.specialType === 'System_String') element = this.core.char;
         else if (isPointerType(type) && value.kind === 'FieldAccess' && value.field.isFixedSizeBuffer) element = type.pointedAtType;
+        if (!element && (element = this.pinnableElementType(type))) this.d.gate(this.c.uri, init, 'ExtensibleFixedStatement');
         if (!element) {
           this.report(init, 'CS8385');
           return this.bad(init);
