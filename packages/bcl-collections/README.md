@@ -121,13 +121,31 @@ casts. Unsupported custom comparer objects are checked through both platforms,
 including an empty List. Browser and Rust native/Wasm qualification is pending.
 
 Run `node --expose-gc scripts/benchmarks/a08-default-string-sort.mjs 8192 invariant-host`
-in the candidate and use `8192 released-ordinal` in Array comparer baseline
-`7f492561`, serially, copying the identical runner to the baseline first.
+in the candidate and use `8192 released-ordinal` in Sort storage baseline
+`186b3045`, serially, copying the identical runner to the baseline first.
 The bounded control uses 8,192 deterministic nullable digit strings
 by default, one warmup and five samples for each VM platform. It initializes the
 per-platform provider before timing default Sort dispatch and reports median/p95
 plus managed allocation counts and bytes; compilation, input setup and output
 checks are excluded. Both profiles produce the same order for this input subset.
-This measures
-the default path, including the chosen host collation backend, rather than
+This measures the default path, including the chosen host collation backend, rather than
 explicit-comparer overhead. Record the host ICU version alongside its timings.
+
+List Sort now copies and roots only the live prefix, sorts that copy through the
+existing ordering helper, and writes it into the same backing array through the
+shared write-notification seam. Capacity and backing identity stay unchanged;
+comparer failures leave values/version unchanged. Fresh empty Sort succeeds and
+increments the version, matching the pinned .NET 10.0.5 fixture. Every pending
+managed value remains rooted across observer-triggered collection during
+writeback; temporary roots are released even when an observer throws. Observer
+exceptions may expose completed writes, like other observed collection writes.
+
+The temporary copy and root set use O(Count) space, comparison retains the
+existing sort complexity, and writeback visits Count slots rather than Capacity.
+`tests/a08-list-sort-storage.test.js` covers both VM platforms, native results,
+snapshots, fault cleanup, notifications and forced GC. Run the identical
+`node --expose-gc scripts/benchmarks/a08-list-sort-storage.mjs` in the ordinal
+parent and this branch, serially, to measure default/ordinal Sort with spare
+capacity. It reports one warmup and five samples per workload, median/p95,
+observed host heap deltas, backing replacements and managed allocation counts.
+No culture behavior or comparer-callback support changes in this storage batch.
