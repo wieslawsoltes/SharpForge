@@ -34,6 +34,7 @@ import { BodyTranslator } from './body-translator.js';
 import { Frame } from './frame.js';
 import { UnsupportedConstruct } from './unsupported.js';
 import { n } from './node-factory.js';
+import { memberGenerators } from '../../lowering/members/index.js';
 
 class GeneratorCore {
   /**
@@ -270,7 +271,9 @@ const Members = Base =>
     }
   };
 
-export class SemanticGenerator extends Members(AsyncMethods(Initialization(Declarations(GeneratorCore)))) {
+const GeneratorBase = memberGenerators.reduce((composed, mixin) => mixin(composed), Members(AsyncMethods(Initialization(Declarations(GeneratorCore)))));
+
+export class SemanticGenerator extends GeneratorBase {
   /**
    * Generates the image.
    * @returns {{image: object}|{unsupported: {construct: string, syntax: object|null, uri: string|null}}}
