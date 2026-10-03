@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b1821835785e74857b52",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass Program\n{\n    static void Main()\n    {\n        const long x = 0xFFFFFFFFFFFFFFFL;\n        try\n        {\n            nint y = checked((nint)x);\n            Console.WriteLine(y);\n        }\n        catch (Exception e)\n        {\n            Console.WriteLine(e.GetType());\n        }\n    }\n}",
+  "sourceSHA256": "09c930f717e29a59d482f7a6dd8777f2ff2d3d2802fd9a0ee7c92a744ed4b363",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "sha256": "a7e54d8ce96a59177276eba5d802097c4cc4b2dee81cb9034e7dd309ad524cb8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "license": "MIT",
+    "method": "ConstantConversions_01",
+    "offset": 94622
+  },
+  "langVersion": "9",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe, parseOptions: TestOptions.Regular9, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8778",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,30): warning CS8778: Constant value '1152921504606846975' may overflow 'nint' at runtime (use 'unchecked' syntax to override)\n                //             nint y = checked((nint)x);\n                Diagnostic(ErrorCode.WRN_ConstOutOfRangeChecked, \"(nint)x\").WithArguments(\"1152921504606846975\", \"nint\").WithLocation(9, 30)",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

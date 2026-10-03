@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-76c807d35cea8625603f",
+  "kind": "spec",
+  "sourceText": "Control c = new Control();\nTextBox t = new TextBox();\nIControl ic = c;\nIControl it = t;\nc.Paint();  // invokes Control.Paint();\nt.Paint();  // invokes TextBox.Paint();\nic.Paint(); // invokes Control.Paint();\nit.Paint(); // invokes Control.Paint();",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "c3103f8a7bd098ccb385df014c50567fb9324d89cdef1b55181bd1afaf5bb309",
+  "originalSource": "Control c = new Control();\nTextBox t = new TextBox();\nIControl ic = c;\nIControl it = t;\nc.Paint();  // invokes Control.Paint();\nt.Paint();  // invokes TextBox.Paint();\nic.Paint(); // invokes Control.Paint();\nit.Paint(); // invokes Control.Paint();",
+  "metadata": {
+    "template": "standalone-console-without-using",
+    "name": "InterfaceImplementationInheritance2",
+    "additionalFiles": [
+      "IControlControlTextBox1.cs"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-interfaces",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/interfaces.md",
+    "sha256": "bcdf69f454a7bd5894c0b08364553fc6587a0a6ee444a93bc91c58138ff95f53",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/interfaces.md",
+    "license": "MIT",
+    "example": "InterfaceImplementationInheritance2",
+    "offsetInUnquotedMarkdown": 61803
+  }
+}

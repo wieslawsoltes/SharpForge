@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5040c622851e81216ed7",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.CompilerServices;\n\nnamespace System.Runtime.CompilerServices\n{\n    public class IsUnmanagedAttribute : System.Attribute { }\n}\n\npublic class Test\n{\n    [IsUnmanaged]\n    [return: IsUnmanaged]\n    public int Method([IsUnmanaged]int x)\n    {\n        return x;\n    }\n}\n",
+  "sourceSHA256": "5a1e4bdfbb264ce72f1a7e885b8af2eb34d00cbade29e631eaee2a5309d52c88",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_IsUnmanaged.cs",
+    "sha256": "c8792e369226130bbbac808179535c1e1aa84e843c9cb3691e3e7502042372c6",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_IsUnmanaged.cs",
+    "license": "MIT",
+    "method": "IsUnmanagedAttributeIsDisallowedEverywhereInSource_Methods",
+    "offset": 20887
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(code)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8335",
+        "severity": "error"
+      },
+      {
+        "code": "CS8335",
+        "severity": "error"
+      },
+      {
+        "code": "CS8335",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,6): error CS8335: Do not use 'System.Runtime.CompilerServices.IsUnmanagedAttribute'. This is reserved for compiler usage.\n                //     [IsUnmanaged]\n                Diagnostic(ErrorCode.ERR_ExplicitReservedAttr, \"IsUnmanaged\").WithArguments(\"System.Runtime.CompilerServices.IsUnmanagedAttribute\").WithLocation(11, 6),\n                // (12,14): error CS8335: Do not use 'System.Runtime.CompilerServices.IsUnmanagedAttribute'. This is reserved for compiler usage.\n                //     [return: IsUnmanaged]\n                Diagnostic(ErrorCode.ERR_ExplicitReservedAttr, \"IsUnmanaged\").WithArguments(\"System.Runtime.CompilerServices.IsUnmanagedAttribute\").WithLocation(12, 14),\n                // (13,24): error CS8335: Do not use 'System.Runtime.CompilerServices.IsUnmanagedAttribute'. This is reserved for compiler usage.\n                //     public int Method([IsUnmanaged]int x)\n                Diagnostic(ErrorCode.ERR_ExplicitReservedAttr, \"IsUnmanaged\").WithArguments(\"System.Runtime.CompilerServices.IsUnmanagedAttribute\").WithLocation(13, 24)",
+  "unsupported": []
+}

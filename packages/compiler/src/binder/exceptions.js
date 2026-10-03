@@ -12,6 +12,7 @@
  * The bound node is `Try { body, catches: [{ type, local, filter, block }], finallyBlock }`; a clause without a
  * declaration has the type System.Exception and `isGeneral`; a clause's `syntax` is what a diagnostic about it points at.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { TypeKind, ErrorTypeSymbol } from '../symbols/types.js';
 import { LocalDeclarationKind } from '../symbols/members.js';
 
@@ -75,7 +76,7 @@ export const ExceptionBinding = Base =>
         type.typeKind === TypeKind.TypeParameter ||
         this.conversions.classifyImplicit(type, this.core.exception).exists;
       if (isException) return type;
-      this.report(typeSyntax, 'CS0155');
+      this.report(typeSyntax, DiagnosticId.CS0155);
       return unknown;
     }
     catchVariable(identifier, type) {
@@ -87,13 +88,13 @@ export const ExceptionBinding = Base =>
     }
     checkCatchOrder(clause, type, order) {
       if (order.general) {
-        this.report(clause.catchKeyword, 'CS1017');
+        this.report(clause.catchKeyword, DiagnosticId.CS1017);
         return;
       }
       if (type.isErrorType()) return;
       const previous = order.caught.find(earlier => earlier.equals(type) || this.conversions.classifyImplicit(type, earlier).exists);
       if (!previous) return;
-      if (clause.declaration) this.report(clause.declaration.type, 'CS0160', [this.display(previous)]);
-      else if (!clause.filter) this.report(clause.catchKeyword, 'CS1058');
+      if (clause.declaration) this.report(clause.declaration.type, DiagnosticId.CS0160, [this.display(previous)]);
+      else if (!clause.filter) this.report(clause.catchKeyword, DiagnosticId.CS1058);
     }
   };

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-07e271d6e3e3c7800fbe",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass Program\n{\n    static void Main(string[] args)\n    {\n        M1<int>();    // 1\n        M1<long>();   // 2\n        M2<string>(); // 3\n        M2<int>();    // 4\n    }\n\n    static void M1<T>()\n    {\n        switch (1)\n        {\n            case T t:\n                Console.Write(1);\n                break;\n            case int i:\n                Console.Write(2);\n                break;\n        }\n    }\n\n    static void M2<T>()\n    {\n        switch (nameof(M2))\n        {\n            case T t:\n                Console.Write(3);\n                break;\n            case string s:\n                Console.Write(4);\n                break;\n            case null:\n                ;\n        }\n    }\n}\n",
+  "sourceSHA256": "b974591c791d4b81ea7e0210ffd591cad094efe71534016e279610f7c2a904e3",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/PDB/PDBTests.cs",
+    "sha256": "aadcd07e0944d99a1634255c9107a08fdc0098047388f2d7dfc6d7410f6e5726",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/PDB/PDBTests.cs",
+    "license": "MIT",
+    "method": "SwitchWithConstantGenericPattern_01",
+    "offset": 140825
+  },
+  "langVersion": "7.1",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe, parseOptions: TestOptions.Regular7_1)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

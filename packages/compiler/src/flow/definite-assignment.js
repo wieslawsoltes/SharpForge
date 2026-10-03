@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import {computeReachableBlocks} from './reachability.js';
 /**
  * Definite assignment analysis: a forward "must" data-flow analysis over the control-flow graph.
@@ -72,9 +73,9 @@ export function analyzeDefiniteAssignment(graph,options={}){
   const diagnostics=[],unassignedReads=[],flagged=new Set();
   for(const block of order){
     if(!entryStates.has(block))continue;
-    const exit=transfer(block,entryStates.get(block),op=>{if(flagged.has(op.node))return;flagged.add(op.node);unassignedReads.push(op);diagnostics.push({code:isOut(op.variable)?'CS0269':'CS0165',args:[op.variable.name],node:op.node.syntax??options.exitNode});});
+    const exit=transfer(block,entryStates.get(block),op=>{if(flagged.has(op.node))return;flagged.add(op.node);unassignedReads.push(op);diagnostics.push({code:isOut(op.variable)?DiagnosticId.CS0269:DiagnosticId.CS0165,args:[op.variable.name],node:op.node.syntax??options.exitNode});});
     const leaves=block.terminator?.kind==='return'||block.terminator?.kind==='jump'&&block.terminator.target===graph.exit;
-    if(leaves)for(const p of outParameters)if(!exit.has(p)){const node=block.terminator.node?.syntax??options.exitNode;if(!flagged.has(block.id+':'+p.name)){flagged.add(block.id+':'+p.name);diagnostics.push({code:'CS0177',args:[p.name],node});}}
+    if(leaves)for(const p of outParameters)if(!exit.has(p)){const node=block.terminator.node?.syntax??options.exitNode;if(!flagged.has(block.id+':'+p.name)){flagged.add(block.id+':'+p.name);diagnostics.push({code:DiagnosticId.CS0177,args:[p.name],node});}}
   }
   // Unused locals: every read counts, wherever it is; a write counts unless it stores a constant.
   const used=new Set(),written=new Set();
@@ -85,7 +86,7 @@ export function analyzeDefiniteAssignment(graph,options={}){
   }
   for(const local of graph.locals){
     if(used.has(local)||local.usedAsConstant||local.hidden||local.isCompilerGenerated||local.isUsing||local.isForEach||!local.syntax||local.syntax.uri===undefined||local.syntax.debugHidden||local.syntax.generated||local.type?.isErrorType?.())continue;
-    diagnostics.push({code:written.has(local)?'CS0219':'CS0168',args:[local.name],node:nameNode(local)});
+    diagnostics.push({code:written.has(local)?DiagnosticId.CS0219:DiagnosticId.CS0168,args:[local.name],node:nameNode(local)});
   }
   return {diagnostics,entryStates,exitStates,unassignedReads};
 }

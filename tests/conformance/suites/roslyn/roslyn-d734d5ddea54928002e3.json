@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d734d5ddea54928002e3",
+  "kind": "diagnostics",
+  "sourceText": "class Program\n{\n    static void Main()\n    {\n        B1.F<System.IntPtr>();\n        B2.F<System.UIntPtr>();\n        B3.F<nint>();\n        B4.F<nuint>();\n    }\n}",
+  "sourceSHA256": "a04906ab380f1d407ff53d2ef553ad9c48cd442e0f4e6a80d1198ec5bbe9ee6d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "sha256": "a7e54d8ce96a59177276eba5d802097c4cc4b2dee81cb9034e7dd309ad524cb8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "license": "MIT",
+    "method": "Constraints_01",
+    "offset": 46273
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "references: new[] { ref2 }, parseOptions: TestOptions.Regular9, targetFramework: TargetFramework.Net70)",
+  "options": "(sourceB, references: new[] { ref2 }, parseOptions: TestOptions.Regular9, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

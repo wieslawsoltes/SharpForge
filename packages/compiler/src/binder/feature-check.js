@@ -7,6 +7,7 @@
  * inferred tuple names, target-typed conditional, unmanaged/Enum/Delegate constraints ... - are gated here with the
  * same catalog (`languageFeature(id)`), so syntax and semantic rows share one feature id, name and version.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { languageFeature, languageFeatures, featureAvailability, parseLanguageVersion, checkFeatures } from '@sharpforge/syntax';
 import { collectSyntaxFeatures } from './syntax-features.js';
 
@@ -18,7 +19,7 @@ export const featureDiagnosticCodes = new Set(
   'CS8022 CS8023 CS8024 CS8025 CS8026 CS8059 CS8107 CS8302 CS8320 CS8370 CS8400 CS8773 CS8936 CS9058 CS9202 CS9260 CS9327 CS8652'.split(' '),
 );
 // Non-trailing named arguments have a diagnostic of their own that names the version (binder/csharp7x.js).
-featureDiagnosticCodes.add('CS1738');
+featureDiagnosticCodes.add(DiagnosticId.CS1738);
 
 /**
  * The language-version diagnostics of one parsed file: the features the parser recorded and, when a version below
@@ -92,26 +93,26 @@ export function checkSemanticFeature(key, version, fallback = null) {
   if (selected.number >= fallback.version) return null;
   const display = n => (Number.isInteger(n) ? (n >= 7 ? n + '.0' : String(n)) : String(n)),
     codes = {
-      1: 'CS8022',
-      2: 'CS8023',
-      3: 'CS8024',
-      4: 'CS8025',
-      5: 'CS8026',
-      6: 'CS8059',
-      7: 'CS8107',
-      7.1: 'CS8302',
-      7.2: 'CS8320',
-      7.3: 'CS8370',
-      8: 'CS8400',
-      9: 'CS8773',
-      10: 'CS8936',
-      11: 'CS9058',
-      12: 'CS9202',
-      13: 'CS9260',
-      14: 'CS9327',
+      1: DiagnosticId.CS8022,
+      2: DiagnosticId.CS8023,
+      3: DiagnosticId.CS8024,
+      4: DiagnosticId.CS8025,
+      5: DiagnosticId.CS8026,
+      6: DiagnosticId.CS8059,
+      7: DiagnosticId.CS8107,
+      7.1: DiagnosticId.CS8302,
+      7.2: DiagnosticId.CS8320,
+      7.3: DiagnosticId.CS8370,
+      8: DiagnosticId.CS8400,
+      9: DiagnosticId.CS8773,
+      10: DiagnosticId.CS8936,
+      11: DiagnosticId.CS9058,
+      12: DiagnosticId.CS9202,
+      13: DiagnosticId.CS9260,
+      14: DiagnosticId.CS9327,
     };
   return {
-    code: codes[selected.number] ?? 'CS9058',
+    code: codes[selected.number] ?? DiagnosticId.CS9058,
     message:
       `Feature '${fallback.name}' is not available in C# ${display(selected.number)}. ` +
       `Please use language version ${display(fallback.version)} or greater.`,

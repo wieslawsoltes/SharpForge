@@ -194,7 +194,8 @@ const csharp7 = {
   OutVar: type('static void M(out int x) { x = 1; } static void N() { M(out int y); }'),
   ExpressionBodiedAccessor: type('int backing; int P { get => backing; set => backing = value; }'),
   ExpressionBodiedDeOrConstructor: unit('class A { int x; public A() => x = 1; ~A() => x = 0; }'),
-  Discards: type('static void M(out int x) { x = 1; } static void N() { M(out var _); }'),
+  // `out var _` and `out int _` are only 'out variable declaration' to Roslyn below C# 7; `out _` is a discard.
+  Discards: type('static void M(out int x) { x = 1; } static void N() { M(out _); }'),
   Deconstruction: main('int a; int b; (a, b) = (1, 2);'),
   GeneralizedAsyncReturnTypes: type('static async System.Threading.Tasks.ValueTask<int> M() { return 1; }'),
   IsPatternExpression: main('object o = 1; bool b = o is 1;'),
@@ -359,7 +360,9 @@ const csharp12 = {
   RefReadonlyParameters: type('static void M(ref readonly int x) { }'),
   LambdaOptionalParameters: main('var f = (int x = 1) => x; f();'),
   LambdaParamsArray: main('var f = (params int[] values) => values.Length; f();'),
-  InlineArrays: unit('[System.Runtime.CompilerServices.InlineArray(4)] struct Buffer { private int element; }'),
+  InlineArrays: unit(
+    '[System.Runtime.CompilerServices.InlineArray(4)] struct Buffer { private int element; } class A { static int M(Buffer b) { return b[0]; } }',
+  ),
   ExperimentalAttribute: unit('[System.Diagnostics.CodeAnalysis.Experimental("SF0001")] class A { }'),
   SpreadElement: main('int[] a = [1]; int[] b = [..a, 2];'),
 };

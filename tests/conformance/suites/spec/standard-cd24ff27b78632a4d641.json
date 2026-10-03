@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-cd24ff27b78632a4d641",
+  "kind": "spec",
+  "sourceText": "class Test\n{\n    int x;\n    static int y;\n    void F()\n    {\n        x = 1;               // Ok, same as this.x = 1\n        y = 1;               // Ok, same as Test.y = 1\n    }\n\n    static void G()\n    {\n        x = 1;               // Error, cannot access this.x\n        y = 1;               // Ok, same as Test.y = 1\n    }\n\n    static void Main()\n    {\n        Test t = new Test();\n        t.x = 1;       // Ok\n        t.y = 1;       // Error, cannot access static member through instance\n        Test.x = 1;    // Error, cannot access instance member through type\n        Test.y = 1;    // Ok\n    }\n}",
+  "unsupported": [],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0120",
+        "severity": "error"
+      },
+      {
+        "code": "CS0176",
+        "severity": "error"
+      },
+      {
+        "code": "CS0120",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": [
+      "CS0414"
+    ]
+  },
+  "sourceSHA256": "c7c9ae0934707a24358fabb4d91838e3535c9ae3702edcc5afd5a13b1fa643be",
+  "originalSource": "class Test\n{\n    int x;\n    static int y;\n    void F()\n    {\n        x = 1;               // Ok, same as this.x = 1\n        y = 1;               // Ok, same as Test.y = 1\n    }\n\n    static void G()\n    {\n        x = 1;               // Error, cannot access this.x\n        y = 1;               // Ok, same as Test.y = 1\n    }\n\n    static void Main()\n    {\n        Test t = new Test();\n        t.x = 1;       // Ok\n        t.y = 1;       // Error, cannot access static member through instance\n        Test.x = 1;    // Error, cannot access instance member through type\n        Test.y = 1;    // Ok\n    }\n}",
+  "metadata": {
+    "template": "standalone-console-without-using",
+    "name": "StaticAndInstanceMembers",
+    "expectedErrors": [
+      "CS0120",
+      "CS0176",
+      "CS0120"
+    ],
+    "ignoredWarnings": [
+      "CS0414"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "StaticAndInstanceMembers",
+    "offsetInUnquotedMarkdown": 60616
+  }
+}

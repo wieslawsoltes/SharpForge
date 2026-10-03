@@ -12,6 +12,7 @@
  *           constructor (which does the same for its type), then the constructor body - a constructor that chains
  *           with `this(...)` runs no initializers itself.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { isAccessible } from './accessibility.js';
@@ -39,10 +40,10 @@ export function checkImplicitBaseCall(type, resolver) {
   const accessible = ctors.filter(c =>
     isAccessible(c.originalDefinition ?? c, type.originalDefinition, { throughType: type.originalDefinition }),
   );
-  if (!accessible.length) return { code: 'CS0122', args: [ctors[0].toDisplayString()] };
+  if (!accessible.length) return { code: DiagnosticId.CS0122, args: [ctors[0].toDisplayString()] };
   const result = resolver.resolve(accessible, [], { isConstructor: true });
   if (result.succeeded) return null;
-  return result.error.code === 'CS1729' ? { code: 'CS1729', args: [base.toDisplayString(), 0] } : result.error;
+  return result.error.code === DiagnosticId.CS1729 ? { code: DiagnosticId.CS1729, args: [base.toDisplayString(), 0] } : result.error;
 }
 /** `this(...)` cycles among the constructors of a type, given each constructor's resolved `this` target. @returns [{code,args,ctor}] */
 export function checkConstructorCycles(type, targetOf) {
@@ -51,7 +52,7 @@ export function checkConstructorCycles(type, targetOf) {
     const target = targetOf(ctor);
     if (!target) continue;
     if (target === ctor) {
-      results.push({ code: 'CS0516', args: [ctor.toDisplayString()], ctor });
+      results.push({ code: DiagnosticId.CS0516, args: [ctor.toDisplayString()], ctor });
       continue;
     }
     const seen = new Set([ctor]);
@@ -59,7 +60,7 @@ export function checkConstructorCycles(type, targetOf) {
       if (c === ctor) {
         // A cycle is reported once, on its last constructor in declaration order (as Roslyn does).
         const last = [...seen].every(other => (other.locations[0]?.start ?? 0) <= (ctor.locations[0]?.start ?? 0));
-        if (last) results.push({ code: 'CS0768', args: [ctor.toDisplayString()], ctor });
+        if (last) results.push({ code: DiagnosticId.CS0768, args: [ctor.toDisplayString()], ctor });
         break;
       }
       if (seen.has(c)) break;

@@ -1,6 +1,7 @@
 import { taskResult, findContracts } from '@sharpforge/framework';
 import { Op, frameworkBuiltin } from '@sharpforge/bytecode';
 import { MethodCompiler } from '../method-compiler.js';
+import { DiagnosticId } from '../diagnostics/codes.js';
 
 /** Top-level statements receive C#'s implicit args parameter in both execution pipelines. */
 export function declareTopLevelEntry(compilation, { file, statements }) {
@@ -41,7 +42,7 @@ function emitLegacyInitializers(compilation, startup, fields, tail) {
 
 /** Forward entry arguments after static initialization, preserving task-await and exit-code behavior. */
 export function declareEntryStartup(compilation, entry, bound) {
-  if (entry.node.asyncRole === 'kickoff' && entry.returnType === 'void') compilation.report(entry.node, 'CS4009');
+  if (entry.node.asyncRole === 'kickoff' && entry.returnType === 'void') compilation.report(entry.node, DiagnosticId.CS4009);
   const node = {
     ...entry.node,
     name: '<startup>',
@@ -61,6 +62,6 @@ export function declareEntryStartup(compilation, entry, bound) {
   const fields = compilation.statics.filter(field => field.node.initializer);
   if (bound) bound.bindInitializers(startup, fields, { ownerPerField: true, tail });
   else emitLegacyInitializers(compilation, startup, fields, tail);
-  if (awaited && !awaitBuiltin) compilation.report(entry.node, 'CS0028', [entry.qualifiedName], 'error');
+  if (awaited && !awaitBuiltin) compilation.report(entry.node, DiagnosticId.CS0028, [entry.qualifiedName], 'error');
   return startup.id;
 }

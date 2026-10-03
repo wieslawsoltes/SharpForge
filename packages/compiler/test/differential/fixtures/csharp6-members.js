@@ -76,6 +76,67 @@ const interpolation = feature('interpolation-binding', [
     `,
     { langVersion: '9' },
   ),
+  out(
+    'constant-expression-alignments',
+    cs`
+      using System;
+      class Program
+      {
+          const int Width = 6;
+          static void Main()
+          {
+              const int local = 4;
+              int x = 42;
+              string s = "ab";
+              Console.WriteLine($"[{x,Width}][{x,-Width}][{s,local}][{s,-local}]");
+              Console.WriteLine($"[{x,Width + 2}][{x,(short)3}][{x,+5}][{x,-(local)}]");
+              Console.WriteLine($"[{x,Width:D4}][{1.5,Width:F2}][{x,0}][{s,1}]");
+          }
+      }
+    `,
+  ),
+  diag(
+    'cs8094-alignment-out-of-range-in-a-program-that-compiles',
+    cs`
+      using System;
+      class Program
+      {
+          static void Main()
+          {
+              int x = 1;
+              Console.WriteLine($"{x,40000}|{x,-40000}|{x,32767}|{x,-32767}|{x,32768:D2}".Length);
+          }
+      }
+    `,
+  ),
+  diag(
+    'cs0029-formattable-string-and-iformattable-targets',
+    cs`
+      using System;
+      class Program
+      {
+          static void Take(FormattableString f) { Console.WriteLine(f.Format + f.ArgumentCount + f.GetArgument(0) + f.GetArguments().Length); }
+          static void Both(string s) { Console.WriteLine("string"); }
+          static void Both(FormattableString f) { Console.WriteLine("formattable"); }
+          static void Fmt(IFormattable f) { Console.WriteLine(f.ToString(null, null)); }
+          static void Main()
+          {
+              int x = 1;
+              FormattableString f = $"a{x}b{x,3:D2}";
+              IFormattable g = $"a{x}";
+              Take($"v{x}"); Both($"v{x}"); Fmt($"v{x}");
+              var v = $"v{x}"; Both(v);
+              object o = $"a{x}"; IComparable c = $"a{x}";
+              var cast = (FormattableString)$"a{x}";
+              string invariant = FormattableString.Invariant($"a{x}") + f.ToString() + g + o + c + cast;
+              FormattableString plain = "plain";
+              FormattableString concatenated = $"a" + $"b";
+              FormattableString coalesced = $"{x}" ?? null;
+              FormattableString fromString = v;
+          }
+      }
+    `,
+  ),
 ]);
 
 const memberBodies = feature('member-bodies', [
@@ -143,6 +204,36 @@ const memberBodies = feature('member-bodies', [
           public int Both { get { return 1; } } => 2;
       }
       class Program { static void Main() { } }
+    `,
+  ),
+  diag(
+    'cs8057-block-and-expression-body-on-every-kind-of-member',
+    cs`
+      using System;
+      class C
+      {
+          int count;
+          int M() { return 1; } => 2;
+          void V() { } => Console.WriteLine();
+          C() { } => count = 1;
+          ~C() { } => count = 2;
+          public static C operator +(C a, C b) { return a; } => b;
+          public static implicit operator int(C c) { return 1; } => 2;
+          int P { get { return 1; } => 2; set { } => count = value; }
+          int Q { get => 1; set { count = value; } }
+          int this[int i] { get { return i; } => i + 1; }
+          int R { get { return 1; } } => 2;
+          int this[string s] { get { return 1; } } => 2;
+          event EventHandler E { add { } => count = 1; remove { } => count = 2; }
+          static void Main()
+          {
+              int Local() { return 1; } => 2;
+              void LocalVoid() { } => Console.WriteLine();
+              Func<int> f = () => 1;
+              Console.WriteLine(Local() + f());
+              LocalVoid();
+          }
+      }
     `,
   ),
 ]);

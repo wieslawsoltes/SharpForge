@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c516e5c0a92c35701263",
+  "kind": "diagnostics",
+  "sourceText": "\n[X]\nclass Y\n{\n}\n",
+  "sourceSHA256": "083ad508234ec71b7f52e00d8a3c3d269aa78159155b754fcab2b45d62b213ee",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "AmbiguousClassNamespaceLookup",
+    "offset": 332957
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { comp1, comp2 })",
+  "options": "(source4, references: new[] { comp1, comp2 })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0434",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,2): error CS0434: The namespace 'X' in 'Temp2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null' conflicts with the type 'X' in 'Temp1, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'\n                // [X]\n                Diagnostic(ErrorCode.ERR_SameFullNameNsAgg, \"X\").WithArguments(\"Temp2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\", \"X\", \"Temp1, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\", \"X\")",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

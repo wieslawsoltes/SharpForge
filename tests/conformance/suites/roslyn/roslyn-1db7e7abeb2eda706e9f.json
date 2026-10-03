@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1db7e7abeb2eda706e9f",
+  "kind": "diagnostics",
+  "sourceText": "public interface IA\n{\n    void F1(nint x, System.UIntPtr y);\n}\npublic abstract class A\n{\n    public abstract void F2(System.IntPtr x, nuint y);\n}",
+  "sourceSHA256": "49dcc514d872cca991ba49bb94d0f9f722f8b63e8cd9027bd15990b46ef7e9c3",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "sha256": "a7e54d8ce96a59177276eba5d802097c4cc4b2dee81cb9034e7dd309ad524cb8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "license": "MIT",
+    "method": "Overrides_01",
+    "offset": 36888
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(sourceA, parseOptions: TestOptions.Regular9, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

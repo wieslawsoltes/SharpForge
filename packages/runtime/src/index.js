@@ -5,3 +5,5 @@ export {runtimeLaunchLimits, runtimeLaunchCapabilities, RuntimeLaunchError, vali
   validateLaunchEnvironment, normalizeRuntimeLaunchOptions} from './launch-options.js';
 
 export {applyDesignPatch} from './design-patch.js';
+export {executionCodeStatistics, invalidateExecutionCode} from './execution/code-version.js';
+export {RuntimeEventLog, RuntimeEventName} from './execution/runtime-events.js';

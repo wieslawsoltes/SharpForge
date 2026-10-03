@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a1edf084b499bcdfece9",
+  "kind": "diagnostics",
+  "sourceText": "\nnamespace System.Runtime.CompilerServices\n{\n    public interface IsUnmanagedAttribute { }\n}\nclass Test<T> where T : unmanaged\n{\n}",
+  "sourceSHA256": "a3dc7d6d56f136e9cd9005251ef947b6c9447f9a175ef2777f03db577a38c04f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_IsUnmanaged.cs",
+    "sha256": "c8792e369226130bbbac808179535c1e1aa84e843c9cb3691e3e7502042372c6",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_IsUnmanaged.cs",
+    "license": "MIT",
+    "method": "IsUnmanagedAttributeExistsAsInterface",
+    "offset": 32258
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, options: TestOptions.DebugDll.WithOutputKind(outputKind))",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0656",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,12): error CS0656: Missing compiler required member 'System.Runtime.CompilerServices.IsUnmanagedAttribute..ctor'\n                // class Test<T> where T : unmanaged\n                Diagnostic(ErrorCode.ERR_MissingPredefinedMember, \"T\").WithArguments(\"System.Runtime.CompilerServices.IsUnmanagedAttribute\", \".ctor\").WithLocation(6, 12)",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

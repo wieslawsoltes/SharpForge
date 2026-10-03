@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3eee16cb07921d059c89",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Security;\nusing System.Security.Permissions;\nusing System.Runtime.InteropServices;\n \n[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\nclass MyPermissionAttribute : CodeAccessSecurityAttribute\n{\n    public MyPermissionAttribute(SecurityAction action, [Optional][MarshalAs(UnmanagedType.Interface)]object x) : base(SecurityAction.Demand)\n    {\n    }\n \n    public override IPermission CreatePermission()\n    {\n        return null;\n    }\n}\n\n[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\nclass MyPermission2Attribute : CodeAccessSecurityAttribute\n{\n    public MyPermission2Attribute(SecurityAction action, [Optional]object x) : base(SecurityAction.Demand)\n    {\n    }\n \n    public override IPermission CreatePermission()\n    {\n        return null;\n    }\n}\n\n[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\nclass MyPermission3Attribute : CodeAccessSecurityAttribute\n{\n    public MyPermission3Attribute([Optional]object x) : base(SecurityAction.Demand)\n    {\n    }\n \n    public override IPermission CreatePermission()\n    {\n        return null;\n    }\n}\n\n\n[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\nclass MyPermission4Attribute : CodeAccessSecurityAttribute\n{\n    public MyPermission4Attribute([Optional]SecurityAction x) : base(SecurityAction.Demand)\n    {\n    }\n \n    public override IPermission CreatePermission()\n    {\n        return null;\n    }\n}\n\n[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\nclass MyPermission5Attribute : CodeAccessSecurityAttribute\n{\n    public MyPermission5Attribute(SecurityAction action, object x = SecurityAction.Demand) : base(SecurityAction.Demand)\n    {\n    }\n \n    public override IPermission CreatePermission()\n    {\n        return null;\n    }\n}\n\n[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\nclass MyPermission6Attribute : CodeAccessSecurityAttribute\n{\n    public MyPermission6Attribute(object x = SecurityAction.Demand) : base(SecurityAction.Demand)\n    {\n    }\n \n    public override IPermission CreatePermission()\n    {\n        return null;\n    }\n}\n\n[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\nclass MyPermission7Attribute : CodeAccessSecurityAttribute\n{\n    public MyPermission7Attribute(SecurityAction action, [Optional]int x) : base(SecurityAction.Demand)\n    {\n    }\n \n    public override IPermission CreatePermission()\n    {\n        return null;\n    }\n}\n\nclass MyPermission8Attribute : CodeAccessSecurityAttribute\n{\n    public MyPermission8Attribute([Optional][DefaultParameterValueAttribute(null)]SecurityAction x) : base(SecurityAction.Demand)\n    {\n    }\n \n    public override IPermission CreatePermission()\n    {\n        return null;\n    }\n}\n\nclass MyPermission9Attribute : CodeAccessSecurityAttribute\n{\n    public MyPermission9Attribute([Optional][DefaultParameterValueAttribute(-1)]SecurityAction x) : base(SecurityAction.Demand)\n    {\n    }\n \n    public override IPermission CreatePermission()\n    {\n        return null;\n    }\n}\n\nclass MyPermission10Attribute : CodeAccessSecurityAttribute\n{\n    public MyPermission10Attribute(SecurityAction x, [Optional][DefaultParameterValueAttribute(SecurityAction.Demand)]object y) : base(SecurityAction.Demand)\n    {\n    }\n \n    public override IPermission CreatePermission()\n    {\n        return null;\n    }\n}\n\n\n\n[MyPermission(SecurityAction.Demand)]\n[MyPermission(SecurityAction.Demand, null)]\n\n[MyPermission2(SecurityAction.Demand)]\n[MyPermission2(SecurityAction.Demand, null)]\n\n[MyPermission3()]\n[MyPermission3(SecurityAction.Demand)]\n[MyPermission3(null)]\n\n[MyPermission4()]\n[MyPermission4(SecurityAction.Demand)]\n[MyPermission4(null)]\n\n[MyPermission5(SecurityAction.Demand)]\n[MyPermission5(SecurityAction.Demand, null)]\n\n[MyPermission6()]\n[MyPermission6(SecurityAction.Demand)]\n[MyPermission6(null)]\n\n[MyPermission7(SecurityAction.Demand)]\n[MyPermission7(SecurityAction.Demand, 0)]\n\n[MyPermission8()]\n[MyPermission8(SecurityAction.Demand)]\n\n[MyPermission9()]\n[MyPermission9(SecurityAction.Demand)]\n\n[MyPermission10(SecurityAction.Demand)]\n[MyPermission10(SecurityAction.Demand, null)]\n\nclass C\n{\n   public static void Main() { }\n}\n",
+  "sourceSHA256": "e2540e7f20537b7ae11cfb22a4f4aa6e67a5988cbb62da144238095ca2114f6a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "CS7067ERR_BadAttributeParamDefaultArgument",
+    "offset": 63490
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1763",
+        "severity": "error"
+      },
+      {
+        "code": "CS1763",
+        "severity": "error"
+      },
+      {
+        "code": "CS1908",
+        "severity": "error"
+      },
+      {
+        "code": "CS1908",
+        "severity": "error"
+      },
+      {
+        "code": "CS7067",
+        "severity": "error"
+      },
+      {
+        "code": "CS7067",
+        "severity": "error"
+      },
+      {
+        "code": "CS7067",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS0182",
+        "severity": "error"
+      },
+      {
+        "code": "CS0182",
+        "severity": "error"
+      },
+      {
+        "code": "CS0182",
+        "severity": "error"
+      },
+      {
+        "code": "CS0182",
+        "severity": "error"
+      },
+      {
+        "code": "CS1763",
+        "severity": "error"
+      },
+      {
+        "code": "CS7048",
+        "severity": "error"
+      },
+      {
+        "code": "CS7049",
+        "severity": "error"
+      },
+      {
+        "code": "CS7048",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (63,65): error CS1763: 'x' is of type 'object'. A default parameter value of a reference type other than string can only be initialized with null\n                //     public MyPermission5Attribute(SecurityAction action, object x = SecurityAction.Demand) : base(SecurityAction.Demand)\n                Diagnostic(ErrorCode.ERR_NotNullRefDefaultParameter, \"x\").WithArguments(\"x\", \"object\").WithLocation(63, 65),\n                // (76,42): error CS1763: 'x' is of type 'object'. A default parameter value of a reference type other than string can only be initialized with null\n                //     public MyPermission6Attribute(object x = SecurityAction.Demand) : base(SecurityAction.Demand)\n                Diagnostic(ErrorCode.ERR_NotNullRefDefaultParameter, \"x\").WithArguments(\"x\", \"object\").WithLocation(76, 42),\n                // (101,46): error CS1908: The type of the argument to the DefaultParameterValue attribute must match the parameter type\n                //     public MyPermission8Attribute([Optional][DefaultParameterValueAttribute(null)]SecurityAction x) : base(SecurityAction.Demand)\n                Diagnostic(ErrorCode.ERR_DefaultValueTypeMustMatch, \"DefaultParameterValueAttribute\").WithLocation(101, 46),\n                // (113,46): error CS1908: The type of the argument to the DefaultParameterValue attribute must match the parameter type\n                //     public MyPermission9Attribute([Optional][DefaultParameterValueAttribute(-1)]SecurityAction x) : base(SecurityAction.Demand)\n                Diagnostic(ErrorCode.ERR_DefaultValueTypeMustMatch, \"DefaultParameterValueAttribute\").WithLocation(113, 46),\n                // (137,2): error CS7067: Attribute constructor parameter 'x' is optional, but no default parameter value was specified.\n                // [MyPermission(SecurityAction.Demand)]\n                Diagnostic(ErrorCode.ERR_BadAttributeParamDefaultArgument, \"MyPermission(SecurityAction.Demand)\").WithArguments(\"x\").WithLocation(137, 2),\n                // (140,2): error CS7067: Attribute constructor parameter 'x' is optional, but no default parameter value was specified.\n                // [MyPermission2(SecurityAction.Demand)]\n                Diagnostic(ErrorCode.ERR_BadAttributeParamDefaultArgument, \"MyPermission2(SecurityAction.Demand)\").WithArguments(\"x\").WithLocation(140, 2),\n                // (143,2): error CS7067: Attribute constructor parameter 'x' is optional, but no default parameter value was specified.\n                // [MyPermission3()]\n                Diagnostic(ErrorCode.ERR_BadAttributeParamDefaultArgument, \"MyPermission3()\").WithArguments(\"x\").WithLocation(143, 2),\n                // (149,16): error CS1503: Argument 1: cannot convert from '<null>' to 'SecurityAction'\n                // [MyPermission4(null)]\n                Diagnostic(ErrorCode.ERR_BadArgType, \"null\").WithArguments(\"1\", \"<null>\", \"System.Security.Permissions.SecurityAction\").WithLocation(149, 16),\n                // (151,2): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                // [MyPermission5(SecurityAction.Demand)]\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"MyPermission5(SecurityAction.Demand)\").WithLocation(151, 2),\n                // (154,2): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                // [MyPermission6()]\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"MyPermission6()\").WithLocation(154, 2),\n                // (161,2): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                // [MyPermission8()]\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"MyPermission8()\").WithLocation(161, 2),\n                // (164,2): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                // [MyPermission9()]\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"MyPermission9()\").WithLocation(164, 2),\n                // (167,2): error CS1763: 'y' is of type 'object'. A default parameter value of a reference type other than string can only be initialized with null\n                // [MyPermission10(SecurityAction.Demand)]\n                Diagnostic(ErrorCode.ERR_NotNullRefDefaultParameter, \"MyPermission10(SecurityAction.Demand)\").WithArguments(\"y\", \"object\").WithLocation(167, 2),\n                // (145,2): error CS7048: First argument to a security attribute must be a valid SecurityAction\n                // [MyPermission3(null)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeMissingAction, \"MyPermission3\").WithLocation(145, 2),\n                // (147,2): error CS7049: Security attribute 'MyPermission4' has an invalid SecurityAction value '0'\n                // [MyPermission4()]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidAction, \"MyPermission4()\").WithArguments(\"MyPermission4\", \"0\").WithLocation(147, 2),\n                // (156,2): error CS7048: First argument to a security attribute must be a valid SecurityAction\n                // [MyPermission6(null)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeMissingAction, \"MyPermission6\").WithLocation(156, 2)",
+  "unsupported": []
+}

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-44a594f6aff4c863634f",
+  "kind": "diagnostics",
+  "sourceText": "class Program\n{\n    static void Main()\n    {\n        _ = sizeof(System.IntPtr);\n        _ = sizeof(System.UIntPtr);\n        _ = sizeof(nint);\n        _ = sizeof(nuint);\n    }\n}",
+  "sourceSHA256": "28f77e2e3f43a3c3713fa96b51abef6d641efdff51edf5a8a3194ae581e8ec79",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "sha256": "a7e54d8ce96a59177276eba5d802097c4cc4b2dee81cb9034e7dd309ad524cb8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "license": "MIT",
+    "method": "SizeOf_01",
+    "offset": 50087
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular9, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0233",
+        "severity": "error"
+      },
+      {
+        "code": "CS0233",
+        "severity": "error"
+      },
+      {
+        "code": "CS0233",
+        "severity": "error"
+      },
+      {
+        "code": "CS0233",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,13): error CS0233: 'nint' does not have a predefined size, therefore sizeof can only be used in an unsafe context\n                //         _ = sizeof(System.IntPtr);\n                Diagnostic(ErrorCode.ERR_SizeofUnsafe, \"sizeof(System.IntPtr)\").WithArguments(\"nint\").WithLocation(5, 13),\n                // (6,13): error CS0233: 'nuint' does not have a predefined size, therefore sizeof can only be used in an unsafe context\n                //         _ = sizeof(System.UIntPtr);\n                Diagnostic(ErrorCode.ERR_SizeofUnsafe, \"sizeof(System.UIntPtr)\").WithArguments(\"nuint\").WithLocation(6, 13),\n                // (7,13): error CS0233: 'nint' does not have a predefined size, therefore sizeof can only be used in an unsafe context\n                //         _ = sizeof(nint);\n                Diagnostic(ErrorCode.ERR_SizeofUnsafe, \"sizeof(nint)\").WithArguments(\"nint\").WithLocation(7, 13),\n                // (8,13): error CS0233: 'nuint' does not have a predefined size, therefore sizeof can only be used in an unsafe context\n                //         _ = sizeof(nuint);\n                Diagnostic(ErrorCode.ERR_SizeofUnsafe, \"sizeof(nuint)\").WithArguments(\"nuint\").WithLocation(8, 13)",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

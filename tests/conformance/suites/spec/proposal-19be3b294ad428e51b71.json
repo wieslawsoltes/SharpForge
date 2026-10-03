@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-19be3b294ad428e51b71",
+  "kind": "spec",
+  "sourceText": "class Program\n{\n    static readonly int f = 123;\n    static void Main()\n    {\n        var d = (in int x) => { };\n        d = (ref int x) => { x = 42; }; // warning: mismatch between `ref` and `in`\n        d(f); // changes value of `f` even though it is `readonly`!\n        System.Console.WriteLine(f); // prints 42\n    }\n}",
+  "sourceSHA256": "30830aa49d251378e8f55821d14ddd62c0c95b3436f35bc055cc769ac2dbee8f",
+  "target": "library",
+  "featureId": "csharp-12-0-ref-readonly-parameters",
+  "langVersion": "12.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-12.0/ref-readonly-parameters.md",
+    "sha256": "a742250323e36f0b81de0743acf0124a6fa60e08c8c2a660eac4da17a8bba683",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/ref-readonly-parameters.md",
+    "license": "NOASSERTION",
+    "offset": 20398
+  }
+}

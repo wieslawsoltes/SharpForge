@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-903b48bac9d8b4335e1d",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class A\n{\n    public static bool TupleEquals((A, A) t) => t == t; // warn 1 and 2\n    public static bool TupleNotEquals((A, A) t) => t != t; // warn 3 and 4\n\n    public static NotBool operator ==(A a1, A a2) => throw null;\n    public static NotBool operator !=(A a1, A a2) => throw null;\n    public override bool Equals(object o) => throw null;\n    public override int GetHashCode() => throw null;\n}\npublic class NotBool\n{\n    [System.Obsolete(\"obsolete\", error: true)]\n    public static bool operator true(NotBool b) => throw null;\n\n    [System.Obsolete(\"obsolete\", error: true)]\n    public static bool operator false(NotBool b) => throw null;\n}\n",
+  "sourceSHA256": "437dcf290209d9de422e859057f08db7be798fdde49f4b97a971dbb6be32b581",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestWithObsoleteTruthOperators",
+    "offset": 125998
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,49): error CS0619: 'NotBool.operator false(NotBool)' is obsolete: 'obsolete'\n                //     public static bool TupleEquals((A, A) t) => t == t; // warn 1 and 2\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"t == t\").WithArguments(\"NotBool.operator false(NotBool)\", \"obsolete\").WithLocation(4, 49),\n                // (4,49): error CS0619: 'NotBool.operator false(NotBool)' is obsolete: 'obsolete'\n                //     public static bool TupleEquals((A, A) t) => t == t; // warn 1 and 2\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"t == t\").WithArguments(\"NotBool.operator false(NotBool)\", \"obsolete\").WithLocation(4, 49),\n                // (5,52): error CS0619: 'NotBool.operator true(NotBool)' is obsolete: 'obsolete'\n                //     public static bool TupleNotEquals((A, A) t) => t != t; // warn 3 and 4\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"t != t\").WithArguments(\"NotBool.operator true(NotBool)\", \"obsolete\").WithLocation(5, 52),\n                // (5,52): error CS0619: 'NotBool.operator true(NotBool)' is obsolete: 'obsolete'\n                //     public static bool TupleNotEquals((A, A) t) => t != t; // warn 3 and 4\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"t != t\").WithArguments(\"NotBool.operator true(NotBool)\", \"obsolete\").WithLocation(5, 52)\n                ",
+  "unsupported": []
+}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-cf2d765bffce991e6575",
+  "kind": "spec",
+  "sourceText": "public interface I1<T> { ... }\npublic interface I2<T> { ... }\n\npublic abstract class G1<U>\n{\n    public abstract int F1(U u);           // Overload resolution for G<int>.F1\n    public abstract int F1(int i);         // will pick non-generic\n\n    public abstract void F2(I1<U> a);      // Valid overload\n    public abstract void F2(I2<U> a);\n}\n\nabstract class G2<U,V>\n{\n    public abstract void F3(U u, V v);     // Valid, but overload resolution for\n    public abstract void F3(V v, U u);     // G2<int,int>.F3 will fail\n\n    public abstract void F4(U u, I1<V> v); // Valid, but overload resolution for\n    public abstract void F4(I1<V> v, U u); // G2<I1<int>,int>.F4 will fail\n\n    public abstract void F5(U u1, I1<V> v2);   // Valid overload\n    public abstract void F5(V v1, U u2);\n\n    public abstract void F6(ref U u);      // Valid overload\n    public abstract void F6(out V v);\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "ea5096c4535da93f01d7c26762a45ec53e70cb7ede053dd032adbf4fe26a2559",
+  "originalSource": "public interface I1<T> { ... }\npublic interface I2<T> { ... }\n\npublic abstract class G1<U>\n{\n    public abstract int F1(U u);           // Overload resolution for G<int>.F1\n    public abstract int F1(int i);         // will pick non-generic\n\n    public abstract void F2(I1<U> a);      // Valid overload\n    public abstract void F2(I2<U> a);\n}\n\nabstract class G2<U,V>\n{\n    public abstract void F3(U u, V v);     // Valid, but overload resolution for\n    public abstract void F3(V v, U u);     // G2<int,int>.F3 will fail\n\n    public abstract void F4(U u, I1<V> v); // Valid, but overload resolution for\n    public abstract void F4(I1<V> v, U u); // G2<I1<int>,int>.F4 will fail\n\n    public abstract void F5(U u1, I1<V> v2);   // Valid overload\n    public abstract void F5(V v1, U u2);\n\n    public abstract void F6(ref U u);      // Valid overload\n    public abstract void F6(out V v);\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "OverloadingInGenericClasses",
+    "replaceEllipsis": true
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-expressions",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/expressions.md",
+    "sha256": "86fd8ab8c2608d09cc5267e037ef05a81a46241c464078f7ee9cbb6328c04e92",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/expressions.md",
+    "license": "MIT",
+    "example": "OverloadingInGenericClasses",
+    "offsetInUnquotedMarkdown": 103344
+  }
+}

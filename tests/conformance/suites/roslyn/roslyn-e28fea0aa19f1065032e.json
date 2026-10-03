@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e28fea0aa19f1065032e",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static int F1;\n    static readonly int F2 = 2;\n    static readonly int F3;\n    static int F4;\n    static int F5;\n    static int F6 = 6;\n    static int F7;\n    static int F8 = 8;\n    static S F9;\n    static C1 F10 = new C1();\n\n    static C()\n    {\n        F1 = 1;\n        F3 = 3;\n        F4 = 4;\n        F5 = 5;\n    }\n\n    public static void M0()\n    {\n        int x = F1;\n        x = F2;\n        x = F3;\n        x = F4;\n        x = F5;\n        x = F6;\n        x = F7;\n\n        F4 = 4;\n        F7 = 7;\n        M1(out F1, F5);\n        F7 = 7;\n        F8--;\n        F9.A = 10;\n        F9.B = 20;\n        F10.A = F9.A;\n        F10.B = F9.B;\n    }\n\n    public static void M1(out int x, int y)\n    {\n        x = 10;\n    }\n\n    struct S\n    {\n        public int A;\n        public int B;\n    }\n\n    class C1\n    {\n        public int A;\n        public int B;\n    }\n}\n",
+  "sourceSHA256": "fc8e330adc123d948ce38cba5238ec1e9beada0340a162c1889e91f4a12a0f46",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "sha256": "eb33d60956503b30bec29f823f9033347fac98a9029a70b139e6a57a3ad1abef",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "StaticFieldCouldBeReadOnlyCSharp",
+    "offset": 15319
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}
