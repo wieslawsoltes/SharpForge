@@ -205,6 +205,13 @@
       "reason": "Qualification adapter loads fixed compiler/build package entry points from the explicitly selected trusted checkout."
     },
     {
+      "path": "scripts/bench/a03-metadata.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "f5c0d240c6de36f1690000ff878f442e2a1f553d31ca6db9f734a0db570e105e",
+      "reason": "Metadata benchmark loads the operator-selected trusted CIL module or fixed workspace entry point; CLI module overrides execute host code."
+    },
+    {
       "path": "scripts/benchmarks/a05-call-offsets.mjs",
       "operation": "dynamic-import",
       "count": 1,
