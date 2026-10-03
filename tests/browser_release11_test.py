@@ -27,7 +27,7 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
  def import_records(records,options):return ev('x=>sharpforge.loadDiskRecords(x.records,x.options)',{'records':records,'options':options})
  try:
   load_application(page)
-  check('0.11 starts with Visual Studio profile, 11 project and 19 item templates and real workers',lambda:truth(ev('sharpforge.version')==json.loads((ROOT/'package.json').read_text())['version'] and ev('sharpforge.getKeymap().id')=='visual-studio' and ev('sharpforge.getTemplates().projects.length')==11 and ev('sharpforge.getTemplates().items.length')==19 and len(workers)==2))
+  check('0.11 starts with Visual Studio profile, 11 project and 19 item templates and real workers',lambda:truth(ev('sharpforge.version')==json.loads((ROOT/'package.json').read_text(encoding='utf-8'))['version'] and ev('sharpforge.getKeymap().id')=='visual-studio' and ev('sharpforge.getTemplates().projects.length')==11 and ev('sharpforge.getTemplates().items.length')==19 and len(workers)==2))
   def keyboard():
    before=state()['name'];page.keyboard.press('Control+Shift+N');page.locator('#wizard-search').fill('navigation');truth(page.locator('[data-template]').count()==1);page.locator('#wizard-search').fill('');page.locator('#wizard-category').select_option('Library');truth(page.locator('[data-template]').count()==2);page.locator('#wizard-cancel').click();truth(state()['name']==before)
   check('Ctrl+Shift+N opens searchable/type-filtered wizard and Cancel preserves workspace',keyboard)
@@ -126,6 +126,6 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
    ev('void sharpforge.openProjectWizard()');page.locator('#wizard-search').fill('WinUI');page.screenshot(path=str(RESULTS/'screenshots/release11-templates.png'));page.locator('[data-template="winui-blank"]').click();page.locator('#wizard-next').click();page.locator('#wizard-project-name').fill('NewWinUIApp');page.screenshot(path=str(RESULTS/'screenshots/release11-wizard.png'));page.locator('#wizard-cancel').click();create('winui-blank','CreatedInSharpForge');ev('sharpforge.run()');wait('sharpforge.getState().debug?.uiActive');ev('sharpforge.uiSettled()');page.locator('.sf-winui').get_by_role('button',name='Increment',exact=True).click();wait('document.querySelector(".sf-winui").textContent.includes("Count: 1")');page.screenshot(path=str(RESULTS/'screenshots/release11-running.png'))
   check('new WinUI counter executes events and screenshots capture the actual wizard and app',screenshot)
   check('no page JavaScript errors',lambda:truth(not errors,json.dumps(errors)))
-  (RESULTS/'browser-release11-validation.json').write_text(json.dumps({'passed':len(checks),'checks':checks,'errors':errors,'workers':len(workers),'mode':'http' if os.getenv('SHARPFORGE_IN_MEMORY') != '1' else 'production modules via in-memory harness'},indent=2))
+  (RESULTS/'browser-release11-validation.json').write_text(json.dumps({'passed':len(checks),'checks':checks,'errors':errors,'workers':len(workers),'mode':'http' if os.getenv('SHARPFORGE_IN_MEMORY') != '1' else 'production modules via in-memory harness'},indent=2), encoding='utf-8')
  except Exception:
   traceback.print_exc();print('ERRORS',json.dumps(errors),flush=True);page.screenshot(path=str(RESULTS/'screenshots/release11-failure.png'));raise

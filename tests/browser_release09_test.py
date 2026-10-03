@@ -130,7 +130,7 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
   def all_count():
    ids=ev('(()=>{const l=sharpforge.getLayout(),a=[...l.closed,...Object.values(l.autoHide).flat()];function walk(n){if(n.type==="group")a.push(...n.panels);else{walk(n.first);walk(n.second);}}walk(l.root);for(const f of l.floating)walk(f.root);return [...new Set(a.filter(id=>!id.startsWith("source:")))];})()');truth(len(ids)==44,str(ids))
   check('all 44 independent workbench tools are available',all_count)
-  manifest=json.loads((ROOT/'examples/features-0.9/manifest.json').read_text())
+  manifest=json.loads((ROOT/'examples/features-0.9/manifest.json').read_text(encoding='utf-8'))
   def shipped_example(example):
    cmd('stop');page.evaluate('(id)=>sharpforge.loadSample(id,true)',example['id']);truth(ev('sharpforge.getBreakpoints()')==example['debug'].get('breakpoints',{}));ev('sharpforge.run()');truth(finished()['output']==example['expectedOutput'])
   for example in manifest:check('production workers run shipped '+example['id'],lambda example=example:shipped_example(example))
@@ -145,5 +145,5 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
  except Exception as e:
   traceback.print_exc();result={'passed':False,'checks':checks,'errors':errors,'failure':str(e)};print('STATE',json.dumps(state().get('debug'),ensure_ascii=False)[:14000]);page.screenshot(path=str(RESULTS/'screenshots/release09-failure.png'),full_page=True,timeout=5000)
  finally:
-  (RESULTS/'browser-release09-results.json').write_text(json.dumps(result,indent=2)+'\n')
+  (RESULTS/'browser-release09-results.json').write_text(json.dumps(result,indent=2)+'\n', encoding='utf-8')
  if not result['passed']:raise SystemExit(1)

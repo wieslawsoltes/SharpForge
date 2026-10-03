@@ -6,7 +6,7 @@ from conformance.browser.launch import launch_browser, results_dir
 RESULTS = results_dir()
 from browser_harness import load_application
 ROOT=Path(__file__).resolve().parents[1];checks=[];errors=[];server=None
-fixtures=json.loads(subprocess.check_output(['node','--input-type=module','-e',"import {arithmeticLibrary,managedFixture} from './tests/managed-fixtures.js';console.log(JSON.stringify({library:[...arithmeticLibrary()],unsupported:[...managedFixture({methods:[{name:'Main',body:(w,c)=>w.op('call',c.member('External.Unavailable','Call','void')).op('ret')} ]})]}));"],cwd=ROOT,text=True))
+fixtures=json.loads(subprocess.check_output(['node','--input-type=module','-e',"import {arithmeticLibrary,managedFixture} from './tests/managed-fixtures.js';console.log(JSON.stringify({library:[...arithmeticLibrary()],unsupported:[...managedFixture({methods:[{name:'Main',body:(w,c)=>w.op('call',c.member('External.Unavailable','Call','void')).op('ret')} ]})]}));"],cwd=ROOT,text=True, encoding='utf-8'))
 def checked(name,action):
  t=time.perf_counter();action();checks.append({'name':name,'passed':True,'milliseconds':round((time.perf_counter()-t)*1000,2)});print('PASS',name,flush=True)
 def truth(value,message='assertion failed'):
@@ -55,5 +55,5 @@ except Exception as error:
 finally:
  if server:server.terminate();server.wait(timeout=10)
  report={'version':'0.4.0','mode':os.getenv('SHARPFORGE_IN_MEMORY')=='1' and 'in-memory real modules and workers' or 'http','checks':checks,'passed':sum(x['passed'] for x in checks),'failed':sum(not x['passed'] for x in checks),'errors':errors}
- (RESULTS/'browser-managed-results.json').write_text(json.dumps(report,indent=2)+'\n')
+ (RESULTS/'browser-managed-results.json').write_text(json.dumps(report,indent=2)+'\n', encoding='utf-8')
  if report['failed']:raise SystemExit(1)

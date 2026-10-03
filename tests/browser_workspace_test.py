@@ -128,5 +128,5 @@ except Exception as error:
 finally:
  if server:server.terminate()
  report={'version':'0.4.0','mode':os.getenv('SHARPFORGE_IN_MEMORY')=='1' and 'in-memory production modules and workers' or 'http','nativeWritePermissions':'not tested; permission and conflict logic covered by node mocks','checks':checks,'passed':sum(x['passed'] for x in checks),'failed':sum(not x['passed'] for x in checks),'errors':errors}
- (RESULTS/'browser-workspace-results.json').write_text(json.dumps(report,indent=2)+'\n')
+ (RESULTS/'browser-workspace-results.json').write_text(json.dumps(report,indent=2)+'\n', encoding='utf-8')
  if report['failed']:raise SystemExit(1)

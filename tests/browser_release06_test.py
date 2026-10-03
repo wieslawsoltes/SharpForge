@@ -17,7 +17,7 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
  try:
   load_application(page)
   checked('two production compiler/runtime workers initialized',lambda:truth(len(workers)==2))
-  manifest=json.loads((ROOT/'examples/features-0.6/manifest.json').read_text())
+  manifest=json.loads((ROOT/'examples/features-0.6/manifest.json').read_text(encoding='utf-8'))
   def example(sample):
    page.evaluate('(id)=>sharpforge.loadSample(id,true)',sample['id']);page.wait_for_function('sharpforge.getState().artifact!==null');page.evaluate('sharpforge.run()');page.wait_for_function('(expected)=>sharpforge.getState().debug?.state==="terminated" && sharpforge.getState().debug.output===expected',arg=sample['expectedOutput'])
   for sample in manifest:checked('production workers: '+sample['id'],lambda sample=sample:example(sample))
@@ -84,5 +84,5 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
  except Exception as error:
   traceback.print_exc();result={'passed':False,'checks':checks,'errors':errors,'failure':str(error)};page.screenshot(path=str(RESULTS/'screenshots/release06-failure.png'),full_page=True,timeout=5000)
  finally:
-  (RESULTS/'browser-release06-results.json').write_text(json.dumps(result,indent=2)+'\n')
+  (RESULTS/'browser-release06-results.json').write_text(json.dumps(result,indent=2)+'\n', encoding='utf-8')
  if not result['passed']:raise SystemExit(1)
