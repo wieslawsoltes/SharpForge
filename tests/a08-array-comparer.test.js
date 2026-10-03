@@ -5,13 +5,17 @@ import {createHash} from 'node:crypto';
 import {compileToIL} from '@sharpforge/compiler';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
 import {findContracts} from '@sharpforge/framework';
+import {arrayComparerAssembly} from './fixtures/comparers/array.js';
 
 const oracleURL = new URL('../packages/bcl-core/reference/array-comparer-net10.json', import.meta.url);
 const orderingURL = new URL('../packages/bcl-core/reference/culture-ordering-net10.json', import.meta.url);
 const captureURL = new URL('../packages/bcl-core/reference/array-comparer/Program.cs', import.meta.url);
 const engines = {source: result => new VirtualMachine(result.image), cil: result => new CilVirtualMachine(result.assembly)};
 const comparerType = 'System.Collections.IComparer';
-const platformOnly = new Set(['nan-equal', 'nan-first']);
+const sourceCases = new Set([
+  'both-null', 'null-first', 'null-second', 'ordinal', 'ints', 'doubles', 'bools',
+  'different-boxes', 'number-string', 'string-number', 'signed-zero'
+]);
 
 function contract(owner, name, parameters = []) {
   const found = findContracts(owner, name).find(candidate =>
@@ -36,14 +40,18 @@ function nativeCase(row) {
 }
 
 for (const [engine, create] of Object.entries(engines)) {
-  test(`array comparer ${engine}: non-generic calls and outer exceptions match native capture`, async () => {
+  test(`array comparer ${engine}: compiled direct StringComparer calls match the supported native subset`, async () => {
     const reference = JSON.parse(await readFile(oracleURL, 'utf8'));
-    const cases = reference.cases.filter(row => !row.nativeOnly && !platformOnly.has(row.id));
-    const program = 'IComparer cmp = StringComparer.Ordinal;object shared = new object();' + cases.map(nativeCase).join('\n');
-    const result = create(compile(program)).run();
-    assert.equal(result.state, 'terminated', JSON.stringify(result.fault));
-    const expected = cases.map(row => `${row.id}:${row.error ?? row.value}`).join('\n');
-    assert.equal(result.output, expected + '\n');
+    const cases = reference.cases.filter(row => sourceCases.has(row.id));
+    assert.equal(cases.length, sourceCases.size);
+    const program = 'var cmp = StringComparer.Ordinal;' + cases.map(nativeCase).join('\n');
+    const vm = create(compile(program));
+    try {
+      const result = vm.run();
+      assert.equal(result.state, 'terminated', JSON.stringify(result.fault));
+      const expected = cases.map(row => `${row.id}:${row.error ?? row.value}`).join('\n');
+      assert.equal(result.output, expected + '\n');
+    } finally { vm.stop(); }
   });
 
   test(`array comparer ${engine}: all captured ordinal search positions and complements`, async () => {
@@ -143,17 +151,63 @@ for (const [engine, create] of Object.entries(engines)) {
   });
 
   test(`array comparer ${engine}: unsupported callbacks are explicit and empty search needs none`, () => {
-    const result = create(compile(`
-      IComparer comparer = new Reverse();
-      Console.WriteLine(Array.BinarySearch((Array)new string[] {}, "a", comparer));
-      try { Array.BinarySearch((Array)new string[] {"a"}, "a", comparer); }
-      catch (Exception error) { Console.WriteLine(error.GetType().Name); }
-      class Reverse : IComparer { public int Compare(object first, object second) { return 0; } }
-    `)).run();
-    assert.equal(result.state, 'terminated', JSON.stringify(result.fault));
-    assert.equal(result.output, '-1\nNotSupportedException\n');
+    const vm = create(compile('Console.WriteLine(0);'));
+    const platform = vm.platform;
+    try {
+      platform.heap.withRoots([], () => {
+        const custom = platform.make('Tests.CustomComparer');
+        platform.heap.pins.push(custom);
+        const empty = platform.heap.allocate('array', 'string[]', []);
+        platform.heap.pins.push(empty);
+        const search = contract('System.Array', 'BinarySearch', ['System.Array', 'object', comparerType]);
+        assert.equal(platform.invoke(search, [empty, null, custom]), -1);
+        const populated = platform.heap.allocate('array', 'string[]', [null]);
+        platform.heap.pins.push(populated);
+        assert.throws(() => platform.invoke(search, [populated, null, custom]), {name: 'NotSupportedException'});
+      });
+    } finally { vm.stop(); }
   });
 }
+
+test('array comparer CIL: every captured vector operation executes through its real interface signature', async () => {
+  const reference = JSON.parse(await readFile(oracleURL, 'utf8'));
+  for (const row of reference.cases.filter(candidate => !candidate.nativeOnly)) {
+    const vm = new CilVirtualMachine(arrayComparerAssembly(row.id));
+    try {
+      const result = vm.run();
+      if (row.error) {
+        assert.equal(result.state, 'faulted', row.id);
+        assert.equal(result.fault?.name, row.error, row.id);
+      } else {
+        assert.equal(result.state, 'terminated', row.id + ': ' + result.fault?.stack);
+        assert.equal(row.sign ? Math.sign(result.returnValue) : result.returnValue, row.value, row.id);
+      }
+    } finally { vm.stop(); }
+  }
+});
+
+test('array comparer CIL: typed catch and InnerException getter preserve all captured wrapped failures', async () => {
+  const reference = JSON.parse(await readFile(oracleURL, 'utf8'));
+  for (const row of reference.cases.filter(candidate => candidate.inner)) {
+    const vm = new CilVirtualMachine(arrayComparerAssembly(row.id, {innerException: true}));
+    try {
+      const result = vm.run();
+      assert.equal(result.state, 'terminated', row.id + ': ' + result.fault?.stack);
+      assert.ok(result.returnValue, row.id);
+      vm.heap.collect([result.returnValue]);
+      assert.equal(vm.heap.get(result.returnValue).methodTable.name, 'System.' + row.inner, row.id);
+    } finally { vm.stop(); }
+  }
+});
+
+test('array comparer source: custom interface implementations remain explicitly unsupported', () => {
+  const result = compileToIL(`using System;using System.Collections; Console.WriteLine(0);
+    class Custom : IComparer { public int Compare(object first, object second) { return 0; } }`);
+  assert.equal(result.success, false);
+  const codes = new Set(result.diagnostics.map(diagnostic => diagnostic.code));
+  assert(codes.has('SF1014'), JSON.stringify(result.diagnostics));
+  assert(codes.has('SF2200'), JSON.stringify(result.diagnostics));
+});
 
 test('array comparer: reference pins capture source and exact released non-generic signature', async () => {
   const reference = JSON.parse(await readFile(oracleURL, 'utf8'));

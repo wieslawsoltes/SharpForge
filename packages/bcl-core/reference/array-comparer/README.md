@@ -12,14 +12,19 @@ Array.BinarySearch(Array, object, IComparer) overload. Comparison signs are
 normalized; binary-search indices and complemented insertion positions are not.
 Both exception type and InnerException type are retained.
 
-Managed source/CIL tests generate calls from the captured expressions and compare
-outer exception types. InnerException has no source lowering yet, so direct
-managed-platform tests check all three captured wrapped failures after collection,
-including the CIL InnerException getter. NaN cases
-use direct managed-platform boxes because source double.NaN fields are outside
-the current execution profile. Rank-two rejection uses a managed array header;
-this does not claim source multidimensional-array construction support. Capture
-and ordinary tests are separate, so test runs never launch the .NET toolchain.
+Compiled source/CIL tests generate eleven supported direct StringComparer calls
+from the captured expressions. Interface conversions, custom implementations,
+new object construction and double.NaN fields are not assumed to lower in that
+source profile. `tests/fixtures/comparers/array.js` independently assembles all
+32 vector operations, including true IComparer.Compare dispatch, boxed values,
+NaN and opaque-object identity. Separate CIL methods use a typed catch and the
+actual InnerException getter for every captured wrapped failure. Both VM
+platforms also check wrapped-fault GC roots and custom-comparer rejection.
+
+Rank-two rejection uses a managed array header; this does not claim source
+multidimensional-array construction support. Source custom implementations retain
+their explicit diagnostics. The pinned capture and its hash stay unchanged;
+ordinary tests never launch the .NET toolchain.
 
 Native implementation references:
 - [StringComparer object comparisons](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/StringComparer.cs)

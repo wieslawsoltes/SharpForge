@@ -97,6 +97,12 @@ under `reference/array-comparer` covers this actual non-generic overload and its
 object comparisons/faults. Ordinary tests also consume the prior 97-string
 ordinal search corpus. NaN comparisons and rank rejection are covered through
 both managed platforms without claiming unsupported source syntax support.
+Independent CIL fixtures execute every captured vector operation through the
+non-generic interface, including boxing and opaque-object construction; typed
+catches and the actual InnerException getter cover all three wrapped failures.
+Compiled source covers eleven direct StringComparer operations. Source interface
+conversions, custom implementations, object construction and NaN field access
+are not silently treated as successful execution by the reference harness.
 
 The host `fault(type, message, reference = null)` service and public
 `fail(platform, type, message, reference = null)` helper can carry an existing
