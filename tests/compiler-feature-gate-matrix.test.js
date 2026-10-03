@@ -91,7 +91,12 @@ function gateDiagnostics(result, row) {
   const names = [row.name, binderNames[row.id]].filter(Boolean).map(name => `'${name.toLowerCase()}'`);
   return result.diagnostics.filter(d => d.code === row.code && names.some(name => d.message.toLowerCase().includes(name)));
 }
-const compileAt = (row, version) => compile(featureSnippets[row.id], { langVersion: versionText(version) });
+// Exercise feature gates on an already parsed tree. Text-input grammar selection is tested separately: contextual
+// words such as `record` and `extension` intentionally parse as identifiers below their introduction versions.
+const compileAt = (row, version) => {
+  const file = parse(new SourceText(featureSnippets[row.id]), undefined, { languageVersion: 'preview' });
+  return compile([file], { langVersion: versionText(version) });
+};
 
 test('A02-B01 every catalog row has exactly one snippet and is either gated or listed as not gated', () => {
   const ids = languageFeatures.map(row => row.id);
