@@ -12,10 +12,10 @@
       "deliverable": "- [SF-A05-T01](https://github.com/wieslawsoltes/SharpForge/issues?q=SF-A05-T01): Complete scalar numeric execution\n\n- [SF-A05-T02](https://github.com/wieslawsoltes/SharpForge/issues?q=SF-A05-T02): Implement complete call semantics\n\n- [SF-A05-T03](https://github.com/wieslawsoltes/SharpForge/issues?q=SF-A05-T03): Implement managed pointer lifetimes\n\n- [SF-A05-T04](https://github.com/wieslawsoltes/SharpForge/issues?q=SF-A05-T04): Complete exception dispatch\n\n- [SF-A05-T05](https://github.com/wieslawsoltes/SharpForge/issues?q=SF-A05-T05): Implement multidimensional arrays\n\n- [SF-A05-T06](https://github.com/wieslawsoltes/SharpForge/issues?q=SF-A05-T06): Preserve state across suspension and snapshots\n\nClose only after every child has merged evidence. The project board must not count an epic and its children as independent delivered capabilities.",
       "acceptance": "",
       "dependencies": "No implementation prerequisite. Claim still requires an ownership lease.",
-      "status": "pending",
+      "status": "implementation in progress; validation deferred until full E01 scope",
       "evidence": [],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-S_2c",
-      "boardStatus": "Backlog",
+      "boardStatus": "In progress",
       "parentIssue": 1
     },
     {
@@ -102,7 +102,7 @@
       "deliverable": "Execute rank/bounds/lower-bound semantics and typed array covariance checks.",
       "acceptance": "- [ ] Boundary and store-type failures match native exception types.\n\n- [ ] Add positive, malformed/negative, cancellation/disposal and boundary tests where applicable.\n\n- [ ] Verify every affected execution/platform target independently; explicitly record unsupported targets.\n\n- [ ] Add or update a runnable example, API capability row and regression test.\n\n- [ ] Measure cold/warm latency, p95/p99 and allocations for performance-sensitive paths; keep correctness gates.\n\n- [ ] Record exact commits, tool versions and commands; no fixture simulator is reported as native qualification.",
       "dependencies": "- [SF-A00-T01](https://github.com/wieslawsoltes/SharpForge/issues/4)\n\n- [SF-A00-T04](https://github.com/wieslawsoltes/SharpForge/issues/7)",
-      "status": "pending",
+      "status": "implementation in progress; validation deferred until full E01 scope",
       "evidence": [],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-S_3A",
       "boardStatus": "In progress",
@@ -117,7 +117,7 @@
       "deliverable": "Version complete VM state across source/CIL pauses and restores.",
       "acceptance": "- [ ] Replay nested calls, faults and parked contexts without stale object/frame identities.\n\n- [ ] Add positive, malformed/negative, cancellation/disposal and boundary tests where applicable.\n\n- [ ] Verify every affected execution/platform target independently; explicitly record unsupported targets.\n\n- [ ] Add or update a runnable example, API capability row and regression test.\n\n- [ ] Measure cold/warm latency, p95/p99 and allocations for performance-sensitive paths; keep correctness gates.\n\n- [ ] Record exact commits, tool versions and commands; no fixture simulator is reported as native qualification.",
       "dependencies": "- [SF-A00-T01](https://github.com/wieslawsoltes/SharpForge/issues/4)\n\n- [SF-A00-T04](https://github.com/wieslawsoltes/SharpForge/issues/7)",
-      "status": "pending",
+      "status": "implementation in progress; validation deferred until full E01 scope",
       "evidence": [],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-S_3Q",
       "boardStatus": "In progress",
@@ -147,11 +147,12 @@
       "deliverable": "Reduce boxed intermediates only when type proofs permit exact semantics.",
       "acceptance": "- [ ] Fast and reference paths match randomized inputs and allocation measurements.\n\n- [ ] Add positive, malformed/negative, cancellation/disposal and boundary tests where applicable.\n\n- [ ] Verify every affected execution/platform target independently; explicitly record unsupported targets.\n\n- [ ] Add or update a runnable example, API capability row and regression test.\n\n- [ ] Measure cold/warm latency, p95/p99 and allocations for performance-sensitive paths; keep correctness gates.\n\n- [ ] Record exact commits, tool versions and commands; no fixture simulator is reported as native qualification.",
       "dependencies": "- [SF-A00-T01](https://github.com/wieslawsoltes/SharpForge/issues/4)\n\n- [SF-A00-T04](https://github.com/wieslawsoltes/SharpForge/issues/7)\n\n- [SF-A05-T01](https://github.com/wieslawsoltes/SharpForge/issues/74)",
-      "status": "pending",
+      "status": "implementation in progress; validation deferred until full E02 scope",
       "evidence": [],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-S_3c",
-      "boardStatus": "Backlog",
-      "parentIssue": 73
+      "boardStatus": "In progress",
+      "parentIssue": 73,
+      "branch": "codex/a05-e02-numeric"
     },
     {
       "id": "SF-A05-T09",
@@ -222,11 +223,16 @@
       "deliverable": "",
       "acceptance": "",
       "dependencies": "",
-      "status": "pending",
-      "evidence": [],
+      "status": "merged; complete-scope qualification recorded with target limitations",
+      "evidence": [
+        "https://github.com/wieslawsoltes/SharpForge/pull/1330",
+        "docs/runtime-a05-e03-validation.json"
+      ],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TFRU",
-      "boardStatus": "Backlog",
-      "parentIssue": 1
+      "boardStatus": "Done",
+      "parentIssue": 1,
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1330",
+      "mergeCommit": "64612a42c727e8602ea9b77625d68bfc52201f7d"
     },
     {
       "id": "SF-A05-E04",
@@ -237,11 +243,16 @@
       "deliverable": "",
       "acceptance": "",
       "dependencies": "",
-      "status": "pending",
-      "evidence": [],
+      "status": "merged; complete-scope qualification recorded with target limitations",
+      "evidence": [
+        "https://github.com/wieslawsoltes/SharpForge/pull/1953",
+        "docs/runtime-a05-e04-validation.json"
+      ],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TFRc",
-      "boardStatus": "Backlog",
-      "parentIssue": 1
+      "boardStatus": "Done",
+      "parentIssue": 1,
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1953",
+      "mergeCommit": "447dfeda62ced13c3403416023a704d0b58c66c7"
     },
     {
       "id": "SF-A05-T13",
@@ -252,14 +263,17 @@
       "deliverable": "Move CilVirtualMachine.binary/compare/convert/storage/indirect and the float()/number()/isNumber()/defaults() helpers from cil-vm.js into packages/runtime/src/execution/numeric-ops.js as pure functions; cil-vm.js keeps one-line delegations.",
       "acceptance": "- [ ] All tests in tests/cil.test.js and tests/managed-il.test.js pass unchanged; numeric-ops.js has no import of heap or VM and is unit-testable in isolation.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "in review",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
         "https://github.com/wieslawsoltes/SharpForge/pull/1330",
-        "runtime-a05-e03-validation.json"
+        "runtime-a05-e03-validation.json",
+        "docs/runtime-a05-e03-validation.json"
       ],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TGpU",
-      "boardStatus": "In review",
-      "parentIssue": 461
+      "boardStatus": "Done",
+      "parentIssue": 461,
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1330",
+      "mergeCommit": "64612a42c727e8602ea9b77625d68bfc52201f7d"
     },
     {
       "id": "SF-A05-T14",
@@ -270,14 +284,17 @@
       "deliverable": "Replace the string if-chain in cil-vm.js step() (startsWith/regex per instruction) with a handler registry packages/runtime/src/execution/handlers/index.js plus group files load-store.js, branch.js, arith.js, object-model.js, array.js, indirect.js, call.js; cil-vm.js only looks up handler by opcode.",
       "acceptance": "- [ ] Each handler file is registered through one line in handlers/index.js; existing CIL suites pass; adding an opcode touches only one group file.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "in review",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
         "https://github.com/wieslawsoltes/SharpForge/pull/1330",
-        "runtime-a05-e03-validation.json"
+        "runtime-a05-e03-validation.json",
+        "docs/runtime-a05-e03-validation.json"
       ],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TGp4",
-      "boardStatus": "In review",
-      "parentIssue": 461
+      "boardStatus": "Done",
+      "parentIssue": 461,
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1330",
+      "mergeCommit": "64612a42c727e8602ea9b77625d68bfc52201f7d"
     },
     {
       "id": "SF-A05-T15",
@@ -288,14 +305,17 @@
       "deliverable": "Move invoke()/call()/ensureInitialized() to execution/calls.js and layout()/typeOf()/matches()/field() to execution/type-system.js with a token-keyed type index replacing inspector.types.find linear scans.",
       "acceptance": "- [ ] typeOf and matches are O(1) map lookups; existing CIL tests pass; cil-vm.js no longer contains metadata walks.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "in review",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
         "https://github.com/wieslawsoltes/SharpForge/pull/1330",
-        "runtime-a05-e03-validation.json"
+        "runtime-a05-e03-validation.json",
+        "docs/runtime-a05-e03-validation.json"
       ],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TGqs",
-      "boardStatus": "In review",
-      "parentIssue": 461
+      "boardStatus": "Done",
+      "parentIssue": 461,
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1330",
+      "mergeCommit": "64612a42c727e8602ea9b77625d68bfc52201f7d"
     },
     {
       "id": "SF-A05-T17",
@@ -306,14 +326,17 @@
       "deliverable": "Move CilVirtualMachine.intrinsic() into packages/runtime/src/execution/intrinsics.js as a Map keyed by owner::name(signature) aligned with supportedIntrinsic() in packages/cil/src/execution-profile.js.",
       "acceptance": "- [ ] A test asserts every member accepted by supportedIntrinsic has a table entry and vice versa; lookups are O(1).\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "in review",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
         "https://github.com/wieslawsoltes/SharpForge/pull/1330",
-        "runtime-a05-e03-validation.json"
+        "runtime-a05-e03-validation.json",
+        "docs/runtime-a05-e03-validation.json"
       ],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TGq4",
-      "boardStatus": "In review",
-      "parentIssue": 461
+      "boardStatus": "Done",
+      "parentIssue": 461,
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1330",
+      "mergeCommit": "64612a42c727e8602ea9b77625d68bfc52201f7d"
     },
     {
       "id": "SF-A05-T18",
@@ -324,14 +347,17 @@
       "deliverable": "Move VirtualMachine.builtin() name switch (Math.*, Console.*, GC.*, string.*, Convert.*) and binary()/CONVERT/UNARY logic from vm.js into two new modules; vm.js runSlice keeps only dispatch.",
       "acceptance": "- [ ] tests/runtime.test.js and tests/compiler.test.js pass; vm.js shrinks below 90 lines; builtins are testable without constructing a VM image.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "in review",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
         "https://github.com/wieslawsoltes/SharpForge/pull/1330",
-        "runtime-a05-e03-validation.json"
+        "runtime-a05-e03-validation.json",
+        "docs/runtime-a05-e03-validation.json"
       ],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TGrw",
-      "boardStatus": "In review",
-      "parentIssue": 461
+      "boardStatus": "Done",
+      "parentIssue": 461,
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1330",
+      "mergeCommit": "64612a42c727e8602ea9b77625d68bfc52201f7d"
     },
     {
       "id": "SF-A05-T16",
@@ -342,14 +368,17 @@
       "deliverable": "Move raise()/resumeUnwind() and the leave branch logic out of cil-vm.js into packages/runtime/src/execution/eh.js behind a two-function interface (throwFault, continueUnwind).",
       "acceptance": "- [ ] tests/cil.test.js protected-region cases pass; eh.js is the only file referencing frame.unwinds/frame.pending/frame.caught.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "in review",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
         "https://github.com/wieslawsoltes/SharpForge/pull/1330",
-        "runtime-a05-e03-validation.json"
+        "runtime-a05-e03-validation.json",
+        "docs/runtime-a05-e03-validation.json"
       ],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TGsA",
-      "boardStatus": "In review",
-      "parentIssue": 461
+      "boardStatus": "Done",
+      "parentIssue": 461,
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1330",
+      "mergeCommit": "64612a42c727e8602ea9b77625d68bfc52201f7d"
     },
     {
       "id": "SF-A05-T19",
@@ -360,14 +389,17 @@
       "deliverable": "Move the five unwinding methods of VirtualMachine into packages/runtime/src/execution/source-eh.js with the VM passed as context.",
       "acceptance": "- [ ] Existing try/finally tests in tests/runtime.test.js and tests/language.test.js pass; vm.js has no reference to frame.unwinds.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "in review",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
         "https://github.com/wieslawsoltes/SharpForge/pull/1330",
-        "runtime-a05-e03-validation.json"
+        "runtime-a05-e03-validation.json",
+        "docs/runtime-a05-e03-validation.json"
       ],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TGs4",
-      "boardStatus": "In review",
-      "parentIssue": 461
+      "boardStatus": "Done",
+      "parentIssue": 461,
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1330",
+      "mergeCommit": "64612a42c727e8602ea9b77625d68bfc52201f7d"
     },
     {
       "id": "SF-A05-T20",
@@ -378,14 +410,17 @@
       "deliverable": "Replace the hand-written field copies in VirtualMachine.snapshot/restore and CilVirtualMachine.snapshot/restore with a declarative schema (schemaVersion, field list, copier) exported from packages/runtime/src/snapshot.js.",
       "acceptance": "- [ ] Adding a VM field without registering it in the schema fails a test that diffs Object.keys(vm) against the schema; snapshot objects carry schemaVersion.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "in review",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
         "https://github.com/wieslawsoltes/SharpForge/pull/1330",
-        "runtime-a05-e03-validation.json"
+        "runtime-a05-e03-validation.json",
+        "docs/runtime-a05-e03-validation.json"
       ],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TGtM",
-      "boardStatus": "In review",
-      "parentIssue": 461
+      "boardStatus": "Done",
+      "parentIssue": 461,
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1330",
+      "mergeCommit": "64612a42c727e8602ea9b77625d68bfc52201f7d"
     },
     {
       "id": "SF-A05-T21",
@@ -396,13 +431,17 @@
       "deliverable": "Add execution/static-init.js: trigger rules for precise vs BeforeFieldInit types, reentrancy on the same context returning partially initialized state, failed cctor caching and TypeInitializationException wrapping with InnerException; today a failed cctor is marked 'failed' but later accesses do not rethrow.",
       "acceptance": "- [ ] Fixtures for cctor ordering across three mutually referencing types, throwing cctor accessed twice, and beforefieldinit laziness match .NET output.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implemented and validated; ready for review",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
-        "runtime-a05-e04-validation.json"
+        "runtime-a05-e04-validation.json",
+        "https://github.com/wieslawsoltes/SharpForge/pull/1953",
+        "docs/runtime-a05-e04-validation.json"
       ],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TGtQ",
-      "boardStatus": "In review",
-      "parentIssue": 462
+      "boardStatus": "Done",
+      "parentIssue": 462,
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1953",
+      "mergeCommit": "447dfeda62ced13c3403416023a704d0b58c66c7"
     },
     {
       "id": "SF-A05-T22",
@@ -413,13 +452,17 @@
       "deliverable": "Add execution/method-table.js so heap records reference a MethodTable object (token, base, interface map, vtable, element type, flags, instance size, GC reference bitmap) instead of a type-name string; typeOf() by name and name collisions across namespaces disappear.",
       "acceptance": "- [ ] Two types with the same simple name in different namespaces dispatch correctly; GetType() identity is reference-equal per type.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implemented and validated; ready for review",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
-        "runtime-a05-e04-validation.json"
+        "runtime-a05-e04-validation.json",
+        "https://github.com/wieslawsoltes/SharpForge/pull/1953",
+        "docs/runtime-a05-e04-validation.json"
       ],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TGt4",
-      "boardStatus": "In review",
-      "parentIssue": 462
+      "boardStatus": "Done",
+      "parentIssue": 462,
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1953",
+      "mergeCommit": "447dfeda62ced13c3403416023a704d0b58c66c7"
     },
     {
       "id": "SF-A05-T24",
@@ -430,13 +473,17 @@
       "deliverable": "Add execution/handlers/tokens.js for ldtoken (type, method, field), Type.GetTypeFromHandle and GetType() returning stable runtime Type objects (reflection surface itself is owned by A04).",
       "acceptance": "- [ ] typeof(T)==x.GetType() comparisons and typeof(List<>) open generic tokens behave as in .NET.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implemented and validated; ready for review",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
-        "runtime-a05-e04-validation.json"
+        "runtime-a05-e04-validation.json",
+        "https://github.com/wieslawsoltes/SharpForge/pull/1953",
+        "docs/runtime-a05-e04-validation.json"
       ],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TGug",
-      "boardStatus": "In review",
-      "parentIssue": 462
+      "boardStatus": "Done",
+      "parentIssue": 462,
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1953",
+      "mergeCommit": "447dfeda62ced13c3403416023a704d0b58c66c7"
     },
     {
       "id": "SF-A05-T23",
@@ -447,13 +494,17 @@
       "deliverable": "Add execution/casting.js: classes, interfaces, arrays (covariance), generic variance (in/out), Nullable<T>, enums vs underlying, with a cast cache.",
       "acceptance": "- [ ] A table-driven test of 60 source/target pairs matches Type.IsAssignableFrom results from .NET.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implemented and validated; ready for review",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
-        "runtime-a05-e04-validation.json"
+        "runtime-a05-e04-validation.json",
+        "https://github.com/wieslawsoltes/SharpForge/pull/1953",
+        "docs/runtime-a05-e04-validation.json"
       ],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TGus",
-      "boardStatus": "In review",
-      "parentIssue": 462
+      "boardStatus": "Done",
+      "parentIssue": 462,
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1953",
+      "mergeCommit": "447dfeda62ced13c3403416023a704d0b58c66c7"
     },
     {
       "id": "SF-A05-T25",
@@ -464,13 +515,17 @@
       "deliverable": "Add execution/enums.js: enum boxing keeps enum type, ToString/HasFlag hooks, conversions and arithmetic on underlying type; source VM Op.ENUM currently pushes a bare number.",
       "acceptance": "- [ ] Boxed enum prints its member name; (object)MyEnum.A is MyEnum is true and is int is false.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implemented and validated; ready for review",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
-        "runtime-a05-e04-validation.json"
+        "runtime-a05-e04-validation.json",
+        "https://github.com/wieslawsoltes/SharpForge/pull/1953",
+        "docs/runtime-a05-e04-validation.json"
       ],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TGu8",
-      "boardStatus": "In review",
-      "parentIssue": 462
+      "boardStatus": "Done",
+      "parentIssue": 462,
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1953",
+      "mergeCommit": "447dfeda62ced13c3403416023a704d0b58c66c7"
     },
     {
       "id": "SF-A05-T26",
@@ -481,13 +536,17 @@
       "deliverable": "Add execution/statics.js keyed by (field token, generic instantiation, scheduler context for [ThreadStatic]) replacing the flat statics Map; volatile. prefix accepted.",
       "acceptance": "- [ ] Generic<int>.Counter and Generic<string>.Counter are independent; [ThreadStatic] values differ per scheduler context.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implemented and validated; ready for review",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
-        "runtime-a05-e04-validation.json"
+        "runtime-a05-e04-validation.json",
+        "https://github.com/wieslawsoltes/SharpForge/pull/1953",
+        "docs/runtime-a05-e04-validation.json"
       ],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TGvw",
-      "boardStatus": "In review",
-      "parentIssue": 462
+      "boardStatus": "Done",
+      "parentIssue": 462,
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1953",
+      "mergeCommit": "447dfeda62ced13c3403416023a704d0b58c66c7"
     },
     {
       "id": "SF-A05-T27",
@@ -498,13 +557,17 @@
       "deliverable": "Add execution/strings.js: ldstr interning table as weak-capable intern pool, String.Intern/IsInterned, reference equality rules, char indexing with surrogate correctness; ensure the strings Map root set does not leak across assembly unload.",
       "acceptance": "- [ ] ReferenceEquals(\"a\",\"a\") is true for literals and false for runtime-built strings; interned pool is released on VM stop.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implemented and validated; ready for review",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
-        "runtime-a05-e04-validation.json"
+        "runtime-a05-e04-validation.json",
+        "https://github.com/wieslawsoltes/SharpForge/pull/1953",
+        "docs/runtime-a05-e04-validation.json"
       ],
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TGwo",
-      "boardStatus": "In review",
-      "parentIssue": 462
+      "boardStatus": "Done",
+      "parentIssue": 462,
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1953",
+      "mergeCommit": "447dfeda62ced13c3403416023a704d0b58c66c7"
     },
     {
       "id": "SF-A05-T28",
@@ -515,14 +578,18 @@
       "deliverable": "Add tests/engine-parity.test.js running every language fixture through VirtualMachine and CilVirtualMachine and failing on differing output, exception type or exit code; list permitted divergences explicitly in tests/support/engine-parity-allowlist.js.",
       "acceptance": "- [ ] Parity suite runs in CI; allowlist has an owner and reason per entry; new fixtures are included automatically.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implemented and validated; ready for review",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
-        "runtime-a05-e04-validation.json"
+        "runtime-a05-e04-validation.json",
+        "https://github.com/wieslawsoltes/SharpForge/pull/1953",
+        "docs/runtime-a05-e04-validation.json"
       ],
       "parent": "SF-A05-E04",
       "parentIssue": 462,
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TGws",
-      "boardStatus": "In review"
+      "boardStatus": "Done",
+      "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1953",
+      "mergeCommit": "447dfeda62ced13c3403416023a704d0b58c66c7"
     },
     {
       "id": "SF-A05-T29",
@@ -578,14 +645,17 @@
       "deliverable": "",
       "acceptance": "- [ ] uint x = 0xFFFFFFFF; Console.WriteLine((ulong)x) prints 4294967295 in the CIL engine; regression test added.\n\n- [ ] Regression test reproduces the defect before the fix and passes after.",
       "dependencies": "",
-      "status": "implemented and validated; PR #1448, CI passed",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
-        "runtime-a05-bugs-validation.json"
+        "runtime-a05-bugs-validation.json",
+        "https://github.com/wieslawsoltes/SharpForge/pull/1448",
+        "docs/runtime-a05-bugs-validation.json"
       ],
       "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1448",
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TGyk",
-      "boardStatus": "In review",
-      "parentIssue": 72
+      "boardStatus": "Done",
+      "parentIssue": 72,
+      "mergeCommit": "b377136cce97b64ca4e3dd94e88b1f829702191d"
     },
     {
       "id": "SF-A05-B02",
@@ -596,14 +666,17 @@
       "deliverable": "",
       "acceptance": "- [ ] Out-of-range float to i8/u8/u4/i2/i1 conversions follow one documented .NET-compatible table and are covered by fixtures.\n\n- [ ] Regression test reproduces the defect before the fix and passes after.",
       "dependencies": "",
-      "status": "implemented and validated; PR #1448, CI passed",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
-        "runtime-a05-bugs-validation.json"
+        "runtime-a05-bugs-validation.json",
+        "https://github.com/wieslawsoltes/SharpForge/pull/1448",
+        "docs/runtime-a05-bugs-validation.json"
       ],
       "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1448",
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TGy8",
-      "boardStatus": "In review",
-      "parentIssue": 72
+      "boardStatus": "Done",
+      "parentIssue": 72,
+      "mergeCommit": "b377136cce97b64ca4e3dd94e88b1f829702191d"
     },
     {
       "id": "SF-A05-B04",
@@ -614,14 +687,17 @@
       "deliverable": "",
       "acceptance": "- [ ] try{int z=0;int y=1/z;}catch(DivideByZeroException){Console.WriteLine(\"ok\");} from a Roslyn-compiled fixture DLL prints ok in the CIL engine.\n\n- [ ] Regression test reproduces the defect before the fix and passes after.",
       "dependencies": "",
-      "status": "implemented and validated; PR #1448, CI passed",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
-        "runtime-a05-bugs-validation.json"
+        "runtime-a05-bugs-validation.json",
+        "https://github.com/wieslawsoltes/SharpForge/pull/1448",
+        "docs/runtime-a05-bugs-validation.json"
       ],
       "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1448",
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TGzo",
-      "boardStatus": "In review",
-      "parentIssue": 72
+      "boardStatus": "Done",
+      "parentIssue": 72,
+      "mergeCommit": "b377136cce97b64ca4e3dd94e88b1f829702191d"
     },
     {
       "id": "SF-A05-B03",
@@ -632,14 +708,17 @@
       "deliverable": "",
       "acceptance": "- [ ] class A{public virtual int F()=>1;} class B:A{public new virtual int F()=>2;} A a=new B(); a.F() returns 1.\n\n- [ ] Regression test reproduces the defect before the fix and passes after.",
       "dependencies": "",
-      "status": "implemented and validated; PR #1448, CI passed",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
-        "runtime-a05-bugs-validation.json"
+        "runtime-a05-bugs-validation.json",
+        "https://github.com/wieslawsoltes/SharpForge/pull/1448",
+        "docs/runtime-a05-bugs-validation.json"
       ],
       "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1448",
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TGzw",
-      "boardStatus": "In review",
-      "parentIssue": 72
+      "boardStatus": "Done",
+      "parentIssue": 72,
+      "mergeCommit": "b377136cce97b64ca4e3dd94e88b1f829702191d"
     },
     {
       "id": "SF-A05-B06",
@@ -650,14 +729,17 @@
       "deliverable": "",
       "acceptance": "- [ ] GC.GetTotalMemory returns an Int64 value in both engines; GC.CollectionCount(1) and (2) return counts without throwing.\n\n- [ ] Regression test reproduces the defect before the fix and passes after.",
       "dependencies": "",
-      "status": "implemented and validated; PR #1448, CI passed",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
-        "runtime-a05-bugs-validation.json"
+        "runtime-a05-bugs-validation.json",
+        "https://github.com/wieslawsoltes/SharpForge/pull/1448",
+        "docs/runtime-a05-bugs-validation.json"
       ],
       "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1448",
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TG0U",
-      "boardStatus": "In review",
-      "parentIssue": 72
+      "boardStatus": "Done",
+      "parentIssue": 72,
+      "mergeCommit": "b377136cce97b64ca4e3dd94e88b1f829702191d"
     },
     {
       "id": "SF-A05-B05",
@@ -668,14 +750,17 @@
       "deliverable": "",
       "acceptance": "- [ ] Offsets map is computed once per method; a call-heavy benchmark (fib 25) improves measurably and allocation count per call drops.\n\n- [ ] Regression test reproduces the defect before the fix and passes after.",
       "dependencies": "",
-      "status": "implemented and validated; PR #1448, CI passed",
+      "status": "merged; complete-scope qualification recorded with target limitations",
       "evidence": [
-        "runtime-a05-bugs-validation.json"
+        "runtime-a05-bugs-validation.json",
+        "https://github.com/wieslawsoltes/SharpForge/pull/1448",
+        "docs/runtime-a05-bugs-validation.json"
       ],
       "pullRequest": "https://github.com/wieslawsoltes/SharpForge/pull/1448",
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TG0g",
-      "boardStatus": "In review",
-      "parentIssue": 73
+      "boardStatus": "Done",
+      "parentIssue": 73,
+      "mergeCommit": "b377136cce97b64ca4e3dd94e88b1f829702191d"
     },
     {
       "id": "SF-A05-T01.1",
@@ -1422,10 +1507,11 @@
       "acceptance": "- [ ] A double-heavy loop allocates zero JS objects per iteration (measured by --trace-gc or allocation counter); float differential tests still pass.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TsCw",
-      "boardStatus": "Unassigned",
+      "boardStatus": "In progress",
       "parentIssue": 81,
-      "status": "pending",
-      "evidence": []
+      "status": "implementation in progress; validation deferred until full E02 scope",
+      "evidence": [],
+      "branch": "codex/a05-e02-numeric"
     },
     {
       "id": "SF-A05-T08.2",
@@ -1437,10 +1523,11 @@
       "acceptance": "- [ ] Randomized differential test of specialized vs generic handlers over 1M cases passes; int loop benchmark improves >= 2x.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TsFw",
-      "boardStatus": "Unassigned",
+      "boardStatus": "In progress",
       "parentIssue": 81,
-      "status": "pending",
-      "evidence": []
+      "status": "implementation in progress; validation deferred until full E02 scope",
+      "evidence": [],
+      "branch": "codex/a05-e02-numeric"
     },
     {
       "id": "SF-A05-T08.3",
@@ -1452,10 +1539,11 @@
       "acceptance": "- [ ] Fuzz comparison against pure BigInt path over 10M operations has zero mismatches; long counter loop benchmark improves >= 3x.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TsH4",
-      "boardStatus": "Unassigned",
+      "boardStatus": "In progress",
       "parentIssue": 81,
-      "status": "pending",
-      "evidence": []
+      "status": "implementation in progress; validation deferred until full E02 scope",
+      "evidence": [],
+      "branch": "codex/a05-e02-numeric"
     },
     {
       "id": "SF-A05-T08.4",
@@ -1467,10 +1555,11 @@
       "acceptance": "- [ ] Instruction-count-normalized time for ldloc/stloc drops >= 30%; small-int truncation tests still pass.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
       "boardItemId": "PVTI_lAHOACMOYs4Bljvozg-TsKM",
-      "boardStatus": "Unassigned",
+      "boardStatus": "In progress",
       "parentIssue": 81,
-      "status": "pending",
-      "evidence": []
+      "status": "implementation in progress; validation deferred until full E02 scope",
+      "evidence": [],
+      "branch": "codex/a05-e02-numeric"
     },
     {
       "id": "SF-A05-T09.1",
