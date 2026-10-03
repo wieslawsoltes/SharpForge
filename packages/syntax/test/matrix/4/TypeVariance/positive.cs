@@ -1,3 +1,0 @@
-interface IProducer<out T>
-{
-}

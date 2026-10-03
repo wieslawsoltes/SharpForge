@@ -1,8 +1,0 @@
-{
-  "schemaVersion": 1,
-  "styles": [],
-  "workers": [],
-  "assets": [
-    { "source": "packages/clr/src", "target": "packages/clr/src", "order": 100 }
-  ]
-}

@@ -1,9 +1,0 @@
-<Project>
-  <Target Name="ValidateExampleProperties" BeforeTargets="CoreCompile">
-    <Error Condition="'$(Company)' != 'SharpForge examples'" Text="Imported properties were not evaluated." />
-    <Message Importance="High" Text="$(MSBuildProjectName): $(BuildFlavor), version $(VersionPrefix)" />
-  </Target>
-  <Target Name="DumpBuildContract" Returns="@(Compile)">
-    <Message Importance="High" Text="$(Configuration)|$(TargetFramework)|$(Company)" />
-  </Target>
-</Project>

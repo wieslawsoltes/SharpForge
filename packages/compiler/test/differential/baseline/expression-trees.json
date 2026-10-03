@@ -1,5 +1,0 @@
-{
-  "expression-trees/async-and-base-access": ["diagnostics", "warnings"],
-  "expression-trees/newer-expression-forms": ["diagnostics", "warnings"],
-  "expression-trees/statement-bodies-and-assignments": ["diagnostics", "warnings"]
-}

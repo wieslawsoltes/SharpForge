@@ -1,5 +1,0 @@
-{
-  "stackalloc/nested-stackalloc-in-7-3": ["diagnostics", "warnings"],
-  "stackalloc/shape-and-conversion-rules": ["diagnostics", "warnings"],
-  "stackalloc/stackalloc-initializers-in-7-2": ["diagnostics", "warnings"]
-}

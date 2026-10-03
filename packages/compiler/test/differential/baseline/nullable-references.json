@@ -1,9 +1,0 @@
-{
-  "nullable-references/annotation-and-warning-contexts": ["diagnostics", "warnings"],
-  "nullable-references/annotations-do-not-change-what-runs": ["diagnostics", "warnings", "bytecode", "cil"],
-  "nullable-references/assignments-arguments-and-elements": ["diagnostics", "warnings"],
-  "nullable-references/flow-state-through-tests-and-operators": ["diagnostics", "warnings"],
-  "nullable-references/members-without-a-constructor": ["diagnostics", "warnings"],
-  "nullable-references/nullable-annotation-in-7-3": ["diagnostics", "warnings"],
-  "nullable-references/overrides-and-implementations-agree-on-nullability": ["diagnostics", "warnings"]
-}

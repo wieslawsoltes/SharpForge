@@ -1,9 +1,0 @@
-{
-  "engine": "firefox",
-  "passed": true,
-  "checks": [
-    "inline script rejected",
-    "inline event handler rejected"
-  ],
-  "scope": "Actual browser CSP failure gate, intentionally violating fixture; not a clean product suite"
-}

@@ -1,7 +1,0 @@
-{
-  "attributes/attribute-locations": ["diagnostics", "warnings"],
-  "attributes/class-lookup-usage-and-constructor": ["diagnostics", "warnings"],
-  "attributes/framework-attributes-do-not-change-execution": ["diagnostics", "warnings", "bytecode", "cil"],
-  "attributes/named-arguments-and-constant-arguments": ["diagnostics", "warnings"],
-  "attributes/obsolete-uses": ["diagnostics", "warnings"]
-}
