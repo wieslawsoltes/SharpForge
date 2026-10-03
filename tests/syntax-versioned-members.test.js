@@ -95,8 +95,8 @@ test('T07.3 init accessors and required members match Roslyn; the words stay ide
   assert.equal(init.filter(t => t.kind === 'InitKeyword').length, 6);
   assert(init.filter(t => t.kind === 'IdentifierToken').length >= 6);
   const text = 'class C { public required int X { get; init; } }';
-  assert.deepEqual(diagnosticsOf(text, '8'), ['CS8400@17 "required"', 'CS8400@39 "init"']);
-  assert.deepEqual(diagnosticsOf(text, '10'), ['CS8936@17 "required"']);
+  assert.deepEqual(diagnosticsOf(text, '8'), ['CS8400@30 "X"', 'CS8400@39 "init"']);
+  assert.deepEqual(diagnosticsOf(text, '10'), ['CS8936@30 "X"']);
   assert.deepEqual(diagnosticsOf(text, '11'), []);
   assert.deepEqual(
     diagnosticsOf('class C { int required; int init; void M() { required = init; } int P { get { int init = 1; return init; } } }', '2'),
