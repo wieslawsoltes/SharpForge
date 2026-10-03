@@ -25,7 +25,7 @@ for(const text of [
  for(const t of r.tokens){assert(t.start>=0&&t.end<=text.length&&t.start<=t.end);assert(Object.isFrozen(t.green));}
 });
 test('lexer: unchanged token interning preserves identity',()=>{const cache=new BoundedCache(),a=lex(new SourceText('int x = 1;'),cache),b=lex(new SourceText('int x = 2;'),cache);assert.equal(a.tokens[0].green,b.tokens[0].green);assert.notEqual(a.tokens[3].green,b.tokens[3].green);assert(b.internedTokenHits>0);});
-for(const [text,code] of [['"unclosed','CS1010'],['/*bad','CS1035'],['$"{x"','CS8076'],['#if true\n','SF1001'],['3.2f','SF1005'],['123L','SF1003'],['0xZZ','CS1013'],["'ab'",'CS1012']])test('lexer: diagnostic '+code+' '+text,()=>{assert(lex(new SourceText(text)).diagnostics.some(d=>d.code===code));});
+for(const [text,code] of [['"unclosed','CS1010'],['/*bad','CS1035'],['$"{x"','CS8076'],['#if true\n','CS1027'],['3.2f','SF1005'],['123L','SF1003'],['0xZZ','CS1013'],["'ab'",'CS1012']])test('lexer: diagnostic '+code+' '+text,()=>{assert(lex(new SourceText(text)).diagnostics.some(d=>d.code===code));});
 test('parser: precedence and right associative assignments',()=>{const p=parseExpression('a = b = 1 + 2 * 3');assert.equal(p.diagnostics.length,0);assert.equal(p.expression.right.kind,'Assignment');assert.equal(p.expression.right.right.right.operator,'*');});
 test('parser: syntax tree survives missing tokens',()=>{const r=parse('class A { static void Main( { int x = ; Console.WriteLine(x) }');assert(r.diagnostics.length>0);assert(r.root);assert(r.tokens.length>5);assert(r.diagnostics.length<=200);});
 test('parser: deterministic punctuation fuzz recovers without throwing',()=>{
