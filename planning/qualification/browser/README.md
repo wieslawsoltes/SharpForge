@@ -36,8 +36,10 @@ Cold navigation-to-compiler-ready and warm correctness-gated compile/run samples
 |1154|`standalone_file_test.py` actual navigation, compile/run/debug|Harness injection remains a different mode|
 |1155|Shared CSP monitor and negative real-browser fixture|Policy is never disabled|
 |1156|iPhone 13, Pixel 5, iPad descriptors, touch controls|No physical hardware/OS keyboard claims|
-|1157|ARIA names/roles, keyboard traversal, media modes|Violations retained; product fixes owned elsewhere|
+|1157|ARIA names/roles, keyboard traversal, media modes|Observed label and focus defects fixed; no complete WCAG or assistive-technology claim|
 |1158|Post-deploy job using actual output URL|Existing deploy without enforced CSP fails|
 |1159|Validated report/category merger and negative unit tests|No hardware qualification without evidence|
 
 Use `python scripts/conformance/browser/latency.py --engine chromium --cold 3 --warm 10` for separately measured cold browser launches and warm compile/run percentiles. `accessibility_smoke.py` proves the name audit rejects an empty button and accepts a YAML-quoted named control on each real engine. Known failure catalogs currently identify only measured macOS cells; the Linux/Windows workflow does not inherit those findings as exemptions. Ordinary PRs keep the repository's minimal CI policy: the full browser workflow requires the `full-ci` label; manual and main runs execute it in full.
+
+The [mobile and accessibility follow-up](ui-fixes.md) records actual fixes and a separate revision-bound recapture. The [original qualification](qualification.md) remains the baseline for measurements not repeated by that follow-up.
