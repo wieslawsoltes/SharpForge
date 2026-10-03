@@ -1,6 +1,7 @@
 import { peOptions } from '../pe/headers.js';
 import { writePE } from '../pe.js';
 import { CilError } from '../binary.js';
+import { strongNameOptions, reserveStrongName } from '../pe/strong-name.js';
 import { writeManagedResources } from '../pe/managed-resources.js';
 
 /** Canonical source-emitter PE options; method RVAs use the fixed .text address. */
@@ -12,8 +13,8 @@ export function emissionPEOptions(image, options, framework) {
   const value = { platform: options.platform ?? 'anycpu', outputKind,
     subsystem: options.subsystem ?? (outputKind === 'windows' ? 'windows' : 'console'),
     prefer32Bit: options.prefer32Bit ?? false, nativeEntryStub: framework === 'mscorlib4',
-    deterministic: options.deterministic ?? true, managedResources: options.managedResources ?? [],
-    win32Resources: options.win32Resources };
+    strongName: strongNameOptions(options), deterministic: options.deterministic ?? true,
+    managedResources: options.managedResources ?? [], win32Resources: options.win32Resources };
   peOptions(value);
   return value;
 }
@@ -38,10 +39,11 @@ export function finishEmittedPE({ section, metadata, debug, includeDebug, entryT
     resources = { offset: section.length, size: resourceBytes.length };
     section.bytes(resourceBytes);
   }
+  const strongNameSignature = reserveStrongName(section, metadata, options.strongName);
   section.pad();
   const metadataOffset = section.length;
   const bytes = metadata.finish(includeDebug ? debug : null, section.finish());
   section.bytes(bytes);
-  const image = writePE(section.finish(), metadataOffset, bytes.length, entryToken, { ...options, resources });
+  const image = writePE(section.finish(), metadataOffset, bytes.length, entryToken, { ...options, resources, strongNameSignature });
   return { bytes: image, metadataBytes: bytes.length };
 }
