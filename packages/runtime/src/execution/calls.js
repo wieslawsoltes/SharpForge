@@ -35,7 +35,7 @@ export function invoke(vm,instruction) {
       return;
     }
     if(instruction.name==='callvirt'&&args[0]===null)throw new ManagedFault('NullReferenceException','Null virtual receiver');
-    const dispatch=target&&instruction.name==='callvirt'&&(descriptor.flags&0x40)?vm.typeSystem.virtualTarget(args[0],descriptor,target):target;
+    const dispatch=target&&instruction.name==='callvirt'&&(vm.inspector.methods.get(target)?.flags&0x40)?vm.typeSystem.virtualTarget(args[0],descriptor,target):target;
     if(dispatch) {
       if(!vm.report.methods.includes(dispatch))throw new ManagedFault('NotSupportedException','Unverified virtual override; select its method directly');
       vm.call(dispatch,args);
