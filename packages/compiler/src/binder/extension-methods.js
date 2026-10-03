@@ -83,7 +83,9 @@ export const ExtensionMethodBinding = Base =>
       // The nearest scope with a method the receiver fits decides, as for an invocation.
       for (const scope of group.extensionScopes) {
         const fitting = scope.methods.filter(
-          method => method.name === group.name && isValidReceiverConversion(this.conversions, group.receiver, method.parameters[0].type),
+          method =>
+            method.name === group.name &&
+            isValidReceiverConversion(this.conversions, group.receiver, method.parameters[0].type, { forMethodGroup: true }),
         );
         if (!fitting.length) continue;
         const result = this.extensionDelegate(group, fitting, to);

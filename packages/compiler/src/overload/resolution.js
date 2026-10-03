@@ -12,6 +12,8 @@ import { RefKind, TypeKind, SymbolDisplayFormat, typeOf } from '../symbols/types
 import { mapArguments, acceptsArgumentCount } from './arguments.js';
 import { inferMethodTypeArguments } from './type-inference.js';
 import { numericKind, isSignedKind, isIntegralKind } from '../conversions/numeric.js';
+import { ConversionKind } from '../conversions/classify.js';
+import { spanElementType } from '../conversions/span.js';
 import { baseTypeChain, containsTypeParameter } from '../symbols/substitution.js';
 import { paramsElementType, betterParamsCollection, keepHighestPriority } from './params-collections.js';
 
@@ -336,6 +338,12 @@ export class OverloadResolver {
     const exact = t => arg.type && !arg.literal && this.conversions.isIdentity(arg.type, t);
     if (exact(t1) && !exact(t2)) return 1;
     if (exact(t2) && !exact(t1)) return -1;
+    // C# 14 (first-class spans): when neither matches exactly, an implicit span conversion is the better conversion.
+    if (this.conversions.firstClassSpans && !exact(t1)) {
+      const span1 = c1?.kind === ConversionKind.ImplicitSpan,
+        span2 = c2?.kind === ConversionKind.ImplicitSpan;
+      if (span1 !== span2) return span1 ? 1 : -1;
+    }
     // A lambda prefers the delegate whose return type is better for its inferred return type.
     if (arg.lambda) {
       const d1 = typeOf(t1).delegateInvokeMethod,
@@ -358,6 +366,16 @@ export class OverloadResolver {
   }
   /** Better conversion target: an implicit conversion t1 -> t2 but not back; signed integral over unsigned. */
   betterTarget(t1, t2) {
+    if (this.conversions.firstClassSpans) {
+      // C# 14: ReadOnlySpan<E> is better than Span<E>; two spans otherwise compare only as two ReadOnlySpans.
+      const span1 = spanElementType(typeOf(t1), 'Span'),
+        span2 = spanElementType(typeOf(t2), 'Span'),
+        readOnly1 = spanElementType(typeOf(t1), 'ReadOnlySpan'),
+        readOnly2 = spanElementType(typeOf(t2), 'ReadOnlySpan');
+      if (readOnly1 && span2 && this.conversions.isIdentity(readOnly1, span2)) return 1;
+      if (readOnly2 && span1 && this.conversions.isIdentity(readOnly2, span1)) return -1;
+      if ((span1 || readOnly1) && (span2 || readOnly2) && !(readOnly1 && readOnly2)) return 0;
+    }
     const to = this.conversions.classifyImplicit(t1, t2).exists,
       from = this.conversions.classifyImplicit(t2, t1).exists;
     if (to && !from) return 1;

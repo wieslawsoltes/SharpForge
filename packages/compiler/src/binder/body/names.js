@@ -5,6 +5,7 @@
 import {DiagnosticId} from '../../diagnostics/codes.js';
 import { SymbolKind, TypeKind, ErrorTypeSymbol, ArrayTypeSymbol } from '../../symbols/types.js';
 import { isKnownMissingMember } from '../../symbols/predefined-member-names.js';
+import { spanElementType } from '../../conversions/span.js';
 import { ConstantValue } from '../../constants/constant-value.js';
 import { extensionScopes, isValidReceiverConversion } from '../../overload/extension-methods.js';
 import { lookupMembers } from '../inheritance.js';
@@ -375,8 +376,10 @@ export const NameBinding = Base =>
       const isKnownGap = isKnownMissingMember(type, name) && !this.importsUnknownNamespaces();
       // On a type that is not fully known a missing member proves nothing. An array is the exception when an
       // extension method in scope takes it as its receiver: an array has no instance method that could be meant.
-      const isOpen = !isKnownGap && (type.hasUnknownConstraint || !this.d.closedHierarchy(type));
-      if (isOpen && !(type instanceof ArrayTypeSymbol)) return this.lenient(syntax);
+      // So are Span<T> and ReadOnlySpan<T>, the receivers the C# 14 span conversions are for.
+      const isOpen = !isKnownGap && (type.hasUnknownConstraint || !this.d.closedHierarchy(type)),
+        isSpan = !!(spanElementType(type, 'Span') ?? spanElementType(type, 'ReadOnlySpan'));
+      if (isOpen && !(type instanceof ArrayTypeSymbol) && !isSpan) return this.lenient(syntax);
       // Extension methods (only meaningful when the name is invoked, but a method group conversion may also use them).
       const scopes = extensionScopes(
         this.typeScope.namespaceChain.map(l => ({
@@ -386,7 +389,8 @@ export const NameBinding = Base =>
         name,
       );
       const takesReceiver = method => method.name === name && isValidReceiverConversion(this.conversions, left, method.parameters[0].type);
-      if (isOpen && !scopes.some(scope => scope.methods.some(takesReceiver))) return this.lenient(syntax);
+      // For a span receiver any extension method of that name is a candidate: its type arguments are inferred later.
+      if (isOpen && !isSpan && !scopes.some(scope => scope.methods.some(takesReceiver))) return this.lenient(syntax);
       if (scopes.length)
         return this.node('MethodGroup', syntax, null, {
           methods: [],

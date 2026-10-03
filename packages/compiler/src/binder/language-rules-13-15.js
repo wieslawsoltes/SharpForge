@@ -10,6 +10,7 @@ import { ExtensionMemberBinding } from './extension-members.js';
 import { ParamsCollectionBinding } from './params-collections.js';
 import { UnsafeIteratorBinding } from './unsafe-iterators.js';
 import { ClosedTypeBinding } from './closed-types.js';
+import { UnsafeExpressionBinding } from './unsafe-expressions.js';
 import { CollectionArgumentBinding } from './collection-arguments.js';
 import { ExtensionIndexerBinding } from './extension-indexers.js';
 
@@ -23,5 +24,6 @@ export const languageRules13to15 = Object.freeze([
   LabeledJumpBinding,
   FieldKeywordBinding,
   ClosedTypeBinding,
+  UnsafeExpressionBinding,
   CollectionArgumentBinding,
 ]);
