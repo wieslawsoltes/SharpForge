@@ -1,12 +1,13 @@
+import {emitScalarConstant,emitScalarConversion,emitScalarBinary,emitScalarUnary,scalarMarker} from './scalar-emission.js';
 import {frameworkType,enumTypes} from '@sharpforge/framework';
-import { EnumConvertBase, Op, BinaryName, UnaryName, Builtins } from '@sharpforge/bytecode';
+import { numericTypeNames,numericTypeName,decodeNumericMode, EnumConvertBase, Op, BinaryName, UnaryName, Builtins } from '@sharpforge/bytecode';
 import { Writer, CilError, align, utf8 } from './binary.js';
 import { MetadataBuilder, token, codedIndex, cliSystemName, methodSignature, localSignature, fieldSignature } from './metadata.js';
 import { CilWriter } from './opcodes.js';
 import { TEXT_RVA, writeMethodBody, writePE } from './pe.js';
 import { analyzeMethod, constantType, validateInput } from './analysis.js';
 const markerName='SharpForge.<>AllocationToken';
-const isValue=t=>['int','long','double','bool'].includes(t)||['enum','value'].includes(frameworkType(t)?.kind);
+const isValue=t=>numericTypeNames.includes(numericTypeName(t))||t==='bool'||['enum','value'].includes(frameworkType(t)?.kind);
 const binaryCodes={'+':'add','-':'sub','*':'mul','/':'div','%':'rem','&':'and','|':'or','^':'xor','<<':'shl','>>':'shr'};
 function safeName(name) { if(typeof name!=='string'||!name||name.length>512||/[\0/\\]/.test(name))throw new CilError('Invalid assembly name');return name.replace(/\.dll$/i,''); }
 /** Emits genuine PE/CLI metadata and CIL bodies. No JS source, host eval or embedded executable bytecode. */
@@ -60,8 +61,8 @@ function emitMethod(c,d) {
   const m=d.original,analysis=analyzeMethod(c.image,m),w=new CilWriter(),locals=m.locals.map(l=>l.type),scratch=new Map(),spans=[],starts=[],patches=[],prefixes=new Map(),handlers=handlerLayout(m),n=m.code.length/3;
   const getScratch=(type,index=0)=>{type=type==='null'?'object':type;const key=type+':'+index;if(scratch.has(key))return scratch.get(key);const slot=locals.length;if(slot>=65535)throw new CilError('Scratch locals exceed CLI limit');locals.push(type);scratch.set(key,slot);return slot;};
   const args=m.parameters.length+(m.isStatic?0:1);for(let i=0;i<args;i++)w.local('ldarg',i).local('stloc',i);
-  const needs=(from,to)=>from!==to&&((to==='double'&&from==='int')||(to==='object'&&isValue(from)));
-  function convert(from,to){if(from===to||from==='null')return;if(to==='double'&&from==='int')w.op('conv.r8');else if(to==='object'&&isValue(from))w.op('box',c.resolveType(from));}
+  const needs=(from,to)=>from!==to&&((numericTypeNames.includes(numericTypeName(to))&&numericTypeNames.includes(numericTypeName(from)))||(to==='object'&&isValue(from)));
+  function convert(from,to){if(from===to||from==='null')return;if(numericTypeNames.includes(numericTypeName(to))&&numericTypeNames.includes(numericTypeName(from)))emitScalarConversion(w,c,from,to);else if(to==='object'&&isValue(from))w.op('box',c.resolveType(from));}
   function adapt(from,to){if(from.length!==to.length)throw new CilError('Invalid conversion stack shape');if(!from.some((t,i)=>needs(t,to[i])))return;let lowest=from.findIndex((t,i)=>needs(t,to[i]));const slots=new Map();for(let i=from.length-1;i>lowest;i--){const slot=getScratch(from[i],i);slots.set(i,slot);w.local('stloc',slot);}convert(from[lowest],to[lowest]);for(let i=lowest+1;i<from.length;i++){w.local('ldloc',slots.get(i));convert(from[i],to[i]);}}
   function relative(name,target){const at=w.length;w.op(name,0);patches.push({at:at+1,end:at+5,target});}
   function zones(pc){const result=[];handlers.forEach((h,i)=>{if(pc>=h.start&&pc<=h.end)result.push('t'+i);if(pc>=h.target&&pc<h.handlerEndPc)result.push('h'+i);});return result;}
@@ -73,7 +74,7 @@ function emitMethod(c,d) {
     const top=input.at(-1),left=input.at(-2);let terminal=false;
     switch(op){
       case Op.ENUM:w.integer(b).op('box',c.resolveType(enumTypes[a])).op('unbox.any',c.resolveType(enumTypes[a]));break;case Op.DELEGATE:{const type=c.image.constants[b];w.op('ldftn',c.methodTokens.get(a)).op('newobj',c.external(type,'.ctor','void',['object','nint'],false));break;}case Op.SEQ:w.op('nop');break;case Op.NOP:w.op('nop').op('nop');break;case Op.ENDFINALLY:w.op('endfinally');terminal=true;break;
-      case Op.CONST:{const value=c.image.constants[a],type=constantType(value,b);if(type==='null')w.op('ldnull');else if(type==='string')w.op('ldstr',0x70000000|c.metadata.userString(value));else if(type==='double')w.op('ldc.r8',value);else {w.integer(value===true?1:value===false?0:value);if(type==='bool')w.op('conv.u1');}break;}
+      case Op.CONST:{const value=c.image.constants[a],type=constantType(value,b);if(value?.scalar)emitScalarConstant(w,c,value);else if(type==='null')w.op('ldnull');else if(type==='string')w.op('ldstr',0x70000000|c.metadata.userString(value));else if(type==='double')w.op('ldc.r8',value);else {w.integer(value===true?1:value===false?0:value);if(type==='bool')w.op('conv.u1');}break;}
       case Op.LDLOC:w.local('ldloc',a);break;
       case Op.STLOC:convert(top,m.locals[a].type);w.op('dup').local('stloc',a);break;
       case Op.LDSTATIC:w.op('ldsfld',c.staticTokens[a]);break;
@@ -81,13 +82,13 @@ function emitMethod(c,d) {
       case Op.LDFLD:{const field=c.fieldTokens.get(top+':'+a);if(!field)throw new CilError(`Missing field ${top}:${a}`);w.op('ldfld',field);break;}
       case Op.STFLD:{const receiver=left,field=c.fieldTokens.get(receiver+':'+a),fieldType=c.image.types.find(t=>t.name===receiver)?.fields[a]?.type;if(!field||!fieldType)throw new CilError('Missing field metadata');convert(top,fieldType);const temp=getScratch(fieldType,998);w.local('stloc',temp).local('ldloc',temp).op('stfld',field).local('ldloc',temp);break;}
       case Op.DUP:w.op('dup');break;case Op.POP:w.op('pop');break;
-      case Op.BINARY:{const operator=BinaryName[a];if(b===2){adapt([left,top],['object','object']);w.op('call',c.external('string','Concat','string',['object','object']));break;}
+      case Op.BINARY:{const operator=BinaryName[a];if(b>=16){const {type}=decodeNumericMode(b);adapt([left,top],[type,['<<','>>'].includes(operator)?'int':type]);emitScalarBinary(w,c,operator,b);break;}if(b===2){adapt([left,top],['object','object']);w.op('call',c.external('string','Concat','string',['object','object']));break;}
         if(['==','!='].includes(operator)&&(left==='string'||top==='string')&&[left,top].every(t=>t==='string'||t==='null')){w.op('call',c.external('string',operator==='=='?'op_Equality':'op_Inequality','bool',['string','string']));break;}
         if((left==='double'||top==='double')&&!['&','|','^','<<','>>'].includes(operator))adapt([left,top],['double','double']);
         if(operator in binaryCodes){w.op(binaryCodes[operator]+(b===5?'.ovf':''));w.op(b===1||b===5?'conv.i4':b===3?'conv.u1':'conv.r8');}
         else if(operator==='==')w.op('ceq');else if(operator==='!=')w.op('ceq').integer(0).op('ceq');else if(operator==='<')w.op('clt');else if(operator==='>')w.op('cgt');else if(operator==='<=')w.op(left==='double'||top==='double'?'cgt.un':'cgt').integer(0).op('ceq');else if(operator==='>=')w.op(left==='double'||top==='double'?'clt.un':'clt').integer(0).op('ceq');else throw new CilError('Unsupported operator');break;}
-      case Op.CONVERT:if(a>=EnumConvertBase){const type=c.resolveType(enumTypes[a-EnumConvertBase]);w.op(b===1?'conv.ovf.i4':'conv.i4').op('box',type).op('unbox.any',type).op('nop');}else w.op(a===0?(b===1?'conv.ovf.i4':'conv.i4'):'conv.r8').op('nop');break;
-      case Op.UNARY:{const operator=UnaryName[a];if(b===5&&operator==='-')w.integer(-1).op('mul.ovf').op('nop');else if(operator==='!')w.integer(0).op('ceq');else if(operator==='~')w.op('not');else{if(operator==='-')w.op('neg');w.op(b===1?'conv.i4':'conv.r8');}break;}
+      case Op.CONVERT:if(b>=16){const {type:from,checked}=decodeNumericMode(b),to=a>=EnumConvertBase?'int':numericTypeNames[a];emitScalarConversion(w,c,from,to,checked);if(a>=EnumConvertBase){const token=c.resolveType(enumTypes[a-EnumConvertBase]);w.op('box',token).op('unbox.any',token);scalarMarker(w,c,enumTypes[a-EnumConvertBase],checked,from);}else scalarMarker(w,c,to,checked,from);break;}if(a>=EnumConvertBase){const type=c.resolveType(enumTypes[a-EnumConvertBase]);w.op(b===1?'conv.ovf.i4':'conv.i4').op('box',type).op('unbox.any',type).op('nop');}else w.op(a===0?(b===1?'conv.ovf.i4':'conv.i4'):'conv.r8').op('nop');break;
+      case Op.UNARY:{const operator=UnaryName[a];if(b>=16){const {type}=decodeNumericMode(b);convert(top,type);emitScalarUnary(w,c,operator,b);break;}if(b===5&&operator==='-')w.integer(-1).op('mul.ovf').op('nop');else if(operator==='!')w.integer(0).op('ceq');else if(operator==='~')w.op('not');else{if(operator==='-')w.op('neg');w.op(b===1?'conv.i4':'conv.r8');}break;}
       case Op.JUMP:{const output=analysis.outputs[pc];adapt(output,analysis.states[a]);relative(leaves(pc,a)?'leave':'br',a);terminal=true;break;}
       case Op.JFALSE:case Op.JTRUE:{// C# expression branches leave only their condition at the stack top.
         const output=analysis.outputs[pc];if(output.some((t,i)=>needs(t,analysis.states[a]?.[i])))throw new CilError('Conditional edge requires an unsupported stack conversion');

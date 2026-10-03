@@ -1,3 +1,5 @@
+import {numeric,normalizeNumeric,implicitNumeric,integral,unaryPromotion,binaryPromotion,scalarLiteral,constantValue,numericDefault,constantFits} from './numeric.js';
+import {NumericType,numericMode,numericTypeNames,scalarConvert} from '@sharpforge/bytecode';
 import {installModernCompiler,languageVersion,hasBackingField,rewriteBackingField} from './modern.js';
 import {lowerAsyncFiles} from './async-lowering.js';
 import {canonicalType,enumTypes,frameworkType,frameworkAssignable,taskResult,findContracts} from '@sharpforge/framework';
@@ -9,13 +11,12 @@ import { emitAssemblyDetailed, CilError } from '@sharpforge/cil';
 import { SourceText, diagnostic } from '@sharpforge/text';
 import { parse } from '@sharpforge/syntax';
 import { Op, Binary, Unary, BuiltinMap, frameworkBuiltin, EnumConvertBase, FORMAT_VERSION } from '@sharpforge/bytecode';
-const supported = new Set(['int','double','bool','string','object','void','var','null','error','Exception']);
+const supported = new Set([...numericTypeNames,'int','double','bool','string','object','void','var','null','error','Exception']);
 const aliases = { 'System.Int32':'int','System.Double':'double','System.Boolean':'bool','System.String':'string','System.Object':'object','System.Void':'void','System.Exception':'Exception' };
-const normalize = t=>canonicalType(aliases[t]??t);
-const numeric = t=>t==='int'||t==='double';
+const normalize = t=>canonicalType(normalizeNumeric(aliases[t]??t));
 const isReference = t=>t==='string'||t==='object'||t==='Exception'||(!supported.has(t)&&t!=='error'&&t!=='long'&&frameworkType(t)?.kind!=='enum')||t.endsWith('[]');
-export function assignable(target,from) { return frameworkAssignable(target,from)||target==='error'||from==='error'||target===from||target==='object'&&from!=='void'||target==='double'&&from==='int'||from==='null'&&isReference(target); }
-function defaultValue(type){return numeric(type)?0:type==='bool'?false:null;}
+export function assignable(target,from) { return frameworkAssignable(target,from)||target==='error'||from==='error'||target===from||target==='object'&&from!=='void'||numeric(target)&&numeric(from)&&implicitNumeric(from,target)||from==='null'&&isReference(target); }
+function defaultValue(type){return numeric(type)?numericDefault(type):type==='bool'?false:null;}
 function alwaysReturns(s){return (s?.kind==='Using'||s?.kind==='OverflowContext')&&alwaysReturns(s.body)||s?.kind==='Switch'&&s.sections.some(x=>x.labels.includes(null))&&s.sections.every(x=>x.statements.some(alwaysReturns))||s?.kind==='Return'||s?.kind==='Throw'||s?.kind==='Block'&&s.statements.some(alwaysReturns)||s?.kind==='If'&&alwaysReturns(s.then)&&alwaysReturns(s.otherwise)||s?.kind==='Try'&&(alwaysReturns(s.finallyBody)||alwaysReturns(s.body)&&s.catches.every(c=>alwaysReturns(c.body)));}
 function pathOf(e){return e.kind==='Name'?e.name:e.kind==='Member'?`${pathOf(e.target)}.${e.name}`:null;}
 export class Compilation {
@@ -140,7 +141,7 @@ class MethodCompiler {
   get pc(){return this.code.length/3;}
   emit(op,a=0,b=0){const at=this.pc;this.code.push(op,a,b);return at;}
   patch(at,target=this.pc){this.code[at*3+1]=target;}
-  emitConstant(value,type){this.emit(Op.CONST,this.c.constant(value),type==='double'?1:0);}
+  emitConstant(value,type){if(numeric(type))value=constantValue(scalarLiteral(value,type),type);this.emit(Op.CONST,this.c.constant(value),type==='double'?1:0);}
   clear(slot){if(!isReference(this.locals[slot].type))return;this.emitConstant(null);this.emit(Op.STLOC,slot);this.emit(Op.POP);}
   temp(type='object'){const slot=this.locals.length;this.locals.push({name:`$t${slot}`,type,slot,hidden:true});return slot;}
   local(name,type,node,assigned=false,hidden=false){
@@ -153,7 +154,7 @@ class MethodCompiler {
   seq(node){if(node.debugHidden)return;const source=this.c.sources.get(node.uri);if(!source)return;const pos=source.positionAt(node.start),point={id:this.c.sequencePoints.length,methodId:this.m.id,offset:this.pc,uri:node.uri,start:node.start,end:node.end,line:pos.line+1,column:pos.character+1};this.c.sequencePoints.push(point);this.emit(Op.SEQ,point.id);}
   build(){this.stmt(this.m.node.body);if(this.m.returnType!=='void'&&!alwaysReturns(this.m.node.body))this.c.report(this.m.node,'CS0161',`Not all code paths return a value in '${this.m.qualifiedName}'`);this.emitConstant(defaultValue(this.m.returnType));this.emit(Op.RET);this.finish();}
   finish(){this.m.code=Int32Array.from(this.code);this.m.locals=this.locals.map(({symbol,...l})=>({...l,...(!l.hidden?{scopeEndPc:l.scopeEndPc??this.pc}:{})}));this.m.handlers=this.handlers;}
-  checkAssign(target,from,node){if(!assignable(target,from))this.c.report(node,'CS0029',`Cannot implicitly convert type '${from}' to '${target}'`);}
+  checkAssign(target,from,node){if(numeric(target)&&numeric(from)){const constant=this.constant(node?.initializer??node);if(constant&&constantFits(constant.value,constant.type,target))return;}if(!assignable(target,from))this.c.report(node,'CS0029',`Cannot implicitly convert type '${from}' to '${target}'`);}
   bool(node){const t=this.expr(node);this.checkAssign('bool',t,node);}
   stmt(node){if(!node)return;
     switch(node.kind){
@@ -288,8 +289,8 @@ class MethodCompiler {
       case 'Index':{const t=this.infer(node.target);return t.endsWith('[]')?t.slice(0,-2):'error';}
       case 'Member':if(node.name==='Length')return 'int';if(node.name==='Message'&&this.infer(node.target)==='Exception'||['Name','FullName'].includes(node.name)&&this.infer(node.target)==='System.Type')return 'string';return this.property(node)?.type??this.field(node)?.type??'error';
       case 'Call':{if(this.isNameof(node))return 'string';const builtin=this.findBuiltin(node);if(builtin)return builtin.result==='numeric'?node.args.some(a=>this.infer(a)==='double')?'double':'int':builtin.result;return this.findMethod(node,false)?.returnType??'error';}
-      case 'Assignment':return this.infer(node.left);case 'Conditional':return this.infer(node.whenTrue);case 'Unary':return node.operator==='!'?'bool':this.infer(node.operand);
-      case 'Binary':if(['==','!=','<','>','<=','>=','&&','||'].includes(node.operator))return 'bool';{const l=this.infer(node.left),r=this.infer(node.right);if(node.operator==='+'&&(l==='string'||r==='string'))return 'string';return l==='double'||r==='double'?'double':l;}
+      case 'Assignment':return this.infer(node.left);case 'Conditional':return this.infer(node.whenTrue);case 'Unary':return node.operator==='!'?'bool':unaryPromotion(this.infer(node.operand),node.operator);
+      case 'Binary':if(['==','!=','<','>','<=','>=','&&','||'].includes(node.operator))return 'bool';{const l=this.infer(node.left),r=this.infer(node.right);if(node.operator==='+'&&(l==='string'||r==='string'))return 'string';return binaryPromotion(l,r,node.operator)??l;}
       default:return 'error';
     }
   }
@@ -309,6 +310,13 @@ class MethodCompiler {
     return candidates[0]??null;
   }
   overflowChecked(node){return this.checkedContext??this.c.options.checkOverflowByUri?.[node?.uri??this.m.node.uri]??this.c.options.checkOverflow??false;}
+  negativeMinimum(node){
+    if(node?.kind!=='Unary'||node.operator!=='-'||node.operand?.kind!=='Literal')return null;
+    const {type,value,literalText=''}=node.operand;
+    if(type==='uint'&&value?.value==='2147483648'&&!/[uUlL]$/.test(literalText))return {type:'int',value:-2147483648};
+    if(type==='ulong'&&value?.value==='9223372036854775808'&&!/[uU]/.test(literalText))return {type:'long',value:{scalar:'long',value:'-9223372036854775808'}};
+    return null;
+  }
   constant(node){try{return evaluateConstant(node,{checked:this.checkedContext!==false,resolve:n=>n.kind==='Name'?this.lookup(n.name)?.constantValue??null:null});}catch(error){if(!(error instanceof ConstantError))throw error;const key=error.node.start+':'+error.code;if(!this.constantDiagnostics.has(key)){this.constantDiagnostics.add(key);this.c.report(error.node,error.code,error.message);}return null;}}
   expr(node){
     if(!node){this.emitConstant(null);return 'error';}const external=this.frameworkExpression(node);if(external!==undefined)return external;
@@ -321,10 +329,10 @@ class MethodCompiler {
       case 'Await':{if(!this.m.node.asyncBody&&!this.m.name.startsWith('<startup>'))this.c.report(node,'CS4032','await requires an async method');const type=this.expr(node.expression),d=findContracts('SharpForge.Runtime.Async','Await',true).find(x=>x.parameters[0]===type);if(!d){this.c.report(node,'CS1061',`Type '${type}' has no supported awaiter`);return 'error';}const builtin=frameworkBuiltin(d);this.emit(Op.BUILTIN,builtin.id,1);return d.result;}
       case 'Default':{const type=this.c.resolveType(node.type,node);if(type==='void')this.c.report(node,'CS1547','default(void) is invalid');this.emitConstant(defaultValue(type),type);return type;}
       case 'Checked':case 'Unchecked':{const previous=this.checkedContext;this.checkedContext=node.kind==='Checked';try{return this.expr(node.expression);}finally{this.checkedContext=previous;}}
-      case 'Cast':{const from=this.expr(node.expression),to=this.c.resolveType(node.type,node),enumTarget=enumTypes.indexOf(to);if((!numeric(from)&&frameworkType(from)?.kind!=='enum')||(!numeric(to)&&enumTarget<0))this.c.report(node,'CS0030',`Cannot convert '${from}' to '${to}'`);this.emit(Op.CONVERT,enumTarget>=0?EnumConvertBase+enumTarget:to==='int'?0:1,this.overflowChecked(node)&&to!=='double'?1:0);return to;}
+      case 'Cast':{const from=this.expr(node.expression),to=this.c.resolveType(node.type,node),enumTarget=enumTypes.indexOf(to);if((!numeric(from)&&frameworkType(from)?.kind!=='enum')||(!numeric(to)&&enumTarget<0))this.c.report(node,'CS0030',`Cannot convert '${from}' to '${to}'`);this.emit(Op.CONVERT,enumTarget>=0?EnumConvertBase+enumTarget:NumericType[to]??0,numericMode(numeric(from)?from:'int',this.overflowChecked(node)));return to;}
       case 'SwitchExpression':return this.switchExpression(node);
       case 'Error':this.emitConstant(null);return 'error';
-      case 'Literal':if(node.type==='char')this.c.report(node,'SF2003','char values are not supported by this execution profile');if(node.type==='int'&&node.value>2147483647)this.c.report(node,'SF2004','Positive integer literal exceeds Int32.MaxValue');this.emitConstant(node.value,node.type);return node.type;
+      case 'Literal':try{this.emitConstant(node.value,node.type);}catch(error){this.c.report(node,'CS1021',error.message);this.emitConstant(0);}return node.type;
       case 'Name':{
         const l=this.lookup(node.name);if(l){if(!this.assigned.has(l.slot))this.c.report(node,'CS0165',`Use of unassigned local variable '${l.name}'`);if(l.symbol)this.c.reference(node,l.symbol);this.emit(Op.LDLOC,l.slot);return l.type;}
         const property=this.property(node);if(property)return this.readProperty(property,node);
@@ -351,8 +359,11 @@ class MethodCompiler {
         if(['++','--'].includes(node.operator)){
           const ref=this.prepare(node.operand);this.loadRef(ref);const previous=node.postfix?this.temp(ref.type):null;if(previous!==null){this.emit(Op.STLOC,previous);}this.emitConstant(1);this.binary(node.operator==='++'?'+':'-',ref.type,'int',node);this.storeRef(ref);if(previous!==null){this.emit(Op.POP);this.emit(Op.LDLOC,previous);}return ref.type;
         }
-        if(node.operator==='-'&&node.operand.kind==='Literal'&&node.operand.type==='int'&&node.operand.value===2147483648){this.emitConstant(-2147483648);return 'int';}
-        const type=this.expr(node.operand);if(node.operator==='!')this.checkAssign('bool',type,node);else if(!numeric(type))this.c.report(node,'CS0023',`Operator '${node.operator}' cannot be applied to '${type}'`);if(node.operator==='~')this.checkAssign('int',type,node);this.emit(Op.UNARY,Unary[node.operator],type==='int'?(this.overflowChecked(node)&&node.operator==='-'?5:1):0);return node.operator==='!'?'bool':type;}
+        const special=this.negativeMinimum(node);if(special){this.emitConstant(special.value,special.type);return special.type;}
+        const type=this.expr(node.operand),promoted=unaryPromotion(type,node.operator);
+        if(node.operator==='!')this.checkAssign('bool',type,node);
+        else if(!numeric(type)||node.operator==='~'&&!integral(type)||node.operator==='-'&&type==='ulong')this.c.report(node,'CS0023',`Operator '${node.operator}' cannot be applied to '${type}'`);
+        this.emit(Op.UNARY,Unary[node.operator],numeric(type)?numericMode(promoted,this.overflowChecked(node)):0);return node.operator==='!'?'bool':promoted;}
       case 'Assignment':{const ref=this.prepare(node.left,node.operator==='=');if(node.operator==='??='){if(!isReference(ref.type))this.c.report(node,'CS0019','??= requires a reference target');this.loadRef(ref);this.emit(Op.DUP);this.emitConstant(null);this.emit(Op.BINARY,Binary['==']);const done=this.emit(Op.JFALSE);this.emit(Op.POP);this.checkAssign(ref.type,this.typedExpr(node.right,ref.type),node);this.storeRef(ref);this.patch(done);return ref.type;}if(node.operator==='='){const type=this.typedExpr(node.right,ref.type);this.checkAssign(ref.type,type,node);}else{this.loadRef(ref);const type=this.expr(node.right);const result=this.binary(node.operator.slice(0,-1),ref.type,type,node);this.checkAssign(ref.type,result,node);}this.storeRef(ref);return ref.type;}
       case 'Conditional':{this.bool(node.condition);const before=new Set(this.assigned),no=this.emit(Op.JFALSE),yesType=this.expr(node.whenTrue),yesAssigned=new Set(this.assigned),done=this.emit(Op.JUMP);this.patch(no);this.assigned=new Set(before);const noType=this.expr(node.whenFalse);this.assigned=new Set([...yesAssigned].filter(s=>this.assigned.has(s)));this.patch(done);if(!assignable(yesType,noType)&&!assignable(noType,yesType))this.c.report(node,'CS0173','The conditional expression branches have incompatible types');return yesType==='null'?noType:yesType==='double'||noType==='double'?'double':yesType;}
       case 'Call':{
@@ -388,13 +399,14 @@ class MethodCompiler {
   }
   binary(operator,left,right,node){
     if(frameworkType(left)?.family==='vector'&&left===right){const name={'+':'Add','-':'Subtract','*':'Multiply','/':'Divide','&':'BitwiseAnd','^':'Xor','==':'EqualsAll','!=':'EqualsAll'}[operator],contract=name&&findContracts('System.Numerics.Vector',name,true).find(d=>d.parameters[0]===left);if(contract){this.emitContract(contract);if(operator==='!=')this.emit(Op.UNARY,Unary['!']);return contract.result;}}
-    let result;
+    let result,promoted=numeric(left)&&numeric(right)?binaryPromotion(left,right,operator):null;
     if(operator==='+'&&(left==='string'||right==='string'))result='string';
+    else if(promoted){if(['&','|','^','<<','>>'].includes(operator)&&!integral(promoted))this.c.report(node,'CS0019','Bitwise operators require integers');result=['==','!=','<','<=','>','>='].includes(operator)?'bool':promoted;}
     else if(['==','!='].includes(operator)){if(!assignable(left,right)&&!assignable(right,left))this.c.report(node,'CS0019',`Operator '${operator}' cannot compare '${left}' and '${right}'`);result='bool';}
     else if(['&','|','^'].includes(operator)&&left==='bool'&&right==='bool')result='bool';
-    else {if(!numeric(left)||!numeric(right))this.c.report(node,'CS0019',`Operator '${operator}' cannot be applied to '${left}' and '${right}'`);if(['&','|','^','<<','>>'].includes(operator)&&(left!=='int'||right!=='int'))this.c.report(node,'CS0019',`Operator '${operator}' requires integers`);result=['<','<=','>','>='].includes(operator)?'bool':left==='double'||right==='double'?'double':'int';}
+    else {this.c.report(node,'CS0019',`Operator '${operator}' cannot be applied to '${left}' and '${right}'`);result='error';}
     if(!(operator in Binary)){this.c.report(node,'SF2006',`Operator '${operator}' is not implemented`);this.emit(Op.POP);return 'error';}
-    this.emit(Op.BINARY,Binary[operator],result==='int'?(this.overflowChecked(node)&&['+','-','*'].includes(operator)?5:1):result==='string'?2:result==='bool'&&left==='bool'?3:0);return result;
+    this.emit(Op.BINARY,Binary[operator],promoted?numericMode(promoted,this.overflowChecked(node)):result==='int'?(this.overflowChecked(node)&&['+','-','*'].includes(operator)?5:1):result==='string'?2:result==='bool'&&left==='bool'?3:0);return result;
   }
   prepare(node,allowReadOnly=false){const framework=this.prepareFramework(node);if(framework)return framework;
     if(node.kind==='Name'){const l=this.lookup(node.name);if(l){if(l.isConst)this.c.report(node,'CS0131','A const local cannot be modified');if(l.isUsing)this.c.report(node,'CS1656','A using variable cannot be reassigned');if(l.isIteration)this.c.report(node,'CS1656','A foreach iteration variable cannot be reassigned');if(l.symbol)this.c.reference(node,l.symbol);return {kind:'local',...l};}}

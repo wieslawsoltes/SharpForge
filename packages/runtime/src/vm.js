@@ -1,3 +1,6 @@
+import {sourceInputTypes,sourceStore,sourceCopy} from './execution/source-storage.js';
+import {address,dereference,sourceFieldValue,sourceFieldStore} from './execution/managed-pointers.js';
+import {decodeScalar,scalarFormat,numericTypeName,numericTypeNames,number,isDecimal,isNativeInteger} from '@sharpforge/bytecode';
 import {createSourceMethodTables} from './execution/method-table.js';
 import {ManagedPlatform,SUSPENDED} from './platform.js';
 import {CooperativeScheduler} from './scheduler.js';
@@ -15,21 +18,23 @@ export class VirtualMachine {
     if(image?.outputKind==='library')throw new Error('Library has no entry point. Invoke a static method with CilVirtualMachine instead.');
     const errors=verifyImage(image);if(errors.length)throw new Error('Bytecode verification failed: '+errors.join('; '));
     this.image=image;this.options={maxInstructions:20_000_000,maxFrames:512,maxOutputCharacters:1_000_000,...options};
-    this.heap=new ManagedHeap({...options,methodTables:createSourceMethodTables(image)});this.heap.rootProvider=()=>this.roots();this.stack=[];this.frames=[];this.statics=image.statics.map(s=>s.value===null?defaultValue(s.type,this):s.value);this.constantValues=new Map();this.strings=new Map();this.output=[];this.outputCharacters=0;
+    this.heap=new ManagedHeap({...options,methodTables:createSourceMethodTables(image,options)});this.heap.rootProvider=()=>this.roots();this.stack=[];this.frames=[];this.statics=image.statics.map(s=>s.value===null?defaultValue(s.type,this):s.value?.scalar?decodeScalar(s.value,this.options):s.value);this.constantValues=new Map();this.strings=new Map();this.output=[];this.outputCharacters=0;
     this.snapshotOwner=Object.freeze({});this.state='ready';this.instructions=0;this.writeRevision=0;this.sourcePause=false;this.elapsedMs=0;this.frameId=0;this.currentPoint=null;this.fault=null;this.pendingFault=null;this.exitCode=0;this.returnValue=null;this.onOutput=options.onOutput??(()=>{});this.onException=null;this.onWrite=null;
     this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);this.call(image.entryPoint,[]);
   }
   *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots()??[];yield this.returnValue;yield* this.stack;yield* this.statics;yield* this.constantValues.values();yield* stringRoots(this);yield* runtimeTypeRoots(this);for(const f of this.frames)yield* f.locals;yield* exceptionRoots(this);}
-  call(methodId,args){if(this.frames.length>=this.options.maxFrames)throw new ManagedFault('StackOverflowException','Maximum managed call depth exceeded');const method=this.image.methods[methodId],locals=Array(method.locals.length).fill(undefined);args.forEach((v,i)=>locals[i]=v);if(!method.isStatic&&args[0]===null)throw new ManagedFault('NullReferenceException','Cannot call an instance method on null');this.frames.push({id:++this.frameId,methodId,pc:0,base:this.stack.length,locals,point:null,...frameState()});}
+  call(methodId,args,types=[]){if(this.frames.length>=this.options.maxFrames)throw new ManagedFault('StackOverflowException','Maximum managed call depth exceeded');const method=this.image.methods[methodId],locals=Array(method.locals.length).fill(undefined);this.heap.withRoots(args,()=>args.forEach((v,i)=>{locals[i]=sourceStore(this,v,method.locals[i].type,types[i]);this.heap.pins.push(locals[i]);}));if(!method.isStatic&&args[0]===null)throw new ManagedFault('NullReferenceException','Cannot call an instance method on null');this.frames.push({id:++this.frameId,methodId,pc:0,base:this.stack.length,locals,point:null,...frameState()});}
   notifyWrite(write){this.writeRevision++;if(['field','array','box'].includes(write.kind))this.heap.mutationRevision++;this.onWrite?.(write);}
   get top(){return this.frames.at(-1);}
-  value(ref){if(ref?.enumType)return ref.value;return isReference(ref)&&this.heap.get(ref).kind==='string'?this.heap.get(ref).data:ref;}
-  format(value){const name=runtimeTypeText(this,value)??enumToString(this,value);if(name!==null)return name;if(value===null)return '';if(value===undefined)return '<unassigned>';if(value===true)return 'True';if(value===false)return 'False';if(isReference(value)){const r=this.heap.get(value);if(r.kind==='string')return r.data;if(r.kind==='exception')return r.type+': '+this.format(r.data[0]);return r.type;}return String(value);}
+  value(ref){if(ref?.enumType)return ref.value;if(ref?.float||isNativeInteger(ref))return number(ref);if(isReference(ref)){const record=this.heap.get(ref);if(record.kind==='string')return record.data;if(record.kind==='box')return this.value(record.data[0]);}return ref;}
+  format(value,type=null){const name=runtimeTypeText(this,value)??enumToString(this,value);if(name!==null)return name;if(value===null)return '';if(value===undefined)return '<unassigned>';if(value===true)return 'True';if(value===false)return 'False';if(isReference(value)){const r=this.heap.get(value);if(r.kind==='string')return r.data;if(r.kind==='box')return this.format(r.data[0],numericTypeName(r.methodTable.name));if(r.kind==='exception')return r.type+': '+this.format(r.data[0]);return r.type;}if(type&&numericTypeNames.includes(numericTypeName(type))||value?.float||isNativeInteger(value)||isDecimal(value)||typeof value==='bigint')return scalarFormat(value,type??undefined,this.options);return String(value);}
   display(value){if(value===null)return 'null';if(isReference(value)){const r=this.heap.get(value);if(r.kind==='string')return JSON.stringify(r.data);if(r.kind==='array')return `${r.type} [${r.data.length}]`;return `${r.type} {#${value.h}}`;}return this.format(value);}
-  constant(index){const raw=this.image.constants[index];return typeof raw==='string'?literalString(this,raw):raw;}
+  constant(index){const raw=this.image.constants[index];return typeof raw==='string'?literalString(this,raw):raw?.scalar?decodeScalar(raw,this.options):raw;}
   binary(operator,a,b,mode=0){return binary(this,operator,a,b,mode);}
   emitOutput(text){text=String(text);if(this.outputCharacters+text.length>this.options.maxOutputCharacters)throw new ManagedFault('OutputLimitException','Program output limit exceeded');this.outputCharacters+=text.length;this.output.push(text);this.onOutput(text);}
-  builtin(id,args){return builtin(this,id,args);}
+  builtin(id,args,types=[]){return builtin(this,id,args,types);}
+  address(kind,index,owner,options){return address(this,kind,index,owner,options);}
+  dereference(pointer,write=false,value){return dereference(this,pointer,write,value);}
   indexed(ref,index){const r=this.heap.get(ref);if(r.kind!=='array')throw new ManagedFault('InvalidOperationException','Expected a managed array');if(!Number.isInteger(index)||index<0||index>=r.data.length)throw new ManagedFault('IndexOutOfRangeException','Index was outside the bounds of the array');return r;}
   makeFault(error){return makeFault(error);}
   enterCatch(frame,handler,fault){return enterCatch(this,frame,handler,fault);}
@@ -52,24 +57,24 @@ export class VirtualMachine {
         switch(op){
           case Op.ENUM:this.stack.push(sourceEnum(this,a,b));break;case Op.DELEGATE:{const receiver=this.stack.pop();this.stack.push(this.heap.withRoots([receiver],()=>this.platform.delegate(this.image.constants[b],a,receiver)));break;}case Op.SEQ:case Op.NOP:break;case Op.ENDFINALLY:this.resumeUnwind(frame);break;
           case Op.CONST:this.stack.push(this.constant(a));break;
-          case Op.LDLOC:if(frame.locals[a]===undefined)throw new ManagedFault('InvalidProgramException','Read of uninitialized local');this.stack.push(frame.locals[a]);break;
-          case Op.STLOC:{const oldValue=frame.locals[a];frame.locals[a]=this.stack.at(-1);this.notifyWrite({kind:'local',frameId:frame.id,index:a,value:frame.locals[a],oldValue});break;}
-          case Op.LDSTATIC:this.stack.push(this.statics[a]);break;
-          case Op.STSTATIC:{const oldValue=this.statics[a];this.statics[a]=this.stack.at(-1);this.notifyWrite({kind:'static',index:a,value:this.statics[a],oldValue});break;}
-          case Op.LDFLD:{const ref=this.stack.pop(),r=this.heap.get(ref);if(a>=r.data.length||r.kind!=='object')throw new ManagedFault('InvalidProgramException','Invalid field index');this.stack.push(r.data[a]);break;}
-          case Op.STFLD:{const value=this.stack.pop(),ref=this.stack.pop(),r=this.heap.get(ref);if(a>=r.data.length||r.kind!=='object')throw new ManagedFault('InvalidProgramException','Invalid field index');const oldValue=r.data[a];r.data[a]=value;this.stack.push(value);this.notifyWrite({kind:'field',handle:ref.h,generation:ref.g,index:a,value,oldValue});break;}
+          case Op.LDLOC:if(frame.locals[a]===undefined)throw new ManagedFault('InvalidProgramException','Read of uninitialized local');this.stack.push(sourceCopy(this,frame.locals[a]));break;
+          case Op.STLOC:{const oldValue=frame.locals[a];frame.locals[a]=sourceStore(this,this.stack.at(-1),method.locals[a].type,sourceInputTypes(this,frame).at(-1));this.stack[this.stack.length-1]=sourceCopy(this,frame.locals[a]);this.notifyWrite({kind:'local',frameId:frame.id,index:a,value:frame.locals[a],oldValue});break;}
+          case Op.LDSTATIC:this.stack.push(sourceCopy(this,this.statics[a]));break;
+          case Op.STSTATIC:{const oldValue=this.statics[a];this.statics[a]=sourceStore(this,this.stack.at(-1),this.image.statics[a].type,sourceInputTypes(this,frame).at(-1));this.stack[this.stack.length-1]=sourceCopy(this,this.statics[a]);this.notifyWrite({kind:'static',index:a,value:this.statics[a],oldValue});break;}
+          case Op.LDFLD:this.stack.push(sourceFieldValue(this,this.stack.pop(),a));break;
+          case Op.STFLD:{const value=this.stack.pop(),ref=this.stack.pop();this.heap.withRoots([ref,value],()=>{const record=this.heap.get(ref),type=record.methodTable.fields[a]?.type.name??'object',stored=sourceStore(this,value,type,sourceInputTypes(this,frame).at(-1));sourceFieldStore(this,ref,a,stored);this.stack.push(sourceCopy(this,stored));});break;}
           case Op.DUP:this.stack.push(this.stack.at(-1));break;case Op.POP:this.stack.pop();break;
           case Op.BINARY:{const right=this.stack.pop(),left=this.stack.pop();this.stack.push(this.binary(BinaryName[a],left,right,b));break;}
           case Op.CONVERT:this.stack.push(convert(this.stack.pop(),a,b,this));break;
-          case Op.UNARY:this.stack.push(unary(UnaryName[a],this.stack.pop(),b));break;
+          case Op.UNARY:this.stack.push(unary(UnaryName[a],this.stack.pop(),b,this));break;
           case Op.JUMP:this.transfer(frame,'jump',a);break;case Op.JFALSE:if(!this.stack.pop())this.transfer(frame,'jump',a);break;case Op.JTRUE:if(this.stack.pop())this.transfer(frame,'jump',a);break;
-          case Op.CALL:{const args=this.stack.splice(this.stack.length-b,b);this.call(a,args);break;}
-          case Op.BUILTIN:{const args=this.stack.splice(this.stack.length-b,b),value=this.builtin(a,args);if(value!==SUSPENDED)this.stack.push(value);break;}
-          case Op.RET:{const result=this.stack.pop();this.transfer(frame,'return',Infinity,result);break;}
+          case Op.CALL:{const args=this.stack.splice(this.stack.length-b,b);this.call(a,args,sourceInputTypes(this,frame).slice(-b));break;}
+          case Op.BUILTIN:{const args=this.stack.splice(this.stack.length-b,b),value=this.builtin(a,args,sourceInputTypes(this,frame).slice(-b));if(value!==SUSPENDED)this.stack.push(value);break;}
+          case Op.RET:{const result=sourceStore(this,this.stack.pop(),method.returnType,sourceInputTypes(this,frame).at(-1));this.transfer(frame,'return',Infinity,result);break;}
           case Op.NEWOBJ:{const type=this.image.types[a];this.stack.push(this.heap.object(type.name,type.fields.map(f=>defaultValue(f.type,this))));break;}
           case Op.NEWARR:{const length=this.stack.pop(),type=this.image.constants[a],ref=this.heap.array(type,length);this.heap.get(ref).data.fill(defaultValue(type,this));this.stack.push(ref);break;}
-          case Op.LDELEM:{const index=this.stack.pop(),ref=this.stack.pop();this.stack.push(this.indexed(ref,index).data[index]);break;}
-          case Op.STELEM:{const value=this.stack.pop(),index=this.stack.pop(),ref=this.stack.pop();const r=this.indexed(ref,index),oldValue=r.data[index];checkSourceArrayStore(this,r,value);r.data[index]=value;this.stack.push(value);this.notifyWrite({kind:'array',handle:ref.h,generation:ref.g,index,value,oldValue});break;}
+          case Op.LDELEM:{const index=this.stack.pop(),ref=this.stack.pop();this.stack.push(sourceCopy(this,this.indexed(ref,index).data[index]));break;}
+          case Op.STELEM:{const value=this.stack.pop(),index=this.stack.pop(),ref=this.stack.pop();this.heap.withRoots([ref,value],()=>{const r=this.indexed(ref,index),oldValue=r.data[index],stored=sourceStore(this,value,r.methodTable.elementType.name,sourceInputTypes(this,frame).at(-1));checkSourceArrayStore(this,r,stored);r.data[index]=stored;this.stack.push(sourceCopy(this,stored));this.notifyWrite({kind:'array',handle:ref.h,generation:ref.g,index,value:stored,oldValue});});break;}
           case Op.LENGTH:{const r=this.heap.get(this.stack.pop());if(r.kind!=='array'&&r.kind!=='string')throw new ManagedFault('InvalidProgramException','Length requires an array or string');this.stack.push(r.data.length);break;}
           case Op.THROW:{const ref=this.stack.pop();if(ref===null)throw new ManagedFault('NullReferenceException','A null exception was thrown');const r=this.heap.get(ref);throw new ManagedFault(r.type,this.format(r.data[0]),ref);}
           case Op.RETHROW:rethrow(frame);break;

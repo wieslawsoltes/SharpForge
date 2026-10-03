@@ -13,3 +13,6 @@ export * from './decompiler.js';
 export {CilDispatchTable} from './dispatch-profile.js';
 
 export {resolveExecutionField,genericTypeParts,substituteTypeArguments} from './field-profile.js';
+
+export {numericIntrinsicDefinitions} from './numeric-intrinsic-profile.js';
+export {analyzeMethod} from './analysis.js';

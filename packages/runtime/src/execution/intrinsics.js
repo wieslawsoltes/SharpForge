@@ -1,3 +1,4 @@
+import {invokeNumericIntrinsic} from './numeric-intrinsics.js';
 import {mutateArray} from './array-ops.js';
 import {intrinsicDefinition,intrinsicDefinitions} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
@@ -12,6 +13,7 @@ function stringReceiver(context) {
   return value;
 }
 const implementations={
+  decimal:({vm,descriptor,self,parameters})=>invokeNumericIntrinsic(vm,descriptor,descriptor.signature.isStatic?parameters:[self,...parameters]).value,
   arrayMutate:({vm,descriptor,parameters})=>mutateArray(vm,descriptor.name,parameters[0]),
   console:({vm,descriptor,parameters})=>{vm.emitOutput((parameters.length?vm.format(parameters[0],descriptor.signature.parameters[0]):'')+(descriptor.name==='WriteLine'?'\n':''));return null;},
   objectCtor:()=>null,

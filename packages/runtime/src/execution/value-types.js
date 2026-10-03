@@ -56,10 +56,10 @@ export function copyValue(vm,value,type=null,numericContext,depth=0) {
   if(table?.flags.enum) {
     const underlying=table.enumUnderlyingType?.name??enumInfo(vm,table.name)?.underlyingType??'int';
     if(vm.image&&!vm.inspector&&enumInfo(vm,table.name))return enumValue(vm,table.name,value);
-    return numericStorage(enumUnderlying(value,underlying),underlying,numericContext);
+    return numericStorage(enumUnderlying(value,underlying),underlying,numericContext??vm.options);
   }
   if(table?.name==='System.Boolean'&&typeof value==='boolean'&&vm.image&&!vm.inspector)return value;
-  if(table&&Object.hasOwn(aliases,table.name))return numericStorage(typeof value==='boolean'?Number(value):value,aliases[table.name],numericContext);
+  if(table&&Object.hasOwn(aliases,table.name))return numericStorage(typeof value==='boolean'?Number(value):value,aliases[table.name],numericContext??vm.options);
   if(value!==null&&typeof value==='object'&&!Object.isFrozen(value))throw new ManagedFault('InvalidProgramException','Mutable host objects are not managed values');
   return value;
 }

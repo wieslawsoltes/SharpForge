@@ -1,3 +1,4 @@
+import {scalarFormat,isDecimal,isNativeInteger,numericTypeName,numericTypeNames,nativeIntegerBits} from '@sharpforge/bytecode';
 import {runtimeTypeRoots,clearRuntimeTypes,runtimeTypeText} from './execution/tokens.js';
 import {address,dereference} from './execution/managed-pointers.js';
 import {storageDefault,storageValue} from './execution/storage.js';
@@ -15,7 +16,8 @@ import {CilTypeSystem} from './execution/type-system.js';
 import {throwFault,continueUnwind,exceptionRoots,fatalFaults} from './execution/eh.js';
 import {invokeIntrinsic} from './execution/intrinsics.js';
 import {initializationRoots} from './execution/static-init.js';
-const numericContext=Object.freeze({fault:(name,message)=>new ManagedFault(name,message),error:message=>new CilError(message),isReference});
+const numericContexts=new WeakMap();
+const numericContext=vm=>{let c=numericContexts.get(vm);if(!c){c=Object.freeze({fault:(name,message)=>new ManagedFault(name,message),error:message=>new CilError(message),isReference,nativeIntBits:nativeIntegerBits(vm.options)});numericContexts.set(vm,c);}return c;};
 /** Direct, cooperative CIL interpreter for a verified managed subset, independent of #SF.
  * No eval, native imports, network, files, threads, dynamic JS plugins or CLR loading. */
 export class CilVirtualMachine {
@@ -54,13 +56,13 @@ export class CilVirtualMachine {
     if(type==='object'&&value===null)return null;throw new CilError(`Host argument type '${type}' is not supported`);
   }
   // CLI storage locations narrow integers and round single precision on write/load.
-  storage(value,type){return storageValue(this,value,type,numericContext);}
+  storage(value,type){return storageValue(this,value,type,numericContext(this));}
   slotType(frame,arg,index){return arg?(frame.method.signature.isStatic?frame.method.signature.parameters[index]:index===0?(this.typeSystem.table(frame.genericIdentity??frame.method.ownerToken).flags.valueType?(frame.genericIdentity??frame.method.owner)+'&':'object'):frame.method.signature.parameters[index-1]):frame.method.locals[index];}
-  indirect(value,name){return numericIndirect(value,name,numericContext);}
+  indirect(value,name){return numericIndirect(value,name,numericContext(this));}
   resultValue(){const value=this.value(this.returnValue);return this.returnType==='uint'?Number(value)>>>0:this.returnType==='ulong'?BigInt.asUintN(64,value??0n):this.returnType==='bool'?!!value:value;}
   resultDisplay(){return this.returnType==='string'?this.display(this.returnValue):this.format(this.returnValue,this.returnType);}
-  value(v){if(v?.float)return v.value;if(isReference(v)){const r=this.heap.get(v);if(r.kind==='string')return r.data;if(r.kind==='box')return this.value(r.data[0]);}return v;}
-  format(v,type){const name=runtimeTypeText(this,v)??enumToString(this,v,type);if(name!==null)return name;if(v===null)return '';if(isReference(v)&&this.heap.get(v).kind==='box'){const r=this.heap.get(v);return this.format(r.data[0],{'System.Boolean':'bool','System.Char':'char','System.UInt32':'uint','System.UInt64':'ulong'}[r.type]);}const n=this.value(v);if(type==='bool')return n?'True':'False';if(type==='char')return String.fromCharCode(Number(n));if(type==='uint')return String(Number(n)>>>0);if(type==='ulong')return String(BigInt.asUintN(64,n));if(isReference(n)){const r=this.heap.get(n);return r.kind==='exception'?r.type+': '+this.format(r.data[0]):r.type;}return String(n);}
+  value(v){if(v?.float||isNativeInteger(v))return v.value;if(isReference(v)){const r=this.heap.get(v);if(r.kind==='string')return r.data;if(r.kind==='box')return this.value(r.data[0]);}return v;}
+  format(v,type){const name=runtimeTypeText(this,v)??enumToString(this,v,type);if(name!==null)return name;if(v===null)return '';if(isReference(v)&&this.heap.get(v).kind==='box'){const r=this.heap.get(v);return this.format(r.data[0],numericTypeName(r.methodTable.name));}const n=this.value(v);if(type==='System.Boolean')type='bool';if(type==='bool')return n?'True':'False';if(isDecimal(v)||v?.float||isNativeInteger(v)||numericTypeNames.includes(numericTypeName(type)))return scalarFormat(v,type,this.options);if(type==='char')return String.fromCharCode(Number(n));if(type==='uint')return String(Number(n)>>>0);if(type==='ulong')return String(BigInt.asUintN(64,n));if(isReference(n)){const r=this.heap.get(n);return r.kind==='exception'?r.type+': '+this.format(r.data[0]):r.type;}return String(n);}
   display(v){return v===null?'null':isReference(v)&&this.heap.get(v).kind==='string'?JSON.stringify(this.value(v)):this.format(v);}
   string(s){return literalString(this,s);}
   push(v){if(this.top.stack.length>=this.options.maxStackValues)throw new ManagedFault('ExecutionLimitException','Evaluation stack budget exceeded');this.top.stack.push(v);}
@@ -78,10 +80,10 @@ export class CilVirtualMachine {
   restore(snapshot){return restoreVM(this,snapshot,'cil');}
   indexed(ref,index){const r=this.heap.get(ref),n=number(index);if(r.kind!=='array'||!Number.isInteger(n)||n<0||n>=r.data.length)throw new ManagedFault('IndexOutOfRangeException','Array index out of range');return r;}
   emitOutput(s){if(this.outputCharacters+s.length>this.options.maxOutputCharacters)throw new ManagedFault('OutputLimitException','Program output limit exceeded');this.outputCharacters+=s.length;this.output.push(s);this.onOutput(s);}
-  compare(a,b,op,unsigned=false){return numericCompare(a,b,op,unsigned,numericContext);}
-  binary(name,a,b){return numericBinary(name,a,b,numericContext);}
-  convert(name,value){return numericConvert(name,value,numericContext);}
-  unary(name,value){return numericUnary(name,value,numericContext);}
+  compare(a,b,op,unsigned=false){return numericCompare(a,b,op,unsigned,numericContext(this));}
+  binary(name,a,b){return numericBinary(name,a,b,numericContext(this));}
+  convert(name,value){return numericConvert(name,value,numericContext(this));}
+  unary(name,value){return numericUnary(name,value,numericContext(this));}
   intrinsic(descriptor,args){return invokeIntrinsic(this,descriptor,args);}
   invoke(instruction){return invoke(this,instruction);}
   resumeUnwind(frame){return continueUnwind(this,frame);}

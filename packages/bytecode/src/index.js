@@ -1,3 +1,5 @@
+import {numericTypeNames,decodeNumericMode} from './numeric/numeric-types.js';
+import {decodeScalar} from './numeric/scalar-ops.js';
 import {contracts,enumTypes,frameworkType} from '@sharpforge/framework';
 /** Versioned, structured-cloneable stack bytecode. Each instruction is three signed 32-bit words. */
 export const FORMAT_VERSION = 1;
@@ -48,14 +50,14 @@ export function verifyImage(image){
       switch(op){
         case Op.ENUM:if(!enumTypes[a])fail(m,pc,'Invalid enum type');delta=1;break;case Op.DELEGATE:need=1;if(!image.methods[a]||frameworkType(image.constants[b])?.kind!=='delegate')fail(m,pc,'Invalid delegate');break;case Op.NOP:break;case Op.ENDFINALLY:if(height!==0)fail(m,pc,'Finally must have an empty stack');break;
         case Op.SEQ:if(!image.sequencePoints[a])fail(m,pc,'Invalid sequence point');break;
-        case Op.CONST:if(a<0||a>=image.constants.length)fail(m,pc,'Invalid constant');delta=1;break;
+        case Op.CONST:if(a<0||a>=image.constants.length)fail(m,pc,'Invalid constant');else if(image.constants[a]?.scalar){try{decodeScalar(image.constants[a]);}catch{fail(m,pc,'Invalid scalar constant');}}delta=1;break;
         case Op.LDLOC:case Op.STLOC:if(a<0||a>=m.locals.length)fail(m,pc,'Invalid local');if(op===Op.LDLOC)delta=1;else need=1;break;
         case Op.LDSTATIC:case Op.STSTATIC:if(a<0||a>=image.statics.length)fail(m,pc,'Invalid static');if(op===Op.LDSTATIC)delta=1;else need=1;break;
         case Op.LDFLD:need=1;break;case Op.STFLD:need=2;delta=-1;break;
         case Op.DUP:need=1;delta=1;break;case Op.POP:need=1;delta=-1;break;
-        case Op.BINARY:need=2;delta=-1;if(!BinaryName[a])fail(m,pc,'Invalid binary operator');if(![0,1,2,3,5].includes(b)||b===5&&!['+','-','*'].includes(BinaryName[a]))fail(m,pc,'Invalid binary mode');break;
-        case Op.CONVERT:need=1;if(a!==0&&a!==1&&!enumTypes[a-EnumConvertBase]||![0,1].includes(b)||b===1&&a===1)fail(m,pc,'Invalid numeric conversion');break;
-        case Op.UNARY:need=1;if(!UnaryName[a]||![0,1,5].includes(b)||b===5&&a!==0)fail(m,pc,'Invalid unary operator');break;
+        case Op.BINARY:need=2;delta=-1;if(!BinaryName[a])fail(m,pc,'Invalid binary operator');if(b>=16?(()=>{try{decodeNumericMode(b);return false;}catch{return true;}})():![0,1,2,3,5].includes(b)||b===5&&!['+','-','*'].includes(BinaryName[a]))fail(m,pc,'Invalid binary mode');break;
+        case Op.CONVERT:need=1;if(!numericTypeNames[a]&&!enumTypes[a-EnumConvertBase]||(b>=16?(()=>{try{decodeNumericMode(b);return false;}catch{return true;}})():![0,1].includes(b)||b===1&&a===1))fail(m,pc,'Invalid numeric conversion');break;
+        case Op.UNARY:need=1;if(!UnaryName[a]||(b>=16?(()=>{try{decodeNumericMode(b);return false;}catch{return true;}})():![0,1,5].includes(b)||b===5&&a!==0))fail(m,pc,'Invalid unary operator');break;
         case Op.JUMP:break;case Op.JFALSE:case Op.JTRUE:need=1;delta=-1;break;
         case Op.CALL:if(!image.methods[a])fail(m,pc,'Invalid method');else if(b!==image.methods[a].parameters.length+(image.methods[a].isStatic?0:1))fail(m,pc,'Invalid argument count');need=b;delta=1-b;break;
         case Op.BUILTIN:if(!Builtins[a]||b<Builtins[a].min||b>Builtins[a].max)fail(m,pc,'Invalid intrinsic');need=b;delta=1-b;break;
