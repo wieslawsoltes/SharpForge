@@ -144,7 +144,10 @@ const inRanges = (ranges, value) => ranges.some(([lo, hi]) => lo <= value && val
 function sampleValues(values, type) {
   if (values.kind === 'bool') return values.hasFalse ? 'false' : 'true';
   if (values.kind === 'string') return values.isComplement ? (values.set.has('') ? '"A"' : '""') : JSON.stringify([...values.set][0]);
-  const value = inRanges(values.ranges, 0) ? 0 : values.ranges[0][0];
+  // As Roslyn samples a numeric set: the smallest value that is not negative, else the negative one nearest to zero.
+  const sorted = [...values.ranges].sort((a, b) => a[0] - b[0]),
+    notNegative = sorted.find(([, hi]) => hi >= 0),
+    value = notNegative ? Math.max(notNegative[0], 0) : sorted.at(-1)[1];
   if (type.typeKind !== TypeKind.Enum) return String(value);
   const named = enumMembers(type).find(member => inRanges(values.ranges, member.value));
   return named ? type.name + '.' + named.name : `(${type.toDisplayString()})${value}`;

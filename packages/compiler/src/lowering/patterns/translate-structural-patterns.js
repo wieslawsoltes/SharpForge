@@ -24,7 +24,10 @@ export const StructuralPatternTranslation = Base =>
       positional.parts.forEach((part, index) => {
         test = n.logicalAnd(test, this.patternTest(part.pattern, parts[index], decision));
       });
-      if (pattern.properties?.length) test = n.logicalAnd(test, super.recursiveTest({ ...typed, testedType: null, properties: pattern.properties }, input, decision));
+      if (pattern.properties?.length) {
+        const properties = { ...typed, testedType: null, properties: pattern.properties };
+        test = n.logicalAnd(test, super.recursiveTest(properties, input, decision));
+      }
       return this.bindPatternLocal(pattern, input, test);
     }
     /** The elements of a tuple input. */
