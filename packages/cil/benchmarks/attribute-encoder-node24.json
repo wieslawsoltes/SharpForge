@@ -1,0 +1,13 @@
+{
+  "cpu": "Apple M3 Pro",
+  "platform": "darwin arm64",
+  "node": "v24.21.0",
+  "operation": "encode 7 fixed arguments and 1 named property",
+  "iterations": 2000,
+  "samples": 31,
+  "medianMicroseconds": 2.461250000000007,
+  "p95Microseconds": 3.774249999999995,
+  "p99Microseconds": 3.823625,
+  "outputBytes": 60,
+  "baseline": "First encoder implementation; no existing encoder baseline."
+}
