@@ -80,6 +80,18 @@ export const profileFlow=[
   diag('switch-fall-out-of-last',main('int k = 1;\nswitch (k)\n{\n    case 1:\n        Console.WriteLine(1);\n        break;\n    case 2:\n        Console.WriteLine(2);\n}')),
   out('switch-section-ending-in-loop',main('int k = 1;\nswitch (k)\n{\n    case 1:\n        Console.WriteLine(1);\n        return;\n    default:\n        Console.WriteLine(2);\n        break;\n}\nConsole.WriteLine(3);'))
 ]),
+...feature('entry-point',[
+  out('void-main',program('    static void Main() { Console.WriteLine(1); }\n')),
+  out('int-main-with-args',program('    static int Main(string[] args) { Console.WriteLine(args.Length); return 0; }\n')),
+  out('top-level-statements','using System;\nConsole.WriteLine(1);\n'),
+  diag('two-mains','using System;\nclass A\n{\n    static void Main() { }\n}\nclass B\n{\n    static void Main() { }\n}\n'),
+  diag('no-main','class A\n{\n    static void Run() { }\n}\n'),
+  diag('wrong-parameter','class A\n{\n    static void Main(int x) { }\n}\n'),
+  diag('wrong-return-type','class A\n{\n    static string Main() { return null; }\n}\n'),
+  diag('wrong-signature-next-to-valid','using System;\nclass A\n{\n    static void Main(int x) { }\n}\nclass B\n{\n    static void Main() { Console.WriteLine(1); }\n}\n'),
+  diag('instance-main','class A\n{\n    void Main() { }\n}\n'),
+  diag('main-ignored-by-top-level','using System;\nConsole.WriteLine(1);\nclass A\n{\n    static void Main() { }\n}\n')
+]),
 ...feature('flow-unused',[
   diag('declared-never-used',main('int x;\nConsole.WriteLine(1);')),
   diag('assigned-constant-never-read',main('int x = 1;\nConsole.WriteLine(1);')),

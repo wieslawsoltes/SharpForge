@@ -4,10 +4,16 @@ import {compile} from '@sharpforge/compiler';
 import {VirtualMachine} from '@sharpforge/runtime';
 import {findEntryPoint,entryPointSignature} from '../packages/compiler/src/binder/entry-point.js';
 import {formatMessage,diagnosticDescriptor} from '../packages/compiler/src/diagnostics/codes.js';
+import {loadFixtures,loadPinned} from '../packages/compiler/test/differential/corpus.js';
+import {runFixture} from '../packages/compiler/test/differential/harness.js';
 /** Compiles with both pipelines (they must agree) and returns `[success, 'CODE:severity message', ...]`. */
 const check=(source,options={})=>{compile(source,{...options,pipeline:'verify'});const r=compile(source,options);return [r.success,...r.diagnostics.map(d=>`${d.code}:${d.severity} ${d.message}`)];};
 const output=(source,options)=>{const r=compile(source,options);assert.equal(r.success,true,JSON.stringify(r.diagnostics));return new VirtualMachine(r.image).run().output;};
 const method=(name,returnType,parameters=[],extra={})=>({name,qualifiedName:(extra.owner?extra.owner.name+'.':'')+name,returnType,parameters:parameters.map(type=>({type})),isStatic:true,synthetic:false,owner:null,node:{uri:'a.cs',start:extra.start??0,end:(extra.start??0)+1},...extra});
+test('A02-T41 entry-point fixtures match Roslyn selection, diagnostics and spans',()=>{
+  const pinned=loadPinned(),own=loadFixtures().filter(f=>f.feature==='entry-point');assert(own.length>=10);
+  for(const fixture of own){const row=runFixture(fixture,pinned.results.get(fixture.id));assert.equal(row.unsupported,false,fixture.id+': '+JSON.stringify(row.details));assert.equal(row.diagnostics&&row.warnings,true,fixture.id+': '+JSON.stringify(row.details));if(fixture.kind==='output')assert.equal(row.bytecode&&row.cil,true,fixture.id+': '+JSON.stringify(row.details));}
+});
 test('A02-T41 Main signatures: void or int, no parameters or string[] args, optionally Task-returning',()=>{
   const sig=(returnType,parameters)=>entryPointSignature(method('Main',returnType,parameters));
   assert.deepEqual(sig('void',[]),{valid:true,isAsync:false,returnsInt:false});assert.deepEqual(sig('int',['string[]']),{valid:true,isAsync:false,returnsInt:true});
@@ -17,7 +23,7 @@ test('A02-T41 Main signatures: void or int, no parameters or string[] args, opti
 test('A02-T41 one suitable Main is selected; several report CS0017 on the first in source order',()=>{
   assert.equal(output('class P{static void Main(){Console.WriteLine("main");}}'),'main\n');assert.equal(output('class P{static int Main(string[] args){Console.WriteLine(args.Length);return 0;}}'),'0\n');
   assert.deepEqual(check('class A{static void Main(){}}class B{static void Main(){}}'),[false,'CS0017:error Program has more than one entry point defined. Compile with /main to specify the type that contains the entry point.']);
-  const d=compile('class A{static void Main(){}}class B{static void Main(){}}').diagnostics[0];assert.equal(d.start,8,'reported on the first Main');
+  const d=compile('class A{static void Main(){}}class B{static void Main(){}}').diagnostics[0];assert.deepEqual([d.start,d.length],[20,4],'reported on the name of the first Main');
   const two=findEntryPoint({methods:[method('Main','void',[],{start:50}),method('Main','void',[],{start:10})]});assert.equal(two.method.node.start,10);assert.deepEqual(two.diagnostics.map(x=>[x.code,x.node.start]),[['CS0017',10]]);
 });
 test('A02-T41 a Main with the wrong signature is a CS0028 warning and not an entry point',()=>{
