@@ -1,6 +1,6 @@
-/** Reproducible microbenchmarks. No Roslyn/CLR comparison or performance gates. */
 import { cpus,platform,arch,totalmem } from 'node:os';
-import { writeFile,mkdir } from 'node:fs/promises';
+import { writeFile } from 'node:fs/promises';
+import { resultPath } from './conformance/results.js';
 import { compile } from '@sharpforge/compiler';
 import { Workspace } from '@sharpforge/workspace';
 import { VirtualMachine,ManagedHeap } from '@sharpforge/runtime';
@@ -24,4 +24,4 @@ let instructions;measure('VM: 10,000-iteration integer loop',()=>{const vm=new V
 results.at(-1).instructions=instructions;
 measure('GC: trace and sweep 10,000-object chain',()=>{const heap=new ManagedHeap({initialThreshold:2_000_000});let head=null;for(let i=0;i<10000;i++)head=heap.object('Node',[head]);heap.rootProvider=()=>[head];heap.collect();head=null;const r=heap.collect();if(r.liveObjects!==0)throw new Error('GC mismatch');},{iterations:15,details:{includes:'Allocation, one live trace, one dead sweep; not a pause-only benchmark.'}});
 const report={correctness:{passed:true},recordedAt:new Date().toISOString(),environment:{node:process.version,platform:platform(),arch:arch(),cpu:cpus()[0]?.model,logicalCpus:cpus().length,hostMemoryGiB:Math.round(totalmem()/2**30)},methodology:'Single-process warm microbenchmarks in a shared Linux container. Wall-clock milliseconds, external performance.now(). No forced JS GC, no network, no browser rendering. Not conformance or comparative compiler measurements.',results};
-await mkdir(new URL('../docs/',import.meta.url),{recursive:true});await writeFile(process.env.BENCH_REPORT??new URL('../docs/benchmark-results.json',import.meta.url),JSON.stringify(report,null,2)+'\n');
+await writeFile(process.env.BENCH_REPORT??await resultPath('benchmark-results.json'),JSON.stringify(report,null,2)+'\n');
