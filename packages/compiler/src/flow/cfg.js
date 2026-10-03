@@ -1,3 +1,4 @@
+import {referenceArgumentFlow} from './reference-arguments.js';
 /**
  * Control-flow graph construction over the bound tree (the binder's output, before lowering).
  *
@@ -49,6 +50,7 @@ class Builder {
   }
   expr(node){
     if(!node)return;
+    if(referenceArgumentFlow(this,node))return;
     switch(node.kind){
       case 'Local':this.op('read',node.local,node);return;
       case 'Parameter':this.op('read',node.parameter,node);return;
