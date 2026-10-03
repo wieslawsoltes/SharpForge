@@ -17,6 +17,7 @@ import { checkRefStructDeclarations, checkAsyncOrIteratorUse } from '../binder/r
 import { checkTypeModifierFeatures } from './type-modifier-features.js';
 import { checkVarianceSafety } from '../conversions/variance.js';
 import { checkNullableSignatures } from '../nullable/signature-checks.js';
+import { uninitializedMembersWithoutConstructor } from '../nullable/uninitialized-members.js';
 import { checkTypeModifiers } from '../binder/type-modifiers.js';
 import { checkConditionalMethods } from '../binder/csharp2-misc.js';
 import { accessRank, baseOrSelf } from './analysis-helpers.js';
@@ -124,6 +125,8 @@ export const DeclarationChecks = Base =>
       // Nullable reference type signature agreement between overrides/implementations and their bases.
       if (this.nullableAt(this.at(type).uri, this.at(type).start).warnings)
         for (const d of checkNullableSignatures(type)) this.reportAt(d.member, d.code, d.args, 'warning');
+      for (const d of uninitializedMembersWithoutConstructor(type))
+        if (this.nullableAt(this.at(d.member).uri, this.at(d.member).start).warnings) this.reportAt(d.member, d.code, d.args, 'warning');
     }
     /** CS0050-CS0059: a member may not expose a type less accessible than itself. */
     checkMemberAccessibility(m, type) {
