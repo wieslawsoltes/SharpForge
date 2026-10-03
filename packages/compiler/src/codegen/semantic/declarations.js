@@ -9,6 +9,7 @@ import { MethodKind } from '../../symbols/members.js';
 import { backingFieldName } from '../../lowering/generated-names.js';
 import { isByReference } from '../../lowering/by-reference.js';
 import { spanOf } from './node-factory.js';
+import { isUnimplementedPartial } from '../../binder/partial-methods.js';
 
 const definitionOf = symbol => symbol.originalDefinition ?? symbol;
 
@@ -108,6 +109,8 @@ export const Declarations = Base =>
     declareMethod(owner, symbol) {
       // Synthesized record members are declared when code first refers to them (lowering/records/record-members.js).
       if (this.methods.has(symbol) || symbol.recordMember) return;
+      // A partial method without an implementing declaration has no code: calls to it were omitted by the binder.
+      if (isUnimplementedPartial(symbol)) return undefined;
       const at = symbol.locations?.[0];
       switch (symbol.methodKind) {
         case MethodKind.Destructor:

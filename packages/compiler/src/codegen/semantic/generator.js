@@ -142,8 +142,10 @@ const Members = Base =>
   class extends Base {
     translateMembers() {
       const bound = this.analysis.bound;
-      for (const [symbol, record] of this.methods) {
-        const body = bound.get(symbol);
+      for (const [declared, record] of this.methods) {
+        // The body of a partial method belongs to its implementing declaration (and uses that declaration's parameters).
+        const symbol = declared.partialImplementationPart ?? declared,
+          body = bound.get(symbol);
         if (body) {
           // The context of the body itself decides: a yield in a local function makes that function the iterator.
           if (body.binder?.c?.isIterator) {

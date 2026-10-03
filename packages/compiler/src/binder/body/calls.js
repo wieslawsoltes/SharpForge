@@ -13,6 +13,7 @@ import { checkWritable, argumentRefKind } from '../ref-kinds.js';
 import { checkConstructedMethod } from '../constraints.js';
 import { isVirtualCall } from '../overrides.js';
 import { isCallOmitted } from '../csharp2-misc.js';
+import { isUnimplementedPartial } from '../partial-methods.js';
 import { receiverPassing } from '../readonly.js';
 
 const unknown = ErrorTypeSymbol.unknown;
@@ -68,6 +69,11 @@ export const CallBinding = Base =>
       );
       group.lastConversionError = r.error ?? null;
       if (r.method) r.method.uses = (r.method.uses ?? 0) + 1;
+      // There is no method to point a delegate at when a partial method has no implementing declaration.
+      if (r.method && r.conversion.exists && isUnimplementedPartial(r.method)) {
+        group.lastConversionError = { code: 'CS0762', args: [r.method.toDisplayString()] };
+        return null;
+      }
       return r.conversion.exists ? r.conversion : null;
     }
     groupReturnType(group, parameterTypes) {
@@ -309,6 +315,8 @@ export const CallBinding = Base =>
       });
       // A call to a [Conditional] method whose symbols are not defined in this file is not executed.
       if (isCallOmitted(method, this.d.definedSymbols(this.c.uri))) n.isOmitted = true;
+      // ... and so is a call to a partial method that has no implementing declaration.
+      if (isUnimplementedPartial(method)) n.isOmitted = true;
       if (receiver && receiver.type?.isValueType === true && !method.isStatic) {
         const passing = receiverPassing(receiver, method, this.variableContext);
         n.receiverPassing = passing.mode;

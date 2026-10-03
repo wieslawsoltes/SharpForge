@@ -95,6 +95,10 @@ export const OperatorBinding = Base =>
       if (operator !== '+' && operator !== '-') return null;
       const type = [left, right].map(e => e.type).find(t => t?.typeKind === TypeKind.Delegate);
       if (!type) return null;
+      // A typed operand that is not a delegate of that type leaves the operator to overload resolution: `text + handler`
+      // is string concatenation.
+      const fits = e => !e.type || e.type.equals(type) || this.conversions.classifyFromExpression(e, type).isImplicit;
+      if (!fits(left) || !fits(right)) return null;
       const operands = [left, right].map(e => {
         const converted = this.convert(e, type, e.syntax);
         if (e.form === 'lambda' && !converted.hasErrors) this.finishLambda(e, type);

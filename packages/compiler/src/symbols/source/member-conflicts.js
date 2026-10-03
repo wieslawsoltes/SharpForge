@@ -3,7 +3,7 @@
  * like its type).
  */
 import { SymbolKind } from '../types.js';
-import { MethodKind, DeclarationModifiers } from '../members.js';
+import { MethodKind } from '../members.js';
 
 /** Class mixin: Duplicate member diagnostics: CS0102 (same name), CS0111 (same signature) and CS0542 (member named */
 export const MemberConflicts = Base =>
@@ -30,10 +30,9 @@ export const MemberConflicts = Base =>
           )
             continue;
           const key = m.signatureKey + (m.methodKind === MethodKind.Conversion ? '->' + m.returnTypeWithAnnotations.toDisplayString() : '');
-          if (signatures.has(key)) {
-            if (!(m.modifiers & DeclarationModifiers.Partial && signatures.get(key).modifiers & DeclarationModifiers.Partial))
-              this.report(uri, at, 'CS0111', [m.isConstructor ? type.name : m.name, type.toDisplayString()]);
-          } else signatures.set(key, m);
+          // The two parts of a partial method were merged before (binder/partial-methods.js): what repeats here is a duplicate.
+          if (signatures.has(key)) this.report(uri, at, 'CS0111', [m.isConstructor ? type.name : m.name, type.toDisplayString()]);
+          else signatures.set(key, m);
           if (names.has(m.name) && names.get(m.name).kind !== SymbolKind.Method)
             this.report(uri, at, 'CS0102', [type.toDisplayString(), m.name]);
           if (!names.has(m.name)) names.set(m.name, m);

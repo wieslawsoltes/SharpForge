@@ -7,9 +7,16 @@ import { checkOperatorDeclarations } from './operator-declarations.js';
 import { checkIndexerDeclarations } from './indexer-declarations.js';
 import { checkRequiredDeclarations, chainingProblem } from './required-members.js';
 import { checkInitAccessors } from './init-accessors.js';
+import { checkPartialMethods } from '../partial-methods.js';
 
 /** The member rules, in the order their diagnostics are produced. Add a rule here to have it run for every source type. */
-export const memberChecks = [checkIndexerDeclarations, checkOperatorDeclarations, checkInitAccessors, checkRequiredDeclarations];
+export const memberChecks = [
+  checkIndexerDeclarations,
+  checkOperatorDeclarations,
+  checkInitAccessors,
+  checkRequiredDeclarations,
+  checkPartialMethods,
+];
 
 /** Class mixin (analysis phase): member declaration rules. */
 export const MemberDeclarationChecks = Base =>

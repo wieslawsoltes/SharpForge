@@ -102,8 +102,9 @@ export const ConversionBinding = Base =>
         const r = e.lastConversionError,
           at = e.nameNode && node === e.syntax ? e.nameNode : node;
         if (r && delegateInvoke(type)) {
-          // A wrong return type is reported on the whole method group expression, the other mismatches on the method name.
-          this.report(r.code === 'CS0407' ? node : at, r.code, r.args);
+          // A wrong return type and a partial method without code are reported on the whole method group expression,
+          // the other mismatches on the method name.
+          this.report(r.code === 'CS0407' || r.code === 'CS0762' ? node : at, r.code, r.args);
           return;
         }
         this.report(at, 'CS0428', [e.name, to]);

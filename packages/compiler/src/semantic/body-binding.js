@@ -57,6 +57,8 @@ export const BodyBinding = Base =>
         parameters: method.parameters,
       });
       for (const p of method.parameters) if (p.defaultSyntax) this.bindParameterDefault(p, binder);
+      // Callers of a partial method use the default values of its defining declaration.
+      for (const p of method.partialDefinitionPart?.parameters ?? []) if (p.defaultSyntax) this.bindParameterDefault(p, binder);
       // The optional parameters of an indexer belong to the property; its accessors bind them.
       for (const p of method.associatedSymbol?.parameters ?? []) if (p.defaultSyntax) this.bindParameterDefault(p, binder);
       let body = null;
