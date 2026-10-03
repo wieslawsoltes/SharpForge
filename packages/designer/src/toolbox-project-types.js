@@ -1,0 +1,98 @@
+import {parse} from '@sharpforge/syntax';
+import {SourceText} from '@sharpforge/text';
+
+const baseControl = 'Microsoft.UI.Xaml.Controls.UserControl';
+const qualifiedName = /^(?:[A-Za-z_][A-Za-z0-9_]*\.)*[A-Za-z_][A-Za-z0-9_]*$/;
+
+/** Checks the serializable, non-executing descriptor used by project toolbox items. */
+export function validateProjectControl(descriptor) {
+  if (!descriptor || typeof descriptor.type !== 'string' || !qualifiedName.test(descriptor.type)) {
+    throw new TypeError('Project control type must be a qualified C# identifier');
+  }
+  if (descriptor.type.length > 512 || descriptor.baseType !== baseControl) {
+    throw new TypeError('Project controls require a supported UserControl preview base');
+  }
+  if (descriptor.uri !== undefined && (typeof descriptor.uri !== 'string' || descriptor.uri.length > 4096)) {
+    throw new TypeError('Project control source URI is invalid');
+  }
+  return {
+    type: descriptor.type,
+    baseType: baseControl,
+    displayName: descriptor.displayName || descriptor.type.split('.').at(-1),
+    ...(descriptor.uri ? {uri: descriptor.uri} : {}),
+    ...(descriptor.analysisVersion !== undefined ? {analysisVersion: descriptor.analysisVersion} : {})
+  };
+}
+
+function usingScope(node, inherited) {
+  const imports = new Set(inherited.imports);
+  const aliases = new Map(inherited.aliases);
+  for (const directive of node.usings ?? []) {
+    const name = directive.namespaceOrType?.toString().trim().replace(/^global::/, '');
+    if (directive.alias) aliases.set(directive.alias.name.toString().trim(), name);
+    else if (!directive.staticKeyword?.text) imports.add(name);
+  }
+  return {imports, aliases};
+}
+
+function declarations(files) {
+  const types = [];
+  let totalBytes = 0;
+  if (files.length > 256) throw new RangeError('Project toolbox file count exceeds 256');
+  for (const file of files) {
+    if (typeof file.text !== 'string') throw new TypeError('Project toolbox source text is required');
+    totalBytes += file.text.length;
+    if (totalBytes > 8_000_000) throw new RangeError('Project toolbox source limit exceeded');
+    const syntax = parse(new SourceText(file.text, file.uri ?? file.path ?? 'Project.cs')).syntax;
+    const pending = [{node: syntax, namespace: '', imports: new Set(), aliases: new Map()}];
+    while (pending.length) {
+      const current = pending.pop();
+      const scope = usingScope(current.node, current);
+      for (const member of current.node.members ?? []) {
+        if (['NamespaceDeclaration', 'FileScopedNamespaceDeclaration'].includes(member.kind)) {
+          const name = member.name.toString().trim();
+          pending.push({node: member, namespace: [current.namespace, name].filter(Boolean).join('.'), ...scope});
+        } else if (member.kind === 'ClassDeclaration') {
+          const modifiers = member.modifiers.map(token => token.valueText ?? token.text);
+          if (modifiers.includes('abstract') || modifiers.includes('static') || member.typeParameterList) continue;
+          const name = member.identifier.valueText;
+          const type = [current.namespace, name].filter(Boolean).join('.');
+          const bases = (member.baseList?.types ?? []).map(base => base.type.toString().trim().replace(/^global::/, ''));
+          types.push({type, bases, namespace: current.namespace, ...scope, uri: file.uri ?? file.path});
+        }
+      }
+    }
+  }
+  return types;
+}
+
+/** Discovers constructible UserControls only from a successful compilation snapshot. */
+export function discoverProjectControls({success, files = [], projectTypes, version = 0}) {
+  if (!success) return [];
+  if (projectTypes) {
+    if (!Array.isArray(projectTypes) || projectTypes.length > 512) throw new RangeError('Project control catalog exceeds 512 items');
+    return projectTypes.map(value => validateProjectControl({...value, analysisVersion: version}));
+  }
+  const types = declarations(files);
+  const byName = new Map(types.map(type => [type.type, type]));
+  const resolved = new Map();
+  const visiting = new Set();
+  const resolvesToControl = (type, depth = 0) => {
+    if (resolved.has(type.type)) return resolved.get(type.type);
+    if (depth > 100 || visiting.has(type.type)) throw new TypeError('Project control inheritance is cyclic or too deep');
+    visiting.add(type.type);
+    const matches = type.bases.some(base => {
+      const name = type.aliases.get(base) ?? base;
+      if (name === baseControl || name === 'UserControl' && type.imports.has('Microsoft.UI.Xaml.Controls')) return true;
+      const target = byName.get(name) ?? byName.get([type.namespace, name].filter(Boolean).join('.')) ??
+        [...type.imports].map(prefix => byName.get(prefix + '.' + name)).find(Boolean);
+      return target ? resolvesToControl(target, depth + 1) : false;
+    });
+    visiting.delete(type.type);
+    resolved.set(type.type, matches);
+    return matches;
+  };
+  return types.filter(type => resolvesToControl(type)).map(type => validateProjectControl({
+    type: type.type, baseType: baseControl, uri: type.uri, analysisVersion: version
+  })).sort((left, right) => left.type.localeCompare(right.type));
+}
