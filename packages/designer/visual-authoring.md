@@ -58,6 +58,8 @@ document.undo();
 
 Minimum width is inclusive; maximum width is exclusive. Generation emits a real managed `ApplyAdaptive(double width)` method. It restores overridden properties to their base local values (or clears their local values), then applies one matching state. Generated initialization applies the design width. Application hosts must call `ApplyAdaptive` when their viewport changes. Automatic native `SizeChanged`/`AdaptiveTrigger` execution is unavailable in the current framework contract and emits `SFD_RESPONSIVE_HOST_RESIZE`; it is not presented as native WinUI qualification.
 
+Canvas, Grid and VariableSizedWrapGrid dependency property identifiers occupy nine entries in the reserved A18 ABI block. Both managed engines resolve attached storage by declaring owner and public member, so Grid.ColumnSpan and VariableSizedWrapGrid.ColumnSpan remain separate. Clearing an adaptive override restores the runtime default and makes `ReadLocalValue` return `UnsetValue`; it does not turn the default into an authored local value. Existing local values are restored through their original attached setter.
+
 High-contrast preview applies an explicit black/white/yellow preview palette. It does not emulate an operating system's complete forced-colors policy. Browser input preview also does not execute managed event handlers; those execute in the application runtime.
 
 ## Studio integration seam
@@ -84,6 +86,10 @@ Use these delegations:
 
 Toolbar controls are found through `view.controlsRoot ?? view.panel('designer')`. Source-aware undo goes through `view.undo`/`view.canUndo`; semantic handler navigation uses `view.sourceSync.navigateEvent`. Hidden and locked outline state is respected through `view.outline`.
 
+The geometry read phase caches browser font metrics and measures the first rendered text line. Pointer sessions receive the moving control's baseline in parent coordinates. Text with an independently rotated baseline is excluded from horizontal baseline targets. Font metrics stay in a bounded controller-owned cache and are disposed with the surface.
+
+Project component navigation uses `view.componentDefinition(id)` and `view.openComponent(id)`. Double-clicking a resolved component opens its defining document; ordinary text controls retain inline editing. The same action is exposed as **Open component document** in the surface context menu for one resolved component.
+
 ## Qualification commands
 
 ```sh
@@ -101,4 +107,15 @@ Browser qualification uses `runDesignerLayoutReferences(root)` from `apps/studio
 
 On Linux x64, AMD EPYC 9V74, Node v24.19.0, the 5,000-node/200-sample geometry benchmark measured 31.25ms cold construction, 0.050ms warm median, 0.109ms p95 and 0.715ms p99, with a 4,047,928-byte retained/GC-sensitive heap delta. This is JavaScript geometry and spatial-query timing, not an end-to-end browser frame budget or a native rendering result. Duplicate target compaction bounds repeated aligned snap targets.
 
-The browser build completed. A local Playwright browser run was attempted, but the Chromium executable was absent; the executable reference harness remains available for the integration environment. The full repository check currently needs A18 test-manifest registration by the shared-file owner. The repository structure report contains inherited warnings; no new visual-owned source file exceeds the declared source limits.
+The follow-up visual, styles/templates and animation batch passed 172 tests, including source VM, direct CIL and existing reload/reassembled execution paths. Previously unset adaptive Canvas, Grid and wrap properties were exercised entering and leaving states, with exact local-state assertions. This follow-up did not run global or browser gates. Chrome for Testing 153.0.8010.12 was found in the execution environment and its executable/shared-library availability was verified for later integration qualification. The full repository check needs shared A18 test-manifest registration. No new visual-owned source file exceeds the declared source limits.
+
+### Attached setter cost
+
+Run `node --expose-gc packages/designer/examples/benchmark-attached.mjs` to execute 1,000 Canvas.SetLeft calls per sample on the real managed engines. The recorded run uses 20 warmups and 81 measured samples, excludes compiler/VM construction time, and performs optional host GC before each sample. The baseline runtime in detached worktree commit `e328f265` has the same platform/styling files as the visual branch before the attached-property follow-up.
+
+| Engine | Baseline median | Updated median | Baseline p95 | Updated p95 |
+|---|---:|---:|---:|---:|
+| Source VM | 4.418 ms | 4.859 ms | 11.883 ms | 10.849 ms |
+| Direct CIL | 19.112 ms | 18.988 ms | 29.273 ms | 22.582 ms |
+
+Hardware/runtime: Linux x64, AMD EPYC 9V74, Node v24.19.0. These are shared-environment microbenchmarks with visible run-to-run variation, so the lower p95 figures are not a speedup claim. The source median increased about 10%, or 0.441 ms per 1,000 setters. This exceeds CONTRIBUTING's 5% performance budget and requires explicit PR review/sign-off. The correctness cost provides target ownership and layout/Int32 validation plus accurate local-versus-unset state; successful target validation is cached per heap record, redundant local markers are not written, and clearing an already-unset value does no work. This measurement does not qualify the browser's 16 ms interaction budget.
