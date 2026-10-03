@@ -67,3 +67,5 @@ export {uint32Binary, uint32Compare} from './numeric/uint32.js';
 
 export {convert, conversionTargets} from './numeric/conversions.js';
 export {number, isNumber} from './numeric/numeric-values.js';
+
+export {singleToInt32Bits, doubleToInt64Bits, int32BitsToSingle, int64BitsToDouble} from './numeric/bit-converter.js';
