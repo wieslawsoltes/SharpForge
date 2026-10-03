@@ -15,10 +15,10 @@ const integerStores = Object.freeze({
   uint: value => value | 0,
 });
 
-/** Only normalized scalar slots qualify; pinned locals and byrefs keep adapters. */
-export function typedSlotHandler(method, instruction, state, generic) {
+/** Decode metadata once; pinned locals retain their lifetime/storage adapter. */
+export function numericSlotDescription(method, instruction) {
   const match = /^(ld|st)(loc|arg)(?:\.(s|[0-3]))?$/.exec(instruction.name);
-  if (!match || !state) return null;
+  if (!match) return null;
   const [, operation, kind, suffix] = match;
   const argument = kind === 'arg';
   const index = instruction.operand ?? Number(suffix);
@@ -26,6 +26,14 @@ export function typedSlotHandler(method, instruction, state, generic) {
   const declared = argument ? method.signature.parameters[parameter] : method.locals[index];
   if (typeof declared !== 'string' || /\bpinned$/.test(declared)) return null;
   const type = numericTypeName(callStorageType(declared));
+  return {operation, argument, index, type};
+}
+
+/** Only normalized scalar slots qualify; pinned locals and byrefs keep adapters. */
+export function typedSlotHandler(method, instruction, state, generic) {
+  const slot = numericSlotDescription(method, instruction);
+  if (!slot || !state) return null;
+  const {operation, argument, index, type} = slot;
   const tag = type === 'float' ? NumericSlotTag.r4 : type === 'double' ? NumericSlotTag.r8 : null;
   if (operation === 'ld' && tag) return (vm, frame) => {
     if (vm.options.scalarSlotLoads === false) return generic(vm, frame, instruction);

@@ -1,7 +1,7 @@
-import {float} from '@sharpforge/bytecode';
+import {float, smallInt64} from '@sharpforge/bytecode';
 import {ManagedFault} from '../heap.js';
 
-export const NumericSlotTag = Object.freeze({value: 0, r4: 1, r8: 2});
+export const NumericSlotTag = Object.freeze({value: 0, r4: 1, r8: 2, smallLong: 3});
 const adapters = new WeakMap();
 
 function arrayIndex(key) {
@@ -16,9 +16,10 @@ function arrayIndex(key) {
  * The adapter is private execution state and never enters a snapshot graph.
  */
 export class TypedNumericSlots {
-  constructor(values, capacity = values.length, maxLength = 0xffffffff) {
+  constructor(values, capacity = values.length, maxLength = 0xffffffff, smallLongs = false) {
     this.values = values;
     this.maxLength = maxLength;
+    this.smallLongs = smallLongs;
     this.numbers = new Float64Array(Math.max(8, capacity, values.length));
     this.tags = new Uint8Array(this.numbers.length);
     this.materialized = [];
@@ -70,21 +71,57 @@ export class TypedNumericSlots {
   get(index) {
     const tag = this.tags[index];
     if (!tag) return this.values[index];
-    if (!this.materialized[index]) {
-      this.materialized[index] = float(this.numbers[index], tag === NumericSlotTag.r4 ? 'r4' : 'r8');
+    if (this.materialized[index] === undefined) {
+      this.materialized[index] = tag === NumericSlotTag.smallLong ? BigInt(this.numbers[index]) :
+        float(this.numbers[index], tag === NumericSlotTag.r4 ? 'r4' : 'r8');
       this.materializations++;
     }
     return this.materialized[index];
   }
 
   set(index, value) {
-    if (value?.float === 'r4' || value?.float === 'r8') {
+    if (this.smallLongs && typeof value === 'bigint') this.setLong(index, value);
+    else if (value?.float === 'r4' || value?.float === 'r8') {
       this.setFloat(index, value.value, value.float === 'r4' ? NumericSlotTag.r4 : NumericSlotTag.r8);
       this.materialized[index] = value;
     } else {
       this.clear(index);
       this.values[index] = value;
     }
+  }
+
+  setLong(index, value) {
+    const exact = smallInt64(value);
+    if (typeof exact === 'number') {
+      this.reserve(index + 1);
+      this.numbers[index] = exact;
+      this.tags[index] = NumericSlotTag.smallLong;
+      this.materialized[index] = undefined;
+      this.values[index] = undefined;
+    } else {
+      this.clear(index);
+      this.values[index] = exact;
+    }
+  }
+
+  readLong(index) {
+    return this.tags[index] === NumericSlotTag.smallLong ? this.numbers[index] : this.values[index];
+  }
+
+  pushLong(value) {
+    if (this.values.length >= this.maxLength) {
+      throw new ManagedFault('ExecutionLimitException', 'Evaluation stack budget exceeded');
+    }
+    this.setLong(this.values.length, value);
+  }
+
+  popLong() {
+    const index = this.values.length - 1;
+    if (index < 0) throw new ManagedFault('InvalidProgramException', 'Evaluation stack underflow');
+    const value = this.readLong(index);
+    this.clear(index);
+    this.values.length = index;
+    return value;
   }
 
   setFloat(index, value, tag) {
@@ -142,6 +179,6 @@ export function numericSlots(values) {
 }
 
 /** Preserve sharing when filter frames or argument adapters refer to one array. */
-export function typedNumericSlots(values, capacity, maxLength) {
-  return adapters.get(values) ?? new TypedNumericSlots(values, capacity, maxLength);
+export function typedNumericSlots(values, capacity, maxLength, smallLongs) {
+  return adapters.get(values) ?? new TypedNumericSlots(values, capacity, maxLength, smallLongs);
 }

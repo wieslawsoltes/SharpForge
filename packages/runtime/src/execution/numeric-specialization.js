@@ -2,6 +2,7 @@ import {numericStackTypes} from './numeric-stack-types.js';
 import {specializedNumericHandler} from './specialized-numeric-handlers.js';
 import {typedFloatHandler} from './typed-float-handlers.js';
 import {typedSlotHandler} from './typed-slot-handlers.js';
+import {smallLongHandler} from './small-long-handlers.js';
 
 /** Contribution to getDecodePlan: called once before its arrays and record are frozen. */
 export function specializeNumericHandlers(vm, method, plan) {
@@ -15,9 +16,11 @@ export function specializeNumericHandlers(vm, method, plan) {
       plan.handlers[index] = selected.handler;
       ids[index] = selected.id;
     }
-    if (vm.options.typedNumericStack !== true) continue;
-    const typed = typedFloatHandler(instruction.name, states[index]) ??
-      typedSlotHandler(method, instruction, states[index], plan.handlers[index]);
+    const floatHandler = vm.options.typedNumericStack === true ? typedFloatHandler(instruction.name, states[index]) ??
+      typedSlotHandler(method, instruction, states[index], plan.handlers[index]) : null;
+    const longHandler = vm.options.smallLongFastPath === true ?
+      smallLongHandler(method, instruction, states[index], plan.handlers[index]) : null;
+    const typed = longHandler ?? floatHandler;
     if (!typed) continue;
     plan.handlers[index] = typed;
     ids[index] = instruction.name.replaceAll('.', '_') + '_typed';
