@@ -1,0 +1,8 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "interfaces/implement-and-dispatch":{"hash":"ef90f5c349e76b36","kind":"output","langVersion":"14.0","diagnostics":[],"output":"sq\nrc\n10\n"},
+  "interfaces/multiple-and-explicit":{"hash":"36990aba5755d9be","kind":"output","langVersion":"14.0","diagnostics":[],"output":"waddle\nswim\nwalk\nTrue\n"},
+  "interfaces/icomparable-sort":{"hash":"07c89adaf3a436ef","kind":"output","langVersion":"14.0","diagnostics":[],"output":"1.9\n2.0\n2.1\n"},
+  "interfaces/cs0535-not-implemented":{"hash":"6fdf503d42ed2ce3","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0535",81,1,"error"]]},
+  "interfaces/cs0144-instantiate-interface":{"hash":"cbaab5a73d0a6757","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0144",22,7,"error"]]},
+  "interfaces/cs0738-wrong-return-type":{"hash":"d7a2a21bfaa94aad","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0738",71,1,"error"]]}
+}}

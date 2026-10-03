@@ -1,0 +1,343 @@
+{
+  "epic": "SF-A05-E03",
+  "commit": "547ee08c853b33da924ab46b7fdb3ab3adc2878f",
+  "date": "2026-10-03",
+  "tools": {
+    "node": "v24.21.0",
+    "python": "3.14.7",
+    "playwright": "1.57.0",
+    "chromium": "143.0.7499.4"
+  },
+  "environment": {
+    "PATH_prefix": "Node 24.21.0 bin and Python virtualenv bin",
+    "TMPDIR": "/private/tmp/sharpforge-a05/tmp"
+  },
+  "checks": [
+    {
+      "command": "node --test tests/*.test.js",
+      "passed": 2634,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "node scripts/check.js",
+      "modules": 257,
+      "syntaxErrors": 0
+    },
+    {
+      "command": "node scripts/build.js",
+      "exitCode": 0
+    },
+    {
+      "command": "node scripts/verify-packages.js",
+      "exitCode": 0
+    },
+    {
+      "command": "node examples/runtime/snapshot-replay.mjs",
+      "output": "source schema 1: 42\ncil schema 1: 42"
+    }
+  ],
+  "browser": {
+    "managed": {
+      "version": "0.4.0",
+      "mode": "http",
+      "checks": [
+        {
+          "name": "ordinary DLL opens in Assembly Explorer without replacing source",
+          "passed": true,
+          "milliseconds": 59.39
+        },
+        {
+          "name": "selected static method runs in bounded direct-CIL worker",
+          "passed": true,
+          "milliseconds": 99.4
+        },
+        {
+          "name": "method C# reconstruction is displayed",
+          "passed": true,
+          "milliseconds": 74.83
+        },
+        {
+          "name": "editable IL is rebuilt and changed arithmetic actually runs",
+          "passed": true,
+          "milliseconds": 126.73
+        },
+        {
+          "name": "all method IL includes resolved signatures and metadata operands",
+          "passed": true,
+          "milliseconds": 49.66
+        },
+        {
+          "name": "unsupported external calls remain inspectable and fail verification",
+          "passed": true,
+          "milliseconds": 68.43
+        },
+        {
+          "name": "malformed uploaded assembly is rejected",
+          "passed": true,
+          "milliseconds": 2.53
+        },
+        {
+          "name": "source generator binds, executes and appears in read-only generated view",
+          "passed": true,
+          "milliseconds": 101.43
+        },
+        {
+          "name": "Ctrl+. refactoring validates, applies and supports editor undo",
+          "passed": true,
+          "milliseconds": 128.34
+        },
+        {
+          "name": "Shift+Alt+F formats indentation through a versioned action",
+          "passed": true,
+          "milliseconds": 47.08
+        },
+        {
+          "name": "assembly workspace renders at desktop and 390px widths",
+          "passed": true,
+          "milliseconds": 5644.1
+        },
+        {
+          "name": "no browser JavaScript errors",
+          "passed": true,
+          "milliseconds": 0.0
+        }
+      ],
+      "passed": 12,
+      "failed": 0,
+      "errors": []
+    },
+    "debugger": {
+      "checks": 22,
+      "workers": 2,
+      "errors": [],
+      "results": [
+        {
+          "name": "0.10 starts with two real workers and 44 independent docking tools",
+          "passed": true,
+          "milliseconds": 10.27
+        },
+        {
+          "name": "compiler emits persistent PDB bytes and verifies multi-file embedded source in the symbol editor",
+          "passed": true,
+          "milliseconds": 474.85
+        },
+        {
+          "name": "Set Next Statement skips assignments without resetting live locals and resumes correctly",
+          "passed": true,
+          "milliseconds": 129.31
+        },
+        {
+          "name": "explicit managed function evaluation requires consent, rolls back previews, invokes getters and commits effects",
+          "passed": true,
+          "milliseconds": 147.92
+        },
+        {
+          "name": "Hot Reload replaces a method through the compiler worker while retaining the caller local",
+          "passed": true,
+          "milliseconds": 149.33
+        },
+        {
+          "name": "rude Hot Reload edits reject without mutating running code and Cancel restores source",
+          "passed": true,
+          "milliseconds": 101.98
+        },
+        {
+          "name": "async contexts expose suspended caller frames and task relationships without moving execution on inspection",
+          "passed": true,
+          "milliseconds": 868.18
+        },
+        {
+          "name": "logical Thread Start/Join shares state and debugger freeze/thaw uses real context identities",
+          "passed": true,
+          "milliseconds": 593.73
+        },
+        {
+          "name": "ordinary DLL without #SF uses embedded PDB source/locals, source-level stepping and Set Next Statement outside the open workspace",
+          "passed": true,
+          "milliseconds": 94.83
+        },
+        {
+          "name": "mismatched Portable PDB is rejected transactionally without losing a valid paused DLL session",
+          "passed": true,
+          "milliseconds": 317.34
+        },
+        {
+          "name": "code-first C# WinUI renders real controls and managed event callbacks survive explicit GC",
+          "passed": true,
+          "milliseconds": 172.71
+        },
+        {
+          "name": "Hot Reload updates an idle managed UI callback without recreating the window or resetting its count",
+          "passed": true,
+          "milliseconds": 79.64
+        },
+        {
+          "name": "Live Visual Tree inspects actual managed control properties in an independent tool",
+          "passed": true,
+          "milliseconds": 90.73
+        },
+        {
+          "name": "unsubscribed native text/slider/selection input synchronizes managed properties before a C# form handler",
+          "passed": true,
+          "milliseconds": 198.84
+        },
+        {
+          "name": "async void WinUI callbacks suspend during Task.Delay, retain controls and resume to update the live application",
+          "passed": true,
+          "milliseconds": 826.52
+        },
+        {
+          "name": "a native button click stops at the C# handler breakpoint; step and continue update the same live window",
+          "passed": true,
+          "milliseconds": 252.42
+        },
+        {
+          "name": "Canvas2D renderer produces actual nontransparent shape/chart pixels from managed drawing calls",
+          "passed": true,
+          "milliseconds": 175.67
+        },
+        {
+          "name": "explicit DOM rendering fallback displays the retained drawing scene",
+          "passed": true,
+          "milliseconds": 6.95
+        },
+        {
+          "name": "WebGPU request negotiates an available backend and reports fallback rather than claiming GPU execution",
+          "passed": true,
+          "milliseconds": 5.09
+        },
+        {
+          "name": "independent JavaScript WinUI package handles nested button content, unsubscription, mutable brushes and disposal",
+          "passed": true,
+          "milliseconds": 7.15
+        },
+        {
+          "name": "all seven new tools retain shared keyboard/context menu and docking functionality",
+          "passed": true,
+          "milliseconds": 270.05
+        },
+        {
+          "name": "Stop removes the application and stale visuals; acceptance has no uncaught JavaScript errors",
+          "passed": true,
+          "milliseconds": 34.58
+        }
+      ]
+    },
+    "runtime": {
+      "passed": true,
+      "checks": [
+        {
+          "name": "stable default language, Visual Studio keys, and explicit-deny runtime panel",
+          "passed": true,
+          "milliseconds": 61.85
+        },
+        {
+          "name": "preview language selection gates capacity expressions and labeled loops in compiler worker",
+          "passed": true,
+          "milliseconds": 136.16
+        },
+        {
+          "name": "field-backed properties, conditional assignment, JSON, array helpers and seeded Random execute",
+          "passed": true,
+          "milliseconds": 139.43
+        },
+        {
+          "name": "managed Vector operations execute actual WebAssembly SIMD in the runtime worker",
+          "passed": true,
+          "milliseconds": 63.52
+        },
+        {
+          "name": "explicit scalar fallback preserves vector results and reports actual backend",
+          "passed": true,
+          "milliseconds": 42.71
+        },
+        {
+          "name": "independent compute package uses two real browser workers with owned transferable inputs",
+          "passed": true,
+          "milliseconds": 14.57
+        },
+        {
+          "name": "compute cancellation rejects a queued job and leaves following work usable",
+          "passed": true,
+          "milliseconds": 9.64
+        },
+        {
+          "name": "managed Task continuations await nested compute workers and establish external history epochs",
+          "passed": true,
+          "milliseconds": 82.31
+        },
+        {
+          "name": "ungranted managed HttpClient makes zero actual requests",
+          "passed": true,
+          "milliseconds": 106.67
+        },
+        {
+          "name": "managed HttpClient fetches a real CORS-enabled loopback endpoint and parses its response",
+          "passed": true,
+          "milliseconds": 69.14
+        },
+        {
+          "name": "relative BaseAddress, POST content, explicit headers and buffered response cross actual HTTP",
+          "passed": true,
+          "milliseconds": 94.54
+        },
+        {
+          "name": "managed CancellationTokenSource aborts a real pending browser HTTP request",
+          "passed": true,
+          "milliseconds": 119.61
+        },
+        {
+          "name": "workspace archives and newly loaded samples cannot restore networking grants",
+          "passed": true,
+          "milliseconds": 24.37
+        },
+        {
+          "name": "runtime panel rejects path grants; explicit apply and revoke update real launch settings",
+          "passed": true,
+          "milliseconds": 138.27
+        },
+        {
+          "name": "code-first WinUI async handler awaits real compute worker and updates the existing controls",
+          "passed": true,
+          "milliseconds": 6728.21
+        },
+        {
+          "name": "pre-external managed snapshots cannot be restored after a completed host operation",
+          "passed": true,
+          "milliseconds": 46.37
+        },
+        {
+          "name": "runtime inspector shows actual backend and job metrics without page errors",
+          "passed": true,
+          "milliseconds": 6416.23
+        }
+      ],
+      "pageErrors": [],
+      "workerEvents": 13,
+      "httpRequests": [
+        {
+          "path": "/data",
+          "cookie": null,
+          "method": "GET"
+        },
+        {
+          "path": "/echo",
+          "body": "hello",
+          "method": "POST",
+          "header": "explicit"
+        },
+        {
+          "path": "/slow",
+          "cookie": null,
+          "method": "GET"
+        }
+      ],
+      "mode": "Production modules + real workers via in-memory HTML; actual browser Fetch to CORS-enabled local HTTP server; no fetch or compute test doubles"
+    }
+  },
+  "limits": [
+    "Native CLR and Rust execution are not qualified by this interpreter refactor.",
+    "Managed browser suite uses HTTP; advanced debugger and runtime suites use existing in-memory browser harness with real workers."
+  ]
+}

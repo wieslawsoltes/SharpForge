@@ -74,17 +74,33 @@ Performance is a requirement, not a later optimisation pass.
 - Tests are deterministic, need no network, and do not write into tracked files.
 - Do not weaken or delete an existing assertion to make a change pass. If an assertion encoded a defect, say so in the pull request and replace it with the correct one.
 
-## 6. Pull requests
+## 6. Working approach: ship complete batches fast
 
-- **One epic or one coherent slice per pull request; one sub-task per commit.** Commit message: `<WORK-ID>: <what changed>` (for example `SF-A02-T19: classify implicit numeric conversions`).
-- **Stack pull requests** when work depends on an unmerged branch: base the pull request on that branch, merge (do not rebase or force-push) to pick up changes below you, and say in the description what the stack order is.
+The backlog is large and many agents work at once. Throughput comes from landing complete, honest increments quickly, not from holding work back until everything around it is perfect.
+
+- **Work in complete feature batches.** A batch is one feature (or a few closely related sub-tasks) taken end to end: implementation, diagnostics, focused tests and a truthful description. Do not publish half a feature, and do not grow a batch into an epic-sized branch.
+- **Reuse what exists before building anything new.** Look for an existing API, seam or helper in the owning package and use it — for example, async lowering targets the runtime's existing continuation API instead of inventing a second mechanism. A new abstraction needs a reason the existing one cannot serve, stated in the pull request.
+- **Publish promptly.** Open the pull request as soon as the batch is implementation-ready. Unpublished work is invisible to other agents and goes stale.
+- **State limits explicitly.** Where support is incomplete, say exactly what is and is not covered: in the pull request description, in a diagnostic for the unsupported case (never a silent wrong result), and by leaving the issue open or listing the remaining sub-tasks. An honest "partial" is always better than a claimed "done".
+- **Merge implementation-ready work without waiting for broader qualification.** A pull request merges when its own required check passes. Do not hold it for the full browser, native or cross-platform matrix, for other workstreams' follow-ups, or for review of unrelated work.
+- **Stage heavy validation.** Run the full matrix (`full-ci` label) once per completed epic or larger scope, then fix what it finds in follow-up batches.
+- **Do not refresh branches every time `main` moves.** Merge `main` into your branch only when you need to: there is a conflict, a required check fails because the branch is behind, or you depend on something that just landed. Constant refreshing burns CI time and creates churn for anyone stacked on you.
+- **Spend integration effort where it lands work.** When several batches are ready, the priority is getting them merged — resolving their conflicts and stack order — over starting new work.
+- **Keep `main` green.** If `main` is red because of your area, fixing it comes before anything else. Never merge a pull request whose required check failed because of your change.
+- **Do not wait.** Move straight to the next batch after publishing; do not block on review, on other agents, or on answers you can find in the code. Record a real blocker on the owning issue and take another item meanwhile.
+
+## 7. Pull requests
+
+- **Small pull requests: one batch each**, roughly up to 15 files or 800 changed lines; one sub-task per commit. Commit message: `<WORK-ID>: <what changed>` (for example `SF-A02-T19: classify implicit numeric conversions`).
+- **Base on `main`.** Stack on another unmerged branch only when the work truly depends on it; then base the pull request on that branch, merge (never rebase or force-push) to pick up changes below you, and state the stack order in the description.
+- **Merge with a merge commit**, never squash or rebase, because other work may be stacked on yours. On "base branch was modified", retry; on a conflict, merge `main`, resolve keeping both sides' intent, push and retry.
 - **Stay inside your workstream's files.** If you need a change in another workstream, ask on the owning issue; if a small change is unavoidable, make it minimal and list it under "Changes outside this workstream".
-- **Description states the truth:** what is done (with `Closes #n` only when the acceptance criteria are fully met and tested), what is partial or not done and why, how it was verified, performance numbers when relevant, and anything a reviewer would be surprised by.
-- **Checks:** a pull request runs one fast check, `core` (`npm run check`, `npm test`, `npm run build`). Add the `full-ci` label once, when the epic is complete, to run the browser and native suites, and fix what they find before merge.
-- Run `npm run check`, `npm run check:structure` and `npm test` locally before pushing.
-- Keep `main` releasable. Do not merge with a failing check.
+- **Description states the truth:** what is done (with `Closes #n` only when the acceptance criteria are fully met and tested), what is partial or not done and why, how it was verified, what was reused, performance numbers when relevant, what is needed from other workstreams, and anything a reviewer would be surprised by.
+- **Checks:** a pull request runs one fast required check, `core` (`npm run check`, `npm test`, `npm run build`). The browser, native and cross-platform jobs run on `main`, on manual dispatch, and on pull requests labelled `full-ci`.
+- **Before pushing,** run your new and changed test files, `npm run check` and `npm run check:structure`. The pull request's check runs the full unit suite; you do not need to run it locally for every batch.
+- **Tests are portable.** Build paths with `fileURLToPath`, never `new URL(...).pathname`; normalize path separators before comparing names; do not assume case-sensitive paths or LF line endings.
 
-## 7. Review checklist
+## 8. Review checklist
 
 A reviewer (or the author, before asking for review) confirms:
 
@@ -95,4 +111,6 @@ A reviewer (or the author, before asking for review) confirms:
 - [ ] Unsupported or invalid input produces a diagnostic, not a wrong result.
 - [ ] Hot paths are allocation-aware and measured; numbers are in the description.
 - [ ] Tests cover positive, negative and boundary cases, against a reference where one exists.
+- [ ] Existing APIs and seams were reused; any new abstraction is justified.
+- [ ] Limits and unsupported cases are stated and produce diagnostics.
 - [ ] Every claim in the description is backed by a test or a measurement.
