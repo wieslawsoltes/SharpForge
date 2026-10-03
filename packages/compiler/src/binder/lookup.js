@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import {SymbolKind,ArrayTypeSymbol,ErrorTypeSymbol} from '../symbols/types.js';
 import {LookupOptions,LookupResultKind} from './binder.js';
 import {specialTypeFromKeyword} from '../symbols/special-types.js';
@@ -34,23 +35,23 @@ const kindWord=symbol=>symbol.kind===SymbolKind.Namespace?'namespace':symbol.kin
 export function lookupSimpleName(binder,name,arity=0,options=LookupOptions.NamespacesAndTypesOnly){
   const result=binder.lookup(name,arity,options);
   if(result.isViable){let symbol=result.symbols[0];if(symbol.kind===SymbolKind.Alias)symbol=symbol.target;return {symbol,result};}
-  if(result.isAmbiguous)return {error:{code:'CS0104',args:[name,describe(result.symbols[0]),describe(result.symbols[1])]},candidates:result.symbols,result};
+  if(result.isAmbiguous)return {error:{code:DiagnosticId.CS0104,args:[name,describe(result.symbols[0]),describe(result.symbols[1])]},candidates:result.symbols,result};
   const [why,near]=result.nonViable;
-  if(why===LookupResultKind.WrongArity){const type=near.find(s=>s.kind===SymbolKind.NamedType);if(type)return {error:type.arity?{code:'CS0305',args:[type.toDisplayString(),'type',type.arity]}:{code:'CS0308',args:[type.toDisplayString(),'type']},candidates:near,result};}
-  if(why===LookupResultKind.NotATypeOrNamespace)return {error:{code:'CS0118',args:[name,kindWord(near[0]),'type']},candidates:near,result};
-  return {error:{code:'CS0246',args:[name]},candidates:[],result};
+  if(why===LookupResultKind.WrongArity){const type=near.find(s=>s.kind===SymbolKind.NamedType);if(type)return {error:type.arity?{code:DiagnosticId.CS0305,args:[type.toDisplayString(),'type',type.arity]}:{code:DiagnosticId.CS0308,args:[type.toDisplayString(),'type']},candidates:near,result};}
+  if(why===LookupResultKind.NotATypeOrNamespace)return {error:{code:DiagnosticId.CS0118,args:[name,kindWord(near[0]),'type']},candidates:near,result};
+  return {error:{code:DiagnosticId.CS0246,args:[name]},candidates:[],result};
 }
 /** Finds `name` (with arity) directly inside a namespace or type. */
 export function lookupMemberOfContainer(container,name,arity=0){
   if(container.kind===SymbolKind.Namespace){
     const types=container.getTypeMembers(name,arity);if(types.length===1)return {symbol:types[0]};// A declaration in the compilation hides a same-named type from a reference; two references conflict (CS0433).
-    if(types.length>1){const own=types.filter(t=>t.containingNamespace?.extent==='source');if(own.length===1)return {symbol:own[0]};return {error:{code:'CS0433',args:[types[0].containingNamespace?.module?.name??'',types[0].toDisplayString(),types[1].containingNamespace?.module?.name??'']},candidates:types,symbol:types[0]};}
+    if(types.length>1){const own=types.filter(t=>t.containingNamespace?.extent==='source');if(own.length===1)return {symbol:own[0]};return {error:{code:DiagnosticId.CS0433,args:[types[0].containingNamespace?.module?.name??'',types[0].toDisplayString(),types[1].containingNamespace?.module?.name??'']},candidates:types,symbol:types[0]};}
     const namespace=arity===0?container.getNamespace(name):null;if(namespace)return {symbol:namespace};
-    const other=container.getTypeMembers(name);if(other.length)return {error:other[0].arity?{code:'CS0305',args:[other[0].toDisplayString(),'type',other[0].arity]}:{code:'CS0308',args:[other[0].toDisplayString(),'type']},candidates:other};
-    return {error:container.isGlobalNamespace?{code:'CS0400',args:[name]}:{code:'CS0234',args:[name,container.toDisplayString()]},candidates:[]};
+    const other=container.getTypeMembers(name);if(other.length)return {error:other[0].arity?{code:DiagnosticId.CS0305,args:[other[0].toDisplayString(),'type',other[0].arity]}:{code:DiagnosticId.CS0308,args:[other[0].toDisplayString(),'type']},candidates:other};
+    return {error:container.isGlobalNamespace?{code:DiagnosticId.CS0400,args:[name]}:{code:DiagnosticId.CS0234,args:[name,container.toDisplayString()]},candidates:[]};
   }
   for(let t=container;t;t=t.baseType){const nested=t.getTypeMembers?.(name,arity)??[];if(nested.length)return {symbol:nested[0]};}
-  return {error:{code:'CS0426',args:[name,container.toDisplayString()]},candidates:[]};
+  return {error:{code:DiagnosticId.CS0426,args:[name,container.toDisplayString()]},candidates:[]};
 }
 /**
  * Binds parsed (or textual) type-name syntax to a namespace or type symbol.
@@ -61,11 +62,11 @@ export function lookupMemberOfContainer(container,name,arity=0){
  */
 export function bindNamespaceOrType(binder,syntax,context={}){
   const parsed=typeof syntax==='string'?parseTypeName(syntax):syntax,fail=(error,name,candidates=[])=>{context.report?.(context.node??null,error.code,error.args);return {symbol:new ErrorTypeSymbol(name,0,{candidates,reason:error}),error};};
-  if(!parsed)return fail({code:'CS1031',args:[]},String(syntax));
+  if(!parsed)return fail({code:DiagnosticId.CS1031,args:[]},String(syntax));
   const text=parsed.segments.map(s=>s.name).join('.'),first=parsed.segments[0];let current;
   const typeArguments=segment=>segment.typeArguments.map(a=>bindType(binder,a,context));
   if(parsed.alias==='global')current={symbol:context.globalNamespace??binder.compilation?.globalNamespace};
-  else if(parsed.alias){const alias=binder.lookup(parsed.alias,0,LookupOptions.NamespacesAndTypesOnly).symbols.find(s=>s.kind===SymbolKind.Alias);if(!alias)return fail({code:'CS0432',args:[parsed.alias]},text);if(alias.target.kind!==SymbolKind.Namespace)return fail({code:'CS0431',args:[parsed.alias]},text);current={symbol:alias.target};}
+  else if(parsed.alias){const alias=binder.lookup(parsed.alias,0,LookupOptions.NamespacesAndTypesOnly).symbols.find(s=>s.kind===SymbolKind.Alias);if(!alias)return fail({code:DiagnosticId.CS0432,args:[parsed.alias]},text);if(alias.target.kind!==SymbolKind.Namespace)return fail({code:DiagnosticId.CS0431,args:[parsed.alias]},text);current={symbol:alias.target};}
   let index=0;
   if(!current){
     const keyword=parsed.segments.length===1&&!first.typeArguments.length?specialTypeFromKeyword(first.name):null;
@@ -82,7 +83,7 @@ export function bindNamespaceOrType(binder,syntax,context={}){
 /** Binds type-name syntax to a TypeSymbol; a namespace in a type position reports CS0118. Never returns null. */
 export function bindType(binder,syntax,context={}){
   const parsed=typeof syntax==='string'?parseTypeName(syntax):syntax,bound=bindNamespaceOrType(binder,parsed??syntax,context);let type=bound.symbol;
-  if(type.kind===SymbolKind.Namespace){const error={code:'CS0118',args:[type.toDisplayString(),'namespace','type']};context.report?.(context.node??null,error.code,error.args);type=new ErrorTypeSymbol(type.name,0,{reason:error});}
+  if(type.kind===SymbolKind.Namespace){const error={code:DiagnosticId.CS0118,args:[type.toDisplayString(),'namespace','type']};context.report?.(context.node??null,error.code,error.args);type=new ErrorTypeSymbol(type.name,0,{reason:error});}
   if(parsed?.nullable&&type.isValueType&&context.types){const nullable=context.types.getCoreTypeQuiet('System_Nullable_T');if(!nullable.isErrorType())type=nullable.construct(type);}
   // Rank specifiers are written outermost first: int[][,] is an array of int[,].
   for(const rank of [...(parsed?.ranks??[])].reverse())type=new ArrayTypeSymbol(type,rank);

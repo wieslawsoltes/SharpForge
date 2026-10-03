@@ -1,40 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {MetadataBuilder,Writer,CilWriter,methodSignature,localSignature,codedIndex,token,writePE,TEXT_RVA,verifyCilAssembly} from '@sharpforge/cil';
+import {token,verifyCilAssembly} from '@sharpforge/cil';
+import {dispatchFixture as fixture} from './support/dispatch-fixture.js';
 import {CilVirtualMachine} from '@sharpforge/runtime';
 
-// Independent metadata builder: explicit slots and MethodImpl rows cannot be expressed
-// by the in-repository C# compiler's current virtual-method surface.
-function fixture(classes,main,{methodImpl=[],interfaces=[],memberRef=false}={}) {
-  const md=new MetadataBuilder('VirtualDispatch'),typeTokens=new Map(classes.map((type,index)=>[type.name,token(2,index+2)]));
-  const object=md.typeRef('System.Object'),resolve=name=>typeTokens.get(name)??md.typeRef(name),methods=new Map();
-  md.add(2,[0,md.string('<Module>'),0,0,1,1]);let nextMethod=1;
-  for(const type of classes) {
-    md.add(2,[type.flags??0x100001,md.string(type.name),0,type.interface?0:codedIndex('TypeDefOrRef',type.base?resolve(type.base):object),1,nextMethod]);
-    for(const method of type.methods)methods.set(type.name+'::'+method.name,token(6,nextMethod++));
-  }
-  const program=md.add(2,[0x100001,md.string('Program'),0,codedIndex('TypeDefOrRef',object),1,nextMethod]);
-  const entry=token(6,nextMethod),definitions=[];
-  for(const type of classes)for(const method of type.methods)definitions.push({...method,owner:type.name,token:methods.get(type.name+'::'+method.name)});
-  definitions.push({name:'Main',owner:'Program',token:entry,flags:0x96,result:'int',locals:['object'],body:main});
-  for(const method of definitions)md.add(6,[0,0,method.flags??0x1c6,md.string(method.name),md.blob(methodSignature(method.result??'int',method.parameters??[],!!(method.flags&0x10),resolve)),1]);
-  const methodRef=name=>{
-    const definition=definitions.find(method=>method.owner+'::'+method.name===name);
-    return memberRef?md.member(resolve(definition.owner),definition.name,methodSignature(definition.result??'int',definition.parameters??[],false,resolve)):methods.get(name);
-  };
-  const context={md,types:typeTokens,methods,methodRef,objectCtor:()=>md.member(object,'.ctor',methodSignature('void',[],false,resolve))};
-  const section=new Writer().zero(72);
-  for(const method of definitions) {
-    if(!method.body)continue;
-    const writer=new CilWriter();method.body(writer,context);const code=writer.finish(),locals=method.locals?md.add(17,[md.blob(localSignature(method.locals,resolve))]):0;
-    section.pad(4);md.rows[6][(method.token&0xffffff)-1][0]=TEXT_RVA+section.length;
-    section.u16(0x3013).u16(8).u32(code.length).u32(locals).bytes(code);
-  }
-  for(const [owner,iface] of interfaces)md.add(9,[resolve(owner)&0xffffff,codedIndex('TypeDefOrRef',resolve(iface))]);
-  for(const [owner,body,declaration] of methodImpl)md.add(25,[resolve(owner)&0xffffff,codedIndex('MethodDefOrRef',methods.get(body)),codedIndex('MethodDefOrRef',methods.get(declaration))]);
-  section.pad(4);const offset=section.length,metadata=md.finish(undefined,new Uint8Array([3,7,0]));section.bytes(metadata);
-  return writePE(section.finish(),offset,metadata.length,entry);
-}
 const ctor=base=>({name:'.ctor',result:'void',flags:0x1886,body:(w,c)=>w.op('ldarg.0').op('call',base?c.methods.get(base+'::.ctor'):c.objectCtor()).op('ret')});
 const constant=(name,value,flags=0x1c6)=>({name,flags,body:w=>w.op('ldc.i4',value).op('ret')});
 const invoke=(type,method)=>(w,c)=>w.op('newobj',c.methods.get(type+'::.ctor')).op('callvirt',c.methodRef(method)).op('ret');

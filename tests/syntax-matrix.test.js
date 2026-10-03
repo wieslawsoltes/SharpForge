@@ -4,14 +4,17 @@ import { readFileSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { languageFeatures, languageFeature, previousLanguageVersion, SyntaxTree } from '@sharpforge/syntax';
 import { fixtureRoot, filesUnder, fixtureOptions, repoRoot } from './support/syntax-reference.js';
+import { featureSnippets } from '../packages/compiler/test/conformance/feature-snippets.js';
 
 // SF-A01-T01.3 / T01.4: the C# 1-15 syntax matrix. packages/syntax/test/matrix/<version>/<feature>/ holds positive.cs
 // (parses cleanly at the introducing version and records the feature) and rejected.cs (the same text one version too
 // low, with the expected code and span in its first line). rejected.cs.roslyn.json beside it is what Roslyn reports
 // when it compiles rejected.cs at that version, so the expectation is checked against the reference compiler.
 //
-// A catalog row is syntax-gated when the lexer or parser records it. Every syntax-gated row must have both fixtures;
-// the other rows can only be decided with bound symbols and are listed in the conformance report as binder-gated.
+// A catalog row is syntax-gated when the lexer or parser records it. Every syntax-gated row must have both fixtures.
+// The other rows are listed in the conformance report without a fixture: C# 1 rows have no version below them
+// (gate 'none'); the rest are gated by the compiler (gate 'compiler'), either by its syntax walker or while binding,
+// and are verified row by row in tests/compiler-feature-gate-matrix.test.js, whose snippet table must cover them.
 const matrix = join(fixtureRoot, 'matrix');
 const directoryOf = row => join(matrix, row.preview ? '15-preview' : String(row.version), row.id);
 const versionOf = row => (row.preview ? 'preview' : String(row.version));
@@ -89,11 +92,12 @@ function assertRejected(row, positive, rejected) {
 }
 
 /**
- * Roslyn knows a row when it has a MessageID and is not preview syntax that the pinned build predates. For those rows
- * Roslyn must report the same code over the same span when it compiles rejected.cs (a zero-width Roslyn span, used
- * for numeric literals, is compared by its start).
+ * Roslyn can confirm every row except preview syntax that the pinned build predates. For the other rows Roslyn must
+ * report the same code over the same span when it compiles rejected.cs (a zero-width Roslyn span, used for numeric
+ * literals, is compared by its start). That includes rows without a Roslyn feature id of their own, such as top-level
+ * statements, which Roslyn gates under another id.
  */
-const roslynKnows = row => !!row.messageId && !row.preview;
+const roslynKnows = row => !row.preview;
 function assertRoslynAgrees(directory, expected) {
   const recorded = JSON.parse(read(join(directory, 'rejected.cs.roslyn.json')));
   const agrees = recorded.errors.some(
@@ -107,7 +111,8 @@ const report = { generated: 'tests/syntax-matrix.test.js', rows: [] };
 for (const row of languageFeatures) {
   const directory = directoryOf(row);
   if (!existsSync(join(directory, 'positive.cs'))) {
-    report.rows.push({ id: row.id, version: row.version, gate: syntaxGated.has(row.id) ? 'syntax' : 'binder', status: 'no-fixture' });
+    const gate = row.version === 1 ? 'none' : syntaxGated.has(row.id) ? 'syntax' : 'compiler';
+    report.rows.push({ id: row.id, version: row.version, gate, status: 'no-fixture' });
     continue;
   }
   const entry = { id: row.id, version: row.version, gate: 'syntax', code: row.code, roslyn: 'not-applicable', status: 'failed' };
@@ -134,13 +139,16 @@ test('matrix: conformance report is emitted as JSON', () => {
       fixtures: rows.filter(r => r.status !== 'no-fixture').length,
       passed: rows.filter(r => r.status === 'passed').length,
       roslynAgrees: rows.filter(r => r.roslyn === 'agrees').length,
-      binderGated: rows.filter(r => r.gate === 'binder').length,
+      compilerGated: rows.filter(r => r.gate === 'compiler').length,
+      firstVersion: rows.filter(r => r.gate === 'none').length,
       total: rows.length
     };
   assert.equal(summary.total, languageFeatures.length);
   assert.equal(summary.passed, summary.fixtures);
+  assert.equal(summary.fixtures + summary.compilerGated + summary.firstVersion, summary.total, 'every row is in exactly one group');
+  for (const row of rows.filter(r => r.gate === 'compiler')) assert(row.id in featureSnippets, `${row.id} has no snippet in the compiler gate matrix`);
   assert(summary.fixtures >= 125, String(summary.fixtures));
-  assert(summary.roslynAgrees >= 110, String(summary.roslynAgrees));
+  assert(summary.roslynAgrees >= 118, String(summary.roslynAgrees));
   const directory = join(repoRoot, 'artifacts');
   mkdirSync(directory, { recursive: true });
   writeFileSync(join(directory, 'syntax-matrix-conformance.json'), JSON.stringify({ ...report, summary }, null, 1) + '\n');

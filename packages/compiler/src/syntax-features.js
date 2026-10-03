@@ -1,3 +1,4 @@
+import {DiagnosticId} from './diagnostics/codes.js';
 import { checkFeatures, languageFeature } from '@sharpforge/syntax';
 import { languageVersion } from './modern.js';
 import { collectSyntaxFeatures } from './binder/syntax-features.js';
@@ -11,7 +12,7 @@ function placementDiagnostics(file) {
   const statement = misplacedTopLevelStatement(file);
   if (!statement) return [];
   const { start, end } = statement.span;
-  return [diagnostic(file.source, start, Math.max(1, end - start), 'CS8803', formatMessage('CS8803', []), 'error')];
+  return [diagnostic(file.source, start, Math.max(1, end - start), DiagnosticId.CS8803, formatMessage(DiagnosticId.CS8803, []), 'error')];
 }
 
 /** Check original parsed files before async lowering, including reused workspace trees. */

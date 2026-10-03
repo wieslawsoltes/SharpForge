@@ -19,6 +19,7 @@
  * extension property. Every implementation carries `extensionReceiverType`, the receiver type in terms of its own
  * type parameters. An operator `static R operator +(A, B)` is the static method `op_Addition<T>(A, B)`.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { Accessibility, RefKind } from '../types.js';
 import { MethodSymbol, PropertySymbol, ParameterSymbol, MethodKind, DeclarationModifiers, modifiersFromSyntax, accessibilityFromSyntax } from '../members.js';
 import { declareTypeParameters, bindConstraintClauses } from './type-parameters.js';
@@ -45,7 +46,7 @@ export const ExtensionBlockBuilder = Base =>
       for (const member of syntax.members ?? []) {
         const disallowed = disallowedMemberToken(member);
         if (disallowed) {
-          report(disallowed, 'CS9282');
+          report(disallowed, DiagnosticId.CS9282);
           continue;
         }
         const first = members.length;
@@ -195,7 +196,7 @@ export const ExtensionBlockBuilder = Base =>
         // "Because indexers are always instance members": `static` is CS0106 as on any indexer (binder/members).
         isStatic = list.includes('static') && !isIndexer,
         name = isIndexer ? 'this[]' : syntax.identifier.valueText;
-      if (isIndexer && list.includes('static')) this.report(uri, syntax.thisKeyword, 'CS0106', ['static']);
+      if (isIndexer && list.includes('static')) this.report(uri, syntax.thisKeyword, DiagnosticId.CS0106, ['static']);
       let typeSyntax = syntax.type;
       if (typeSyntax.kind === 'RefType') typeSyntax = typeSyntax.type;
       const accessor = (keyword, body) =>
