@@ -4,7 +4,7 @@
   "async-lowering/await-in-try-catch-finally":{"hash":"459b43fedfb50650","kind":"output","langVersion":"14.0","diagnostics":[],"output":"described x\nok x!\ndescribed bad\ncaught bad name\ndescribed bad\nretry after bad name\ndescribed bad\nretry after bad name\ndescribed good\n3\n"},
   "async-lowering/async-lambdas-and-local-functions":{"hash":"20435c5354f51c19","kind":"output","langVersion":"14.0","diagnostics":[],"output":"49\n24\nfire x\nbetween\nfired x\ndone\n"},
   "async-lowering/top-level-await-value-tasks-and-loops":{"hash":"5fab3f02ac2edbbb","kind":"output","langVersion":"14.0","diagnostics":[],"output":"6\n5\nslow\n15\n6\n10\n"},
-  "async-lowering/async-void-and-faulted-tasks":{"hash":"3315c64c6dcdacd0","kind":"output","langVersion":"14.0","diagnostics":[],"output":"fire a\nreturned\nfired a\nhandler ran\nearly is faulted: True\nearly\nlate\n"},
+  "async-lowering/async-void-and-faulted-tasks":{"hash":"3315c64c6dcdacd0","kind":"output","langVersion":"14.0","diagnostics":[],"output":"fire a\nreturned\nearly is faulted: True\nearly\nfired a\nhandler ran\nlate\n"},
   "async-lowering/cs1988-by-reference-parameters":{"hash":"1c71e5ddf9cd2ccd","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1988",81,1,"error"],["CS1988",92,1,"error"],["CS1988",102,1,"error"]]},
   "async-lowering/cs1996-await-in-lock":{"hash":"8333dc45747dabe5","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1996",128,19,"error"]]},
   "async-lowering/cs1997-value-from-task-method":{"hash":"7369291ad6c15d77","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1997",98,6,"error"],["CS0161",137,7,"error"]]},
