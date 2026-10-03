@@ -151,7 +151,7 @@ export const LambdaBinding = Base =>
           node.lastConversionError = [
             { node: anchor, code: 'CS1661', args: [isAnonymousMethod ? 'anonymous method' : 'lambda expression', this.display(to)] },
             {
-              node: isAnonymousMethod ? (parameterSyntax[i].identifier ?? parameterSyntax[i]) : parameterSyntax[i],
+              node: parameterSyntax[i].identifier ?? parameterSyntax[i],
               code: 'CS1678',
               args: [i + 1, this.display(explicit[i]), this.display(invoke.parameters[i].type)],
             },

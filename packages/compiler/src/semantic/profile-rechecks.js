@@ -23,7 +23,15 @@ const rules = [
     applies: node => node.kind === 'FieldExpression',
     codes: ['CS9258'],
   },
+  {
+    // A type named like a contextual keyword (binder/reserved-type-names.js): the rule depends on the language version.
+    text: /\b(?:class|struct|interface|enum|delegate)\b[^;{(]*\b(?:record|required|scoped|file|extension)\b/,
+    applies: node => !!node.identifier && typeDeclarationKinds.has(node.kind) && reservedNames.has(node.identifier.valueText),
+    codes: ['CS8860', 'CS9029', 'CS9062', 'CS9056', 'CS9306'],
+  },
 ];
+const typeDeclarationKinds = new Set(['ClassDeclaration', 'StructDeclaration', 'InterfaceDeclaration', 'EnumDeclaration', 'DelegateDeclaration']);
+const reservedNames = new Set(['record', 'required', 'scoped', 'file', 'extension']);
 
 /** Rules decided from the compilation unit alone: `{ applies(file), codes }`. */
 const unitRules = [
