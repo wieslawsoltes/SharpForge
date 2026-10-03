@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0637321a7edd2d150ea8",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.CompilerServices;\n\n[Dynamic(new[] { true })]\npublic class C\n{\n    [Dynamic(new[] { true })]\n    public object F = null;\n\n    [Dynamic(new[] { true })]\n    public object P { get; set; }\n    \n    [return: Dynamic(new[] { true })]\n    public void M([Dynamic(new[] { true })]object a) \n    {\n    }\n}\n\n[Dynamic(new bool[] { true })]\npublic struct S { }\n",
+  "sourceSHA256": "75495061384c9e8fa25ff5b0aa9a56dae355630b55f803ead4b13617c0a65d39",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Dynamic.cs",
+    "sha256": "820f741675ec86f59a8098c3c7033bb9a2db6a58bafbf7ae3f3ef848279509da",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Dynamic.cs",
+    "license": "MIT",
+    "method": "ExplicitDynamicAttribute",
+    "offset": 92093
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1970",
+        "severity": "error"
+      },
+      {
+        "code": "CS1970",
+        "severity": "error"
+      },
+      {
+        "code": "CS1970",
+        "severity": "error"
+      },
+      {
+        "code": "CS1970",
+        "severity": "error"
+      },
+      {
+        "code": "CS1970",
+        "severity": "error"
+      },
+      {
+        "code": "CS1970",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,2): error CS1970: Do not use 'System.Runtime.CompilerServices.DynamicAttribute'. Use the 'dynamic' keyword instead.\n                Diagnostic(ErrorCode.ERR_ExplicitDynamicAttr, \"Dynamic(new[] { true })\"),\n                // (19,2): error CS1970: Do not use 'System.Runtime.CompilerServices.DynamicAttribute'. Use the 'dynamic' keyword instead.\n                Diagnostic(ErrorCode.ERR_ExplicitDynamicAttr, \"Dynamic(new bool[] { true })\"),\n                // (10,6): error CS1970: Do not use 'System.Runtime.CompilerServices.DynamicAttribute'. Use the 'dynamic' keyword instead.\n                Diagnostic(ErrorCode.ERR_ExplicitDynamicAttr, \"Dynamic(new[] { true })\"),\n                // (13,14): error CS1970: Do not use 'System.Runtime.CompilerServices.DynamicAttribute'. Use the 'dynamic' keyword instead.\n                Diagnostic(ErrorCode.ERR_ExplicitDynamicAttr, \"Dynamic(new[] { true })\"),\n                // (14,20): error CS1970: Do not use 'System.Runtime.CompilerServices.DynamicAttribute'. Use the 'dynamic' keyword instead.\n                Diagnostic(ErrorCode.ERR_ExplicitDynamicAttr, \"Dynamic(new[] { true })\"),\n                // (7,6): error CS1970: Do not use 'System.Runtime.CompilerServices.DynamicAttribute'. Use the 'dynamic' keyword instead.\n                Diagnostic(ErrorCode.ERR_ExplicitDynamicAttr, \"Dynamic(new[] { true })\")",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

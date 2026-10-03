@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-19bff64153a688580d90",
+  "kind": "spec",
+  "sourceText": "T Single<T>(this T[] array)\n{\n    Debug.Assert(array != null);\n    Debug.Assert(array.Length == 1);\n\n    return array[0];\n}",
+  "sourceSHA256": "8141068e35a24e11427d6d45270724069d9cc4ef45bc36dfbd6f478236e7f51d",
+  "target": "library",
+  "featureId": "csharp-10-0-callerargumentexpression",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/caller-argument-expression.md",
+    "sha256": "3382a8fb87efebf49fa27820b08a3cbdba61bcc72e54120bf4d6a8623ac7ae01",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/caller-argument-expression.md",
+    "license": "NOASSERTION",
+    "offset": 594
+  }
+}

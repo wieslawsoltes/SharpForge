@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0ff093ca3882039be517",
+  "kind": "diagnostics",
+  "sourceText": "assert(\"Action\");\nassert(\"Appearance\");\nassert(\"Asynchronous\");\nassert(\"Behavior\");\nassert(\"Config\");\nassert(\"Data\");\nassert(\"DDE\");\nassert(\"Default\");\nassert(\"Design\");\nassert(\"DragDrop\");\nassert(\"Focus\");\nassert(\"Font\");\nassert(\"Format\");\nassert(\"Key\");\nassert(\"Layout\");\nassert(\"List\");\nassert(\"Mouse\");\nassert(\"Position\");\nassert(\"Scale\");\nassert(\"Text\");\nassert(\"WindowStyle\");\n\nassert(null, \"default\");\nassert(\"\", \"default\");\nassert(\"other\", \"default\");\nSystem.Console.Write(\"RAN\");\n\nvoid assert(string input, string expected = null)\n{\n    if (C.M(input) != (expected ?? input))\n    {\n        throw new System.Exception($\"{input} produced {C.M(input)}\");\n    }\n}\n\npublic class C\n{\n    public static string M(string value)\n    {\n        return value switch\n        {\n            \"Action\" => \"Action\",\n            \"Appearance\" => \"Appearance\",\n            \"Asynchronous\" => \"Asynchronous\",\n            \"Behavior\" => \"Behavior\",\n            \"Config\" => \"Config\",\n            \"Data\" => \"Data\",\n            \"DDE\" => \"DDE\",\n            \"Default\" => \"Default\",\n            \"Design\" => \"Design\",\n            \"DragDrop\" => \"DragDrop\",\n            \"Focus\" => \"Focus\",\n            \"Font\" => \"Font\",\n            \"Format\" => \"Format\",\n            \"Key\" => \"Key\",\n            \"Layout\" => \"Layout\",\n            \"List\" => \"List\",\n            \"Mouse\" => \"Mouse\",\n            \"Position\" => \"Position\",\n            \"Scale\" => \"Scale\",\n            \"Text\" => \"Text\",\n            \"WindowStyle\" => \"WindowStyle\",\n            _ => \"default\"\n        };\n    }\n}",
+  "sourceSHA256": "92956e11480fb0042f7d5b9560d8efdcc36a1b967770d92865730f70bc3cff11",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "sha256": "f4ddec53df1ec1373a003dd48fa22fbb4d028d7926ae9037faed2b953df6ab4d",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "license": "MIT",
+    "method": "GetLocalizedString",
+    "offset": 421552
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

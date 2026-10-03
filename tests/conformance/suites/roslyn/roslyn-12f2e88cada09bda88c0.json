@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-12f2e88cada09bda88c0",
+  "kind": "diagnostics",
+  "sourceText": "using System.Threading.Tasks;\n// This async method lacks 'await' operators and will run synchronously. Consider using the 'await' operator to await non-blocking API calls, or 'await Task.Run(...)' to do CPU-bound work on a background thread.\nclass Program\n{\n    int F;\n\n    public static unsafe async Task Main()\n    {\n        Program prog = new Program();\n        int* ptr = &prog.F; // 1\n        fixed (int* ptr1 = &prog.F) { }\n\n        int local = 0;\n        int* localPtr = &local; // 2\n        fixed (int* localPtr1 = &local) { } // 3, 4\n\n        S structLocal = default;\n        int* innerPtr = &structLocal.F; // 5\n        fixed (int* innerPtr1 = &structLocal.F) { } // 6, 7\n\n        localFunc();\n        void localFunc()\n        {\n            int localFuncLocal = 0;\n            int* localFuncLocalPtr = &localFuncLocal;\n        }\n\n        _ = asyncLocalFunc();\n        async Task asyncLocalFunc()\n        {\n            int localFuncLocal = 0;\n            int* localFuncLocalPtr = &localFuncLocal; // 8\n        }\n    }\n}\n\nstruct S { public int F; }",
+  "sourceSHA256": "f18481491f2c5bb0f93e180e2edef485df7a70dd3c38f2b5ac3b88b40820f28d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncTests.cs",
+    "sha256": "e775ebaa8455ffef5e68e336ab005933d69d5f2188f336f62d29b2cf0329a6aa",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncTests.cs",
+    "license": "MIT",
+    "method": "AddressOf_Fixed",
+    "offset": 81413
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.UnsafeDebugExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0212",
+        "severity": "error"
+      },
+      {
+        "code": "CS9123",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0213",
+        "severity": "error"
+      },
+      {
+        "code": "CS9123",
+        "severity": "warning"
+      },
+      {
+        "code": "CS9123",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0213",
+        "severity": "error"
+      },
+      {
+        "code": "CS9123",
+        "severity": "warning"
+      },
+      {
+        "code": "CS9123",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,20): error CS0212: You can only take the address of an unfixed expression inside of a fixed statement initializer\n                //         int* ptr = &prog.F; // 1\n                Diagnostic(ErrorCode.ERR_FixedNeeded, \"&prog.F\").WithLocation(10, 20),\n                // (14,26): warning CS9123: The '&' operator should not be used on parameters or local variables in async methods.\n                //         int* localPtr = &local; // 2\n                Diagnostic(ErrorCode.WRN_AddressOfInAsync, \"local\").WithLocation(14, 26),\n                // (15,33): error CS0213: You cannot use the fixed statement to take the address of an already fixed expression\n                //         fixed (int* localPtr1 = &local) { } // 3, 4\n                Diagnostic(ErrorCode.ERR_FixedNotNeeded, \"&local\").WithLocation(15, 33),\n                // (15,34): warning CS9123: The '&' operator should not be used on parameters or local variables in async methods.\n                //         fixed (int* localPtr1 = &local) { } // 3, 4\n                Diagnostic(ErrorCode.WRN_AddressOfInAsync, \"local\").WithLocation(15, 34),\n                // (18,26): warning CS9123: The '&' operator should not be used on parameters or local variables in async methods.\n                //         int* innerPtr = &structLocal.F; // 5\n                Diagnostic(ErrorCode.WRN_AddressOfInAsync, \"structLocal.F\").WithLocation(18, 26),\n                // (19,33): error CS0213: You cannot use the fixed statement to take the address of an already fixed expression\n                //         fixed (int* innerPtr1 = &structLocal.F) { } // 6, 7\n                Diagnostic(ErrorCode.ERR_FixedNotNeeded, \"&structLocal.F\").WithLocation(19, 33),\n                // (19,34): warning CS9123: The '&' operator should not be used on parameters or local variables in async methods.\n                //         fixed (int* innerPtr1 = &structLocal.F) { } // 6, 7\n                Diagnostic(ErrorCode.WRN_AddressOfInAsync, \"structLocal.F\").WithLocation(19, 34),\n                // (32,39): warning CS9123: The '&' operator should not be used on parameters or local variables in async methods.\n                //             int* localFuncLocalPtr = &localFuncLocal; // 8\n                Diagnostic(ErrorCode.WRN_AddressOfInAsync, \"localFuncLocal\").WithLocation(32, 39)",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

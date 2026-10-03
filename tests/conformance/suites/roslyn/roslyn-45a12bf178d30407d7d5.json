@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-45a12bf178d30407d7d5",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nReadOnlySpan<char> s1 = source();\nReadOnlySpan<char> s2 = MemoryExtensions.AsSpan(source());\nstatic string source() => \"\";",
+  "sourceSHA256": "e7d41f62462445e33b717f67b66b4cc20348c84e1d7fa573b3b8bc00796d4e15",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FirstClassSpanTests.cs",
+    "sha256": "99be7ba6d5e067485b6142b5e65214b7e83d1dbf3a681e7b98e309631ef90315",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FirstClassSpanTests.cs",
+    "license": "MIT",
+    "method": "Conversion_string_ReadOnlySpan_Implicit_HelperAccessibility_02",
+    "offset": 69604
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source2, [comp1])",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0656",
+        "severity": "error"
+      },
+      {
+        "code": "CS0122",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (2,25): error CS0656: Missing compiler required member 'System.MemoryExtensions.AsSpan'\n            // ReadOnlySpan<char> s1 = source();\n            Diagnostic(ErrorCode.ERR_MissingPredefinedMember, \"source()\").WithArguments(\"System.MemoryExtensions\", \"AsSpan\").WithLocation(2, 25),\n            // (3,25): error CS0122: 'MemoryExtensions' is inaccessible due to its protection level\n            // ReadOnlySpan<char> s2 = MemoryExtensions.AsSpan(source());\n            Diagnostic(ErrorCode.ERR_BadAccess, \"MemoryExtensions\").WithArguments(\"System.MemoryExtensions\").WithLocation(3, 25)",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation"
+  ]
+}

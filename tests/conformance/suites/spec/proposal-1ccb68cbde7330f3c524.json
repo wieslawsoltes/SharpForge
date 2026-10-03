@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-1ccb68cbde7330f3c524",
+  "kind": "spec",
+  "sourceText": "M(b ? 1 : 2, 1); // calls M(long, long) without this feature; ambiguous with this feature.\n\nM(short, short);\nM(long, long);",
+  "sourceSHA256": "b571fff2a38a7b5422f0b91545ae16953cba85e759486b8cdb72095d072f8dc5",
+  "target": "library",
+  "featureId": "csharp-9-0-target-typed-conditional-expressions",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/target-typed-conditional-expression.md",
+    "sha256": "895488dedc3d20d0d0d74e9f72aaad660e93a8ecf264d92e103c1d227c12bb73",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/target-typed-conditional-expression.md",
+    "license": "NOASSERTION",
+    "offset": 3590
+  }
+}

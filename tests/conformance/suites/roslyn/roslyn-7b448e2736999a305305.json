@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-7b448e2736999a305305",
+  "kind": "diagnostics",
+  "sourceText": "\nunsafe struct S\n{\n    fixed int F[3, 4];\n}",
+  "sourceSHA256": "9554a82f05856d8e4d859960bb9fd9ce8f795726f2a427edb67d9e7da4715bfc",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/FixedSizeBufferTests.cs",
+    "sha256": "5f39ababded2b14153c2b7df0aba5621d48ffeb53005371ba6aad3896c37e080",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/FixedSizeBufferTests.cs",
+    "license": "MIT",
+    "method": "SingleDimensionFixedBuffersOnly",
+    "offset": 20253
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.UnsafeReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS7092",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,16): error CS7092: A fixed buffer may only have one dimension.\n                //     fixed int F[3, 4];\n                Diagnostic(ErrorCode.ERR_FixedBufferTooManyDimensions, \"[3, 4]\")",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

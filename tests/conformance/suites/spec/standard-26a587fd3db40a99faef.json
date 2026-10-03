@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-26a587fd3db40a99faef",
+  "kind": "spec",
+  "sourceText": "interface I<T>\n{\n    void F();\n}\n\nclass X<U ,V> : I<U>, I<V> // Error: I<U> and I<V> conflict\n{\n    void I<U>.F() {...}\n    void I<V>.F() {...}\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0695",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "4a954faab57d0ee0ddf1a869ac0d24393a9f8992189900fde71b0166cdcda615",
+  "originalSource": "interface I<T>\n{\n    void F();\n}\n\nclass X<U ,V> : I<U>, I<V> // Error: I<U> and I<V> conflict\n{\n    void I<U>.F() {...}\n    void I<V>.F() {...}\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "UniquenessOfImplementedInterfaces1",
+    "replaceEllipsis": true,
+    "expectedErrors": [
+      "CS0695"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-interfaces",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/interfaces.md",
+    "sha256": "bcdf69f454a7bd5894c0b08364553fc6587a0a6ee444a93bc91c58138ff95f53",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/interfaces.md",
+    "license": "MIT",
+    "example": "UniquenessOfImplementedInterfaces1",
+    "offsetInUnquotedMarkdown": 48097
+  }
+}

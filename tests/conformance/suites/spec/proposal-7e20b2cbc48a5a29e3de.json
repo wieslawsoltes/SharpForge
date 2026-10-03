@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-7e20b2cbc48a5a29e3de",
+  "kind": "spec",
+  "sourceText": "interface I1 { }\nI1 M1<T>(T p)\n    where T : I1, allows ref struct\n{\n    // Error: cannot box potential ref struct\n    return p;\n}\n\nT M2<T>(T p)\n    where T : allows ref struct\n{\n    Span<int> span = stackalloc int[42];\n\n    // The safe-to-escape of the return is current method because one of the inputs is\n    // current method\n    T t = M3<int, T>(span);\n\n    // Error: the safe-to-escape is current method.\n    return t;\n\n    // Okay\n    return default;\n    return p;\n}\n\nR M3<T, R>(Span<T> span)\n    where R : allows ref struct\n{\n    return default;\n}",
+  "sourceSHA256": "82b94c9466755278d7530fcdee5628282fbbdc36e652d3368fb07ce009dbfb2a",
+  "target": "library",
+  "featureId": "csharp-13-0-ref-struct-interfaces",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/ref-struct-interfaces.md",
+    "sha256": "89db7c6f20f22a5b99df61e63033ebecc1f2cde6459e71f2fa50cd9458a4b123",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/ref-struct-interfaces.md",
+    "license": "NOASSERTION",
+    "offset": 7626
+  }
+}

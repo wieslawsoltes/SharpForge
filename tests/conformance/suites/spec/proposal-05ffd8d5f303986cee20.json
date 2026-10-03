@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-05ffd8d5f303986cee20",
+  "kind": "spec",
+  "sourceText": "string? s = null;\nM(s, $\"\"); // Infers `string` for `T` because of the `T?` parameter, not `string?`, as flow analysis does not consider the unannotated `T` parameter of the constructor\n\nvoid M<T>(T? t, [InterpolatedStringHandlerArgument(\"s1\")] CustomHandler<T> c) { }\n\n[InterpolatedStringHandler]\npublic partial struct CustomHandler<T>\n{\n    public CustomHandler(int literalLength, int formattedCount, T t) : this()\n    {\n    }\n}",
+  "sourceSHA256": "5a21c30dca26adf3894849269e2ff74bfeb092a18914bce309d4a635ffddc5ae",
+  "target": "library",
+  "featureId": "csharp-10-0-interpolated-string-handlers",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/improved-interpolated-strings.md",
+    "sha256": "a9232653b4497eae44487404a0c446af954667024beea4be2ad9a642b257b02c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/improved-interpolated-strings.md",
+    "license": "NOASSERTION",
+    "offset": 30304
+  }
+}

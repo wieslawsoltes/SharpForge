@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-05019ee7d7f90345fda9",
+  "kind": "spec",
+  "sourceText": "static bool Is123(ReadOnlySpan<char> s)\n{\n    return s is \"123\";\n}\n\nstatic bool IsABC(Span<char> s)\n{\n    return s switch { \"ABC\" => true, _ => false };\n}",
+  "sourceSHA256": "11711c6bb9c11d002bda4b080ccc43fbae0d3ef2e0b25dcef5274550134a2dd1",
+  "target": "library",
+  "featureId": "csharp-11-0-pattern-match-span-char-on-a-constant-string",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/pattern-match-span-of-char-on-string.md",
+    "sha256": "b0ec498f85961c9f4c81be68eaa5a27b4401995f33c33e86666653fd3403c3d9",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/pattern-match-span-of-char-on-string.md",
+    "license": "NOASSERTION",
+    "offset": 1008
+  }
+}

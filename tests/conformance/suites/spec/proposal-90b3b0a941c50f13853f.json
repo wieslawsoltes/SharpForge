@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-90b3b0a941c50f13853f",
+  "kind": "spec",
+  "sourceText": "T Single<T>(this T[] array)\n{\n    if (array == null)\n    {\n        throw new ArgumentNullException(nameof(array));\n    }\n\n    if (array.Length != 1)\n    {\n        throw new ArgumentException(\"Array must contain a single element.\", nameof(array));\n    }\n\n    return array[0];\n}",
+  "sourceSHA256": "cba7bdc2be1cc8706641c3d6450343b4c4933a79c4c60f8afeff817665d8af65",
+  "target": "library",
+  "featureId": "csharp-10-0-callerargumentexpression",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/caller-argument-expression.md",
+    "sha256": "3382a8fb87efebf49fa27820b08a3cbdba61bcc72e54120bf4d6a8623ac7ae01",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/caller-argument-expression.md",
+    "license": "NOASSERTION",
+    "offset": 1558
+  }
+}

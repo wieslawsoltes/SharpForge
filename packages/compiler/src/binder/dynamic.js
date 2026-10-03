@@ -133,6 +133,10 @@ export const DynamicBinding = Base =>
         const r = this.d.overloads.resolve(group.methods, args, { typeArguments: group.typeArguments, name: group.name });
         if (!r.succeeded && r.error.code !== DiagnosticId.CS0121) return node;
       }
+      if (group.receiver?.kind === 'Base') {
+        this.report(syntax, DiagnosticId.CS1971, [group.name]);
+        return this.bad(syntax, { args: argumentList(args) });
+      }
       if (!this.checkDynamicArguments(args)) return this.bad(syntax, { args: argumentList(args) });
       for (const method of group.methods) if (!this.quiet) this.d.noteUse?.(method, this.c.uri, syntax);
       return this.dynamicNode('DynamicInvocation', syntax, { receiver: group, args: argumentList(args) });

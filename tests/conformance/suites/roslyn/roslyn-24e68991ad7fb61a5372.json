@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-24e68991ad7fb61a5372",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C3\n{\n    public void M((int, int) x) { }\n}\n",
+  "sourceSHA256": "5f1a1728bbf86734e3f82b41d4df2aa10d9758cb4b4356b2edbb47db5c511d5a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "AmbiguousTupleTypesForDeclaration",
+    "offset": 153294
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { new CSharpCompilationReference(comp1),\n                    new CSharpCompilationReference(comp2) })",
+  "options": "(source,\n                references: new[] { new CSharpCompilationReference(comp1),\n                    new CSharpCompilationReference(comp2) })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8356",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,19): error CS8356: Predefined type 'System.ValueTuple`2' is declared in multiple referenced assemblies: 'comp1, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null' and 'comp2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'\n                //     public void M((int, int) x) { }\n                Diagnostic(ErrorCode.ERR_PredefinedTypeAmbiguous, \"(int, int)\").WithArguments(\"System.ValueTuple`2\", \"comp1, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\", \"comp2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\").WithLocation(4, 19)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

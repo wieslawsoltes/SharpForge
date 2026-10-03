@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f50d7fd562fbe6c5de5c",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Security.Permissions;\n\n[A]\n[A()]\nclass A : CodeAccessSecurityAttribute\n{\n    public A(SecurityAction a = 0) : base(a)\n    {\n    }\n}",
+  "sourceSHA256": "fd0706791eb960c52fb55015fd68b5d5cd6ffb4f9aa1fe3be78d9af6454bc079",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Security.cs",
+    "sha256": "995f9a35982f60a6e97828d01cb24f09a40124463d1f9e4c6b48f42ec012d8ff",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Security.cs",
+    "license": "MIT",
+    "method": "CrashOnOptionalParameterInSecurityAttribute",
+    "offset": 103582
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS7049",
+        "severity": "error"
+      },
+      {
+        "code": "CS7049",
+        "severity": "error"
+      },
+      {
+        "code": "CS0534",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,2): error CS7049: Security attribute 'A' has an invalid SecurityAction value '0'\n                // [A]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidAction, \"A\").WithArguments(\"A\", \"0\").WithLocation(4, 2),\n                // (5,2): error CS7049: Security attribute 'A' has an invalid SecurityAction value '0'\n                // [A()]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidAction, \"A()\").WithArguments(\"A\", \"0\").WithLocation(5, 2),\n                // (6,7): error CS0534: 'A' does not implement inherited abstract member 'SecurityAttribute.CreatePermission()'\n                // class A : CodeAccessSecurityAttribute\n                Diagnostic(ErrorCode.ERR_UnimplementedAbstractMethod, \"A\").WithArguments(\"A\", \"System.Security.Permissions.SecurityAttribute.CreatePermission()\").WithLocation(6, 7)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

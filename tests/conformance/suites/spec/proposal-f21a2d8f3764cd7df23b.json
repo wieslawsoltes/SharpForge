@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-f21a2d8f3764cd7df23b",
+  "kind": "spec",
+  "sourceText": "string x;\n\nS1? s1 = null;\n_ = s1?.M1(x = \"a\") ?? s1.Value.M2(x = \"a\");\n\nx.ToString(); // ok\n\npublic struct S1\n{\n    public S1 M1(object obj) => this;\n    public S2 M2(object obj) => new S2();\n}\npublic struct S2\n{\n    public static implicit operator S2(S1 s1) => default;\n}",
+  "sourceSHA256": "2eb3a2b9c84b03a0ccdea60d734f7e3fdaa3a17684a807dfff28b7de44c57f03",
+  "target": "library",
+  "featureId": "csharp-10-0-improved-definite-assignment",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/improved-definite-assignment.md",
+    "sha256": "ccd1c46e7e5bc593532b701677ef883e33a5d9c7c91f6cb198e37dd4f1732222",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/improved-definite-assignment.md",
+    "license": "NOASSERTION",
+    "offset": 6505
+  }
+}

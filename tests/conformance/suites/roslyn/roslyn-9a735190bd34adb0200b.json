@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9a735190bd34adb0200b",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.InteropServices;\n\n[assembly: TypeLibVersionAttribute(-1, int.MinValue)]\n",
+  "sourceSHA256": "9cff75fb9c078b2233bd8916aa0d4472ab70ad44b81f4134d6e4c3d01575513d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestTypeLibVersionAttribute_Invalid",
+    "offset": 212372
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,36): error CS0591: Invalid value for argument to 'TypeLibVersionAttribute' attribute\n                // [assembly: TypeLibVersionAttribute(-1, int.MinValue)]\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, \"-1\").WithArguments(\"TypeLibVersionAttribute\"),\n                // (4,40): error CS0591: Invalid value for argument to 'TypeLibVersionAttribute' attribute\n                // [assembly: TypeLibVersionAttribute(-1, int.MinValue)]\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, \"int.MinValue\").WithArguments(\"TypeLibVersionAttribute\")",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}
