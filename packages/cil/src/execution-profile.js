@@ -7,7 +7,7 @@ import { AssemblyInspector } from './inspector.js';
 import { CilError } from './binary.js';
 import {CilDispatchTable} from './dispatch-profile.js';
 // Broad decoding is deliberately separate from this managed execution allowlist.
-const simple = new Set(('localloc cpblk initblk unaligned. volatile. tail. constrained. readonly. ldtoken ldftn ldvirtftn calli endfilter nop break ldnull dup pop ret switch ldstr newobj call callvirt throw rethrow endfinally ldlen newarr ldfld stfld ldsfld stsfld ldflda ldsflda ldobj stobj initobj ldelema ldelem stelem box unbox unbox.any cpobj sizeof castclass isinst ckfinite').split(' '));
+const simple = new Set(('jmp localloc cpblk initblk unaligned. volatile. tail. constrained. readonly. ldtoken ldftn ldvirtftn calli endfilter nop break ldnull dup pop ret switch ldstr newobj call callvirt throw rethrow endfinally ldlen newarr ldfld stfld ldsfld stsfld ldflda ldsflda ldobj stobj initobj ldelema ldelem stelem box unbox unbox.any cpobj sizeof castclass isinst ckfinite').split(' '));
 const arithmetic = /^(add|sub|mul)(\.ovf(\.un)?)?$|^(div|rem|shr)(\.un)?$|^(and|or|xor|shl|neg|not|ceq|cgt|clt)(\.un)?$/;
 const indexed = /^(ldarg|ldarga|starg|ldloc|ldloca|stloc)(\.[0-3s])?$/;
 const numeric = /^ldc\.(i4(\.(m1|[0-8]|s))?|i8|r4|r8)$/;
@@ -27,7 +27,7 @@ export function selectMethod(inspector,selection,args){
 }
 export function stackEffect(inspector,m,i){
   const n=i.name;
-  if(['unaligned.','volatile.','tail.','constrained.','readonly.'].includes(n)||n==='nop'||n==='break'||n==='endfinally'||n==='rethrow'||/^br(\.s)?$/.test(n)||/^leave/.test(n))return [0,0];
+  if(['unaligned.','volatile.','tail.','constrained.','readonly.'].includes(n)||n==='jmp'||n==='nop'||n==='break'||n==='endfinally'||n==='rethrow'||/^br(\.s)?$/.test(n)||/^leave/.test(n))return [0,0];
   if(n==='ldtoken'||n==='ldftn'||n==='sizeof'||n==='ldnull'||n==='ldstr'||numeric.test(n)||/^ld(arg|loc)/.test(n)||n==='ldsfld'||n==='ldsflda')return [0,1];
   if(/^st(arg|loc)/.test(n)||n==='pop'||n==='stsfld'||n==='throw'||n==='endfilter'||n==='switch'||/^br(true|false)/.test(n)||n==='initobj')return [1,0];
   if(n==='cpblk'||n==='initblk')return [3,0];
@@ -72,9 +72,10 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
       if(i.name==='calli') {
         try{const signature=inspector.signature(i.operand);if(i.operand>>>24!==17||signature.kind!=='method'||signature.callingConvention||signature.genericArity||signature.parameters.concat(signature.returnType).some(illegalType))throw new CilError('calli requires a managed non-vararg StandAloneSig');}catch(error){issue(m,i,'IL_SIGNATURE',error.message);}
       }
-      if(['call','callvirt','newobj','ldftn','ldvirtftn'].includes(i.name)){
+      if(['jmp','call','callvirt','newobj','ldftn','ldvirtftn'].includes(i.name)){
         try{const d=resolveExecutionMethod(inspector,i.operand),target=d.resolvedToken;
           for(const method of reachableAsyncMethods(inspector,d))pending.push(method);
+          if(i.name==='jmp'&&callSignatureKey(d.signature)!==callSignatureKey(m.signature))throw new CilError('jmp method signatures must match');
           if(d.signature.callingConvention||d.signature.parameters.concat(d.signature.returnType).some(illegalType))throw new CilError('Unsupported managed call signature');
           if(['callvirt','ldvirtftn'].includes(i.name)&&d.signature.isStatic)throw new CilError(i.name+' requires an instance method');
           const instructionIndex=m.instructions.indexOf(i),prefixes=[];for(let index=instructionIndex-1;index>=0&&m.instructions[index].name.endsWith('.');index--)prefixes.push(m.instructions[index]);
@@ -101,6 +102,7 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
       if(heights.has(index)){if(heights.get(index)!==height)issue(m,i,'IL_STACK','Inconsistent evaluation stack height at join');continue;}heights.set(index,height);
       let pop,push;try{[pop,push]=stackEffect(inspector,m,i);}catch(error){issue(m,i,'IL_STACK',error.message);continue;}
       if(height<pop){issue(m,i,'IL_STACK','Evaluation stack underflow');continue;}const after=height-pop+push;if(after>m.maxStack)issue(m,i,'IL_STACK','Evaluation stack exceeds maxstack');
+      if(i.name==='jmp'){if(height!==0)issue(m,i,'IL_STACK','jmp requires an empty stack');continue;}
       if(i.name==='ret'){if(height!==pop)issue(m,i,'IL_STACK','Invalid return stack');continue;}
       if(['throw','rethrow','endfinally','endfilter'].includes(i.name)){if(i.name==='endfilter'&&height!==1)issue(m,i,'IL_STACK','endfilter requires exactly one decision');if(i.name==='endfinally'&&height!==0)issue(m,i,'IL_STACK','endfinally requires an empty stack');continue;}
       if(i.operandKind.startsWith('br'))queue.push([map.get(i.operand),i.name.startsWith('leave')?0:after]);
