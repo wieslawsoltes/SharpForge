@@ -119,7 +119,7 @@ function emitMethod(c,d) {
           }else throw new CilError('Unsupported formatting helper');
           w.op('ldstr',0x70000000|c.metadata.userString('SharpForge.Formatting.'+descriptor.name)).op('pop');break;
         }if(!descriptor.isStatic&&descriptor.kind!=='constructor'&&frameworkType(descriptor.owner)?.kind==='value'){const slots=[];for(let j=to.length-1;j>=0;j--){const slot=getScratch(to[j],2000+j);slots[j]=slot;w.local('stloc',slot);}w.op('ldloca',slots[0]);for(let j=1;j<slots.length;j++)w.local('ldloc',slots[j]);}const ctor=descriptor.kind==='constructor';w.op(ctor?'newobj':descriptor.isStatic||frameworkType(descriptor.owner)?.kind==='value'?'call':'callvirt',c.external(descriptor.owner,descriptor.name,ctor?'void':descriptor.result,descriptor.parameters,descriptor.isStatic));if(!ctor&&descriptor.result==='void')w.op('ldnull');}else emitBuiltin(c,w,a,b,input.slice(input.length-b),adapt);break;}
-      case Op.RET:{if(m.returnType==='void')w.op('pop');else convert(top,m.returnType);if(zones(pc).length){if(m.returnType!=='void')w.local('stloc',returnSlot);relative('leave','return');}else w.op('ret');terminal=true;break;}
+      case Op.RET:{if(m.returnType==='void')w.op('pop');else convert(top,m.returnType);if(sourceHandlerZones(handlers,pc).length){if(m.returnType!=='void')w.local('stloc',returnSlot);relative('leave','return');}else w.op('ret');terminal=true;break;}
       case Op.NEWOBJ:w.op('ldnull').op('newobj',c.allocTokens.get(a));break;
       case Op.NEWARR:w.op('newarr',c.resolveType(c.image.constants[a]));break;
       case Op.LDELEM:w.op('ldelem',c.resolveType(left.slice(0,-2)));break;
