@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { findContracts } from '@sharpforge/framework';
 import { Op, Binary } from '@sharpforge/bytecode';
 import { isReference, typeText } from '../type-utils.js';
@@ -49,7 +50,7 @@ export function compileForeach(node) {
   this.seq({ ...node, end: node.expression.end });
   const arrayType = this.expr(node.expression);
   if (!arrayType.endsWith('[]'))
-    this.c.report(node, 'CS1579', [typeText(arrayType), 'GetEnumerator']);
+    this.c.report(node, DiagnosticId.CS1579, [typeText(arrayType), 'GetEnumerator']);
   const element = arrayType.endsWith('[]') ? arrayType.slice(0, -2) : 'error';
   const arr = this.temp(arrayType);
   const index = this.temp('int');

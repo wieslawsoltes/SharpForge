@@ -5,6 +5,8 @@ services. [Assembly load contexts](CONTEXTS.md) add lazy metadata loading and
 explicit lifetimes. Full CLR type construction and execution are separate work.
 Canonical [method definition identities](METHODS.md) retain lazy signature and
 body access for reflection and execution services to consume later.
+Bounded AST [generic signature substitution](GENERICS.md) preserves metadata
+tokens and open caller scopes without parsing display names.
 
 `AssemblyName.parse(displayName)` parses immutable partial identities, preserving
 unspecified components as `null`. `fullName` formats CLR quoting and escaping.

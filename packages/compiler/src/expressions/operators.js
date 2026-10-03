@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { Op, Binary, Unary } from '@sharpforge/bytecode';
 import { numeric, isReference, assignable, typeText } from '../type-utils.js';
 
@@ -12,7 +13,7 @@ export function emitBinary(node) {
     let jump;
     if (node.operator === '??') {
       if (!isReference(lt) && lt !== 'null' && lt !== 'error')
-        this.c.report(node, 'CS0019', ['??', typeText(lt), typeText(this.infer(node.right))]);
+        this.c.report(node, DiagnosticId.CS0019, ['??', typeText(lt), typeText(this.infer(node.right))]);
       this.emitConstant(null);
       this.emit(Op.BINARY, Binary['!=']);
       jump = this.emit(Op.JTRUE);
@@ -62,7 +63,7 @@ export function emitUnary(node) {
   if (node.operator === '!')
     this.checkAssign('bool', type, node);
   else if (!numeric(type))
-    this.c.report(node, 'CS0023', [node.operator, typeText(type)]);
+    this.c.report(node, DiagnosticId.CS0023, [node.operator, typeText(type)]);
   if (node.operator === '~')
     this.checkAssign('int', type, node);
   this.emit(Op.UNARY, Unary[node.operator], type === 'int' ? (this.overflowChecked(node) && node.operator === '-' ? 5 : 1) : 0);
@@ -73,7 +74,7 @@ export function emitAssignment(node) {
   const ref = this.prepare(node.left, node.operator === '=');
   if (node.operator === '??=') {
     if (!isReference(ref.type))
-      this.c.report(node, 'CS0019', ['??=', typeText(ref.type), typeText(this.infer(node.right))]);
+      this.c.report(node, DiagnosticId.CS0019, ['??=', typeText(ref.type), typeText(this.infer(node.right))]);
     this.loadRef(ref);
     this.emit(Op.DUP);
     this.emitConstant(null);
@@ -112,6 +113,6 @@ export function emitConditional(node) {
   this.assigned = new Set([...yesAssigned].filter(s => this.assigned.has(s)));
   this.patch(done);
   if (!assignable(yesType, noType) && !assignable(noType, yesType))
-    this.c.report(node, 'CS0173', [typeText(yesType), typeText(noType)]);
+    this.c.report(node, DiagnosticId.CS0173, [typeText(yesType), typeText(noType)]);
   return yesType === 'null' ? noType : yesType === 'double' || noType === 'double' ? 'double' : yesType;
 }

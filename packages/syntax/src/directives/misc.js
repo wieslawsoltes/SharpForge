@@ -2,12 +2,12 @@
 const comment = /^[ \t]*(?:\/\/.*)?$/,
   quoted = /^[ \t]*"([^"]*)"/;
 const extra = rest => (comment.test(rest) ? [] : [['CS1025', 'Single-line comment or end-of-line expected']]);
-function lineDirective(rest, features) {
+function lineDirective(rest) {
   const word = /^[ \t]*(default|hidden)(?![\w])(.*)$/.exec(rest);
   if (word) return { structure: { directive: 'line', mode: word[1] }, diagnostics: extra(word[2]) };
   const span = /^[ \t]*\([ \t]*(\d+)[ \t]*,[ \t]*(\d+)[ \t]*\)[ \t]*-[ \t]*\([ \t]*(\d+)[ \t]*,[ \t]*(\d+)[ \t]*\)(?:[ \t]+(\d+))?(.*)$/.exec(rest);
   if (span) {
-    features.push('LineSpanDirective');
+    // Roslyn has no language-version gate for the span form, so no feature use is recorded for it.
     const file = quoted.exec(span[6]),
       diagnostics = file ? extra(span[6].slice(file[0].length)) : [['CS8938', 'The #line directive value is missing or out of range']];
     const n = k => Number(span[k]);
@@ -110,7 +110,7 @@ export function scanMiscDirective(name, rest, features = [], base = 0) {
       structure: { directive: 'warning', message: rest.trim() },
       diagnostics: [['CS1030', `#warning: '${rest.trim()}'`, 'warning']]
     };
-  if (name === 'line') return { kind: 'LineDirectiveTrivia', ...lineDirective(rest, features) };
+  if (name === 'line') return { kind: 'LineDirectiveTrivia', ...lineDirective(rest) };
   if (name === 'pragma') return pragmaDirective(rest, features, base);
   if (name === 'nullable') {
     features.push('NullableReferenceTypes');

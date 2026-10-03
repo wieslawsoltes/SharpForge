@@ -15,3 +15,4 @@ export { RuntimeAppContext, RuntimeAppDomain } from './app-domain.js';
 export { TypeDesc, TypeKind } from './type-system/type-desc.js';
 export { MethodDesc } from './type-system/method-desc.js';
 export { resolveArrayMethod } from './type-system/constructed-types.js';
+export { substituteSignature, substituteTypeSignature } from './generics/substitution.js';
