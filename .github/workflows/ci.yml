@@ -5,7 +5,7 @@ on:
   push:
     branches: [main]
   pull_request:
-    types: [opened, synchronize, reopened, labeled]
+    types: [opened, synchronize, reopened, labeled, unlabeled]
   workflow_dispatch:
   merge_group:
     types: [checks_requested]
@@ -37,6 +37,9 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - name: Review contract changes and seam lock against the PR snapshot
+        if: github.event_name == 'pull_request'
+        run: node scripts/planning/review-gates.js
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npm run check
       - name: Plan affected areas with conservative fallback
