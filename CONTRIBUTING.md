@@ -96,7 +96,7 @@ The backlog is large and many agents work at once. Throughput comes from landing
 - **Merge with a merge commit**, never squash or rebase, because other work may be stacked on yours. On "base branch was modified", retry; on a conflict, merge `main`, resolve keeping both sides' intent, push and retry.
 - **Stay inside your workstream's files.** If you need a change in another workstream, ask on the owning issue; if a small change is unavoidable, make it minimal and list it under "Changes outside this workstream".
 - **Description states the truth:** what is done (with `Closes #n` only when the acceptance criteria are fully met and tested), what is partial or not done and why, how it was verified, what was reused, performance numbers when relevant, what is needed from other workstreams, and anything a reviewer would be surprised by.
-- **Checks:** a pull request runs one fast required check, `core` (`npm run check`, `npm test`, `npm run build`). The browser, native and cross-platform jobs run on `main`, on manual dispatch, and on pull requests labelled `full-ci`.
+- **Checks:** a pull request runs one fast required check, `core` (`npm run check`, `npm test`, `npm run build`). Main pushes also run only core. The central browser, native and cross-platform qualification runs on explicit dispatch, merge groups, release calls, and pull requests labelled `full-ci`; specialized workflows are dispatched separately. Follow the [serial validation schedule](planning/qualification/serial-validation.md).
 - **Before pushing,** run your new and changed test files (through `node scripts/limited.js`, see section 8), `npm run check` and `npm run check:structure`. The pull request's check runs the full unit suite; you do not need to run it locally for every batch.
 - **Tests are portable.** Build paths with `fileURLToPath`, never `new URL(...).pathname`; normalize path separators before comparing names; do not assume case-sensitive paths or LF line endings.
 
@@ -104,13 +104,13 @@ The backlog is large and many agents work at once. Throughput comes from landing
 
 Many agents and people build and test on the same machine. One unbounded `node --test` run starts a process per core at 300–500 MB each; a few of those at once push the machine into swap and slow everyone down.
 
-- **Limits are on by default outside CI.** `npm test` and `node scripts/limited.js <command>` cap the number of test files run in parallel, cap the V8 heap of each Node process, and wait for one of a small number of machine-wide run slots. Defaults scale with RAM (one parallel test file and one run slot per 8 GB, at most 4; 2 GB heap per process).
+- **`npm test` runs test files serially,** everywhere. Outside CI it also waits for one of a small number of machine-wide run slots and caps the V8 heap of each Node process. `node scripts/limited.js <command>` applies the same local limits to targeted runs, with a small bounded parallelism. Defaults scale with RAM (one run slot and one parallel test file per 8 GB, at most 4; 2 GB heap per process).
 - **Run targeted tests through the wrapper:** `node scripts/limited.js node --test tests/<your-file>.test.js`. Do not call `node --test` on many files directly, and never pass `--test-concurrency=0` or a high value.
 - **Do not run the full suite locally for every batch.** The pull request's `core` check runs it. Run the full suite locally only to reproduce a CI failure, and one run at a time.
 - **One heavy job at a time per agent.** Do not start a build, a test run and a benchmark in parallel, and do not have helper agents run tests concurrently in the same checkout.
 - **Clean up.** Stop servers, watchers, browsers and background shells you started; do not leave processes running after a batch.
 - **Benchmarks need a quiet machine.** Run them alone, and say in the pull request if the machine was shared.
-- **Overrides,** when you know the machine can take it: `SHARPFORGE_TEST_CONCURRENCY`, `SHARPFORGE_MAX_PARALLEL_RUNS`, `SHARPFORGE_MAX_OLD_SPACE_MB`. CI sets `CI=true`, which disables the limits.
+- **Overrides,** when you know the machine can take it: `SHARPFORGE_TEST_CONCURRENCY`, `SHARPFORGE_MAX_PARALLEL_RUNS`, `SHARPFORGE_MAX_OLD_SPACE_MB`. CI sets `CI=true`, which disables the slot and heap limits.
 
 ## 9. Review checklist
 

@@ -33,6 +33,8 @@ jobs:
   qualification:
     needs: policy
     uses: ./.github/workflows/ci.yml
+    with:
+      qualification: true
   build:
     needs: qualification
     runs-on: ubuntu-24.04

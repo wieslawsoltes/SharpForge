@@ -1,6 +1,7 @@
 import { readPE } from '@sharpforge/cil';
 import { assemblyIdentityFromRow } from './identity.js';
 import { checkCancellation, loadError, LoadErrorCode } from './load-errors.js';
+import { MetadataTypeDefinitions } from './type-system/metadata-type-definitions.js';
 
 function namedIdentityRow(row, reference) {
   if (!reference) return { MajorVersion: row[1], MinorVersion: row[2], BuildNumber: row[3], RevisionNumber: row[4],
@@ -27,6 +28,7 @@ export class RuntimeModule {
   #bodies = new Map();
   #typeHandles = new Map();
   #bodyReads = 0;
+  #typeDefinitions;
   constructor(assembly, pe) {
     this.#assembly = assembly;
     this.#pe = pe;
@@ -71,6 +73,13 @@ export class RuntimeModule {
       this.#typeHandles.set(token, Object.freeze({ kind: 'TypeDefinitionHandle', module: this, metadataToken: token }));
     }
     return this.#typeHandles.get(token);
+  }
+
+  /** Canonical named TypeDef identity, independent of inheritance and executable method loading. */
+  typeDefinition(token) {
+    this.#assembly.ensureUsable();
+    this.#typeDefinitions ??= new MetadataTypeDefinitions(this);
+    return this.#typeDefinitions.get(token);
   }
 
   /** Metadata decoding is lazy and counted once per method. Returned byte arrays are isolated copies. */
