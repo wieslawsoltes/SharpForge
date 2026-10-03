@@ -37,6 +37,7 @@ export class DesignerPropertyCommands {
     return this.edit('Create binding for ' + property, property, ids, node => {
       delete node.properties[property];
       delete node.resourceReferences?.[property];
+      delete node.templatePropertyBindings?.[property];
       (node.bindings ??= {})[property] = structuredClone(normalized);
     });
   }
@@ -46,6 +47,7 @@ export class DesignerPropertyCommands {
     return this.edit('Set resource for ' + property, property, ids, node => {
       delete node.properties[property];
       delete node.bindings?.[property];
+      delete node.templatePropertyBindings?.[property];
       (node.resourceReferences ??= {})[property] = structuredClone(normalized);
     });
   }
@@ -54,6 +56,9 @@ export class DesignerPropertyCommands {
     resourceKey(key);
     const nodes = ids.map(id => this.document.node(id));
     if (nodes.some(node => !node)) authoringError('SFD1841', 'Resource conversion requires an existing selection.');
+    if (nodes.some(node => node.bindings?.[property] || node.resourceReferences?.[property] || node.templatePropertyBindings?.[property])) {
+      authoringError('SFD1841', 'Choose a concrete local value before converting a protected expression to a resource.');
+    }
     const values = nodes.map(node => resolvedProperties(this.document.value, node).properties[property]);
     if (values[0] === undefined || values.some(value => !samePropertyValue(value, values[0]))) {
       authoringError('SFD1841', 'Choose a shared concrete value before converting the selection to a resource.');

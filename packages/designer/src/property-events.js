@@ -1,6 +1,24 @@
 import {canonicalType, eventsFor, frameworkAssignable, frameworkType} from '@sharpforge/framework';
 import {authoringError, qualifiedIdentifier, resourceKey} from './property-diagnostics.js';
 
+/** Source subscriptions expose navigation separately from the right to stage a single managed handler edit. */
+export function designerEventSourceAccess(binding, {uri = ''} = {}) {
+  const subscriptions = (binding?.subscriptions ?? []).map(subscription => ({...subscription,
+    location: subscription.location ?? {uri, start: subscription.span?.start, end: subscription.span?.end}}));
+  const editable = !binding?.dynamic && subscriptions.length <= 1 && (!binding?.capability || binding.capability === 'edit') &&
+    !subscriptions.some(subscription => subscription.protected);
+  const reasons = {multiple: 'Multiple subscriptions are protected. Edit their handlers in Code view.',
+    lambda: 'This lambda subscription is protected. Edit it in Code view.',
+    template: 'Managed event edits on template parts require Code view.'};
+  return {editable, subscriptions, canNavigate: subscriptions.some(subscription => subscription.location?.uri &&
+    Number.isInteger(subscription.location?.start)), reason: editable ? '' : reasons[binding?.reason] ?? 'This event is protected by source code.'};
+}
+
+function assertEventEditable(binding) {
+  const access = designerEventSourceAccess(binding);
+  if (!access.editable) authoringError('SFD1842', access.reason);
+}
+
 /** Event-handler candidates are checked against the framework's delegate signature. */
 export function compatibleDesignerHandlers(type, event, handlers) {
   const delegate = frameworkType(eventsFor(canonicalType(type))[event]);
@@ -16,7 +34,9 @@ export function compatibleDesignerHandlers(type, event, handlers) {
     .sort((left, right) => left.name.localeCompare(right.name, 'en'));
 }
 
-export function setDesignerEventHandler(document, id, event, name, handlers) {
+export function setDesignerEventHandler(document, id, event, name, handlersOrOptions) {
+  const {handlers = [], sourceBinding} = Array.isArray(handlersOrOptions) ? {handlers: handlersOrOptions} : handlersOrOptions ?? {};
+  assertEventEditable(sourceBinding);
   const node = document.node(id);
   if (!node) authoringError('SFD1842', 'Select a control before editing its events.');
   const candidates = compatibleDesignerHandlers(node.type, event, handlers);
@@ -31,7 +51,8 @@ export function setDesignerEventHandler(document, id, event, name, handlers) {
 }
 
 /** Returns a source edit request; the source service owns committing it and navigation. */
-export function designerEventHandlerRequest(node, event, name, {className = 'Program', existingNames = []} = {}) {
+export function designerEventHandlerRequest(node, event, name, {className = 'Program', existingNames = [], sourceBinding} = {}) {
+  assertEventEditable(sourceBinding);
   resourceKey(name);
   qualifiedIdentifier(className, 'Handler class');
   const signature = frameworkType(eventsFor(node.type)[event]);

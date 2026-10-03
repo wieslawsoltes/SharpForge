@@ -4,9 +4,11 @@ import {
   DesignDocument, createDesign, createDesignerMetadata, designerMetadata, designerPropertySchema, designerChildSlot,
   normalizeDesignerColor, normalizeDesignerBrush, designerColorHex, colorToHsv, hsvToColor, csharpValue,
   PropertyEditorRegistry, createPropertyEditorRegistry, scrubDesignerNumber, DesignerPropertyCommands,
-  designerPropertyRows, designerPropertySource, DesignerPropertyGridState, compatibleDesignerHandlers, setDesignerEventHandler
+  designerPropertyRows, designerPropertySource, DesignerPropertyGridState, compatibleDesignerHandlers, setDesignerEventHandler,
+  designerEventSourceAccess, designerEventHandlerRequest
 } from '@sharpforge/designer';
 import {CONTROLS, XAML, MEDIA, frameworkAssignable, frameworkManifest} from '@sharpforge/framework';
+import {parseDesignerPropertyText, propertySelect} from '../apps/studio/designer-property-dom.js';
 
 const fixture = () => new DesignDocument(createDesign('Authoring'));
 
@@ -20,6 +22,18 @@ test('A18 metadata covers every concrete visual in the framework API contract', 
   assert.equal(designerPropertySchema('Button').Opacity.constraints.maximum, 1);
   assert.equal(designerPropertySchema('Button').Row.owner, CONTROLS + 'Grid');
   assert.equal(designerPropertySchema('TextBox').FontFamily.category, 'Text & typography');
+});
+
+test('A18 immutable property schema caches preserve framework attached setter identities', () => {
+  const schema = designerPropertySchema('Button');
+  assert.equal(designerPropertySchema(CONTROLS + 'Button'), schema);
+  assert(Object.isFrozen(schema));
+  assert(Object.isFrozen(schema.Width));
+  assert(Object.isFrozen(schema.Width.constraints));
+  assert.throws(() => { schema.Width.category = 'Corrupted'; }, TypeError);
+  assert.equal(schema.WrapColumnSpan.owner, CONTROLS + 'VariableSizedWrapGrid');
+  assert.equal(schema.WrapColumnSpan.member, 'ColumnSpan');
+  assert.equal(schema.WrapWrapColumnSpan, undefined);
 });
 
 test('A18 colors preserve alpha and round-trip RGBA/HSV at boundary hues', () => {
@@ -101,6 +115,36 @@ test('A18 search filters Width, MinWidth, MaxWidth and mixed selection stays bla
   assert.equal(new DesignerPropertyGridState(state.snapshot()).isCollapsed('Button', 'Placement'), true);
 });
 
+test('A18 equal effective values retain their value while showing different sources', () => {
+  const document = fixture();
+  const duplicate = document.duplicate('action');
+  document.setStyle('EqualWidth', {targetType: 'Button', setters: {Width: 160}});
+  document.setReference('style', 'EqualWidth', [duplicate]);
+  new DesignerPropertyCommands(document).reset('Width', [duplicate]);
+  const row = designerPropertyRows(document.value, ['action', duplicate]).find(row => row.name === 'Width');
+  assert.equal(row.value, 160);
+  assert.equal(row.mixed, false);
+  assert.equal(row.source.kind, 'mixed');
+});
+
+test('A18 resource conversion rejects a protected expression without substituting a style fallback', () => {
+  const document = fixture();
+  const commands = new DesignerPropertyCommands(document);
+  commands.bind('Width', {path: 'Customer.Width'}, ['action']);
+  const before = document.serialize();
+  assert.throws(() => commands.convertToResource('Width', 'WidthResource', {ids: ['action']}), /concrete local value/);
+  assert.equal(document.serialize(), before);
+});
+
+test('A18 property form text rejects malformed Booleans and selects its first available choice', () => {
+  assert.equal(parseDesignerPropertyText('true', 'bool'), true);
+  assert.equal(parseDesignerPropertyText('false', 'bool'), false);
+  assert.throws(() => parseDesignerPropertyText('flase', 'bool'), error => error.code === 'SFD1844');
+  const document = {createElement: () => ({children: [], setAttribute() {}, append(item) { this.children.push(item); }})};
+  const select = propertySelect(document, [{value: 'first', label: 'First'}, {value: 'second', label: 'Second'}], undefined, 'Choice');
+  assert.equal(select.value, 'first');
+});
+
 test('A18 event picker excludes incompatible parameter and return signatures', () => {
   const handlers = [{name: 'Program.Click', parameters: ['object', XAML + 'RoutedEventArgs'], returnType: 'void'},
     {name: 'Program.Bad', parameters: ['string', 'string'], returnType: 'void'},
@@ -112,4 +156,27 @@ test('A18 event picker excludes incompatible parameter and return signatures', (
   const revision = document.revision;
   assert.throws(() => setDesignerEventHandler(document, 'action', 'Click', 'Program.Bad', handlers), /compatible/);
   assert.equal(document.revision, revision);
+});
+
+test('A18 protected event subscriptions expose source navigation but reject staging and new handlers', () => {
+  const document = fixture();
+  const multiple = {capability: 'navigate', reason: 'multiple', subscriptions: [
+    {handler: 'OnClick', location: {uri: 'Page.cs', start: 40, end: 48}},
+    {handler: 'OnOther', span: {start: 120, end: 127}}
+  ]};
+  const access = designerEventSourceAccess(multiple, {uri: 'Page.cs'});
+  assert.equal(access.editable, false);
+  assert.equal(access.canNavigate, true);
+  assert.equal(access.subscriptions[1].location.start, 120);
+  assert.match(access.reason, /Multiple subscriptions/);
+  const before = document.serialize();
+  assert.throws(() => setDesignerEventHandler(document, 'action', 'Click', '', {sourceBinding: multiple}), /protected/);
+  assert.throws(() => designerEventHandlerRequest(document.node('action'), 'Click', 'NewHandler', {sourceBinding: multiple}), /protected/);
+  assert.equal(document.serialize(), before);
+  const lambda = designerEventSourceAccess({capability: 'navigate', reason: 'lambda', subscriptions: [
+    {handler: null, protected: true, span: {start: 70, end: 90}}
+  ]}, {uri: 'Page.cs'});
+  assert.equal(lambda.canNavigate, true);
+  assert.equal(lambda.editable, false);
+  assert.equal(lambda.subscriptions[0].location.start, 70);
 });

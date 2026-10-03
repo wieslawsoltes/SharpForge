@@ -1,3 +1,5 @@
+import {DesignerAuthoringError} from '../../packages/designer/src/index.js';
+
 /** Small DOM factories keep each editor independent and text safe by construction. */
 export function propertyElement(document, tag, text = '', className = '') {
   const element = document.createElement(tag);
@@ -40,8 +42,15 @@ export function propertySelect(document, choices, selected, label) {
     option.textContent = choice.label ?? String(choice);
     select.append(option);
   }
-  select.value = selected === undefined ? '' : String(selected);
+  select.value = selected === undefined ? String(choices[0]?.value ?? choices[0] ?? '') : String(selected);
   return select;
+}
+
+export function parseDesignerPropertyText(text, type) {
+  if (type !== 'bool') return text;
+  if (text === 'true') return true;
+  if (text === 'false') return false;
+  throw new DesignerAuthoringError('SFD1844', 'Boolean values must be true or false.');
 }
 
 export function showPropertyError(element, error) {

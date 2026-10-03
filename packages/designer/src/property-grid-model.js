@@ -46,9 +46,11 @@ export function designerPropertyRows(design, ids, {search = '', arrange = 'categ
     if (!schemas.every(candidate => candidate[name]?.type === schema.type)) continue;
     const sources = selected.map((node, index) => designerPropertySource(design, node, name, values[index]));
     const current = collection ? selected[0].collections?.[name] ?? [] : sources[0].value;
-    const mixed = sources.some(source => !samePropertyValue(source, sources[0])) ||
+    const mixed = sources.some(source => !samePropertyValue(source.value, sources[0].value) ||
+      !samePropertyValue(source.expression, sources[0].expression)) ||
       collection && selected.some(node => !samePropertyValue(node.collections?.[name] ?? [], current));
-    const source = sources.every(item => item.kind === sources[0].kind) ? sources[0] : {kind: 'mixed', label: 'Mixed value sources'};
+    const sameSource = sources.every(item => item.kind === sources[0].kind && item.label === sources[0].label);
+    const source = sameSource ? sources[0] : {kind: 'mixed', label: 'Mixed value sources'};
     const protectedSource = selected.some(node => sourceBindings[node.id]?.properties?.[name]?.dynamic);
     const text = formatDesignerProperty(current);
     if (needle && !`${name} ${text} ${source.label}`.toLocaleLowerCase('en-US').includes(needle)) continue;
