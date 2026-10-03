@@ -1,9 +1,10 @@
+import {operatorPrecedence as precedence, closeAngleCount, splitTypeClose} from './operators.js';
 import {parseSynchronizationStatement,parseSynchronizationPrefix,parseSynchronizationTypeArguments} from './synchronization.js';
 import { SourceText, diagnostic } from '@sharpforge/text';
 import { lex } from './lexer.js';
 const modifiers = new Set(['public','private','protected','internal','static','readonly','const','sealed','partial','virtual','override','abstract','async']);
 const typeKeywords = new Set(['int','double','float','bool','string','object','char','void','var','long','decimal','uint','ulong','short','ushort','byte','sbyte','nint','nuint']);
-const precedence = { '??=':1, '=':1, '+=':1, '-=':1, '*=':1, '/=':1, '%=':1, '&=':1, '|=':1, '^=':1, '??':3, '||':4, '&&':5, '|':6, '^':7, '&':8, '==':9, '!=':9, '<':10, '>':10, '<=':10, '>=':10, 'is':10, 'as':10, '<<':11, '>>':11, '+':12, '-':12, '*':13, '/':13, '%':13 };
+
 export class Parser {
   constructor(lexed) { Object.assign(this, lexed); this.diagnostics = [...lexed.diagnostics]; this.i = 0; this.depth = 0; this.nodeCount = 0; this.namespaceName=''; }
   get current() { return this.tokens[this.i]; }
@@ -43,7 +44,7 @@ export class Parser {
     if (typeKeywords.has(t.kind)) name=this.take().kind;
     else if (this.at('identifier')) name=this.parseName();
     else { this.error(t,'CS1031','Type expected'); name='error'; if(![';',')',',','}','eof'].includes(t.kind)) this.take(); }
-    if(this.match('<')){if(!/^(?:System\.(?:(?:Threading\.Tasks|Collections\.Generic|Numerics)\.)?)?(?:Task|Action|Func|List|Dictionary|HashSet|Queue|Stack|Vector)$/.test(name))this.error(t,'SF1012','Only registered closed framework generic types are supported');const args=[];do{args.push(this.type());}while(this.match(','));if(this.at('>>')){const token=this.current;this.tokens.splice(this.i,1,{...token,kind:'>',text:'>',end:token.start+1},{...token,kind:'>',text:'>',start:token.start+1});}this.expect('>');name+='<'+args.join(', ')+'>'; }
+    if(this.match('<')){if(!/^(?:System\.(?:(?:Threading\.Tasks|Collections\.Generic|Numerics)\.)?)?(?:Task|Action|Func|List|Dictionary|HashSet|Queue|Stack|Vector)$/.test(name))this.error(t,'SF1012','Only registered closed framework generic types are supported');const args=[];do{args.push(this.type());}while(this.match(','));splitTypeClose(this);this.expect('>');name+='<'+args.join(', ')+'>'; }
     while (this.at('[') && this.peek().kind === ']') { this.take(); this.take(); name += '[]'; }
     if (this.match('?')) this.error(t,'SF1013','Nullable type annotations are not implemented');
     return name;
@@ -59,7 +60,7 @@ export class Parser {
     let i=this.i; while(modifiers.has(this.tokens[i]?.kind)) i++;
     if(!typeKeywords.has(this.tokens[i]?.kind)&&this.tokens[i]?.kind!=='identifier')return false;
     i++; while(this.tokens[i]?.kind==='.'&&this.tokens[i+1]?.kind==='identifier')i+=2;
-    if(this.tokens[i]?.kind==='<'){let depth=0,steps=0;do{const k=this.tokens[i++]?.kind;depth+=k==='<'?1:k==='>'?-1:k==='>>'?-2:0;if(++steps>128)return false;}while(depth>0&&this.tokens[i]?.kind!=='eof');}while(this.tokens[i]?.kind==='['&&this.tokens[i+1]?.kind===']')i+=2;
+    if(this.tokens[i]?.kind==='<'){let depth=0,steps=0;do{const k=this.tokens[i++]?.kind;depth+=k==='<'?1:-closeAngleCount(k);if(++steps>128)return false;}while(depth>0&&this.tokens[i]?.kind!=='eof');}while(this.tokens[i]?.kind==='['&&this.tokens[i+1]?.kind===']')i+=2;
     return this.tokens[i]?.kind==='identifier'&&this.tokens[i+1]?.kind==='(';
   }
   looksLikeCast() {
@@ -111,7 +112,7 @@ export class Parser {
     let i=this.i;if(this.tokens[i]?.kind==='const')i++;
     if(!typeKeywords.has(this.tokens[i]?.kind)&&this.tokens[i]?.kind!=='identifier')return false;i++;
     while(this.tokens[i]?.kind==='.'&&this.tokens[i+1]?.kind==='identifier')i+=2;
-    if(this.tokens[i]?.kind==='<'){let depth=0,steps=0;do{const k=this.tokens[i++]?.kind;depth+=k==='<'?1:k==='>'?-1:k==='>>'?-2:0;if(++steps>128)return false;}while(depth>0&&this.tokens[i]?.kind!=='eof');}while(this.tokens[i]?.kind==='['&&this.tokens[i+1]?.kind===']')i+=2;
+    if(this.tokens[i]?.kind==='<'){let depth=0,steps=0;do{const k=this.tokens[i++]?.kind;depth+=k==='<'?1:-closeAngleCount(k);if(++steps>128)return false;}while(depth>0&&this.tokens[i]?.kind!=='eof');}while(this.tokens[i]?.kind==='['&&this.tokens[i+1]?.kind===']')i+=2;
     return this.tokens[i]?.kind==='identifier'&&['=',';',',',')'].includes(this.tokens[i+1]?.kind);
   }
   local(semicolon=true) {
@@ -162,7 +163,7 @@ export class Parser {
       const parts=t.value.map(part=>{if(part.text!==undefined)return {...part};const inner=lex(new SourceText(part.expression,this.source.uri)),p=new Parser({...inner,source:this.source,tokens:inner.tokens.map(x=>({...x,start:x.start+part.start,end:x.end+part.start,fullStart:x.fullStart+part.start})),diagnostics:[]});const expression=p.expression();if(!p.at('eof'))p.error(p.current,'CS1003','Unexpected trailing interpolation input');for(const d of inner.diagnostics)this.error({start:part.start,end:part.end},d.code,d.message);this.diagnostics.push(...p.diagnostics);return {...part,expression};});return this.node('InterpolatedString',t,{parts});
     }
     if(['integer','double','scalar','string','char','true','false','null'].includes(t.kind)&&!(['double','string','char'].includes(t.kind)&&t.text===t.kind))return this.node('Literal',t,{value:t.kind==='true'?true:t.kind==='false'?false:t.kind==='null'?null:t.value,literalText:t.text,type:t.kind==='scalar'?t.value.scalar:t.kind==='integer'?'int':t.kind==='true'||t.kind==='false'?'bool':t.kind});
-    if(t.kind==='identifier'&&['Vector','List','HashSet','Queue','Stack','Dictionary','Task'].includes(t.value)&&this.at('<')){let at=this.i,depth=0;do{const k=this.tokens[at++]?.kind;depth+=k==='<'?1:k==='>'?-1:k==='>>'?-2:0;}while(depth>0&&at<this.tokens.length);if(depth===0&&this.tokens[at]?.kind==='.'){this.i--;const name=this.type();return this.node('Name',t,{name,nameSpan:{start:t.start,end:this.tokens[this.i-1].end}});}}
+    if(t.kind==='identifier'&&['Vector','List','HashSet','Queue','Stack','Dictionary','Task'].includes(t.value)&&this.at('<')){let at=this.i,depth=0;do{const k=this.tokens[at++]?.kind;depth+=k==='<'?1:-closeAngleCount(k);}while(depth>0&&at<this.tokens.length);if(depth===0&&this.tokens[at]?.kind==='.'){this.i--;const name=this.type();return this.node('Name',t,{name,nameSpan:{start:t.start,end:this.tokens[this.i-1].end}});}}
     if(['identifier','this','base'].includes(t.kind)||typeKeywords.has(t.kind))return this.node('Name',t,{name:t.value??t.kind,escaped:t.text.startsWith('@'),nameSpan:{start:t.start,end:t.end}});
     if(t.kind==='unchecked'||t.kind==='checked'){this.expect('(');const expression=this.expression();this.expect(')');return this.node(t.kind==='checked'?'Checked':'Unchecked',t,{expression});}
     if(t.kind==='await')return this.node('Await',t,{expression:this.expression(14)});
