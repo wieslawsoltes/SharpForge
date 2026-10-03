@@ -3,6 +3,8 @@
  * (semantic/declaration-checks.js) every member rule in `memberChecks` runs and its rows are reported.
  * A rule is `type => [{ member, code, args, at? }]`; `at` overrides the location of `member`.
  */
+import { checkExtensionDeclarations } from '../extension-methods.js';
+import { checkMemberBodies } from '../member-bodies.js';
 import { checkOperatorDeclarations } from './operator-declarations.js';
 import { checkIndexerDeclarations } from './indexer-declarations.js';
 import { checkRequiredDeclarations, chainingProblem } from './required-members.js';
@@ -26,6 +28,8 @@ export const memberChecks = [
   checkInitAccessors,
   checkRequiredDeclarations,
   checkPrimaryConstructorChaining,
+  checkExtensionDeclarations,
+  checkMemberBodies,
 ];
 
 /** Class mixin (analysis phase): member declaration rules. */

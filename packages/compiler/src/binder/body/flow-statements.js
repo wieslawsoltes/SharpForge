@@ -263,7 +263,7 @@ export const FlowStatementBinding = Base =>
           this.report(expressionSyntax, 'CS8151', [this.display(type)]);
         return stmt('Return', syntax, false, { expression: e, isRef: true });
       }
-      const converted = this.convert(e, type, expressionSyntax);
+      const converted = this.convertReturned(e, type, expressionSyntax);
       if (e.form === 'lambda' && !converted.hasErrors) this.finishLambda(e, type);
       return stmt('Return', syntax, false, { expression: converted });
     }
