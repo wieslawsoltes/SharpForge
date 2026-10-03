@@ -1,3 +1,4 @@
+import {resultPath} from './conformance/results.js';
 /** Independent managed-runtime validation. Requires an existing .NET WASM publish directory.
  * No runtime binaries or third-party assemblies are copied into this project.
  * Usage: DOTNET_WASM_DIR=/path/to/published/_framework node scripts/validate-clr-wasm.js
@@ -26,5 +27,5 @@ const runtime=await create({config,imports:{require:createRequire(import.meta.ur
 const results=[];
 for(const t of tests){try{const actual=await runtime.runMain(t.assemblyName+'.dll',[]),passed=actual===t.expected;results.push({name:t.name,expected:t.expected,actual,passed});console.log(passed?'PASS':'FAIL',t.name);}catch(error){results.push({name:t.name,expected:t.expected,passed:false,error:String(error)});console.error('FAIL',t.name,String(error));}}
 const report={timestamp:new Date().toISOString(),runtime:runtime.runtimeBuildInfo,referenceProfile:'net8',testOnlyTypeForwardingFacade:!hasFacade,scope:'46 output-free fixtures executed by independent Mono .NET WASM, not by SharpForge VM. The installed runtime is trimmed; Console and some BCL overloads are unavailable. No desktop CoreCLR/ILVerify claim.',results,passed:results.filter(r=>r.passed).length,failed:results.filter(r=>!r.passed).length};
-await writeFile(new URL('../docs/clr-wasm-results.json',import.meta.url),JSON.stringify(report,null,2)+'\n');
+await writeFile(await resultPath('clr-wasm-results.json'),JSON.stringify(report,null,2)+'\n');
 console.log(`${report.passed}/${results.length} independent CLR fixtures passed`);if(report.failed)process.exitCode=1;
