@@ -1,0 +1,45 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {CilVirtualMachine} from '@sharpforge/runtime';
+import {wasmEligibility} from '../packages/runtime/src/execution/wasm/eligibility.js';
+import {managedFixture} from './managed-fixtures.js';
+
+function inspect(method, options) {
+  const vm = new CilVirtualMachine(managedFixture({methods: [{name: 'Main', result: 'int', ...method}]}));
+  return wasmEligibility(vm, vm.top.method, options);
+}
+
+test('T11.1 verified arithmetic lowers to immutable typed stack IR', () => {
+  const report = inspect({body: writer => writer.op('ldc.i4.2').op('ldc.i4.3').op('mul').op('ret')});
+  assert.equal(report.eligible, true, JSON.stringify(report.reasons));
+  assert.equal(report.ir.nativeInstructions, 3);
+  assert.deepEqual(report.ir.instructions[2].inputs, ['i32', 'i32']);
+  assert.equal(report.ir.instructions[2].depth, 2);
+  assert.equal(report.ir.instructions[2].kind, 'binary');
+  assert.equal(Object.isFrozen(report.ir.instructions[2]), true);
+});
+
+test('T11.1 byref locals reject the entire method with a stable reason', () => {
+  const report = inspect({locals: ['int'], body: writer => writer.op('ldloca.s', 0).op('pop').op('ldc.i4.1').op('ret')});
+  assert.equal(report.eligible, false);
+  assert.equal(report.reasons[0].code, 'WASM_OPCODE');
+  assert.equal(report.reasons[0].offset, 0);
+  assert.equal(report.ir, null);
+});
+
+test('T11.1 compile limits and verification proof are mandatory', () => {
+  const report = inspect({body: writer => writer.op('ldc.i4.1').op('ret')}, {maxMethodInstructions: 1});
+  assert.equal(report.reasons[0].code, 'WASM_SIZE');
+  assert.throws(() => inspect({body: writer => writer.op('ldc.i4.1').op('ret')}, {maxMethodInstructions: Infinity}), RangeError);
+  const vm = new CilVirtualMachine(managedFixture());
+  vm.report = {success: false};
+  assert.equal(wasmEligibility(vm, vm.top.method).reasons[0].code, 'WASM_UNVERIFIED');
+});
+
+test('T11.1 loops retain exact backward PC targets for OSR', () => {
+  const report = inspect({locals: ['int'], body: writer => writer.op('ldc.i4.0').op('stloc.0')
+    .mark('loop').op('ldloc.0').op('ldc.i4.1').op('add').op('stloc.0')
+    .op('ldloc.0').op('ldc.i4.8').op('blt.s', 'loop').op('ldloc.0').op('ret')});
+  assert.equal(report.eligible, true, JSON.stringify(report.reasons));
+  assert.deepEqual(report.ir.instructions[8].targets, [2]);
+});
