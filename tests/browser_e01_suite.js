@@ -2,6 +2,7 @@ import {compileToIL} from '../packages/compiler/src/index.js';
 import {loadAssembly} from '../packages/cil/src/index.js';
 import {VirtualMachine,CilVirtualMachine} from '../packages/runtime/src/index.js';
 import {Builtins,Op} from '../packages/bytecode/src/index.js';
+import {runSnapshotBrowser} from './browser_snapshot_suite.js';
 
 const engines=['source','reloaded-source','cil'];
 const normalize=value=>value.replaceAll('\r\n','\n');
@@ -74,6 +75,7 @@ export async function runE01Browser(manifest,onProgress=()=>{}) {
     }
     return {schemaVersion:saved.schemaVersion,replays};
   });
+  await runSnapshotBrowser(check,{engines,compiled,machine,assertResult,manifest});
   for(const fixture of manifest.synchronization)for(const quantum of [1,7,256])for(const engine of engines)
     await check('T30 '+fixture.name+' quantum '+quantum,engine,async()=>{
       const vm=machine(engine,compiled(fixture.source),{virtualTime:true,schedulerQuantum:quantum,nativeIntBits:64});

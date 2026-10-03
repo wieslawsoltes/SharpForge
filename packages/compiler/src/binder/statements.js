@@ -1,5 +1,6 @@
 import {frameworkType} from '@sharpforge/framework';
 import {typeText} from '../type-utils.js';
+import {isExceptionType} from '../symbols/exception-identity.js';
 import {LocalDeclarationKind} from '../symbols/members.js';
 import {BoundBadStatement,BoundNoOpStatement,BoundBlock,BoundLocalDeclaration,BoundMultipleLocalDeclarations,BoundExpressionStatement,BoundIfStatement,BoundWhileStatement,BoundDoStatement,BoundForStatement,BoundForEachStatement,BoundForEachEnumerator,BoundSwitchStatement,BoundSwitchSection,BoundSwitchLabel,BoundTryStatement,BoundCatchBlock,BoundUsingStatement,BoundUsingResource,BoundReturnStatement,BoundThrowStatement,BoundBreakStatement,BoundContinueStatement,BoundCheckedStatement,BoundConditionalAccessAssignment} from '../bound/nodes.js';
 /**
@@ -76,15 +77,18 @@ export const StatementBinder=Base=>class StatementBinder extends Base {
       }
       case 'Throw':{
         let expression=null;
-        if(node.expression){expression=this.bindExpression(node.expression);const type=expression.legacyType;if(type!=='Exception'&&type!=='null'&&type!=='error')this.c.report(node,'CS0155');}else if(!this.catchDepth)this.c.report(node,'CS0156');
+        if(node.expression){expression=this.bindExpression(node.expression);const type=expression.legacyType;if(type!=='null'&&!isExceptionType(this.c,type))this.c.report(node,'CS0155');}else if(!this.catchDepth)this.c.report(node,'CS0156');
         return this.statement(BoundThrowStatement,node,{expression});
       }
       case 'Try':{
         const tryBlock=this.bindStatement(node.body),catchBlocks=node.catches.map(ca=>{
-          this.pushScope();const type=this.c.resolveType(ca.type,node,false,this.m);if(type!=='Exception')this.c.report(node,'SF2002');let local=null;
-          if(ca.name)local=this.local(ca.name,'Exception',{...ca.body,name:ca.name,nameSpan:ca.nameSpan},false,{declarationKind:LocalDeclarationKind.Catch});
+          this.pushScope();const type=this.c.resolveType(ca.type,node,false,this.m);
+          if(!isExceptionType(this.c,type))this.c.report(ca.body,'CS0155');
+          let local=null;
+          if(ca.name)local=this.local(ca.name,type,{...ca.body,name:ca.name,nameSpan:ca.nameSpan},false,{declarationKind:LocalDeclarationKind.Catch});
+          const filter=ca.filter?this.bindBool(ca.filter):null;
           this.catchDepth++;const body=this.bindStatement(ca.body);this.catchDepth--;this.popScope();
-          return this.statement(BoundCatchBlock,ca.body,{exceptionType:this.type(type),local,body});
+          return this.statement(BoundCatchBlock,ca.body,{exceptionType:this.type(type),local,filter,body});
         });
         let finallyBlock=null;if(node.finallyBody){this.finallyScopes.push(this.loops.length);finallyBlock=this.bindStatement(node.finallyBody);this.finallyScopes.pop();}
         return this.statement(BoundTryStatement,node,{tryBlock,catchBlocks,finallyBlock});

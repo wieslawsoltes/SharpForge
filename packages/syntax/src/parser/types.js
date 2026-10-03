@@ -65,7 +65,7 @@ export const typeMethods = {
     if (this.kindAt(i) === '::') {
       if (!this.isId(this.tokens[i + 1])) return -1;
       i += 2;
-      if (info) info.must = true;
+      if (info) info.must = info.alias = true;
     }
     for (;;) {
       if (this.kindAt(i) === '<') {
@@ -117,7 +117,8 @@ export const typeMethods = {
   },
   /**
    * Scans a type at `i` without building nodes; returns the index after it or -1.
-   * `info.must` is set when the tokens can only be a type (predefined, array, nullable, pointer, alias-qualified).
+   * `info.must` is set when the tokens can only be a type (predefined, array, nullable, pointer, alias-qualified);
+   * `info.alias` and `info.suffix` say whether that came from an `alias::` prefix or a `?`, `*` or `[]` suffix.
    * `mode` 'afterIs' applies the `T ? a : b` rule: `?` and `*` extend the type only when no expression can follow.
    */
   scanType(i, info, mode) {
@@ -156,7 +157,7 @@ export const typeMethods = {
           if (mode === 'afterIs' && this.canStartExpression(this.tokens[i + 1] ?? this.tokens.at(-1))) break;
           i++;
           if (info) {
-            info.must = true;
+            info.must = info.suffix = true;
             if (kind === '?') info.nullable = true;
           }
           continue;
@@ -166,7 +167,7 @@ export const typeMethods = {
           while (this.kindAt(j) === ',') j++;
           if (this.kindAt(j) !== ']') break;
           i = j + 1;
-          if (info) info.must = true;
+          if (info) info.must = info.suffix = true;
           continue;
         }
         break;
@@ -191,7 +192,7 @@ export const typeMethods = {
     if (this.isPredefined()) type = this.n('PredefinedType', this.take());
     else if (this.at('(')) type = this.tupleType();
     else if (this.at('delegate') && this.peek().kind === '*') type = this.functionPointerType();
-    else if (this.isId()) type = this.name();
+    else if (this.isId()) type = this.name(mode === undefined);
     else {
       this.error(this.errorAnchor(), 'CS1031', 'Type expected');
       type = this.n('IdentifierName', this.cache.missing('IdentifierToken'));
@@ -240,23 +241,39 @@ export const typeMethods = {
     }
     return this.n('ArrayRankSpecifier', open, sizes, this.expect(']'));
   },
-  /** A namespace or type name: identifiers joined by `.`, with an optional `alias::` prefix and type arguments. */
-  name() {
+  /**
+   * A namespace or type name: identifiers joined by `.`, with an optional `alias::` prefix and type arguments.
+   * `definite` is true where only a type can stand (declarations, attributes, usings): there a `<` always opens a
+   * type-argument list, so `[Attr<int]` reports the missing `>`. Where an expression could stand instead (after
+   * `is`, `as` and `new`) the list must scan as one.
+   */
+  name(definite = true) {
+    const context = definite ? 'definite' : true;
     let left;
     if (this.peek().kind === '::' && this.isId()) {
       this.feature('GlobalNamespace', this.current);
       const alias = this.n('IdentifierName', this.atWord('global') ? this.takeWord('global') : this.id());
-      left = this.n('AliasQualifiedName', alias, this.take(), this.simpleName(true));
-    } else left = this.simpleName(true);
-    while (this.at('.') && this.peek().kind !== '.') left = this.n('QualifiedName', left, this.take(), this.simpleName(true));
+      left = this.n('AliasQualifiedName', alias, this.take(), this.simpleName(context));
+    } else left = this.simpleName(context);
+    while (this.at('.') && this.peek().kind !== '.') left = this.n('QualifiedName', left, this.take(), this.simpleName(context));
     return left;
   },
-  /** An identifier with optional type arguments. In expressions the `<` is only a type-argument list per the spec lookahead. */
-  simpleName(typeContext) {
-    const identifier = this.id();
-    if (this.at('<') && (typeContext ? this.scanTypeArguments(this.i) >= 0 : this.isGenericNameInExpression(this.i)))
-      return this.n('GenericName', identifier, this.typeArgumentList());
-    return this.n('IdentifierName', identifier);
+  /**
+   * An identifier with optional type arguments. `context` is 'definite' (a `<` always opens type arguments), true (a
+   * type where the list must scan as one) or false (an expression, where the spec lookahead decides).
+   */
+  simpleName(context) {
+    const nameToken = this.current,
+      identifier = this.id();
+    if (!this.at('<') || !this.isTypeArgumentListAhead(context)) return this.n('IdentifierName', identifier);
+    const open = this.i,
+      typeArguments = this.typeArgumentList();
+    if (context === false) this.unboundGenericName(nameToken, open);
+    return this.n('GenericName', identifier, typeArguments);
+  },
+  isTypeArgumentListAhead(context) {
+    if (context === 'definite') return true;
+    return context ? this.scanTypeArguments(this.i) >= 0 : this.isGenericNameInExpression(this.i);
   },
   typeArgumentList() {
     this.feature('Generics', this.current);

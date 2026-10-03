@@ -1,6 +1,6 @@
 /**
  * Argument lists of invocations, element accesses, object creations and tuples: positional and C# 4 named arguments,
- * `ref` / `out` / `in` modifiers and C# 7 declaration expressions (`out var x`).
+ * `ref` / `out` / `in` modifiers; an `out` argument may declare a variable (see declaration-expressions.js).
  */
 export const argumentMethods = {
   argumentList() {
@@ -21,6 +21,7 @@ export const argumentMethods = {
     const list = [],
       indexer = close === ']';
     if (this.at(';') || this.at('eof') || (this.at(close) && !indexer)) return list;
+    if (!this.at(close) && !this.at(',') && !this.canStartArgument()) return list;
     for (;;) {
       const before = this.i;
       list.push(this.argument(indexer));
@@ -38,9 +39,10 @@ export const argumentMethods = {
     let nameColon = null,
       refKind = null;
     if (this.isId() && this.peek().kind === ':') {
-      this.feature('NamedArgument', this.current);
+      this.feature('NamedArgument', this.current, this.peek());
       nameColon = this.n('NameColon', this.n('IdentifierName', this.id()), this.take());
     }
+    const refToken = this.current;
     if (this.atAny(['ref', 'out', 'in'])) refKind = this.take();
     if (indexer && (this.at(',') || this.at(']'))) {
       this.error(this.errorAnchor(), 'CS0443', 'Syntax error; value expected');
@@ -50,8 +52,8 @@ export const argumentMethods = {
       this.error(this.errorAnchor(), 'CS0839', 'Argument missing');
       return this.n('Argument', nameColon, refKind, this.missingName());
     }
-    const declares = refKind?.kind === 'OutKeyword' || (this.declarationContext ?? 0) > 0 || this.tupleContext;
-    if (refKind?.kind === 'OutKeyword' && this.isDeclarationExpressionAhead()) this.feature('OutVar', this.current);
-    return this.n('Argument', nameColon, refKind, declares && this.isDeclarationExpressionAhead() ? this.declarationExpression() : this.expression());
+    if (refKind?.kind === 'OutKeyword') return this.n('Argument', nameColon, refKind, this.outArgumentExpression(refToken));
+    const declares = ((this.declarationContext ?? 0) > 0 || this.tupleContext) && this.isDeclarationExpressionAhead();
+    return this.n('Argument', nameColon, refKind, declares ? this.declarationExpression() : this.expression());
   }
 };

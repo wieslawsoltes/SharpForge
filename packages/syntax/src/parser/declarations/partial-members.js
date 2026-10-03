@@ -6,14 +6,23 @@ import { accessibilityModifiers } from '../modifiers.js';
  */
 const extendedModifiers = new Set([...accessibilityModifiers, 'virtual', 'override', 'sealed', 'new', 'extern']);
 export const partialMemberMethods = {
-  /** Records the feature a `partial` member of node kind `kind` needs. `token` anchors the diagnostic (the member name or keyword). */
+  /**
+   * Records the feature a `partial` member of node kind `kind` needs, where Roslyn reports it: at the `partial`
+   * modifier, or at `token` (the member name) for extended partial methods and partial properties.
+   */
   partialMember(modifiers, kind, token, returnType = null) {
     if (!modifiers.some(modifier => modifier.kind === 'PartialKeyword')) return;
+    const partial = this.partialModifierToken() ?? token;
     if (kind === 'MethodDeclaration') {
-      this.feature('PartialMethod', token);
+      this.feature('PartialMethod', partial);
       const isVoid = returnType?.kind === 'PredefinedType' && returnType.children[0].kind === 'VoidKeyword';
       if (!isVoid || modifiers.some(modifier => extendedModifiers.has(modifier.text))) this.feature('ExtendedPartialMethods', token);
-    } else if (kind === 'PropertyDeclaration' || kind === 'IndexerDeclaration') this.feature('PartialProperties', token);
-    else this.feature('PartialEventsAndConstructors', token);
+    } else if (kind === 'PropertyDeclaration' || kind === 'IndexerDeclaration') this.feature('PartialProperties', token, token, 'partial');
+    else this.feature('PartialEventsAndConstructors', partial);
+  },
+  /** The lexer token of the `partial` modifier of the member being parsed, or null. */
+  partialModifierToken() {
+    for (let i = this.memberModifiers; i < this.memberModifiersEnd; i++) if (this.tokens[i].kind === 'partial') return this.tokens[i];
+    return null;
   }
 };

@@ -9,6 +9,7 @@ import {evaluateConstant,ConstantError} from './constants.js';
 import {normalize,numeric,isReference,assignable,defaultValue,alwaysReturns,pathOf,typeText} from './type-utils.js';
 import {FrameworkCompiler} from './framework.js';
 import {ModernCompiler} from './modern.js';
+import {exceptionTypeName,isExceptionType} from './symbols/exception-identity.js';
 /** Core statement/expression compiler for the string-typed profile; framework and modern layers are composed below. */
 class CoreMethodCompiler {
   constructor(compilation,method){this.c=compilation;this.m=method;this.code=[];this.locals=[];this.scopes=[new Map()];this.assigned=new Set();this.loops=[];this.handlers=[];this.catchDepth=0;this.finallyScopes=[];this.checkedContext=null;this.constantDiagnostics=new Set();
@@ -64,7 +65,7 @@ class CoreMethodCompiler {
       case 'Break':case 'Continue':{this.seq(node);if(node.label)this.c.requireFeature(node,15,'Labeled break and continue');const loop=node.label?[...this.loops].reverse().find(l=>l.labels?.includes(node.label)&&(node.kind!=='Continue'||!l.switch)):node.kind==='Continue'?[...this.loops].reverse().find(l=>!l.switch):this.loops.at(-1);if(loop&&this.finallyScopes.length&&!this.loops.slice(this.finallyScopes.at(-1)).includes(loop))this.c.report(node,'CS0157');if(!loop)this.c.report(node,'CS0139');else loop[node.kind==='Break'?'breaks':'continues'].push(this.emit(Op.JUMP));break;}
       case 'Switch':this.switchStatement(node);break;
       case 'Return':if(this.finallyScopes.length)this.c.report(node,'CS0157');this.seq(node);if(node.expression){const type=this.typedExpr(node.expression,this.m.returnType);this.checkAssign(this.m.returnType,type,node);}else{if(this.m.returnType!=='void')this.c.report(node,'CS0126',[typeText(this.m.returnType)]);this.emitConstant(null);}this.emit(Op.RET);break;
-      case 'Throw':this.seq(node);if(node.expression){const type=this.expr(node.expression);if(type!=='Exception'&&type!=='null'&&type!=='error')this.c.report(node,'CS0155');this.emit(Op.THROW);}else{if(!this.catchDepth)this.c.report(node,'CS0156');this.emit(Op.RETHROW);}break;
+      case 'Throw':this.seq(node);if(node.expression){const type=this.expr(node.expression);if(type!=='null'&&!isExceptionType(this.c,type))this.c.report(node,'CS0155');this.emit(Op.THROW);}else{if(!this.catchDepth)this.c.report(node,'CS0156');this.emit(Op.RETHROW);}break;
       case 'Try':{
         if(node.finallyBody){
           const start=this.pc,before=new Set(this.assigned);
@@ -73,7 +74,28 @@ class CoreMethodCompiler {
           this.assigned=new Set(before);this.finallyScopes.push(this.loops.length);this.stmt(node.finallyBody);this.finallyScopes.pop();this.emit(Op.ENDFINALLY);handler.handlerEnd=this.pc;this.patch(jump);for(const slot of normalAssigned)this.assigned.add(slot);break;
         }
         const start=this.pc,before=new Set(this.assigned);this.stmt(node.body);if(this.pc===start)this.emit(Op.NOP);const end=this.pc,jumps=[this.emit(Op.JUMP)];
-        for(const ca of node.catches){this.scopes.push(new Map());this.assigned=new Set(before);const type=this.c.resolveType(ca.type,node,false,this.m);if(type!=='Exception')this.c.report(node,'SF2002');const slot=this.temp('Exception');if(ca.name){const l=this.local(ca.name,'Exception',{...ca.body,name:ca.name,nameSpan:ca.nameSpan},true);l.scopeEnd=ca.body.end;this.locals[slot].hidden=true;this.handlers.push({start,end,target:this.pc,slot:l.slot,type});}else this.handlers.push({start,end,target:this.pc,slot,type});this.catchDepth++;this.stmt(ca.body);this.catchDepth--;jumps.push(this.emit(Op.JUMP));this.closeScope();}
+        for(const ca of node.catches){
+          this.scopes.push(new Map());
+          this.assigned=new Set(before);
+          const type=this.c.resolveType(ca.type,node,false,this.m);
+          if(!isExceptionType(this.c,type))this.c.report(ca.body,'CS0155');
+          let slot=this.temp(type);
+          if(ca.name){
+            const local=this.local(ca.name,type,{...ca.body,name:ca.name,nameSpan:ca.nameSpan},true);
+            local.scopeEnd=ca.body.end;
+            slot=local.slot;
+          }
+          const handler={start,end,target:0,handlerEnd:0,slot,type:exceptionTypeName(this.c.semantic.typeOf(type))};
+          if(ca.filter){handler.filter=this.pc;this.bool(ca.filter);this.emit(Op.ENDFILTER);}
+          handler.target=this.pc;
+          this.handlers.push(handler);
+          this.catchDepth++;
+          this.stmt(ca.body);
+          this.catchDepth--;
+          jumps.push(this.emit(Op.JUMP));
+          handler.handlerEnd=this.pc;
+          this.closeScope();
+        }
         for(const jump of jumps)this.patch(jump);this.assigned=before;break;}
       default:this.c.report(node,'SF2099',[node.kind]);
     }

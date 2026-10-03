@@ -1,4 +1,4 @@
-// langversion 9: expect CS8773 at 53 "A"
+// langversion 9: expect CS8773 at 56 ":"
 class C
 {
     void M()

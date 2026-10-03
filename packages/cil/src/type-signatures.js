@@ -1,16 +1,17 @@
 import {canonicalType, frameworkType} from '@sharpforge/framework';
 import {arrayType, memoryTypeName, spanType} from '@sharpforge/bytecode';
 import {CilError} from './binary.js';
+import {varargsTypeDefinition} from './varargs-profile.js';
 
 const elements = {
   void: 1, bool: 2, char: 3, sbyte: 4, byte: 5, short: 6, ushort: 7, int: 8, uint: 9,
-  long: 10, ulong: 11, float: 12, double: 13, string: 14, object: 28, nint: 24, nuint: 25,
+  long: 10, ulong: 11, float: 12, double: 13, string: 14, typedref: 22, object: 28, nint: 24, nuint: 25,
 };
 export const systemNames = {
   sbyte: 'System.SByte', byte: 'System.Byte', short: 'System.Int16', ushort: 'System.UInt16', uint: 'System.UInt32',
   ulong: 'System.UInt64', float: 'System.Single', char: 'System.Char', decimal: 'System.Decimal', nint: 'System.IntPtr',
   nuint: 'System.UIntPtr', bool: 'System.Boolean', int: 'System.Int32', long: 'System.Int64', double: 'System.Double',
-  string: 'System.String', object: 'System.Object', Exception: 'System.Exception', Array: 'System.Array',
+  typedref: 'System.TypedReference', string: 'System.String', object: 'System.Object', Exception: 'System.Exception', Array: 'System.Array',
 };
 const aliases = new Map(Object.entries(systemNames).map(([alias, full]) => [full, alias]));
 export function cliSystemName(type) { return systemNames[type] ?? memoryTypeName(type); }
@@ -66,6 +67,6 @@ export function signatureType(writer, type, resolveToken) {
     return writer;
   }
   if (type in elements) return writer.u8(elements[type]);
-  const value = type === 'decimal' || ['enum', 'value'].includes(frameworkType(type)?.kind);
+  const value = type === 'decimal' || !!varargsTypeDefinition(type) || ['enum', 'value'].includes(frameworkType(type)?.kind);
   return writer.u8(value ? 0x11 : 0x12).compressed(typeToken(resolveToken(type)));
 }

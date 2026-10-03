@@ -286,7 +286,6 @@ const csharp9 = {
       'public static System.Collections.Generic.IAsyncEnumerator<int> GetAsyncEnumerator(this Bag b) { return null; } ' +
       'static async System.Threading.Tasks.Task M(Bag b) { await foreach (int x in b) { } } }',
   ),
-  PragmaWarningEnable: '#pragma warning enable 168\n' + main(''),
   AndPattern: main('int a = 1; bool b = a is > 0 and < 2;'),
   OrPattern: main('int a = 1; bool b = a is 1 or 2;'),
   NotPattern: main('object o = null; bool b = o is not null;'),

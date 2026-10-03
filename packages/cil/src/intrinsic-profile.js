@@ -1,4 +1,5 @@
 import {memoryMethodDefinition} from './memory-profile.js';
+import {varargsIntrinsicDefinitions} from './varargs-profile.js';
 import {exceptionIntrinsicDefinitions} from './exception-profile.js';
 import {asyncMethodDefinition} from './async-profile.js';
 import {numericAliases} from '@sharpforge/bytecode';
@@ -31,6 +32,11 @@ add('System.Console','WriteLine',[],'void',true,'console');
 add('System.Object','.ctor',[],'void',false,'objectCtor');
 add('System.Object','ToString',[],'string',false,'objectToString');
 add('System.Object','GetType',[],'System.Type',false,'objectGetType');
+for(const owner of ['System.Object','System.ValueType','System.Enum']) {
+  add(owner,'ToString',[],'string',false,'objectToString');
+  add(owner,'Equals',['object'],'bool',false,'objectEquals');
+  add(owner,'GetHashCode',[],'int',false,'objectHashCode');
+}
 add('System.Type','GetTypeFromHandle',['System.RuntimeTypeHandle'],'System.Type',true,'typeFromHandle');
 for(const name of ['op_Equality','op_Inequality'])add('System.Type',name,['System.Type','System.Type'],'bool',true,'typeCompare');
 for(const parameter of ['System.Type','object'])add('System.Type','Equals',[parameter],'bool',false,'typeEquals');
@@ -71,6 +77,8 @@ for(const [owner,result] of [['System.Int32','int'],['System.Double','double'],[
 for(const d of numericIntrinsicDefinitions)add(d.owner,d.name,d.parameters,d.returnType,d.isStatic,d.implementation==='object'?'objectCtor':d.implementation);
 
 for(const d of syncIntrinsicDefinitions)add(d.owner,d.name,d.parameters,d.returnType,d.isStatic,d.implementation==='object'?'objectCtor':d.implementation);
+
+for(const d of varargsIntrinsicDefinitions)add(d.owner,d.name,d.parameters,d.returnType,d.isStatic,d.implementation);
 
 const builtinDefinitions=new Map(definitions),frameworkDefinitions=new Map();
 

@@ -33,7 +33,7 @@ const notGated = {
       'PragmaWarning PragmaChecksum AliasQualifiedNames ExpressionTrees QueryContinuation QueryJoin QueryGroupBy QueryOrderBy QueryLet ' +
       'EmbeddedInteropTypes IndexedProperties CallerInfoAttributes AwaitExpression AwaitInCatchAndFinally ExtensionAddMethods ' +
       'ParameterlessStructInitializers Deconstruction GeneralizedAsyncReturnTypes IsPatternExpression CaseGuards OverrideWithConstraints ' +
-      'PropertyPatterns PositionalPatterns NullForgivingOperator NullableDirective TopLevelStatements PragmaWarningEnable WithExpressions ' +
+      'PropertyPatterns PositionalPatterns NullForgivingOperator NullableDirective TopLevelStatements WithExpressions ' +
       'UnmanagedCallingConventions AsyncMethodBuilderOverride CallerArgumentExpression ExtendedNameofScope NumericIntPtr ScopedRef ' +
       'SlicePattern ExperimentalAttribute SpreadElement'
     )
@@ -53,23 +53,19 @@ const notGated = {
   UnmanagedConstructedTypes: needsOperandTypes,
   ObsoleteOnPropertyAccessor: needsAttributeBinding,
   NullPointerConstantPattern: needsOperandTypes,
-  AsyncUsing: 'the parser records `await using` as AsyncStreams, so it is reported with that feature name',
   TargetTypedConditional: needsOperandTypes,
   ModuleInitializers: needsAttributeBinding,
-  ExtensionGetEnumerator: needsOperandTypes,
   ExtensionGetAsyncEnumerator: needsOperandTypes,
   MemberNotNull: needsAttributeBinding,
   VarianceSafetyForStaticInterfaceMembers: 'needs the variance check of interface members',
   WithOnStructs: needsOperandTypes,
   WithOnAnonymousTypes: needsOperandTypes,
   InferredDelegateType: needsOperandTypes,
-  LambdaAttributes: 'the parser reads `[A] () => x` as a collection expression followed by a lambda (syntax package defect)',
   ImplicitImplementationOfNonPublicMembers: 'needs the interface implementation map',
   ImprovedInterpolatedStrings: needsOperandTypes,
   AutoDefaultStructs: 'needs definite assignment of struct fields in constructors',
   CacheStaticMethodGroupConversion: 'only changes code generation in Roslyn; there is no diagnostic',
   SpanCharConstantPattern: needsOperandTypes,
-  FileTypes: 'the parser does not accept the `file` modifier on a type (syntax package defect)',
   InstanceMemberInNameof: needsOperandTypes,
   InlineArrays: needsOperandTypes,
   LockObject: needsOperandTypes,
@@ -93,6 +89,8 @@ const crashesAtOwnVersion = {};
 
 /** The diagnostics of `result` that are the language-version gate of `row`. */
 function gateDiagnostics(result, row) {
+  // A row with a dedicated Roslyn diagnostic (for example the warning CS8371) is recognised by its code: its message does not name the feature.
+  if (row.dedicatedMessage) return result.diagnostics.filter(d => d.code === row.code);
   const names = [row.name, binderNames[row.id]].filter(Boolean).map(name => `'${name.toLowerCase()}'`);
   return result.diagnostics.filter(d => d.code === row.code && names.some(name => d.message.toLowerCase().includes(name)));
 }
@@ -125,7 +123,7 @@ for (const row of languageFeatures) {
   test(`A02-B01 C# ${versionText(row.version)} feature is gated at ${versionText(below)}: ${row.id}`, () => {
     const low = gateDiagnostics(compileAt(row, below), row);
     assert(low.length > 0, `${row.id}: no ${row.code} for '${row.name}' at language version ${versionText(below)}`);
-    assert(low.every(d => d.severity === 'error'));
+    assert(low.every(d => d.severity === row.severity));
     if (row.id in crashesAtOwnVersion) {
       assert.throws(() => compileAt(row, row.version), TypeError, `${row.id} no longer crashes: remove it from crashesAtOwnVersion`);
       return;

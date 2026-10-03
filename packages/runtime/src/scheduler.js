@@ -32,7 +32,7 @@ export class CooperativeScheduler {
   *roots(){yield this.unhandledFault?.reference;if(!this.enabled)return;for(const c of this.contexts.values()){
       if(!retainsContextFrames(c))continue;yield c.task;yield c.thread;yield c.delegate;yield c.returnValue;yield c.wait?.task;yield c.resumeFault?.reference;
       if(c.id===this.currentId&&!this.parked)continue;
-      yield* c.stack??[];for(const f of c.frames){yield* f.locals??[];yield* f.args??[];for(const v of f.stack??[]){if(v?.byref)yield v.owner;else yield v;}yield f.returnObject;yield f.asyncBuilderTask;yield* callRoots(f);yield* arrayContinuationRoots(f);if(this.vm.exceptionRoots)yield* this.vm.exceptionRoots(f);else{yield f.exception?.reference;for(const x of f.caught??[])yield x.fault?.reference;for(const x of f.unwinds??[]){yield x.value;yield x.error?.reference;}}}
+      yield* c.stack??[];for(const f of c.frames){yield* f.locals??[];yield* f.args??[];for(const v of f.stack??[]){if(v?.byref)yield v.owner;else yield v;}yield f.returnObject;yield f.filterSearch?.error.reference;yield f.asyncBuilderTask;yield* callRoots(f);yield* arrayContinuationRoots(f);if(this.vm.exceptionRoots)yield* this.vm.exceptionRoots(f);else{yield f.exception?.reference;for(const x of f.caught??[])yield x.fault?.reference;for(const x of f.unwinds??[]){yield x.value;yield x.error?.reference;}}}
       yield c.pendingFault?.reference;yield c.fault?.reference;
     }
     for(const t of this.tasks.values())if(!terminal.has(t.status)){yield t.ref;yield* t.dependencies??[];yield t.error?.reference;}

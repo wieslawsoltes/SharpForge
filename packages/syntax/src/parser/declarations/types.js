@@ -4,6 +4,12 @@ const kinds = { class: 'ClassDeclaration', struct: 'StructDeclaration', interfac
 export const typeDeclarationMethods = {
   /** Parses a type or delegate declaration when one starts here; returns null otherwise. */
   typeLikeDeclaration(attributeLists, modifiers) {
+    this.interfaceNestedType();
+    if (modifiers.length) {
+      this.fileTypeName(modifiers);
+      const name = this.typeNameAhead();
+      if (name) this.modifierNameFeatures(this.memberModifiers, this.memberModifiersEnd, name);
+    }
     if (this.atAny(['class', 'struct', 'interface'])) return this.typeDeclaration(attributeLists, modifiers);
     if (this.at('enum')) return this.enumDeclaration(attributeLists, modifiers);
     if (this.at('delegate') && this.peek().kind !== '*') return this.delegateDeclaration(attributeLists, modifiers);
@@ -42,8 +48,12 @@ export const typeDeclarationMethods = {
         null,
         this.take()
       );
-    const open = this.expect('{'),
-      members = this.typeBody(nameToken.value);
+    if (!this.at('{')) {
+      const header = [attributeLists, modifiers, keyword, identifier, typeParameters, parameterList, baseList, constraints];
+      return this.n(kind, ...header, ...this.missingBody());
+    }
+    const open = this.take(),
+      members = this.typeBody(nameToken.value, false, kind);
     return this.n(
       kind,
       attributeLists,
@@ -60,20 +70,34 @@ export const typeDeclarationMethods = {
       this.match(';')
     );
   },
-  /** Members of a type body up to (not including) the closing brace. Tokens that cannot start a member are skipped with CS1519. */
-  typeBody(owner, extension = false) {
+  /** The body of a type whose `{` is absent: both braces are missing and no members are read, as in Roslyn. Returns [open, members, close, semicolon]. */
+  missingBody() {
+    const open = this.expect('{');
+    this.error(this.errorAnchor(), 'CS1513', '} expected');
+    return [open, null, this.missing('}'), null];
+  },
+  /**
+   * Members of a type body up to (not including) the closing brace. Tokens that cannot start a member are skipped with
+   * CS1519. `kind` is the declaration kind of the type when member rules depend on it (interfaces).
+   */
+  typeBody(owner, extension = false, kind = null) {
     const members = [],
       async = this.inAsync,
       outer = this.inExtension,
-      enclosing = this.owner;
+      enclosing = this.owner,
+      container = this.containerKind;
     this.inAsync = false;
     this.inExtension = extension;
     this.owner = owner;
+    this.containerKind = kind;
+    this.typeDepth++;
     if (!this.enter('Type nesting limit exceeded')) {
       this.leave();
+      this.typeDepth--;
       this.inAsync = async;
       this.inExtension = outer;
       this.owner = enclosing;
+      this.containerKind = container;
       return members;
     }
     while (!this.at('}') && !this.at('eof') && !this.at('namespace')) {
@@ -91,9 +115,11 @@ export const typeDeclarationMethods = {
       this.guardProgress(before);
     }
     this.leave();
+    this.typeDepth--;
     this.inAsync = async;
     this.inExtension = outer;
     this.owner = enclosing;
+    this.containerKind = container;
     return members;
   }
 };

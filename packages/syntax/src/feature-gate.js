@@ -1,15 +1,16 @@
 import { diagnostic } from '@sharpforge/text';
-import { languageFeature, featureNotAvailableCode } from './features.js';
+import { languageFeature, featureNotAvailableCode, invalidModifierMessage } from './features.js';
 import { parseLanguageVersion, displayLanguageVersion } from './langversion.js';
 import { previewRevisions } from './preview-revisions.js';
 /** Parser-side feature availability: maps a feature use and a target LangVersion to Roslyn's "feature not available" diagnostics. */
 const resolve = version => (typeof version === 'object' && version ? version : (parseLanguageVersion(version) ?? parseLanguageVersion('default')));
 /**
- * Returns { code, message } when `featureId` is unavailable at `version`, otherwise null.
+ * Returns { code, message, severity? } when `featureId` is unavailable at `version`, otherwise null. `modifier`
+ * names the modifier that needs the feature, for uses reported in the "modifier is not valid" form.
  * Released features report CS8022-CS8026, CS8059, CS8107, CS8302, CS8320, CS8370, CS8400, CS8773, CS8936, CS9058,
  * CS9202 or CS9260 according to the selected version; preview features report CS8652 with their pinned revision.
  */
-export function featureAvailability(featureId, version) {
+export function featureAvailability(featureId, version, modifier) {
   const feature = languageFeature(featureId),
     selected = resolve(version);
   if (!feature) throw new Error(`Unknown language feature '${featureId}'`);
@@ -23,6 +24,12 @@ export function featureAvailability(featureId, version) {
   if (selected.number >= feature.version) return null;
   const selectedName = displayLanguageVersion(selected.number);
   const requiredName = displayLanguageVersion(feature.version);
+  // A use that names a modifier is reported as "the modifier is not valid for this item" (CS8703), as Roslyn does.
+  if (feature.dedicatedMessage || modifier) {
+    const template = feature.dedicatedMessage ?? invalidModifierMessage,
+      message = template.replace('{0}', selectedName).replace('{1}', modifier ?? feature.modifier).replace('{2}', requiredName);
+    return { code: feature.dedicatedMessage ? feature.code : 'CS8703', severity: feature.severity, message };
+  }
   return {
     code: featureNotAvailableCode(selected.number),
     message: `Feature '${feature.name}' is not available in C# ${selectedName}. Please use language version ${requiredName} or greater.`
@@ -44,11 +51,11 @@ export function checkFeatures(source, uses, version) {
     seen = new Set(),
     diagnostics = [];
   for (const use of uses) {
-    const result = featureAvailability(use.id, selected),
-      key = use.id + ':' + use.start;
+    const result = featureAvailability(use.id, selected, use.modifier),
+      key = use.id + ':' + use.start + ':' + (use.modifier ?? '');
     if (!result || seen.has(key)) continue;
     seen.add(key);
-    diagnostics.push(diagnostic(source, use.start, Math.max(1, use.end - use.start), result.code, result.message));
+    diagnostics.push(diagnostic(source, use.start, Math.max(1, use.end - use.start), result.code, result.message, result.severity));
   }
   return diagnostics;
 }

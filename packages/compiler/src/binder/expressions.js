@@ -3,7 +3,7 @@ import {integral} from '../numeric.js';
 import {bindScalarExpression, bindScalarTyped} from './scalar-expressions.js';
 import {bindMemoryExpression, bindMemoryTyped, bindMemoryIndex} from './memory-expressions.js';
 import {numericTypeNames} from '@sharpforge/bytecode';
-import {canonicalType,frameworkType,findContracts,enumValue,eventsFor} from '@sharpforge/framework';
+import {canonicalType,frameworkType,enumValue,eventsFor} from '@sharpforge/framework';
 import {BuiltinMap} from '@sharpforge/bytecode';
 import {numeric,isReference,assignable,pathOf,typeText} from '../type-utils.js';
 import {classifyBinary} from './operators.js';

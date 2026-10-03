@@ -34,11 +34,11 @@ export class GitHubProject {
   async items() {
     const project = await this.project(), items = []; let after = null;
     do {
-      const data = await this.graphql('query Items($id:ID!,$after:String){node(id:$id){... on ProjectV2{items(first:50,after:$after){nodes{id content{... on Issue{id number title body state repository{nameWithOwner}}} fieldValues(first:100){nodes{... on ProjectV2ItemFieldTextValue{text field{... on ProjectV2Field{name}}} ... on ProjectV2ItemFieldDateValue{date field{... on ProjectV2Field{name}}} ... on ProjectV2ItemFieldSingleSelectValue{name field{... on ProjectV2SingleSelectField{name}}}}}} pageInfo{hasNextPage endCursor}}}}}', { id: project.id, after });
+      const data = await this.graphql('query Items($id:ID!,$after:String){node(id:$id){... on ProjectV2{items(first:50,after:$after){nodes{id content{... on Issue{id number title body state repository{nameWithOwner}}} fieldValues(first:100){nodes{... on ProjectV2ItemFieldNumberValue{number field{... on ProjectV2Field{name}}} ... on ProjectV2ItemFieldTextValue{text field{... on ProjectV2Field{name}}} ... on ProjectV2ItemFieldDateValue{date field{... on ProjectV2Field{name}}} ... on ProjectV2ItemFieldSingleSelectValue{name field{... on ProjectV2SingleSelectField{name}}}}}} pageInfo{hasNextPage endCursor}}}}}', { id: project.id, after });
       const connection = data.node.items;
       for (const item of connection.nodes) {
         if (item.content?.repository?.nameWithOwner !== `${this.owner}/${this.repo}`) continue;
-        items.push({ ...item, fields: Object.fromEntries(item.fieldValues.nodes.filter(v => v.field).map(v => [v.field.name, v.text ?? v.date ?? v.name])) });
+        items.push({ ...item, fields: Object.fromEntries(item.fieldValues.nodes.filter(v => v.field).map(v => [v.field.name, v.text ?? v.date ?? v.number ?? v.name])) });
       }
       after = connection.pageInfo.hasNextPage ? connection.pageInfo.endCursor : null;
     } while (after);

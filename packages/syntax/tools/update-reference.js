@@ -23,6 +23,9 @@ const dll = resolve(tool, 'bin/Release/net10.0/roslyn-tree-export.dll');
 for (const directory of ['reference', 'lexer-corpus', 'expression-corpus', 'matrix'])
   run([dll, resolve(fixtures, directory), resolve(fixtures, directory)]);
 run([dll, '--features', resolve(fixtures, 'reference/roslyn-features.json')]);
+// What Roslyn itself reports for every rejected fixture at its language version (rejected.cs.roslyn.json).
+run([dll, '--rejected', resolve(fixtures, 'matrix')]);
+run([dll, '--rejected', resolve(fixtures, 'gates')]);
 // Only the positive matrix fixtures are compared with Roslyn trees; rejected fixtures are checked by the feature gate, and
 // preview features the pinned Roslyn build does not parse (stamp.roslyn false) have no reference tree at all.
 const prune = directory => {

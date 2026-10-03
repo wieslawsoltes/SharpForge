@@ -1,3 +1,4 @@
+import {exceptionRegionEntries} from './exception-regions.js';
 import {Op, OpName} from './opcodes.js';
 import {memoryStackEffect} from './memory-verification.js';
 import {numericTypeNames,decodeNumericMode} from './numeric/numeric-types.js';
@@ -31,13 +32,14 @@ export function verifyImage(image){
   for(const m of image.methods){
     if(!(m.code instanceof Int32Array)||m.code.length%3||m.code.length>3_000_000||!Array.isArray(m.locals)||!Array.isArray(m.handlers)){fail(m,0,'Invalid code or metadata');continue;}
     const n=m.code.length/3,heights=new Map(),queue=[[0,0]];
-    for(const h of m.handlers){if(h.start<0||h.end>n||h.start>=h.end||h.target<0||h.target>=n||(h.kind==='finally'?(!Number.isInteger(h.handlerEnd)||h.handlerEnd<=h.target||h.handlerEnd>n):(h.slot<0||h.slot>=m.locals.length)))fail(m,0,'Invalid exception handler');else queue.push([h.target,0]);}
+    queue.push(...exceptionRegionEntries(m,fail));
     while(queue.length){const [pc,height]=queue.pop();if(pc<0||pc>=n){fail(m,pc,'Control flow leaves the method');continue;}if(heights.has(pc)){if(heights.get(pc)!==height)fail(m,pc,'Inconsistent stack height at join');continue;}heights.set(pc,height);
       const op=m.code[pc*3],a=m.code[pc*3+1],b=m.code[pc*3+2];let need=0,delta=0;
       const memory=memoryStackEffect(op,a,b,image.constants);
       if(memory){need=memory.need;delta=memory.delta;if(!memory.valid)fail(m,pc,'Invalid memory instruction');}
       else switch(op){
         case Op.ENUM:if(!enumTypes[a])fail(m,pc,'Invalid enum type');delta=1;break;case Op.DELEGATE:need=1;if(!image.methods[a]||frameworkType(image.constants[b])?.kind!=='delegate')fail(m,pc,'Invalid delegate');break;case Op.NOP:break;case Op.ENDFINALLY:if(height!==0)fail(m,pc,'Finally must have an empty stack');break;
+        case Op.ENDFILTER:need=1;delta=-1;if(height!==1||!m.handlers.some(h=>h.filter!==undefined&&pc>=h.filter&&pc<h.target))fail(m,pc,'Invalid filter exit');break;
         case Op.SEQ:if(!image.sequencePoints[a])fail(m,pc,'Invalid sequence point');break;
         case Op.CONST:if(a<0||a>=image.constants.length)fail(m,pc,'Invalid constant');else if(image.constants[a]?.scalar){try{decodeScalar(image.constants[a]);}catch{fail(m,pc,'Invalid scalar constant');}}delta=1;break;
         case Op.LDLOC:case Op.STLOC:if(a<0||a>=m.locals.length)fail(m,pc,'Invalid local');if(op===Op.LDLOC)delta=1;else need=1;break;
@@ -59,7 +61,7 @@ export function verifyImage(image){
         default:fail(m,pc,'Unknown opcode');continue;
       }
       if(height<need){fail(m,pc,'Stack underflow');continue;}
-      if(op===Op.RET||op===Op.THROW||op===Op.RETHROW||op===Op.ENDFINALLY)continue;
+      if(op===Op.RET||op===Op.THROW||op===Op.RETHROW||op===Op.ENDFINALLY||op===Op.ENDFILTER)continue;
       if(op===Op.JUMP||op===Op.JFALSE||op===Op.JTRUE)queue.push([a,height+delta]);
       if(op!==Op.JUMP)queue.push([pc+1,height+delta]);
     }

@@ -45,6 +45,7 @@ export const AssignmentExpressions = Base =>
         }
         case 'Assignment':
         case 'RefAssignment':
+        case 'DeconstructionAssignment':
           return this.assign(e.left, this.expr(e.right, this.target(e.left, state)));
         case 'CoalesceAssignment': {
           const after = this.expr(e.left, state),
@@ -87,6 +88,7 @@ export const AssignmentExpressions = Base =>
         }
         case 'Call':
         case 'ObjectCreation':
+        case 'ObjectInitializer':
         case 'IndexerAccess':
         case 'Bad': {
           let s = this.expr(e.receiver, state);
@@ -102,8 +104,12 @@ export const AssignmentExpressions = Base =>
             } else s = this.expr(value, s);
           }
           for (const o of outs) s = this.assign(o, s);
-          for (const i of e.initializers ?? []) s = this.expr(i.value, s);
-          for (const c of e.collectionInitializers ?? []) for (const a of c.args) s = this.expr(a, s);
+          for (const i of e.initializers ?? []) {
+            // An index initializer evaluates its arguments before its value.
+            for (const a of i.target?.args ?? i.target?.indices ?? []) s = this.expr(a.expression ?? a, s);
+            s = this.expr(i.value, s);
+          }
+          for (const c of e.collectionInitializers ?? []) s = this.expr(c, s);
           return s;
         }
         case 'Lambda': {
@@ -191,12 +197,22 @@ export const AssignmentExpressions = Base =>
           for (const a of left.args ?? []) s = this.expr(a.expression ?? a, s);
           return s;
         }
+        case 'Tuple': {
+          // The targets of a deconstruction, left to right.
+          let s = state;
+          for (const element of left.elements) s = this.target(element, s);
+          return s;
+        }
         default:
           return this.expr(left, state);
       }
     }
     assign(left, state) {
       if (!state || !left) return state;
+      if (left.kind === 'Tuple') {
+        for (const element of left.elements) this.assign(element, state);
+        return state;
+      }
       if (left.kind === 'Local' || left.kind === 'DeclarationExpression') {
         if (left.local) {
           if (left.kind === 'DeclarationExpression') this.declare(left.local);

@@ -6,6 +6,7 @@ import {canonicalType,frameworkType,enumTypes} from '@sharpforge/framework';
 import {EnumConvertBase,Op,Binary,Unary,BuiltinMap,frameworkBuiltin} from '@sharpforge/bytecode';
 import {isReference,defaultValue} from '../type-utils.js';
 import {classifyBinary,binaryMode} from '../binder/operators.js';
+import {exceptionTypeName} from '../symbols/exception-identity.js';
 /**
  * Bytecode IR generation from lowered bound trees.
  *
@@ -89,11 +90,30 @@ export class IrEmitter {
     }
   }
   tryCatch(node){
-    const start=this.pc;this.stmt(node.tryBlock);if(this.pc===start)this.emit(Op.NOP);const end=this.pc,jumps=[this.emit(Op.JUMP)];
-    for(const ca of node.catchBlocks){
-      const type=this.c.semantic.nameOf(ca.exceptionType),slot=this.temp('Exception');
-      if(ca.local){const l=this.declare(ca.local);l.scopeEnd=ca.body.syntax.end;this.handlers.push({start,end,target:this.pc,slot:l.slot,type});}else this.handlers.push({start,end,target:this.pc,slot,type});
-      this.stmt(ca.body);jumps.push(this.emit(Op.JUMP));this.closeScope(ca.local?[ca.local]:[]);
+    const start=this.pc;
+    this.stmt(node.tryBlock);
+    if(this.pc===start)this.emit(Op.NOP);
+    const end=this.pc,jumps=[this.emit(Op.JUMP)];
+    for(const clause of node.catchBlocks){
+      const type=exceptionTypeName(clause.exceptionType);
+      let slot=this.temp(this.c.semantic.nameOf(clause.exceptionType));
+      if(clause.local){
+        const local=this.declare(clause.local);
+        local.scopeEnd=clause.body.syntax.end;
+        slot=local.slot;
+      }
+      const handler={start,end,target:0,handlerEnd:0,slot,type};
+      if(clause.filter){
+        handler.filter=this.pc;
+        this.expr(clause.filter);
+        this.emit(Op.ENDFILTER);
+      }
+      handler.target=this.pc;
+      this.handlers.push(handler);
+      this.stmt(clause.body);
+      jumps.push(this.emit(Op.JUMP));
+      handler.handlerEnd=this.pc;
+      this.closeScope(clause.local?[clause.local]:[]);
     }
     for(const jump of jumps)this.patch(jump);
   }

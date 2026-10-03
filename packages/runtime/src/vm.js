@@ -1,3 +1,4 @@
+import {isFatalFault,markUnhandled} from './execution/unhandled.js';
 import {executeSourceMemory} from './execution/source-memory.js';
 import {collectAtInstruction} from './execution/gc-stress.js';
 import {faultFromException} from './execution/exception-object.js';
@@ -19,7 +20,7 @@ import { ManagedHeap, ManagedFault, isReference } from './heap.js';
 import {builtin} from './execution/source-builtins.js';
 import {literalString,stringRoots,clearStrings} from './execution/strings.js';
 import {binary,convert,unary,defaultValue,sourceEnum,enumToString,checkSourceArrayStore,runtimeTypeRoots,clearRuntimeTypes,runtimeTypeText} from './execution/source-ops.js';
-import {roots as exceptionRoots,makeFault,enterCatch,finalizers,finishReturn,transfer,resumeUnwind,handleFault,rethrow} from './execution/source-eh.js';
+import {roots as exceptionRoots,makeFault,enterCatch,finalizers,finishReturn,transfer,resumeUnwind,handleFault,rethrow,endSourceFilter} from './execution/source-eh.js';
 export class VirtualMachine {
   constructor(image,options={}){
     if(image instanceof Uint8Array||image instanceof ArrayBuffer)image=loadAssembly(image,options.assemblyLimits);
@@ -64,7 +65,7 @@ export class VirtualMachine {
       try{
         if(this.instructions>this.options.maxInstructions||continuing&&this.instructions>=this.options.maxInstructions)throw new ManagedFault('InstructionLimitException','Program exceeded its instruction budget');
         if(continuing){const result=resumeArrayOperation(this,frame,{deadline:started+timeBudgetMs,workBudget:1});count+=result.work;this.instructions+=result.work;if(result.done&&result.returns)this.stack.push(result.value);if(!result.work)break;}else switch(op){
-          case Op.ENUM:this.stack.push(sourceEnum(this,a,b));break;case Op.DELEGATE:{const receiver=this.stack.pop();this.stack.push(this.heap.withRoots([receiver],()=>this.platform.delegate(this.image.constants[b],a,receiver)));break;}case Op.SEQ:case Op.NOP:break;case Op.ENDFINALLY:this.resumeUnwind(frame);break;
+          case Op.ENUM:this.stack.push(sourceEnum(this,a,b));break;case Op.DELEGATE:{const receiver=this.stack.pop();this.stack.push(this.heap.withRoots([receiver],()=>this.platform.delegate(this.image.constants[b],a,receiver)));break;}case Op.SEQ:case Op.NOP:break;case Op.ENDFINALLY:this.resumeUnwind(frame);break;case Op.ENDFILTER:endSourceFilter(this,this.stack.pop());break;
           case Op.CONST:this.stack.push(this.constant(a));break;
           case Op.LDLOC:if(frame.locals[a]===undefined)throw new ManagedFault('InvalidProgramException','Read of uninitialized local');this.stack.push(sourceCopy(this,frame.locals[a]));break;
           case Op.STLOC:{const oldValue=frame.locals[a];frame.locals[a]=sourceStore(this,this.stack.at(-1),method.locals[a].type,sourceInputTypes(this,frame).at(-1));this.stack[this.stack.length-1]=sourceCopy(this,frame.locals[a]);this.notifyWrite({kind:'local',frameId:frame.id,index:a,value:frame.locals[a],oldValue});break;}
@@ -90,7 +91,7 @@ export class VirtualMachine {
           case Op.RETHROW:rethrow(frame);break;
           default:if(!executeSourceMemory(this,op,a,b))throw new ManagedFault('InvalidProgramException','Unknown instruction');
         }
-      }catch(error){const fault=this.makeFault(error);if(fault.fatal||fault.name==='InstructionLimitException'){this.fault=fault;this.scheduler.cancelAll({preserveCurrent:true});this.state='faulted';break;}if(this.onException?.(fault)){this.pendingFault=fault;this.state='paused';}else this.handleFault(fault);}
+      }catch(error){const fault=this.makeFault(error);if(isFatalFault(fault)){markUnhandled(this,fault);this.scheduler.cancelAll({preserveCurrent:true});break;}if(this.onException?.(fault)){this.pendingFault=fault;this.state='paused';}else this.handleFault(fault);}
       collectAtInstruction(this);
       this.scheduler.afterInstruction();
     }

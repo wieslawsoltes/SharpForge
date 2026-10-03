@@ -7,6 +7,7 @@
  *   delegates          -> a class per delegate type, numbered targets (delegates.js)
  *   patterns, switches -> sequential tests over shared evaluations   (lowering/decision-dag.js, translate-patterns.js)
  *   initialization     -> initializer methods run where .NET runs them (initialization.js)
+ *   async functions    -> a kickoff and a body on the runtime's continuation ABI (lowering/async/async-methods.js)
  *
  * A construct that needs an instruction the runtime does not have raises `UnsupportedConstruct`; the generator then
  * produces no image and names the construct, which `compile()` reports as SF2200.
@@ -16,6 +17,11 @@ import { MethodKind } from '../../symbols/members.js';
 import { isSourceSymbol } from '../../semantic/analysis-helpers.js';
 import { analyzeCaptures } from '../../lowering/closures.js';
 import { IteratorClasses, stateMachineBody } from '../../lowering/iterators.js';
+import { newHoist } from '../../lowering/iterators/try-regions.js';
+import { TASK } from '@sharpforge/framework';
+import { AsyncMethods, asyncResultType } from '../../lowering/async/async-methods.js';
+import { TupleClasses } from '../../lowering/tuples/tuple-classes.js';
+import { StructuralMembers } from '../../lowering/tuples/structural-members.js';
 import { stateMachineTypeName, stateMachineParameterProxyFieldName, thisProxyFieldName } from '../../lowering/generated-names.js';
 import { JumpIrEmitter } from './jump-emitter.js';
 import { ProgramModel } from './program-model.js';
@@ -41,6 +47,8 @@ class GeneratorCore {
     this.types = new TypeMapper(this);
     this.delegates = new DelegateClasses(this);
     this.iterators = new IteratorClasses(this);
+    this.structural = new StructuralMembers(this);
+    this.tuples = this.structural.register(new TupleClasses(this));
     this.classes = new Map();
     this.fields = new Map();
     this.methods = new Map();
@@ -113,8 +121,9 @@ class GeneratorCore {
     if (!method.isStatic) frame.thisExpr = () => n.thisReference(method.owner.name);
     return frame;
   }
-  /** Lowers one queued body and records it for emission. */
-  translate({ frame, bound, parameters = [], returnsValue = true, prologue = null }) {
+  /** Lowers one queued body and records it for emission; a queued `run` thunk lowers its body itself. */
+  translate({ frame, bound, parameters = [], returnsValue = true, prologue = null, run = null }) {
+    if (run) return run();
     const translator = new BodyTranslator(this, frame);
     const entry = translator.declareParameters(parameters);
     // `prologue(translator)` builds statements that run after the parameters are in place (a constructor initializer).
@@ -134,17 +143,19 @@ const Members = Base =>
       for (const [symbol, record] of this.methods) {
         const body = bound.get(symbol);
         if (body) {
-          if (body.binder?.isIterator || body.binder?.c?.isIterator) {
+          // The context of the body itself decides: a yield in a local function makes that function the iterator.
+          if (body.binder?.c?.isIterator) {
             this.translateIterator(symbol, record, body);
             this.drain();
             continue;
           }
           const frame = this.memberFrame(record, symbol, this.uriOf(symbol), body);
+          if (symbol.isAsync) frame.method = this.asyncBody(record, this.asyncOrigin(symbol, frame));
           this.queueBody({
             frame,
             bound: body,
             parameters: symbol.parameters,
-            returnsValue: record.returnType !== 'void',
+            returnsValue: frame.method.returnType !== 'void',
             prologue: this.prologueOf(symbol, frame),
           });
         } else this.synthesizeAccessor(symbol, record);
@@ -154,14 +165,17 @@ const Members = Base =>
     /**
      * An iterator method becomes a kickoff (the method itself: it creates the iterator object and stores the
      * arguments) and a state machine (`<M>d__N.MoveNext`) that runs the body with its locals hoisted into fields.
+     * @param [local] for an iterator local function: `{frame, extra}`, the frame of the enclosing body and the
+     *   parameters the function receives after its declared ones (the receiver and the cells of captured variables)
      */
-    translateIterator(symbol, record, bound) {
+    translateIterator(symbol, record, bound, local = null) {
       const at = symbol.locations?.[0],
-        uri = this.uriOf(symbol),
+        uri = local?.frame.uri ?? this.uriOf(symbol),
         info = this.iterators.infoOf(record.returnType);
       if (!info) return this.unsupported('an iterator method that does not return IEnumerable<T> or IEnumerator<T>', at, uri);
-      const frame = this.memberFrame(record, symbol, uri, bound),
-        machine = this.iterators.addMachine(info, stateMachineTypeName(symbol.name, frame.root.ordinal)),
+      const frame = local?.frame ?? this.memberFrame(record, symbol, uri, bound),
+        name = local ? `<${record.name}>d` : stateMachineTypeName(symbol.name, frame.root.ordinal),
+        machine = this.iterators.addMachine(info, name),
         self = () => n.parameter(n.newParameter('iterator', info.record.name, 0)),
         values = [];
       const proxy = (name, type, value) => {
@@ -176,7 +190,7 @@ const Members = Base =>
         return pair.live;
       };
       const machineFrame = new Frame({ uri, method: machine.moveNext, captures: frame.captures, root: frame.root });
-      machineFrame.hoist = { info, machine, self, labels: [], slots: 0 };
+      machineFrame.hoist = newHoist(info, machine, self);
       if (!record.isStatic) {
         const live = proxy('this', record.owner.name, () => n.thisReference(record.owner.name));
         machineFrame.thisExpr = () => n.field(self(), live);
@@ -185,11 +199,21 @@ const Members = Base =>
         const type = record.parameters[i].type;
         return proxy(p.name, type, () => n.parameter(n.newParameter(p.name, type, i)));
       });
+      (local?.extra ?? []).forEach((extra, i) => {
+        const ordinal = symbol.parameters.length + i,
+          live = proxy('<>8__' + extra.name, extra.type, () => n.parameter(n.newParameter(extra.name, extra.type, ordinal))),
+          read = () => n.field(self(), live);
+        if (extra.isThis) machineFrame.thisExpr = read;
+        else {
+          machineFrame.cells.set(extra.variable, read);
+          machineFrame.vars.set(extra.variable, () => n.field(read(), extra.cell.value));
+        }
+      });
       this.bodies.push({ method: record, body: n.block([n.returnStatement(this.iterators.create(info, machine, values))]) });
       const translator = new BodyTranslator(this, machineFrame),
         prologue = translator.hoistParameters(symbol.parameters, liveParameters),
         lowered = translator.statement(bound);
-      this.bodies.push({ method: machine.moveNext, body: stateMachineBody(info, self, machineFrame.hoist.labels, n.block([...prologue, lowered])) });
+      this.bodies.push({ method: machine.moveNext, body: stateMachineBody(machineFrame.hoist, n.block([...prologue, lowered])) });
     }
     /** The accessors of an auto-property read and write its backing field. */
     synthesizeAccessor(symbol, record) {
@@ -203,12 +227,18 @@ const Members = Base =>
       else statements.push(n.expressionStatement(n.assign(slot(), n.parameter(n.newParameter('value', field.type, 0)))));
       this.addSynthesizedBody(record, n.block(statements));
     }
-    /** `<startup>` calls the entry point; its result is the exit code. */
+    /** The machine name and declaration of an async method, for `asyncBody`. */
+    asyncOrigin(symbol, frame) {
+      return { name: stateMachineTypeName(symbol.name, frame.root.ordinal), syntax: symbol.locations?.[0] ?? null, uri: frame.uri };
+    }
+    /** `<startup>` calls the entry point and awaits a task-returning one; the result is the exit code. */
     startup(entry) {
-      const method = this.program.addMethod(null, '<startup>', { isStatic: true, returnType: entry.returnType, parameters: [] });
+      const result = asyncResultType(entry.returnType) ?? entry.returnType,
+        method = this.program.addMethod(null, '<startup>', { isStatic: true, returnType: result, parameters: [] });
       const args = entry.parameters.length ? [n.newArray('string', n.literal(0, 'int'))] : [];
-      const invocation = n.call(entry, null, args);
-      const statement = entry.returnType === 'void' ? n.expressionStatement(invocation) : n.returnStatement(invocation);
+      const call = n.call(entry, null, args),
+        invocation = result === entry.returnType ? call : this.awaitTask(call);
+      const statement = result === 'void' ? n.expressionStatement(invocation) : n.returnStatement(invocation);
       this.bodies.push({ method, body: n.block([statement]) });
       return method;
     }
@@ -218,14 +248,16 @@ const Members = Base =>
       if (tops.length > 1) return this.unsupported('top-level statements in several files');
       if (tops.length) {
         const [file, body] = tops[0];
-        const method = this.program.addMethod(null, '<Main>', {
+        const isAsync = !!body.binder?.c?.isAsync,
+          method = this.program.addMethod(null, '<Main>', {
           isStatic: true,
-          returnType: 'void',
+          returnType: isAsync ? TASK : 'void',
           parameters: [{ name: 'args', type: 'string[]' }],
           node: { uri: file.source.uri, start: 0, end: file.source.length },
           hasSource: true,
         });
         const frame = this.memberFrame(method, { name: '<Main>$' }, file.source.uri, body);
+        if (isAsync) frame.method = this.asyncBody(method, this.asyncOrigin({ name: '<Main>$' }, frame));
         this.queueBody({ frame, bound: body, parameters: body.binder?.c?.parameters ?? [], returnsValue: false });
         this.drain();
         return method;
@@ -236,7 +268,7 @@ const Members = Base =>
     }
   };
 
-export class SemanticGenerator extends Members(Initialization(Declarations(GeneratorCore))) {
+export class SemanticGenerator extends Members(AsyncMethods(Initialization(Declarations(GeneratorCore)))) {
   /**
    * Generates the image.
    * @returns {{image: object}|{unsupported: {construct: string, syntax: object|null, uri: string|null}}}
@@ -244,8 +276,7 @@ export class SemanticGenerator extends Members(Initialization(Declarations(Gener
   generate() {
     try {
       this.declareTypes();
-      this.declareTypeInitializers();
-      this.declareInstanceInitializers();
+      this.declareInitializers();
       const entry = this.entryPoint();
       this.translateMembers();
       const startup = this.startup(entry);

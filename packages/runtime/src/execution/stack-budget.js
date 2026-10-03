@@ -22,7 +22,7 @@ function storageBytes(vm, type) {
 }
 
 /** Logical managed bytes, not a claim about JavaScript engine object sizes. */
-export function frameStackBytes(vm, frame) {
+function declaredFrameBytes(vm, frame) {
   if (frame.method) {
     const method = frame.method;
     let bytes = frameHeaderBytes + method.maxStack * slotBytes;
@@ -36,6 +36,11 @@ export function frameStackBytes(vm, frame) {
   // Source locals include argument slots, so they are counted exactly once.
   for (const local of method.locals) bytes += storageBytes(vm, local.type);
   return bytes;
+}
+
+export function frameStackBytes(vm, frame) {
+  return declaredFrameBytes(vm, frame) + (frame.varargs ?? []).reduce((bytes, argument) =>
+    bytes + storageBytes(vm, argument.type.name), 0);
 }
 
 function overflow() {
@@ -59,13 +64,13 @@ export class ManagedStackBudget {
     const method = frame.method ?? this.vm.image.methods[frame.methodId];
     let bytes = this.methodSizes.get(method);
     if (bytes === undefined) {
-      bytes = frameStackBytes(this.vm, frame);
+      bytes = declaredFrameBytes(this.vm, frame);
       if (!Number.isSafeInteger(bytes) || bytes < frameHeaderBytes) {
         throw new ManagedFault('InvalidProgramException', 'Invalid managed frame size');
       }
       this.methodSizes.set(method, bytes);
     }
-    return bytes;
+    return bytes + (frame.varargs ?? []).reduce((total, argument) => total + storageBytes(this.vm, argument.type.name), 0);
   }
 
   register(frame, contextId = this.vm.scheduler?.currentId ?? 1) {

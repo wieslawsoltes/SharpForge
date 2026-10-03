@@ -1,4 +1,4 @@
-// langversion 7.3: expect CS8370 at 48 "@$\"{x}\""
+// langversion 7.3: expect CS8401 at 48 "@$\""
 class C
 {
     void M()

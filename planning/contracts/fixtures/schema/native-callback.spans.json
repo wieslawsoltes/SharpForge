@@ -1,0 +1,74 @@
+[
+  {
+    "documentId": "Program.cs",
+    "end": 100,
+    "endColumn": 87,
+    "endLine": 2,
+    "hidden": false,
+    "offset": 0,
+    "schemaVersion": 1,
+    "start": 51,
+    "startColumn": 38,
+    "startLine": 2
+  },
+  {
+    "documentId": "Program.cs",
+    "end": 115,
+    "endColumn": 102,
+    "endLine": 2,
+    "hidden": false,
+    "offset": 10,
+    "schemaVersion": 1,
+    "start": 106,
+    "startColumn": 93,
+    "startLine": 2
+  },
+  {
+    "documentId": "Program.cs",
+    "end": 122,
+    "endColumn": 109,
+    "endLine": 2,
+    "hidden": false,
+    "offset": 14,
+    "schemaVersion": 1,
+    "start": 117,
+    "startColumn": 104,
+    "startLine": 2
+  },
+  {
+    "documentId": "Program.cs",
+    "end": 144,
+    "endColumn": 131,
+    "endLine": 2,
+    "hidden": false,
+    "offset": 19,
+    "schemaVersion": 1,
+    "start": 131,
+    "startColumn": 118,
+    "startLine": 2
+  },
+  {
+    "documentId": "Program.cs",
+    "end": 127,
+    "endColumn": 114,
+    "endLine": 2,
+    "hidden": false,
+    "offset": 22,
+    "schemaVersion": 1,
+    "start": 124,
+    "startColumn": 111,
+    "startLine": 2
+  },
+  {
+    "documentId": "Program.cs",
+    "end": 174,
+    "endColumn": 161,
+    "endLine": 2,
+    "hidden": false,
+    "offset": 32,
+    "schemaVersion": 1,
+    "start": 147,
+    "startColumn": 134,
+    "startLine": 2
+  }
+]

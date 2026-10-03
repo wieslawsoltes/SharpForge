@@ -1,3 +1,4 @@
+import {validateVarargsSnapshot} from './execution/varargs-snapshot-validation.js';
 import {validateStackSnapshot} from './execution/stack-budget.js';
 import {validateMemorySnapshot} from './execution/memory-snapshot-validation.js';
 import {heapDataBytes} from './execution/snapshot-buffers.js';
@@ -149,4 +150,5 @@ export function validateSnapshotState(vm,s,engine) {
   validateAsyncSnapshot(vm,s);
   validateMemorySnapshot(vm,s);
   validateStackSnapshot(vm,s);
+  if(engine==='cil')validateVarargsSnapshot(vm,s);
 }

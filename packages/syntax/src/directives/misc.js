@@ -39,16 +39,27 @@ function lineDirective(rest, features) {
     diagnostics.push(['CS1576', 'The line number specified for #line directive is missing or invalid']);
   return { structure: { directive: 'line', mode: 'number', line: Number(number[1]), file: file?.[1] ?? null }, diagnostics };
 }
-function pragmaDirective(rest, features) {
+const checksumSyntax = 'Invalid #pragma checksum syntax; should be #pragma checksum "filename" "{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}" "XXXX..."';
+/** [offset, length] of the first word of `text` (which starts `base` characters into the directive), or of its end when it has none. */
+function wordSpan(text, base) {
+  const word = /^[ \t]*([^\s\/]+)/.exec(text);
+  return word ? [base + word[0].length - word[1].length, word[1].length] : [base, 0];
+}
+/**
+ * `#pragma warning disable|restore [codes]` and `#pragma checksum "file" "{guid}" "bytes"`. `base` is the offset of
+ * `rest` within the directive; each warning names the offending word (or the place where one is missing), as in Roslyn.
+ */
+function pragmaDirective(rest, features, base) {
   features.push('Pragma');
   const warning = /^[ \t]*warning(?![\w])(.*)$/.exec(rest);
   if (warning) {
-    const action = /^[ \t]*(disable|restore|enable)(?![\w])(.*)$/.exec(warning[1]);
+    const afterWarning = base + rest.length - warning[1].length,
+      action = /^[ \t]*(disable|restore)(?![\w])(.*)$/.exec(warning[1]);
     if (!action)
       return {
         kind: 'PragmaWarningDirectiveTrivia',
         structure: { directive: 'pragma', pragma: 'warning', action: null, codes: [] },
-        diagnostics: [['CS1634', 'Expected disable or restore', 'warning']]
+        diagnostics: [['CS1634', 'Expected disable or restore', 'warning', wordSpan(warning[1], afterWarning)]]
       };
     const list = action[2].replace(/\/\/.*$/, '').trim(),
       codes = list ? list.split(',').map(c => c.trim()) : [];
@@ -70,40 +81,23 @@ function pragmaDirective(rest, features) {
     return {
       kind: 'PragmaChecksumDirectiveTrivia',
       structure: { directive: 'pragma', pragma: 'checksum', file: checksum[1], guid: checksum[2], bytes: checksum[3] },
-      diagnostics: valid
-        ? extra(checksum[4])
-        : [
-            [
-              'CS1695',
-              'Invalid #pragma checksum syntax; should be #pragma checksum "filename" "{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}" "XXXX..."',
-              'warning'
-            ]
-          ]
+      diagnostics: valid ? extra(checksum[4]) : [['CS1695', checksumSyntax, 'warning']]
     };
   }
-  if (/^[ \t]*checksum(?![\w])/.test(rest))
+  const bare = /^[ \t]*checksum(?![\w])/.exec(rest);
+  if (bare)
     return {
       kind: 'PragmaChecksumDirectiveTrivia',
       structure: { directive: 'pragma', pragma: 'checksum', file: null, guid: null, bytes: null },
-      diagnostics: [
-        [
-          'CS1695',
-          'Invalid #pragma checksum syntax; should be #pragma checksum "filename" "{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}" "XXXX..."',
-          'warning'
-        ]
-      ]
+      diagnostics: [['CS1695', checksumSyntax, 'warning', [base + bare[0].length, 0]]]
     };
   return {
     kind: 'PragmaWarningDirectiveTrivia',
     structure: { directive: 'pragma', pragma: null },
-    diagnostics: [['CS1633', 'Unrecognized #pragma directive', 'warning']]
+    diagnostics: [['CS1633', 'Unrecognized #pragma directive', 'warning', wordSpan(rest, base)]]
   };
 }
-/**
- * Handles the non-conditional directives. `features` collects language-feature uses.
- * Returns { kind, structure, diagnostics } or null when `name` is not handled here.
- */
-export function scanMiscDirective(name, rest, features = []) {
+export function scanMiscDirective(name, rest, features = [], base = 0) {
   if (name === 'error')
     return {
       kind: 'ErrorDirectiveTrivia',
@@ -117,7 +111,7 @@ export function scanMiscDirective(name, rest, features = []) {
       diagnostics: [['CS1030', `#warning: '${rest.trim()}'`, 'warning']]
     };
   if (name === 'line') return { kind: 'LineDirectiveTrivia', ...lineDirective(rest, features) };
-  if (name === 'pragma') return pragmaDirective(rest, features);
+  if (name === 'pragma') return pragmaDirective(rest, features, base);
   if (name === 'nullable') {
     features.push('NullableReferenceTypes');
     const setting = /^[ \t]*(enable|disable|restore)(?![\w])(.*)$/.exec(rest);

@@ -22,6 +22,15 @@ import {fixtures as structAssignment} from './fixtures/struct-assignment.js';
 import {fixtures as usings} from './fixtures/usings.js';
 import {fixtures as lowering} from './fixtures/lowering.js';
 import {fixtures as featureGates} from './fixtures/feature-gates.js';
+import {fixtures as iteratorDisposal} from './fixtures/iterator-disposal.js';
+import {fixtures as exceptionHandling} from './fixtures/exception-handling.js';
+import {fixtures as asyncLowering} from './fixtures/async-lowering.js';
+import {fixtures as asyncStreams} from './fixtures/async-streams.js';
+import {fixtures as queryFixtures} from './fixtures/queries.js';
+import {fixtures as foreachPatterns} from './fixtures/foreach-patterns.js';
+import {fixtures as tupleLowering} from './fixtures/tuple-lowering.js';
+import {fixtures as deconstruction} from './fixtures/deconstruction.js';
+import {fixtures as members} from './fixtures/members.js';
 
 /** Directory of the differential harness. */
 export const root=dirname(fileURLToPath(import.meta.url));
@@ -35,7 +44,7 @@ export function fixtureHash(fixture){return createHash('sha256').update((fixture
 
 /** Every fixture `{id,feature,kind,langVersion?,source}`, validated for unique ids and well-formed fields. */
 export function loadFixtures(){
-  const all=[...basics,...flow,...types,...library,...profileFlow,...typeSystem,...refSafety,...extensionMethods,...nullableLoops,...structAssignment,...usings,...lowering,...featureGates],seen=new Set();
+  const all=[...basics,...flow,...types,...library,...profileFlow,...typeSystem,...refSafety,...extensionMethods,...nullableLoops,...structAssignment,...usings,...lowering,...featureGates,...iteratorDisposal,...exceptionHandling,...asyncLowering,...asyncStreams,...tupleLowering,...deconstruction,...members,...queryFixtures,...foreachPatterns],seen=new Set();
   for(const f of all){
     if(typeof f.id!=='string'||!/^[a-z0-9-]+\/[a-z0-9-]+$/.test(f.id))throw new Error(`Invalid fixture id ${JSON.stringify(f.id)}`);
     if(seen.has(f.id))throw new Error(`Duplicate fixture id ${f.id}`);seen.add(f.id);

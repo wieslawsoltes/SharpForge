@@ -1,14 +1,6 @@
 import { Precedence, binaryOperators, assignmentOperators, prefixOperators } from '../lexer/operators.js';
 /** Expression parsing by precedence climbing: assignment, conditional, binary, unary, postfix and primary forms. */
-const P = Precedence,
-  literalKinds = {
-    NumericLiteralToken: 'NumericLiteralExpression',
-    CharacterLiteralToken: 'CharacterLiteralExpression',
-    TrueKeyword: 'TrueLiteralExpression',
-    FalseKeyword: 'FalseLiteralExpression',
-    NullKeyword: 'NullLiteralExpression',
-    ArgListKeyword: 'ArgListExpression'
-  };
+const P = Precedence;
 export const expressionMethods = {
   missingName() {
     return this.n('IdentifierName', this.cache.missing('IdentifierToken'));
@@ -33,35 +25,39 @@ export const expressionMethods = {
       this.skip();
       return this.missingName();
     }
-    const left = this.binary(this.unary(min), min);
+    const start = this.i,
+      left = this.binary(this.unary(min), min, start);
     this.leave();
     return left;
   },
-  binary(left, min) {
+  /** Extends `left`, whose tokens start at index `start`, with the binary, conditional and assignment operators that bind at least as tightly as `min`. */
+  binary(left, min, start) {
     for (;;) {
       const operator = this.operatorAt(),
         text = operator.text,
-        start = this.current;
+        operatorToken = this.current;
       if (assignmentOperators[text]) {
         if (min > P.Assignment) break;
-        const token = this.takeOperator(operator);
-        if (text === '??=') this.feature('CoalesceAssignmentExpression', start);
-        else if (text === '>>>=') this.feature('UnsignedRightShift', start, this.tokens[this.i - 1]);
+        const token = this.takeOperator(operator),
+          target = left;
+        if (text === '??=') this.feature('CoalesceAssignmentExpression', operatorToken);
         left = this.n(
           assignmentOperators[text],
           left,
           token,
           text === '=' && this.at('ref') ? this.expressionOrRef() : this.expression(P.Assignment)
         );
+        if (text === '=' && target.kind === 'TupleExpression') this.mixedDeconstruction(target, start);
+        else if (text === '>>>=') this.unsignedRightShiftExpression(start);
         continue;
       }
       if (text === '?') {
         if (min > P.Conditional) break;
         const question = this.take();
         this.colonDepth = (this.colonDepth ?? 0) + 1;
-        const whenTrue = this.expressionOrRef();
+        const whenTrue = this.expressionOrThrow();
         this.colonDepth--;
-        left = this.n('ConditionalExpression', left, question, whenTrue, this.expect(':'), this.expressionOrRef());
+        left = this.n('ConditionalExpression', left, question, whenTrue, this.expect(':'), this.expressionOrThrow());
         continue;
       }
       if (text === 'switch') {
@@ -71,9 +67,7 @@ export const expressionMethods = {
       }
       if (text === '..') {
         if (min > P.Range) break;
-        this.feature('RangeOperator', start);
-        const token = this.take();
-        left = this.n('RangeExpression', left, token, this.canStartExpression() ? this.expression(P.Unary) : null);
+        left = this.rangeExpression(left, start);
         continue;
       }
       if (this.isWithExpression()) {
@@ -92,9 +86,9 @@ export const expressionMethods = {
         left = this.n('AsExpression', left, this.take(), this.type('afterIs'));
         continue;
       }
-      if (text === '>>>') this.feature('UnsignedRightShift', start, this.tokens[this.i + operator.count - 1]);
       const token = this.takeOperator(operator);
-      left = this.n(kind, left, token, this.expression(text === '??' ? precedence : precedence + 1));
+      left = this.n(kind, left, token, text === '??' ? this.coalesceOperand(precedence) : this.expression(precedence + 1));
+      if (text === '>>>') this.unsignedRightShiftExpression(start);
     }
     return left;
   },
@@ -105,15 +99,11 @@ export const expressionMethods = {
       const lambda = this.anonymousFunction(min);
       if (lambda) return lambda;
     }
+    if (kind === '^') return this.indexExpression();
+    if (kind === '..') return this.rangeExpression(null);
     if (Object.hasOwn(prefixOperators, kind)) {
-      if (kind === '^') this.feature('IndexOperator', token);
       const operator = this.take();
       return this.n(prefixOperators[kind], operator, this.expression(P.Unary));
-    }
-    if (kind === '..') {
-      this.feature('RangeOperator', token);
-      const operator = this.take();
-      return this.n('RangeExpression', null, operator, this.canStartExpression() ? this.expression(P.Unary) : null);
     }
     if (kind === 'await' && this.isAwaitExpression()) return this.awaitExpression();
     if (kind === '(' && this.isCast()) {
@@ -122,10 +112,7 @@ export const expressionMethods = {
         close = this.expect(')');
       return this.n('CastExpression', open, type, close, this.expression(P.Cast));
     }
-    if (kind === 'throw') {
-      this.feature('ThrowExpression', token);
-      return this.n('ThrowExpression', this.take(), this.expression(P.Coalescing));
-    }
+    if (kind === 'throw') return this.throwExpression(false, min);
     if (kind === 'ref') return this.n('RefExpression', this.take(), this.expression());
     return this.postfix(this.primary(min), min);
   },
@@ -137,11 +124,11 @@ export const expressionMethods = {
     if (info.must) return true;
     const next = this.tokens[Math.min(end + 1, this.tokens.length - 1)],
       kind = next.kind;
+    if (kind === '[') return this.isCollectionCast(info);
     if (
       kind === 'is' ||
       kind === 'as' ||
       kind === 'switch' ||
-      kind === '[' ||
       (kind === 'await' && !this.canStartExpression(this.tokens[Math.min(end + 2, this.tokens.length - 1)]))
     )
       return false;
@@ -199,17 +186,11 @@ export const expressionMethods = {
     const token = this.current,
       kind = token.kind;
     if (kind === 'interpolated') return this.interpolatedString();
-    if (Object.hasOwn(literalKinds, token.syntaxKind)) return this.n(literalKinds[token.syntaxKind], this.take());
-    if (token.syntaxKind.endsWith('StringLiteralToken'))
-      return this.n(token.flags?.utf8 ? 'Utf8StringLiteralExpression' : 'StringLiteralExpression', this.take());
+    const literal = this.literalExpression();
+    if (literal) return literal;
     switch (kind) {
       case 'default':
-        if (this.peek().kind === '(') {
-          this.feature('Default', token);
-          return this.n('DefaultExpression', this.take(), this.take(), this.type(), this.expect(')'));
-        }
-        this.feature('DefaultLiteral', token);
-        return this.n('DefaultLiteralExpression', this.take());
+        return this.defaultExpression();
       case 'typeof':
         return this.n('TypeOfExpression', this.take(), this.expect('('), this.type(), this.expect(')'));
       case 'sizeof':
@@ -243,7 +224,11 @@ export const expressionMethods = {
   },
   predefinedOrName() {
     const token = this.current;
-    if (this.isPredefined(token)) return this.n('PredefinedType', this.take());
+    if (this.isPredefined(token)) {
+      // A predefined type is an expression only as the receiver of a member access (`int.Parse`).
+      if (this.peek().kind !== '.') this.error(token, 'CS1525', `Invalid expression term '${token.text}'`);
+      return this.n('PredefinedType', this.take());
+    }
     if (this.isWord(token, 'from') && this.isQueryStart()) return this.queryExpression();
     if (this.isWord(token, 'var') && this.peek().kind === '(' && this.isDeconstructionAhead()) return this.declarationExpression();
     if (this.peek().kind === '::') {
@@ -251,6 +236,7 @@ export const expressionMethods = {
       const alias = this.n('IdentifierName', this.atWord('global') ? this.takeWord('global') : this.id());
       return this.n('AliasQualifiedName', alias, this.take(), this.simpleName(false));
     }
+    if (this.fieldKeyword && this.isFieldExpression()) return this.fieldExpression();
     return this.simpleName(false);
   }
 };

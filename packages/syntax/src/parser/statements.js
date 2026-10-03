@@ -40,7 +40,9 @@ export const statementMethods = {
       statements = [],
       saved = this.colonDepth,
       tuple = this.tupleContext,
-      declaration = this.declarationContext;
+      declaration = this.declarationContext,
+      restricted = this.restrictedVariables;
+    this.restrictedVariables = false;
     this.colonDepth = 0;
     this.tupleContext = false;
     this.declarationContext = 0;
@@ -61,6 +63,7 @@ export const statementMethods = {
     this.colonDepth = saved;
     this.tupleContext = tuple;
     this.declarationContext = declaration;
+    this.restrictedVariables = restricted;
     return this.n('Block', attributeLists, open, statements, this.expect('}'));
   },
   /** Parses one statement. `attributeLists` may be supplied by a caller that already consumed them. */
@@ -70,7 +73,10 @@ export const statementMethods = {
       this.skipRest();
       return this.n('EmptyStatement', attributeLists, this.cache.missing('SemicolonToken'));
     }
-    attributeLists ??= this.at('[') && this.isAttributeListAhead() ? this.attributeLists() : null;
+    if (!attributeLists) {
+      this.statementStart = this.i;
+      if (this.at('[') && this.isAttributeListAhead()) attributeLists = this.attributeLists();
+    }
     const result = this.statementCore(attributeLists);
     this.leave();
     return result;
@@ -115,34 +121,15 @@ export const statementMethods = {
     const condition = this.expression();
     return this.n('DoStatement', attributeLists, keyword, body, whileKeyword, open, condition, this.expect(')'), this.expect(';'));
   },
-  /** `await using` and `await foreach` (C# 8); null when `await` starts an expression. */
-  awaitStatement(attributeLists) {
-    const token = this.current;
-    const next = this.peek().kind;
-    if (next !== 'using' && next !== 'foreach') return null;
-    this.feature('AsyncStreams', token);
-    const awaitKeyword = this.takeWord('await');
-    return next === 'using' ? this.usingStatement(attributeLists, awaitKeyword) : this.forEachStatement(attributeLists, awaitKeyword);
-  },
-  usingStatement(attrs, awaitKeyword) {
-    const keyword = this.take();
-    if (!this.at('(')) {
-      this.feature('UsingDeclarations', this.tokens[this.i - 1]);
-      return this.localDeclaration(attrs, awaitKeyword, keyword);
-    }
-    const open = this.take(),
-      declaration = this.isLocalDeclaration() ? this.variableDeclaration() : null,
-      expression = declaration ? null : this.expression();
-    return this.n('UsingStatement', attrs, awaitKeyword, keyword, open, declaration, expression, this.expect(')'), this.embedded());
-  },
+  /** `foreach (T x in e)`, or the deconstructing form `foreach (var (a, b) in e)` when no `type identifier` pair starts the header. */
   forEachStatement(attrs, awaitKeyword) {
     const keyword = this.take(),
       open = this.expect('('),
       end = this.scanType(this.i);
-    if (end > this.i && this.isId(this.tokens[end]) && this.kindAt(end + 1) === 'in') {
+    if (end > this.i && this.isId(this.tokens[end]) && this.kindAt(end) !== 'in') {
       const type = this.type(),
         identifier = this.id(),
-        inKeyword = this.take();
+        inKeyword = this.expectIn();
       return this.n(
         'ForEachStatement',
         attrs,
@@ -167,10 +154,15 @@ export const statementMethods = {
       keyword,
       open,
       variable,
-      this.expect('in'),
+      this.expectIn(),
       this.expression(),
       this.expect(')'),
       this.embedded()
     );
+  },
+  expectIn() {
+    if (this.at('in')) return this.take();
+    this.error(this.errorAnchor(), 'CS1515', "'in' expected");
+    return this.missing('in');
   }
 };

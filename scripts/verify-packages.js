@@ -1,105 +1,90 @@
+/** Install every workspace tarball offline and execute package-owned smoke contributions. */
+import {mkdir, mkdtemp, writeFile, readFile, rm, cp, stat, readdir} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {resolve, join} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {spawnSync} from 'node:child_process';
 import {npmCli} from './conformance/node-tools.js';
 import {resultPath} from './conformance/results.js';
-/** Pack every workspace, install the tarballs in an isolated offline project,
- * import every public entry point, then compile/load/execute a real DLL there.
- */
-import { mkdir,readdir,mkdtemp,writeFile,readFile,rm } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
-import { resolve,join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { spawnSync } from 'node:child_process';
-const root=fileURLToPath(new URL('../',import.meta.url));
-function run(command,args,cwd=root){const result=spawnSync(command==='npm'?process.execPath:command,command==='npm'?[npmCli(),...args]:args,{cwd,encoding:'utf8',timeout:120000});if(result.error||result.status!==0)throw new Error(`${command} failed: ${result.error?.message??result.stderr}\n${result.stdout}`);return result.stdout;}
-const artifacts=join(root,'artifacts');await mkdir(artifacts,{recursive:true});
-for(const name of await readdir(artifacts))if(name.endsWith('.tgz'))await rm(join(artifacts,name));
-run('npm',['pack','--workspaces','--ignore-scripts','--pack-destination',artifacts,'--json']);
-const tarballs=(await readdir(artifacts)).filter(n=>n.endsWith('.tgz')).sort();if(tarballs.length!==25)throw new Error('Expected twenty-five package tarballs');
-const directory=await mkdtemp(join(tmpdir(),'sharpforge-packages-'));
-try{
- await writeFile(join(directory,'package.json'),JSON.stringify({name:'sharpforge-isolated-smoke',version:'1.0.0',private:true,type:'module'}));
- run('npm',['install','--offline','--ignore-scripts','--no-audit','--no-fund',...tarballs.map(n=>join(artifacts,n))],directory);
- const script=`import assert from 'node:assert/strict';
-const names=['text','syntax','bytecode','cil','compiler','runtime','debugger','workspace','language','protocol','editor','refactoring','extensions','project-system','docking','msbuild','controls','symbols','framework','winui','archive','templates','designer','compute','network'];
-const packages={};for(const name of names){const api=await import('@sharpforge/'+name);packages[name]=Object.keys(api).length;assert.ok(packages[name]>0);}
-const {compileToIL}=await import('@sharpforge/compiler');const {loadAssembly,formatAssembly}=await import('@sharpforge/cil');const {VirtualMachine}=await import('@sharpforge/runtime');
-const source='Console.WriteLine(6 * 7);',result=compileToIL(source,{name:'Isolated'});assert.equal(result.success,true,JSON.stringify(result.diagnostics));assert.deepEqual(Array.from(result.assembly.slice(0,2)),[77,90]);
-const executable=loadAssembly(result.assembly),vm=new VirtualMachine(executable),execution=vm.run();assert.equal(execution.output,'42\\n');assert.equal(execution.fault,null);assert.match(formatAssembly(result.assembly),/System.Console::WriteLine/);
-const direct=new VirtualMachine(result.assembly).run();assert.equal(direct.output,'42\\n');
-const {CilVirtualMachine}=await import('@sharpforge/runtime');const {AssemblyInspector,formatILDocument,assembleILDocument}=await import('@sharpforge/cil');
-const ordinary=compileToIL(source,{includeDebug:false}).assembly;assert.equal(new AssemblyInspector(ordinary).metadata.streams.has('#SF'),false);assert.equal(new CilVirtualMachine(ordinary).run().output,'42\\n');assert.equal(new CilVirtualMachine(assembleILDocument(formatILDocument(ordinary)).bytes).run().output,'42\\n');
-const {Workspace}=await import('@sharpforge/workspace');const {ExtensionDriver,BuildInfoGenerator}=await import('@sharpforge/extensions');const {RefactoringEngine}=await import('@sharpforge/refactoring');
-const ws=new Workspace({extensions:new ExtensionDriver().registerGenerator(BuildInfoGenerator),extensionOptions:{version:'isolated'}});ws.update('Program.cs','Console.WriteLine(GeneratedBuildInfo.Version());',1);const generated=ws.compile();assert(generated.success);assert.equal(new VirtualMachine(generated.image).run().output,'isolated\\n');
-const edits=new Workspace();edits.update('Program.cs','var count=42; Console.WriteLine(count);',1);const engine=new RefactoringEngine(edits);const actions=engine.actions('Program.cs',5);assert(actions.length);engine.apply(actions[0]);assert.match(edits.documents.get('Program.cs').source.text,/int count/);
-
-const {ProjectSystem,createCsproj}=await import('@sharpforge/project-system');const project=new ProjectSystem([{path:'Demo.csproj',text:createCsproj({outputType:'Exe',files:['Program.cs']})},{path:'Program.cs',text:source}]);const loaded=project.load('Demo.csproj');assert.equal(loaded.projects.length,1);assert.equal(project.compilationFiles('Demo.csproj').length,1);
-const {DockLayout}=await import('@sharpforge/docking');const dock=new DockLayout([{id:'editor',kind:'document'},{id:'output',kind:'tool'}]);dock.open('editor');dock.dockRoot('output','bottom');dock.float('output');dock.undo();assert.equal(dock.state.floating.length,0);dock.validate(dock.snapshot());
-const {findTextMatches}=await import('@sharpforge/text');assert.equal(findTextMatches([{uri:'a.cs',text:'İ x X'}],'x').matches[0].start,2);
-const library=compileToIL('class Library {public static int Bias=40;public static int Add(int a,int b){return a+b+Bias;}}',{outputKind:'library'});assert(library.success);assert.equal(new CilVirtualMachine(library.assembly,{methodToken:'Library::Add',arguments:[1,1]}).run().returnValue,42);
-const {CilDebugSession}=await import('@sharpforge/debugger');const ds=new CilDebugSession(ordinary);ds.start();ds.runUntilStop();assert.equal(ds.reason.reason,'entry');assert(ds.disassemble(ds.stackTrace()[0].instructionPointerReference).length);ds.resume();ds.runUntilStop();assert.equal(ds.vm.output.join(''),'42\\n');
-const {ProtocolMessageReader,encodeProtocolMessage}=await import('@sharpforge/protocol');const reader=new ProtocolMessageReader();assert.deepEqual(reader.feed(encodeProtocolMessage({id:1,result:'😀'})),[{id:1,result:'😀'}]);
-const {readFileSync}=await import('node:fs');assert(readFileSync(new URL(import.meta.resolve('@sharpforge/editor/editor.css')),'utf8').includes('.sf-editor'));
-const props=compileToIL('class P { public int X{get;set;}=7; } int F(){try{return new P().X;}finally{Console.WriteLine(1);}} Console.WriteLine(F());');assert(props.success);assert.equal(new CilVirtualMachine(props.assembly).run().output,'1\\n7\\n');
-
-const checkedSource='class Lease:IDisposable{public void Dispose(){Console.WriteLine("disposed");}} using var lease=new Lease();int x=2147483647;try{Console.WriteLine(checked(x+1));}catch(Exception e){Console.WriteLine(42);}';
-const checkedIL=compileToIL(checkedSource);assert(checkedIL.success,JSON.stringify(checkedIL.diagnostics));for(const bytes of [checkedIL.assembly,assembleILDocument(formatILDocument(checkedIL.assembly)).bytes])assert.equal(new CilVirtualMachine(bytes).run().output,'42\\ndisposed\\n');assert.equal(new VirtualMachine(checkedIL.assembly).run().output,'42\\ndisposed\\n');
-const replay=new CilDebugSession(ordinary,{recordHistory:true});replay.start();replay.runUntilStop();replay.resume();replay.runUntilStop();replay.stepBack();assert.equal(replay.vm.state,'paused');replay.reverseContinue();assert.equal(replay.vm.instructions,0);replay.resume();replay.runUntilStop();assert.equal(replay.vm.output.join(''),'42\\n');
-const {SyntaxHighlightIndex,NavigationHistory}=await import('@sharpforge/editor');const index=new SyntaxHighlightIndex('int x=1;\\n'.repeat(5000)),view=index.window({scrollTop:22000,height:440});assert(view.characters<1000);assert(view.firstLine>900);const history=new NavigationHistory();history.push({uri:'A.cs',start:1,end:1});history.push({uri:'B.cs',start:2,end:4});assert.equal(history.back().uri,'A.cs');
-const {JsonSchemaGenerator,UnreachableStatementAnalyzer}=await import('@sharpforge/extensions');const immutable=new Workspace({extensions:new ExtensionDriver().registerGenerator(JsonSchemaGenerator).registerAnalyzer(UnreachableStatementAnalyzer),additionalFiles:[{uri:'row.schema.json',text:JSON.stringify({name:'Row',immutable:true,fields:[{name:'Value',type:'int'}]})}]});immutable.update('Program.cs','var row=new Row(42);Console.WriteLine(row.Value);',1);const model=immutable.compile();assert(model.success,JSON.stringify(model.diagnostics));assert.equal(new CilVirtualMachine(compileToIL([...immutable.documents.values()].map(d=>d.source).concat(model.generatedSources.map(d=>({uri:d.uri,text:d.text})))).assembly).run().output,'42\\n');
-assert.equal(typeof project.compilationOptions('Demo.csproj').checkOverflow,'boolean');
-const {TreeModel,CommandRegistry}=await import('@sharpforge/controls');const tree=new TreeModel([{id:'root',defaultExpanded:true,children:[{id:'a',label:'A.cs'}]}]);assert.equal(tree.rows().length,2);tree.select('a');assert(tree.selected.has('a'));const commands=new CommandRegistry();commands.register({id:'answer',label:'Answer',execute:()=>42});assert.equal(await commands.execute('answer'),42);
-const {EDITOR_KEYMAPS}=await import('@sharpforge/editor');assert.equal(EDITOR_KEYMAPS.length,5);assert.equal(EDITOR_KEYMAPS[0].id,'visual-studio');assert(readFileSync(new URL(import.meta.resolve('@sharpforge/editor/classic.css')),'utf8').includes('.CodeMirror'));assert(readFileSync(new URL(import.meta.resolve('@sharpforge/controls/controls.css')),'utf8').includes('.sf-tree'));
-const {addSolutionProject,parseXml,editProjectMembership,buildSolutionTree}=await import('@sharpforge/project-system');const added=addSolutionProject('<Solution><Folder Name="/src/" /></Solution>',{solutionPath:'A.slnx',projectPath:'App/App.csproj',folder:'src'});assert.equal(parseXml(added).children.length,1);assert.equal(buildSolutionTree({files:[{path:'A.cs'}]}).length,1);
-const {remapSourceBreakpoints}=await import('@sharpforge/debugger');assert.equal(remapSourceBreakpoints('int x=1;','// comment\\nint x=1;',[{line:1}])[0].line,2);
-const {normalizeBuildRequest}=await import('@sharpforge/msbuild');const {NativeWorkspace,NativeMSBuild}=await import('@sharpforge/msbuild/node');assert.equal(normalizeBuildRequest({project:'Demo.csproj'}).trusted,false);assert.equal(typeof NativeWorkspace.open,'function');assert.equal(typeof NativeMSBuild.prototype.start,'function');
-
-// 0.9 assertions run against installed tarballs only (no source-workspace imports).
-const {DebugSession,SourceBreakpointIndex}=await import('@sharpforge/debugger');
-const debugIL=compileToIL('for(int i=0;i<3;i++){\\nConsole.WriteLine(i);\\n}');assert(debugIL.success);
-for(const Session of [DebugSession,CilDebugSession]){const dbg=new Session(debugIL.assembly,{recordHistory:true});assert(dbg.setBreakpoints('Program.cs',[{line:2}])[0].verified);dbg.start(false);dbg.runUntilStop();assert.equal(dbg.reason.reason,'breakpoint');assert.equal(dbg.evaluate('i').result,'0');assert.equal(dbg.vm.output.join(''),'');dbg.resume('continue');dbg.runUntilStop();assert.equal(dbg.evaluate('i').result,'1');dbg.reverseContinue();assert.equal(dbg.evaluate('i').result,'0');assert.equal(dbg.breakpoints[0].hits,1);}
-const locationIndex=new SourceBreakpointIndex(loadAssembly(debugIL.assembly));assert.equal(locationIndex.resolve('Program.cs',{line:2}).point.line,2);
-const {DebugAdapter}=await import('@sharpforge/protocol');const adapter09=new DebugAdapter();let seq09=0;for(const [command,args] of [['initialize',{}],['launch',{assembly:debugIL.assembly}],['setBreakpoints',{source:{path:'Program.cs'},breakpoints:[{line:2}]}]]){assert((await adapter09.handle({seq:++seq09,type:'request',command,arguments:args})).success);}adapter09.pump();assert.notEqual(adapter09.session.vm.state,'paused');assert((await adapter09.handle({seq:++seq09,type:'request',command:'configurationDone',arguments:{}})).success);adapter09.pump();assert.equal(adapter09.session.reason.reason,'breakpoint');
-
-
-// 0.10 public APIs execute from installed packages, not workspace symlinks.
-const {readPortablePdb,loadSymbols,bindSources}=await import('@sharpforge/symbols');
-assert.equal(bindSources(loadSymbols(result.assembly,result.pdb)).documents[0].verified,true);
-const {frameworkManifest,findContracts}=await import('@sharpforge/framework');assert(frameworkManifest.types.length>40);assert(findContracts('Microsoft.UI.Xaml.Controls.Button','.ctor').length);
-const {WinUIHost,RenderSurface,createWinUIApp}=await import('@sharpforge/winui');assert.equal(typeof WinUIHost,'function');assert.equal(typeof RenderSurface,'function');assert.equal(typeof createWinUIApp,'function');
-const ac=compileToIL('using System.Threading.Tasks;class P{static async Task Main(){await Task.Delay(1);Console.WriteLine(42);}}');assert(ac.success);assert.equal((await new CilVirtualMachine(ac.assembly,{virtualTime:true}).runAsync()).output,'42\\n');
-const uc=compileToIL('using Microsoft.UI.Xaml;using Microsoft.UI.Xaml.Controls;Window w=new Window(){Content=new Button(){Content="Hi"}};w.Activate();');assert(uc.success,JSON.stringify(uc.diagnostics));const uv=new CilVirtualMachine(uc.assembly);uv.run();assert.equal(uv.platform.scene().windows.length,1);
-const reloc=compileToIL('int x=20;\\nx=x+22;\\nConsole.WriteLine(x);'),rd=new DebugSession(reloc.image);rd.setBreakpoints('Program.cs',[{line:2}]);rd.start(false);rd.runUntilStop();rd.setNextStatement({uri:'Program.cs',line:3});rd.resume();rd.runUntilStop();assert.equal(rd.vm.output.join(''),'20\\n');
-
-const {createProjectPlan}=await import('@sharpforge/templates');const {exportWorkspaceZip,importWorkspaceZip}=await import('@sharpforge/project-system');const {readZip}=await import('@sharpforge/archive');const plan=createProjectPlan('console-library-solution',{projectName:'Packed'});const zip=exportWorkspaceZip({records:plan.records,folders:plan.folders,settings:{entry:plan.entry,startup:plan.startup}});assert(readZip(zip).length>5);const restored=importWorkspaceZip(zip),loadedSystem=new ProjectSystem(restored.records);loadedSystem.load(restored.settings.entry);const generatedApp=compileToIL(loadedSystem.compilationFiles(restored.settings.startup));assert(generatedApp.success);assert.equal(new CilVirtualMachine(generatedApp.assembly).run().output,'42\\n');
-// 0.12: independently installed designer code generation and structural EnC.
-const {createDesign,DesignDocument,generateDesignProject,designFromScene,designPatch}=await import('@sharpforge/designer');
-const {applyDesignPatch}=await import('@sharpforge/runtime');
-const design=new DesignDocument(createDesign('Packaged designer'));
-design.add('NumberBox','canvas',{Value:42});
-const dc=compileToIL(generateDesignProject(design.value).filter(r=>r.path.endsWith('.cs')).map(r=>({uri:r.path,text:r.text})));assert(dc.success,JSON.stringify(dc.diagnostics));
-for(const Session of [DebugSession,CilDebugSession]){const ds=new Session(Session===DebugSession?dc.image:dc.assembly);ds.start(false);ds.runUntilStop();const prior=designFromScene(ds.vm.platform.scene()),changed=new DesignDocument(prior);const button=prior.nodes.find(n=>n.properties.Name==='ActionButton');changed.setProperty('Width',234,[button.id]);applyDesignPatch(ds,designPatch(prior,changed.value));assert.equal(ds.vm.platform.scene().nodes.find(n=>n.id===button.runtimeId).properties.Width,234);}
-const initial='class P { static int A(int x){return x+1;} static void Main(){\\nint x=2;\\nConsole.WriteLine(A(x));\\n}}';const es=new DebugSession(compileToIL(initial).image);es.setBreakpoints('Program.cs',[{line:3}]);es.start(false);es.runUntilStop();const updated=initial.replace('return x+1;','return B(x);').replace('static void Main()','static int B(int x){return x*21;} static void Main()');assert.equal(es.applyChanges(compileToIL(updated).image).summary.addedMethods,1);es.setBreakpoints('Program.cs',[]);es.resume();assert.equal(es.runUntilStop().output,'42\\n');
-// 0.13: installed source synchronizer, closed BCL and shared timeline implementation.
-const {CSharpDesignSession,generateDesignCode}=await import('@sharpforge/designer');
-const linked=new CSharpDesignSession(generateDesignCode(design.value));const editDesign=new DesignDocument(linked.document);editDesign.setProperty('Width',279,['action']);const sourcePlan=linked.plan(editDesign.value);assert(sourcePlan.text.includes('279'));linked.commit(sourcePlan);assert.equal(linked.document.nodes.find(n=>n.id==='action').properties.Width,279);
-const bc=compileToIL('using System.Collections.Generic;using System.Text;var a=new List<int>() {3,1,2};a.Sort();var s=new StringBuilder();foreach(var i in a)s.Append($"{i:D2}");Console.WriteLine(s.ToString());');assert(bc.success,JSON.stringify(bc.diagnostics));assert.equal(new VirtualMachine(bc.image).run().output,'010203\\n');assert.equal(new CilVirtualMachine(bc.assembly).run().output,'010203\\n');
-const animation=compileToIL('using System;using Microsoft.UI.Xaml;using Microsoft.UI.Xaml.Controls;using Microsoft.UI.Xaml.Media.Animation;var b=new Button();var a=new DoubleAnimation(){From=0,To=1,Duration=new Duration(TimeSpan.FromSeconds(1))};Storyboard.SetTarget(a,b);Storyboard.SetTargetProperty(a,"Opacity");var s=new Storyboard();s.Children.Add(a);s.Begin();SharpForge.UI.AnimationClock.AdvanceBy(500);Console.WriteLine(b.Opacity);');assert(animation.success,JSON.stringify(animation.diagnostics));for(const VM of [VirtualMachine,CilVirtualMachine])assert.equal(new VM(VM===VirtualMachine?animation.image:animation.assembly).run().output,'0.5\\n');
-// 0.14: real installed WASM kernels, worker_threads, BCL and network transports.
-const {createSimdEngine,ComputePool}=await import('@sharpforge/compute');
-const simd14=createSimdEngine({backend:'wasm'});assert.equal(simd14.backend,'wasm-simd128');assert.equal(simd14.execute('sum',new Float64Array([20,22])),42);
-const pool14=new ComputePool({workers:2});try{await pool14.init();const values=await Promise.all([pool14.execute('sum',new Float64Array([10,11])),pool14.execute('sum',new Float64Array([20,22]))]);assert.deepEqual(values,[21,42]);assert.equal((await pool14.capabilities()).slots.length,2);}finally{pool14.dispose();}
-const lc14=compileToIL('using System.Collections.Generic;List<int> a=[with(capacity: 8),1,2,3];Console.WriteLine(a.Count);',{langVersion:'preview'});assert(lc14.success,JSON.stringify(lc14.diagnostics));assert.equal(new CilVirtualMachine(lc14.assembly).run().output,'3\\n');
-const jc14=compileToIL('using System.Text.Json;Console.WriteLine(JsonSerializer.Serialize(new int[]{20,22}));');assert(jc14.success);assert.equal(new VirtualMachine(jc14.image).run().output,'[20,22]\\n');
-const {NetworkPolicy,HttpTransport,WebSocketClient,createBrowserCsp}=await import('@sharpforge/network');assert.equal(typeof WebSocketClient,'function');assert.throws(()=>new NetworkPolicy().check('https://example.com'));assert(createBrowserCsp().includes("'wasm-unsafe-eval'"));
-const {createServer}=await import('node:http');const server14=createServer((req,res)=>res.end('packed HTTP'));
-await new Promise(r=>server14.listen(0,'127.0.0.1',r));const origin14='http://127.0.0.1:'+server14.address().port,transport14=new HttpTransport({allowedOrigins:[origin14]});
-try{assert.equal((await transport14.request(origin14)).text,'packed HTTP');const hc14=compileToIL('using System.Net.Http;using System.Threading.Tasks;class P{static async Task Main(){using var c=new HttpClient();Console.WriteLine(await c.GetStringAsync('+JSON.stringify(origin14)+'));}}');assert(hc14.success,JSON.stringify(hc14.diagnostics));for(const VM of [VirtualMachine,CilVirtualMachine]){const hvm14=new VM(VM===VirtualMachine?hc14.image:hc14.assembly,{network:{allowedOrigins:[origin14]}});try{assert.equal((await hvm14.runAsync()).output,'packed HTTP\\n');}finally{hvm14.stop();}}}finally{transport14.dispose();server14.closeAllConnections();await new Promise(r=>server14.close(r));}
-console.log(JSON.stringify({passed:true,node:process.version,mode:'All twenty-five 0.14.0 tarballs installed offline in an isolated project, without source workspace links',packages,execution:{source,output:execution.output,fault:execution.fault,assemblyBytes:result.assembly.length,format:'ECMA-335',methodTokens:executable.il.methodTokens}},null,2));`;
- await writeFile(join(directory,'verify.mjs'),script);
- const output=run(process.execPath,['verify.mjs'],directory);
- const protocolRoot=join(directory,'node_modules','@sharpforge','protocol'),protocolBins=JSON.parse(await readFile(join(protocolRoot,'package.json'),'utf8')).bin;
- const {encodeProtocolMessage,ProtocolMessageReader}=await import('../packages/protocol/src/framing.js');
- for(const [bin,message]of [['sharpforge-lsp',{jsonrpc:'2.0',id:1,method:'initialize',params:{}}],['sharpforge-dap',{seq:1,type:'request',command:'initialize',arguments:{}}]]){const result=spawnSync(process.execPath,[join(protocolRoot,protocolBins[bin])],{cwd:directory,input:encodeProtocolMessage(message),timeout:10000});if(result.status!==0)throw new Error('Packaged '+bin+' failed: '+result.stderr);const messages=new ProtocolMessageReader().feed(result.stdout);if(!messages.some(m=>m.id===1||m.request_seq===1&&m.success))throw new Error('Missing packaged protocol response');}
- const nativeHelp=run(process.execPath,[join(directory,'node_modules','@sharpforge','msbuild','bin','sharpforge-msbuild.js'),'--help'],directory);if(!nativeHelp.includes('--trust-projects'))throw new Error('Installed MSBuild host help missing');
- const report={...JSON.parse(output),timestamp:new Date().toISOString(),tarballs};
- await writeFile(await resultPath('package-results.json'),JSON.stringify(report,null,2)+'\n');console.log(output);
-}finally{await rm(directory,{recursive:true,force:true});}
+import {filesUnder, isMain} from './planning/test-manifests.js';
+import {globPattern} from './planning/lib/paths.js';
+export const packageRoot = fileURLToPath(new URL('../', import.meta.url));
+export async function discoverPackages(root = packageRoot) {
+  const workspace = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'));
+  const globs = Array.isArray(workspace.workspaces) ? workspace.workspaces : workspace.workspaces?.packages;
+  if (!Array.isArray(globs) || !globs.length) throw new Error('Root package.json must declare workspaces');
+  const patterns = globs.map(glob => globPattern(glob.replace(/\/$/, '') + '/package.json'));
+  const manifests = (await filesUnder(root)).filter(path => patterns.some(pattern => pattern.test(path)));
+  if (!manifests.length) throw new Error('No workspace packages discovered');
+  const seen = new Set(), packages = [];
+  for (const path of manifests) {
+    const manifest = JSON.parse(await readFile(join(root, path), 'utf8'));
+    if (typeof manifest.name !== 'string' || !manifest.name || typeof manifest.version !== 'string') throw new Error(`Invalid workspace package ${path}`);
+    if (seen.has(manifest.name)) throw new Error(`Duplicate workspace package ${manifest.name}`);
+    seen.add(manifest.name);
+    const directory = path.slice(0, path.lastIndexOf('/')), smoke = `${directory}/smoke.mjs`;
+    await stat(resolve(root, smoke)).catch(() => {throw new Error(`Missing package smoke contribution ${smoke}`);});
+    packages.push({name: manifest.name, version: manifest.version, directory, smoke});
+  }
+  return packages.sort((a, b) => a.name.localeCompare(b.name));
+}
+function run(command, args, cwd = packageRoot) {
+  const result = spawnSync(command === 'npm' ? process.execPath : command, command === 'npm' ? [npmCli(), ...args] : args, {cwd, encoding: 'utf8', timeout: 120000});
+  if (result.error || result.status !== 0) throw new Error(`${command} failed: ${result.error?.message ?? result.stderr}\n${result.stdout}`);
+  return result.stdout;
+}
+export function validatePacked(packages, packed) {
+  if (!Array.isArray(packed) || packed.length !== packages.length) throw new Error(`Expected ${packages.length} package tarballs; received ${packed?.length}`);
+  const seen = new Set();
+  for (const item of packed) {
+    if (!packages.some(pkg => pkg.name === item.name && pkg.version === item.version) || seen.has(item.name)) throw new Error(`Unexpected/duplicate tarball ${item.name}@${item.version}`);
+    if (typeof item.filename !== 'string' || item.filename.includes('/') || item.filename.includes('\\') || !item.filename.endsWith('.tgz')) throw new Error(`Invalid tarball filename ${item.filename}`);
+    seen.add(item.name);
+  }
+  return packed.map(item => item.filename).sort();
+}
+const runner = `import {readFile} from 'node:fs/promises';
+import {join} from 'node:path';
+import {pathToFileURL} from 'node:url';
+import {spawnSync} from 'node:child_process';
+const directory=process.cwd(), entries=JSON.parse(await readFile('smokes.json','utf8'));
+const report={passed:true,node:process.version,mode:'All '+entries.length+' workspace tarballs installed offline in an isolated project, without source workspace links',packages:{},smokeSteps:[]},context={report};
+const modules=[];
+function run(command,args,options={}){const result=spawnSync(command,args,{cwd:directory,timeout:120000,...options});if(result.error||result.status!==0)throw new Error(command+' failed: '+(result.error?.message??result.stderr));return result.stdout;}
+for(const entry of entries){const api=await import(entry.name),module=await import(pathToFileURL(join(directory,entry.smoke)));report.packages[entry.name]=Object.keys(api).length;if(!report.packages[entry.name]||typeof module.smoke!=='function')throw new Error('Invalid public API or smoke contribution '+entry.name);await module.smoke({api,directory,report});modules.push({entry,module});}
+const steps=modules.flatMap(({module})=>module.smokeSteps??[]).sort((a,b)=>a.order-b.order||a.id.localeCompare(b.id)),ids=new Set();
+for(const step of steps){if(typeof step.id!=='string'||ids.has(step.id)||!Number.isSafeInteger(step.order)||typeof step.run!=='function')throw new Error('Invalid/duplicate smoke step '+step.id);ids.add(step.id);await step.run(context);report.smokeSteps.push(step.id);}
+for(const {entry,module} of modules)if(module.smokeInstalledCli)await module.smokeInstalledCli({directory,packageRoot:join(directory,'node_modules',entry.name),run});
+console.log(JSON.stringify(report,null,2));`;
+export async function verifyPackages(root = packageRoot) {
+  const packages = await discoverPackages(root), artifacts = join(root, 'artifacts');
+  await mkdir(artifacts, {recursive: true});
+  const packDirectory = await mkdtemp(join(artifacts, 'package-verification-'));
+  const directory = await mkdtemp(join(tmpdir(), 'sharpforge-packages-'));
+  try {
+    const packed = JSON.parse(run('npm', ['pack', '--workspaces', '--ignore-scripts', '--pack-destination', packDirectory, '--json'], root));
+    const tarballs = validatePacked(packages, packed);
+    await writeFile(join(directory, 'package.json'), JSON.stringify({name: 'sharpforge-isolated-smoke', version: '1.0.0', private: true, type: 'module'}));
+    run('npm', ['install', '--offline', '--ignore-scripts', '--no-audit', '--no-fund', ...tarballs.map(name => join(packDirectory, name))], directory);
+    const entries = [];
+    for (const [index, pkg] of packages.entries()) {
+      const smoke = `smoke-${index}.mjs`;
+      await cp(resolve(root, pkg.smoke), join(directory, smoke));
+      entries.push({name: pkg.name, smoke});
+    }
+    await writeFile(join(directory, 'smokes.json'), JSON.stringify(entries));
+    await writeFile(join(directory, 'verify.mjs'), runner);
+    const output = run(process.execPath, ['verify.mjs'], directory);
+    for (const name of await readdir(artifacts)) if (name.endsWith('.tgz')) await rm(join(artifacts, name));
+    for (const name of tarballs) await cp(join(packDirectory, name), join(artifacts, name));
+    const report = {...JSON.parse(output), timestamp: new Date().toISOString(), tarballs};
+    await writeFile(await resultPath('package-results.json'), JSON.stringify(report, null, 2) + '\n');
+    console.log(output); return report;
+  } finally {
+    await rm(directory, {recursive: true, force: true});
+    await rm(packDirectory, {recursive: true, force: true});
+  }
+}
+if (isMain(import.meta.url)) {
+  try {await verifyPackages();} catch (error) {console.error(error.message); process.exitCode = 1;}
+}

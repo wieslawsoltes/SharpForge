@@ -61,7 +61,7 @@ export class BoundTreeRewriter extends BoundTreeVisitor {
   visitSwitchSection(node){return node.update({switchLabels:this.visitList(node.switchLabels),statements:this.visitList(node.statements)});}
   visitSwitchLabel(node){return node.update({pattern:node.pattern?this.visit(node.pattern):null});}
   visitTryStatement(node){return node.update({tryBlock:this.visit(node.tryBlock),catchBlocks:this.visitList(node.catchBlocks),finallyBlock:node.finallyBlock?this.visit(node.finallyBlock):null});}
-  visitCatchBlock(node){return node.update({body:this.visit(node.body)});}
+  visitCatchBlock(node){return node.update({filter:node.filter?this.visit(node.filter):null,body:this.visit(node.body)});}
   visitUsingStatement(node){return node.update({resources:this.visitList(node.resources),body:this.visit(node.body)});}
   visitUsingResource(node){return node.update({declaration:this.visit(node.declaration),nullCheck:this.visit(node.nullCheck),dispose:this.visit(node.dispose)});}
   visitReturnStatement(node){return node.update({expression:node.expression?this.visit(node.expression):null});}

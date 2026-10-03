@@ -57,7 +57,7 @@
     {"name": "SwitchSection", "doc": "case labels and their statements.", "fields": [["switchLabels", "nodes"], ["statements", "nodes"]]},
     {"name": "SwitchLabel", "doc": "case constant: (pattern) or default: (no pattern).", "fields": [["pattern", "node?"]]},
     {"name": "TryStatement", "doc": "try/catch/finally.", "fields": [["tryBlock", "node"], ["catchBlocks", "nodes"], ["finallyBlock", "node?"]]},
-    {"name": "CatchBlock", "doc": "catch (T local) body.", "fields": [["exceptionType", "value"], ["local", "value"], ["body", "node"]]},
+    {"name": "CatchBlock", "doc": "catch (T local) when (filter) body.", "fields": [["exceptionType", "value"], ["local", "value"], ["filter", "node?"], ["body", "node"]]},
     {"name": "UsingStatement", "doc": "using (resources) body. Each resource holds its declaration and the bound null test and Dispose call.", "fields": [["resources", "nodes"], ["body", "node"]]},
     {"name": "UsingResource", "doc": "One using resource: declaration, `resource != null` and `resource.Dispose()`.", "fields": [["declaration", "node"], ["nullCheck", "node"], ["dispose", "node"]]},
     {"name": "ReturnStatement", "doc": "return expression;", "fields": [["expression", "node?"]]},

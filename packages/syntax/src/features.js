@@ -131,7 +131,7 @@ const table = [
       'StaticAnonymousFunction|static anonymous function;ExternLocalFunctions|extern local functions;ModuleInitializers|module initializers;' +
       'FunctionPointers|function pointers;NativeInt|native-sized integers;LocalFunctionAttributes|local function attributes;' +
       'LambdaDiscardParameters|lambda discard parameters;ExtensionGetEnumerator|extension GetEnumerator;ExtensionGetAsyncEnumerator|extension ' +
-      'GetAsyncEnumerator;-PragmaWarningEnable|pragma warning enable;AndPattern|and pattern;OrPattern|or pattern;NotPattern|not pattern;' +
+      'GetAsyncEnumerator;AndPattern|and pattern;OrPattern|or pattern;NotPattern|not pattern;' +
       'TypePattern|type pattern;ParenthesizedPattern|parenthesized pattern;RelationalPattern|relational pattern;' +
       'DefaultTypeParameterConstraint|default type parameter constraints;ExtendedPartialMethods|extended partial methods;' +
       'MemberNotNull|MemberNotNull attribute;VarianceSafetyForStaticInterfaceMembers|variance safety for static interface members;' +
@@ -188,6 +188,38 @@ const table = [
       'expressions'
   ]
 ];
+/**
+ * Features whose unavailability Roslyn reports with a diagnostic of their own rather than the generic "feature is not
+ * available in C# n": [code, severity, message, modifier]. In a message `{0}` is the selected language version, `{1}`
+ * the modifier concerned (the fourth element unless the use names one) and `{2}` the required version.
+ */
+export const invalidModifierMessage = "The modifier '{1}' is not valid for this item in C# {0}. Please use language version '{2}' or greater.";
+const dedicatedDiagnostics = {
+  AttributesOnBackingFields: [
+    'CS8371',
+    'warning',
+    'Field-targeted attributes on auto-properties are not supported in language version {0}. Please use language version 7.3 or greater.'
+  ],
+  AltInterpolatedVerbatimStrings: [
+    'CS8401',
+    'error',
+    "To use '@$' instead of '$@' for an interpolated verbatim string, please use language version '{2}' or greater."
+  ],
+  NewLinesInInterpolations: [
+    'CS8967',
+    'error',
+    'Newlines inside a non-verbatim interpolated string are not supported in C# {0}. Please use language version {2} or greater.'
+  ],
+  StaticAbstractMembersInInterfaces: ['CS8703', 'error', invalidModifierMessage, 'abstract'],
+  PartialProperties: ['CS8703', 'error', invalidModifierMessage, 'partial']
+};
+/**
+ * Features whose syntax has another, older meaning below their version instead of being rejected: `[with(x)]` is a
+ * collection holding a call to a method named `with` until C# 15, and `field` in a property accessor is an ordinary
+ * identifier until C# 14. The parser decides by language version, so there is no "feature not available" diagnostic
+ * to report for them.
+ */
+const olderMeanings = new Set(['CollectionExpressionArguments', 'FieldKeyword']);
 function build() {
   const rows = [];
   for (const [version, list] of table)
@@ -195,7 +227,8 @@ function build() {
       const [rawId, name] = entry.split('|'),
         id = rawId.replace(/^-/, ''),
         preview = version === 15,
-        index = order.indexOf(version);
+        index = order.indexOf(version),
+        dedicated = dedicatedDiagnostics[id];
       rows.push(
         Object.freeze({
           id,
@@ -203,13 +236,17 @@ function build() {
           version,
           preview,
           messageId: rawId.startsWith('-') ? null : 'IDS_Feature' + id,
-          code: preview ? 'CS8652' : index > 0 ? selectedVersionCodes[order[index - 1]] : null
+          code: dedicated ? dedicated[0] : preview ? 'CS8652' : index > 0 ? selectedVersionCodes[order[index - 1]] : null,
+          severity: dedicated ? dedicated[1] : 'error',
+          dedicatedMessage: dedicated ? dedicated[2] : null,
+          modifier: dedicated?.[3] ?? null,
+          olderMeaning: olderMeanings.has(id)
         })
       );
     }
   return Object.freeze(rows);
 }
-/** Every catalog row: { id, name, version, preview, messageId, code }. */
+/** Every catalog row: { id, name, version, preview, messageId, code, severity, dedicatedMessage, modifier, olderMeaning }. */
 export const languageFeatures = build();
 const byId = new Map(languageFeatures.map(row => [row.id, row]));
 /** Looks up a catalog row by feature id; undefined for unknown ids. */

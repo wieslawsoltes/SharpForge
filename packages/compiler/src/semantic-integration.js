@@ -17,6 +17,7 @@ import { formatMessage, isFeatureGateCode } from './diagnostics/codes.js';
 import { suspiciousUsings, usingDiagnosticClassifier } from './binder/using-check.js';
 import { featureDiagnosticCodes, newestLanguageVersion } from './binder/feature-check.js';
 import { generateFromSemanticAnalysis, isEntryPointCandidate } from './codegen/semantic/generator.js';
+import { needsSemanticRules, semanticRuleCodes } from './semantic/profile-rechecks.js';
 
 /** Profile diagnostics that mark a construct the execution profile cannot run (as opposed to option and API errors). */
 export const isProfileConstructDiagnostic = code =>
@@ -47,6 +48,8 @@ const pipelineCodes = new Set([
   'SF2140',
   'SF3001',
 ]);
+/** What the pipeline's source-level async rewrite reports when it meets `await` or `async` it cannot rewrite. */
+const asyncRewriteCodes = new Set(['CS4032', 'CS1983']);
 const adapterPseudo = d =>
   (d.code === 'CS1014' && /init is not supported/.test(d.message)) || (d.code === 'CS0528' && /Duplicate IDisposable/.test(d.message));
 const constructNames = {
@@ -117,8 +120,10 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   // Nor is a program without an entry point: nothing can be generated for it, so the pipeline's diagnostics stand.
   const nothingToGenerate = onlyStandingErrors(legacy, files) || hasNoEntryPoint(legacy);
   if (!compiled && !gatesVersion && !profile.length && !hasReferences && nothingToGenerate) return null;
-  const usings = compiled && !gatesVersion ? suspiciousUsings(compilation) : null;
-  if (compiled && !gatesVersion && !usings) return null;
+  const usings = compiled && !gatesVersion ? suspiciousUsings(compilation) : null,
+    // ... and for the few language rules the pipeline does not check on constructs it compiles.
+    rechecked = compiled && needsSemanticRules(files);
+  if (compiled && !gatesVersion && !usings && !rechecked) return null;
   let result;
   try {
     const analysis = new SemanticAnalysis(files, {
@@ -126,7 +131,7 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
       nullableContext: compilation.typedOptions?.nullableContext ?? compilation.options.nullableContext,
     });
     // Wrong using directives of a program that compiles are diagnosed from the directives alone.
-    result = usings === 'directives' ? analysis.runUsings() : analysis.run();
+    result = usings === 'directives' && !rechecked ? analysis.runUsings() : analysis.run();
   } catch (error) {
     // An internal failure of the analysis must not hide the profile diagnostics the pipeline already has, and it must
     // not pass silently either: it is reported as a diagnostic of its own.
@@ -159,13 +164,17 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   const unchanged = () => (featureGates.length ? { diagnostics: merge(legacy, featureGates), semantic: result } : null);
   if (compiled) {
     // The image stands; the analysis only adds what it found in the using directives and alias declarations.
-    const extra = [...semantic.filter(d => isUsingDiagnostic(d) || d.code === 'CS0576'), ...featureGates];
+    const taken = d => isUsingDiagnostic(d) || d.code === 'CS0576' || (rechecked && semanticRuleCodes.has(d.code));
+    const extra = [...semantic.filter(taken), ...featureGates];
     return extra.length ? { diagnostics: merge(legacy, extra), semantic: result } : null;
   }
   if (errors.length) {
     // Both binders reject the program: without profile constructs (or references) the pipeline's diagnostics stand,
     // unless the analysis found a namespace or alias error - the string-typed binder does not know those rules.
-    if (!profile.length && !hasReferences && !errors.some(isNamespaceDiagnostic)) return unchanged();
+    // ... or the program has async functions: the pipeline binds those after a source-level rewrite into a kickoff and
+    // a body, which moves and renames what its binder reports.
+    const rewritten = compilation.methods.some(m => m.node?.asyncRole) || legacy.some(d => asyncRewriteCodes.has(d.code));
+    if (!profile.length && !hasReferences && !rewritten && !errors.some(isNamespaceDiagnostic)) return unchanged();
     // Not valid C#: the semantic diagnostics replace the errors the string-typed binder derived from the constructs it does not
     // know. The profile diagnostics stay (the program still names constructs the profile lacks), except a literal-range one
     // that sits on the very literal a C# error is reported for (one diagnostic per literal).
