@@ -5,10 +5,17 @@ or merged harness is not qualification evidence. Retained failures, unsupported
 platforms and unmeasured obligations remain open until actual captures exist.
 
 Ordinary pull requests and main pushes run the existing single `core` job:
-check, impacted Node tests or the full fallback, build, checkout integrity, and
-PR preview upload. Central full qualification is explicit: `ci.yml` manual
-dispatch, a PR carrying `full-ci`, a merge-group event, or a reusable release call
-passing `qualification: true`. A reusable workflow observes its caller's event,
+static and manifest checks, impact planning, quarantine expiry checks, build,
+checkout integrity, and PR preview upload. PRs also retain the contract-change
+and seam-lock review gates. Ordinary runs do not execute Node tests, including
+impacted subsets; a green ordinary `core` is not unit qualification evidence.
+Central full qualification is staged until the completed scope is ready and is
+explicit: `ci.yml` manual dispatch, a PR carrying `full-ci`, a merge-group event,
+or a reusable release call passing `qualification: true`. These modes execute
+the complete Node manifest suite once per platform through the serial `npm test`
+runner. That suite already includes the conformance Node regressions; Python
+infrastructure regressions retain their separate lane.
+A reusable workflow observes its caller's event,
 so release qualification uses that boolean instead of testing for
 `event_name == 'workflow_call'`. Release packaging still requires the strict
 `ci-ok` aggregate and the existing approval/payload verification gates.

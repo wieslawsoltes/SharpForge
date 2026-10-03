@@ -17,3 +17,8 @@ Captured on macOS ARM64 with .NET SDK 10.0.201/runtime 10.0.5. AnyCPU and ARM64 
 256-byte binary, private UTF-8/NUL payload and empty resource. x86/x64 rows were independently read by SRM; execution
 is explicitly unsupported on this ARM64 .NET host. All ten focused tests passed, including source and direct CIL
 JavaScript engines with all four platform headers. Resource reading is data-only and adds no native/Wasm reflection API.
+
+Buffer ownership correction: the four new regression cases were run against prior commit `af5ca405` and all four failed.
+They cover offset Buffer payload/GUID copies, blob/GUID interning ownership and low-level PE section copying. Restoring
+the fixes produced 14/14 passing focused cases, including the canonical Buffer input no-mutation assertion. Native
+resource observations were unchanged and were not regenerated for this JavaScript storage correction.

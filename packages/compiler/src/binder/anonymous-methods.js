@@ -31,7 +31,9 @@ export const anonymousFunctionAnchor = (syntax, fallback = null) => syntax.deleg
  * @returns {null|{node: object, code: string, args: any[]}[]}
  */
 export function anonymousMethodSignatureErrors(syntax, parameterSyntax, invoke) {
-  if (syntax.kind !== 'AnonymousMethodExpression') return null;
+  const isLambda = syntax.kind !== 'AnonymousMethodExpression';
+  // A simple lambda `x => ...` has a bare identifier for a parameter: it declares no ref kind and takes the delegate's.
+  if (isLambda && !(parameterSyntax ?? []).every(parameter => parameter.kind === 'Parameter')) return null;
   if (!parameterSyntax) {
     return invoke.parameters.some(parameter => parameter.refKind === RefKind.Out) ? [{ node: syntax.delegateKeyword, code: 'CS1688', args: [] }] : null;
   }

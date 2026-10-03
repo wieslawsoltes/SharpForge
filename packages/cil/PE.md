@@ -45,9 +45,9 @@ Canonical source loading replays recorded platform options and compares every
 executable byte, including import thunks and relocations. Append-only debug payloads
 are supported on the final section; changing a thunk or import still rejects the image.
 
-T03 scope remains open for managed/Win32 resource construction, cryptographic content
-identifiers/checksum, public signing, input assembly identities and netmodules. This
-batch establishes their layout/directory foundations without claiming those features.
+Managed resources are documented in [RESOURCES.md](./RESOURCES.md). T03 scope remains open
+for Win32 resource integration, public signing, input assembly identities and netmodules;
+these are separate batches from the layout and deterministic identity APIs.
 
 ## Deterministic identities
 

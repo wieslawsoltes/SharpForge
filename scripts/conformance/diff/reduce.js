@@ -3,6 +3,7 @@ import {SourceText} from '../../../packages/text/src/index.js';
 import {performance} from 'node:perf_hooks';
 import {fixtureHash,sha256} from './fixtures.js';
 import {differenceSignature} from './classify.js';
+import {observeWithinBudget, ReductionBudgetExceeded} from './reduce-observation.js';
 export function withSource(fixture,sourceText){const next={...fixture,sourceText};next.inputHash=fixtureHash(next);return next;}
 function candidates(source,kind){
   const parsed=parse(new SourceText(source));if(parsed.diagnostics.some(d=>d.severity==='error'))return [];
@@ -19,9 +20,18 @@ export async function reduceFixture(fixture,difference,observe,{signal,maxAttemp
   const interesting=async source=>{
     if(signal?.aborted)throw Object.assign(new Error('Reduction cancelled'),{code:'cancelled'});
     if(attempts>=maxAttempts||performance.now()-start>=timeoutMs){exhausted=true;return false;}attempts++;
-    const controller=new AbortController(),abort=()=>controller.abort();signal?.addEventListener('abort',abort,{once:true});const timer=setTimeout(abort,Math.max(1,timeoutMs-(performance.now()-start)));
-    try{const result=await observe(withSource(fixture,source),{signal:controller.signal});if(controller.signal.aborted){if(signal?.aborted)throw Object.assign(new Error('Reduction cancelled'),{code:'cancelled'});exhausted=true;return false;}return result.differences.some(d=>differenceSignature(d)===signature)&&!result.differences.some(d=>['host','fixture-nondeterminism','unclassified'].includes(d.class));}
-    finally{clearTimeout(timer);signal?.removeEventListener('abort',abort);}
+    let result;
+    try {
+      result = await observeWithinBudget(withSource(fixture, source), observe, {
+        signal, timeoutMs: Math.max(1, timeoutMs - (performance.now() - start)),
+      });
+    } catch (error) {
+      if (!(error instanceof ReductionBudgetExceeded)) throw error;
+      exhausted = true;
+      if (attempts === 1) throw error;
+      return false;
+    }
+    return result.differences.some(d=>differenceSignature(d)===signature)&&!result.differences.some(d=>['host','fixture-nondeterminism','unclassified'].includes(d.class));
   };
   if(!await interesting(original))throw new Error('Original fixture does not reproduce the requested deterministic difference');
   const parseable=!parse(new SourceText(original)).diagnostics.some(d=>d.severity==='error');

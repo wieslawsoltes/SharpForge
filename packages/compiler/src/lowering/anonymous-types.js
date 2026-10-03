@@ -95,6 +95,33 @@ export const AnonymousTypeLowering = Base =>
         );
       return n.sequence([instance], [n.assign(n.local(instance), n.allocate(info.record)), ...stores], n.local(instance));
     }
+    /**
+     * `a with { X = v }` (C# 10): a new instance whose members are the listed values and, for the others, the
+     * members of `a`. The receiver and then the values are evaluated once, in the order they are written.
+     */
+    exprWith(node) {
+      if (!this.g.anonymous.handles(node.type)) return super.exprWith(node);
+      const info = this.g.anonymous.classOf(node.type, node.syntax),
+        source = this.temp(info.record.name, 'with'),
+        instance = this.temp(info.record.name, 'anonymous'),
+        locals = [source, instance],
+        effects = [n.assign(n.local(source), this.expression(node.receiver))],
+        replaced = new Map();
+      for (const entry of node.initializers) {
+        const index = info.members.findIndex(member => member.name === entry.target?.property?.name);
+        if (index < 0 || !entry.value || entry.value.kind === 'ObjectInitializer') return this.unsupported('this with expression', node.syntax);
+        const value = this.temp(info.fields[index].type, 'value');
+        locals.push(value);
+        effects.push(n.assign(n.local(value), this.expression(entry.value)));
+        replaced.set(index, value);
+      }
+      effects.push(n.assign(n.local(instance), n.allocate(info.record)));
+      info.fields.forEach((field, index) => {
+        const value = replaced.has(index) ? n.local(replaced.get(index)) : n.field(n.local(source), field);
+        effects.push(n.assign(n.field(n.local(instance), field), value));
+      });
+      return n.sequence(locals, effects, n.local(instance));
+    }
     exprPropertyAccess(node) {
       const owner = node.property.containingType ?? node.property.containingSymbol;
       if (!this.g.anonymous.handles(owner)) return super.exprPropertyAccess(node);
