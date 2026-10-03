@@ -7,6 +7,7 @@ import { ConversionKind } from '../../conversions/classify.js';
 import { isNullableType, stripNullable } from '../../conversions/nullable.js';
 import { typeTestOutcome, asOperatorTargetValid } from '../../conversions/reference.js';
 import { delegateInvoke } from '../../overload/type-inference.js';
+import { resolveAwaitable, untypedAwaitOperand } from '../await.js';
 import { lookupMembers } from '../inheritance.js';
 
 const unknown = ErrorTypeSymbol.unknown;
@@ -204,22 +205,26 @@ export const TypeTestBinding = Base =>
     await(syntax) {
       const operand = this.value(syntax.expression);
       if (reportAwaitOutsideAsync(this, syntax)) return this.bad(syntax);
-      if (operand.hasErrors || !operand.type) return this.bad(syntax);
+      if (this.inUnsafeContext) this.report(syntax, 'CS4004');
+      if (operand.hasErrors) return this.bad(syntax);
+      const untyped = untypedAwaitOperand(operand);
+      if (untyped || !operand.type) {
+        this.report(syntax, untyped ? 'CS4001' : 'CS8716', untyped ? [untyped] : []);
+        return this.bad(syntax);
+      }
       const t = operand.type;
       if (t.originalDefinition === this.core.taskT || (t.originalDefinition?.name === 'ValueTask' && t.typeArguments?.length === 1))
         return this.node('Await', syntax, t.typeArguments[0].type, { operand });
       if (t.equals(this.core.task) || t.name === 'ValueTask') return this.node('Await', syntax, this.core.void, { operand });
-      const getAwaiter = lookupMembers(t, 'GetAwaiter', this.core, { within: this.c.containingType }).members.find(
-        m => m.kind === SymbolKind.Method && !m.parameters.length,
-      );
-      if (getAwaiter) {
-        const result = lookupMembers(getAwaiter.returnType, 'GetResult', this.core, {}).members.find(m => m.kind === SymbolKind.Method);
-        return this.node('Await', syntax, result?.returnType ?? unknown, { operand, getAwaiter });
+      // Any other type is awaited through the awaitable pattern (binder/await.js).
+      const pattern = resolveAwaitable(this, operand);
+      if (pattern.isUnknown) return this.lenient(syntax);
+      if (pattern.error) {
+        this.report(syntax, pattern.error.code, pattern.error.args);
+        return this.bad(syntax);
       }
-      // A registry type may have an awaiter the registry does not list; a predefined type has none.
-      if (!isSource(t) && !t.specialType) return this.lenient(syntax);
-      this.report(syntax, 'CS1061', [this.display(t), 'GetAwaiter']);
-      return this.bad(syntax);
+      for (const method of [pattern.getAwaiter, pattern.getResult]) if (method && !this.quiet) this.d.noteUse?.(method, this.c.uri, syntax);
+      return this.node('Await', syntax, pattern.resultType ?? unknown, { operand, getAwaiter: pattern.getAwaiter, awaitable: pattern });
     }
     /** A thrown value converts implicitly to System.Exception (CS0029/CS0266 otherwise). */
     checkThrown(e, node) {
