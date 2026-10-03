@@ -22,4 +22,7 @@ Canonical source replay reconstructs the signing mode and public key from real m
 
 Semantics follow [.NET public signing](https://github.com/dotnet/runtime/blob/main/docs/project/public-signing.md)
 and [C# delay signing](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/security).
-Native reference evidence is tracked under `tests/fixtures/a03-public-sign`; validation is pending.
+Native reference evidence is tracked under `tests/fixtures/a03-public-sign`: .NET 10.0.5
+AssemblyName and PEReader agree on public-key token, flags and zero reservation for all eight
+mode/platform combinations. Both JavaScript engines pass. Browser, Windows loader, Mono
+and signature-verification qualification remain outside this focused batch.
