@@ -8,4 +8,5 @@ export * from './zlib.js';
 export * from './memory-odb.js';
 export * from './refs.js';
 export * from './config.js';
+export * from './index-file.js';
 export * from './refspec.js';
