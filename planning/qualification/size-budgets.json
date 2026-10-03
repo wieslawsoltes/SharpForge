@@ -1,122 +1,152 @@
 {
   "schemaVersion": 1,
-  "reason": "Initial explicit ceilings; qualification records actual sizes and review proposes tighter per-artifact limits.",
+  "reason": "Initial review proposal: exact artifacts measured at e3bf896bcc74802ea7031267635140cb6eae1744; 15 percent headroom rounded up to 1 KiB, never a derived runtime exemption.",
   "budgets": [
     {
       "id": "dist",
-      "maxBytes": 15000000
+      "observedBytes": 15026880,
+      "maxBytes": 17281024
     },
     {
       "id": "standalone",
-      "maxBytes": 6000000
+      "observedBytes": 3194784,
+      "maxBytes": 3674112
     },
     {
       "id": "worker:compiler.worker.js",
-      "maxBytes": 1000000
+      "observedBytes": 437605,
+      "maxBytes": 503808
     },
     {
       "id": "worker:runtime.worker.js",
-      "maxBytes": 1500000
+      "observedBytes": 727971,
+      "maxBytes": 837632
     },
     {
       "id": "package:@sharpforge/archive",
-      "maxBytes": 500000
+      "observedBytes": 8339,
+      "maxBytes": 10240
     },
     {
       "id": "package:@sharpforge/bytecode",
-      "maxBytes": 500000
+      "observedBytes": 4904,
+      "maxBytes": 6144
     },
     {
       "id": "package:@sharpforge/cil",
-      "maxBytes": 500000
+      "observedBytes": 42836,
+      "maxBytes": 50176
     },
     {
       "id": "package:@sharpforge/compiler",
-      "maxBytes": 500000
+      "observedBytes": 26563,
+      "maxBytes": 30720
     },
     {
       "id": "package:@sharpforge/compute",
-      "maxBytes": 500000
+      "observedBytes": 12914,
+      "maxBytes": 15360
     },
     {
       "id": "package:@sharpforge/controls",
-      "maxBytes": 500000
+      "observedBytes": 11025,
+      "maxBytes": 13312
     },
     {
       "id": "package:@sharpforge/debugger",
-      "maxBytes": 500000
+      "observedBytes": 39895,
+      "maxBytes": 46080
     },
     {
       "id": "package:@sharpforge/designer",
-      "maxBytes": 500000
+      "observedBytes": 20116,
+      "maxBytes": 23552
     },
     {
       "id": "package:@sharpforge/docking",
-      "maxBytes": 500000
+      "observedBytes": 12414,
+      "maxBytes": 14336
     },
     {
       "id": "package:@sharpforge/editor",
-      "maxBytes": 500000
+      "observedBytes": 201945,
+      "maxBytes": 232448
     },
     {
       "id": "package:@sharpforge/extensions",
-      "maxBytes": 500000
+      "observedBytes": 5459,
+      "maxBytes": 7168
     },
     {
       "id": "package:@sharpforge/framework",
-      "maxBytes": 500000
+      "observedBytes": 18698,
+      "maxBytes": 21504
     },
     {
       "id": "package:@sharpforge/language",
-      "maxBytes": 500000
+      "observedBytes": 4704,
+      "maxBytes": 6144
     },
     {
       "id": "package:@sharpforge/msbuild",
-      "maxBytes": 500000
+      "observedBytes": 21834,
+      "maxBytes": 25600
     },
     {
       "id": "package:@sharpforge/network",
-      "maxBytes": 500000
+      "observedBytes": 6281,
+      "maxBytes": 8192
     },
     {
       "id": "package:@sharpforge/project-system",
-      "maxBytes": 500000
+      "observedBytes": 23917,
+      "maxBytes": 27648
     },
     {
       "id": "package:@sharpforge/protocol",
-      "maxBytes": 500000
+      "observedBytes": 11202,
+      "maxBytes": 13312
     },
     {
       "id": "package:@sharpforge/refactoring",
-      "maxBytes": 500000
+      "observedBytes": 6338,
+      "maxBytes": 8192
     },
     {
       "id": "package:@sharpforge/runtime",
-      "maxBytes": 500000
+      "observedBytes": 58334,
+      "maxBytes": 67584
     },
     {
       "id": "package:@sharpforge/symbols",
-      "maxBytes": 500000
+      "observedBytes": 12612,
+      "maxBytes": 15360
     },
     {
       "id": "package:@sharpforge/syntax",
-      "maxBytes": 500000
+      "observedBytes": 10467,
+      "maxBytes": 12288
     },
     {
       "id": "package:@sharpforge/templates",
-      "maxBytes": 500000
+      "observedBytes": 9699,
+      "maxBytes": 11264
     },
     {
       "id": "package:@sharpforge/text",
-      "maxBytes": 500000
+      "observedBytes": 3274,
+      "maxBytes": 4096
     },
     {
       "id": "package:@sharpforge/winui",
-      "maxBytes": 500000
+      "observedBytes": 25031,
+      "maxBytes": 29696
     },
     {
       "id": "package:@sharpforge/workspace",
-      "maxBytes": 500000
+      "observedBytes": 3154,
+      "maxBytes": 4096
     }
-  ]
+  ],
+  "measurementCommit": "e3bf896bcc74802ea7031267635140cb6eae1744"
 }
