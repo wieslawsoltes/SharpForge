@@ -4,6 +4,7 @@ import {arrayRecord, arrayAddress, arrayGet, arraySet, createArray} from './arra
 import {stackAllocate} from './stack-memory.js';
 import {pointerOffset, rawMemoryView, readMemory, writeMemory, validateMemoryPointer} from './raw-memory.js';
 import {valueLayout} from './value-layout.js';
+import {castCacheFor} from './casting.js';
 
 function fail(message) {
   throw new ManagedFault('ArgumentOutOfRangeException', message);
@@ -15,13 +16,23 @@ export function spanCreate(vm, elementType, pointer, length, {readonly = false} 
   const count = arrayInteger(length, 'ArgumentOutOfRangeException');
   if (count < 0) fail('Span length cannot be negative');
   if (pointer === null && count !== 0) fail('A nonempty span requires storage');
-  if (pointer?.memoryPointer) rawMemoryView(vm, pointer, count * valueLayout(vm, element).size);
+  if (pointer?.readonly && !readonly) {
+    throw new ManagedFault('InvalidProgramException', 'A readonly address cannot create a mutable Span');
+  }
+  if (pointer?.memoryPointer) {
+    const layout = valueLayout(vm, element);
+    if (layout.containsReferences) throw new ManagedFault('ArgumentException', 'Pointer-backed Span elements must be unmanaged');
+    rawMemoryView(vm, pointer, count * layout.size);
+  }
   else if (pointer !== null) {
     if (pointer?.kind !== 'array' || pointer.path?.length || pointer.vmOwner !== vm.snapshotOwner) {
       throw new ManagedFault('InvalidProgramException', 'Span requires an owned array or stack address');
     }
     const record = arrayRecord(vm, pointer.owner);
-    if (record.methodTable.elementType !== element || pointer.index + count > record.data.length) {
+    const actual = record.methodTable.elementType;
+    const compatible = actual === element || readonly && !actual.flags.valueType && !element.flags.valueType &&
+      castCacheFor(vm.heap.methodTables).isAssignableFrom(element, actual);
+    if (!compatible || !Number.isSafeInteger(pointer.index) || pointer.index < 0 || pointer.index > record.data.length - count) {
       throw new ManagedFault('ArrayTypeMismatchException', 'Span element storage is incompatible');
     }
   }
@@ -38,13 +49,24 @@ export function stackSpan(vm, type, length) {
 }
 
 export function spanFromArray(vm, element, reference, start = 0, length = null, options = {}) {
-  if (reference === null) return spanCreate(vm, element, null, length ?? 0, options);
+  if (reference === null) {
+    if (arrayInteger(start, 'ArgumentOutOfRangeException') !== 0) fail('Null array Span start must be zero');
+    return spanCreate(vm, element, null, length ?? 0, options);
+  }
   const record = arrayRecord(vm, reference);
   const index = arrayInteger(start, 'ArgumentOutOfRangeException');
   const count = length === null ? record.data.length - index : arrayInteger(length, 'ArgumentOutOfRangeException');
   if (index < 0 || count < 0 || index > record.data.length - count) fail('Span bounds exceed the array');
+  const requested = vm.heap.methodTables.get(element);
+  const actual = record.methodTable.elementType;
+  const compatible = actual === requested || options.readonly && !actual.flags.valueType && !requested.flags.valueType &&
+    castCacheFor(vm.heap.methodTables).isAssignableFrom(requested, actual);
+  if (!record.methodTable.flags.szArray || !compatible) {
+    throw new ManagedFault('ArrayTypeMismatchException', 'Span requires a compatible vector');
+  }
   if (count === 0) return spanCreate(vm, element, null, 0, options);
-  return spanCreate(vm, element, arrayAddress(vm, reference, [index], {type: element}), count, options);
+  const pointer = arrayAddress(vm, reference, [index], {type: element, readonly: !!options.readonly});
+  return spanCreate(vm, element, pointer, count, options);
 }
 
 export function validateSpan(vm, value) {

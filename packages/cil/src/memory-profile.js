@@ -3,9 +3,22 @@ import {callStorageType, substituteCallType} from './call-profile.js';
 
 const aliases = new Map([
   ['System.Int32', 'int'], ['System.Int64', 'long'], ['System.Single', 'float'], ['System.Double', 'double'],
-  ['System.Boolean', 'bool'], ['System.Byte', 'byte'], ['System.Void', 'void']
+  ['System.Boolean', 'bool'], ['System.Byte', 'byte'], ['System.Void', 'void'],
+  ['System.Char', 'char'], ['System.Int16', 'short'], ['System.UInt16', 'ushort'],
+  ['System.UInt32', 'uint'], ['System.UInt64', 'ulong']
 ]);
 const canonical = type => aliases.get(callStorageType(type)) ?? callStorageType(type);
+
+const bitValues = new Map([
+  ['ToBoolean', 'bool'], ['ToChar', 'char'], ['ToInt16', 'short'], ['ToUInt16', 'ushort'],
+  ['ToInt32', 'int'], ['ToUInt32', 'uint'], ['ToInt64', 'long'], ['ToUInt64', 'ulong'],
+  ['ToSingle', 'float'], ['ToDouble', 'double']
+]);
+const bitScalars = new Map([
+  ['DoubleToInt64Bits', ['double', 'long']], ['Int64BitsToDouble', ['long', 'double']],
+  ['SingleToInt32Bits', ['float', 'int']], ['Int32BitsToSingle', ['int', 'float']]
+]);
+const byteSources = new Set([...bitValues.values(), 'byte']);
 
 /** Closed metadata contracts for frame-owned memory, Span and Nullable. */
 export function memoryMethodDefinition(descriptor) {
@@ -42,11 +55,10 @@ export function memoryMethodDefinition(descriptor) {
   if (owner === 'System.Runtime.CompilerServices.Unsafe' && signature.isStatic && name === 'As' &&
       arguments_.length === 2 && parameter.join(',') === arguments_[0] + '&' && result === arguments_[1] + '&') operation = 'reinterpret';
   if (owner === 'System.BitConverter' && signature.isStatic) {
-    if (name === 'GetBytes' && parameter.length === 1 && result === 'byte[]') operation = 'bitBytes';
-    if (/^To(Int16|UInt16|Int32|UInt32|Int64|UInt64|Single|Double|Char|Boolean)$/.test(name) &&
-        parameter.join(',') === 'byte[],int') operation = 'bitValue';
-    if (['DoubleToInt64Bits', 'Int64BitsToDouble', 'SingleToInt32Bits', 'Int32BitsToSingle'].includes(name) &&
-        parameter.length === 1) operation = 'bitScalar';
+    if (name === 'GetBytes' && parameter.length === 1 && byteSources.has(parameter[0]) && result === 'byte[]') operation = 'bitBytes';
+    if (bitValues.get(name) === result && parameter.join(',') === 'byte[],int') operation = 'bitValue';
+    const scalar = bitScalars.get(name);
+    if (scalar && parameter.length === 1 && parameter[0] === scalar[0] && result === scalar[1]) operation = 'bitScalar';
   }
   return operation ? {implementation: 'memory', descriptor, operation, element, owner, contract: null} : null;
 }

@@ -1,60 +1,55 @@
 # A05 T05 array execution
 
-The runtime stores rank, lengths, lower bounds, and row-major strides in a frozen
-`arrayShape` on the managed heap record. The last dimension changes fastest.
-Element values use the T03 copy, boxing, interior-pointer, and GC rules. The array's
-actual element MethodTable controls every store through a covariant view.
+Arrays retain rank, lengths, lower bounds and row-major strides in an immutable
+`arrayShape`. The last dimension varies fastest. The actual element MethodTable
+controls stores through covariant references, and struct elements use T03 copy
+and interior-address rules.
 
-Contracts are pinned to ECMA-335 sixth edition, II.14.2 and I.8.9.1, and the
-[.NET 10 Array implementation](https://github.com/dotnet/runtime/blob/v10.0.0/src/coreclr/System.Private.CoreLib/src/System/Array.CoreCLR.cs),
-[allocation rules](https://github.com/dotnet/runtime/blob/v10.0.0/src/coreclr/vm/gchelpers.cpp),
-and [CreateInstance contracts](https://learn.microsoft.com/en-us/dotnet/api/system.array.createinstance?view=net-10.0).
-Normal incompatible reference stores throw `ArrayTypeMismatchException`.
-Reflection `SetValue` throws `InvalidCastException` for incompatible objects and
-`ArgumentException` for disallowed primitive narrowing. A null reflected value
-resets a value element to its zero-initialized value. Empty dimensions have an
-upper bound one below their lower bound, with Int32 wrap at the minimum bound.
+Contracts follow ECMA-335 sixth edition, II.14.2 and I.8.9.1, and the
+[.NET 10 Array implementation](https://github.com/dotnet/runtime/blob/v10.0.0/src/coreclr/System.Private.CoreLib/src/System/Array.CoreCLR.cs).
+Ordinary incompatible stores throw `ArrayTypeMismatchException`. Reflection
+stores use `InvalidCastException` for incompatible objects and `ArgumentException`
+for forbidden primitive narrowing. Reflected null resets value elements to zero.
 
-| Surface | Capability |
+| Surface | Implementation |
 | --- | --- |
-| CIL ARRAY pseudo-methods | `.ctor`, `Get`, `Set`, `Address`, ranks 1–32; lower-bound constructor arguments alternate bound/length |
-| Vectors | `newarr`, typed loads/stores, `ldelema`, and `readonly. ldelema`; zero-based rank-one constructors become vectors |
-| Array reflection | `CreateInstance(Type,int...)`, `CreateInstance(Type,int[]/long[])`, `CreateInstance(Type,int[],int[])`; `Rank`, `Length`, `LongLength`, `GetLength`, `GetLongLength`, `GetLowerBound`, `GetUpperBound` |
-| Reflection element access | `GetValue`/`SetValue` with 1–3 Int32/Int64 indices or a managed Int32/Int64 index vector; boxing and permitted primitive widening |
-| Source execution | Shared source IR create/get/set/address adapters; source-language rectangular-array and lower-bound syntax remains a frontend dependency |
-| GC and snapshots | Interior pointers retain the array and nested references; allocating reads/stores retain popped owners; snapshot preflight validates rank, bounds, strides and element count |
-| Boundaries | Default one-million-element allocation cap and managed heap budget; `maxArrayLength` may configure a lower or higher cap; Int64 reflection indices must fit Int32 |
-| Excluded surface | Pointer/byref/open-generic/void element types, native memory layouts, arbitrary reflection, bulk Array algorithms, and arrays exceeding the configured runtime budget |
+| Shape | Ranks 1–32, lengths, nonzero/negative lower bounds, row-major strides; zero-bound rank-one allocations become vectors |
+| CIL | ARRAY `.ctor`, `Get`, `Set`, `Address`; vector loads/stores, `ldelema` and `readonly.` |
+| Reflection | CreateInstance, Rank, Length/LongLength, dimension lengths/bounds, boxed GetValue and checked SetValue |
+| Backing | Native typed arrays for primitives and enum underlyings; managed slot arrays for references and copied structs |
+| Capacity | Derived from `maxBytes` and element width, optionally restricted by `maxArrayLength`; no fixed one-million-element limit |
+| Int64 | Exact native/Int64 lengths and indices are checked before conversion to host addressing; LongLength returns Int64 |
+| Algorithms | Copy with overlap, Clear, IndexOf, Resize, Clone and FieldRVA InitializeArray |
+| Source | Shared runtime IR for vectors/rectangles and append-only builtin descriptors for Array APIs; compiler adapters own syntax and CIL lowering |
+| GC/snapshot | Interior roots, allocating operand roots, typed-buffer copies and shape preflight; writes use the shared heap barrier |
 
-`execution/arrays.js` exposes `createArray`, `arrayGet`, `arraySet`, `arrayAddress`,
-`arrayDimension`, and source aliases. `array-calls.js` exposes
-`arrayCall(vm,descriptor,args,instruction)` returning `{handled,returns,value}`.
-Instance arguments include the receiver. The independent descriptor recognizer
-`arrayMethodDefinition` is shared by the CIL verifier and runtime call adapter.
+`execution/arrays.js` owns create/get/set/address operations. The separate
+`array-storage.js` has no heap dependency and describes element widths, typed
+storage copies, reads/writes and raw byte views. `array-calls.js` returns
+`{handled, returns, value}` for descriptor-based call/newobj integration. Source
+adapters preserve static input types when primitive values require boxing.
 
-Integration owns the CIL index export and profile hook, calls/newobj dispatch,
-source `NEWARR` adapter, and any final snapshot schema additions. `readonly.` sets
-`frame.readonlyAccess`; `ldelema` consumes it. No new VM-level mutable fields are
-introduced. The browser worker requires named imports and exports, which these
-modules use.
+Pointer, byref, ref-struct, void and open-generic array elements are rejected.
+Lengths must fit the configured heap budget and host typed-array capacity;
+Int64 support does not imply unlimited allocation or imprecise Number indexing.
+Arbitrary reflection and user-defined equality comparers are separate surfaces.
+Raw byte views never expose reference-containing array storage.
 
-The runnable native example is `tests/fixtures/a05/arrays/Program.cs`. Its committed
-expected output covers rank, zero and nonzero lower bounds, covariant writes,
-struct array copies, nested references through GC, reflection stores, and failures.
-The independently authored PE fixture exercises ARRAY TypeSpecs, the special
-constructor, `Get`, `Set`, and `Address` without the source emitter.
+Prepared native fixtures are `tests/fixtures/a05/arrays` and
+`tests/fixtures/a05/array-leaves`. They cover rectangular/lower-bound arrays,
+covariance, struct copies, reflection, bulk algorithms, FieldRVA initializers,
+jagged arrays and a four-million-byte allocation under a 32 MiB heap. Independent
+PE fixtures exercise ARRAY metadata without relying on the source emitter.
 
-Validation is deliberately deferred until E01 is assembled. Planned commands:
+Validation remains deferred until all E01 leaves are assembled. Planned commands:
 
 ```sh
-node --test tests/a05-05-arrays.test.js
-node scripts/validate-a05-type-system.js --fixture tests/fixtures/a05/arrays --output artifacts/a05-arrays
+node --test tests/a05-05-arrays.test.js tests/a05-array-backing.test.js tests/a05-array-runtime.test.js tests/a05-source-array-builtins.test.js tests/a05-memory-boundaries.test.js
+node scripts/validate-a05-type-system.js --fixture tests/fixtures/a05/array-leaves --output artifacts/a05-array-leaves
 node tests/a05-05-benchmark.js
 ```
 
-The benchmark records cold, warm median, p95/p99, managed allocation counts, and
-observed host-heap change with Node/platform/architecture. Host-heap change is not
-an exact JavaScript allocation count. The native runner records SDK/runtime
-versions, exact commands, DLL hashes, and same-DLL native/CIL output. Unit or
-synthetic fixture success alone is not native or browser qualification. Node,
-browser, and native targets still need their independent assembled-epic gates.
+The native runner records versions, commands, DLL hashes and same-DLL output.
+Benchmarks record cold/warm latency, p95/p99, managed allocations and observed host
+heap changes. Browser execution requires its independent bundled-runtime gate;
+no execution or performance result is claimed by these fixture definitions.

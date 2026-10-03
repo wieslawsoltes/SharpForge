@@ -1,3 +1,4 @@
+import {sourceStore, sourceInputTypes} from './source-storage.js';
 import {Op} from '@sharpforge/bytecode';
 import {createArray, arrayGet, arraySet, arrayAddress} from './arrays.js';
 import {stackSpan, spanGet, spanSet, spanAddress, spanSlice, spanLength, spanCreate} from './spans.js';
@@ -17,7 +18,11 @@ export function executeSourceMemory(vm, operation, a, b) {
     case Op.STRECT: {
       const value = stack.pop();
       const indices = popIndices(a);
-      stack.push(arraySet(vm, stack.pop(), indices, value));
+      const reference = stack.pop();
+      stack.push(vm.heap.withRoots([reference, value], () => {
+        const type = vm.heap.get(reference).methodTable.elementType;
+        return arraySet(vm, reference, indices, sourceStore(vm, value, type, sourceInputTypes(vm).at(-1)));
+      }));
       return true;
     }
     case Op.RECTADDR: {
@@ -34,7 +39,9 @@ export function executeSourceMemory(vm, operation, a, b) {
     case Op.SPANSET: {
       const value = stack.pop();
       const index = stack.pop();
-      stack.push(spanSet(vm, stack.pop(), index, value));
+      const span = stack.pop();
+      stack.push(vm.heap.withRoots([span, value], () => spanSet(vm, span, index,
+        sourceStore(vm, value, span.elementType, sourceInputTypes(vm).at(-1)))));
       return true;
     }
     case Op.SPANADDR: {

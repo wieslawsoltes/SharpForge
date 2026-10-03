@@ -1,6 +1,6 @@
 import {ManagedFault,isReference} from '../heap.js';
 import {frameById, registerFrame} from './frame-lifetimes.js';
-import {memoryPointer} from './stack-memory.js';
+import {memoryPointer, stackRegion} from './stack-memory.js';
 import {arrayElementBytes, rawArrayBytes} from './array-storage.js';
 
 function releaseLease(vm, frame, localIndex) {
@@ -15,13 +15,19 @@ function releaseLease(vm, frame, localIndex) {
 export function storePinnedLocal(vm, frame, localIndex, value) {
   releaseLease(vm, frame, localIndex);
   if (value === null || value === 0 || value === 0n) return null;
+  if (value?.memoryPointer && value.kind === 'stack') {
+    if (value.vmOwner !== vm.snapshotOwner) throw new ManagedFault('InvalidProgramException', 'Foreign pinned address');
+    stackRegion(vm, value);
+    return value;
+  }
   const reference=isReference(value)?value:value?.owner;
   if (!isReference(value)&&(!value?.byref || value.kind !== 'array' || value.path.length)) {
     throw new ManagedFault('NotSupportedException', 'Pinned locals require a primitive array element address');
   }
   if (value?.byref&&value.vmOwner !== vm.snapshotOwner) throw new ManagedFault('InvalidProgramException', 'Foreign pinned address');
   const record = vm.heap.get(reference);
-  rawArrayBytes(record.data);
+  try {rawArrayBytes(record.data);}
+  catch {throw new ManagedFault('NotSupportedException','Pinned storage cannot contain managed references');}
   registerFrame(vm, frame);
   vm.memorySequence = (vm.memorySequence ?? 0) + 1;
   const id = vm.memorySequence;
