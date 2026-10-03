@@ -27,6 +27,7 @@ import {fixtures as iteratorDisposal} from './fixtures/iterator-disposal.js';
 import {fixtures as asyncLowering} from './fixtures/async-lowering.js';
 import {fixtures as asyncStreams} from './fixtures/async-streams.js';
 import {fixtures as tupleLowering} from './fixtures/tuple-lowering.js';
+import {fixtures as deconstruction} from './fixtures/deconstruction.js';
 
 /** Directory of the differential harness. */
 export const root=dirname(fileURLToPath(import.meta.url));
@@ -60,6 +61,7 @@ export function loadFixtures(){
     ...asyncLowering,
     ...asyncStreams,
     ...tupleLowering,
+    ...deconstruction,
   ],seen=new Set();
   for(const f of all){
     if(typeof f.id!=='string'||!/^[a-z0-9-]+\/[a-z0-9-]+$/.test(f.id))throw new Error(`Invalid fixture id ${JSON.stringify(f.id)}`);
