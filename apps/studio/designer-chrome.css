@@ -249,6 +249,30 @@ html[data-theme="light"] {
 }
 .design-toolbox-tabs button { flex: none; white-space: nowrap; font-size: 11px; }
 .design-toolbox-tabs button[aria-selected="true"] { background: var(--design-pressed); color: var(--design-foreground); }
+.design-toolbox-tab-actions {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  gap: var(--design-command-gap);
+  padding: 3px 4px;
+  border-bottom: 1px solid var(--design-line-soft);
+}
+.design-toolbox-preview-badge {
+  flex: none;
+  margin-left: auto;
+  color: var(--design-warning);
+  font-size: 9px;
+  line-height: 16px;
+  white-space: nowrap;
+}
+.design-toolbox-category > button { width: 100%; min-width: 0; }
+.design-toolbox-category > button > span:nth-child(2) {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .design-toolbox-category > summary,
 .design-property-category > summary {
   position: relative;

@@ -47,6 +47,7 @@ export class DesignerOutlineState {
   }
 
   assertEditable(ids) {
+    if (this.document.readOnly) throw new Error('This source preview is read only. Open its source to change the document outline.');
     if (ids.some(id => this.isLocked(id))) throw new Error('Unlock the selected control before changing its structure or geometry');
   }
 }

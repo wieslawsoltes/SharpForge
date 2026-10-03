@@ -40,6 +40,7 @@ export class DesignerOutline {
       scroll: () => this.render(),
       keydown: event => this.keydown(event),
       dblclick: event => {
+        if (this.view.document.readOnly) return;
         if (event.target.closest('.sf-tree-label')) {
           event.preventDefault();
           event.stopImmediatePropagation();
@@ -63,7 +64,7 @@ export class DesignerOutline {
       const id = row.dataset.treeId;
       row.classList.toggle('design-outline-hidden', !this.isVisible(id));
       row.classList.toggle('design-outline-locked', this.isLocked(id));
-      row.draggable = id !== this.view.document.value.root && !this.isLocked(id);
+      row.draggable = !this.view.document.readOnly && id !== this.view.document.value.root && !this.isLocked(id);
       let controls = row.querySelector('.design-outline-actions');
       if (!controls) {
         controls = row.ownerDocument.createElement('span');
@@ -163,7 +164,7 @@ export class DesignerOutline {
   dragStart(event) {
     const row = event.target.closest('[data-tree-id]');
     if (!row) return;
-    if (this.isLocked(row.dataset.treeId)) {
+    if (this.view.document.readOnly || this.isLocked(row.dataset.treeId)) {
       event.preventDefault();
       event.stopImmediatePropagation();
     }
@@ -173,7 +174,7 @@ export class DesignerOutline {
     if (!event.dataTransfer.types.includes('application/x-sharpforge-tree')) return;
     event.stopImmediatePropagation();
     const row = event.target.closest('[data-tree-id]');
-    if (!row || this.isLocked(row.dataset.treeId)) {
+    if (this.view.document.readOnly || !row || this.isLocked(row.dataset.treeId)) {
       this.clearDrop();
       event.dataTransfer.dropEffect = 'none';
       return;
