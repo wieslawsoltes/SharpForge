@@ -3,8 +3,8 @@
   "sources": {
     "packages/runtime/src/heap.js": "28b86fe51a4a4cd93b7701b682fa2363a07d8a9c6370fd734e96690b16fe853c",
     "packages/runtime/src/vm.js": "4fdca4d2d1e42b8c34c5e4afa676d316c52d12ead54ce0fe13e1d96e0cd57a1d",
-    "packages/runtime/src/cil-vm.js": "c9471f46dd0ef60c7142d6667911efcb7f93ac19af955a225efbf2b1e8f91b84",
-    "packages/bytecode/src/index.js": "d6c313db3a1fd8b53801d427676cc73055803ee4cfe2cdc68f2eb8bb699656aa",
+    "packages/runtime/src/cil-vm.js": "e69d28937e92c27c48b2aecc23623c5e5a9d81f4e02c934cee790971f46af944",
+    "packages/bytecode/src/index.js": "de43e5a33969a116d069ca0f3a1237594d0e70fdee2f505d9be4c5c8cae2dd49",
     "packages/bytecode/src/builtins.js": "6fdacdea89188845cec3fead149a251b6f56cff3c5382f7aa0f1a2bf213217e7"
   },
   "resultKinds": {
