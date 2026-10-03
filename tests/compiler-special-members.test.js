@@ -32,6 +32,7 @@ test('SF-A02-T48 extern rules read the bound attributes of the member', () => {
   assert.deepEqual(rulesOf(source('static extern void M();'), 'N'), ['CS0626']);
   assert.deepEqual(rulesOf(source('[Obsolete] static extern void M();'), 'N'), []);
   assert.deepEqual(rulesOf(source('extern N();'), 'N'), ['CS0824']);
+  assert.deepEqual(rulesOf('partial class N { partial void M(); extern partial void M(); }', 'N'), []);
   assert.deepEqual(rulesOf(source('static extern void M() { }'), 'N'), ['CS0179']);
   assert.deepEqual(rulesOf(source('public abstract extern void M();'), 'N'), ['CS0180']);
   assert.deepEqual(rulesOf(source('[DllImport("a")] extern void M();'), 'N'), ['CS0601']);
