@@ -272,6 +272,7 @@
     "language-version/no-gate-null-coalescing-at-1",
     "language-version/null-coalescing-assignment-in-7-3",
     "language-version/nullable-reference-types-in-7-3",
+    "language-version/pattern-matching-in-6",
     "language-version/raw-string-in-10",
     "linq/cs1061-linq-without-using",
     "loops/break-continue",
