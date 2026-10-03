@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {CilVirtualMachine} from '@sharpforge/runtime';
+import {AssemblyInspector} from '@sharpforge/cil';
 import {convert, float} from '../packages/runtime/src/execution/numeric-ops.js';
 import {managedFixture} from './managed-fixtures.js';
 import {floatingConversionCases, numericConversionCases, numericConversionFixture, numericConversionOutput} from './a05-numeric-fixtures.js';
@@ -56,6 +57,17 @@ test('A05 B01/B02: independent managed IL preserves the public signed/unsigned c
     assert.equal(invoked.state, 'terminated', invoked.fault?.stack);
     assert.equal(invoked.returnValue, item.expected, item.id);
   }
+});
+
+test('A05 native numeric fixture uses CLI primitive MethodDef and MemberRef signatures', () => {
+  const inspector = new AssemblyInspector(numericConversionFixture()), metadata = inspector.metadata;
+  const method = name => [...inspector.methods.values()].find(method => method.name === name);
+  assert.deepEqual([...metadata.blob(metadata.row(method('uint_max_to_ulong').token)[4])], [0, 1, 0x0b, 0x09]);
+  assert.deepEqual([...metadata.blob(metadata.row(method('single_i8_precision').token)[4])], [0, 1, 0x0a, 0x0c]);
+  const members = method('Main').instructions.filter(instruction => instruction.name === 'call' && instruction.operand >>> 24 === 10).map(instruction => metadata.blob(metadata.row(instruction.operand)[2]));
+  assert(members.some(signature => signature.length === 4 && signature[0] === 0 && signature[1] === 1 && signature[2] === 1 && signature[3] === 0x09), 'Console.WriteLine(uint) must use ELEMENT_TYPE_U4');
+  assert(members.some(signature => signature.length === 4 && signature[0] === 0 && signature[1] === 1 && signature[2] === 1 && signature[3] === 0x0b), 'Console.WriteLine(ulong) must use ELEMENT_TYPE_U8');
+  assert(method('single_i8_precision').implFlags & 8, 'Native conversion inputs must retain NoInlining');
 });
 
 test('A05 B02: checked conversions keep overflow faults rather than applying saturation', () => {
