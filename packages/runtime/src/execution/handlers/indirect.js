@@ -1,3 +1,4 @@
+import {nativeSize} from '../native-int.js';
 import {primitiveSizes} from '@sharpforge/cil';
 import {ManagedFault} from '../../heap.js';
 import {storageDefault} from '../storage.js';
@@ -5,7 +6,7 @@ import {enumInfo} from '../enums.js';
 import {finishMemoryAccess} from '../statics.js';
 
 const handlers=new Map([
-  ['sizeof',(vm,frame,instruction)=>vm.push(primitiveSizes[vm.inspector.metadata.typeName(instruction.operand)])],
+  ['sizeof',(vm,frame,instruction)=>{const type=vm.inspector.metadata.typeName(instruction.operand);vm.push(type==='System.IntPtr'||type==='System.UIntPtr'?nativeSize(vm.options):primitiveSizes[type]);}],
   ['cpobj',(vm,frame,instruction)=>{const source=vm.pop(),destination=vm.pop(),type=vm.inspector.metadata.typeName(instruction.operand);vm.dereference(destination,true,vm.storage(vm.dereference(source),type));}],
   ['ldobj',(vm,frame,instruction)=>vm.push(vm.storage(vm.dereference(vm.pop()),vm.inspector.metadata.typeName(instruction.operand)))],
   ['stobj',(vm,frame,instruction)=>{const value=vm.pop();vm.dereference(vm.pop(),true,vm.storage(value,vm.inspector.metadata.typeName(instruction.operand)));}],

@@ -18,7 +18,7 @@ export class CilTypeSystem {
     this.initializers=new Map();
     this.dispatch=new VirtualDispatch(vm.inspector);
     const metadata=vm.inspector.metadata;
-    this.methodTables=new MethodTableRegistry({tokenResolver:token=>cachedTypeName(vm,token)});
+    this.methodTables=new MethodTableRegistry({nativeIntBits:vm.options?.nativeIntBits,tokenResolver:token=>cachedTypeName(vm,token)});
     for(const type of this.types.values()) {
       this.initializers.set(type.token,type.methods.find(method=>method.name==='.cctor')??null);
       const base=type.baseToken?metadata.typeName(type.baseToken):null;
