@@ -16,6 +16,7 @@ import {BuckStopsHereBinder,InContainerBinder,WithUsingsBinder} from './binder/b
 import {checkFeatures} from '@sharpforge/syntax';
 import {NullableContextMap} from './nullable/annotations.js';
 import {typeSyntaxSpan} from './binder/type-spans.js';
+import {reconcileWithSemanticAnalysis} from './semantic-integration.js';
 export class Compilation {
   constructor(parsedFiles, options={}) {
     this.inputFiles=parsedFiles;parsedFiles=lowerAsyncFiles(parsedFiles);this.files=parsedFiles;this.options=options;this.sources=new Map(parsedFiles.map(p=>[p.source.uri,p.source]));
@@ -163,6 +164,8 @@ export class Compilation {
     // Warning options (#pragma warning, nowarn, warnaserror, warning level) decide the final diagnostic list.
     // A feature the binder gates itself keeps the binder's diagnostic; the parser's is added where nothing covers it.
     for(const f of featureDiagnostics)if(!this.diagnostics.some(d=>d.uri===f.uri&&(d.code===f.code||d.code==='CS8652'||f.code==='CS8652')&&d.start<f.start+f.length&&f.start<d.start+d.length))this.diagnostics.push(f);
+    // Programs outside the execution profile get the diagnostics of the type system (semantic-integration.js).
+    const reconciled=reconcileWithSemanticAnalysis(this,featureDiagnostics);if(reconciled){this.diagnostics=reconciled.diagnostics;this.semanticAnalysis=reconciled.semantic;}
     const diagnostics=applySuppression(this.diagnostics,{sources:this.sources,directives:new Map(this.inputFiles.filter(f=>f.directives).map(f=>[f.source.uri,f.directives])),options:this.typedOptions}),errors=diagnostics.filter(d=>d.severity==='error').length;
     return {success:errors===0,image:errors===0?image:null,diagnostics,symbols:this.symbols,references:this.references,
       metrics:{compileMs:performance.now()-start,files:this.files.length,tokens:this.files.reduce((s,f)=>s+f.tokens.length,0),internedTokenHits:this.files.reduce((s,f)=>s+f.internedTokenHits,0),nodes:this.files.reduce((s,f)=>s+f.nodeCount,0),methods:this.methods.length,instructions:this.methods.reduce((s,m)=>s+(m.code?.length??0)/3,0),errors}};
