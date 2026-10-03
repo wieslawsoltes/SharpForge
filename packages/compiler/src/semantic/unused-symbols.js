@@ -27,7 +27,8 @@ export const UnusedSymbolWarnings = Base =>
           const at = local.locations[0];
           if (!at) continue;
           if (!local.writes || local.isCatch) this.report(binder.c.uri, at, 'CS0168', [local.name]);
-          else if (!local.nonConstantWrite && !local.isOutVar) this.report(binder.c.uri, at, 'CS0219', [local.name]);
+          // A local whose type is an error has no value to speak of: Roslyn reports only the type error.
+          else if (!local.nonConstantWrite && !local.isOutVar && !local.type?.isErrorType?.()) this.report(binder.c.uri, at, 'CS0219', [local.name]);
         }
         for (const f of binder.allLocalFunctions ?? [])
           if (!f.method.uses) this.report(f.uri, f.method.locations[0], 'CS8321', [f.method.name]);
@@ -45,8 +46,8 @@ export const UnusedSymbolWarnings = Base =>
           if (!isPrivate && !isInternal) continue;
           if (!f.reads && !f.writes) {
             if (isPrivate) this.reportAt(f, 'CS0169', [f.toDisplayString()]);
-            else this.reportAt(f, 'CS0649', [f.toDisplayString(), defaultText(f.type)]);
-          } else if (!f.writes) this.reportAt(f, 'CS0649', [f.toDisplayString(), defaultText(f.type)]);
+            else if (!f.isRequired) this.reportAt(f, 'CS0649', [f.toDisplayString(), defaultText(f.type)]);
+          } else if (!f.writes && !f.isRequired) this.reportAt(f, 'CS0649', [f.toDisplayString(), defaultText(f.type)]);
           else if (!f.reads && isPrivate && !f.nonConstantWrite) this.reportAt(f, 'CS0414', [f.toDisplayString()]);
         }
       }

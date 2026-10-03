@@ -13,6 +13,7 @@ import { classifyConstantNarrowing } from '../../conversions/constant-narrowing.
 import { isNullableType, stripNullable } from '../../conversions/nullable.js';
 import { delegateInvoke } from '../../overload/type-inference.js';
 import { isAccessible } from '../accessibility.js';
+import { anonymousFunctionAnchor } from '../anonymous-methods.js';
 import { reportTupleLiteralFailure } from '../tuples.js';
 
 const keywordOf = type =>
@@ -103,7 +104,9 @@ export const ConversionBinding = Base =>
       if (e.form === 'lambda') {
         const r = e.lastConversionError;
         if (r) for (const x of r) this.report(x.node ?? node, x.code, x.args);
-        else this.report(node, 'CS1660', [e.isAnonymousMethod ? 'anonymous method' : 'lambda expression', to]);
+        else if (e.isAnonymousMethod && ['System_Object', 'System_Delegate', 'System_MulticastDelegate'].includes(type.specialType))
+          this.report(anonymousFunctionAnchor(e.syntax, node), 'CS8917');
+        else this.report(anonymousFunctionAnchor(e.syntax, node), 'CS1660', [e.isAnonymousMethod ? 'anonymous method' : 'lambda expression', to]);
         return;
       }
       if (e.noNaturalType) {
@@ -171,7 +174,7 @@ export const ConversionBinding = Base =>
       return this.markRead(e);
     }
     markRead(e) {
-      if (e.kind === 'PropertyAccess' && !e.readChecked) {
+      if ((e.kind === 'PropertyAccess' || (e.kind === 'IndexerAccess' && e.property.containingType)) && !e.readChecked) {
         e.readChecked = true;
         const p = e.property;
         if (!p.getMethod && p.setMethod) this.report(e.syntax, 'CS0154', [p.toDisplayString()]);

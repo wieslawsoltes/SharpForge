@@ -8,7 +8,30 @@ concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: false
 jobs:
+  policy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24.21.0'
+      - name: Gate versions, specification review and required manual environment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          node scripts/conformance/release/version-check.js
+          node scripts/conformance/release-policy/check-policy.js
+          node scripts/conformance/release-policy/environment.js
   qualification:
+    needs: policy
     uses: ./.github/workflows/ci.yml
   build:
     needs: qualification
@@ -23,6 +46,7 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24.21.0'
@@ -57,6 +81,7 @@ jobs:
           node scripts/conformance/supply/attestation.js subjects > artifacts/ATTESTATION-SUBJECTS.txt
           node scripts/conformance/clean-checkout.js
       - name: Attest each release asset
+        id: attest
         uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
         with:
           subject-path: |
@@ -66,6 +91,10 @@ jobs:
             artifacts/SOURCE-MANIFEST.json
             artifacts/SHA256SUMS
             artifacts/SBOM.cdx.json
+      - name: Retain the attestation proof for draft release assets
+        env:
+          ATTESTATION_BUNDLE: ${{ steps.attest.outputs.bundle-path }}
+        run: cp -- "$ATTESTATION_BUNDLE" artifacts/provenance.sigstore.json
       - name: Verify GitHub signatures and exact signer/source identity
         env:
           GH_TOKEN: ${{ github.token }}
@@ -80,17 +109,20 @@ jobs:
         if: always()
         with:
           name: release-build-evidence
-  publish:
+  draft:
     needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
       contents: write
+      actions: read
+      pull-requests: read
       attestations: read
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24.21.0'
@@ -103,16 +135,45 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           node scripts/conformance/source-manifest.js --verify-payloads
-          node scripts/conformance/supply/attestation.js verify
           node scripts/conformance/clean-checkout.js
-      - name: Publish only cryptographically verified assets
+      - name: Create only a verified draft with all assets and attestation proof
         env:
           GH_TOKEN: ${{ github.token }}
-        shell: bash
+        run: node scripts/conformance/release-policy/release.js draft --execute
+      - uses: ./.github/actions/qualification-evidence
+        if: always()
+        with:
+          name: release-draft-evidence
+  publish:
+    needs: draft
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment:
+      name: release
+    permissions:
+      contents: write
+      actions: read
+      pull-requests: read
+      attestations: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24.21.0'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: attested-release
+          path: artifacts
+      - name: Reverify exact payloads before the manually approved publication
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          node scripts/conformance/supply/attestation.js subjects > artifacts/ATTESTATION-SUBJECTS.txt
-          mapfile -t assets < artifacts/ATTESTATION-SUBJECTS.txt
-          gh release create "$GITHUB_REF_NAME" "${assets[@]}" --verify-tag --generate-notes --title "SharpForge $GITHUB_REF_NAME"
+          node scripts/conformance/source-manifest.js --verify-payloads
+          node scripts/conformance/clean-checkout.js
+          node scripts/conformance/release-policy/release.js publish --execute
       - uses: ./.github/actions/qualification-evidence
         if: always()
         with:

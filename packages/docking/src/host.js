@@ -3,7 +3,7 @@ export class DockHost {
   constructor(element,layout,{resolveContent,onActivate=()=>{},onError=()=>{},onClose=()=>{},onWindowKeyDown=()=>{}}={}){
     this.onWindowKeyDown=onWindowKeyDown;this.element=element;this.layout=layout;this.resolveContent=resolveContent;this.onActivate=onActivate;this.onError=onError;this.onClose=onClose;this.contents=new Map();this.popouts=new Map();this.windowWatch=null;this.autoPanel=null;this.dragPanel=null;this.disposed=false;this.controller=new AbortController();this.element.classList.add('sf-dock-host');
     this.unsubscribe=layout.subscribe(event=>{if(!['resize','bounds'].includes(event.type)||!this.dragSizing)this.render();});
-    this.outside=e=>{if(this.autoPanel&&!e.target.closest('.sf-dock-auto-popup,.sf-dock-shelf')){this.autoPanel=null;this.render();}};
+    this.outside=e=>{if(this.autoPanel&&!e.target.closest('.sf-dock-auto-popup,.sf-dock-shelf')&&e.target.closest('[data-dock-toggle]')?.dataset.dockToggle!==this.autoPanel){this.autoPanel=null;this.render();}};
     element.ownerDocument.addEventListener('pointerdown',this.outside,{signal:this.controller.signal});element.ownerDocument.addEventListener('keydown',e=>{if(e.key==='Escape'&&this.autoPanel){this.autoPanel=null;this.render();}},{signal:this.controller.signal});
     this.render();
   }

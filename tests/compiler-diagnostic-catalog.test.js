@@ -1,3 +1,4 @@
+import {fileURLToPath} from 'node:url';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,readdirSync} from 'node:fs';
@@ -6,7 +7,7 @@ import {spawnSync} from 'node:child_process';
 import {compile} from '@sharpforge/compiler';
 import {diagnosticDescriptor,formatMessage,argumentCount,diagnosticCodes,profileCodes,defaultSeverity,roslynEquivalent,featureNotAvailableCode,hasDiagnosticCode} from '../packages/compiler/src/diagnostics/codes.js';
 import {roslynCodes,ROSLYN_VERSION} from '../packages/compiler/src/diagnostics/roslyn-codes.js';
-const pkg=new URL('../packages/compiler/',import.meta.url).pathname,root=join(pkg,'src');
+const pkg=fileURLToPath(new URL('../packages/compiler/',import.meta.url)),root=join(pkg,'src');
 const pinned=JSON.parse(readFileSync(join(pkg,'test/roslyn/diagnostic-messages.json'),'utf8'));
 const sources=dir=>readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?sources(join(dir,e.name)):e.name.endsWith('.js')?[join(dir,e.name)]:[]);
 const files=sources(root).filter(f=>!f.endsWith('roslyn-codes.js')).map(f=>[f,readFileSync(f,'utf8')]);
@@ -62,8 +63,8 @@ test('A02-T36 descriptors expose severity, warning level, format and argument co
 });
 test('A02-T36 feature gates report the Roslyn code for the selected language version',()=>{
   assert.equal(featureNotAvailableCode(7.3),'CS8370');assert.equal(featureNotAvailableCode(8),'CS8400');assert.equal(featureNotAvailableCode(11),'CS9058');
-  const d=compile('class C{} C c=new();',{langVersion:'8'}).diagnostics;
-  assert.deepEqual(d.map(x=>[x.code,x.message]),[['CS8400',"Feature 'Target-typed new' is not available in C# 8.0. Please use language version 9.0 or greater."]]);
+  const d=compile('class C{static void Main(){C c=new();Console.WriteLine(c);}}',{langVersion:'8'}).diagnostics;
+  assert.deepEqual(d.map(x=>[x.code,x.message]),[['CS8400',"Feature 'target-typed object creation' is not available in C# 8.0. Please use language version 9.0 or greater."]]);
   assert.equal(compile('int[] a=[1];',{langVersion:'11'}).diagnostics[0].code,'CS9058');
 });
 test('A02-T36 compiler diagnostics carry Roslyn message text',()=>{

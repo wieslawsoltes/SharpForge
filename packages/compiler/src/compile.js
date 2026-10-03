@@ -1,10 +1,12 @@
 import {emitPortablePdb,attachPortablePdb,SymbolError} from '@sharpforge/symbols';
 import {emitAssemblyDetailed,CilError} from '@sharpforge/cil';
 import {SourceText,diagnostic} from '@sharpforge/text';
-import {parse} from '@sharpforge/syntax';
+import {parseCompilerInput} from './parse-input.js';
 import {Compilation} from './compilation.js';
 import {formatMessage} from './diagnostics/codes.js';
-export function compile(input,options={}){if(Array.isArray(input)&&input.length===0)input='';const parseOptions=options.preprocessorSymbols?{preprocessorSymbols:Array.isArray(options.preprocessorSymbols)?options.preprocessorSymbols:String(options.preprocessorSymbols).split(/[;,]/).map(s=>s.trim()).filter(Boolean)}:{};const files=typeof input==='string'?[parse(new SourceText(input),undefined,parseOptions)]:input.map(f=>f.root?f:parse(new SourceText(f.text,f.uri,f.version),undefined,parseOptions));return new Compilation(files,options).build();}
+export function compile(input, options = {}) {
+  return new Compilation(parseCompilerInput(input, options), options).build();
+}
 
 /** Compile to the portable PE/CLI artifact without changing the lightweight IDE analysis API.
  * Errors are returned as diagnostics; image remains available only as a compiler/debugging IR.

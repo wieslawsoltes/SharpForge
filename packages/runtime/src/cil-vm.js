@@ -115,8 +115,9 @@ export class CilVirtualMachine {
   raise(error){return throwFault(this,error);}
   *exceptionRoots(frame){yield* exceptionRoots(frame);}
   step(){
-    if(!prepareCall(this))return;
-    const frame=this.top,instruction=frame.method.instructions[frame.pc++];
+    const frame=this.top;
+    if(frame.needsInitialization&&!prepareCall(this,frame))return;
+    const instruction=frame.method.instructions[frame.pc++];
     if(!instruction)throw new ManagedFault('InvalidProgramException','Instruction pointer is outside the method');
     frame.lastOffset=instruction.offset;
     const handler=cilHandlers.get(instruction.name);

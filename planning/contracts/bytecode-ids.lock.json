@@ -18008,6 +18008,129 @@
       "params": [
         "object"
       ]
+    },
+    {
+      "id": 1781,
+      "name": "string.Intern",
+      "min": 1,
+      "max": 1,
+      "result": "string",
+      "params": [
+        "string"
+      ]
+    },
+    {
+      "id": 1782,
+      "name": "string.IsInterned",
+      "min": 1,
+      "max": 1,
+      "result": "string",
+      "params": [
+        "string"
+      ]
+    },
+    {
+      "id": 1783,
+      "name": "string.get_Chars",
+      "min": 2,
+      "max": 2,
+      "result": "int",
+      "params": [
+        "string",
+        "int"
+      ]
+    },
+    {
+      "id": 1784,
+      "name": "object.ReferenceEquals",
+      "min": 2,
+      "max": 2,
+      "result": "bool",
+      "params": [
+        "object",
+        "object"
+      ]
+    },
+    {
+      "id": 1785,
+      "name": "Enum.HasFlag",
+      "min": 2,
+      "max": 2,
+      "result": "bool",
+      "params": [
+        "any",
+        "any"
+      ]
+    },
+    {
+      "id": 1786,
+      "name": "object.GetType",
+      "min": 1,
+      "max": 1,
+      "result": "System.Type",
+      "params": [
+        "any"
+      ]
+    },
+    {
+      "id": 1787,
+      "name": "Type.Name",
+      "min": 1,
+      "max": 1,
+      "result": "string",
+      "params": [
+        "System.Type"
+      ]
+    },
+    {
+      "id": 1788,
+      "name": "Type.FullName",
+      "min": 1,
+      "max": 1,
+      "result": "string",
+      "params": [
+        "System.Type"
+      ]
+    },
+    {
+      "id": 1789,
+      "name": "$type.int.GetType",
+      "min": 1,
+      "max": 1,
+      "result": "System.Type",
+      "params": [
+        "any"
+      ]
+    },
+    {
+      "id": 1790,
+      "name": "$type.double.GetType",
+      "min": 1,
+      "max": 1,
+      "result": "System.Type",
+      "params": [
+        "any"
+      ]
+    },
+    {
+      "id": 1791,
+      "name": "$type.bool.GetType",
+      "min": 1,
+      "max": 1,
+      "result": "System.Type",
+      "params": [
+        "any"
+      ]
+    },
+    {
+      "id": 1792,
+      "name": "$type.long.GetType",
+      "min": 1,
+      "max": 1,
+      "result": "System.Type",
+      "params": [
+        "any"
+      ]
     }
   ]
 }

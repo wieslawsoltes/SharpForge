@@ -16,6 +16,6 @@ export function sourceVersion(path,constant,seen=new Set()){
 export function checkVersions(root=fileURLToPath(new URL('../../../',import.meta.url))){
   const registry=JSON.parse(readFileSync(resolve(root,'planning/contracts/versions.json'),'utf8'));
   for(const [key,path,constant] of [['framework','packages/framework/src/index.js','ABI_VERSION'],['bytecode','packages/bytecode/src/index.js','FORMAT_VERSION'],['value','scripts/planning/abi/value-codec.js','ABI_VERSION']])if(sourceVersion(resolve(root,path),constant)!==registry[key])throw new Error(`${key} version drift`);
-  return negotiate(registry,{framework:1,bytecode:1,value:1,metadata:1});
+  return negotiate(registry,{framework:1,bytecode:2,value:1,metadata:1});
 }
 if(process.argv[1]===fileURLToPath(import.meta.url))console.log(JSON.stringify(checkVersions()));

@@ -3,5 +3,9 @@
  * imports this list, so adding a family touches only this file.
  */
 import { fixtures as memberInitializers } from './member-initializers.js';
+import { fixtures as memberOperators } from './member-operators.js';
+import { fixtures as memberInitRequired } from './member-init-required.js';
+import { fixtures as memberPrimaryConstructors } from './member-primary-constructors.js';
+import { fixtures as memberPartial } from './member-partial.js';
 
-export const fixtures = [...memberInitializers];
+export const fixtures = [...memberInitializers, ...memberOperators, ...memberInitRequired, ...memberPrimaryConstructors, ...memberPartial];

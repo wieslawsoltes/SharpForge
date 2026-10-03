@@ -233,5 +233,49 @@ export const fixtures = [
   `,
       { langVersion: '9.0' },
     ),
+    out(
+      'foreach-deconstructs-each-element',
+      cs`
+    using System;
+    using System.Collections.Generic;
+    record Point(int X, int Y);
+    class Program
+    {
+        static IEnumerable<(int, string)> Pairs() { yield return (1, "a"); yield return (2, "b"); }
+        static void Main()
+        {
+            var items = new[] { (1, "one"), (2, "two") };
+            foreach (var (n, s) in items) Console.WriteLine(n + s);
+            foreach ((int n, string s) in items) { Console.WriteLine(s + n); }
+            int total = 0;
+            foreach ((var n, _) in Pairs()) total += n;
+            Console.WriteLine(total);
+            foreach (var (x, y) in new[] { new Point(1, 2), new Point(3, 4) }) Console.WriteLine(x * y);
+            var actions = new Func<int>[2];
+            int index = 0;
+            foreach (var (a, _) in items) actions[index++] = () => a * 10;
+            foreach (var f in actions) Console.WriteLine(f());
+            foreach (var ((a, b), c) in new[] { ((1, 2), 3) }) Console.WriteLine(a + b + c);
+            foreach ((double d, object o) in items) Console.WriteLine(d / 2 + " " + o);
+        }
+    }
+  `,
+    ),
+    diag(
+      'foreach-errors',
+      cs`
+    class Program
+    {
+        static void Main() { }
+        static void M(int x)
+        {
+            foreach (var (a, b) in new[] { 1, 2 }) System.Console.WriteLine(a);
+            foreach (var (c, d, e) in new[] { (1, 2) }) System.Console.WriteLine(c);
+            foreach ((int f, string g) in new[] { (1, 2) }) System.Console.WriteLine(f);
+            foreach ((x, var h) in new[] { (1, 2) }) System.Console.WriteLine(h);
+        }
+    }
+  `,
+    ),
   ]),
 ];
