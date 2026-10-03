@@ -7,7 +7,9 @@ import {snapshotSchemaVersion} from './snapshot-version.js';
 export const portableSnapshotVersion = 1;
 
 function imageText(image) {
-  return JSON.stringify(image, (_key, value) => {
+  const {il, ...code} = image;
+  // Assembly-loader timings describe a load, not executable code identity.
+  return JSON.stringify(code, (_key, value) => {
     if (typeof value === 'bigint') return {$integer: value.toString()};
     if (typeof value === 'number' && (!Number.isFinite(value) || Object.is(value, -0))) {
       return {$number: Object.is(value, -0) ? '-0' : String(value)};

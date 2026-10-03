@@ -7,6 +7,7 @@ export function executeSourceMemory(vm, operation, a, b) {
   const stack = vm.stack;
   const popIndices = rank => stack.splice(stack.length - rank, rank);
   switch (operation) {
+    case Op.SPANDEFAULT: stack.push(spanCreate(vm,vm.image.constants[a],null,0,{readonly:b===1})); return true;
     case Op.NEWRECT: stack.push(createArray(vm, vm.image.constants[a], popIndices(b))); return true;
     case Op.LDRECT: {
       const indices = popIndices(a);

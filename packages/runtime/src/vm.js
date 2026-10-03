@@ -1,7 +1,8 @@
+import {executeSourceMemory} from './execution/source-memory.js';
 import {collectAtInstruction} from './execution/gc-stress.js';
 import {faultFromException} from './execution/exception-object.js';
 import {callSource} from './execution/source-calls.js';
-import {createArray,arrayAddress} from './execution/arrays.js';
+import {createArray,arrayAddress,arrayGet} from './execution/arrays.js';
 import {SyncPrimitives} from './execution/sync-primitives.js';
 import {resumeArrayOperation,arrayContinuationRoots} from './execution/array-ops.js';
 import {validateSliceBudget} from './execution/slice-budget.js';
@@ -82,12 +83,12 @@ export class VirtualMachine {
           case Op.RET:{const result=sourceStore(this,this.stack.pop(),method.returnType,sourceInputTypes(this,frame).at(-1));this.transfer(frame,'return',Infinity,result);break;}
           case Op.NEWOBJ:this.stack.push(sourceNewObject(this,this.image.types[a].name));break;
           case Op.NEWARR:{const length=this.stack.pop(),type=this.image.constants[a];this.stack.push(createArray(this,type,[length]));break;}
-          case Op.LDELEM:{const index=Number(number(this.stack.pop())),ref=this.stack.pop();this.stack.push(sourceCopy(this,this.indexed(ref,index).data[index]));break;}
+          case Op.LDELEM:{const index=Number(number(this.stack.pop())),ref=this.stack.pop();this.stack.push(sourceCopy(this,arrayGet(this,ref,[index])));break;}
           case Op.STELEM:{const value=this.stack.pop(),index=Number(number(this.stack.pop())),ref=this.stack.pop();this.heap.withRoots([ref,value],()=>{const r=this.indexed(ref,index),oldValue=r.data[index],stored=sourceStore(this,value,r.methodTable.elementType.name,sourceInputTypes(this,frame).at(-1));checkSourceArrayStore(this,r,stored);this.heap.writeData(r,index,stored);this.stack.push(sourceCopy(this,stored));this.notifyWrite({kind:'array',handle:ref.h,generation:ref.g,index,value:stored,oldValue});});break;}
           case Op.LENGTH:{const r=this.heap.get(this.stack.pop());if(r.kind!=='array'&&r.kind!=='string')throw new ManagedFault('InvalidProgramException','Length requires an array or string');this.stack.push(r.data.length);break;}
           case Op.THROW:throw faultFromException(this,this.stack.pop());
           case Op.RETHROW:rethrow(frame);break;
-          default:throw new ManagedFault('InvalidProgramException','Unknown instruction');
+          default:if(!executeSourceMemory(this,op,a,b))throw new ManagedFault('InvalidProgramException','Unknown instruction');
         }
       }catch(error){const fault=this.makeFault(error);if(fault.fatal||fault.name==='InstructionLimitException'){this.fault=fault;this.scheduler.cancelAll({preserveCurrent:true});this.state='faulted';break;}if(this.onException?.(fault)){this.pendingFault=fault;this.state='paused';}else this.handleFault(fault);}
       collectAtInstruction(this);

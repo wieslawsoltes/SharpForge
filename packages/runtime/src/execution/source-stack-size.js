@@ -1,4 +1,4 @@
-import {Op} from '@sharpforge/bytecode';
+import {Op, memoryStackEffect} from '@sharpforge/bytecode';
 
 const effects = new Map([
   [Op.SEQ, 0], [Op.NOP, 0], [Op.ENDFINALLY, 0], [Op.JUMP, 0],
@@ -7,12 +7,12 @@ const effects = new Map([
   [Op.DUP, 1], [Op.POP, -1], [Op.BINARY, -1], [Op.UNARY, 0], [Op.CONVERT, 0],
   [Op.JFALSE, -1], [Op.JTRUE, -1], [Op.RET, -1], [Op.NEWARR, 0],
   [Op.LDELEM, -1], [Op.STELEM, -2], [Op.LENGTH, 0], [Op.THROW, -1],
-  [Op.RETHROW, 0], [Op.DELEGATE, 0]
+  [Op.RETHROW, 0], [Op.DELEGATE, 0], [Op.LDIND, 0], [Op.STIND, -1]
 ]);
 const endings = new Set([Op.RET, Op.THROW, Op.RETHROW, Op.ENDFINALLY]);
 
 /** Maximum evaluation slots for an already verified source method, in O(IL). */
-export function sourceStackSlots(method) {
+export function sourceStackSlots(method, constants = []) {
   const heights = new Map();
   const queue = [[0, 0]];
   for (const handler of method.handlers) queue.push([handler.target, 0]);
@@ -24,7 +24,7 @@ export function sourceStackSlots(method) {
     const opcode = method.code[offset * 3];
     const operand = method.code[offset * 3 + 1];
     const count = method.code[offset * 3 + 2];
-    let change = effects.get(opcode);
+    let change = memoryStackEffect(opcode, operand, count, constants)?.delta ?? effects.get(opcode);
     if (opcode === Op.CALL || opcode === Op.BUILTIN) change = 1 - count;
     if (opcode === Op.ADDRESS) change = 1 - ((operand & 3) === 3 ? 2 : (operand & 3) === 2 ? 1 : 0);
     if (change === undefined) throw new TypeError('Unknown source stack effect');

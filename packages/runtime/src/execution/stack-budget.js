@@ -32,7 +32,7 @@ export function frameStackBytes(vm, frame) {
     return bytes;
   }
   const method = vm.image.methods[frame.methodId];
-  let bytes = frameHeaderBytes + sourceStackSlots(method) * slotBytes;
+  let bytes = frameHeaderBytes + sourceStackSlots(method, vm.image.constants) * slotBytes;
   // Source locals include argument slots, so they are counted exactly once.
   for (const local of method.locals) bytes += storageBytes(vm, local.type);
   return bytes;
