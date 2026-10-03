@@ -1,3 +1,4 @@
+import {pinnedAddress} from '../pinned.js';
 import {pointerBinary,validateMemoryPointer} from '../raw-memory.js';
 import {ManagedFault} from '../../heap.js';
 
@@ -13,7 +14,7 @@ for(const [name,op,unsigned] of [['ceq','eq',false],['cgt','gt',false],['cgt.un'
 for(const target of ['i1','u1','i2','u2','i4','u4','i8','u8','i','u','r4','r8']) {
   handlers.set('conv.'+target,vm=>{
     const value=vm.pop();
-    if(value?.memoryPointer&&['i','u'].includes(target)){validateMemoryPointer(vm,value);vm.push(value);}
+    if(value?.byref&&['i','u'].includes(target)){const pointer=value.memoryPointer?value:pinnedAddress(vm,value);validateMemoryPointer(vm,pointer);vm.push(pointer);}
     else vm.push(vm.convert('conv.'+target,value));
   });
   if(target==='r4'||target==='r8')continue;

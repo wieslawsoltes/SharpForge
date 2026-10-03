@@ -11,7 +11,7 @@ const canonical = type => aliases.get(callStorageType(type)) ?? callStorageType(
 export function memoryMethodDefinition(descriptor) {
   if (descriptor?.kind !== 'method' || !descriptor.signature || descriptor.signature.callingConvention) return null;
   const {name, signature} = descriptor;
-  const owner = descriptor.ownerInstance ?? descriptor.owner;
+  let owner = descriptor.ownerInstance ?? descriptor.owner;
   const generic = genericTypeParts(owner);
   const element = generic.arguments[0];
   const arguments_ = descriptor.methodArguments ?? descriptor.genericArguments ?? [];
@@ -29,8 +29,9 @@ export function memoryMethodDefinition(descriptor) {
     if (!signature.isStatic && name === 'Slice' && ['int', 'int,int'].includes(parameter.join(',')) && result === owner) operation = 'spanSlice';
     if (!signature.isStatic && name === 'ToArray' && parameter.length === 0 && result === element + '[]') operation = 'spanArray';
     if (!signature.isStatic && name === 'GetPinnableReference' && parameter.length === 0 && result === element + '&') operation = 'spanPin';
-    if (signature.isStatic && name === 'op_Implicit' && parameter.length === 1 && result === owner &&
-        [element + '[]', 'System.Span`1<' + element + '>'].includes(parameter[0])) operation = 'spanConvert';
+    if (signature.isStatic && name === 'op_Implicit' && parameter.length === 1 &&
+        [owner,'System.ReadOnlySpan`1<' + element + '>'].includes(result) &&
+        [element + '[]', 'System.Span`1<' + element + '>'].includes(parameter[0])) {operation = 'spanConvert';owner=result;}
   }
   if (generic.definition === 'System.Nullable`1' && element && !signature.isStatic) {
     if (name === '.ctor' && parameter.join(',') === element && result === 'void') operation = 'nullableCtor';
