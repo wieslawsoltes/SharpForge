@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5f7f0af51d37570535e9",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n \npublic class A : Attribute\n{\n    public object X;\n    static void Main()\n    {\n        typeof(C<int>.E).GetCustomAttributes(false);\n    }\n}\n \npublic class C<T>\n{\n    [A(X = default(E))]\n    public enum E { }\n\n    [A(X = typeof(E2))]\n    public enum E2 { }\n}\n",
+  "sourceSHA256": "09d6aa80990ec7280a1d4c6c050f42c8f38fe0767005b1c4e84f577e34fb9a17",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "CS0416_GenericAttributeDefaultValueArgument",
+    "offset": 265633
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0182",
+        "severity": "error"
+      },
+      {
+        "code": "CS0416",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (14,12): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                //     [A(X = default(E))]\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"default(E)\").WithLocation(14, 12),\n                // (17,12): error CS0416: 'C<T>.E2': an attribute argument cannot use type parameters\n                //     [A(X = typeof(E2))]\n                Diagnostic(ErrorCode.ERR_AttrArgWithTypeVars, \"typeof(E2)\").WithArguments(\"C<T>.E2\").WithLocation(17, 12)",
+  "unsupported": []
+}

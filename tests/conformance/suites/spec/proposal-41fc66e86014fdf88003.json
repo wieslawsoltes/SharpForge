@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-41fc66e86014fdf88003",
+  "kind": "spec",
+  "sourceText": "using System;\n\nvar c = new C();\nc.M(1, 2, 3); // error CS1501: No overload for method 'M' takes 3 arguments\n((I)c).M(1, 2, 3);\n\ninterface I\n{\n    void M(params int[] ints);\n}\n\nclass C : I\n{\n    public void M(int[] ints) { Console.WriteLine(\"params\"); }\n}",
+  "sourceSHA256": "91103aa2ae450407dfcedd08b3dbc2b35d127885363c92d3a05063b031345cfe",
+  "target": "library",
+  "featureId": "csharp-13-0-overload-resolution-priority",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/overload-resolution-priority.md",
+    "sha256": "3ae409649aa5fc38d1b6a2d6a156f641c7c72feba0e394ce5765522d2322138b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/overload-resolution-priority.md",
+    "license": "NOASSERTION",
+    "offset": 13085
+  }
+}

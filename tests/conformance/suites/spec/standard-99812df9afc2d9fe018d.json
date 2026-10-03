@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-99812df9afc2d9fe018d",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass Test\n{\n    public static int result;\n    public static volatile bool finished;\n\n    static void Thread2()\n    {\n        result = 143;\n        finished = true;\n    }\n\n    static void Main()\n    {\n        finished = false;\n\n        // Run Thread2() in a new thread\n        new Thread(new ThreadStart(Thread2)).Start();    \n\n        // Wait for Thread2() to signal that it has a result\n        // by setting finished to true.\n        for (;;)\n        {\n            if (finished)\n            {\n                Console.WriteLine($\"result = {result}\");\n                return;\n            }\n        }\n    }\n}\n",
+  "unsupported": [
+    "Runtime expectation requires upstream output/exception/argument extraction"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "844877618631d867e5f38ff51d029491ef13fe4723eb12c95e5f29fb34be4f19",
+  "originalSource": "class Test\n{\n    public static int result;\n    public static volatile bool finished;\n\n    static void Thread2()\n    {\n        result = 143;\n        finished = true;\n    }\n\n    static void Main()\n    {\n        finished = false;\n\n        // Run Thread2() in a new thread\n        new Thread(new ThreadStart(Thread2)).Start();    \n\n        // Wait for Thread2() to signal that it has a result\n        // by setting finished to true.\n        for (;;)\n        {\n            if (finished)\n            {\n                Console.WriteLine($\"result = {result}\");\n                return;\n            }\n        }\n    }\n}\n",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "VolatileFields",
+    "inferOutput": true
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "VolatileFields",
+    "offsetInUnquotedMarkdown": 91856
+  }
+}

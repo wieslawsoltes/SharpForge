@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8419addb4543b7ab2ce0",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass Program\n{\n    public static void Main()\n    {\n        Console.Write(M1(false));\n        Console.Write(M1(true));\n    }\n    static object M1(bool b)\n    {\n        return M2(b switch { false => new A(), true => new B() });\n    }\n    static Exception M2(Exception ex) => ex;\n    static int M2(int i) => i;\n    static int M2(string s) => s.Length;\n}\nclass A : Exception\n{\n    public static implicit operator int(A a) => throw null;\n    public static implicit operator B(A a) => throw null;\n}\nclass B : Exception\n{\n    public static implicit operator int(B b) => throw null;\n}\n",
+  "sourceSHA256": "ffbb123c34f2fd2a0fc3836e34ce6f73cd2e587a2e3fe5172ac33f54955dbbd6",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "TargetTypedSwitch_Argument_01",
+    "offset": 140250
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0121",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (12,16): error CS0121: The call is ambiguous between the following methods or properties: 'Program.M2(Exception)' and 'Program.M2(int)'\n                    //         return M2(b switch { false => new A(), true => new B() });\n                    Diagnostic(ErrorCode.ERR_AmbigCall, \"M2\").WithArguments(\"Program.M2(System.Exception)\", \"Program.M2(int)\").WithLocation(12, 16)\n                ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

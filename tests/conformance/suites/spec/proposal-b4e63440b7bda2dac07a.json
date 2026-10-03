@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-b4e63440b7bda2dac07a",
+  "kind": "spec",
+  "sourceText": "ref struct S\n{\n    int field;\n    ref int refField;\n\n    static void SelfAssign(ref S s)\n    {\n        s.refField = ref s.field;\n    }\n}\n\n// Maps to \n\nref struct S<out $this>\n{\n    int field;\n    ref<$this> int refField;\n\n    static void SelfAssign<$ro, $cm>(ref<$ro> S<$cm> s)\n    {\n        // error: the types work out here to ref<$cm> int = ref<$ro> int and that is \n        // illegal as $ro has no conversion to $cm (the relationship is the other direction)\n        s.refField = ref<$ro> s.field;\n    }\n}",
+  "sourceSHA256": "4f5c5580775c3a8ed0360a37b5d218ca1af8f95c61cbac26c853d1e591e8746f",
+  "target": "library",
+  "featureId": "csharp-11-0-ref-fields",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/low-level-struct-improvements.md",
+    "sha256": "48173c4aaa1ffb3cbd8f7602f52fbf0b38a57f1e4fc50a725ba5305f30a5ff54",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/low-level-struct-improvements.md",
+    "license": "NOASSERTION",
+    "offset": 67085
+  }
+}

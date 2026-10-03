@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-662eb6e909bce01d9c64",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    async System.Threading.Tasks.Task M()\n    {\n        await foreach (var i in new C())\n        {\n        }\n    }\n    internal Enumerator GetAsyncEnumerator(System.Threading.CancellationToken token = default)\n    {\n        throw null;\n    }\n    public sealed class Enumerator\n    {\n    }\n}",
+  "sourceSHA256": "f210ab0f0dbb1a951e7a8ed1ae2f0f92e51984e2f4243d826c1e1c5f2c1590f9",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "sha256": "3c72028a71b56ed2c5aef9987e6e3104cd6d4d2bfe0a3ef090960b2314c59cf3",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "license": "MIT",
+    "method": "TestWithInaccessibleGetEnumerator",
+    "offset": 20947
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0279",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8411",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,33): warning CS0279: 'C' does not implement the 'async streams' pattern. 'C.GetAsyncEnumerator(System.Threading.CancellationToken)' is not a public instance or extension method.\n                //         await foreach (var i in new C())\n                Diagnostic(ErrorCode.WRN_PatternNotPublicOrNotInstance, \"new C()\").WithArguments(\"C\", \"async streams\", \"C.GetAsyncEnumerator(System.Threading.CancellationToken)\").WithLocation(6, 33),\n                // (6,33): error CS8411: Async foreach statement cannot operate on variables of type 'C' because 'C' does not contain a public definition for 'GetAsyncEnumerator'\n                //         await foreach (var i in new C())\n                Diagnostic(ErrorCode.ERR_AwaitForEachMissingMember, \"new C()\").WithArguments(\"C\", \"GetAsyncEnumerator\").WithLocation(6, 33)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

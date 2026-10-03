@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-630fde883a06b1235053",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass Program\n{\n    static void M(Span<int> s)\n    {\n        var x = s[1..^1];\n        var y = s[^1];\n    }\n}",
+  "sourceSHA256": "eb9cd6e51860e86d185ee1f0be98667d77541624a70233bd5d734973f8943d50",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/IndexAndRangeTests.cs",
+    "sha256": "cc97f1fd9348a23ea1dfb48fed759ac29970be3fad476cf9584d65aab04f6ef8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/IndexAndRangeTests.cs",
+    "license": "MIT",
+    "method": "SpanSlice",
+    "offset": 117659
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

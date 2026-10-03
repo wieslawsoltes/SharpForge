@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3aa9936befb7939abb49",
+  "kind": "diagnostics",
+  "sourceText": "\nunsafe class C\n{\n    public static void Main()\n    {\n        fixed (int* p = new Fixable(1))\n        {\n            System.Console.Write(p[1]);\n        }\n    }\n}\n\npublic struct Fixable\n{\n    public Fixable(int arg){}\n\n    public ref int GetPinnableReference(int x = 0) => ref (new int[]{1,2,3})[0];\n}\n\n",
+  "sourceSHA256": "8110a6de61bfb89faa37fcf3ae78f17955ceb70d27b4a6e597349c4d986b8375",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/UnsafeTests.cs",
+    "sha256": "424f034ea20a9add3b40a8a1c0094fffc5ef30885511f2c90ae10bd80b976073",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/UnsafeTests.cs",
+    "license": "MIT",
+    "method": "CustomFixedStructVariousErr07_Optional",
+    "offset": 140023
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, options: TestOptions.UnsafeReleaseExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0280",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8385",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,25): warning CS0280: 'Fixable' does not implement the 'fixed' pattern. 'Fixable.GetPinnableReference(int)' has the wrong signature.\n                //         fixed (int* p = new Fixable(1))\n                Diagnostic(ErrorCode.WRN_PatternBadSignature, \"new Fixable(1)\").WithArguments(\"Fixable\", \"fixed\", \"Fixable.GetPinnableReference(int)\").WithLocation(6, 25),\n                // (6,25): error CS9385: The given expression cannot be used in a fixed statement\n                //         fixed (int* p = new Fixable(1))\n                Diagnostic(ErrorCode.ERR_ExprCannotBeFixed, \"new Fixable(1)\").WithLocation(6, 25)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

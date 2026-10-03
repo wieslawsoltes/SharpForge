@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "runtime-1a71b0fe778ac36a9334",
+  "kind": "runtime",
+  "sourceText": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n.assembly extern legacy library mscorlib {}\n.assembly extern xunit.core {}\n\n\n.class public auto ansi ble_s {\n.method public static int32 main() {\n.custom instance void [xunit.core]Xunit.FactAttribute::.ctor() = (\n    01 00 00 00\n)\n.locals         (class [mscorlib]System.String)\n.entrypoint\n\n        ldc.i4          0x44444444\n        ldc.i4          0x55555555\n        ble.s                   next0\n        br                      fail\nnext0:\n        ldc.i4          0x66666666\n        ldc.i4          0x66666666\n        ble.s                   next1\n        br                      fail\nnext1:\n        ldc.i4          0x55555555\n        ldc.i4          0x44444444\n        ble                   fail\n        br                      next2\nnext2:\n        ldc.r4          float32(0xBF800000)\n        ldc.r4          float32(0x3F800000)\n        ble.s                   next3\n        br                      fail\nnext3:\n        ldc.r4          float32(0x3F800000)\n        ldc.r4          float32(0x3F800000)\n        ble.s                   next4\n        br                      fail\nnext4:\n        ldc.r4          float32(0x3F800000)\n        ldc.r4          float32(0xBF800000)\n        ble                   fail\n        br                      next5\nnext5:\n        ldc.r4          float32(0xBF800000)\n        ldc.r4          float32(0x3F800000)\n        ble.un.s        next6\n        br                      fail\nnext6:\n        ldc.r4          float32(0x3F800000)\n        ldc.r4          float32(0x3F800000)\n        ble.un.s        next7\n        br                      fail\nnext7:\n        ldc.r4          float32(0x3F800000)\n        ldc.r4          float32(0xBF800000)\n        ble.un.s        fail\n        br                      next8\nnext8:\n        ldc.r4          float32(0x7FC00000)\n        ldc.r4          float32(0x7FC00000)\n        ble.un.s        next9\n        br                      fail\nnext9:\n        ldc.r4          float32(0x7FC00000)\n        ldc.r4          float32(0x3F800000)\n        ble.un.s        next10\n        br                      fail\nnext10:\n        ldc.r4          float32(0xBF800000)\n        ldc.r4          float32(0x7FC00000)\n        ble.un.s        pass\n        br                      fail\n\npass:\n        ldc.i4 100\n        br                      end\nfail:\n        ldc.i4          0x0\n        br                      end\nend:\n        ret\n}\n}\n\n\n.assembly ble_s {}\n\n",
+  "unsupported": [
+    "Upstream IL preprocessor/legacy assembly rewrite required"
+  ],
+  "language": "il",
+  "opcodeFamilies": [
+    "arithmetic",
+    "branches",
+    "calls"
+  ],
+  "sourceSHA256": "63008d3aba1fde0a9d766d2f0b3206129f3358875d8098c39ad496c21cec21cb",
+  "originalSource": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n.assembly extern legacy library mscorlib {}\n.assembly extern xunit.core {}\n\n\n.class public auto ansi ble_s {\n.method public static int32 main() {\n.custom instance void [xunit.core]Xunit.FactAttribute::.ctor() = (\n    01 00 00 00\n)\n.locals         (class [mscorlib]System.String)\n.entrypoint\n\n        ldc.i4          0x44444444\n        ldc.i4          0x55555555\n        ble.s                   next0\n        br                      fail\nnext0:\n        ldc.i4          0x66666666\n        ldc.i4          0x66666666\n        ble.s                   next1\n        br                      fail\nnext1:\n        ldc.i4          0x55555555\n        ldc.i4          0x44444444\n        ble                   fail\n        br                      next2\nnext2:\n        ldc.r4          float32(0xBF800000)\n        ldc.r4          float32(0x3F800000)\n        ble.s                   next3\n        br                      fail\nnext3:\n        ldc.r4          float32(0x3F800000)\n        ldc.r4          float32(0x3F800000)\n        ble.s                   next4\n        br                      fail\nnext4:\n        ldc.r4          float32(0x3F800000)\n        ldc.r4          float32(0xBF800000)\n        ble                   fail\n        br                      next5\nnext5:\n        ldc.r4          float32(0xBF800000)\n        ldc.r4          float32(0x3F800000)\n        ble.un.s        next6\n        br                      fail\nnext6:\n        ldc.r4          float32(0x3F800000)\n        ldc.r4          float32(0x3F800000)\n        ble.un.s        next7\n        br                      fail\nnext7:\n        ldc.r4          float32(0x3F800000)\n        ldc.r4          float32(0xBF800000)\n        ble.un.s        fail\n        br                      next8\nnext8:\n        ldc.r4          float32(0x7FC00000)\n        ldc.r4          float32(0x7FC00000)\n        ble.un.s        next9\n        br                      fail\nnext9:\n        ldc.r4          float32(0x7FC00000)\n        ldc.r4          float32(0x3F800000)\n        ble.un.s        next10\n        br                      fail\nnext10:\n        ldc.r4          float32(0xBF800000)\n        ldc.r4          float32(0x7FC00000)\n        ble.un.s        pass\n        br                      fail\n\npass:\n        ldc.i4 100\n        br                      end\nfail:\n        ldc.i4          0x0\n        br                      end\nend:\n        ret\n}\n}\n\n\n.assembly ble_s {}\n\n",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/tests/JIT/IL_Conformance/Old/Base/ble_s.il",
+    "sha256": "63008d3aba1fde0a9d766d2f0b3206129f3358875d8098c39ad496c21cec21cb",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/tests/JIT/IL_Conformance/Old/Base/ble_s.il",
+    "license": "MIT"
+  },
+  "namespace": "JIT",
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack"
+  ],
+  "expected": {
+    "exitCode": 100
+  },
+  "adaptation": "Unmodified upstream IL. Native ILAsm required; no IL simulation."
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-f040419b4cc7dab3504f",
+  "kind": "spec",
+  "sourceText": "ref struct S2 : IAsyncDisposable\n{\n    ValueTask IAsyncDisposable.DisposeAsync()\n    {\n    }\n}\n\nclass C\n{\n    static async Task Main()\n    {\n        await using (new S2())\n        {\n        } // S2.IAsyncDisposable.DisposeAsync\n    }\n}",
+  "sourceSHA256": "25e0868da40a469f490bd7b028253cb15b5cd627c06ac92c4e9b15bdfca0669a",
+  "target": "library",
+  "featureId": "csharp-13-0-ref-struct-interfaces",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/ref-struct-interfaces.md",
+    "sha256": "89db7c6f20f22a5b99df61e63033ebecc1f2cde6459e71f2fa50cd9458a4b123",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/ref-struct-interfaces.md",
+    "license": "NOASSERTION",
+    "offset": 11500
+  }
+}
