@@ -1,0 +1,566 @@
+[
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 0,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.Void"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 0,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.Boolean"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 0,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.Char"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 0,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.SByte"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 0,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.Byte"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 0,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.Int16"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 0,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.UInt16"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 0,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.Int32"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 0,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.UInt32"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 0,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.Int64"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 0,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.UInt64"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 0,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.IntPtr"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 0,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.UIntPtr"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 0,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.Single"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 0,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.Double"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 0,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.Decimal"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 0,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.String"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 0,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.Object"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "element": {
+        "arguments": [],
+        "arity": 0,
+        "assembly": "System.Runtime",
+        "kind": "named",
+        "name": "System.Int32"
+      },
+      "kind": "array",
+      "rank": 1
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "element": {
+        "arguments": [],
+        "arity": 0,
+        "assembly": "System.Runtime",
+        "kind": "named",
+        "name": "System.String"
+      },
+      "kind": "array",
+      "rank": 2
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "element": {
+        "arguments": [],
+        "arity": 0,
+        "assembly": "System.Runtime",
+        "kind": "named",
+        "name": "System.Int32"
+      },
+      "kind": "byref",
+      "rank": 1
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "element": {
+        "arguments": [],
+        "arity": 0,
+        "assembly": "System.Runtime",
+        "kind": "named",
+        "name": "System.Void"
+      },
+      "kind": "pointer",
+      "rank": 1
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "index": 0,
+      "kind": "parameter",
+      "owner": "type"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "index": 1,
+      "kind": "parameter",
+      "owner": "method"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [
+        {
+          "arguments": [],
+          "arity": 0,
+          "assembly": "System.Runtime",
+          "kind": "named",
+          "name": "System.Int32"
+        }
+      ],
+      "arity": 1,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.Collections.Generic.List`1"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [
+        {
+          "arguments": [],
+          "arity": 0,
+          "assembly": "System.Runtime",
+          "kind": "named",
+          "name": "System.String"
+        },
+        {
+          "arguments": [],
+          "arity": 0,
+          "assembly": "System.Runtime",
+          "kind": "named",
+          "name": "System.Int32"
+        }
+      ],
+      "arity": 2,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.Collections.Generic.Dictionary`2"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [
+        {
+          "arguments": [],
+          "arity": 0,
+          "assembly": "System.Runtime",
+          "kind": "named",
+          "name": "System.String"
+        }
+      ],
+      "arity": 1,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.Threading.Tasks.Task`1"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [
+        {
+          "arguments": [],
+          "arity": 0,
+          "assembly": "System.Runtime",
+          "kind": "named",
+          "name": "System.Int32"
+        },
+        {
+          "arguments": [],
+          "arity": 0,
+          "assembly": "System.Runtime",
+          "kind": "named",
+          "name": "System.String"
+        }
+      ],
+      "arity": 2,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.Func`2"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [
+        {
+          "arguments": [],
+          "arity": 0,
+          "assembly": "System.Runtime",
+          "kind": "named",
+          "name": "System.Int32"
+        }
+      ],
+      "arity": 1,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.Action`1"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 0,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.Exception"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 0,
+      "assembly": "SharpForge",
+      "kind": "named",
+      "name": "Microsoft.UI.Xaml.Window"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "element": {
+        "element": {
+          "arguments": [],
+          "arity": 0,
+          "assembly": "System.Runtime",
+          "kind": "named",
+          "name": "System.Int32"
+        },
+        "kind": "array",
+        "rank": 1
+      },
+      "kind": "array",
+      "rank": 1
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "element": {
+        "arguments": [],
+        "arity": 0,
+        "assembly": "System.Runtime",
+        "kind": "named",
+        "name": "System.Int32"
+      },
+      "kind": "array",
+      "rank": 3
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [],
+      "arity": 1,
+      "assembly": "SharpForge",
+      "kind": "named",
+      "name": "Example.Outer`1"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [
+        {
+          "arguments": [],
+          "arity": 0,
+          "assembly": "System.Runtime",
+          "kind": "named",
+          "name": "System.String"
+        }
+      ],
+      "arity": 1,
+      "assembly": "SharpForge",
+      "kind": "named",
+      "name": "Example.Outer`1+Inner`1"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "arguments": [
+        {
+          "arguments": [
+            {
+              "arguments": [],
+              "arity": 0,
+              "assembly": "System.Runtime",
+              "kind": "named",
+              "name": "System.Int32"
+            }
+          ],
+          "arity": 1,
+          "assembly": "System.Runtime",
+          "kind": "named",
+          "name": "System.Collections.Generic.List`1"
+        }
+      ],
+      "arity": 1,
+      "assembly": "System.Runtime",
+      "kind": "named",
+      "name": "System.Collections.Generic.List`1"
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "callingConvention": "default",
+      "explicitThis": false,
+      "genericArity": 0,
+      "hasThis": false,
+      "parameters": [
+        {
+          "arguments": [],
+          "arity": 0,
+          "assembly": "System.Runtime",
+          "kind": "named",
+          "name": "System.Int32"
+        }
+      ],
+      "returnType": {
+        "arguments": [],
+        "arity": 0,
+        "assembly": "System.Runtime",
+        "kind": "named",
+        "name": "System.Void"
+      },
+      "sentinel": null
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "kind": "functionPointer",
+      "signature": {
+        "callingConvention": "default",
+        "explicitThis": false,
+        "genericArity": 0,
+        "hasThis": false,
+        "parameters": [
+          {
+            "arguments": [],
+            "arity": 0,
+            "assembly": "System.Runtime",
+            "kind": "named",
+            "name": "System.Int32"
+          }
+        ],
+        "returnType": {
+          "arguments": [],
+          "arity": 0,
+          "assembly": "System.Runtime",
+          "kind": "named",
+          "name": "System.Void"
+        },
+        "sentinel": null
+      }
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "element": {
+        "arguments": [],
+        "arity": 0,
+        "assembly": "System.Runtime",
+        "kind": "named",
+        "name": "System.Int32"
+      },
+      "kind": "modified",
+      "modifier": {
+        "arguments": [],
+        "arity": 0,
+        "assembly": "System.Runtime",
+        "kind": "named",
+        "name": "System.Runtime.CompilerServices.IsVolatile"
+      },
+      "required": true
+    },
+    "schemaVersion": 1
+  },
+  {
+    "identity": {
+      "callingConvention": "vararg",
+      "explicitThis": false,
+      "genericArity": 0,
+      "hasThis": false,
+      "parameters": [
+        {
+          "arguments": [],
+          "arity": 0,
+          "assembly": "System.Runtime",
+          "kind": "named",
+          "name": "System.Int32"
+        }
+      ],
+      "returnType": {
+        "arguments": [],
+        "arity": 0,
+        "assembly": "System.Runtime",
+        "kind": "named",
+        "name": "System.Void"
+      },
+      "sentinel": 1
+    },
+    "schemaVersion": 1
+  }
+]
