@@ -32,6 +32,7 @@ this branch has passed the full numeric qualification matrix.
 
 `tests/a05-int64-arithmetic.test.js` exercises the public API and independently
 authored direct-CIL methods against those results. Existing numeric seam tests
-cover the adjacent paths. Validation and performance measurements remain queued;
-no speedup is claimed. This slice does not add source-language Int64 lowering or
+cover the adjacent paths. The serial validation queue passed 124 focused Int64,
+float, numeric seam, managed IL and ABI tests on Node 24.21.0. Performance
+measurements remain staged for the larger scope; no speedup is claimed. This slice does not add source-language Int64 lowering or
 change Int32, floating-point, conversion, storage or native-width policies.
