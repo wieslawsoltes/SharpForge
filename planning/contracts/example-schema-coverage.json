@@ -623,8 +623,9 @@
       "input": "examples/release14/CsharpPreviewCollections/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS8652: The feature 'collection expression arguments' is currently in Preview and *unsupported*. To use Preview features, use the 'preview' language version. (pinned to csharplang/proposals/csharp-15.0/collection-expression-arguments.md revision 1, .NET SDK 10.0.201 (Roslyn 5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a))",
-        "CS8652: The feature 'labeled break and continue' is currently in Preview and *unsupported*. To use Preview features, use the 'preview' language version. (pinned to csharplang/proposals/csharp-15.0/labeled-break-continue.md revision 1, .NET SDK 10.0.201 (Roslyn 5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a))"
+        "CS0103: The name 'with' does not exist in the current context",
+        "CS8652: The feature 'labeled break and continue' is currently in Preview and *unsupported*. To use Preview features, use the 'preview' language version. (pinned to csharplang/proposals/csharp-15.0/labeled-break-continue.md revision 1, .NET SDK 10.0.201 (Roslyn 5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a))",
+        "SF1017: Named and by-reference arguments are not implemented in this profile"
       ]
     },
     {

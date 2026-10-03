@@ -36,7 +36,14 @@ test('compiler checks lossless syntax features for text and reused trees per fil
   const parsed = parse(new SourceText(source, 'Raw.cs'));
   assert.equal(compile([parsed], {langVersion:'14',langVersionByUri:{'Raw.cs':'10'}}).success, false);
   assert.equal(compile([parsed], {langVersion:'10',langVersionByUri:{'Raw.cs':'11'}}).success, true);
-  const preview = compile('int[] values = [with(capacity: 2), 1, 2];', {langVersion:'14'});
+  const previewSource = 'int[] values = [with(capacity: 2), 1, 2];';
+  // Stable grammar keeps `with` as a method name; a reused preview tree must still enforce the selected version.
+  const stable = compile(previewSource, {langVersion:'14'});
+  assert.equal(stable.success, false);
+  assert(stable.diagnostics.some(d=>d.code==='CS0103' && d.message.includes("'with'")));
+  assert.equal(stable.diagnostics.filter(d=>d.code==='CS8652').length, 0);
+  const previewTree = parse(new SourceText(previewSource, 'Preview.cs'), undefined, {languageVersion:'preview'});
+  const preview = compile([previewTree], {langVersion:'14'});
   assert.equal(preview.success, false);
   assert.equal(preview.diagnostics.filter(d=>d.code==='CS8652').length, 1);
 });
