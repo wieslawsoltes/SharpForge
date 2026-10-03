@@ -4,10 +4,9 @@ import { loadError, LoadErrorCode } from '../load-errors.js';
 
 const empty = Object.freeze([]);
 const kinds = Object.freeze({
-  method: { table: 6, pointer: 5, list: 'MethodList', name: 3, create: createMethodDesc,
-    details: row => ({ flags: row[2], implementationFlags: row[1], signatureIndex: row[4] }) },
-  field: { table: 4, pointer: 3, list: 'FieldList', name: 1, create: createFieldDesc,
-    nameOptions: Object.freeze({ maxBytes: 4096 }), details: row => ({ flags: row[0], signatureIndex: row[2] }) },
+  method: { table: 6, pointer: 5, list: 'MethodList', name: 3, flags: 2, implementationFlags: 1, signature: 4, create: createMethodDesc },
+  field: { table: 4, pointer: 3, list: 'FieldList', name: 1, flags: 0, signature: 2, create: createFieldDesc,
+    nameOptions: Object.freeze({ maxBytes: 4096 }) },
 });
 
 /** One module's bounded definition ownership index; schemas share MethodList/FieldList traversal and caches. */
@@ -84,7 +83,8 @@ export class MetadataMemberDefinitions {
       this.#index();
       const name = this.#module.string(row[this.#kind.name], this.#kind.nameOptions);
       if (name.length > 4096) throw loadError(LoadErrorCode.LimitExceeded, 'Member name length exceeded');
-      const descriptor = this.#kind.create({ name, module: this.#module, token, ...this.#kind.details(row),
+      const descriptor = this.#kind.create({ name, module: this.#module, token, flags: row[this.#kind.flags],
+        implementationFlags: row[this.#kind.implementationFlags], signatureIndex: row[this.#kind.signature],
         declaringType: this.#module.typeDefinition(this.#owners[token & 0xffffff]) });
       this.#descriptors.set(token, descriptor);
       return descriptor;
