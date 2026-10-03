@@ -1269,16 +1269,14 @@
         "object",
         "nint"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "InvalidProgramException",
-        "message": "Delegate construction requires a verified method pointer"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "InvalidProgramException",
-        "message": "Delegate construction requires a verified method pointer"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -1289,16 +1287,14 @@
         "object",
         "Microsoft.UI.Xaml.RoutedEventArgs"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -6193,16 +6189,14 @@
         "object",
         "nint"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "InvalidProgramException",
-        "message": "Delegate construction requires a verified method pointer"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "InvalidProgramException",
-        "message": "Delegate construction requires a verified method pointer"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -6210,16 +6204,14 @@
       "owner": "System.Action",
       "name": "Invoke",
       "parameters": [],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -6230,16 +6222,14 @@
         "object",
         "nint"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "InvalidProgramException",
-        "message": "Delegate construction requires a verified method pointer"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "InvalidProgramException",
-        "message": "Delegate construction requires a verified method pointer"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -6247,16 +6237,14 @@
       "owner": "System.Func`1<int>",
       "name": "Invoke",
       "parameters": [],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -6267,16 +6255,14 @@
         "object",
         "nint"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "InvalidProgramException",
-        "message": "Delegate construction requires a verified method pointer"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "InvalidProgramException",
-        "message": "Delegate construction requires a verified method pointer"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -6284,16 +6270,14 @@
       "owner": "System.Func`1<double>",
       "name": "Invoke",
       "parameters": [],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -6304,16 +6288,14 @@
         "object",
         "nint"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "InvalidProgramException",
-        "message": "Delegate construction requires a verified method pointer"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "InvalidProgramException",
-        "message": "Delegate construction requires a verified method pointer"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -6321,16 +6303,14 @@
       "owner": "System.Func`1<bool>",
       "name": "Invoke",
       "parameters": [],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -6341,16 +6321,14 @@
         "object",
         "nint"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "InvalidProgramException",
-        "message": "Delegate construction requires a verified method pointer"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "InvalidProgramException",
-        "message": "Delegate construction requires a verified method pointer"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -6358,16 +6336,14 @@
       "owner": "System.Func`1<string>",
       "name": "Invoke",
       "parameters": [],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -6378,16 +6354,14 @@
         "object",
         "nint"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "InvalidProgramException",
-        "message": "Delegate construction requires a verified method pointer"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "InvalidProgramException",
-        "message": "Delegate construction requires a verified method pointer"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -6395,16 +6369,14 @@
       "owner": "System.Func`1<object>",
       "name": "Invoke",
       "parameters": [],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -6415,16 +6387,14 @@
         "object",
         "nint"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "InvalidProgramException",
-        "message": "Delegate construction requires a verified method pointer"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "InvalidProgramException",
-        "message": "Delegate construction requires a verified method pointer"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -6432,16 +6402,14 @@
       "owner": "System.Threading.ThreadStart",
       "name": "Invoke",
       "parameters": [],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -6543,16 +6511,14 @@
       "owner": "System.Threading.Thread",
       "name": "Start",
       "parameters": [],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -6715,16 +6681,14 @@
       "parameters": [
         "System.Action"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -6855,16 +6819,14 @@
       "parameters": [
         "System.Func`1<int>"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -6995,16 +6957,14 @@
       "parameters": [
         "System.Func`1<double>"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -7135,16 +7095,14 @@
       "parameters": [
         "System.Func`1<bool>"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -7275,16 +7233,14 @@
       "parameters": [
         "System.Func`1<string>"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -7415,16 +7371,14 @@
       "parameters": [
         "System.Func`1<object>"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -7481,16 +7435,14 @@
       "parameters": [
         "System.Action"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -7500,16 +7452,14 @@
       "parameters": [
         "System.Func`1<int>"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -7519,16 +7469,14 @@
       "parameters": [
         "System.Func`1<double>"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -7538,16 +7486,14 @@
       "parameters": [
         "System.Func`1<bool>"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -7557,16 +7503,14 @@
       "parameters": [
         "System.Func`1<string>"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -7576,16 +7520,14 @@
       "parameters": [
         "System.Func`1<object>"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -22197,16 +22139,14 @@
       "parameters": [
         "double"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Unsupported easing function EasingFunctionBase"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Unsupported easing function EasingFunctionBase"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -24763,16 +24703,14 @@
         "object",
         "nint"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "InvalidProgramException",
-        "message": "Delegate construction requires a verified method pointer"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "InvalidProgramException",
-        "message": "Delegate construction requires a verified method pointer"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -24780,16 +24718,14 @@
       "owner": "System.Func`1<System.Net.Http.HttpResponseMessage>",
       "name": "Invoke",
       "parameters": [],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -24799,16 +24735,14 @@
       "parameters": [
         "System.Func`1<System.Net.Http.HttpResponseMessage>"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -24940,16 +24874,14 @@
         "object",
         "nint"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "InvalidProgramException",
-        "message": "Delegate construction requires a verified method pointer"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "InvalidProgramException",
-        "message": "Delegate construction requires a verified method pointer"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -24957,16 +24889,14 @@
       "owner": "System.Func`1<double[]>",
       "name": "Invoke",
       "parameters": [],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -24976,16 +24906,14 @@
       "parameters": [
         "System.Func`1<double[]>"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "TypeError",
-        "message": "Cannot read properties of undefined (reading 'isStatic')"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "CilError",
-        "message": "MethodDef not found"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -27257,16 +27185,14 @@
       "parameters": [
         "double[]"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "RangeError",
-        "message": "Invalid worker-pool limits"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "RangeError",
-        "message": "Invalid worker-pool limits"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -27277,16 +27203,14 @@
         "double[]",
         "double[]"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "RangeError",
-        "message": "Invalid worker-pool limits"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "RangeError",
-        "message": "Invalid worker-pool limits"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -27297,16 +27221,14 @@
         "double[]",
         "double[]"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "RangeError",
-        "message": "Invalid worker-pool limits"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "RangeError",
-        "message": "Invalid worker-pool limits"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
@@ -27317,16 +27239,14 @@
         "double[]",
         "double[]"
       ],
-      "status": "missing",
+      "status": "implemented",
       "source": {
-        "handled": false,
-        "outcome": "RangeError",
-        "message": "Invalid worker-pool limits"
+        "handled": true,
+        "outcome": "returned"
       },
       "cil": {
-        "handled": false,
-        "outcome": "RangeError",
-        "message": "Invalid worker-pool limits"
+        "handled": true,
+        "outcome": "returned"
       }
     },
     {
