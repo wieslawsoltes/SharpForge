@@ -101,6 +101,25 @@ for (const engine of ['source', 'cil']) {
       vm.stop();
     }
   });
+
+  test(`SF-A09-B01 ${engine} numeric token expansion respects the existing output budget`, () => {
+    const compiled = compileToIL('Console.WriteLine(0);');
+    assert.equal(compiled.success, true, JSON.stringify(compiled.diagnostics));
+    const vm = engine === 'source' ? new VirtualMachine(compiled.image) : new CilVirtualMachine(compiled.assembly);
+    const encode = count => {
+      const text = vm.heap.string('a'.repeat(count));
+      return vm.heap.withRoots([text], () => {
+        const input = vm.heap.allocate('array', 'object[]', [text, vm.platform.managed(1e-7, 'double')]);
+        return vm.platform.native(vm.platform.invoke(serialize.contract, [input]));
+      });
+    };
+    try {
+      assert.equal(encode(999990).length, 1_000_000);
+      assert.throws(() => encode(999991), {name: 'JsonException'});
+    } finally {
+      vm.stop();
+    }
+  });
 }
 
 test('SF-A09-B01 numeric oracle pins fifty values, source, SDK and runtime', () => {
