@@ -24,7 +24,13 @@ for (const feature of inventory.rows) {
     for (const langVersion of [undefined, '14', 'latest', 'default']) {
       const result = compile(source, { langVersion, outputKind: 'library' });
       assert.equal(result.success, false, 'Preview proposal silently accepted with ' + langVersion);
-      if (feature.supportedProfile) assert(result.diagnostics.some((row) => row.code === 'CS8652'));
+      if (feature.id === 'csharp-15-0-collection-expression-arguments') {
+        // Stable C# keeps with(...) as an ordinary method call. The probe has no
+        // method named with, so binding rejects it without a preview syntax gate.
+        assert(result.diagnostics.some((row) => row.code === 'CS0103' && row.message.includes("'with'")));
+      } else if (feature.supportedProfile) {
+        assert(result.diagnostics.some((row) => row.code === 'CS8652'));
+      }
     }
   });
   test(`preview compiler ${feature.id}: explicitly opted-in acceptance`, {
