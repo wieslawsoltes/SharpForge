@@ -2,14 +2,15 @@ import {MAX, bclScalar, bounded, fail, integer, makeArray, string, text} from '.
 import {compositeFormat} from '../formatting/composite-format.js';
 
 const owner = 'System.Text.StringBuilder';
+const maximumCapacity = 2147483647;
 
-/** Register StringBuilder in its released ABI order, including the released capacity metadata. */
+/** Register StringBuilder in its released ABI order with the .NET default MaxCapacity. */
 export function registerStringBuilder({define, member, ctor, prop}) {
   define(owner, {kind: 'bcl', family: 'builder'});
   for (const parameters of [[], ['int'], ['string'], ['string', 'int']]) ctor(owner, parameters);
   prop(owner, 'Length', 'int', 0);
   prop(owner, 'Capacity', 'int', 16);
-  prop(owner, 'MaxCapacity', 'int', 1048576, true);
+  prop(owner, 'MaxCapacity', 'int', maximumCapacity, true);
   for (const type of ['int', 'double', 'bool', 'string', 'object']) member(owner, 'Append', [type], owner);
   for (const parameters of [[], ['string']]) member(owner, 'AppendLine', parameters, owner);
   const methods = [
@@ -25,6 +26,12 @@ export function registerStringBuilder({define, member, ctor, prop}) {
   for (let count = 1; count <= 3; count++) {
     member(owner, 'AppendFormat', ['string', ...Array(count).fill('object')], owner);
   }
+}
+
+function capacity(platform, value, minimum = 0) {
+  integer(platform, value, minimum, maximumCapacity);
+  if (value > MAX) fail(platform, 'OutOfMemoryException', 'StringBuilder host text allocation limit exceeded');
+  return value;
 }
 
 function chunks(platform, reference) {
@@ -48,7 +55,8 @@ function commitChunks(platform, reference, items) {
   reserve(platform, reference, items.length);
   const next = Array(chunks(platform, reference).length).fill(null);
   items.forEach((value, index) => { next[index] = value; });
-  platform.heap.replaceData(platform.get(reference, '$data'), next);
+  const storage = platform.get(reference, '$data');
+  if (storage) platform.heap.replaceData(storage, next);
   platform.set(reference, '$count', items.length);
   platform.set(reference, '$version', platform.get(reference, '$version', 0) + 1);
 }
@@ -92,12 +100,12 @@ function appendText(platform, reference, value) {
 }
 
 function construct(platform, descriptor, scalars) {
-  if (scalars.length === 1 && typeof scalars[0] === 'number') integer(platform, scalars[0]);
-  if (scalars.length === 2) integer(platform, scalars[1]);
+  if (scalars.length === 1 && typeof scalars[0] === 'number') capacity(platform, scalars[0]);
+  if (scalars.length === 2) capacity(platform, scalars[1]);
   const reference = platform.make(descriptor.owner, {'$count': 0, '$version': 0});
   platform.heap.pins.push(reference);
-  const capacity = scalars.length === 1 && typeof scalars[0] === 'number' ? scalars[0] : scalars[1] ?? 16;
-  platform.set(reference, '$capacity', capacity);
+  const initialCapacity = scalars.length === 1 && typeof scalars[0] === 'number' ? scalars[0] : scalars[1] ?? 16;
+  platform.set(reference, '$capacity', initialCapacity || 16);
   platform.set(reference, '$length', 0);
   if (typeof scalars[0] === 'string') appendText(platform, reference, scalars[0]);
   return reference;
@@ -109,7 +117,7 @@ function mutateBuffer(platform, reference, name, values, scalars) {
       setBuffer(platform, reference, '');
       return reference;
     case 'set_Length': {
-      const length = integer(platform, scalars[0]);
+      const length = capacity(platform, scalars[0]);
       const previous = bufferText(platform, reference);
       setBuffer(platform, reference, length > previous.length
         ? previous + '\0'.repeat(length - previous.length)
@@ -119,6 +127,7 @@ function mutateBuffer(platform, reference, name, values, scalars) {
     case 'Insert': {
       const previous = bufferText(platform, reference);
       const start = integer(platform, scalars[0], 0, previous.length);
+      capacity(platform, previous.length + (scalars[1]?.length ?? 0));
       setBuffer(platform, reference, previous.slice(0, start) + (scalars[1] ?? '') + previous.slice(start));
       return reference;
     }
@@ -132,7 +141,19 @@ function mutateBuffer(platform, reference, name, values, scalars) {
     case 'Replace': {
       const previous = string(platform, values[0]);
       if (!previous) fail(platform, 'ArgumentException', 'Old value cannot be empty');
-      setBuffer(platform, reference, bufferText(platform, reference).split(previous).join(scalars[1] ?? ''));
+      const source = bufferText(platform, reference);
+      const replacement = scalars[1] ?? '';
+      if (replacement.length > previous.length) {
+        let occurrences = 0;
+        let position = source.indexOf(previous);
+        while (position >= 0) {
+          occurrences++;
+          position = source.indexOf(previous, position + previous.length);
+        }
+        const length = source.length + occurrences * (replacement.length - previous.length);
+        if (length > MAX) fail(platform, 'OutOfMemoryException', 'StringBuilder host text allocation limit exceeded');
+      }
+      setBuffer(platform, reference, source.split(previous).join(replacement));
       return reference;
     }
     default: fail(platform, 'MissingMethodException', name);
@@ -143,9 +164,9 @@ function invokeMember(platform, descriptor, reference, values, scalars) {
   switch (descriptor.name) {
     case 'get_Length': return platform.get(reference, '$length', 0);
     case 'get_Capacity': return platform.get(reference, '$capacity', 16);
-    case 'get_MaxCapacity': return MAX;
+    case 'get_MaxCapacity': return maximumCapacity;
     case 'set_Capacity':
-      integer(platform, scalars[0], platform.get(reference, '$length', 0));
+      capacity(platform, scalars[0], platform.get(reference, '$length', 0));
       platform.set(reference, '$capacity', scalars[0]);
       return null;
     case 'Append': return appendText(platform, reference, text(platform, values[0], descriptor.parameters[0]));
@@ -153,7 +174,7 @@ function invokeMember(platform, descriptor, reference, values, scalars) {
     case 'AppendFormat':
       return appendText(platform, reference, compositeFormat(platform, string(platform, values[0]), values.slice(1)));
     case 'EnsureCapacity':
-      integer(platform, scalars[0]);
+      capacity(platform, scalars[0]);
       platform.set(reference, '$capacity', Math.max(scalars[0], platform.get(reference, '$capacity', 16)));
       return platform.get(reference, '$capacity');
     case 'ToString': {

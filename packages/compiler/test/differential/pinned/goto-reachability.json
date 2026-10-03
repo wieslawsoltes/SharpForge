@@ -1,0 +1,4 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "goto-reachability/cs0162-in-methods-with-goto-and-labels":{"hash":"a5a4fe0e27b3208b","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0162",81,7,"warning"],["CS0162",143,7,"warning"],["CS0162",279,7,"warning"],["CS0162",366,3,"warning"],["CS0162",494,7,"warning"],["CS0162",612,7,"warning"],["CS0162",750,7,"warning"]]},
+  "goto-reachability/code-after-a-label-runs":{"hash":"bb75fa38df3de4d2","kind":"output","langVersion":"14.0","diagnostics":[],"output":"3\nend\n"}
+}}
