@@ -126,3 +126,15 @@ below used Linux, Node v24.19.0, AMD EPYC 9V74 80-Core Processor in the same wor
 The registry derives each canonical type's immutable schema once and indexes attached setters once. Repeated lookup returns the same
 frozen descriptor map, with no per-lookup map allocation or full manifest scan. These measurements cover metadata and model validation;
 they do not measure browser layout, compiler performance or native rendering.
+
+## Default event metadata
+
+Each `designerMetadata` descriptor exposes `defaultEvent: string | null`. The value comes from an explicit designer table of known
+WinUI editor defaults, follows declared base types, and is retained only when the framework actually declares the event. Controls
+without an explicit default expose `null`; consumers must not substitute the first available event. Button activation uses `Click`,
+TextBox uses `TextChanged`, supported selector controls use `SelectionChanged`, and ToggleSwitch uses `Toggled`.
+
+Studio surface activation and Events-row double-click share `activateDesignerEvent`. Existing subscriptions use the source worker's
+navigation operation, including protected lambdas and multiple subscriptions. Creation uses the same compiler-validated atomic source
+transaction as other designer edits. Inherited read-only previews and template parts cannot create handlers. Enter on the event row
+performs the same action; double-click within a handler editor keeps that editor's normal selection behavior.

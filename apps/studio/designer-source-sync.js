@@ -37,6 +37,7 @@ export class DesignerSourceSync {
       state: this.state, message: this.message, auto: this.auto, dirty: this.dirty(),
       warnings: this.session?.analysis.warnings ?? [], diagnostics: [...this.diagnostics],
       structuralEditable: this.session?.analysis.structuralEditable ?? false,
+      canApply: this.session?.analysis.canApply !== false,
       generation: this.generation, pending: this.writing
     };
   }
@@ -89,7 +90,7 @@ export class DesignerSourceSync {
         code: 'SFSYNC_STALE'
       });
     }
-    if (candidate.success === false || !candidate.analysis?.document) {
+    if (candidate.success === false && !candidate.previewAvailable || !candidate.analysis?.document) {
       const diagnostics = candidate.diagnostics ?? [];
       this.report('blocked', diagnostics[0]?.message ?? 'The document has no valid design preview yet', diagnostics);
       throw Object.assign(new Error(this.message), {diagnostics});
@@ -108,7 +109,9 @@ export class DesignerSourceSync {
       sourceText: primary.text, sourceVersion: primary.version ?? 0, document: designerSourceDocument(this.view.document.value),
       designRevision: this.view.document.revision, generation
     });
-    this.report('synced', 'Linked ' + uri + ' · ' + (candidate.analysis.method?.name ?? 'construction method'), []);
+    if (candidate.success === false) this.report('blocked', candidate.diagnostics?.[0]?.message ?? 'Preview requires another compilation target',
+      candidate.diagnostics ?? []);
+    else this.report('synced', 'Linked ' + uri + ' · ' + (candidate.analysis.method?.name ?? 'construction method'), []);
     this.view.toolbox?.updateAnalysis?.({ success: true, projectTypes: candidate.projectTypes ?? [], version });
     if (!this.view.documentHost) this.view.chrome?.setMode('split');
     return this.snapshot();
@@ -136,6 +139,11 @@ export class DesignerSourceSync {
     clearTimeout(this.designTimer);
     if (this.protocol.sourceDirty) {
       this.report('conflict', 'C# and design both changed. Both versions are retained for reconciliation.');
+      return;
+    }
+    if (this.session.analysis.canApply === false) {
+      this.report('blocked', this.session.analysis.diagnostics?.[0]?.message ?? 'This preview cannot apply source in the current compiler target',
+        this.session.analysis.diagnostics ?? []);
       return;
     }
     if (!this.dirty()) { this.report('synced', 'C# and design are synchronized.', []); return; }
@@ -188,7 +196,7 @@ export class DesignerSourceSync {
     catch (error) { protocol.reject(token, error); throw error; }
     if (file.version !== version || !protocol.isCurrent(token) || protocol !== this.protocol) return this.snapshot();
     if (candidate.workspaceRevision !== undefined && candidate.workspaceRevision !== this.view.state.revision) return this.snapshot();
-    if (candidate.success === false) {
+    if (candidate.success === false && !candidate.previewAvailable) {
       const diagnostics = candidate.diagnostics ?? [];
       protocol.reject(token, diagnostics[0] ?? { message: 'Source analysis did not produce a valid design' });
       this.report('blocked', diagnostics[0]?.message ?? 'Retaining the last valid preview', diagnostics);
@@ -205,7 +213,9 @@ export class DesignerSourceSync {
     finally { this.loading = false; }
     this.session = { analysis: candidate.analysis, sources: (this.view.sourceFiles?.() ?? []).map(item => ({ ...item })) };
     this.session.analysis.text ??= file.text;
-    this.report('synced', 'Read ' + file.uri + ' · last valid preview updated', []);
+    if (candidate.success === false) this.report('blocked', candidate.diagnostics?.[0]?.message ?? 'Preview requires another compilation target',
+      candidate.diagnostics ?? []);
+    else this.report('synced', 'Read ' + file.uri + ' · last valid preview updated', []);
     return this.snapshot();
   }
 

@@ -7,8 +7,10 @@ export function renderSourceSyncControls(snapshot) {
   const commands = uri
     ? [['read', 'Read C#'], ['write', 'Apply to C#'], ['source', 'Open editor'], ['disconnect', 'Disconnect']]
     : [['connect', 'Connect C#']];
-  const buttons = commands.map(([command, title]) =>
-    `<button type="button" class="design-command" data-sync="${command}">${title}</button>`).join('');
+  const buttons = commands.map(([command, title]) => {
+    const disabled = command === 'write' && snapshot.canApply === false;
+    return `<button type="button" class="design-command" data-sync="${command}"${disabled ? ' disabled' : ''}>${title}</button>`;
+  }).join('');
   return `<span class="design-sync-state ${escapeHtml(snapshot.state)}" title="${escapeHtml(snapshot.message)}">`
     + escapeHtml(status) + '</span>' + buttons
     + '<label class="design-auto-sync"><input type="checkbox" data-sync-auto '

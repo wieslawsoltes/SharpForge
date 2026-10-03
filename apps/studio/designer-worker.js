@@ -3,6 +3,7 @@ import {
   planDesignSourceUpdate, planDesignEventHandler, discoverProjectControls
 } from '@sharpforge/designer';
 import { registerDesignerValidation } from './designer-worker-validation.js';
+import {registerDesignerResourceSourceWorker} from './designer-resource-source-worker.js';
 
 function sameSources(left, right) {
   if (!Array.isArray(left) || !Array.isArray(right) || left.length !== right.length) return false;
@@ -14,6 +15,7 @@ function sameSources(left, right) {
 /** Register an additive compiler-worker request; syntax and semantic graphs remain in the worker. */
 export function registerDesignerWorker(protocol, {maxCachedDocuments = 4, maxCachedCharacters = 512000, workspace = null} = {}) {
   const unregisterValidation = workspace ? registerDesignerValidation(protocol, workspace) : null;
+  const unregisterResources = registerDesignerResourceSourceWorker(protocol);
   const analyses = new Map();
   const options = params => ({
     uri: params.uri, previous: params.previous, className: params.className, methodName: params.methodName,
@@ -84,5 +86,5 @@ export function registerDesignerWorker(protocol, {maxCachedDocuments = 4, maxCac
         diagnostics: error.details?.diagnostics ?? [designSourceDiagnostic(error, { uri: params.uri })] };
     }
   });
-  return () => { unregister(); unregisterValidation?.(); analyses.clear(); };
+  return () => { unregister(); unregisterResources(); unregisterValidation?.(); analyses.clear(); };
 }

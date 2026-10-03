@@ -14,6 +14,7 @@ import { isNullableType, stripNullable, acceptsNullLiteral } from './nullable.js
 import { hasImplicitReferenceConversion, hasBoxingConversion, hasExplicitReferenceConversion, hasUnboxingConversion } from './reference.js';
 import { resolveUserDefinedConversion } from './user-defined.js';
 import { hasImplicitSpanConversion, hasExplicitSpanConversion } from './span.js';
+import { pointerConversionKind } from './pointer.js';
 
 export const ConversionKind = Object.freeze(
   Object.fromEntries(
@@ -39,6 +40,10 @@ export const ConversionKind = Object.freeze(
       'ImplicitDynamic',
       'ObjectCreation',
       'CollectionExpression',
+      'ImplicitPointerToVoid',
+      'ExplicitPointerToPointer',
+      'ExplicitPointerToInteger',
+      'ExplicitIntegerToPointer',
       'ExplicitNumeric',
       'ExplicitEnumeration',
       'ExplicitNullable',
@@ -54,6 +59,7 @@ export const ConversionKind = Object.freeze(
   ),
 );
 const implicitKinds = new Set([
+  'ImplicitPointerToVoid',
   'Identity',
   'ImplicitNumeric',
   'ImplicitEnumeration',
@@ -183,6 +189,7 @@ export class Conversions {
         return new Conversion(K.ImplicitNullable, { underlying: inner, steps: isNullableType(from) ? ['lift'] : ['wrap'] });
     }
     if (from.typeKind === TypeKind.Dynamic) return simple.ImplicitDynamic;
+    if (pointerConversionKind(from, to, t => this.kindOf(t)) === K.ImplicitPointerToVoid) return simple.ImplicitPointerToVoid;
     if (hasImplicitReferenceConversion(from, to, this.core)) return simple.ImplicitReference;
     if (hasBoxingConversion(from, to, this.core)) return simple.Boxing;
     if (isTuple(from) && isTuple(to) && from.typeArguments.length === to.typeArguments.length) {
@@ -200,6 +207,8 @@ export class Conversions {
     const a = this.kindOf(from),
       b = this.kindOf(to);
     if (a && b && explicitNumericConversion(a, b)) return simple.ExplicitNumeric;
+    const pointer = pointerConversionKind(from, to, t => this.kindOf(t));
+    if (pointer) return simple[pointer];
     // Enumerations convert explicitly to and from every numeric type and each other.
     if ((isEnum(from) && (b || isEnum(to))) || (isEnum(to) && a)) return simple.ExplicitEnumeration;
     if (isNullableType(from) || isNullableType(to)) {

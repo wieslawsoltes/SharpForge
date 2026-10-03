@@ -1,4 +1,5 @@
-import {DesignerSessionRegistry, probeDesignSource} from '../../packages/designer/src/index.js';
+import {DesignerSessionRegistry} from '../../packages/designer/src/index.js';
+import {classifyDesignerSource} from './designer-source-classification.js';
 import {DesignerDocumentView} from './designer-document-view.js';
 import {DesignerToolRouter} from './designer-tool-router.js';
 
@@ -50,7 +51,7 @@ export class DesignerDocuments {
     if (/\.sfdesign\.json$/i.test(uri)) return {uri, compatible: true, kind: 'design', reason: null};
     const cached = this.probes.get(uri);
     if (cached?.text === file.text) return cached.result;
-    const result = probeDesignSource(file.text, uri);
+    const result = classifyDesignerSource(file.text, uri);
     this.probes.set(uri, {text: file.text, result});
     return result;
   }
@@ -70,7 +71,7 @@ export class DesignerDocuments {
     const source = this.sources.get(uri);
     if (!source) throw new Error(`The source document must be mounted before opening its designer: ${uri}`);
     const file = this.file(uri);
-    const kind = /\.sfdesign\.json$/i.test(uri) ? 'design' : 'csharp';
+    const kind = /\.sfdesign\.json$/i.test(uri) ? 'design' : this.probe(uri).kind === 'resources' ? 'resources' : 'csharp';
     const document = kind === 'design' ? JSON.parse(file.text) : undefined;
     const session = this.registry.open(uri, {...this.sessionOptions(uri, kind), kind, document});
     let view;
@@ -138,6 +139,7 @@ export class DesignerDocuments {
     }
     await this.openSource(uri);
     const view = this.views.get(uri) ?? this.createView(uri);
+    if (view.initializationFailed) this.initializeView(view);
     const initialized = await view.ready;
     if (view.disposed) throw new Error('The document was closed while opening its designer');
     if (!initialized && mode !== 'code') throw new Error(view.session.status || 'Repair source diagnostics before opening the design view');

@@ -6,6 +6,7 @@ import {retainSourceIdentities} from './source-identity.js';
 import {retainSourceDesignMetadata} from './source-design-metadata.js';
 import {inferSourceStyle} from './source-text.js';
 import {designSourceDiagnostics, failSource} from './source-errors.js';
+import {sourceRootBaseEvidence} from './source-preview.js';
 
 /** Analyzes all files together so fields and handlers resolve across partial class declarations. */
 export function analyzeDesignSources(sources, options = {}) {
@@ -47,7 +48,8 @@ export function analyzeDesignSources(sources, options = {}) {
   const {method, owner, parsed} = context.chosen;
   const ownership = {version: 1, uri: parsed.source.uri, className: ownerName(owner), methodName: method.name,
     methodSymbol: context.methodSymbol?.name ?? method.name, span: {start: method.body.start, end: method.body.end}, regions: reader.regions};
-  if (reader.rootAssignment) ownership.rootAssignment = {...reader.rootAssignment, owner: ownerName(owner), methodName: method.name,
+  if (reader.rootAssignment) ownership.rootAssignment = {...reader.rootAssignment, ...sourceRootBaseEvidence(context, reader.rootAssignment),
+    owner: ownerName(owner), methodName: method.name,
     childId: remap[reader.rootAssignment.childId] ?? reader.rootAssignment.childId};
   const analysis = {text: parsed.source.text, uri: parsed.source.uri, document, bindings: reader.bindings, method, owner,
     methods: context.methods, templateMethods: reader.templateMethods, resources: reader.resources,

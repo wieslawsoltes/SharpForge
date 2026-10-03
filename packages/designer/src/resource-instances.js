@@ -5,7 +5,13 @@ import {projectDesignerState} from './resource-states.js';
 import {projectDesignerAuthoringScene} from './resource-preview.js';
 
 /** Ten independent scenes share immutable authoring input: five state presets × two themes. */
-export function designerInstancePreviews(input, {nodeId, resourceKey, kind = 'style'} = {}) {
+export function designerInstancePreviews(input, {nodeId, resourceKey, kind = 'style', themes = ['light', 'dark'],
+  states = ['Normal', 'PointerOver', 'Pressed', 'Disabled', 'Focused'], resolveAsset} = {}) {
+  if (!Array.isArray(themes) || !themes.length || themes.length > 2 || themes.some(theme => !['light', 'dark'].includes(theme)) ||
+    !Array.isArray(states) || !states.length || states.length > 5 || states.some(state =>
+      !['Normal', 'PointerOver', 'Pressed', 'Disabled', 'Focused'].includes(state))) {
+    authoringError('SFD1854', 'Choose bounded preview themes and states.');
+  }
   const design = validateDesign(input);
   let root = design.nodes.find(node => node.id === nodeId);
   if (!root && resourceKey) {
@@ -41,14 +47,14 @@ export function designerInstancePreviews(input, {nodeId, resourceKey, kind = 'st
     node.events = {};
   }
   const result = [];
-  for (const theme of ['light', 'dark']) {
-    for (const state of ['Normal', 'PointerOver', 'Pressed', 'Disabled', 'Focused']) {
+  for (const theme of themes) {
+    for (const state of states) {
       const document = structuredClone(base);
       const instance = document.nodes[0];
       const schema = propertySchema(instance.type);
       if (schema.RequestedTheme) instance.properties.RequestedTheme = theme === 'light' ? 1 : 2;
       if (state === 'Disabled' && schema.IsEnabled) instance.properties.IsEnabled = false;
-      let scene = projectDesignerAuthoringScene(document, designScene(document), {theme, samples: false});
+      let scene = projectDesignerAuthoringScene(document, designScene(document), {theme, samples: false, resolveAsset});
       scene = projectDesignerState(scene, root.states, {'*': state});
       if (root.template) scene = projectDesignerState(scene, design.templates[root.template].states, {'*': state}, {prefix: root.id + '::'});
       result.push({theme, state, scene});

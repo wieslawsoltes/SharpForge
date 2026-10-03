@@ -38,7 +38,7 @@ export function createDesignerActions(view) {
     'run-app': () => view.launchDesignerApp({uri: view.session.kind === 'csharp' ? view.session.uri : undefined}),
     apply: () => view.applyLive(),
     source: () => {
-      if (view.session.kind === 'csharp') return view.documentHost.setMode('code');
+      if (view.session.kind !== 'design') return view.documentHost.setMode('code');
       return exportGeneratedSource(view);
     },
     generate: async () => {
