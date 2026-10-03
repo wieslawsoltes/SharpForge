@@ -60,7 +60,7 @@ export class VirtualMachine {
           case Op.STFLD:{const value=this.stack.pop(),ref=this.stack.pop(),r=this.heap.get(ref);if(a>=r.data.length||r.kind!=='object')throw new ManagedFault('InvalidProgramException','Invalid field index');const oldValue=r.data[a];r.data[a]=value;this.stack.push(value);this.notifyWrite({kind:'field',handle:ref.h,generation:ref.g,index:a,value,oldValue});break;}
           case Op.DUP:this.stack.push(this.stack.at(-1));break;case Op.POP:this.stack.pop();break;
           case Op.BINARY:{const right=this.stack.pop(),left=this.stack.pop();this.stack.push(this.binary(BinaryName[a],left,right,b));break;}
-          case Op.CONVERT:this.stack.push(convert(this.stack.pop(),a,b));break;
+          case Op.CONVERT:this.stack.push(convert(this.stack.pop(),a,b,this));break;
           case Op.UNARY:this.stack.push(unary(UnaryName[a],this.stack.pop(),b));break;
           case Op.JUMP:this.transfer(frame,'jump',a);break;case Op.JFALSE:if(!this.stack.pop())this.transfer(frame,'jump',a);break;case Op.JTRUE:if(this.stack.pop())this.transfer(frame,'jump',a);break;
           case Op.CALL:{const args=this.stack.splice(this.stack.length-b,b);this.call(a,args);break;}

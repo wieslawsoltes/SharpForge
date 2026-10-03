@@ -1,6 +1,6 @@
 import {installModernCompiler,languageVersion,hasBackingField,rewriteBackingField} from './modern.js';
 import {lowerAsyncFiles} from './async-lowering.js';
-import {canonicalType,frameworkType,frameworkAssignable,taskResult,findContracts} from '@sharpforge/framework';
+import {canonicalType,enumTypes,frameworkType,frameworkAssignable,taskResult,findContracts} from '@sharpforge/framework';
 import {installFrameworkCompiler} from './framework.js';
 import {emitPortablePdb,attachPortablePdb,SymbolError} from '@sharpforge/symbols';
 import {evaluateConstant,ConstantError} from './constants.js';
@@ -8,7 +8,7 @@ export {evaluateConstant,ConstantError} from './constants.js';
 import { emitAssemblyDetailed, CilError } from '@sharpforge/cil';
 import { SourceText, diagnostic } from '@sharpforge/text';
 import { parse } from '@sharpforge/syntax';
-import { Op, Binary, Unary, BuiltinMap, frameworkBuiltin, FORMAT_VERSION } from '@sharpforge/bytecode';
+import { Op, Binary, Unary, BuiltinMap, frameworkBuiltin, EnumConvertBase, FORMAT_VERSION } from '@sharpforge/bytecode';
 const supported = new Set(['int','double','bool','string','object','void','var','null','error','Exception']);
 const aliases = { 'System.Int32':'int','System.Double':'double','System.Boolean':'bool','System.String':'string','System.Object':'object','System.Void':'void','System.Exception':'Exception' };
 const normalize = t=>canonicalType(aliases[t]??t);
@@ -321,7 +321,7 @@ class MethodCompiler {
       case 'Await':{if(!this.m.node.asyncBody&&!this.m.name.startsWith('<startup>'))this.c.report(node,'CS4032','await requires an async method');const type=this.expr(node.expression),d=findContracts('SharpForge.Runtime.Async','Await',true).find(x=>x.parameters[0]===type);if(!d){this.c.report(node,'CS1061',`Type '${type}' has no supported awaiter`);return 'error';}const builtin=frameworkBuiltin(d);this.emit(Op.BUILTIN,builtin.id,1);return d.result;}
       case 'Default':{const type=this.c.resolveType(node.type,node);if(type==='void')this.c.report(node,'CS1547','default(void) is invalid');this.emitConstant(defaultValue(type),type);return type;}
       case 'Checked':case 'Unchecked':{const previous=this.checkedContext;this.checkedContext=node.kind==='Checked';try{return this.expr(node.expression);}finally{this.checkedContext=previous;}}
-      case 'Cast':{const from=this.expr(node.expression),to=this.c.resolveType(node.type,node);if(!numeric(from)||!numeric(to))this.c.report(node,'CS0030',`Cannot convert '${from}' to '${to}'`);this.emit(Op.CONVERT,to==='int'?0:1,this.overflowChecked(node)&&to==='int'?1:0);return to;}
+      case 'Cast':{const from=this.expr(node.expression),to=this.c.resolveType(node.type,node),enumTarget=enumTypes.indexOf(to);if((!numeric(from)&&frameworkType(from)?.kind!=='enum')||(!numeric(to)&&enumTarget<0))this.c.report(node,'CS0030',`Cannot convert '${from}' to '${to}'`);this.emit(Op.CONVERT,enumTarget>=0?EnumConvertBase+enumTarget:to==='int'?0:1,this.overflowChecked(node)&&to!=='double'?1:0);return to;}
       case 'SwitchExpression':return this.switchExpression(node);
       case 'Error':this.emitConstant(null);return 'error';
       case 'Literal':if(node.type==='char')this.c.report(node,'SF2003','char values are not supported by this execution profile');if(node.type==='int'&&node.value>2147483647)this.c.report(node,'SF2004','Positive integer literal exceeds Int32.MaxValue');this.emitConstant(node.value,node.type);return node.type;

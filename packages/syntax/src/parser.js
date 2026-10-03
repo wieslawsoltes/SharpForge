@@ -61,6 +61,15 @@ export class Parser {
     if(this.tokens[i]?.kind==='<'){let depth=0,steps=0;do{const k=this.tokens[i++]?.kind;depth+=k==='<'?1:k==='>'?-1:k==='>>'?-2:0;if(++steps>128)return false;}while(depth>0&&this.tokens[i]?.kind!=='eof');}while(this.tokens[i]?.kind==='['&&this.tokens[i+1]?.kind===']')i+=2;
     return this.tokens[i]?.kind==='identifier'&&this.tokens[i+1]?.kind==='(';
   }
+  looksLikeCast() {
+    // Called after '('. A named type followed by unary +/- remains a grouped
+    // expression, as in (value) + 1; predefined types are unambiguous.
+    let i=this.i;const predefined=typeKeywords.has(this.tokens[i]?.kind);
+    if(!predefined&&this.tokens[i]?.kind!=='identifier')return false;
+    i++;while(this.tokens[i]?.kind==='.'&&this.tokens[i+1]?.kind==='identifier')i+=2;
+    if(this.tokens[i]?.kind!==')')return false;
+    return predefined||['identifier','integer','double','string','char','true','false','null','this','base','new','default','checked','unchecked','(','!','~'].includes(this.tokens[i+1]?.kind);
+  }
   methodOrField(owner) {
     const start=this.current, mods=this.parseModifiers();
     if(owner&&this.at('identifier')&&this.current.value===owner&&this.peek().kind==='(') {const id=this.take(), parameters=this.parameters(); return this.node('Method',start,{name:'.ctor',nameSpan:{start:id.start,end:id.end},returnType:'void',parameters,body:this.block(),modifiers:mods,owner});}
@@ -155,7 +164,7 @@ export class Parser {
     if(t.kind==='unchecked'||t.kind==='checked'){this.expect('(');const expression=this.expression();this.expect(')');return this.node(t.kind==='checked'?'Checked':'Unchecked',t,{expression});}
     if(t.kind==='await')return this.node('Await',t,{expression:this.expression(14)});
     if(t.kind==='default'){this.expect('(');const type=this.type();this.expect(')');return this.node('Default',t,{type});}
-    if(t.kind==='('&&['int','double'].includes(this.current.kind)&&this.peek().kind===')'){const type=this.take().kind;this.take();return this.node('Cast',t,{type,expression:this.expression(14)});}
+    if(t.kind==='('&&this.looksLikeCast()){const type=this.type();this.expect(')');return this.node('Cast',t,{type,expression:this.expression(14)});}
     if(t.kind==='('){const expression=this.expression();this.expect(')');return expression;}
     if(['!','~','-','+','++','--'].includes(t.kind))return this.node('Unary',t,{operator:t.kind,operand:this.expression(14),postfix:false});
     if(t.kind==='['){
