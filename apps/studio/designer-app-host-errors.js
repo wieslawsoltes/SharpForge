@@ -28,7 +28,7 @@ export function awaitAppOperation(task, {signal, timeout = 30_000} = {}) {
     const canceled = () => finish(reject, signal.reason ?? new DOMException('App operation canceled', 'AbortError'));
     const timer = setTimeout(() => finish(reject, new DesignerAppHostError('App operation timed out', 'SFDA0004')), timeout);
     signal?.addEventListener('abort', canceled, {once: true});
-    Promise.resolve().then(task).then(value => finish(resolve, value), error => finish(reject, error));
+    Promise.resolve().then(() => settled ? undefined : task()).then(value => finish(resolve, value), error => finish(reject, error));
   });
 }
 

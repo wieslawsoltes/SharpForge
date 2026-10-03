@@ -45,8 +45,12 @@ export function appLaunchParameters(result, {profile, debug, sourceProjection, r
     throw new DesignerAppHostError('App compilation produced no executable for the selected profile', 'SFDA0010');
   }
   const executable = profile === 'source-vm' ? {image: result.image} : {assembly: result.assembly};
+  const permitted = ['network', 'compute', 'recordHistory', 'maxHistory', 'maxHistoryBytes', 'maxInstructions', 'stepOverProperties',
+    'breakpointsEnabled', 'breakpoints', 'functionBreakpoints', 'exceptionBreak', 'exceptionRules', 'instructionBreakpoints',
+    'methodToken', 'arguments', 'manualAnimations'];
+  const runtime = Object.fromEntries(permitted.filter(key => Object.hasOwn(runtimeOptions, key)).map(key => [key, runtimeOptions[key]]));
   return {
-    ...runtimeOptions, ...executable, debug, managedIL: profile === 'managed-il', stopOnEntry: false,
+    ...runtime, ...executable, debug, managedIL: profile === 'managed-il', stopOnEntry: false,
     pdb: result.pdb ?? null, sources: Object.fromEntries(sourceProjection.map(file => [file.uri, file.text]))
   };
 }
