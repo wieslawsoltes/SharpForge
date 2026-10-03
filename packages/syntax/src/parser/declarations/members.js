@@ -7,6 +7,8 @@ export const memberMethods = {
   },
   /** Any member of a class, struct or interface, including nested type declarations. `owner` is the enclosing type name. */
   memberDeclaration(owner) {
+    this.memberStart = this.i;
+    this.memberErrors = this.diagnostics.length;
     const attributeLists = this.attributeLists(),
       modifiers = this.modifiers();
     return this.typeLikeDeclaration(attributeLists, modifiers) ?? this.memberDeclarationAfterModifiers(attributeLists, modifiers, owner);
@@ -42,7 +44,9 @@ export const memberMethods = {
       return this.indexerDeclaration(attributeLists, modifiers, type, explicit);
     }
     if (!this.isId()) {
-      this.error(this.current, 'CS1519', `Invalid token '${this.current.text}' in class, record, struct, or interface member declaration`);
+      // An incomplete member that already carries an error (a missing type, say) reports nothing more, as in Roslyn.
+      if (explicit || this.diagnostics.length === this.memberErrors)
+        this.error(this.current, 'CS1519', `Invalid token '${this.current.text}' in class, record, struct, or interface member declaration`);
       return explicit
         ? this.n('PropertyDeclaration', attributeLists, modifiers, type, explicit, this.cache.missing('IdentifierToken'), null, null, null, null)
         : this.n('IncompleteMember', attributeLists, modifiers, type);
@@ -55,6 +59,7 @@ export const memberMethods = {
     }
     if (this.at('{') || this.at('=>')) {
       this.partialMember(modifiers, 'PropertyDeclaration', nameToken);
+      if (attributeLists.length) this.backingFieldAttributes(this.memberStart);
       return this.propertyDeclaration(attributeLists, modifiers, type, explicit, identifier);
     }
     if (explicit) {
@@ -65,9 +70,17 @@ export const memberMethods = {
       'FieldDeclaration',
       attributeLists,
       modifiers,
-      this.n('VariableDeclaration', type, this.variableDeclarators(identifier)),
+      this.n('VariableDeclaration', type, this.fieldDeclarators(identifier)),
       this.expect(';')
     );
+  },
+  /** The declarators of a field, whose initializers are a restricted scope for expression variables (C# 7.3). */
+  fieldDeclarators(first) {
+    const saved = this.restrictedVariables;
+    this.restrictedVariables = true;
+    const declarators = this.variableDeclarators(first);
+    this.restrictedVariables = saved;
+    return declarators;
   },
   /** Declarators of a field or local: `a = 1, b, c[10]`. `first` is an already consumed identifier. */
   variableDeclarators(first) {

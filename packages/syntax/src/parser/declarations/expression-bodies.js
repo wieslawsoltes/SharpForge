@@ -8,7 +8,7 @@ export const expressionBodyMethods = {
   arrowExpressionClause(feature) {
     if (feature) this.feature(feature, this.current);
     const arrow = this.take();
-    return this.n('ArrowExpressionClause', arrow, this.expressionOrRef());
+    return this.n('ArrowExpressionClause', arrow, this.expressionOrThrow());
   },
   /** A block body, an expression body or a bare semicolon: returns [body, expressionBody, semicolonToken]. */
   functionBody(feature) {
@@ -21,7 +21,7 @@ export const expressionBodyMethods = {
     if (this.at('=>')) return [this.arrowExpressionClause('ExpressionBodiedProperty'), null, this.expect(';')];
     if (this.at('=')) {
       this.feature('AutoPropertyInitializer', this.current);
-      const initializer = this.n('EqualsValueClause', this.take(), this.variableInitializer());
+      const initializer = this.n('EqualsValueClause', this.take(), this.inInitializer(this.variableInitializer));
       return [null, initializer, this.expect(';')];
     }
     return [null, null, this.match(';')];

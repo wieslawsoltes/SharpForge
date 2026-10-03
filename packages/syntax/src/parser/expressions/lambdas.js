@@ -49,15 +49,23 @@ export const lambdaMethods = {
     if (returnTypeEnd < 0 && this.isId()) {
       const parameter = this.n('Parameter', null, null, null, this.id(), null),
         arrow = this.take(),
-        [body, expression] = this.asyncBody(modifiers, () => (this.at('{') ? [this.block(), null] : [null, this.expressionOrRef()]));
+        [body, expression] = this.lambdaBody(modifiers);
       return this.n('SimpleLambdaExpression', null, modifiers, parameter, arrow, body, expression);
     }
     const returnType = returnTypeEnd >= 0 ? this.type() : null;
     if (returnType) this.feature('LambdaReturnType', start);
     const parameters = this.lambdaParameterList(),
       arrow = this.expect('=>'),
-      [body, expression] = this.asyncBody(modifiers, () => (this.at('{') ? [this.block(), null] : [null, this.expressionOrRef()]));
+      [body, expression] = this.lambdaBody(modifiers);
     return this.n('ParenthesizedLambdaExpression', null, modifiers, returnType, parameters, arrow, body, expression);
+  },
+  /** A block or expression body: returns [block, expression]. The body is its own scope for async and expression variables. */
+  lambdaBody(modifiers) {
+    const restricted = this.restrictedVariables;
+    this.restrictedVariables = false;
+    const body = this.asyncBody(modifiers, () => (this.at('{') ? [this.block(), null] : [null, this.expressionOrThrow()]));
+    this.restrictedVariables = restricted;
+    return body;
   },
   lambdaModifiers(end) {
     const list = [];

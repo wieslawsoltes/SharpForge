@@ -93,6 +93,8 @@ const crashesAtOwnVersion = {};
 
 /** The diagnostics of `result` that are the language-version gate of `row`. */
 function gateDiagnostics(result, row) {
+  // A row with a dedicated Roslyn diagnostic (for example the warning CS8371) is recognised by its code: its message does not name the feature.
+  if (row.dedicatedMessage) return result.diagnostics.filter(d => d.code === row.code);
   const names = [row.name, binderNames[row.id]].filter(Boolean).map(name => `'${name.toLowerCase()}'`);
   return result.diagnostics.filter(d => d.code === row.code && names.some(name => d.message.toLowerCase().includes(name)));
 }
@@ -125,7 +127,7 @@ for (const row of languageFeatures) {
   test(`A02-B01 C# ${versionText(row.version)} feature is gated at ${versionText(below)}: ${row.id}`, () => {
     const low = gateDiagnostics(compileAt(row, below), row);
     assert(low.length > 0, `${row.id}: no ${row.code} for '${row.name}' at language version ${versionText(below)}`);
-    assert(low.every(d => d.severity === 'error'));
+    assert(low.every(d => d.severity === row.severity));
     if (row.id in crashesAtOwnVersion) {
       assert.throws(() => compileAt(row, row.version), TypeError, `${row.id} no longer crashes: remove it from crashesAtOwnVersion`);
       return;
