@@ -11,5 +11,6 @@ export {intrinsicKey,intrinsicDefinitions,intrinsicDefinition} from './intrinsic
 export * from './il-document.js';
 export * from './decompiler.js';
 export {CilDispatchTable} from './dispatch-profile.js';
+export {managedDelegateSignature, supportedDelegateCall} from './delegate-profile.js';
 
 export {resolveExecutionField,genericTypeParts,substituteTypeArguments} from './field-profile.js';
