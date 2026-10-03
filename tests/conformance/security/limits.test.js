@@ -33,6 +33,7 @@ function execute(source, engine, options = {}) {
       ? new VirtualMachine(artifact.image, options)
       : new CilVirtualMachine(artifact.assembly, options);
   let peakRss = process.memoryUsage().rss;
+  let peakFrames = vm.frames.length;
   try {
     assert.equal(vm.heap.maxBytes, options.maxBytes ?? defaults.heap);
     assert.equal(vm.options.maxFrames, options.maxFrames ?? defaults.frames);
@@ -45,7 +46,8 @@ function execute(source, engine, options = {}) {
       options.maxOutputCharacters ?? defaults.output,
     );
     while (['ready', 'running'].includes(vm.state)) {
-      vm.runSlice({ instructionBudget: 100000, timeBudgetMs: 100 });
+      vm.runSlice({ instructionBudget: options.observeFrames ? 1 : 100000, timeBudgetMs: 100 });
+      peakFrames = Math.max(peakFrames, vm.frames.length);
       peakRss = Math.max(peakRss, process.memoryUsage().rss);
     }
     assert(
@@ -60,6 +62,7 @@ function execute(source, engine, options = {}) {
       outputCharacters: vm.outputCharacters,
       heapPeak: vm.heap.stats.peakBytes,
       peakRss,
+      peakFrames,
     };
     assert(result.heapPeak <= vm.heap.maxBytes);
     return result;
@@ -101,11 +104,14 @@ const cases = {
   frames(engine) {
     const source = (depth) =>
       `class P { static int F(int n){if(n==0)return 0;return F(n-1)+1;} static void Main(){Console.WriteLine(F(${depth}));} }`;
-    const positive = execute(source(510), engine);
+    // The emitted entry wrapper and Main add two frames before F(509)..F(0).
+    const positive = execute(source(509), engine, { observeFrames: true });
     assert.equal(positive.state, 'terminated');
-    assert.equal(positive.output, '510\n');
-    const negative = execute(source(511), engine);
+    assert.equal(positive.output, '509\n');
+    assert.equal(positive.peakFrames, defaults.frames);
+    const negative = execute(source(510), engine, { observeFrames: true });
     fault(negative, 'StackOverflowException');
+    assert.equal(negative.peakFrames, defaults.frames);
     return negative;
   },
   instructions(engine) {

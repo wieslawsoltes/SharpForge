@@ -29,7 +29,7 @@ export function installCsp(html, options = {}) {
   const kind = options.inlineScript === undefined ? 'browser' : 'standalone';
   const tag = `<meta data-sharpforge-csp="${kind}" http-equiv="Content-Security-Policy" ` +
     `content="${escapeAttribute(metaCsp(browserCsp(options)))}">`;
-  return clean.replace(/<head(?:\s[^>]*)?>/i, head => `${head}\n${tag}`);
+  return clean.replace(/(<head(?:\s[^>]*)?>)\s*/i, (_, head) => `${head}\n${tag}\n`);
 }
 
 /** A generated standalone has one inline entry script; hosted responses must allow those same bytes. */

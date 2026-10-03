@@ -23,6 +23,13 @@
       "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
     },
     {
+      "path": "packages/compiler/test/differential/fixture-discovery.js",
+      "operation": "dynamic-import",
+      "sha256": "bf074cc53ec6cd467b4f6000cf3d8a2dc7811e78852a4e1726495cc74b74e94d",
+      "count": 1,
+      "reason": "Differential runner imports checked-in fixture modules from its trusted fixture directory; overrides are executable host input."
+    },
+    {
       "path": "packages/compute/smoke.mjs",
       "operation": "dynamic-import",
       "count": 1,
@@ -163,6 +170,41 @@
       "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
     },
     {
+      "path": "planning/contracts/tests/claim-race.test.js",
+      "operation": "dynamic-import",
+      "sha256": "a3caa5c8039b2089d67bbf9cffe05a65b8c0a3701a526ae83fc6b5ce47533349",
+      "count": 7,
+      "reason": "Planning contract tests import fixed Node, workspace and checked-in planning modules in isolated test phases."
+    },
+    {
+      "path": "planning/contracts/tests/golden-output.test.js",
+      "operation": "dynamic-import",
+      "sha256": "61bed5d579fbc322b8d5460a529f138e9843d3ef6c4e7ad8303b6ef946b9f3eb",
+      "count": 1,
+      "reason": "Planning contract tests import fixed Node, workspace and checked-in planning modules in isolated test phases."
+    },
+    {
+      "path": "planning/contracts/tests/governance.test.js",
+      "operation": "dynamic-import",
+      "sha256": "058761c95196b3a676a1aff0dbe519953136eb66944650a6377d759a274cd08b",
+      "count": 8,
+      "reason": "Planning contract tests import fixed Node, workspace and checked-in planning modules in isolated test phases."
+    },
+    {
+      "path": "planning/qualification/integration-performance/compiler-adapters/compiler.mjs",
+      "operation": "dynamic-import",
+      "sha256": "769d2f2dc7f2fe3984c2446278d84ef9beba29ad9125811b0bfc3cf63e40e2d7",
+      "count": 1,
+      "reason": "Qualification adapter loads fixed compiler/build package entry points from the explicitly selected trusted checkout."
+    },
+    {
+      "path": "planning/qualification/integration-performance/size/measure.mjs",
+      "operation": "dynamic-import",
+      "sha256": "26851a5b20595deb28624b0f6888ed0f4bd271caf9ac6d389ab770d19dfb6681",
+      "count": 2,
+      "reason": "Qualification adapter loads fixed compiler/build package entry points from the explicitly selected trusted checkout."
+    },
+    {
       "path": "scripts/benchmarks/a05-call-offsets.mjs",
       "operation": "dynamic-import",
       "count": 1,
@@ -238,6 +280,13 @@
       "count": 3,
       "sha256": "007c94cc9a7e9baef77d27a089f3ad90c3370d07a5059a317626cb246b6e6cd1",
       "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    },
+    {
+      "path": "tests/conformance/flaky/detect.test.js",
+      "operation": "dynamic-import",
+      "sha256": "e2eec7d15bd893248cedcf1b3efc3824359a9fdbf0f5ea134ca69d95ec71efc2",
+      "count": 3,
+      "reason": "Regression imports fixed Node filesystem, OS and path modules to create an isolated fail-then-pass fixture."
     },
     {
       "path": "tests/conformance/qualification.test.js",

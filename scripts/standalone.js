@@ -17,5 +17,8 @@ html=html.replace('<link rel="stylesheet" href="./studio.css">',()=>'<style>'+cs
 const inlineScript=script.replace(/<\/script/gi,'<\\/script');
 html=html.replace('<script type="module" src="./studio.js"></script>',()=>'<script>'+inlineScript+'</script>');
 html=installCsp(html,{allowedOrigins:connectOrigins(process.env.SHARPFORGE_CONNECT_ORIGINS),inlineScript});
-html=html.replace('<title>','<!-- Self-contained SharpForge release: inline script/style and Blob workers. The CSP allows only the exact generated entry script hash, trusted workers and configured origins. -->\n<title>');
-const target=resolve(root,process.env.SHARPFORGE_STANDALONE_PATH || 'artifacts/SharpForge-standalone.html');await mkdir(dirname(target),{recursive:true});await writeFile(target,html);console.log(`Built ${target} (${Buffer.byteLength(html).toLocaleString()} bytes)`);
+html=html.replace('<title>','<!-- Self-contained SharpForge release: exact entry-script hash, trusted Blob workers and configured origins. -->\n<title>');
+const target=resolve(root,process.env.SHARPFORGE_STANDALONE_PATH || 'artifacts/SharpForge-standalone.html');
+await mkdir(dirname(target),{recursive:true});
+await writeFile(target,html);
+console.log(`Built ${target} (${Buffer.byteLength(html).toLocaleString()} bytes)`);

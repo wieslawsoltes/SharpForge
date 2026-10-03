@@ -6,7 +6,7 @@ import { spawnSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
 import { dynamicCodeUses } from './code-tokens.js';
 
-export function sourceFiles(root, directories = ['packages', 'apps', 'scripts', 'tests']) {
+export function sourceFiles(root, directories = ['packages', 'apps', 'scripts', 'tests', 'planning', 'examples']) {
   const files = [];
   const visit = directory => {
     if (!existsSync(directory)) return;
@@ -38,8 +38,9 @@ export function checkDynamicUses(root, paths, policy) {
       const matching = uses.filter(use => use.operation === operation), entry = policy.allow.find(row => row.path === path && row.operation === operation);
       const record = { path, operation, sha256: hash, count: matching.length, lines: matching.map(use => use.line) };
       observed.push(record);
-      if (!entry || entry.sha256 !== hash || entry.count !== matching.length) errors.push({ ...record, message: 'Unreviewed dynamic-code use or changed file' });
-      else used.add(entry.path + ':' + entry.operation);
+      if (!entry || entry.sha256 !== hash || entry.count !== matching.length) {
+        errors.push({ ...record, message: 'Unreviewed dynamic-code use or changed file' });
+      } else used.add(entry.path + ':' + entry.operation);
     }
   }
   for (const entry of policy.allow) if (!used.has(entry.path + ':' + entry.operation)) {
