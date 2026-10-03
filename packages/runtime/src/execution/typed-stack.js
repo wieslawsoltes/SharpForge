@@ -178,6 +178,12 @@ export function numericSlots(values) {
   return adapters.get(values);
 }
 
+/** Root scanners read this slot without materializing scalar wrapper values. */
+export function numericSlotRoot(values, index) {
+  const adapter = adapters.get(values);
+  return adapter ? adapter.values[index] : values[index];
+}
+
 /** Preserve sharing when filter frames or argument adapters refer to one array. */
 export function typedNumericSlots(values, capacity, maxLength, smallLongs) {
   return adapters.get(values) ?? new TypedNumericSlots(values, capacity, maxLength, smallLongs);

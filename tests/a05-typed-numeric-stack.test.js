@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {float} from '@sharpforge/bytecode';
 import {CilVirtualMachine} from '@sharpforge/runtime';
-import {TypedNumericSlots, NumericSlotTag, numericSlots} from '../packages/runtime/src/execution/typed-stack.js';
+import {TypedNumericSlots, NumericSlotTag, numericSlots, numericSlotRoot} from '../packages/runtime/src/execution/typed-stack.js';
 import {ensureTypedNumericFrame} from '../packages/runtime/src/execution/typed-numeric-frame.js';
 import {specializeNumericHandlers} from '../packages/runtime/src/execution/numeric-specialization.js';
 import {copyFrames} from '../packages/runtime/src/execution/execution-copy.js';
@@ -54,6 +54,22 @@ test('T08.1 raw stack operations retain stack budget and underflow faults', () =
     {name: 'ExecutionLimitException', message: 'Evaluation stack budget exceeded'});
   assert(Object.is(slots.popNumber(), -0));
   assert.equal(slots.materializations, 0);
+});
+
+test('T08.1 root scans retain managed values without materializing numeric slots', () => {
+  const reference = Object.freeze({h: 1, g: 2});
+  const pointer = Object.freeze({byref: true, owner: reference});
+  const slots = new TypedNumericSlots([reference, pointer], 4, 8, true);
+  slots.pushFloat(-0, NumericSlotTag.r8);
+  slots.pushLong(42);
+  assert.strictEqual(numericSlotRoot(slots.array, 0), reference);
+  assert.strictEqual(numericSlotRoot(slots.array, 1), pointer);
+  assert.equal(numericSlotRoot(slots.array, 2), undefined);
+  assert.equal(numericSlotRoot(slots.array, 3), undefined);
+  assert.equal(slots.materializations, 0);
+  assert.strictEqual(numericSlotRoot([reference], 0), reference);
+  slots.array.length = 0;
+  for (let index = 0; index < 4; index++) assert.equal(numericSlotRoot(slots.array, index), undefined);
 });
 
 function planFor(vm, frame = vm.top) {
