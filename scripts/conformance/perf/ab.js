@@ -8,9 +8,10 @@ import {adapters} from './workloads.js';
 import {readBaseline} from './update-baseline.js';
 import {committedJson} from './size-budget.js';
 import {compare,summary} from './compare.js';
-import {args,integer,isMain,repository,git,clean,report,benchmark,writeJson,json} from './core.js';
+import {args,integer,isMain,repository,git,clean,report,benchmark,writeJson,json,pinCheckouts} from './core.js';
 export async function ab({root=repository,base,head='HEAD',ids,registry=null,pairs=20,warmups=3,output=join(root,'artifacts/results/performance/ab'),signal,timeoutMs=120000,threshold=.05,quarantine=[]}={}){
  if(!base)throw new Error('An explicit baseline commit is required');
+ const capturedHarness=pinCheckouts(root);
  integer(pairs,20,3,200);integer(warmups,3,0,100);
  const registered=[...adapters,...(registry?json(registry):[])];if(new Set(registered.map(a=>a.id)).size!==registered.length)throw new Error('Duplicate adapter registration');ids??=registered.map(a=>a.id);
  if(!Array.isArray(ids)||!ids.length||new Set(ids).size!==ids.length||ids.some(id=>!registered.some(a=>a.id===id)))throw new Error('Unknown/duplicate adapter');
@@ -35,6 +36,7 @@ export async function ab({root=repository,base,head='HEAD',ids,registry=null,pai
   }
   for(const side of ['base','head'])if(clean(trees[side])!==commits[side])throw new Error('Checkout changed during benchmark');
   const combine=side=>report(ids.map(id=>{const selected=captured[side].flatMap(x=>x.benchmarks).filter(x=>x.id===id),first=selected[0];if(selected.some(x=>x.correctness.checksum!==first.correctness.checksum))throw new Error('Nondeterministic correctness '+id);return benchmark({...first,samples:selected.flatMap(x=>x.samples),coldSamples:selected.flatMap(x=>x.coldSamples),checksum:first.correctness.checksum,metrics:{samples:selected.flatMap(x=>x.metrics?.samples??[])}});}),captured[side][0].environment);
+  capturedHarness.verify();
   const before=combine('base'),after=combine('head'),result=compare(before,after,{threshold,minSamples:pairs,quarantine});
   writeJson(join(output,'base.json'),before);writeJson(join(output,'head.json'),after);writeJson(join(output,'comparison.json'),result);await writeFile(join(output,'summary.md'),summary(result));completed=true;return result;
  }finally{

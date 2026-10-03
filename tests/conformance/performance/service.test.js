@@ -4,7 +4,7 @@ import {mkdtempSync,mkdirSync,writeFileSync,readFileSync,rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {execFileSync} from 'node:child_process';
-import {benchmark,report,distribution,validateReport,sha} from '../../../scripts/conformance/perf/core.js';
+import {benchmark,report,distribution,validateReport,sha,pinCheckouts} from '../../../scripts/conformance/perf/core.js';
 import {normalize,producers} from '../../../scripts/conformance/perf/normalize.js';
 import {compare,signProbability,summary} from '../../../scripts/conformance/perf/compare.js';
 import {execute} from '../../../scripts/conformance/perf/process.js';
@@ -45,6 +45,7 @@ test('comparison rejects mismatches; explicit quarantine retains the regression 
  b.benchmarks[0].correctness.checksum='wrong';assert.throws(()=>compare(a,b),/Correctness/);b.benchmarks[0].correctness.checksum='42';
  const quarantine=[{id:'A05/control',reason:'tracked noisy runner #123',expires:'2099-01-01'}];assert.equal(compare(a,b,{quarantine}).rows[0].verdict,'quarantined');
  assert.throws(()=>compare(a,b,{quarantine:[{...quarantine[0],expires:'2000-01-01'}]}),/expired/);
+ assert.throws(()=>compare(a,b,{quarantine:[{...quarantine[0],expires:'not-a-date'}]}),/expired/);
  assert.throws(()=>compare(record([1]),record([2])),/Insufficient/);
  assert.equal(compare(record(Array(20).fill(0)),record(Array(20).fill(1))).passed,false);
 });
@@ -116,4 +117,15 @@ test('cancelling a parent also reaps children which ignore SIGTERM',{skip:proces
 });
 test('browser evidence verifies actual retained trace bytes',()=>{
  const dir=mkdtempSync(join(tmpdir(),'perf-trace-'));try{writeFileSync(join(dir,'chromium-0.zip'),'trace-byte-fixture');const raw={traces:[{path:'chromium-0.zip',sha256:sha('trace-byte-fixture')}]};assert.doesNotThrow(()=>verifyTraces(raw,dir));writeFileSync(join(dir,'chromium-0.zip'),'changed');assert.throws(()=>verifyTraces(raw,dir),/digest/);assert.throws(()=>verifyTraces({traces:[{path:'../escape',sha256:'a'.repeat(64)}]},dir),/digest/);}finally{rmSync(dir,{recursive:true,force:true});}
+});
+
+test('capture pins both clean product and harness revisions',()=>{
+ const dir=mkdtempSync(join(tmpdir(),'perf-provenance-'));
+ const init=name=>{const root=join(dir,name);mkdirSync(root);const g=(...a)=>execFileSync('git',a,{cwd:root,encoding:'utf8',stdio:['ignore','pipe','pipe']}).trim();g('init');g('config','user.email','test@example.invalid');g('config','user.name','test');writeFileSync(join(root,'code'),'initial');g('add','.');g('commit','-m','initial');return {root,g};};
+ try{
+  const product=init('product'),harness=init('harness'),captured=pinCheckouts(product.root,harness.root);assert.doesNotThrow(()=>captured.verify());
+  writeFileSync(join(harness.root,'code'),'dirty');assert.throws(()=>pinCheckouts(product.root,harness.root),/clean/);assert.throws(()=>captured.verify(),/clean/);
+  harness.g('add','.');harness.g('commit','-m','changed harness');assert.throws(()=>captured.verify(),/changed/);
+  const next=pinCheckouts(product.root,harness.root);product.g('commit','--allow-empty','-m','changed target');assert.throws(()=>next.verify(),/changed/);
+ }finally{rmSync(dir,{recursive:true,force:true});}
 });

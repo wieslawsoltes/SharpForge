@@ -12,6 +12,11 @@ export function writeJson(path,value){mkdirSync(dirname(path),{recursive:true});
 export function git(root,...args){return execFileSync('git',args,{cwd:root,encoding:'utf8',timeout:30000}).trim();}
 export function commit(root){return git(root,'rev-parse','--verify','HEAD');}
 export function clean(root){if(git(root,'status','--porcelain','--untracked-files=all'))throw new Error('Performance capture requires a clean checkout');return commit(root);}
+/** Pin both the measured product and the executable harness before any work. */
+export function pinCheckouts(root=repository,harness=repository){
+ const targetCommit=clean(root),harnessCommit=clean(harness);
+ return {commit:targetCommit,harnessCommit,verify(){if(clean(root)!==targetCommit||clean(harness)!==harnessCommit)throw new Error('Product or harness changed during measurement');}};
+}
 export function environment(root=repository){return {node:process.version,platform:process.platform,arch:process.arch,cpu:os.cpus()[0]?.model??'unknown',logicalCpus:os.cpus().length,osRelease:os.release(),runnerName:process.env.RUNNER_NAME??os.hostname(),commit:commit(root)};}
 export function runnerId(env){return sha(JSON.stringify({...env,commit:undefined})).slice(0,24);}
 export function samples(values,label='samples'){if(!Array.isArray(values)||!values.length||values.length>100000||values.some(n=>typeof n!=='number'||!Number.isFinite(n)||n<0))throw new TypeError(label+': expected 1–100000 finite nonnegative measurements');return values;}

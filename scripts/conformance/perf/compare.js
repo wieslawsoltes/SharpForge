@@ -6,7 +6,7 @@ export function compare(base,head,{threshold=.05,alpha=.01,minSamples=20,quarant
  if(base.harnessCommit!==head.harnessCommit||base.runnerId!==head.runnerId||JSON.stringify({...base.environment,commit:null})!==JSON.stringify({...head.environment,commit:null}))throw new Error('A/B requires the same runner and environment');
  if(!Number.isFinite(threshold)||threshold<0||threshold>1||!(alpha>0&&alpha<1)||!Number.isInteger(minSamples)||minSamples<3)throw new Error('Invalid comparison policy');
  const ids=new Set(),rows=[];
- for(const q of quarantine){if(!q.id||!q.reason||!q.expires||Date.parse(q.expires)<=Date.now()||ids.has(q.id))throw new Error('Invalid/expired quarantine');ids.add(q.id);}
+ for(const q of quarantine){if(!q.id||!q.reason||!q.expires||!Number.isFinite(Date.parse(q.expires))||Date.parse(q.expires)<=Date.now()||ids.has(q.id))throw new Error('Invalid/expired quarantine');ids.add(q.id);}
  if(base.benchmarks.length!==head.benchmarks.length)throw new Error('Benchmark set mismatch');
  for(const before of base.benchmarks){
   const after=head.benchmarks.find(row=>row.id===before.id);if(!after||before.engine!==after.engine||before.area!==after.area||before.correctness.checksum!==after.correctness.checksum)throw new Error('Correctness/target mismatch: '+before.id);
