@@ -1,9 +1,12 @@
-import { CSharpDesignSession, DesignSyncProtocol } from '@sharpforge/designer';
+import {CSharpDesignSession, DesignSyncProtocol, designSourceSnapshot, designPreviewCapability} from '@sharpforge/designer';
 import { renderSourceSyncControls, bindSourceSyncControls } from './designer-source-controls.js';
 import {createDesignerSourceEvent} from './designer-source-events.js';
 import {designerSourceDocument, retainDesignerRuntimeBindings} from './designer-source-projection.js';
+import {
+  setSourceAuthoringCapability, publishSourceCatalog, navigateReadOnlySourceEvent, markSourcePreviewBaseline, isDesignerCancellation
+} from './designer-source-preview.js';
 
-const ignoredChanges = new Set(['selection', 'initialize', 'saved', 'source sync', 'live apply', 'live attach']);
+const ignoredChanges = new Set(['selection', 'initialize', 'saved', 'source sync', 'live apply', 'live attach', 'capability']);
 
 /** Revision-guarded source coordination. Studio performs parsing and edit planning in its compiler worker. */
 export class DesignerSourceSync {
@@ -28,8 +31,22 @@ export class DesignerSourceSync {
   file() { return this.view.sourceFiles?.().find(file => file.uri === this.session?.analysis.uri); }
   dirty() { return this.protocol?.designDirty ?? false; }
   handlerCandidates() { return this.session?.analysis.handlers ?? []; }
-  createEventHandler(request) { return createDesignerSourceEvent(this, request); }
-  navigateEvent(nodeId, event) { return createDesignerSourceEvent(this, {nodeId, event}, {navigateOnly: true}); }
+  createEventHandler(request) { this.assertCanApply(); return createDesignerSourceEvent(this, request); }
+  navigateEvent(nodeId, event) {
+    return this.session?.analysis.readOnly ? navigateReadOnlySourceEvent(this, nodeId, event)
+      : createDesignerSourceEvent(this, {nodeId, event}, {navigateOnly: true});
+  }
+
+  assertCanApply() {
+    if (this.session?.analysis.canApply === false) {
+      throw Object.assign(new Error(this.session.analysis.previewCapability?.reason ??
+        'This source cannot be changed by the current compiler target.'), {code: 'SFSYNC_COMPILE'});
+    }
+  }
+
+  reportOperationError(error) {
+    if (!isDesignerCancellation(error)) this.report('blocked', error.message, error.diagnostics ?? []);
+  }
 
   snapshot() {
     return {
@@ -38,6 +55,7 @@ export class DesignerSourceSync {
       warnings: this.session?.analysis.warnings ?? [], diagnostics: [...this.diagnostics],
       structuralEditable: this.session?.analysis.structuralEditable ?? false,
       canApply: this.session?.analysis.canApply !== false,
+      readOnly: this.session?.analysis.readOnly === true,
       generation: this.generation, pending: this.writing
     };
   }
@@ -62,13 +80,20 @@ export class DesignerSourceSync {
     this.operation = null;
   }
 
-  async analyze(file, previous = null) {
+  async analyze(file, previous = null, {signal} = {}) {
     if (previous) previous = {...previous, document: this.view.document.snapshot()};
     if (this.view.analyzeDesign) return this.view.analyzeDesign({
-      operation: 'analyze', uri: file.uri, previous, generation: this.generation
+      operation: 'analyze', uri: file.uri, previous, generation: this.generation, signal,
+      requestOwner: 'source:' + (this.view.session?.uri ?? file.uri), workspaceId: this.view.workspaceId?.()
     });
-    const session = new CSharpDesignSession(file.text, { uri: file.uri, sources: this.view.sourceFiles?.(), previous });
-    return { success: true, analysis: session.analysis, document: session.document };
+    const session = new CSharpDesignSession(file.text, {uri: file.uri, sources: this.view.sourceFiles?.(), previous, signal});
+    const analysis = designSourceSnapshot(session.analysis);
+    const capability = designPreviewCapability(session.analysis);
+    analysis.canApply = analysis.compilationSucceeded;
+    analysis.readOnly = !analysis.compilationSucceeded && capability.previewAvailable;
+    analysis.previewCapability = capability;
+    return {success: analysis.compilationSucceeded, previewAvailable: capability.previewAvailable,
+      analysis, diagnostics: analysis.diagnostics, document: analysis.document};
   }
 
   /** A failed link retains the existing document and its last valid preview. */
@@ -81,9 +106,11 @@ export class DesignerSourceSync {
     const file = files.find(item => item.uri === uri);
     if (!file) throw new Error('C# source file is not open in this workspace');
     this.cancelPending();
+    const operation = new AbortController();
+    this.operation = operation;
     const generation = ++this.generation;
     const version = file.version;
-    const candidate = await this.analyze(file);
+    const candidate = await this.analyze(file, null, {signal: operation.signal});
     if (generation !== this.generation || this.disposed || file.version !== version ||
       candidate.workspaceRevision !== undefined && candidate.workspaceRevision !== this.view.state.revision) {
       throw Object.assign(new Error('Source changed while opening its design preview; open it again to use the current source'), {
@@ -102,17 +129,21 @@ export class DesignerSourceSync {
     this.session.analysis.text ??= primary.text;
     this.session.analysis.warnings ??= candidate.diagnostics?.filter(item => item.severity !== 'error') ?? [];
     this.loading = true;
-    try { this.view.replace(candidate.analysis.document, { path: uri.replace(/(?:\.g)?\.cs$/i, '.sfdesign.json') }); }
+    try {
+      this.view.replace(candidate.analysis.document, {path: uri.replace(/(?:\.g)?\.cs$/i, '.sfdesign.json')});
+      setSourceAuthoringCapability(this, candidate.analysis);
+    }
     finally { this.loading = false; }
     this.protocol = new DesignSyncProtocol({
       workspaceId: this.view.workspaceId?.() ?? this.view.state.name ?? 'workspace', uri: primary.uri,
       sourceText: primary.text, sourceVersion: primary.version ?? 0, document: designerSourceDocument(this.view.document.value),
       designRevision: this.view.document.revision, generation
     });
+    markSourcePreviewBaseline(this, candidate.analysis, candidate.diagnostics ?? []);
     if (candidate.success === false) this.report('blocked', candidate.diagnostics?.[0]?.message ?? 'Preview requires another compilation target',
       candidate.diagnostics ?? []);
     else this.report('synced', 'Linked ' + uri + ' · ' + (candidate.analysis.method?.name ?? 'construction method'), []);
-    this.view.toolbox?.updateAnalysis?.({ success: true, projectTypes: candidate.projectTypes ?? [], version });
+    publishSourceCatalog(this, candidate, candidate.revision ?? candidate.workspaceRevision ?? version);
     if (!this.view.documentHost) this.view.chrome?.setMode('split');
     return this.snapshot();
   }
@@ -123,6 +154,7 @@ export class DesignerSourceSync {
     this.protocol?.dispose();
     this.protocol = null;
     this.session = null;
+    if (!this.view.document.disposed) this.view.document.setReadOnly(false);
     this.report('unlinked', 'C# link disconnected; the design document is retained.', []);
   }
 
@@ -148,7 +180,7 @@ export class DesignerSourceSync {
     }
     if (!this.dirty()) { this.report('synced', 'C# and design are synchronized.', []); return; }
     this.report('design-dirty', 'Designer changes staged · validating C# before writeback', []);
-    if (this.auto) this.designTimer = setTimeout(() => this.write().catch(error => this.report('blocked', error.message)), 350);
+    if (this.auto) this.designTimer = setTimeout(() => this.write().catch(error => this.reportOperationError(error)), 350);
   }
 
   setAuto(enabled) {
@@ -176,7 +208,7 @@ export class DesignerSourceSync {
     clearTimeout(this.sourceTimer);
     if (this.dirty()) { this.report('conflict', 'C# and designer both changed; automatic synchronization is paused.'); return; }
     this.report('source-dirty', 'C# changed · retaining the last valid preview', []);
-    if (this.auto) this.sourceTimer = setTimeout(() => this.read().catch(error => this.report('blocked', error.message)), 450);
+    if (this.auto) this.sourceTimer = setTimeout(() => this.read().catch(error => this.reportOperationError(error)), 450);
   }
 
   async read({ discardDesign = false } = {}) {
@@ -192,7 +224,7 @@ export class DesignerSourceSync {
     const token = protocol.begin('source', { resolution: discardDesign ? 'source' : null, signal: operation.signal });
     const version = file.version;
     let candidate;
-    try { candidate = await this.analyze(file, this.session.analysis); }
+    try { candidate = await this.analyze(file, this.session.analysis, {signal: operation.signal}); }
     catch (error) { protocol.reject(token, error); throw error; }
     if (file.version !== version || !protocol.isCurrent(token) || protocol !== this.protocol) return this.snapshot();
     if (candidate.workspaceRevision !== undefined && candidate.workspaceRevision !== this.view.state.revision) return this.snapshot();
@@ -203,24 +235,31 @@ export class DesignerSourceSync {
       return this.snapshot();
     }
     const document = candidate.analysis.document;
-    const accepted = protocol.accept(token, {
+    const accept = candidate.success === false ? protocol.acceptPreview.bind(protocol) : protocol.accept.bind(protocol);
+    const accepted = accept(token, {
       document: designerSourceDocument(document), sourceVersion: version, designRevision: this.view.document.revision + 1,
-      diagnostics: candidate.diagnostics ?? []
+      diagnostics: candidate.diagnostics ?? [], success: candidate.success !== false,
+      capability: candidate.analysis.previewCapability
     });
     if (!accepted.accepted) return this.snapshot();
-    this.loading = true;
-    try { this.view.document.load(retainDesignerRuntimeBindings(this.view.document.value, document), {label: 'source sync', history: false}); }
-    finally { this.loading = false; }
-    this.session = { analysis: candidate.analysis, sources: (this.view.sourceFiles?.() ?? []).map(item => ({ ...item })) };
+    this.session = {analysis: candidate.analysis, sources: (this.view.sourceFiles?.() ?? []).map(item => ({...item}))};
     this.session.analysis.text ??= file.text;
+    this.loading = true;
+    try {
+      this.view.document.load(retainDesignerRuntimeBindings(this.view.document.value, document), {label: 'source sync', history: false});
+      setSourceAuthoringCapability(this, candidate.analysis);
+    }
+    finally { this.loading = false; }
     if (candidate.success === false) this.report('blocked', candidate.diagnostics?.[0]?.message ?? 'Preview requires another compilation target',
       candidate.diagnostics ?? []);
     else this.report('synced', 'Read ' + file.uri + ' · last valid preview updated', []);
+    publishSourceCatalog(this, candidate, candidate.revision ?? candidate.workspaceRevision ?? this.view.state.revision);
     return this.snapshot();
   }
 
   async write() {
     if (!this.session || !this.protocol) throw new Error('Connect a C# file first');
+    this.assertCanApply();
     if (this.writing) return this.pending;
     const file = this.file();
     if (!file) throw new Error('Linked C# file was removed');
@@ -237,18 +276,18 @@ export class DesignerSourceSync {
     const version = file.version;
     this.writing = true;
     this.report('validating', 'Compile-checking the complete design transaction…', []);
-    this.pending = this.applyPlan({ file, baseline, design, token, generation, version });
+    this.pending = this.applyPlan({file, baseline, design, token, generation, version, signal: operation.signal});
     try { return await this.pending; }
     finally { this.writing = false; this.pending = null; this.view.chrome?.refreshSource(); }
   }
 
-  async applyPlan({ file, baseline, design, token, generation, version }) {
+  async applyPlan({file, baseline, design, token, generation, version, signal}) {
     const protocol = this.protocol;
     try {
       const plan = this.view.analyzeDesign
         ? await this.view.analyzeDesign({
           operation: 'plan', uri: file.uri, baselineSources: baseline.sources,
-          previous: baseline.analysis, design, generation
+          previous: baseline.analysis, design, generation, signal, workspaceId: this.view.workspaceId?.()
         })
         : new CSharpDesignSession(baseline.analysis.text, { uri: file.uri }).plan(design, file.text);
       if (plan.success === false) throw Object.assign(new Error(plan.diagnostics?.[0]?.message ?? 'Designer changes do not compile'), {
@@ -265,21 +304,28 @@ export class DesignerSourceSync {
       }
       assertCurrent();
       const current = this.file();
+      const normalized = retainDesignerRuntimeBindings(this.view.document.value, plan.document ?? plan.analysis?.document ?? design);
+      const needsLoad = JSON.stringify(normalized) !== JSON.stringify(this.view.document.value);
       const accepted = protocol.accept(token, {
-        document: design, text: current.text, sourceVersion: current.version,
-        designRevision: this.view.document.revision, diagnostics: plan.diagnostics ?? []
+        document: designerSourceDocument(normalized), text: current.text, sourceVersion: current.version,
+        designRevision: this.view.document.revision + (needsLoad ? 1 : 0), diagnostics: plan.diagnostics ?? []
       });
       if (!accepted.accepted) throw new Error(accepted.diagnostic?.message ?? 'Source transaction became stale');
       this.session = {
-        analysis: { ...(plan.analysis ?? baseline.analysis), text: current.text, document: design },
-        sources: (this.view.sourceFiles?.() ?? []).map(item => ({ ...item }))
+        analysis: {...(plan.analysis ?? baseline.analysis), text: current.text, document: normalized},
+        sources: (this.view.sourceFiles?.() ?? []).map(item => ({...item}))
       };
+      if (needsLoad) {
+        this.loading = true;
+        try { this.view.document.load(normalized, {label: 'source sync', history: false}); }
+        finally { this.loading = false; }
+      }
       const count = plan.changes?.reduce((sum, change) => sum + change.edits.length, 0) ?? plan.edits?.length ?? 0;
       this.report('synced', 'Applied ' + count + ' source edits', []);
       return this.snapshot();
     } catch (error) {
       protocol.reject(token, { code: error.code ?? 'SFSYNC_BLOCKED', message: error.message });
-      if (generation === this.generation) this.report('blocked', error.message, error.diagnostics ?? []);
+      if (generation === this.generation && !signal?.aborted) this.reportOperationError(error);
       throw error;
     }
   }
@@ -292,21 +338,25 @@ export class DesignerSourceSync {
     this.protocol?.dispose();
     const file = this.file();
     if (!file) throw new Error('Cannot restore history for a removed source file');
+    this.session = {analysis: {...analysis, text: file.text},
+      sources: (this.view.sourceFiles?.() ?? []).map(item => ({...item}))};
     this.loading = true;
     try {
       this.view.document.load(retainDesignerRuntimeBindings(this.view.document.value, analysis.document), {
         label: 'source sync', history: false
       });
+      setSourceAuthoringCapability(this, analysis);
     }
     finally { this.loading = false; }
-    this.session = { analysis: { ...analysis, text: file.text },
-      sources: (this.view.sourceFiles?.() ?? []).map(item => ({ ...item })) };
     this.protocol = new DesignSyncProtocol({
       workspaceId: this.view.workspaceId?.() ?? this.view.state.name ?? 'workspace', uri: file.uri,
       sourceText: file.text, sourceVersion: file.version, document: designerSourceDocument(this.view.document.value),
       designRevision: this.view.document.revision, generation: this.generation
     });
-    this.report('synced', 'Source and design history restored together', []);
+    markSourcePreviewBaseline(this, analysis);
+    if (analysis.compilationSucceeded === false) {
+      this.report('blocked', analysis.previewCapability?.reason ?? 'Source preview history restored with compiler limitations', analysis.diagnostics ?? []);
+    } else this.report('synced', 'Source and design history restored together', []);
   }
 
   async editText(text) {

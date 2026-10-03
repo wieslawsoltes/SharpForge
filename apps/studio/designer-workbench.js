@@ -1,4 +1,4 @@
-import {DesignerOptionsService} from '@sharpforge/designer';
+import {DesignerOptionsService, initializeDesignerDocumentOptions, createDesign, designInheritancePreviewProfile} from '@sharpforge/designer';
 import {DesignerTools} from './designer-tools.js';
 import {DesignerDocuments} from './designer-documents.js';
 import {DesignerDocumentHistory} from './designer-document-history.js';
@@ -11,6 +11,7 @@ import {createDesignerFileServices} from './designer-workspace-files.js';
 import {DesignerProjectRoots} from './designer-project-roots.js';
 import {DesignerAppHost} from './designer-app-host.js';
 import {contributeDesignerAppAutomation} from './designer-app-host-automation.js';
+import {isDesignerCancellation} from './designer-source-preview.js';
 
 /** Studio's designer contribution owns routing, history, catalogs, app targets, and persistence for one workspace. */
 export function createDesignerWorkbench(context) {
@@ -33,7 +34,7 @@ export class DesignerWorkbench {
       restored: (uri, analysis) => this.documents.get(uri)?.sourceSync?.restoreHistory(analysis)
     });
     this.apps = new StudioDesignerSessions({
-      request: context.runtimeRequest, getState: () => this.state.debug, projectName: () => this.state.name,
+      request: context.runtimeRequest, getState: () => (context.runtimeState?.() ?? this.state.debug), projectName: () => this.state.name,
       compile: () => context.requestCompiler('build'), selectVisual: context.selectVisual,
       workspaceId: () => this.workspaceId(), sourceFiles: () => this.state.files.map(file => ({...file}))
     });
@@ -50,9 +51,13 @@ export class DesignerWorkbench {
         code: error.code ?? 'SFD1862', severity: 'warning', uri: descriptor.uri, message: error.message
       }])
     });
-    this.fileServices = createDesignerFileServices({
+    const fileServices = createDesignerFileServices({
       ...context, documents: () => this.documents, open: uri => this.documents.open(uri, 'design')
     });
+    this.fileServices = {...fileServices,
+      createDesignDocument: (value = createDesign(), path) => fileServices.createDesignDocument(
+        initializeDesignerDocumentOptions(value, this.options.value), path)
+    };
     this.documents = new DesignerDocuments({
       state: this.state, records: context.records, openSource: context.openSource,
       resolvePanel: id => context.docking.content.get(id), createTools: (session, options) => this.createTools(session, options),
@@ -102,11 +107,12 @@ export class DesignerWorkbench {
       idPrefix: 'designer-app-' + this.epoch,
       sessions: this.apps.registry, sourceFiles: () => this.state.files.map(file => ({...file})),
       workspaceId: () => this.workspaceId(), projectName: () => this.state.name,
-      compile: options => {
-        const context = designerCompilationContext(this.state, options.uri ?? this.state.active);
-        return this.context.compiler.request('build', {
-          ...context, compilationOptions: {...context.compilationOptions, outputKind: 'exe'}
+      compile: async options => {
+        const selected = designerCompilationContext(this.state, options.uri ?? this.state.active);
+        const result = await this.context.compiler.request('build', {
+          ...selected, compilationOptions: {...selected.compilationOptions, outputKind: 'exe'}
         });
+        return result.success ? {...result, compilationUris: selected.files.map(file => file.uri)} : result;
       },
       runtimeOptions: this.context.runtimeOptions,
       windowOptions: {document: this.context.hostDocument},
@@ -171,22 +177,36 @@ export class DesignerWorkbench {
   }
 
   publishDiagnostics(uri, diagnostics) {
-    this.diagnostics.set(uri, diagnostics.map(diagnostic => ({...diagnostic, source: 'Designer'})));
+    this.diagnostics.set(uri, diagnostics.map(diagnostic => ({...diagnostic, source: diagnostic.source ?? 'Designer'})));
     this.state.designerDiagnostics = [...this.diagnostics.values()].flat();
     this.context.renderPanel('problems');
   }
 
   async updateCatalog(result) {
-    if (!result.success || this.disposed) return;
+    this.catalogOperation?.abort();
+    if (this.disposed || !result.success && !designInheritancePreviewProfile(result.diagnostics)) return;
+    const operation = new AbortController();
+    this.catalogOperation = operation;
     const revision = this.state.revision;
     const epoch = this.epoch;
     const context = designerCompilationContext(this.state, this.state.active);
-    const catalog = await this.context.compiler.request('designAnalyze', {...context, operation: 'catalog', success: true});
-    if (this.disposed || epoch !== this.epoch || revision !== this.state.revision || !catalog.success) return;
+    let catalog;
+    try {
+      catalog = await this.context.compiler.request('designAnalyze', {...context, operation: 'catalog', success: result.success,
+        workspaceId: this.workspaceId(), requestOwner: 'project-catalog', generation: epoch}, {signal: operation.signal});
+    } catch (error) {
+      if (!isDesignerCancellation(error)) throw error;
+      return;
+    }
+    if (this.disposed || operation.signal.aborted || epoch !== this.epoch || revision !== this.state.revision
+      || !catalog.success && !catalog.previewAvailable) return;
     this.projectTypes = catalog.projectTypes;
     this.projectRoots.setCatalog(this.projectTypes, revision);
     for (const view of this.documents.views.values()) {
-      view.tools.toolbox.updateAnalysis({success: true, projectTypes: this.projectTypes, version: revision});
+      const snapshot = {success: catalog.success, previewAvailable: catalog.previewAvailable,
+        projectTypes: this.projectTypes, version: revision};
+      if (catalog.success) view.tools.toolbox.updateAnalysis(snapshot);
+      else view.tools.toolbox.updatePreviewAnalysis(snapshot);
     }
   }
 
@@ -201,6 +221,7 @@ export class DesignerWorkbench {
   }
 
   reset() {
+    this.catalogOperation?.abort();
     this.epoch++;
     this.documents.reset();
     this.history.clear();
@@ -216,6 +237,7 @@ export class DesignerWorkbench {
   dispose() {
     if (this.disposed) return;
     this.disposed = true;
+    this.catalogOperation?.abort();
     this.commands.dispose();
     this.disposeAutomation?.();
     this.disposeAppAutomation?.();
