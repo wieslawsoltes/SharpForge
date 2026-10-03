@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-a6a45cf1ca446c8b76c6",
+  "kind": "spec",
+  "sourceText": "delegate bool TryParse<T>(string text, out T result);",
+  "sourceSHA256": "0458312062a52b3cc49ecc1811fec3491d499e37c82f157941687977995313bf",
+  "target": "library",
+  "featureId": "csharp-14-0-simple-lambda-parameters-with-modifiers",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/simple-lambda-parameters-with-modifiers.md",
+    "sha256": "935dcbf54e8767a381f21f1c6277ff4a0a78a8d7f2f1c0ed500e7a5661c144e4",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/simple-lambda-parameters-with-modifiers.md",
+    "license": "NOASSERTION",
+    "offset": 388
+  }
+}

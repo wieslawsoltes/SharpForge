@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5987d9f8acb741036e8b",
+  "kind": "diagnostics",
+  "sourceText": "assert(\"last\");\nassert(\"position\");\nassert(\"name\");\nassert(\"namespace-uri\");\nassert(\"local-name\");\nassert(\"count\");\nassert(\"id\");\nassert(\"string\");\nassert(\"concat\");\nassert(\"starts-with\");\nassert(\"contains\");\nassert(\"substring-before\");\nassert(\"substring-after\");\nassert(\"substring\");\nassert(\"string-length\");\nassert(\"normalize-space\");\nassert(\"translate\");\nassert(\"boolean\");\nassert(\"not\");\nassert(\"true\");\nassert(\"false\");\nassert(\"lang\");\nassert(\"number\");\nassert(\"sum\");\nassert(\"floor\");\nassert(\"ceiling\");\nassert(\"round\");\n\nassert(null, \"default\");\nassert(\"\", \"default\");\nassert(\"other\", \"default\");\nSystem.Console.Write(\"RAN\");\n\nvoid assert(string input, string expected = null)\n{\n    if (C.M(input) != (expected ?? input))\n    {\n        throw new System.Exception($\"{input} produced {C.M(input)}\");\n    }\n}\n\npublic class C\n{\n    public static string M(string value)\n    {\n        return value switch\n        {\n            \"last\" => \"last\",\n            \"position\" => \"position\",\n            \"name\" => \"name\",\n            \"namespace-uri\" => \"namespace-uri\",\n            \"local-name\" => \"local-name\",\n            \"count\" => \"count\",\n            \"id\" => \"id\",\n            \"string\" => \"string\",\n            \"concat\" => \"concat\",\n            \"starts-with\" => \"starts-with\",\n            \"contains\" => \"contains\",\n            \"substring-before\" => \"substring-before\",\n            \"substring-after\" => \"substring-after\",\n            \"substring\" => \"substring\",\n            \"string-length\" => \"string-length\",\n            \"normalize-space\" => \"normalize-space\",\n            \"translate\" => \"translate\",\n            \"boolean\" => \"boolean\",\n            \"not\" => \"not\",\n            \"true\" => \"true\",\n            \"false\" => \"false\",\n            \"lang\" => \"lang\",\n            \"number\" => \"number\",\n            \"sum\" => \"sum\",\n            \"floor\" => \"floor\",\n            \"ceiling\" => \"ceiling\",\n            \"round\" => \"round\",\n            _ => \"default\"\n        };\n    }\n}",
+  "sourceSHA256": "37d4d6c7a4a43f59f61744d39f012b103bca41efe4fada31f249c58cec99541a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "sha256": "f4ddec53df1ec1373a003dd48fa22fbb4d028d7926ae9037faed2b953df6ab4d",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "license": "MIT",
+    "method": "FunctionAvailable",
+    "offset": 333357
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.RegularPreview.WithDisableLengthBasedSwitch())",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-2ef12b5546d4b9f5eb11",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public void M(I0 imc)\n    {\n        imc.ExecuteAsync(\"\");\n    }\n}",
+  "sourceSHA256": "26e45ef80609c502857fd2834edbb67ccf4f3f6abba64be7706004b50599ffe9",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Nullable.cs",
+    "sha256": "32f83728594c49ce50d234006777d1af71d49e0e2cd7cc5c8982c5b2ac7fa714",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Nullable.cs",
+    "license": "MIT",
+    "method": "SynthesizeNullableAttributeBasedOnInterfacesToEmit",
+    "offset": 3030
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { getReference(lib1_comp), getReference(lib2_comp) })",
+  "options": "(client_source, references: new[] { getReference(lib1_comp), getReference(lib2_comp) })",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

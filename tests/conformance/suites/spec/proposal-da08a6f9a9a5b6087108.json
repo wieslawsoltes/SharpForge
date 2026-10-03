@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-da08a6f9a9a5b6087108",
+  "kind": "spec",
+  "sourceText": "var l = new System.Threading.Lock();\nif (l != null) // no warning even though `l` is implicitly converted to `object` for `operator!=(object, object)`\n    // ...",
+  "sourceSHA256": "608b8e27bf13ed4af99bb7e3f8be1ec642e8552cafc59bdf8bd4649aca8919b2",
+  "target": "library",
+  "featureId": "csharp-13-0-lock-object",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/lock-object.md",
+    "sha256": "6a60605a1f68d2463393dba661c1c0d8e1e24ca2abd5e55d56eb415ef8258fb7",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/lock-object.md",
+    "license": "NOASSERTION",
+    "offset": 3589
+  }
+}

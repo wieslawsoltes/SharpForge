@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-e3882df6e832a59ab2b5",
+  "kind": "spec",
+  "sourceText": "if (expr is Type v) { // code using v",
+  "sourceSHA256": "e0ef41e199b719c32844d6e05e893192b48c15711bb45f2709c256ce02de1f12",
+  "target": "library",
+  "featureId": "csharp-8-0-recursive-patterns",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/patterns.md",
+    "sha256": "51aab3fb3e9834eb32b8b2bab5066945f9e3b7f113df4fe172ef87221b04fe70",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/patterns.md",
+    "license": "NOASSERTION",
+    "offset": 4553
+  }
+}

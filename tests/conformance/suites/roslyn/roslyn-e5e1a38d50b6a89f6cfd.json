@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e5e1a38d50b6a89f6cfd",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nusing System.Runtime.CompilerServices;\nclass C\n{\n    static void M([DateTimeConstant(100L)] ref readonly DateTime d) => throw null;\n    static void Main()\n    {\n        M();\n    }\n}",
+  "sourceSHA256": "81370a724fd9791fa3ca791a623327470687fa62471532d1c345e00af15dd685",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "DefaultParameterValue_DateTimeConstant_Invalid",
+    "offset": 223333
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS7036",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (8,9): error CS7036: There is no argument given that corresponds to the required parameter 'd' of 'C.M(ref readonly DateTime)'\n            //         M();\n            Diagnostic(ErrorCode.ERR_NoCorrespondingArgument, \"M\").WithArguments(\"d\", \"C.M(ref readonly System.DateTime)\").WithLocation(8, 9)",
+  "unsupported": []
+}

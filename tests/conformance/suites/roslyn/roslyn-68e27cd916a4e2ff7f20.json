@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-68e27cd916a4e2ff7f20",
+  "kind": "diagnostics",
+  "sourceText": "\ninterface IBase1\n{\n    void BaseGoo();\n}\ninterface IBase2\n{\n    void BaseGoo();\n}\ninterface IInterface : IBase1, IBase2\n{\n    void InterfaceGoo();\n}\nclass C1 : IInterface\n{\n    public void BaseGoo() { System.Console.Write(\"BaseGoo \");}\n    public void InterfaceGoo() { System.Console.Write(\"InterfaceGoo \"); }\n    public void Test()\n    {\n        C1 c = new C1();\n        c.BaseGoo();\n        c.InterfaceGoo();\n        ((IBase1)c).BaseGoo();\n        ((IBase2)c).BaseGoo();\n        ((IInterface)c).InterfaceGoo();\n        ((IInterface)c).BaseGoo();\n    }\n}\n",
+  "sourceSHA256": "b107ef5dce7de5d6c707e1760469a759cb294069a4d2491616182561b5128185",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenImplicitImplementationTests.cs",
+    "sha256": "a4475eb2e0c323e95d539844d71405ba797b7d87f53acb650a6827149db75098",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenImplicitImplementationTests.cs",
+    "license": "MIT",
+    "method": "ImplementInterfaceWithMultipleBasesWithSameMethod",
+    "offset": 15778
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0121",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (26,9): error CS0121: The call is ambiguous between the following methods or properties: 'IBase1.BaseGoo()' and 'IBase2.BaseGoo()'\n                    //         ((IInterface)c).BaseGoo();\n                    Diagnostic(ErrorCode.ERR_AmbigCall, \"BaseGoo\").WithArguments(\"IBase1.BaseGoo()\", \"IBase2.BaseGoo()\")",
+  "unsupported": []
+}

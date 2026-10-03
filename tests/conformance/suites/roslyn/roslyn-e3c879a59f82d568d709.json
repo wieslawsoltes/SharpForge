@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e3c879a59f82d568d709",
+  "kind": "diagnostics",
+  "sourceText": "assert(\"display\");\nassert(\"doc\");\nassert(\"pt\");\nassert(\"in\");\nassert(\"mm\");\nassert(\"px\");\nassert(\"world\");\n\nassert(null, \"default\");\nassert(\"\", \"default\");\nassert(\"other\", \"default\");\nSystem.Console.Write(\"RAN\");\n\nvoid assert(string input, string expected = null)\n{\n    if (C.M(input) != (expected ?? input))\n    {\n        throw new System.Exception($\"{input} produced {C.M(input)}\");\n    }\n}\n\npublic class C\n{\n    public static string M(string value)\n    {\n        return value switch\n        {\n            \"display\" => \"display\",\n            \"doc\" => \"doc\",\n            \"pt\" => \"pt\",\n            \"in\" => \"in\",\n            \"mm\" => \"mm\",\n            \"px\" => \"px\",\n            \"world\" => \"world\",\n            _ => \"default\"\n        };\n    }\n}",
+  "sourceSHA256": "b63b65089c6d5bbb1f655e9086e09ac63cd84a9fb34bd7b5d24d5218ae235be1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "sha256": "f4ddec53df1ec1373a003dd48fa22fbb4d028d7926ae9037faed2b953df6ab4d",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "license": "MIT",
+    "method": "ParseGraphicsUnits",
+    "offset": 439748
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

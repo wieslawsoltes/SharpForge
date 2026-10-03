@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-a41f262acec1611bb6b1",
+  "kind": "spec",
+  "sourceText": "class C\n{\n    partial F() => new partial(); // previously a method, now a constructor\n    @partial F() => new partial(); // workaround to keep it a method\n}\n\nclass partial { }",
+  "sourceSHA256": "003bca926bf3c366acc3af665a9b4d390fe7a89035645c8cd5c22dd21cb4b11b",
+  "target": "library",
+  "featureId": "csharp-14-0-partial-events-and-constructors",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/partial-events-and-constructors.md",
+    "sha256": "104e69ae2f93be87d2915774c1afbffb4f14f5e05a045df83370bbc01fd486b4",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/partial-events-and-constructors.md",
+    "license": "NOASSERTION",
+    "offset": 5895
+  }
+}

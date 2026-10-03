@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d7f5323f0a010817bc86",
+  "kind": "diagnostics",
+  "sourceText": "using System;\npublic class C\n{\n    public void SwitchBasedPatternMatching(object o)\n    {\n        switch (o)\n        {\n            case int n when n == 1:\n                Console.WriteLine(\"1\"); break;\n            case string s:\n                Console.WriteLine(\"s\"); break;\n            case int n when n == 2:\n                Console.WriteLine(\"2\"); break;\n        }\n    }\n}",
+  "sourceSHA256": "9221eec7560cc4cb4353d1add917833f2b0e32b0fc7d0b1b0aaaf72ce599849e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "NoRedundantTypeCheck",
+    "offset": 30957
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseDll)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

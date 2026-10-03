@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-bdac9036addce379c2a9",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static bool M()\n    {\n        return (1, 1) == (2, 2, 2);\n    }\n}",
+  "sourceSHA256": "186968e99681bafd79849aeeea364242fa9763f3437244cc2407fdeb84edc55c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestTupleLiteralsWithDifferentCardinalities",
+    "offset": 2891
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8384",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,16): error CS8373: Tuple types used as operands of an == or != operator must have matching cardinalities. But this operator has tuple types of cardinality 2 on the left and 3 on the right.\n                //         return (1, 1) == (2, 2, 2);\n                Diagnostic(ErrorCode.ERR_TupleSizesMismatchForBinOps, \"(1, 1) == (2, 2, 2)\").WithArguments(\"2\", \"3\").WithLocation(6, 16)\n                ",
+  "unsupported": []
+}

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-afe9538c1b086ec7b994",
+  "kind": "diagnostics",
+  "sourceText": "delegate int D(out int x);\npublic class C : NotFound\n{\n    static int x1 = 2;\n    static int x2 = 3;\n    int x3 = x1 + x2;\n    D d1 = (out int x4) => (x4 = 1) + @x4;\n}",
+  "sourceSHA256": "43d618ca59f99b40aa3d9beb062b6ecaaf18386efb94e34123f6e8f78c4e54dd",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/DiagnosticAnalyzerTests.cs",
+    "sha256": "44af3a2b3a9902d6a7259ce0c742c45e4a6948fa26f70a2cd52f9e39ce49587c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/DiagnosticAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "SimplestDiagnosticAnalyzerTestInInitializer",
+    "offset": 4664
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0246",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,18): error CS0246: The type or namespace name 'NotFound' could not be found (are you missing a using directive or an assembly reference?)\n                // public class C : NotFound\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"NotFound\").WithArguments(\"NotFound\")\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

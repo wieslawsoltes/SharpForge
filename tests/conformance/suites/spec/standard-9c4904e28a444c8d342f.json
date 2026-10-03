@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-9c4904e28a444c8d342f",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass Gen<T> where T : struct\n{\n    static Gen()\n    {\n        if (!typeof(T).IsEnum)\n        {\n            throw new ArgumentException(\"T must be an enum\");\n        }\n    }\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "403de0392fd78818df61ed50cf536ac7c2b06de9b7ed6ef3db1d781204c037b6",
+  "originalSource": "class Gen<T> where T : struct\n{\n    static Gen()\n    {\n        if (!typeof(T).IsEnum)\n        {\n            throw new ArgumentException(\"T must be an enum\");\n        }\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "StaticConstructors3"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "StaticConstructors3",
+    "offsetInUnquotedMarkdown": 263517
+  }
+}

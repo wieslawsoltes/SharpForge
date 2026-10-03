@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-dc1ba145de40cb645ff7",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Reflection;\n\nsealed class MarkAttribute : Attribute\n{\n    public MarkAttribute(int a, int b)\n    {\n        A = a;\n        B = b;\n    }\n    public int A { get; }\n    public int B { get;  }\n}\n\n[Mark(b: 42, a: 1)]\nstatic class Program\n{\n    public static void Main()\n    {\n        var attr = typeof(Program).GetCustomAttribute<MarkAttribute>();\n        Console.Write($\"A={attr.A}, B={attr.B}\");\n    }\n}",
+  "sourceSHA256": "defdd32ae069ccdfde4d2ed682df59270f8f7972b22967a119843302180218a0",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "TestNamedArgumentOnNonParamsArgument",
+    "offset": 56534
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System;\nusing System.Reflection;\n\nsealed class MarkAttribute : Attribute\n{\n    public MarkAttribute(int a, int b)\n    {\n        A = a;\n        B = b;\n    }\n    public int A { get; }\n    public int B { get;  }\n}\n\n[Mark(b: 42, a: 1)]\nstatic class Program\n{\n    public static void Main()\n    {\n        var attr = typeof(Program).GetCustomAttribute<MarkAttribute>();\n        Console.Write($\"\"A={attr.A}, B={attr.B}\"\");\n    }\n}\", options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}
