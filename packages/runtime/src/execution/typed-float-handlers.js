@@ -57,13 +57,16 @@ export function typedFloatHandler(name, state) {
     return (vm, frame, instruction) => numericSlots(frame.stack).pushFloat(instruction.operand, tag);
   }
   const category = state.at(-1);
-  if ((name === 'conv.r4' || name === 'conv.r8') &&
+  if ((name === 'conv.r4' || name === 'conv.r8' || name === 'conv.r.un') &&
       (category === StackCategory.i4 || category === StackCategory.i8)) {
     const tag = name === 'conv.r4' ? NumericSlotTag.r4 : NumericSlotTag.r8;
+    const unsigned = name === 'conv.r.un';
     return (vm, frame) => {
       const slots = numericSlots(frame.stack);
       const value = category === StackCategory.i8 ? slots.popLong() : vm.pop();
-      slots.pushFloat(Number(value), tag);
+      const raw = !unsigned ? value : category === StackCategory.i4 ? value >>> 0 :
+        value < 0 ? BigInt.asUintN(64, BigInt(value)) : value;
+      slots.pushFloat(Number(raw), tag);
     };
   }
   if (floating.has(category)) {

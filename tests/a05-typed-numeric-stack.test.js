@@ -127,3 +127,18 @@ test('T08.1 write observers get the original normalized value and previous value
   assert.deepEqual(writes[0].oldValue, float(0, 'r4'));
   assert.equal(vm.writeRevision, 1);
 });
+
+for (const input of [-1, -2147483648, -1n, -(1n << 63n), 9007199254740991n]) {
+  for (const smallLongFastPath of [false, true]) {
+    test(`T08.1 unsigned float conversion preserves ${input} with small-long=${smallLongFastPath}`, () => {
+      const wide = typeof input === 'bigint';
+      const bytes = managedFixture({methods: [{name: 'Main', result: 'double', body: writer => writer
+        .op(wide ? 'ldc.i8' : 'ldc.i4', input).op('conv.r.un').op('ret')}]});
+      const vm = new CilVirtualMachine(bytes, {typedNumericStack: true, smallLongFastPath});
+      const frame = executeUntilReturn(vm, planFor(vm));
+      assert.equal(numericSlots(frame.stack).materializations, 0);
+      const expected = wide ? Number(BigInt.asUintN(64, input)) : input >>> 0;
+      assert.deepEqual(frame.stack[0], float(expected));
+    });
+  }
+}

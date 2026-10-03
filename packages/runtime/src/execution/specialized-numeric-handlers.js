@@ -45,7 +45,7 @@ function i4Operation(name) {
   if (['div', 'rem'].includes(operation)) return (left, right) => {
     if (unsigned) { left >>>= 0; right >>>= 0; }
     if (right === 0) divideByZero();
-    if (operation === 'div' && left === -2147483648 && right === -1) {
+    if (left === -2147483648 && right === -1) {
       throw new ManagedFault('OverflowException', 'Integer division overflow');
     }
     return (operation === 'div' ? left / right : left % right) | 0;
