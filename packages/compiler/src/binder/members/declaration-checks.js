@@ -4,6 +4,7 @@
  * A rule is `type => [{ member, code, args, at? }]`; `at` overrides the location of `member`.
  */
 import { checkExtensionDeclarations } from '../extension-methods.js';
+import { checkMemberBodies } from '../member-bodies.js';
 import { checkOperatorDeclarations } from './operator-declarations.js';
 import { checkIndexerDeclarations } from './indexer-declarations.js';
 import { checkRequiredDeclarations, chainingProblem } from './required-members.js';
@@ -28,6 +29,7 @@ export const memberChecks = [
   checkRequiredDeclarations,
   checkPrimaryConstructorChaining,
   checkExtensionDeclarations,
+  checkMemberBodies,
 ];
 
 /** Class mixin (analysis phase): member declaration rules. */
