@@ -106,7 +106,16 @@ exact obligation proof, artifact digest, commit ancestry and a closed leaf.
 
 Reference URLs, immutable commits, file hashes and licenses are in
 `references/manifest.json`. Reports record exact repository commit, dirty state,
-input digest, toolchain and commands. Ordinary PRs do not launch native or browser inventory jobs. Main pushes matching
+input digest, toolchain and commands. The input digest includes every workspace
+package source/manifest, the package lock, oracle runner, probes and planning owner
+snapshot. `outputs.json` seals all generated catalogs, observations, gap identities
+and issue proposals. `--check` verifies those exact baseline bytes, then compares
+every regenerated output on the baseline platform. Independent platforms verify
+the sealed baseline and shared structure while retaining their own observations;
+they do not relabel another platform's results. Native diagnostics retain their
+complete text and are sorted because Roslyn can reorder independent warnings.
+
+Ordinary PRs do not launch native or browser inventory jobs. Main pushes matching
 the inventory paths, manual dispatch, and matching PRs carrying `full-ci` retain the
 full six-job native/Chromium qualification. Adding the label is an explicit trigger;
 PR-number concurrency cancels superseded runs. No successful core-only PR check

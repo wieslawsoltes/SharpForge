@@ -1,4 +1,4 @@
-import { readdir, readFile, mkdir, writeFile, access } from 'node:fs/promises';
+import { readdir, readFile, mkdir, writeFile, access, lstat } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
 import path from 'node:path';
@@ -16,18 +16,30 @@ import { ideInventory } from './ide.js';
 import { runtimeInventory } from './runtime-gc.js';
 import { assignGapIds, issueCandidates } from './gap-ids.js';
 import { denominator } from './denominator.js';
+import { outputManifest, verifyRecordedOutputs } from './baseline.js';
 
-export async function inputManifest() {
+export async function inputManifest({repositoryRoot=root}={}) {
   const inputs=[];
   async function walk(relative) {
-    const absolute=path.join(root,relative);
+    const absolute=path.join(repositoryRoot,relative);
+    if((await lstat(absolute)).isSymbolicLink())throw new Error(`Inventory input must not be a symlink: ${relative}`);
     for(const entry of (await readdir(absolute,{withFileTypes:true})).sort((a,b)=>a.name.localeCompare(b.name,'en'))) {
       const file=`${relative}/${entry.name}`;
-      if(entry.isDirectory())await walk(file);else if(entry.isFile())inputs.push({path:file,sha256:sha256(await readFile(path.join(root,file)))});else throw new Error(`Inventory input must not be a symlink: ${file}`);
+      if(entry.isDirectory())await walk(file);else if(entry.isFile())inputs.push({path:file,sha256:sha256(await readFile(path.join(repositoryRoot,file)))});else throw new Error(`Inventory input must not be a symlink: ${file}`);
     }
   }
-  for(const directory of ['packages/compiler/src','packages/syntax/src','packages/cil/src','packages/runtime/src','packages/framework/src','packages/protocol/src','scripts/conformance/inventory','tests/conformance/inventory/probes','tests/conformance/inventory/metadata','planning/qualification/inventory/references'])await walk(directory);
-  for(const file of ['planning/qualification/oracle-toolchain.json','planning/qualification/inventory/surface-catalog.json','tests/conformance/oracle/WinUI/packages.lock.json'])inputs.push({path:file,sha256:sha256(await readFile(path.join(root,file)))});
+  // Include every workspace source and manifest: compiler/protocol imports are
+  // transitive (bytecode, text, symbols, workspace, etc.), not a fixed six-package set.
+  const files=['package.json','package-lock.json','planning/backlog.snapshot.json','planning/qualification/oracle-toolchain.json','planning/qualification/inventory/surface-catalog.json','tests/conformance/oracle/WinUI/packages.lock.json','tests/conformance/inventory/browser_probe.py'];
+  for(const entry of await readdir(path.join(repositoryRoot,'packages'),{withFileTypes:true})) {
+    if(entry.isSymbolicLink())throw new Error(`Inventory package must not be a symlink: ${entry.name}`);
+    if(!entry.isDirectory())continue;
+    files.push(`packages/${entry.name}/package.json`);
+    try{await access(path.join(repositoryRoot,'packages',entry.name,'src'));}catch(error){if(error.code==='ENOENT')continue;throw error;}
+    await walk(`packages/${entry.name}/src`);
+  }
+  for(const directory of ['scripts/conformance/inventory','scripts/conformance/oracle','tests/conformance/inventory/probes','tests/conformance/inventory/metadata','planning/qualification/inventory/references'])await walk(directory);
+  for(const file of files)inputs.push({path:file,sha256:sha256(await readFile(path.join(repositoryRoot,file)))});
   inputs.sort((a,b)=>a.path.localeCompare(b.path,'en'));return {files:inputs,sha256:sha256(canonicalJSON(inputs))};
 }
 export function validateDenominator(current,baseline) {
@@ -62,11 +74,13 @@ export async function generate({update=false,signal}={}) {
     for(const [name,value]of Object.entries(inventory))outputs[`${name}.json`]={...value,baselinePlatform:target,inputDigest:inputs.sha256,rows:value.rows.map(row=>byKey.get(row.key))};
     Object.assign(outputs,{'gap-ids.json':assigned.ledger,'obligations.json':obligations,'issue-candidates.json':issueCandidates(assigned.rows),'inputs.json':inputs});
     for(const [name,value]of Object.entries(outputs))await writeJSON(path.join(output,name),value);
-    if(update)for(const [name,value]of Object.entries(outputs))await writeJSON(path.join(inventoryRoot,name),value);
+    const seal=outputManifest(outputs,target,inputs.sha256);await writeJSON(path.join(output,'outputs.json'),seal);
+    if(update){for(const [name,value]of Object.entries(outputs))await writeJSON(path.join(inventoryRoot,name),value);await writeJSON(path.join(inventoryRoot,'outputs.json'),seal);}
     else {
       validateDenominator(obligations,await readJSON(path.join(inventoryRoot,'obligations.json')));
       const recorded=await readJSON(path.join(inventoryRoot,'inputs.json'));
       if(recorded.sha256!==inputs.sha256)throw new Error('Inventory inputs changed; regenerate and review statuses with --update');
+      report.baselineComparison=await verifyRecordedOutputs(inventoryRoot,outputs,target,inputs.sha256);
     }
     report.catalogs=Object.fromEntries(Object.entries(inventory).map(([name,value])=>[name,value.totals]));
     report.denominator={capabilities:obligations.rows.length,obligations:obligations.rows.reduce((n,row)=>n+row.platforms.length*row.engines.length*row.specRevisions.length,0),areas:[...new Set(obligations.rows.map(row=>row.area))].sort()};

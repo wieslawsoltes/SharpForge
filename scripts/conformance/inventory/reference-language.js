@@ -5,6 +5,12 @@ import { root,probeRoot,readJSON,sha256 } from './common.js';
 import { resolveToolchain } from '../oracle/toolchain.js';
 import { runProcess } from '../oracle/process.js';
 
+export function referenceDiagnostics(output,directory,file) {
+  // Roslyn can report independent warnings in different orders. Preserve each
+  // complete diagnostic while comparing the collection in a stable order.
+  return output.replaceAll(file,'Probe.cs').replaceAll(directory,'/_/inventory').replaceAll('\r\n','\n').trim().split('\n').filter(Boolean).sort();
+}
+
 /** Validate probe source fidelity with real pinned Roslyn. This is compiler-only
  * reference evidence, never execution evidence for SharpForge or native WinUI. */
 export async function referenceLanguage({toolchain,signal}={}) {
@@ -17,8 +23,7 @@ export async function referenceLanguage({toolchain,signal}={}) {
       const language=feature.langVersion==='1.2'?'1':feature.langVersion;
       const args=['/noconfig','/nostdlib+','/nologo',`/target:${feature.outputKind??'library'}`,'/unsafe+','/nullable:disable',`/langversion:${language}`,'/deterministic+',...(feature.nativeFeatures??[]).map(value=>`/features:${value}`),`/out:${path.join(directory,'Probe.dll')}`,...references.map(reference=>`/reference:${reference}`),file];
       const result=await runProcess(toolchain.dotnet,[toolchain.csc,...args],{cwd:directory,signal,timeoutMs:30000});
-      const output=(result.stdout+result.stderr).replaceAll(file,'Probe.cs').replaceAll(directory,'/_/inventory').replaceAll('\r\n','\n');
-      results.push({id:feature.id,sourceSHA256:sha256(bytes),langVersion:language,target:feature.outputKind??'library',features:feature.nativeFeatures??[],accepted:result.exitCode===0,exitCode:result.exitCode,diagnostics:output.trim().split('\n').filter(Boolean)});
+      results.push({id:feature.id,sourceSHA256:sha256(bytes),langVersion:language,target:feature.outputKind??'library',features:feature.nativeFeatures??[],accepted:result.exitCode===0,exitCode:result.exitCode,diagnostics:referenceDiagnostics(result.stdout+result.stderr,directory,file)});
     }
     return {schemaVersion:1,scope:'Actual pinned Roslyn source validity; library compilation only',compiler:toolchain.actual.roslyn,rows:results};
   } finally {await rm(directory,{recursive:true,force:true});}

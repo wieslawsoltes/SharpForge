@@ -1,0 +1,13 @@
+{"schemaVersion":1,"platform":"node-darwin-arm64","inputDigest":"244d4acca02580cc3123737c880236a7bdf65c961d33f05406d62e630094422f","files":[
+{"name":"bcl-api.json","sha256":"97e6e929c6b71087adaceca3e926b498e7a0f5102c4ffde919c62713d07d8a3a"},
+{"name":"csharp-features.json","sha256":"da8763315d4ad399eb81cc147ab9f8aa0fb8476e6f9eee3bff4050b494c943dd"},
+{"name":"diagnostics.json","sha256":"ed28c03a07a4c476fa4ee0b3b82981fe2293e5ab9469fa8ec960412e73cb045c"},
+{"name":"ecma335.json","sha256":"ce776c59566ad780aec3f1526bd3633640988c8c9874f42c256b6dc995654077"},
+{"name":"gap-ids.json","sha256":"f79a9ca4f223c38aa7ae5da7b6f165b676dfed9acc284f7e73a30eab9a4c419b"},
+{"name":"ide-capabilities.json","sha256":"a84c9b616fb97f6b4fb64d5aafd5a8c450a94eb7136c5eaec1a260eac700f459"},
+{"name":"inputs.json","sha256":"7989c034435f0984089df99961a5ee26a8443fdf6632027cc699a13dbb97d18a"},
+{"name":"issue-candidates.json","sha256":"5f2bb516a330e4d05996651d4324e9fb506c9ca20bdfec4d4084aabb1d4a268b"},
+{"name":"obligations.json","sha256":"722bad48a3b495220a8014d35d589567b0a8f5f24c29f2e61c8fe0f2f506cfb5"},
+{"name":"runtime-gc.json","sha256":"95e6aa474bc781b0fec1f6b8d5ddb7cbc3bdc450a415c3f43afeb38eff479c8a"},
+{"name":"winui-api.json","sha256":"201ed090cc010a3f2c63f2fa3e3910015357b6e1008eeb3677f8566a41d35193"}
+]}

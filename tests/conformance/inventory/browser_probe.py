@@ -25,8 +25,8 @@ language = json.loads((ROOT / 'tests/conformance/inventory/probes/csharp.json').
 for feature in language:
     feature['source'] = (ROOT / feature['probe']).read_text(encoding='utf-8')
 script = '''async data => {
-const {compile,compileToIL}=await __sharpforgeTestImport('/packages/compiler/src/index.js');
-const {VirtualMachine,CilVirtualMachine}=await __sharpforgeTestImport('/packages/runtime/src/index.js');
+const {compile,compileToIL}=await __sharpforgeTestImport(location.origin + '/packages/compiler/src/index.js');
+const {VirtualMachine,CilVirtualMachine}=await __sharpforgeTestImport(location.origin + '/packages/runtime/src/index.js');
 ''' + runner + '''
 const runtime=await runtimeObservations(data.fixtures);
 const language=data.language.map(f=>{
@@ -47,7 +47,7 @@ with sync_playwright() as playwright, launch_browser(playwright, __file__) as br
     load_application(page)
     result = page.evaluate(script, {'fixtures': fixtures, 'language': language})
     result.update(schemaVersion=1, platform=target, host=platform.platform(), browser=browser.version,
-                  inputDigest=hashlib.sha256(json.dumps({'runner': runner, 'fixtures': fixtures, 'language': language}, sort_keys=True).encode('utf-8')).hexdigest(),
+                  inputDigest=hashlib.sha256(json.dumps({'script': script, 'fixtures': fixtures, 'language': language}, sort_keys=True).encode('utf-8')).hexdigest(),
                   command='python tests/conformance/inventory/browser_probe.py',
                   commit=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True, encoding='utf-8').strip(),
                   meaning='Per-fixture browser observations; gaps remain failures, not native or total parity evidence')
