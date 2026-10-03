@@ -9,6 +9,7 @@
 import { ArrayTypeSymbol, ErrorTypeSymbol } from '../../symbols/types.js';
 import { numericKind } from '../../conversions/numeric.js';
 import { deconstructionOf } from '../deconstruction.js';
+import { typeTestOutcome } from '../../conversions/reference.js';
 import { checkSwitchArms } from '../../flow/pattern-exhaustiveness.js';
 
 const unknown = ErrorTypeSymbol.unknown;
@@ -82,7 +83,8 @@ export const StructuralPatternBinding = Base =>
         constants.add(key);
         return true;
       });
-      for (const problem of checkSwitchArms(type, checked, site)) this.report(problem.node, problem.code, problem.args);
+      const isSubtype = (derived, base) => typeTestOutcome(derived, base, this.core) === 'always';
+      for (const problem of checkSwitchArms(type, checked, { ...site, isSubtype })) this.report(problem.node, problem.code, problem.args);
     }
     /** A slice outside a list pattern. */
     straySlicePattern(syntax) {

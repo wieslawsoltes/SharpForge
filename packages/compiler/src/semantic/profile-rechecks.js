@@ -52,6 +52,12 @@ const rules = [
     codes: ['CS0029', 'CS0266', 'CS0037'],
   },
   {
+    // A switch expression (flow/pattern-exhaustiveness.js): arms that can never be chosen and values no arm handles.
+    text: /\bswitch\s*\{/,
+    applies: node => node.kind === 'SwitchExpression',
+    codes: ['CS8509', 'CS8510', 'CS8524', 'CS8846'],
+  },
+  {
     // C# 15 preview `closed` types (binder/preview-features.js): the provisional rules of the pinned proposals.
     text: /\bclosed\s+(?:class|enum)\b/,
     applies: node => (node.kind === 'ClassDeclaration' || node.kind === 'EnumDeclaration') && (node.modifiers ?? []).some(token => token.text === 'closed'),

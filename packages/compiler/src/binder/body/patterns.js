@@ -66,6 +66,10 @@ export const PatternBinding = Base =>
             }
             const c = this.conversions.classifyFromExpression(e, inputType);
             if (c.exists && c.isImplicit) return { kind: 'ConstantPattern', syntax, value: this.applyConversion(e, inputType, c) };
+            // A value of a type parameter that is not known to be a value type can be tested for null.
+            if (e.literal === 'null' && inputType.typeKind === TypeKind.TypeParameter && !inputType.isValueType) {
+              return { kind: 'ConstantPattern', syntax, value: e };
+            }
             const explicit = e.type ? this.conversions.classifyExplicit(inputType, e.type) : null;
             if (
               explicit?.exists &&
