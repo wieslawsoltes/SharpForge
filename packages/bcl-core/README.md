@@ -72,3 +72,10 @@ comparison function. Its sign expresses ordering. It allocates no managed memory
 null receivers raise `NullReferenceException`, and unsupported implementations
 raise `NotSupportedException`. Collections reuse this helper through the public
 core entry point. Custom managed callbacks remain tracked by #2655.
+
+Compiled source supports direct `StringComparer.Ordinal.Compare` calls. Interface
+locals/conversions, interface `is` expressions and custom comparer implementations
+remain guarded by the current source profile; registered interface metadata does
+not imply that those source constructs execute. Independently assembled CIL
+exercises interface Compare, List.Sort, castclass and isinst without bypassing the
+runtime call or cast paths. The source-negative tests retain the existing guards.

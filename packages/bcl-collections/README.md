@@ -49,7 +49,10 @@ the same in-place removal seam. Clear writes null only to live entries and keeps
 capacity; an empty Clear preserves its released no-op version rule. Insert and
 AddRange reserve once before mutation when growth is needed and otherwise reuse
 their backing storage. Insert shifts only its suffix; AddRange writes only the
-appended elements. Reverse and Sort retain their existing storage paths.
+appended elements. Reverse swaps only the live prefix in place, with one reusable
+temporary GC root protecting each displaced reference through write observers.
+Empty/singleton Reverse performs no slot writes but increments the version.
+Sort retains its existing storage path.
 
 `tests/a08-dictionary-removal.test.js` and `tests/a08-hashset-removal.test.js` cover
 native slot reuse, cached-index and backing-array retention, managed-object
@@ -74,6 +77,10 @@ value-based List lookup becomes constant-time.
 single-reservation growth, empty input, validation, failed growth, GC and restore.
 `scripts/benchmarks/a08-list-insertion.mjs` measures tail insertion and singleton
 AddRange with spare capacity using the same static-import baseline workflow.
+`tests/a08-list-reverse.test.js` covers native values/capacity, exact swaps,
+empty/singleton versions, observer-triggered GC, throwing observers, allocation
+failure and heap restore. `scripts/benchmarks/a08-list-reverse.mjs` measures
+repeated reversal with exact and spare capacity through the same VM dispatch.
 
 Object collection equality and hash keys retain boxed primitive type identity:
 boxed `int` 1 differs from boxed `double` 1.0, while equal boxes of the same type,
@@ -104,8 +111,12 @@ ordinal profile. **#829 remains open** for the invariant-culture default, and
 #2619/#2621/#2655 track culture comparison and general comparer dispatch. This
 increment does not use a host locale heuristic or claim complete culture support.
 The pinned .NET 10.0.5 corpus includes invariant and ordinal results, but only the
-ordinal results qualify this implementation. Both source and direct CIL tests
-consume the capture; browser and Rust native/Wasm qualification is pending.
+ordinal results qualify this implementation. Both VM platforms consume the full
+capture. Compiled source exercises direct StringComparer calls; source interface
+locals/conversions and custom implementations remain explicitly diagnosed.
+Independently assembled CIL exercises interface Compare/List.Sort and runtime
+casts. Unsupported custom comparer objects are checked through both platforms,
+including an empty List. Browser and Rust native/Wasm qualification is pending.
 
 Run `node --expose-gc scripts/benchmarks/a08-default-string-sort.mjs` serially in
 the candidate and metadata baseline `85917302`, copying the identical runner to
