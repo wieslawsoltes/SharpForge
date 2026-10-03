@@ -5,7 +5,7 @@ import {mkdir,readFile,writeFile,symlink,utimes,access} from 'node:fs/promises';
 import {join} from 'node:path';
 import {readZip,writeZip} from '../../../packages/archive/src/index.js';
 import {releaseManifest,verifyManifest,verifyReleaseTree} from '../../../scripts/conformance/source-manifest.js';
-import {temporary,hash,inventory,run,differences} from '../../../scripts/conformance/repro/common.js';
+import {temporary,hash,inventory,run,differences,readRegular} from '../../../scripts/conformance/repro/common.js';
 import {canonicalZip,packageRelease} from '../../../scripts/conformance/repro/package-release.js';
 import {verifySource} from '../../../scripts/conformance/repro/source.js';
 import {dependencies,vendorCache,verifyCache} from '../../../scripts/conformance/repro/cache.js';
@@ -15,6 +15,7 @@ import {compareExamples,regenerate,generators} from '../../../scripts/conformanc
 import {explain} from '../../../scripts/conformance/repro/offline.js';
 import {markdownLinks,checkLink} from '../../../scripts/conformance/repro/link-check.js';
 import {download} from '../../../scripts/conformance/repro/prepare.js';
+import {npmCli} from '../../../scripts/conformance/node-tools.js';
 
 const epoch=1767225601;
 async function fixture(directory){await mkdir(join(directory,'dist'));await mkdir(join(directory,'artifacts'));await writeFile(join(directory,'dist/main.js'),'export const value=42;');await writeFile(join(directory,'artifacts/app.html'),'<!doctype html>');}
@@ -50,6 +51,15 @@ test('T09 browser zip bytes ignore insertion order and filesystem mtimes',async(
   assert.throws(()=>canonicalZip([{path:'a',text:'x'},{path:'A',text:'y'}],epoch),/colliding/);
 }));
 
+test('T09 browser packaging rejects linked output ancestors and bounded reads reject oversized files',async()=>temporary(async directory=>{
+  await fixture(directory);await mkdir(join(directory,'outside'));
+  await symlink(join(directory,'outside'),join(directory,'linked'),process.platform==='win32'?'junction':'dir');
+  await assert.rejects(packageRelease({root:directory,epoch,output:'linked/result.zip'}),/parent.*real directory/);
+  await assert.rejects(access(join(directory,'outside/result.zip')),{code:'ENOENT'});
+  await assert.rejects(packageRelease({root:directory,epoch,output:'../escape.zip'}),/escapes/);
+  await assert.rejects(readRegular(join(directory,'dist/main.js'),{maxBytes:2}),/oversized/);
+}));
+
 test('T09 exact source archive rejects altered, omitted, extra, truncated and multiple-root bytes',()=>{
   const bytes=Buffer.from('source λ'),oid=createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
   const tree=new Map([['src/a.js',{mode:'100644',oid}]]),valid=writeZip([{path:'Source/src/a.js',bytes}]);
@@ -71,6 +81,13 @@ test('T09 vendored offline cache is sealed to exact lock and bytes, including le
   assert.throws(()=>dependencies({lockfileVersion:1}),/version/);
   assert.throws(()=>dependencies({lockfileVersion:3,packages:{x:{resolved:'https://example.invalid/a.tgz'}}}),/integrity/);
   assert.throws(()=>dependencies({lockfileVersion:3,packages:{x:{resolved:'file:outside',integrity:'sha512-YQ=='}}}),/HTTPS/);
+}));
+
+test('T09 actual npm offline installer fails closed for a missing locked tarball',async()=>temporary(async directory=>{
+  const name='sharpforge-deliberately-missing',pkg={name:'offline-negative',version:'1.0.0',dependencies:{[name]:'1.0.0'}};
+  await writeFile(join(directory,'package.json'),JSON.stringify(pkg));
+  await writeFile(join(directory,'package-lock.json'),JSON.stringify({name:pkg.name,version:pkg.version,lockfileVersion:3,requires:true,packages:{'':pkg,[`node_modules/${name}`]:{version:'1.0.0',resolved:`https://127.0.0.1:1/${name}-1.0.0.tgz`,integrity:'sha512-'+Buffer.alloc(64).toString('base64')}}}));
+  await assert.rejects(run(process.execPath,[npmCli(),'ci','--offline','--ignore-scripts','--no-audit','--no-fund','--cache',join(directory,'empty-cache')],{cwd:directory}),/ENOTCACHED|cache mode is 'only-if-cached'/);
 }));
 
 const output=(path,content)=>({path,bytes:Buffer.byteLength(content),sha256:hash(content)});
@@ -114,6 +131,7 @@ test('T09 link parser covers inline, image, reference, balanced parentheses, HTM
   assert.deepEqual(markdownLinks(source).sort(),['docs/a.md#anchor','docs/image.png','docs/a_(b).md','docs/a b.md','examples/a.zip','docs/s.md','docs/html.md','https://example.invalid/'].sort());
   assert.throws(()=>markdownLinks('[x][undefined]'),/Undefined link reference/);
   assert.throws(()=>markdownLinks('[x](unfinished'),/Unclosed/);
+  assert.deepEqual(markdownLinks('[![badge](docs/badge.svg)](docs/outer.md)').sort(),['docs/badge.svg','docs/outer.md']);
 });
 
 test('T09 relative links must resolve to tracked files or verified release assets',()=>{

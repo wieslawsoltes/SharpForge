@@ -11,6 +11,10 @@ export const json = value => JSON.stringify(value, null, 2) + '\n';
 export const isMain = url => process.argv[1] && url === pathToFileURL(resolve(process.argv[1])).href;
 export async function writeJSON(path, value) {await mkdir(dirname(path), {recursive:true}); await writeFile(path, json(value));}
 export async function readJSON(path) {return JSON.parse(await readFile(path, 'utf8'));}
+export async function readRegular(path,{maxBytes=64*1024*1024}={}) {
+  const info=await lstat(path);if(!info.isFile()||info.isSymbolicLink()||info.size>maxBytes)throw new Error(`Invalid or oversized regular file: ${path}`);
+  const bytes=await readFile(path);if(bytes.length>maxBytes)throw new Error(`File grew beyond size limit: ${path}`);return bytes;
+}
 export function abortIfNeeded(signal) {if(signal?.aborted) throw signal.reason ?? new Error('Cancelled');}
 
 // Wait for child exit before returning an error or deleting its working directory.
@@ -51,20 +55,21 @@ export async function revision(root, ref='HEAD') {
   if(!/^[a-f0-9]{40}$/.test(commit))throw new Error('Expected exact Git SHA-1 commit');
   return {commit,epoch:Number(await git(root,['show','-s','--format=%ct',commit]))};
 }
-export async function files(directory,prefix='') {
+export async function files(directory,prefix='',counter={files:0,entries:0}) {
   if(!(await lstat(directory)).isDirectory())throw new Error(`Expected directory: ${directory}`);
   const result=[];
   for(const name of (await readdir(directory)).sort()){
+    if(++counter.entries>30000)throw new Error('Release tree entry limit exceeded');
     const path=join(directory,name),stat=await lstat(path),relative=prefix+name;
     if(stat.isSymbolicLink())throw new Error(`Symbolic link is not a release file: ${relative}`);
-    if(stat.isDirectory())result.push(...await files(path,relative+'/'));
-    else if(stat.isFile())result.push(relative);
+    if(stat.isDirectory())result.push(...await files(path,relative+'/',counter));
+    else if(stat.isFile()){counter.files++;result.push(relative);}
     else throw new Error(`Special file is not a release file: ${relative}`);
   }
   return result;
 }
 export async function inventory(directory) {
-  const output=[];for(const path of await files(directory)){const bytes=await readFile(join(directory,path));output.push({path,bytes:bytes.length,sha256:hash(bytes)});}return output;
+  const output=[];for(const path of await files(directory)){const bytes=await readRegular(join(directory,path));output.push({path,bytes:bytes.length,sha256:hash(bytes)});}return output;
 }
 export function differences(expected,actual) {
   const map=rows=>{const result=new Map();for(const row of rows){if(result.has(row.path))throw new Error(`Duplicate output path: ${row.path}`);result.set(row.path,row);}return result;};

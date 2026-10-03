@@ -1,8 +1,8 @@
-import {readFile, mkdir, writeFile} from 'node:fs/promises';
-import {resolve, join, dirname} from 'node:path';
+import {mkdir, writeFile,lstat} from 'node:fs/promises';
+import {resolve, join, dirname,relative,sep,isAbsolute} from 'node:path';
 import {parseArgs} from 'node:util';
 import {writeZip, readZip} from '../../../packages/archive/src/index.js';
-import {files, revision, hash, isMain} from './common.js';
+import {files, revision, hash, isMain,readRegular} from './common.js';
 
 // ZIP's UTC-independent DOS fields have two-second precision. No host timestamps,
 // permissions, directory enumeration order, compression version, or extra fields.
@@ -21,10 +21,14 @@ export function canonicalZip(entries,epoch) {
 }
 export async function packageRelease({root=process.cwd(),epoch,output}={}) {
   root=resolve(root);epoch??=process.env.SOURCE_DATE_EPOCH===undefined?(await revision(root)).epoch:Number(process.env.SOURCE_DATE_EPOCH);
+  if(!(await lstat(root)).isDirectory())throw new Error('Package root must be a real directory');
   const paths=await files(join(root,'dist'));if(!paths.length)throw new Error('Cannot package empty dist tree');
-  const entries=[];for(const path of paths)entries.push({path,bytes:await readFile(join(root,'dist',path))});
+  const entries=[];let total=0;for(const path of paths){const bytes=await readRegular(join(root,'dist',path));total+=bytes.length;if(total>128*1024*1024)throw new Error('Browser archive total input limit exceeded');entries.push({path,bytes});}
   const bytes=canonicalZip(entries,epoch),target=resolve(root,output??'artifacts/SharpForge-browser.zip');
-  await mkdir(dirname(target),{recursive:true});await writeFile(target,bytes);
+  const local=relative(root,target);if(!local||local==='..'||local.startsWith('..'+sep)||isAbsolute(local))throw new Error('Browser archive output escapes package root');
+  let current=root;for(const part of relative(root,dirname(target)).split(sep).filter(Boolean)){current=join(current,part);await mkdir(current,{recursive:true});if(!(await lstat(current)).isDirectory())throw new Error('Browser archive output parent is not a real directory');}
+  const existing=await lstat(target).catch(error=>{if(error.code==='ENOENT')return null;throw error;});if(existing&&!existing.isFile())throw new Error('Browser archive output is not a regular file');
+  await writeFile(target,bytes);
   return {path:target,bytes:bytes.length,sha256:hash(bytes),epoch,files:entries.length};
 }
 if(isMain(import.meta.url)){

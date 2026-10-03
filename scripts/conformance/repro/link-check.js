@@ -1,4 +1,4 @@
-import {readFile} from 'node:fs/promises';
+import {readFile,lstat} from 'node:fs/promises';
 import {posix,resolve,join} from 'node:path';
 import {parseArgs} from 'node:util';
 import {git,readJSON,cli,isMain} from './common.js';
@@ -15,8 +15,10 @@ export function markdownLinks(markdown) {
   }
   for(let index=0;index<text.length;index++){
     if(text[index]!=='['||text[index-1]==='\\')continue;
-    const end=text.indexOf(']',index+1);if(end<0)continue;
-    const label=text.slice(index+1,end);let cursor=end+1;
+    let end=index+1,labelDepth=1;
+    for(;end<text.length;end++){if(text[end]==='\\'){end++;continue;}if(text[end]==='[')labelDepth++;if(text[end]===']'&&--labelDepth===0)break;}
+    if(labelDepth!==0)continue;
+    const label=text.slice(index+1,end);if(label.includes('['))links.push(...markdownLinks(label));let cursor=end+1;
     if(text[cursor]==='('){
       let depth=1,angle=false,quote=null,body='';
       for(cursor++;cursor<text.length;cursor++){
@@ -56,7 +58,14 @@ export async function checkLinks({root=process.cwd(),assets,external=false,signa
   const documents=[...tracked].filter(path=>path==='README.md'||path==='CHANGELOG.md'||/^docs\/[^/]+\.md$/.test(path)).sort(),links=[],errors=[];
   for(const document of documents){
     let urls;try{urls=markdownLinks(await readFile(join(root,document),'utf8'));}catch(error){errors.push(error.message);continue;}
-    for(const url of urls)try{links.push({document,...checkLink(document,url,{tracked,assets:assetPaths})});}catch(error){errors.push(error.message);}
+    for(const url of urls)try{
+      const link=checkLink(document,url,{tracked,assets:assetPaths});
+      if(link.kind==='tracked-file'||link.kind==='tracked-directory'){
+        const info=await lstat(join(root,link.path)).catch(()=>null);
+        if(!info||info.isSymbolicLink()||(link.kind==='tracked-file'?!info.isFile():!info.isDirectory()))throw new Error(`Missing or nonregular tracked link target in ${document}: ${url}`);
+      }
+      links.push({document,...link});
+    }catch(error){errors.push(error.message);}
   }
   const remote=[];
   if(external)for(const url of [...new Set(links.filter(link=>link.kind==='external').map(link=>link.url))]){

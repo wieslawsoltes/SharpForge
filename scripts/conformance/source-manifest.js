@@ -3,23 +3,24 @@ import {readdir, readFile, writeFile, lstat} from 'node:fs/promises';
 import {resolve, join} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {spawnSync} from 'node:child_process';
-import {inventory, differences} from './repro/common.js';
+import {inventory, differences,readRegular} from './repro/common.js';
 
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 export async function releaseManifest(directory, commit, {root}={}) {
   if(!(await lstat(directory)).isDirectory())throw new Error('Release directory must not be a symlink');
   const entries = await readdir(directory, {withFileTypes: true});
-  if(entries.some(entry=>entry.isSymbolicLink()&&/\.(?:tgz|zip|html)$/.test(entry.name)))throw new Error('Release payload must not be a symlink');
+  if(entries.some(entry=>!entry.isFile()&&/\.(?:tgz|zip|html)$/.test(entry.name)))throw new Error('Release payload must be a regular file, never a symlink');
   const names = entries.filter(entry => entry.isFile() && /\.(?:tgz|zip|html)$/.test(entry.name)).map(entry => entry.name).sort();
   if (!names.length) throw new Error('No release payloads found');
   const files = [];
   for (const name of names) {
-    const bytes = await readFile(join(directory, name));
+    const bytes = await readRegular(join(directory, name),{maxBytes:512*1024*1024});
     files.push({path: name, bytes: bytes.length, sha256: sha256(bytes)});
   }
   const manifest={schemaVersion: 1, algorithm: 'SHA256', commit,
     scope: 'Release payload files alongside this manifest. Historical tracked docs and workspace files are not release qualification evidence.', files};
   if(root){
+    if(!/^[a-f0-9]{40}$/.test(commit))throw new Error('Release tree requires an exact source commit');
     const tree=await inventory(join(root,'dist'));if(!tree.length)throw new Error('Release dist tree is empty');
     return {...manifest,schemaVersion:2,scope:'Exact release payloads and dist tree. Reports, caches and historical workspace documents are excluded.',tree:{root:'dist',files:tree}};
   }
@@ -30,6 +31,7 @@ export async function releaseManifest(directory, commit, {root}={}) {
 // Complete build verification explicitly composes verifyReleaseTree below.
 export async function verifyManifest(directory, manifest) {
   if(![1,2].includes(manifest?.schemaVersion)||manifest.algorithm!=='SHA256'||typeof manifest.commit!=='string'||!Array.isArray(manifest.files))throw new Error('Invalid source manifest');
+  if(manifest.schemaVersion===2&&!/^[a-f0-9]{40}$/.test(manifest.commit))throw new Error('Invalid source manifest commit');
   const actual = await releaseManifest(directory, manifest.commit);
   if (JSON.stringify(actual.files) !== JSON.stringify(manifest.files)) throw new Error('Release payload inventory or content differs from SOURCE-MANIFEST.json');
   return manifest;
