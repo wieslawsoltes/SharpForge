@@ -121,8 +121,7 @@ const operations = Object.freeze({
   BinarySearch: binarySearch
 });
 
-function invoke(p, descriptor, args) {
-  const type = p.bclHost.frameworkType(descriptor.owner);
+function invoke(p, descriptor, args, type = p.bclHost.frameworkType(descriptor.owner)) {
   if (type?.kind !== 'bcl14' || type.family !== 'array') return {handled: false};
   const native = args.map(value => p.native(value));
   if (!args[0]) fail(p, 'ArgumentNullException', 'Source array is required');

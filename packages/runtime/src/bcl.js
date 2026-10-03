@@ -15,8 +15,8 @@ function append(p,ref,value){const n=count(p,ref);reserve(p,ref,n+1);write(p,ref
 function keyOf(p,value){const v=bclScalar(p,value);if(v===null)return 'null';if(isReference(v))return 'r:'+v.h+':'+v.g;return typeof v+':'+String(v);}
 function indexMap(p,ref,slots=1){const record=p.record(ref),v=version(p,ref);p.bclIndexes??=new WeakMap();let cache=p.bclIndexes.get(record);if(cache?.version!==v){const index=new Map(),items=data(p,ref);for(let i=0;i<count(p,ref);i++)index.set(keyOf(p,items[i*slots]),i);cache={version:v,index};p.bclIndexes.set(record,cache);}return cache.index;}
 /** All state is heap-owned and therefore GC-visible and included in debugger snapshots. */
-export function invokeBcl(p,d,args){
-  const t=frameworkType(d.owner),family=t?.family;if(t?.kind!=='bcl')return {handled:false};
+export function invokeBcl(p,d,args,t=frameworkType(d.owner)){
+  const family=t?.family;if(t?.kind!=='bcl')return {handled:false};
   const result=value=>({handled:true,value}),ref=d.isStatic||d.kind==='constructor'?null:args[0],values=ref===null?args:args.slice(1),n=values.map(v=>bclScalar(p,v)),m=d.name;
   if(family==='math'){
     if(d.kind==='get')return result(p.managed(t.properties[d.property].value,'double'));

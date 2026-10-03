@@ -13,7 +13,7 @@ const registry = createBclRegistry(bclModules);
 export function registerBclModules(target, options) {
   return registry.register(target, options);
 }
-/** Dispatch a registered family in constant time with explicit platform services. */
-export function invokeBclModules(platform, descriptor, args) {
-  return registry.invoke(platform, descriptor, args);
+/** Dispatch a registered family; a supplied type reuses the caller's owner lookup. */
+export function invokeBclModules(platform, descriptor, args, type) {
+  return registry.invoke(platform, descriptor, args, type);
 }

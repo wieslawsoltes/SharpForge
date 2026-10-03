@@ -33,11 +33,10 @@ export function createBclRegistry(contributions) {
         if (result?.then) throw new TypeError(`BCL contracts must be synchronous: ${module.name}`);
       }
     },
-    invoke(platform, descriptor, args) {
-      const type = platform.bclHost.frameworkType(descriptor.owner);
+    invoke(platform, descriptor, args, type = platform.bclHost.frameworkType(descriptor.owner)) {
       const module = families.get(type?.family);
       if (!module) return unhandled;
-      const result = module.invoke(platform, descriptor, args);
+      const result = module.invoke(platform, descriptor, args, type);
       if (!result || typeof result.handled !== 'boolean' || result.then) {
         throw new TypeError(`Invalid BCL invocation result: ${module.name}`);
       }

@@ -17,14 +17,14 @@ export function initializeBclHost(platform) {
   platform.bclHost = services;
 }
 
-function invokeCore(platform, descriptor, args) {
-  const result = invokeBclModules(platform, descriptor, args);
-  return result.handled ? result : invokeBcl(platform, descriptor, args);
+function invokeCore(platform, descriptor, args, type) {
+  const result = invokeBclModules(platform, descriptor, args, type);
+  return result.handled ? result : invokeBcl(platform, descriptor, args, type);
 }
 
 function invokeRuntime14(platform, descriptor, args, type) {
   return type.family?.startsWith('json') ? invokeJson(platform, descriptor, args) :
-    invokeBclModules(platform, descriptor, args);
+    invokeBclModules(platform, descriptor, args, type);
 }
 
 const handlers = Object.freeze({
