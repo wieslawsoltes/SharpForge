@@ -136,8 +136,9 @@ export const expressionForms = Object.freeze({
   },
   SimpleMemberAccessExpression(red) {
     const target = this.expression(red.expression);
-    if (red.name.kind !== 'IdentifierName') return null;
-    return this.from('Member', target, red, { target, name: red.name.identifier.valueText, nameSpan: this.nameSpan(red.name.identifier) });
+    if (!['IdentifierName', 'GenericName'].includes(red.name.kind)) return null;
+    return this.from('Member', target, red, {target, name: red.name.identifier.valueText, nameSpan: this.nameSpan(red.name.identifier),
+      ...(red.name.kind === 'GenericName' ? {typeArguments: red.name.typeArgumentList.arguments.map(type => this.type(type))} : {})});
   },
   InvocationExpression(red) {
     const target = this.expression(red.expression);
