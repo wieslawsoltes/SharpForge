@@ -1,0 +1,39 @@
+name: Reproducible defect
+description: Report a bounded defect with its owning area, reproduction and expected behavior.
+title: "[SF-A00-B00] "
+body:
+  - type: input
+    id: area
+    attributes:
+      label: Area and parent
+      value: "**Area:** A00 · **Parent:** #1"
+    validations:
+      required: true
+  - type: textarea
+    id: deliverable
+    attributes:
+      label: Reproduction and expected behavior
+      value: "## Deliverable\n\nExact source commit/environment:\nSmallest reproduction:\nObserved behavior:\nExpected behavior:"
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      value: "## Acceptance criteria\n\n- [ ] A focused fixture reproduces the defect.\n- [ ] The fix preserves negative/boundary/disposal behavior.\n- [ ] Exact commands/results and unsupported targets recorded."
+    validations:
+      required: true
+  - type: textarea
+    id: ownership
+    attributes:
+      label: Ownership and lock keys
+      value: "**Owns:** `packages/replace-with-owned-package/**`\nLock keys: none\nAgent: unassigned\nBranch: not created\nLease: not claimed"
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and attachments
+      description: "Use real artifact links with commit/digests; never include credentials or private repository tokens."
+    validations:
+      required: true

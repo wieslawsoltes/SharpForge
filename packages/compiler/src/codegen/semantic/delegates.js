@@ -23,6 +23,8 @@ export class DelegateClasses {
   }
   /** The image class of a delegate type, declared on first use. */
   classOf(type, syntax = null) {
+    // In a generic body the delegate type is the one of the construction being lowered (`Func<T, int>` of `T = string`).
+    type = this.generator.generics.closed(type, syntax);
     // Constructed types (`Func<int, int>`) are distinct symbols that compare equal: one class per distinct type.
     let info = this.byType.get(type) ?? this.all.find(known => known.type.equals?.(type));
     if (info) {

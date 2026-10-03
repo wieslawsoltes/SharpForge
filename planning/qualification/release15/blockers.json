@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "blockers": [
+    {
+      "id": "REMOTE-GIT",
+      "taskIds": [
+        "SF-A25-T03",
+        "SF-A25-T06"
+      ],
+      "reason": "Remote product Git/auth APIs are absent; local fixture loading is not a remote clone."
+    },
+    {
+      "id": "DOCUMENT-SESSIONS",
+      "taskIds": [
+        "SF-A18-T01"
+      ],
+      "reason": "Designer is a global tool; independent document designer sessions and automatic switching are absent."
+    },
+    {
+      "id": "MULTI-APP",
+      "taskIds": [
+        "SF-A19-T02",
+        "SF-A19-T07",
+        "SF-A18-T10"
+      ],
+      "reason": "Studio has one runtime worker and global debug/designer selection; two apps/two instances are unavailable."
+    },
+    {
+      "id": "FAIR-SESSION-IO",
+      "taskIds": [
+        "SF-R015-T02",
+        "SF-A12-T10"
+      ],
+      "reason": "Cross-app resource admission and independent network grant revocation are absent; component concurrency is narrower."
+    },
+    {
+      "id": "PHYSICAL-GPU",
+      "taskIds": [
+        "SF-A17-T06"
+      ],
+      "reason": "No physical adapter qualification is retained. Browser backend records and deliberate device destruction cannot establish physical hardware coverage."
+    },
+    {
+      "id": "GPU-UNAVAILABLE",
+      "taskIds": [
+        "SF-A17-T06"
+      ],
+      "reason": "The requested browser WebGPU backend or a real device was unavailable; fallback is not a GPU pass."
+    },
+    {
+      "id": "APP-EXPORT",
+      "taskIds": [
+        "SF-R015-T03",
+        "SF-A26-T11"
+      ],
+      "reason": "Runtime-only two-app publishing/download APIs are absent; IDE standalone packaging is not application export."
+    },
+    {
+      "id": "PROVIDER-AUTH",
+      "taskIds": [
+        "SF-A25-T03",
+        "SF-A25-T06"
+      ],
+      "reason": "Controlled-provider PAT/OAuth/device-flow/logout/non-fast-forward qualification is blocked by absent product APIs and unprovided account authorization."
+    },
+    {
+      "id": "SOURCE-ARCHIVE",
+      "taskIds": [
+        "SF-R015-T01"
+      ],
+      "reason": "An exact source archive, SHA-256 and trusted matching release build report must be supplied before archive qualification."
+    },
+    {
+      "id": "PLATFORM-MATRIX",
+      "taskIds": [
+        "SF-R015-T04"
+      ],
+      "reason": "Windows/Linux/macOS, Firefox/WebKit, physical DPI/mobile and supported physical GPUs remain unqualified until retained captures exist."
+    }
+  ]
+}
