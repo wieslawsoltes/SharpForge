@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3051c2370088910134a3",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Runtime.CompilerServices;\n\npublic class Bar\n{\n    public DateTime M1([DateTimeConstant(-1)] DateTime x = default(DateTime)) { return x; }\n    public static void Main()\n    {\n        Console.WriteLine(new Bar().M1().Ticks);\n    }\n}\n",
+  "sourceSHA256": "5a9dfa5bf6b515c057984b93f17956428e1d2648b26b222a6a9b1e08d5b72231",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "DateTimeConstantAttributeWithBadDefaultValue",
+    "offset": 26616
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8017",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,60): error CS8017: The parameter has multiple distinct default values.\n                //     public DateTime M1([DateTimeConstant(-1)] DateTime x = default(DateTime)) { return x; }\n                Diagnostic(ErrorCode.ERR_ParamDefaultValueDiffersFromAttribute, \"default(DateTime)\").WithLocation(7, 60)\n                ",
+  "unsupported": []
+}

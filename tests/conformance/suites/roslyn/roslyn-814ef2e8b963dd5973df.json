@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-814ef2e8b963dd5973df",
+  "kind": "diagnostics",
+  "sourceText": "\nextern alias alias1;\nusing alias1::NS2;\n\nclass C3\n{\n    public static void Main()\n    {\n        \"x\".M1((1, 1));\n    }\n}\n",
+  "sourceSHA256": "b3be5ade71bfefca4de0943c8e6ff25d89956fcf6b51a29853b98ffeed80db84",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "ExactlyMatchingExpression",
+    "offset": 753836
+  },
+  "langVersion": "default",
+  "target": "exe",
+  "references": "references: new[] {\n                    comp1.ToMetadataReference(),\n                    comp2.ToMetadataReference().WithAliases(ImmutableArray.Create(\"alias1\")),\n                    ValueTupleRef,\n                    SystemRuntimeFacadeRef\n                },\n                parseOptions: TestOptions.Regular,\n                options: TestOptions.DebugExe)",
+  "options": "(source5,\n                references: new[] {\n                    comp1.ToMetadataReference(),\n                    comp2.ToMetadataReference().WithAliases(ImmutableArray.Create(\"alias1\")),\n                    ValueTupleRef,\n                    SystemRuntimeFacadeRef\n                },\n                parseOptions: TestOptions.Regular,\n                options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

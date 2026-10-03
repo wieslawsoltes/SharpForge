@@ -39,9 +39,11 @@ async function execute(create,signal) {
   let vm;
   try {
     vm=create();const result=await vm.runAsync({signal});
-    return {state:result.state,output:result.output,exceptionType:canonicalFaultType(result.fault),exitCode:result.exitCode};
+    return {state:result.state,output:result.output,exceptionType:canonicalFaultType(result.fault),
+      diagnosticName:result.fault?.name??null,exitCode:result.exitCode};
   } catch(error) {
-    return {state:vm?'host-error':'load-error',output:vm?.output.join('')??'',exceptionType:canonicalFaultType(error),exitCode:vm?.exitCode??null,error:{message:error.message,stack:error.stack}};
+    return {state:vm?'host-error':'load-error',output:vm?.output.join('')??'',exceptionType:canonicalFaultType(error),
+      diagnosticName:error.name,exitCode:vm?.exitCode??null,error:{message:error.message,stack:error.stack}};
   } finally {vm?.stop();}
 }
 

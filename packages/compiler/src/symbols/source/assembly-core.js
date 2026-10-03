@@ -91,7 +91,7 @@ export class SourceAssemblyCore {
     const isFileLocal = modifiers.includes('file') && !container,
       fileKey = name + '`' + arity;
     const declaration = { syntax, scope, uri, file },
-      siblings = isFileLocal ? [...(scope.fileTypes?.values() ?? [])] : container ? container._nested : namespace.getTypeMembers(),
+      siblings = isFileLocal ? [...(scope.fileTypes?.values() ?? [])] : container ? container._nested : namespace.getTypeMembers(name, arity),
       existing = siblings.find(t => t.name === name && t.arity === arity && t.isSource);
     if (existing) {
       const partial = modifiers.includes('partial'),

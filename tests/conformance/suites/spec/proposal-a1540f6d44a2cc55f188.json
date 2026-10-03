@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-a1540f6d44a2cc55f188",
+  "kind": "spec",
+  "sourceText": "class Base\n{\n    [OverloadResolutionPriority(1)] public virtual void M() {}\n}\nclass Derived\n{\n    [OverloadResolutionPriority(2)] public override void M() {} // Warn or error for the useless and ignored attribute?\n}",
+  "sourceSHA256": "486bed9adebdd5bdd771aa43e1ce66cfa43ea4094a90eca9c38753d1bbca0613",
+  "target": "library",
+  "featureId": "csharp-13-0-overload-resolution-priority",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/overload-resolution-priority.md",
+    "sha256": "3ae409649aa5fc38d1b6a2d6a156f641c7c72feba0e394ce5765522d2322138b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/overload-resolution-priority.md",
+    "license": "NOASSERTION",
+    "offset": 11858
+  }
+}

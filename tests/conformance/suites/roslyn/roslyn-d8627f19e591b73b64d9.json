@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d8627f19e591b73b64d9",
+  "kind": "diagnostics",
+  "sourceText": "\nnamespace System\n{\n    public struct ValueTuple<T1, T2>\n    {\n        public T1 Item1;\n        public T2 Item2;\n\n        public ValueTuple(T1 item1, T2 item2)\n        {\n            System.Console.Write(\"ValueTuple2, \");\n            this.Item1 = item1;\n            this.Item2 = item2;\n        }\n    }\n    public struct ValueTuple<T1, T2, T3>\n    {\n        public ValueTuple(T1 item1, T2 item2, T3 item3)\n        {\n            // ValueTuple'3 required (constructed in bound tree), but not emitted\n            throw null;\n        }\n    }\n}\npublic class Base\n{\n    public int I;\n    public Base(int i) { I = i; }\n}\npublic class A : Base\n{\n    public A(int i) : base(i)\n    {\n        System.Console.Write($\"A:{i}, \");\n    }\n    public static bool operator ==(A a, Y y)\n    {\n        System.Console.Write($\"A({a.I}) == Y({y.I}), \");\n        return true;\n    }\n    public static bool operator !=(A a, Y y)\n        => throw null;\n    public override bool Equals(object o)\n        => throw null;\n    public override int GetHashCode()\n        => throw null;\n}\npublic class X : Base\n{\n    public X(int i) : base(i)\n    {\n        System.Console.Write($\"X:{i}, \");\n    }\n}\npublic class Y : Base\n{\n    public Y(int i) : base(i)\n    {\n        System.Console.Write($\"Y:{i}, \");\n    }\n    public static implicit operator Y(X x)\n    {\n        System.Console.Write($\"X:{x.I} -> \");\n        return new Y(x.I);\n    }\n}\npublic class C\n{\n    public static void Main()\n    {\n        System.Console.Write($\"{(new A(1), (new A(2), new A(3)), new A(4)) == (new X(5), GetTuple(), new Y(8))}\");\n    }\n    public static (X, Y) GetTuple()\n    {\n        System.Console.Write($\"GetTuple, \");\n        return (new X(6), new Y(7));\n    }\n}\n",
+  "sourceSHA256": "2d8a99e96014fba3b8a64d07c22676a025fdabddad7e79c6a5a4220153e861f4",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestEvaluationOrderOnTupleType2",
+    "offset": 105892
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

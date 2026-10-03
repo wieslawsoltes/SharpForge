@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f266fccb0c171eb7495c",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nnamespace Test\n{\n    public class Program\n    {\n        enum E\n        {\n            Zero,\n            FortyTwo = 42\n        };\n\n        public static void Main()\n        {\n            E[] a = new[] { E.FortyTwo, 0 }; // Dev10 error CS0826\n            Console.WriteLine(String.Format(\"Type={0}, a[0]={1}, a[1]={2}\", a.GetType(), a[0], a[1]));\n        }\n    }\n}\n",
+  "sourceSHA256": "96b8921c415c8efa9a2729c038df5773b7314464bfdb811edd2151e9f25e6bfd",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenImplicitlyTypeArraysTests.cs",
+    "sha256": "0fc3699a5865debbf22c8a495b096c5d5f16c83af48caf9d65ef34fc0f9d8521",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenImplicitlyTypeArraysTests.cs",
+    "license": "MIT",
+    "method": "CS0826ERR_ImplicitlyTypedArrayNoBestType",
+    "offset": 30328
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0826",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (16,21): error CS0826: No best type found for implicitly-typed array\n                //             E[] a = new[] { E.FortyTwo, 0 }; // Dev10 error CS0826\n                Diagnostic(ErrorCode.ERR_ImplicitlyTypedArrayNoBestType, \"new[] { E.FortyTwo, 0 }\").WithLocation(16, 21)",
+  "unsupported": []
+}

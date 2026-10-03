@@ -1,4 +1,5 @@
 import {enumTypes,frameworkType} from '@sharpforge/framework';
+export {managedExceptionTypes, exceptionTypeName, exceptionBaseType, exceptionHResult, exceptionMatches} from './exception-types.js';
 /** Versioned, structured-cloneable stack bytecode. Each instruction is three signed 32-bit words. */
 export const FORMAT_VERSION = 2;
 // Numeric conversion IDs occupy the low range; enum targets retain declared identity.
@@ -58,3 +59,7 @@ export function verifyImage(image){
   }
   return errors;
 }
+
+export {float, floatBinary, floatCompare, finiteFloat, ieeeRemainder} from './numeric/float.js';
+export {int64Binary, int64Compare, int64Unary} from './numeric/int64.js';
+export {uint32Binary, uint32Compare} from './numeric/uint32.js';

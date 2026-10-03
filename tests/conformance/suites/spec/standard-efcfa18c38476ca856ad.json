@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-efcfa18c38476ca856ad",
+  "kind": "spec",
+  "sourceText": "delegate int D1(int i, double d);\ndelegate int D2(int c, double d);",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "c8e25969a3c6ddd1868392f186168df515cf93064ce12d28f0ebea052ea6d075",
+  "originalSource": "delegate int D1(int i, double d);\ndelegate int D2(int c, double d);",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "DelegateDeclarations"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-delegates",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/delegates.md",
+    "sha256": "9455f48c0c2b89946fa49f010b25134e63d575781fea98dcd54cdba081865907",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/delegates.md",
+    "license": "MIT",
+    "example": "DelegateDeclarations",
+    "offsetInUnquotedMarkdown": 4275
+  }
+}

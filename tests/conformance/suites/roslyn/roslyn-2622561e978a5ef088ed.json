@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-2622561e978a5ef088ed",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Runtime.CompilerServices;\n\n[TupleElementNames(new[] { \"a\", \"b\" })]\npublic class C\n{\n    [TupleElementNames(new string[] { null, null })]\n    public ValueTuple<int, int> Field1;\n\n    [TupleElementNames(new[] { \"x\", \"y\" })]\n    public ValueTuple<int, int> Prop1;\n\n    [return: TupleElementNames(new string[] { null, null })]\n    public ValueTuple<int, int> M([TupleElementNames(new string[] { null})] ValueTuple x) => (0, 0);\n\n    public delegate void Delegate1<T>(object sender,\n        [TupleElementNames(new[] { \"x\" })]ValueTuple<T> args);\n\n    [TupleElementNames(new[] { \"y\" })]\n    public event Delegate1<ValueTuple<int>> Event1\n    {\n        add { }\n        remove { }\n    }\n\n    [TupleElementNames(new[] { \"a\", \"b\" })]\n    public (int x, int y) this[[TupleElementNames](int a, int b) t] => t;\n}\n\n[TupleElementNames(new[] { \"a\", \"b\" })]\npublic struct S\n{\n}",
+  "sourceSHA256": "36d68b38c5fc1882b36c1b4f714e94642242441ada0c0ff13ef5ac854db78c57",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Tuples.cs",
+    "sha256": "ab7f8403f0a95068a2bd711aa01cd126753f683f5dfc23d800e78e06f558bd7d",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Tuples.cs",
+    "license": "MIT",
+    "method": "ExplicitTupleNamesAttribute",
+    "offset": 52647
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: s_attributeRefs)",
+  "options": "(text, references: s_attributeRefs)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8138",
+        "severity": "error"
+      },
+      {
+        "code": "CS8138",
+        "severity": "error"
+      },
+      {
+        "code": "CS8138",
+        "severity": "error"
+      },
+      {
+        "code": "CS8138",
+        "severity": "error"
+      },
+      {
+        "code": "CS8138",
+        "severity": "error"
+      },
+      {
+        "code": "CS8138",
+        "severity": "error"
+      },
+      {
+        "code": "CS8138",
+        "severity": "error"
+      },
+      {
+        "code": "CS8138",
+        "severity": "error"
+      },
+      {
+        "code": "CS7036",
+        "severity": "error"
+      },
+      {
+        "code": "CS8138",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,2): error CS8138: Cannot reference 'System.Runtime.CompilerServices.TupleElementNamesAttribute' explicitly. Use the tuple syntax to define tuple names.\n                // [TupleElementNames(new[] { \"a\", \"b\" })]\n                Diagnostic(ErrorCode.ERR_ExplicitTupleElementNamesAttribute, @\"TupleElementNames(new[] { \"\"a\"\", \"\"b\"\" })\").WithLocation(5, 2),\n                // (31,2): error CS8138: Cannot reference 'System.Runtime.CompilerServices.TupleElementNamesAttribute' explicitly. Use the tuple syntax to define tuple names.\n                // [TupleElementNames(new[] { \"a\", \"b\" })]\n                Diagnostic(ErrorCode.ERR_ExplicitTupleElementNamesAttribute, @\"TupleElementNames(new[] { \"\"a\"\", \"\"b\"\" })\").WithLocation(31, 2),\n                // (18,10): error CS8138: Cannot reference 'System.Runtime.CompilerServices.TupleElementNamesAttribute' explicitly. Use the tuple syntax to define tuple names.\n                //         [TupleElementNames(new[] { \"x\" })]ValueTuple<T> args);\n                Diagnostic(ErrorCode.ERR_ExplicitTupleElementNamesAttribute, @\"TupleElementNames(new[] { \"\"x\"\" })\").WithLocation(18, 10),\n                // (11,6): error CS8138: Cannot reference 'System.Runtime.CompilerServices.TupleElementNamesAttribute' explicitly. Use the tuple syntax to define tuple names.\n                //     [TupleElementNames(new[] { \"x\", \"y\" })]\n                Diagnostic(ErrorCode.ERR_ExplicitTupleElementNamesAttribute, @\"TupleElementNames(new[] { \"\"x\"\", \"\"y\"\" })\").WithLocation(11, 6),\n                // (14,14): error CS8138: Cannot reference 'System.Runtime.CompilerServices.TupleElementNamesAttribute' explicitly. Use the tuple syntax to define tuple names.\n                //     [return: TupleElementNames(new string[] { null, null })]\n                Diagnostic(ErrorCode.ERR_ExplicitTupleElementNamesAttribute, \"TupleElementNames(new string[] { null, null })\").WithLocation(14, 14),\n                // (15,36): error CS8138: Cannot reference 'System.Runtime.CompilerServices.TupleElementNamesAttribute' explicitly. Use the tuple syntax to define tuple names.\n                //     public ValueTuple<int, int> M([TupleElementNames(new string[] { null})] ValueTuple x) => (0, 0);\n                Diagnostic(ErrorCode.ERR_ExplicitTupleElementNamesAttribute, \"TupleElementNames(new string[] { null})\").WithLocation(15, 36),\n                // (20,6): error CS8138: Cannot reference 'System.Runtime.CompilerServices.TupleElementNamesAttribute' explicitly. Use the tuple syntax to define tuple names.\n                //     [TupleElementNames(new[] { \"y\" })]\n                Diagnostic(ErrorCode.ERR_ExplicitTupleElementNamesAttribute, @\"TupleElementNames(new[] { \"\"y\"\" })\").WithLocation(20, 6),\n                // (27,6): error CS8138: Cannot reference 'System.Runtime.CompilerServices.TupleElementNamesAttribute' explicitly. Use the tuple syntax to define tuple names.\n                //     [TupleElementNames(new[] { \"a\", \"b\" })]\n                Diagnostic(ErrorCode.ERR_ExplicitTupleElementNamesAttribute, @\"TupleElementNames(new[] { \"\"a\"\", \"\"b\"\" })\").WithLocation(27, 6),\n                // (28,33): error CS7036: There is no argument given that corresponds to the required parameter 'transformNames' of 'TupleElementNamesAttribute.TupleElementNamesAttribute(string[])'\n                //     public (int x, int y) this[[TupleElementNames](int a, int b) t] => t;\n                Diagnostic(ErrorCode.ERR_NoCorrespondingArgument, \"TupleElementNames\").WithArguments(\"transformNames\", \"System.Runtime.CompilerServices.TupleElementNamesAttribute.TupleElementNamesAttribute(string[])\").WithLocation(28, 33),\n                // (8,6): error CS8138: Cannot reference 'System.Runtime.CompilerServices.TupleElementNamesAttribute' explicitly. Use the tuple syntax to define tuple names.\n                //     [TupleElementNames(new string[] { null, null })]\n                Diagnostic(ErrorCode.ERR_ExplicitTupleElementNamesAttribute, \"TupleElementNames(new string[] { null, null })\").WithLocation(8, 6)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

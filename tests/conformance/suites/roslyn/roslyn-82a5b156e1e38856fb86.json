@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-82a5b156e1e38856fb86",
+  "kind": "diagnostics",
+  "sourceText": "\n[System.AttributeUsage(System.AttributeTargets.Property) ]\npublic class A : System.Attribute { }\n\npublic class Test\n{\n    [field: A]\n    public int P { get; set; }\n\n    [field: A]\n    public int P2 { get; }\n}\n",
+  "sourceSHA256": "ad7aeb4028a03a5f7874e89f6329ab44bf384dafc2f068a787dbd4195a41c6a9",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "TestPropertyTargetedFieldAttributesOnAutoProperty",
+    "offset": 103900
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0592",
+        "severity": "error"
+      },
+      {
+        "code": "CS0592",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,13): error CS0592: Attribute 'A' is not valid on this declaration type. It is only valid on 'property, indexer' declarations.\n                //     [field: A]\n                Diagnostic(ErrorCode.ERR_AttributeOnBadSymbolType, \"A\").WithArguments(\"A\", \"property, indexer\").WithLocation(10, 13),\n                // (7,13): error CS0592: Attribute 'A' is not valid on this declaration type. It is only valid on 'property, indexer' declarations.\n                //     [field: A]\n                Diagnostic(ErrorCode.ERR_AttributeOnBadSymbolType, \"A\").WithArguments(\"A\", \"property, indexer\").WithLocation(7, 13)\n                ",
+  "unsupported": []
+}

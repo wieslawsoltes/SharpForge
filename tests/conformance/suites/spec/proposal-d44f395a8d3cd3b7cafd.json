@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-d44f395a8d3cd3b7cafd",
+  "kind": "spec",
+  "sourceText": "public readonly struct NativeInt\n{\n    public IntPtr Value;\n}",
+  "sourceSHA256": "fb75b0c138056201f16c8def8a6f6908e1adb11a0685a791cd7abd039b1ee693",
+  "target": "library",
+  "featureId": "csharp-9-0-native-sized-integers",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/native-integers.md",
+    "sha256": "d0b0b6f2a77880d7ea7898939dd15177557aacb592d26800e709b4f7749c9496",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/native-integers.md",
+    "license": "NOASSERTION",
+    "offset": 19826
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-bac812beb84c07d27fc5",
+  "kind": "diagnostics",
+  "sourceText": "class B : A\n{\n    static void M1()\n    {\n        long x = F1;\n        ulong y = F2;\n        long? z = F3;\n        ulong? w = F4;\n    }\n    static void M2(int x, uint y, int? z, uint? w)\n    {\n        F1 = x;\n        F2 = y;\n        F3 = z;\n        F4 = w;\n    }\n}",
+  "sourceSHA256": "30e4b9f03a35c004b7c728807c2a0eddf06aa2166e13fcdcf256602bfd9cdd2a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "sha256": "a7e54d8ce96a59177276eba5d802097c4cc4b2dee81cb9034e7dd309ad524cb8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "license": "MIT",
+    "method": "BuiltInConversions_NativeIntegers",
+    "offset": 67195
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "references: new[] { AsReference(comp, useCompilationReference) }, parseOptions: useLatest ? TestOptions.Regular9 : TestOptions.Regular8, targetFramework: TargetFramework.Net70)",
+  "options": "(sourceB, references: new[] { AsReference(comp, useCompilationReference) }, parseOptions: useLatest ? TestOptions.Regular9 : TestOptions.Regular8, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation",
+    "Dynamic or customized parse options require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

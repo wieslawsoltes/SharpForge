@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c7228e7f15d66d756d12",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public void M()\n    {\n        var x1 = M2(() =>\n                    {\n                        bool flag = true;\n                        dynamic d = null;\n                        if (flag)\n                        {\n                            return (a: 1, b: d);\n                        }\n                        else\n                        {\n                            if (flag)\n                            {\n                                return (a: d, c: 3);\n                            }\n                            else\n                            {\n                                return (a: d, d: 4);\n                            }\n                        }\n                    });\n    }\n    public T M2<T>(System.Func<T> f)\n    {\n        return f();\n    }\n}\n",
+  "sourceSHA256": "0a3eb5b600448d24fd55302fcc4f62e1987d7266df692f3310a0a4a438d48431",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "LambdaTypeInferenceFails",
+    "offset": 846460
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0411",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,18): error CS0411: The type arguments for method 'C.M2<T>(Func<T>)' cannot be inferred from the usage. Try specifying the type arguments explicitly.\n                //         var x1 = M2(() =>\n                Diagnostic(ErrorCode.ERR_CantInferMethTypeArgs, \"M2\").WithArguments(\"C.M2<T>(System.Func<T>)\").WithLocation(6, 18)\n                ",
+  "unsupported": []
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-6a81aedf7d725c8f9704",
+  "kind": "spec",
+  "sourceText": "Random r = new Random();\nobject obj;\nobj = r.NextDouble;         // warning: Converting method group to 'object'. Did you intend to invoke the method?\nobj = (object)r.NextDouble; // ok",
+  "sourceSHA256": "db75637baaf99467d9b0780ad783f11eb15b8a9f114300e859c3230bf3d824a6",
+  "target": "library",
+  "featureId": "csharp-10-0-lambda-improvements",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/lambda-improvements.md",
+    "sha256": "43e4ead0e264a6e6580875a4178ad3f09374d22c739ffc682b6b5f5cfbfc752f",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/lambda-improvements.md",
+    "license": "NOASSERTION",
+    "offset": 10768
+  }
+}

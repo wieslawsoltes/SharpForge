@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6b0f5de800dc51284a2b",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass B\n{\n    public void M0()\n    {\n        Action<int> action1 = input => { };\n        Action<int> action2 = input => input++;\n        Func<int,bool> func1 = input => { input++; input++; if (input > 0) return true; return false; };\n    }\n}\n\npublic delegate void MumbleEventHandler(object sender, System.EventArgs args);\n\nclass C\n{\n    public event MumbleEventHandler Mumble;\n\n    public void OnMumble(System.EventArgs args)\n    {\n        Mumble += new MumbleEventHandler((s, e) => { });\n        Mumble += (s, e) => { int i = 0; i++; i++; i++; };\n        Mumble(this, args);\n    }\n}\n",
+  "sourceSHA256": "35c40de38bd285418200e43792f9bf1fd38787cd019126971dcc3c2fd927644e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "sha256": "eb33d60956503b30bec29f823f9033347fac98a9029a70b139e6a57a3ad1abef",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "LambdaExpressionCSharp",
+    "offset": 51535
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

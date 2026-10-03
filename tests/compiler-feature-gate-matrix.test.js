@@ -23,8 +23,6 @@ const binderNames = {
 };
 
 const noRoslynGate = 'Roslyn has no MessageID for this row: csc reports no language-version diagnostic for it';
-const needsAttributeBinding = 'gated by Roslyn where the attribute is bound; attributes are not bound here';
-const needsOperandTypes = 'depends on the types of the operands, which only overload resolution or conversion classification knows';
 const notGated = {
   // ---- C# 2 - C# 12 rows without a Roslyn gate ----
   ...Object.fromEntries(
@@ -34,7 +32,7 @@ const notGated = {
       'EmbeddedInteropTypes IndexedProperties CallerInfoAttributes AwaitExpression AwaitInCatchAndFinally ExtensionAddMethods ' +
       'ParameterlessStructInitializers Deconstruction GeneralizedAsyncReturnTypes IsPatternExpression CaseGuards OverrideWithConstraints ' +
       'PropertyPatterns PositionalPatterns NullForgivingOperator NullableDirective WithExpressions ' +
-      'UnmanagedCallingConventions AsyncMethodBuilderOverride CallerArgumentExpression ExtendedNameofScope NumericIntPtr ScopedRef ' +
+      'UnmanagedCallingConventions AsyncMethodBuilderOverride CallerArgumentExpression ExtendedNameofScope NumericIntPtr ' +
       'SlicePattern ExperimentalAttribute SpreadElement'
     )
       .split(' ')
@@ -42,31 +40,24 @@ const notGated = {
   ),
   // ---- features that need binding the compiler does not do for the gate ----
   Dynamic: 'below C# 4 Roslyn reports CS0246 for the type name `dynamic`, not a language-version diagnostic (pinned)',
+  ScopedRef: "Roslyn has no feature of this name: it reports `scoped` as 'ref fields' (CS8936 at the keyword); the walker does the same (pinned)",
   InferredTupleNames: 'Roslyn reports CS8306 where an inferred name is used, not a feature diagnostic; the binder does the same',
   NonTrailingNamedArguments: 'Roslyn reports CS1738 on the positional argument, naming the version; the binder does the same (pinned)',
-  GenericPatternMatching: needsOperandTypes,
+  GenericPatternMatching: 'below C# 7.1 Roslyn reports CS8314 for the pattern, naming the version; the binder does the same (pinned)',
   ImprovedOverloadCandidates: 'changes which candidates overload resolution keeps; there is no construct to report',
-  ExtensibleFixedStatement: needsOperandTypes,
-  IndexingMovableFixedBuffers: needsOperandTypes,
   NameShadowingInNestedFunctions: 'below C# 8 Roslyn reports CS0136, not a language-version diagnostic',
-  UnmanagedConstructedTypes: needsOperandTypes,
-  ObsoleteOnPropertyAccessor: needsAttributeBinding,
-  NullPointerConstantPattern: needsOperandTypes,
   TargetTypedConditional: 'below C# 9 Roslyn reports CS8957 for the conditional, not a language-version diagnostic (pinned)',
-  ExtensionGetAsyncEnumerator: needsOperandTypes,
-  MemberNotNull: needsAttributeBinding,
-  VarianceSafetyForStaticInterfaceMembers: 'needs the variance check of interface members',
-  WithOnStructs: needsOperandTypes,
-  WithOnAnonymousTypes: needsOperandTypes,
-  ImplicitImplementationOfNonPublicMembers: 'needs the interface implementation map',
-  ImprovedInterpolatedStrings: needsOperandTypes,
-  AutoDefaultStructs: 'needs definite assignment of struct fields in constructors',
+  VarianceSafetyForStaticInterfaceMembers:
+    'below C# 9 Roslyn reports CS8904 for the variance violation, naming the version; the binder does the same (pinned)',
+  ImplicitImplementationOfNonPublicMembers:
+    'below C# 10 Roslyn reports CS8704 on the implementing member, naming the version; the binder does the same (pinned)',
+  ImprovedInterpolatedStrings: 'needs interpolated string handler conversions, which are not bound yet (SF-A02-T75)',
+  AutoDefaultStructs: 'below C# 11 Roslyn reports CS0171 for the unassigned field, not a language-version diagnostic; the binder does the same (pinned)',
   CacheStaticMethodGroupConversion: 'only changes code generation in Roslyn; there is no diagnostic',
-  SpanCharConstantPattern: needsOperandTypes,
-  InlineArrays: needsOperandTypes,
-  LockObject: needsOperandTypes,
-  FirstClassSpan: needsOperandTypes,
-  ExpressionOptionalAndNamedArguments: 'needs expression-tree conversion of lambdas',
+  LockObject: 'needs System.Threading.Lock in the framework registry (the type is unknown: CS0246)',
+  FirstClassSpan: 'Roslyn reports nothing for the snippet below C# 14 (the conversion exists as a user-defined one); pinned',
+  ExpressionOptionalAndNamedArguments:
+    'below C# 14 Roslyn reports CS0854 / CS0853 for the call, not a language-version diagnostic; the binder does the same (pinned)',
 };
 
 /**
@@ -86,7 +77,7 @@ function gateDiagnostics(result, row) {
 // words such as `record` and `extension` intentionally parse as identifiers below their introduction versions.
 const compileAt = (row, version) => {
   const file = parse(new SourceText(featureSnippets[row.id]), undefined, { languageVersion: 'preview' });
-  return compile([file], { langVersion: versionText(version) });
+  return compile([file], { langVersion: versionText(version), allowUnsafe: /\bunsafe\b/.test(featureSnippets[row.id]) });
 };
 
 test('A02-B01 every catalog row has exactly one snippet and is either gated or listed as not gated', () => {
@@ -100,7 +91,7 @@ test('A02-B01 every catalog row has exactly one snippet and is either gated or l
     assert(notGated[id].length > 10, `${id} needs a reason`);
   }
   const gated = languageFeatures.filter(row => row.version > 1 && !(row.id in notGated));
-  assert(gated.length >= 140, `only ${gated.length} rows are gated`);
+  assert(gated.length >= 174, `only ${gated.length} rows are gated`);
 });
 
 for (const row of languageFeatures) {

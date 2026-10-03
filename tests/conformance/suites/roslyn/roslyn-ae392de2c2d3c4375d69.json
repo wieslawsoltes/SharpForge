@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ae392de2c2d3c4375d69",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public virtual (int a, int b) M((int c, int d) x)\n    {\n        throw new System.Exception();\n    }\n}\nclass D : C\n{\n    public override (int, int) M((int g, int h) y)\n    {\n        return y;\n    }\n}\n",
+  "sourceSHA256": "aa576f91963613f2a4737ae73cb516ed709b1d65124760b584a3c1f290bc71e0",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "OverrideTupleMethodWithDifferentNamesInParameterType",
+    "offset": 178955
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8139",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,32): error CS8139: 'D.M((int g, int h))': cannot change tuple element names when overriding inherited member 'C.M((int c, int d))'\n                //     public override (int, int) M((int g, int h) y)\n                Diagnostic(ErrorCode.ERR_CantChangeTupleNamesOnOverride, \"M\").WithArguments(\"D.M((int g, int h))\", \"C.M((int c, int d))\").WithLocation(11, 32)\n                ",
+  "unsupported": []
+}
