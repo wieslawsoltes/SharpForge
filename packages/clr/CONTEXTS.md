@@ -103,6 +103,15 @@ Unloaded descriptors, general generic variance/Nullable rules and pointer/byref/
 function-pointer casts report TypeLoad diagnostics. COM/type-equivalence and
 dynamic interface behavior are outside this metadata-only service. Full
 500-pair and executable cast qualification remains separate work under T03.7.
+The independent SDK 10.0.201 / CoreCLR 10.0.5 capture checks 33 targeted pairs;
+all 16 focused type tests passed on Node 24.21.0. Regenerate with
+`node packages/clr/tools/capture-assignability.mjs tests/fixtures/clr-assignability`.
+`node packages/clr/tools/benchmark-assignability.mjs` measured cold pair decisions
+with loaded descriptors at median 0.7222 µs / p95 2.8043 µs, and cached interface
+decisions at median 0.0746 µs / p95 0.0915 µs on Apple M3 Pro/darwin-arm64.
+The machine is shared, allocations are unmeasured, and no previous equivalent
+implementation exists. This evidence covers the JavaScript metadata service;
+source VM, direct CIL and Rust/Wasm executable casts remain unqualified here.
 
 `AssemblyLoadSession` owns a Default context and a registry of custom contexts.
 No process-global assembly registry is used. `createContext` accepts a name,
