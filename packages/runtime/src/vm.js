@@ -1,3 +1,4 @@
+import {createExecutionProfiler} from './execution/profiler.js';
 import {executeSourceReference, sourceReturnReference} from './execution/source-references.js';
 import {isFatalFault,markUnhandled} from './execution/unhandled.js';
 import {executeSourceMemory} from './execution/source-memory.js';
@@ -30,7 +31,7 @@ export class VirtualMachine {
     this.image=image;this.options={maxInstructions:20_000_000,maxOutputCharacters:1_000_000,...options};
     this.heap=new ManagedHeap({...options,methodTables:createSourceMethodTables(image,options)});this.heap.rootProvider=()=>this.roots();this.stack=[];this.frames=[];this.statics=image.statics.map(s=>s.value===null?defaultValue(s.type,this):s.value?.scalar?decodeScalar(s.value,this.options):s.value);this.constantValues=new Map();this.strings=new Map();this.output=[];this.outputCharacters=0;
     this.snapshotOwner=Object.freeze({});this.state='ready';this.instructions=0;this.writeRevision=0;this.sourcePause=false;this.elapsedMs=0;this.frameId=0;this.currentPoint=null;this.fault=null;this.pendingFault=null;this.exitCode=0;this.returnValue=null;this.onOutput=options.onOutput??(()=>{});this.onException=null;this.onWrite=null;
-    this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);this.sync=new SyncPrimitives(this);this.call(image.entryPoint,[]);
+    this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);this.sync=new SyncPrimitives(this);this.profiler=createExecutionProfiler(this,options.profile);this.heap.observer=this.profiler;this.call(image.entryPoint,[]);
   }
   *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots()??[];yield* this.sync?.roots()??[];yield this.returnValue;yield* this.stack;yield* this.statics;yield* this.constantValues.values();yield* stringRoots(this);yield* runtimeTypeRoots(this);for(const f of this.frames){yield* f.locals;yield* arrayContinuationRoots(f);}yield* exceptionRoots(this);}
   call(methodId,args,types=[]){return callSource(this,methodId,args,types);}
@@ -62,10 +63,10 @@ export class VirtualMachine {
       if((count&255)===0&&performance.now()-started>=timeBudgetMs)break;
       this.scheduler.beforeInstruction();if(this.state!=='running'||!this.frames.length)break;const frame=this.top,continuing=!!frame.intrinsicContinuation,method=this.image.methods[frame.methodId],code=method.code,base=frame.pc*3,op=code[base],a=code[base+1],b=code[base+2];
       if(!continuing&&op===Op.SEQ){frame.point=this.image.sequencePoints[a];this.currentPoint=frame.point;if(onSequence?.(frame.point,frame)){this.sourcePause=true;this.state='paused';break;}}
-      this.sourcePause=false;if(!continuing){frame.pc++;count++;this.instructions++;}
+      this.sourcePause=false;if(!continuing){frame.pc++;count++;this.instructions++;if(this.profiler)this.profiler.instruction(frame);}
       try{
         if(this.instructions>this.options.maxInstructions||continuing&&this.instructions>=this.options.maxInstructions)throw new ManagedFault('InstructionLimitException','Program exceeded its instruction budget');
-        if(continuing){const result=resumeArrayOperation(this,frame,{deadline:started+timeBudgetMs,workBudget:1});count+=result.work;this.instructions+=result.work;if(result.done&&result.returns)this.stack.push(result.value);if(!result.work)break;}else if(!executeSourceReference(this,frame,op,a,b))switch(op){
+        if(continuing){const result=resumeArrayOperation(this,frame,{deadline:started+timeBudgetMs,workBudget:1});count+=result.work;this.instructions+=result.work;if(this.profiler)this.profiler.instruction(frame,result.work);if(result.done&&result.returns)this.stack.push(result.value);if(!result.work)break;}else if(!executeSourceReference(this,frame,op,a,b))switch(op){
           case Op.ENUM:this.stack.push(sourceEnum(this,a,b));break;case Op.DELEGATE:{const receiver=this.stack.pop();this.stack.push(this.heap.withRoots([receiver],()=>this.platform.delegate(this.image.constants[b],a,receiver)));break;}case Op.SEQ:case Op.NOP:break;case Op.ENDFINALLY:this.resumeUnwind(frame);break;case Op.ENDFILTER:endSourceFilter(this,this.stack.pop());break;
           case Op.CONST:this.stack.push(this.constant(a));break;
           case Op.LDLOC:if(frame.locals[a]===undefined)throw new ManagedFault('InvalidProgramException','Read of uninitialized local');this.stack.push(sourceCopy(this,frame.locals[a]));break;
@@ -95,7 +96,7 @@ export class VirtualMachine {
       collectAtInstruction(this);
       this.scheduler.afterInstruction();
     }
-    this.currentPoint=this.top?.point??null;this.elapsedMs+=performance.now()-started;return this.state;
+    this.currentPoint=this.top?.point??null;this.elapsedMs+=performance.now()-started;if(this.profiler)this.profiler.boundary();return this.state;
   }
   allFrames(){return this.scheduler.allFrames();}
   run(){if(this.state==='paused')this.state='running';while(this.state==='ready'||this.state==='running')this.runSlice({instructionBudget:100000,timeBudgetMs:100});return {state:this.state,output:this.output.join(''),exitCode:this.exitCode,fault:this.fault,stats:this.statistics()};}

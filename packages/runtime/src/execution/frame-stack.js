@@ -7,6 +7,7 @@ export function pushFrame(vm, frame) {
   try {
     registerFrame(vm, frame);
     vm.frames.push(frame);
+    if (vm.profiler) vm.profiler.enter(frame);
   } catch (error) {
     releaseFrame(vm, frame);
     releaseStackFrame(vm, frame);
@@ -19,6 +20,7 @@ export function pushFrame(vm, frame) {
 export function popFrame(vm) {
   const frame = vm.frames.pop();
   if (frame) {
+    if (vm.profiler) vm.profiler.leave(frame);
     releaseFrame(vm, frame);
     releaseStackFrame(vm, frame);
   }
@@ -30,7 +32,9 @@ export function replaceFrame(vm, frame) {
   const previous = vm.frames.at(-1);
   replaceStackFrame(vm, previous, frame);
   registerFrame(vm, frame);
+  if (vm.profiler) vm.profiler.leave(previous);
   vm.frames[vm.frames.length - 1] = frame;
+  if (vm.profiler) vm.profiler.enter(frame);
   releaseFrame(vm, previous);
   return frame;
 }

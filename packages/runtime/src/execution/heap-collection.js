@@ -5,6 +5,7 @@ import {isReference} from './managed-fault.js';
 export function collectHeap(heap, extraRoots = []) {
   heap.mutationRevision++;
   const start = performance.now();
+  if (heap.observer) heap.observer.gcStart(heap.stats);
   if (heap.marks.length < heap.records.length) {
     heap.marks = new Uint32Array(Math.max(heap.records.length, heap.marks.length * 2, 64));
   }
@@ -63,7 +64,9 @@ export function collectHeap(heap, extraRoots = []) {
       handle.value = null;
     }
   }
-  return finishCollection(heap, {start, markEnd, objects, bytes, ...metrics});
+  const result = finishCollection(heap, {start, markEnd, objects, bytes, ...metrics});
+  if (heap.observer) heap.observer.gcEnd(result);
+  return result;
 }
 
 function finishCollection(heap, metrics) {

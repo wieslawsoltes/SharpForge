@@ -20,6 +20,7 @@ export class ManagedHeap {
     const maxArrayLength = options.maxArrayLength ?? 0xffffffff;
     if (!Number.isSafeInteger(maxArrayLength) || maxArrayLength < 0) throw new RangeError('Invalid maxArrayLength');
     this.methodTables = methodTables;
+    this.observer = null;
     this.maxBytes = maxBytes;
     this.maxArrayLength = maxArrayLength;
     this.threshold = Math.min(initialThreshold, maxBytes);
@@ -126,6 +127,7 @@ export class ManagedHeap {
     this.stats.liveObjects++;
     this.stats.allocations++;
     this.stats.peakBytes = Math.max(this.stats.peakBytes, this.stats.liveBytes);
+    if (this.observer) this.observer.allocation(size, typeName, kind);
     return Object.freeze(Object.defineProperty({h: handle, g: generation}, 'heapOwner', {value: this.handleOwner}));
   }
 
@@ -160,6 +162,7 @@ export class ManagedHeap {
     this.ensureWritable(record);
     record.data = cloneArrayStorage(data);
     record.size = size;
+    if (delta > 0 && this.observer) this.observer.allocation(delta, record.type, record.kind, true);
   }
 
   string(value, roots = []) {

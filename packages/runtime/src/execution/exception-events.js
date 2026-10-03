@@ -106,6 +106,7 @@ export function notifyFirstChance(vm, fault) {
     delete fault.exceptionDebuggerResume;
     return false;
   }
+  if (vm.profiler && fault.exceptionEventResume !== 'firstChance') vm.profiler.exception(fault);
   fault.phase = 'first-chance';
   if (beginExceptionEvent(vm, fault, 'firstChance')) return true;
   if (!vm.onException?.(fault)) return false;

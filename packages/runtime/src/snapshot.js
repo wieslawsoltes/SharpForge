@@ -22,6 +22,7 @@ const common = [
 ];
 const exclusions = {
   options: 'Host configuration is retained by the owning VM.',
+  profiler: 'Host observations are cumulative and do not rewind with guest execution.',
   snapshotOwner: 'Snapshots are scoped to their original VM instance.',
   onOutput: 'Host callback, retained across restore.',
   onException: 'Debugger callback, retained across restore.',

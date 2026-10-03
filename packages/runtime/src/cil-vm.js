@@ -1,3 +1,4 @@
+import {createExecutionProfiler} from './execution/profiler.js';
 import {collectAtInstruction} from './execution/gc-stress.js';
 import {verificationFault} from './execution/verification-fault.js';
 import {asyncRoots} from './execution/async-runtime.js';
@@ -42,7 +43,7 @@ export class CilVirtualMachine {
     const input=options.arguments??(entry.signature.parameters.length===1&&entry.signature.parameters[0]==='string[]'?[[]]:[]);
     if(input.length!==entry.signature.parameters.length)throw new CilError('Argument count does not match selected method');
     const args=[];this.heap.withRoots(args,()=>{for(let i=0;i<input.length;i++){const value=this.marshal(input[i],entry.signature.parameters[i]);args.push(value);this.heap.pins.push(value);}});
-    this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);this.sync=new SyncPrimitives(this);this.call(entry.token,args);this.ensureInitialized(entry.ownerToken,'static-method');
+    this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);this.sync=new SyncPrimitives(this);this.profiler=createExecutionProfiler(this,options.profile);this.heap.observer=this.profiler;this.call(entry.token,args);this.ensureInitialized(entry.ownerToken,'static-method');
   }
   *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots()??[];yield* this.sync?.roots()??[];yield* asyncRoots(this);
     const root=function*(v){if(v?.byref){if(v.owner)yield v.owner;}else yield v;};
@@ -118,12 +119,12 @@ export class CilVirtualMachine {
     validateSliceBudget(instructionBudget,timeBudgetMs);
     this.scheduler.beforeSlice();if(this.state==='ready')this.state='running';if(this.state!=='running')return this.state;const started=performance.now();let n=0;
     if(this.pendingFault){const pending=this.pendingFault;this.pendingFault=null;pending.exceptionDebuggerResume=true;this.raise(pending);}
-    while(this.state==='running'&&this.frames.length&&n<instructionBudget){if((n&255)===0&&performance.now()-started>=timeBudgetMs)break;this.scheduler.beforeInstruction();if(this.state!=='running'||!this.frames.length)break;const frame=this.top,continuing=!!frame.intrinsicContinuation,instruction=frame.method.instructions[frame.pc];if(!continuing&&instruction&&onInstruction?.(instruction,frame)){this.state='paused';break;}if(!continuing){n++;this.instructions++;}
-      try{if(this.instructions>this.options.maxInstructions||continuing&&this.instructions>=this.options.maxInstructions)throw new ManagedFault('InstructionLimitException','Program exceeded its instruction budget');if(continuing){const result=resumeArrayOperation(this,frame,{deadline:started+timeBudgetMs,workBudget:1});n+=result.work;this.instructions+=result.work;if(!result.work)break;}else this.step();}catch(error){const fault=error instanceof ManagedFault?error:new ManagedFault('InvalidProgramException',error.message??String(error));fault.phase='first-chance';fault.frames??=[...this.frames].reverse().map(f=>({method:f.method.owner+'::'+f.method.name,methodToken:f.method.token,ilOffset:f.lastOffset}));this.raise(fault);}
+    while(this.state==='running'&&this.frames.length&&n<instructionBudget){if((n&255)===0&&performance.now()-started>=timeBudgetMs)break;this.scheduler.beforeInstruction();if(this.state!=='running'||!this.frames.length)break;const frame=this.top,continuing=!!frame.intrinsicContinuation,instruction=frame.method.instructions[frame.pc];if(!continuing&&instruction&&onInstruction?.(instruction,frame)){this.state='paused';break;}if(!continuing){n++;this.instructions++;if(this.profiler)this.profiler.instruction(frame);}
+      try{if(this.instructions>this.options.maxInstructions||continuing&&this.instructions>=this.options.maxInstructions)throw new ManagedFault('InstructionLimitException','Program exceeded its instruction budget');if(continuing){const result=resumeArrayOperation(this,frame,{deadline:started+timeBudgetMs,workBudget:1});n+=result.work;this.instructions+=result.work;if(this.profiler)this.profiler.instruction(frame,result.work);if(!result.work)break;}else this.step();}catch(error){const fault=error instanceof ManagedFault?error:new ManagedFault('InvalidProgramException',error.message??String(error));fault.phase='first-chance';fault.frames??=[...this.frames].reverse().map(f=>({method:f.method.owner+'::'+f.method.name,methodToken:f.method.token,ilOffset:f.lastOffset}));this.raise(fault);}
       collectAtInstruction(this);
       this.scheduler.afterInstruction();
     }
-    this.elapsedMs+=performance.now()-started;return this.state;
+    this.elapsedMs+=performance.now()-started;if(this.profiler)this.profiler.boundary();return this.state;
   }
   allFrames(){return this.scheduler.allFrames();}
   run(){while(this.state==='ready'||this.state==='running')this.runSlice({instructionBudget:100000,timeBudgetMs:50});return {state:this.state,output:this.output.join(''),returnValue:this.resultValue(),exitCode:this.exitCode,fault:this.fault,stats:this.statistics()};}
