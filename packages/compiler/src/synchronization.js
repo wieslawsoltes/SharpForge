@@ -6,7 +6,7 @@ const aliases={'System.Object':'object','System.String':'string','System.Boolean
 const typeName=type=>type?.endsWith('&')?typeName(type.slice(0,-1))+'&':aliases[type]??canonicalType(type);
 const primitive=new Set(['bool','char','sbyte','byte','short','ushort','int','uint','long','ulong','nint','nuint','float','double','decimal','void']);
 const descriptorKey=descriptor=>{const signature=descriptor.signature??descriptor;return [descriptor.owner,descriptor.name,signature.parameters.map(typeName).join(','),typeName(signature.returnType),signature.genericArity??0].join('|');};
-const defaultBuiltin=descriptor=>Builtins.find(builtin=>builtin.synchronization&&descriptorKey(builtin.synchronization)===descriptorKey(descriptor));
+const defaultBuiltin=descriptor=>Builtins.find(builtin=>builtin?.synchronization&&descriptorKey(builtin.synchronization)===descriptorKey(descriptor));
 const containsAwait=node=>node&&typeof node==='object'&&(node.kind==='Await'||Object.entries(node).some(([key,value])=>!['source','tokens','symbol','green'].includes(key)&&(Array.isArray(value)?value.some(containsAwait):containsAwait(value))));
 
 /** Independent installer; root owns bytecode/registry/parser integration. */

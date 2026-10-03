@@ -1,9 +1,9 @@
 import {Builtins} from '@sharpforge/bytecode';
 import {n} from './node-factory.js';
 
-const enter = Builtins.find(entry => entry.synchronization?.owner === 'System.Threading.Monitor' &&
+const enter = Builtins.find(entry => entry?.synchronization?.owner === 'System.Threading.Monitor' &&
   entry.synchronization.name === 'Enter' && entry.synchronization.parameters.length === 2);
-const exit = Builtins.find(entry => entry.synchronization?.owner === 'System.Threading.Monitor' &&
+const exit = Builtins.find(entry => entry?.synchronization?.owner === 'System.Threading.Monitor' &&
   entry.synchronization.name === 'Exit');
 
 /** Semantic fallback uses the same monitor and managed-address ABI as legacy lock lowering. */
