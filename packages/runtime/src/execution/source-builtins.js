@@ -24,7 +24,8 @@ function legacyStringPlatform(vm) {
 }
 
 function legacyHost(vm) {
-  return vm.legacyBclHost ??= {
+  const cache = vm.platform ?? vm;
+  return cache.legacyBclHost ??= {
     platform: legacyStringPlatform(vm),
     heap: vm.heap,
     value: value => vm.value(value),

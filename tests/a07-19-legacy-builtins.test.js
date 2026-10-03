@@ -93,6 +93,27 @@ test('A07 Replace with a null old value reports ArgumentNullException on both en
   }
 });
 
+test('A07 legacy builtin host caches do not enter source or CIL VM snapshots', () => {
+  const fixture = {name: 'Convert.ToString', args: [true], result: 'string', parameter: 'bool'};
+  for (const engine of ['source', 'cil']) {
+    const vm = engine === 'source'
+      ? new VirtualMachine(sourceImage(fixture))
+      : new CilVirtualMachine(cilAssembly(fixture), {arguments: fixture.args});
+    try {
+      const result = vm.run();
+      assert.equal(result.state, 'terminated', result.fault?.stack);
+      assert.equal(vm.value(vm.returnValue), 'True');
+      assert.equal(Object.hasOwn(vm, 'legacyBclHost'), false);
+      assert.equal(Object.hasOwn(vm, 'legacyBclHosts'), false);
+      const snapshot = vm.snapshot();
+      vm.restore(snapshot);
+      assert.equal(vm.value(vm.returnValue), 'True');
+    } finally {
+      vm.stop();
+    }
+  }
+});
+
 test('A07 legacy package surface keeps explicit host services and rejects unknown operations', () => {
   const host = {
     heap: {string: value => ({text: value})},

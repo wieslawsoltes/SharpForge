@@ -8,9 +8,10 @@ import {enumToString,enumHasFlag} from './enums.js';
 import {objectType,typeFromHandle,typeEquals,typeName,typeHandle,typeProperty,runtimeTypeText} from './tokens.js';
 
 function legacyHost(vm, formatType = null) {
-  vm.legacyBclHosts ??= new Map();
-  if (!vm.legacyBclHosts.has(formatType)) {
-    vm.legacyBclHosts.set(formatType, {
+  const cache = vm.platform;
+  cache.legacyBclHosts ??= new Map();
+  if (!cache.legacyBclHosts.has(formatType)) {
+    cache.legacyBclHosts.set(formatType, {
       platform: vm.platform,
       heap: vm.heap,
       value: value => vm.value(value),
@@ -19,7 +20,7 @@ function legacyHost(vm, formatType = null) {
       fault: (type, message) => new ManagedFault(type, message)
     });
   }
-  return vm.legacyBclHosts.get(formatType);
+  return cache.legacyBclHosts.get(formatType);
 }
 
 function legacyString(context) {
