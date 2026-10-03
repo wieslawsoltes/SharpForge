@@ -30,8 +30,8 @@ export function evaluateConstant(node, {resolve=()=>null, checked=true, maxNodes
     if(n.kind==='Cast'){
       const x=walk(n.expression,check);if(!x||!['int','double'].includes(x.type)||!['int','double'].includes(n.type))return null;
       if(n.type==='double')return {type:'double',value:Number(x.value)};
-      const value=Math.trunc(x.value);if(!Number.isFinite(value)){if(check)fail(n,'CS0221','Constant value cannot be converted to int');return {type:'int',value:-2147483648};}
-      if(!check&&x.type==='double'&&(value<-2147483648||value>2147483647))return {type:'int',value:-2147483648};
+      const value=Math.trunc(x.value);if(!check&&x.type==='double')return {type:'int',value:Number.isNaN(value)?0:Math.max(-2147483648,Math.min(2147483647,value))|0};
+      if(!Number.isFinite(value))fail(n,'CS0221','Constant value cannot be converted to int');
       return int(value,n,check);
     }
     if(n.kind==='Conditional'){

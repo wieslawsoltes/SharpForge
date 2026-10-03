@@ -1,3 +1,4 @@
+import {convert as cilConvert,float} from './numeric-ops.js';
 import {ManagedFault, isReference} from '../heap.js';
 
 export const defaultValue = type => type === 'int' || type === 'double' ? 0 : type === 'bool' ? false : null;
@@ -42,10 +43,10 @@ export function binary(vm, operator, a, b, mode = 0) {
 }
 
 export function convert(value, type, checked = 0) {
-  if (type === 0 && checked === 1 && (!Number.isFinite(value) || Math.trunc(value) < -2147483648 || Math.trunc(value) > 2147483647)) {
-    throw new ManagedFault('OverflowException', 'Checked Int32 conversion overflow');
-  }
-  return type === 0 ? (Number.isFinite(value) && value >= -2147483648 && value < 2147483648 ? Math.trunc(value) | 0 : -2147483648) : Number(value);
+  if (type !== 0) return Number(value);
+  return cilConvert(checked === 1 ? 'conv.ovf.i4' : 'conv.i4', float(value), {
+    fault: (name, message) => new ManagedFault(name, message)
+  });
 }
 
 export function unary(operator, value, mode = 0) {

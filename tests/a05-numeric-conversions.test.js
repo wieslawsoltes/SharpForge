@@ -64,7 +64,7 @@ test('A05 native numeric fixture uses CLI primitive MethodDef and MemberRef sign
   const method = name => [...inspector.methods.values()].find(method => method.name === name);
   assert.deepEqual([...metadata.blob(metadata.row(method('uint_max_to_ulong').token)[4])], [0, 1, 0x0b, 0x09]);
   assert.deepEqual([...metadata.blob(metadata.row(method('single_i8_precision').token)[4])], [0, 1, 0x0a, 0x0c]);
-  const members = method('Main').instructions.filter(instruction => instruction.name === 'call' && instruction.operand >>> 24 === 10).map(instruction => metadata.blob(metadata.row(instruction.operand)[2]));
+  const members = inspector.getMethod(method('Main').token).instructions.filter(instruction => instruction.name === 'call' && instruction.operand >>> 24 === 10).map(instruction => metadata.blob(metadata.row(instruction.operand)[2]));
   assert(members.some(signature => signature.length === 4 && signature[0] === 0 && signature[1] === 1 && signature[2] === 1 && signature[3] === 0x09), 'Console.WriteLine(uint) must use ELEMENT_TYPE_U4');
   assert(members.some(signature => signature.length === 4 && signature[0] === 0 && signature[1] === 1 && signature[2] === 1 && signature[3] === 0x0b), 'Console.WriteLine(ulong) must use ELEMENT_TYPE_U8');
   assert(method('single_i8_precision').implFlags & 8, 'Native conversion inputs must retain NoInlining');
