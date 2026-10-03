@@ -33,8 +33,9 @@ export const modifierMethods = {
       next = this.tokens[Math.min(index + 1, this.tokens.length - 1)];
     if (kind === 'identifier') return !token.flags && (this.isRequiredModifier(index) || this.isClosedModifier(index) || this.isSafeModifier(index));
     if (!declarationModifiers.has(kind)) return false;
-    if (kind === 'partial' || kind === 'async') return !token.flags && this.canFollowContextualModifier(next);
-    if (kind === 'ref') return next.kind === 'struct' || (next.kind === 'partial' && this.kindAt(index + 2) === 'struct');
+    if (kind === 'async') return this.isAsyncModifier(index);
+    if (kind === 'partial') return !token.flags && this.canFollowContextualModifier(next);
+    if (kind === 'ref') return this.isRefStructModifier(index);
     if (kind === 'fixed') return false;
     if (kind === 'new')
       return member && (declarationModifiers.has(next.kind) || typeKeywords.includes(next.kind) || this.isPredefined(next) || this.isId(next));
@@ -71,7 +72,7 @@ export const modifierMethods = {
         list.push(this.takeWord(kind));
         continue;
       }
-      if ((kind === 'private' && seen.has('protected')) || (kind === 'protected' && seen.has('private'))) this.feature('PrivateProtected', token);
+      this.privateProtectedFeature(seen, kind, token);
       list.push(kind === 'partial' || kind === 'async' ? this.takeWord(kind) : this.take());
     }
     return list;

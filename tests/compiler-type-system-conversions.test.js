@@ -237,7 +237,8 @@ test('A02-T06.1 conversion classification across the standard conversions', () =
     assert.equal(kindOf(from, to), implicit, label);
     assert.equal(castKind(from, to), explicit, label + ' (cast)');
   }
-  assert.equal(conversions.classifyFromExpression({ literal: 'null' }, core.string).kind, ConversionKind.NullLiteral);
+  // Roslyn classifies null to a reference type as an implicit reference conversion (pinned in test/conversions/pinned.json).
+  assert.equal(conversions.classifyFromExpression({ literal: 'null' }, core.string).kind, ConversionKind.ImplicitReference);
   assert.equal(conversions.classifyFromExpression({ literal: 'null' }, core.nullableOf(core.int)).kind, ConversionKind.NullLiteral);
   assert.equal(conversions.classifyFromExpression({ literal: 'null' }, core.int).exists, false);
   assert.equal(conversions.classifyFromExpression({ literal: 'default' }, core.int).kind, ConversionKind.DefaultLiteral);

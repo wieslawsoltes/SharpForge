@@ -6,9 +6,6 @@ import { Accessibility, TypeKind } from '../symbols/types.js';
 /** The span of a syntax node or token (`.span`) or of a plain `{ start, end }` location. */
 export const spanOf = node => node.span ?? node;
 
-/** Namespaces of the BCL and platform that the closed framework registry models only in part. */
-export const knownNamespaces = /^(System|Microsoft|Windows)(\.|$)/;
-
 const frameworkTypeNames = `
   DateTime DateTimeOffset TimeSpan Guid Random Tuple ValueTuple Lazy Nullable Func Action Predicate Comparison Converter
   EventHandler EventArgs Delegate Attribute Type Uri Version Array Buffer BitConverter Convert Environment GC Math MathF

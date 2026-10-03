@@ -193,7 +193,7 @@ export const typeMethods = {
     else if (this.at('delegate') && this.peek().kind === '*') type = this.functionPointerType();
     else if (this.isId()) type = this.name();
     else {
-      this.error(this.current, 'CS1031', 'Type expected');
+      this.error(this.errorAnchor(), 'CS1031', 'Type expected');
       type = this.n('IdentifierName', this.cache.missing('IdentifierToken'));
     }
     for (let first = true; ;) {
