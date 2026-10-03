@@ -86,6 +86,7 @@ export const NullableConditions = Base =>
         }
       }
       if (inner?.local) matched.set(inner.local, NOT_NULL);
+      if (!testsForNull) this.learnFromSubpatterns(inner, variable, matched);
       return negated ? { whenTrue: unmatched, whenFalse: matched } : { whenTrue: matched, whenFalse: unmatched };
     }
 

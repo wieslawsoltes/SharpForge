@@ -1,0 +1,6 @@
+{
+  "interface-most-specific/cs8705-abstract-member-two-defaults": ["diagnostics", "warnings"],
+  "interface-most-specific/cs8705-diamond": ["diagnostics", "warnings"],
+  "interface-most-specific/derived-interface-implements-abstract-member": ["diagnostics", "warnings"],
+  "interface-most-specific/most-specific-wins-and-reabstraction": ["diagnostics", "warnings"]
+}

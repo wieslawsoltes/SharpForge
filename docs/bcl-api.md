@@ -1245,4 +1245,14 @@ Pinned reference: 9 implemented and 14 missing exact metadata rows.
 | method | <code>System.Random::Shuffle``1(!!0[]):System.Void instance</code> | missing | — |
 | property | <code>System.Random::Shared[]:System.Random get static</code> | implemented | 1713 |
 
+### Module <code>environment</code>
+
+Registered families: <code>environment</code>.
+
+| ABI ID | Registered signature | Registry status |
+| --- | --- | --- |
+| 524289 | <code>static string System.Environment::GetEnvironmentVariable(string)</code> | implemented |
+
+No pinned reference inventory is included for these families; registered rows alone do not establish API coverage.
+
 <!-- bcl-module-inventory:end -->
