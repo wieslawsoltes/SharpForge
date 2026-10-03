@@ -3,7 +3,7 @@ import {decimalConstants} from '../decimal-intrinsics.js';
 import {castReference} from '../casting.js';
 import {staticSlot,finishMemoryAccess} from '../statics.js';
 import {ManagedFault} from '../../heap.js';
-import {boxValue,unboxValue} from '../value-types.js';
+import {boxValue,unboxValue,unboxCompatible} from '../value-types.js';
 import {fieldAccess,fieldAddress} from '../managed-pointers.js';
 
 const handlers=new Map();
@@ -29,9 +29,10 @@ handlers.set('box',(vm,frame,instruction)=>vm.push(boxValue(vm,vm.pop(),vm.typeS
 for(const name of ['unbox','unbox.any'])handlers.set(name,(vm,frame,instruction)=>{
   const ref=vm.pop(),table=vm.typeSystem.table(instruction.operand);
   if(name==='unbox.any'&&!table.flags.valueType){vm.push(castReference(vm.heap,ref,table));return;}
+  if(name==='unbox.any'){vm.push(unboxValue(vm,ref,table));return;}
   const record=vm.heap.get(ref);
-  if(record.kind!=='box'||record.methodTable!==table)throw new ManagedFault('InvalidCastException','Boxed type mismatch');
-  vm.push(name==='unbox'?vm.address('box',0,ref):unboxValue(vm,ref,table));
+  if(record.kind!=='box'||!unboxCompatible(record.methodTable,table))throw new ManagedFault('InvalidCastException','Boxed type mismatch');
+  vm.push(vm.address('box',0,ref,{type:table}));
 });
 for(const name of ['castclass','isinst'])handlers.set(name,(vm,frame,instruction)=>{
   vm.push(castReference(vm.heap,vm.pop(),vm.typeSystem.table(instruction.operand),name==='castclass'));

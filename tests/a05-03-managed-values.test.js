@@ -8,6 +8,7 @@ import {address,dereference,sourceFieldValue,sourceFieldStore,validatePointer,po
 import {storageValue,sourceStorageValue} from '../packages/runtime/src/execution/storage.js';
 import {sourceStore,sourceCopy,sourceNewObject} from '../packages/runtime/src/execution/source-storage.js';
 import {sourceFieldType} from '../packages/runtime/src/execution/managed-pointers.js';
+import {releaseFrame,rebuildFrameIndex} from '../packages/runtime/src/execution/frame-lifetimes.js';
 import {copyExecution} from '../packages/runtime/src/snapshot.js';
 import {valueFixture} from './a05-03-fixtures.js';
 
@@ -92,7 +93,8 @@ test('a05-03: boxed primitives, enums and nested structs preserve type and copy 
   assert.equal(unboxValue(vm,box,'Outer').fields[0].fields[0],6);
   assert.equal(unboxValue(vm,boxValue(vm,123,'int'),'int'),123);
   const enumBox=boxValue(vm,1,'Choice');assert.equal(vm.heap.get(enumBox).methodTable,vm.heap.methodTables.get('Choice'));
-  assert.throws(()=>unboxValue(vm,enumBox,'int'),{name:'InvalidCastException'});
+  // Enum/underlying unbox compatibility: the old negative assertion encoded a defect.
+  assert.equal(unboxValue(vm,enumBox,'int'),1);
   assert.throws(()=>unboxValue(vm,box,'Inner'),{name:'InvalidCastException'});
   assert.throws(()=>unboxValue(vm,null,'Outer'),{name:'NullReferenceException'});
 });
@@ -105,7 +107,7 @@ test('a05-03: stack lifetime, invalid bounds, readonly writes and cross-VM point
   assert.throws(()=>address(vm,'local',-1),{name:'InvalidProgramException'});
   assert.throws(()=>address(vm,'local',2),{name:'InvalidProgramException'});
   assert.throws(()=>dereference(vm,address(vm,'local',0,null,{type:'int',readonly:true}),true,1),{name:'InvalidProgramException'});
-  vm.frames=[];assert.throws(()=>dereference(vm,pointer),{name:'InvalidProgramException'});
+  releaseFrame(vm,vm.top);vm.frames=[];assert.throws(()=>dereference(vm,pointer),{name:'InvalidProgramException'});
   vm.frames=[{id:2,locals:[99]}];assert.throws(()=>dereference(vm,pointer),{name:'InvalidProgramException'});
 });
 
@@ -155,7 +157,7 @@ test('a05-03: parked scheduler locals root byrefs and cancellation expires stack
   const vm=new VirtualMachine(compiled.image);vm.heap.methodTables=tables();
   const ref=vm.heap.object('Holder',[nested(vm,5)]),interior=numberPointer(vm,address(vm,'field',0,ref));
   const frame={id:100,methodId:0,locals:[interior],stack:[],args:[]};
-  vm.frames=[];vm.scheduler.enabled=true;vm.scheduler.parked=true;vm.scheduler.contexts.set(2,{id:2,status:'waiting',frames:[frame],stack:[]});
+  vm.frames=[];vm.scheduler.enabled=true;vm.scheduler.parked=true;vm.scheduler.contexts.set(2,{id:2,status:'waiting',frames:[frame],stack:[]});rebuildFrameIndex(vm);
   const local=address(vm,'local',0,null,{frameId:100,type:'int&'});
   vm.heap.collect();assert.equal(dereference(vm,dereference(vm,local)),5);
   vm.scheduler.cancelAll();assert.throws(()=>dereference(vm,local),{name:'InvalidProgramException'});
