@@ -14,7 +14,7 @@ test('CLR parameter identities preserve position, flags, signature AST and lazy 
     md.rows[8][0][0] = 0x11;
     md.rows[8][1][0] = 2;
     md.add(8, [0, 0, md.string('result')]);
-    md.constantValue({ Parent: 0x08000001, Type: 'int', Value: 42 });
+    md.definitions.constantValue({ Parent: 0x08000001, Type: 'int', Value: 42 });
   });
   const method = module.methodDefinition(0x06000001);
   const parameters = method.parameters;
@@ -88,11 +88,11 @@ test('CLR parameter constants diagnose flag disagreement, duplicate rows and mal
   const cases = [
     ({ md }) => { md.rows[8][0][0] = 0x1000; },
     ({ md }) => {
-      md.constantValue({ Parent: 0x08000001, Type: 'int', Value: 1 });
+      md.definitions.constantValue({ Parent: 0x08000001, Type: 'int', Value: 1 });
       md.rows[8][0][0] = 0;
     },
     ({ md }) => {
-      md.constantValue({ Parent: 0x08000001, Type: 'int', Value: 1 });
+      md.definitions.constantValue({ Parent: 0x08000001, Type: 'int', Value: 1 });
       md.add(11, [...md.rows[11][0]]);
     },
     ({ md }) => {

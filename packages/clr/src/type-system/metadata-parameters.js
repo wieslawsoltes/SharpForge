@@ -41,8 +41,7 @@ export class MetadataParameters {
       }
       const [flags, sequence, nameIndex] = this.#module.row(token);
       if (sequence > parameterCount || rows.has(sequence)) throw invalid('Invalid or duplicate parameter sequence');
-      const name = nameIndex ? this.#module.string(nameIndex) : null;
-      if (name?.length > 4096) throw loadError(LoadErrorCode.LimitExceeded, 'Parameter name length exceeded');
+      const name = this.#module.string(nameIndex, { maxBytes: 4096 });
       rows.set(sequence, { token, flags, name });
       tokens.add(token);
     }
@@ -97,7 +96,8 @@ export class MetadataParameters {
       const constant = this.#constantRows().get(token);
       if (Boolean(flags & 0x1000) !== Boolean(constant)) throw invalid('Param HasDefault flag and Constant row disagree');
       if (!constant) return null;
-      return Object.freeze({ type: constant.type, value: decodeConstant(constant.type, this.#module.blob(constant.blob)) });
+      const bytes = this.#module.blob(constant.blob, { maxBytes: 1024 * 1024 });
+      return Object.freeze({ type: constant.type, value: decodeConstant(constant.type, bytes) });
     });
   }
 }

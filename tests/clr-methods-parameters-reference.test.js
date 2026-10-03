@@ -22,7 +22,8 @@ test('CLR parameter positions, names, flags and raw Constant values match indepe
       assert.equal(parameter.flags, item.flags);
       assert.ok(Object.isFrozen(parameter));
       const constant = parameter.constant;
-      const value = typeof constant?.value === 'bigint' ? String(constant.value) : constant?.value;
+      // The oracle serializes Int64/UInt64 as decimal text; the codec uses Number when exact, otherwise BigInt.
+      const value = constant && [10, 11].includes(constant.type) ? String(constant.value) : constant?.value;
       assert.deepEqual(constant ? { ...constant, value } : null, item.constant);
     }
     assert.notEqual(method.returnParameter, other.methodDefinition(expected.token).returnParameter);
