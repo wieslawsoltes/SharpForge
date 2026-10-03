@@ -115,10 +115,7 @@ export const expressionMethods = {
       const operator = this.take();
       return this.n('RangeExpression', null, operator, this.canStartExpression() ? this.expression(P.Unary) : null);
     }
-    if (kind === 'await' && this.canStartExpression(this.peek()) && this.peek().kind !== '[') {
-      this.feature('Async', token);
-      return this.n('AwaitExpression', this.takeWord('await'), this.expression(P.Unary));
-    }
+    if (kind === 'await' && this.isAwaitExpression()) return this.awaitExpression();
     if (kind === '(' && this.isCast()) {
       const open = this.take(),
         type = this.type(),
@@ -183,7 +180,8 @@ export const expressionMethods = {
     for (;;) {
       const token = this.current,
         kind = token.kind;
-      if (binding && (kind === '++' || kind === '--' || (kind === '!' && !['.', '[', '(', '?'].includes(this.peek().kind)))) return expression;
+      if (binding && (kind === '++' || kind === '--' || kind === '->' || (kind === '!' && !['.', '[', '(', '?'].includes(this.peek().kind))))
+        return expression;
       if (kind === '(') expression = this.n('InvocationExpression', expression, this.argumentList());
       else if (kind === '[') expression = this.n('ElementAccessExpression', expression, this.bracketedArgumentList());
       else if (kind === '.') expression = this.n('SimpleMemberAccessExpression', expression, this.take(), this.simpleName(false));
@@ -193,10 +191,8 @@ export const expressionMethods = {
       else if (kind === '!' && this.isSuppression()) {
         this.feature('NullableReferenceTypes', token);
         expression = this.n('SuppressNullableWarningExpression', expression, this.take());
-      } else if (kind === '?' && this.isConditionalAccess()) {
-        this.feature('NullPropagatingOperator', token);
-        expression = this.n('ConditionalAccessExpression', expression, this.take(), this.conditionalAccessTail(min));
-      } else return expression;
+      } else if (kind === '?' && this.isConditionalAccess()) expression = this.conditionalAccess(expression, min);
+      else return expression;
     }
   },
   primary(min) {
@@ -242,7 +238,7 @@ export const expressionMethods = {
         return this.collectionExpression();
     }
     if (this.isPredefined(token) || this.isId(token)) return this.predefinedOrName();
-    this.error(token, 'CS1525', `Invalid expression term '${token.text}'`);
+    this.error(this.errorAnchor(), 'CS1525', `Invalid expression term '${token.text}'`);
     return this.missingName();
   },
   predefinedOrName() {

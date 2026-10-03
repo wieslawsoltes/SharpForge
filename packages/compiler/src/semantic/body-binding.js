@@ -8,6 +8,7 @@ import { checkImplicitBaseCall, checkConstructorCycles, constructorInitializerKi
 import { BodyBinder } from '../binder/body-binder.js';
 import { isAccessible } from '../binder/accessibility.js';
 import { analyzeDefiniteAssignment } from '../flow/semantic-assignment.js';
+import { analyzeRefSafety } from '../flow/ref-safety.js';
 import { NullableWalker } from '../nullable/walker.js';
 import { isSourceSymbol, isClosedType, containsAwait } from './analysis-helpers.js';
 
@@ -107,6 +108,7 @@ export const BodyBinding = Base =>
             containingType: context.containingType,
           }))
             this.report(context.uri, d.node, d.code, d.args);
+          for (const d of analyzeRefSafety(method, body)) this.report(context.uri, d.node, d.code, d.args);
           if (this.nullableMaps.get(context.uri)?.anyWarnings ?? this.nullableAt(context.uri, 0).warnings)
             for (const d of new NullableWalker(this, context.uri).analyze(method, body))
               this.report(context.uri, d.node, d.code, d.args, 'warning');
@@ -287,6 +289,7 @@ export const BodyBinding = Base =>
           containingType: null,
         }))
           this.report(uri, d.node, d.code, d.args);
+        for (const d of analyzeRefSafety(null, body)) this.report(uri, d.node, d.code, d.args);
         if (this.nullableMaps.get(uri)?.anyWarnings ?? this.nullableAt(uri, 0).warnings)
           for (const d of new NullableWalker(this, uri).analyze(null, body)) this.report(uri, d.node, d.code, d.args, 'warning');
       }

@@ -1,4 +1,4 @@
-import {canonicalType,frameworkType,frameworkAssignable,taskResult,findContracts,enumValue} from '@sharpforge/framework';
+import {frameworkType,taskResult} from '@sharpforge/framework';
 import {BuiltinMap} from '@sharpforge/bytecode';
 import {evaluateConstant,ConstantError} from '../constants.js';
 import {normalize,numeric,assignable,pathOf,typeText} from '../type-utils.js';
@@ -13,7 +13,6 @@ import {BoundBadExpression} from '../bound/nodes.js';
  * `type` is a TypeSymbol. Scopes, parameters and the checked context live in the binder chain; no IR is produced.
  * `infer` and the member queries are side-effect free; `bind*` methods (expressions.js, statements.js) report.
  */
-const framePath=e=>e?.kind==='Name'?e.name:e?.kind==='Member'&&framePath(e.target)?framePath(e.target)+'.'+e.name:null;
 export class MethodBinderContext {
   /** @param compilation the Compilation; @param method the method declaration record being bound. */
   constructor(compilation,method){
@@ -112,48 +111,6 @@ export class MethodBinderContext {
       case 'Binary':if(['==','!=','<','>','<=','>=','&&','||'].includes(node.operator))return 'bool';{const l=this.infer(node.left),r=this.infer(node.right);if(node.operator==='+'&&(l==='string'||r==='string'))return 'string';return l==='double'||r==='double'?'double':l;}
       default:return 'error';
     }
-  }
-  // ---- framework queries (the closed registry) ---------------------------------------------------------------
-  canTarget(node,type){return node?.kind==='New'&&node.type==='<target>'&&type!=='object'||node?.kind==='CollectionExpression'&&(type?.endsWith('[]')||['List','HashSet'].includes(frameworkType(type)?.family));}
-  frameworkReceiver(node){
-    if(node?.kind!=='Member')return null;
-    const path=framePath(node.target),staticType=path&&!this.c.findType(path,this.m)&&frameworkType(path==='string'?'System.String':path);
-    if(staticType)return {type:staticType.name,isStatic:true,node:null};
-    const inferred=this.infer(node.target),type=inferred==='string'?'System.String':canonicalType(inferred);
-    return frameworkType(type)?{type:frameworkType(type).name,isStatic:false,node:node.target}:null;
-  }
-  frameworkProperty(node){
-    const receiver=this.frameworkReceiver(node);if(!receiver)return null;
-    const get=findContracts(receiver.type,'get_'+node.name,receiver.isStatic)[0],set=findContracts(receiver.type,'set_'+node.name,receiver.isStatic)[0];
-    return get||set?{receiver,get,set,type:get?.result??set.parameters[0]}:null;
-  }
-  frameworkConversion(target,source){return target===source||target==='double'&&source==='int'||source==='null'&&!['int','double','bool','void'].includes(target)||frameworkAssignable(target,source);}
-  /** The single user method a method group converts to for a framework delegate type, or null (CS0123 when `report`). */
-  delegateMethod(node,type,report=false){
-    const contract=frameworkType(type);if(contract?.kind!=='delegate')return null;
-    const target=node.kind==='New'&&node.args.length===1?node.args[0]:node;let methods=[],receiver=null;
-    if(target.kind==='Name')methods=this.c.methods.filter(m=>m.name===target.name&&(m.owner===this.m.owner||!m.owner)&&(!this.m.isStatic||m.isStatic));
-    else if(target.kind==='Member'){const owner=this.c.findType(framePath(target.target),this.m);if(owner)methods=owner.methods.filter(m=>m.isStatic&&m.name===target.name);else{receiver=target.target;methods=this.c.findType(this.infer(receiver),this.m)?.methods.filter(m=>!m.isStatic&&m.name===target.name)??[];}}
-    methods=methods.filter(m=>m.parameters.length===contract.parameters.length&&m.parameters.every((p,i)=>this.frameworkConversion(p.type,contract.parameters[i]))&&(contract.result===m.returnType||!['int','double','bool','void'].includes(m.returnType)&&frameworkAssignable(contract.result,m.returnType)));
-    const exact=methods.filter(m=>m.returnType===contract.result);if(exact.length===1)methods=exact;if(methods.length!==1){if(report)this.c.report(node,'CS0123',[target.name??'<expression>',typeText(type)]);return null;}
-    return {method:methods[0],receiver,node:target};
-  }
-  /** Overload selection among framework contracts; reports CS0121/CS1501 when `report` is set. */
-  frameworkCall(node,report=false){
-    const receiver=this.frameworkReceiver(node.target);if(!receiver)return null;const types=node.args.map(x=>this.infer(x));
-    let candidates=findContracts(receiver.type,node.target.name,receiver.isStatic).filter(d=>d.kind!=='constructor'&&d.parameters.length===types.length&&d.parameters.every((t,i)=>this.frameworkConversion(t,types[i])||this.canTarget(node.args[i],t)||!!this.delegateMethod(node.args[i],t)));
-    const exactCandidates=candidates.filter(d=>d.parameters.every((t,i)=>frameworkType(t)?.kind!=='delegate'||this.delegateMethod(node.args[i],t)?.method.returnType===frameworkType(t).result));if(exactCandidates.length)candidates=exactCandidates;
-    const rank=c=>c.parameters.reduce((n,t,i)=>n+(t===types[i]?0:1),0);candidates.sort((a,b)=>rank(a)-rank(b));
-    if(candidates.length>1&&rank(candidates[0])===rank(candidates[1])){if(report)this.c.report(node,'CS0121',[typeText(candidates[0].owner)+'.'+candidates[0].name,typeText(candidates[1].owner)+'.'+candidates[1].name]);return null;}
-    if(!candidates.length){if(report)this.c.report(node,'CS1501',[node.target.name,types.length]);return null;}
-    return {receiver,contract:candidates[0]};
-  }
-  frameworkInfer(node){
-    if(node.kind==='Index')return findContracts(this.infer(node.target),'get_Item',false)[0]?.result;
-    if(node.kind==='Member')return enumValue(framePath(node))?.type??this.frameworkProperty(node)?.type;
-    if(node.kind==='New')return this.c.findType(node.type,this.m)?undefined:frameworkType(node.type)?.name;
-    if(node.kind==='Call')return this.frameworkCall(node)?.contract.result;
-    return undefined;
   }
 }
 /** Re-exported helpers so that the expression and statement binders share one vocabulary. */

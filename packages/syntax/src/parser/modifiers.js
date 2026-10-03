@@ -33,7 +33,8 @@ export const modifierMethods = {
       next = this.tokens[Math.min(index + 1, this.tokens.length - 1)];
     if (kind === 'identifier') return !token.flags && (this.isRequiredModifier(index) || this.isClosedModifier(index) || this.isSafeModifier(index));
     if (!declarationModifiers.has(kind)) return false;
-    if (kind === 'partial' || kind === 'async') return !token.flags && this.canFollowContextualModifier(next);
+    if (kind === 'async') return this.isAsyncModifier(index);
+    if (kind === 'partial') return !token.flags && this.canFollowContextualModifier(next);
     if (kind === 'ref') return next.kind === 'struct' || (next.kind === 'partial' && this.kindAt(index + 2) === 'struct');
     if (kind === 'fixed') return false;
     if (kind === 'new')
