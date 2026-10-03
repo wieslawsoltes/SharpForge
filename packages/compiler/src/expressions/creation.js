@@ -1,30 +1,10 @@
 import {DiagnosticId} from '../diagnostics/codes.js';
 import { Op, BuiltinMap } from '@sharpforge/bytecode';
 import { assignable, typeText } from '../type-utils.js';
+import { emitArrayCreation } from '../codegen/legacy-array-creation.js';
 
 export function emitNewArray(node) {
-  let type = node.type;
-  if (type === 'var[]') {
-    if (!node.values?.length)
-      this.c.report(node, DiagnosticId.CS0826);
-    type = (node.values?.length ? this.infer(node.values[0]) : 'error') + '[]';
-  }
-  type = this.c.resolveType(type, node, false, this.m);
-  const element = type.slice(0, -2);
-  if (node.length)
-    this.checkAssign('int', this.expr(node.length), node.length);
-  else
-    this.emitConstant(node.values?.length ?? 0);
-  this.emit(Op.NEWARR, this.c.constant(element));
-  if (node.values)
-    node.values.forEach((value, i) => {
-      this.emit(Op.DUP);
-      this.emitConstant(i);
-      this.checkAssign(element, this.typedExpr(value, element), value);
-      this.emit(Op.STELEM);
-      this.emit(Op.POP);
-    });
-  return type;
+  return emitArrayCreation(this, node);
 }
 
 export function emitNew(node) {

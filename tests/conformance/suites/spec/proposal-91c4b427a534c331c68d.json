@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-91c4b427a534c331c68d",
+  "kind": "spec",
+  "sourceText": "struct S\n{\n    int x, y;\n\n    // Example 1\n    public S()\n    {\n        // ok. Compiler inserts an assignment of `this = default`.\n    }\n\n    // Example 2\n    public S()\n    {\n        // ok. Compiler inserts an assignment of `y = default`.\n        x = 1;\n    }\n\n    // Example 3\n    public S()\n    {\n        // valid since C# 1.0. Compiler inserts no implicit assignments.\n        x = 1;\n        y = 2;\n    }\n\n    // Example 4\n    public S(bool b)\n    {\n        // ok. Compiler inserts assignment of `this = default`.\n        if (b)\n            x = 1;\n        else\n            y = 2;\n    }\n\n    // Example 5\n    void M() { }\n    public S(bool b)\n    {\n        // ok. Compiler inserts assignment of `y = default`.\n        x = 1;\n        if (b)\n            M();\n\n        y = 2;\n    }\n}",
+  "sourceSHA256": "3400f140d675d5b2c74a54fc4eb91b2699cf80bef27d9a8f04f71d960d448952",
+  "target": "library",
+  "featureId": "csharp-11-0-auto-default-structs",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/auto-default-structs.md",
+    "sha256": "ef94c71a977016911c9fb1ac490aaf2c63d30ee809982111f21ef945f4dda24a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/auto-default-structs.md",
+    "license": "NOASSERTION",
+    "offset": 4203
+  }
+}

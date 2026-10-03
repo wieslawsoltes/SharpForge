@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-7aad941168e0e2b7ca6d",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Derived1 : Base, I<(int notA, int notB)>\n{\n}\nclass Derived2 : Base, I<(int a, int b)>\n{\n}\n",
+  "sourceSHA256": "551b8d25555f1346afe98817949313c208a263e2213a5660d8984d5b39ce39ff",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "ExplicitBaseImplementationNotConsideredImplementationForInterfaceWithDifferentTupleNames_04",
+    "offset": 1073983
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { comp1.ToMetadataReference() })",
+  "options": "(source2, references: new[] { comp1.ToMetadataReference() })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0535",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,24): error CS0535: 'Derived1' does not implement interface member 'I<(int notA, int notB)>.M()'\n                // class Derived1 : Base, I<(int notA, int notB)>\n                Diagnostic(ErrorCode.ERR_UnimplementedInterfaceMember, \"I<(int notA, int notB)>\").WithArguments(\"Derived1\", \"I<(int notA, int notB)>.M()\").WithLocation(2, 24)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-3299c82a303194b4e338",
+  "kind": "spec",
+  "sourceText": "class A\n{\n    override protected void Finalize() {}  // Error\n    public void F()\n    {\n        this.Finalize();                   // Error\n    }\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0249",
+        "severity": "error"
+      },
+      {
+        "code": "CS0245",
+        "severity": "error"
+      },
+      {
+        "code": "CS0465",
+        "severity": "warning"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "5c4cde8a8195d9a57b08d2aea28d49d7d6cddf99fb0a6584b9e5575ecd359adc",
+  "originalSource": "class A\n{\n    override protected void Finalize() {}  // Error\n    public void F()\n    {\n        this.Finalize();                   // Error\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "Finalizers2",
+    "expectedErrors": [
+      "CS0249",
+      "CS0245"
+    ],
+    "expectedWarnings": [
+      "CS0465"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "Finalizers2",
+    "offsetInUnquotedMarkdown": 267743
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9113dacecd0e383b0e2f",
+  "kind": "diagnostics",
+  "sourceText": "class Program\n{\n    static void Main(string[] args) { }\n    void M1(string x)\n    {\n        switch (x)\n        {\n            case \"a\":\n            case \"b\" when Mutate(ref x): // prevents sharing temps\n            case \"c\":\n                break;\n        }\n    }\n    void M2(string x)\n    {\n        switch (x)\n        {\n            case \"a\":\n            case \"b\" when Pure(x):\n            case \"c\":\n                break;\n        }\n    }\n    static bool Mutate(ref string x) { x = null; return false; }\n    static bool Pure(string x) { return false; }\n}",
+  "sourceSHA256": "fab5533ca0935a4c91b5103fee3c34b759395fcedf725cd1a53339366163befe",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "SharingTemps01",
+    "offset": 75220
+  },
+  "langVersion": "default",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe, parseOptions: TestOptions.RegularWithoutRecursivePatterns)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-26f8004ed789e2d1eafe",
+  "kind": "diagnostics",
+  "sourceText": "namespace System;\npublic readonly ref struct ReadOnlySpan<T>;\npublic readonly ref struct Span<T>\n{\n    public static implicit operator ReadOnlySpan<T>(Span<T> span) => default;\n}",
+  "sourceSHA256": "1ed297f12d0234071001a3ef747dc099dee9577a9f0c88c326f1b5a111017b71",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FirstClassSpanTests.cs",
+    "sha256": "99be7ba6d5e067485b6142b5e65214b7e83d1dbf3a681e7b98e309631ef90315",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FirstClassSpanTests.cs",
+    "license": "MIT",
+    "method": "Conversion_Span_ReadOnlySpan_Retargeting",
+    "offset": 120295
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source1, targetFramework: TargetFramework.Mscorlib40)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

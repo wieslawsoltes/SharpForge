@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-87570d9876d60ef24ff9",
+  "kind": "spec",
+  "sourceText": "struct S0 // ok\n{\n    int x;\n    object y;\n}\n\nstruct S1 // error: 'struct' with field initializers must include an explicitly declared constructor\n{\n    int x = 1;\n    object y;\n}\n\nstruct S2\n{\n    int x = 1;\n    object y;\n    public S2() { } // error in C# 10 (valid starting in C# 11): field 'y' must be assigned\n}\n\nstruct S3 // ok\n{\n    int x = 1;\n    object y;\n    public S3() { y = 2; }\n}",
+  "sourceSHA256": "e90bbc3c25653df75fa02cbcad8724fed4c3bda4ceb4dd0458f6e8d62769299e",
+  "target": "library",
+  "featureId": "csharp-10-0-parameterless-struct-constructors",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/parameterless-struct-constructors.md",
+    "sha256": "8449fc73d19ead4997183738e4fb6162c4155a1325207005bfd3751aeb9eadc0",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/parameterless-struct-constructors.md",
+    "license": "NOASSERTION",
+    "offset": 4629
+  }
+}

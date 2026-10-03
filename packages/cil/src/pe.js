@@ -10,3 +10,5 @@ export { PEMachine, CorFlags, PEPlatforms, PEDirectoryNames } from './pe/headers
 export { writeManagedPE as writePE } from './pe/writer.js';
 export { readPortableExecutable as readPE } from './pe/reader.js';
 export { readManagedResources, writeManagedResources, ManifestResourceVisibility } from './pe/managed-resources.js';
+export { writeWin32Resources } from './pe/win32-resources.js';
+export { readWin32Resources } from './pe/win32-reader.js';

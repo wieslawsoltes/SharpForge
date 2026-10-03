@@ -7,47 +7,15 @@
  * An operation on it is late bound: Roslyn emits a call site that asks Microsoft.CSharp.RuntimeBinder for the member,
  * overload, operator or conversion once the actual types are known. The runtime has no such binder and no type
  * information to bind with (no reflection over image classes, no type test on an `object`), so every dynamic
- * operation is SF2200 naming it; nothing is emitted for the program. The operations are the nodes binder/dynamic.js
- * marks `isDynamic`, operators with a dynamic operand, and a conversion from `dynamic` to anything but `object`.
+ * operation is SF2200 naming it; nothing is emitted for the program (bound/dynamic-operations.js says which nodes
+ * are operations).
  */
 import { TypeKind } from '../symbols/types.js';
+import { dynamicOperation, dynamicOperationNames as operationNames } from '../bound/dynamic-operations.js';
+
+export { dynamicOperation };
 
 const isDynamic = type => type?.typeKind === TypeKind.Dynamic;
-
-/** What each late-bound operation is called in the diagnostic. */
-const operationNames = {
-  DynamicMemberAccess: 'a member access',
-  DynamicInvocation: 'an invocation',
-  DynamicElementAccess: 'an element access',
-  DynamicObjectCreation: 'a constructor call',
-  Unary: 'an operator',
-  Binary: 'an operator',
-  Increment: 'an operator',
-  CompoundAssignment: 'an operator',
-  Await: 'an await',
-  Conversion: 'a conversion',
-  ForEach: 'an enumeration',
-  Using: 'a conversion',
-};
-
-/** The name of the late-bound operation a bound node stands for, or null when it is bound statically. */
-export function dynamicOperation(node) {
-  switch (node.kind) {
-    case 'Unary':
-    case 'Increment':
-      return isDynamic(node.operand?.type) ? operationNames[node.kind] : null;
-    case 'Binary':
-      return isDynamic(node.left?.type) || isDynamic(node.right?.type) ? operationNames.Binary : null;
-    case 'CompoundAssignment':
-      return isDynamic(node.left?.type) || isDynamic(node.operation?.type) ? operationNames.CompoundAssignment : null;
-    case 'Conversion': {
-      const isToObject = node.type?.specialType === 'System_Object' || isDynamic(node.type);
-      return isDynamic(node.operand?.type) && !isToObject ? operationNames.Conversion : null;
-    }
-    default:
-      return node.isDynamic ? (operationNames[node.kind] ?? 'an operation') : null;
-  }
-}
 
 const describe = operation => `${operation} on a value of type 'dynamic' (the runtime has no late binder: Microsoft.CSharp.RuntimeBinder)`;
 

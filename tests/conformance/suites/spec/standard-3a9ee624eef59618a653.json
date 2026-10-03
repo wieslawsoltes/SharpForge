@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-3a9ee624eef59618a653",
+  "kind": "spec",
+  "sourceText": "\nclass Control : Component\n{\n    // Unique keys for events\n    static readonly object mouseDownEventKey = new object();\n    static readonly object mouseUpEventKey = new object();\n\n    // Return event handler associated with key\n    protected Delegate GetEventHandler(object key) {...}\n\n    // Add event handler associated with key\n    protected void AddEventHandler(object key, Delegate handler) {...}\n\n    // Remove event handler associated with key\n    protected void RemoveEventHandler(object key, Delegate handler) {...}\n\n    // MouseDown event\n    public event MouseEventHandler MouseDown\n    {\n        add { AddEventHandler(mouseDownEventKey, value); }\n        remove { RemoveEventHandler(mouseDownEventKey, value); }\n    }\n\n    // MouseUp event\n    public event MouseEventHandler MouseUp\n    {\n        add { AddEventHandler(mouseUpEventKey, value); }\n        remove { RemoveEventHandler(mouseUpEventKey, value); }\n    }\n\n    // Invoke the MouseUp event\n    protected void OnMouseUp(MouseEventArgs args)\n    {\n        MouseEventHandler handler;\n        handler = (MouseEventHandler)GetEventHandler(mouseUpEventKey);\n        if (handler != null)\n        {\n            handler(this, args);\n        }\n    }\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "d6d03c935e668cbe15c3cd844eec09cbdc7623afeda699eb1ac9f4fcbee6c756",
+  "originalSource": "\nclass Control : Component\n{\n    // Unique keys for events\n    static readonly object mouseDownEventKey = new object();\n    static readonly object mouseUpEventKey = new object();\n\n    // Return event handler associated with key\n    protected Delegate GetEventHandler(object key) {...}\n\n    // Add event handler associated with key\n    protected void AddEventHandler(object key, Delegate handler) {...}\n\n    // Remove event handler associated with key\n    protected void RemoveEventHandler(object key, Delegate handler) {...}\n\n    // MouseDown event\n    public event MouseEventHandler MouseDown\n    {\n        add { AddEventHandler(mouseDownEventKey, value); }\n        remove { RemoveEventHandler(mouseDownEventKey, value); }\n    }\n\n    // MouseUp event\n    public event MouseEventHandler MouseUp\n    {\n        add { AddEventHandler(mouseUpEventKey, value); }\n        remove { RemoveEventHandler(mouseUpEventKey, value); }\n    }\n\n    // Invoke the MouseUp event\n    protected void OnMouseUp(MouseEventArgs args)\n    {\n        MouseEventHandler handler;\n        handler = (MouseEventHandler)GetEventHandler(mouseUpEventKey);\n        if (handler != null)\n        {\n            handler(this, args);\n        }\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "EventAccessors",
+    "replaceEllipsis": true,
+    "customEllipsisReplacements": [
+      "return null;"
+    ],
+    "additionalFiles": [
+      "Component.cs",
+      "MouseEventHandler.cs",
+      "MouseEventArgs.cs"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "EventAccessors",
+    "offsetInUnquotedMarkdown": 211612
+  }
+}

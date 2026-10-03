@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a96fea526bf8ce4e8f4e",
+  "kind": "diagnostics",
+  "sourceText": "\ninterface I1<T> {}\ninterface I2<T> : I1<T> {}\n\nclass Base<U> where U : I1<(int a, int b)> {}\n\nclass Derived : Base<I2<(int notA, int notB)>> {}\n",
+  "sourceSHA256": "9b2b9aad479f542b16e116bb861aadc453305707880d6d74d57a49eef1d09a5f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "TupleNameDifferencesIgnoredInConstraintWhenNotIdentityConversion2",
+    "offset": 1067907
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

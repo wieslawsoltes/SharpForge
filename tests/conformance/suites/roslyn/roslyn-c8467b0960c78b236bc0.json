@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c8467b0960c78b236bc0",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class Test\n{\n    public static void Main()\n    {\n        // OK\n        new TestRef().M<int>();\n\n        // Not IComparable\n        new TestRef().M<S1>();\n    }\n\n    struct S1{}\n}",
+  "sourceSHA256": "48a886642104fc9cb6414194ac6a34c5f0eda6f415a6fdafff4f5bc9381f194f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/UnmanagedTypeModifierTests.cs",
+    "sha256": "d8425d45c0db1398d31b1b3ec364712c75315d7b1d94690f26bff0e291c3cdc0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/UnmanagedTypeModifierTests.cs",
+    "license": "MIT",
+    "method": "UnmanagedConstraintWithTypeConstraint_IL",
+    "offset": 52185
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { reference })",
+  "options": "(code, references: new[] { reference })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0315",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,23): error CS0315: The type 'Test.S1' cannot be used as type parameter 'T' in the generic type or method 'TestRef.M<T>()'. There is no boxing conversion from 'Test.S1' to 'System.IComparable'.\n                //         new TestRef().M<S1>();\n                Diagnostic(ErrorCode.ERR_GenericConstraintNotSatisfiedValType, \"M<S1>\").WithArguments(\"TestRef.M<T>()\", \"System.IComparable\", \"T\", \"Test.S1\").WithLocation(10, 23)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

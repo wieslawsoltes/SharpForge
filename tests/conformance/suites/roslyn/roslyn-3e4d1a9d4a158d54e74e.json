@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3e4d1a9d4a158d54e74e",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    static void M()\n    {\n        try\n        {\n            M1();\n        }\n        catch when (throw null)\n        {\n            M2();\n        }\n    }\n\n    static void M1(){}\n    static void M2(){}\n}",
+  "sourceSHA256": "04971aa5cf8272573239f3f554a07cfb0c868a52343c03e6d7a2cf6de41f5c75",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTryFinally.cs",
+    "sha256": "3ed12e5626219fd67ecf94aafa47a6210fddedaa37ed37a87d35bcb102b1c856",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTryFinally.cs",
+    "license": "MIT",
+    "method": "WhenWithAlwaysThrowingExpression_03",
+    "offset": 84982
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8115",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,21): error CS8115: A throw expression is not allowed in this context.\n                //         catch when (throw null)\n                Diagnostic(ErrorCode.ERR_ThrowMisplaced, \"throw\").WithLocation(9, 21)\n                ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}
