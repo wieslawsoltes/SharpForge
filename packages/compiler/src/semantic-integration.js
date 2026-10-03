@@ -172,7 +172,7 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
     // ... or the program has async functions: the pipeline binds those after a source-level rewrite into a kickoff and
     // a body, which moves and renames what its binder reports.
     const rewritten = compilation.methods.some(m => m.node?.asyncRole) || legacy.some(d => asyncRewriteCodes.has(d.code));
-    if (!outside.length && !hasReferences && !rewritten && !errors.some(isNamespaceDiagnostic)) return unchanged();
+    if (result.incomplete && !outside.length && !hasReferences && !rewritten && !errors.some(isNamespaceDiagnostic)) return unchanged();
     // Not valid C#: the semantic diagnostics replace the errors the string-typed binder derived from the constructs it does not
     // know. The profile diagnostics stay (the program still names constructs the profile lacks), except a literal-range one
     // that sits on the very literal a C# error is reported for (one diagnostic per literal).

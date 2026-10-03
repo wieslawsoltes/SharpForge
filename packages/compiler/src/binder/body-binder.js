@@ -36,6 +36,7 @@ import { LocalFunctionBinding } from './body/local-functions.js';
 import { JumpBinding } from './jumps.js';
 import { ExceptionBinding } from './exceptions.js';
 import { AnonymousMethodBinding } from './anonymous-methods.js';
+import { languageRules } from './language-rules.js';
 
 const expressionFamilies = [
   ConversionBinding,
@@ -71,6 +72,6 @@ const compose = (base, mixins) => mixins.reduce((composed, mixin) => mixin(compo
  * operator resolvers, type binder, diagnostics sink); `context` says where the body lives: `{ uri, scope,
  * containingType, method, isStatic, returnType, returnRefKind, isAsync, isIterator, isFieldInitializer, parent }`.
  */
-export class BodyBinder extends compose(BinderCore, [...expressionFamilies, ...statementFamilies]) {}
+export class BodyBinder extends compose(BinderCore, [...expressionFamilies, ...statementFamilies, ...languageRules]) {}
 
 export { dumpSemanticTree } from '../bound/semantic-dump.js';
