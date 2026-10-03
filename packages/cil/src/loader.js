@@ -13,7 +13,7 @@ import { decodeInstructions } from './opcodes.js';
 import { emitAssembly } from './emitter.js';
 import { defaultValue } from './analysis.js';
 const profileOpcodes=new Set(['ldftn','unbox.any','ldloca','ldloca.s','add.ovf','sub.ovf','mul.ovf','conv.ovf.i4','nop', 'ldarg.0', 'ldarg.1', 'ldarg.2', 'ldarg.3', 'ldloc.0', 'ldloc.1', 'ldloc.2', 'ldloc.3', 'stloc.0', 'stloc.1', 'stloc.2', 'stloc.3', 'ldarg.s', 'starg.s', 'ldloc.s', 'stloc.s', 'ldnull', 'ldc.i4.m1', 'ldc.i4.0', 'ldc.i4.1', 'ldc.i4.2', 'ldc.i4.3', 'ldc.i4.4', 'ldc.i4.5', 'ldc.i4.6', 'ldc.i4.7', 'ldc.i4.8', 'ldc.i4.s', 'ldc.i4', 'ldc.r8', 'dup', 'pop', 'call', 'ret', 'br.s', 'brfalse.s', 'brtrue.s', 'br', 'brfalse', 'brtrue', 'add', 'sub', 'mul', 'div', 'rem', 'and', 'or', 'xor', 'shl', 'shr', 'neg', 'not', 'conv.i4', 'conv.r8', 'callvirt', 'ldstr', 'newobj', 'castclass', 'throw', 'ldfld', 'stfld', 'ldsfld', 'stsfld', 'box', 'newarr', 'ldlen', 'ldelem', 'stelem', 'conv.u1', 'leave', 'leave.s', 'ceq', 'cgt', 'cgt.un', 'clt', 'clt.un', 'ldarg', 'starg', 'ldloc', 'stloc', 'rethrow', 'endfinally']);
-for(const name of ['arglist','mkrefany','refanyval','refanytype','ldobj','stobj','endfilter','isinst','ldsflda','ldflda','ldelema','readonly.','ldarga','ldarga.s','ldtoken','ldc.i8','ldc.r4','add.ovf.un','sub.ovf.un','mul.ovf.un','div.un','rem.un','shr.un','conv.r.un',...['i1','u1','i2','u2','i4','u4','i8','u8','i','u','r4','r8'].flatMap(type=>['conv.'+type,'conv.ovf.'+type,'conv.ovf.'+type+'.un'])])profileOpcodes.add(name);
+for(const name of ['stelem.ref','arglist','mkrefany','refanyval','refanytype','ldobj','stobj','endfilter','isinst','ldsflda','ldflda','ldelema','readonly.','ldarga','ldarga.s','ldtoken','ldc.i8','ldc.r4','add.ovf.un','sub.ovf.un','mul.ovf.un','div.un','rem.un','shr.un','conv.r.un',...['i1','u1','i2','u2','i4','u4','i8','u8','i','u','r4','r8'].flatMap(type=>['conv.'+type,'conv.ovf.'+type,'conv.ovf.'+type+'.un'])])profileOpcodes.add(name);
 const shortTypes={...numericAliases,'System.Int32':'int','System.Int64':'long','System.Double':'double','System.Boolean':'bool','System.String':'string','System.Object':'object','System.Exception':'Exception','System.Array':'Array'};
 const arithmetic={'add.ovf':'+','sub.ovf':'-','mul.ovf':'*',add:'+',sub:'-',mul:'*',div:'/',rem:'%',and:'&',or:'|',xor:'^',shl:'<<',shr:'>>'};
 function nativeLocal(i,prefix){if(i.name===prefix)return i.operand;if(i.name===prefix+'.s')return i.operand;if(i.name.startsWith(prefix+'.'))return Number(i.name.slice(prefix.length+1));return null;}
@@ -70,11 +70,11 @@ function decodeSpan(span,c) {
   if(span.at(-2)?.name==='ldstr'&&span.at(-1)?.name==='pop'){
     const marker=c.metadata.userString(span.at(-2).operand);
     if(marker==='SharpForge.Formatting.Format4'){
-      const builtin=Builtins.find(b=>b.contract?.owner==='System.String'&&b.contract.name==='Format'&&b.contract.parameters.length===5);
+      const builtin=Builtins.find(b=>b?.contract?.owner==='System.String'&&b.contract.name==='Format'&&b.contract.parameters.length===5);
       return [Op.BUILTIN,builtin.id,builtin.min];
     }
     if(marker==='SharpForge.Formatting.BoxValue'||marker==='SharpForge.Formatting.FormatValue'){
-      const builtin=Builtins.find(b=>b.contract?.owner==='SharpForge.Runtime.Formatting'&&b.contract.name===marker.slice('SharpForge.Formatting.'.length));
+      const builtin=Builtins.find(b=>b?.contract?.owner==='SharpForge.Runtime.Formatting'&&b.contract.name===marker.slice('SharpForge.Formatting.'.length));
       return [Op.BUILTIN,builtin.id,builtin.min];
     }
   }
