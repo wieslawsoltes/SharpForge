@@ -103,3 +103,9 @@ The host `fault(type, message, reference = null)` service and public
 managed exception reference. Callers root that reference during fault creation;
 the runtime's ordinary exception frames retain it afterward. Existing calls
 without a reference keep their previous behavior.
+Compiled source supports direct `StringComparer.Ordinal.Compare` calls. Interface
+locals/conversions, interface `is` expressions and custom comparer implementations
+remain guarded by the current source profile; registered interface metadata does
+not imply that those source constructs execute. Independently assembled CIL
+exercises interface Compare, List.Sort, castclass and isinst without bypassing the
+runtime call or cast paths. The source-negative tests retain the existing guards.

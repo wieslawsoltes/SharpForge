@@ -22,6 +22,13 @@ reference is not a portable collation table and does not qualify an arbitrary
 JavaScript Intl.Collator or a different ICU version. Ordinal behavior is exact
 UTF-16 ordering and independent of this culture backend.
 
+The capture remains unchanged when adapting execution fixtures. Both VM
+platforms consume every ordinal pair and sorted result. Compiled source covers
+direct StringComparer calls; `tests/fixtures/comparers/ordinal.js` independently
+assembles interface Compare/List.Sort, castclass and isinst. Source interface
+locals/conversions, interface `is` and custom implementations retain their
+explicit profile diagnostics instead of being treated as successful execution.
+
 Follow-up #829 needs either a pinned portable collation implementation/data set,
 or an explicitly qualified host provider with declared version, options and
 backend identity. #2619 owns CompareInfo/CompareOptions, #2621 StringComparer
