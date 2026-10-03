@@ -6,6 +6,7 @@ export { typeKey, typeNameText, imageTypeNameText, instantiationTypeName, instan
 
 import { GenericTranslation as SourceGenericTranslation } from './translate-generics.js';
 import { FrameworkGenericTranslation } from './translate-framework-generics.js';
+import { PrimitiveMemberTranslation } from './translate-primitive-members.js';
 
-/** Class mixin for the body translator: constructions of source generics and of framework generics. */
-export const GenericTranslation = Base => FrameworkGenericTranslation(SourceGenericTranslation(Base));
+/** Class mixin for the body translator: constructions of source generics and of framework generics, members of simple types. */
+export const GenericTranslation = Base => PrimitiveMemberTranslation(FrameworkGenericTranslation(SourceGenericTranslation(Base)));

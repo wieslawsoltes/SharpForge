@@ -95,6 +95,10 @@ export const CallBinding = Base =>
     invocation(syntax) {
       const target = this.expression(syntax.expression, { invoked: true });
       const args = this.arguments(syntax.argumentList);
+      return this.invokeBound(target, args, syntax);
+    }
+    /** Invokes an already bound target with bound arguments (binder/dynamic.js takes the late-bound calls from here). */
+    invokeBound(target, args, syntax) {
       // A call that could not be bound still evaluates its arguments: `out` arguments stay assigned for flow analysis.
       const outArguments = () => args.map(a => ({ expression: a, refKind: a.refKind ?? null }));
       if (target.hasErrors) return this.bad(syntax, { args: outArguments() });
@@ -131,6 +135,15 @@ export const CallBinding = Base =>
       this.report(syntax.expression, DiagnosticId.CS0149);
       return this.bad(syntax);
     }
+    /** The extension methods named like the group, innermost namespace first. */
+    extensionScopesOf(group) {
+      if (group.extensionScopes) return group.extensionScopes;
+      const chain = this.typeScope.namespaceChain.map(l => ({
+        namespace: l.namespace,
+        usings: l.scope.usings ? this.d.typeBinder.usingsOf(l.scope) : null,
+      }));
+      return extensionScopes(chain, group.name);
+    }
     call(group, args, syntax) {
       const nameNode = group.nameNode ?? group.syntax,
         anyBad = args.some(a => a.hasErrors);
@@ -140,15 +153,7 @@ export const CallBinding = Base =>
         result = this.d.overloads.resolve(group.methods, args, { typeArguments: group.typeArguments, name: group.name });
       }
       if ((!result || !result.succeeded) && group.receiver && !group.viaType && group.kind === 'MethodGroup') {
-        const scopes =
-          group.extensionScopes ??
-          extensionScopes(
-            this.typeScope.namespaceChain.map(l => ({
-              namespace: l.namespace,
-              usings: l.scope.usings ? this.d.typeBinder.usingsOf(l.scope) : null,
-            })),
-            group.name,
-          );
+        const scopes = this.extensionScopesOf(group);
         if (scopes.length && !anyBad) {
           const ext = resolveExtensionInvocation(group.name, group.receiver, args, scopes, this.d.overloads, {
             typeArguments: group.typeArguments,
@@ -368,7 +373,9 @@ export const CallBinding = Base =>
         if (declared.length > 1) indexers = declared;
       }
       if (!indexers.length) {
-        if (!isSource(type) && type.typeKind !== TypeKind.TypeParameter && !this.d.registryIsComplete(type, 'this[]'))
+        // `object` has no indexer; any other framework type may have one the registry does not list.
+        const isObject = type.specialType === 'System_Object';
+        if (!isObject && !isSource(type) && type.typeKind !== TypeKind.TypeParameter && !this.d.registryIsComplete(type, 'this[]'))
           return this.lenient(syntax);
         this.report(syntax, DiagnosticId.CS0021, [this.display(type)]);
         return this.bad(syntax);
@@ -393,6 +400,7 @@ export const CallBinding = Base =>
         return this.bad(syntax);
       }
       const property = byAccessor.get(r.candidate.definition) ?? byAccessor.get(r.method) ?? indexers[0];
+      if (isSource(property) && this.reportIfInaccessible(property, type, syntax)) return this.bad(syntax);
       return this.node('IndexerAccess', syntax, property.type, {
         receiver: target,
         property,

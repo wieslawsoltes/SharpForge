@@ -18,7 +18,33 @@ const rules = [
     applies: node => node.kind === 'TryStatement' && node.catches.length > 1,
     codes: [DiagnosticId.CS0160, DiagnosticId.CS1017, DiagnosticId.CS1058],
   },
+  {
+    // Labeled break and continue (binder/labeled-jumps.js): the target rules of the pinned preview proposal.
+    text: /\b(?:break|continue)\s+[\p{L}_@]/u,
+    applies: node => (node.kind === 'BreakStatement' || node.kind === 'ContinueStatement') && !!node.label,
+    codes: [DiagnosticId.CS0139, DiagnosticId.CS0157],
+  },
+  {
+    // The `field` keyword next to a member named `field` (binder/field-keyword.js): the warning CS9258.
+    text: /\bfield\b[^]*\bfield\b/,
+    applies: node => node.kind === 'FieldExpression',
+    codes: [DiagnosticId.CS9258],
+  },
+  {
+    // A type named like a contextual keyword (binder/reserved-type-names.js): the rule depends on the language version.
+    text: /\b(?:class|struct|interface|enum|delegate)\b[^;{(]*\b(?:record|required|scoped|file|extension)\b/,
+    applies: node => !!node.identifier && typeDeclarationKinds.has(node.kind) && reservedNames.has(node.identifier.valueText),
+    codes: [DiagnosticId.CS8860, DiagnosticId.CS9029, DiagnosticId.CS9062, DiagnosticId.CS9056, DiagnosticId.CS9306],
+  },
+  {
+    // C# 15 preview `closed` types (binder/preview-features.js): the provisional rules of the pinned proposals.
+    text: /\bclosed\s+(?:class|enum)\b/,
+    applies: node => (node.kind === 'ClassDeclaration' || node.kind === 'EnumDeclaration') && (node.modifiers ?? []).some(token => token.text === 'closed'),
+    codes: [DiagnosticId.SF2203],
+  },
 ];
+const typeDeclarationKinds = new Set(['ClassDeclaration', 'StructDeclaration', 'InterfaceDeclaration', 'EnumDeclaration', 'DelegateDeclaration']);
+const reservedNames = new Set(['record', 'required', 'scoped', 'file', 'extension']);
 
 /** Rules decided from the compilation unit alone: `{ applies(file), codes }`. */
 const unitRules = [

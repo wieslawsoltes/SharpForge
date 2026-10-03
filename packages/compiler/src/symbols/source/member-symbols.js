@@ -104,6 +104,18 @@ export const MemberSymbolBuilder = Base =>
       method.uri = uri;
       method.hasBody = hasBody;
       method.modifierWords = m.list;
+      // Constraints first: `T?` in the signature is Nullable<T> only when T is known to be a value type.
+      if (syntax.constraintClauses?.length) {
+        if (flags & DeclarationModifiers.Override || syntax.explicitInterfaceSpecifier) method.inheritsConstraints = true;
+        bindConstraintClauses(
+          typeParameters,
+          syntax.constraintClauses,
+          t => this.bindType(t, mscope).type,
+          (n, c, a) => this.report(uri, n, c, a),
+          { ownerDisplay: name, useFeature: (node, feature) => this.host.useFeature?.(uri, node, feature) },
+        );
+      } else if (typeParameters.length && (flags & DeclarationModifiers.Override || syntax.explicitInterfaceSpecifier))
+        method.inheritsConstraints = true;
       let returnSyntax = returnTypeSyntax;
       if (returnSyntax?.kind === 'RefType') {
         method.refKind = returnSyntax.readOnlyKeyword ? RefKind.RefReadOnly : RefKind.Ref;
@@ -120,17 +132,6 @@ export const MemberSymbolBuilder = Base =>
         }),
       );
       method.isExtensionMethod = parameters[0]?.isThis === true;
-      if (syntax.constraintClauses?.length) {
-        if (flags & DeclarationModifiers.Override || syntax.explicitInterfaceSpecifier) method.inheritsConstraints = true;
-        bindConstraintClauses(
-          typeParameters,
-          syntax.constraintClauses,
-          t => this.bindType(t, mscope).type,
-          (n, c, a) => this.report(uri, n, c, a),
-          { ownerDisplay: name, useFeature: (node, feature) => this.host.useFeature?.(uri, node, feature) },
-        );
-      } else if (typeParameters.length && (flags & DeclarationModifiers.Override || syntax.explicitInterfaceSpecifier))
-        method.inheritsConstraints = true;
       if (syntax.explicitInterfaceSpecifier) {
         method.explicitInterfaceSyntax = syntax.explicitInterfaceSpecifier.name;
         method.simpleName = name;
@@ -224,7 +225,7 @@ export const MemberSymbolBuilder = Base =>
         case 'ConversionOperatorDeclaration': {
           const implicit = syntax.implicitOrExplicitKeyword.text === 'implicit',
             op = this.method(type, syntax, scope, uri, {
-              name: implicit ? 'op_Implicit' : 'op_Explicit',
+              name: implicit ? 'op_Implicit' : syntax.checkedKeyword ? 'op_CheckedExplicit' : 'op_Explicit',
               kind: MethodKind.Conversion,
               returnTypeSyntax: syntax.type,
             });

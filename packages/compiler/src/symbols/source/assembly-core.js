@@ -88,8 +88,11 @@ export class SourceAssemblyCore {
       modifiers = words(syntax.modifiers),
       arity = syntax.typeParameterList?.parameters.length ?? 0,
       kind = typeKindOf(syntax);
+    // C# 11: a `file` type is declared in the scope of its file, not in the namespace, so only that file finds it.
+    const isFileLocal = modifiers.includes('file') && !container,
+      fileKey = name + '`' + arity;
     const declaration = { syntax, scope, uri, file },
-      siblings = container ? container._nested : namespace.getTypeMembers(),
+      siblings = isFileLocal ? [...(scope.fileTypes?.values() ?? [])] : container ? container._nested : namespace.getTypeMembers(name, arity),
       existing = siblings.find(t => t.name === name && t.arity === arity && t.isSource);
     if (existing) {
       const partial = modifiers.includes('partial'),
@@ -115,7 +118,7 @@ export class SourceAssemblyCore {
         this.report(
           uri,
           syntax.identifier,
-          container ? DiagnosticId.CS0102 : DiagnosticId.CS0101,
+          isFileLocal ? DiagnosticId.CS9071 : container ? DiagnosticId.CS0102 : DiagnosticId.CS0101,
           container
             ? [container.toDisplayString(), name]
             : [name, namespace.isGlobalNamespace ? '<global namespace>' : namespace.toDisplayString()],
@@ -152,10 +155,11 @@ export class SourceAssemblyCore {
     type.typeParameters = Object.freeze(declareTypeParameters(syntax.typeParameterList, type, uri, (n, c, a) => this.report(uri, n, c, a)));
     type._typeArguments = null;
     type.modifierWords = modifiers;
-    if (!existing) {
-      if (container) container._nested.push(type);
-      else namespace.addType(type);
-    } else type.isDuplicate = true;
+    type.isFileLocal = isFileLocal;
+    if (existing) type.isDuplicate = true;
+    else if (isFileLocal) (scope.fileTypes ??= new Map()).set(fileKey, type);
+    else if (container) container._nested.push(type);
+    else namespace.addType(type);
     if (container) type.containingSymbol = container;
     this.types.push(type);
     this.declareNested(syntax, type, declaration, file);

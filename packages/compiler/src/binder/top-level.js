@@ -42,6 +42,15 @@ export function checkTopLevelPlacement(file) {
   return rows;
 }
 
+/**
+ * The first top-level statement of a parsed file that follows a namespace or type declaration (CS8803), or null.
+ * The compilation reports it on every compile path: the execution pipeline runs the statements wherever they stand.
+ */
+export function misplacedTopLevelStatement(file) {
+  if (!file.syntax?.members) return null;
+  return checkTopLevelPlacement(file).find(row => row.code === DiagnosticId.CS8803)?.node ?? null;
+}
+
 /** The names the top-level statements of a file declare at their outermost level: locals and local functions. */
 export function topLevelNamesOf(file) {
   const names = new Set();

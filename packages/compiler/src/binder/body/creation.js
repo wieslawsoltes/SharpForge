@@ -212,7 +212,11 @@ export const CreationBinding = Base =>
           this.report(e, DiagnosticId.CS0846);
           return this.bad(e);
         }
-        return this.convert(this.value(e), elementType, e);
+        // A lambda element is bound against the element type (`Func<int, int>[] a = { x => x + 1 }`).
+        const value = this.value(e),
+          converted = this.convert(value, elementType, e);
+        if (value.form === 'lambda' && !converted.hasErrors) this.finishLambda(value, elementType);
+        return converted;
       });
     }
   };

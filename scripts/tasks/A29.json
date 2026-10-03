@@ -44,6 +44,14 @@
           "args": [
             "scripts/check.js"
           ]
+        },
+        {
+          "command": "node",
+          "args": [
+            "scripts/conformance/static/check-imports.js",
+            "--output",
+            "artifacts/security/static-imports.json"
+          ]
         }
       ]
     },

@@ -34,7 +34,11 @@ export const FlowStatementBinding = Base =>
         const type = collection.type;
         if (syntax.awaitKeyword) reportAwaitOutsideAsync(this, syntax.awaitKeyword);
         if (!collection.hasErrors && type && !type.isErrorType()) {
-          if (syntax.awaitKeyword) {
+          if (type.typeKind === TypeKind.Dynamic) {
+            // The enumerator is found at run time; an asynchronous one cannot be.
+            if (syntax.awaitKeyword) this.report(syntax.expression, DiagnosticId.CS8416);
+            element = syntax.awaitKeyword ? unknown : type;
+          } else if (syntax.awaitKeyword) {
             enumeration = bindAsyncForEach(this, collection, syntax.expression);
             element = enumeration?.elementType ?? unknown;
           } else if (type instanceof ArrayTypeSymbol) element = type.elementType;
@@ -264,7 +268,7 @@ export const FlowStatementBinding = Base =>
           this.report(expressionSyntax, DiagnosticId.CS8151, [this.display(type)]);
         return stmt('Return', syntax, false, { expression: e, isRef: true });
       }
-      const converted = this.convert(e, type, expressionSyntax);
+      const converted = this.convertReturned(e, type, expressionSyntax);
       if (e.form === 'lambda' && !converted.hasErrors) this.finishLambda(e, type);
       return stmt('Return', syntax, false, { expression: converted });
     }

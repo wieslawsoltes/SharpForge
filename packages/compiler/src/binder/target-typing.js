@@ -101,6 +101,7 @@ export const TargetTypedBinding = Base =>
       else if (e.isTargetTypedConditional)
         this.report(e.syntax, DiagnosticId.CS0173, [this.operandDisplay(e.noNaturalType.left), this.operandDisplay(e.noNaturalType.right)]);
       else if (e.isTargetTypedSwitch) this.report(e.syntax.switchKeyword ?? e.syntax, DiagnosticId.CS8506);
+      else if (e.form === 'collection') this.report(e.syntax, DiagnosticId.CS9176);
       else return e;
       return this.bad(e.syntax);
     }

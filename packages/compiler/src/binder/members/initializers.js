@@ -113,7 +113,7 @@ export const InitializerBinding = Base =>
           m => m.kind === SymbolKind.Field || m.kind === SymbolKind.Property,
         );
       if (!found.length) {
-        if (!isSourceSymbol(type) && !this.d.registryIsComplete(type, name)) this.lenient(item);
+        if (!isSourceSymbol(type) && !type.isAnonymousType && !this.d.registryIsComplete(type, name)) this.lenient(item);
         else this.report(item.left, DiagnosticId.CS0117, [this.display(type), name]);
         return null;
       }
