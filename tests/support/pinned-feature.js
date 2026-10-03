@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { loadFixtures, loadPinned } from '../../packages/compiler/test/differential/corpus.js';
+import { loadFixtures, loadPinned } from '../../packages/compiler/test/differential/corpus-store.js';
 import { runFixture } from '../../packages/compiler/test/differential/harness.js';
 import { semanticRow } from '../../packages/compiler/test/differential/tools/semantic-report.mjs';
 

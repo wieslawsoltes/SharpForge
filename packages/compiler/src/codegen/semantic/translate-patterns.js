@@ -129,7 +129,7 @@ export const PatternTranslation = Base =>
       for (const arm of [...node.arms].reverse()) {
         let test = this.patternTest(arm.pattern, governing.input, decision);
         if (arm.when) test = n.logicalAnd(test, this.expression(arm.when));
-        result = n.conditional(test, this.expression(arm.value), result, type);
+        result = this.choose(test, this.expression(arm.value), result, type);
       }
       return n.sequence([...governing.locals, ...decision.locals], [...governing.effects, ...decision.resets], result);
     }

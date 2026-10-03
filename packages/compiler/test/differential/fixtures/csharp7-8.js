@@ -3,5 +3,7 @@
  * registered here so that the corpus lists the two epics once.
  */
 import { fixtures as csharp8Statements } from './csharp8-statements.js';
+import { fixtures as expressionVariables } from './expression-variables.js';
+import { fixtures as indexRange } from './index-range.js';
 
-export const fixtures = [...csharp8Statements];
+export const fixtures = [...csharp8Statements, ...expressionVariables, ...indexRange];
