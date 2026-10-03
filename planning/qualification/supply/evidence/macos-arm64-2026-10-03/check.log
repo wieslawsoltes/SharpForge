@@ -1,0 +1,12 @@
+
+> sharpforge@0.14.0 check
+> node scripts/run.js check
+
+{
+  "areas": 30,
+  "nodeFiles": 84,
+  "browserScripts": 17,
+  "unassigned": 0,
+  "duplicate": 0
+}
+Checked 405 JavaScript modules; 0 syntax errors.

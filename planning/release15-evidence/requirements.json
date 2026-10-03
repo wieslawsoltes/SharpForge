@@ -1,0 +1,811 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "f750562017aca877b10f74184dd7b19e2228ddda",
+  "releaseVersionInSource": "0.14.0",
+  "scope": "0.15 requirement audit of existing code; neither a recovered 0.15 snapshot nor fresh behavioral qualification",
+  "requirements": [
+    {
+      "id": "R015-01",
+      "requirement": "Designer chrome alignment, themes, density and high DPI",
+      "implementation": "partial",
+      "qualification": "unqualified-at-audited-commit",
+      "implementedComponents": [
+        "DesignerChrome and toolbar styles exist; WinUI Button rendering is a separate component."
+      ],
+      "remaining": [
+        "The referenced defect screenshot is not supplied to this audit. No exact visual acceptance for its geometry was executed."
+      ],
+      "sourcePaths": [
+        "apps/studio/designer-chrome.js",
+        "apps/studio/styles/designer.css",
+        "apps/studio/styles/designer-sync.css",
+        "packages/winui/src/style.css"
+      ],
+      "existingTests": [
+        {
+          "command": [
+            "python",
+            "tests/browser_release13_test.py"
+          ],
+          "scope": "Existing designer modes and compact chrome; not the missing defect screenshot or full DPI matrix"
+        }
+      ],
+      "owners": [
+        {
+          "id": "SF-A18-T02",
+          "issue": 254,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/254"
+        },
+        {
+          "id": "SF-A19-T05",
+          "issue": 265,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/265"
+        },
+        {
+          "id": "SF-A16-B01",
+          "issue": 1735,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/1735"
+        }
+      ],
+      "missingAcceptanceTask": "#254: add exact icon/text geometry, focus, density/theme/DPI regression to existing designer owner; #1735 separately owns Button-control text alignment on the design surface and running app",
+      "commandsStatus": "not-run; future reproduction only"
+    },
+    {
+      "id": "R015-02",
+      "requirement": "Per-document Design/Split/Code lifecycle for compatible imported/new/renamed/partial C# files",
+      "implementation": "partial",
+      "qualification": "unqualified-at-audited-commit",
+      "implementedComponents": [
+        "DesignSourceSession supports bounded source/design synchronization and guarded structural edits. Existing editor integration retains undo and rejects conflicts."
+      ],
+      "remaining": [
+        "Studio creates one DesignerTools with one document and sourceSync.session; no independent document-to-designer session map was found in these paths.",
+        "Two documents through docking/reopen, partial-file binding and complete rename/cancellation lifecycle remain unqualified."
+      ],
+      "sourcePaths": [
+        "apps/studio/designer-tools.js",
+        "apps/studio/designer-source-sync.js",
+        "packages/designer/src/csharp-sync.js",
+        "apps/studio/studio.js"
+      ],
+      "existingTests": [
+        {
+          "command": [
+            "node",
+            "--test",
+            "tests/designer-sync13.test.js",
+            "tests/syntax-designer-sync.test.js"
+          ],
+          "scope": "Source region edits and syntax adapter"
+        },
+        {
+          "command": [
+            "python",
+            "tests/browser_release13_test.py"
+          ],
+          "scope": "Single attached source document; no two-document lifecycle claim"
+        }
+      ],
+      "owners": [
+        {
+          "id": "SF-A18-T01",
+          "issue": 411,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/411"
+        },
+        {
+          "id": "SF-A18-T03",
+          "issue": 255,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/255"
+        },
+        {
+          "id": "SF-A18-T04",
+          "issue": 256,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/256"
+        },
+        {
+          "id": "SF-A18-T05",
+          "issue": 257,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/257"
+        },
+        {
+          "id": "SF-A18-T10",
+          "issue": 415,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/415"
+        },
+        {
+          "id": "SF-A18-T12",
+          "issue": 417,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/417"
+        },
+        {
+          "id": "SF-A19-T01",
+          "issue": 261,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/261"
+        },
+        {
+          "id": "SF-A19-T03",
+          "issue": 263,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/263"
+        },
+        {
+          "id": "SF-A19-T05",
+          "issue": 265,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/265"
+        }
+      ],
+      "missingAcceptanceTask": "#411/#261: add two-document design sessions and lifecycle fixtures; #417 owns round-trip qualification",
+      "commandsStatus": "not-run; future reproduction only"
+    },
+    {
+      "id": "R015-03",
+      "requirement": "Two different apps and two instances with isolated state and late-callback routing",
+      "implementation": "absent",
+      "qualification": "unqualified-at-audited-commit",
+      "implementedComponents": [
+        "Independent VM instances are library objects. Worker requests have session/generation checks; one running Studio app has stop/restart and debugger paths."
+      ],
+      "remaining": [
+        "Studio has one runtime WorkerClient, one state.debug and one application/designer attachment; launch paths stop the current session.",
+        "No multi-startup/session orchestration was found. Lower-level VM isolation does not implement the required four concurrent app instances."
+      ],
+      "sourcePaths": [
+        "apps/studio/studio.js",
+        "apps/studio/runtime.worker.js",
+        "packages/runtime/src/index.js"
+      ],
+      "existingTests": [
+        {
+          "command": [
+            "node",
+            "--test",
+            "tests/project-runtime14.test.js",
+            "tests/runtime14.test.js"
+          ],
+          "scope": "Existing one-app launch settings/host epoch boundaries only"
+        }
+      ],
+      "owners": [
+        {
+          "id": "SF-A19-T01",
+          "issue": 261,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/261"
+        },
+        {
+          "id": "SF-A19-T02",
+          "issue": 262,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/262"
+        },
+        {
+          "id": "SF-A19-T06",
+          "issue": 266,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/266"
+        },
+        {
+          "id": "SF-A19-T07",
+          "issue": 267,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/267"
+        },
+        {
+          "id": "SF-A19-T11",
+          "issue": 271,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/271"
+        },
+        {
+          "id": "SF-A12-T10",
+          "issue": 181,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/181"
+        },
+        {
+          "id": "SF-A11-T02",
+          "issue": 159,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/159"
+        },
+        {
+          "id": "SF-A11-T06",
+          "issue": 163,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/163"
+        }
+      ],
+      "missingAcceptanceTask": "#262/#267/#181: two-app/two-instance routing, independent stop/hot reload/grants/debugger and disposal tests",
+      "commandsStatus": "not-run; future reproduction only"
+    },
+    {
+      "id": "R015-04",
+      "requirement": "SIMD, numeric-worker performance and fair shared resource budgets",
+      "implementation": "partial",
+      "qualification": "unqualified-at-audited-commit",
+      "implementedComponents": [
+        "Actual Wasm SIMD and scalar numerical kernels, bounded independent workers, typed-array copies, queue deadlines/cancellation and per-pool metrics exist."
+      ],
+      "remaining": [
+        "No shared fair budget across concurrently running app sessions was found; individual pool bounds are not a global quota.",
+        "Historical timing docs do not qualify this source. No new cold/warm/p95/p99/allocation or simultaneous-app benchmark was run."
+      ],
+      "sourcePaths": [
+        "packages/compute/src/index.js",
+        "packages/compute/src/pool.js",
+        "packages/compute/src/kernel.js",
+        "packages/compute/src/wasm.js",
+        "scripts/benchmark-compute14.js",
+        "scripts/benchmark-release14.js"
+      ],
+      "existingTests": [
+        {
+          "command": [
+            "node",
+            "--test",
+            "tests/compute14.test.js",
+            "tests/runtime14.test.js"
+          ],
+          "scope": "Actual independent Node workers, numeric edge cases, cancellation and bounded pools"
+        },
+        {
+          "command": [
+            "node",
+            "scripts/benchmark-compute14.js"
+          ],
+          "scope": "Future measured scalar/Wasm/worker samples; not native allocation or managed-thread proof"
+        }
+      ],
+      "owners": [
+        {
+          "id": "SF-A10-T01",
+          "issue": 144,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/144"
+        },
+        {
+          "id": "SF-A10-T02",
+          "issue": 145,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/145"
+        },
+        {
+          "id": "SF-A10-T03",
+          "issue": 146,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/146"
+        },
+        {
+          "id": "SF-A10-T05",
+          "issue": 148,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/148"
+        },
+        {
+          "id": "SF-A10-T07",
+          "issue": 150,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/150"
+        },
+        {
+          "id": "SF-A10-T08",
+          "issue": 151,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/151"
+        },
+        {
+          "id": "SF-A10-T09",
+          "issue": 152,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/152"
+        },
+        {
+          "id": "SF-A10-T10",
+          "issue": 153,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/153"
+        },
+        {
+          "id": "SF-A10-T11",
+          "issue": 154,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/154"
+        },
+        {
+          "id": "SF-A10-T12",
+          "issue": 155,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/155"
+        },
+        {
+          "id": "SF-A11-T01",
+          "issue": 158,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/158"
+        },
+        {
+          "id": "SF-A11-T02",
+          "issue": 159,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/159"
+        },
+        {
+          "id": "SF-A11-T06",
+          "issue": 163,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/163"
+        },
+        {
+          "id": "SF-R015-T02",
+          "issue": 424,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/424"
+        }
+      ],
+      "missingAcceptanceTask": "#424: implement/test fair cross-app worker and memory budgets; #155 owns new performance qualification",
+      "commandsStatus": "not-run; future reproduction only"
+    },
+    {
+      "id": "R015-05",
+      "requirement": "Real HTTP, managed WebSocket and per-app network isolation",
+      "implementation": "partial",
+      "qualification": "unqualified-at-audited-commit",
+      "implementedComponents": [
+        "Default-deny exact-origin HTTP/JS WebSocket transport, bounded bodies/queues, actual loopback test servers, cancellation/disposal and managed HttpClient exist."
+      ],
+      "remaining": [
+        "JavaScript WebSocket is not managed System.Net.WebSockets.ClientWebSocket.",
+        "Cross-app revocation, backpressure, provider credentials and remote HTTPS/native-browser behavior are not established by local loopback tests."
+      ],
+      "sourcePaths": [
+        "packages/network/src/index.js",
+        "packages/runtime/src/network.js",
+        "packages/network/README.md"
+      ],
+      "existingTests": [
+        {
+          "command": [
+            "node",
+            "--test",
+            "tests/network14.test.js",
+            "tests/runtime14.test.js"
+          ],
+          "scope": "Loopback HTTP/JS WebSocket and managed HttpClient through existing engines"
+        },
+        {
+          "command": [
+            "python",
+            "tests/browser_release14_test.py"
+          ],
+          "scope": "Existing browser Fetch/worker cases; independent execution still required"
+        }
+      ],
+      "owners": [
+        {
+          "id": "SF-A12-T01",
+          "issue": 172,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/172"
+        },
+        {
+          "id": "SF-A12-T02",
+          "issue": 173,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/173"
+        },
+        {
+          "id": "SF-A12-T03",
+          "issue": 174,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/174"
+        },
+        {
+          "id": "SF-A12-T04",
+          "issue": 175,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/175"
+        },
+        {
+          "id": "SF-A12-T05",
+          "issue": 176,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/176"
+        },
+        {
+          "id": "SF-A12-T10",
+          "issue": 181,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/181"
+        },
+        {
+          "id": "SF-A12-T11",
+          "issue": 182,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/182"
+        },
+        {
+          "id": "SF-A12-T12",
+          "issue": 183,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/183"
+        }
+      ],
+      "missingAcceptanceTask": "#174/#181/#183: managed socket and two-app grant/backpressure/credential leakage fixtures",
+      "commandsStatus": "not-run; future reproduction only"
+    },
+    {
+      "id": "R015-06",
+      "requirement": "WinUI-compatible drawing, actual GPU behavior and fallback lifecycle",
+      "implementation": "partial",
+      "qualification": "unqualified-at-audited-commit",
+      "implementedComponents": [
+        "RenderSurface has actual WebGPU pipeline setup, simple rectangle/line/ellipse primitives, Canvas2D/DOM fallback, backend metrics and device-loss fallback."
+      ],
+      "remaining": [
+        "This limited internal drawing surface does not establish complete WinUI/Composition/optional Win2D contracts, path/text/image fidelity or physical GPU qualification.",
+        "No device, browser, DPI, device-loss or software-versus-hardware run was performed by this audit."
+      ],
+      "sourcePaths": [
+        "packages/winui/src/surface.js",
+        "packages/winui/src/host.js",
+        "packages/winui/src/style-system.js"
+      ],
+      "existingTests": [
+        {
+          "command": [
+            "node",
+            "--test",
+            "tests/winui-runtime.test.js"
+          ],
+          "scope": "Managed WinUI contract/runtime baseline, not GPU device evidence"
+        },
+        {
+          "command": [
+            "python",
+            "tests/browser_release12_test.py"
+          ],
+          "scope": "Existing designer/host rendering scenarios; record actual backend separately"
+        }
+      ],
+      "owners": [
+        {
+          "id": "SF-A17-T01",
+          "issue": 240,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/240"
+        },
+        {
+          "id": "SF-A17-T02",
+          "issue": 241,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/241"
+        },
+        {
+          "id": "SF-A17-T03",
+          "issue": 242,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/242"
+        },
+        {
+          "id": "SF-A17-T04",
+          "issue": 243,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/243"
+        },
+        {
+          "id": "SF-A17-T05",
+          "issue": 244,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/244"
+        },
+        {
+          "id": "SF-A17-T06",
+          "issue": 245,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/245"
+        },
+        {
+          "id": "SF-A17-T09",
+          "issue": 248,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/248"
+        },
+        {
+          "id": "SF-A17-T10",
+          "issue": 249,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/249"
+        },
+        {
+          "id": "SF-A17-T11",
+          "issue": 250,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/250"
+        },
+        {
+          "id": "SF-A17-T12",
+          "issue": 251,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/251"
+        },
+        {
+          "id": "SF-A15-T02",
+          "issue": 214,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/214"
+        },
+        {
+          "id": "SF-A15-T07",
+          "issue": 218,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/218"
+        },
+        {
+          "id": "SF-A15-T08",
+          "issue": 219,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/219"
+        },
+        {
+          "id": "SF-A16-T04",
+          "issue": 229,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/229"
+        },
+        {
+          "id": "SF-A16-T07",
+          "issue": 232,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/232"
+        },
+        {
+          "id": "SF-A16-T09",
+          "issue": 234,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/234"
+        }
+      ],
+      "missingAcceptanceTask": "#245/#248/#250: actual device-loss, no-GPU fallback and physical hardware matrix; A15/A16 retain property/control contracts",
+      "commandsStatus": "not-run; future reproduction only"
+    },
+    {
+      "id": "R015-07",
+      "requirement": "Selected project/entry/dependency closure to app-only downloadable HTML",
+      "implementation": "absent",
+      "qualification": "unqualified-at-audited-commit",
+      "implementedComponents": [
+        "scripts/standalone.js embeds dist/index.html, studio.css, Studio JavaScript and compiler/runtime workers into an IDE HTML file."
+      ],
+      "remaining": [
+        "The existing IDE bundle is not an app-only publisher. No selected-app manifest, closure/trimming or runtime-only emitter was found in the audited source.",
+        "Console, explicit library entry and WinUI app downloads with managed handlers, assets, cancellation and simultaneous export isolation remain missing."
+      ],
+      "sourcePaths": [
+        "scripts/standalone.js",
+        "apps/studio/studio.js"
+      ],
+      "existingTests": [
+        {
+          "command": [
+            "python",
+            "tests/standalone_test.py"
+          ],
+          "scope": "Existing standalone IDE only; must not be relabeled an app-only test"
+        }
+      ],
+      "owners": [
+        {
+          "id": "SF-A26-T01",
+          "issue": 359,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/359"
+        },
+        {
+          "id": "SF-A26-T02",
+          "issue": 360,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/360"
+        },
+        {
+          "id": "SF-A26-T03",
+          "issue": 361,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/361"
+        },
+        {
+          "id": "SF-A26-T04",
+          "issue": 362,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/362"
+        },
+        {
+          "id": "SF-A26-T05",
+          "issue": 363,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/363"
+        },
+        {
+          "id": "SF-A26-T06",
+          "issue": 418,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/418"
+        },
+        {
+          "id": "SF-A26-T07",
+          "issue": 364,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/364"
+        },
+        {
+          "id": "SF-A26-T08",
+          "issue": 365,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/365"
+        },
+        {
+          "id": "SF-A26-T09",
+          "issue": 366,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/366"
+        },
+        {
+          "id": "SF-A26-T10",
+          "issue": 367,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/367"
+        },
+        {
+          "id": "SF-A26-T11",
+          "issue": 368,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/368"
+        },
+        {
+          "id": "SF-A26-T12",
+          "issue": 369,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/369"
+        },
+        {
+          "id": "SF-R015-T03",
+          "issue": 425,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/425"
+        }
+      ],
+      "missingAcceptanceTask": "#359/#361/#368/#369/#425: runtime-only publisher and actual downloaded app scenarios; reuse JS/Wasm profiles without waiting for Rust",
+      "commandsStatus": "not-run; future reproduction only"
+    },
+    {
+      "id": "R015-08",
+      "requirement": "Standalone file/HTTP/HTTPS/offline deployment and secret/CSP isolation",
+      "implementation": "partial",
+      "qualification": "unqualified-at-audited-commit",
+      "implementedComponents": [
+        "Current IDE CSP helpers and project-setting sanitization exist. T08/T09 tooling inventories and signs qualified IDE/package payloads."
+      ],
+      "remaining": [
+        "No app-only output exists to qualify. Existing in-memory loader or loopback tests cannot establish saved-file startup, external HTTPS, storage, native dialogs or hardware support.",
+        "Repository tokens, recovery/editor state and implicit grants must be excluded by the future app publisher."
+      ],
+      "sourcePaths": [
+        "packages/network/src/index.js",
+        "scripts/standalone.js",
+        "scripts/conformance/source-manifest.js",
+        "scripts/conformance/supply/secret-scan.js"
+      ],
+      "existingTests": [
+        {
+          "command": [
+            "node",
+            "--test",
+            "tests/project-runtime14.test.js",
+            "tests/network14.test.js"
+          ],
+          "scope": "Grant/settings sanitization baseline"
+        },
+        {
+          "command": [
+            "python",
+            "tests/standalone_test.py"
+          ],
+          "scope": "Existing IDE injected into about:blank; explicitly does not exercise file URL, HTTP navigation or native persistent storage"
+        }
+      ],
+      "owners": [
+        {
+          "id": "SF-A26-T07",
+          "issue": 364,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/364"
+        },
+        {
+          "id": "SF-A26-T08",
+          "issue": 365,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/365"
+        },
+        {
+          "id": "SF-A26-T12",
+          "issue": 369,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/369"
+        },
+        {
+          "id": "SF-A12-T10",
+          "issue": 181,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/181"
+        },
+        {
+          "id": "SF-A12-T12",
+          "issue": 183,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/183"
+        }
+      ],
+      "missingAcceptanceTask": "#364/#365/#369: real app saved-file/HTTP/HTTPS/offline runs and forbidden-state/token tests",
+      "commandsStatus": "not-run; future reproduction only"
+    },
+    {
+      "id": "R015-09",
+      "requirement": "Provider-neutral remote Git with real PAT/browser auth and safe workspace mutation",
+      "implementation": "absent",
+      "qualification": "unqualified-at-audited-commit",
+      "implementedComponents": [
+        "Project/explorer source handles local/disk/template/ZIP records; local host capability tokens and filesystem undo tokens are not Git credentials."
+      ],
+      "remaining": [
+        "No Git package/provider-neutral transport or real PAT/device/PKCE flow was found in the audited packages and Studio paths.",
+        "Clone/fetch, expected-remote push, staging/commit, dirty-buffer protection and revocation require their existing A25 owners."
+      ],
+      "sourcePaths": [
+        "apps/studio/explorer-commands.js",
+        "apps/studio/studio.js",
+        "packages/workspace/src/index.js"
+      ],
+      "existingTests": [
+        {
+          "command": [
+            "node",
+            "--test",
+            "tests/project-runtime14.test.js"
+          ],
+          "scope": "Project/runtime baseline only; no real Git-provider acceptance test exists here"
+        }
+      ],
+      "owners": [
+        {
+          "id": "SF-A25-T01",
+          "issue": 345,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/345"
+        },
+        {
+          "id": "SF-A25-T02",
+          "issue": 346,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/346"
+        },
+        {
+          "id": "SF-A25-T03",
+          "issue": 347,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/347"
+        },
+        {
+          "id": "SF-A25-T04",
+          "issue": 348,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/348"
+        },
+        {
+          "id": "SF-A25-T05",
+          "issue": 349,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/349"
+        },
+        {
+          "id": "SF-A25-T06",
+          "issue": 350,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/350"
+        },
+        {
+          "id": "SF-A25-T07",
+          "issue": 351,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/351"
+        },
+        {
+          "id": "SF-A25-T08",
+          "issue": 352,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/352"
+        },
+        {
+          "id": "SF-A25-T09",
+          "issue": 353,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/353"
+        },
+        {
+          "id": "SF-A25-T12",
+          "issue": 356,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/356"
+        }
+      ],
+      "missingAcceptanceTask": "#347/#348/#350/#356: actual authorized-provider auth/revocation/cancel/expected-remote negative fixtures; no usable secrets in evidence",
+      "commandsStatus": "not-run; future reproduction only"
+    },
+    {
+      "id": "R015-10",
+      "requirement": "Remote Git \u2192 designer \u2192 concurrent apps \u2192 downloaded apps \u2192 expected-remote push",
+      "implementation": "absent",
+      "qualification": "unqualified-at-audited-commit",
+      "implementedComponents": [
+        "Existing modules provide individual editor/designer/runtime and local I/O building blocks."
+      ],
+      "remaining": [
+        "The integrated acceptance chain has no runnable test in this snapshot and depends on missing Git, multi-app and app-publish contracts.",
+        "Passing unrelated package/core/CI checks does not close this end-to-end requirement."
+      ],
+      "sourcePaths": [
+        "apps/studio/studio.js",
+        "packages/designer/src/index.js",
+        "packages/workspace/src/index.js"
+      ],
+      "existingTests": [],
+      "owners": [
+        {
+          "id": "SF-R015-T04",
+          "issue": 426,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/426"
+        },
+        {
+          "id": "SF-A19-T02",
+          "issue": 262,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/262"
+        },
+        {
+          "id": "SF-A25-T03",
+          "issue": 347,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/347"
+        },
+        {
+          "id": "SF-A26-T12",
+          "issue": 369,
+          "url": "https://github.com/wieslawsoltes/SharpForge/issues/369"
+        }
+      ],
+      "missingAcceptanceTask": "#426: author the full independently reproducible scenario after the existing owners deliver prerequisites",
+      "commandsStatus": "not-run; future reproduction only"
+    }
+  ]
+}
