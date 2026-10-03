@@ -41,6 +41,17 @@ export class Parser {
     this.budgetExhausted = false;
     this.cancellation = options.cancellationToken ?? null;
     this.ticks = 0;
+    // Expression variables declared in initializers and query clauses need C# 7.3 (see csharp73.js).
+    this.restrictedVariables = false;
+    this.memberStart = 0;
+    this.memberErrors = 0;
+    this.statementStart = 0;
+    // The member being parsed: its modifier tokens [memberModifiers, memberModifiersEnd), its name token, and the kind of its type.
+    this.memberModifiers = 0;
+    this.memberModifiersEnd = 0;
+    this.memberName = null;
+    this.containerKind = null;
+    this.accessorBodies = 0;
   }
   get current() {
     return this.tokens[this.i];
@@ -77,8 +88,14 @@ export class Parser {
       length = Math.max(1, token.end - token.start);
     this.diagnostics.push(diagnostic(this.source, start, length, code, message, severity));
   }
-  feature(id, token, end = token) {
-    this.features.push({ id, start: token.start, end: end.end ?? end });
+  /**
+   * Records a use of catalog feature `id` over the tokens `token` to `end`. `modifier` names the modifier that needs
+   * the feature when the diagnostic is "the modifier is not valid for this item" rather than the generic one.
+   */
+  feature(id, token, end = token, modifier) {
+    const use = { id, start: token.start, end: end.end ?? end };
+    if (modifier) use.modifier = modifier;
+    this.features.push(use);
   }
   trivia(pieces) {
     if (!pieces.length) return empty;
@@ -131,7 +148,7 @@ export class Parser {
   }
   id() {
     if (this.isId()) return this.take('IdentifierToken');
-    this.error(this.current, 'CS1001', 'Identifier expected');
+    this.error(this.errorAnchor(), 'CS1001', 'Identifier expected');
     return this.cache.missing('IdentifierToken');
   }
   /** True when the tokens at `index` and `index + 1` touch (no trivia between), as required to merge `>` `>` into `>>`. */

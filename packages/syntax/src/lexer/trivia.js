@@ -53,7 +53,9 @@ function directive(s, hash) {
   const structure = Object.freeze({ isActive: active, ...result.structure }),
     piece = Object.freeze({ kind: result.kind ?? 'BadDirectiveTrivia', start: hash, end, structure });
   if (active || structural.has(word) || result.unknown)
-    for (const [code, message, severity] of result.diagnostics) s.error(hash, stop - hash, code, message, severity);
+    // A directive diagnostic covers the whole directive unless it names its own [offset, length] within it.
+    for (const [code, message, severity, span] of result.diagnostics)
+      s.error(hash + (span?.[0] ?? 0), span?.[1] ?? stop - hash, code, message, severity);
   if (active) for (const id of features) s.feature(id, hash, stop);
   s.directives.push(piece);
   s.checkpoints.push({ start: hash, end, state: (s.lastSnapshot = snapshotDirectiveState(s.state, s.lastSnapshot)) });

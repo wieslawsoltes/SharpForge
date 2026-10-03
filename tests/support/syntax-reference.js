@@ -3,7 +3,7 @@ import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
-import { SyntaxTree, decimalToString, matchesGrammar } from '@sharpforge/syntax';
+import { SyntaxTree, decimalToString, matchesGrammar, boundPhaseCodes, languageFeatures } from '@sharpforge/syntax';
 export const repoRoot = fileURLToPath(new URL('../../', import.meta.url));
 export const fixtureRoot = join(repoRoot, 'packages/syntax/test');
 /** Every file under `directory` (absolute) whose name passes `filter`, sorted. */
@@ -70,8 +70,13 @@ export function compareWithReference(tree, reference, text, limit = 8) {
     path.pop();
   };
   visit(tree.root, reference.tree);
-  const errors = list => list.sort().join(' '), mine = errors(tree.getDiagnostics().filter(d => d.severity === 'error').map(d => d.code)), theirs = errors(reference.diagnostics.filter(d => d[3] === 'error').map(d => d[0]));
-  if (mine !== theirs) problems.push(`error codes [${mine}] != [${theirs}]`);
+  // Error codes and the offsets they are reported at; several errors at one offset are compared as a set.
+  const errors = list => list.sort().join(' ');
+  // Errors Roslyn only reports while binding (boundPhaseCodes) cannot appear in its parse-only diagnostics.
+  const parseErrors = tree.getDiagnostics().filter(d => d.severity === 'error' && !boundPhaseCodes.has(d.code));
+  const mine = errors(parseErrors.map(d => `${d.code}@${d.start}`));
+  const theirs = errors(reference.diagnostics.filter(d => d[3] === 'error').map(d => `${d[0]}@${d[1]}`));
+  if (mine !== theirs) problems.push(`errors [${mine}] != [${theirs}]`);
   return problems;
 }
 /** Parses a fixture with the options Roslyn used for its reference dump and returns { text, tree, reference }. */
@@ -125,4 +130,22 @@ export function assertRecoversLikeRoslyn(relative) {
   const result = assertMatchesRoslyn(relative);
   assert(result.tree.getDiagnostics().length > 0, relative + ' reports errors');
   return result;
+}
+// Every code the feature gate can report: one per catalog row plus CS8703, the 'modifier is not valid in C# n' form.
+const gateCodes = new Set([...languageFeatures.map(row => row.code).filter(Boolean), 'CS8703']);
+/**
+ * Asserts that the language-version diagnostics SharpForge reports for `relative` (a `*.rejected.cs` file under
+ * packages/syntax/test, whose first line names the language version) are the ones Roslyn reports when compiling the
+ * file: the same codes over the same spans. Other Roslyn errors (unbound names and so on) are not syntax and are ignored.
+ * Returns the agreed list as `code@start..end` strings.
+ */
+export function assertGatesMatchRoslyn(relative) {
+  const file = join(fixtureRoot, relative), text = readFileSync(file, 'utf8');
+  assert(existsSync(file + '.roslyn.json'), 'no Roslyn compile diagnostics for ' + relative);
+  const recorded = JSON.parse(readFileSync(file + '.roslyn.json', 'utf8'));
+  const theirs = recorded.errors.filter(entry => gateCodes.has(entry[0])).map(entry => `${entry[0]}@${entry[1]}..${entry[2]}`);
+  const tree = SyntaxTree.parseText(text, { languageVersion: recorded.langversion });
+  const mine = tree.getDiagnostics().filter(d => gateCodes.has(d.code)).map(d => `${d.code}@${d.start}..${d.start + d.length}`);
+  assert.deepEqual(mine, theirs, relative);
+  return mine;
 }

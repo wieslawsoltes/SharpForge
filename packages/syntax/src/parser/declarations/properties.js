@@ -5,20 +5,12 @@
  */
 export const propertyMethods = {
   propertyDeclaration(attributeLists, modifiers, type, explicit, identifier) {
-    let accessors = null,
-      expressionBody = null,
-      initializer = null,
-      semicolon = null;
-    if (this.at('{')) accessors = this.accessorList();
-    if (this.at('=>')) {
-      this.feature('ExpressionBodiedProperty', this.current);
-      expressionBody = this.n('ArrowExpressionClause', this.take(), this.expressionOrRef());
-      semicolon = this.expect(';');
-    } else if (this.at('=')) {
-      this.feature('AutoPropertyInitializer', this.current);
-      initializer = this.n('EqualsValueClause', this.take(), this.variableInitializer());
-      semicolon = this.expect(';');
-    } else semicolon = this.match(';');
+    const bodies = this.accessorBodies,
+      nameToken = this.memberName,
+      accessors = this.at('{') ? this.accessorList() : null,
+      tail = this.i,
+      [expressionBody, initializer, semicolon] = this.propertyTail();
+    this.accessorMemberForm(nameToken, bodies, expressionBody ? tail + 1 : -1);
     return this.n('PropertyDeclaration', attributeLists, modifiers, type, explicit, identifier, accessors, expressionBody, initializer, semicolon);
   }
 };

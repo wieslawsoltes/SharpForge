@@ -3,18 +3,21 @@ import { overloadableOperators } from '../../lexer/operators.js';
 export const operatorMethods = {
   indexerDeclaration(attributeLists, modifiers, type, explicit) {
     const keyword = this.take(),
-      parameters = this.bracketedParameterList();
+      parameters = this.bracketedParameterList(),
+      bodies = this.accessorBodies,
+      nameToken = this.memberName,
+      tail = this.i;
     let accessors = null,
       expressionBody = null,
       semicolon = null;
     if (this.at('=>')) {
-      this.feature('ExpressionBodiedIndexer', this.current);
-      expressionBody = this.n('ArrowExpressionClause', this.take(), this.expressionOrRef());
+      expressionBody = this.arrowExpressionClause('ExpressionBodiedIndexer');
       semicolon = this.expect(';');
     } else if (this.at('{')) {
       accessors = this.accessorList();
       semicolon = this.match(';');
     } else this.error(this.current, 'CS1514', '{ expected');
+    this.accessorMemberForm(nameToken, bodies, expressionBody ? tail + 1 : -1);
     return this.n('IndexerDeclaration', attributeLists, modifiers, type, explicit, keyword, parameters, accessors, expressionBody, semicolon);
   },
   operatorDeclaration(attributeLists, modifiers, returnType, explicit) {
@@ -24,6 +27,7 @@ export const operatorMethods = {
       start = this.current;
     let token;
     if (checkedKeyword) this.feature('CheckedUserDefinedOperators', this.tokens[this.i - 1]);
+    this.memberForm(start, true);
     if (overloadableOperators.has(operator.text)) {
       token = this.takeOperator(operator);
       this.operatorFeatures(operator.text, modifiers, start);
