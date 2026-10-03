@@ -65,7 +65,7 @@ test('A03 resource emission rejects invalid names, duplicates, visibility, paylo
 });
 
 test('A03 resource reading bounds the length prefix, blob and directory before returning bytes', () => {
-  const compiled = compile({ debugFormat: 'none' });
+  const compiled = compile({ portablePdb: false });
   const pe = readPE(compiled.assembly);
   assert.throws(() => readManagedResources(pe, { maxResourceBytes: 1 }), /size limit/);
   assert.throws(() => readManagedResources(pe, { maxResourceBytes: -1 }), /size limit/);
