@@ -10,7 +10,6 @@ import { formatMessage } from './diagnostics/codes.js';
 function placementDiagnostics(file) {
   const statement = misplacedTopLevelStatement(file);
   if (!statement) return [];
-  if (globalThis.process?.env?.SF_LOG_8803) globalThis.__sf8803(file.source.text);
   const { start, end } = statement.span;
   return [diagnostic(file.source, start, Math.max(1, end - start), 'CS8803', formatMessage('CS8803', []), 'error')];
 }
@@ -25,7 +24,9 @@ export function syntaxFeatureChecks(files, options) {
     catch { continue; } // Compilation reports invalid options once with CS1617.
     const uses = [...(file.features ?? [])];
     const firstStatement = file.root.statements?.[0];
-    if (firstStatement && !uses.some(use=>use.id==='TopLevelStatements')) uses.push({id:'TopLevelStatements',start:firstStatement.start,end:firstStatement.end});
+    if (firstStatement && !uses.some(use => use.id === 'TopLevelStatements')) {
+      uses.push({ id: 'TopLevelStatements', start: firstStatement.start, end: firstStatement.end });
+    }
     if (file.syntax && selected.number < newestLanguageVersion) {
       const recorded = new Set(uses.map(use => use.id));
       uses.push(...collectSyntaxFeatures(file.syntax).filter(use => !recorded.has(use.id)));
