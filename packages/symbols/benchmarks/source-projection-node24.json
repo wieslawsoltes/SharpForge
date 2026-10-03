@@ -1,0 +1,70 @@
+{
+  "protocol": {
+    "script": "tests/benchmarks/source-projection.mjs",
+    "beforeCommand": "node scripts/limited.js node --input-type=module < ../SharpForge-a13-source-projection/tests/benchmarks/source-projection.mjs",
+    "afterCommand": "node scripts/limited.js node tests/benchmarks/source-projection.mjs",
+    "testConcurrency": 1,
+    "parallelRuns": 1,
+    "environment": "Exclusive team validation slot; other agents could perform code-only work.",
+    "beforeProjectionBlob": "907c725f83f23d04b606193ad3ce1c8d4e767696",
+    "allocationMeasurement": "Not measured; the implementation removes repeated filtered-scope arrays and builds one method-token map per call."
+  },
+  "before": {
+    "revision": "93666bd7",
+    "node": "v24.21.0",
+    "host": "darwin arm64 Apple M3 Pro",
+    "samples": 15,
+    "cases": [
+      {
+        "methods": 250,
+        "scopes": 500,
+        "locals": 2500,
+        "medianMs": 0.7627080000000035,
+        "p95Ms": 1.1689169999999933
+      },
+      {
+        "methods": 1000,
+        "scopes": 2000,
+        "locals": 10000,
+        "medianMs": 2.1414589999999976,
+        "p95Ms": 12.320542000000017
+      },
+      {
+        "methods": 4000,
+        "scopes": 8000,
+        "locals": 40000,
+        "medianMs": 38.81383299999993,
+        "p95Ms": 40.50933300000003
+      }
+    ]
+  },
+  "after": {
+    "revision": "9b868a60",
+    "node": "v24.21.0",
+    "host": "darwin arm64 Apple M3 Pro",
+    "samples": 15,
+    "cases": [
+      {
+        "methods": 250,
+        "scopes": 500,
+        "locals": 2500,
+        "medianMs": 0.07566700000000992,
+        "p95Ms": 0.6667500000000075
+      },
+      {
+        "methods": 1000,
+        "scopes": 2000,
+        "locals": 10000,
+        "medianMs": 0.25116700000000947,
+        "p95Ms": 2.6936249999999973
+      },
+      {
+        "methods": 4000,
+        "scopes": 8000,
+        "locals": 40000,
+        "medianMs": 0.8669579999999826,
+        "p95Ms": 1.932292000000018
+      }
+    ]
+  }
+}

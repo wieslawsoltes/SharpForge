@@ -29,7 +29,7 @@ const instanceFields = type =>
 export const structInstanceFields = instanceFields;
 /**
  * Layout cycles: a struct that (transitively) contains an instance field of its own type.
- * @returns [{code:DiagnosticId.CS0523,args:[field display,field type display],field}]
+ * @returns [{code:'CS0523',args:[field display,field type display],field}]
  */
 export function checkStructLayout(type) {
   const results = [];

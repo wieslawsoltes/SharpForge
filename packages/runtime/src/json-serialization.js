@@ -1,4 +1,5 @@
 import {frameworkType} from '@sharpforge/framework';
+import {dictionaryEntries} from '@sharpforge/bcl-collections';
 import {ManagedFault, isReference} from './heap.js';
 import {JSON_DEPTH_LIMIT, JSON_NODE_LIMIT} from './json-limits.js';
 import {escapeJsonStrings} from './json-escaping.js';
@@ -40,10 +41,8 @@ export function serializeJson(platform, input) {
       }
       if (type?.family === 'Dictionary' && type.key === 'string') {
         const result = Object.create(null);
-        const storage = platform.get(value, '$data');
-        const data = storage ? platform.heap.get(storage).data : [];
-        for (let index = 0; index < platform.get(value, '$count'); index++) {
-          result[platform.native(data[index * 2])] = visit(data[index * 2 + 1], depth + 1);
+        for (const [key, item] of dictionaryEntries(platform, value)) {
+          result[platform.native(key)] = visit(item, depth + 1);
         }
         return result;
       }

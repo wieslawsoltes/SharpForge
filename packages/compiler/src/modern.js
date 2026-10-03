@@ -3,11 +3,10 @@ import {typeText} from './type-utils.js';
 import {Op,Binary} from '@sharpforge/bytecode';
 import {canonicalType,frameworkType,findContracts} from '@sharpforge/framework';
 import {languageVersion as parseLangVersion} from '@sharpforge/syntax';
+import {directlyLabeledStatement} from './binder/labeled-jumps.js';
 
 /** Feature selection is not a claim that all features of that C# version are implemented. LangVersion spellings are parsed by @sharpforge/syntax. */
 export function languageVersion(value='14') { return parseLangVersion(value); }
-export function hasBackingField(n){if(!n||typeof n!=='object')return false;if(n.kind==='Name'&&n.name==='field'&&!n.escaped)return true;return Object.entries(n).some(([k,v])=>!['source','tokens','symbol'].includes(k)&&(Array.isArray(v)?v.some(hasBackingField):hasBackingField(v)));}
-export function rewriteBackingField(n,name,report){if(!n||typeof n!=='object')return n;if(n.kind==='Name'&&n.name==='field'&&!n.escaped)return {...n,name};if(n.kind==='Variable'&&n.name==='field')report(n);return Object.fromEntries(Object.entries(n).map(([k,v])=>[k,['source','tokens','symbol'].includes(k)?v:Array.isArray(v)?v.map(x=>rewriteBackingField(x,name,report)):v&&typeof v==='object'?rewriteBackingField(v,name,report):v]));}
 
 /** Modern-syntax layer (class mixin, composed in method-compiler.js). */
 export const ModernCompiler=Base=>class ModernCompiler extends Base {
@@ -28,11 +27,7 @@ export const ModernCompiler=Base=>class ModernCompiler extends Base {
       return super.expr(node);
     }
     stmt(node){
-      if(node?.kind==='Labeled'){
-        const labels=[];let body=node;while(body.kind==='Labeled'){if(labels.includes(body.label)||this.loops.some(l=>l.labels?.includes(body.label)))this.c.report(body,DiagnosticId.CS0140,[body.label]);labels.push(body.label);body=body.body;}
-        if(!['While','Do','For','Foreach','Switch'].includes(body.kind))this.c.report(node,DiagnosticId.SF2142);
-        return this.stmt({...body,labels});
-      }
+      if(node?.kind==='Labeled')return this.stmt(directlyLabeledStatement(node,this.loops,(at,code,args)=>this.c.report(at,code,args)));
       if(node?.kind==='ExpressionStatement'&&node.expression.kind==='Assignment'&&['ConditionalMember','ConditionalIndex'].includes(node.expression.left.kind)){
         this.c.requireFeature(node,14,'Null-conditional assignment');const assignment=node.expression,left=assignment.left,type=this.infer(left.target),slot=this.temp(type),base={uri:node.uri,start:node.start,end:node.end,debugHidden:true};
         if(['int','double','bool','void'].includes(type))this.c.report(left,DiagnosticId.CS0023,['?',typeText(type)]);
