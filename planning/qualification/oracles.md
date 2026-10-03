@@ -123,3 +123,37 @@ locked content hashes. Reference behavior follows Microsoft's
 [SARIF error logs](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/errors-warnings#errorlog),
 [NuGet locked restore](https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#locking-dependencies),
 and [Windows App SDK self-contained deployment](https://learn.microsoft.com/en-us/windows/apps/package-and-deploy/self-contained-deploy/deploy-self-contained-apps).
+
+## Recorded qualification
+
+Implementation commit `8552b2798dc7ed01570e547879f68471f7cef712` was qualified
+from a clean checkout on macOS arm64, Darwin 25.6.0, Node v24.21.0 with the exact
+pinned SDK/compiler/runtime/reference hashes. Commands:
+
+```sh
+node --test --test-reporter=tap tests/conformance/oracle/*.test.js
+node scripts/conformance/oracle/qualify.js --verify
+node scripts/conformance/oracle/verify-expected.js
+node scripts/conformance/clean-checkout.js
+```
+
+All 12 regression tests passed. All 11 Roslyn and 8 CoreCLR observations passed;
+the 19 expected JSON files reproduced byte-for-byte on a second native run.
+WinUI was explicitly unsupported on this host. The restored WinUI C# source also
+compiled with the actual WinUI/WinRT reference DLLs, which verifies managed type
+binding only and is not native WinUI execution qualification. Actionlint 1.7.8
+accepted the isolated workflow. No root package registration or product runtime
+was changed.
+
+The committed-run report is at
+`artifacts/results/oracles/darwin-arm64/report.json`, SHA-256
+`70b21599f70779e32c09151e690de05e2894299123ef1cdd21e1be748addfe84`.
+It records `dirty: false`. Measured CoreCLR cold process latency was 33.90 ms;
+repeated-process p95/p99 were 34.43/49.35 ms. Each allocation sample measured
+152,000 managed bytes with the fixture correctness gate passing. These are local
+observations, not performance budgets or a claim about other machines.
+
+Hosted Linux/Windows CoreCLR expected outputs and native WinUI execution remain
+pending. Their first verification uploads actual candidates while failing on
+missing baselines. The parent task must stay open until those outputs have been
+reviewed, committed, and passed in the independently pinned hosted jobs.
