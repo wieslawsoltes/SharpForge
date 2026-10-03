@@ -105,7 +105,9 @@ then decodes trusted text; bound documents expose their selected `encoding`.
 explicit source client. Both the transport and permission callback are injected;
 construction does not fetch. `await client.fetch(document, url, { signal })`
 returns a `SourceStatus` result with verified bytes/text only after its raw-byte
-SHA-1/256/384/512 checksum matches. For example, allowlist an exact HTTPS origin
+SHA-1/256/384/512 checksum matches. Verification prefers WebCrypto; SHA-1/256
+also have a portable fallback, while SHA-384/512 require WebCrypto. For example,
+allowlist an exact HTTPS origin
 and have the host's existing origin-grant service answer
 `requestPermission({ origin, url, purpose, signal })`. Permission must return
 literal `true` before every request, including redirects. Requests omit credentials,

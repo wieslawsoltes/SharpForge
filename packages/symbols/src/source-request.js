@@ -19,7 +19,7 @@ export function sourceRequest(signal, timeoutMs, reportCleanupError) {
     abort() {
       controller.abort(sourceFailure(SourceStatus.disposed, 'Source client disposed'));
     },
-    wait(action) {
+    wait(action, onAbortedValue) {
       check();
       return new Promise((resolve, reject) => {
         const aborted = () => reject(controller.signal.reason);
@@ -29,7 +29,16 @@ export function sourceRequest(signal, timeoutMs, reportCleanupError) {
             check();
             return action();
           })
-          .then(resolve, reject)
+          .then((value) => {
+            if (controller.signal.aborted) {
+              try {
+                onAbortedValue?.(value);
+              } catch (error) {
+                reportCleanupError(error);
+              }
+              reject(controller.signal.reason);
+            } else resolve(value);
+          }, reject)
           .finally(() => {
             controller.signal.removeEventListener('abort', aborted);
           });
