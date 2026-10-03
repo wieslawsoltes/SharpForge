@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "runtime-f55955da152ea01a2556",
+  "kind": "runtime",
+  "sourceText": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\nusing System;\n\n\nnamespace BoxTest_tailjump_cs\n{\n    public class Test\n    {\n        protected object Fibonacci(object num, object flag)\n        {\n            if ((bool)flag)\n                return Fibonacci2(num, flag);\n            if (((int)num % 2) == 0)\n                return Fibonacci2(num, flag);\n            return Fibonacci2(num, flag);\n        }\n\n        protected object Fibonacci2(object num, object flag)\n        {\n            int N;\n            if ((int)num <= 1)\n                N = (int)num;\n            else\n                N = (int)Fibonacci((int)num - 2, false) + (int)Fibonacci((int)num - 1, flag);\n            if ((bool)flag)\n                Console.Write(N.ToString() + \" \");\n            return N;\n        }\n\n        \n        \n        public static void Main()\n        {\n            new Test().Fibonacci(20, true);\n            Console.WriteLine();\n            Console.WriteLine(\"*** PASSED ***\");\n        }\n    }\n}\n",
+  "language": "csharp",
+  "unsupported": [
+    "Requires exactly one static int test entry point"
+  ],
+  "opcodeFamilies": [],
+  "sourceSHA256": "f2883a8a9db23ba61ac4a791753f61ab80d2a0b51a690f9bd4e23b5a7a350185",
+  "originalSource": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\nusing System;\nusing Xunit;\n\nnamespace BoxTest_tailjump_cs\n{\n    public class Test\n    {\n        protected object Fibonacci(object num, object flag)\n        {\n            if ((bool)flag)\n                return Fibonacci2(num, flag);\n            if (((int)num % 2) == 0)\n                return Fibonacci2(num, flag);\n            return Fibonacci2(num, flag);\n        }\n\n        protected object Fibonacci2(object num, object flag)\n        {\n            int N;\n            if ((int)num <= 1)\n                N = (int)num;\n            else\n                N = (int)Fibonacci((int)num - 2, false) + (int)Fibonacci((int)num - 1, flag);\n            if ((bool)flag)\n                Console.Write(N.ToString() + \" \");\n            return N;\n        }\n\n        [Fact]\n        [OuterLoop]\n        public static void TestEntryPoint()\n        {\n            new Test().Fibonacci(20, true);\n            Console.WriteLine();\n            Console.WriteLine(\"*** PASSED ***\");\n        }\n    }\n}\n",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/tests/JIT/Methodical/Boxing/misc/tailjump.cs",
+    "sha256": "f7c90d14db53ac13dc43d939405599d9d0b81685bcd167167928a2e308e209d4",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/tests/JIT/Methodical/Boxing/misc/tailjump.cs",
+    "license": "MIT"
+  },
+  "namespace": "JIT",
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack"
+  ],
+  "expected": {
+    "exitCode": 100
+  },
+  "adaptation": "Remove Fact/OuterLoop discovery attributes and Xunit using; rename TestEntryPoint to Main. Test body unchanged."
+}

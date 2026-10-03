@@ -168,3 +168,20 @@ the existing CIL inspector. Pure PE key generation accepts headers from any PE;
 native PE, MSF PDB, ELF, Mach-O, compressed-store files and pointer-file payloads
 are not supported by this lookup client and cannot be returned as verified.
 Ordinary tests use captured dotnet-symbol keys and injected transports offline.
+
+`await resolveSources(symbols, { sources, fetcher, signal })` tries workspace
+sources (a Map or name-keyed object), embedded bytes, then an explicitly supplied
+source client in that order. Missing, mismatched or undecodable candidates fall
+through. Each document reports `status`, `verified`, `provenance` (`workspace`,
+`embedded`, `source-link` or null), `attempts`, and verified `bytes`/`text` only.
+Results reuse the debugger binding shape (`documents`, `sources`, `sequencePoints`,
+`methods`); unverified documents have no sequence points. Even an injected fetcher's
+claimed verified bytes are checked again at the resolution boundary.
+
+Resolution is sequential, abortable and bounded by `maxDocuments` (10,000),
+`maxBytes` per candidate (16 MiB), `maxTotalBytes` across attempted verification
+(64 MiB), and `timeoutMs` for the whole operation (30 seconds). Remote response
+allocation is separately bounded by the source client's own limit before the
+resolution verification budget is applied. `fallbackEncoding` controls decoding;
+`mapping` passes options to `sourceLinkUrl`. Cancellation and timeout leave pending
+documents unverified. The caller owns the supplied fetch client's lifetime.

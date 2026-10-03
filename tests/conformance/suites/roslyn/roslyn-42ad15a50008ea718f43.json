@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-42ad15a50008ea718f43",
+  "kind": "diagnostics",
+  "sourceText": "\npublic interface I0 : I1<string>\n{\n}",
+  "sourceSHA256": "4b2c6e2aedd0e3dd70cf3adb141b4d7c04e9fca18e4ff8dd5c5af359f588a4e2",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Nullable.cs",
+    "sha256": "32f83728594c49ce50d234006777d1af71d49e0e2cd7cc5c8982c5b2ac7fa714",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Nullable.cs",
+    "license": "MIT",
+    "method": "SynthesizeTupleElementNamesAttributeBasedOnInterfacesToEmit_IndirectInterfaces",
+    "offset": 10048
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { getReference(lib1_comp), getReference(valueTuple_comp) })",
+  "options": "(lib2_source, references: new[] { getReference(lib1_comp), getReference(valueTuple_comp) })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8137",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,18): error CS8137: Cannot define a class or member that utilizes tuples because the compiler required type 'System.Runtime.CompilerServices.TupleElementNamesAttribute' cannot be found. Are you missing a reference?\n                // public interface I0 : I1<string>\n                Diagnostic(ErrorCode.ERR_TupleElementNamesAttributeMissing, \"I0\").WithArguments(\"System.Runtime.CompilerServices.TupleElementNamesAttribute\").WithLocation(2, 18)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

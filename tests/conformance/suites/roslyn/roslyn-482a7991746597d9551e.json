@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-482a7991746597d9551e",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass Program\n{\n    static void Main()\n    {\n        const long x = 0xFFFFFFFFFFFFFFFL;\n        const IntPtr y = checked((IntPtr)x);\n        Console.WriteLine(y);\n    }\n}",
+  "sourceSHA256": "8fcd51849457499f59a9195b67c5165359d46996ae88612acd7e541a3c2b1bfc",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "sha256": "a7e54d8ce96a59177276eba5d802097c4cc4b2dee81cb9034e7dd309ad524cb8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "license": "MIT",
+    "method": "ConstantConversions_01",
+    "offset": 93455
+  },
+  "langVersion": "9",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe, parseOptions: TestOptions.Regular9, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0133",
+        "severity": "error"
+      },
+      {
+        "code": "CS8778",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,26): error CS0133: The expression being assigned to 'y' must be constant\n                //         const IntPtr y = checked((IntPtr)x);\n                Diagnostic(ErrorCode.ERR_NotConstantExpression, \"checked((IntPtr)x)\").WithArguments(\"y\").WithLocation(7, 26),\n                // (7,34): warning CS8778: Constant value '1152921504606846975' may overflow 'nint' at runtime (use 'unchecked' syntax to override)\n                //         const IntPtr y = checked((IntPtr)x);\n                Diagnostic(ErrorCode.WRN_ConstOutOfRangeChecked, \"(IntPtr)x\").WithArguments(\"1152921504606846975\", \"nint\").WithLocation(7, 34)",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

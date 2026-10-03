@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-2b4cabb95c28ec2cfbdd",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class Test\n{\n    public static void Main()\n    {\n        new TestRef().M<int>();\n        new TestRef().M<string>();\n    }\n}",
+  "sourceSHA256": "a6fd4013b3c3f8229c4f7e3c74630f085825107cfb9a378a0a4b60ddb7da7ba9",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/UnmanagedTypeModifierTests.cs",
+    "sha256": "d8425d45c0db1398d31b1b3ec364712c75315d7b1d94690f26bff0e291c3cdc0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/UnmanagedTypeModifierTests.cs",
+    "license": "MIT",
+    "method": "UnmanagedConstraintWithoutValueTypeConstraint_IL",
+    "offset": 49843
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { reference })",
+  "options": "(code, references: new[] { reference })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0570",
+        "severity": "error"
+      },
+      {
+        "code": "CS0311",
+        "severity": "error"
+      },
+      {
+        "code": "CS0570",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,23): error CS0570: 'T' is not supported by the language\n                //         new TestRef().M<int>();\n                Diagnostic(ErrorCode.ERR_BindToBogus, \"M<int>\").WithArguments(\"T\").WithLocation(6, 23),\n                // (7,23): error CS0311: The type 'string' cannot be used as type parameter 'T' in the generic type or method 'TestRef.M<T>()'. There is no implicit reference conversion from 'string' to 'System.ValueType'.\n                //         new TestRef().M<string>();\n                Diagnostic(ErrorCode.ERR_GenericConstraintNotSatisfiedRefType, \"M<string>\").WithArguments(\"TestRef.M<T>()\", \"System.ValueType\", \"T\", \"string\").WithLocation(7, 23),\n                // (7,23): error CS0570: 'T' is not supported by the language\n                //         new TestRef().M<string>();\n                Diagnostic(ErrorCode.ERR_BindToBogus, \"M<string>\").WithArguments(\"T\").WithLocation(7, 23)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

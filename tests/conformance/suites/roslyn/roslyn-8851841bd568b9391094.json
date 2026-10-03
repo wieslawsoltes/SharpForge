@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8851841bd568b9391094",
+  "kind": "diagnostics",
+  "sourceText": "\nstruct S\n{\n    int _x;\n    public S(int x)\n    {\n        var s = this;\n        void Local()\n        {\n            s._x = _x;\n        }\n        Local();\n    }\n}",
+  "sourceSHA256": "0bafbac24056f61ce3a273cd92d8eaafb8e56616a7b2883c591bbd846bc24797",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "UnassignedInStruct",
+    "offset": 19182
+  },
+  "langVersion": "10",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular10)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1673",
+        "severity": "error"
+      },
+      {
+        "code": "CS0188",
+        "severity": "error"
+      },
+      {
+        "code": "CS9015",
+        "severity": "error"
+      },
+      {
+        "code": "CS0171",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,20): error CS1673: Anonymous methods, lambda expressions, query expressions, and local functions inside structs cannot access instance members of 'this'. Consider copying 'this' to a local variable outside the anonymous method, lambda expression, query expression, or local function and using the local instead.\n                //             s._x = _x;\n                Diagnostic(ErrorCode.ERR_ThisStructNotInAnonMeth, \"_x\").WithLocation(10, 20),\n                // (7,17): error CS0188: The 'this' object cannot be used before all of its fields have been assigned. Consider updating to language version '11.0' to auto-default the unassigned fields.\n                //         var s = this;\n                Diagnostic(ErrorCode.ERR_UseDefViolationThisUnsupportedVersion, \"this\").WithArguments(\"11.0\").WithLocation(7, 17),\n                // (12,9): error CS9015: Use of possibly unassigned field '_x'. Consider updating to language version '11.0' to auto-default the field.\n                //         Local();\n                Diagnostic(ErrorCode.ERR_UseDefViolationFieldUnsupportedVersion, \"Local()\").WithArguments(\"_x\", \"11.0\").WithLocation(12, 9),\n                // (5,12): error CS0171: Field 'S._x' must be fully assigned before control is returned to the caller. Consider updating to language version '11.0' to auto-default the field.\n                //     public S(int x)\n                Diagnostic(ErrorCode.ERR_UnassignedThisUnsupportedVersion, \"S\").WithArguments(\"S._x\", \"11.0\").WithLocation(5, 12)\n                ",
+  "unsupported": []
+}

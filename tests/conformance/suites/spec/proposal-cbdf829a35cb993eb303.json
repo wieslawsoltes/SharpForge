@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-cbdf829a35cb993eb303",
+  "kind": "spec",
+  "sourceText": "void WriteInt(int i = 0) {\n  Console.Write(i);\n}\n\nvar writeInt = WriteInt; // Inferred as Action<int>\nDoAction(writeInt, 3); // Ok, writeInt is an Action<int>\n\nvoid DoAction(Action<int> a, int p) {\n  a(p);\n}\n\nint Count(params int[] xs) {\n  return xs.Length;\n}\nvar counter = Count; // Inferred as Func<int[], int>\nDoFunction(counter, 3); // Ok, counter is a Func<int[], int>\n\nint DoFunction(Func<int[], int> f, int p) {\n  return f(new[] { p });\n}",
+  "sourceSHA256": "e265852e7de1dd265dab8503c2fc2496698fee9dca9c7339562654d5653421c6",
+  "target": "library",
+  "featureId": "csharp-12-0-lambda-optional-parameters",
+  "langVersion": "12.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "sha256": "663ca72db438d27be03c24504ddcfa11032e0e1acc2a7f996cff23c10f67dc6e",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "license": "NOASSERTION",
+    "offset": 4880
+  }
+}

@@ -284,3 +284,9 @@ Kind: bcl14; family: jsonSerializer.
 
 - `static string Serialize(object)`
 
+Default string escaping is pinned to System.Text.Json on .NET 10.0.5, including
+non-ASCII text, HTML-sensitive characters, dictionary keys and invalid UTF-16
+surrogate replacement. Serialization retains its existing one-million UTF-16
+unit output budget; escape expansion beyond that budget raises `JsonException`.
+Numeric formatting remains a separate open part of [#838](https://github.com/wieslawsoltes/SharpForge/issues/838).
+Custom encoders and arbitrary object reflection are not supported.

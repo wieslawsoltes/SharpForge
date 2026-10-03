@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-48c347f17c62f112960a",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass A : System.Attribute\n{\n    public A() { }\n    public A(IntPtr value) { }\n    public IntPtr[] Value;\n}\n[A(1)]\n[A(Value = default)]\nclass B\n{\n}",
+  "sourceSHA256": "c278ec5dc1e2e1be5c1457d30e5a0d8f1c82d18182408df8e3ac3f1abc29c29b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "sha256": "a7e54d8ce96a59177276eba5d802097c4cc4b2dee81cb9034e7dd309ad524cb8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "license": "MIT",
+    "method": "AttributeValue_02",
+    "offset": 130803
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source0, parseOptions: TestOptions.Regular9, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0181",
+        "severity": "error"
+      },
+      {
+        "code": "CS0655",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,2): error CS0181: Attribute constructor parameter 'value' has type 'nint', which is not a valid attribute parameter type\n                // [A(1)]\n                Diagnostic(ErrorCode.ERR_BadAttributeParamType, \"A\").WithArguments(\"value\", \"nint\").WithLocation(8, 2),\n                // (9,4): error CS0655: 'Value' is not a valid named attribute argument because it is not a valid attribute parameter type\n                // [A(Value = default)]\n                Diagnostic(ErrorCode.ERR_BadNamedAttributeArgumentType, \"Value\").WithArguments(\"Value\").WithLocation(9, 4)",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

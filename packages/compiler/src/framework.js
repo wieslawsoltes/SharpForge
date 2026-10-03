@@ -1,13 +1,8 @@
 import {canonicalType,frameworkType,frameworkAssignable,findContracts,enumValue,enumTypes,eventsFor} from '@sharpforge/framework';
 import {Op,frameworkBuiltin} from '@sharpforge/bytecode';
 import {typeText} from './type-utils.js';
-/** The dotted path of a name or member-access chain, or null. The receiver's path is computed once per level. */
-function pathOf(node) {
-  if (node?.kind === 'Name') return node.name;
-  if (node?.kind !== 'Member') return null;
-  const target = pathOf(node.target);
-  return target ? target + '.' + node.name : null;
-}
+import {emitValueArgument} from './codegen/value-arguments.js';
+import {memberPath as pathOf} from './binder/member-path.js';
 /** Closed framework binder layer (class mixin, composed in method-compiler.js); ordinary user members retain precedence. */
 export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
     frameworkReceiver(node) {
@@ -28,7 +23,7 @@ export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
       const target=node.kind==='New'&&node.args.length===1?node.args[0]:node;
       let methods=[],receiver=null;
       if(target.kind==='Name'){
-        methods=this.c.methods.filter(m=>m.name===target.name&&(m.owner===this.m.owner||!m.owner)&&(!this.m.isStatic||m.isStatic));
+        methods=this.c.methodIndex.named(target.name).filter(m=>(m.owner===this.m.owner||!m.owner)&&(!this.m.isStatic||m.isStatic));
       } else if(target.kind==='Member') {
         const owner=this.c.findType(pathOf(target.target),this.m);
         if(owner)methods=owner.methods.filter(m=>m.isStatic&&m.name===target.name);
@@ -61,10 +56,7 @@ export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
       return canonicalType(type);
     }
     emitFrameworkArguments(args,parameters,boxPrimitives=false) {
-      args.forEach((arg,i)=>{
-        if(frameworkType(parameters[i])?.kind==='delegate'&&this.delegateMethod(arg,parameters[i]))this.emitDelegate(arg,parameters[i]);
-        else {const type=this.typedExpr(arg,parameters[i]);this.checkAssign(parameters[i],type,arg);if(boxPrimitives&&parameters[i]==='object'&&['int','double','bool'].includes(type)){this.emitConstant(type);this.emitContract(findContracts('SharpForge.Runtime.Formatting','BoxValue',true)[0]);}}
-      });
+      args.forEach((arg,i)=>emitValueArgument(this,arg,parameters[i],boxPrimitives));
     }
     emitContract(contract) {
       const b=frameworkBuiltin(contract);this.emit(Op.BUILTIN,b.id,b.min);return contract.result;

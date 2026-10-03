@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e5f6ec96e672e52f9782",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public void M1()\n    {\n#pragma warning disable CS0168, CS0219\n        int a1;\n        int b1, b2, b3;\n        int c1, c2, c3, c4;\n        C[] d1, d2, d3, d4 = { null, null };\n        int e1 = 1, e2, e3, e4 = 10;\n        int f1, f2, f3, ;\n        int g1, g2, g3, g4 =;\n#pragma warning restore CS0168, CS0219\n    }\n}\n",
+  "sourceSHA256": "04c66ec60b3b7940b1a952833a6341c6140079068318f0ccc767fdc296f137c8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "sha256": "eb33d60956503b30bec29f823f9033347fac98a9029a70b139e6a57a3ad1abef",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "VariableDeclarationCSharp",
+    "offset": 35924
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1001",
+        "severity": "error"
+      },
+      {
+        "code": "CS1525",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                Diagnostic(ErrorCode.ERR_IdentifierExpected, \";\").WithLocation(12, 25),\n                Diagnostic(ErrorCode.ERR_InvalidExprTerm, \";\").WithArguments(\";\").WithLocation(13, 29)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

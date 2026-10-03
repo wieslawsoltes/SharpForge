@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-e0eb5edd1f42bfd3a5a2",
+  "kind": "spec",
+  "sourceText": "int E(int j = 13) {\n  return 11;\n}\n\nint F(int k = 0) {\n  return 3;\n}\n\nint G(int x = 13) {\n  return 4;\n}\n\nvar a = (int i = 13) => 1;\n// internal delegate int b'(int arg = 13);\nvar b = (int i = 0) => 2;\n// internal delegate int c'(int arg = 0);\nvar c = (int i = 13) => 3;\n// internal delegate int b'(int arg = 13);\nvar d = (int c = 13) => 1;\n// internal delegate int b'(int arg = 13);\n\nvar e = E;\n// internal delegate int b'(int arg = 13);\nvar f = F;\n// internal delegate int c'(int arg = 0);\nvar g = G;\n// internal delegate int b'(int arg = 13);\n\na = b; // Not allowed\na = c; // Allowed\na = d; // Allowed\nc = e; // Allowed\ne = f; // Not Allowed\nb = f; // Allowed\ne = g; // Allowed\n\nd = (int c = 10) => 2; // Warning: default parameter value is different between new lambda\n                       // and synthesized delegate b'. We won't do implicit conversion",
+  "sourceSHA256": "d221927ddaa066583fa1bb354ca393346e43ba30c246db86b22b42a8afc034d6",
+  "target": "library",
+  "featureId": "csharp-12-0-lambda-optional-parameters",
+  "langVersion": "12.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "sha256": "663ca72db438d27be03c24504ddcfa11032e0e1acc2a7f996cff23c10f67dc6e",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "license": "NOASSERTION",
+    "offset": 10917
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-54712758810c0ef1d5cc",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass A\n{\n    int x = 1, y = -1, count;\n\n    public A()\n    {\n        count = 0;\n    }\n\n    public A(int n)\n    {\n        count = n;\n    }\n}\n\nclass B : A\n{\n    double sqrt2 = Math.Sqrt(2.0);\n    ArrayList items = new ArrayList(100);\n    int max;\n\n    public B(): this(100)\n    {\n        items.Add(\"default\");\n    }\n\n    public B(int n) : base(n - 1)\n    {\n        max = n;\n    }\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": [
+      "CS0414",
+      "CS0414"
+    ]
+  },
+  "sourceSHA256": "2334bdb50194e136b333b2e7c87bf1e67ccdb20fdd8b14e76cb0750ca03ffcf7",
+  "originalSource": "class A\n{\n    int x = 1, y = -1, count;\n\n    public A()\n    {\n        count = 0;\n    }\n\n    public A(int n)\n    {\n        count = n;\n    }\n}\n\nclass B : A\n{\n    double sqrt2 = Math.Sqrt(2.0);\n    ArrayList items = new ArrayList(100);\n    int max;\n\n    public B(): this(100)\n    {\n        items.Add(\"default\");\n    }\n\n    public B(int n) : base(n - 1)\n    {\n        max = n;\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "ConstructorExecution2",
+    "ignoredWarnings": [
+      "CS0414",
+      "CS0414"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "ConstructorExecution2",
+    "offsetInUnquotedMarkdown": 254584
+  }
+}

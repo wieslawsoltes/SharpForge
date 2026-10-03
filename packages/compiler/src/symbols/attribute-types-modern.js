@@ -16,6 +16,9 @@ export function modernAttributes(T) {
     // C# 9
     [compilerServices, 'ModuleInitializerAttribute', T.Method, false, [[]], []],
     [compilerServices, 'SkipLocalsInitAttribute', skipLocalsInit, false, [[]], []],
+    // The `params string[]` constructors are not declared: one member name per attribute, and the attributes may repeat.
+    [codeAnalysis, 'MemberNotNullAttribute', T.Method | T.Property, true, [[['member', 's']]], []],
+    [codeAnalysis, 'MemberNotNullWhenAttribute', T.Method | T.Property, true, [[['returnValue', 'b'], ['member', 's']]], []],
     // C# 10
     [compilerServices, 'AsyncMethodBuilderAttribute', types | T.Method, false, [[['builderType', 't']]], []],
     [compilerServices, 'InterpolatedStringHandlerAttribute', T.Class | T.Struct, false, [[]], []],

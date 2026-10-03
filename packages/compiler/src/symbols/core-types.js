@@ -12,6 +12,7 @@ import { Accessibility } from './types.js';
 import { declareSpanTypes } from './span-types.js';
 import { declareIndexRangeTypes } from './index-range-types.js';
 import { declareAsyncEnumeration } from './async-enumeration.js';
+import { declareAwaiterTypes } from './awaiter-types.js';
 import { declareExpressionTreeTypes } from './expression-tree-types.js';
 import { declareCoreTypeRelations } from './core-type-relations.js';
 import { declareExceptionTypes } from './exception-types.js';
@@ -82,6 +83,7 @@ export class CoreTypes {
     this.valueTask = bridge.coreType('System_Threading_Tasks_ValueTask');
     this.valueTaskT = bridge.coreType('System_Threading_Tasks_ValueTask_T');
     declareAsyncEnumeration(this);
+    declareAwaiterTypes(this);
     declareExpressionTreeTypes(this);
     this.type = bridge.coreType('System_Type');
     this.attribute = bridge.coreType('System_Attribute');

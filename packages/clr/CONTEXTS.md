@@ -9,9 +9,82 @@ ownership is linear, with 100,000 relevant rows, 128 nesting levels and 4,096 na
 characters as limits. Malformed tokens use `SFCLR005`, invalid nested ownership
 uses `SFCLR012` / TypeLoadException, and resource limits use `SFCLR007`.
 
-This API is metadata identity only. Base/interface graphs, class/value/enum
-classification, constructed types, layout and dispatch are subsequent batches;
-no reference assembly is loaded and no method body is decoded by identity lookup.
+This API is metadata identity only. Graph loading uses the separate explicit
+context service below; no reference assembly is loaded and no method body is
+decoded by identity lookup. Layout and dispatch remain later batches.
+
+`context.types.load(module, token, {signal})` explicitly completes a TypeDef or
+TypeRef's inheritance graph on that same canonical descriptor. `find(module,
+fullName)` adds indexed exact-name lookup. Loaded descriptors expose `kind`,
+`baseType`, transitive `interfaces`, enum `underlyingType` and `isLoaded`. Type
+identity remains stable before/after loading and across explicit assembly sharing.
+
+Hosts register BCL identities through `context.types.defineIntrinsic(fullName,
+{kind, baseType, interfaces})` and retrieve them with `intrinsic(fullName)`.
+The context's optional `typeOptions.resolveExternalType({module, assemblyName,
+namespace, name, signal})` hook explicitly maps AssemblyRefs to loaded descriptors;
+a null result falls back to assembly resolution. There is no automatic framework
+facade binding. This host seam does not replace A04's managed framework registry.
+Async host callbacks use `request.resolveType(module, token)` for dependent type
+loads, preserving cycle ancestry across awaits. Direct recursive calls through
+`context.types.load` start an independent operation and are unsupported inside
+a resolver callback when they depend on the same unresolved type.
+
+Inheritance/interface and TypeRef cycles produce TypeLoadException. Type loading
+checks cancellation and configurable `maxDepth` (default 128, maximum 512) and
+`maxMetadataRows` (default 100,000). Metadata definition identity retains its own
+documented bounds. Relevant metadata rows are indexed in linear time; inherited
+interface output is materialized once per completed definition. Concurrent first
+loads may repeat work but publish the same descriptor.
+
+Generic inheritance/constraints, exported-type forwarding,
+multi-module TypeRefs, layout/dispatch/assignability and full verification remain
+separate batches. Unsupported resolution forms produce explicit TypeLoad errors.
+The independent native graph fixture covers ordinary C# base/interfaces, nested
+ownership, structs, enums and circular metadata rejection. Regenerate with
+`node packages/clr/tools/capture-type-graphs.mjs tests/fixtures/clr-type-graphs`.
+
+`context.types.szArray(element)` and `array(element, rank)` canonicalize vectors
+and multidimensional arrays separately, including the distinct rank-one `[*]`
+form. Rank is 1–32. Arrays expose their System.Array base, registered base
+interfaces, and vectors add five instantiated generic collection interfaces.
+Their synthetic `Get`, `Set`, `Address` and `.ctor` descriptors expose return and
+parameter types plus the declaring array. `resolveArrayMethod` matches an exact
+signature; `types.resolveArrayMember(module, memberRefToken)` decodes array
+TypeSpec/MemberRef metadata, including multidimensional lower-bound constructors.
+Jagged vectors expose length constructors for each consecutive vector level.
+
+`pointer(element)`, `byRef(element)` and `functionPointer(signature)` preserve
+canonical structural identity. Function pointer signatures use TypeDesc return
+and parameter types, convention/receiver flags, generic arity and vararg sentinel
+(-1 when absent). Nested byrefs and void/TypedReference array elements fail explicitly. Type
+construction is bounded by `maxConstructedTypes` (default 100,000) and 4,096 display
+name characters. TypeSpecs preserve element/rank identity; bounds are constructor
+arguments, not part of runtime array type identity.
+Element constructions retain their element's defining module/context, including
+when another context explicitly shares that element type.
+
+Hosts explicitly register System.Array, primitive and generic collection types.
+`defineIntrinsic` accepts `genericArity` for those host contracts; generic
+parameters and array interface instantiations have canonical identities. General
+metadata generic instantiation, constraints and modifiers remain unsupported with
+TypeLoad diagnostics. These APIs describe types/members; they do not execute
+array methods, allocate instances, perform assignability or generate layout.
+
+The constructed-type oracle compares native .NET array interfaces and synthetic
+method/constructor signatures. Regenerate with `node
+packages/clr/tools/capture-constructed-types.mjs tests/fixtures/clr-constructed-types`.
+The .NET 10.0.5 / SDK 10.0.201 capture covers five array shapes and an actual
+C# multidimensional-array constructor MemberRef. Thirteen focused type tests
+passed on Node 24.21.0. This qualifies the JavaScript metadata service; array
+execution on source VM, direct CIL and Rust/Wasm is not part of this batch.
+
+`node packages/clr/tools/benchmark-constructed-types.mjs` measured cold vector
+descriptor construction at median 12.083 µs / p95 33.667 µs, and cached lookup at
+median 0.0926 µs / p95 0.1092 µs on Apple M3 Pro, darwin-arm64, Node 24.21.0.
+The machine is shared, allocations were not measured, and no equivalent previous
+implementation exists. Construction materializes its interface and method
+signatures once; cached identities avoid rebuilding them.
 
 `AssemblyLoadSession` owns a Default context and a registry of custom contexts.
 No process-global assembly registry is used. `createContext` accepts a name,

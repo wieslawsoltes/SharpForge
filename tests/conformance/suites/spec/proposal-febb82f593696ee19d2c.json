@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-febb82f593696ee19d2c",
+  "kind": "spec",
+  "sourceText": "namespace System;\n\n// Excludes Assembly, GenericParameter, Module, Parameter, ReturnValue\n[AttributeUsage(AttributeTargets.Class\n                | AttributeTargets.Constructor\n                | AttributeTargets.Delegate\n                | AttributeTargets.Enum\n                | AttributeTargets.Event\n                | AttributeTargets.Field\n                | AttributeTargets.Interface\n                | AttributeTargets.Method\n                | AttributeTargets.Property\n                | AttributeTargets.Struct,\n                AllowMultiple = false,\n                Inherited = false)]\npublic class BinaryCompatOnlyAttribute : Attribute {}",
+  "sourceSHA256": "1ecb834e4a106db0fac760a32ca3c57c7ad790e791158e103cbf9ce395a80cf6",
+  "target": "library",
+  "featureId": "csharp-13-0-overload-resolution-priority",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/overload-resolution-priority.md",
+    "sha256": "3ae409649aa5fc38d1b6a2d6a156f641c7c72feba0e394ce5765522d2322138b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/overload-resolution-priority.md",
+    "license": "NOASSERTION",
+    "offset": 16845
+  }
+}

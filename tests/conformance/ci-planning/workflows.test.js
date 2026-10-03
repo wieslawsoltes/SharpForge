@@ -2,15 +2,34 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 const read = name => readFileSync(new URL(`../../../.github/workflows/${name}.yml`, import.meta.url), 'utf8');
+const fullQualification = "inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group'"
+  + " || contains(github.event.pull_request.labels.*.name, 'full-ci')";
 
-test('ordinary core retains shared checks/build and chooses impacted tests or one full fallback', () => {
+test('ordinary core retains shared checks/build and stages all Node tests for explicit qualification', () => {
   const core = read('ci').split('  core-platforms:')[0];
   assert.match(core, /run: npm run check/);
   assert.match(core, /run: npm run build/);
-  assert.match(core, /run: npm test\n        if: steps.impact.outputs.mode != 'impacted'/);
-  assert.match(core, /if: steps.impact.outputs.mode == 'impacted'/);
+  assert.equal(core.match(/run: npm test\n        if: ([^\n]+)/)?.[1], fullQualification);
+  assert.match(core, /run: node scripts\/conformance\/ci-planning\/impact.js\n/);
+  assert.doesNotMatch(core, /impact.js --run/);
   assert.match(core, /detect.js --check-quarantine/);
+  assert.match(core, /run: node scripts\/planning\/review-gates.js/);
+  assert.match(core, /run: node scripts\/conformance\/clean-checkout.js/);
+  assert.match(core, /run: node scripts\/conformance\/release-policy\/preview.js --record/);
   assert.doesNotMatch(core, /strategy:/);
+});
+test('full qualification runs Node manifests once per platform and retains Python regressions', () => {
+  const workflow = read('ci');
+  const core = workflow.split('  core-platforms:')[0];
+  const platforms = workflow.split('  core-platforms:')[1].split('  build:')[0];
+  const manifest = JSON.parse(readFileSync(new URL('../../manifests/A29.json', import.meta.url), 'utf8'));
+  assert.ok(manifest.nodeGlobs.includes('tests/conformance/**/*.test.js'));
+  assert.equal(platforms.match(/\n    if: ([^\n]+)/)?.[1], fullQualification);
+  for (const job of [core, platforms]) {
+    assert.equal((job.match(/run: npm test\n/g) ?? []).length, 1);
+    assert.doesNotMatch(job, /node --test/);
+    assert.match(job, /python -m unittest discover -s tests\/conformance\/browser -p 'test_\*.py'/);
+  }
 });
 test('specialized qualification is dispatched explicitly without full-ci or queue fanout', () => {
   const names = ['browser-matrix', 'coverage', 'differential', 'gc-trace', 'inventory', 'merge-queue',

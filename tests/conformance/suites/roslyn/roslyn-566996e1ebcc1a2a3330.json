@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-566996e1ebcc1a2a3330",
+  "kind": "diagnostics",
+  "sourceText": "\nstruct B\n{\n    public static implicit operator B(C c) => default;\n}\n\nclass C\n{\n    static void M1(C c1)\n    {\n        int x;\n        B b = c1?.M1(x = 0) ?? c1.M2(x = 0);\n        x.ToString();\n    }\n\n    C M1(object obj) { return this; }\n    B M2(object obj) { return this; }\n}\n",
+  "sourceSHA256": "d20c0afc34fc474adf6fa1a2a8d7fd8f10feeeffb67912823ad580d8c989942f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "NullCoalescing_CondAccess_UserDefinedConv_05",
+    "offset": 150651
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

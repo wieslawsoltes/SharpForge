@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-b0ff8104b4aa7bef7d22",
+  "kind": "spec",
+  "sourceText": "// API Proposal issue: https://github.com/dotnet/runtime/issues/50601\nnamespace System.Runtime.CompilerServices\n{\n    [InterpolatedStringHandler]\n    public ref struct DefaultInterpolatedStringHandler\n    {\n        public DefaultInterpolatedStringHandler(int literalLength, int formattedCount);\n        public string ToStringAndClear();\n\n        public void AppendLiteral(string value);\n\n        public void AppendFormatted<T>(T value);\n        public void AppendFormatted<T>(T value, string? format);\n        public void AppendFormatted<T>(T value, int alignment);\n        public void AppendFormatted<T>(T value, int alignment, string? format);\n\n        public void AppendFormatted(ReadOnlySpan<char> value);\n        public void AppendFormatted(ReadOnlySpan<char> value, int alignment = 0, string? format = null);\n\n        public void AppendFormatted(string? value);\n        public void AppendFormatted(string? value, int alignment = 0, string? format = null);\n\n        public void AppendFormatted(object? value, int alignment = 0, string? format = null);\n    }\n}",
+  "sourceSHA256": "1a9dcfcfbdba95f22f560aefcf8ed347e51b67a8f9a31285ca54fc92cb86d7cf",
+  "target": "library",
+  "featureId": "csharp-10-0-interpolated-string-handlers",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/improved-interpolated-strings.md",
+    "sha256": "a9232653b4497eae44487404a0c446af954667024beea4be2ad9a642b257b02c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/improved-interpolated-strings.md",
+    "license": "NOASSERTION",
+    "offset": 14250
+  }
+}

@@ -37,6 +37,13 @@
       "reason": "Developer-run benchmark imports the attribute reader from an operator-supplied checkout path or the fixed in-repo compiler module; it is not shipped or loaded by the product."
     },
     {
+      "path": "packages/cil/tools/benchmark-constants.mjs",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "db480aa3f56691e00d3d43667f29b7f9aa1d55788e9132adb9eac6b119ba262c",
+      "reason": "Developer-run Constant benchmark loads the metadata importer from an explicitly selected trusted local baseline or its fixed workspace path; the tool is not shipped in the product."
+    },
+    {
       "path": "packages/compiler/smoke.mjs",
       "operation": "dynamic-import",
       "count": 3,
@@ -341,7 +348,7 @@
       "path": "tests/conformance/qualification.test.js",
       "operation": "dynamic-import",
       "count": 1,
-      "sha256": "e2febfd9d7c3177fe2df252a7018fda03d476805d911d7419c4313adce9cf01e",
+      "sha256": "781c4708c6fa6185705256a2ca7e3077edc094fa190f512b92db15363605b441",
       "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
     },
     {
