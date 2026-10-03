@@ -1,7 +1,7 @@
 import { Writer, CilError } from '../binary.js';
 import { win32ResourceEntries } from './win32-input.js';
 
-const maximumBytes = 16 * 1024 * 1024;
+import { maximumWin32ResourceBytes } from './win32-limits.js';
 function validKey(key) {
   return Number.isInteger(key) && key >= 0 && key <= 65535
     || typeof key === 'string' && key.length > 0 && key.length <= 1024 && !key.includes('\0');
@@ -27,7 +27,7 @@ function resourceTree(entries) {
       names.add(key);
       bytes += 2 + key.length * 2;
     }
-    if (bytes > maximumBytes) throw new CilError('Win32 resources exceed size limit');
+    if (bytes > maximumWin32ResourceBytes) throw new CilError('Win32 resources exceed size limit');
     if (!root.has(entry.type)) root.set(entry.type, new Map());
     const type = root.get(entry.type);
     if (!type.has(entry.name)) type.set(entry.name, new Map());
