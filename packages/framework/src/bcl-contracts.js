@@ -1,14 +1,9 @@
+import {registerBclModules} from '@sharpforge/bcl-core';
 /** Explicit closed BCL surface; registrations append, never renumber older ABI members. */
-export function registerBcl({define, member, ctor, prop}) {
+export function registerBcl(registry) {
+  const {define, member, ctor, prop} = registry;
   const scalar = ['int', 'double', 'bool', 'string', 'object'];
-  const sb = 'System.Text.StringBuilder';
-  define(sb, {kind: 'bcl', family: 'builder'});
-  for (const p of [[], ['int'], ['string'], ['string','int']]) ctor(sb,p);
-  prop(sb,'Length','int',0); prop(sb,'Capacity','int',16); prop(sb,'MaxCapacity','int',1048576,true);
-  for (const t of scalar) member(sb,'Append',[t],sb);
-  for (const p of [[],['string']]) member(sb,'AppendLine',p,sb);
-  for (const [name,p,r] of [['Clear',[],sb],['ToString',[],'string'],['ToString',['int','int'],'string'],['Insert',['int','string'],sb],['Remove',['int','int'],sb],['Replace',['string','string'],sb],['EnsureCapacity',['int'],'int']]) member(sb,name,p,r);
-  for(let n=1;n<=3;n++) member(sb,'AppendFormat',['string',...Array(n).fill('object')],sb);
+  registerBclModules(registry, {group: 'bcl-prefix'});
 
   for (const t of scalar) {
     const enumerator=`SharpForge.Runtime.Enumerator\`1<${t}>`;
@@ -32,30 +27,7 @@ export function registerBcl({define, member, ctor, prop}) {
       for(const [m,p,r]of [['Add',[key,t],'void'],['TryAdd',[key,t],'bool'],['ContainsKey',[key],'bool'],['ContainsValue',[t],'bool'],['Remove',[key],'bool'],['Clear',[],'void'],['get_Item',[key],t],['set_Item',[key,t],'void']])member(name,m,p,r);
     }
   }
-  define('System.String',{kind:'bcl',family:'string'});
-  prop('System.String','Empty','string','',true,true);
-  for(const [m,p,r,stat] of [
-    ['IsNullOrEmpty',['string'],'bool',true],['IsNullOrWhiteSpace',['string'],'bool',true],
-    ['Concat',['string','string'],'string',true],['Concat',['string[]'],'string',true],
-    ['Join',['string','string[]'],'string',true],['Join',['string','int[]'],'string',true],
-    ['Equals',['string','string'],'bool',true],['CompareOrdinal',['string','string'],'int',true],
-    ['ToString',[],'string',false],['Substring',['int'],'string',false],['Substring',['int','int'],'string',false],
-    ['Contains',['string'],'bool',false],['IndexOf',['string'],'int',false],['IndexOf',['string','int'],'int',false],
-    ['LastIndexOf',['string'],'int',false],['StartsWith',['string'],'bool',false],['EndsWith',['string'],'bool',false],
-    ['Trim',[],'string',false],['TrimStart',[],'string',false],['TrimEnd',[],'string',false],
-    ['ToUpperInvariant',[],'string',false],['ToLowerInvariant',[],'string',false],
-    ['ToUpper',[],'string',false],['ToLower',[],'string',false],['Replace',['string','string'],'string',false],
-    ['Split',['string'],'string[]',false],['Split',['string','int'],'string[]',false],
-    ['PadLeft',['int'],'string',false],['PadRight',['int'],'string',false],
-    ['Remove',['int'],'string',false],['Remove',['int','int'],'string',false],['Insert',['int','string'],'string',false]
-  ])member('System.String',m,p,r,{isStatic:stat});
-  prop('System.String','Length','int',0,true);
-  for(let n=1;n<=4;n++)member('System.String','Format',['string',...Array(n).fill('object')],'string',{isStatic:true});
-  member('System.String','Format',['string','object[]'],'string',{isStatic:true});
-  // Compiler-generated format call keeps the primitive type (boxing bool on both engines).
-  define('SharpForge.Runtime.Formatting',{kind:'bcl',family:'format'});
-  member('SharpForge.Runtime.Formatting','BoxValue',['object','string'],'object',{isStatic:true});
-  member('SharpForge.Runtime.Formatting','FormatValue',['object','string','int','string'],'string',{isStatic:true});
+  registerBclModules(registry, {group: 'bcl-suffix'});
   define('System.Math',{kind:'bcl',family:'math'});
   for(const m of ['Sin','Cos','Tan','Asin','Acos','Atan','Log','Log10','Exp','Truncate'])member('System.Math',m,['double'],'double',{isStatic:true});
   member('System.Math','Atan2',['double','double'],'double',{isStatic:true});

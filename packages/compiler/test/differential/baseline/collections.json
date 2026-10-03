@@ -6,5 +6,6 @@
   "collections/cs1503-dictionary-key-type": ["warnings"],
   "collections/hashset": ["diagnostics", "warnings", "bytecode", "cil"],
   "collections/list-basics": ["warnings"],
+  "collections/list-of-objects": ["diagnostics", "warnings", "bytecode", "cil"],
   "collections/list-sort-and-search": ["warnings"]
 }
