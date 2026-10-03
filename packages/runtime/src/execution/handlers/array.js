@@ -21,4 +21,4 @@ for(const suffix of ['', '.i1','.u1','.i2','.u2','.i4','.u4','.i8','.i','.r4','.
     vm.dereference(vm.address('array',index,ref),true,suffix?vm.indirect(value,instruction.name):vm.storage(value,vm.inspector.metadata.typeName(instruction.operand)));
   });
 }
-export default handlers;
+export {handlers};

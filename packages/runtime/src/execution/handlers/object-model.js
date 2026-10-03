@@ -36,4 +36,4 @@ for(const name of ['castclass','isinst'])handlers.set(name,(vm,frame,instruction
   if(!ok&&name==='castclass')throw new ManagedFault('InvalidCastException','Incompatible reference type');
   vm.push(ok?ref:null);
 });
-export default handlers;
+export {handlers};
