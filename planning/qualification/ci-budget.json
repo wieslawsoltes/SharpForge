@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "workflow": ".github/workflows/ci.yml",
+  "minimumSamples": 5,
+  "maxP95Seconds": 1200,
+  "maxQueueP95Seconds": 600,
+  "rationale": "Initial explicit policy budgets: 20-minute core timeout and 10-minute queue allowance. These are limits, not measured results."
+}
