@@ -40,8 +40,8 @@ export function peSymbolKey(path, identity = {}) {
     fail('Invalid PE symbol identity');
   }
   const name = filename(path);
-  const identity = timestamp.toString(16).toUpperCase().padStart(8, '0') + sizeOfImage.toString(16);
-  return `${name}/${identity}/${name}`;
+  const signature = timestamp.toString(16).toUpperCase().padStart(8, '0') + sizeOfImage.toString(16);
+  return `${name}/${signature}/${name}`;
 }
 
 export function keyUrl(server, key) {
