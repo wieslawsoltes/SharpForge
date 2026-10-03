@@ -11,7 +11,9 @@
  * type the algebra does not model - is opaque: it covers nothing, it is not checked for subsumption, and a switch
  * expression that contains one is not checked for exhaustiveness.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind } from '../symbols/types.js';
+import { tupleElements } from '../symbols/tuple-elements.js';
 import {
   scalarKind,
   universe,
@@ -182,7 +184,7 @@ function sampleAtom(atom, type) {
   const entries = [...atom.parts].filter(([key]) => key !== subtypePartKey).map(([key, part]) => [key, sampleSpace(part.space, part.type)]);
   if (type.isTupleType) {
     const byKey = new Map(entries);
-    return '(' + type.typeArguments.map((_, index) => byKey.get('Item' + (index + 1)) ?? '_').join(', ') + ')';
+    return '(' + tupleElements(type).map((_, index) => byKey.get('Item' + (index + 1)) ?? '_').join(', ') + ')';
   }
   const positional = entries.filter(([key]) => !key.startsWith('.')).map(([, text]) => text),
     properties = entries.filter(([key]) => key.startsWith('.')).map(([key, text]) => `${key.slice(1)}: ${text}`);
@@ -223,7 +225,7 @@ export function checkSwitchArms(type, arms, site) {
       hasDefault = true;
       continue;
     }
-    const subsumed = { code: site.isExpression ? 'CS8510' : 'CS8120', args: [], node: arm.node },
+    const subsumed = { code: site.isExpression ? DiagnosticId.CS8510 : DiagnosticId.CS8120, args: [], node: arm.node },
       space = builder.of(arm.pattern, type);
     if (!space) {
       // Whatever an opaque pattern matches, it cannot be chosen once every value is handled.
@@ -242,9 +244,9 @@ export function checkSwitchArms(type, arms, site) {
     uncovered = subtract(all, covered, forExhaustiveness);
   if (isEmpty(uncovered)) return diagnostics;
   const example = sampleSpace(uncovered, type);
-  let code = 'CS8509';
-  if (isEmpty(subtract(all, coveredIgnoringWhen, forExhaustiveness))) code = 'CS8846';
-  else if (onlyUnnamedEnumValues(uncovered, type)) code = 'CS8524';
+  let code = DiagnosticId.CS8509;
+  if (isEmpty(subtract(all, coveredIgnoringWhen, forExhaustiveness))) code = DiagnosticId.CS8846;
+  else if (onlyUnnamedEnumValues(uncovered, type)) code = DiagnosticId.CS8524;
   diagnostics.push({ code, args: [example], node: site.node });
   return diagnostics;
 }

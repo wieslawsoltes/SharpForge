@@ -7,6 +7,7 @@
  * in; when one of them is a core library (it defines System.Object) its types replace the registry's for the
  * predefined types, so `int`, `string`, `Console` and `List<T>` are the imported symbols with their real members.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { bindReferences, unificationCodes } from './reference-manager.js';
 import { coreTypeDescriptor } from '../symbols/special-types.js';
 import { readCompilationReferences } from './reference-input.js';
@@ -68,7 +69,7 @@ export function bindCompilationReferences(references, bridge) {
       hasCoreLibrary: false,
       manager: null,
       useSiteDiagnostics: () => [],
-      externAlias: name => ({ alias: null, diagnostic: { code: name === 'global' ? 'CS1681' : 'CS0430', args: name === 'global' ? [] : [name] } }),
+      externAlias: name => ({ alias: null, diagnostic: { code: name === 'global' ? DiagnosticId.CS1681 : DiagnosticId.CS0430, args: name === 'global' ? [] : [name] } }),
       forwardedToMissingAssembly: () => null,
       isUnification: () => false,
     };

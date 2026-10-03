@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { Op } from '@sharpforge/bytecode';
 
 export function compileThrow(node) {
@@ -5,12 +6,12 @@ export function compileThrow(node) {
   if (node.expression) {
     const type = this.expr(node.expression);
     if (type !== 'Exception' && type !== 'null' && type !== 'error')
-      this.c.report(node, 'CS0155');
+      this.c.report(node, DiagnosticId.CS0155);
     this.emit(Op.THROW);
   }
   else {
     if (!this.catchDepth)
-      this.c.report(node, 'CS0156');
+      this.c.report(node, DiagnosticId.CS0156);
     this.emit(Op.RETHROW);
   }
   return;
@@ -54,7 +55,7 @@ export function compileTry(node) {
     this.assigned = new Set(before);
     const type = this.c.resolveType(ca.type, node, false, this.m);
     if (type !== 'Exception')
-      this.c.report(node, 'SF2002');
+      this.c.report(node, DiagnosticId.SF2002);
     const slot = this.temp('Exception');
     if (ca.name) {
       const l = this.local(ca.name, 'Exception', { ...ca.body, name: ca.name, nameSpan: ca.nameSpan }, true);
@@ -77,5 +78,5 @@ export function compileTry(node) {
 }
 
 export function compileUnknown(node) {
-  this.c.report(node, 'SF2099', [node.kind]);
+  this.c.report(node, DiagnosticId.SF2099, [node.kind]);
 }

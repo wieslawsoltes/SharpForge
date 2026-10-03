@@ -2,6 +2,7 @@
  * Property and indexer symbols with their accessors and auto-property backing fields, delegate Invoke
  * methods, primary constructors (with positional record properties) and implicit constructors.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { TypeKind, Accessibility, RefKind, SymbolKind } from '../types.js';
 import {
   MethodSymbol,
@@ -86,11 +87,11 @@ export const PropertySymbolBuilder = Base =>
         const k = a.keyword.text;
         if (k === 'get') {
           // An accessor list next to an expression body is reported once for the member (CS8057, binder/member-bodies.js).
-          if (getMethod && !syntax.expressionBody) this.report(uri, a.keyword, 'CS1007');
+          if (getMethod && !syntax.expressionBody) this.report(uri, a.keyword, DiagnosticId.CS1007);
           else if (getMethod) continue;
           else getMethod = accessor('get', a);
         } else if (k === 'set' || k === 'init') {
-          if (setMethod) this.report(uri, a.keyword, 'CS1007');
+          if (setMethod) this.report(uri, a.keyword, DiagnosticId.CS1007);
           else setMethod = accessor(k, a);
         }
       }

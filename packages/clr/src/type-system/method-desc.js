@@ -1,0 +1,48 @@
+import { decodeSignature } from '@sharpforge/cil';
+import { loadError, LoadErrorCode } from '../load-errors.js';
+
+function freezeSignature(node) {
+  if (!node || typeof node !== 'object' || Object.isFrozen(node)) return node;
+  for (const value of Object.values(node)) freezeSignature(value);
+  return Object.freeze(node);
+}
+
+/** Canonical MethodDef metadata identity. Signature and body decoding remain lazy. */
+export class MethodDesc {
+  #state;
+  #signature;
+  constructor(state, key) {
+    if (key !== creationKey) throw new TypeError('Method descriptors are created by their runtime module');
+    this.#state = state;
+    Object.freeze(this);
+  }
+  get name() { return this.#state.name; }
+  get flags() { return this.#state.flags; }
+  get implementationFlags() { return this.#state.implementationFlags; }
+  get metadataToken() { return this.#state.token; }
+  get declaringType() { return this.#state.declaringType; }
+  get module() { return this.#state.module; }
+  get assembly() { return this.module.assembly; }
+  get loadContext() { return this.assembly.loadContext; }
+  get isStatic() { return Boolean(this.flags & 0x10); }
+  get genericParameters() { return this.#state.genericParameters ??= this.module.methodGenericParameters(this.metadataToken); }
+  get signature() {
+    if (this.#signature) return this.#signature;
+    try {
+      const signature = decodeSignature(this.module.blob(this.#state.signatureIndex));
+      if (signature.kind !== 'method' || signature.hasThis === this.isStatic) {
+        throw loadError(LoadErrorCode.InvalidImage, 'MethodDef signature kind or receiver does not match its flags');
+      }
+      this.#signature = freezeSignature(signature);
+      return this.#signature;
+    } catch (error) {
+      if (error.code?.startsWith('SFCLR')) throw error;
+      throw loadError(LoadErrorCode.InvalidImage, `Invalid method signature: ${error.message}`);
+    }
+  }
+  /** Returns null for absent RVA or an isolated body snapshot; executable bytes are never cached on this descriptor. */
+  getMethodBody() { return this.module.methodBody(this.metadataToken); }
+}
+
+const creationKey = Symbol('MethodDesc creation');
+export function createMethodDesc(state) { return new MethodDesc(state, creationKey); }

@@ -1,3 +1,4 @@
+import { writeAssemblyReference } from './metadata/assembly-references.js';
 import { initializeMetadataBuilder } from './metadata/builder-state.js';
 import { encodeTypeSignature } from './metadata/signature-writer.js';
 import { parseSignatureType } from './metadata/signature-parser.js';
@@ -24,7 +25,7 @@ export class MetadataBuilder {
   blob(bytes) { return this.heaps.blob(bytes); }
   guid(bytes) { return this.heaps.guid(bytes); }
   userString(value) { return this.heaps.userString(value); }
-  assemblyRef(name) { if(this.assemblyRefs.has(name))return this.assemblyRefs.get(name);const custom=name==='SharpForge.WinUI'||name==='SharpForge.Runtime';const legacy=this.framework==='mscorlib4';const publicKey=legacy?[0xb7,0x7a,0x5c,0x56,0x19,0x34,0xe0,0x89]:[0xb0,0x3f,0x5f,0x7f,0x11,0xd5,0x0a,0x3a];const t=this.add(35,[custom?0:legacy?4:8,custom?10:0,0,0,0,custom?0:this.blob(Uint8Array.from(publicKey)),this.string(name),0,0]);this.assemblyRefs.set(name,t);return t; }
+  assemblyRef(name) { return writeAssemblyReference(this,name); }
   typeRef(fullName,assembly) { const canonical=fullName.includes('<')?fullName:canonicalType(fullName);if(canonical!==fullName)fullName=canonical;const generic=fullName.endsWith('>')&&fullName.indexOf('<')>0;if(generic){const key='typespec:'+fullName;if(this.typeRefs.has(key))return this.typeRefs.get(key);const token=this.typeSpec(parseSignatureType(fullName,t=>this.typeRef(t)));this.typeRefs.set(key,token);return token;}assembly??=fullName.startsWith('Microsoft.UI.')||fullName.startsWith('Windows.UI.')?'SharpForge.WinUI':fullName.startsWith('SharpForge.Runtime.')?'SharpForge.Runtime':this.framework==='mscorlib4'?'mscorlib':fullName==='System.Console'?'System.Console':fullName==='System.Diagnostics.Debug'?'System.Diagnostics.Debug':'System.Runtime';const key=assembly+':'+fullName;if(this.typeRefs.has(key))return this.typeRefs.get(key);const split=fullName.lastIndexOf('.'),ns=split<0?'':fullName.slice(0,split),name=fullName.slice(split+1);const t=this.add(1,[codedIndex('ResolutionScope',this.assemblyRef(assembly)),this.string(name),this.string(ns)]);this.typeRefs.set(key,t);return t; }
   /** Intern a TypeSpec by encoded bytes, independent of spelling or object identity. */
   typeSpec(type) {

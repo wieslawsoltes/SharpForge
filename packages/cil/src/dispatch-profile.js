@@ -1,5 +1,8 @@
 import {CilError} from './binary.js';
 import {decodeCoded,token} from './metadata.js';
+import {indexDispatchTable} from './vtable-profile.js';
+import {inheritInterfaceCandidates,addInterfaceCandidate,completeInterfaceSlots,interfaceReachableTargets}
+  from './interface-dispatch-profile.js';
 
 const virtual=0x40,newslot=0x100,final=0x20;
 const signatureKey=signature=>JSON.stringify([signature.returnType,signature.parameters,signature.genericArity??0,signature.callingConvention??0,!!signature.isStatic]);
@@ -9,6 +12,7 @@ const signatureKey=signature=>JSON.stringify([signature.returnType,signature.par
 export class CilDispatchTable {
   constructor(inspector) {
     this.inspector=inspector;this.types=new Map(inspector.types.map(type=>[type.token,type]));
+    this.definitions=new Map(inspector.methods);
     this.tables=new Map();this.building=new Set();this.implementations=new Map();this.targetCache=new Map();
     for(const row of inspector.metadata.rows?.[25]??[]) {
       const owner=token(2,row[0]);
@@ -17,10 +21,12 @@ export class CilDispatchTable {
     }
   }
   definition(methodToken) {
+    if(this.definitions.has(methodToken))return this.definitions.get(methodToken);
     const descriptor=this.inspector.resolveToken(methodToken),resolved=descriptor.resolvedToken??(descriptor.token>>>24===6?descriptor.token:null);
     if(!resolved)throw new CilError('External virtual declarations are not executable');
     const method=this.inspector.methods.get(resolved);
     if(!method)throw new CilError('Virtual declaration is not a MethodDef');
+    this.definitions.set(methodToken,method);
     return method;
   }
   table(typeToken) {
@@ -36,27 +42,34 @@ export class CilDispatchTable {
       for(const interfaceToken of type.interfaces) {
         const inherited=this.table(interfaceToken);interfaces.push(inherited);
         for(const ancestor of inherited.ancestors)ancestors.add(ancestor);
+        for(const [declaration,slot] of inherited.declarations)declarations.set(declaration,slot);
         if(type.flags&0x20) {
           for(const [slot,body] of inherited.slots)slots.set(slot,body);
           for(const [slot,body] of inherited.aliases)aliases.set(slot,body);
-          for(const [declaration,slot] of inherited.declarations)declarations.set(declaration,slot);
           for(const [key,slot] of inherited.visible)visible.set(key,slot);
         }
       }
+      const interfaceCandidates=inheritInterfaceCandidates([base,...interfaces]);
+      const publicMethods=new Map(base.publicMethods??[]);
       for(const method of type.methods) {
         if(!(method.flags&virtual)||method.flags&0x10)continue;
         const key=method.name+'::'+signatureKey(this.inspector.signature(method.token));
-        const inherited=method.flags&newslot?undefined:visible.get(key),slot=inherited??method.token;
+        const privateBody=(method.flags&7)===1;
+        const inherited=method.flags&newslot||privateBody?undefined:visible.get(key),slot=inherited??method.token;
         if(inherited!==undefined) {
           const previous=this.resolveSlot({slots,aliases},slot);
           if(this.inspector.methods.get(previous)?.flags&final)throw new CilError('A final virtual method cannot be overridden');
         }
-        aliases.delete(slot);slots.set(slot,method.token);declarations.set(method.token,slot);visible.set(key,slot);
+        aliases.delete(slot);slots.set(slot,method.token);declarations.set(method.token,slot);
+        if(!privateBody)visible.set(key,slot);
+        if((method.flags&7)===6)publicMethods.set(key,slot);
+        if(type.flags&0x20)addInterfaceCandidate(interfaceCandidates,slot,typeToken,method.token);
       }
       // Map ordinary implicit interface implementations before explicit MethodImpl rows.
-      for(const iface of interfaces)for(const [declaration,slot] of iface.declarations) {
+      if(!(type.flags&0x20))for(const iface of interfaces)for(const [declaration,slot] of iface.declarations) {
         const method=this.inspector.methods.get(declaration),key=method.name+'::'+signatureKey(this.inspector.signature(declaration));
-        const implementation=visible.get(key);
+        if((method.flags&7)!==6)continue;
+        const implementation=publicMethods.get(key);
         if(implementation!==undefined){slots.set(slot,slots.get(implementation));if(slot!==implementation)aliases.set(slot,implementation);}
       }
       const explicit=new Set();
@@ -69,13 +82,21 @@ export class CilDispatchTable {
         const previous=this.resolveSlot(base,slot);
         if(!(this.types.get(declaration.ownerToken)?.flags&0x20)&&previous!==undefined&&this.inspector.methods.get(previous)?.flags&final)throw new CilError('A final virtual method cannot be overridden');
         const bodySlot=declarations.get(body.token);
+        if(type.flags&0x20)addInterfaceCandidate(interfaceCandidates,slot,typeToken,body.token);
         explicit.add(slot);slots.set(slot,body.token);
         if(bodySlot!==undefined&&bodySlot!==slot)aliases.set(slot,bodySlot);else aliases.delete(slot);
       }
-      const table={slots,aliases,declarations,visible,ancestors};this.tables.set(typeToken,table);return table;
+      const table={slots,aliases,declarations,visible,ancestors,publicMethods,interfaceCandidates,interfaceSelections:new Map()};
+      this.tables.set(typeToken,table);
+      try {
+        completeInterfaceSlots(this,table);
+        indexDispatchTable(table,(owner,slot)=>this.resolveSlot(owner,slot));
+        return table;
+      } catch(error) {this.tables.delete(typeToken);throw error;}
     } finally {this.building.delete(typeToken);}
   }
   resolveSlot(table,slot) {
+    if(table.targets)return table.targets[table.slotIndexes.get(slot)];
     const seen=new Set();
     while(table.aliases.has(slot)) {
       if(seen.has(slot))throw new CilError('Cyclic MethodImpl slot mapping');
@@ -88,7 +109,8 @@ export class CilDispatchTable {
     if(!(declaration.flags&virtual))return declaration.token;
     const table=this.table(typeToken);
     if(!table.ancestors.has(declaration.ownerToken))throw new CilError('Virtual receiver is incompatible with the method declaration');
-    const slot=this.table(declaration.ownerToken).declarations.get(declaration.token),target=this.resolveSlot(table,slot);
+    const slot=this.table(declaration.ownerToken).declarations.get(declaration.token);
+    const target=table.targets[table.slotIndexes.get(slot)];
     if(target===undefined)throw new CilError('Virtual method has no implementation');
     return target;
   }
@@ -107,6 +129,10 @@ export class CilDispatchTable {
       if(type.flags&0xa0||!this.isAssignable(type.token,declaration.ownerToken))continue;
       const target=this.resolve(type.token,methodToken),method=this.inspector.methods.get(target);
       if(method?.hasBody&&!(method.flags&0x400))targets.add(target);
+      if(target?.ambiguousImplementation) {
+        const slot=this.table(declaration.ownerToken).declarations.get(declaration.token);
+        for(const candidate of interfaceReachableTargets(this.table(type.token),slot,this.inspector))targets.add(candidate);
+      }
     }
     this.targetCache.set(methodToken,targets);return targets;
   }

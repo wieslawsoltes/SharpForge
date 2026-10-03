@@ -31,7 +31,7 @@ This extraction preserves the released compatibility profile: element types are
 `int`, `double`, `bool`, `string` and `object`; Dictionary keys are `string` or
 `int`. Range and set inputs use arrays. It does not add open generic collections,
 custom comparers or additional members. Dictionary and HashSet removal take constant work
-and reuses freed entry slots in the order observed in the pinned .NET 10.0.5
+and reuse freed entry slots in the order observed in the pinned .NET 10.0.5
 fixture. Key/value traversal skips holes in physical slot order. Keys and Values
 remain snapshots in this released profile, and mutation versions retain their
 existing behavior. Payload array limits remain unchanged; the managed Int32
@@ -40,8 +40,19 @@ copies, JSON serialization and set algebra visit live physical slots, including
 null values. ExceptWith removes in input order; IntersectWith removes in physical
 order, retaining native free-slot reuse. Array construction deduplicates through
 the existing index. Released enumerator mutation-version/disposal rules remain
-unchanged and do not claim complete .NET enumerator parity. List mutations and
-default sorting remain separate A08 work.
+unchanged and do not claim complete .NET enumerator parity. List RemoveAt and
+RemoveRange shift the surviving suffix inside existing storage and clear the
+vacated tail. Tail RemoveAt takes constant work; arbitrary removals still require
+linear shifts. Valid empty ranges avoid backing writes and retain the released
+version increment. Remove(value) retains its linear first-match lookup and reuses
+the same in-place removal seam. Clear writes null only to live entries and keeps
+capacity; an empty Clear preserves its released no-op version rule. Insert and
+AddRange reserve once before mutation when growth is needed and otherwise reuse
+their backing storage. Insert shifts only its suffix; AddRange writes only the
+appended elements. Reverse swaps only the live prefix in place, with one reusable
+temporary GC root protecting each displaced reference through write observers.
+Empty/singleton Reverse performs no slot writes but increments the version.
+Sort retains its existing storage path.
 
 `tests/a08-dictionary-removal.test.js` and `tests/a08-hashset-removal.test.js` cover
 native slot reuse, cached-index and backing-array retention, managed-object
@@ -50,6 +61,26 @@ release, failed growth and heap restore through both VMs. The root scheduler run
 100,000 removals for both families through each VM platform. Compilation and initial insertion are
 outside its timed region; it also rejects index rebuilds or managed allocations.
 Performance qualification must use the resulting timings, not the unit tests.
+
+`tests/a08-list-removal.test.js` covers the narrow List removal change on both VMs,
+including native result/capacity checks, slot notifications, invalid ranges, GC,
+allocation failure and heap restore. Copy the same committed
+`scripts/benchmarks/a08-list-removal.mjs` runner to a baseline checkout for serial
+comparisons of tail and middle-range removal. It reports backing replacements
+and slot writes, and accepts an optional item count (default 2,000).
+`tests/a08-list-value-removal.test.js` separately covers first-match equality,
+Remove/Clear notifications, GC, unchanged no-op versions and allocation failures.
+`scripts/benchmarks/a08-list-value-removal.mjs` compares tail-value lookup/removal
+and Clear using the same static-import baseline workflow. It makes no claim that
+value-based List lookup becomes constant-time.
+`tests/a08-list-insertion.test.js` covers native results/capacity, exact writes,
+single-reservation growth, empty input, validation, failed growth, GC and restore.
+`scripts/benchmarks/a08-list-insertion.mjs` measures tail insertion and singleton
+AddRange with spare capacity using the same static-import baseline workflow.
+`tests/a08-list-reverse.test.js` covers native values/capacity, exact swaps,
+empty/singleton versions, observer-triggered GC, throwing observers, allocation
+failure and heap restore. `scripts/benchmarks/a08-list-reverse.mjs` measures
+repeated reversal with exact and spare capacity through the same VM dispatch.
 
 Object collection equality and hash keys retain boxed primitive type identity:
 boxed `int` 1 differs from boxed `double` 1.0, while equal boxes of the same type,

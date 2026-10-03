@@ -6,10 +6,15 @@
  * object after it was created: a store into an element builds a new object (lowering/tuples/locations.js), so a tuple
  * that was copied - assigned, passed, returned, captured - can share its object safely.
  *
+ * A tuple of more than seven elements is one class too, with the fields `Item1..ItemN`: the nesting in `Rest` is a
+ * property of the ValueTuple type, not of the value. Reading `Rest` builds the tuple of the elements from the eighth
+ * on (translate-tuples.js), which is a copy - as it is for the struct.
+ *
  * Element names exist only at compile time, so `(int a, int b)` and `(int, int)` are one class. The members a tuple
  * needs at run time (creation, `==`, `Equals`, `ToString`) are static methods of that class, declared on first use.
  */
 import { n } from '../../codegen/semantic/node-factory.js';
+import { tupleElements } from '../../symbols/tuple-elements.js';
 
 export class TupleClasses {
   /**
@@ -26,7 +31,7 @@ export class TupleClasses {
   }
   /** The image class of a tuple type: `{record, fields, elementTypes, create, methods}`. */
   classOf(type, syntax = null) {
-    const elementTypes = type.typeArguments.map(argument => argument.type),
+    const elementTypes = tupleElements(type).map(argument => argument.type),
       imageTypes = elementTypes.map(element => this.host.types.imageType(element, syntax)),
       // No comma in the name: the runtime reads commas in a type name as generic argument separators.
       key = imageTypes.join(';');

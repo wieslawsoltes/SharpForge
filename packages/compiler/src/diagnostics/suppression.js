@@ -12,6 +12,7 @@
  * skips comments, string/char literals and inactive `#if` regions. Diagnostics use the packages/text shape
  * `{uri,start,length,code,message,severity,range}`; nothing here writes message text (catalog only).
  */
+import {DiagnosticId} from './codes.js';
 import {diagnosticDescriptor,formatMessage,hasDiagnosticCode} from './codes.js';
 
 /**
@@ -71,19 +72,19 @@ export function parsePragmaDirectives(text,{preprocessorSymbols=[]}={}){
     else if(name==='undef'&&tokens[1])symbols.delete(tokens[1].text);
     if(name!=='pragma')return;
     if(tokens[1]?.text==='checksum')return;
-    if(tokens[1]?.text!=='warning'){report('CS1633',tokens[1],eod);return;}
+    if(tokens[1]?.text!=='warning'){report(DiagnosticId.CS1633,tokens[1],eod);return;}
     const action=tokens[2]?.text;
-    if(tokens[2]?.kind!=='identifier'||action!=='disable'&&action!=='restore'){report('CS1634',tokens[2],eod);return;}
+    if(tokens[2]?.kind!=='identifier'||action!=='disable'&&action!=='restore'){report(DiagnosticId.CS1634,tokens[2],eod);return;}
     const ids=[];let i=3,listed=0,failed=false;
     while(i<tokens.length){
       const t=tokens[i];listed++;
       if(t.kind==='number'){ids.push(normalizeDiagnosticId(t.text));i++;}
       else if(t.kind==='identifier'){ids.push(t.text);i++;}
-      else{report('CS1072',t,eod);failed=true;}
+      else{report(DiagnosticId.CS1072,t,eod);failed=true;}
       if(tokens[i]?.kind!=='comma')break;
       i++;
     }
-    if(!failed&&i<tokens.length)report('CS1696',tokens[i],eod);
+    if(!failed&&i<tokens.length)report(DiagnosticId.CS1696,tokens[i],eod);
     directives.push({start:hash,end,action,ids:listed===0?null:ids});
   };
   let i=0,lineStart=true;const n=text.length;

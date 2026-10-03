@@ -16,6 +16,7 @@
  * `in` arguments (7.2) must be variables (CS8156). A constructed struct - `Pair<int>` - satisfies the `unmanaged`
  * constraint from C# 8 only: below it the call is gated as 'unmanaged constructed types'.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { ConversionKind } from '../conversions/classify.js';
 import { defaultConstant } from '../constants/default-constant.js';
 import { isNullableType } from '../conversions/nullable.js';
@@ -70,7 +71,7 @@ export const CSharp7xBinding = Base =>
   class extends Base {
     expression(syntax, options = {}) {
       if (syntax.kind === 'DefaultLiteralExpression' && needsNaturalType(syntax)) {
-        this.report(syntax, 'CS8716');
+        this.report(syntax, DiagnosticId.CS8716);
         return this.bad(syntax);
       }
       return super.expression(syntax, options);
@@ -81,18 +82,18 @@ export const CSharp7xBinding = Base =>
       if (!left && !right) return super.binary(syntax, operator);
       if (equalityOperators.has(operator)) {
         if (!(left && right)) return super.binary(syntax, operator);
-        this.report(syntax, 'CS8315', [operator, 'default', 'default']);
+        this.report(syntax, DiagnosticId.CS8315, [operator, 'default', 'default']);
         return this.bad(syntax);
       }
       // The other operand is still bound for its own diagnostics.
       if (!left) this.value(syntax.left);
       if (!right) this.value(syntax.right);
-      this.report(syntax, 'CS8310', [operator, 'default']);
+      this.report(syntax, DiagnosticId.CS8310, [operator, 'default']);
       return this.bad(syntax);
     }
     pattern(syntax, inputType, input) {
       if (syntax.kind === 'ConstantPattern' && isDefaultLiteral(syntax.expression)) {
-        this.report(unparenthesized(syntax.expression), 'CS8505');
+        this.report(unparenthesized(syntax.expression), DiagnosticId.CS8505);
         return { kind: 'Bad', syntax, hasErrors: true };
       }
       return super.pattern(syntax, inputType, input);
@@ -111,7 +112,7 @@ export const CSharp7xBinding = Base =>
     /** An argument passed with `in` must be a variable: the callee gets a reference to it (CS8156). */
     checkInArgument(argument) {
       if (argument.refKind !== RefKind.In || argument.hasErrors) return;
-      if (!classifyVariable(argument, this.variableContext).isVariable) this.report(argument.syntax, 'CS8156');
+      if (!classifyVariable(argument, this.variableContext).isVariable) this.report(argument.syntax, DiagnosticId.CS8156);
     }
     /** A generic struct counts as unmanaged from C# 8 ('unmanaged constructed types'); the use is reported on the method name. */
     checkUnmanagedConstructedTypes(method, nameNode) {
@@ -134,7 +135,7 @@ export const CSharp7xBinding = Base =>
       for (const argument of args) {
         if (argument.nameColon) named = true;
         else if (named) {
-          this.report(argument, 'CS1738', ['7.2']);
+          this.report(argument, DiagnosticId.CS1738, ['7.2']);
           return;
         }
       }

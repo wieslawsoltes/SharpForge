@@ -70,7 +70,7 @@ test('T28 async is a modifier only when a declaration follows', () => {
 });
 
 test('T28 async functions are rejected below C# 5', () => {
-  assert.deepEqual(codesOf('class C { async void M() { await x; } }', '4'), ['CS8025']);
+  assert.deepEqual(codesOf('class C { async void M() { await x; } }', '4'), ['CS8025', 'CS8025'], 'the method name and the await');
   assert.deepEqual(codesOf('class C { async void M() { await x; } }', '5'), []);
   assert.deepEqual(codesOf('class C { void M() { int await = 1; await++; } }', '4'), [], 'the identifier needs no feature');
 });

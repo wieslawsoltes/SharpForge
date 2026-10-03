@@ -1,3 +1,4 @@
+import {isNativeStorageType} from '../native-int.js';
 import {completeInitialization} from '../static-init.js';
 import {leaveCilMethod} from '../cil-method-events.js';
 import {delegateMethodPointer} from '../delegate-targets.js';
@@ -8,7 +9,9 @@ handlers.set('ldftn',(vm,frame,instruction)=>{
   vm.push(delegateMethodPointer(vm,instruction.operand));
 });
 handlers.set('ret',(vm,frame)=>{
-  const result=frame.method.signature.returnType==='void'?null:vm.pop();
+  const type=frame.method.signature.returnType;
+  let result=type==='void'?null:vm.pop();
+  if(isNativeStorageType(type))result=vm.storage(result,type);
   if(frame.initializes)completeInitialization(vm,frame);
   leaveCilMethod(vm, frame);
   vm.frames.pop();const value=frame.returnObject??result;
