@@ -7,15 +7,16 @@
  * collides with a declaration. Only then is the analysis run, and `isUsingDiagnostic` / `isNamespaceDiagnostic` say
  * which of its diagnostics belong to using directives and namespace lookup.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind } from '../symbols/types.js';
 import { isBclNamespace } from '../symbols/bcl-namespaces.js';
 import { collectUsingDirectives, resolveQualifiedName } from './usings.js';
 import { checkGlobalUsingPlacement } from './global-usings.js';
 
 /** Diagnostics of a using or extern alias directive itself. */
-const directiveCodes = new Set(['CS0246', 'CS0234', 'CS0138', 'CS7007', 'CS1537', 'CS0105', 'CS0430', 'CS1681', 'CS0426', 'CS8914', 'CS8915']);
+const directiveCodes = new Set([DiagnosticId.CS0246, DiagnosticId.CS0234, DiagnosticId.CS0138, DiagnosticId.CS7007, DiagnosticId.CS1537, DiagnosticId.CS0105, DiagnosticId.CS0430, DiagnosticId.CS1681, DiagnosticId.CS0426, DiagnosticId.CS8914, DiagnosticId.CS8915]);
 /** Diagnostics that only namespace and alias lookup produce, wherever they are reported. */
-const namespaceCodes = new Set(['CS0234', 'CS0138', 'CS7007', 'CS1537', 'CS0576', 'CS0431', 'CS0432', 'CS0430']);
+const namespaceCodes = new Set([DiagnosticId.CS0234, DiagnosticId.CS0138, DiagnosticId.CS7007, DiagnosticId.CS1537, DiagnosticId.CS0576, DiagnosticId.CS0431, DiagnosticId.CS0432, DiagnosticId.CS0430]);
 const plainName = /^[A-Za-z_][A-Za-z0-9_]*(\.[A-Za-z_][A-Za-z0-9_]*)*$/;
 
 /**

@@ -12,6 +12,7 @@
  *   CS9334 an explicit implementation whose type differs from the member's
  * The resulting map (`type.interfaceImplementations`) is what a back end emits as MethodImpl rows / interface vtables.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { TypeKind, SymbolKind, Accessibility, TypeCompareKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { baseTypeChain, allInterfacesOf } from '../symbols/substitution.js';
@@ -79,19 +80,19 @@ export function findImplementation(type, iface, member, core) {
       const sameReturn = sameType(typeOfMember(c), typeOfMember(member), c, member);
       // A static abstract member is implemented by a static member, an instance member by an instance member.
       if (!!c.isStatic !== !!member.isStatic) {
-        close ??= { code: member.isStatic ? 'CS8928' : 'CS0736', candidate: c };
+        close ??= { code: member.isStatic ? DiagnosticId.CS8928 : DiagnosticId.CS0736, candidate: c };
         continue;
       }
       if (c.declaredAccessibility !== Accessibility.Public) {
-        close ??= { code: 'CS0737', candidate: c };
+        close ??= { code: DiagnosticId.CS0737, candidate: c };
         continue;
       }
       if (!sameReturn) {
-        close ??= { code: 'CS0738', candidate: c };
+        close ??= { code: DiagnosticId.CS0738, candidate: c };
         continue;
       }
       if (member.kind === SymbolKind.Property && ((member.getMethod && !c.getMethod) || (member.setMethod && !c.setMethod))) {
-        close ??= { code: 'CS0535', candidate: c, accessor: member.getMethod && !c.getMethod ? 'get' : 'set' };
+        close ??= { code: DiagnosticId.CS0535, candidate: c, accessor: member.getMethod && !c.getMethod ? 'get' : 'set' };
         continue;
       }
       return { member: c, isExplicit: false, declaredIn: t };
@@ -102,18 +103,18 @@ export function findImplementation(type, iface, member, core) {
   if (!member.isAbstract) return { defaultImplementation: member };
   const typeName = type.toDisplayString(),
     memberName = member.toDisplayString();
-  if (close?.code === 'CS0738')
+  if (close?.code === DiagnosticId.CS0738)
     return {
-      error: { code: 'CS0738', args: [typeName, memberName, close.candidate.toDisplayString(), typeOfMember(member).toDisplayString()] },
+      error: { code: DiagnosticId.CS0738, args: [typeName, memberName, close.candidate.toDisplayString(), typeOfMember(member).toDisplayString()] },
     };
-  if (close?.code === 'CS0736' || close?.code === 'CS0737' || close?.code === 'CS8928')
+  if (close?.code === DiagnosticId.CS0736 || close?.code === DiagnosticId.CS0737 || close?.code === DiagnosticId.CS8928)
     return { error: { code: close.code, args: [typeName, memberName, close.candidate.toDisplayString()] } };
-  if (close?.accessor) return { error: { code: 'CS0535', args: [typeName, memberName + '.' + close.accessor] } };
+  if (close?.accessor) return { error: { code: DiagnosticId.CS0535, args: [typeName, memberName + '.' + close.accessor] } };
   if (member.kind === SymbolKind.Property && !member.isIndexer) {
     const parts = [member.getMethod && 'get', member.setMethod && (member.setMethod.isInitOnly ? 'init' : 'set')].filter(Boolean);
-    return { errors: parts.map(p => ({ code: 'CS0535', args: [typeName, memberName + '.' + p] })) };
+    return { errors: parts.map(p => ({ code: DiagnosticId.CS0535, args: [typeName, memberName + '.' + p] })) };
   }
-  return { error: { code: 'CS0535', args: [typeName, memberName] } };
+  return { error: { code: DiagnosticId.CS0535, args: [typeName, memberName] } };
 }
 /**
  * Maps every interface member to its implementation for a class or struct.
@@ -131,18 +132,18 @@ export function bindInterfaceImplementations(type, core) {
     if (!iface || iface.isErrorType?.()) continue;
     if (m.kind === SymbolKind.Method && m.isAccessor) continue;
     if (iface.typeKind !== TypeKind.Interface) {
-      diagnostics.push({ code: 'CS0538', args: [iface.toDisplayString()], member: m, onInterfaceName: true });
+      diagnostics.push({ code: DiagnosticId.CS0538, args: [iface.toDisplayString()], member: m, onInterfaceName: true });
       continue;
     }
     if (!all.some(i => i.equals(iface))) {
-      diagnostics.push({ code: 'CS0540', args: [m.toDisplayString(), iface.toDisplayString()], member: m, onInterfaceName: true });
+      diagnostics.push({ code: DiagnosticId.CS0540, args: [m.toDisplayString(), iface.toDisplayString()], member: m, onInterfaceName: true });
       continue;
     }
     const implemented = implementableMembers(iface).find(im => im.name === simpleName(m) && matches(m, im));
-    if (!implemented) diagnostics.push({ code: 'CS0539', args: [m.toDisplayString()], member: m });
+    if (!implemented) diagnostics.push({ code: DiagnosticId.CS0539, args: [m.toDisplayString()], member: m });
     else if (!sameType(typeOfMember(m), typeOfMember(implemented), m, implemented)) {
       const args = [m.toDisplayString(), typeOfMember(implemented).toDisplayString(), implemented.toDisplayString()];
-      diagnostics.push({ code: 'CS9334', args, member: m });
+      diagnostics.push({ code: DiagnosticId.CS9334, args, member: m });
     }
   }
   // Only interfaces this type lists itself (or gains through them) are checked here; base classes were checked on their own.

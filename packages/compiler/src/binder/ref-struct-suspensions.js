@@ -15,6 +15,7 @@
  * struct with several fields that together assign all of it, and suspensions other than `await` and `yield return`
  * (`await foreach`, `await using`). Lambdas and local functions inside the body are not looked into.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { RefKind } from '../symbols/types.js';
 import { forEachChild } from '../bound/semantic-walker.js';
 import { isRefLike } from './ref-struct.js';
@@ -99,7 +100,7 @@ export function refStructLocalsAcrossSuspensions(body) {
       // The back edge of the loop carries a suspension to the read unless the value is written first in the iteration.
       if (!covering.some(write => write.span.start >= loop.start)) crossed = suspensions.some(suspension => contains(loop, suspension));
     }
-    if (crossed) rows.push({ node: read.syntax, code: 'CS4007', args: [read.local.type.toDisplayString()] });
+    if (crossed) rows.push({ node: read.syntax, code: DiagnosticId.CS4007, args: [read.local.type.toDisplayString()] });
   }
   return rows;
 }

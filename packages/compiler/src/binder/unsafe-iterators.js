@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 /**
  * Unsafe code in iterators (SF-A02-T82, C# 13 "ref and unsafe in async and iterator methods"): an iterator may
  * contain unsafe blocks, with two restrictions Roslyn reports while binding:
@@ -13,7 +14,7 @@
 export const UnsafeIteratorBinding = Base =>
   class extends Base {
     statement(syntax) {
-      if (syntax.kind === 'YieldReturnStatement' && this.unsafeBlocks > 0 && this.version.number >= 13) this.report(syntax.yieldKeyword, 'CS9238');
+      if (syntax.kind === 'YieldReturnStatement' && this.unsafeBlocks > 0 && this.version.number >= 13) this.report(syntax.yieldKeyword, DiagnosticId.CS9238);
       return super.statement(syntax);
     }
     addressOf(syntax, inFixedInitializer) {

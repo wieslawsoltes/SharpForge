@@ -1,3 +1,4 @@
+import {registryTypeKind, registryTypeOptions, registryInterfaces, registryVariance} from './registry-type-shapes.js';
 import {types as frameworkTypes,contracts as frameworkContracts,canonicalType} from '@sharpforge/framework';
 import {Builtins} from '@sharpforge/bytecode';
 import {builtinOwners, builtinMemberShape, builtinParameterType} from './registry-builtins.js';
@@ -25,8 +26,8 @@ export function parseRegistryName(name){
 }
 class RegistryConstructedType extends ConstructedNamedTypeSymbol {
   constructor(definition,args,bridge,registryName){super(definition,args,null);this.bridge=bridge;this.registryName=registryName;this._own=null;}
-  get baseType(){return this.bridge.baseOf(this.registryName);}
-  get interfaces(){return [];}
+  get baseType(){return this.typeKind===TypeKind.Interface?null:this.bridge.baseOf(this.registryName);}
+  get interfaces(){return this._registryInterfaces??=registryInterfaces(this.bridge,this.registryName);}
   getMembers(name){this._own??=this.bridge.membersOf(this.registryName,this);return name===undefined?this._own:this._own.filter(m=>m.name===name);}
 }
 export class RegistryBridge {
@@ -56,15 +57,15 @@ export class RegistryBridge {
     const dot=path.lastIndexOf('.'),outerName=dot>0?path.slice(0,dot):'',outer=outerName&&this.types.has(outerName)?this.declare(outerName):null,simple=path.slice(dot+1),container=outer??this.globalNamespace.ensureNamespace(outerName);
     // Nested types are tracked on the outer type directly: asking it for members here would bind its contracts too early.
     const nested=(n,a)=>(outer?(outer._nested??[]).filter(t=>t.name===n&&t.arity===a):container.getTypeMembers(n,a))[0];
-    const kind=entry?.kind==='enum'?TypeKind.Enum:entry?.kind==='delegate'?TypeKind.Delegate:entry?.kind==='value'?TypeKind.Struct:TypeKind.Class;
+    const kind=registryTypeKind(entry);
     if(arity){
       let definition=nested(simple,arity);
-      if(!definition){definition=new NamedTypeSymbol({name:simple,arity,typeKind:kind,baseType:()=>this.objectType});if(outer){(outer._nested??=[]).push(definition);definition.containingSymbol=outer;}else container.addType(definition);}
+      if(!definition){definition=new NamedTypeSymbol({name:simple,arity,...registryTypeOptions(this,name,kind)});if(outer){(outer._nested??=[]).push(definition);definition.containingSymbol=outer;}else container.addType(definition);}
       // Constructing the definition with the arguments of a registry instantiation yields that instantiation.
-      definition.instanceProvider=(d,typeArguments)=>this.closedInstance(d,typeArguments);definition.instances??=[];const type=new RegistryConstructedType(definition,args.map(a=>new TypeWithAnnotations(this.typeFromName(a)??this.objectType)),this,name);definition.instances.push(type);attachOpenMembers(this,definition);this.remember(name,type);return type;
+      registryVariance(definition,entry);definition.instanceProvider=(d,typeArguments)=>this.closedInstance(d,typeArguments);definition.instances??=[];const type=new RegistryConstructedType(definition,args.map(a=>new TypeWithAnnotations(this.typeFromName(a)??this.objectType)),this,name);definition.instances.push(type);attachOpenMembers(this,definition);this.remember(name,type);return type;
     }
     const existing=nested(simple,0);if(existing){this.remember(name,existing);this.attach(existing,name);return existing;}
-    const type=new NamedTypeSymbol({name:simple,typeKind:kind,isStatic:entry?.kind==='static',isAbstract:entry?.kind==='abstract',isSealed:kind!==TypeKind.Class,baseType:()=>this.baseOf(name),enumUnderlyingType:kind===TypeKind.Enum?this.byName.get('int'):null});
+    const type=new NamedTypeSymbol({name:simple,...registryTypeOptions(this,name,kind)});
     type.registryKind=entry?.kind??null;if(outer){this.remember(name,type);(outer._nested??=[]).push(type);type.containingSymbol=outer;}else{container.addType(type);this.remember(name,type);}this.attach(type,name);return type;
   }
   /** The registry instantiation matching a definition and type arguments, or null. */
