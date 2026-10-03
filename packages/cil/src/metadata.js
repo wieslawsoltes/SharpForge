@@ -1,3 +1,4 @@
+import { manifestRowWriters } from './metadata/rows-manifest.js';
 import {frameworkType,canonicalType} from '@sharpforge/framework';
 import { Writer, Reader, CilError, align, utf8, text, buildId } from './binary.js';
 /** ECMA-335 II.22 tables and II.24 heaps. Table/index widths are computed, never fixed. */
@@ -11,7 +12,7 @@ export { Tables, TableId, tableDefinitions, metadataSchemas } from './metadata/t
 export { metadataCodedIndices, codedIndex, decodeCoded, token, metadataIndexWidth } from './metadata/indices.js';
 export class MetadataBuilder {
   constructor(name='Application', {framework='net8'}={}) {
-    this.name=name;this.framework=framework;this.rows={};this.heaps=new MetadataHeaps();this.definitions=definitionRowWriters(this);this.typeRefs=new Map();this.members=new Map();this.assemblyRefs=new Map();
+    this.name=name;this.framework=framework;this.rows={};this.heaps=new MetadataHeaps();this.definitions=definitionRowWriters(this);this.manifest=manifestRowWriters(this);this.typeRefs=new Map();this.members=new Map();this.assemblyRefs=new Map();
     this.add(0,[0,this.string(name+'.dll'),1,0,0]);this.add(32,[0x8004,0,2,0,0,0,0,this.string(name),0]);
   }
   add(table,row) { const rows=this.rows[table]??=[];rows.push(row);return token(table,rows.length); }
