@@ -18,6 +18,12 @@ const rules = [
     codes: ['CS0160', 'CS1017', 'CS1058'],
   },
   {
+    // The `field` keyword next to a member named `field` (binder/field-keyword.js): the warning CS9258.
+    text: /\bfield\b[^]*\bfield\b/,
+    applies: node => node.kind === 'FieldExpression',
+    codes: ['CS9258'],
+  },
+  {
     // A type named like a contextual keyword (binder/reserved-type-names.js): the rule depends on the language version.
     text: /\b(?:class|struct|interface|enum|delegate)\b[^;{(]*\b(?:record|required|scoped|file|extension)\b/,
     applies: node => !!node.identifier && typeDeclarationKinds.has(node.kind) && reservedNames.has(node.identifier.valueText),
