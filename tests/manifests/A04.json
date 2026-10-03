@@ -4,6 +4,7 @@
   "nodeGlobs": [
     "tests/clr-context-*.test.js",
     "tests/clr-identity-*.test.js",
+    "tests/clr-methods-*.test.js",
     "tests/clr-types-*.test.js",
     "tests/managed-il.test.js"
   ],
