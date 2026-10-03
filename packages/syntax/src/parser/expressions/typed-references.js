@@ -5,5 +5,5 @@ export function typedReferenceExpression(parser) {
   const identifier = parser.n('IdentifierName', parser.take()), open = parser.expect('(');
   const args = [parser.n('Argument', null, null, parser.expression())];
   if (name === '__refvalue') args.push(parser.expect(','), parser.n('Argument', null, null, parser.type()));
-  return parser.n('InvocationExpression', identifier, parser.n('ArgumentList', open, args, parser.expect(')'));
+  return parser.n('InvocationExpression', identifier, parser.n('ArgumentList', open, args, parser.expect(')')));
 }
