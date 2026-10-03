@@ -126,3 +126,10 @@ below used Linux, Node v24.19.0, AMD EPYC 9V74 80-Core Processor in the same wor
 The registry derives each canonical type's immutable schema once and indexes attached setters once. Repeated lookup returns the same
 frozen descriptor map, with no per-lookup map allocation or full manifest scan. These measurements cover metadata and model validation;
 they do not measure browser layout, compiler performance or native rendering.
+
+## New document defaults
+
+`initializeDesignerDocumentOptions(value, options)` is a creation-only helper. It returns a cloned design with default guide settings
+and the chosen snap grid size only when guide metadata is absent. Callers must use it at new-document creation, never as a generic
+load or recovery normalization step. Existing serialized guide settings take precedence. Applying saved options to an active document
+updates its actual guide metadata and calls `DesignerSourceSync.setAuto`; these guide changes remain outside the C# projection.
