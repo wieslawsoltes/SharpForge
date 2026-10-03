@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-47db5cbdd58524730b44",
+  "kind": "diagnostics",
+  "sourceText": "\n[Boom]\nclass Boom : System.Attribute\n{\n    public Boom(int? x = 0) { }  \n\n    static void Main()\n    {\n        typeof(Boom).GetCustomAttributes(true);\n    }\n}\n",
+  "sourceSHA256": "c58262ce1a313e7365586cf36c9c5e1bfe388a476c0ecb7ecba8ed58529bee4a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "sha256": "15bbd12edb525c2764339fc84bc1d7201034c05a5703e07d2fafeee8c74638ab",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "license": "MIT",
+    "method": "CS0181ERR_BadAttributeParamType_Nullable",
+    "offset": 29278
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0181",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                Diagnostic(ErrorCode.ERR_BadAttributeParamType, \"Boom\").WithArguments(\"x\", \"int?\")",
+  "unsupported": []
+}

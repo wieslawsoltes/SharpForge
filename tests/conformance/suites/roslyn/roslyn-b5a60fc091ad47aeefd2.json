@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b5a60fc091ad47aeefd2",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static bool M()\n    {\n        return (1, 2) == (3, 4);\n    }\n}",
+  "sourceSHA256": "c0f40410d68e5f006f4fdf9f217ebf599cc6c33074ab74aa961a15be291bb783",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestWithoutValueTuple",
+    "offset": 5128
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8179",
+        "severity": "error"
+      },
+      {
+        "code": "CS8179",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,16): error CS8179: Predefined type 'System.ValueTuple`2' is not defined or imported\n                //         return (1, 2) == (3, 4);\n                Diagnostic(ErrorCode.ERR_PredefinedValueTupleTypeNotFound, \"(1, 2)\").WithArguments(\"System.ValueTuple`2\").WithLocation(6, 16),\n                // (6,26): error CS8179: Predefined type 'System.ValueTuple`2' is not defined or imported\n                //         return (1, 2) == (3, 4);\n                Diagnostic(ErrorCode.ERR_PredefinedValueTupleTypeNotFound, \"(3, 4)\").WithArguments(\"System.ValueTuple`2\").WithLocation(6, 26)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-93dda65f655bdb965418",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Gen<T>\n{\n    [TypeAttribute(typeof(L1.L2.L3<>.L4<>))] public T Fld6;\n}",
+  "sourceSHA256": "189b28da39f8bcfb46adb440a1272601bc65888f560f2b1b85feb51bdf9d959b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "OpenGenericTypesUsedAsAttributeArgs",
+    "offset": 308920
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0649",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,6): error CS0246: The type or namespace name 'TypeAttributeAttribute' could not be found (are you missing a using directive or an assembly reference?)\n                //     [TypeAttribute(typeof(L1.L2.L3<>.L4<>))] public T Fld6;\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"TypeAttribute\").WithArguments(\"TypeAttributeAttribute\").WithLocation(4, 6),\n                // (4,6): error CS0246: The type or namespace name 'TypeAttribute' could not be found (are you missing a using directive or an assembly reference?)\n                //     [TypeAttribute(typeof(L1.L2.L3<>.L4<>))] public T Fld6;\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"TypeAttribute\").WithArguments(\"TypeAttribute\").WithLocation(4, 6),\n                // (4,27): error CS0246: The type or namespace name 'L1' could not be found (are you missing a using directive or an assembly reference?)\n                //     [TypeAttribute(typeof(L1.L2.L3<>.L4<>))] public T Fld6;\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"L1\").WithArguments(\"L1\").WithLocation(4, 27),\n                // (4,55): warning CS0649: Field 'Gen<T>.Fld6' is never assigned to, and will always have its default value \n                //     [TypeAttribute(typeof(L1.L2.L3<>.L4<>))] public T Fld6;\n                Diagnostic(ErrorCode.WRN_UnassignedInternalField, \"Fld6\").WithArguments(\"Gen<T>.Fld6\", \"\").WithLocation(4, 55)",
+  "unsupported": []
+}

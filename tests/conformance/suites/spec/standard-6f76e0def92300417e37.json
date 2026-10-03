@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-6f76e0def92300417e37",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass Program { static void Main() {\nConsole.Out.WriteLine(\"hello, world\");\n} }",
+  "unsupported": [],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": [],
+    "stdout": "hello, world\n",
+    "exitCode": 0
+  },
+  "sourceSHA256": "fc34b86ac08ca6fe90742a4850d6717de8b1ffcdd5385d507202b8a4582da37b",
+  "originalSource": "Console.Out.WriteLine(\"hello, world\");",
+  "metadata": {
+    "template": "code-in-main",
+    "name": "ConsoleOutWriteLine",
+    "expectedOutput": [
+      "hello, world"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "ConsoleOutWriteLine",
+    "offsetInUnquotedMarkdown": 185965
+  }
+}

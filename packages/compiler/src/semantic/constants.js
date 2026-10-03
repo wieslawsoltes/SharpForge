@@ -108,7 +108,9 @@ export const ConstantBinding = Base =>
             r.bound.kind === 'Default' ||
             (r.bound.kind === 'ObjectCreation' && !r.bound.args?.length) ||
             r.bound.operand?.literal ||
-            r.bound.operand?.kind === 'Default'
+            r.bound.operand?.kind === 'Default' ||
+            // A constant wrapped into a nullable type: `long? x = 0`.
+            (r.bound.conversion?.kind === 'ImplicitNullable' && r.bound.operand?.constantValue)
           )
         )
           binder.report(p.defaultSyntax, 'CS1736', [p.name]);

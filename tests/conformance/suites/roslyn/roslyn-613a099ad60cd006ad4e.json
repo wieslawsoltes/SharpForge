@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-613a099ad60cd006ad4e",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n \nclass C\n{\n    [Obsolete(\"Do not use\", true)]\n    public C() { }\n}\nclass D : C\n{\n    public D() { }\n}\nclass E : C\n{\n    public E() : base() { }\n}\n\nclass Event1\n{\n    [Obsolete(\"Do not use\")]\n    public event Action A;\n\n    [field:Obsolete(\"Do not use\")]\n    public event Action A1;\n  \n    public void Test()\n    {\n        A();\n        A1();\n        A += () => {};\n        A1 += () => {};\n    }\n\n    public static void Test1()\n    {\n        var e = new Event1();\n        e.A();\n        e.A1();\n        e.A += () => {};\n        e.A1 += () => {};\n    }\n}\n",
+  "sourceSHA256": "bb6a1641b4a02849a8f34a326526078ebc1fba309d60465e97b592522f356c24",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestObsoleteAttributeOnMembers3",
+    "offset": 280636
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,5): error CS0619: 'C.C()' is obsolete: 'Do not use'\n                //     public D() { }\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"public D() { }\").WithArguments(\"C.C()\", \"Do not use\"),\n                // (15,16): error CS0619: 'C.C()' is obsolete: 'Do not use'\n                //     public E() : base() { }\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \": base()\").WithArguments(\"C.C()\", \"Do not use\"),\n                // (29,9): warning CS0618: 'Event1.A1' is obsolete: 'Do not use'\n                //         A1();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"A1\").WithArguments(\"Event1.A1\", \"Do not use\"),\n                // (30,9): warning CS0618: 'Event1.A' is obsolete: 'Do not use'\n                //         A += () => {};\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"A\").WithArguments(\"Event1.A\", \"Do not use\"),\n                // (38,9): warning CS0618: 'Event1.A1' is obsolete: 'Do not use'\n                //         e.A1();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"e.A1\").WithArguments(\"Event1.A1\", \"Do not use\"),\n                // (39,9): warning CS0618: 'Event1.A' is obsolete: 'Do not use'\n                //         e.A += () => {};\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"e.A\").WithArguments(\"Event1.A\", \"Do not use\")",
+  "unsupported": []
+}

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-c5527c763c7bb8f640ca",
+  "kind": "spec",
+  "sourceText": "closed class C<T> { ... }\nclass D1<U> : C<U> { ... }\nclass D2<V> : C<V[]> { ... }\n\nclass Program\n{\n    int M<X>(C<X> c)\n        => c switch\n        {\n            D1<X> => 1,\n            // warning: switch is non-exhaustive. Pattern 'C' is not handled.\n        };\n}",
+  "sourceSHA256": "4bb42820f7fc4fb81d592a9d6555f10446ec59a7bafde51b8657d81a6daef240",
+  "target": "library",
+  "featureId": "csharp-15-0-closed-hierarchies",
+  "langVersion": "preview",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-15.0/closed-hierarchies.md",
+    "sha256": "42fefd4135df4a6d52f32ec44f95ddcf6f1a755a105a5fefe1cbf57d888feb96",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/closed-hierarchies.md",
+    "license": "NOASSERTION",
+    "offset": 5243
+  }
+}

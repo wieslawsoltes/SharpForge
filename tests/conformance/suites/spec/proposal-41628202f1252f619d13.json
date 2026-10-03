@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-41628202f1252f619d13",
+  "kind": "spec",
+  "sourceText": "interface I1 { void M(); }\ninterface I2 { void M(); }\ninterface I3 : I1, I2 { void I1.M() { } void I2.M() { } }\ninterface I5 : I3\n{\n    void I1.M()\n    {\n        base(I1).M(); // calls I3's implementation of I1.M\n    }\n    void I2.M()\n    {\n        base(I2).M(); // calls I3's implementation of I2.M\n    }\n}",
+  "sourceSHA256": "bfab19dbaadaf1ded569649a9e8bcdb35034b0c52ef59d5037e2aca5aa8ba05d",
+  "target": "library",
+  "featureId": "csharp-8-0-default-interface-members",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/default-interface-methods.md",
+    "sha256": "feebc11b0983ad0c24c2017ac76706a9f3ff81b9cf1cc2703ec12d4829f24c42",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/default-interface-methods.md",
+    "license": "NOASSERTION",
+    "offset": 36388
+  }
+}

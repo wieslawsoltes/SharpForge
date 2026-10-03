@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "runtime-12c62a9becdc5b35b929",
+  "kind": "runtime",
+  "sourceText": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n.assembly extern legacy library mscorlib {}\n.assembly extern xunit.core {}\n.assembly extern System.Console\n{\n  .publickeytoken = (B0 3F 5F 7F 11 D5 0A 3A )\n  .ver 4:0:0:0\n}\n//-----------------------------------------------------\n// ADD\n//-----------------------------------------------------\n// Smoke level tests of the ADD instruction\n//-----------------------------------------------------\n// Notes:\n//\tWill we ever be able to _add R4's _and R8's, I4's _and I8's?\n//-----------------------------------------------------\n\n\n.assembly 'add'{\n  //This byte field requests that this assembly not be verified at run time and corresponds to this C# declaration:\n  //[assembly:System.Security.Permissions.SecurityPermissionAttribute( [mscorlib]System.Security.Permissions.SecurityAction.RequestMinimum, Flags=System.Security.Permissions.SecurityPermissionFlag.SkipVerification )]\n}\n\n.namespace add_\n{\n.class public explicit _add {\n\n.field [0] int32 global0\n.field [4] int32 global1\n\n.method public void .ctor() { ret }\n\n//-------------------------\n// Entry point - Main     -\n//-------------------------\n.method public static int32 main() {\n.custom instance void [xunit.core]Xunit.FactAttribute::.ctor() = (\n    01 00 00 00\n)\n.entrypoint\n.maxstack\t6\n.locals init (class add_._add target)\n//----------------\n// begin testing -\n//----------------\n\n\t// creating new instance of _add and storing it\n\tnewobj instance void add_._add::.ctor()\n\tstloc.0\n\n\n        // -- I4 + I2 -- Make sure we can _add smaller types to larger types\n        ldc.i4  0xAABB\n        conv.i2\n        ldc.i4  0x1111\n        add\n        ldc.i4  0xFFFFBBCC\n        ceq\n        brfalse FAIL\n        // -- I4 + I4 --\n        ldc.i4  0x11223344\n        ldc.i4  0x11111111\n        add\n        ldc.i4  0x22334455\n        ceq\n        brfalse FAIL\n\n        // -- I4 + &  -- Managed ptr\n\n        // -- I4 + *  -- Unmanaged ptr\n        ldloc target\n\tldflda\tint32 add_._add::global0\n        ldc.i4  0xAAAAAAAA\n        stind.i4        \n\n\tldloc target\n\tldflda\tint32 add_._add::global1\n        ldc.i4  0x44444444\n        stind.i4\n\n\tldloc target\n\tldflda\tint32 add_._add::global0\n        ldc.i4  0x4\n        add\n        ldind.i4\n        ldc.i4  0x44444444\n        ceq\n        brfalse FAIL\n\n        // -- I8 + I8 --\n        ldc.i8  0x0011223344556677\n        ldc.i8  0x7766554433221100\n        add\n        ldc.i8  0x7777777777777777\n        ceq\n        brfalse FAIL\n        // -- R4 + R4 --\n        ldc.r4  float32(0x3F800000)\n        ldc.r4  float32(0x00000000)\n        add\n        ldc.r4  float32(0x3F800000)\n        ceq\n        brfalse FAIL\n        \n        // -- R8 + R8 --\n        ldc.r8  float64(0xBFF0000000000000)\n        ldc.r8  float64(0x0000000000000000)\n        add\n        ldc.r8  float64(0xBFF0000000000000)\n        ceq\n        brfalse FAIL\n\n//----------------\nPASS:\n\tldstr \"Test SUCCESS\"\n\tcall void [System.Console]System.Console::WriteLine(string)\n\tldc.i4\t0x64\n\tret\n//----------------\nFAIL:\n\tldstr \"Test FAILED\"\n\tcall void [System.Console]System.Console::WriteLine(string)\n\tldc.i4\t0x0\n\tret\n}\n}\n}\n",
+  "unsupported": [
+    "Upstream IL preprocessor/legacy assembly rewrite required"
+  ],
+  "language": "il",
+  "opcodeFamilies": [
+    "arithmetic",
+    "branches",
+    "calls",
+    "conversions",
+    "memory",
+    "objects"
+  ],
+  "sourceSHA256": "3916f954a8f821e7ad4b670c053be97d40c611f4139360dee32b466a3f4ed24c",
+  "originalSource": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n.assembly extern legacy library mscorlib {}\n.assembly extern xunit.core {}\n.assembly extern System.Console\n{\n  .publickeytoken = (B0 3F 5F 7F 11 D5 0A 3A )\n  .ver 4:0:0:0\n}\n//-----------------------------------------------------\n// ADD\n//-----------------------------------------------------\n// Smoke level tests of the ADD instruction\n//-----------------------------------------------------\n// Notes:\n//\tWill we ever be able to _add R4's _and R8's, I4's _and I8's?\n//-----------------------------------------------------\n\n\n.assembly 'add'{\n  //This byte field requests that this assembly not be verified at run time and corresponds to this C# declaration:\n  //[assembly:System.Security.Permissions.SecurityPermissionAttribute( [mscorlib]System.Security.Permissions.SecurityAction.RequestMinimum, Flags=System.Security.Permissions.SecurityPermissionFlag.SkipVerification )]\n}\n\n.namespace add_\n{\n.class public explicit _add {\n\n.field [0] int32 global0\n.field [4] int32 global1\n\n.method public void .ctor() { ret }\n\n//-------------------------\n// Entry point - Main     -\n//-------------------------\n.method public static int32 main() {\n.custom instance void [xunit.core]Xunit.FactAttribute::.ctor() = (\n    01 00 00 00\n)\n.entrypoint\n.maxstack\t6\n.locals init (class add_._add target)\n//----------------\n// begin testing -\n//----------------\n\n\t// creating new instance of _add and storing it\n\tnewobj instance void add_._add::.ctor()\n\tstloc.0\n\n\n        // -- I4 + I2 -- Make sure we can _add smaller types to larger types\n        ldc.i4  0xAABB\n        conv.i2\n        ldc.i4  0x1111\n        add\n        ldc.i4  0xFFFFBBCC\n        ceq\n        brfalse FAIL\n        // -- I4 + I4 --\n        ldc.i4  0x11223344\n        ldc.i4  0x11111111\n        add\n        ldc.i4  0x22334455\n        ceq\n        brfalse FAIL\n\n        // -- I4 + &  -- Managed ptr\n\n        // -- I4 + *  -- Unmanaged ptr\n        ldloc target\n\tldflda\tint32 add_._add::global0\n        ldc.i4  0xAAAAAAAA\n        stind.i4        \n\n\tldloc target\n\tldflda\tint32 add_._add::global1\n        ldc.i4  0x44444444\n        stind.i4\n\n\tldloc target\n\tldflda\tint32 add_._add::global0\n        ldc.i4  0x4\n        add\n        ldind.i4\n        ldc.i4  0x44444444\n        ceq\n        brfalse FAIL\n\n        // -- I8 + I8 --\n        ldc.i8  0x0011223344556677\n        ldc.i8  0x7766554433221100\n        add\n        ldc.i8  0x7777777777777777\n        ceq\n        brfalse FAIL\n        // -- R4 + R4 --\n        ldc.r4  float32(0x3F800000)\n        ldc.r4  float32(0x00000000)\n        add\n        ldc.r4  float32(0x3F800000)\n        ceq\n        brfalse FAIL\n        \n        // -- R8 + R8 --\n        ldc.r8  float64(0xBFF0000000000000)\n        ldc.r8  float64(0x0000000000000000)\n        add\n        ldc.r8  float64(0xBFF0000000000000)\n        ceq\n        brfalse FAIL\n\n//----------------\nPASS:\n\tldstr \"Test SUCCESS\"\n\tcall void [System.Console]System.Console::WriteLine(string)\n\tldc.i4\t0x64\n\tret\n//----------------\nFAIL:\n\tldstr \"Test FAILED\"\n\tcall void [System.Console]System.Console::WriteLine(string)\n\tldc.i4\t0x0\n\tret\n}\n}\n}\n",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/tests/JIT/IL_Conformance/Old/Base/add.il",
+    "sha256": "3916f954a8f821e7ad4b670c053be97d40c611f4139360dee32b466a3f4ed24c",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/tests/JIT/IL_Conformance/Old/Base/add.il",
+    "license": "MIT"
+  },
+  "namespace": "JIT",
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack"
+  ],
+  "expected": {
+    "exitCode": 100
+  },
+  "adaptation": "Unmodified upstream IL. Native ILAsm required; no IL simulation."
+}

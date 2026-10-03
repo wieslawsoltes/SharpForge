@@ -1,20 +1,8 @@
-import { Writer, Reader, CilError } from '../binary.js';
+import { Writer, Reader } from '../binary.js';
 import { signaturePrimitives, signatureAliases } from './signature-types.js';
 import { readPrimitiveValue, writePrimitiveValue } from './primitive-values.js';
-
-export const constantDiagnosticCatalog = Object.freeze({
-  MD0120: 'Invalid Constant element type',
-  MD0121: 'Invalid Constant value',
-  MD0122: 'Invalid Constant blob length',
-  MD0123: 'Constant size limit exceeded',
-  MD0124: 'Constant operation cancelled',
-});
-
-function invalid(code, message = constantDiagnosticCatalog[code]) {
-  const error = new CilError(message);
-  error.code = code;
-  return error;
-}
+import { constantError as invalid } from './constant-errors.js';
+export { constantDiagnosticCatalog } from './constant-errors.js';
 const invalidValue = message => invalid('MD0121', message);
 const widths = Object.freeze({ 2: 1, 3: 2, 4: 1, 5: 1, 6: 2, 7: 2, 8: 4, 9: 4, 10: 8, 11: 8, 12: 4, 13: 8, 18: 4 });
 

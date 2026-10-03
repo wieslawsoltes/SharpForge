@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-ccba3b762c57abcef2f2",
+  "kind": "spec",
+  "sourceText": "public record class Result<T> : Result<T>.IUnionMembers\n{\n    object? _value;\n\n    public interface IUnionMembers\n    {\n        public static Result<T> Create(T value) => new() { _value = value };\n        public static Result<T> Create(Exception value) => new() { _value = value };\n\n        public object? Value { get; }\n    }\n\n    object? IUnionMembers.Value => _value;\n}",
+  "sourceSHA256": "b874186b1db21da2c4ab7411e69a9660e3b44afad65fbb975fa161dba7fed8a0",
+  "target": "library",
+  "featureId": "csharp-15-0-unions",
+  "langVersion": "preview",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-15.0/unions.md",
+    "sha256": "eb6de7e24e702567a909286e0b4b6d5b409ae3e7016fadd87ab4fc8c16c9fa4a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/unions.md",
+    "license": "NOASSERTION",
+    "offset": 10278
+  }
+}

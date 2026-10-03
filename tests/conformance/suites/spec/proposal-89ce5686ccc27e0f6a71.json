@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-89ce5686ccc27e0f6a71",
+  "kind": "spec",
+  "sourceText": "public class C\n{\n    public required int Prop { get; protected init; }\n\n    // Advertises that Prop is required. This is fine, because the constructor is just as accessible as the property initer.\n    protected C() {}\n\n    // Error: ctor C(object) is more accessible than required property Prop.init.\n    public C(object otherArg) {}\n}",
+  "sourceSHA256": "0d801d2116d441023f4404bea43cbf385a44ba61e5c81b0955d4610bef27f48c",
+  "target": "library",
+  "featureId": "csharp-11-0-required-members",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/required-members.md",
+    "sha256": "0f731d503b589797298f8926899fe7ca9be3843141d8782b074f52d1822f1ed3",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/required-members.md",
+    "license": "NOASSERTION",
+    "offset": 5676
+  }
+}

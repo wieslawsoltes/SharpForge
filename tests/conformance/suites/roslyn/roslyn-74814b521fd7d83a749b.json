@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-74814b521fd7d83a749b",
+  "kind": "diagnostics",
+  "sourceText": "assert(null, \"default\");\nassert(\"\", \"blank\");\nassert(\"a\", \"a\");\nassert(\"b\", \"b\");\nassert(\"c\", \"c\");\nassert(\"no\");\nassert(\"yes\");\nassert(\"four\");\nassert(\"blurb\");\nassert(\"hello\");\nassert(\"lamps\");\nassert(\"lambs\");\nassert(\"names\");\nassert(\"slurp\");\nassert(\"towed\");\nassert(\"words\");\nassert(\"not\", \"default\");\nassert(\"other\", \"default\");\nassert(\"y\", \"default\");\nassert(\"longer example\", \"default\");\nSystem.Console.Write(\"RAN\");\n\nvoid assert(string input, string expected = null)\n{\n    if (C.M(input) != (expected ?? input))\n    {\n        throw new System.Exception($\"{input} produced {C.M(input)}\");\n    }\n}\n\npublic class C\n{\n    public static string M(string o)\n    {\n        return o switch\n        {\n            \"\" => \"blank\",\n            \"a\" => \"a\",\n            \"b\" => \"b\",\n            \"c\" => \"c\",\n            \"no\" => \"no\",\n            \"yes\" => \"yes\",\n            \"four\" => \"four\",\n            \"alice\" => \"alice\",\n            \"blurb\" => \"blurb\",\n            \"hello\" => \"hello\",\n            \"lamps\" => \"lamps\",\n            \"lambs\" => \"lambs\",\n            \"lower\" => \"lower\",\n            \"names\" => \"names\",\n            \"slurp\" => \"slurp\",\n            \"towed\" => \"towed\",\n            \"words\" => \"words\",\n            _ => \"default\"\n        };\n    }\n}",
+  "sourceSHA256": "79106029c4cf72ca8c0cc3d3b8ba7453eee4e15d0c97a5bc811c677caee2ba42",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "sha256": "f4ddec53df1ec1373a003dd48fa22fbb4d028d7926ae9037faed2b953df6ab4d",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "license": "MIT",
+    "method": "MixOfBucketSizes",
+    "offset": 1921
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

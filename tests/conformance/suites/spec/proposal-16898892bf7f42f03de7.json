@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-16898892bf7f42f03de7",
+  "kind": "spec",
+  "sourceText": "     // assign to\n     (arr != null ? ref arr[0]: ref otherArr[0]) = 1;\n\n     // error. readOnlyField is readonly and thus conditional expression is readonly\n     (arr != null ? ref arr[0]: ref obj.readOnlyField) = 1;",
+  "sourceSHA256": "43ae7a6343fdf593609d8e18d0518ca96df2780424a3124a3d25508b7c65343a",
+  "target": "library",
+  "featureId": "csharp-7-2-in-parameters-and-readonly-references",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/readonly-ref.md",
+    "sha256": "d859c5f6e0e030570288248c429a08d0e4b8d5c0eecd6bf9042317e99198122b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/readonly-ref.md",
+    "license": "NOASSERTION",
+    "offset": 31094
+  }
+}

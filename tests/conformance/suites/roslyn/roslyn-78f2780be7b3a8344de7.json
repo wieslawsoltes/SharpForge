@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-78f2780be7b3a8344de7",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass Attr<T> : Attribute { }\n\n[Attr<int*>] // 1\nclass C1 { }\n\n[Attr<delegate*<int, void>>] // 2\nclass C2 { }\n\n[Attr<TypedReference>] // 3\nclass C3 { }\n",
+  "sourceSHA256": "54b93e12d53fa5b4cf9574be1fba72438a5f483674b9005e1602fc926e5473e9",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "GenericAttributeRestrictedTypeArgument_NoUnsafeContext",
+    "offset": 429145
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,7): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                // [Attr<int*>] // 1\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"int*\").WithLocation(5, 7),\n                // (5,7): error CS0306: The type 'int*' may not be used as a type argument\n                // [Attr<int*>] // 1\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"int*\").WithArguments(\"int*\").WithLocation(5, 7),\n                // (8,7): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                // [Attr<delegate*<int, void>>] // 2\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"delegate*\").WithLocation(8, 7),\n                // (8,7): error CS0306: The type 'delegate*<int, void>' may not be used as a type argument\n                // [Attr<delegate*<int, void>>] // 2\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"delegate*<int, void>\").WithArguments(\"delegate*<int, void>\").WithLocation(8, 7),\n                // (11,7): error CS0306: The type 'TypedReference' may not be used as a type argument\n                // [Attr<TypedReference>] // 3\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"TypedReference\").WithArguments(\"System.TypedReference\").WithLocation(11, 7)",
+  "unsupported": []
+}

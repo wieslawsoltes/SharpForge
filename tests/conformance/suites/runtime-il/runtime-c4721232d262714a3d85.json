@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "runtime-c4721232d262714a3d85",
+  "kind": "runtime",
+  "sourceText": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n.assembly extern legacy library mscorlib {}\n.assembly extern xunit.core {}\n\n.assembly 'ceq'{}\n\n.namespace ceq_\n{\n.class public _ceq {\n\n.field public static   int32 i4\n.field public static   int64 i8\n.field public static   float32 r4\n.field public static   float64 r8\n.field public static   int32 i\n.field public static   class ceq_._ceq ref\n\n.method public void .ctor() {\n.maxstack\t10\n\tldarg.0\n\tcall instance void [mscorlib]System.Object::.ctor()\n\tret\n}\n\n.method public static void initialize() {\n        ldc.i4  0x1234ABCD\n        stsfld  int32 ceq_._ceq::i4\n        ldc.i8  0x1234ABCD5678EF09\n        stsfld  int64 ceq_._ceq::i8\n        ldc.r4  float32(0xBF800000)\n        stsfld  float32 ceq_._ceq::r4\n        ldc.r8  float64(0xBFF0000000000000)\n        stsfld  float64 ceq_._ceq::r8\n        ldc.i4  0x000000FF\n        stsfld  int32 ceq_._ceq::i\n        newobj  instance void ceq_._ceq::.ctor()\n        stsfld  class ceq_._ceq ceq_._ceq::ref\n        ret\n}\n\n.method public static int32 main() {\n.custom instance void [xunit.core]Xunit.FactAttribute::.ctor() = (\n    01 00 00 00\n)\n.entrypoint\n.maxstack\t10\n\tcall\tvoid ceq_._ceq::initialize()\n        ldsfld  int32 ceq_._ceq::i4\n        ldsfld  int32 ceq_._ceq::i4\n        ceq\n        brfalse FAIL    \n        ldsfld  int64 ceq_._ceq::i8\n        ldsfld  int64 ceq_._ceq::i8\n        ceq\n        brfalse FAIL    \n        ldsfld  float32 ceq_._ceq::r4\n        ldsfld  float32 ceq_._ceq::r4\n        ceq\n        brfalse FAIL    \n\n        ldsfld  float64 ceq_._ceq::r8\n        ldsfld  float64 ceq_._ceq::r8\n        ceq\n        brfalse FAIL    \n        ldsfld  int32 ceq_._ceq::i\n        ldsfld  int32 ceq_._ceq::i\n        ceq\n        brfalse FAIL    \n\n\nPASS:\n\tldc.i4 100\n\tret\nFAIL:\n\tldc.i4\t0x0\n\tret\n}\n}\n}\n",
+  "unsupported": [
+    "Upstream IL preprocessor/legacy assembly rewrite required"
+  ],
+  "language": "il",
+  "opcodeFamilies": [
+    "arithmetic",
+    "branches",
+    "calls",
+    "objects"
+  ],
+  "sourceSHA256": "07fd7e09d01afa9ef54a5e563f1d361171311581b7ddd39a6bb1a42953366dfa",
+  "originalSource": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n.assembly extern legacy library mscorlib {}\n.assembly extern xunit.core {}\n\n.assembly 'ceq'{}\n\n.namespace ceq_\n{\n.class public _ceq {\n\n.field public static   int32 i4\n.field public static   int64 i8\n.field public static   float32 r4\n.field public static   float64 r8\n.field public static   int32 i\n.field public static   class ceq_._ceq ref\n\n.method public void .ctor() {\n.maxstack\t10\n\tldarg.0\n\tcall instance void [mscorlib]System.Object::.ctor()\n\tret\n}\n\n.method public static void initialize() {\n        ldc.i4  0x1234ABCD\n        stsfld  int32 ceq_._ceq::i4\n        ldc.i8  0x1234ABCD5678EF09\n        stsfld  int64 ceq_._ceq::i8\n        ldc.r4  float32(0xBF800000)\n        stsfld  float32 ceq_._ceq::r4\n        ldc.r8  float64(0xBFF0000000000000)\n        stsfld  float64 ceq_._ceq::r8\n        ldc.i4  0x000000FF\n        stsfld  int32 ceq_._ceq::i\n        newobj  instance void ceq_._ceq::.ctor()\n        stsfld  class ceq_._ceq ceq_._ceq::ref\n        ret\n}\n\n.method public static int32 main() {\n.custom instance void [xunit.core]Xunit.FactAttribute::.ctor() = (\n    01 00 00 00\n)\n.entrypoint\n.maxstack\t10\n\tcall\tvoid ceq_._ceq::initialize()\n        ldsfld  int32 ceq_._ceq::i4\n        ldsfld  int32 ceq_._ceq::i4\n        ceq\n        brfalse FAIL    \n        ldsfld  int64 ceq_._ceq::i8\n        ldsfld  int64 ceq_._ceq::i8\n        ceq\n        brfalse FAIL    \n        ldsfld  float32 ceq_._ceq::r4\n        ldsfld  float32 ceq_._ceq::r4\n        ceq\n        brfalse FAIL    \n\n        ldsfld  float64 ceq_._ceq::r8\n        ldsfld  float64 ceq_._ceq::r8\n        ceq\n        brfalse FAIL    \n        ldsfld  int32 ceq_._ceq::i\n        ldsfld  int32 ceq_._ceq::i\n        ceq\n        brfalse FAIL    \n\n\nPASS:\n\tldc.i4 100\n\tret\nFAIL:\n\tldc.i4\t0x0\n\tret\n}\n}\n}\n",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/tests/JIT/IL_Conformance/Old/Base/ceq.il",
+    "sha256": "07fd7e09d01afa9ef54a5e563f1d361171311581b7ddd39a6bb1a42953366dfa",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/tests/JIT/IL_Conformance/Old/Base/ceq.il",
+    "license": "MIT"
+  },
+  "namespace": "JIT",
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack"
+  ],
+  "expected": {
+    "exitCode": 100
+  },
+  "adaptation": "Unmodified upstream IL. Native ILAsm required; no IL simulation."
+}

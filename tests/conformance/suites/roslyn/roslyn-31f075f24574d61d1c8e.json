@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-31f075f24574d61d1c8e",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Reflection;\n\nsealed class MarkAttribute : Attribute\n{\n    public MarkAttribute(bool a, params object[] b)\n    {\n        A = a;\n        B = b;\n    }\n    public bool A { get; }\n    public object[] B { get; }\n}\n\n[Mark(b: \"Hello\", a: true)]\nstatic class Program\n{\n    public static void Main()\n    {\n        var attr = typeof(Program).GetCustomAttribute<MarkAttribute>();\n        Console.Write($\"A={attr.A}, B.Length={attr.B.Length}, B[0]={attr.B[0]}\");\n    }\n}",
+  "sourceSHA256": "21a0afbcc4b4ca6db81f5a64d9418bb766f77addc55e6f3fb4fd2fd00136fddd",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "TestNamedArgumentOnObjectParamsArgument2",
+    "offset": 51213
+  },
+  "langVersion": "7.2",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System;\nusing System.Reflection;\n\nsealed class MarkAttribute : Attribute\n{\n    public MarkAttribute(bool a, params object[] b)\n    {\n        A = a;\n        B = b;\n    }\n    public bool A { get; }\n    public object[] B { get; }\n}\n\n[Mark(b: \"\"Hello\"\", a: true)]\nstatic class Program\n{\n    public static void Main()\n    {\n        var attr = typeof(Program).GetCustomAttribute<MarkAttribute>();\n        Console.Write($\"\"A={attr.A}, B.Length={attr.B.Length}, B[0]={attr.B[0]}\"\");\n    }\n}\", options: TestOptions.DebugExe, parseOptions: TestOptions.Regular7_2)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

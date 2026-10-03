@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-77a4fd8c94dfffbc7315",
+  "kind": "diagnostics",
+  "sourceText": "ref struct C\n{\n    public C(ref readonly int p)\n    {\n        r = ref p; // 1\n        rro = ref p;\n        ror = ref p; // 2\n        rorro = ref p;\n    }\n\n    ref int r;\n    ref readonly int rro;\n    readonly ref int ror;\n    readonly ref readonly int rorro;\n\n    void M(ref readonly int p)\n    {\n        ref int a = ref p; // 3\n        ref readonly int b = ref p;\n        r = ref p; // 4\n        rro = ref p; // 5\n        ror = ref p; // 6\n        rorro = ref p; // 7\n    }\n}",
+  "sourceSHA256": "ab97e03e8180038c9e0c935774e91ddbf3fd2940f820ede2bee6b1c6057e2c0d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "RefAssignment",
+    "offset": 133615
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8331",
+        "severity": "error"
+      },
+      {
+        "code": "CS8331",
+        "severity": "error"
+      },
+      {
+        "code": "CS8329",
+        "severity": "error"
+      },
+      {
+        "code": "CS8331",
+        "severity": "error"
+      },
+      {
+        "code": "CS9079",
+        "severity": "error"
+      },
+      {
+        "code": "CS0191",
+        "severity": "error"
+      },
+      {
+        "code": "CS0191",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (5,17): error CS8331: Cannot assign to variable 'p' or use it as the right hand side of a ref assignment because it is a readonly variable\n            //         r = ref p; // 1\n            Diagnostic(ErrorCode.ERR_AssignReadonlyNotField, \"p\").WithArguments(\"variable\", \"p\").WithLocation(5, 17),\n            // (7,19): error CS8331: Cannot assign to variable 'p' or use it as the right hand side of a ref assignment because it is a readonly variable\n            //         ror = ref p; // 2\n            Diagnostic(ErrorCode.ERR_AssignReadonlyNotField, \"p\").WithArguments(\"variable\", \"p\").WithLocation(7, 19),\n            // (18,25): error CS8329: Cannot use variable 'p' as a ref or out value because it is a readonly variable\n            //         ref int a = ref p; // 3\n            Diagnostic(ErrorCode.ERR_RefReadonlyNotField, \"p\").WithArguments(\"variable\", \"p\").WithLocation(18, 25),\n            // (20,17): error CS8331: Cannot assign to variable 'p' or use it as the right hand side of a ref assignment because it is a readonly variable\n            //         r = ref p; // 4\n            Diagnostic(ErrorCode.ERR_AssignReadonlyNotField, \"p\").WithArguments(\"variable\", \"p\").WithLocation(20, 17),\n            // (21,9): error CS9079: Cannot ref-assign 'p' to 'rro' because 'p' can only escape the current method through a return statement.\n            //         rro = ref p; // 5\n            Diagnostic(ErrorCode.ERR_RefAssignReturnOnly, \"rro = ref p\").WithArguments(\"rro\", \"p\").WithLocation(21, 9),\n            // (22,9): error CS0191: A readonly field cannot be assigned to (except in a constructor or init-only setter of the type in which the field is defined or a variable initializer)\n            //         ror = ref p; // 6\n            Diagnostic(ErrorCode.ERR_AssgReadonly, \"ror\").WithLocation(22, 9),\n            // (23,9): error CS0191: A readonly field cannot be assigned to (except in a constructor or init-only setter of the type in which the field is defined or a variable initializer)\n            //         rorro = ref p; // 7\n            Diagnostic(ErrorCode.ERR_AssgReadonly, \"rorro\").WithLocation(23, 9)",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

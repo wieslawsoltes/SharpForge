@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-11bd93e54479648d9723",
+  "kind": "diagnostics",
+  "sourceText": "assert(\"AsPointer\");\nassert(\"As\");\nassert(\"AsRef\");\nassert(\"Add\");\nassert(\"AddByteOffset\");\nassert(\"Copy\");\nassert(\"CopyBlock\");\nassert(\"CopyBlockUnaligned\");\nassert(\"InitBlock\");\nassert(\"InitBlockUnaligned\");\nassert(\"Read\");\nassert(\"Write\");\nassert(\"ReadUnaligned\");\nassert(\"WriteUnaligned\");\nassert(\"AreSame\");\nassert(\"ByteOffset\");\nassert(\"NullRef\");\nassert(\"IsNullRef\");\nassert(\"SkipInit\");\nassert(\"Subtract\");\nassert(\"SubtractByteOffset\");\nassert(\"Unbox\");\n\nassert(null, \"default\");\nassert(\"\", \"default\");\nassert(\"other\", \"default\");\nSystem.Console.Write(\"RAN\");\n\nvoid assert(string input, string expected = null)\n{\n    if (C.M(input) != (expected ?? input))\n    {\n        throw new System.Exception($\"{input} produced {C.M(input)}\");\n    }\n}\n\npublic class C\n{\n    public static string M(string value)\n    {\n        return value switch\n        {\n            \"AsPointer\" => \"AsPointer\",\n            \"As\" => \"As\",\n            \"AsRef\" => \"AsRef\",\n            \"Add\" => \"Add\",\n            \"AddByteOffset\" => \"AddByteOffset\",\n            \"Copy\" => \"Copy\",\n            \"CopyBlock\" => \"CopyBlock\",\n            \"CopyBlockUnaligned\" => \"CopyBlockUnaligned\",\n            \"InitBlock\" => \"InitBlock\",\n            \"InitBlockUnaligned\" => \"InitBlockUnaligned\",\n            \"Read\" => \"Read\",\n            \"Write\" => \"Write\",\n            \"ReadUnaligned\" => \"ReadUnaligned\",\n            \"WriteUnaligned\" => \"WriteUnaligned\",\n            \"AreSame\" => \"AreSame\",\n            \"ByteOffset\" => \"ByteOffset\",\n            \"NullRef\" => \"NullRef\",\n            \"IsNullRef\" => \"IsNullRef\",\n            \"SkipInit\" => \"SkipInit\",\n            \"Subtract\" => \"Subtract\",\n            \"SubtractByteOffset\" => \"SubtractByteOffset\",\n            \"Unbox\" => \"Unbox\",\n            _ => \"default\"\n        };\n    }\n}",
+  "sourceSHA256": "f078217538334d4c6aff059548b61ff5e66f5c4e9168740af64532825766579e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "sha256": "f4ddec53df1ec1373a003dd48fa22fbb4d028d7926ae9037faed2b953df6ab4d",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "license": "MIT",
+    "method": "EmitIL",
+    "offset": 401747
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.RegularPreview.WithDisableLengthBasedSwitch())",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

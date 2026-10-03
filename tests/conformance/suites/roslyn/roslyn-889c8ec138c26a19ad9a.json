@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-889c8ec138c26a19ad9a",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    void M()\n    {\n        System.Console.WriteLine($\"{(new A(), new A()) == (new X(), new Y())}\");\n        System.Console.WriteLine($\"{(new A(), new A()) != (new X(), new Y())}\");\n    }\n}\npublic class A\n{\n    [System.Obsolete(\"obsolete\", true)]\n    public static bool operator ==(A a, Y y)\n        => throw null;\n    [System.Obsolete(\"obsolete too\", true)]\n    public static bool operator !=(A a, Y y)\n        => throw null;\n    public override bool Equals(object o)\n        => throw null;\n    public override int GetHashCode()\n        => throw null;\n}\npublic class X\n{\n}\npublic class Y\n{\n    public static implicit operator Y(X x)\n        => throw null;\n}\n",
+  "sourceSHA256": "d6d488946bd19f86f4d884b5eb4af8d6da6f4f09b6d9b13426c469ac9c0d5d2d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestObsoleteEqualityOperator",
+    "offset": 109065
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,37): error CS0619: 'A.operator ==(A, Y)' is obsolete: 'obsolete'\n                //         System.Console.WriteLine($\"{(new A(), new A()) == (new X(), new Y())}\");\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"(new A(), new A()) == (new X(), new Y())\").WithArguments(\"A.operator ==(A, Y)\", \"obsolete\").WithLocation(6, 37),\n                // (6,37): error CS0619: 'A.operator ==(A, Y)' is obsolete: 'obsolete'\n                //         System.Console.WriteLine($\"{(new A(), new A()) == (new X(), new Y())}\");\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"(new A(), new A()) == (new X(), new Y())\").WithArguments(\"A.operator ==(A, Y)\", \"obsolete\").WithLocation(6, 37),\n                // (7,37): error CS0619: 'A.operator !=(A, Y)' is obsolete: 'obsolete too'\n                //         System.Console.WriteLine($\"{(new A(), new A()) != (new X(), new Y())}\");\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"(new A(), new A()) != (new X(), new Y())\").WithArguments(\"A.operator !=(A, Y)\", \"obsolete too\").WithLocation(7, 37),\n                // (7,37): error CS0619: 'A.operator !=(A, Y)' is obsolete: 'obsolete too'\n                //         System.Console.WriteLine($\"{(new A(), new A()) != (new X(), new Y())}\");\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"(new A(), new A()) != (new X(), new Y())\").WithArguments(\"A.operator !=(A, Y)\", \"obsolete too\").WithLocation(7, 37)\n                ",
+  "unsupported": []
+}
