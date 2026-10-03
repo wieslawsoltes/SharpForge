@@ -60,8 +60,20 @@ node scripts/limited.js node --test --test-concurrency=1 tests/clr-methods-*.tes
 node scripts/limited.js node packages/clr/tools/benchmark-method-definitions.mjs
 ```
 
-Validation is pending the scheduled serial slot. Full MethodInfo/ConstructorInfo
-and ParameterInfo facades, defaults, GetBaseDefinition, overload resolution,
-virtual dispatch and invocation are
+The SDK 10.0.201/CoreCLR 10.0.5 capture contains 14 methods across five types;
+the six focused method-definition tests pass on Node 24.21.0. Static checks pass,
+and the structure report contains 264 existing findings with none in CLR.
+Validation ran serially through the limiter; broader execution qualification was
+not run. Method-owned parameter validation is recorded separately above.
+
+The first implementation has no prior equivalent benchmark. On a shared Apple
+M3 Pro/darwin-arm64 with Node 24.21.0, cold indexing and identity creation for all
+fixture types measured median 22.584 µs / p95 45.500 µs. Cached method identity and
+signature lookup measured median 0.00793 µs / p95 0.02924 µs. Exact allocation
+counts were not measured; no speedup is claimed. The committed JSON records
+host details and percentiles.
+
+Full MethodInfo/ConstructorInfo and ParameterInfo facades, defaults,
+GetBaseDefinition, overload resolution, virtual dispatch and invocation are
 separate increments. Source VM, direct CIL and Rust native/Wasm execution are
 not qualified by this host metadata API.
