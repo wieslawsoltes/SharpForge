@@ -149,7 +149,7 @@ export function invokeAsyncIntrinsic(vm,descriptor,args) {
 
 /** Pending task records own boxed machines; completed task heap records own faults. */
 export function* asyncRoots(vm) {
-  for(const task of vm.scheduler.tasks.values())if(task.asyncState&&!terminal.has(task.status)) {
+  for(const task of vm.scheduler?.tasks?.values()??[])if(task.asyncState&&!terminal.has(task.status)) {
     yield task.ref;yield task.asyncState.machine;yield task.asyncState.awaitedTask;
   }
 }

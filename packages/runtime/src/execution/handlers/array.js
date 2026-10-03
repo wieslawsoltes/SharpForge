@@ -13,12 +13,12 @@ const handlers=new Map([
 for(const suffix of ['', '.i1','.u1','.i2','.u2','.i4','.u4','.i8','.i','.r4','.r8','.ref']) {
   handlers.set('ldelem'+suffix,(vm,frame,instruction)=>{
     const index=number(vm.pop()),ref=vm.pop(),record=arrayVectorRecord(vm,ref,index);
-    vm.push(suffix?vm.indirect(record.data[index],instruction.name):vm.storage(record.data[index],vm.inspector.metadata.typeName(instruction.operand)));
+    vm.push(vm.heap.withRoots([ref],()=>suffix?vm.indirect(record.data[index],instruction.name):vm.storage(record.data[index],vm.typeSystem.table(instruction.operand))));
   });
   if(['.u1','.u2','.u4'].includes(suffix))continue;
   handlers.set('stelem'+suffix,(vm,frame,instruction)=>{
     const value=vm.pop(),index=number(vm.pop()),ref=vm.pop();arrayVectorRecord(vm,ref,index);
-    vm.dereference(vm.address('array',index,ref),true,suffix?vm.indirect(value,instruction.name):vm.storage(value,vm.inspector.metadata.typeName(instruction.operand)));
+    vm.heap.withRoots([ref,value],()=>vm.dereference(vm.address('array',Number(index),ref),true,suffix?vm.indirect(value,instruction.name):vm.storage(value,vm.typeSystem.table(instruction.operand))));
   });
 }
 export {handlers};

@@ -1,3 +1,5 @@
+import {invokeAsyncIntrinsic} from './async-runtime.js';
+import {arrayCall} from './array-calls.js';
 import {invokeNumericIntrinsic} from './numeric-intrinsics.js';
 import {mutateArray} from './array-ops.js';
 import {intrinsicDefinition,intrinsicDefinitions} from '@sharpforge/cil';
@@ -13,6 +15,7 @@ function stringReceiver(context) {
   return value;
 }
 const implementations={
+  synchronization:({vm,descriptor,self,parameters})=>vm.sync.invoke(descriptor,descriptor.signature.isStatic?parameters:[self,...parameters]).value,
   decimal:({vm,descriptor,self,parameters})=>invokeNumericIntrinsic(vm,descriptor,descriptor.signature.isStatic?parameters:[self,...parameters]).value,
   arrayMutate:({vm,descriptor,parameters})=>mutateArray(vm,descriptor.name,parameters[0]),
   console:({vm,descriptor,parameters})=>{vm.emitOutput((parameters.length?vm.format(parameters[0],descriptor.signature.parameters[0]):'')+(descriptor.name==='WriteLine'?'\n':''));return null;},
@@ -61,23 +64,7 @@ const implementations={
     const result=string[{Contains:'includes',StartsWith:'startsWith',EndsWith:'endsWith',IndexOf:'indexOf'}[descriptor.name]](values[0]);
     return typeof result==='boolean'?result?1:0:result;
   },
-  math:({descriptor,values})=>{
-    const name=descriptor.name,signature=descriptor.signature;
-    let result;
-    if(typeof values[0]==='bigint') {
-      if(name==='Abs') {
-        if(values[0]===-(1n<<63n))throw new ManagedFault('OverflowException','Int64 absolute value overflow');
-        result=values[0]<0?-values[0]:values[0];
-      } else result=name==='Min'?values[0]<values[1]?values[0]:values[1]:values[0]>values[1]?values[0]:values[1];
-    } else if(name==='Round') {
-      const floor=Math.floor(values[0]),fraction=values[0]-floor;
-      result=fraction===0.5?(floor%2===0?floor:floor+1):Math.round(values[0]);
-    } else {
-      if(name==='Abs'&&signature.returnType==='int'&&values[0]===-2147483648)throw new ManagedFault('OverflowException','Int32 absolute value overflow');
-      result=Math[name==='Ceiling'?'ceil':name.toLowerCase()](...values);
-    }
-    return signature.returnType==='double'||signature.returnType==='float'?float(result,signature.returnType==='float'?'r4':'r8'):result;
-  },
+  math:({vm,descriptor,parameters})=>invokeNumericIntrinsic(vm,descriptor,parameters).value,
   gcCollect:({vm})=>{vm.heap.collect();return null;},
   gcMemory:({vm,values})=>{if(values[0])vm.heap.collect();return BigInt(vm.heap.stats.liveBytes);},
   gcCount:({vm,values})=>{
@@ -114,6 +101,9 @@ export const intrinsicHandlers=new Map(intrinsicDefinitions.map(definition=>{
   }];
 }));
 export function invokeIntrinsic(vm,descriptor,args) {
+  const array=arrayCall(vm,descriptor,args);if(array.handled)return array.value;
+  const async=invokeAsyncIntrinsic(vm,descriptor,args);if(async.handled)return async.value;
+  const sync=vm.sync?.invoke(descriptor,args);if(sync?.handled)return sync.value;
   const definition=intrinsicDefinition(descriptor),handler=definition&&intrinsicHandlers.get(definition.key);
   if(!handler)throw new ManagedFault('MissingMethodException',`${descriptor.owner}::${descriptor.name}`);
   return handler(vm,descriptor,args,definition);

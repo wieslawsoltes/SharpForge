@@ -21,7 +21,7 @@ const bases = new Map([
   ...['NullReferenceException', 'IndexOutOfRangeException', 'InvalidCastException',
     'FormatException', 'NotSupportedException', 'OutOfMemoryException',
     'StackOverflowException', 'TypeLoadException', 'TypeInitializationException',
-    'InvalidProgramException', 'ArrayTypeMismatchException']
+    'InvalidProgramException', 'ArrayTypeMismatchException', 'RankException']
     .map(name => [`System.${name}`, 'System.SystemException'])
 ]);
 const aliases = new Map([...bases.keys()].map(name => [name.slice(name.lastIndexOf('.') + 1), name]));

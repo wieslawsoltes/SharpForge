@@ -1,3 +1,5 @@
+import {numericIntrinsicDefinitions} from './numeric-intrinsic-profile.js';
+import {syncIntrinsicDefinitions} from './sync-intrinsic-profile.js';
 import {numericTypeNames,decodeNumericMode} from './numeric/numeric-types.js';
 import {decodeScalar} from './numeric/scalar-ops.js';
 import {contracts,enumTypes,frameworkType} from '@sharpforge/framework';
@@ -5,7 +7,7 @@ import {contracts,enumTypes,frameworkType} from '@sharpforge/framework';
 export const FORMAT_VERSION = 1;
 // Numeric conversion IDs occupy the low range; enum targets retain declared identity.
 export const EnumConvertBase = 65536;
-export const Op = Object.freeze(Object.fromEntries(['SEQ','CONST','LDLOC','STLOC','LDSTATIC','STSTATIC','LDFLD','STFLD','DUP','POP','BINARY','UNARY','JUMP','JFALSE','JTRUE','CALL','BUILTIN','RET','NEWOBJ','NEWARR','LDELEM','STELEM','LENGTH','THROW','RETHROW','CONVERT','NOP','ENDFINALLY','DELEGATE','ENUM'].map((n,i)=>[n,i])));
+export const Op = Object.freeze(Object.fromEntries(['SEQ','CONST','LDLOC','STLOC','LDSTATIC','STSTATIC','LDFLD','STFLD','DUP','POP','BINARY','UNARY','JUMP','JFALSE','JTRUE','CALL','BUILTIN','RET','NEWOBJ','NEWARR','LDELEM','STELEM','LENGTH','THROW','RETHROW','CONVERT','NOP','ENDFINALLY','DELEGATE','ENUM','ADDRESS'].map((n,i)=>[n,i])));
 export const OpName = Object.freeze(Object.keys(Op));
 export const Binary = Object.freeze(Object.fromEntries(['+','-','*','/','%','==','!=','<','<=','>','>=','&','|','^','<<','>>'].map((n,i)=>[n,i])));
 export const BinaryName = Object.freeze(Object.keys(Binary));
@@ -25,8 +27,13 @@ const definitions = [
  ['Debug.Assert',1,2,'void',['bool','string']],['Environment.TickCount',0,0,'int',[]],['$Math.Abs.Int32',1,1,'int',['int']]
 ];
 // Append new intrinsics after framework entries so released builtin IDs do not move.
-const additions=[['string.Intern',1,1,'string',['string']],['string.IsInterned',1,1,'string',['string']],['string.get_Chars',2,2,'int',['string','int']],['object.ReferenceEquals',2,2,'bool',['object','object']],['Enum.HasFlag',2,2,'bool',['any','any']],['object.GetType',1,1,'System.Type',['any']],['Type.Name',1,1,'string',['System.Type']],['Type.FullName',1,1,'string',['System.Type']],...['int','double','bool','long'].map(type=>['$type.'+type+'.GetType',1,1,'System.Type',['any']])];
-export const Builtins = Object.freeze([...definitions.map(([name,min,max,result,params],id)=>Object.freeze({id,name,min,max,result,params})),...contracts.map(contract=>{const id=definitions.length+contract.id,count=contract.parameters.length+(!contract.isStatic&&contract.kind!=='constructor'?1:0);return Object.freeze({id,name:'$framework:'+contract.id,min:count,max:count,result:contract.result,params:[...(!contract.isStatic&&contract.kind!=='constructor'?[contract.owner]:[]),...contract.parameters],contract});}),...additions.map(([name,min,max,result,params],index)=>Object.freeze({id:definitions.length+contracts.length+index,name,min,max,result,params}))]);
+const additions=[['string.Intern',1,1,'string',['string']],['string.IsInterned',1,1,'string',['string']],['string.get_Chars',2,2,'int',['string','int']],['object.ReferenceEquals',2,2,'bool',['object','object']],['Enum.HasFlag',2,2,'bool',['any','any']],['object.GetType',1,1,'System.Type',['any']],['Type.Name',1,1,'string',['System.Type']],['Type.FullName',1,1,'string',['System.Type']],...['int','double','bool','long',...numericTypeNames.filter(type=>!['int','double','long'].includes(type))].map(type=>['$type.'+type+'.GetType',1,1,'System.Type',['any']])];
+const originalBuiltins = [...definitions.map(([name,min,max,result,params],id)=>Object.freeze({id,name,min,max,result,params})),...contracts.map(contract=>{const id=definitions.length+contract.id,count=contract.parameters.length+(!contract.isStatic&&contract.kind!=='constructor'?1:0);return Object.freeze({id,name:'$framework:'+contract.id,min:count,max:count,result:contract.result,params:[...(!contract.isStatic&&contract.kind!=='constructor'?[contract.owner]:[]),...contract.parameters],contract});}),...additions.map(([name,min,max,result,params],index)=>Object.freeze({id:definitions.length+contracts.length+index,name,min,max,result,params}))];
+
+const profileBuiltin=(descriptor,kind,id)=>{const constructor=descriptor.name==='.ctor',count=descriptor.parameters.length+(!descriptor.isStatic&&!constructor?1:0);return Object.freeze({id,name:'$'+kind+':'+descriptor.owner+'::'+descriptor.name+'('+descriptor.parameters.join(',')+'):'+descriptor.returnType,min:count,max:count,result:constructor?descriptor.owner:descriptor.returnType,params:Object.freeze([...(!descriptor.isStatic&&!constructor?[descriptor.owner]:[]),...descriptor.parameters]),[kind]:descriptor});};
+export const Builtins=Object.freeze([...originalBuiltins,...numericIntrinsicDefinitions.map((descriptor,index)=>profileBuiltin(descriptor,'numeric',originalBuiltins.length+index)),...syncIntrinsicDefinitions.map((descriptor,index)=>profileBuiltin(descriptor,'synchronization',originalBuiltins.length+numericIntrinsicDefinitions.length+index))]);
+export {numericIntrinsicDefinitions} from './numeric-intrinsic-profile.js';
+export {syncIntrinsicDefinitions,isSynchronizationIntrinsic} from './sync-intrinsic-profile.js';
 export const frameworkBuiltin = contract=>contract?Builtins[definitions.length+contract.id]:null;
 export const BuiltinMap = new Map(Builtins.map(b=>[b.name,b]));
 export function disassemble(image, methodId) {
@@ -53,6 +60,7 @@ export function verifyImage(image){
         case Op.CONST:if(a<0||a>=image.constants.length)fail(m,pc,'Invalid constant');else if(image.constants[a]?.scalar){try{decodeScalar(image.constants[a]);}catch{fail(m,pc,'Invalid scalar constant');}}delta=1;break;
         case Op.LDLOC:case Op.STLOC:if(a<0||a>=m.locals.length)fail(m,pc,'Invalid local');if(op===Op.LDLOC)delta=1;else need=1;break;
         case Op.LDSTATIC:case Op.STSTATIC:if(a<0||a>=image.statics.length)fail(m,pc,'Invalid static');if(op===Op.LDSTATIC)delta=1;else need=1;break;
+        case Op.ADDRESS:if(a<0||a>7||b<0||(a&3)===0&&b>=m.locals.length||(a&3)===1&&b>=image.statics.length||(a&3)===3&&b!==0)fail(m,pc,'Invalid managed address');need=(a&3)===2?1:(a&3)===3?2:0;delta=1-need;break;
         case Op.LDFLD:need=1;break;case Op.STFLD:need=2;delta=-1;break;
         case Op.DUP:need=1;delta=1;break;case Op.POP:need=1;delta=-1;break;
         case Op.BINARY:need=2;delta=-1;if(!BinaryName[a])fail(m,pc,'Invalid binary operator');if(b>=16?(()=>{try{decodeNumericMode(b);return false;}catch{return true;}})():![0,1,2,3,5].includes(b)||b===5&&!['+','-','*'].includes(BinaryName[a]))fail(m,pc,'Invalid binary mode');break;
@@ -81,3 +89,5 @@ export {numericTypeNames,NumericType,numericAliases,numericTypeName,numericTypeI
 export {float,isNativeInteger,nativeInteger,number,isNumber,defaults,compare,binary,unary,convert,storage,indirect} from './numeric/numeric-ops.js';
 export {decimalMaxCoefficient,isDecimal,decimal,decimalZero,decimalFromBits,decimalBits,decimalParse,decimalFromInteger,decimalFromFloat,decimalToInteger,decimalToFloat,decimalCompare,decimalNegate,decimalAbs,decimalAdd,decimalMultiply,decimalDivide,decimalRemainder,decimalRound,decimalFormat,decimalBinary} from './numeric/decimal-ops.js';
 export {scalarConvert,scalarBinary,scalarUnary,encodeScalar,decodeScalar,scalarFormat} from './numeric/scalar-ops.js';
+
+export {numericFormat} from './numeric/numeric-format.js';

@@ -23,6 +23,23 @@ export function arrayShape(record) {
   if(!record.methodTable.flags.szArray)throw fault('InvalidProgramException','Multidimensional array shape is missing');
   return Object.freeze({rank:1,szArray:true,lengths:Object.freeze([record.data.length]),lowerBounds:Object.freeze([0]),strides:Object.freeze([1])});
 }
+/** Snapshot preflight: shape metadata must describe exactly the stored elements. */
+export function validateArrayShape(record) {
+  const invalid=()=>{throw new TypeError('Invalid snapshot array shape');};
+  const table=record?.methodTable,shape=record?.arrayShape;
+  if(!table?.flags.array||!Array.isArray(record.data))invalid();
+  if(shape===undefined){if(!table.flags.szArray)invalid();return;}
+  if(!shape||!Number.isInteger(shape.rank)||shape.rank<1||shape.rank>32||shape.rank!==table.rank||shape.szArray!==table.flags.szArray||
+    ![shape.lengths,shape.lowerBounds,shape.strides].every(values=>Array.isArray(values)&&values.length===shape.rank))invalid();
+  let total=1;
+  for(let i=shape.rank-1;i>=0;i--) {
+    const length=shape.lengths[i],lower=shape.lowerBounds[i];
+    if(!Number.isInteger(length)||length<0||length>2147483647||!Number.isInteger(lower)||lower< -2147483648||lower>2147483647||
+      length>0&&lower+length-1>2147483647||shape.strides[i]!==total)invalid();
+    total*=length;
+  }
+  if(total!==record.data.length||shape.szArray&&(shape.rank!==1||shape.lowerBounds[0]!==0))invalid();
+}
 export function arrayVectorRecord(vm,reference,index) {
   const record=arrayRecord(vm,reference);
   if(!record.methodTable.flags.szArray)throw fault('InvalidProgramException','Vector opcode requires a single-dimensional zero-based array');
@@ -79,13 +96,15 @@ export function arrayDimension(vm,reference,dimension,property='length') {
   return shape.lengths[index];
 }
 export function arrayGet(vm,reference,indices,{reflection=false,type=null}={}) {
-  const record=arrayRecord(vm,reference),offset=arrayOffset(record,indices,{reflection}),element=record.methodTable.elementType;
-  const value=copyValue(vm,record.data[offset],type??element);
-  return reflection&&element.flags.valueType?boxValue(vm,value,element):value;
+  return vm.heap.withRoots([reference],()=>{
+    const record=arrayRecord(vm,reference),offset=arrayOffset(record,indices,{reflection}),element=record.methodTable.elementType;
+    const value=copyValue(vm,record.data[offset],type??element);
+    return reflection&&element.flags.valueType?boxValue(vm,value,element):value;
+  });
 }
 export function arrayAddress(vm,reference,indices,{type=null,readonly=false}={}) {
   const record=arrayRecord(vm,reference),index=arrayOffset(record,indices),actual=record.methodTable.elementType;
-  const requested=type===null?actual:vm.heap.methodTables.get(type);
+  const requested=type===null?actual:vm.inspector?vm.typeSystem.table(type):vm.heap.methodTables.get(type);
   const casts=castCacheFor(vm.heap.methodTables);
   const valueAlias=requested.flags.valueType&&actual.flags.valueType&&casts.isAssignableFrom(vm.heap.methodTables.get(requested.name+'[]'),vm.heap.methodTables.get(actual.name+'[]'));
   const compatible=requested===actual||valueAlias||readonly&&casts.isAssignableFrom(requested,actual);
@@ -115,7 +134,7 @@ function reflectedValue(vm,value,element) {
   if(source.name==='System.UInt64')raw=BigInt.asUintN(64,raw);
   else if(source.name==='System.UInt32')raw=Number(raw)>>>0;
   else if(source.name==='System.Boolean')raw=Number(raw);
-  return numericStorage(raw,element.name);
+  return numericStorage(raw,element.name,vm.options);
 }
 export function arraySet(vm,reference,indices,value,{reflection=false}={}) {
   return vm.heap.withRoots([reference,value],()=>{

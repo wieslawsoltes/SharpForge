@@ -22,13 +22,15 @@ export function emitScalarConversion(w,c,from,to,checked=false) {
   from=numericTypeName(from);to=numericTypeName(to);
   if(from===to)return;
   if(to==='decimal') {
+    if(from==='nint'||from==='nuint'){w.op(from==='nint'?'conv.i8':'conv.u8');from=from==='nint'?'long':'ulong';}
     w.op('call',c.external('System.Decimal',['float','double'].includes(from)?'op_Explicit':'op_Implicit','System.Decimal',[from]));return;
   }
-  if(from==='decimal') {w.op('call',c.external('System.Decimal','op_Explicit',to,['System.Decimal']));return;}
+  if(from==='decimal') {const native=to==='nint'||to==='nuint';w.op('call',c.external('System.Decimal','op_Explicit',native?(to==='nint'?'long':'ulong'):to,['System.Decimal']));if(native)w.op(to==='nint'?'conv.ovf.i':'conv.ovf.u.un');return;}
   const suffix=scalarCilNames[to];if(!suffix)throw new CilError('Invalid scalar conversion target');
   const source=integerType(from),target=integerType(to);
   if(!target) {if(source?.unsigned)w.op('conv.r.un');w.op('conv.'+suffix);return;}
   if(checked){w.op('conv.ovf.'+suffix+(source?.unsigned?'.un':''));return;}
+  if((to==='nint'||to==='nuint')&&source&&source.bits<=32&&!source.native){w.op(source.unsigned?'conv.u':'conv.i');if(to==='nuint'&&!source.unsigned)w.op('conv.u');return;}
   // C# signed Int32 -> UInt64 widens the signed value before reinterpretation.
   if(to==='ulong'&&source&&!source.unsigned&&source.bits<64)w.op('conv.i8');
   if((to==='long'||to==='ulong')&&source?.unsigned&&source.bits<=32)w.op('conv.u8');
@@ -42,7 +44,7 @@ export function emitScalarBinary(w,c,operator,mode) {
     const name=decimalOperators[operator];if(!name)throw new CilError('Invalid Decimal operator');
     w.op('call',c.external('System.Decimal','op_'+name,comparison?'bool':'System.Decimal',['System.Decimal','System.Decimal']));
   } else if(operator in arithmetic) {
-    const overflow=checked&&['+','-','*'].includes(operator),unsigned=integer?.unsigned&&(overflow||['/','%','>>'].includes(operator));
+    const overflow=integer&&checked&&['+','-','*'].includes(operator),unsigned=integer?.unsigned&&(overflow||['/','%','>>'].includes(operator));
     w.op(arithmetic[operator]+(overflow?'.ovf':'')+(unsigned?'.un':''));
     if(type==='float'||type==='double')w.op('conv.'+scalarCilNames[type]);
   } else if(operator==='==')w.op('ceq');
@@ -57,7 +59,7 @@ export function emitScalarBinary(w,c,operator,mode) {
 export function emitScalarUnary(w,c,operator,mode) {
   const {type,checked}=decodeNumericMode(mode);
   if(type==='decimal')w.op('call',c.external('System.Decimal',operator==='-'?'op_UnaryNegation':'op_UnaryPlus','System.Decimal',['System.Decimal']));
-  else if(operator==='-'&&checked) {
+  else if(operator==='-'&&checked&&integerType(type)) {
     if(type==='long')w.op('ldc.i8',-1n);else {w.integer(-1);if(type==='nint')w.op('conv.i');}
     w.op('mul.ovf');
   } else if(operator==='-')w.op('neg');

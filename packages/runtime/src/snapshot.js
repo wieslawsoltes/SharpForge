@@ -1,5 +1,13 @@
-import {ManagedFault} from './heap.js';
+import {ManagedFault,isReference} from './heap.js';
 import {validateSnapshotState} from './snapshot-validation.js';
+
+// These frozen records are owned runtime identities or immutable CLI values.
+// An arbitrary frozen wrapper can still contain mutable arrays, Maps or faults.
+const immutableRecord=value=>Object.isFrozen(value)&&(
+  Object.keys(value).length===0||isReference(value)||value.registry&&value.flags||
+  value.byref||value.runtimeHandle||value.methodPointer||value.valueType||
+  value.enumType||value.float||value.nativeInt||value.decimal
+);
 
 /** Clone execution graphs, preserving aliases, immutable handles and fault identity. */
 export function copyExecution(value, memo = new Map()) {
@@ -26,7 +34,7 @@ export function copyExecution(value, memo = new Map()) {
       : new value.constructor(buffer, value.byteOffset, value.length);
     memo.set(value, copy); return copy;
   }
-  if (Object.isFrozen(value)) return value;
+  if (immutableRecord(value)) return value;
   if (value instanceof ManagedFault) {
     const copy = new ManagedFault(value.name, value.message, value.reference); memo.set(value, copy);
     for (const key of Object.keys(value)) copy[key] = copyExecution(value[key], memo);
@@ -34,7 +42,7 @@ export function copyExecution(value, memo = new Map()) {
   }
   const copy = Array.isArray(value) ? [] : {}; memo.set(value, copy);
   for (const [key, item] of Object.entries(value)) copy[key] = copyExecution(item, memo);
-  return copy;
+  return Object.isFrozen(value)?Object.freeze(copy):copy;
 }
 
 /** Method bodies and decode maps belong to the code generation, not execution state. */
@@ -50,13 +58,13 @@ export function copyFrames(frames, memo = new Map()) {
   return copied;
 }
 
-export const snapshotSchemaVersion = 2;
+export const snapshotSchemaVersion = 3;
 const field = (name, copier = copyExecution, options = {}) => Object.freeze({name, copier, ...options});
 const component = name => field(name, null, {component: true});
 const retain = value => value;
 const entries = (value, memo) => copyExecution([...value], memo);
 const common = [
-  component('platform'), component('scheduler'), field('frames', copyFrames), component('heap'),
+  component('platform'), component('scheduler'), field('frames', copyFrames), component('heap'), component('sync'),
   field('typeObjects', copyExecution, {optional: true}),
   field('statics'), field('fault'), field('pendingFault'), field('state', retain),
   field('instructions', retain), field('elapsedMs', retain), field('frameId', retain, {monotonic: true}),
@@ -119,7 +127,7 @@ export function snapshotVM(vm, engine) {
   for (const item of selected.fields) {
     if (item.optional && !Object.hasOwn(vm, item.name)) continue;
     snapshot[item.name] = item.component
-      ? item.name==='scheduler'?vm.scheduler.snapshot(memo):copyExecution(vm[item.name].snapshot(),memo)
+      ? ['scheduler','sync'].includes(item.name)?vm[item.name].snapshot(memo):copyExecution(vm[item.name].snapshot(),memo)
       : item.copier(vm[item.name], memo);
   }
   if (engine === 'cil') snapshot.heapRevision = vm.heap.mutationRevision;
@@ -154,6 +162,9 @@ export function restoreVM(vm, snapshot, engine) {
     else if (item.optional) delete vm[item.name];
   }
   if (engine === 'source') { vm.state = 'paused'; vm.currentPoint = vm.top?.point ?? null; }
+  // Reuse the memo mapping from the original snapshot to its prepared graph.
+  // Passing the prepared sync value to restore would clone it a second time.
+  vm.sync.restore(snapshot.sync,memo);
   vm.scheduler.restore(values.get('scheduler'),memo,true);
   vm.platform.restore(values.get('platform'));
 }

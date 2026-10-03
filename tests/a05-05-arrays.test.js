@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {ManagedHeap,CilVirtualMachine} from '@sharpforge/runtime';
 import {MethodTableRegistry} from '../packages/runtime/src/execution/method-table.js';
-import {createArray,arrayRecord,arrayShape,arrayOffset,arrayDimension,arrayGet,arraySet,arrayAddress,arrayVectorRecord,sourceArrayCreate,sourceArrayGet,sourceArraySet} from '../packages/runtime/src/execution/arrays.js';
+import {createArray,arrayRecord,arrayShape,validateArrayShape,arrayOffset,arrayDimension,arrayGet,arraySet,arrayAddress,arrayVectorRecord,sourceArrayCreate,sourceArrayGet,sourceArraySet} from '../packages/runtime/src/execution/arrays.js';
 import {arrayCall} from '../packages/runtime/src/execution/array-calls.js';
 import {arrayMethodDefinition} from '../packages/cil/src/array-profile.js';
 import {createValue,boxValue,unboxValue} from '../packages/runtime/src/execution/value-types.js';
@@ -108,7 +108,17 @@ test('a05-05: Array CreateInstance and dimension reflection hooks accept managed
   reflect(vm,'SetValue',['object','int','int'],[ref,boxValue(vm,17,'int'),0,6],'void');
   assert.equal(unboxValue(vm,reflect(vm,'GetValue',['long','long'],[ref,0n,6n],'object'),'int'),17);
   assert.throws(()=>reflect(vm,'CreateInstance',['System.Type','int[]'],[type,null],'System.Array',true),{name:'ArgumentNullException'});
+  assert.throws(()=>reflect(vm,'CreateInstance',['System.Type','int[]'],[type,vm.heap.array('long',2)],'System.Array',true),{name:'ArgumentException'});
   assert.throws(()=>reflect(vm,'GetValue',['long','long'],[ref,0n,2147483648n],'object'),{name:'ArgumentOutOfRangeException'});
+});
+
+test('a05-05: snapshot shape validation rejects forged strides, rank and length while accepting empty shapes',()=>{
+  const vm=context(),record=arrayRecord(vm,createArray(vm,'int',[2,3],[-1,5]));
+  validateArrayShape(record);
+  for(const patch of [{rank:1},{strides:[1,2]},{lengths:[2,2]},{lowerBounds:[0,2147483647]},{szArray:true}])
+    assert.throws(()=>validateArrayShape({...record,arrayShape:{...record.arrayShape,...patch}}),TypeError);
+  validateArrayShape(arrayRecord(vm,createArray(vm,'int',[0,1000000,1000000,1000000])));
+  assert.throws(()=>validateArrayShape({...record,arrayShape:undefined}),TypeError);
 });
 
 test('a05-05: descriptor admission checks full pseudo-method signatures and malformed calls',()=>{

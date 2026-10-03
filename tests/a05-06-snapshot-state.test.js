@@ -5,6 +5,10 @@ import {loadAssembly} from '@sharpforge/cil';
 import {VirtualMachine,CilVirtualMachine,ManagedFault} from '@sharpforge/runtime';
 import {valueFixture} from './a05-03-fixtures.js';
 import {copyFrames} from '../packages/runtime/src/snapshot.js';
+import {copyExecution} from '../packages/runtime/src/snapshot.js';
+import {createArray} from '../packages/runtime/src/execution/arrays.js';
+import {mutateArray,resumeArrayOperation} from '../packages/runtime/src/execution/array-ops.js';
+import {SUSPENDED} from '../packages/runtime/src/platform.js';
 
 const engines={source:c=>new VirtualMachine(c.image,{virtualTime:true}),reload:c=>new VirtualMachine(loadAssembly(c.assembly),{virtualTime:true}),cil:c=>new CilVirtualMachine(c.assembly,{virtualTime:true})};
 function compile(source){const c=compileToIL(source);assert(c.success,JSON.stringify(c.diagnostics));return c;}
@@ -59,6 +63,57 @@ for(const [engine,create] of Object.entries(engines)) {
       assert.throws(()=>vm.restore(snapshot),TypeError);
       assert.equal(vm.heap.records,current.heap);assert.equal(vm.frames,current.frames);assert.equal(vm.output,current.output);
       assert.equal(vm.instructions,current.instructions);assert.equal(vm.heap.mutationRevision,current.revision);
+    }
+  });
+  test(`a05-06 ${engine}: synchronization and suspended intrinsics restore together after their live roots are gone`,()=>{
+    const vm=create(nested),gate=vm.heap.object('object',[]),array=createArray(vm,'int',[256]);
+    vm.heap.get(array).data=Array.from({length:256},(_,index)=>256-index);
+    vm.sync.enter(gate);vm.sync.enter(gate);mutateArray(vm,'Sort',array);
+    resumeArrayOperation(vm,vm.top,{workBudget:1});
+    const saved=vm.snapshot(),prefix=[...vm.heap.get(array).data],work=saved.frames[0].intrinsicContinuation.work;
+    vm.stop();vm.sync.clear();vm.heap.collect();assert.throws(()=>vm.heap.get(array));assert.throws(()=>vm.heap.get(gate));
+    for(let replay=0;replay<2;replay++){
+      vm.restore(saved);assert.equal(vm.sync.block(gate).depth,2);assert.equal(vm.scheduler.current.frames,vm.frames);
+      assert.equal(vm.top.intrinsicContinuation.work,work);assert.deepEqual(vm.heap.get(array).data,prefix);
+      while(!resumeArrayOperation(vm,vm.top,{workBudget:2}).done){}
+      assert.deepEqual(vm.heap.get(array).data,Array.from({length:256},(_,index)=>index+1));
+      vm.sync.exit(gate);assert.equal(vm.sync.block(gate).depth,1);assert.equal(saved.sync.blocks[0][1].depth,2);
+    }
+  });
+  test(`a05-06 ${engine}: corrupt sync, shape, aliases and continuation snapshots fail atomically`,()=>{
+    const vm=create(nested),gate=vm.heap.object('object',[]),array=createArray(vm,'int',[128]);
+    vm.sync.enter(gate);mutateArray(vm,'Reverse',array);const saved=vm.snapshot();
+    const baseline={frames:vm.frames,heap:vm.heap.records,sync:vm.sync.blocks,scheduler:vm.scheduler.contexts,revision:vm.heap.mutationRevision};
+    const corruptions=[
+      state=>{state.sync.blocks[0][1].depth=0;},
+      state=>{state.sync.blocks[0][1].owner=999;},
+      state=>{state.frames[0].intrinsicContinuation.reference={h:array.h,g:array.g+1};},
+      state=>{state.frames[0].intrinsicContinuation.owner=Object.freeze({});},
+      state=>{state.frames[0].intrinsicContinuation.index=4;},
+      state=>{state.heap.records[array.h].arrayShape={rank:1,szArray:true,lengths:[127],lowerBounds:[0],strides:[1]};},
+      state=>{state.scheduler.contexts[0][1].frames=[{...state.frames[0]}];},
+      state=>{state.scheduler.unhandledFault={name:'Exception',message:'unowned host fault'};}
+    ];
+    for(const corrupt of corruptions){const memo=new Map([[saved.codeOwner,saved.codeOwner]]);copyFrames(saved.frames,memo);const state=copyExecution(saved,memo);corrupt(state);assert.throws(()=>vm.restore(state),TypeError);
+      assert.equal(vm.frames,baseline.frames);assert.equal(vm.heap.records,baseline.heap);assert.equal(vm.sync.blocks,baseline.sync);
+      assert.equal(vm.scheduler.contexts,baseline.scheduler);assert.equal(vm.heap.mutationRevision,baseline.revision);
+    }
+  });
+  test(`a05-06 ${engine}: monitor wait tasks and Boolean addresses replay from parked contexts`,()=>{
+    const vm=create(compile('bool taken=false;Console.WriteLine(taken);')),gate=vm.heap.object('object',[]);
+    vm.sync.enter(gate);const entry=vm.inspector?vm.top.method.token:vm.top.methodId;
+    const worker=vm.scheduler.createContext(()=>{vm.call(entry,[]);return SUSPENDED;},[],{name:'Monitor waiter'});
+    vm.scheduler.save();vm.scheduler.load(vm.scheduler.contexts.get(worker));vm.top.locals[0]=vm.inspector?0:false;
+    const flag=vm.address('local',0);assert.equal(vm.sync.enter(gate,{flag}),SUSPENDED);
+    vm.scheduler.save();vm.scheduler.load(vm.scheduler.contexts.get(1));
+    const saved=vm.snapshot();assert.equal(saved.sync.blocks[0][1].entries[0].flag,flag);
+    const corrupt=copyExecution(saved.sync);corrupt.blocks[0][1].entries[0].contextId=1;
+    const revision=vm.heap.mutationRevision;assert.throws(()=>vm.restore({...saved,sync:corrupt}),TypeError);assert.equal(vm.heap.mutationRevision,revision);
+    vm.stop();
+    for(let replay=0;replay<2;replay++){
+      vm.restore(saved);assert.equal(vm.scheduler.contexts.get(worker).status,'waiting');assert.equal(!!vm.dereference(flag),false);
+      vm.sync.exit(gate);assert.equal(vm.scheduler.contexts.get(worker).status,'ready');assert.equal(!!vm.dereference(flag),true);
+      assert.equal(vm.sync.block(gate).owner,worker);assert.equal(saved.sync.blocks[0][1].entries.length,1);
     }
   });
 }

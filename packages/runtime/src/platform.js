@@ -1,3 +1,4 @@
+import {delegatesEqual} from './execution/delegate-calls.js';
 import {invokeJson} from './json.js';
 import {HostOperations} from './host-operations.js';
 import {invokeNetwork} from './network.js';
@@ -8,7 +9,7 @@ import {invokeBcl} from './bcl.js';
 import {refreshStyle,refreshStyles,applyTemplate,updateBindings,invokeStyling} from './styling.js';
 import {canonicalType,frameworkType,propertiesFor,eventsFor,frameworkAssignable,colorValues,XAML,CONTROLS,MEDIA,TASK,THREAD,taskResult} from '@sharpforge/framework';
 import {ManagedFault,isReference} from './heap.js';
-export const SUSPENDED = Object.freeze({sharpforgeSuspended:true});
+export {SUSPENDED} from './execution/suspension.js';
 const identity=r=>`${r.h}:${r.g}`;
 const equal=(a,b)=>a===b||isReference(a)&&isReference(b)&&a.h===b.h&&a.g===b.g;
 /** A data-only boundary between managed execution and the browser. No DOM or host eval. */
@@ -44,7 +45,7 @@ export class ManagedPlatform {
   styleMutation(callback){if(this.styleDepth)return callback();const heap=this.heap.snapshot(),platform=this.snapshot(),pending=this.vm.pendingWrite,existing=this.transaction,offset=existing?.length??0,t=existing??this.beginTransaction();this.styleDepth++;
     try{const result=callback();if(!existing)this.commitTransaction(t);return result;}catch(error){this.heap.restore(heap);this.restore(platform);this.vm.pendingWrite=pending;if(existing)existing.length=offset;else this.rollbackTransaction(t);throw error;}finally{this.styleDepth--;}}
   delegate(type,method,receiver){return this.make(type,{method,receiver},'delegate');}
-  delegateEquals(a,b){if(equal(a,b))return true;if(!isReference(a)||!isReference(b))return false;const x=this.heap.get(a),y=this.heap.get(b);return x.kind==='delegate'&&y.kind==='delegate'&&x.type===y.type&&this.get(a,'method')===this.get(b,'method')&&equal(this.get(a,'receiver'),this.get(b,'receiver'));}
+  delegateEquals(a,b){if(this.vm.inspector)return delegatesEqual(this.vm,a,b);if(equal(a,b))return true;if(!isReference(a)||!isReference(b))return false;const x=this.heap.get(a),y=this.heap.get(b);return x.kind==='delegate'&&y.kind==='delegate'&&x.type===y.type&&this.get(a,'method')===this.get(b,'method')&&equal(this.get(a,'receiver'),this.get(b,'receiver'));}
   construct(type,args){
     const t=frameworkType(type);if(!t)throw new ManagedFault('TypeLoadException',`Unknown framework type ${type}`);
     if(t.kind==='delegate'){if(!args[1]?.methodPointer)throw new ManagedFault('InvalidProgramException','Delegate construction requires a verified method pointer');return this.delegate(type,args[1].token,args[0]);}

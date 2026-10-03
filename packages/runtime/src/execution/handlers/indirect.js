@@ -1,15 +1,14 @@
-import {primitiveSizes} from '@sharpforge/cil';
 import {storageDefault} from '../storage.js';
 import {finishMemoryAccess} from '../statics.js';
 
 const handlers=new Map([
-  ['sizeof',(vm,frame,instruction)=>vm.push(primitiveSizes[vm.inspector.metadata.typeName(instruction.operand)])],
-  ['cpobj',(vm,frame,instruction)=>{const source=vm.pop(),destination=vm.pop(),type=vm.inspector.metadata.typeName(instruction.operand);vm.dereference(destination,true,vm.storage(vm.dereference(source),type));}],
-  ['ldobj',(vm,frame,instruction)=>vm.push(vm.storage(vm.dereference(vm.pop()),vm.inspector.metadata.typeName(instruction.operand)))],
-  ['stobj',(vm,frame,instruction)=>{const value=vm.pop();vm.dereference(vm.pop(),true,vm.storage(value,vm.inspector.metadata.typeName(instruction.operand)));}],
+  ['sizeof',(vm,frame,instruction)=>vm.push(vm.typeSystem.table(instruction.operand).valueSize)],
+  ['cpobj',(vm,frame,instruction)=>{const source=vm.pop(),destination=vm.pop(),type=vm.typeSystem.table(instruction.operand);vm.heap.withRoots([source,destination],()=>vm.dereference(destination,true,vm.storage(vm.dereference(source),type)));}],
+  ['ldobj',(vm,frame,instruction)=>{const pointer=vm.pop();vm.push(vm.heap.withRoots([pointer],()=>vm.storage(vm.dereference(pointer),vm.typeSystem.table(instruction.operand))));}],
+  ['stobj',(vm,frame,instruction)=>{const value=vm.pop(),pointer=vm.pop();vm.heap.withRoots([value,pointer],()=>vm.dereference(pointer,true,vm.storage(value,vm.typeSystem.table(instruction.operand))));}],
   ['initobj',(vm,frame,instruction)=>{
-    const address=vm.pop(),name=vm.inspector.metadata.typeName(instruction.operand),type={'System.Int32':'int','System.Int64':'long','System.Double':'double','System.Single':'float','System.Boolean':'bool'}[name]??name;
-    vm.dereference(address,true,storageDefault(vm,type));
+    const address=vm.pop(),type=vm.typeSystem.table(instruction.operand);
+    vm.heap.withRoots([address],()=>vm.dereference(address,true,storageDefault(vm,type)));
   }]
 ]);
 for(const suffix of ['i1','u1','i2','u2','i4','u4','i8','i','r4','r8','ref']) {

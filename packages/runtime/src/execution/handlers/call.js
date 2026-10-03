@@ -12,7 +12,7 @@ handlers.set('ldvirtftn',(vm,frame,instruction)=>vm.push(methodPointer(vm,instru
 handlers.set('tail.',(vm,frame)=>{frame.tailCall=true;});
 handlers.set('constrained.',(vm,frame,instruction)=>{frame.constrainedType=instruction.operand;});
 handlers.set('ret',(vm,frame)=>{
-  let result=frame.method.signature.returnType==='void'?null:vm.pop();
+  let result=frame.method.signature.returnType==='void'?null:vm.storage(vm.pop(),frame.method.signature.returnType);
   if(result?.byref){validatePointer(vm,result);if(result.frameId===frame.id)throw new ManagedFault('InvalidProgramException','A return reference cannot outlive its local frame');}
   if(frame.initializes)completeInitialization(vm,frame);
   vm.frames.pop();

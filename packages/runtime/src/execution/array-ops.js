@@ -1,5 +1,5 @@
 import {ManagedFault,isReference} from '../heap.js';
-import {SUSPENDED} from '../platform.js';
+import {SUSPENDED} from './suspension.js';
 
 /** One charged work unit has a fixed upper bound independent of array length. */
 export const arrayWorkQuantum=32;
@@ -48,10 +48,12 @@ export function validateArrayContinuation(vm,frame,record=null) {
   const state=frame.intrinsicContinuation;
   if(!state)return null;
   if(state.kind!=='array'||state.owner!==owner(vm)||state.frameId!==(frame.id??0)||(state.operation!=='Sort'&&state.operation!=='Reverse')||(state.phase!=='build'&&state.phase!=='extract')||typeof state.sifting!=='boolean'||typeof state.pushResult!=='boolean')throw invalid('Malformed or foreign array continuation');
-  if(!isReference(state.reference)||state.reference.heapOwner!==undefined&&state.reference.heapOwner!==vm.heap.handleOwner)throw invalid('Array continuation reference belongs to another heap');
+  if(!isReference(state.reference)||!integer(state.reference.h)||state.reference.h<0||!integer(state.reference.g)||state.reference.g<1||state.reference.heapOwner!==undefined&&state.reference.heapOwner!==vm.heap.handleOwner)throw invalid('Array continuation reference belongs to another heap');
   if(!integer(state.length)||state.length<2||!integer(state.index)||state.index<0||state.index>state.length||!integer(state.end)||state.end<0||state.end>=state.length||!integer(state.root)||state.root<0||state.root>=state.length||!integer(state.buildIndex)||state.buildIndex< -1||state.buildIndex>=Math.floor(state.length/2)||!integer(state.work)||state.work<0)throw invalid('Array continuation indices are invalid');
   record??=recordFor(vm,state.reference);
-  if(record.kind!=='array'||record.data.length!==state.length)throw invalid('Array changed shape during an intrinsic');
+  if(record.kind!=='array'||record.data.length!==state.length||record.methodTable?.rank>1)throw invalid('Array changed shape during an intrinsic');
+  if(state.operation==='Reverse'&&(state.phase!=='build'||state.sifting||state.root!==0||state.buildIndex!==Math.floor(state.length/2)-1||state.index+state.end!==state.length-1)||
+    state.operation==='Sort'&&(state.index!==0||state.phase==='build'&&state.end!==state.length-1||state.phase==='extract'&&state.buildIndex!==-1||state.root>state.end))throw invalid('Array continuation phase is inconsistent');
   return state;
 }
 

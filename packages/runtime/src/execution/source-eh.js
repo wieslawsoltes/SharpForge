@@ -1,3 +1,4 @@
+import {cancelArrayOperation} from './array-ops.js';
 import {ManagedFault} from '../heap.js';
 
 export function frameState() { return {exception: null, caught: [], unwinds: []}; }
@@ -100,6 +101,7 @@ export function handleFault(vm, error) {
   while (vm.frames.length) {
     const frame = vm.top, method = vm.image.methods[frame.methodId], pc = frame.pc - 1;
     const handler = method.handlers.filter(h => h.kind !== 'finally' && pc >= h.start && pc < h.end).sort((a, b) => (a.end - a.start) - (b.end - b.start))[0];
+    cancelArrayOperation(frame);
     const target = handler?.target ?? Infinity, finals = vm.finalizers(frame, pc, target);
     // Exceptions caught inside the active finally preserve its original continuation.
     frame.unwinds = frame.unwinds.filter(u => u.active && target >= u.active.target && target < u.active.handlerEnd);

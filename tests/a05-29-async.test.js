@@ -4,6 +4,7 @@ import {Writer,verifyCilAssembly,AssemblyInspector} from '@sharpforge/cil';
 import {CilVirtualMachine,ManagedFault} from '@sharpforge/runtime';
 import {asyncMethodDefinition,reachableAsyncMethods,asyncTypeDefinition} from '../packages/cil/src/async-profile.js';
 import {invokeAsyncIntrinsic,asyncRoots} from '../packages/runtime/src/execution/async-runtime.js';
+import {validateAsyncSnapshot} from '../packages/runtime/src/execution/async-snapshot-validation.js';
 import {address} from '../packages/runtime/src/execution/managed-pointers.js';
 import {createValue} from '../packages/runtime/src/execution/value-types.js';
 import {controlFixture} from './support/control-fixture.js';
@@ -35,6 +36,9 @@ test('A05 T29 awaiter raises a task fault inside MoveNext and cleanup executes o
 test('A05 T29 cancellation during an await drops all pending continuations',()=>{
   const vm=waitingVm();vm.stop();vm.heap.collect();assert.equal(vm.state,'terminated');assert.equal(vm.frames.length,0);assert.equal([...asyncRoots(vm)].length,0);
   assert([...vm.scheduler.tasks.values()].every(task=>['completed','faulted','canceled'].includes(task.status)));assert.equal(vm.statics.get(0x04000001),0);
+});
+test('A05 T29 constructor root enumeration precedes scheduler creation',()=>{
+  assert.deepEqual([...asyncRoots({})],[]);
 });
 test('A05 T29 async descriptors validate closed signatures and reachable compiler methods',()=>{
   const good=descriptor(TASK+'`1<int>','GetAwaiter',RESULT_AWAITER);assert.equal(asyncMethodDefinition(good).operation,'task-awaiter');
@@ -89,4 +93,54 @@ test('A05 T29 async void faults are posted outside the synchronous caller and sn
   invokeAsyncIntrinsic(vm,descriptor('System.Runtime.CompilerServices.AsyncVoidMethodBuilder','SetException','void',['System.Exception']),[pointer,ref]);
   assert.notEqual(vm.state,'faulted');const snapshot=vm.snapshot();vm.scheduler.beforeSlice();assert.equal(vm.state,'faulted');assert.equal(vm.fault.message,'async void');
   vm.restore(snapshot);vm.scheduler.beforeSlice();assert.equal(vm.state,'faulted');assert.equal(vm.fault.message,'async void');
+});
+test('A05 T29 malformed async snapshots reject before live execution changes',()=>{
+  const vm=waitingVm(),foreign=waitingVm(),foreignTask=builderTask(foreign),live={heap:vm.heap.records,frames:vm.frames,tasks:vm.scheduler.tasks,contexts:vm.scheduler.contexts,output:vm.output,instructions:vm.instructions,revision:vm.heap.mutationRevision,types:vm.heap.methodTables.nextToken};
+  const corruptions=[
+    (s,t)=>{t.asyncState=null;},
+    (s,t)=>{t.asyncState.phase='resuming';},
+    (s,t)=>{t.asyncState.phase='created';},
+    (s,t)=>{t.asyncState.builderType=AWAITER;},
+    (s,t)=>{t.asyncState.kind='void';},
+    (s,t)=>{t.resultType='string';},
+    (s,t)=>{t.asyncState.machine=t.ref;},
+    (s,t)=>{t.asyncState.machine=foreignTask.asyncState.machine;},
+    (s,t)=>{t.asyncState.awaitedTask=foreignTask.asyncState.awaitedTask;},
+    (s,t)=>{t.asyncState.awaitedTask=t.ref;},
+    (s,t)=>{t.asyncState.moveNext=0x06000001;},
+    (s,t)=>{t.asyncState.moveNext=0x060000ff;},
+    (s,t)=>{t.asyncState.contextId=s.scheduler.nextId;},
+    (s,t)=>{t.contextId=1;},
+    (s,t,c)=>{c.wait.propagateFault=true;},
+    (s,t,c)=>{c.wait=null;},
+    (s,t,c)=>{c.frames[0].asyncBuilderTask=t.asyncState.awaitedTask;},
+    (s,t,c)=>{c.frames[0].asyncBuilderTask=foreignTask.ref;},
+    (s,t,c)=>{c.frames[0].args[0]=Object.freeze({...c.frames[0].args[0],vmOwner:foreign.snapshotOwner});},
+    (s,t,c)=>{c.frames[0].args[0]=Object.freeze({...c.frames[0].args[0],owner:t.ref});},
+    (s,t)=>{const data=s.heap.records[t.ref.h].data;data[data.indexOf('Id')+1]++;},
+    (s,t)=>{const data=s.heap.records[t.ref.h].data;data[data.indexOf('$status')+1]='completed';}
+  ];
+  for(const corrupt of corruptions) {
+    const snapshot=vm.snapshot(),task=snapshot.scheduler.tasks.find(([,task])=>task.asyncState)[1],context=snapshot.scheduler.contexts.find(([id])=>id===task.asyncState.contextId)[1];
+    corrupt(snapshot,task,context);assert.throws(()=>vm.restore(snapshot),TypeError);
+    assert.equal(vm.heap.records,live.heap);assert.equal(vm.frames,live.frames);assert.equal(vm.scheduler.tasks,live.tasks);assert.equal(vm.scheduler.contexts,live.contexts);assert.equal(vm.output,live.output);
+    assert.equal(vm.instructions,live.instructions);assert.equal(vm.heap.mutationRevision,live.revision);assert.equal(vm.heap.methodTables.nextToken,live.types);
+  }
+});
+test('A05 T29 awaiting snapshots accept the wake-up boundary before GetResult',async()=>{
+  const vm=waitingVm();vm.scheduler.advance(5);const task=builderTask(vm);
+  assert.equal(task.asyncState.phase,'awaiting');assert.equal(vm.scheduler.contexts.get(task.asyncState.contextId).wait,null);
+  const snapshot=vm.snapshot();assert.equal(validateAsyncSnapshot(vm,snapshot),snapshot);vm.restore(snapshot);
+  const result=await vm.runAsync();assert.equal(result.state,'terminated',result.fault?.stack);assert.equal(result.output,'42\n');
+});
+test('A05 T29 snapshot validation uses saved roots after the live machine is collected',async()=>{
+  const vm=waitingVm(),saved=vm.snapshot(),machine=builderTask(vm).asyncState.machine;
+  vm.stop();vm.heap.collect();assert.throws(()=>vm.heap.get(machine));
+  assert.equal(validateAsyncSnapshot(vm,saved),saved);vm.restore(saved);
+  const result=await vm.runAsync();assert.equal(result.state,'terminated',result.fault?.stack);assert.equal(result.output,'42\n');
+});
+test('A05 T29 canceled task history remains restorable after its machine is collected',()=>{
+  const vm=waitingVm(),task=builderTask(vm),machine=task.asyncState.machine;vm.stop();vm.heap.collect();assert.throws(()=>vm.heap.get(machine));
+  assert.equal(task.asyncState.phase,'awaiting');assert.equal(task.status,'canceled');const saved=vm.snapshot();
+  assert.equal(validateAsyncSnapshot(vm,saved),saved);vm.restore(saved);assert.equal(vm.state,'terminated');assert.equal([...asyncRoots(vm)].length,0);
 });

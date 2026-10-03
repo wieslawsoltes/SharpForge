@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {compile,compileToIL} from '@sharpforge/compiler';
 import {parse} from '@sharpforge/syntax';
 import {Op} from '@sharpforge/bytecode';
+import {AssemblyInspector,loadAssembly} from '@sharpforge/cil';
 import {VirtualMachine,CilVirtualMachine} from '@sharpforge/runtime';
 
 test('A05 T30 parser retains lock, byref modifiers and synchronization method type arguments',()=>{
@@ -38,22 +39,31 @@ test('A05 T30 byref lowering distinguishes local, static, field, array and reado
 });
 
 const evaluationOrder='using System.Threading;class Box{public int Value;}class P{static Box box=new Box();static int calls;static Box Receiver(){calls++;return box;}static int Value(){calls++;return 9;}static void Main(){Interlocked.Exchange(ref Receiver().Value,Value());Console.WriteLine(calls);Console.WriteLine(box.Value);object gate=new object();try{lock(gate){throw new Exception();}}catch(Exception error){}Console.WriteLine(Monitor.IsEntered(gate));}}';
-for(const engine of ['source','cil'])test(`A05 T30 ${engine}: receiver evaluation and lock cleanup occur once`,async()=>{
+for(const engine of ['source','reloaded','cil'])test(`A05 T30 ${engine}: receiver evaluation and lock cleanup occur once`,async()=>{
   const compiled=compileToIL(evaluationOrder);assert(compiled.success,JSON.stringify(compiled.diagnostics));
-  const vm=engine==='source'?new VirtualMachine(compiled.image):new CilVirtualMachine(compiled.assembly),result=await vm.runAsync();
+  const vm=engine!=='cil'?new VirtualMachine(engine==='reloaded'?loadAssembly(compiled.assembly):compiled.image):new CilVirtualMachine(compiled.assembly),result=await vm.runAsync();
   assert.equal(result.state,'terminated',result.fault?.stack);assert.equal(result.output,'2\n9\nFalse\n');
 });
 
-for(const engine of ['source','cil'])test(`A05 T30 ${engine}: generic atomic reference calls preserve declared reference types`,async()=>{
+for(const engine of ['source','reloaded','cil'])test(`A05 T30 ${engine}: generic atomic reference calls preserve declared reference types`,async()=>{
   const source='using System.Threading;class P{static void Main(){string text="old";Console.WriteLine(Interlocked.Exchange<string>(ref text,"new"));Console.WriteLine(Volatile.Read<string>(ref text));}}';
   const compiled=compileToIL(source);assert(compiled.success,JSON.stringify(compiled.diagnostics));
-  const vm=engine==='source'?new VirtualMachine(compiled.image):new CilVirtualMachine(compiled.assembly),result=await vm.runAsync();
+  const vm=engine!=='cil'?new VirtualMachine(engine==='reloaded'?loadAssembly(compiled.assembly):compiled.image):new CilVirtualMachine(compiled.assembly),result=await vm.runAsync();
   assert.equal(result.state,'terminated',result.fault?.stack);assert.equal(result.output,'old\nnew\n');
 });
 
-for(const engine of ['source','cil'])test(`A05 T30 ${engine}: lock target is evaluated once and remains stable after reassignment`,async()=>{
+for(const engine of ['source','reloaded','cil'])test(`A05 T30 ${engine}: lock target is evaluated once and remains stable after reassignment`,async()=>{
   const source='using System.Threading;class P{static int calls;static object first=new object();static object second=new object();static object Gate(){calls++;return first;}static void Main(){object target=Gate();lock(target){target=second;Console.WriteLine(Monitor.IsEntered(first));}Console.WriteLine(Monitor.IsEntered(first));Console.WriteLine(calls);}}';
   const compiled=compileToIL(source);assert(compiled.success,JSON.stringify(compiled.diagnostics));
-  const vm=engine==='source'?new VirtualMachine(compiled.image):new CilVirtualMachine(compiled.assembly),result=await vm.runAsync();
+  const vm=engine!=='cil'?new VirtualMachine(engine==='reloaded'?loadAssembly(compiled.assembly):compiled.image):new CilVirtualMachine(compiled.assembly),result=await vm.runAsync();
   assert.equal(result.state,'terminated',result.fault?.stack);assert.equal(result.output,'True\nFalse\n1\n');
+});
+
+test('A05 T30 generic synchronization emits MethodSpec and reloaded addresses retain readonly flags',()=>{
+  const source='using System.Threading;class P{static void Main(){string value="old";Interlocked.Exchange<string>(ref value,"new");Console.WriteLine(Volatile.Read<string>(ref value));int number=1;Volatile.Read(in number);}}';
+  const compiled=compileToIL(source);assert(compiled.success,JSON.stringify(compiled.diagnostics));
+  const inspector=new AssemblyInspector(compiled.assembly),specifications=inspector.metadata.rows[43]??[];
+  assert.equal(specifications.length,2);for(let index=0;index<specifications.length;index++)assert.deepEqual(inspector.signature(0x2b000001+index).arguments,['string']);
+  const loaded=loadAssembly(compiled.assembly),flags=[];for(const method of loaded.methods)for(let pc=0;pc<method.code.length;pc+=3)if(method.code[pc]===Op.ADDRESS)flags.push(method.code[pc+1]);
+  assert(flags.includes(0));assert(flags.includes(4));
 });

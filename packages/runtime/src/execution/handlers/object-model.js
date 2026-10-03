@@ -1,3 +1,5 @@
+import {numericFieldDefinition} from '@sharpforge/cil';
+import {decimalConstants} from '../decimal-intrinsics.js';
 import {castReference} from '../casting.js';
 import {staticSlot,finishMemoryAccess} from '../statics.js';
 import {ManagedFault} from '../../heap.js';
@@ -7,6 +9,8 @@ import {fieldAccess,fieldAddress} from '../managed-pointers.js';
 const handlers=new Map();
 handlers.set('volatile.',(vm,frame)=>{frame.volatileAccess=true;});
 for(const name of ['ldsfld','stsfld','ldsflda'])handlers.set(name,(vm,frame,instruction)=>{
+  const constant=numericFieldDefinition(vm.inspector.resolveToken(instruction.operand));
+  if(constant){if(name!=='ldsfld')throw new ManagedFault('InvalidProgramException','Numeric constant fields are read-only');vm.push(decimalConstants[constant.name]);finishMemoryAccess(frame);return;}
   const slot=staticSlot(vm,instruction.operand,frame);
   if(vm.ensureInitialized(slot.typeToken,'field',slot.genericIdentity)){frame.pc--;return;}
   if(name==='ldsfld')vm.push(vm.storage(vm.statics.get(slot.key),slot.field.signature.type));
@@ -30,6 +34,6 @@ for(const name of ['unbox','unbox.any'])handlers.set(name,(vm,frame,instruction)
   vm.push(name==='unbox'?vm.address('box',0,ref):unboxValue(vm,ref,table));
 });
 for(const name of ['castclass','isinst'])handlers.set(name,(vm,frame,instruction)=>{
-  vm.push(castReference(vm.heap,vm.pop(),instruction.operand,name==='castclass'));
+  vm.push(castReference(vm.heap,vm.pop(),vm.typeSystem.table(instruction.operand),name==='castclass'));
 });
 export {handlers};

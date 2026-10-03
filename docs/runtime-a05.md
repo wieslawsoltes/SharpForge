@@ -1,8 +1,12 @@
 # JavaScript runtime project delivery
 
 The complete requested scope is [project 7](https://github.com/users/wieslawsoltes/projects/7).
-`runtime-a05-scope.json` records all 41 board items and their acceptance criteria as of
+`runtime-a05-scope.json` records all 108 board items, including 67 detailed subtasks, and their acceptance criteria as of
 2026-10-03. Pending entries remain delivery requirements, not declared capabilities.
+The detailed subtasks remain part of their parent epic scope; parent and child rows
+are not counted as independent delivered capabilities. E01 validation stays deferred
+until the complete detailed scope is assembled, including raw memory and pinning,
+managed varargs, typed array storage, and portable snapshots.
 
 Implementation is staged in worktrees and stacked pull requests. Validation runs once
 a complete epic scope has been integrated, followed by targeted reruns only for fixes.

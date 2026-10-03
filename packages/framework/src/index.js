@@ -235,6 +235,8 @@ for(const type of [...types.values()])if(['control','abstract','shape'].includes
 registerBcl({define,member,ctor,prop});
 registerWinUI13({define,member,ctor,prop,event,en,control,types});
 registerRuntime14({define,member,ctor,prop,en,delegate});
+// Append to keep all released enum ordinals stable.
+en('System.MidpointRounding',{ToEven:0,AwayFromZero:1,ToZero:2,ToNegativeInfinity:3,ToPositiveInfinity:4});
 
 export function findContracts(owner, name, isStatic) {
   owner=canonicalType(owner);const result=[],seen=new Set();

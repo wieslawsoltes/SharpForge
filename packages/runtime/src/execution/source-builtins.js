@@ -1,3 +1,4 @@
+import {invokeNumericIntrinsic} from './numeric-intrinsics.js';
 import {mutateArray} from './array-ops.js';
 import {Builtins} from '@sharpforge/bytecode';
 import {ManagedFault} from '../heap.js';
@@ -8,6 +9,8 @@ import {objectType,typeName,runtimeTypeText} from './tokens.js';
 /** Invoke an intrinsic with heap/value/format/output/platform services; no image is required. */
 export function builtin(vm, id, args,types=[]) {
   const entry = Builtins[id];
+  if(entry.numeric)return vm.heap.withRoots(args,()=>invokeNumericIntrinsic(vm,entry.numeric,args).value);
+  if(entry.synchronization)return vm.heap.withRoots(args,()=>vm.sync.invoke(entry.synchronization,args).value);
   if (entry.contract) {
     const result=vm.platform.invoke(entry.contract,args);
     return enumInfo(vm,entry.contract.result)?enumValue(vm,entry.contract.result,result):result;
@@ -17,12 +20,8 @@ export function builtin(vm, id, args,types=[]) {
     const a = vm.value(args[0]), b = vm.value(args[1]), c = vm.value(args[2]);
     if(name.startsWith('$type.'))return objectType(vm,args[0],name.split('.')[1]);
     if (name.startsWith('Math.')) {
-      const fn = {Abs: 'abs', Min: 'min', Max: 'max', Pow: 'pow', Sqrt: 'sqrt', Floor: 'floor', Ceiling: 'ceil', Round: 'round'}[name.slice(5)];
-      if (fn === 'round') {
-        const f = Math.floor(a), fraction = a - f;
-        return fraction === 0.5 ? (f % 2 === 0 ? f : f + 1) : Math.round(a);
-      }
-      return Math[fn](...args);
+      const type=entry.result==='numeric'?(types.includes('double')?'double':types.includes('float')?'float':types.includes('long')?'long':'int'):entry.result;
+      return invokeNumericIntrinsic(vm,{owner:'System.Math',name:name.slice(5),parameters:types,returnType:type,isStatic:true},args).value;
     }
     switch (name) {
       case 'string.Intern': return internString(vm,args[0]);

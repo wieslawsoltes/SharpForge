@@ -7,6 +7,7 @@ import {execFile} from 'node:child_process';
 import {promisify} from 'node:util';
 import {createHash} from 'node:crypto';
 import {compileToIL} from '@sharpforge/compiler';
+import {loadAssembly} from '@sharpforge/cil';
 import {VirtualMachine,CilVirtualMachine} from '@sharpforge/runtime';
 
 const run=promisify(execFile),dotnet=process.env.DOTNET_PATH??'dotnet',directory=await mkdtemp(join(tmpdir(),'sharpforge-a05-sync-'));
@@ -21,8 +22,10 @@ try {
   const assemblyPath=join(directory,'bin','Release','net10.0','Synchronization.dll'),assembly=new Uint8Array(await readFile(assemblyPath));
   const native=normalize((await run(dotnet,[assemblyPath],options)).stdout);assert.equal(native,expected,'Native .NET synchronization output');
   const compiled=compileToIL(source);assert(compiled.success,JSON.stringify(compiled.diagnostics));
+  const emittedPath=join(directory,'EmittedSynchronization.dll');await writeFile(emittedPath,compiled.assembly);await copyFile(join(directory,'bin','Release','net10.0','Synchronization.runtimeconfig.json'),join(directory,'EmittedSynchronization.runtimeconfig.json'));
+  assert.equal(normalize((await run(dotnet,[emittedPath],options)).stdout),native,'SharpForge emitted synchronization DLL on CLR');
   const outcomes=[];
-  for(const quantum of [1,7,256])for(const [name,vm] of [['source',new VirtualMachine(compiled.image,{virtualTime:true,schedulerQuantum:quantum})],['emitted-cil',new CilVirtualMachine(compiled.assembly,{virtualTime:true,schedulerQuantum:quantum})],['roslyn-cil',new CilVirtualMachine(assembly,{virtualTime:true,schedulerQuantum:quantum})]]) {
+  for(const quantum of [1,7,256])for(const [name,vm] of [['source',new VirtualMachine(compiled.image,{virtualTime:true,schedulerQuantum:quantum})],['reloaded-source',new VirtualMachine(loadAssembly(compiled.assembly),{virtualTime:true,schedulerQuantum:quantum})],['emitted-cil',new CilVirtualMachine(compiled.assembly,{virtualTime:true,schedulerQuantum:quantum})],['roslyn-cil',new CilVirtualMachine(assembly,{virtualTime:true,schedulerQuantum:quantum})]]) {
     const result=await vm.runAsync();assert.equal(result.state,'terminated',name+': '+result.fault?.stack);assert.equal(result.output,native,name+' quantum '+quantum);outcomes.push({engine:name,quantum,instructions:vm.instructions,passed:true});
   }
   const report={passed:true,commit,node:process.version,sdk,runtimeInfo,platform:process.platform,architecture:process.arch,sourceSha256:createHash('sha256').update(source).digest('hex'),assemblySha256:createHash('sha256').update(assembly).digest('hex'),outcomes,nativeThreads:true,managedVmScheduling:'cooperative single JavaScript agent'};

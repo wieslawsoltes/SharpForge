@@ -1,8 +1,10 @@
+import {arrayCall} from './array-calls.js';
+import {invokeNumericIntrinsic} from './numeric-intrinsics.js';
 import {stringFromChars} from './strings.js';
 import {methodOffsets} from './method-offsets.js';
 import {systemType,intrinsicDefinition,resolveExecutionMethod,callSignatureKey,supportedIntrinsic,supportedDelegateCall,instantiateSignature} from '@sharpforge/cil';
 import {ManagedFault,isReference} from '../heap.js';
-import {SUSPENDED} from '../platform.js';
+import {SUSPENDED} from './suspension.js';
 import {storageDefault} from './storage.js';
 import {createExceptionState} from './eh.js';
 import {ensureTypeInitialized} from './static-init.js';
@@ -122,6 +124,8 @@ export function invoke(vm,instruction) {
       const value=instruction.name==='newobj'?constructDelegate(vm,descriptor.ownerInstance??descriptor.owner,args[0],args[1]):invokeDelegateOperation(vm,descriptor,args);
       if(value!==SUSPENDED&&(instruction.name==='newobj'||descriptor.signature.returnType!=='void'))caller.stack.push(value);return;
     }
+    const array=arrayCall(vm,descriptor,args,instruction.name);if(array.handled){if(array.returns)caller.stack.push(array.value);return;}
+    if(instruction.name==='newobj'&&descriptor.owner==='System.Decimal'){const decimal=invokeNumericIntrinsic(vm,descriptor,args);if(decimal.handled){caller.stack.push(decimal.value);return;}}
     const contract=intrinsicDefinition(descriptor)?.contract;
     if(instruction.name==='newobj'&&descriptor.owner==='System.String'&&descriptor.signature.parameters.join(',')==='char[]'){caller.stack.push(stringFromChars(vm,args[0]));return;}
     if(instruction.name==='newobj'&&contract){caller.stack.push(vm.platform.invoke(contract,args));return;}
@@ -131,7 +135,7 @@ export function invoke(vm,instruction) {
       if(target&&type.flags.valueType)ref=boxValue(vm,storageDefault(vm,type.name),type.name);
       else if(target){const layout=vm.layout(genericIdentity??descriptor.ownerToken);ref=vm.heap.object(layout.methodTable,layout.fields.map(field=>storageDefault(vm,field.type)));}
       else if(systemType(descriptor.owner)==='System.Object'&&args.length===0)ref=vm.heap.object(vm.typeSystem.table('System.Object'),[]);
-      else if(systemType(descriptor.owner)==='System.Exception')ref=vm.heap.allocate('exception','System.Exception',[args[0]??null]);
+      else if(intrinsicDefinition(descriptor)?.implementation==='exceptionCtor')ref=vm.heap.allocate('exception',systemType(descriptor.owner),[args[0]??null]);
       else throw new ManagedFault('NotSupportedException','External object construction is unavailable');
       args.unshift(type?.flags.valueType?address(vm,'box',0,ref,{type:type.name}):ref);vm.heap.pins.push(ref);
       if(target)startManagedCall(vm,descriptor,args,{returnObject:ref,genericIdentity,valueConstructor:!!type.flags.valueType,valueConstructorType:type.name});else {vm.intrinsic(descriptor,args);caller.stack.push(ref);}

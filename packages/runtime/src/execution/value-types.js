@@ -53,6 +53,8 @@ export function copyValue(vm,value,type=null,numericContext,depth=0) {
     }
     return value;
   }
+  if(table&&!table.flags.valueType&&value!==null)
+    throw new ManagedFault('InvalidCastException','Reference storage requires a managed reference');
   if(table?.flags.enum) {
     const underlying=table.enumUnderlyingType?.name??enumInfo(vm,table.name)?.underlyingType??'int';
     if(vm.image&&!vm.inspector&&enumInfo(vm,table.name))return enumValue(vm,table.name,value);

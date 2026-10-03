@@ -25,7 +25,7 @@ export function evaluateConstant(node,{resolve=()=>null,checked=true,maxNodes=20
         return numeric(x.type)&&['+','-','~'].includes(n.operator)?constantNumericUnary(n.operator,x.value,x.type,check):null;
       }
       if(n.kind==='Cast') {
-        const x=walk(n.expression,check),to=normalizeNumeric(n.type);if(!x||!numeric(x.type)||!numeric(to))return null;
+        const x=walk(n.expression,check),to=normalizeNumeric(n.type);if(!x||!numeric(x.type)||!numeric(to)||['nint','nuint'].includes(x.type)||['nint','nuint'].includes(to))return null;
         return {type:to,value:constantValue(scalarConvert(scalarLiteral(x.value,x.type),x.type,to,check),to)};
       }
       if(n.kind==='Conditional') {
