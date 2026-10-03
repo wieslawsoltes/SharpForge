@@ -1,3 +1,4 @@
+import {fixedCallSignature} from './varargs-profile.js';
 import {CilError} from './binary.js';
 import {decodeCoded} from './metadata.js';
 import {genericTypeParts} from './field-profile.js';
@@ -25,14 +26,14 @@ export function resolveExecutionMethod(inspector,token,context={}) {
   const arity=raw.signature.genericArity??0;
   if(raw.genericArguments&&methodArguments.length!==arity)throw new CilError('Generic method argument count mismatch');
   const signature=instantiateSignature(raw.signature,parts.arguments.length?parts.arguments:contextTypes,methodArguments);
-  let target=raw.resolvedToken??(raw.token>>>24===6?raw.token:raw.definitionToken>>>24===6?raw.definitionToken:null);
+  let target=raw.resolvedToken??(raw.signature.callingConvention===5&&raw.ownerToken>>>24===6?raw.ownerToken:null)??(raw.token>>>24===6?raw.token:raw.definitionToken>>>24===6?raw.definitionToken:null);
   let definition=target?inspector.methods.get(target):null;
   if(!definition) {
     const visited=new Set();
     while(!visited.has(owner)) {
       visited.add(owner);const type=inspector.types.find(type=>type.name===parts.definition);
       if(!type)break;
-      const matches=type.methods.filter(method=>method.name===raw.name&&(inspector.signature(method.token).genericArity??0)===arity&&callSignatureKey(instantiateSignature(inspector.signature(method.token),parts.arguments,methodArguments))===callSignatureKey(signature));
+      const matches=type.methods.filter(method=>method.name===raw.name&&(inspector.signature(method.token).genericArity??0)===arity&&callSignatureKey(instantiateSignature(inspector.signature(method.token),parts.arguments,methodArguments))===callSignatureKey(fixedCallSignature(signature)));
       if(matches.length>1)throw new CilError('Ambiguous internal call declaration');
       if(matches.length){definition=matches[0];target=definition.token;break;}
       if(!type.baseToken)break;

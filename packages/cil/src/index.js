@@ -24,3 +24,5 @@ export {numericFieldDefinition} from './numeric-field-profile.js';
 export {asyncIntrinsicDefinitions,asyncMethodDefinition,asyncTypeDefinition,reachableAsyncMethods} from './async-profile.js';
 
 export {exceptionIntrinsicDefinitions} from './exception-profile.js';
+
+export {varargsIntrinsicDefinitions,varargsTypeDefinition} from './varargs-profile.js';

@@ -1,3 +1,4 @@
+import {varargsCall} from './varargs.js';
 import {exceptionConstructor, exceptionIntrinsic} from './exception-intrinsics.js';
 import {invokeAsyncIntrinsic} from './async-runtime.js';
 import {arrayCall} from './array-calls.js';
@@ -16,6 +17,7 @@ function stringReceiver(context) {
   return value;
 }
 const implementations={
+  varargs:({vm,descriptor,self,parameters})=>varargsCall(vm,descriptor,descriptor.signature.isStatic?parameters:[self,...parameters]).value,
   synchronization:({vm,descriptor,self,parameters})=>vm.sync.invoke(descriptor,descriptor.signature.isStatic?parameters:[self,...parameters]).value,
   decimal:({vm,descriptor,self,parameters})=>invokeNumericIntrinsic(vm,descriptor,descriptor.signature.isStatic?parameters:[self,...parameters]).value,
   arrayMutate:({vm,descriptor,parameters})=>mutateArray(vm,descriptor.name,parameters[0]),

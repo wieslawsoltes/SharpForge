@@ -1,3 +1,5 @@
+import {splitVarargs, attachVarargs, varargsCall} from './varargs.js';
+import {memoryCall} from './memory-calls.js';
 import {createException} from './exception-object.js';
 import {arrayCall} from './array-calls.js';
 import {invokeNumericIntrinsic} from './numeric-intrinsics.js';
@@ -27,6 +29,8 @@ export function call(vm, token, args, extra = {}) {
   }
   const method = instantiatedMethod(vm, token, extra.genericIdentity ?? null, extra.methodArguments ?? []);
   const values = bindCallArguments(vm, method, args);
+  const varargs = attachVarargs(method, values, extra.optionalArguments);
+  const {optionalArguments, ...frameExtra} = extra;
   const frame = {
     id: ++vm.frameId,
     method,
@@ -38,7 +42,8 @@ export function call(vm, token, args, extra = {}) {
     offsets: methodOffsets(method),
     ...createExceptionState(),
     needsInitialization: method.name !== '.cctor',
-    ...extra
+    ...frameExtra,
+    ...(varargs ? {varargs} : {})
   };
   if (replacement) replaceFrame(vm, frame);
   else pushFrame(vm, frame);
@@ -91,7 +96,8 @@ function startManagedCall(vm,descriptor,args,extra={}) {
     args[0]=address(vm,'box',0,args[0],{type:owner.name});
   }
 
-  vm.call(token,args,{...extra,genericIdentity,methodArguments:descriptor.methodArguments??[]});return SUSPENDED;
+  const variable=splitVarargs(vm,descriptor,args);
+  vm.call(token,variable.args,{...extra,...variable.extra,genericIdentity,methodArguments:descriptor.methodArguments??[]});return SUSPENDED;
 }
 
 export function invokeFunctionPointer(vm,pointer,args,extra={}) {
@@ -139,6 +145,8 @@ export function invoke(vm,instruction) {
       if(value!==SUSPENDED&&(instruction.name==='newobj'||descriptor.signature.returnType!=='void'))caller.stack.push(value);return;
     }
     const array=arrayCall(vm,descriptor,args,instruction.name);if(array.handled){if(array.returns)caller.stack.push(array.value);return;}
+    const memory=memoryCall(vm,descriptor,args,instruction.name);if(memory.handled){if(memory.returns)caller.stack.push(memory.value);return;}
+    const variable=varargsCall(vm,descriptor,args,instruction.name);if(variable.handled){if(variable.returns)caller.stack.push(variable.value);return;}
     if(instruction.name==='newobj'&&descriptor.owner==='System.Decimal'){const decimal=invokeNumericIntrinsic(vm,descriptor,args);if(decimal.handled){caller.stack.push(decimal.value);return;}}
     const contract=intrinsicDefinition(descriptor)?.contract;
     if(instruction.name==='newobj'&&descriptor.owner==='System.String'&&descriptor.signature.parameters.join(',')==='char[]'){caller.stack.push(stringFromChars(vm,args[0]));return;}
