@@ -13,6 +13,7 @@ export class DesignerDocuments {
     this.onChange = onChange;
     this.onError = onError ?? (error => { throw error; });
     this.onHistory = options.onHistory ?? (() => false);
+    this.sessionOptions = options.sessionOptions ?? (() => ({}));
     this.registry = new DesignerSessionRegistry();
     this.sources = new Map();
     this.views = new Map();
@@ -71,7 +72,7 @@ export class DesignerDocuments {
     const file = this.file(uri);
     const kind = /\.sfdesign\.json$/i.test(uri) ? 'design' : 'csharp';
     const document = kind === 'design' ? JSON.parse(file.text) : undefined;
-    const session = this.registry.open(uri, {kind, document});
+    const session = this.registry.open(uri, {...this.sessionOptions(uri, kind), kind, document});
     const stateBeforeConnect = {...session.viewState};
     let view;
     try {

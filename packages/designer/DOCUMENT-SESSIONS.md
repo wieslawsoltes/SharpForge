@@ -49,7 +49,7 @@ that cannot outlive their document. Disposal continues after a failed cleanup an
 
 ## Studio integration
 
-`DesignerDocuments` is composed with `{state, createTools, openSource, resolvePanel, records, onChange, onError, onHistory}`.
+`DesignerDocuments` is composed with `{state, createTools, openSource, resolvePanel, records, onChange, onError, onHistory, sessionOptions}`.
 `createTools(session, options)` receives `options.documentHost` and `options.panelResolver`. Each view has its own surface and five
 side-panel roots. `DesignerToolRouter` moves the active roots into the shared dock containers; inactive roots remain attached to their
 own session. A non-designer document gives the shared tools a neutral empty state.
@@ -77,3 +77,8 @@ docked source documents. The default HTTP backend tests actual reload; the restr
 instead. `node tests/a18-session-probe-benchmark.js` records the machine/runtime and median/p95 timings for the existing complete
 source session versus the compatibility gate on a deterministic 2,000-line file. Browser/engine results must be reported from an
 actual run; these source files alone do not establish a passing platform matrix.
+
+The shipped `samples-designer.js` catalog also contains `edit-continue-structure`, a console-only methods/fields example with no
+WinUI construction. It is deliberately classified as incompatible, just like ParticleLab. The four GUI examples have compatible
+construction sources; wrapper `Program.cs` files that only call `DesignedView.Create()` retain Code view. A catalog membership alone
+does not establish that a file owns a declarative visual tree.

@@ -163,6 +163,18 @@ try:
 
         checked('workspace recovery restores different designer views per document', recovery)
 
+        def standalone_design_document():
+            design_text = (ROOT / 'examples/designer/CanvasCounter/View.sfdesign.json').read_text(encoding='utf-8')
+            standalone = [records[2], {'path': 'Board.sfdesign.json', 'text': design_text}]
+            page.evaluate('(records) => sharpforge.loadDiskRecords(records, {name:"Standalone design", mode:"folder"})', standalone)
+            page.evaluate('sharpforge.designerDocuments.open("Board.sfdesign.json", "design")')
+            document = page.evaluate('sharpforge.designerDocuments.get("Board.sfdesign.json")')
+            truth(document['kind'] == 'design' and document['mode'] == 'design')
+            truth(page.locator('[data-designer-document="Board.sfdesign.json"] .design-stage').count() == 1)
+            truth(page.locator('[data-dock-tab="designer"]').count() == 0)
+
+        checked('standalone design JSON opens as its own document without a retired designer tool panel', standalone_design_document)
+
         def close_removed_files():
             page.evaluate('sharpforge.loadDiskRecords([{path:"Program.cs",text:"class Program { static void Main() {} }"}],'
                           '{name:"Closed designers", mode:"folder"})')

@@ -1,4 +1,5 @@
 import {performance} from 'node:perf_hooks';
+import {cpus, totalmem} from 'node:os';
 import {probeDesignSource, CSharpDesignSession} from '@sharpforge/designer';
 
 const members = Array.from({length: 1992}, (_, index) => `    static int value${index} = ${index};`).join('\n');
@@ -17,6 +18,7 @@ function measure(action) {
 console.log(JSON.stringify({
   runtime: process.version,
   platform: `${process.platform}/${process.arch}`,
+  machine: {cpu: cpus()[0]?.model ?? 'unknown', logicalCpus: cpus().length, memoryBytes: totalmem()},
   lines: source.split('\n').length,
   characters: source.length,
   fullDesignSession: measure(() => new CSharpDesignSession(source, {uri: 'View.cs'})),

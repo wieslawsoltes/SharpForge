@@ -21,10 +21,14 @@ for (const name of ['Create', 'InitializeComponent', 'Main']) {
   });
 }
 
-test('each shipped generated designer sample contains a compatible construction document', () => {
+test('shipped GUI samples are compatible and the console Edit and Continue sample is explicitly excluded', () => {
   for (const sample of designerSamples) {
     const compatible = sample.files.filter(file => probeDesignSource(file.text, file.uri).compatible);
-    assert.ok(compatible.length > 0, sample.name);
+    // The sample catalog also contains a non-UI field/Hot Reload example. It must not gain a false design surface.
+    if (sample.id === 'edit-continue-structure') {
+      assert.equal(compatible.length, 0);
+      assert.equal(probeDesignSource(sample.files[0].text, sample.files[0].uri).code, 'SFDESIGN_NO_DECLARATIVE_CONTROLS');
+    } else assert.ok(compatible.length > 0, sample.name);
   }
 });
 
