@@ -11,7 +11,7 @@ export function uint32Binary(name, left, right, context = {}) {
   if ((operation === 'div' || operation === 'rem') && second === 0) {
     numericFault(context, 'DivideByZeroException', 'Attempted to divide by zero');
   }
-  if (operation === 'div' && !unsigned && first === -2147483648 && second === -1) {
+  if ((operation === 'div' || operation === 'rem') && !unsigned && first === -2147483648 && second === -1) {
     numericFault(context, 'OverflowException', 'Integer division overflow');
   }
   switch (operation) {

@@ -108,7 +108,7 @@ test('T01.2/T01.10 authored small-storage IL matches the same assembly on the na
   assert.equal(new Set(rows.map(row => row.type)).size, 6);
   for (const item of rows) {
     const assembly = smallStorageFixture(item.type, item.suffix, item.location, item.input);
-    const result = new CilVirtualMachine(assembly, {arguments: item.location === 'arg' ? [0] : []}).run();
+    const result = new CilVirtualMachine(assembly, {arguments: item.location === 'arg' ? [item.type === 'bool' ? false : 0] : []}).run();
     assert.equal(result.state, 'terminated', JSON.stringify(item) + ': ' + result.fault?.stack);
     assert.equal(Number(number(result.returnValue)), item.expected, JSON.stringify(item));
   }
