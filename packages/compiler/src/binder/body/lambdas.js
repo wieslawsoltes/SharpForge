@@ -11,6 +11,24 @@ import { anonymousFunctionAnchor, anonymousMethodSignatureErrors } from '../anon
 
 const unknown = ErrorTypeSymbol.unknown;
 
+/** The cache key of a lambda binding: its parameter types and return type (`?` while the return type is inferred). */
+const signatureKey = (parameterTypes, returnType) =>
+  parameterTypes.map(type => type.toDisplayString()).join(',') + '=>' + (returnType ? returnType.toDisplayString() : '?');
+
+/**
+ * True when an expression body bound for return type inference is also its binding for `returnType`: `convert`
+ * returns such a value unchanged and reports nothing, so binding the body again would produce the same result.
+ */
+const returnsUnconverted = (body, returnType) =>
+  !!body.type &&
+  !body.hasErrors &&
+  !body.literal &&
+  !body.form &&
+  !body.constantValue &&
+  returnType.specialType !== 'System_Void' &&
+  !returnType.isErrorType?.() &&
+  body.type.equals(returnType);
+
 /** Class mixin: Lambdas and anonymous methods (bound per candidate delegate type, cached, diagnostics reported once), */
 export const LambdaBinding = Base =>
   class extends Base {
@@ -29,8 +47,24 @@ export const LambdaBinding = Base =>
         cache = new Map();
       const node = this.node('Lambda', syntax, null, { form: 'lambda', isAnonymousMethod, parameterSyntax, isAsync });
       const bindWith = (parameterTypes, returnType, quiet, refKinds = null) => {
-        const key = parameterTypes.map(t => t.toDisplayString()).join(',') + '=>' + (returnType ? returnType.toDisplayString() : '?');
-        if (quiet && cache.has(key)) return cache.get(key);
+        const key = signatureKey(parameterTypes, returnType);
+        const known = cache.get(key);
+        if (known && quiet) return known;
+        // Inside a speculative binding the final pass reports into the enclosing list and records no uses, which is
+        // what the cached speculative result did: replay its diagnostics instead of binding the body again.
+        if (known && this.quiet) {
+          for (const diagnostic of known.diagnostics) this.quiet.push(diagnostic);
+          return known;
+        }
+        const reusableForInference = quiet && returnType && !syntax.block && !isAsync && !syntax.isQueryLambda;
+        if (reusableForInference) {
+          const forInference = cache.get(signatureKey(parameterTypes, null));
+          if (forInference && returnsUnconverted(forInference.body, returnType)) {
+            cache.set(key, forInference);
+            return forInference;
+          }
+        }
+        this.d.lambdaBodyBindings = (this.d.lambdaBodyBindings ?? 0) + 1;
         // C# 9: when more than one parameter is named `_` they are discards, and `_` names none of them.
         const hasDiscards = (parameterSyntax ?? []).filter(p => p.identifier.valueText === '_').length > 1;
         const parameters = (parameterSyntax ?? []).map((p, i) => {
@@ -70,7 +104,8 @@ export const LambdaBinding = Base =>
             isStaticInitializer: this.c.isStaticInitializer,
           });
         child.checked = this.checked;
-        let body;
+        let body,
+          returnedUnconverted = false;
         if (syntax.block) body = child.block(syntax.block);
         else {
           // The body of a lambda is the expression itself; only member declarations wrap it in an arrow clause.
@@ -81,6 +116,7 @@ export const LambdaBinding = Base =>
             // A lambda the compiler builds for a query clause is not an anonymous function of the program (no CS1662).
             body = syntax.isQueryLambda ? child.convert(v, child.c.returnType) : child.convertReturned(v, child.c.returnType, bodySyntax);
             if (v.form === 'lambda' && !body.hasErrors) child.finishLambda(v, child.c.returnType);
+            returnedUnconverted = body === v;
             child.returns.push(v);
           } else if (
             (child.c.returnType && child.c.returnType.specialType === 'System_Void') ||
@@ -114,7 +150,13 @@ export const LambdaBinding = Base =>
               : inferred,
           child,
         };
-        if (quiet) cache.set(key, result);
+        if (quiet) {
+          cache.set(key, result);
+          // The same body, bound again to infer the return type, would be this one and would infer `returnType`.
+          const inferenceKey = signatureKey(parameterTypes, null);
+          if (reusableForInference && returnedUnconverted && !cache.has(inferenceKey) && returnsUnconverted(body, returnType))
+            cache.set(inferenceKey, { ...result, inferred: body.type });
+        }
         return result;
       };
       node.lambda = {
