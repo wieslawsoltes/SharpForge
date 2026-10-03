@@ -17,6 +17,7 @@ function frameFor(vm,id) {
 function checkPointer(vm,pointer) {
   if(pointer===null)throw new ManagedFault('NullReferenceException','Managed pointer is null');
   if(!vm.snapshotOwner||!pointer?.byref||pointer.vmOwner!==vm.snapshotOwner||!Object.isFrozen(pointer)||!Array.isArray(pointer.path)||!Object.isFrozen(pointer.path))throw invalid('Malformed managed pointer or pointer belongs to another VM');
+  if(pointer.baseType&&pointer.baseType.registry!==vm.heap.methodTables)throw invalid('Managed pointer type belongs to another VM');
 }
 function slot(vm,pointer) {
   checkPointer(vm,pointer);let slots,table,frame;
@@ -70,10 +71,15 @@ export function dereference(vm,pointer,write=false,replacement) {
   if(!write) {if(value===undefined)throw invalid('Uninitialized address');return value;}
   if(pointer.readonly)throw invalid('Cannot write through a readonly managed pointer');
   if(replacement?.byref&&!['arg','local'].includes(pointer.kind))throw invalid('Managed pointers cannot escape into heap or static storage');
-  const stored=table?storageValue(vm,replacement,table):copyValue(vm,replacement);
-  if(pointer.kind==='array'&&!pointer.path.length)checkArrayStore(vm.heap,vm.heap.get(pointer.owner),stored);
-  const replace=(current,path,at)=>at===path.length?stored:replaceValueField(vm,current,path[at],replace(current.fields[path[at]],path,at+1));
-  const next=replace(base.get(),pointer.path,0);base.set(next);
+  // Callers have already popped operands. Nested copies may allocate private
+  // framework values, so keep both the location and replacement rooted.
+  const stored=vm.heap.withRoots([pointer,replacement,base.get()],()=>{
+    const copied=table?storageValue(vm,replacement,table):copyValue(vm,replacement);
+    vm.heap.pins.push(copied);
+    if(pointer.kind==='array'&&!pointer.path.length)checkArrayStore(vm.heap,vm.heap.get(pointer.owner),copied);
+    const replace=(current,path,at)=>at===path.length?copied:replaceValueField(vm,current,path[at],replace(current.fields[path[at]],path,at+1));
+    base.set(replace(base.get(),pointer.path,0));return copied;
+  });
   const writeEvent={kind:pointer.kind,index:pointer.index,frameId:pointer.frameId,value:stored,oldValue:value,path:pointer.path,
     ...(pointer.owner?{handle:pointer.owner.h,generation:pointer.owner.g}:{})};
   if(vm.notifyWrite)vm.notifyWrite(writeEvent);
@@ -101,11 +107,18 @@ export function fieldAddress(vm,metadataToken,receiver,field=fieldAccess(vm,meta
 }
 
 /** Indexed source IR adapters use the same address/copy rules as metadata CIL. */
-export function sourceFieldValue(vm,receiver,index) {
+export function sourceFieldType(vm,receiver,index) {
   const value=receiver?.byref?dereference(vm,receiver):receiver;
   const record=isValueTypeValue(value)?{data:value.fields,methodTable:value.valueType}:vm.heap.get(value);
   if(!Number.isInteger(index)||index<0||index>=record.data.length)throw invalid('Invalid source field index');
-  return copyValue(vm,record.data[index],record.methodTable.fields[index]?.type??null);
+  return record.methodTable.fields[index]?.type??vm.heap.methodTables.get('object');
+}
+export function sourceFieldValue(vm,receiver,index) {
+  return vm.heap.withRoots([receiver],()=>{
+    const value=receiver?.byref?dereference(vm,receiver):receiver;
+    const record=isValueTypeValue(value)?{data:value.fields,methodTable:value.valueType}:vm.heap.get(value);
+    return copyValue(vm,record.data[index],sourceFieldType(vm,receiver,index));
+  });
 }
 export function sourceFieldStore(vm,receiver,index,value) {
   return dereference(vm,address(vm,'field',index,receiver),true,value);

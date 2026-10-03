@@ -5,7 +5,7 @@ import {number} from './numeric-ops.js';
 import {scalarConvert} from './scalar-ops.js';
 import {isDecimal,decimal,decimalZero,decimalMaxCoefficient,decimalFromBits,decimalBits,decimalParse,decimalFromInteger,decimalFromFloat,decimalCompare,decimalAbs,decimalRound,decimalNegate,decimalBinary,decimalFormat} from './decimal-ops.js';
 
-const definitions=numericIntrinsicDefinitions.filter(definition=>definition.owner!=='System.BitConverter');
+const definitions=numericIntrinsicDefinitions.filter(definition=>definition.implementation==='decimal'&&definition.owner!=='System.BitConverter');
 export const decimalIntrinsicDefinitions=Object.freeze(definitions);
 export const decimalConstants=Object.freeze({Zero:decimalZero,One:decimal(1n),MinusOne:decimal(1n,0,true),MaxValue:decimal(decimalMaxCoefficient),MinValue:decimal(decimalMaxCoefficient,0,true)});
 const key=descriptor=>{const signature=descriptor.signature??descriptor;return [descriptor.owner,descriptor.name,signature.isStatic?'static':'instance',signature.parameters.map(numericTypeName).join(','),numericTypeName(signature.returnType??signature.result)].join('|');};

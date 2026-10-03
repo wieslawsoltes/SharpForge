@@ -157,9 +157,11 @@ export function decimalFormat(value,format='G',context) {
   requireDecimal(value,context);format=format??'G';
   const match=/^([gGfFnNeEpP])(\d{0,2})$/.exec(format||'G');
   if(!match)fail(context,'FormatException','Unsupported Decimal format');
-  const code=match[1].toUpperCase(),digits=match[2]===''?null:Number(match[2]);
+  const code=match[1].toUpperCase(),digits=match[2]===''?null:Number(match[2]),generalDigits=digits===0?Math.max(1,value.coefficient.toString().length):digits;
   let coefficient=value.coefficient,scale=value.scale;
-  const roundTo=places=>{if(scale>places){coefficient=roundedDivision(coefficient,power(scale-places));scale=places;}if(scale<0){coefficient*=power(-scale);scale=0;}};
+  // CoreLib numeric text rounds Decimal midpoint digits away from zero;
+  // Decimal arithmetic and Decimal.Round retain their independent rounding modes.
+  const roundTo=places=>{if(scale>places){coefficient=roundedDivision(coefficient,power(scale-places),1);scale=places;}if(scale<0){coefficient*=power(-scale);scale=0;}};
   const trim=()=>{while(scale>0&&coefficient%10n===0n){coefficient/=10n;scale--;}};
   const exponent=()=>coefficient===0n?0:coefficient.toString().length-scale-1;
   const scientific=(precision,exponentDigits,trimZeros)=>{
@@ -172,8 +174,8 @@ export function decimalFormat(value,format='G',context) {
   if(code==='E')text=scientific(digits??6,3,false);
   else {
     if(code==='P'){scale-=2;if(scale<0){coefficient*=power(-scale);scale=0;}}
-    if(code==='G'&&digits){roundTo(digits-1-exponent());trim();}
-    if(code==='G'&&digits&&(exponent()< -4||exponent()>=digits))text=scientific(digits-1,2,true);
+    if(code==='G'&&generalDigits){roundTo(generalDigits-1-exponent());trim();}
+    if(code==='G'&&generalDigits&&(exponent()< -4||exponent()>=generalDigits))text=scientific(generalDigits-1,2,true);
     else {
       const places=code==='G'?scale:digits??2;roundTo(places);
       text=coefficient.toString()+'0'.repeat(Math.max(0,places-scale));

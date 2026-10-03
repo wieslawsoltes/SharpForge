@@ -1,3 +1,4 @@
+import {resolveCallType} from './generic-calls.js';
 import {exceptionMatches} from './exception-types.js';
 import {CilError,CilDispatchTable,decodeCoded,resolveExecutionField} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
@@ -15,7 +16,7 @@ export class CilTypeSystem {
     this.initializers=new Map();
     this.dispatch=new CilDispatchTable(vm.inspector);
     const metadata=vm.inspector.metadata;
-    this.methodTables=new MethodTableRegistry({tokenResolver:token=>metadata.typeName(token)});
+    this.methodTables=new MethodTableRegistry({...vm.options,tokenResolver:token=>metadata.typeName(token)});
     for(const type of this.types.values()) {
       this.initializers.set(type.token,type.methods.find(method=>method.name==='.cctor')??null);
       const base=type.baseToken?metadata.typeName(type.baseToken):null;
@@ -29,7 +30,7 @@ export class CilTypeSystem {
       this.methodTables.define({name:type.name,token:type.token,base,interfaces:type.interfaces.map(token=>metadata.typeName(token)),fields,
         flags:{interface:!!(type.flags&0x20),abstract:!!(type.flags&0x80),sealed:!!(type.flags&0x100),enum:base==='System.Enum',valueType:base==='System.ValueType'||base==='System.Enum'},
         enumUnderlyingType:underlying,variance:parameters.map(row=>(row[1]&3)===1?1:(row[1]&3)===2?-1:0),
-        vtable:[...[...dispatch.slots.keys()].map(slot=>[slot,this.dispatch.resolveSlot(dispatch,slot)]),...[...dispatch.declarations].map(([declaration,slot])=>[declaration,this.dispatch.resolveSlot(dispatch,slot)])]});
+        vtable:[...[...dispatch.slots.keys()].map(slot=>[slot,this.dispatch.resolveSlot(dispatch,slot)]),...[...dispatch.declarations].map(([declaration,record])=>[declaration,this.dispatch.resolveSlot(dispatch,record.slot)])]});
     }
     // Complete the metadata graph before execution so casts never scan name lists.
     for(const type of this.types.values())this.methodTables.get(type.token);
@@ -37,7 +38,7 @@ export class CilTypeSystem {
     for(const record of vm.heap.records)if(record)record.methodTable=this.methodTables.get(record.methodTable?.name??record.type);
     this.castCache=castCacheFor(this.methodTables);
   }
-  table(type){return this.methodTables.get(type);}
+  table(type){return this.methodTables.get(typeof type==='number'||typeof type==='string'?resolveCallType(this.vm,type):type);}
   layout(typeToken,depth=0) {
     if(this.layouts.has(typeToken))return this.layouts.get(typeToken);
     if(depth>64)throw new CilError('Inheritance depth exceeded');
@@ -66,6 +67,6 @@ export class CilTypeSystem {
     return {field,token:resolved,record,index};
   }
   virtualTarget(ref,descriptor,target) {
-    return this.dispatch.resolve(this.typeOf(ref),target);
+    return this.dispatch.resolve(this.vm.heap.get(ref).methodTable.name,target,descriptor.ownerInstance);
   }
 }

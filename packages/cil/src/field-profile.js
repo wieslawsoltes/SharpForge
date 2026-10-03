@@ -2,8 +2,11 @@ import {CilError} from './binary.js';
 
 /** Split a CLI display signature without confusing nested generic arguments. */
 export function genericTypeParts(name) {
-  const open = name.indexOf('<');
-  if (open < 0 || !name.endsWith('>')) return {definition: name, arguments: []};
+  // Generated type identifiers may contain literal angle brackets, e.g. <Work>d__2.
+  // Only a balanced generic argument list at the end contributes type arguments.
+  let open=-1,level=0;
+  if(name.endsWith('>'))for(let i=name.length-1;i>=0;i--){if(name[i]==='>')level++;else if(name[i]==='<'&&--level===0){open=i;break;}}
+  if(open<0)return {definition:name,arguments:[]};
   const argumentsList = []; let depth = 0, start = open + 1;
   for (let i = start; i < name.length - 1; i++) {
     if (name[i] === '<' || name[i] === '[') depth++;

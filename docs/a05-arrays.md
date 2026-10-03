@@ -22,7 +22,7 @@ upper bound one below their lower bound, with Int32 wrap at the minimum bound.
 | Array reflection | `CreateInstance(Type,int...)`, `CreateInstance(Type,int[]/long[])`, `CreateInstance(Type,int[],int[])`; `Rank`, `Length`, `LongLength`, `GetLength`, `GetLongLength`, `GetLowerBound`, `GetUpperBound` |
 | Reflection element access | `GetValue`/`SetValue` with 1–3 Int32/Int64 indices or a managed Int32/Int64 index vector; boxing and permitted primitive widening |
 | Source execution | Shared source IR create/get/set/address adapters; source-language rectangular-array and lower-bound syntax remains a frontend dependency |
-| GC and snapshots | Interior pointers retain the array and nested references; frozen shape and value records replay with existing heap snapshots |
+| GC and snapshots | Interior pointers retain the array and nested references; allocating reads/stores retain popped owners; snapshot preflight validates rank, bounds, strides and element count |
 | Boundaries | Default one-million-element allocation cap and managed heap budget; `maxArrayLength` may configure a lower or higher cap; Int64 reflection indices must fit Int32 |
 | Excluded surface | Pointer/byref/open-generic/void element types, native memory layouts, arbitrary reflection, bulk Array algorithms, and arrays exceeding the configured runtime budget |
 

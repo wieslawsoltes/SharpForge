@@ -63,7 +63,7 @@ test('A05 T01 Decimal rejects malformed payloads and formatting without mutating
   assert.throws(()=>decimal(-1n),{name:'ArgumentException'});
   const value=decimalParse('1.200');assert.equal(decimalFormat(value,'F2'),'1.20');assert.equal(value.scale,3);
   assert.equal(decimalFormat(decimalParse('12345.6789'),'E2'),'1.23E+004');
-  assert.equal(decimalFormat(decimalParse('0.0125'),'P1'),'1.2 %');
+  assert.equal(decimalFormat(decimalParse('0.0125'),'P1'),'1.3 %');
   assert.equal(decimalFormat(decimalParse('12345.6789'),'N2'),'12,345.68');
   assert.deepEqual(decimalBits(decimalNegate(decimalZero)),[0,0,0,-2147483648]);
 });

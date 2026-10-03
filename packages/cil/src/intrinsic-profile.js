@@ -1,10 +1,16 @@
+import {asyncMethodDefinition} from './async-profile.js';
+import {numericAliases} from '@sharpforge/bytecode';
+import {arrayMethodDefinition} from './array-profile.js';
+import {syncIntrinsicDefinitions,isSynchronizationIntrinsic} from './sync-intrinsic-profile.js';
 import {numericIntrinsicDefinitions} from './numeric-intrinsic-profile.js';
 import {canonicalType,contracts,types} from '@sharpforge/framework';
 
-const aliases={object:'System.Object',string:'System.String',Exception:'System.Exception',int:'System.Int32',double:'System.Double',long:'System.Int64',bool:'System.Boolean'};
+const aliases={object:'System.Object',string:'System.String',Exception:'System.Exception',int:'System.Int32',double:'System.Double',long:'System.Int64',bool:'System.Boolean',decimal:'System.Decimal',float:'System.Single',uint:'System.UInt32',ulong:'System.UInt64',nint:'System.IntPtr',nuint:'System.UIntPtr'};
 export const systemType=name=>aliases[name]??name;
 /** Include return type and staticness: parameter-only keys can accept invalid MemberRefs. */
+const signatureType=type=>type.replace(/[A-Za-z_][\w.+`]+/g,name=>numericAliases[name]??({'System.Object':'object','System.String':'string','System.Void':'void'}[name])??name);
 function signatureKey(owner,name,parameters,result,isStatic) {
+  parameters=parameters.map(signatureType);result=signatureType(result);
   return owner+'::'+name+'('+JSON.stringify(parameters)+'):'+JSON.stringify(result)+':'+(isStatic?'static':'instance');
 }
 export function intrinsicKey(descriptor) {
@@ -34,7 +40,7 @@ for(const name of ['IsGenericType','IsGenericTypeDefinition','ContainsGenericPar
 add('System.Object','ReferenceEquals',['object','object'],'bool',true,'objectReferenceEquals');
 add('System.Enum','ToString',[],'string',false,'enumToString');
 add('System.Enum','HasFlag',['System.Enum'],'bool',false,'enumHasFlag');
-for(const parameters of [[],['string']])add('System.Exception','.ctor',parameters,'void',false,'exceptionCtor');
+for(const owner of ['System.Exception','System.NotSupportedException','System.InvalidOperationException'])for(const parameters of [[],['string']])add(owner,'.ctor',parameters,'void',false,'exceptionCtor');
 add('System.Exception','get_Message',[],'string',false,'exceptionMessage');
 for(const result of ['Exception','System.Exception'])add('System.Exception','get_InnerException',[],result,false,'exceptionInner');
 add('System.TypeInitializationException','get_Message',[],'string',false,'exceptionMessage');
@@ -64,7 +70,9 @@ for(const type of ['int','double','string'])add('System.Convert','ToDouble',[typ
 for(const type of primitive)add('System.Convert','ToString',[type],'string',true,'convertString');
 for(const [owner,result] of [['System.Int32','int'],['System.Double','double'],['System.Int64','long']])add(owner,'Parse',['string'],result,true,'parse');
 
-for(const d of numericIntrinsicDefinitions)add(d.owner,d.name,d.parameters,d.returnType,d.isStatic,d.implementation);
+for(const d of numericIntrinsicDefinitions)add(d.owner,d.name,d.parameters,d.returnType,d.isStatic,d.implementation==='object'?'objectCtor':d.implementation);
+
+for(const d of syncIntrinsicDefinitions)add(d.owner,d.name,d.parameters,d.returnType,d.isStatic,d.implementation==='object'?'objectCtor':d.implementation);
 
 const builtinDefinitions=new Map(definitions),frameworkDefinitions=new Map();
 
@@ -95,6 +103,9 @@ export const intrinsicDefinitions=Object.freeze([...definitions.values()]);
 export function intrinsicDefinition(descriptor) {
   if(descriptor?.kind!=='method'||!descriptor.signature||!Array.isArray(descriptor.signature.parameters))return null;
   const signature=descriptor.signature;
+  const array=arrayMethodDefinition(descriptor);if(array)return array;
+  const async=asyncMethodDefinition(descriptor);if(async)return async;
+  if(isSynchronizationIntrinsic(descriptor))return {key:intrinsicKey(descriptor),descriptor,implementation:'synchronization',contract:null};
   // Framework canonical aliases and built-in CLI aliases intentionally differ.
   // This preserves the verifier's previous contract-first selection policy.
   const contract=frameworkDefinitions.get(signatureKey(canonicalType(descriptor.owner),descriptor.name,signature.parameters.map(canonicalType),canonicalType(signature.returnType),signature.isStatic));

@@ -1,3 +1,4 @@
+import {cancelArrayOperation} from './array-ops.js';
 import {ManagedFault} from '../heap.js';
 import {failInitialization} from './static-init.js';
 
@@ -56,6 +57,7 @@ function beginUnwind(vm,search) {
   const catcher=selection?.kind==='catch'&&selection.frameId===frame.id?selection.handler:null;
   const finals=frame.needsInitialization||frame.filterSearch?[]:activeClauses(frame,location?.offset??frame.lastOffset).filter(handler=>(handler.flags===2||handler.flags===4)&&(!catcher||!within(catcher.target,handler)));
   frame.unwinds=frame.unwinds.filter(unwind=>unwind.active&&catcher&&catcher.target>=unwind.active.target&&catcher.target<unwind.active.handlerEnd);
+  cancelArrayOperation(frame);
   frame.pending={kind:'exception',error:search.error,catch:catcher,handlers:finals,search};frame.unwinds.push(frame.pending);
   frame.stack=[];frame.volatileAccess=false;vm.fault=null;continueUnwind(vm,frame);
 }

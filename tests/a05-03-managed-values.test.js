@@ -6,6 +6,8 @@ import {MethodTableRegistry} from '../packages/runtime/src/execution/method-tabl
 import {createValue,copyValue,boxValue,unboxValue,valueDefault,sourceValue} from '../packages/runtime/src/execution/value-types.js';
 import {address,dereference,sourceFieldValue,sourceFieldStore,validatePointer,pointerType,asReadonly} from '../packages/runtime/src/execution/managed-pointers.js';
 import {storageValue,sourceStorageValue} from '../packages/runtime/src/execution/storage.js';
+import {sourceStore,sourceCopy,sourceNewObject} from '../packages/runtime/src/execution/source-storage.js';
+import {sourceFieldType} from '../packages/runtime/src/execution/managed-pointers.js';
 import {copyExecution} from '../packages/runtime/src/snapshot.js';
 import {valueFixture} from './a05-03-fixtures.js';
 
@@ -33,6 +35,37 @@ test('a05-03: nested struct copies share only managed object references',()=>{
   assert.equal(vm.top.locals[0].fields[0].fields[0],7);assert.equal(vm.top.locals[1].fields[0].fields[0],19);
   assert.equal(copy.fields[0].fields[0],7);assert.equal(Object.isFrozen(original.fields),true);
   assert.throws(()=>{original.fields[0].fields[0]=99;},TypeError);
+  assert.throws(()=>createValue(vm,'Inner',[1,Object.freeze({data:[]})]),{name:'InvalidCastException'});
+});
+
+test('a05-03: source IR allocation and field stores retain struct and primitive boxing types',()=>{
+  const vm=context();vm.image={types:[],methods:[]};
+  const value=sourceNewObject(vm,'Outer');assert.equal(value.valueType,vm.heap.methodTables.get('Outer'));
+  vm.top.locals[0]=value;
+  const pointer=numberPointer(vm,address(vm,'local',0,null,{type:'Outer'}));
+  assert.equal(sourceFieldType(vm,address(vm,'field',0,address(vm,'local',0,null,{type:'Outer'})),0).name,'System.Int32');
+  dereference(vm,pointer,true,5);const copied=sourceStore(vm,vm.top.locals[0],'Outer','Outer');
+  assert.notEqual(copied,vm.top.locals[0]);assert.notEqual(copied.fields[0],vm.top.locals[0].fields[0]);
+  const boxed=sourceStore(vm,copied,'object','Outer');assert.equal(vm.heap.get(boxed).kind,'box');
+  assert.equal(sourceCopy(vm,boxed),boxed);assert.equal(unboxValue(vm,boxed,'Outer').fields[0].fields[0],5);
+  assert.equal(vm.heap.get(sourceStore(vm,1,'object','double')).methodTable.name,'System.Double');
+  assert.equal(vm.heap.get(sourceStore(vm,true,'object','bool')).methodTable.name,'System.Boolean');
+  assert.equal(sourceStore(vm,true,'bool','bool'),true);
+  vm.top.locals[1]=false;const boolean=address(vm,'local',1,null,{type:'bool'});dereference(vm,boolean,true,1);assert.equal(dereference(vm,boolean),true);
+  const other=context();assert.throws(()=>sourceStore(vm,other.heap.string('foreign'),'object','string'),{name:'InvalidReferenceException'});
+});
+
+test('a05-03: allocating interior stores pin popped owners and incoming references',()=>{
+  const vm=context(),owner=vm.heap.object('Holder',[nested(vm,1)]),incoming=vm.heap.string('temporary');
+  const pointer=address(vm,'field',1,address(vm,'field',0,address(vm,'field',0,owner)));
+  const withRoots=vm.heap.withRoots.bind(vm.heap);
+  // Collect at the value-copy boundary, after caller operands would be popped.
+  // This catches pinning the replacement while forgetting its owning object.
+  let collected=false;
+  vm.heap.withRoots=(values,action)=>withRoots(values,()=>{if(!collected){collected=true;vm.heap.collect();}return action();});
+  dereference(vm,pointer,true,incoming);
+  assert.equal(vm.heap.get(owner).data[0].fields[0].fields[1],incoming);assert.equal(vm.heap.get(incoming).data,'temporary');
+  assert(collected);
 });
 
 test('a05-03: interior refs follow replaced enclosing values and keep whole owners alive',()=>{

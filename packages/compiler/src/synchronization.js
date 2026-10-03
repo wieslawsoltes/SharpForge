@@ -1,5 +1,4 @@
-import {Op,Builtins} from '@sharpforge/bytecode';
-import {syncIntrinsicDefinitions} from '@sharpforge/cil';
+import {Op,Builtins,syncIntrinsicDefinitions} from '@sharpforge/bytecode';
 import {canonicalType,frameworkType} from '@sharpforge/framework';
 
 const pathOf=node=>node?.kind==='Name'?node.name:node?.kind==='Member'&&pathOf(node.target)?pathOf(node.target)+'.'+node.name:null;
@@ -62,7 +61,7 @@ export function installSynchronizationCompiler(C,{builtinFor=defaultBuiltin,addr
       if(selected.type&&owner==='System.Threading.Volatile'&&this.synchronizationValueType(selected.type)){if(report)this.c.report(node,'CS0452','Generic Volatile requires a reference type');return {error:true};}
       return selected;
     },
-    synchronizationAddress(node,{readonly=false}={}) {
+    synchronizationAddress(node,{readonly=false,out=false}={}) {
       if(addressOp===undefined)throw new Error('Synchronization compiler requires Op.ADDRESS integration');
       const type=typeName(this.infer(node)).replace(/&$/,''),flag=readonly?4:0;
       if(node?.kind==='BoundTemp'){this.emit(addressOp,flag,node.slot);return type;}
@@ -70,7 +69,7 @@ export function installSynchronizationCompiler(C,{builtinFor=defaultBuiltin,addr
         const local=this.lookup(node.name);
         if(local) {
           if(local.isConst||!readonly&&(local.isUsing||local.isIteration||local.refKind==='in'))this.c.report(node,'CS1657','This local cannot be passed as a writable reference');
-          if(!this.assigned.has(local.slot))this.c.report(node,'CS0165',`Use of unassigned local variable '${local.name}'`);
+          if(!out&&!this.assigned.has(local.slot))this.c.report(node,'CS0165',`Use of unassigned local variable '${local.name}'`);
           if(local.symbol)this.c.reference(node,local.symbol);
           if(local.type.endsWith('&'))this.emit(Op.LDLOC,local.slot);else this.emit(addressOp,flag,local.slot);
           return type;
@@ -90,7 +89,7 @@ export function installSynchronizationCompiler(C,{builtinFor=defaultBuiltin,addr
         return type;
       }
       if(node?.kind==='Index'&&this.infer(node.target).endsWith('[]')) {
-        this.expr(node.target);this.checkAssign('int',this.expr(node.index),node.index);this.emit(addressOp,3|flag,0);return type;
+        this.expr(node.target);this.arrayIndex(node.index);this.emit(addressOp,3|flag,0);return type;
       }
       this.c.report(node,'CS1510','A byref argument requires a local, field or array element');this.emitConstant(null);return 'error';
     },

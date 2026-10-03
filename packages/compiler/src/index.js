@@ -1,3 +1,5 @@
+import {installSynchronizationCompiler} from './synchronization.js';
+import {installScalarCompiler} from './scalar-builtins.js';
 import {numeric,normalizeNumeric,implicitNumeric,integral,unaryPromotion,binaryPromotion,scalarLiteral,constantValue,numericDefault,constantFits} from './numeric.js';
 import {NumericType,numericMode,numericTypeNames,scalarConvert} from '@sharpforge/bytecode';
 import {installModernCompiler,languageVersion,hasBackingField,rewriteBackingField} from './modern.js';
@@ -17,7 +19,7 @@ const normalize = t=>canonicalType(normalizeNumeric(aliases[t]??t));
 const isReference = t=>t==='string'||t==='object'||t==='Exception'||(!supported.has(t)&&t!=='error'&&t!=='long'&&frameworkType(t)?.kind!=='enum')||t.endsWith('[]');
 export function assignable(target,from) { return frameworkAssignable(target,from)||target==='error'||from==='error'||target===from||target==='object'&&from!=='void'||numeric(target)&&numeric(from)&&implicitNumeric(from,target)||from==='null'&&isReference(target); }
 function defaultValue(type){return numeric(type)?numericDefault(type):type==='bool'?false:null;}
-function alwaysReturns(s){return (s?.kind==='Using'||s?.kind==='OverflowContext')&&alwaysReturns(s.body)||s?.kind==='Switch'&&s.sections.some(x=>x.labels.includes(null))&&s.sections.every(x=>x.statements.some(alwaysReturns))||s?.kind==='Return'||s?.kind==='Throw'||s?.kind==='Block'&&s.statements.some(alwaysReturns)||s?.kind==='If'&&alwaysReturns(s.then)&&alwaysReturns(s.otherwise)||s?.kind==='Try'&&(alwaysReturns(s.finallyBody)||alwaysReturns(s.body)&&s.catches.every(c=>alwaysReturns(c.body)));}
+function alwaysReturns(s){return (s?.kind==='Using'||s?.kind==='OverflowContext'||s?.kind==='Lock')&&alwaysReturns(s.body)||s?.kind==='Switch'&&s.sections.some(x=>x.labels.includes(null))&&s.sections.every(x=>x.statements.some(alwaysReturns))||s?.kind==='Return'||s?.kind==='Throw'||s?.kind==='Block'&&s.statements.some(alwaysReturns)||s?.kind==='If'&&alwaysReturns(s.then)&&alwaysReturns(s.otherwise)||s?.kind==='Try'&&(alwaysReturns(s.finallyBody)||alwaysReturns(s.body)&&s.catches.every(c=>alwaysReturns(c.body)));}
 function pathOf(e){return e.kind==='Name'?e.name:e.kind==='Member'?`${pathOf(e.target)}.${e.name}`:null;}
 export class Compilation {
   constructor(parsedFiles, options={}) {
@@ -221,15 +223,15 @@ class MethodCompiler {
   constantPattern(node){
     if(this.isNameof(node))return {value:this.nameof(node),type:'string'};
     const result=this.constant(node);
-    if(result&&['int','string','bool','null'].includes(result.type)){
+    if(result&&(integral(result.type)||['string','bool','null'].includes(result.type))){
       const visit=n=>{if(!n||typeof n!=='object')return;if(n.kind==='Name'){const local=this.lookup(n.name);if(local?.constantValue&&local.symbol)this.c.reference(n,local.symbol);}for(const [key,value]of Object.entries(n))if(!['green','tokens','source'].includes(key))for(const child of Array.isArray(value)?value:[value])if(child&&typeof child==='object'&&child.kind)visit(child);};visit(node);return result;
     }
-    this.c.report(node??this.m.node,'CS0150','This profile requires an int, string, bool or null constant pattern');return {value:null,type:'error'};
+    this.c.report(node??this.m.node,'CS0150','This profile requires an integral, string, bool or null constant pattern');return {value:null,type:'error'};
   }
   switchDispatch(node,groups){
-    this.seq({...node,end:node.expression.end});const type=this.expr(node.expression),slot=this.temp(type);if(!['int','string','bool'].includes(type))this.c.report(node,'CS0151','Switch governing type must be int, string or bool in this profile');this.emit(Op.STLOC,slot);this.emit(Op.POP);
+    this.seq({...node,end:node.expression.end});const type=this.expr(node.expression),slot=this.temp(type);if(!integral(type)&&!['string','bool'].includes(type))this.c.report(node,'CS0151','Switch governing type must be integral, string or bool in this profile');this.emit(Op.STLOC,slot);this.emit(Op.POP);
     const branches=groups.map(()=>[]),seen=new Set();let fallback=-1;
-    groups.forEach((labels,index)=>labels.forEach(label=>{if(label===null){if(fallback>=0)this.c.report(node,'CS0152','Duplicate default arm');fallback=index;return;}const constant=this.constantPattern(label),key=JSON.stringify([constant.type,constant.value]);if(seen.has(key))this.c.report(label,'CS0152','Duplicate constant pattern');seen.add(key);this.checkAssign(type,constant.type,label);this.emit(Op.LDLOC,slot);this.emitConstant(constant.value,constant.type);this.emit(Op.BINARY,Binary['==']);branches[index].push(this.emit(Op.JTRUE));}));
+    groups.forEach((labels,index)=>labels.forEach(label=>{if(label===null){if(fallback>=0)this.c.report(node,'CS0152','Duplicate default arm');fallback=index;return;}const constant=this.constantPattern(label),key=JSON.stringify([constant.type,constant.value]);if(seen.has(key))this.c.report(label,'CS0152','Duplicate constant pattern');seen.add(key);this.checkAssign(type,constant.type,label);this.emit(Op.LDLOC,slot);this.emitConstant(constant.value,constant.type);if(numeric(type))this.binary('==',type,constant.type,{...node,left:node.expression,right:label});else this.emit(Op.BINARY,Binary['==']);branches[index].push(this.emit(Op.JTRUE));}));
     return {branches,fallback,otherwise:this.emit(Op.JUMP),slot};
   }
   switchStatement(node){
@@ -237,10 +239,10 @@ class MethodCompiler {
     const ends=[];node.sections.forEach((section,index)=>{for(const p of dispatch.branches[index])this.patch(p);if(dispatch.fallback===index)this.patch(dispatch.otherwise);this.assigned=new Set(before);for(const s of section.statements)this.stmt(s);const terminal=s=>alwaysReturns(s)||['Break','Continue'].includes(s?.kind)||s?.kind==='Block'&&terminal(s.statements.at(-1))||s?.kind==='If'&&terminal(s.then)&&terminal(s.otherwise);if(section.statements.length&&!terminal(section.statements.at(-1)))this.c.report(section,'CS0163','Control cannot fall through a switch section');ends.push(this.emit(Op.JUMP));});
     if(dispatch.fallback<0)this.patch(dispatch.otherwise);for(const p of [...ends,...loop.breaks])this.patch(p);this.loops.pop();for(const local of this.scopes.at(-1).values())this.clear(local.slot);this.closeScope();this.clear(dispatch.slot);this.assigned=before;
   }
-  switchType(node){const types=node.arms.map(a=>this.infer(a.expression));return types.includes('double')&&types.every(t=>numeric(t))?'double':types.find(t=>t!=='null')??'error';}
+  switchType(node){const types=node.arms.map(a=>this.infer(a.expression));if(types.every(numeric))return [...new Set(types)].find(type=>node.arms.every(arm=>this.scalarAccepts(arm.expression,type)))??'error';return types.find(t=>t!=='null')??'error';}
   switchExpression(node){
     const type=this.switchType(node),before=new Set(this.assigned),dispatch=this.switchDispatch(node,node.arms.map(a=>[a.pattern])),ends=[],assigned=[];
-    node.arms.forEach((arm,index)=>{for(const p of dispatch.branches[index])this.patch(p);if(dispatch.fallback===index)this.patch(dispatch.otherwise);this.assigned=new Set(before);this.checkAssign(type,this.expr(arm.expression),arm);assigned.push(new Set(this.assigned));ends.push(this.emit(Op.JUMP));});
+    node.arms.forEach((arm,index)=>{for(const p of dispatch.branches[index])this.patch(p);if(dispatch.fallback===index)this.patch(dispatch.otherwise);this.assigned=new Set(before);this.checkAssign(type,this.typedExpr(arm.expression,type),arm);assigned.push(new Set(this.assigned));ends.push(this.emit(Op.JUMP));});
     if(dispatch.fallback<0){this.patch(dispatch.otherwise);this.emitConstant('No switch expression arm matched.');this.emit(Op.BUILTIN,BuiltinMap.get('Exception.new').id,1);this.emit(Op.THROW);this.c.report(node,'CS8509','Switch expression does not contain a discard (_) arm','warning');}
     for(const p of ends)this.patch(p);this.clear(dispatch.slot);this.assigned=assigned.length?new Set([...assigned[0]].filter(x=>assigned.every(s=>s.has(x)))):before;return type;
   }
@@ -289,8 +291,8 @@ class MethodCompiler {
       case 'Index':{const t=this.infer(node.target);return t.endsWith('[]')?t.slice(0,-2):'error';}
       case 'Member':if(node.name==='Length')return 'int';if(node.name==='Message'&&this.infer(node.target)==='Exception'||['Name','FullName'].includes(node.name)&&this.infer(node.target)==='System.Type')return 'string';return this.property(node)?.type??this.field(node)?.type??'error';
       case 'Call':{if(this.isNameof(node))return 'string';const builtin=this.findBuiltin(node);if(builtin)return builtin.result==='numeric'?node.args.some(a=>this.infer(a)==='double')?'double':'int':builtin.result;return this.findMethod(node,false)?.returnType??'error';}
-      case 'Assignment':return this.infer(node.left);case 'Conditional':return this.infer(node.whenTrue);case 'Unary':return node.operator==='!'?'bool':unaryPromotion(this.infer(node.operand),node.operator);
-      case 'Binary':if(['==','!=','<','>','<=','>=','&&','||'].includes(node.operator))return 'bool';{const l=this.infer(node.left),r=this.infer(node.right);if(node.operator==='+'&&(l==='string'||r==='string'))return 'string';return binaryPromotion(l,r,node.operator)??l;}
+      case 'Assignment':return this.infer(node.left);case 'Conditional':return this.infer(node.whenTrue);case 'Unary':return this.negativeMinimum(node)?.type??(node.operator==='!'?'bool':unaryPromotion(this.infer(node.operand),node.operator));
+      case 'Binary':if(['==','!=','<','>','<=','>=','&&','||'].includes(node.operator))return 'bool';{const l=this.infer(node.left),r=this.infer(node.right);if(node.operator==='+'&&(l==='string'||r==='string'))return 'string';return binaryPromotion(l,r,node.operator,this.constant(node.left),this.constant(node.right))??l;}
       default:return 'error';
     }
   }
@@ -317,7 +319,7 @@ class MethodCompiler {
     if(type==='ulong'&&value?.value==='9223372036854775808'&&!/[uU]/.test(literalText))return {type:'long',value:{scalar:'long',value:'-9223372036854775808'}};
     return null;
   }
-  constant(node){try{return evaluateConstant(node,{checked:this.checkedContext!==false,resolve:n=>n.kind==='Name'?this.lookup(n.name)?.constantValue??null:null});}catch(error){if(!(error instanceof ConstantError))throw error;const key=error.node.start+':'+error.code;if(!this.constantDiagnostics.has(key)){this.constantDiagnostics.add(key);this.c.report(error.node,error.code,error.message);}return null;}}
+  constant(node){try{return evaluateConstant(node,{checked:this.checkedContext!==false,resolve:n=>n.kind==='Name'?this.lookup(n.name)?.constantValue??null:this.scalarConstant?.(n)??null});}catch(error){if(!(error instanceof ConstantError))throw error;const key=error.node.start+':'+error.code;if(!this.constantDiagnostics.has(key)){this.constantDiagnostics.add(key);this.c.report(error.node,error.code,error.message);}return null;}}
   expr(node){
     if(!node){this.emitConstant(null);return 'error';}const external=this.frameworkExpression(node);if(external!==undefined)return external;
     if(['Binary','Unary','Cast'].includes(node.kind))this.constant(node);
@@ -347,7 +349,7 @@ class MethodCompiler {
         const property=this.property(node);if(property)return this.readProperty(property,node);
         const f=this.field(node);if(f){this.c.reference(node,f.symbol);if(f.isStatic)this.emit(Op.LDSTATIC,f.index);else{this.expr(node.target);this.emit(Op.LDFLD,f.index);}return f.type;}
         this.c.report(node,'CS1061',`'${type}' does not contain member '${node.name}'`);this.emitConstant(null);return 'error';}
-      case 'Index':{const type=this.expr(node.target);const index=this.expr(node.index);this.checkAssign('int',index,node.index);if(!type.endsWith('[]'))this.c.report(node,'SF2005','Indexing currently requires an array');this.emit(Op.LDELEM);return type.endsWith('[]')?type.slice(0,-2):'error';}
+      case 'Index':{const type=this.expr(node.target);this.arrayIndex(node.index);if(!type.endsWith('[]'))this.c.report(node,'SF2005','Indexing currently requires an array');this.emit(Op.LDELEM);return type.endsWith('[]')?type.slice(0,-2):'error';}
       case 'Binary':{
         if(['&&','||','??'].includes(node.operator)){
           const lt=this.expr(node.left);this.emit(Op.DUP);let jump;
@@ -357,21 +359,22 @@ class MethodCompiler {
         const left=this.expr(node.left),right=this.expr(node.right);return this.binary(node.operator,left,right,node);}
       case 'Unary':{
         if(['++','--'].includes(node.operator)){
-          const ref=this.prepare(node.operand);this.loadRef(ref);const previous=node.postfix?this.temp(ref.type):null;if(previous!==null){this.emit(Op.STLOC,previous);}this.emitConstant(1);this.binary(node.operator==='++'?'+':'-',ref.type,'int',node);this.storeRef(ref);if(previous!==null){this.emit(Op.POP);this.emit(Op.LDLOC,previous);}return ref.type;
+          const ref=this.prepare(node.operand);this.loadRef(ref);const previous=node.postfix?this.temp(ref.type):null;if(previous!==null){this.emit(Op.STLOC,previous);}this.emitConstant(1);const promoted=this.binary(node.operator==='++'?'+':'-',ref.type,'int',node);if(numeric(ref.type)&&promoted!==ref.type)this.emit(Op.CONVERT,NumericType[ref.type],numericMode(promoted,this.overflowChecked(node)));this.storeRef(ref);if(previous!==null){this.emit(Op.POP);this.emit(Op.LDLOC,previous);}return ref.type;
         }
         const special=this.negativeMinimum(node);if(special){this.emitConstant(special.value,special.type);return special.type;}
         const type=this.expr(node.operand),promoted=unaryPromotion(type,node.operator);
         if(node.operator==='!')this.checkAssign('bool',type,node);
-        else if(!numeric(type)||node.operator==='~'&&!integral(type)||node.operator==='-'&&type==='ulong')this.c.report(node,'CS0023',`Operator '${node.operator}' cannot be applied to '${type}'`);
+        else if(!numeric(type)||node.operator==='~'&&!integral(type)||node.operator==='-'&&['ulong','nuint'].includes(type))this.c.report(node,'CS0023',`Operator '${node.operator}' cannot be applied to '${type}'`);
+        if(numeric(type)&&promoted!==type)this.emit(Op.CONVERT,NumericType[promoted],numericMode(type,false));
         this.emit(Op.UNARY,Unary[node.operator],numeric(type)?numericMode(promoted,this.overflowChecked(node)):0);return node.operator==='!'?'bool':promoted;}
-      case 'Assignment':{const ref=this.prepare(node.left,node.operator==='=');if(node.operator==='??='){if(!isReference(ref.type))this.c.report(node,'CS0019','??= requires a reference target');this.loadRef(ref);this.emit(Op.DUP);this.emitConstant(null);this.emit(Op.BINARY,Binary['==']);const done=this.emit(Op.JFALSE);this.emit(Op.POP);this.checkAssign(ref.type,this.typedExpr(node.right,ref.type),node);this.storeRef(ref);this.patch(done);return ref.type;}if(node.operator==='='){const type=this.typedExpr(node.right,ref.type);this.checkAssign(ref.type,type,node);}else{this.loadRef(ref);const type=this.expr(node.right);const result=this.binary(node.operator.slice(0,-1),ref.type,type,node);this.checkAssign(ref.type,result,node);}this.storeRef(ref);return ref.type;}
+      case 'Assignment':{const ref=this.prepare(node.left,node.operator==='=');if(node.operator==='??='){if(!isReference(ref.type))this.c.report(node,'CS0019','??= requires a reference target');this.loadRef(ref);this.emit(Op.DUP);this.emitConstant(null);this.emit(Op.BINARY,Binary['==']);const done=this.emit(Op.JFALSE);this.emit(Op.POP);this.checkAssign(ref.type,this.typedExpr(node.right,ref.type),node);this.storeRef(ref);this.patch(done);return ref.type;}if(node.operator==='='){const type=this.typedExpr(node.right,ref.type);this.checkAssign(ref.type,type,node);}else{this.loadRef(ref);const type=this.expr(node.right);const result=this.binary(node.operator.slice(0,-1),ref.type,type,node);if(numeric(ref.type)&&numeric(result)&&result!==ref.type)this.emit(Op.CONVERT,NumericType[ref.type],numericMode(result,this.overflowChecked(node)));else this.checkAssign(ref.type,result,node);}this.storeRef(ref);return ref.type;}
       case 'Conditional':{this.bool(node.condition);const before=new Set(this.assigned),no=this.emit(Op.JFALSE),yesType=this.expr(node.whenTrue),yesAssigned=new Set(this.assigned),done=this.emit(Op.JUMP);this.patch(no);this.assigned=new Set(before);const noType=this.expr(node.whenFalse);this.assigned=new Set([...yesAssigned].filter(s=>this.assigned.has(s)));this.patch(done);if(!assignable(yesType,noType)&&!assignable(noType,yesType))this.c.report(node,'CS0173','The conditional expression branches have incompatible types');return yesType==='null'?noType:yesType==='double'||noType==='double'?'double':yesType;}
       case 'Call':{
         if(this.isNameof(node)){this.emitConstant(this.nameof(node));return 'string';}
         const builtin=this.findBuiltin(node);if(builtin){let count=0,types=[];const staticPath=pathOf(node.target)?.replace(/^System\./,'');if(staticPath!==builtin.name&&node.target.kind==='Member'){types.push(this.expr(node.target.target));count++;}
           for(const a of node.args){types.push(this.expr(a));count++;}if(count<builtin.min||count>builtin.max)this.c.report(node,'CS1501',`'${builtin.name}' expects ${builtin.min===builtin.max?builtin.min:builtInRange(builtin)} total arguments`);
           types.forEach((type,i)=>{const target=builtin.params[i];if(target==='number'){if(!numeric(type))this.c.report(node,'CS1503',`Argument ${i+1} must be numeric`);}else if(target==='array'){if(!type.endsWith('[]'))this.c.report(node,'CS1503','Argument must be an array');}else if(target&&target!=='any'&&target!=='exception')this.checkAssign(target,type,node.args[Math.max(0,i-(count-node.args.length))]??node);});
-          const selected=builtin.name==='object.GetType'&&['int','double','bool','long'].includes(types[0])?BuiltinMap.get('$type.'+types[0]+'.GetType'):builtin.name==='Math.Abs'&&types[0]==='int'?BuiltinMap.get('$Math.Abs.Int32'):builtin;this.emit(Op.BUILTIN,selected.id,count);return builtin.result==='numeric'?(types.includes('double')?'double':'int'):builtin.result;
+          const selected=builtin.name==='object.GetType'&&[...numericTypeNames,'bool'].includes(types[0])?BuiltinMap.get('$type.'+types[0]+'.GetType'):builtin.name==='Math.Abs'&&types[0]==='int'?BuiltinMap.get('$Math.Abs.Int32'):builtin;this.emit(Op.BUILTIN,selected.id,count);return builtin.result==='numeric'?(types.includes('double')?'double':'int'):builtin.result;
         }
         const method=this.findMethod(node);let count=node.args.length;if(method&&!method.isStatic){if(node.target.kind==='Member')this.expr(node.target.target);else this.emit(Op.LDLOC,this.lookup('this')?.slot??0);count++;}
         node.args.forEach((arg,i)=>{const type=this.typedExpr(arg,method?.parameters[i]?.type);if(method)this.checkAssign(method.parameters[i]?.type??'error',type,arg);});
@@ -380,7 +383,7 @@ class MethodCompiler {
       case 'NewArray':{
         let type=node.type;if(type==='var[]'){if(!node.values?.length)this.c.report(node,'CS0826','No best type found for implicitly-typed array');type=(node.values?.length?this.infer(node.values[0]):'error')+'[]';}
         type=this.c.resolveType(type,node);const element=type.slice(0,-2);
-        if(node.length)this.checkAssign('int',this.expr(node.length),node.length);else this.emitConstant(node.values?.length??0);
+        if(node.length)this.arrayIndex(node.length);else this.emitConstant(node.values?.length??0);
         this.emit(Op.NEWARR,this.c.constant(element));
         if(node.values)node.values.forEach((value,i)=>{this.emit(Op.DUP);this.emitConstant(i);this.checkAssign(element,this.typedExpr(value,element),value);this.emit(Op.STELEM);this.emit(Op.POP);});return type;}
       case 'New':{if(node.collectionInitializers?.length)this.c.report(node,'SF2013','Collection initializers require a registered collection Add contract');
@@ -397,15 +400,17 @@ class MethodCompiler {
       default:this.c.report(node,'SF2098',`Expression '${node.kind}' is not implemented`);this.emitConstant(null);return 'error';
     }
   }
+  arrayIndex(node){const type=this.expr(node);if(!integral(type))this.c.report(node,'CS0266','Array indexes and lengths require an integral type');const target=type==='uint'?'nuint':['long','ulong'].includes(type)?'nint':type;if(target!==type)this.emit(Op.CONVERT,NumericType[target],numericMode(type,type!=='uint'));return target;}
   binary(operator,left,right,node){
     if(frameworkType(left)?.family==='vector'&&left===right){const name={'+':'Add','-':'Subtract','*':'Multiply','/':'Divide','&':'BitwiseAnd','^':'Xor','==':'EqualsAll','!=':'EqualsAll'}[operator],contract=name&&findContracts('System.Numerics.Vector',name,true).find(d=>d.parameters[0]===left);if(contract){this.emitContract(contract);if(operator==='!=')this.emit(Op.UNARY,Unary['!']);return contract.result;}}
-    let result,promoted=numeric(left)&&numeric(right)?binaryPromotion(left,right,operator):null;
-    if(operator==='+'&&(left==='string'||right==='string'))result='string';
+    let result,promoted=numeric(left)&&numeric(right)?binaryPromotion(left,right,operator,this.constant(node?.left),node?.kind==='Unary'&&['++','--'].includes(node.operator)?{type:'int',value:1}:this.constant(node?.right)):null;
+    if(operator==='+'&&(left==='string'||right==='string')){if(numeric(left)){const saved=this.temp(right);this.emit(Op.STLOC,saved);this.emit(Op.POP);this.scalarString(left);this.emit(Op.LDLOC,saved);}if(numeric(right))this.scalarString(right);result='string';}
     else if(promoted){if(['&','|','^','<<','>>'].includes(operator)&&!integral(promoted))this.c.report(node,'CS0019','Bitwise operators require integers');result=['==','!=','<','<=','>','>='].includes(operator)?'bool':promoted;}
     else if(['==','!='].includes(operator)){if(!assignable(left,right)&&!assignable(right,left))this.c.report(node,'CS0019',`Operator '${operator}' cannot compare '${left}' and '${right}'`);result='bool';}
     else if(['&','|','^'].includes(operator)&&left==='bool'&&right==='bool')result='bool';
     else {this.c.report(node,'CS0019',`Operator '${operator}' cannot be applied to '${left}' and '${right}'`);result='error';}
     if(!(operator in Binary)){this.c.report(node,'SF2006',`Operator '${operator}' is not implemented`);this.emit(Op.POP);return 'error';}
+    if(promoted){const rightType=['<<','>>'].includes(operator)?'int':promoted;if(left!==promoted){const saved=this.temp(right);this.emit(Op.STLOC,saved);this.emit(Op.POP);this.emit(Op.CONVERT,NumericType[promoted],numericMode(left,false));this.emit(Op.LDLOC,saved);}if(right!==rightType)this.emit(Op.CONVERT,NumericType[rightType],numericMode(right,false));}
     this.emit(Op.BINARY,Binary[operator],promoted?numericMode(promoted,this.overflowChecked(node)):result==='int'?(this.overflowChecked(node)&&['+','-','*'].includes(operator)?5:1):result==='string'?2:result==='bool'&&left==='bool'?3:0);return result;
   }
   prepare(node,allowReadOnly=false){const framework=this.prepareFramework(node);if(framework)return framework;
@@ -422,7 +427,7 @@ class MethodCompiler {
     }
     const f=(node.kind==='Name'||node.kind==='Member')?this.field(node):null;
     if(f){this.c.reference(node,f.symbol);if(f.isStatic)return {kind:'static',type:f.type,index:f.index};if(node.kind==='Member')this.expr(node.target);else{const self=this.lookup('this');if(!self)this.c.report(node,'CS0120','An object reference is required');this.emit(Op.LDLOC,self?.slot??0);}const receiver=this.temp(f.owner.name);this.emit(Op.STLOC,receiver);this.emit(Op.POP);return {kind:'field',type:f.type,index:f.index,receiver};}
-    if(node.kind==='Index'){const type=this.expr(node.target),receiver=this.temp(type);this.emit(Op.STLOC,receiver);this.emit(Op.POP);this.checkAssign('int',this.expr(node.index),node.index);const index=this.temp('int');this.emit(Op.STLOC,index);this.emit(Op.POP);if(!type.endsWith('[]'))this.c.report(node,'CS0021','Array required');return {kind:'index',type:type.slice(0,-2),receiver,index};}
+    if(node.kind==='Index'){const type=this.expr(node.target),receiver=this.temp(type);this.emit(Op.STLOC,receiver);this.emit(Op.POP);const indexType=this.arrayIndex(node.index),index=this.temp(indexType);this.emit(Op.STLOC,index);this.emit(Op.POP);if(!type.endsWith('[]'))this.c.report(node,'CS0021','Array required');return {kind:'index',type:type.slice(0,-2),receiver,index};}
     this.c.report(node,'CS0131','The left-hand side must be a variable, field or array element');return {kind:'local',type:'error',slot:this.temp()};
   }
   loadRef(ref){if(ref.kind==='framework'){this.loadFramework(ref);return;}if(ref.kind==='property'){const getter=this.propertyAccess(ref.property,ref.node,'get');if(getter){if(!ref.property.isStatic)this.emit(Op.LDLOC,ref.receiver);this.emit(Op.CALL,getter.id,ref.property.isStatic?0:1);}else this.emitConstant(null);}else if(ref.kind==='local'){if(!this.assigned.has(ref.slot))this.c.report(this.m.node,'CS0165',`Use of unassigned local '${ref.name}'`);this.emit(Op.LDLOC,ref.slot);}else if(ref.kind==='static')this.emit(Op.LDSTATIC,ref.index);else{this.emit(Op.LDLOC,ref.receiver);if(ref.kind==='field')this.emit(Op.LDFLD,ref.index);else{this.emit(Op.LDLOC,ref.index);this.emit(Op.LDELEM);}}}
@@ -430,6 +435,8 @@ class MethodCompiler {
 }
 installFrameworkCompiler(MethodCompiler);
 installModernCompiler(MethodCompiler);
+installScalarCompiler(MethodCompiler);
+installSynchronizationCompiler(MethodCompiler);
 export {languageVersion} from './modern.js';
 function builtInRange(b){return `${b.min}–${b.max}`;}
 export function compile(input,options={}){if(Array.isArray(input)&&input.length===0)input='';const files=typeof input==='string'?[parse(new SourceText(input))]:input.map(f=>f.root?f:parse(new SourceText(f.text,f.uri,f.version)));return new Compilation(files,options).build();}

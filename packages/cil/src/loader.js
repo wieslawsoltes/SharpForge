@@ -1,5 +1,5 @@
 import {scalarSpan} from './scalar-loading.js';
-import {numericAliases} from '@sharpforge/bytecode';
+import {numericAliases,Builtins,numericTypeName,numericTypeNames} from '@sharpforge/bytecode';
 import {contractForMember,frameworkType,enumTypes} from '@sharpforge/framework';
 import { Op, Binary, Unary, BuiltinMap, frameworkBuiltin, EnumConvertBase, FORMAT_VERSION, verifyImage } from '@sharpforge/bytecode';
 import { CilError, text, equalBytes } from './binary.js';
@@ -9,7 +9,7 @@ import { decodeInstructions } from './opcodes.js';
 import { emitAssembly } from './emitter.js';
 import { defaultValue } from './analysis.js';
 const profileOpcodes=new Set(['ldftn','unbox.any','ldloca','ldloca.s','add.ovf','sub.ovf','mul.ovf','conv.ovf.i4','nop', 'ldarg.0', 'ldarg.1', 'ldarg.2', 'ldarg.3', 'ldloc.0', 'ldloc.1', 'ldloc.2', 'ldloc.3', 'stloc.0', 'stloc.1', 'stloc.2', 'stloc.3', 'ldarg.s', 'starg.s', 'ldloc.s', 'stloc.s', 'ldnull', 'ldc.i4.m1', 'ldc.i4.0', 'ldc.i4.1', 'ldc.i4.2', 'ldc.i4.3', 'ldc.i4.4', 'ldc.i4.5', 'ldc.i4.6', 'ldc.i4.7', 'ldc.i4.8', 'ldc.i4.s', 'ldc.i4', 'ldc.r8', 'dup', 'pop', 'call', 'ret', 'br.s', 'brfalse.s', 'brtrue.s', 'br', 'brfalse', 'brtrue', 'add', 'sub', 'mul', 'div', 'rem', 'and', 'or', 'xor', 'shl', 'shr', 'neg', 'not', 'conv.i4', 'conv.r8', 'callvirt', 'ldstr', 'newobj', 'castclass', 'throw', 'ldfld', 'stfld', 'ldsfld', 'stsfld', 'box', 'newarr', 'ldlen', 'ldelem', 'stelem', 'conv.u1', 'leave', 'leave.s', 'ceq', 'cgt', 'cgt.un', 'clt', 'clt.un', 'ldarg', 'starg', 'ldloc', 'stloc', 'rethrow', 'endfinally']);
-for(const name of ['ldtoken','ldc.i8','ldc.r4','add.ovf.un','sub.ovf.un','mul.ovf.un','div.un','rem.un','shr.un','conv.r.un',...['i1','u1','i2','u2','i4','u4','i8','u8','i','u','r4','r8'].flatMap(type=>['conv.'+type,'conv.ovf.'+type,'conv.ovf.'+type+'.un'])])profileOpcodes.add(name);
+for(const name of ['ldsflda','ldflda','ldelema','readonly.','ldarga','ldarga.s','ldtoken','ldc.i8','ldc.r4','add.ovf.un','sub.ovf.un','mul.ovf.un','div.un','rem.un','shr.un','conv.r.un',...['i1','u1','i2','u2','i4','u4','i8','u8','i','u','r4','r8'].flatMap(type=>['conv.'+type,'conv.ovf.'+type,'conv.ovf.'+type+'.un'])])profileOpcodes.add(name);
 const shortTypes={...numericAliases,'System.Int32':'int','System.Int64':'long','System.Double':'double','System.Boolean':'bool','System.String':'string','System.Object':'object','System.Exception':'Exception','System.Array':'Array'};
 const arithmetic={'add.ovf':'+','sub.ovf':'-','mul.ovf':'*',add:'+',sub:'-',mul:'*',div:'/',rem:'%',and:'&',or:'|',xor:'^',shl:'<<',shr:'>>'};
 function nativeLocal(i,prefix){if(i.name===prefix)return i.operand;if(i.name===prefix+'.s')return i.operand;if(i.name.startsWith(prefix+'.'))return Number(i.name.slice(prefix.length+1));return null;}
@@ -47,7 +47,7 @@ export function loadAssembly(bytes,options={}) {
   const library=debug.outputKind==='library',entry=methodByToken.get(pe.entryPoint);if(library?pe.entryPoint!==0||debug.entry!==null:!entry||entry.id!==debug.entry)throw new CilError('Entry point does not match profile');
   const image={formatVersion:FORMAT_VERSION,name:debug.name,...(library?{outputKind:'library'}:{}),entryPoint:library?null:entry.id,constants:[],sequencePoints:debug.sequencePoints,sources:debug.sources,types,statics,methods};const constants=new Map(),intern=value=>{const key=JSON.stringify([typeof value,value]);if(constants.has(key))return constants.get(key);const id=image.constants.length;constants.set(key,id);image.constants.push(value);return id;};
   let totalInstructions=0;
-  const resolveCall=t=>{if(t>>>24===6){const row=metadata.row(t);return {token:t,owner:metadata.typeName(typeOwners.get(t)),name:metadata.string(row[3]),sig:readSignature(metadata.blob(row[4]),metadata)};}if(t>>>24!==10)throw new CilError('Unsupported method token');const row=metadata.row(t);return {token:t,owner:metadata.typeName(decodeCoded('MemberRefParent',row[0])),name:metadata.string(row[1]),sig:readSignature(metadata.blob(row[2]),metadata)};};
+  const resolveCall=t=>{if(t>>>24===43){const row=metadata.row(t),definition=resolveCall(decodeCoded('MethodDefOrRef',row[0])),spec=readSignature(metadata.blob(row[1]),metadata);if(spec.kind!=='methodSpec'||spec.arguments.length!==(definition.sig.genericArity??0))throw new CilError('Invalid generic method instantiation');const substitute=type=>type.replace(/!!(\d+)/g,(_,index)=>spec.arguments[Number(index)]??'error');return {...definition,token:t,methodArguments:spec.arguments,sig:{...definition.sig,parameters:definition.sig.parameters.map(substitute),returnType:substitute(definition.sig.returnType)}};}if(t>>>24===6){const row=metadata.row(t);return {token:t,owner:metadata.typeName(typeOwners.get(t)),name:metadata.string(row[3]),sig:readSignature(metadata.blob(row[4]),metadata)};}if(t>>>24!==10)throw new CilError('Unsupported method token');const row=metadata.row(t);return {token:t,owner:metadata.typeName(decodeCoded('MemberRefParent',row[0])),name:metadata.string(row[1]),sig:readSignature(metadata.blob(row[2]),metadata)};};
   for(const method of methods){const info=debug.methods[method.id],body=bodies.get(method.id),all=instructions.get(method.id),byOffset=new Map(all.map(i=>[i.offset,i])),startToPc=new Map();let previousEnd=0;
     for(let pc=0;pc<info.spans.length;pc++){const span=info.spans[pc];if(!Array.isArray(span)||span.length!==2||!span.every(Number.isInteger)||span[0]<previousEnd||span[1]<=0||span[0]+span[1]>body.code.length||!byOffset.has(span[0])||span[0]+span[1]!==body.code.length&&!byOffset.has(span[0]+span[1]))throw new CilError('Invalid instruction-boundary map');previousEnd=span[0]+span[1];startToPc.set(span[0],pc);}totalInstructions+=info.spans.length;if(totalInstructions>1_000_000)throw new CilError('Instruction limit exceeded');
     const sequenceByPc=new Map();for(const p of image.sequencePoints.filter(p=>p.methodId===method.id)){if(p.id<0||p.id>=image.sequencePoints.length||image.sequencePoints[p.id]!==p||info.spans[p.offset]?.[0]!==p.ilOffset||p.methodToken!==info.token)throw new CilError('Invalid sequence point');sequenceByPc.set(p.offset,p.id);}
@@ -62,10 +62,26 @@ export function loadAssembly(bytes,options={}) {
   return image;
 }
 function decodeSpan(span,c) {
+  if(span.at(-2)?.name==='ldstr'&&span.at(-1)?.name==='pop'){
+    const marker=c.metadata.userString(span.at(-2).operand);
+    if(marker==='SharpForge.Formatting.Format4'){
+      const builtin=Builtins.find(b=>b.contract?.owner==='System.String'&&b.contract.name==='Format'&&b.contract.parameters.length===5);
+      return [Op.BUILTIN,builtin.id,builtin.min];
+    }
+    if(marker==='SharpForge.Formatting.BoxValue'||marker==='SharpForge.Formatting.FormatValue'){
+      const builtin=Builtins.find(b=>b.contract?.owner==='SharpForge.Runtime.Formatting'&&b.contract.name===marker.slice('SharpForge.Formatting.'.length));
+      return [Op.BUILTIN,builtin.id,builtin.min];
+    }
+  }
   const scalar=scalarSpan(span,c);if(scalar)return [scalar.op,scalar.a,scalar.b];
-  const emit=(op,a=0,b=0)=>[op,a,b],names=span.map(i=>i.name),call=span.find(i=>['call','callvirt','newobj'].includes(i.name));
+  const emit=(op,a=0,b=0)=>[op,a,b],names=span.map(i=>i.name),call=span.filter(i=>['call','callvirt','newobj'].includes(i.name)).at(-1);
   if(names.includes('ldftn')){const functionToken=span.find(i=>i.name==='ldftn').operand,method=c.methodByToken.get(functionToken),constructor=c.resolveCall(call.operand);if(!method||frameworkType(constructor.owner)?.kind!=='delegate')throw new CilError('Invalid delegate construction');return emit(Op.DELEGATE,method.id,c.intern(constructor.owner));}
-  if(call){const target=c.resolveCall(call.operand),owner=shortTypes[target.owner]??target.owner,sig=target.sig,count=sig.parameters.length+(sig.isStatic?0:1);
+  const afterCall=call?span.slice(span.indexOf(call)+1):[];
+  const storedConversion=afterCall.some(i=>['ret','stfld','stsfld','stelem'].includes(i.name)||i.operandKind.startsWith('br')||nativeLocal(i,'stloc')!==null&&nativeLocal(i,'stloc')<c.method.locals.length);
+  if(call&&!storedConversion){const target=c.resolveCall(call.operand),owner=shortTypes[target.owner]??target.owner,sig=target.sig,count=sig.parameters.length+(sig.isStatic?0:1);
+    const normalized=type=>type.endsWith('&')?normalized(type.slice(0,-1))+'&':shortTypes[type]??numericTypeName(type);
+    const profile=Builtins.find(builtin=>{const descriptor=builtin.numeric??builtin.synchronization;if(descriptor?.formatType!==undefined&&descriptor.formatType!==(span.some(i=>i.name==='box')?normalized(c.metadata.typeName(span.find(i=>i.name==='box').operand)):null))return false;if(['System.Console','System.Convert'].includes(descriptor?.owner)&&descriptor.formatType===undefined&&span.some(i=>i.name==='box'&&['nint','nuint'].includes(normalized(c.metadata.typeName(i.operand)))))return false;if(!descriptor||descriptor.owner!==target.owner||descriptor.name!==target.name||descriptor.isStatic!==sig.isStatic||(descriptor.genericArity??0)!==(sig.genericArity??0))return false;const substitute=type=>type.replace(/!!(\d+)/g,(_,index)=>target.methodArguments?.[Number(index)]??'!!'+index);return normalized(substitute(descriptor.returnType))===normalized(sig.returnType)&&descriptor.parameters.length===sig.parameters.length&&descriptor.parameters.every((type,index)=>normalized(substitute(type))===normalized(sig.parameters[index]));});
+    if(profile)return emit(Op.BUILTIN,profile.id,profile.min);
     const contract=contractForMember({owner:target.owner,name:target.name,signature:sig});if(contract){const builtin=frameworkBuiltin(contract);return emit(Op.BUILTIN,builtin.id,builtin.min);}
     if(call.name==='newobj'&&sig.parameters[0]==='SharpForge.<>AllocationToken'){const type=c.typeByToken.get(c.typeOwners.get(call.operand));if(!type)throw new CilError('Unknown allocation constructor');return emit(Op.NEWOBJ,type.id);}
     if(c.methodByToken.has(call.operand)){const method=c.methodByToken.get(call.operand);return emit(Op.CALL,method.id,count);}
@@ -80,7 +96,7 @@ function decodeSpan(span,c) {
     else if(target.owner==='System.Console')name='Console.'+target.name;
     else if(target.owner==='System.GC'){name='GC.'+target.name;if(target.name==='GetTotalMemory'&&span.some(i=>i.name.startsWith('ldc.i4')))argc=0;}
     else if(target.owner==='System.Convert'){name='Convert.'+target.name;if(target.name==='ToString'&&sig.parameters[0]==='object')name='object.ToString';}
-    else if(target.owner==='System.Object'&&target.name==='GetType'){const box=span.find(i=>i.name==='box'),type=box?shortTypes[c.metadata.typeName(box.operand)]??c.metadata.typeName(box.operand):null;name=['int','double','bool','long'].includes(type)?'$type.'+type+'.GetType':'object.GetType';}
+    else if(target.owner==='System.Object'&&target.name==='GetType'){const box=span.find(i=>i.name==='box'),type=box?shortTypes[c.metadata.typeName(box.operand)]??c.metadata.typeName(box.operand):null;name=[...numericTypeNames,'bool'].includes(type)?'$type.'+type+'.GetType':'object.GetType';}
     else if(['System.Type','System.Reflection.MemberInfo'].includes(target.owner)&&['get_Name','get_FullName'].includes(target.name))name='Type.'+target.name.slice(4);
     else if(target.owner==='System.Object'&&target.name==='ReferenceEquals')name='object.ReferenceEquals';
     else if(target.owner==='System.Enum'&&target.name==='HasFlag')name='Enum.HasFlag';
@@ -89,6 +105,8 @@ function decodeSpan(span,c) {
     const builtin=BuiltinMap.get(name);if(!builtin)throw new CilError(`External method is not in the browser runtime profile: ${target.owner}.${target.name}`);return emit(Op.BUILTIN,builtin.id,argc);
   }
   if(names.includes('box')&&names.includes('unbox.any')){const t=c.metadata.typeName(span.find(i=>i.name==='box').operand),id=enumTypes.indexOf(t);if(id>=0){if(['conv.i4','conv.ovf.i4'].includes(span[0].name))return emit(Op.CONVERT,EnumConvertBase+id,span[0].name==='conv.ovf.i4'?1:0);return emit(Op.ENUM,id,constant(span[0],c.metadata));}}
+  const address=span.find(i=>['ldloca','ldloca.s','ldsflda','ldflda','ldelema'].includes(i.name));
+  if(address){const readonly=span.some(i=>i.name==='readonly.')||span.at(-1)?.name==='pop'&&span.at(-2)?.name==='ldc.i4.4';if(address.name.startsWith('ldloca'))return emit(Op.ADDRESS,readonly?4:0,address.operand);if(address.name==='ldsflda'){const slot=c.staticByToken.get(address.operand);if(slot===undefined)throw new CilError('Unknown addressed static field');return emit(Op.ADDRESS,1|(readonly?4:0),slot);}if(address.name==='ldflda'){const field=c.fieldByToken.get(address.operand);if(!field)throw new CilError('Unknown addressed instance field');return emit(Op.ADDRESS,2|(readonly?4:0),field.index);}return emit(Op.ADDRESS,3|(readonly?4:0));}
   const field=span.find(i=>['ldfld','stfld','ldsfld','stsfld'].includes(i.name));if(field){if(field.name.endsWith('sfld')){const index=c.staticByToken.get(field.operand);if(index===undefined)throw new CilError('Unknown static field token');return emit(field.name==='ldsfld'?Op.LDSTATIC:Op.STSTATIC,index);}const f=c.fieldByToken.get(field.operand);if(!f)throw new CilError('Unknown field token');return emit(field.name==='ldfld'?Op.LDFLD:Op.STFLD,f.index);}
   const array=span.find(i=>['newarr','ldelem','stelem','ldlen'].includes(i.name));if(array){if(array.name==='newarr')return emit(Op.NEWARR,c.intern(shortTypes[c.metadata.typeName(array.operand)]??c.metadata.typeName(array.operand)));return emit({ldelem:Op.LDELEM,stelem:Op.STELEM,ldlen:Op.LENGTH}[array.name]);}
   if(names.includes('ret'))return emit(Op.RET);if(names.includes('endfinally'))return emit(Op.ENDFINALLY);

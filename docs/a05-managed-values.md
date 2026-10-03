@@ -15,15 +15,18 @@ API reference: [OpCodes.Ldflda](https://learn.microsoft.com/en-us/dotnet/api/sys
 | Struct assignment, argument, return and field copies | `storageValue` / `copyValue` | Immutable typed values recursively copy nested structs; object fields share managed references |
 | Primitive, enum and struct boxing | `boxValue` / `unboxValue` | Boxes retain exact MethodTable identity; `unbox` aliases storage |
 | GC through value fields and interior pointers | `forEachValueReference` | Active and parked context values, heap records, temporary roots and strong handles share the tracing adapter |
-| Source IR values | `sourceValue`, `sourceStorageValue`, `sourceFieldValue`, `sourceFieldStore` | Static input types must be supplied when boxing erased primitive representations |
+| Source IR values | `sourceNewObject`, `sourceStore`, `sourceFieldValue`, `sourceFieldStore` | Value-type NEWOBJ creates an immutable aggregate; field access accepts managed pointers; static input types must be supplied when boxing erased primitive representations |
 | Snapshot replay | Frozen values and location descriptors | Mutable struct updates replace values; snapshots retain previous values without alias leaks |
 
 Source-language struct and ref syntax remains a compiler boundary. Runtime helper
 and source IR tests do not claim that syntax is accepted. Ref structs, byref fields,
 unsafe pointer arithmetic and physical struct memory layout are outside this
 slice. Managed pointers cannot be stored in heap records, aggregate fields, boxes
-or statics. The direct CIL verifier still needs its adapter to permit user struct
-`cpobj`/`unbox`; `sizeof` remains restricted to its separate supported layout set.
+or statics. Reference fields reject host objects, even if their outer object is
+frozen. Allocating stores root operands after they leave the evaluation stack.
+The direct CIL verifier and runtime resolve typed memory operands through the
+current generic instantiation; `sizeof` uses the MethodTable size within the
+separate supported layout set.
 
 The runnable native comparison example is
 `tests/fixtures/a05/managed-values/Program.cs`. Its project targets .NET 10 and has

@@ -17,3 +17,8 @@ export {resolveExecutionField,genericTypeParts,substituteTypeArguments} from './
 export {numericIntrinsicDefinitions} from './numeric-intrinsic-profile.js';
 export {analyzeMethod} from './analysis.js';
 export {normalizeCallType,substituteCallType,callStorageType,instantiateSignature,callSignatureKey,resolveExecutionMethod,methodGenericParameters,managedDelegateSignature,supportedDelegateCall} from './call-profile.js';
+
+export {arrayMethodDefinition} from './array-profile.js';
+export {syncIntrinsicDefinitions,isSynchronizationIntrinsic} from './sync-intrinsic-profile.js';
+export {numericFieldDefinition} from './numeric-field-profile.js';
+export {asyncIntrinsicDefinitions,asyncMethodDefinition,asyncTypeDefinition,reachableAsyncMethods} from './async-profile.js';

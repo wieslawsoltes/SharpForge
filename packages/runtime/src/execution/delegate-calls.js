@@ -1,9 +1,8 @@
 import {managedDelegateSignature} from '@sharpforge/cil';
 import {ManagedFault,isReference} from '../heap.js';
-import {SUSPENDED} from '../platform.js';
-import {invokeFunctionPointer} from './calls.js';
+import {SUSPENDED} from './suspension.js';
 
-const equalRef=(a,b)=>a===b||isReference(a)&&isReference(b)&&a.h===b.h&&a.g===b.g;
+const equalRef=(a,b)=>a===b||isReference(a)&&isReference(b)&&a.h===b.h&&a.g===b.g&&(a.heapOwner===undefined||b.heapOwner===undefined||a.heapOwner===b.heapOwner);
 function record(vm,ref) {
   const value=vm.heap.get(ref);
   if(value.kind!=='delegate')throw new ManagedFault('ArgumentException','A managed delegate is required');
@@ -70,7 +69,7 @@ function invokeEntry(vm,entry,args,continuation) {
     vm.call(token,method.signature.isStatic?args:[receiver,...args],{delegateContinuation:continuation});return SUSPENDED;
   }
   const values=mode==='closed-instance'||mode==='closed-static'?[receiver,...args]:[...args];
-  return invokeFunctionPointer(vm,pointer,values,{delegateContinuation:continuation});
+  return vm.invokeFunctionPointer(pointer,values,{delegateContinuation:continuation});
 }
 export function invokeDelegate(vm,ref,args) {
   const type=record(vm,ref).type,signature=managedDelegateSignature(vm.inspector,type);

@@ -1,5 +1,5 @@
 import {canonicalType,frameworkType,frameworkAssignable,findContracts,enumValue,enumTypes,eventsFor} from '@sharpforge/framework';
-import {Op,frameworkBuiltin} from '@sharpforge/bytecode';
+import {Op,frameworkBuiltin,numericTypeNames} from '@sharpforge/bytecode';
 const pathOf=e=>e?.kind==='Name'?e.name:e?.kind==='Member'&&pathOf(e.target)?pathOf(e.target)+'.'+e.name:null;
 /** Install a closed framework binder; ordinary user members retain precedence. */
 export function installFrameworkCompiler(C) {
@@ -57,7 +57,7 @@ export function installFrameworkCompiler(C) {
     emitFrameworkArguments(args,parameters,boxPrimitives=false) {
       args.forEach((arg,i)=>{
         if(frameworkType(parameters[i])?.kind==='delegate'&&this.delegateMethod(arg,parameters[i]))this.emitDelegate(arg,parameters[i]);
-        else {const type=this.typedExpr(arg,parameters[i]);this.checkAssign(parameters[i],type,arg);if(boxPrimitives&&parameters[i]==='object'&&['int','double','bool'].includes(type)){this.emitConstant(type);this.emitContract(findContracts('SharpForge.Runtime.Formatting','BoxValue',true)[0]);}}
+        else {const type=this.typedExpr(arg,parameters[i]);this.checkAssign(parameters[i],type,arg);if(boxPrimitives&&parameters[i]==='object'&&[...numericTypeNames,'bool'].includes(type)){this.emitConstant(type);this.emitContract(findContracts('SharpForge.Runtime.Formatting','BoxValue',true)[0]);}}
       });
     },
     emitContract(contract) {

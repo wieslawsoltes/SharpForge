@@ -1,3 +1,4 @@
+import {numericFormat} from './numeric-format.js';
 import {numericTypeName,integerType,nativeIntegerBits} from './numeric-types.js';
 import {float,number,nativeInteger,isNativeInteger,binary,compare,unary,convert,storage} from './numeric-ops.js';
 import {isDecimal,decimalParse,decimalFromBits,decimalBits,decimalFromInteger,decimalFromFloat,decimalToFloat,decimalBinary,decimalNegate,decimalFormat} from './decimal-ops.js';
@@ -94,12 +95,4 @@ export function decodeScalar(constant,context={}) {
   if(type!=='float'&&type!=='double'||typeof value!=='string'||!/^(?:NaN|[-+]?Infinity|-?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?)$/.test(value))return fail(context,'Malformed floating-point constant');
   return float(Number(value),type==='float'?'r4':'r8');
 }
-export function scalarFormat(value,type,context) {
-  if(isDecimal(value))return decimalFormat(value,'G',context);
-  if(isNativeInteger(value)&&context?.nativeIntBits===undefined)context={...context,nativeIntBits:value.nativeInt};
-  type=numericTypeName(type??(value?.float==='r4'?'float':value?.float?'double':isNativeInteger(value)?'nint':typeof value==='bigint'?'long':'int'));
-  const integer=integerType(type,context),raw=unwrap(value);
-  if(type==='char')return String.fromCharCode(Number(raw)&65535);
-  if(integer)return (integer.unsigned?BigInt.asUintN(integer.bits,BigInt(raw)):BigInt.asIntN(integer.bits,BigInt(raw))).toString();
-  return Object.is(raw,-0)?'-0':String(raw);
-}
+export function scalarFormat(value,type,context) {return numericFormat(value,type,'G',context);}

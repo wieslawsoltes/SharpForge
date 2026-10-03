@@ -1,8 +1,8 @@
 import {enumTypes,frameworkAssignable} from '@sharpforge/framework';
-import { numericTypeNames,decodeNumericMode, EnumConvertBase, Op, BinaryName, Builtins, verifyImage } from '@sharpforge/bytecode';
+import { numericTypeNames,numericTypeName,decodeNumericMode, EnumConvertBase, Op, BinaryName, Builtins, verifyImage } from '@sharpforge/bytecode';
 import { CilError } from './binary.js';
 export function constantType(value,flags=0) { return value?.scalar??(value===null?'null':typeof value==='boolean'?'bool':typeof value==='string'?'string':flags===1||!Number.isInteger(value)?'double':'int'); }
-export function defaultValue(type) { return type==='bool'?false:type==='int'||type==='double'?0:null; }
+export function defaultValue(type) {type=numericTypeName(type);return type==='bool'?false:type==='int'||type==='double'?0:type==='decimal'?{scalar:'decimal',value:[0,0,0,0]}:numericTypeNames.includes(type)?{scalar:type,value:'0'}:null;}
 function merge(a,b) { if(a===b)return a;if(frameworkAssignable(a,b))return a;if(frameworkAssignable(b,a))return b;if(a==='null')return b;if(b==='null')return a;if((a==='int'&&b==='double')||(a==='double'&&b==='int'))return 'double';if(a==='object'||b==='object')return 'object';throw new CilError(`Incompatible evaluation-stack types: ${a}, ${b}`); }
 export function analyzeMethod(image,method) {
   const count=method.code.length/3,states=Array(count),outputs=Array(count),queue=[[0,[]]],typeMap=new Map(image.types.map(t=>[t.name,t]));let maxStack=0;
@@ -12,6 +12,7 @@ export function analyzeMethod(image,method) {
       case Op.ENUM:stack.push(enumTypes[a]);break;case Op.DELEGATE:pop();stack.push(image.constants[b]);break;case Op.CONST:stack.push(constantType(image.constants[a],b));break;
       case Op.LDLOC:stack.push(method.locals[a].type);break;case Op.LDSTATIC:stack.push(image.statics[a].type);break;
       case Op.STLOC:pop();stack.push(method.locals[a].type);break;case Op.STSTATIC:pop();stack.push(image.statics[a].type);break;
+      case Op.ADDRESS:{const kind=a&3;let type;if(kind===0)type=method.locals[b].type;else if(kind===1)type=image.statics[b].type;else if(kind===2){const receiver=pop().replace(/&$/,'');type=typeMap.get(receiver)?.fields[b]?.type;}else {pop();const array=pop();if(array.endsWith('[]'))type=array.slice(0,-2);}if(!type)throw new CilError('Unknown managed address type');stack.push(type+'&');break;}
       case Op.LDFLD:{const receiver=pop(),field=typeMap.get(receiver)?.fields[a];if(!field)throw new CilError(`Cannot resolve field ${receiver}:${a}`);stack.push(field.type);break;}
       case Op.STFLD:{pop();const receiver=pop(),field=typeMap.get(receiver)?.fields[a];if(!field)throw new CilError('Unknown store field');stack.push(field.type);break;}
       case Op.DUP:stack.push(stack.at(-1));break;case Op.POP:pop();break;
@@ -20,7 +21,7 @@ export function analyzeMethod(image,method) {
       case Op.UNARY:{const old=pop();stack.push(a===2?'bool':b>=16?decodeNumericMode(b).type:a===3?'int':(b===1||b===5)?'int':old==='int'?'int':'double');break;}
       case Op.JFALSE:case Op.JTRUE:pop();break;
       case Op.CALL:for(let i=0;i<b;i++)pop();stack.push(image.methods[a].returnType==='void'?'null':image.methods[a].returnType);break;
-      case Op.BUILTIN:{const args=stack.splice(stack.length-b,b),result=Builtins[a].result;stack.push(result==='void'?'null':result==='numeric'?(args.includes('double')?'double':'int'):result);break;}
+      case Op.BUILTIN:{const args=stack.splice(stack.length-b,b);let result=numericTypeName(Builtins[a].result);if(result==='System.Object')result='object';if(result==='!!0'){if(!args[0]?.endsWith('&'))throw new CilError('Generic synchronization requires a byref argument');result=args[0].slice(0,-1);}stack.push(result==='void'?'null':result==='numeric'?(args.includes('double')?'double':'int'):result);break;}
       case Op.RET:case Op.THROW:pop();break;
       case Op.NEWOBJ:stack.push(image.types[a].name);break;
       case Op.NEWARR:pop();stack.push(image.constants[a]+'[]');break;

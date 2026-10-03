@@ -1,3 +1,5 @@
+import {reachableAsyncMethods} from './async-profile.js';
+import {numericFieldDefinition} from './numeric-field-profile.js';
 import {resolveExecutionField} from './field-profile.js';
 import {resolveExecutionMethod,supportedDelegateCall,callStorageType,methodGenericParameters,callSignatureKey} from './call-profile.js';
 import {verifyControlRegions} from './control-flow-profile.js';
@@ -59,7 +61,7 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
     verifyControlRegions(inspector,m,issue);
     for(const i of m.instructions){
       if(!isExecutableOpcode(i.name)){issue(m,i,'IL_OPCODE',`Opcode '${i.name}' is inspection-only`);continue;}
-      if(i.name==='sizeof'){try{const type=inspector.metadata.typeName(i.operand);if(!primitiveSizes[type])issue(m,i,'IL_TYPE','sizeof is implemented only for fixed-width primitive types');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
+      if(i.name==='sizeof'){try{const type=inspector.metadata.typeName(i.operand);if(!primitiveSizes[type]&&!['System.IntPtr','System.UIntPtr','System.Decimal'].includes(type))issue(m,i,'IL_TYPE','sizeof requires a supported managed value type');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
       if(['cpobj','unbox','unbox.any','box','castclass','isinst','ldobj','stobj','initobj','newarr','ldelema','ldelem','stelem'].includes(i.name)){try{if(inspector.resolveToken(i.operand).kind!=='type')throw new CilError('Instruction requires a type token');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
       if(i.name==='ldtoken'){try{const token=inspector.resolveToken(i.operand);if(!['type','method','field'].includes(token.kind))issue(m,i,'IL_TOKEN','ldtoken requires a type, method or field');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
       if(indexed.test(i.name)){
@@ -71,6 +73,7 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
       }
       if(['call','callvirt','newobj','ldftn','ldvirtftn'].includes(i.name)){
         try{const d=resolveExecutionMethod(inspector,i.operand),target=d.resolvedToken;
+          for(const method of reachableAsyncMethods(inspector,d))pending.push(method);
           if(d.signature.callingConvention||d.signature.parameters.concat(d.signature.returnType).some(illegalType))throw new CilError('Unsupported managed call signature');
           if(['callvirt','ldvirtftn'].includes(i.name)&&d.signature.isStatic)throw new CilError(i.name+' requires an instance method');
           const instructionIndex=m.instructions.indexOf(i),prefixes=[];for(let index=instructionIndex-1;index>=0&&m.instructions[index].name.endsWith('.');index--)prefixes.push(m.instructions[index]);
@@ -89,7 +92,7 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
         }catch(error){issue(m,i,'IL_TOKEN',error.message);}
       }
       if(['ldsfld','stsfld','ldsflda','newobj'].includes(i.name)){try{enqueueType((i.name==='newobj'?inspector.resolveToken(i.operand):resolveExecutionField(inspector,i.operand)).ownerToken);}catch{/* Reported by token validation. */}}
-      if(['ldfld','stfld','ldsfld','stsfld','ldflda','ldsflda'].includes(i.name)){try{const d=resolveExecutionField(inspector,i.operand);if(d.kind!=='field'||d.token>>>24!==4&&!d.resolvedToken)issue(m,i,'IL_FIELD','External fields are inspection-only');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
+      if(['ldfld','stfld','ldsfld','stsfld','ldflda','ldsflda'].includes(i.name)){try{const constant=numericFieldDefinition(inspector.resolveToken(i.operand));if(constant){if(i.name!=='ldsfld')issue(m,i,'IL_FIELD','Numeric constant fields are read-only');continue;}const d=resolveExecutionField(inspector,i.operand);if(d.kind!=='field'||d.token>>>24!==4&&!d.resolvedToken)issue(m,i,'IL_FIELD','External fields are inspection-only');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
     }
     const queue=[[0,0]],heights=new Map();for(const h of m.handlers){queue.push([map.get(h.target),h.flags===0||h.flags===1?1:0]);if(h.flags===1)queue.push([map.get(h.catchType),1]);}
     while(queue.length&&issues.length<200){

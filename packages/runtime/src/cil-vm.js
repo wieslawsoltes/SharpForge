@@ -1,3 +1,11 @@
+import {asyncRoots} from './execution/async-runtime.js';
+import {nativeInteger,decimalParse,decimalFromBits,decodeScalar} from '@sharpforge/bytecode';
+import {invokeDelegate} from './execution/delegate-calls.js';
+import {callRoots} from './execution/generic-calls.js';
+import {createArray} from './execution/arrays.js';
+import {SyncPrimitives} from './execution/sync-primitives.js';
+import {resumeArrayOperation,arrayContinuationRoots} from './execution/array-ops.js';
+import {validateSliceBudget} from './execution/slice-budget.js';
 import {scalarFormat,isDecimal,isNativeInteger,numericTypeName,numericTypeNames,nativeIntegerBits} from '@sharpforge/bytecode';
 import {runtimeTypeRoots,clearRuntimeTypes,runtimeTypeText} from './execution/tokens.js';
 import {address,dereference} from './execution/managed-pointers.js';
@@ -11,7 +19,7 @@ import { AssemblyInspector, verifyCilAssembly, resolveExecutionField, CilError }
 import { ManagedHeap, ManagedFault, isReference } from './heap.js';
 import {float,number,compare as numericCompare,binary as numericBinary,convert as numericConvert,unary as numericUnary,indirect as numericIndirect} from './execution/numeric-ops.js';
 import {cilHandlers} from './execution/handlers/index.js';
-import {call,ensureInitialized,invoke,prepareCall} from './execution/calls.js';
+import {call,ensureInitialized,invoke,prepareCall,invokeFunctionPointer} from './execution/calls.js';
 import {CilTypeSystem} from './execution/type-system.js';
 import {throwFault,continueUnwind,exceptionRoots,fatalFaults} from './execution/eh.js';
 import {invokeIntrinsic} from './execution/intrinsics.js';
@@ -32,14 +40,14 @@ export class CilVirtualMachine {
     const input=options.arguments??(entry.signature.parameters.length===1&&entry.signature.parameters[0]==='string[]'?[[]]:[]);
     if(input.length!==entry.signature.parameters.length)throw new CilError('Argument count does not match selected method');
     const args=[];this.heap.withRoots(args,()=>{for(let i=0;i<input.length;i++){const value=this.marshal(input[i],entry.signature.parameters[i]);args.push(value);this.heap.pins.push(value);}});
-    this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);this.call(entry.token,args);this.ensureInitialized(entry.ownerToken,'static-method');
+    this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);this.sync=new SyncPrimitives(this);this.call(entry.token,args);this.ensureInitialized(entry.ownerToken,'static-method');
   }
-  *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots()??[];
+  *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots()??[];yield* this.sync?.roots()??[];yield* asyncRoots(this);
     const root=function*(v){if(v?.byref){if(v.owner)yield v.owner;}else yield v;};
     yield* initializationRoots(this);yield* runtimeTypeRoots(this);
     for(const v of this.statics.values())yield* root(v);yield* stringRoots(this);yield this.returnValue;
     if(this.fault?.reference)yield this.fault.reference;if(this.pendingFault?.reference)yield this.pendingFault.reference;
-    for(const f of this.frames){for(const v of f.stack)yield* root(v);for(const v of f.args)yield* root(v);for(const v of f.locals)yield* root(v);yield f.returnObject;yield* exceptionRoots(f);}
+    for(const f of this.frames){for(const v of f.stack)yield* root(v);for(const v of f.args)yield* root(v);for(const v of f.locals)yield* root(v);yield f.returnObject;yield f.asyncBuilderTask;yield* exceptionRoots(f);yield* callRoots(f);yield* arrayContinuationRoots(f);}
   }
   get top(){return this.frames.at(-1);}
   get typeSystem(){
@@ -47,7 +55,11 @@ export class CilVirtualMachine {
     return this._typeSystem;
   }
   marshal(value,type){
-    if(type.endsWith('[]')){if(!Array.isArray(value))throw new CilError(`Expected JSON array for ${type}`);const ref=this.heap.array(type.slice(0,-2),value.length);return this.heap.withRoots([ref],()=>{const r=this.heap.get(ref);for(let i=0;i<value.length;i++)r.data[i]=this.marshal(value[i],type.slice(0,-2));return ref;});}
+    type=numericTypeName(type);
+    if(value?.scalar){if(numericTypeName(value.scalar)!==type)throw new CilError('Scalar argument type mismatch');return decodeScalar(value,numericContext(this));}
+    if(type==='decimal'){if(Array.isArray(value))return decimalFromBits(value,numericContext(this));if(typeof value!=='string')throw new CilError('Decimal arguments require exact text or four Int32 bits');return decimalParse(value,numericContext(this));}
+    if(type==='nint'||type==='nuint'){const bits=nativeIntegerBits(this.options);let n;try{if(typeof value==='number'&&!Number.isSafeInteger(value))throw new Error();n=BigInt(value);}catch{throw new CilError('Native integer arguments require an exact integer or decimal string');}const unsigned=type==='nuint',min=unsigned?0n:-(1n<<BigInt(bits-1)),max=unsigned?(1n<<BigInt(bits))-1n:(1n<<BigInt(bits-1))-1n;if(n<min||n>max)throw new CilError('Native integer argument out of range');return nativeInteger(n,bits);}
+    if(type.endsWith('[]')){if(!Array.isArray(value))throw new CilError(`Expected JSON array for ${type}`);const ref=createArray(this,type.slice(0,-2),[value.length]);return this.heap.withRoots([ref],()=>{const r=this.heap.get(ref);for(let i=0;i<value.length;i++)r.data[i]=this.marshal(value[i],type.slice(0,-2));return ref;});}
     if(type==='string'){if(value===null)return null;if(typeof value!=='string')throw new CilError('Expected string argument');return this.heap.string(value);}
     if(type==='bool'){if(typeof value!=='boolean')throw new CilError('Expected boolean argument');return value?1:0;}
     if(type==='long'||type==='ulong'){let n;try{if(typeof value==='number'&&!Number.isSafeInteger(value))throw new Error();n=BigInt(value);}catch{throw new CilError('Int64 arguments require an exact integer or decimal string');}if(type==='long'&&(n<-(1n<<63n)||n>=(1n<<63n))||type==='ulong'&&(n<0||n>=(1n<<64n)))throw new CilError('Int64 argument out of range');return BigInt.asIntN(64,n);}
@@ -59,7 +71,7 @@ export class CilVirtualMachine {
   storage(value,type){return storageValue(this,value,type,numericContext(this));}
   slotType(frame,arg,index){return arg?(frame.method.signature.isStatic?frame.method.signature.parameters[index]:index===0?(this.typeSystem.table(frame.genericIdentity??frame.method.ownerToken).flags.valueType?(frame.genericIdentity??frame.method.owner)+'&':'object'):frame.method.signature.parameters[index-1]):frame.method.locals[index];}
   indirect(value,name){return numericIndirect(value,name,numericContext(this));}
-  resultValue(){const value=this.value(this.returnValue);return this.returnType==='uint'?Number(value)>>>0:this.returnType==='ulong'?BigInt.asUintN(64,value??0n):this.returnType==='bool'?!!value:value;}
+  resultValue(){const value=this.value(this.returnValue);if(this.returnType==='nuint'){const bits=nativeIntegerBits(this.options),n=BigInt.asUintN(bits,BigInt(value??0));return bits===32?Number(n):n;}return this.returnType==='uint'?Number(value)>>>0:this.returnType==='ulong'?BigInt.asUintN(64,value??0n):this.returnType==='bool'?!!value:value;}
   resultDisplay(){return this.returnType==='string'?this.display(this.returnValue):this.format(this.returnValue,this.returnType);}
   value(v){if(v?.float||isNativeInteger(v))return v.value;if(isReference(v)){const r=this.heap.get(v);if(r.kind==='string')return r.data;if(r.kind==='box')return this.value(r.data[0]);}return v;}
   format(v,type){const name=runtimeTypeText(this,v)??enumToString(this,v,type);if(name!==null)return name;if(v===null)return '';if(isReference(v)&&this.heap.get(v).kind==='box'){const r=this.heap.get(v);return this.format(r.data[0],numericTypeName(r.methodTable.name));}const n=this.value(v);if(type==='System.Boolean')type='bool';if(type==='bool')return n?'True':'False';if(isDecimal(v)||v?.float||isNativeInteger(v)||numericTypeNames.includes(numericTypeName(type)))return scalarFormat(v,type,this.options);if(type==='char')return String.fromCharCode(Number(n));if(type==='uint')return String(Number(n)>>>0);if(type==='ulong')return String(BigInt.asUintN(64,n));if(isReference(n)){const r=this.heap.get(n);return r.kind==='exception'?r.type+': '+this.format(r.data[0]):r.type;}return String(n);}
@@ -85,6 +97,8 @@ export class CilVirtualMachine {
   convert(name,value){return numericConvert(name,value,numericContext(this));}
   unary(name,value){return numericUnary(name,value,numericContext(this));}
   intrinsic(descriptor,args){return invokeIntrinsic(this,descriptor,args);}
+  invokeFunctionPointer(pointer,args,extra){return invokeFunctionPointer(this,pointer,args,extra);}
+  invokeDelegate(reference,args){return invokeDelegate(this,reference,args);}
   invoke(instruction){return invoke(this,instruction);}
   resumeUnwind(frame){return continueUnwind(this,frame);}
   raise(error){return throwFault(this,error);}
@@ -99,10 +113,11 @@ export class CilVirtualMachine {
     handler(this,frame,instruction);
   }
   runSlice({instructionBudget=15000,timeBudgetMs=8,onInstruction=null}={}){
+    validateSliceBudget(instructionBudget,timeBudgetMs);
     this.scheduler.beforeSlice();if(this.state==='ready')this.state='running';if(this.state!=='running')return this.state;const started=performance.now();let n=0;
     if(this.pendingFault){const pending=this.pendingFault;this.pendingFault=null;this.raise(pending);}
-    while(this.state==='running'&&this.frames.length&&n<instructionBudget){if((n&255)===0&&performance.now()-started>=timeBudgetMs)break;this.scheduler.beforeInstruction();if(this.state!=='running'||!this.frames.length)break;const instruction=this.top.method.instructions[this.top.pc];if(instruction&&onInstruction?.(instruction,this.top)){this.state='paused';break;}n++;this.instructions++;
-      try{if(this.instructions>this.options.maxInstructions)throw new ManagedFault('InstructionLimitException','Program exceeded its instruction budget');this.step();}catch(error){const fault=error instanceof ManagedFault?error:new ManagedFault('InvalidProgramException',error.message??String(error));fault.frames??=[...this.frames].reverse().map(f=>({method:f.method.owner+'::'+f.method.name,methodToken:f.method.token,ilOffset:f.lastOffset}));if(!fatalFaults.has(fault.name)&&this.onException?.(fault)){this.pendingFault=fault;this.state='paused';}else this.raise(fault);}
+    while(this.state==='running'&&this.frames.length&&n<instructionBudget){if((n&255)===0&&performance.now()-started>=timeBudgetMs)break;this.scheduler.beforeInstruction();if(this.state!=='running'||!this.frames.length)break;const frame=this.top,continuing=!!frame.intrinsicContinuation,instruction=frame.method.instructions[frame.pc];if(!continuing&&instruction&&onInstruction?.(instruction,frame)){this.state='paused';break;}if(!continuing){n++;this.instructions++;}
+      try{if(this.instructions>this.options.maxInstructions||continuing&&this.instructions>=this.options.maxInstructions)throw new ManagedFault('InstructionLimitException','Program exceeded its instruction budget');if(continuing){const result=resumeArrayOperation(this,frame,{deadline:started+timeBudgetMs,workBudget:1});n+=result.work;this.instructions+=result.work;if(!result.work)break;}else this.step();}catch(error){const fault=error instanceof ManagedFault?error:new ManagedFault('InvalidProgramException',error.message??String(error));fault.frames??=[...this.frames].reverse().map(f=>({method:f.method.owner+'::'+f.method.name,methodToken:f.method.token,ilOffset:f.lastOffset}));if(!fatalFaults.has(fault.name)&&this.onException?.(fault)){this.pendingFault=fault;this.state='paused';}else this.raise(fault);}
       this.scheduler.afterInstruction();
     }
     this.elapsedMs+=performance.now()-started;return this.state;

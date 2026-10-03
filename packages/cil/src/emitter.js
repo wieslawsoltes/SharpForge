@@ -40,7 +40,7 @@ export function emitAssemblyDetailed(image,{name=image.name??'Application',frame
       if(property.set!==null)metadata.add(24,[1,context.methodTokens.get(property.set)&0xffffff,codedIndex('HasSemantics',pt)]);
     }
   }
-  context.external=(owner,name,returnType,parameters,isStatic=true)=>metadata.member(context.resolveType(owner),name,methodSignature(returnType,parameters,isStatic,context.resolveType));
+  context.external=(owner,name,returnType,parameters,isStatic=true,genericArity=0)=>metadata.member(context.resolveType(owner),name,methodSignature(returnType,parameters,isStatic,context.resolveType,genericArity));
   const section=new Writer().zero(72),debugMethods=[];let ilBytes=0;
   for(const d of context.descriptors){section.pad();const rva=TEXT_RVA+section.length;metadata.rows[6][(d.token&0xffffff)-1][0]=rva;const body=d.original?emitMethod(context,d):emitHelper(context,d);d.body=body;ilBytes+=body.code.length;const sig=body.locals.length?metadata.add(17,[metadata.blob(localSignature(body.locals,context.resolveType))]):0;section.bytes(writeMethodBody(body.code,sig,body.maxStack,body.handlers));
     if(d.original)debugMethods.push({...(d.original.asyncRole?{asyncRole:d.original.asyncRole,asyncOrigin:d.original.asyncOrigin}:{}),id:d.original.id,token:d.token,name:d.original.name,qualifiedName:d.original.qualifiedName,...(d.original.sourceRange?{sourceRange:d.original.sourceRange}:{}),...(d.original.accessor?{accessor:d.original.accessor}:{}),locals:d.original.locals.map(({type,...local})=>local),spans:body.spans});
@@ -75,6 +75,7 @@ function emitMethod(c,d) {
     switch(op){
       case Op.ENUM:w.integer(b).op('box',c.resolveType(enumTypes[a])).op('unbox.any',c.resolveType(enumTypes[a]));break;case Op.DELEGATE:{const type=c.image.constants[b];w.op('ldftn',c.methodTokens.get(a)).op('newobj',c.external(type,'.ctor','void',['object','nint'],false));break;}case Op.SEQ:w.op('nop');break;case Op.NOP:w.op('nop').op('nop');break;case Op.ENDFINALLY:w.op('endfinally');terminal=true;break;
       case Op.CONST:{const value=c.image.constants[a],type=constantType(value,b);if(value?.scalar)emitScalarConstant(w,c,value);else if(type==='null')w.op('ldnull');else if(type==='string')w.op('ldstr',0x70000000|c.metadata.userString(value));else if(type==='double')w.op('ldc.r8',value);else {w.integer(value===true?1:value===false?0:value);if(type==='bool')w.op('conv.u1');}break;}
+      case Op.ADDRESS:{const kind=a&3;if(kind===0)w.op('ldloca',b);else if(kind===1)w.op('ldsflda',c.staticTokens[b]);else if(kind===2){const field=c.fieldTokens.get(top.replace(/&$/,'')+':'+b);if(!field)throw new CilError('Unknown addressed field');w.op('ldflda',field);}else {if(a&4)w.op('readonly.');w.op('ldelema',c.resolveType(left.slice(0,-2)));}if(a&4)w.integer(4).op('pop');break;}
       case Op.LDLOC:w.local('ldloc',a);break;
       case Op.STLOC:convert(top,m.locals[a].type);w.op('dup').local('stloc',a);break;
       case Op.LDSTATIC:w.op('ldsfld',c.staticTokens[a]);break;
@@ -94,7 +95,29 @@ function emitMethod(c,d) {
         const output=analysis.outputs[pc];if(output.some((t,i)=>needs(t,analysis.states[a]?.[i])))throw new CilError('Conditional edge requires an unsupported stack conversion');
         if(leaves(pc,a)){const skip=w.length;w.op(op===Op.JFALSE?'brtrue':'brfalse',5);relative('leave',a);}else relative(op===Op.JFALSE?'brfalse':'brtrue',a);break;}
       case Op.CALL:{const target=c.image.methods[a],from=input.slice(input.length-b),to=[...(target.isStatic?[]:[target.owner]),...target.parameters.map(p=>p.type)];adapt(from,to);w.op('call',c.methodTokens.get(a));if(target.returnType==='void')w.op('ldnull');break;}
-      case Op.BUILTIN:{const descriptor=Builtins[a]?.contract;if(descriptor){const from=input.slice(input.length-b),to=[...(!descriptor.isStatic&&descriptor.kind!=='constructor'?[descriptor.owner]:[]),...descriptor.parameters];adapt(from,to);if(!descriptor.isStatic&&descriptor.kind!=='constructor'&&frameworkType(descriptor.owner)?.kind==='value'){const slots=[];for(let j=to.length-1;j>=0;j--){const slot=getScratch(to[j],2000+j);slots[j]=slot;w.local('stloc',slot);}w.op('ldloca',slots[0]);for(let j=1;j<slots.length;j++)w.local('ldloc',slots[j]);}const ctor=descriptor.kind==='constructor';w.op(ctor?'newobj':descriptor.isStatic||frameworkType(descriptor.owner)?.kind==='value'?'call':'callvirt',c.external(descriptor.owner,descriptor.name,ctor?'void':descriptor.result,descriptor.parameters,descriptor.isStatic));if(!ctor&&descriptor.result==='void')w.op('ldnull');}else emitBuiltin(c,w,a,b,input.slice(input.length-b),adapt);break;}
+      case Op.BUILTIN:{const builtin=Builtins[a],profile=builtin.numeric??builtin.synchronization;if(profile){const ctor=profile.name==='.ctor',from=input.slice(input.length-b),generic=profile.genericArity??0,type=generic?from[0]?.replace(/&$/,''):null;if(generic&&!from[0]?.endsWith('&'))throw new CilError('Generic synchronization requires an address');const replace=t=>generic?t.replaceAll('!!0',type):t,parameters=profile.parameters.map(replace),to=[...(!profile.isStatic&&!ctor?[profile.owner]:[]),...parameters];adapt(from,to);if(!profile.isStatic&&!ctor&&numericTypeName(profile.owner)==='decimal'){const slots=[];for(let j=to.length-1;j>=0;j--){slots[j]=getScratch(to[j],2500+j);w.local('stloc',slots[j]);}w.op('ldloca',slots[0]);for(let j=1;j<slots.length;j++)w.local('ldloc',slots[j]);}let target=c.external(profile.owner,profile.name,profile.returnType,profile.parameters,profile.isStatic,generic);if(generic)target=c.metadata.methodSpec(target,[type],c.resolveType);w.op(ctor?'newobj':profile.isStatic||numericTypeName(profile.owner)==='decimal'?'call':'callvirt',target);if(!ctor&&profile.returnType==='void')w.op('ldnull');break;}const descriptor=builtin?.contract;if(descriptor){const from=input.slice(input.length-b),to=[...(!descriptor.isStatic&&descriptor.kind!=='constructor'?[descriptor.owner]:[]),...descriptor.parameters];adapt(from,to);if(descriptor.owner==='System.String'&&descriptor.name==='Format'&&descriptor.parameters.length===5){
+          // The source profile's fourth object argument is a params-array call in CoreLib.
+          const slots=Array.from({length:4},(_,j)=>getScratch('object',2700+j));
+          for(let j=3;j>=0;j--)w.local('stloc',slots[j]);
+          w.integer(4).op('newarr',c.resolveType('object'));
+          for(let j=0;j<4;j++)w.op('dup').integer(j).local('ldloc',slots[j]).op('stelem.ref');
+          w.op('call',c.external('string','Format','string',['string','object[]']));
+          w.op('ldstr',0x70000000|c.metadata.userString('SharpForge.Formatting.Format4')).op('pop');break;
+        }if(descriptor.owner==='SharpForge.Runtime.Formatting'){
+          // The profile's source helper ABI lowers to actual CoreLib operations.
+          // Its no-op marker lets the loader reconstruct the original source call.
+          if(descriptor.name==='BoxValue')w.op('pop');
+          else if(descriptor.name==='FormatValue'){
+            const value=getScratch('object',2600),format=getScratch('string',2601),alignment=getScratch('int',2602);
+            w.op('pop').local('stloc',alignment).local('stloc',format).local('stloc',value);
+            w.op('ldstr',0x70000000|c.metadata.userString('{0,')).local('ldloc',alignment).op('box',c.resolveType('int')).op('call',c.external('string','Concat','string',['object','object']));
+            w.op('ldstr',0x70000000|c.metadata.userString(':')).op('call',c.external('string','Concat','string',['string','string']));
+            w.local('ldloc',format).op('call',c.external('string','Concat','string',['string','string']));
+            w.op('ldstr',0x70000000|c.metadata.userString('}')).op('call',c.external('string','Concat','string',['string','string']));
+            w.local('ldloc',value).op('call',c.external('string','Format','string',['string','object']));
+          }else throw new CilError('Unsupported formatting helper');
+          w.op('ldstr',0x70000000|c.metadata.userString('SharpForge.Formatting.'+descriptor.name)).op('pop');break;
+        }if(!descriptor.isStatic&&descriptor.kind!=='constructor'&&frameworkType(descriptor.owner)?.kind==='value'){const slots=[];for(let j=to.length-1;j>=0;j--){const slot=getScratch(to[j],2000+j);slots[j]=slot;w.local('stloc',slot);}w.op('ldloca',slots[0]);for(let j=1;j<slots.length;j++)w.local('ldloc',slots[j]);}const ctor=descriptor.kind==='constructor';w.op(ctor?'newobj':descriptor.isStatic||frameworkType(descriptor.owner)?.kind==='value'?'call':'callvirt',c.external(descriptor.owner,descriptor.name,ctor?'void':descriptor.result,descriptor.parameters,descriptor.isStatic));if(!ctor&&descriptor.result==='void')w.op('ldnull');}else emitBuiltin(c,w,a,b,input.slice(input.length-b),adapt);break;}
       case Op.RET:{if(m.returnType==='void')w.op('pop');else convert(top,m.returnType);if(zones(pc).length){if(m.returnType!=='void')w.local('stloc',returnSlot);relative('leave','return');}else w.op('ret');terminal=true;break;}
       case Op.NEWOBJ:w.op('ldnull').op('newobj',c.allocTokens.get(a));break;
       case Op.NEWARR:w.op('newarr',c.resolveType(c.image.constants[a]));break;
@@ -114,7 +137,7 @@ function emitMethod(c,d) {
 }
 function emitBuiltin(c,w,id,count,types,adapt) {
   const name=Builtins[id].name;let owner,member,result,params,instance=false,newObject=false,extra=false;
-  if(name.startsWith('Console.')){owner='System.Console';member=name.slice(8);result='void';params=count?[types[0]==='null'?'string':frameworkType(types[0])?.kind==='enum'?'object':isValue(types[0])||types[0]==='string'?types[0]:'object']:[];}
+  if(name.startsWith('Console.')){owner='System.Console';member=name.slice(8);result='void';params=count?[types[0]==='null'?'string':frameworkType(types[0])?.kind==='enum'?'object':['sbyte','byte','short','ushort'].includes(types[0])?'int':['nint','nuint'].includes(types[0])?'object':isValue(types[0])||types[0]==='string'?types[0]:'object']:[];}
   else if(name.startsWith('Math.')||name==='$Math.Abs.Int32'){owner='System.Math';member=name==='$Math.Abs.Int32'?'Abs':name.slice(5);const intResult=['Abs','Min','Max'].includes(member)&&types.every(t=>t==='int');result=intResult?'int':'double';params=types.map(()=>result);}
   else if(name.startsWith('GC.')){owner='System.GC';member=name.slice(3);result=member==='Collect'?'void':member==='GetTotalMemory'?'long':'int';params=member==='Collect'?[]:member==='GetTotalMemory'?['bool']:['int'];if(member==='GetTotalMemory'&&!count){w.integer(0);extra=true;}}
   else if(name==='int.Parse'||name==='double.Parse'){owner=name.startsWith('int')?'int':'double';member='Parse';result=owner;params=['string'];}

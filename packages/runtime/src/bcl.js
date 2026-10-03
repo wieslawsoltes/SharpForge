@@ -1,5 +1,7 @@
 import {frameworkType} from '@sharpforge/framework';
 import {ManagedFault,isReference} from './heap.js';
+import {numericFormat,numericTypeName,numericTypeNames,isDecimal,isNativeInteger} from '@sharpforge/bytecode';
+import {boxValue} from './execution/value-types.js';
 const MAX=1_000_000;
 const fail=(type,message)=>{throw new ManagedFault(type,message);};
 const integer=(n,min=0,max=MAX)=>{if(!Number.isInteger(n)||n<min||n>max)fail('ArgumentOutOfRangeException','Value is outside the supported range');return n;};
@@ -7,20 +9,20 @@ export function bclScalar(p,value){
   if(isReference(value)){const r=p.heap.get(value);if(r.kind==='box')return bclScalar(p,r.data[0]);if(r.kind==='string')return r.data;}
   return p.native(value);
 }
-function typeOf(p,value){if(isReference(value)){const r=p.heap.get(value);return r.kind==='box'?r.type:r.kind==='string'?'string':r.type;}return typeof value==='boolean'?'bool':typeof value==='number'?'double':'object';}
-function text(p,value,type){const n=bclScalar(p,value);if(n==null)return '';if(type==='bool'||type==='System.Boolean')return n?'True':'False';if(typeof n==='boolean')return n?'True':'False';if(typeof n==='number')return Number.isNaN(n)?'NaN':n===Infinity?'Infinity':n===-Infinity?'-Infinity':String(n);if(typeof n==='string')return n;return p.vm.format(value);}
+function typeOf(p,value){if(isReference(value)){const r=p.heap.get(value);return r.kind==='box'?r.methodTable.name:r.kind==='string'?'string':r.type;}return isDecimal(value)?'decimal':value?.float==='r4'?'float':value?.float?'double':isNativeInteger(value)?'nint':typeof value==='bigint'?'long':typeof value==='boolean'?'bool':typeof value==='number'?'double':'object';}
+function scalarValue(p,value,type=null){
+  if(value?.byref)return scalarValue(p,p.vm.dereference(value),type);
+  if(isReference(value)){const r=p.heap.get(value);if(r.kind==='box')return scalarValue(p,r.data[0],r.methodTable.name);}
+  return {value,type:numericTypeName(type??typeOf(p,value))};
+}
+const formattingContext=p=>({...p.vm.options,fault:(name,message)=>new ManagedFault(name,message)});
+function text(p,value,type){const scalar=scalarValue(p,value,type);if(scalar.value==null)return '';if(numericTypeNames.includes(scalar.type)||scalar.type==='bool')return numericFormat(scalar.value,scalar.type,'G',formattingContext(p));return p.vm.format(value,type);}
 function string(p,value,nullable=false){const n=bclScalar(p,value);if(n===null&&nullable)return null;if(typeof n!=='string')fail(n===null?'ArgumentNullException':'ArgumentException','A string is required');return n;}
 function bounded(s){if(s.length>MAX)fail('OutOfMemoryException','BCL text limit exceeded');return s;}
-// Exact binary64 -> fixed decimal rounding, midpoint-to-even (not JS toFixed's tie-away rule).
-function fixedEven(value,digits){if(!Number.isFinite(value))return String(value);const negative=value<0||Object.is(value,-0),v=Math.abs(value),bytes=new DataView(new ArrayBuffer(8));bytes.setFloat64(0,v,false);const bits=bytes.getBigUint64(0,false),exponent=Number((bits>>52n)&2047n),fraction=bits&((1n<<52n)-1n);let numerator=(exponent?fraction+(1n<<52n):fraction)*10n**BigInt(digits),power=(exponent?exponent-1023:-1022)-52,denominator=1n;if(power>=0)numerator<<=BigInt(power);else denominator<<=BigInt(-power);let quotient=numerator/denominator;const remainder=numerator%denominator;if(remainder*2n>denominator||remainder*2n===denominator&&(quotient&1n))quotient++;let result=quotient.toString().padStart(digits+1,'0');if(digits)result=result.slice(0,-digits)+'.'+result.slice(-digits);return (negative?'-':'')+result;}
 export function formatBclValue(p,value,format='',alignment=0,type=null){
-  integer(alignment,-100000,100000);const v=bclScalar(p,value);let out=text(p,value,type??typeOf(p,value));
-  if(v!==null&&typeof v==='number'&&format){const match=/^([dDxXfFnNeEgGpP])(\d{0,2})$/.exec(format);if(!match)fail('FormatException','Unsupported numeric format '+format);const code=match[1],precision=match[2]?Number(match[2]):null;if(precision!==null&&precision>99)fail('FormatException','Numeric precision limit');
-    if(/[dDxX]/.test(code)){if(!Number.isInteger(v)||['double','System.Double'].includes(type??typeOf(p,value)))fail('FormatException','Integer format requires an integer type');const digits=/[xX]/.test(code)?(v<0?v>>>0:v).toString(16):String(Math.abs(v));out=digits.padStart(precision??1,'0');if(code==='X')out=out.toUpperCase();if(/[dD]/.test(code)&&v<0)out='-'+out;}
-    if(/[fFnNpP]/.test(code)){const n=/[pP]/.test(code)?v*100:v;out=fixedEven(n,precision??2);if(/[nNpP]/.test(code)){const parts=out.split('.');parts[0]=parts[0].replace(/\B(?=(\d{3})+(?!\d))/g,',');out=parts.join('.');}if(/[pP]/.test(code))out+=' %';}
-    if(/[eE]/.test(code)){out=v.toExponential(precision??6).replace(/e([+-])(\d+)$/,(_,sign,digits)=>(code==='E'?'E':'e')+sign+digits.padStart(3,'0'));}
-    if(/[gG]/.test(code)&&precision)out=Number(v.toPrecision(precision)).toString();
-  }
+  integer(alignment,-100000,100000);const scalar=scalarValue(p,value,type);let out;
+  if(scalar.value!==null&&(numericTypeNames.includes(scalar.type)||scalar.type==='bool'))out=numericFormat(scalar.value,scalar.type,format||'G',formattingContext(p));
+  else out=text(p,value,type);
   if(alignment>0)out=out.padStart(alignment);else if(alignment<0)out=out.padEnd(-alignment);return bounded(out);
 }
 export function compositeFormat(p,format,args){
@@ -51,7 +53,7 @@ function appendText(p,ref,value){bounded(value);const length=p.get(ref,'$length'
 export function invokeBcl(p,d,args){
   const t=frameworkType(d.owner),family=t?.family;if(t?.kind!=='bcl')return {handled:false};
   const result=value=>({handled:true,value}),ref=d.isStatic||d.kind==='constructor'?null:args[0],values=ref===null?args:args.slice(1),n=values.map(v=>bclScalar(p,v)),m=d.name;
-  if(family==='format'&&m==='BoxValue'){if(!['int','double','bool'].includes(n[1]))fail('InvalidOperationException','Unknown primitive box');return result(p.heap.allocate('box',n[1],[p.managed(n[0],n[1])]));}
+  if(family==='format'&&m==='BoxValue'){const type=numericTypeName(n[1]);if(!numericTypeNames.includes(type)&&type!=='bool')fail('InvalidOperationException','Unknown primitive box');const scalar=scalarValue(p,values[0],type);if(numericTypeName(scalar.type)!==type)fail('InvalidCastException','Boxed scalar type does not match its declared type');return result(boxValue(p.vm,scalar.value,type));}
   if(family==='format')return result(p.heap.string(formatBclValue(p,values[0],n[1]??'',n[2],n[3])));
   if(family==='math'){
     if(d.kind==='get')return result(p.managed(t.properties[d.property].value,'double'));

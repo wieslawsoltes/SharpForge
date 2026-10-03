@@ -1,3 +1,4 @@
+import {parseSynchronizationStatement,parseSynchronizationPrefix,parseSynchronizationTypeArguments} from './synchronization.js';
 import { SourceText, diagnostic } from '@sharpforge/text';
 import { lex } from './lexer.js';
 const modifiers = new Set(['public','private','protected','internal','static','readonly','const','sealed','partial','virtual','override','abstract','async']);
@@ -119,6 +120,7 @@ export class Parser {
     if(semicolon)this.expect(';');return this.node('Local',start,{declarations});
   }
   statement() {
+    const synchronization=parseSynchronizationStatement(this);if(synchronization)return synchronization;
     const start=this.current;
     if(['checked','unchecked'].includes(this.current.kind)&&this.peek().kind==='{'){const context=this.take();return this.node('OverflowContext',context,{checked:context.kind==='checked',body:this.block()});}if(this.at('{'))return this.block();
     if(this.at('identifier')&&this.peek().kind===':'){const label=this.take();this.take();return this.node('Labeled',start,{label:label.value,body:this.statement()});}
@@ -141,6 +143,7 @@ export class Parser {
     if(++this.depth>200){this.error(this.current,'SF1099','Expression nesting limit exceeded');this.take();this.depth--;return this.node('Error',this.current);}
     let left=this.prefix();
     for(;;){
+      const synchronizationTypeArguments=parseSynchronizationTypeArguments(this,left);if(synchronizationTypeArguments){left=synchronizationTypeArguments;continue;}
       if(this.at('(')&&16>=min){const start=left;this.take();const args=[];while(!this.at(')')&&!this.at('eof')){const before=this.i;args.push(this.expression());if(!this.match(','))break;this.guardProgress(before);}this.expect(')');left=this.node('Call',start,{target:left,args});continue;}
       if(this.match('?.')){const id=this.expect('identifier');left=this.node('ConditionalMember',left,{target:left,name:id.value,nameSpan:{start:id.start,end:id.end}});continue;}
       if(this.at('?')&&this.peek().kind==='['&&16>=min){this.take();this.take();const index=this.expression();this.expect(']');left=this.node('ConditionalIndex',left,{target:left,index});continue;}
@@ -154,7 +157,7 @@ export class Parser {
     this.depth--;return left;
   }
   prefix() {
-    const t=this.take();
+    const t=this.take();const synchronization=parseSynchronizationPrefix(this,t);if(synchronization)return synchronization;
     if(t.kind==='interpolated'){
       const parts=t.value.map(part=>{if(part.text!==undefined)return {...part};const inner=lex(new SourceText(part.expression,this.source.uri)),p=new Parser({...inner,source:this.source,tokens:inner.tokens.map(x=>({...x,start:x.start+part.start,end:x.end+part.start,fullStart:x.fullStart+part.start})),diagnostics:[]});const expression=p.expression();if(!p.at('eof'))p.error(p.current,'CS1003','Unexpected trailing interpolation input');for(const d of inner.diagnostics)this.error({start:part.start,end:part.end},d.code,d.message);this.diagnostics.push(...p.diagnostics);return {...part,expression};});return this.node('InterpolatedString',t,{parts});
     }
