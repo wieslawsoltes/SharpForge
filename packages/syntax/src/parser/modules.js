@@ -56,6 +56,7 @@ import { interpolatedStringMethods } from './expressions/interpolated-strings.js
 import { stackAllocMethods } from './unsafe/stackalloc.js';
 import { anonymousObjectMethods } from './expressions/anonymous-objects.js';
 import { parameterMethods } from './declarations/parameters.js';
+import { awaitMethods } from './expressions/await.js';
 export const parserModules = Object.freeze([
   typeMethods,
   modifierMethods,
@@ -109,5 +110,6 @@ export const parserModules = Object.freeze([
   interpolatedStringMethods,
   stackAllocMethods,
   anonymousObjectMethods,
-  parameterMethods
+  parameterMethods,
+  awaitMethods
 ]);
