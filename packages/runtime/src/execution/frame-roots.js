@@ -43,25 +43,18 @@ function planFor(vm, frame) {
   const cil = !!method.signature;
   const argumentTypes = cil ? [...(method.signature.isStatic ? [] : ['object']), ...method.signature.parameters] : [];
   const localTypes = cil ? method.locals : method.locals.map(local => local.type);
-  const referenceSlots = types => types.flatMap((type, index) => referenceType(type) ? [index] : []);
-  plan = {code, liveness: slotLiveness(method), arguments: referenceSlots(argumentTypes), locals: referenceSlots(localTypes),
+  const slots = [];
+  for (let index = 0; index < argumentTypes.length; index++) {
+    if (referenceType(argumentTypes[index])) slots.push({argument: true, index, position: index});
+  }
+  for (let index = 0; index < localTypes.length; index++) {
+    if (referenceType(localTypes[index])) slots.push({argument: false, index, position: argumentTypes.length + index});
+  }
+  plan = {code, liveness: slotLiveness(method), slots,
     argumentCount: argumentTypes.length, localCount: localTypes.length,
     stackTypes: cil ? numericStackTypes(vm.inspector, method, methodOffsets(method)) : null};
   pool.rootPlans.set(method, plan);
   return plan;
-}
-
-function visitSlots(array, indices, slotOffset, context) {
-  const {plan, pc, visit, prune} = context;
-  for (const index of indices) {
-    const value = numericSlotRoot(array, index);
-    if (value === undefined || value === null) continue;
-    if (prune && !liveSlot(plan.liveness, pc, slotOffset + index)) {
-      // A dead handle must not remain in a subsequent portable snapshot after its
-      // heap record has been collected. Clearing also avoids host retention.
-      array[index] = undefined;
-    } else offer(value, visit);
-  }
 }
 
 /** Continuation slots are roots independent of IL local liveness and declared result type. */
@@ -86,9 +79,15 @@ export function visitFrameContinuations(frame, visit) {
 export function visitFrameRoots(vm, frame, visit, sourceStack = null, end = sourceStack?.length ?? 0) {
   const plan = planFor(vm, frame), active = vm.framePool.activeFrame === frame;
   const pc = Math.max(0, frame.pc - Number(active));
-  const context = {plan, pc, visit, prune: vm.options.preciseRootLiveness !== false && !frame.filterOwnerId};
-  visitSlots(frame.args, plan.arguments, 0, context);
-  visitSlots(frame.locals, plan.locals, plan.argumentCount, context);
+  const prune = vm.options.preciseRootLiveness !== false && !frame.filterOwnerId;
+  for (const slot of plan.slots) {
+    const array = slot.argument ? frame.args : frame.locals;
+    const value = numericSlotRoot(array, slot.index);
+    if (value === undefined || value === null) continue;
+    // A dead handle cannot remain in a portable snapshot after its record dies.
+    if (prune && !liveSlot(plan.liveness, pc, slot.position)) array[slot.index] = undefined;
+    else offer(value, visit);
+  }
   // Optional varargs are addressable beyond the fixed signature/local table.
   for (let index = plan.argumentCount; index < (frame.args?.length ?? 0); index++) offer(numericSlotRoot(frame.args, index), visit);
   for (let index = plan.localCount; index < frame.locals.length; index++) offer(numericSlotRoot(frame.locals, index), visit);
