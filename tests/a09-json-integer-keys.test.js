@@ -2,18 +2,21 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
-import {compileToIL} from '@sharpforge/compiler';
+import {compile, compileToIL} from '@sharpforge/compiler';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
 import {managedFixture} from './managed-fixtures.js';
 
 const directory = new URL('./fixtures/json-integer-keys/', import.meta.url);
 const source = readFileSync(new URL('Cases.cs', directory), 'utf8');
 const reference = JSON.parse(readFileSync(new URL('oracle.json', directory), 'utf8'));
+const nativeCharStatement = "objects.Add(1, '<');";
+assert.equal(source.split(nativeCharStatement).length, 2, 'Adapt exactly one unsupported source Char expression');
+const supportedSource = source.replace(nativeCharStatement, 'objects.Add(1, "<");');
 let compiled;
 
 for (const engine of ['source', 'cil']) {
-  test(`SF-A09-B02 ${engine} integer dictionary JSON matches native types and entry order`, () => {
-    compiled ??= compileToIL(source);
+  test(`SF-A09-B02 ${engine} supported source profile matches native JSON with explicit Char-to-string adaptation`, () => {
+    compiled ??= compileToIL(supportedSource);
     assert.equal(compiled.success, true, JSON.stringify(compiled.diagnostics));
     const vm = engine === 'source' ? new VirtualMachine(compiled.image) : new CilVirtualMachine(compiled.assembly);
     try {
@@ -21,7 +24,7 @@ for (const engine of ['source', 'cil']) {
       assert.equal(result.state, 'terminated', result.fault?.stack);
       assert.deepEqual(result.output.trimEnd().split('\n'), reference.lines);
       const boxedTypes = new Set(vm.heap.records.filter(record => record?.kind === 'box').map(record => record.methodTable.name));
-      for (const type of ['System.Int32', 'System.Double', 'System.Boolean', 'System.Char']) {
+      for (const type of ['System.Int32', 'System.Double', 'System.Boolean']) {
         assert(boxedTypes.has(type), 'The fixture must execute real managed boxing for ' + type);
       }
     } finally {
@@ -78,6 +81,48 @@ test('SF-A09-B02 independently assembled CIL serializes signed dictionary keys i
     vm.stop();
   }
 });
+
+test('SF-A09-B02 independently assembled CIL preserves genuine boxed Char and Boolean JSON values', () => {
+  const owner = 'System.Collections.Generic.Dictionary`2<int, object>';
+  const entries = [
+    [7, null, null], [6, '<é+>', 'string'], [5, 42, 'System.Int32'], [4, 1e-7, 'System.Double'],
+    [3, 1, 'System.Boolean'], [2, 0, 'System.Boolean'], [1, 60, 'System.Char']
+  ];
+  const assembly = managedFixture({methods: [{
+    name: 'Main', result: 'string', maxStack: 4,
+    body(writer, context) {
+      writer.op('newobj', context.member(owner, '.ctor', 'void', [], false));
+      for (const [key, value, type] of entries) {
+        writer.op('dup').op('ldc.i4', key);
+        if (type === null) writer.op('ldnull');
+        else if (type === 'string') writer.op('ldstr', 0x70000000 + context.md.userString(value));
+        else {
+          writer.op(type === 'System.Double' ? 'ldc.r8' : 'ldc.i4', value);
+          writer.op('box', context.resolve(type));
+        }
+        writer.op('callvirt', context.member(owner, 'Add', 'void', ['int', 'object'], false));
+      }
+      writer.op('call', context.member('System.Text.Json.JsonSerializer', 'Serialize', 'string', ['object'])).op('ret');
+    }
+  }]});
+  const vm = new CilVirtualMachine(assembly);
+  try {
+    const result = vm.run();
+    assert.equal(result.state, 'terminated', result.fault?.stack);
+    assert.equal(vm.value(vm.returnValue), reference.lines[11]);
+    const character = vm.heap.records.find(record => record?.kind === 'box' && record.methodTable.name === 'System.Char');
+    assert.equal(character.data[0], 60);
+  } finally {
+    vm.stop();
+  }
+});
+
+for (const pipeline of ['bound', 'legacy']) {
+  test(`SF-A09-B02 ${pipeline} source Char remains an explicit unsupported-profile diagnostic`, () => {
+    const result = compile("object[] values = new object[] {'<'};", {pipeline});
+    assert(result.diagnostics.some(item => item.code === 'SF2003' && item.severity === 'error'));
+  });
+}
 
 test('SF-A09-B02 integer dictionary oracle pins source, SDK, runtime and all eighteen cases', () => {
   assert.equal(reference.sdk, '10.0.201');
