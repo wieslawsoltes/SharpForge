@@ -3,7 +3,11 @@ import { CilError } from '../binary.js';
 import { signaturePrimitives, signatureAliases, signatureBudget } from './signature-types.js';
 
 const collections = new Set(['List', 'Dictionary', 'HashSet', 'Queue', 'Stack', 'IEnumerable', 'IList', 'ICollection']);
-const genericValues = new Set(['System.Nullable', 'System.ValueTuple', 'System.Collections.Generic.KeyValuePair']);
+const genericValues = new Set([
+  'System.Nullable', 'System.ValueTuple', 'System.Collections.Generic.KeyValuePair', 'System.Numerics.Vector',
+  'System.Memory', 'System.ReadOnlyMemory', 'System.Span', 'System.ReadOnlySpan', 'System.ArraySegment',
+  'System.Threading.Tasks.ValueTask',
+]);
 
 function parts(text) {
   const result = [];
@@ -78,7 +82,7 @@ export function parseSignatureType(value, resolveToken, options = {}) {
   function named(name, kind) {
     if (typeof resolveToken !== 'function') throw new CilError('Type token resolver is required');
     const base = name.replace(/`\d+$/, '');
-    const isValue = genericValues.has(base) || ['enum', 'value'].includes(frameworkType(name)?.kind);
+    const isValue = (/`\d+$/.test(name) && genericValues.has(base)) || ['enum', 'value'].includes(frameworkType(name)?.kind);
     return { kind: kind ?? (isValue ? 'valuetype' : 'class'), token: resolveToken(name) };
   }
   function parse(text, depth = 0) {

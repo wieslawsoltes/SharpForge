@@ -63,6 +63,8 @@ test('nested generic arguments preserve argument boundaries and class/value sema
     'System.Collections.Generic.Dictionary`2<string, System.Collections.Generic.List`1<int>>');
   const nullable = parseSignatureType('Nullable<!0>', resolve);
   assert.equal(nullable.type.kind, 'valuetype');
+  assert.equal(parseSignatureType('Vector<int>', () => 0x01000004).type.kind, 'valuetype');
+  assert.equal(parseSignatureType('System.Numerics.Vector', () => 0x01000004).kind, 'class');
   assert.deepEqual(decodeSignature(methodSpecSignature(['int', '!!1'])), {
     kind: 'methodSpec', arguments: [int, { kind: 'genericParameter', scope: 'method', index: 1 }],
   });
