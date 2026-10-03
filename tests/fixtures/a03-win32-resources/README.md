@@ -1,7 +1,7 @@
 # Independent Win32 resource reader
 
-`llvm.json` captures LLVM's PE/COFF resource reader on an emitted library containing VS_VERSIONINFO and an application
-manifest. The fixture uses explicit version options; compiler assembly-attribute projection remains outside this slice.
+`llvm.json` captures LLVM's PE/COFF resource reader on an emitted library containing VS_VERSIONINFO, an application
+manifest and a one-image ICO group. The fixture uses explicit version options; compiler assembly-attribute projection remains outside this slice.
 Only the input path is replaced by `<fixture>`; resource values and bytes are the real reader output.
 
 Regenerate in the local validation slot, then run the focused Win32 tests:
