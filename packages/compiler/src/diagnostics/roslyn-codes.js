@@ -819,6 +819,8 @@ export const roslynCodes=Object.freeze({
  CS9228:["ERR_ParamsCollectionMissingConstructor","error",0,"Non-array params collection type must have an applicable constructor that can be called with no arguments."],
  CS9231:["ERR_InterceptsLocationDataInvalidFormat","error",0,"The data argument to InterceptsLocationAttribute is not in the correct format."],
  CS9232:["ERR_InterceptsLocationUnsupportedVersion","error",0,"Version '{0}' of the interceptors format is not supported. The latest supported version is '1'."],
+ CS9238:["ERR_BadYieldInUnsafe","error",0,"Cannot use 'yield return' in an 'unsafe' block"],
+ CS9239:["ERR_AddressOfInIterator","error",0,"The '&' operator cannot be used on parameters or local variables in iterator methods."],
  CS9242:["ERR_AllowsClauseMustBeLast","error",0,"The 'allows' constraint clause must be the last constraint specified"],
  CS9244:["ERR_NotRefStructConstraintNotSatisfied","error",0,"The type '{2}' may not be a ref struct or a type parameter allowing ref structs in order to use it as parameter '{1}' in the generic type or method '{0}'"],
  CS9248:["ERR_PartialPropertyMissingImplementation","error",0,"Partial property '{0}' must have an implementation part."],
