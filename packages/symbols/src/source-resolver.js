@@ -86,15 +86,14 @@ async function checkedSource(document, raw, context) {
   if (!(await context.operation.wait(() => verifySourceAsync(expected, bytes)))) {
     return sourceResult(SourceStatus.mismatch, { reason: 'Source checksum mismatch' });
   }
+  let decoded;
   try {
-    return sourceResult(SourceStatus.verified, {
-      bytes,
-      ...decodeSource(bytes, context.decoding),
-      reason: 'Checksum verified',
-    });
+    decoded = decodeSource(bytes, context.decoding);
   } catch (error) {
     return sourceResult(SourceStatus.invalidEncoding, { reason: error.message });
   }
+  context.operation.check();
+  return sourceResult(SourceStatus.verified, { bytes, ...decoded, reason: 'Checksum verified' });
 }
 
 async function linkedSource(symbols, document, context) {
