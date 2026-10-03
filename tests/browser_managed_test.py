@@ -2,7 +2,9 @@
 import json,os,subprocess,time,traceback
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-from browser_harness import load_in_memory
+from conformance.browser.launch import launch_browser, results_dir
+RESULTS = results_dir()
+from browser_harness import load_application
 ROOT=Path(__file__).resolve().parents[1];checks=[];errors=[];server=None
 fixtures=json.loads(subprocess.check_output(['node','--input-type=module','-e',"import {arithmeticLibrary,managedFixture} from './tests/managed-fixtures.js';console.log(JSON.stringify({library:[...arithmeticLibrary()],unsupported:[...managedFixture({methods:[{name:'Main',body:(w,c)=>w.op('call',c.member('External.Unavailable','Call','void')).op('ret')} ]})]}));"],cwd=ROOT,text=True))
 def checked(name,action):
@@ -10,13 +12,10 @@ def checked(name,action):
 def truth(value,message='assertion failed'):
  if not value:raise AssertionError(message)
 try:
- with sync_playwright() as p:
-  executable=os.getenv('CHROMIUM_EXECUTABLE');browser=p.chromium.launch(**({'executable_path':executable} if executable else {}),headless=True,args=['--no-sandbox'])
+ with sync_playwright() as p, launch_browser(p, __file__) as browser:
   page=browser.new_page(viewport={'width':1536,'height':1050});page.on('pageerror',lambda e:errors.append(str(e)))
   mode='in-memory' if os.getenv('SHARPFORGE_IN_MEMORY')=='1' else 'http'
-  if mode=='http':
-   server=subprocess.Popen(['node','scripts/serve.js'],cwd=ROOT,env={**os.environ,'PORT':'4182'},stdout=subprocess.DEVNULL);time.sleep(.4);page.goto('http://127.0.0.1:4182/');page.wait_for_function('window.sharpforge?.getState().metrics')
-  else:load_in_memory(page)
+  load_application(page)
   def open_library():
    before=page.evaluate('sharpforge.getState().files');result=page.evaluate('bytes=>sharpforge.importAssembly(new Uint8Array(bytes))',fixtures['library']);truth(result['workbench']);truth(page.evaluate('sharpforge.getState().files')==before);truth(page.locator('#assembly-code').input_value().find('ldarg.0')>=0)
   checked('ordinary DLL opens in Assembly Explorer without replacing source',open_library)
@@ -48,14 +47,13 @@ try:
    area=page.locator('[data-source-uri="Program.cs"] .sf-input');area.fill('class P\n{\nstatic void Main()\n{\nConsole.WriteLine(42);\n}\n}');area.press('Shift+Alt+f');page.wait_for_function('document.querySelector(".source-document:not([hidden]) .sf-input").value.includes("        Console")')
   checked('Shift+Alt+F formats indentation through a versioned action',format_source)
   def visual():
-   page.evaluate('bytes=>sharpforge.inspectAssembly(new Uint8Array(bytes))',fixtures['library']);page.evaluate('document.documentElement.style.setProperty("--bottom","430px")');page.wait_for_function('document.querySelectorAll("#toasts .toast").length===0');page.screenshot(path=str(ROOT/'docs/screenshots/assembly-workbench.png'),full_page=True);page.set_viewport_size({'width':390,'height':844});page.screenshot(path=str(ROOT/'docs/screenshots/assembly-workbench-mobile.png'),full_page=True);truth(page.locator('#assembly-code').is_visible());truth(page.evaluate('document.documentElement.scrollWidth<=window.innerWidth+1'))
+   page.evaluate('bytes=>sharpforge.inspectAssembly(new Uint8Array(bytes))',fixtures['library']);page.evaluate('document.documentElement.style.setProperty("--bottom","430px")');page.wait_for_function('document.querySelectorAll("#toasts .toast").length===0');page.screenshot(path=str(RESULTS/'screenshots/assembly-workbench.png'),full_page=True);page.set_viewport_size({'width':390,'height':844});page.screenshot(path=str(RESULTS/'screenshots/assembly-workbench-mobile.png'),full_page=True);truth(page.locator('#assembly-code').is_visible());truth(page.evaluate('document.documentElement.scrollWidth<=window.innerWidth+1'))
   checked('assembly workspace renders at desktop and 390px widths',visual)
   checked('no browser JavaScript errors',lambda:truth(not errors,str(errors)))
-  browser.close()
 except Exception as error:
  checks.append({'name':'acceptance failure','passed':False,'error':str(error)});traceback.print_exc()
 finally:
  if server:server.terminate();server.wait(timeout=10)
  report={'version':'0.4.0','mode':os.getenv('SHARPFORGE_IN_MEMORY')=='1' and 'in-memory real modules and workers' or 'http','checks':checks,'passed':sum(x['passed'] for x in checks),'failed':sum(not x['passed'] for x in checks),'errors':errors}
- (ROOT/'docs/browser-managed-results.json').write_text(json.dumps(report,indent=2)+'\n')
+ (RESULTS/'browser-managed-results.json').write_text(json.dumps(report,indent=2)+'\n')
  if report['failed']:raise SystemExit(1)

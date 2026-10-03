@@ -1,13 +1,15 @@
 """Production Explorer + MSBuildClient + actual loopback HTTP host and temp disk.
-Browser modules/workers load through the restricted-runner in-memory harness.
+Browser modules/workers load through production HTTP/CSP by default.
 A Python byte-forwarder replaces only browser transport, not API/filesystem logic.
-No SDK, native build, network-navigation or OS file-picker qualification is claimed.
+No SDK, native build or OS file-picker qualification is claimed.
 """
 import base64,http.client,json,os,shutil,subprocess,tempfile,time,traceback
 from pathlib import Path
 from urllib.parse import urlparse
 from playwright.sync_api import sync_playwright
-from browser_harness import load_in_memory
+from conformance.browser.launch import launch_browser, results_dir
+RESULTS = results_dir()
+from browser_harness import load_application
 ROOT=Path(__file__).resolve().parents[1];checks=[];errors=[];requests=[]
 def truth(x,msg='assertion failed'):
  if not x:raise AssertionError(msg)
@@ -24,8 +26,8 @@ with tempfile.TemporaryDirectory(prefix='sf08-browser-native-') as temp:
    try:
     c.request(opts.get('method','GET'),path,body=body.encode() if body else None,headers=headers);reply=c.getresponse();payload=reply.read();requests.append({'path':path.split('?')[0],'status':reply.status});return {'status':reply.status,'headers':dict(reply.getheaders()),'bytes':base64.b64encode(payload).decode()}
    finally:c.close()
-  with sync_playwright() as p:
-   browser=p.chromium.launch(headless=True,args=['--no-sandbox'],**({'executable_path':os.environ['CHROMIUM_EXECUTABLE']} if os.getenv('CHROMIUM_EXECUTABLE') else {}));page=browser.new_page(viewport={'width':1700,'height':1080});page.set_default_timeout(10000);page.on('pageerror',lambda e:errors.append(e.stack or str(e)));page.on('dialog',lambda d:d.accept());page.expose_function('__nativeHttp',forward)
+  with sync_playwright() as p, launch_browser(p, __file__) as browser:
+   page=browser.new_page(viewport={'width':1700,'height':1080});page.set_default_timeout(10000);page.on('pageerror',lambda e:errors.append(e.stack or str(e)));page.on('dialog',lambda d:d.accept());page.expose_function('__nativeHttp',forward)
    def wait(s,arg=None):page.wait_for_function(s,arg=arg)
    def op(action,path=None,kind=None):
     wait('!sharpforge.getExplorer().busy')
@@ -37,9 +39,9 @@ with tempfile.TemporaryDirectory(prefix='sf08-browser-native-') as temp:
      page.locator('#wizard-next').click();page.locator('#wizard-item-name').fill(path.split('/')[-1]);page.locator('#wizard-location').fill(path.rsplit('/',1)[0] if '/' in path else '');page.locator('#wizard-next').click()
     else:page.locator('#item-path').fill(path);page.get_by_role('button',name='Apply',exact=True).click()
    try:
-    load_in_memory(page)
-    source={'contract':(ROOT/'packages/msbuild/src/contract.js').read_text(),'client':(ROOT/'packages/msbuild/src/client.js').read_text(),'token':ready['token']}
-    page.evaluate('''async data=>{const contract=URL.createObjectURL(new Blob([data.contract],{type:'text/javascript'}));const module=URL.createObjectURL(new Blob([data.client.replace('./contract.js',contract)],{type:'text/javascript'}));const {MSBuildClient}=await import(module);const fetcher=async(path,options)=>{const result=await __nativeHttp(path,{method:options.method,headers:options.headers,body:options.body});return new Response(Uint8Array.from(atob(result.bytes),c=>c.charCodeAt(0)),{status:result.status,headers:result.headers});};window.__realNativeClient=new MSBuildClient({token:data.token,fetch:fetcher});await sharpforge.native.connect(__realNativeClient);await sharpforge.native.attach();}''',source)
+    load_application(page)
+    source={'token':ready['token']}
+    page.evaluate('''async data=>{const {MSBuildClient}=await __sharpforgeTestImport('/packages/msbuild/src/client.js');const fetcher=async(path,options)=>{const result=await __nativeHttp(path,{method:options.method,headers:options.headers,body:options.body});return new Response(Uint8Array.from(atob(result.bytes),c=>c.charCodeAt(0)),{status:result.status,headers:result.headers});};window.__realNativeClient=new MSBuildClient({token:data.token,fetch:fetcher});await sharpforge.native.connect(__realNativeClient);await sharpforge.native.attach();}''',source)
     check('actual loopback host attaches native solution hierarchy without building',lambda:truth(page.evaluate('sharpforge.getState().nativeMode && !sharpforge.native.getState().job && sharpforge.getState().project===null')))
     def open_source():
      page.locator('#file-filter').fill('Program.cs');page.locator('[data-node-kind="source"]').filter(has_text='Program.cs').dblclick();wait('sharpforge.getState().active==="App/Program.cs"');truth(page.locator('[data-source-uri="App/Program.cs"] .sf-input').input_value()==(disk/'App/Program.cs').read_text());page.locator('#file-filter').fill('')
@@ -77,12 +79,12 @@ with tempfile.TemporaryDirectory(prefix='sf08-browser-native-') as temp:
      page.evaluate('sharpforge.native.open("App/Program.cs")');area=page.locator('[data-source-uri="App/Program.cs"] .sf-input');area.fill('// unsaved editor work\nConsole.WriteLine(43);\n');(disk/'App/Program.cs').write_text('// external writer\nConsole.WriteLine(44);\n');result=page.evaluate('async()=>{try{await sharpforge.native.save();return "unexpected success";}catch(e){return e.message;}}');truth('conflict' in result.lower(),result);truth((disk/'App/Program.cs').read_text().startswith('// external'));truth(area.input_value().startswith('// unsaved'))
     check('external disk edits are not overwritten and conflicted editor work stays open',conflict)
     check('all API traffic used the real host and no native job was requested',lambda:truth(len(requests)>20 and not any('/jobs' in r['path'] for r in requests) and not errors,str(errors)))
-    wait('document.querySelectorAll("#toasts .toast").length===0');page.mouse.move(850,45);page.screenshot(path=str(ROOT/'docs/screenshots/release08-native-explorer.png'),full_page=True)
-    result={'passed':True,'browser':browser.version,'mode':'production UI/client, in-memory workers, Python byte-forwarder to real loopback HTTP and native temporary filesystem','nativeBuildsExecuted':False,'checks':checks,'errors':errors,'requests':requests}
+    wait('document.querySelectorAll("#toasts .toast").length===0');page.mouse.move(850,45);page.screenshot(path=str(RESULTS/'screenshots/release08-native-explorer.png'),full_page=True)
+    result={'passed':True,'browser':browser.version,'mode':('in-memory' if os.getenv('SHARPFORGE_IN_MEMORY') == '1' else 'CSP HTTP') + ' UI/workers; Python byte-forwarder to real loopback HTTP and native temporary filesystem','nativeBuildsExecuted':False,'checks':checks,'errors':errors,'requests':requests}
    except Exception as e:
-    traceback.print_exc();result={'passed':False,'checks':checks,'errors':errors,'failure':str(e),'requests':requests};page.screenshot(path=str(ROOT/'docs/screenshots/release08-native-failure.png'),full_page=True)
+    traceback.print_exc();result={'passed':False,'checks':checks,'errors':errors,'failure':str(e),'requests':requests};page.screenshot(path=str(RESULTS/'screenshots/release08-native-failure.png'),full_page=True)
    finally:
-    (ROOT/'docs/browser-native-explorer-results.json').write_text(json.dumps(result,indent=2)+'\n');browser.close()
+    (RESULTS/'browser-native-explorer-results.json').write_text(json.dumps(result,indent=2)+'\n')
    if not result['passed']:raise SystemExit(1)
  finally:
   server.terminate()
