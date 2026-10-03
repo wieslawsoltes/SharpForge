@@ -27,7 +27,7 @@ export function resolveExecutionField(inspector, token, contextArguments = []) {
   if (!definition) {
     const type = inspector.types.find(type => type.name === owner.definition);
     if (type) {
-      const referenceType = substituteTypeArguments(substituteTypeArguments(member.signature.type, contextArguments), owner.arguments);
+      const referenceType = substituteTypeArguments(member.signature.type, owner.arguments.length ? owner.arguments : contextArguments);
       const candidates = type.fields.filter(field => field.name === member.name && substituteTypeArguments(inspector.signature(field.token).type, owner.arguments) === referenceType);
       if (candidates.length !== 1) throw new CilError('Field reference has no unique internal declaration');
       definition = candidates[0];
