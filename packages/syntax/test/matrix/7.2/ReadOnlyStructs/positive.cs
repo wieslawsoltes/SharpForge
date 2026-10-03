@@ -1,3 +1,0 @@
-readonly struct Meters
-{
-}

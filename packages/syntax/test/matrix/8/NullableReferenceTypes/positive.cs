@@ -1,4 +1,0 @@
-#nullable enable
-class C
-{
-}

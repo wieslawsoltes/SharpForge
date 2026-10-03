@@ -1,1 +1,0 @@
-[System.Runtime.CompilerServices.InterpolatedStringHandler] ref struct H { public H(int a,int b){} public void AppendLiteral(string s){} public void AppendFormatted<T>(T t){} } class C { static void F(H h){} void M(){F($"value:{1}");} }

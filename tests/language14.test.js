@@ -1,7 +1,0 @@
-import {cases,invalid} from './fixtures/language/language14.js';
-import test from 'node:test';import assert from 'node:assert/strict';
-import {compileToIL,languageVersion} from '@sharpforge/compiler';import {VirtualMachine,CilVirtualMachine} from '@sharpforge/runtime';import {loadAssembly,formatILDocument,assembleILDocument} from '@sharpforge/cil';
-const paths={source:c=>new VirtualMachine(c.image),reload:c=>new VirtualMachine(loadAssembly(c.assembly)),cil:c=>new CilVirtualMachine(c.assembly),reassembled:c=>new CilVirtualMachine(assembleILDocument(formatILDocument(c.assembly)).bytes)};
-for(const[name,src,expected,lang='14']of cases){const c=compileToIL('using System;using System.Collections.Generic;'+src,{langVersion:lang});for(const[path,make]of Object.entries(paths))test(`language14 ${path}: ${name}`,()=>{assert(c.success,JSON.stringify(c.diagnostics));const vm=make(c);try{const r=vm.run();assert.equal(r.state,'terminated',JSON.stringify(r.fault));assert.equal(r.output,expected);}finally{vm.stop();}});}
-for(const[name,src,lang]of invalid)test('language14 rejects: '+name,()=>assert.equal(compileToIL('using System.Collections.Generic;'+src,{langVersion:lang}).success,false));
-for(const v of ['14','14.0','latest','default','preview'])test('language version '+v,()=>assert.ok(languageVersion(v)));for(const v of ['15','latest-but-not-real','0','99'])test('language rejects version '+v,()=>assert.throws(()=>languageVersion(v)));

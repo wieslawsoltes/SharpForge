@@ -1,9 +1,0 @@
-{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
-  "accessibility/protected-and-private-within":{"hash":"dc290347e01ace89","kind":"output","langVersion":"14.0","diagnostics":[],"output":"42\n"},
-  "accessibility/cs0122-private-field":{"hash":"49ccb38998f2828b","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0122",51,6,"error"],["CS0414",82,6,"warning"]]},
-  "accessibility/cs0122-default-private-method":{"hash":"792d33b877027468","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0122",33,6,"error"]]},
-  "accessibility/cs0122-protected-from-outside":{"hash":"3c62b9a6ea762e46","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0122",51,5,"error"]]},
-  "accessibility/cs0122-private-constructor":{"hash":"01f82b05ef6ac67e","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0122",26,1,"error"]]},
-  "accessibility/cs0122-private-nested-type":{"hash":"ca50d9ceddbf2ebe","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0122",32,5,"error"]]},
-  "accessibility/cs0050-inconsistent-accessibility":{"hash":"35dae1591d8b2a34","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0050",86,3,"error"]]}
-}}

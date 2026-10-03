@@ -1,3 +1,0 @@
-/* Visual Studio-inspired compact workspace, authored SharpForge styling. */
-:root{--accent:#007acc;--accent-bg:#094771;--selection:#264f78;--selection-inactive:#3a3d41;--border:#3f3f46;--bg:#1e1e1e;--panel:#252526;--surface:#2d2d30;--hover:#3e3e42;--raised:#2d2d30;--text:#dcdcdc;--muted:#aaa;--line:#3f3f46;--line-soft:#303033;--editor:#1e1e1e}
-html[data-theme=light]{--selection:#c9def5;--selection-inactive:#ddd;--border:#ccc;--panel:#f5f5f5;--surface:#eee;--hover:#dbeaf9;--raised:#fff;--text:#202020;--muted:#626262;--line:#ccc;--line-soft:#ddd;--editor:#fff;--bg:#eee;--accent-bg:#c9def5}

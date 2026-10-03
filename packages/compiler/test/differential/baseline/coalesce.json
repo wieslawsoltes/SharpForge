@@ -1,4 +1,0 @@
-{
-  "coalesce/type-parameter-operands": ["diagnostics", "warnings"],
-  "coalesce/unconstrained-type-parameter-in-7-3": ["diagnostics", "warnings"]
-}

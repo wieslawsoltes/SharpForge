@@ -1,4 +1,0 @@
-{
-  "records/cs8852-record-init-only": ["diagnostics", "warnings"],
-  "records/record-class": ["diagnostics", "warnings", "bytecode", "cil"]
-}

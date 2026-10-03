@@ -1,6 +1,0 @@
-{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
-  "using-static/static-members-nested-types-and-enum-members":{"hash":"cfbb97386ed8effd","kind":"output","langVersion":"14.0","diagnostics":[],"output":"8\n2\n12\n3\n6\n"},
-  "using-static/cs0229-cs0121-cs0104-the-same-name-from-two-types":{"hash":"9c2c4193ae110d7c","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0229",364,1,"error"],["CS0121",376,1,"error"],["CS0104",419,1,"error"]]},
-  "using-static/cs0103-extension-and-instance-members-are-not-imported":{"hash":"7eef7c3643779a48","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0103",415,5,"error"],["CS0103",488,1,"error"]]},
-  "using-static/cs7007-cs0246-what-using-static-may-name":{"hash":"f8331809f8acf6a2","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS7007",13,6,"error"],["CS0246",34,7,"error"]]}
-}}

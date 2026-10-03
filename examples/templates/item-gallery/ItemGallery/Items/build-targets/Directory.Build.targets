@@ -1,3 +1,0 @@
-<Project>
-  <!-- Add native MSBuild targets explicitly. Loading does not execute tasks. -->
-</Project>
