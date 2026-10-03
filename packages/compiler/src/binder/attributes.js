@@ -141,6 +141,8 @@ export const AttributeBinding = Base =>
         container = this.globalNamespace;
         simple = name.name;
       }
+      // C# 11 generic attributes (./csharp11.js).
+      if (simple.kind === 'GenericName' && this.genericAttributeClass) return this.genericAttributeClass(name, simple, container, scope, uri);
       if (simple.kind !== 'IdentifierName' || (name.kind === 'AliasQualifiedName' && !container)) {
         const type = binder.bindType(name, scope).type;
         return type.isErrorType() ? null : this.checkAttributeClass(type, name, uri);
@@ -180,6 +182,7 @@ export const AttributeBinding = Base =>
         this.incomplete = true;
         return null;
       }
+      if (this.reportAttributeArity?.(simple, text, scope, container, uri)) return null;
       const missing = container ? ['CS0234', container.toDisplayString()] : ['CS0246'];
       for (const candidate of [text + 'Attribute', text]) this.report(uri, simple, missing[0], [candidate, ...missing.slice(1)]);
       return null;
@@ -223,7 +226,8 @@ export const AttributeBinding = Base =>
         isStatic: true,
         isFieldInitializer: true,
         isStaticInitializer: true,
-        parameters: [],
+        // C# 11: the parameters of a method are in scope in its attributes and in those of its parameters (for nameof).
+        parameters: this.attributeScopeParameters?.(site) ?? [],
       });
       const all = syntax.argumentList?.arguments ?? [],
         positional = all.filter(argument => !argument.nameEquals).map(argument => binder.argument(argument));

@@ -1,0 +1,3 @@
+{
+  "nullable-coalesce/cs0019-only-for-unrelated-operands": ["diagnostics", "warnings"]
+}
