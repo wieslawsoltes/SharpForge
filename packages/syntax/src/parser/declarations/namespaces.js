@@ -1,7 +1,7 @@
 import { accessibilityModifiers } from '../modifiers.js';
 import { reusableNamespaceMembers } from '../../incremental/blender.js';
 /** Compilation units, extern aliases, using directives (namespace, static and alias forms) and namespace declarations, kept in source order. */
-const memberOnly = new Set([...accessibilityModifiers, 'virtual', 'override', 'abstract', 'sealed', 'volatile', 'new']);
+const memberOnly = new Set([...accessibilityModifiers, 'virtual', 'override', 'abstract', 'sealed', 'volatile']);
 /** Modifiers that can only start a local declaration after `using` (`static` and `unsafe` may start a directive). */
 const localOnlyModifiers = new Set(['const', 'readonly', 'volatile', 'extern']);
 export const namespaceMethods = {
@@ -157,8 +157,7 @@ export const namespaceMethods = {
       return this.globalFunction(attributeLists, modifiersEnd);
     }
     const memberish =
-      !creation &&
-      (inNamespace || modifiers.some(m => memberOnly.has(m.text)) || this.at('event') || this.at('~') || this.atAny(['implicit', 'explicit']));
+      inNamespace || modifiers.some(m => memberOnly.has(m.text)) || this.at('event') || this.at('~') || this.atAny(['implicit', 'explicit']);
     if (memberish) return this.memberDeclarationAfterModifiers(attributeLists, modifiers, null);
     this.reset(mark);
     return this.globalStatement(attributeLists);

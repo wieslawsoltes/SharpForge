@@ -1,0 +1,5330 @@
+{
+  "schemaVersion": 1,
+  "commits": {
+    "base": "defb7ccbe13dae9dfe9a67cc24281b2a0b5f9e99",
+    "head": "a3093d496861383e0b26b4aaab7dfced552251b9"
+  },
+  "order": [
+    {
+      "side": "base",
+      "id": "A05/vm-source",
+      "pair": 0,
+      "started": "2026-10-03T15:25:15.231Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-0-A05_vm-source-0.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-source",
+      "pair": 0,
+      "started": "2026-10-03T15:25:15.743Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-0-A05_vm-source-0.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-source",
+      "pair": 1,
+      "started": "2026-10-03T15:25:16.247Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-0-A05_vm-source-1.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-source",
+      "pair": 1,
+      "started": "2026-10-03T15:25:16.799Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-0-A05_vm-source-1.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-source",
+      "pair": 2,
+      "started": "2026-10-03T15:25:17.281Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-0-A05_vm-source-2.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-source",
+      "pair": 2,
+      "started": "2026-10-03T15:25:17.737Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-0-A05_vm-source-2.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-source",
+      "pair": 3,
+      "started": "2026-10-03T15:25:18.230Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-0-A05_vm-source-3.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-source",
+      "pair": 3,
+      "started": "2026-10-03T15:25:18.719Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-0-A05_vm-source-3.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-source",
+      "pair": 4,
+      "started": "2026-10-03T15:25:19.216Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-0-A05_vm-source-4.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-source",
+      "pair": 4,
+      "started": "2026-10-03T15:25:19.761Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-0-A05_vm-source-4.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-source",
+      "pair": 5,
+      "started": "2026-10-03T15:25:20.256Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-0-A05_vm-source-5.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-source",
+      "pair": 5,
+      "started": "2026-10-03T15:25:20.742Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-0-A05_vm-source-5.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-source",
+      "pair": 6,
+      "started": "2026-10-03T15:25:21.211Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-0-A05_vm-source-6.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-source",
+      "pair": 6,
+      "started": "2026-10-03T15:25:21.667Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-0-A05_vm-source-6.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-source",
+      "pair": 7,
+      "started": "2026-10-03T15:25:22.173Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-0-A05_vm-source-7.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-source",
+      "pair": 7,
+      "started": "2026-10-03T15:25:22.706Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-0-A05_vm-source-7.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-source",
+      "pair": 8,
+      "started": "2026-10-03T15:25:23.221Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-0-A05_vm-source-8.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-source",
+      "pair": 8,
+      "started": "2026-10-03T15:25:23.752Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-0-A05_vm-source-8.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-source",
+      "pair": 9,
+      "started": "2026-10-03T15:25:24.263Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-0-A05_vm-source-9.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-source",
+      "pair": 9,
+      "started": "2026-10-03T15:25:24.757Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-0-A05_vm-source-9.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-source",
+      "pair": 10,
+      "started": "2026-10-03T15:25:25.212Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-0-A05_vm-source-10.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-source",
+      "pair": 10,
+      "started": "2026-10-03T15:25:25.690Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-0-A05_vm-source-10.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-source",
+      "pair": 11,
+      "started": "2026-10-03T15:25:26.171Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-0-A05_vm-source-11.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-source",
+      "pair": 11,
+      "started": "2026-10-03T15:25:26.690Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-0-A05_vm-source-11.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-source",
+      "pair": 12,
+      "started": "2026-10-03T15:25:27.209Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-0-A05_vm-source-12.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-source",
+      "pair": 12,
+      "started": "2026-10-03T15:25:27.725Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-0-A05_vm-source-12.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-source",
+      "pair": 13,
+      "started": "2026-10-03T15:25:28.231Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-0-A05_vm-source-13.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-source",
+      "pair": 13,
+      "started": "2026-10-03T15:25:28.725Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-0-A05_vm-source-13.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-source",
+      "pair": 14,
+      "started": "2026-10-03T15:25:29.222Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-0-A05_vm-source-14.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-source",
+      "pair": 14,
+      "started": "2026-10-03T15:25:29.687Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-0-A05_vm-source-14.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-source",
+      "pair": 15,
+      "started": "2026-10-03T15:25:30.177Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-0-A05_vm-source-15.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-source",
+      "pair": 15,
+      "started": "2026-10-03T15:25:30.682Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-0-A05_vm-source-15.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-source",
+      "pair": 16,
+      "started": "2026-10-03T15:25:31.151Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-0-A05_vm-source-16.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-source",
+      "pair": 16,
+      "started": "2026-10-03T15:25:31.597Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-0-A05_vm-source-16.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-source",
+      "pair": 17,
+      "started": "2026-10-03T15:25:32.078Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-0-A05_vm-source-17.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-source",
+      "pair": 17,
+      "started": "2026-10-03T15:25:32.557Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-0-A05_vm-source-17.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-source",
+      "pair": 18,
+      "started": "2026-10-03T15:25:33.009Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-0-A05_vm-source-18.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-source",
+      "pair": 18,
+      "started": "2026-10-03T15:25:33.476Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-0-A05_vm-source-18.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-source",
+      "pair": 19,
+      "started": "2026-10-03T15:25:33.962Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-0-A05_vm-source-19.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-source",
+      "pair": 19,
+      "started": "2026-10-03T15:25:34.452Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-0-A05_vm-source-19.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-cil",
+      "pair": 0,
+      "started": "2026-10-03T15:25:34.913Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-1-A05_vm-cil-0.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-cil",
+      "pair": 0,
+      "started": "2026-10-03T15:25:35.407Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-1-A05_vm-cil-0.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-cil",
+      "pair": 1,
+      "started": "2026-10-03T15:25:35.987Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-1-A05_vm-cil-1.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-cil",
+      "pair": 1,
+      "started": "2026-10-03T15:25:36.528Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-1-A05_vm-cil-1.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-cil",
+      "pair": 2,
+      "started": "2026-10-03T15:25:37.034Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-1-A05_vm-cil-2.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-cil",
+      "pair": 2,
+      "started": "2026-10-03T15:25:37.518Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-1-A05_vm-cil-2.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-cil",
+      "pair": 3,
+      "started": "2026-10-03T15:25:38.048Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-1-A05_vm-cil-3.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-cil",
+      "pair": 3,
+      "started": "2026-10-03T15:25:38.580Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-1-A05_vm-cil-3.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-cil",
+      "pair": 4,
+      "started": "2026-10-03T15:25:39.083Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-1-A05_vm-cil-4.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-cil",
+      "pair": 4,
+      "started": "2026-10-03T15:25:39.576Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-1-A05_vm-cil-4.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-cil",
+      "pair": 5,
+      "started": "2026-10-03T15:25:40.100Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-1-A05_vm-cil-5.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-cil",
+      "pair": 5,
+      "started": "2026-10-03T15:25:40.669Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-1-A05_vm-cil-5.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-cil",
+      "pair": 6,
+      "started": "2026-10-03T15:25:41.183Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-1-A05_vm-cil-6.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-cil",
+      "pair": 6,
+      "started": "2026-10-03T15:25:41.685Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-1-A05_vm-cil-6.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-cil",
+      "pair": 7,
+      "started": "2026-10-03T15:25:42.224Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-1-A05_vm-cil-7.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-cil",
+      "pair": 7,
+      "started": "2026-10-03T15:25:42.771Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-1-A05_vm-cil-7.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-cil",
+      "pair": 8,
+      "started": "2026-10-03T15:25:43.281Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-1-A05_vm-cil-8.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-cil",
+      "pair": 8,
+      "started": "2026-10-03T15:25:43.764Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-1-A05_vm-cil-8.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-cil",
+      "pair": 9,
+      "started": "2026-10-03T15:25:44.306Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-1-A05_vm-cil-9.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-cil",
+      "pair": 9,
+      "started": "2026-10-03T15:25:44.841Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-1-A05_vm-cil-9.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-cil",
+      "pair": 10,
+      "started": "2026-10-03T15:25:45.339Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-1-A05_vm-cil-10.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-cil",
+      "pair": 10,
+      "started": "2026-10-03T15:25:45.837Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-1-A05_vm-cil-10.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-cil",
+      "pair": 11,
+      "started": "2026-10-03T15:25:46.809Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-1-A05_vm-cil-11.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-cil",
+      "pair": 11,
+      "started": "2026-10-03T15:25:47.990Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-1-A05_vm-cil-11.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-cil",
+      "pair": 12,
+      "started": "2026-10-03T15:25:49.074Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-1-A05_vm-cil-12.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-cil",
+      "pair": 12,
+      "started": "2026-10-03T15:25:50.103Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-1-A05_vm-cil-12.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-cil",
+      "pair": 13,
+      "started": "2026-10-03T15:25:51.252Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-1-A05_vm-cil-13.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-cil",
+      "pair": 13,
+      "started": "2026-10-03T15:25:52.312Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-1-A05_vm-cil-13.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-cil",
+      "pair": 14,
+      "started": "2026-10-03T15:25:53.339Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-1-A05_vm-cil-14.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-cil",
+      "pair": 14,
+      "started": "2026-10-03T15:25:54.403Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-1-A05_vm-cil-14.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-cil",
+      "pair": 15,
+      "started": "2026-10-03T15:25:55.471Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-1-A05_vm-cil-15.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-cil",
+      "pair": 15,
+      "started": "2026-10-03T15:25:56.644Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-1-A05_vm-cil-15.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-cil",
+      "pair": 16,
+      "started": "2026-10-03T15:25:57.666Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-1-A05_vm-cil-16.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-cil",
+      "pair": 16,
+      "started": "2026-10-03T15:25:58.676Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-1-A05_vm-cil-16.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-cil",
+      "pair": 17,
+      "started": "2026-10-03T15:25:59.666Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-1-A05_vm-cil-17.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-cil",
+      "pair": 17,
+      "started": "2026-10-03T15:26:00.634Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-1-A05_vm-cil-17.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-cil",
+      "pair": 18,
+      "started": "2026-10-03T15:26:01.376Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-1-A05_vm-cil-18.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-cil",
+      "pair": 18,
+      "started": "2026-10-03T15:26:01.980Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-1-A05_vm-cil-18.json"
+    },
+    {
+      "side": "head",
+      "id": "A05/vm-cil",
+      "pair": 19,
+      "started": "2026-10-03T15:26:02.643Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-1-A05_vm-cil-19.json"
+    },
+    {
+      "side": "base",
+      "id": "A05/vm-cil",
+      "pair": 19,
+      "started": "2026-10-03T15:26:03.297Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A05/vm-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-1-A05_vm-cil-19.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-source",
+      "pair": 0,
+      "started": "2026-10-03T15:26:03.915Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-2-A08_dictionary-source-0.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-source",
+      "pair": 0,
+      "started": "2026-10-03T15:26:04.459Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-2-A08_dictionary-source-0.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-source",
+      "pair": 1,
+      "started": "2026-10-03T15:26:05.007Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-2-A08_dictionary-source-1.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-source",
+      "pair": 1,
+      "started": "2026-10-03T15:26:05.564Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-2-A08_dictionary-source-1.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-source",
+      "pair": 2,
+      "started": "2026-10-03T15:26:06.090Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-2-A08_dictionary-source-2.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-source",
+      "pair": 2,
+      "started": "2026-10-03T15:26:06.602Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-2-A08_dictionary-source-2.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-source",
+      "pair": 3,
+      "started": "2026-10-03T15:26:07.151Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-2-A08_dictionary-source-3.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-source",
+      "pair": 3,
+      "started": "2026-10-03T15:26:07.691Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-2-A08_dictionary-source-3.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-source",
+      "pair": 4,
+      "started": "2026-10-03T15:26:08.215Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-2-A08_dictionary-source-4.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-source",
+      "pair": 4,
+      "started": "2026-10-03T15:26:08.709Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-2-A08_dictionary-source-4.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-source",
+      "pair": 5,
+      "started": "2026-10-03T15:26:09.228Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-2-A08_dictionary-source-5.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-source",
+      "pair": 5,
+      "started": "2026-10-03T15:26:09.758Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-2-A08_dictionary-source-5.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-source",
+      "pair": 6,
+      "started": "2026-10-03T15:26:10.316Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-2-A08_dictionary-source-6.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-source",
+      "pair": 6,
+      "started": "2026-10-03T15:26:10.812Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-2-A08_dictionary-source-6.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-source",
+      "pair": 7,
+      "started": "2026-10-03T15:26:11.327Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-2-A08_dictionary-source-7.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-source",
+      "pair": 7,
+      "started": "2026-10-03T15:26:11.845Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-2-A08_dictionary-source-7.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-source",
+      "pair": 8,
+      "started": "2026-10-03T15:26:12.336Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-2-A08_dictionary-source-8.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-source",
+      "pair": 8,
+      "started": "2026-10-03T15:26:12.834Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-2-A08_dictionary-source-8.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-source",
+      "pair": 9,
+      "started": "2026-10-03T15:26:13.355Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-2-A08_dictionary-source-9.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-source",
+      "pair": 9,
+      "started": "2026-10-03T15:26:13.878Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-2-A08_dictionary-source-9.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-source",
+      "pair": 10,
+      "started": "2026-10-03T15:26:14.367Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-2-A08_dictionary-source-10.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-source",
+      "pair": 10,
+      "started": "2026-10-03T15:26:14.860Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-2-A08_dictionary-source-10.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-source",
+      "pair": 11,
+      "started": "2026-10-03T15:26:15.381Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-2-A08_dictionary-source-11.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-source",
+      "pair": 11,
+      "started": "2026-10-03T15:26:15.900Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-2-A08_dictionary-source-11.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-source",
+      "pair": 12,
+      "started": "2026-10-03T15:26:16.396Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-2-A08_dictionary-source-12.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-source",
+      "pair": 12,
+      "started": "2026-10-03T15:26:16.891Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-2-A08_dictionary-source-12.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-source",
+      "pair": 13,
+      "started": "2026-10-03T15:26:17.410Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-2-A08_dictionary-source-13.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-source",
+      "pair": 13,
+      "started": "2026-10-03T15:26:17.930Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-2-A08_dictionary-source-13.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-source",
+      "pair": 14,
+      "started": "2026-10-03T15:26:18.418Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-2-A08_dictionary-source-14.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-source",
+      "pair": 14,
+      "started": "2026-10-03T15:26:18.910Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-2-A08_dictionary-source-14.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-source",
+      "pair": 15,
+      "started": "2026-10-03T15:26:19.426Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-2-A08_dictionary-source-15.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-source",
+      "pair": 15,
+      "started": "2026-10-03T15:26:19.951Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-2-A08_dictionary-source-15.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-source",
+      "pair": 16,
+      "started": "2026-10-03T15:26:20.444Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-2-A08_dictionary-source-16.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-source",
+      "pair": 16,
+      "started": "2026-10-03T15:26:20.938Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-2-A08_dictionary-source-16.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-source",
+      "pair": 17,
+      "started": "2026-10-03T15:26:21.459Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-2-A08_dictionary-source-17.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-source",
+      "pair": 17,
+      "started": "2026-10-03T15:26:21.980Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-2-A08_dictionary-source-17.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-source",
+      "pair": 18,
+      "started": "2026-10-03T15:26:22.437Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-2-A08_dictionary-source-18.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-source",
+      "pair": 18,
+      "started": "2026-10-03T15:26:22.921Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-2-A08_dictionary-source-18.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-source",
+      "pair": 19,
+      "started": "2026-10-03T15:26:23.431Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-2-A08_dictionary-source-19.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-source",
+      "pair": 19,
+      "started": "2026-10-03T15:26:23.927Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-source",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-2-A08_dictionary-source-19.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-cil",
+      "pair": 0,
+      "started": "2026-10-03T15:26:24.387Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-3-A08_dictionary-cil-0.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-cil",
+      "pair": 0,
+      "started": "2026-10-03T15:26:24.871Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-3-A08_dictionary-cil-0.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-cil",
+      "pair": 1,
+      "started": "2026-10-03T15:26:25.388Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-3-A08_dictionary-cil-1.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-cil",
+      "pair": 1,
+      "started": "2026-10-03T15:26:25.893Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-3-A08_dictionary-cil-1.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-cil",
+      "pair": 2,
+      "started": "2026-10-03T15:26:26.379Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-3-A08_dictionary-cil-2.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-cil",
+      "pair": 2,
+      "started": "2026-10-03T15:26:26.870Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-3-A08_dictionary-cil-2.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-cil",
+      "pair": 3,
+      "started": "2026-10-03T15:26:27.393Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-3-A08_dictionary-cil-3.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-cil",
+      "pair": 3,
+      "started": "2026-10-03T15:26:28.188Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-3-A08_dictionary-cil-3.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-cil",
+      "pair": 4,
+      "started": "2026-10-03T15:26:29.167Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-3-A08_dictionary-cil-4.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-cil",
+      "pair": 4,
+      "started": "2026-10-03T15:26:30.132Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-3-A08_dictionary-cil-4.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-cil",
+      "pair": 5,
+      "started": "2026-10-03T15:26:31.294Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-3-A08_dictionary-cil-5.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-cil",
+      "pair": 5,
+      "started": "2026-10-03T15:26:32.346Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-3-A08_dictionary-cil-5.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-cil",
+      "pair": 6,
+      "started": "2026-10-03T15:26:33.332Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-3-A08_dictionary-cil-6.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-cil",
+      "pair": 6,
+      "started": "2026-10-03T15:26:34.312Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-3-A08_dictionary-cil-6.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-cil",
+      "pair": 7,
+      "started": "2026-10-03T15:26:35.361Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-3-A08_dictionary-cil-7.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-cil",
+      "pair": 7,
+      "started": "2026-10-03T15:26:36.465Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-3-A08_dictionary-cil-7.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-cil",
+      "pair": 8,
+      "started": "2026-10-03T15:26:37.533Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-3-A08_dictionary-cil-8.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-cil",
+      "pair": 8,
+      "started": "2026-10-03T15:26:38.584Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-3-A08_dictionary-cil-8.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-cil",
+      "pair": 9,
+      "started": "2026-10-03T15:26:39.713Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-3-A08_dictionary-cil-9.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-cil",
+      "pair": 9,
+      "started": "2026-10-03T15:26:40.843Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-3-A08_dictionary-cil-9.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-cil",
+      "pair": 10,
+      "started": "2026-10-03T15:26:41.913Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-3-A08_dictionary-cil-10.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-cil",
+      "pair": 10,
+      "started": "2026-10-03T15:26:42.996Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-3-A08_dictionary-cil-10.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-cil",
+      "pair": 11,
+      "started": "2026-10-03T15:26:44.060Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-3-A08_dictionary-cil-11.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-cil",
+      "pair": 11,
+      "started": "2026-10-03T15:26:45.108Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-3-A08_dictionary-cil-11.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-cil",
+      "pair": 12,
+      "started": "2026-10-03T15:26:45.931Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-3-A08_dictionary-cil-12.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-cil",
+      "pair": 12,
+      "started": "2026-10-03T15:26:46.884Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-3-A08_dictionary-cil-12.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-cil",
+      "pair": 13,
+      "started": "2026-10-03T15:26:47.666Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-3-A08_dictionary-cil-13.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-cil",
+      "pair": 13,
+      "started": "2026-10-03T15:26:48.467Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-3-A08_dictionary-cil-13.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-cil",
+      "pair": 14,
+      "started": "2026-10-03T15:26:49.313Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-3-A08_dictionary-cil-14.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-cil",
+      "pair": 14,
+      "started": "2026-10-03T15:26:50.050Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-3-A08_dictionary-cil-14.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-cil",
+      "pair": 15,
+      "started": "2026-10-03T15:26:50.728Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-3-A08_dictionary-cil-15.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-cil",
+      "pair": 15,
+      "started": "2026-10-03T15:26:51.400Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-3-A08_dictionary-cil-15.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-cil",
+      "pair": 16,
+      "started": "2026-10-03T15:26:51.969Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-3-A08_dictionary-cil-16.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-cil",
+      "pair": 16,
+      "started": "2026-10-03T15:26:52.537Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-3-A08_dictionary-cil-16.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-cil",
+      "pair": 17,
+      "started": "2026-10-03T15:26:53.198Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-3-A08_dictionary-cil-17.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-cil",
+      "pair": 17,
+      "started": "2026-10-03T15:26:53.777Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-3-A08_dictionary-cil-17.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-cil",
+      "pair": 18,
+      "started": "2026-10-03T15:26:54.327Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-3-A08_dictionary-cil-18.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-cil",
+      "pair": 18,
+      "started": "2026-10-03T15:26:54.896Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-3-A08_dictionary-cil-18.json"
+    },
+    {
+      "side": "head",
+      "id": "A08/dictionary-cil",
+      "pair": 19,
+      "started": "2026-10-03T15:26:55.471Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-3-A08_dictionary-cil-19.json"
+    },
+    {
+      "side": "base",
+      "id": "A08/dictionary-cil",
+      "pair": 19,
+      "started": "2026-10-03T15:26:56.016Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A08/dictionary-cil",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-3-A08_dictionary-cil-19.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-scalar",
+      "pair": 0,
+      "started": "2026-10-03T15:26:56.547Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-4-A10_compute-scalar-0.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-scalar",
+      "pair": 0,
+      "started": "2026-10-03T15:26:56.948Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-4-A10_compute-scalar-0.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-scalar",
+      "pair": 1,
+      "started": "2026-10-03T15:26:57.351Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-4-A10_compute-scalar-1.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-scalar",
+      "pair": 1,
+      "started": "2026-10-03T15:26:57.757Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-4-A10_compute-scalar-1.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-scalar",
+      "pair": 2,
+      "started": "2026-10-03T15:26:58.167Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-4-A10_compute-scalar-2.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-scalar",
+      "pair": 2,
+      "started": "2026-10-03T15:26:58.857Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-4-A10_compute-scalar-2.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-scalar",
+      "pair": 3,
+      "started": "2026-10-03T15:26:59.269Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-4-A10_compute-scalar-3.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-scalar",
+      "pair": 3,
+      "started": "2026-10-03T15:26:59.668Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-4-A10_compute-scalar-3.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-scalar",
+      "pair": 4,
+      "started": "2026-10-03T15:27:00.066Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-4-A10_compute-scalar-4.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-scalar",
+      "pair": 4,
+      "started": "2026-10-03T15:27:00.457Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-4-A10_compute-scalar-4.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-scalar",
+      "pair": 5,
+      "started": "2026-10-03T15:27:00.861Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-4-A10_compute-scalar-5.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-scalar",
+      "pair": 5,
+      "started": "2026-10-03T15:27:01.256Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-4-A10_compute-scalar-5.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-scalar",
+      "pair": 6,
+      "started": "2026-10-03T15:27:01.656Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-4-A10_compute-scalar-6.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-scalar",
+      "pair": 6,
+      "started": "2026-10-03T15:27:02.092Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-4-A10_compute-scalar-6.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-scalar",
+      "pair": 7,
+      "started": "2026-10-03T15:27:02.488Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-4-A10_compute-scalar-7.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-scalar",
+      "pair": 7,
+      "started": "2026-10-03T15:27:02.883Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-4-A10_compute-scalar-7.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-scalar",
+      "pair": 8,
+      "started": "2026-10-03T15:27:03.279Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-4-A10_compute-scalar-8.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-scalar",
+      "pair": 8,
+      "started": "2026-10-03T15:27:03.671Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-4-A10_compute-scalar-8.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-scalar",
+      "pair": 9,
+      "started": "2026-10-03T15:27:04.068Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-4-A10_compute-scalar-9.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-scalar",
+      "pair": 9,
+      "started": "2026-10-03T15:27:04.467Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-4-A10_compute-scalar-9.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-scalar",
+      "pair": 10,
+      "started": "2026-10-03T15:27:05.078Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-4-A10_compute-scalar-10.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-scalar",
+      "pair": 10,
+      "started": "2026-10-03T15:27:05.546Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-4-A10_compute-scalar-10.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-scalar",
+      "pair": 11,
+      "started": "2026-10-03T15:27:05.972Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-4-A10_compute-scalar-11.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-scalar",
+      "pair": 11,
+      "started": "2026-10-03T15:27:06.428Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-4-A10_compute-scalar-11.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-scalar",
+      "pair": 12,
+      "started": "2026-10-03T15:27:06.829Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-4-A10_compute-scalar-12.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-scalar",
+      "pair": 12,
+      "started": "2026-10-03T15:27:07.225Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-4-A10_compute-scalar-12.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-scalar",
+      "pair": 13,
+      "started": "2026-10-03T15:27:07.620Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-4-A10_compute-scalar-13.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-scalar",
+      "pair": 13,
+      "started": "2026-10-03T15:27:08.010Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-4-A10_compute-scalar-13.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-scalar",
+      "pair": 14,
+      "started": "2026-10-03T15:27:08.425Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-4-A10_compute-scalar-14.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-scalar",
+      "pair": 14,
+      "started": "2026-10-03T15:27:08.819Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-4-A10_compute-scalar-14.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-scalar",
+      "pair": 15,
+      "started": "2026-10-03T15:27:09.216Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-4-A10_compute-scalar-15.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-scalar",
+      "pair": 15,
+      "started": "2026-10-03T15:27:09.654Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-4-A10_compute-scalar-15.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-scalar",
+      "pair": 16,
+      "started": "2026-10-03T15:27:10.114Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-4-A10_compute-scalar-16.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-scalar",
+      "pair": 16,
+      "started": "2026-10-03T15:27:10.515Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-4-A10_compute-scalar-16.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-scalar",
+      "pair": 17,
+      "started": "2026-10-03T15:27:10.922Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-4-A10_compute-scalar-17.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-scalar",
+      "pair": 17,
+      "started": "2026-10-03T15:27:11.296Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-4-A10_compute-scalar-17.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-scalar",
+      "pair": 18,
+      "started": "2026-10-03T15:27:11.667Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-4-A10_compute-scalar-18.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-scalar",
+      "pair": 18,
+      "started": "2026-10-03T15:27:12.037Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-4-A10_compute-scalar-18.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-scalar",
+      "pair": 19,
+      "started": "2026-10-03T15:27:12.412Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-4-A10_compute-scalar-19.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-scalar",
+      "pair": 19,
+      "started": "2026-10-03T15:27:12.793Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-scalar",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-4-A10_compute-scalar-19.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-wasm",
+      "pair": 0,
+      "started": "2026-10-03T15:27:13.190Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-5-A10_compute-wasm-0.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-wasm",
+      "pair": 0,
+      "started": "2026-10-03T15:27:13.558Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-5-A10_compute-wasm-0.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-wasm",
+      "pair": 1,
+      "started": "2026-10-03T15:27:13.936Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-5-A10_compute-wasm-1.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-wasm",
+      "pair": 1,
+      "started": "2026-10-03T15:27:14.304Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-5-A10_compute-wasm-1.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-wasm",
+      "pair": 2,
+      "started": "2026-10-03T15:27:14.672Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-5-A10_compute-wasm-2.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-wasm",
+      "pair": 2,
+      "started": "2026-10-03T15:27:15.051Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-5-A10_compute-wasm-2.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-wasm",
+      "pair": 3,
+      "started": "2026-10-03T15:27:15.475Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-5-A10_compute-wasm-3.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-wasm",
+      "pair": 3,
+      "started": "2026-10-03T15:27:15.869Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-5-A10_compute-wasm-3.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-wasm",
+      "pair": 4,
+      "started": "2026-10-03T15:27:16.239Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-5-A10_compute-wasm-4.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-wasm",
+      "pair": 4,
+      "started": "2026-10-03T15:27:16.621Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-5-A10_compute-wasm-4.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-wasm",
+      "pair": 5,
+      "started": "2026-10-03T15:27:17.046Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-5-A10_compute-wasm-5.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-wasm",
+      "pair": 5,
+      "started": "2026-10-03T15:27:17.454Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-5-A10_compute-wasm-5.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-wasm",
+      "pair": 6,
+      "started": "2026-10-03T15:27:17.872Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-5-A10_compute-wasm-6.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-wasm",
+      "pair": 6,
+      "started": "2026-10-03T15:27:18.268Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-5-A10_compute-wasm-6.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-wasm",
+      "pair": 7,
+      "started": "2026-10-03T15:27:18.661Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-5-A10_compute-wasm-7.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-wasm",
+      "pair": 7,
+      "started": "2026-10-03T15:27:19.030Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-5-A10_compute-wasm-7.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-wasm",
+      "pair": 8,
+      "started": "2026-10-03T15:27:19.404Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-5-A10_compute-wasm-8.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-wasm",
+      "pair": 8,
+      "started": "2026-10-03T15:27:19.773Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-5-A10_compute-wasm-8.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-wasm",
+      "pair": 9,
+      "started": "2026-10-03T15:27:20.146Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-5-A10_compute-wasm-9.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-wasm",
+      "pair": 9,
+      "started": "2026-10-03T15:27:20.518Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-5-A10_compute-wasm-9.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-wasm",
+      "pair": 10,
+      "started": "2026-10-03T15:27:20.881Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-5-A10_compute-wasm-10.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-wasm",
+      "pair": 10,
+      "started": "2026-10-03T15:27:21.250Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-5-A10_compute-wasm-10.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-wasm",
+      "pair": 11,
+      "started": "2026-10-03T15:27:21.623Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-5-A10_compute-wasm-11.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-wasm",
+      "pair": 11,
+      "started": "2026-10-03T15:27:21.990Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-5-A10_compute-wasm-11.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-wasm",
+      "pair": 12,
+      "started": "2026-10-03T15:27:22.356Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-5-A10_compute-wasm-12.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-wasm",
+      "pair": 12,
+      "started": "2026-10-03T15:27:22.731Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-5-A10_compute-wasm-12.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-wasm",
+      "pair": 13,
+      "started": "2026-10-03T15:27:23.139Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-5-A10_compute-wasm-13.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-wasm",
+      "pair": 13,
+      "started": "2026-10-03T15:27:23.523Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-5-A10_compute-wasm-13.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-wasm",
+      "pair": 14,
+      "started": "2026-10-03T15:27:23.889Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-5-A10_compute-wasm-14.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-wasm",
+      "pair": 14,
+      "started": "2026-10-03T15:27:24.256Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-5-A10_compute-wasm-14.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-wasm",
+      "pair": 15,
+      "started": "2026-10-03T15:27:24.624Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-5-A10_compute-wasm-15.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-wasm",
+      "pair": 15,
+      "started": "2026-10-03T15:27:24.991Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-5-A10_compute-wasm-15.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-wasm",
+      "pair": 16,
+      "started": "2026-10-03T15:27:25.359Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-5-A10_compute-wasm-16.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-wasm",
+      "pair": 16,
+      "started": "2026-10-03T15:27:25.722Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-5-A10_compute-wasm-16.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-wasm",
+      "pair": 17,
+      "started": "2026-10-03T15:27:26.104Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-5-A10_compute-wasm-17.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-wasm",
+      "pair": 17,
+      "started": "2026-10-03T15:27:26.584Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-5-A10_compute-wasm-17.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-wasm",
+      "pair": 18,
+      "started": "2026-10-03T15:27:27.034Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-5-A10_compute-wasm-18.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-wasm",
+      "pair": 18,
+      "started": "2026-10-03T15:27:27.418Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-5-A10_compute-wasm-18.json"
+    },
+    {
+      "side": "head",
+      "id": "A10/compute-wasm",
+      "pair": 19,
+      "started": "2026-10-03T15:27:27.799Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-5-A10_compute-wasm-19.json"
+    },
+    {
+      "side": "base",
+      "id": "A10/compute-wasm",
+      "pair": 19,
+      "started": "2026-10-03T15:27:28.177Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A10/compute-wasm",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-5-A10_compute-wasm-19.json"
+    },
+    {
+      "side": "base",
+      "id": "A20/editor-index",
+      "pair": 0,
+      "started": "2026-10-03T15:27:28.560Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-6-A20_editor-index-0.json"
+    },
+    {
+      "side": "head",
+      "id": "A20/editor-index",
+      "pair": 0,
+      "started": "2026-10-03T15:27:29.014Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-6-A20_editor-index-0.json"
+    },
+    {
+      "side": "head",
+      "id": "A20/editor-index",
+      "pair": 1,
+      "started": "2026-10-03T15:27:29.481Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-6-A20_editor-index-1.json"
+    },
+    {
+      "side": "base",
+      "id": "A20/editor-index",
+      "pair": 1,
+      "started": "2026-10-03T15:27:29.943Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-6-A20_editor-index-1.json"
+    },
+    {
+      "side": "base",
+      "id": "A20/editor-index",
+      "pair": 2,
+      "started": "2026-10-03T15:27:30.504Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-6-A20_editor-index-2.json"
+    },
+    {
+      "side": "head",
+      "id": "A20/editor-index",
+      "pair": 2,
+      "started": "2026-10-03T15:27:31.022Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-6-A20_editor-index-2.json"
+    },
+    {
+      "side": "head",
+      "id": "A20/editor-index",
+      "pair": 3,
+      "started": "2026-10-03T15:27:31.531Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-6-A20_editor-index-3.json"
+    },
+    {
+      "side": "base",
+      "id": "A20/editor-index",
+      "pair": 3,
+      "started": "2026-10-03T15:27:32.066Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-6-A20_editor-index-3.json"
+    },
+    {
+      "side": "base",
+      "id": "A20/editor-index",
+      "pair": 4,
+      "started": "2026-10-03T15:27:32.564Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-6-A20_editor-index-4.json"
+    },
+    {
+      "side": "head",
+      "id": "A20/editor-index",
+      "pair": 4,
+      "started": "2026-10-03T15:27:33.051Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-6-A20_editor-index-4.json"
+    },
+    {
+      "side": "head",
+      "id": "A20/editor-index",
+      "pair": 5,
+      "started": "2026-10-03T15:27:33.547Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-6-A20_editor-index-5.json"
+    },
+    {
+      "side": "base",
+      "id": "A20/editor-index",
+      "pair": 5,
+      "started": "2026-10-03T15:27:34.041Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-6-A20_editor-index-5.json"
+    },
+    {
+      "side": "base",
+      "id": "A20/editor-index",
+      "pair": 6,
+      "started": "2026-10-03T15:27:34.551Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-6-A20_editor-index-6.json"
+    },
+    {
+      "side": "head",
+      "id": "A20/editor-index",
+      "pair": 6,
+      "started": "2026-10-03T15:27:35.046Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-6-A20_editor-index-6.json"
+    },
+    {
+      "side": "head",
+      "id": "A20/editor-index",
+      "pair": 7,
+      "started": "2026-10-03T15:27:35.563Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-6-A20_editor-index-7.json"
+    },
+    {
+      "side": "base",
+      "id": "A20/editor-index",
+      "pair": 7,
+      "started": "2026-10-03T15:27:36.059Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-6-A20_editor-index-7.json"
+    },
+    {
+      "side": "base",
+      "id": "A20/editor-index",
+      "pair": 8,
+      "started": "2026-10-03T15:27:36.548Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-6-A20_editor-index-8.json"
+    },
+    {
+      "side": "head",
+      "id": "A20/editor-index",
+      "pair": 8,
+      "started": "2026-10-03T15:27:37.048Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-6-A20_editor-index-8.json"
+    },
+    {
+      "side": "head",
+      "id": "A20/editor-index",
+      "pair": 9,
+      "started": "2026-10-03T15:27:37.555Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-6-A20_editor-index-9.json"
+    },
+    {
+      "side": "base",
+      "id": "A20/editor-index",
+      "pair": 9,
+      "started": "2026-10-03T15:27:38.062Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-6-A20_editor-index-9.json"
+    },
+    {
+      "side": "base",
+      "id": "A20/editor-index",
+      "pair": 10,
+      "started": "2026-10-03T15:27:38.552Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-6-A20_editor-index-10.json"
+    },
+    {
+      "side": "head",
+      "id": "A20/editor-index",
+      "pair": 10,
+      "started": "2026-10-03T15:27:39.040Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-6-A20_editor-index-10.json"
+    },
+    {
+      "side": "head",
+      "id": "A20/editor-index",
+      "pair": 11,
+      "started": "2026-10-03T15:27:39.551Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-6-A20_editor-index-11.json"
+    },
+    {
+      "side": "base",
+      "id": "A20/editor-index",
+      "pair": 11,
+      "started": "2026-10-03T15:27:40.034Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-6-A20_editor-index-11.json"
+    },
+    {
+      "side": "base",
+      "id": "A20/editor-index",
+      "pair": 12,
+      "started": "2026-10-03T15:27:40.522Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-6-A20_editor-index-12.json"
+    },
+    {
+      "side": "head",
+      "id": "A20/editor-index",
+      "pair": 12,
+      "started": "2026-10-03T15:27:40.980Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-6-A20_editor-index-12.json"
+    },
+    {
+      "side": "head",
+      "id": "A20/editor-index",
+      "pair": 13,
+      "started": "2026-10-03T15:27:41.438Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-6-A20_editor-index-13.json"
+    },
+    {
+      "side": "base",
+      "id": "A20/editor-index",
+      "pair": 13,
+      "started": "2026-10-03T15:27:41.919Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-6-A20_editor-index-13.json"
+    },
+    {
+      "side": "base",
+      "id": "A20/editor-index",
+      "pair": 14,
+      "started": "2026-10-03T15:27:42.443Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-6-A20_editor-index-14.json"
+    },
+    {
+      "side": "head",
+      "id": "A20/editor-index",
+      "pair": 14,
+      "started": "2026-10-03T15:27:42.916Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-6-A20_editor-index-14.json"
+    },
+    {
+      "side": "head",
+      "id": "A20/editor-index",
+      "pair": 15,
+      "started": "2026-10-03T15:27:43.401Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-6-A20_editor-index-15.json"
+    },
+    {
+      "side": "base",
+      "id": "A20/editor-index",
+      "pair": 15,
+      "started": "2026-10-03T15:27:43.872Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-6-A20_editor-index-15.json"
+    },
+    {
+      "side": "base",
+      "id": "A20/editor-index",
+      "pair": 16,
+      "started": "2026-10-03T15:27:44.336Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-6-A20_editor-index-16.json"
+    },
+    {
+      "side": "head",
+      "id": "A20/editor-index",
+      "pair": 16,
+      "started": "2026-10-03T15:27:44.803Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-6-A20_editor-index-16.json"
+    },
+    {
+      "side": "head",
+      "id": "A20/editor-index",
+      "pair": 17,
+      "started": "2026-10-03T15:27:45.261Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-6-A20_editor-index-17.json"
+    },
+    {
+      "side": "base",
+      "id": "A20/editor-index",
+      "pair": 17,
+      "started": "2026-10-03T15:27:45.720Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-6-A20_editor-index-17.json"
+    },
+    {
+      "side": "base",
+      "id": "A20/editor-index",
+      "pair": 18,
+      "started": "2026-10-03T15:27:46.176Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-6-A20_editor-index-18.json"
+    },
+    {
+      "side": "head",
+      "id": "A20/editor-index",
+      "pair": 18,
+      "started": "2026-10-03T15:27:46.645Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-6-A20_editor-index-18.json"
+    },
+    {
+      "side": "head",
+      "id": "A20/editor-index",
+      "pair": 19,
+      "started": "2026-10-03T15:27:47.114Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/head",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "head-6-A20_editor-index-19.json"
+    },
+    {
+      "side": "base",
+      "id": "A20/editor-index",
+      "pair": 19,
+      "started": "2026-10-03T15:27:47.648Z",
+      "command": [
+        "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/measure.js",
+        "--root",
+        "/var/folders/6f/snf59k7x0ns_dv9l8f0_qgz00000gn/T/sharpforge-perf-jrCiqf/base",
+        "--adapter",
+        "A20/editor-index",
+        "--samples",
+        "1",
+        "--warmups",
+        "3"
+      ],
+      "artifact": "base-6-A20_editor-index-19.json"
+    }
+  ],
+  "completed": true
+}

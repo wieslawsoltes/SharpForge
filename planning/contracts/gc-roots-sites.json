@@ -1,0 +1,98 @@
+[
+  {
+    "id": "cil-vm.js:roots:1",
+    "file": "packages/runtime/src/cil-vm.js",
+    "line": 27,
+    "provider": "ptions);this.heap.rootProvider=()=>this.roots();this.frames=[];this.statics=new "
+  },
+  {
+    "id": "cil-vm.js:roots:2",
+    "file": "packages/runtime/src/cil-vm.js",
+    "line": 35,
+    "provider": "try.ownerToken,'static-method'); } *roots(){yield* this.platform?.roots()??["
+  },
+  {
+    "id": "cil-vm.js:roots:3",
+    "file": "packages/runtime/src/cil-vm.js",
+    "line": 35,
+    "provider": "); } *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots"
+  },
+  {
+    "id": "cil-vm.js:roots:4",
+    "file": "packages/runtime/src/cil-vm.js",
+    "line": 35,
+    "provider": "orm?.roots()??[];yield* this.scheduler?.roots()??[]; const root=function*(v)"
+  },
+  {
+    "id": "execution/source-eh.js:roots:1",
+    "file": "packages/runtime/src/execution/source-eh.js",
+    "line": 6,
+    "provider": "urn value or fault. */ export function* roots(vm) { for (const frame of vm.fra"
+  },
+  {
+    "id": "execution/strings.js:roots:1",
+    "file": "packages/runtime/src/execution/strings.js",
+    "line": 23,
+    "provider": "(stringData(this.heap,reference)); } *roots() { if(!this.weak)yield* this.entr"
+  },
+  {
+    "id": "execution/strings.js:roots:2",
+    "file": "packages/runtime/src/execution/strings.js",
+    "line": 37,
+    "provider": "tion* stringRoots(vm) { yield* pool(vm).roots(); } export function clearStrings("
+  },
+  {
+    "id": "host-operations.js:roots:1",
+    "file": "packages/runtime/src/host-operations.js",
+    "line": 5,
+    "provider": ";this.revision=0;this.closed=false;} *roots(){for(const op of this.active.valu"
+  },
+  {
+    "id": "platform.js:roots:1",
+    "file": "packages/runtime/src/platform.js",
+    "line": 17,
+    "provider": "perations=new HostOperations(this);} *roots(){yield* this.hostOperations.roots"
+  },
+  {
+    "id": "platform.js:roots:2",
+    "file": "packages/runtime/src/platform.js",
+    "line": 17,
+    "provider": "} *roots(){yield* this.hostOperations.roots();yield* this.animations.roots();y"
+  },
+  {
+    "id": "platform.js:roots:3",
+    "file": "packages/runtime/src/platform.js",
+    "line": 17,
+    "provider": "erations.roots();yield* this.animations.roots();yield this.application;yield* th"
+  },
+  {
+    "id": "scheduler.js:roots:1",
+    "file": "packages/runtime/src/scheduler.js",
+    "line": 26,
+    "provider": " this.contexts.get(this.currentId);} *roots(){if(!this.enabled)return;for(cons"
+  },
+  {
+    "id": "vm.js:roots:1",
+    "file": "packages/runtime/src/vm.js",
+    "line": 18,
+    "provider": "mage)});this.heap.rootProvider=()=>this.roots();this.stack=[];this.frames=[];thi"
+  },
+  {
+    "id": "vm.js:roots:2",
+    "file": "packages/runtime/src/vm.js",
+    "line": 22,
+    "provider": ";this.call(image.entryPoint,[]); } *roots(){yield* this.platform?.roots()??["
+  },
+  {
+    "id": "vm.js:roots:3",
+    "file": "packages/runtime/src/vm.js",
+    "line": 22,
+    "provider": "); } *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots"
+  },
+  {
+    "id": "vm.js:roots:4",
+    "file": "packages/runtime/src/vm.js",
+    "line": 22,
+    "provider": "orm?.roots()??[];yield* this.scheduler?.roots()??[];yield this.returnValue;yield"
+  }
+]

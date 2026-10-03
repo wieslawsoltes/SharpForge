@@ -6,6 +6,7 @@ import { loadAssembly } from '@sharpforge/cil';
 import { Op, BinaryName, UnaryName, verifyImage } from '@sharpforge/bytecode';
 import { ManagedHeap, ManagedFault, isReference } from './heap.js';
 import {builtin} from './execution/source-builtins.js';
+import {sourceValue} from './execution/source-values.js';
 import {literalString,stringRoots,clearStrings} from './execution/strings.js';
 import {binary,convert,unary,defaultValue,sourceEnum,enumToString,checkSourceArrayStore,runtimeTypeRoots,clearRuntimeTypes,runtimeTypeText} from './execution/source-ops.js';
 import {roots as exceptionRoots,frameState,makeFault,enterCatch,finalizers,finishReturn,transfer,resumeUnwind,handleFault,rethrow} from './execution/source-eh.js';
@@ -23,7 +24,7 @@ export class VirtualMachine {
   call(methodId,args){if(this.frames.length>=this.options.maxFrames)throw new ManagedFault('StackOverflowException','Maximum managed call depth exceeded');const method=this.image.methods[methodId],locals=Array(method.locals.length).fill(undefined);args.forEach((v,i)=>locals[i]=v);if(!method.isStatic&&args[0]===null)throw new ManagedFault('NullReferenceException','Cannot call an instance method on null');this.frames.push({id:++this.frameId,methodId,pc:0,base:this.stack.length,locals,point:null,...frameState()});}
   notifyWrite(write){this.writeRevision++;if(['field','array'].includes(write.kind))this.heap.mutationRevision++;this.onWrite?.(write);}
   get top(){return this.frames.at(-1);}
-  value(ref){if(ref?.enumType)return ref.value;return isReference(ref)&&this.heap.get(ref).kind==='string'?this.heap.get(ref).data:ref;}
+  value(ref){return sourceValue(this.heap,ref);}
   format(value){const name=runtimeTypeText(this,value)??enumToString(this,value);if(name!==null)return name;if(value===null)return '';if(value===undefined)return '<unassigned>';if(value===true)return 'True';if(value===false)return 'False';if(isReference(value)){const r=this.heap.get(value);if(r.kind==='string')return r.data;if(r.kind==='exception')return r.type+': '+this.format(r.data[0]);return r.type;}return String(value);}
   display(value){if(value===null)return 'null';if(isReference(value)){const r=this.heap.get(value);if(r.kind==='string')return JSON.stringify(r.data);if(r.kind==='array')return `${r.type} [${r.data.length}]`;return `${r.type} {#${value.h}}`;}return this.format(value);}
   constant(index){const raw=this.image.constants[index];return typeof raw==='string'?literalString(this,raw):raw;}
