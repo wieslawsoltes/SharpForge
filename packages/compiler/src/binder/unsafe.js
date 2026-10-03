@@ -24,6 +24,7 @@ import {
   isUnsafeSymbol,
   isManagedType,
   findPointerSyntax,
+  unsafeMarker,
   isUnmanagedConstructedType,
   pointsAtConstructedType,
 } from './unsafe-declarations.js';
@@ -73,7 +74,7 @@ export const UnsafeBinding = Base =>
       const bound = super.bindType(syntax, options),
         at = findPointerSyntax(syntax);
       if (at) {
-        this.requireUnsafe(at);
+        this.requireUnsafe(unsafeMarker(at));
         this.warnManagedPointee(bound.type, at);
         if (pointsAtConstructedType(bound.type)) this.d.gate(this.c.uri, at, 'UnmanagedConstructedTypes');
       }
