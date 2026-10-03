@@ -50,6 +50,8 @@
     "docs/native-unavailable-0.11.0.txt",
     "docs/node-tests-0.12.0.tap",
     "docs/package-results.json",
+    "docs/pdb-interop.json",
+    "docs/pdb-performance.json",
     "docs/performance-after-0.14.0.json",
     "docs/performance-before-0.13.0.json",
     "docs/performance-compute-0.14.0.json",

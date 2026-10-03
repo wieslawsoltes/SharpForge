@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-52bb1f8bcb6d931b6522",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass A\n{\n    public static int X;\n\n    static A()\n    {\n        X = B.Y + 1;\n    }\n}\n\nclass B\n{\n    public static int Y = A.X + 1;\n\n    static B() {}\n\n    static void Main()\n    {\n        Console.WriteLine($\"X = {A.X}, Y = {B.Y}\");\n    }\n}",
+  "unsupported": [
+    "Runtime expectation requires upstream output/exception/argument extraction"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "b00104e02495434795a0d9a8c45c0e68a0839e5d375c58389b072ff6e161ff8d",
+  "originalSource": "class A\n{\n    public static int X;\n\n    static A()\n    {\n        X = B.Y + 1;\n    }\n}\n\nclass B\n{\n    public static int Y = A.X + 1;\n\n    static B() {}\n\n    static void Main()\n    {\n        Console.WriteLine($\"X = {A.X}, Y = {B.Y}\");\n    }\n}",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "StaticConstructors2",
+    "inferOutput": true
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "StaticConstructors2",
+    "offsetInUnquotedMarkdown": 262133
+  }
+}

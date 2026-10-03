@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8685bbd46c7f0ff6c041",
+  "kind": "diagnostics",
+  "sourceText": "\n\nusing System.Collections.Generic;\n\npublic class MyClass\n{\n    public static void Main()\n    {\n        ((int, int), string)[] arr = new((int, int), string)[1];\n\n        Test5(arr);\n    }\n\n    public static void Test4(IEnumerable<(KeyValuePair<int, int>, string)> en)\n    {\n        foreach ((KeyValuePair<int, int> kv, string s) in en)\n        {\n            var a = kv.Key; // false error CS0170: Use of possibly unassigned field\n        }\n    }\n\n    public static void Test5(IEnumerable<((int, int), string)> en)\n    {\n        foreach (((int, int k) t, string s) in en)\n        {\n            var a = t.k; // false error CS0170: Use of possibly unassigned field\n            System.Console.WriteLine(a);\n        }\n    }\n}",
+  "sourceSHA256": "999c75e208a2a5d3664d803c4a7109a52952bb43f8b82151c1daeb87f2f76a6b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "DefAssignmentsStruct001",
+    "offset": 266582
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

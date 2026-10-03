@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-63a026434d6048afb5a6",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\npublic class A\n{\n    [Obsolete]\n    public virtual void M<T>() { }\n}\n\npublic class B : A\n{\n    public override void M<T>() { }\n}\n\nclass Test\n{\n    void M(B b)\n    {\n        b.M<int>();\n    }\n}\n",
+  "sourceSHA256": "fe014e8b51806bc0dae3c796240475be18a96a5585ab708f3b2467d167307277",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "ObsoleteOnVirtual_GenericMethod",
+    "offset": 299429
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0672",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (12,26): warning CS0672: Member 'B.M<T>()' overrides obsolete member 'A.M<T>()'. Add the Obsolete attribute to 'B.M<T>()'.\n                //     public override void M<T>() { }\n                Diagnostic(ErrorCode.WRN_NonObsoleteOverridingObsolete, \"M\").WithArguments(\"B.M<T>()\", \"A.M<T>()\"),\n                // (19,9): warning CS0612: 'A.M<T>()' is obsolete\n                //         b.M<int>();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"b.M<int>()\").WithArguments(\"A.M<T>()\")",
+  "unsupported": []
+}

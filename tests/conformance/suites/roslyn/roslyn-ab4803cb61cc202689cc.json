@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ab4803cb61cc202689cc",
+  "kind": "diagnostics",
+  "sourceText": "\ninterface I<T>\n{\n    T M();\n}\nclass Base : I<(int a, int b)>\n{\n    public (int a, int b) M() { return (1, 2); }\n}\nclass Derived : Base, I<(int notA, int notB)>\n{\n    public new (int notA, int notB) M() { return (3, 4); }\n}\n",
+  "sourceSHA256": "1067959e395de567dda79a340ccf54c5f9116e5866a08b3c957743b23ccf6069",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "CanShadowWithDifferentTupleNames",
+    "offset": 1069875
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

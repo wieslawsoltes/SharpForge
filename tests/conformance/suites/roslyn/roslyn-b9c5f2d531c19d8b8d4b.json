@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b9c5f2d531c19d8b8d4b",
+  "kind": "diagnostics",
+  "sourceText": "class Program\n{\n    static void Main()\n    {\n        var d = new D();\n        _ = d.F1;\n        _ = d.F2;\n    }\n}",
+  "sourceSHA256": "fc646eefb3603cb6cee303627edf4fd854236d968594341fac2eb35e7cccade9",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_NativeInteger.cs",
+    "sha256": "ba6cbd3462b4f24e7b1edcedb260b4b6046e0b9b58ff785f93c1b090d324064a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_NativeInteger.cs",
+    "license": "MIT",
+    "method": "EmitAttribute_ErrorType",
+    "offset": 36937
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "references: new[] { ref2 }, parseOptions: TestOptions.Regular9)",
+  "options": "(source3, references: new[] { ref2 }, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0012",
+        "severity": "error"
+      },
+      {
+        "code": "CS0012",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,15): error CS0012: The type 'B<>' is defined in an assembly that is not referenced. You must add a reference to assembly '95d36b13-f2e1-495d-9ab6-62e8cc63ac22, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.\n                //         _ = d.F1;\n                Diagnostic(ErrorCode.ERR_NoTypeDef, \"F1\").WithArguments(\"B<>\", \"95d36b13-f2e1-495d-9ab6-62e8cc63ac22, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\").WithLocation(6, 15),\n                // (7,15): error CS0012: The type 'A' is defined in an assembly that is not referenced. You must add a reference to assembly '95d36b13-f2e1-495d-9ab6-62e8cc63ac22, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.\n                //         _ = d.F2;\n                Diagnostic(ErrorCode.ERR_NoTypeDef, \"F2\").WithArguments(\"A\", \"95d36b13-f2e1-495d-9ab6-62e8cc63ac22, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\").WithLocation(7, 15)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

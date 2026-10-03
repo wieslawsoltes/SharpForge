@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-49555ee46215043163a9",
+  "kind": "diagnostics",
+  "sourceText": "\nextern alias A;\nextern alias B;\n\npublic class C\n{\n\tpublic static void Main() \n    {\n        System.Console.WriteLine(new N.D()); \n        System.Console.WriteLine(new A::N.D()); \n        System.Console.WriteLine(new B::N.D()); \n    }\n}",
+  "sourceSHA256": "828b45c403b9b52ec0310cfdbf70e203885f612682b0d8ae0f160e8db19031e1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/PDB/PDBUsingTests.cs",
+    "sha256": "3d32b8748a2018c59c39c0b4c163de7666786e1a93099cc9dd77a552f8c8f8fc",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/PDB/PDBUsingTests.cs",
+    "license": "MIT",
+    "method": "ReferenceWithGlobalAndDuplicateAliases",
+    "offset": 65411
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "references: new[]\n                {\n                    new CSharpCompilationReference(compilation1, ImmutableArray.Create(\"global\", \"B\", \"A\", \"A\", \"global\"))\n                })",
+  "options": "(source2,\n                parseOptions: TestOptions.Regular.WithNoRefSafetyRulesAttribute(),\n                options: TestOptions.DebugDll,\n                references: new[]\n                {\n                    new CSharpCompilationReference(compilation1, ImmutableArray.Create(\"global\", \"B\", \"A\", \"A\", \"global\"))\n                })",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-760095189567b4220f3d",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Diagnostics;\n\nclass C\n{\n    void M()\n    {\n#pragma warning disable 8321 // Unreferenced local function\n        [Conditional(\"DEBUG\")] // 1\n        void local1() { }\n    }\n}\n",
+  "sourceSHA256": "2096cefc10b7a1a53ef8137e2f4d0beb6472211d5bbffcccd83affc4675c644b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenLocalFunctionTests.cs",
+    "sha256": "f82408ae8a01719408de7138990acc9c61883a313220662a688379932fdef2d2",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenLocalFunctionTests.cs",
+    "license": "MIT",
+    "method": "LocalFunction_ConditionalAttributeDisallowed",
+    "offset": 120215
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8783",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,10): error CS8764: Local function 'local1()' must be 'static' in order to use the Conditional attribute\n                //         [Conditional(\"DEBUG\")] // 1\n                Diagnostic(ErrorCode.ERR_ConditionalOnLocalFunction, @\"Conditional(\"\"DEBUG\"\")\").WithArguments(\"local1()\").WithLocation(9, 10)",
+  "unsupported": []
+}

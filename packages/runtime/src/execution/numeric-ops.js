@@ -1,4 +1,7 @@
-import {float, floatBinary, floatCompare, int64Binary, int64Compare, int64Unary} from '@sharpforge/bytecode';
+import {
+  float, floatBinary, floatCompare, int64Binary, int64Compare, int64Unary,
+  uint32Binary, uint32Compare, smallInteger, smallIntegerIndirect
+} from '@sharpforge/bytecode';
 export {float} from '@sharpforge/bytecode';
 
 /** Pure operations on CIL evaluation-stack values.
@@ -11,6 +14,8 @@ export {float} from '@sharpforge/bytecode';
 const fault = (type, message) => Object.assign(new Error(message), {name: type});
 const error = message => Object.assign(new Error(message), {name: 'CilError'});
 const reference = value => value !== null && typeof value === 'object' && Number.isInteger(value.h) && Number.isInteger(value.g);
+const smallStorageTypes = new Set(['sbyte', 'byte', 'short', 'ushort', 'char', 'bool']);
+const smallIndirectSuffixes = new Set(['i1', 'u1', 'i2', 'u2']);
 
 export const number = value => value?.float ? value.value : value;
 export const isNumber = value => typeof value === 'number' || typeof value === 'bigint' || !!value?.float;
@@ -33,6 +38,10 @@ export function compare(a, b, op, unsigned = false, {fault: createFault = fault,
     a = int64Compare(a, b, unsigned);
     b = 0;
     unsigned = false;
+  } else if (unsigned && !floating && typeof a === 'number' && typeof b === 'number') {
+    a = uint32Compare(a, b);
+    b = 0;
+    unsigned = false;
   }
   if (unsigned && !floating) {
     a = typeof a === 'bigint' ? BigInt.asUintN(64, a) : a >>> 0;
@@ -53,9 +62,11 @@ export function binary(name, a, b, context = {}) {
   const wide = typeof a === 'bigint';
   if (typeof b === 'bigint' !== wide && !['shl', 'shr'].includes(op)) throw createFault('InvalidProgramException', 'Mismatched integer widths');
   if (wide) return int64Binary(name, a, b, context);
+  if (unsigned || !checked && (op === 'add' || op === 'sub' || op === 'mul')) {
+    return uint32Binary(name, a, b, context);
+  }
   if (checked) {
     let x = BigInt(a), y = BigInt(b), bits = 32;
-    if (unsigned) { x = BigInt.asUintN(bits, x); y = BigInt.asUintN(bits, y); }
     if (['div', 'rem'].includes(op) && y === 0n) throw createFault('DivideByZeroException', 'Attempted to divide by zero');
     if (op === 'div' && !unsigned && x === -(1n << BigInt(bits - 1)) && y === -1n) throw createFault('OverflowException', 'Integer division overflow');
     const shift = y & BigInt(bits - 1);
@@ -63,13 +74,9 @@ export function binary(name, a, b, context = {}) {
     if (checked && (value < (unsigned ? 0n : -(1n << BigInt(bits - 1))) || value > (unsigned ? (1n << BigInt(bits)) - 1n : (1n << BigInt(bits - 1)) - 1n))) throw createFault('OverflowException', 'Checked arithmetic overflow');
     return Number(BigInt.asIntN(32, value));
   }
-  if (unsigned) { a >>>= 0; b >>>= 0; }
   if (['div', 'rem'].includes(op) && b === 0) throw createFault('DivideByZeroException', 'Attempted to divide by zero');
   if (op === 'div' && !unsigned && a === -2147483648 && b === -1) throw createFault('OverflowException', 'Integer division overflow');
   switch (op) {
-    case 'add': return (a + b) | 0;
-    case 'sub': return (a - b) | 0;
-    case 'mul': return Math.imul(a, b);
     case 'div': return (a / b) | 0;
     case 'rem': return (a % b) | 0;
     case 'and': return a & b;
@@ -134,11 +141,16 @@ export function convert(name, value, {fault: createFault = fault, error: createE
 /** CLI storage locations narrow integers and round single precision on write/load. */
 export function storage(value, type, context) {
   type = numericAliases[type] ?? type;
+  if (type === 'bool' && typeof value === 'boolean') return value ? 1 : 0;
+  if (smallStorageTypes.has(type) &&
+      (typeof value === 'bigint' || Number.isInteger(value))) return smallInteger(value, type, context);
   const conversion = {sbyte: 'i1', byte: 'u1', short: 'i2', ushort: 'u2', char: 'u2', bool: 'u1', int: 'i4', uint: 'u4', long: 'i8', ulong: 'u8', float: 'r4', double: 'r8'}[type];
   return conversion ? convert('conv.' + conversion, value, context) : value;
 }
 
 export function indirect(value, name, context) {
   const suffix = name.split('.').at(-1);
+  if (smallIndirectSuffixes.has(suffix) &&
+      (typeof value === 'bigint' || Number.isInteger(value))) return smallIntegerIndirect(value, suffix, context);
   return ['i1', 'u1', 'i2', 'u2', 'i4', 'u4', 'i8', 'r4', 'r8', 'i'].includes(suffix) ? convert('conv.' + suffix, value, context) : value;
 }

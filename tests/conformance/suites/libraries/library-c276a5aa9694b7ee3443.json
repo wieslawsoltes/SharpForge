@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "library-c276a5aa9694b7ee3443",
+  "kind": "library",
+  "namespace": "System.Collections",
+  "sourceText": "using System;\nusing System.Collections;\nusing System.Collections.Generic;\nusing System.Linq;\nusing Xunit;\nclass SuiteProgram { static int Main() {\n\n            Random r = new();\n\n            for (int length = 0; length < 128; length++)\n            {\n                bool[] bits = new bool[length];\n                for (int i = 0; i < bits.Length; i++)\n                {\n                    bits[i] = r.Next(0, 2) == 0;\n                }\n\n                BitArray ba = new(bits);\n\n                Span<byte> bytes = CollectionsMarshal.AsBytes(ba);\n                Assert.Equal((length + 7) / 8, bytes.Length);\n                for (int i = 0; i < length; i++)\n                {\n                    Assert.Equal(bits[i], (bytes[i / 8] & (1 << (i % 8))) != 0);\n                }\n                for (int i = length; i < bytes.Length * 8; i++)\n                {\n                    Assert.Equal(0, bytes[i / 8] & (1 << (i % 8)));\n                }\n            }\n        \nreturn 0; } }\n// SharpForge's deliberately small test adapter. Assertions fail by throwing.\n\nnamespace Xunit\n{\n    public static class Assert\n    {\n        public static void True(bool value) { if (!value) throw new Exception(\"Assert.True\"); }\n        public static void False(bool value) { if (value) throw new Exception(\"Assert.False\"); }\n        public static void Null(object value) { if (value != null) throw new Exception(\"Assert.Null\"); }\n        public static void NotNull(object value) { if (value == null) throw new Exception(\"Assert.NotNull\"); }\n        public static void Same(object expected, object actual)\n        { if (!object.ReferenceEquals(expected, actual)) throw new Exception(\"Assert.Same\"); }\n        public static void Equal<T>(T expected, T actual)\n        {\n            if (expected is System.Collections.IEnumerable && !(expected is string))\n                throw new NotSupportedException(\"Shim Equal supports scalar values only, not sequence equality\");\n            if (!object.Equals(expected, actual)) throw new Exception(\"Assert.Equal\");\n        }\n        public static T Throws<T>(Action action) where T : Exception\n        {\n            try { action(); }\n            catch (Exception error)\n            {\n                if (error.GetType() != typeof(T)) throw new Exception(\"Assert.Throws: wrong exception type\");\n                return (T)error;\n            }\n            throw new Exception(\"Assert.Throws: no exception\");\n        }\n    }\n}\n",
+  "sourceSHA256": "384e3e0af5493050445d1633052ac8ffdfaad6dcc968455bbaaa3c1a793dd034",
+  "originalSource": "public static void AsBytes_RoundtripsCtor()\n        {\n            Random r = new();\n\n            for (int length = 0; length < 128; length++)\n            {\n                bool[] bits = new bool[length];\n                for (int i = 0; i < bits.Length; i++)\n                {\n                    bits[i] = r.Next(0, 2) == 0;\n                }\n\n                BitArray ba = new(bits);\n\n                Span<byte> bytes = CollectionsMarshal.AsBytes(ba);\n                Assert.Equal((length + 7) / 8, bytes.Length);\n                for (int i = 0; i < length; i++)\n                {\n                    Assert.Equal(bits[i], (bytes[i / 8] & (1 << (i % 8))) != 0);\n                }\n                for (int i = length; i < bytes.Length * 8; i++)\n                {\n                    Assert.Equal(0, bytes[i / 8] & (1 << (i % 8)));\n                }\n            }\n        }",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/libraries/System.Collections/tests/BitArray/BitArray_GetSetTests.cs",
+    "sha256": "29c54f4ec46606a58868b8a8f0a0b6c5b88617733870dfc6789eb8132d1f6226",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/libraries/System.Collections/tests/BitArray/BitArray_GetSetTests.cs",
+    "license": "MIT",
+    "method": "AsBytes_RoundtripsCtor",
+    "offset": 15873
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack",
+    "local XunitShim.cs"
+  ],
+  "expected": {
+    "exitCode": 0
+  },
+  "unsupported": [],
+  "adaptation": "Original method body in standalone Main; no base fixture/helpers imported. Native compilation preflight detects unresolved dependencies; scalar assertions, reference identity and exact exception assertions execute."
+}

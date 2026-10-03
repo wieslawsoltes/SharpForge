@@ -1,6 +1,6 @@
 # Historical evidence migration (SF-A29-T37)
 
-The reviewed inventory in `evidence-archive.json` selects 86 generated JSON,
+The reviewed inventory in `evidence-archive.json` selects 88 generated JSON,
 TAP, text and DLL reports from `docs/`. It retains authored API/reference data,
 the A05 planning scope, Markdown and screenshot illustrations. The archive
 preserves every selected byte, including old filenames, timestamps, embedded
@@ -26,7 +26,7 @@ node scripts/conformance/archive-evidence.js --mode prepare \
 ```
 
 This reads committed Git blobs and checks the current originals still match. It
-stages 89 upload assets: 86 individual reports, `HISTORICAL-EVIDENCE.json`,
+stages 91 upload assets: 88 individual reports, `HISTORICAL-EVIDENCE.json`,
 `historical-evidence.zip` and `SHA256SUMS`. The ZIP uses the existing bounded,
 deterministic archive package and preserves original `docs/` paths. The
 manifest contains the snapshot commit, original Git blob IDs, policy digest,
@@ -38,6 +38,12 @@ contents, original content hashes and complete index. Review `RELEASE-NOTES.md`
 and `UPLOAD-PLAN.json`; the latter contains an exact `gh` argument array and
 prepublication checks, not a shell command. Preparation never edits originals
 and refuses an existing staging directory or evidence index.
+
+The inventory includes the PDB interoperability and performance reports added
+after the initial 86-report proposal. That earlier staging directory retains its
+original snapshot and must not be relabeled or reused with the expanded policy.
+Prepare a new directory from a published commit containing all 88 reports and
+this policy; review the newly generated consumer rewrites against that checkout.
 
 ## Publish, verify, then migrate
 

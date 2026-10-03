@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-6790ff02ad4a7612625c",
+  "kind": "spec",
+  "sourceText": "interface IA\n{\n    void M() { Console.WriteLine(\"IA.M\"); }\n}\n\ninterface IB : IA\n{\n    void IA.M() { Console.WriteLine(\"IB.M\"); }\n}\n\ninterface IC: IA\n{\n    void IA.M() { Console.WriteLine(\"IC.M\"); }\n}\n\nabstract class C: IB, IC { } // error: no most specific implementation for 'IA.M'\n\nabstract class D: IA, IB, IC // OK\n{\n    public abstract void M();\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8705",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "d65cf63e392e92af00fc7658ae0e8976e804eb84a63bc4bb2cc4d382ce1f127e",
+  "originalSource": "interface IA\n{\n    void M() { Console.WriteLine(\"IA.M\"); }\n}\n\ninterface IB : IA\n{\n    void IA.M() { Console.WriteLine(\"IB.M\"); }\n}\n\ninterface IC: IA\n{\n    void IA.M() { Console.WriteLine(\"IC.M\"); }\n}\n\nabstract class C: IB, IC { } // error: no most specific implementation for 'IA.M'\n\nabstract class D: IA, IB, IC // OK\n{\n    public abstract void M();\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "InterfaceMethods4",
+    "expectedErrors": [
+      "CS8705"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-interfaces",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/interfaces.md",
+    "sha256": "bcdf69f454a7bd5894c0b08364553fc6587a0a6ee444a93bc91c58138ff95f53",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/interfaces.md",
+    "license": "MIT",
+    "example": "InterfaceMethods4",
+    "offsetInUnquotedMarkdown": 29534
+  }
+}
