@@ -237,7 +237,7 @@ export const FlowStatementBinding = Base =>
       if (this.finallyDepth) this.report(syntax.returnKeyword, 'CS0157');
       if (this.c.isIterator && !this.c.isLambda) {
         if (syntax.expression) this.value(syntax.expression);
-        this.report(syntax, 'CS1622');
+        this.report(syntax.returnKeyword ?? syntax, 'CS1622');
         return stmt('Return', syntax, false, {});
       }
       const isRefReturn = syntax.expression?.kind === 'RefExpression',

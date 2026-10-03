@@ -101,8 +101,7 @@ export const CallTranslation = Base =>
         case 'MoveNext':
           return n.call(info.moveNext, null, [receiver]);
         case 'Dispose':
-          // No finally blocks are pending in a lowered iterator (yield inside try is not lowered): disposing ends it.
-          return n.sequence([], [n.assign(n.field(receiver, info.stateField), n.literal(-1, 'int'))], n.nullLiteral('object'));
+          return n.call(info.dispose, null, [receiver]);
         default:
           return this.unsupported(`'${method.toDisplayString()}' on an iterator`, syntax);
       }
