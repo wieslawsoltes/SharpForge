@@ -54,6 +54,7 @@ import { collectionExpressionMethods } from './expressions/collection-expression
 import { switchExpressionMethods } from './expressions/switch-expression.js';
 import { interpolatedStringMethods } from './expressions/interpolated-strings.js';
 import { stackAllocMethods } from './unsafe/stackalloc.js';
+import { anonymousObjectMethods } from './expressions/anonymous-objects.js';
 export const parserModules = Object.freeze([
   typeMethods,
   modifierMethods,
@@ -105,5 +106,6 @@ export const parserModules = Object.freeze([
   collectionExpressionMethods,
   switchExpressionMethods,
   interpolatedStringMethods,
-  stackAllocMethods
+  stackAllocMethods,
+  anonymousObjectMethods
 ]);
