@@ -26,8 +26,10 @@ for (const engine of ['source', 'cil']) {
     const initial = platform.heap.string('abc');
     const builder = invoke(platform, '.ctor', [initial], ['string']);
     platform.heap.withRoots([builder], () => {
+      const initialVersion = platform.get(builder, '$version');
       invoke(platform, 'Append', [builder, 42], ['int']);
       invoke(platform, 'Append', [builder, platform.managed(true, 'bool')], ['bool']);
+      assert.equal(platform.get(builder, '$version'), initialVersion + 2);
       platform.heap.collect();
       assert.equal(platform.native(invoke(platform, 'ToString', [builder])), 'abc42True');
       assert.equal(invoke(platform, 'get_Length', [builder]), 9);

@@ -62,6 +62,7 @@ function appendChunk(platform, reference, value) {
   record.data[count] = value;
   platform.vm.notifyWrite?.({kind: 'array', handle: storage.h, generation: storage.g, index: count, oldValue, value});
   platform.set(reference, '$count', count + 1);
+  platform.set(reference, '$version', platform.get(reference, '$version', 0) + 1);
 }
 
 function bufferText(platform, reference) {
