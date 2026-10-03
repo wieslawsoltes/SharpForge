@@ -1,16 +1,9 @@
-import {callStorageType} from '@sharpforge/cil';
-import {numericTypeName, numericTypeNames} from '@sharpforge/bytecode';
 import {ManagedFault} from '../heap.js';
+import {reusableScalarType} from './scalar-storage-plan.js';
 
 // Plans contain metadata only. A closed generic method has its own signature and
 // locals, so its classification never leaks into another instantiation or VM.
 const plans = new WeakMap();
-const immutableScalars = new Set([...numericTypeNames, 'bool']);
-
-function reusable(type) {
-  if (/\bpinned$/.test(type)) return false;
-  return immutableScalars.has(numericTypeName(callStorageType(type)));
-}
 
 function planFor(method) {
   let entry = plans.get(method);
@@ -22,8 +15,8 @@ function planFor(method) {
     locals: method.locals,
     parameters: signature.parameters,
     isStatic: signature.isStatic,
-    localLoads: method.locals.map(reusable),
-    argumentLoads: [...(signature.isStatic ? [] : [false]), ...signature.parameters.map(reusable)],
+    localLoads: method.locals.map(reusableScalarType),
+    argumentLoads: [...(signature.isStatic ? [] : [false]), ...signature.parameters.map(reusableScalarType)],
   };
   plans.set(method, entry);
   return entry;
