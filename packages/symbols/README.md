@@ -51,3 +51,13 @@ maps use `slots` (`kind: null` for a temporary); lambda maps expose
 retain `bytes`. A supplied `bytes` property requests exact raw preservation.
 `debug.custom` accepts records with `parent` metadata tokens and `kind` GUIDs;
 `debug.stateMachines` accepts `moveNext`/`kickoff` MethodDef token pairs.
+
+Compilation CDI codecs expose dynamic `flags` (LSB first, trailing zero bytes
+omitted), tuple `names` (null for unnamed elements), default `namespace`,
+compilation `options`, metadata `references` (including MVID, aliases, flags,
+timestamp and image size), type `documents` and the empty `primaryConstructor`
+marker. Strings are strict UTF-8; terminated fields, duplicate option names,
+counts and payload sizes are checked. EnC wire details follow Roslyn's
+`EditAndContinueMethodDebugInformation`; primary-constructor markers follow its
+`MetadataWriter.PortablePdb` emitter. Native fixture qualification is separate
+from synthetic codec round trips.

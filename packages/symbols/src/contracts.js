@@ -13,6 +13,10 @@ export const PdbGuids = Object.freeze({
   encSlots: '755f52a8-91c5-45be-b4b8-209571e552bd',
   encStates: '8b78cd68-2ede-420b-980b-e15884b8aaa3',
   encLambdas: 'a643004c-0240-496f-a783-30d64f4979de',
+  tupleNames: 'ed9fdf71-8879-4747-8ed3-fe5ede3ce710',
+  compilationReferences: '7e4d4708-096e-4c5c-aeda-cb10ba6a740d',
+  typeDocuments: '932e74bc-dba9-4478-8d46-0f32a7bab3d3',
+  primaryConstructor: '9d40ace1-c703-4d0e-bf41-7243060a8fb5',
   defaultNamespace: '58b2eab6-209f-4e4e-a22c-b2d0f910c782',
   compilationOptions: 'b5feec05-8cd0-4a83-96da-466284bb4bd8',
 });
