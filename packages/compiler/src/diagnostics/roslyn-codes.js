@@ -353,6 +353,8 @@ export const roslynCodes=Object.freeze({
  CS0844:["ERR_VariableUsedBeforeDeclarationAndHidesField","error",0,"Cannot use local variable '{0}' before it is declared. The declaration of the local variable hides the field '{1}'."],
  CS0846:["ERR_ArrayInitializerExpected","error",0,"A nested array initializer is expected"],
  CS0847:["ERR_ArrayInitializerIncorrectLength","error",0,"An array initializer of length '{0}' is expected"],
+ CS0853:["ERR_ExpressionTreeContainsNamedArgument","error",0,"An expression tree may not contain a named argument specification"],
+ CS0854:["ERR_ExpressionTreeContainsOptionalArgument","error",0,"An expression tree may not contain a call or invocation that uses optional arguments"],
  CS1001:["ERR_IdentifierExpected","error",0,"Identifier expected"],
  CS1002:["ERR_SemicolonExpected","error",0,"; expected"],
  CS1003:["ERR_SyntaxError","error",0,"Syntax error, '{0}' expected"],

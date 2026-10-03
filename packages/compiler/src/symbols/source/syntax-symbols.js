@@ -15,9 +15,17 @@ import { MemberSymbolBuilder } from './member-symbols.js';
 import { PropertySymbolBuilder } from './property-symbols.js';
 import { MemberConflicts } from './member-conflicts.js';
 import { CompoundOperatorSymbols } from './compound-operators.js';
+import { FieldKeywordSymbols } from './field-keyword.js';
 import { ExtensionBlockBuilder } from './extension-blocks.js';
 
-const builders = [MemberSymbolBuilder, PropertySymbolBuilder, MemberConflicts, ExtensionBlockBuilder, CompoundOperatorSymbols];
+const builders = [
+  MemberSymbolBuilder,
+  PropertySymbolBuilder,
+  FieldKeywordSymbols,
+  MemberConflicts,
+  ExtensionBlockBuilder,
+  CompoundOperatorSymbols,
+];
 
 /**
  * `new SourceAssembly(files, host).declare(mergedGlobalNamespace)`.

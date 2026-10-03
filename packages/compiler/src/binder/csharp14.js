@@ -94,7 +94,8 @@ export const CSharp14Binding = Base =>
     increment(syntax) {
       const token = incrementKinds[syntax.kind];
       // Only programs that declare an instance `++` / `--` pay for looking at the operand first.
-      if (token && this.version.number >= 14 && syntax.parent?.kind === 'ExpressionStatement' && this.d.assembly.compoundOperators?.some(m => m.operatorToken === token)) {
+      const declared = this.d.assembly.compoundOperators?.some(method => method.operatorToken === token);
+      if (token && declared && this.version.number >= 14 && syntax.parent?.kind === 'ExpressionStatement') {
         const saved = this.quiet;
         this.quiet = [];
         let operand;
