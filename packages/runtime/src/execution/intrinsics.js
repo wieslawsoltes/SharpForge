@@ -63,7 +63,7 @@ const implementations={
   gcCollect:({vm})=>{vm.heap.collect();return null;},
   gcMemory:({vm,values})=>{if(values[0])vm.heap.collect();return BigInt(vm.heap.stats.liveBytes);},
   gcCount:({vm,values})=>{
-    if(values[0]!==0)throw new ManagedFault('ArgumentOutOfRangeException','Only GC generation zero is modeled');
+    if(!Number.isInteger(values[0])||values[0]<0||values[0]>2)throw new ManagedFault('ArgumentOutOfRangeException','Generation must be between 0 and 2');
     return vm.heap.stats.collections;
   },
   parse:({vm,descriptor,values})=>{
