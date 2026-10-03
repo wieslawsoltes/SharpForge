@@ -84,7 +84,10 @@ export class VirtualTable {
       row.style.height = this.rowHeight + 'px';
       row.style.gridTemplateColumns = this.template();
       for (const column of this.columns) {
-        row.append(element(this.document, 'div', {role: 'gridcell', text: this.format(data, column)}));
+        const cell = element(this.document, 'div', {role: 'gridcell'});
+        if (column.render) column.render(cell, data);
+        else cell.textContent = this.format(data, column);
+        row.append(cell);
       }
       row.addEventListener('click', () => { this.select(index, {reveal: false}); this.root.focus(); });
       row.addEventListener('dblclick', () => this.onActivate(data));
