@@ -1,5 +1,7 @@
 import {numericStackTypes} from './numeric-stack-types.js';
 import {specializedNumericHandler} from './specialized-numeric-handlers.js';
+import {typedFloatHandler} from './typed-float-handlers.js';
+import {typedSlotHandler} from './typed-slot-handlers.js';
 
 /** Contribution to getDecodePlan: called once before its arrays and record are frozen. */
 export function specializeNumericHandlers(vm, method, plan) {
@@ -7,10 +9,19 @@ export function specializeNumericHandlers(vm, method, plan) {
   const states = numericStackTypes(vm.inspector, method, plan.offsets);
   const ids = Array(method.instructions.length).fill(null);
   for (let index = 0; index < method.instructions.length; index++) {
-    const selected = specializedNumericHandler(method.instructions[index].name, states[index]);
-    if (!selected) continue;
-    plan.handlers[index] = selected.handler;
-    ids[index] = selected.id;
+    const instruction = method.instructions[index];
+    const selected = specializedNumericHandler(instruction.name, states[index]);
+    if (selected) {
+      plan.handlers[index] = selected.handler;
+      ids[index] = selected.id;
+    }
+    if (vm.options.typedNumericStack !== true) continue;
+    const typed = typedFloatHandler(instruction.name, states[index]) ??
+      typedSlotHandler(method, instruction, states[index], plan.handlers[index]);
+    if (!typed) continue;
+    plan.handlers[index] = typed;
+    ids[index] = instruction.name.replaceAll('.', '_') + '_typed';
+    plan.typedNumericSlots = true;
   }
   plan.numericHandlerIds = Object.freeze(ids);
   plan.numericStackStates = Object.freeze(states);
