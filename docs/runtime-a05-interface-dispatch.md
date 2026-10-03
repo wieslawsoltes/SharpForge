@@ -40,6 +40,9 @@ and reimplemented calls, including selected-body initialization order:
 dotnet run --project tests/fixtures/a05/default-interfaces/DefaultInterfaces.csproj
 ```
 
-No tests, native builds, checks or benchmarks were executed in this branch.
+Serial validation at `0c995ef2` passed all 54 tests in interface-dispatch,
+virtual-slots, B03 dispatch, statics and token-cache suites under Node 24.21.0,
+one worker and a 512 MB heap cap. Static/manifests and build validation use
+the required core check. The native fixture and benchmarks have not run.
 Qualification and latency/allocation measurements remain in the root queue;
 the full issue stays open for remaining generic and external call prerequisites.
