@@ -1,3 +1,4 @@
+import {isDecimal, decimalFormat} from './execution/decimal.js';
 import {nativeIntegerBits} from './execution/native-int.js';
 import {formatDoubleDefault} from '@sharpforge/bcl-core';
 import {isReference} from './heap.js';
@@ -15,6 +16,7 @@ const boxedDisplayTypes = Object.freeze({
 
 /** Preserve source managed-value display semantics, with invariant binary64 numeric text. */
 export function formatSourceValue(vm, value) {
+  if (isDecimal(value)) return decimalFormat(value);
   const name = runtimeTypeText(vm, value) ?? enumToString(vm, value);
   if (name !== null) return name;
   if (value === null) return '';
@@ -32,6 +34,7 @@ export function formatSourceValue(vm, value) {
 
 /** Preserve CIL boxing, enums and typed integer display before binary64 numeric formatting. */
 export function formatCilValue(vm, value, type) {
+  if (isDecimal(value)) return decimalFormat(value);
   const name = runtimeTypeText(vm, value) ?? enumToString(vm, value, type);
   if (name !== null) return name;
   if (value === null) return '';
