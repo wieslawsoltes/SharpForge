@@ -100,7 +100,7 @@ export class SourceAssemblyCore {
           access(modifiers) &&
           existing.declarations.some(d => access(words(d.syntax.modifiers)) && access(words(d.syntax.modifiers)) !== access(modifiers))
         )
-          this.report(uri, syntax.identifier, 'CS0262', [name]);
+          this.report(existing.declarations[0].uri, existing.declarations[0].syntax.identifier, 'CS0262', [name]);
         existing.declarations.push(declaration);
         this.declareNested(syntax, existing, declaration, file);
         return existing;

@@ -1,5 +1,5 @@
 /**
- * foreach over every enumeration pattern, switch statements with patterns, try/catch/finally and return.
+ * foreach over every enumeration pattern, switch statements with patterns and return.
  */
 import { SymbolKind, TypeKind, ErrorTypeSymbol, ArrayTypeSymbol } from '../../symbols/types.js';
 import { LocalDeclarationKind } from '../../symbols/members.js';
@@ -18,7 +18,7 @@ const isSourceType = t => {
 };
 const stmt = (kind, syntax, completes, props) => ({ kind, syntax, completes, ...props });
 
-/** Class mixin: foreach over every enumeration pattern, switch statements with patterns, try/catch/finally and return. */
+/** Class mixin: foreach over every enumeration pattern, switch statements with patterns and return. */
 export const FlowStatementBinding = Base =>
   class extends Base {
     forEach(syntax) {
@@ -116,12 +116,13 @@ export const FlowStatementBinding = Base =>
     }
     switchStatement(syntax) {
       const governing = this.value(syntax.expression),
-        sw = this.enterLoop(false),
+        sw = Object.assign(this.enterLoop(false), { syntax, governing }),
         sections = [],
         seen = new Map();
       let hasDefault = false,
         anyCompletes = false;
       this.pushScope();
+      this.enterLabels([]);
       try {
         const type = governing.hasErrors ? null : governing.type,
           pendingNames = [];
@@ -176,6 +177,7 @@ export const FlowStatementBinding = Base =>
           sections.push({ labels, body, syntax: section });
         });
       } finally {
+        this.leaveLabels();
         this.popScope();
         this.exitLoop();
       }
@@ -187,75 +189,7 @@ export const FlowStatementBinding = Base =>
         );
       const exhaustive =
         hasDefault || sections.some(s => s.labels.some(l => l.kind === 'DiscardPattern' || (l.kind === 'VarPattern' && !l.when)));
-      return stmt('Switch', syntax, sw.hasBreak || !exhaustive || anyCompletes, { governing, sections });
-    }
-    tryStatement(syntax) {
-      const body = this.block(syntax.block),
-        catches = [],
-        caught = [];
-      let completes = body.completes;
-      for (const clause of syntax.catches) {
-        this.pushScope();
-        try {
-          let type = this.core.exception,
-            local = null;
-          if (clause.declaration) {
-            type = this.bindType(clause.declaration.type).type;
-            if (
-              !type.isErrorType() &&
-              !(
-                type.equals(this.core.exception) ||
-                this.conversions.classifyImplicit(type, this.core.exception).exists ||
-                type.typeKind === TypeKind.TypeParameter
-              )
-            ) {
-              this.report(clause.declaration.type, 'CS0155');
-              type = unknown;
-            }
-            if (clause.declaration.identifier) {
-              local = this.newLocal(
-                clause.declaration.identifier.valueText,
-                type,
-                clause.declaration.identifier,
-                LocalDeclarationKind.Catch,
-              );
-              local.writes++;
-              local.isCatch = true;
-              this.declare(local.name, local, clause.declaration.identifier);
-            }
-          }
-          const filter = clause.filter ? this.condition(clause.filter.filterExpression) : null;
-          if (!type.isErrorType() && !filter) {
-            const previous = caught.find(t => t.equals(type) || this.conversions.classifyImplicit(type, t).exists);
-            if (previous)
-              this.report(clause.declaration?.type ?? clause.catchKeyword, clause.declaration ? 'CS0160' : 'CS1017', [
-                this.display(previous),
-              ]);
-          }
-          if (!filter) caught.push(type);
-          this.catchDepth++;
-          const savedFinally = this.finallyInCatch;
-          this.finallyInCatch = false;
-          const block = this.block(clause.block);
-          this.finallyInCatch = savedFinally;
-          this.catchDepth--;
-          if (block.completes) completes = true;
-          catches.push({ type, local, filter, block });
-        } finally {
-          this.popScope();
-        }
-      }
-      let finallyBlock = null;
-      if (syntax.finally) {
-        this.finallyDepth++;
-        const saved = this.finallyInCatch;
-        this.finallyInCatch = this.catchDepth > 0;
-        finallyBlock = this.block(syntax.finally.block);
-        this.finallyInCatch = saved;
-        this.finallyDepth--;
-        if (!finallyBlock.completes) completes = false;
-      }
-      return stmt('Try', syntax, completes, { body, catches, finallyBlock });
+      return stmt('Switch', syntax, sw.hasBreak || !exhaustive || anyCompletes, { governing, sections, gotoTargets: sw.gotoTargets ?? null });
     }
     iteratorElementType() {
       const t = this.c.declaredReturnType ?? this.c.returnType;
