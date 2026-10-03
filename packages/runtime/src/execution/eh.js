@@ -2,13 +2,14 @@ import {prepareException, faultFromException} from './exception-object.js';
 import {cancelArrayOperation} from './array-ops.js';
 import {ManagedFault} from '../heap.js';
 import {failInitialization} from './static-init.js';
-import {pushFrame, popFrame} from './frame-stack.js';
+import {popFrame} from './frame-stack.js';
+import {enterFilter, finishFilter} from './eh-filters.js';
+export {createExceptionState} from './exception-state.js';
 
 export const fatalFaults=new Set(['InstructionLimitException','OutputLimitException','StackOverflowException','ExecutionLimitException']);
 const within=(offset,handler)=>offset>=handler.start&&offset<handler.end;
 
 // Preserve the debugger/snapshot frame shape; this module alone mutates CIL EH state.
-export function createExceptionState(){return {exception:null,pending:null,caught:[],unwinds:[]};}
 export function* exceptionRoots(frame) {
   if(frame.exception?.reference)yield frame.exception.reference;
   for(const caught of frame.caught??[])if(caught.fault.reference)yield caught.fault.reference;
@@ -30,14 +31,7 @@ function searchHandlers(vm,search) {
       if(handler.flags===0&&vm.matches(search.error.reference,vm.inspector.metadata.typeName(handler.catchType))) {
         search.selection={kind:'catch',frameId:frame.id,handler};beginUnwind(vm,search);return;
       }
-      if(handler.flags===1) {
-        if(vm.frames.length>=vm.options.maxFrames)throw new ManagedFault('StackOverflowException','Managed filter call depth exceeded');
-        // A filter evaluates in its declaring method's locals while younger frames
-        // remain live. Shared arrays also retain their aliasing through snapshots.
-        pushFrame(vm,{id:++vm.frameId,method:frame.method,args:frame.args,locals:frame.locals,stack:[search.error.reference],pc:frame.offsets.get(handler.catchType),lastOffset:handler.catchType,offsets:frame.offsets,...createExceptionState(),needsInitialization:false,
-          genericIdentity:frame.genericIdentity??null,methodArguments:frame.methodArguments??[],filterSearch:search,filterOwnerId:frame.id,filterHandler:handler});
-        return;
-      }
+      if(handler.flags===1) {enterFilter(vm,frame,handler,search);return;}
     }
     if(frame.initializes) {
       // The runtime's cctor boundary first completes its own cleanup, wraps the
@@ -64,13 +58,10 @@ function beginUnwind(vm,search) {
   frame.stack=[];frame.volatileAccess=false;vm.fault=null;continueUnwind(vm,frame);
 }
 
-export function endFilter(vm,value) {
-  const frame=vm.top,search=frame?.filterSearch;
-  if(!search)throw new ManagedFault('InvalidProgramException','endfilter outside a filter');
-  if(!Number.isInteger(value))throw new ManagedFault('InvalidProgramException','endfilter requires an Int32 decision');
-  popFrame(vm);
-  if(value!==0){search.selection={kind:'catch',frameId:frame.filterOwnerId,handler:frame.filterHandler};beginUnwind(vm,search);}
-  else searchHandlers(vm,search);
+export function endFilter(vm, value) {
+  const search = finishFilter(vm, value);
+  if (search.selection) beginUnwind(vm, search);
+  else searchHandlers(vm, search);
 }
 
 /** Enter a leave or resume an exception/finally continuation. */
