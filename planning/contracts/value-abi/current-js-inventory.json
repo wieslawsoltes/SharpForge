@@ -1,16 +1,20 @@
 {
   "schemaVersion": 1,
   "sources": {
-    "packages/runtime/src/heap.js": "5fd22d7d5be4a87a491b2655c10574e501f857cd47658f1994022acaf404dff6",
-    "packages/runtime/src/vm.js": "337051529a1790dc897bd8e747dcad88eb620136a0eded6d09541273606ce81d",
-    "packages/runtime/src/cil-vm.js": "867ac287808ef46aee312500e6d1f37a2e918173a0949bc6668821462f833669",
-    "packages/bytecode/src/index.js": "fe9aed51cb9899d74681c771e4a320e717a10e09d85d454026def9a35d11f364",
-    "packages/bytecode/src/builtins.js": "ec47a8869551dcf73f2bf0c82e32e9a50091956abb8c50df433a0091e0b0ac56"
+    "packages/runtime/src/heap.js": "28b86fe51a4a4cd93b7701b682fa2363a07d8a9c6370fd734e96690b16fe853c",
+    "packages/runtime/src/vm.js": "20aa8d7f297fd2f9e7107ea64a0b5b687402e9a39cc04b060ccee6b97b01fcb5",
+    "packages/runtime/src/cil-vm.js": "80b1f3dcb85858c035003c9d2a98a243a3fb60219f014340077a80e3ed0aef8e",
+    "packages/bytecode/src/index.js": "d6c313db3a1fd8b53801d427676cc73055803ee4cfe2cdc68f2eb8bb699656aa",
+    "packages/bytecode/src/builtins.js": "e1726996b9555b604a66b9fdbec63a3fe0c1ec56dab1a10d165ea37a3236f319"
   },
   "resultKinds": {
     "int": {
       "source": "number (Int32 narrowed by bitwise operations)",
       "cil": "number (Int32 stack category)"
+    },
+    "enum": {
+      "source": "frozen {enumType, underlyingType, value: number | bigint}",
+      "cil": "underlying stack integer or boxed managed enum"
     },
     "long": {
       "source": "bigint (signed Int64)",
@@ -41,11 +45,15 @@
       "cil": "ManagedFault with optional reference, frames"
     },
     "any": {
-      "source": "number | bigint | boolean | null | undefined | {h,g}",
+      "source": "number | bigint | boolean | null | undefined | {h,g} | enum carrier",
       "cil": "number | bigint | null | undefined | {h,g} | float | byref | methodPointer"
     }
   },
   "additionalShapes": [
+    {
+      "shape": "{enumType, underlyingType, value}",
+      "meaning": "source enum identity with signed or unsigned integer storage; not a heap reference"
+    },
     {
       "shape": "null",
       "meaning": "null reference and default reference storage"

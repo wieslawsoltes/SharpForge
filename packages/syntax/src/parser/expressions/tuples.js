@@ -4,7 +4,8 @@ export const tupleMethods = {
   parenthesizedOrTuple() {
     const start = this.current, open = this.take(), saved = this.tupleContext; let args = [];
     this.nested(() => {
-      this.tupleContext = true;
+      const end = this.matchingBracket(this.i - 1);
+      this.tupleContext = saved || this.kindAt(end + 1) === '=' || (this.declarationContext ?? 0) > 0;
       for (;;) { const before = this.i; args.push(this.argument()); if (this.at(',')) args.push(this.take()); else break; if (before === this.i) break; }
     });
     this.tupleContext = saved; const close = this.expect(')'), first = args[0];

@@ -56,7 +56,7 @@ export class Parser {
   expect(kind) {
     if (this.at(kind)) return this.take();
     const [code, message] = expected[kind] ?? ['CS1003', `Syntax error, '${kind}' expected`];
-    this.error(this.errorAnchor(), code, message); return this.missing(kind);
+    this.error(kind === ':' ? this.current : this.errorAnchor(), code, message); return this.missing(kind);
   }
   /** Missing-token errors point at the end of the previous token, where the token should have been. */
   errorAnchor() { const previous = this.tokens[this.i - 1]; return previous && this.current.start > previous.end ? { start: previous.end, end: previous.end } : this.current; }

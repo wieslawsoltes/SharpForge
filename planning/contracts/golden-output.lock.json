@@ -9,8 +9,8 @@
       "syntax": "7cc6dfdc2b05c34b3337f3f14c54ec5e94a4b834ec0189ac8700faab598be6bf",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-      "assembly": "b8f5b562673500069f6e9e5620f5732001985d1c966c3bc90e6c3839f5d50f92",
-      "bytecode": "80b5861af7a4556b98a40863283667743b7795a52e0d4baa8355d3c18147f493"
+      "assembly": "9c9dd5e461f8e403effa72d75dc635fb1d2a518f0a108eb9a216fcda2813192c",
+      "bytecode": "cdd1caa52a2979a126b0e1fcf2bfea7a9c427d436c68da61c76289692d2cf991"
     },
     {
       "input": "examples/arrays/Program.cs",
@@ -26,7 +26,7 @@
       "source": "a9a70b334c20d0b709d283aee7f6901a8dc33ec71f0af4df2ae8b19f7661245b",
       "syntax": "d091911523082358eb5b845fbbfc377379613583ba6f2291a8ab07f57fd5a914",
       "status": "not-emitted",
-      "diagnostics": "ce4ab99e2cde842a331aecb1b3c42ac285ff7b447e7cfeac6ab51001095faef1",
+      "diagnostics": "37bb657ea191b979a0b972383710cb3c64dca0c2052b3ddbb37867ff76a66bf3",
       "assembly": null,
       "bytecode": null
     },
@@ -35,7 +35,7 @@
       "source": "29dd1e45942aa100cf116b1c61d7ab1c319cee97345fc00f2fcc77c57a6dbe6a",
       "syntax": "c42340715e0ec0a5f99180af591c8fa0f834195a11541c321044000b056c88ab",
       "status": "not-emitted",
-      "diagnostics": "a088a56367d28a5540e377236c7b29466a153b0e4b20c11d96c417e4b507b769",
+      "diagnostics": "cc871d8232a2c662b24f6c93b97fe5ed5fb1f2192f71daa78d36b65a24549ec8",
       "assembly": null,
       "bytecode": null
     },
@@ -62,7 +62,7 @@
       "source": "573cfefc4cf9350cb95846cb3b9c8254fa87813abb700a817fb367fffbf8fbea",
       "syntax": "17b5129d12fd5a8a13129bc3a6d6100f8ba53fd4e5bac22c46a0ae32e27e2280",
       "status": "not-emitted",
-      "diagnostics": "d642db5e92c7113eda6d687cb5825935b1e6b1d285c404e8ee5366b10c9ed156",
+      "diagnostics": "91fbbc59c308df333b1b58c4d00787b33a2955be5285377d5dd16c86a536b992",
       "assembly": null,
       "bytecode": null
     },
@@ -71,7 +71,7 @@
       "source": "eb45c7df090ff07508d7c073ac624c339320d689accc3a5096355c4b272218f2",
       "syntax": "bc1d4a50401f7e0c61f1dbc0a0e99b9cfb07f29c426c2013a160066cee7c2ffc",
       "status": "not-emitted",
-      "diagnostics": "bc8c79e5ecc6bdfbdd2307a852370621791dbaa38b8046ed719194554c579511",
+      "diagnostics": "4b90120d79cd08b4f6789a3ac1530bba98a00951e0e222d4e88864e1ba6cdf19",
       "assembly": null,
       "bytecode": null
     },
@@ -89,7 +89,7 @@
       "source": "616d53dba6ef8e361bcdb2a52be548fe55bf4d4a604ee77c8d23bc5bfb0c393d",
       "syntax": "f4420ecd3ba2ba56177ef3fd47d5d3c04a9080e229cbadf125fb80a855046c6e",
       "status": "not-emitted",
-      "diagnostics": "98f5fe16ac526fab203bf9580a3b6042260b59edbad867bc5b8baca5a5982224",
+      "diagnostics": "76086c297125987c8d9fc538aba3a4f2284adfefc38c5027e19bec8335c734bd",
       "assembly": null,
       "bytecode": null
     },
@@ -143,7 +143,7 @@
       "source": "ab902b911b16a2be2f75c774eb558333d0248c8f1c6094327393cf88fe3232b0",
       "syntax": "a1fcfe9e44242531b77e0d70d6eeceda5eebe515631ba6c0d13a735261066385",
       "status": "not-emitted",
-      "diagnostics": "d10fd78353b355c8f411a4ade3c512d9e5d155c5e5b86c25f5fbc52bd66b8144",
+      "diagnostics": "bbe4049f0a70d95d90c64250697a2700480e1f60906f41083b70f94e08b9ca11",
       "assembly": null,
       "bytecode": null
     },
@@ -152,7 +152,7 @@
       "source": "a99065c058416fb7f5106822358fdfa9efc754694162c23c80154e67bf5fc43a",
       "syntax": "8ee9066134303e31dad965d24525c30952cebc102d83835ec87f81a66ccff978",
       "status": "not-emitted",
-      "diagnostics": "fade1a2e0635c22cc60c44237a147632e558404a2e144d23f821cc754392804b",
+      "diagnostics": "aec6b1375c39d544648b95bc47e253bd76fe4276f265e0aaa0f38a78397ee91c",
       "assembly": null,
       "bytecode": null
     },
@@ -189,8 +189,8 @@
       "syntax": "ae8153b9ebf4e593763906819b2d30e0dc48adffc1e9ad12252cad00bf94dc4c",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-      "assembly": "b02582f72845c49e17af076adf5300a4833b1b14f89e49c2a3c956b1ec9ff528",
-      "bytecode": "00c904383a8f09f51890546efef2ca8ab3e029425be5ca65a554ef5d22de174f"
+      "assembly": "d03ff9125733df90f159f8df45aa4452dc9c43d25433b05e439c4796a4149289",
+      "bytecode": "0994b1ba0207b57b675dec18737489ab8e3e10ed980516513a629c4e43cec254"
     },
     {
       "input": "examples/features-0.10/winui-graphics/Program.cs",
@@ -206,7 +206,7 @@
       "source": "3b3436ec37e04bb88a7998ad1e21e9a9bb5c9d42d84875c09f378eb3f66edda0",
       "syntax": "6c83cf5fab6ddbdd4babdade2a9811bcde41f68888763708b3a3025f2a6800ff",
       "status": "emitted",
-      "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "diagnostics": "0aa58201d1f9ddcdf1e5df20484355aece786e271a8a41b6c685cada30af83be",
       "assembly": "4f48cb23371fdad483fa603867211d6944258a612872199df7fe0b058dd86841",
       "bytecode": "6d9a3f0d4ed4daf2c9ff9a365ddd2e738678960e98e07966b7c7340af2855b61"
     },
@@ -269,7 +269,7 @@
       "source": "a129bed1015efea8833194d9f61615e2777a31710e9b31978ce9ce116e4f62d2",
       "syntax": "48e0507717745c25fb018dccda791fdab3173b57900be4e0aa021598483501b5",
       "status": "emitted",
-      "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "diagnostics": "363db41435eddf1fecbfa77f513004739015175901806aed2a1b10d5c9dc46be",
       "assembly": "c7bb37e2e05ad90977a997aab8cfdc499307ec9d35e26da17aee552b8739c3e2",
       "bytecode": "7dfe12443411267e8f37ee70959f38031805811889855083e902fe89f3cb120c"
     },
@@ -287,7 +287,7 @@
       "source": "e77ebb54ebfa2b70c20cd25fd625b12a91f2c6af5cab5d3faab974c88f5c1a9b",
       "syntax": "05e883879ab0ce1c5ebf43be90f43b33c091d6363098b9c2d05b8da85873ae60",
       "status": "not-emitted",
-      "diagnostics": "ee5391992365d4ab3f63e6ab24d25cc29718b738d3a4354794ad8ee47c7205a2",
+      "diagnostics": "446e09e312657c4bcb139b1bb70e671bb0696ce6b8b152170f427fac236926b2",
       "assembly": null,
       "bytecode": null
     },
@@ -314,7 +314,7 @@
       "source": "ed551557f5d3a30a815437332c8fdde2709bc03a70400bb1967a182690964f3b",
       "syntax": "191bb1951c5be3ab86b679ebc6078def6b60dde9d3b3862ea728067eeea6e30d",
       "status": "emitted",
-      "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "diagnostics": "8a8b7449e04746853d0dcdacfeae2dac93f60ee153b4ad8c39f149b7273539d4",
       "assembly": "08e032a8e7c9fd068d0cfbb0958291bafb4fd793f18c08d1aa2d8a4a66eeb155",
       "bytecode": "de8164f10de66aec3ee4a4497b2b0b3326755a1a4f6b88b2630d2c7b803deb54"
     },
@@ -359,7 +359,7 @@
       "source": "723a3294dc3b8b3e1361b80017936e4bd5a25c6d19b6d4a172dc62e454648cd9",
       "syntax": "4cbc94d3b6f90a47ddd5a48771dc18680315b0c07e7aeb4116ec8d85c41f0a2b",
       "status": "not-emitted",
-      "diagnostics": "8dbe69caf5854a269766f7db0a4556b8c8f7d33bb402349e7da55a3149d4b8df",
+      "diagnostics": "d633d7ccdae9753199660241e239ecd38aa319ee902feb381c1c5508ccddcd6f",
       "assembly": null,
       "bytecode": null
     },
@@ -368,7 +368,7 @@
       "source": "7a94c5b12aad00a6e6e62bfb2a723d22776965b13dc2f387a4d8b980124c75cf",
       "syntax": "2fbb2585f7f2276864edd3593703902b24796678195d0d252694b6c9e4a7a459",
       "status": "not-emitted",
-      "diagnostics": "afff7b708c8fe133f02c44d3ab77df0a115c97875f22d55979b3ce4c4607ec0f",
+      "diagnostics": "7c7daece7c792bc671f71079ae178ee095871b8fb73b3a8011b1bb294e77d73a",
       "assembly": null,
       "bytecode": null
     },
@@ -377,7 +377,7 @@
       "source": "593e26e8039789daced332652515de57cd6a0a070501827e965823bc962914f1",
       "syntax": "48a233855bc39e12ceff34422f0e3b4f87f8d017e2f19922d737277b6ce2c84c",
       "status": "not-emitted",
-      "diagnostics": "44696e8d0b35171e5a32463f18c2c6667571c287ad1acb18e0c172f4d88b8bb3",
+      "diagnostics": "ce287a75a5dbd3c7c9c5016e4008a4c3ac520a197880d9bcaa479feb2d4d7b98",
       "assembly": null,
       "bytecode": null
     },
@@ -386,7 +386,7 @@
       "source": "3210b52e09360cf2a31907fdff0307fcb04857fa9ee6074628532b66e5c31412",
       "syntax": "d734f7b9334340b566c09aa7eb34bfbc93e583ed25dced72c3472e2d4099e97b",
       "status": "not-emitted",
-      "diagnostics": "36a5c54b8f6d0defab090e55ab954053c2b5901d7da4601c9e47c34b62959f97",
+      "diagnostics": "8f04b712afad587881ac29ab57faac6c64c9414eb36fff8855dea8a92c056710",
       "assembly": null,
       "bytecode": null
     },
@@ -395,7 +395,7 @@
       "source": "606a7294d312cf56b3518a75a4dfb4024af90205289684c59291ab2aed80f872",
       "syntax": "2cacfe7ff3a01869e94b98054ca52014d732b4b0470b0ac7d9f342659160d69f",
       "status": "not-emitted",
-      "diagnostics": "8a860c637e4921e0821c615bf7f3e1ddce5405f2455ed5dda9f3274d3f49ce77",
+      "diagnostics": "428cc297646181af0d6c48bd604e6805facbd42f2133adc0b3f12e88c295e113",
       "assembly": null,
       "bytecode": null
     },
@@ -422,7 +422,7 @@
       "source": "5821d64ae45690b394583a064f391bcdeb24b98953efdb616752ccc0fbb5c8a9",
       "syntax": "ae78923149bc17682f2bdcb927159ab5cb05fc94cae2b4eaad5182f7a63f4c05",
       "status": "emitted",
-      "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "diagnostics": "ffa515ec0fe85aa17b042bc2ec8fa3af868820d171d3f9b1507b9383ba5367b5",
       "assembly": "7c464576a5744cae03fe8f5f5820c06ce35a26f7610533d81d389e05b8c51790",
       "bytecode": "5550810122781aa423f800419e652f14dbfeb9f9940c3c522d75c92eb59680a2"
     },
@@ -431,7 +431,7 @@
       "source": "32ddaac03b533b44055430d88767c3608f447a370f7059c01ce5b4844ffeb619",
       "syntax": "4370b8f28fa6a23a0b8c8f3144eb9e41a09ad72aeaea620c9528de3fbdd87c3f",
       "status": "not-emitted",
-      "diagnostics": "39a2f0c1e69cce6762b97ed9eb4913979be4961b9d1208f60c698e571492fa42",
+      "diagnostics": "edacda23110a83e2e2a7e54a3161426e8a7c631848a10b78a31cee02c2defffd",
       "assembly": null,
       "bytecode": null
     },
@@ -440,7 +440,7 @@
       "source": "8c0e47a54e9211d65fede11bd1667b8c1ae774d217012b0b65d6bd4bae659e9d",
       "syntax": "d257f32423a42ca7ab5c92b5b9b61e0d7082873f94915de35776f5ff87f2a428",
       "status": "not-emitted",
-      "diagnostics": "39b27e67a14a5998903a6e713448f583d725247d2e9df08070765b3aec218b1e",
+      "diagnostics": "9403ebe33e051954bca37684b1748b5f0c39b5e366f4fb8168ba84c3812a2e2a",
       "assembly": null,
       "bytecode": null
     },
@@ -476,7 +476,7 @@
       "source": "ab5a684a63839255f9feb24d13ea2166deaa37636bab03b25a0c0c6527095513",
       "syntax": "ec53de6d75e2074cb5eaabfb5074cb035e70367d7f63b4e2343e4b4cc36ff8e0",
       "status": "not-emitted",
-      "diagnostics": "a0d45b95437d768762f5af3329bafff98ee7066253bfd3bafe42118738253cbb",
+      "diagnostics": "d9bf4d378c1aaa0fe5dab162d3d22bc086e61e81b76b24308e3c98b54131982d",
       "assembly": null,
       "bytecode": null
     },
@@ -485,7 +485,7 @@
       "source": "a9a151e5aef36b027919dbbe68427161403569162faa83fb6610f75b65cd9b7f",
       "syntax": "95d34c9efd89ab413e7218229fbd62f4a81b96e4b5c14bb294fa1e21be2fe39e",
       "status": "not-emitted",
-      "diagnostics": "2bc9154f1b75c5073ccdce9b3e3f8c8792d7a082e375e0b0f1b22aa711523872",
+      "diagnostics": "2c1cbc8c4266f7c3a3b860badb53304215d13f173f6fcf37e65225e6c9d2efc5",
       "assembly": null,
       "bytecode": null
     },
@@ -494,7 +494,7 @@
       "source": "32918f95cc92114727364a92cda505b7cc745e4820be7b02f375c54548953390",
       "syntax": "dae0e5d84450b0b07665830fe3ec4fc66c10c6121d4d4aa984afc0559b8e3313",
       "status": "not-emitted",
-      "diagnostics": "83f174b2b1b9983417e6753730c733d4e2766145a5103dd1a420cf42256285cd",
+      "diagnostics": "1e17da3308da27ad53def14d9ecffcdb2103097549547bacb543f57d3d3d04f4",
       "assembly": null,
       "bytecode": null
     },
@@ -503,7 +503,7 @@
       "source": "168ce631c717bd84da7a41f95a6c56a5535bbb799712b0f008d3d633ef6d360e",
       "syntax": "a7fa6a90c7394b2615d8080486ebacadbdb150e05f329e9c96801cf2c9bbc600",
       "status": "not-emitted",
-      "diagnostics": "607be6238a4ce213c4803cbd95cbfc26c7fd98fb5395c06303adfde1e56e55c2",
+      "diagnostics": "0a31ccf31f21d7640fa9f9ddff6565b5c3c585deb2da273cfc012226563462da",
       "assembly": null,
       "bytecode": null
     },
@@ -512,7 +512,7 @@
       "source": "83536968c9c3bb56a05180287268971a4eee4464f9912c36c35f489e078c1ffb",
       "syntax": "3c4f9907f3310dcddfc34e0d1854c5c5ac0f85855568b3a5da47b5f9feaddcbe",
       "status": "not-emitted",
-      "diagnostics": "9a8fc02e25b52bb78296a15217853e54cd95ef6c291b9d315f9603dd39ac3718",
+      "diagnostics": "700167eaa5cd421e244155eb57b9ad994c01102e53e77974a7e6f79cc65bfab6",
       "assembly": null,
       "bytecode": null
     },
@@ -521,7 +521,7 @@
       "source": "be036c8b41d23682285bc120e64d443e5390771cfd56145e199376a2a31012d3",
       "syntax": "1e911e31e537d7b8a4e3d13e8fe46f7531387b74d858bd78a6b7291d2330a861",
       "status": "not-emitted",
-      "diagnostics": "5a7e264cab63caed42844f2e1919bfd1480b47882af6cdfdcac742dd3674fde6",
+      "diagnostics": "2e240e2e40b768007d3bbb05ad3604fe13afb4af08b91183b225e55c5a067afa",
       "assembly": null,
       "bytecode": null
     },
@@ -530,7 +530,7 @@
       "source": "2211f96031998b6320e964bb3aff6e71c6ba5e33a52e8a6e500d0cd7ee518385",
       "syntax": "6f4dccc538bd2a4fe2ec3ddc1249ae2e26ea6e1ee6a13d82b59fbc1bc6a94bde",
       "status": "not-emitted",
-      "diagnostics": "6ba70ed9d281ef0ff0a6ee01d60b9cfbbe821bfc2050a220ee2b3185e7f04d12",
+      "diagnostics": "4cc610ff9f0e9f4350acea70f073071a9d2ea80134c47e118ff9be5ccec7f1ab",
       "assembly": null,
       "bytecode": null
     },
@@ -548,7 +548,7 @@
       "source": "dc36b0bd882a4e2af6af60842a1393989e7949af88f4ff800ac03373ca542dae",
       "syntax": "e9775c7a742a6af1647151894ee3aff2d08c8dca438a9bf8f6a71a360ed4b63d",
       "status": "not-emitted",
-      "diagnostics": "e1eaea90342d05a798be4aad04a1aa26bb3f163a18f461edb0dd2f093030e44c",
+      "diagnostics": "7f1d70e55b86bd1e305d464390a5e6e375aaddbf669d685ea5dc1e25753716bf",
       "assembly": null,
       "bytecode": null
     },
@@ -557,7 +557,7 @@
       "source": "fa6430063ce11c28b8f431218d3769b73d87341091a75fb2f223a90c09a72aec",
       "syntax": "f8044f47c4129175590894a20c335c47292dc73c51e7a187163d2a0433fd4259",
       "status": "not-emitted",
-      "diagnostics": "9a3bd0cdbcbb8ae3aa39e9a62b9544965219fc2e1ab06d249d2229f4770f349a",
+      "diagnostics": "c87e76ecf525811c6fff230b76369b9924ae0a4a9144e0efb692de5e0ad4d2a0",
       "assembly": null,
       "bytecode": null
     },
@@ -584,7 +584,7 @@
       "source": "3210b52e09360cf2a31907fdff0307fcb04857fa9ee6074628532b66e5c31412",
       "syntax": "fe6b853afb4361eeb68f7474ada4cd25db79552010d0154e76120d35b986092d",
       "status": "not-emitted",
-      "diagnostics": "2077688cfd8b73d692ab9f23d0b752601f2e906c801aa3bbe114fbe771e9e612",
+      "diagnostics": "a06e877d91bd025d708ec781e7e0a95ffd81216be0c1530eca71c614fedcfb7f",
       "assembly": null,
       "bytecode": null
     },
@@ -593,7 +593,7 @@
       "source": "606a7294d312cf56b3518a75a4dfb4024af90205289684c59291ab2aed80f872",
       "syntax": "9c4281422fbca07dbc27191215518c3be5ef3cee7f64a85aa2a9b7ee8dd17018",
       "status": "not-emitted",
-      "diagnostics": "c3401cc47c6b327542da0a0e54a89497cf932270a63dc5cd7896d324ad35c78b",
+      "diagnostics": "538df3b4979efcffd547a61d665f7cc0456170c4e3bbe116497eec00b5a2c508",
       "assembly": null,
       "bytecode": null
     },
@@ -602,7 +602,7 @@
       "source": "252cbde62a0ea026b16e5d032961faa61ce0f9da8781179ffcba9a306033c65c",
       "syntax": "1f7e8ae1befaf6c10786e3dbbf07b9a67cbef29ea8f60cb67e177a8392f90934",
       "status": "not-emitted",
-      "diagnostics": "54b88764a3b5ea9fc963391284666948ffaa58697adecd0aae37046ad387fb7f",
+      "diagnostics": "7a236dcb5c52994b9cbb682ca56fd13b57aebd08e838b38c00e524df6515d3dd",
       "assembly": null,
       "bytecode": null
     },
@@ -611,7 +611,7 @@
       "source": "8c84414ac492a2aa5f934e55457cbfdd0c51914cd75724f29e4d18c5836043b4",
       "syntax": "28a6c209e2615ceb254e81b59448f1172ebd89b2b416adcdae2b6ed1edade806",
       "status": "not-emitted",
-      "diagnostics": "f13a36f554224b140e08f8381c7c29ca1a4c79a25dd0759de5d3b4975faeb0ca",
+      "diagnostics": "482fa145c7482866dd2c5dfdc09c5a5e032a27b3b9e9b3f5574a3c1ade682401",
       "assembly": null,
       "bytecode": null
     },
@@ -620,7 +620,7 @@
       "source": "723a3294dc3b8b3e1361b80017936e4bd5a25c6d19b6d4a172dc62e454648cd9",
       "syntax": "1f9d6311c377f865ea12a8802d65de76efd2467aec0594fd912f01e8d1c2d925",
       "status": "not-emitted",
-      "diagnostics": "568d3e8371d730a2dde53c7c2676603f76a095494941ffbe47b8b9ac6582588e",
+      "diagnostics": "5436e22995ec94f1813535f9e708e7a4b26739321df1e9b21bbd5ca4d9b6af8b",
       "assembly": null,
       "bytecode": null
     },
@@ -629,7 +629,7 @@
       "source": "7a94c5b12aad00a6e6e62bfb2a723d22776965b13dc2f387a4d8b980124c75cf",
       "syntax": "e8a6177cd22d01e81359a098178931c64be251847508abb4fd4c3f72ef382f4c",
       "status": "not-emitted",
-      "diagnostics": "978e295d7f3ef5fc4aa933173f4b7a2673179db065a76ba8e82bed8fac92858f",
+      "diagnostics": "88c252db0ad92f2cad39aba21d3a31e26b20818445b251eda02f26d2f4f1ad80",
       "assembly": null,
       "bytecode": null
     },
@@ -638,7 +638,7 @@
       "source": "a50629085a6e68edf1efe22964ca96df01b0cfae45344116c65ea94ee2556af2",
       "syntax": "fcf3db9ef377fc03bf288bb225dde74366a5d128da32ac7917f97aaec67bfc89",
       "status": "not-emitted",
-      "diagnostics": "6a2002ed19eea9327c0b29d18ce96ee0a2a3144f9409618242ae1503ae7fbf15",
+      "diagnostics": "fbbf7affeddf0d3e9c955c1335fd9ee472dc89a6ffdd81d3520696bfe658ddae",
       "assembly": null,
       "bytecode": null
     },
@@ -647,7 +647,7 @@
       "source": "d00ce2977c4fc3a2c2e9ff85383f7e39f5b3c531913f9b2b24299c31bdab5693",
       "syntax": "52a5b629d46c593a97f8de270f1fa349078d4bda9626431d4f9fb0266d4ca78e",
       "status": "not-emitted",
-      "diagnostics": "e76eec5991ee16377caca2df0b0dc9085da85367cf5c8cdf4198c9eb43948cea",
+      "diagnostics": "fac416f104d73a413cdf6c89559b3ef13b3f0d556510d92fa8b3beb327799090",
       "assembly": null,
       "bytecode": null
     },
@@ -656,7 +656,7 @@
       "source": "a6fd8f4a370723db2a47c1a50bbb53af47b1f1e5b641a214d78e12074369f02a",
       "syntax": "d7fdf3b6a432542767a6b073a0162086b131bc250c595829f565de0a657f7a1f",
       "status": "not-emitted",
-      "diagnostics": "e4e470bcb92407c462c80721cbc72b0b0bed6f423d87b1da6b9b070b69a6c977",
+      "diagnostics": "9f572589645b917ea66d7307b11b1c5f67942b35cd23fd5fde303ac212dca3f0",
       "assembly": null,
       "bytecode": null
     },
@@ -665,7 +665,7 @@
       "source": "75eb996e0b26b7edcd42549f774ca4fa1c3a6c582db395d8e5e5582cbc2c3b7a",
       "syntax": "3d05387143147f2bdd263d33a57e64a57c3dafffd30617e47b0ffdc6b8161fa0",
       "status": "not-emitted",
-      "diagnostics": "e1b8a4444018e35f8c87db76762f86a102000dab1122a1ed1dd677b44d8e1a05",
+      "diagnostics": "1599334ad7b950da17af05649ac99cbf40c4207fd0431108a5cc4133ecd4b040",
       "assembly": null,
       "bytecode": null
     },
@@ -674,7 +674,7 @@
       "source": "790326d8106ae7a8ec7a71eae80adff06d428304a24ccf850314e12706851ebe",
       "syntax": "7148084cedb2cd85575be07a0374a05341e59c43c4fa53dc42b6f167d0378a9b",
       "status": "not-emitted",
-      "diagnostics": "7cfb070b8dae7364ec04e4414f9fa8cfc7811ce18139e32612bb986808ad6671",
+      "diagnostics": "eb09d5cf5eaf826298070becb62e9cb3efe56576387e91ec29155532adaf78ec",
       "assembly": null,
       "bytecode": null
     },
@@ -683,7 +683,7 @@
       "source": "0fa06871a35726a83e59fc215a09376ed5be31dc1ce6218468d2e330fc9acf2b",
       "syntax": "28fa6a975399d0943f454aede265e6ed156c64e09a6f3735257c490b55cf1eb4",
       "status": "not-emitted",
-      "diagnostics": "80e5931965b5e8643517001f2c2e92366531f25eea22b16eee7bb7025755d719",
+      "diagnostics": "ae9982a70759b9b8103522bc036a2ccf5c538a9957c1077fc0078358ba9f2213",
       "assembly": null,
       "bytecode": null
     },
@@ -692,7 +692,7 @@
       "source": "683dcc6da5321de0da7de86a90346c44884fb578720ebd5848ba0927a6337cb8",
       "syntax": "b25a9bbcd7518a2603bba5c9d90e1c3cee25c19929693db33e60680ac70d4b2e",
       "status": "not-emitted",
-      "diagnostics": "6b23866967ac56ac7d9fb9dfb80ef753878a3323c025d49b49fabf3d39e20362",
+      "diagnostics": "400df8b9cc25dedfec3d45b7f4102911c88f7def028b6f833085ce70961eddc6",
       "assembly": null,
       "bytecode": null
     },
@@ -710,7 +710,7 @@
       "source": "ab902b911b16a2be2f75c774eb558333d0248c8f1c6094327393cf88fe3232b0",
       "syntax": "4576b253d20328368e31b6056cd8d3ad1f63ca04cdf50c921918727894d74889",
       "status": "not-emitted",
-      "diagnostics": "ac780f6708c6cacdd8b61544e34a3c46eaae7a0ed3391795aceafb2d9c630e55",
+      "diagnostics": "c39bfc52f023f645ad0d433b685b256c752f3d3967b932724aedb16bc162e6b8",
       "assembly": null,
       "bytecode": null
     },
@@ -719,7 +719,7 @@
       "source": "a99065c058416fb7f5106822358fdfa9efc754694162c23c80154e67bf5fc43a",
       "syntax": "71f7f884b66d67a477ada8a3db56b48fc90b39659c7ee98f1a5aeca05ed2f910",
       "status": "not-emitted",
-      "diagnostics": "33080377f9c561d9ef89d95571a8075bc1d772ba46718fd1878bf72e9b3bbd2b",
+      "diagnostics": "2340c37096d2f593babeee9657e3c9b81bb84e2200fce0ab8a5e942501309b44",
       "assembly": null,
       "bytecode": null
     },
@@ -738,15 +738,15 @@
       "syntax": "9242d36d371b149f81477662b8cdcdc4913aecd888f37f54d950f629382ed0a2",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-      "assembly": "ba117d0b494f36339bdb7994af0ee03ccb28d0876265e1d650ddd9e19fc7a425",
-      "bytecode": "b13f02187a88121c92a19e52e1164d57187766a3d1d8d6247835f1f53fdbb98e"
+      "assembly": "1ca9c427dbe289e55517c26fdc8926fd15e6639d5761db52144f321625e8d55e",
+      "bytecode": "53686b638ac60fcc89a33e6a6ff811bc69da13d7422e9c280e17af86585c8d72"
     },
     {
       "input": "examples/projects/Workshop/App/Program.cs",
       "source": "a9fe8b8369ed5d570809fb125bdb459e094ac7d41a7ac2accca7b89c55aa14ec",
       "syntax": "4bf2cd5cede006a22dc6871ce60416f2cb822afa3b2920c9415ebacfc362ab3d",
       "status": "not-emitted",
-      "diagnostics": "b9e51603709659decbe2ba223b8ec73970df37376217467b65eaa592a2b6dc52",
+      "diagnostics": "c2f2bf6a1dc89fdc116d133a890c3f944169d66dba357d4e003145c2879df533",
       "assembly": null,
       "bytecode": null
     },
@@ -755,7 +755,7 @@
       "source": "a027d1a2628539fb18b0972194caf340d0bc2ecbcc0edc40790044bbe90eed8d",
       "syntax": "db87726db9eae745b6174f7377905b912c5366eb2cc6a34020ff935fe456bbc2",
       "status": "not-emitted",
-      "diagnostics": "2aba9ad8400b8f46f70213c9d7bdf968ad62830abab45ca0f295292bb89a959b",
+      "diagnostics": "90f4985e894c55cca1794e4b88ba2f7edd76395d7052e1b7e38f4247a68471e1",
       "assembly": null,
       "bytecode": null
     },
@@ -764,7 +764,7 @@
       "source": "16b3d730ba6fe13bf8359c56721d31c65753b349d68c465c80b8a75ab128b2fc",
       "syntax": "69deb52f0e3674f85a803e4ddebb826e1e7fa0ac50a621277682caa590798966",
       "status": "not-emitted",
-      "diagnostics": "f355d4a7477395d8ddee8d3f3a4cfcd32a3614993bd673b20b4e63e4052ed08d",
+      "diagnostics": "4fb14b289c102f3efca724fb3ab67db8d2b6649de4641e8275dd0addeab4722e",
       "assembly": null,
       "bytecode": null
     },
@@ -890,7 +890,7 @@
       "source": "d44868ad7fecbc8f9aad2c93b0c03dc8fd23502f46669590b4de41000c8781a2",
       "syntax": "6778639c6b19c14fc47978ddfd0cc9cade3004a288faf84fc7b6310ff0c82d6a",
       "status": "emitted",
-      "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "diagnostics": "fc533be2f09b0c72be16cfbfd70d14943bc3bc3216b801d6ad8c2bf286273b09",
       "assembly": "26a185012df8fd8e81748cf634f55def37b18250d786044ac4db4b293d22a48d",
       "bytecode": "eba14d46e61ad0119d81aca21d94eee260075555ad8b2347c84fc8a605c0222c"
     },
@@ -926,7 +926,7 @@
       "source": "84f0d318b21ca86f15ed5348acc7ba41dac48934a05e81267aebf703a4935328",
       "syntax": "70f7971de8e1c44c47f30c744d2866bb7f9f0f992b22501576df1964c45777c3",
       "status": "not-emitted",
-      "diagnostics": "54bdb3ea4c45dfbbd804315dd7b1c057be093e32f0362b242a496edea4062da9",
+      "diagnostics": "4b656f84f71d83c46b645889a16841d2a9d125ea2b8b5d7c9c325726f0b5aa89",
       "assembly": null,
       "bytecode": null
     },
@@ -944,7 +944,7 @@
       "source": "7386fb4adf79afe2c805a987566fc8882fc3b729cf28f65263fd674819049ffb",
       "syntax": "146a1f6a3d56f26765fd309c6797d777a8005a1b1a3150bcdc44bfccc1eea42a",
       "status": "not-emitted",
-      "diagnostics": "57e3f342efc1656d81b3bcc83709bb47a5b3de62100c1612b4b13bbf69a841a8",
+      "diagnostics": "a34aff66fcb71a7af8a02e82d8af521c3a815b7afb6d246527adc988f01860f3",
       "assembly": null,
       "bytecode": null
     },
@@ -953,7 +953,7 @@
       "source": "e41363e83f9250a8589fd0cfca64f49fe0da255160dc40e22996407cd23eddf5",
       "syntax": "6b984febbd7e9213a2f8604c9e38ce801d9de4d2a75f1e70e64172d185b4370f",
       "status": "not-emitted",
-      "diagnostics": "65d82f4d3e9a3583127a81b4bb549c460e253837e8ae9b43118ebccb3dd20228",
+      "diagnostics": "0af43561ac681c2c24196ccfeac3f8aee03afa4ff0e850fa90e415766312df38",
       "assembly": null,
       "bytecode": null
     },
@@ -971,7 +971,7 @@
       "source": "de5348facf430b499ff86fc5b13508726952baee669d6c996e3c4b17ce99ab5f",
       "syntax": "f3045a3147acc3d24ca9a6e82dd87eeba0b4d40ff85629388e4ce21d6859acad",
       "status": "not-emitted",
-      "diagnostics": "51b7f34c2e077c5aa4cd28b33f5300365a0ce8a0465aa67abd6fa3678a402258",
+      "diagnostics": "cd0686870080c2b80f47145370775d460dcd82c00ccb30e7e338ca4a6916f1c5",
       "assembly": null,
       "bytecode": null
     },
@@ -980,7 +980,7 @@
       "source": "5daaa7c7668d400f40659fad382d669e4b12532362e28609aab42ef0c0a33a82",
       "syntax": "0177f4a7e1a332baf2e21c0b990a6d7fd352e5a9ccb5c94b1f9ab6fea2cb6e94",
       "status": "not-emitted",
-      "diagnostics": "ffe0911ecdfb1abb09197c9ede4a54086709e5d255a98f97dc7353c26cf0b391",
+      "diagnostics": "4b41defbf6937165a94b29fc961bab4db990163d257a85518f581b9d2be7c3f6",
       "assembly": null,
       "bytecode": null
     },
@@ -989,7 +989,7 @@
       "source": "621a0a6fab971c81843585247a162c1b84e9c3594b78ddb7ef9f51cc8b37350b",
       "syntax": "a60ada836a86e500cbe5eb452e3a9e8a0a59e7e8f981f357d3d1d394e390f5ce",
       "status": "not-emitted",
-      "diagnostics": "249558ee2da1311bd4e03295a4c96c76f35d10a7d72ec3161a1979195c4d6cdc",
+      "diagnostics": "9340a8ccce26208b97f5b0b34383acb4382c795be96cc4df41a5425a67193f53",
       "assembly": null,
       "bytecode": null
     },
@@ -998,7 +998,7 @@
       "source": "f8844623ede8d3bcc607e5dda3530add74ae4c8b1d60bb55d9adc0ad7bb746ed",
       "syntax": "824ea8bf068687e6c13b8651a9cb7875de6ac0e3a5e93b3af7bd52e22938927a",
       "status": "not-emitted",
-      "diagnostics": "8ea7d80cfb5f4d345d8955e19560e1c7329ff1b3a9a23bc299485c9ea61d486d",
+      "diagnostics": "feb42651bd710adb07d067021b5b29d92c16f46e9ca5a840631624e5573ee3c6",
       "assembly": null,
       "bytecode": null
     },
@@ -1007,7 +1007,7 @@
       "source": "29fc906b317efcefa29eaf83903983384bb8c916b67c8e58b241fe54b9cdca57",
       "syntax": "121327d526e3d50b20a83aad07c9cec17d3aa0f3fa61591e35cf9e5baa8109cb",
       "status": "not-emitted",
-      "diagnostics": "7cbebb06450bcb60222fa6533aeca20e737ba57d82bfafc885b90682b67f76ec",
+      "diagnostics": "5cc29493f0f3140573e81fc400130d63023a62a53e837328ae68333fe6c20d18",
       "assembly": null,
       "bytecode": null
     },
@@ -1016,7 +1016,7 @@
       "source": "4d85d4e654d12bc59375c72bf3ad028f5f8be32e9b8d815fd688127e3147eab6",
       "syntax": "655d4336f75d7a9bfda45a61307a7c846d2e38b02834932d797e3033b1d4016f",
       "status": "not-emitted",
-      "diagnostics": "b24514b99dfbc5371a7e45f87937898e9dd95c805f20c4f41c2d8323772c1caa",
+      "diagnostics": "c53a99c10ca993443ecefa7705e0712debac46f17b8d675984bcc5e6253e30dd",
       "assembly": null,
       "bytecode": null
     },
@@ -1025,7 +1025,7 @@
       "source": "826512d35b4d6f63964fe1022880793226db0afc2a82d4ed9769b01f2a013721",
       "syntax": "e67cc9945c30056437749fb4d12c53d6081a731006523fa27771cceb09f0bd9d",
       "status": "not-emitted",
-      "diagnostics": "ec6c6cd3db4b7fa16b9b372f500a8b262a0c78c1ff4a0aed26bc3320778a64fc",
+      "diagnostics": "130071e15ef4a0cee7b03ae7fc4601200fc942642eb011b191ba421941789b28",
       "assembly": null,
       "bytecode": null
     },
@@ -1034,7 +1034,7 @@
       "source": "fd9e9f9bd9b4807873c87c5b540683c7fca35b90c0c57e929a6a4ca18b55be75",
       "syntax": "7b0ba47558d6cfe286fd2f8b6258f5070624fbdcc97cceba904b081914a7911b",
       "status": "not-emitted",
-      "diagnostics": "7b56789db858975d22693b08d42d3fb6673e576c4de6ac68283ea1db4cc1f8a1",
+      "diagnostics": "a381ee1d0c1f52c0eb16af60a385050213c020e1b56c6e57eebc0e567c218af7",
       "assembly": null,
       "bytecode": null
     },
@@ -1043,7 +1043,7 @@
       "source": "7c7dcda23f367b6c956ed2586674ec54e6bde7ed01af777df71d13fb2300210c",
       "syntax": "c49911f58e52e091bb92d215b65fd4686ba4d82cacbf01423f155875af80c9e9",
       "status": "not-emitted",
-      "diagnostics": "869d787360867411f5dd78ea2f39219a55e054b2a73e1b536a4b25f7882a5dd4",
+      "diagnostics": "1fd4ed05d6659aa0e3c71f2e8096eb0aed7474964c941b2fd99fa30769b2f870",
       "assembly": null,
       "bytecode": null
     },
@@ -1052,7 +1052,7 @@
       "source": "05bfce2f9e0021c280762f5f49d3cda14bfda631c1b5634aeed9a9c8071d09f9",
       "syntax": "e3273db8a2a70ad144fc81bfc0f538a391254c285ac3f0721af9f38140f18a5c",
       "status": "not-emitted",
-      "diagnostics": "931c0eb193202336e055cdea853b0a09aa3609090477cda44c2f3e36f8532d0d",
+      "diagnostics": "7ddad0d43996df3bda8363ebe2d7bd5a711ce80488b4c045b2bd3c3482975c65",
       "assembly": null,
       "bytecode": null
     },
@@ -1061,7 +1061,7 @@
       "source": "ea65e11ce3d03455cc8aa4a358604742629adfc9f2dcf59aec3009b2bc0da42e",
       "syntax": "bff60484f781cff2533e01ad22c7040c3511d2a83bcbe622ddc482b49cfa4916",
       "status": "not-emitted",
-      "diagnostics": "69945abde985878e4a501bb18264c3144a12ef7fdfc817521d5b5ab02a7d8264",
+      "diagnostics": "1bf45b93019fb60e5151f10708491623c288a6b6eca4327101a6f4d301da0f26",
       "assembly": null,
       "bytecode": null
     },
@@ -1070,7 +1070,7 @@
       "source": "c8e1c846536929eb9dfa2f431a32603bf5eb3ca2b07eb68b1f641783b5fbc3f6",
       "syntax": "fb2cfdefee8aefc4d384f456adbe6edd1ac5639aa035270ee0050c177f719446",
       "status": "not-emitted",
-      "diagnostics": "7daaf582aa7bb1faa46162f243608a09b445aecdb5a28bdd30ada4ecd8d1b00d",
+      "diagnostics": "6619cf8da797f544312fcca9056bc7c53e368c9bade1d524786da65b4a1f4b80",
       "assembly": null,
       "bytecode": null
     },
@@ -1079,7 +1079,7 @@
       "source": "577c1e713c2383e89cc2aeae89ce7ba9ef6918637f42577901618cfaa45e7c59",
       "syntax": "50479b93df95504d0540c77269f924829aa782462303ba790142a9a7bb39afb2",
       "status": "not-emitted",
-      "diagnostics": "dea196664185f5c57ec4f92ed505503453545f9d4b2c94f6d3265dc72c97f285",
+      "diagnostics": "7911c0baf7fa1bc630013f53710c94922800abde9d96cf92b7cb9f1fe642861c",
       "assembly": null,
       "bytecode": null
     },
@@ -1088,7 +1088,7 @@
       "source": "4ed5e57bf9b89760a873839e68ece3fe0bdf5e24565f711f90bd7301796d6e6c",
       "syntax": "a025f047257ddc26025d46b593758db97c437643b4f5be5e2c28e43dcb6249f0",
       "status": "not-emitted",
-      "diagnostics": "e24dd671e49e11fc2b2a2396474a334f55743c87583e14a9fb064e48b514ee45",
+      "diagnostics": "eb86da44cf5aabc116833bf0b3fa9a18cbc02346795f6dfde4619ad5d0605322",
       "assembly": null,
       "bytecode": null
     },
@@ -1097,7 +1097,7 @@
       "source": "9331e09f458054e6103b58e15bd601b6ced6a8dbcaedced7c1098612b1ccbfec",
       "syntax": "c08b60aa11ae6d0f6cb79055b9d11b76ac6c756d69522f91157cb5a57a322998",
       "status": "not-emitted",
-      "diagnostics": "fba8df1f5eb6c41239c47a2a3c300d67af6caf8f42be8a20b175ea2a9a864c76",
+      "diagnostics": "3bbc2ae11e00b92c7a48028cb766293e52a5f6f5f4768ece777ef528c72d693f",
       "assembly": null,
       "bytecode": null
     },
@@ -1106,7 +1106,7 @@
       "source": "4b64cb542476de05037a46d7a84814cef0b23d83ffbb74ed14a94ea7e77f01c9",
       "syntax": "5748d1e381b5a1ddadce5bb677cf1750d342fd1360d6d14e75ecb98b2757150b",
       "status": "not-emitted",
-      "diagnostics": "9ff38a55c44265fea6d5320e8bdd786be901e9722c26b6988df3747eba9f02ca",
+      "diagnostics": "f8dd4b6cc7b594a7513e93299847dd56d15b5f4a65f55bba8fddc30c1e386ec4",
       "assembly": null,
       "bytecode": null
     },
@@ -1124,7 +1124,7 @@
       "source": "2e53d27ef6052bf027d871b269f5af8903e7a75d564a6c2712e63a0c7526e833",
       "syntax": "4d9d4833a6d86d674b0638e8ead7cbb49e464a7e4a19e226d341d328b15b974b",
       "status": "not-emitted",
-      "diagnostics": "9b632f4fa853432dfa923518a942db13bfaeee6be0a7c63d2e386b3b028f19e1",
+      "diagnostics": "a9efa844fb0b2e0e6fec54d937fbde888ecb3298dea5122ae63ef2b18e15ab04",
       "assembly": null,
       "bytecode": null
     },
@@ -1133,7 +1133,7 @@
       "source": "b6334b5db86f3ef42a62d94e4329c83e8a09bc23c4130fa8e14be26181ae6db7",
       "syntax": "638a8af8c87a4485873d8980a96223489beb8b4cecbdd95889f6f7e6dff038d1",
       "status": "not-emitted",
-      "diagnostics": "9d7b4e492d5d62ceaf49868cfe89f5ff38db5421956a9ca9917fd914137b6e5e",
+      "diagnostics": "80f59367bebc0ac1397b24741a7449a2cbaf1d13930a140518b9fe4437e155ed",
       "assembly": null,
       "bytecode": null
     },
@@ -1142,7 +1142,7 @@
       "source": "4f7d49822fc90b54a4db8c5bdb0943f30c6883c0e47981d713a5bdca64fcaf91",
       "syntax": "9d231d43644394e237b8907baacf97e16a8d63574d21f3364da2e82194642011",
       "status": "not-emitted",
-      "diagnostics": "76cfed5ebefe0b89b117d1d2201e362e903dc2f33e662fd520aa05cd5773b9de",
+      "diagnostics": "adc8e2980edb88676e5d8506831024216079afd029457aa05ffffa6314ad0202",
       "assembly": null,
       "bytecode": null
     },
@@ -1151,7 +1151,7 @@
       "source": "0c423b6114e1a813d6fd9f55c8370883f0bc15360ef9f7d4428e90068cb44e13",
       "syntax": "a7ae48940b117b21147fa9ad602f168601f7060d6c53f3497cebae0aa7395501",
       "status": "not-emitted",
-      "diagnostics": "d4bff73bd0598925e14212b905e444bd62daafbe541b500b58ece62692356512",
+      "diagnostics": "d2714af2ff91dae95468a40e7c5c4b447531ebf2cd4801927e3ce6775edf4411",
       "assembly": null,
       "bytecode": null
     },
@@ -1160,7 +1160,7 @@
       "source": "5690cb35f33da6b98238679f65021da01ad008da812b084deeb9d5d4ee0fcba3",
       "syntax": "ab4a783a86f55956841cfad1328ad789fcff9ad208d85cf8c62683e97f97f4ce",
       "status": "not-emitted",
-      "diagnostics": "011bb4357f03aecd969d3b8118cceaca6d3128cb69844ab6b171b5a67ca10340",
+      "diagnostics": "1286da45e0d58abd87251b00619496b532219bb560b00ca1e5b84addfebb67f6",
       "assembly": null,
       "bytecode": null
     },
@@ -1169,7 +1169,7 @@
       "source": "7635e72bb71ed37e00e72fe36b5c25b5822b9f2067e09b3890717cc2077110d3",
       "syntax": "00a6af3834ae45f896d049596fcf3a820f9d72c31afaca9f3cf1eb1c3178fce6",
       "status": "not-emitted",
-      "diagnostics": "38a53899523e1148637d6cdefd37d51ff34626587c1c8c21f48a7d04f73da196",
+      "diagnostics": "f44e9fe3590703365281845c45ce6adc97a685ede54258e9a41546133a8b7403",
       "assembly": null,
       "bytecode": null
     },
@@ -1178,7 +1178,7 @@
       "source": "d176b956dde5688e5484b9530312d1bec0d439f735eb3ed824da5172113d343e",
       "syntax": "d99204e6e17b1f37cdd541e9d00feaa9116cc015962e2f2fe1e17f0cb688c490",
       "status": "not-emitted",
-      "diagnostics": "7d26473fe980bff734eac3913c2b266ed35a0c09ed29b2b483eb5cac721435ca",
+      "diagnostics": "e07f8b97ce073304b3cdf923df96ec26f7a52ea54e8b9a40a1a3136fa52c509e",
       "assembly": null,
       "bytecode": null
     },
@@ -1187,7 +1187,7 @@
       "source": "7b8a2f1a1f27b3f0c3e3acf004df969924584211bffcc59e655bf2a6396543d5",
       "syntax": "12d73556fb5321a8558e57400d4aa53266837450c5daaafc6f81759aa0313c77",
       "status": "not-emitted",
-      "diagnostics": "8d9d0d1f0cf9ccd1850fbba0604fcc0a8b84494a29c687013cd69a20064cd480",
+      "diagnostics": "d49d47ee65479e8b3cc426614aeef655bb7c4d775ec71c6b0fb6f657436fabdc",
       "assembly": null,
       "bytecode": null
     },
@@ -1196,7 +1196,7 @@
       "source": "9dd4af58924e3e7430aa761e4a8fc9f082e48d88a4fd397ab5bc8b9416d0ca01",
       "syntax": "7c16cda2b01a6c8c5097fa098df3c3ad422ca8d218296bb80bfec3bd7d0ff903",
       "status": "not-emitted",
-      "diagnostics": "801483fb771c9cfd8bd961f6dbcdf7dd8a8e93948ee3f868cb69e1e9d8574240",
+      "diagnostics": "d7c6eb3da5dfa96d0b3c683db79af54ef35fd2f8e4ba12ea1d51c51a977cd692",
       "assembly": null,
       "bytecode": null
     },
@@ -1205,7 +1205,7 @@
       "source": "11dda7d4b3fd8488442a6d3b55fac0e9c70a8bb89d0ab1700f2420ac732e8897",
       "syntax": "dbd56eda388b9d1d298d392c1939e9a1f76849c31ad24041424bf9fa9c7113b4",
       "status": "not-emitted",
-      "diagnostics": "bc93572ca673c358df648ced9939b18bd38f12d6ed50b3095bbf0000f83794c7",
+      "diagnostics": "b9301bc69722834969b7ebaa778039b2cbc1bbc839ed721494c2338354fb5d1b",
       "assembly": null,
       "bytecode": null
     }
@@ -1253,7 +1253,7 @@
     },
     {
       "path": "dist/compiler.worker.js",
-      "sha256": "0e7d350945e8992e448dd7639a456274b4480980d200ba890d24e026a82b30cd"
+      "sha256": "a6765490ebd90431ed93e4d35ce85ca15d1bb23b5c663f5ccb0536b7e4698f17"
     },
     {
       "path": "dist/debugger-extensions.js",
@@ -1393,7 +1393,7 @@
     },
     {
       "path": "dist/docs/compatibility.md",
-      "sha256": "c3e7c4c1f2c6026edc32308cc4e2d70c9531ec680ec6b207ea70374aa48b23c8"
+      "sha256": "711bea4213a0a2a2508fb8c0221f67fd340bbc2e0072a56e4ea9b6bb7f9143f7"
     },
     {
       "path": "dist/docs/core-results-0.10.0.tap",
@@ -1652,12 +1652,16 @@
       "sha256": "ae3d9c871910db8f63454fae641d8fc3867216f87afa747457b90397acb2552b"
     },
     {
+      "path": "dist/docs/runtime-a05-e04-validation.json",
+      "sha256": "473b47f59150540ff16ffac02fe9ee5048c00e896d247323fdbde7f2b1bbab14"
+    },
+    {
       "path": "dist/docs/runtime-a05-scope.json",
-      "sha256": "5e8d6cfa959f4d5c5a6cc878193942c6dc8df220ca611728de473ec585783658"
+      "sha256": "9b36104fa5ddf48cbc1b8a262d15d6e946b207f1992a3471bb63e222a981e732"
     },
     {
       "path": "dist/docs/runtime-a05.md",
-      "sha256": "bddab5110c3cd2320f1cb5b65e9d290cfe330a5c64c4686dc21e055485abd23e"
+      "sha256": "370dd16ae82e2cfc99c11866f6d696b7d14a950dbb1b9a5aa1270880f3cc8d29"
     },
     {
       "path": "dist/docs/runtime14-api.md",
@@ -3084,6 +3088,10 @@
       "sha256": "2dc9958626a5044ab23d708513008af134ed5249e0c6022e4f803ea158276817"
     },
     {
+      "path": "dist/examples/runtime/types-and-statics.mjs",
+      "sha256": "cddc396334b1258207d0eb7884697548f416c5375347a47bd96396d3b57e2fd0"
+    },
+    {
       "path": "dist/examples/templates/README.md",
       "sha256": "b9cd44c8dc34723ecbfae45e280de45e16b999cba8f11c58fae7aa5360032ebf"
     },
@@ -3517,11 +3525,11 @@
     },
     {
       "path": "dist/packages/bytecode/src/builtins.js",
-      "sha256": "e7ec1930a0ceee6ccf3da079eeae041e40946ece05984461f6677a99b3d68238"
+      "sha256": "a65727e006d8cde681020c138445742331879bb1f9e8bd8f5934cda681e7d39e"
     },
     {
       "path": "dist/packages/bytecode/src/index.js",
-      "sha256": "6cbb9d11f706d8d4a425d4678be4c0fac0048899be7c8d13e6b78808ab968a27"
+      "sha256": "4c2fba33be9b82803361a8f5b95f12e9a8afc65e22674621238771dbc93bdeca"
     },
     {
       "path": "dist/packages/cil/LICENSE",
@@ -3545,7 +3553,7 @@
     },
     {
       "path": "dist/packages/cil/src/analysis.js",
-      "sha256": "21bcbfa5e30af72b87738b24423f5131fab922d7a9c96ffd867a6be1ab283f6a"
+      "sha256": "48e9c281c97325434b1a4385b156bdf3f6b1c1eba37da8265c8d620d6ffd7c66"
     },
     {
       "path": "dist/packages/cil/src/binary.js",
@@ -3565,11 +3573,15 @@
     },
     {
       "path": "dist/packages/cil/src/emitter.js",
-      "sha256": "6a59e421574a57212743a7fde1d4fa74d3a352ccc8e9c50b3eb1c30220453dcb"
+      "sha256": "fd98349991d375d7c987740a08f8a46fe74cfac83511e271d493796b1d16f1db"
     },
     {
       "path": "dist/packages/cil/src/execution-profile.js",
-      "sha256": "85035e1ac6b93d89bb0b6d98e0b7e0b79642b0968223d1348f3348312031f9b1"
+      "sha256": "4f39c3ba8272f845e1d9dc8faa6e70bc84b705557b48bf9a4451a06b0108771b"
+    },
+    {
+      "path": "dist/packages/cil/src/field-profile.js",
+      "sha256": "15ed0f58267edf84b84ee9079d79b5b68034824240ab774353a29ab430dfe5c4"
     },
     {
       "path": "dist/packages/cil/src/il-document.js",
@@ -3577,7 +3589,7 @@
     },
     {
       "path": "dist/packages/cil/src/index.js",
-      "sha256": "5a3147d38e8a223ca1abae03a2d3d6b02902e0ff66c971cbde5fbfd111243383"
+      "sha256": "618eefe7d116a161c51af80fd1a9a6776d0845ff5a9f2c15362fed0b7a8895c5"
     },
     {
       "path": "dist/packages/cil/src/inspector.js",
@@ -3585,11 +3597,11 @@
     },
     {
       "path": "dist/packages/cil/src/intrinsic-profile.js",
-      "sha256": "1bb628b6645a7608e6e9a90051b9d6272a8d4001b328b2a1e95e500d82f26944"
+      "sha256": "77926e3abf39cec17aaa9c770517dbf322bfac9116a400f44841da1ec7e04958"
     },
     {
       "path": "dist/packages/cil/src/loader.js",
-      "sha256": "6ce08fe0f9f93eed0c40e4204afe6e57572d5bf75143f82297524a6e4b8bd9b7"
+      "sha256": "8b70eacd13f45b08150fedf9d7ba68db5c181b71f0a146855f5d8955c13be31a"
     },
     {
       "path": "dist/packages/cil/src/metadata.js",
@@ -3620,32 +3632,532 @@
       "sha256": "5ee546c9c84e592c5f1760269ac103a3c1681a5f0123cda759acdaba3d5b92eb"
     },
     {
+      "path": "dist/packages/compiler/scripts/generate-bound-nodes.js",
+      "sha256": "b80fdf00b27d5f65ba1c6e6e08a8e6f26ab9c34fe782f6900a0c00e96f176c70"
+    },
+    {
+      "path": "dist/packages/compiler/scripts/generate-diagnostic-codes.js",
+      "sha256": "d9a898fcfb9ed357e409d161253ac2c8e6b45fe678cea7a75244e71e3ec395bc"
+    },
+    {
       "path": "dist/packages/compiler/smoke.mjs",
       "sha256": "a0534343013d556403e2f3e5a01b57edf69924d476c49e64309c9f0f97ab3d19"
     },
     {
       "path": "dist/packages/compiler/src/async-lowering.js",
-      "sha256": "12d813c15bc8fe4707855fa1a0a7bb2ebc2b8bef02290e79fae591881e44b291"
+      "sha256": "e138a4b9db1ea19d1ea351888ecde0a38fc40bf08269a7a48db86ca9365501d8"
+    },
+    {
+      "path": "dist/packages/compiler/src/binder/accessibility.js",
+      "sha256": "511252197c4725482f929c90bdca894818e581f21b3d1fedbd0cb3c6c9db8f28"
+    },
+    {
+      "path": "dist/packages/compiler/src/binder/binder.js",
+      "sha256": "a96a240a0e30c8df9af7cfb57e13df4bfd26ab32e7183bd1a598b07e5d86fe49"
+    },
+    {
+      "path": "dist/packages/compiler/src/binder/entry-point.js",
+      "sha256": "8949b2ae25cbc4b097b8ec7e617106be4cfc5dfb6527bf1b26ca861586441963"
+    },
+    {
+      "path": "dist/packages/compiler/src/binder/expressions.js",
+      "sha256": "a75fbd2036f776bf2a474f734c8644deb8f6e74b30897b7df5b8fcb1874288a7"
+    },
+    {
+      "path": "dist/packages/compiler/src/binder/lookup.js",
+      "sha256": "45dcc21be3885279b8916dbea999896a4d943f7d3bbe6b988f82b634023fb0bc"
+    },
+    {
+      "path": "dist/packages/compiler/src/binder/method-body.js",
+      "sha256": "1b566644b5af4ddbda90af813d6be6854378e4bf73fee3a610f36fc2e212ee8e"
+    },
+    {
+      "path": "dist/packages/compiler/src/binder/method-context.js",
+      "sha256": "e68a2affb1836c21fc74cc0f032fdfd4a3d8629f12a6181a128ce1c5061a739f"
+    },
+    {
+      "path": "dist/packages/compiler/src/binder/operators.js",
+      "sha256": "4954fa1ca77813f230dafb9c7de34e8fbf6fe9d023e18dc1813473d639cee3c3"
+    },
+    {
+      "path": "dist/packages/compiler/src/binder/statements.js",
+      "sha256": "113452d6e6318347f8e6bae06ab2197ce083450607b444200478da5d9e6f746c"
+    },
+    {
+      "path": "dist/packages/compiler/src/binder/usings.js",
+      "sha256": "cfe2fb24002b5b5d9b4011c40c05e3d2e889ff4cf245c22ed1be5c02ac56be5c"
+    },
+    {
+      "path": "dist/packages/compiler/src/bound/dump.js",
+      "sha256": "6a55096218f9a6f930e435639571f9ec7642ce16cf65978fb6b0fbd7e2b0f61c"
+    },
+    {
+      "path": "dist/packages/compiler/src/bound/nodes.js",
+      "sha256": "0485ea1a21acfcbc59211dbaceeec6c7574855a227332c13886795e3a1410bfe"
+    },
+    {
+      "path": "dist/packages/compiler/src/bound/nodes.json",
+      "sha256": "30c2cbd73c5178744d33f54600dce1fd605ad3027fed6482fa39a1e5e7034faa"
+    },
+    {
+      "path": "dist/packages/compiler/src/bound/rewriter.js",
+      "sha256": "d4fa853b63d3652f07e52c00fc7b9fb956b328ea6f7033c4abb576121057f221"
+    },
+    {
+      "path": "dist/packages/compiler/src/bound/visitor.js",
+      "sha256": "bc9016a85e5687fe5ad7e406a4ed1af015f15b7a6e7fa2c0907b53964e9cf276"
+    },
+    {
+      "path": "dist/packages/compiler/src/codegen/ir-emitter.js",
+      "sha256": "b57428e72d34abcb9fa314848fbf1cd9a4d7c3e63ca8c7b1d66a4946302ab5b2"
+    },
+    {
+      "path": "dist/packages/compiler/src/compilation.js",
+      "sha256": "9f482d798329be76a4ddbabd3155d6f5aa5c414e7744ad5b1d5ed470bb478787"
+    },
+    {
+      "path": "dist/packages/compiler/src/compile.js",
+      "sha256": "78559e53d8fb6b137c2e006d4463d57164a38b6b145b546f94dfc9538092fda4"
     },
     {
       "path": "dist/packages/compiler/src/constants.js",
-      "sha256": "48e44c2a7b032308815c39f6aeda5e1b3990adab295264cb9f62ea4ad9e8921d"
+      "sha256": "35349df58d93a9700612b210dd087d9364402862ca7e372aee8be33026942334"
+    },
+    {
+      "path": "dist/packages/compiler/src/constants/constant-value.js",
+      "sha256": "557d65cc588fbef31128587606ae935af3930e4711705047f37e14b00634aa75"
+    },
+    {
+      "path": "dist/packages/compiler/src/constants/fold.js",
+      "sha256": "bc12b8a6f2bd7f3ac12efef8b2fc898ae3b4814dbda16027154b7fe5d0827560"
+    },
+    {
+      "path": "dist/packages/compiler/src/diagnostics/codes.js",
+      "sha256": "fcb3d77600262ce937619194d2e1028ef5569469818fdac42c589676d9ada538"
+    },
+    {
+      "path": "dist/packages/compiler/src/diagnostics/roslyn-codes.js",
+      "sha256": "714623904d523f3b11295cfb68efe25c9b42c18a76b5dcd969f3f95400448dff"
+    },
+    {
+      "path": "dist/packages/compiler/src/diagnostics/suppression.js",
+      "sha256": "4c9a3d93fd39cf193e5bc5e3c5b6a06671b890b1ff41618dac3881cf3a0accfe"
+    },
+    {
+      "path": "dist/packages/compiler/src/flow/cfg.js",
+      "sha256": "04cccaccf732b884010854a699efcc498bfc3d1a41a74a2b517ed437706d36ef"
+    },
+    {
+      "path": "dist/packages/compiler/src/flow/definite-assignment.js",
+      "sha256": "8b644b5474f7abec35a8710a486e0b752e0cd695126a54cfca73ab9454d2ebf9"
+    },
+    {
+      "path": "dist/packages/compiler/src/flow/method-flow.js",
+      "sha256": "cdad073d2414f12720897e66b5683a15e94c9b5c159f1d5cc903b974c7ae8954"
+    },
+    {
+      "path": "dist/packages/compiler/src/flow/reachability.js",
+      "sha256": "6e7008b16eb37bc11e8a7af7a4c090667b07120d1b96eafc56e2e9b53d844217"
+    },
+    {
+      "path": "dist/packages/compiler/src/flow/region-analysis.js",
+      "sha256": "aca53a5906ce05836b0dcbaca3e9f4b63a452207d5f34b75fcde5a4c523e5ceb"
     },
     {
       "path": "dist/packages/compiler/src/framework.js",
-      "sha256": "8bb8b387c140d832212a7e401e1c640687bc93328758e5cba7464075bf63a2ac"
+      "sha256": "5b6082bc9b2f4912b081e375432af77020166d062b1a2bc6a49aea81ca8621a9"
     },
     {
       "path": "dist/packages/compiler/src/index.js",
-      "sha256": "232afe03689152d9aca4d23ec891dffbca57c361b587248ca91d52b1b056cde1"
+      "sha256": "bf75a5f09730fb50c7485e54942848dc75fcda424faef22b3d527cb2bc351d9e"
+    },
+    {
+      "path": "dist/packages/compiler/src/lowering/generated-names.js",
+      "sha256": "56bf5e0671e0a49d8bf0a7ad8d2a740a1c69b97b42388bbfec303072fb91ff83"
+    },
+    {
+      "path": "dist/packages/compiler/src/lowering/local-rewriter.js",
+      "sha256": "88952767f626a5fc0421fa8405fa537e33ce6d297cc93ae01e558154e44740f5"
+    },
+    {
+      "path": "dist/packages/compiler/src/lowering/pipeline.js",
+      "sha256": "25f884e2bde28e28bd4e9b4f6b149ae11fbfdf74e643905717fe8fb4e62b97a9"
+    },
+    {
+      "path": "dist/packages/compiler/src/metadata-import/assembly-identity.js",
+      "sha256": "ab84a73c84bf385a14a0c570e791ccc5c52bd79127d42ac7ecd435ab3037a4ac"
+    },
+    {
+      "path": "dist/packages/compiler/src/metadata-import/attributes.js",
+      "sha256": "a15f5f88d6622883fa73c39c992c9ca67f52b2ca0b8e0966ba7b89e66d401941"
+    },
+    {
+      "path": "dist/packages/compiler/src/metadata-import/pe-metadata.js",
+      "sha256": "293aab9bc4b6cef87cf3195390b79c31307cf8a3b9be85b8fab8df46b18a0ae6"
+    },
+    {
+      "path": "dist/packages/compiler/src/metadata-import/pe-symbols.js",
+      "sha256": "7e65d758c6864bc16bef28d5a4d1e083aa340ba79e36107a6c5849f3a509a66b"
+    },
+    {
+      "path": "dist/packages/compiler/src/metadata-import/reference-manager.js",
+      "sha256": "0bf6ca648ac4b4007aeaa1aafc34e276d3f8e0d9d5ffde6d491b29bad85e4334"
+    },
+    {
+      "path": "dist/packages/compiler/src/method-compiler.js",
+      "sha256": "3a0e1760e23c608812967a1a50a2da98ce2ea13f47d7f035af75b97de79a60ca"
+    },
+    {
+      "path": "dist/packages/compiler/src/method-pipeline.js",
+      "sha256": "2132842dfda50a6f98eb54310b195c1b6b229d764f8e6913fc1ab557e63f3f5c"
     },
     {
       "path": "dist/packages/compiler/src/modern.js",
-      "sha256": "253d97f890fdcc6512aa6ba3e81b38fb23a8295c9926cfcd2d07c88332f263c9"
+      "sha256": "7c421e19afbad5b02e64483cab6c0471ced2b343543c29b2943dd5acfac0369c"
+    },
+    {
+      "path": "dist/packages/compiler/src/options.js",
+      "sha256": "972e77f2f4ca2fb921ee62dc815a1e2c6e19cc706fee978511013d35698022d7"
+    },
+    {
+      "path": "dist/packages/compiler/src/semantic-model.js",
+      "sha256": "9e2cfeb40bee50c2fe18a9f402fbae4fbcc2c2617a9382f2a766822546e93192"
+    },
+    {
+      "path": "dist/packages/compiler/src/symbols/compilation-symbols.js",
+      "sha256": "80dc44c4819dc62f1423c30dc015387cd5c7a19f31be9b822a19b7df993f2c18"
+    },
+    {
+      "path": "dist/packages/compiler/src/symbols/legacy-types.js",
+      "sha256": "ded7e0cd95de1cd1647abd642b7daafff3c58a1267af15361cae22d07b9b2dbb"
+    },
+    {
+      "path": "dist/packages/compiler/src/symbols/members.js",
+      "sha256": "1624be3597554e54cf87764892954c003353f32c403f7d3a3c3679c9613187d0"
+    },
+    {
+      "path": "dist/packages/compiler/src/symbols/namespaces.js",
+      "sha256": "04d244bb2460722c1a171209c6803617c2170044ec72cfc52015eac894683427"
+    },
+    {
+      "path": "dist/packages/compiler/src/symbols/registry-bridge.js",
+      "sha256": "0a14cb2b26df245a7881450c81652ad2a0220906d3345d1254721ac522020ec4"
+    },
+    {
+      "path": "dist/packages/compiler/src/symbols/source/declaration-table.js",
+      "sha256": "f16ab9da8adf6a93e1126f6fd6c61ada233de315ed857a44c210259e442bdef1"
+    },
+    {
+      "path": "dist/packages/compiler/src/symbols/special-types.js",
+      "sha256": "04f77336e4782608fdccf852e6bcbd27a921b36678a918268e13dec857dbe9dc"
+    },
+    {
+      "path": "dist/packages/compiler/src/symbols/types.js",
+      "sha256": "2a623c58a5a006ef296df88aae17ec02e34d1a9d0a390361838bdb43e47123fe"
+    },
+    {
+      "path": "dist/packages/compiler/src/symbols/well-known-members.js",
+      "sha256": "e50eaae9adf3a3fb708bd3d540413a9729d6b3a34d9f8e4154eb396b2c934b9d"
     },
     {
       "path": "dist/packages/compiler/src/syntax-features.js",
-      "sha256": "2b7411eee77d2e03c90e95aa409a8e719110321fa8705ea8c3263cb2cbc5c0c7"
+      "sha256": "c28796ad55b8ee8b9c9c6ed29360ee26bb6f2a228c7c1f99c81276fdcb6acd9f"
+    },
+    {
+      "path": "dist/packages/compiler/src/type-utils.js",
+      "sha256": "d1301bec187d2294295009e0e7de4785300c1692c4109c3b67d26d3a4b844f97"
+    },
+    {
+      "path": "dist/packages/compiler/test/accessibility/generate-roslyn-accessibility.js",
+      "sha256": "c234c3024d52c1e84759cbfa4fc0a174115977cdcb761d48b44ae961b1c47c2a"
+    },
+    {
+      "path": "dist/packages/compiler/test/accessibility/roslyn-accessibility.json",
+      "sha256": "c7f6341aec7adfed378a9a05cb29a1cf13ef8103d3fc1316ea7768bef6dc44ec"
+    },
+    {
+      "path": "dist/packages/compiler/test/accessibility/roslyn-declarations.json",
+      "sha256": "cd66b9923f19b2f2bb9a241ef84646cc828bffe906da7f987858d728413e5415"
+    },
+    {
+      "path": "dist/packages/compiler/test/bound/fixtures.js",
+      "sha256": "eef3a45a90c0274d2f743415fc248421f51c38995bba602edeee0162ba4b7443"
+    },
+    {
+      "path": "dist/packages/compiler/test/bound/snapshots.json",
+      "sha256": "14f6bf075b2175f2a5a1fb8bb45f6e98587a55c9e6714194374e6f9be79315c2"
+    },
+    {
+      "path": "dist/packages/compiler/test/bound/update-snapshots.js",
+      "sha256": "14781638140d221374b296a4a94ba77f1d1c73ffe035f7ebabd24626f3871a3c"
+    },
+    {
+      "path": "dist/packages/compiler/test/constants/expressions.js",
+      "sha256": "4f45cd71ac4d9aee8a7589ff4a381ea406dd149953a1938af6b74bfcdb8b2710"
+    },
+    {
+      "path": "dist/packages/compiler/test/constants/generate.js",
+      "sha256": "f7978ff5d554452816ea1fbc4f24f5cabdf944b23e9e336ed56574f5afde8cc1"
+    },
+    {
+      "path": "dist/packages/compiler/test/constants/oracle.js",
+      "sha256": "f4c8c414e9aebe1e29d9a384c741c30c32e9d4af493a16b2d24be5e21bcdd02f"
+    },
+    {
+      "path": "dist/packages/compiler/test/constants/roslyn-constants.json",
+      "sha256": "e34a7965604717981c2b5f04a58511f5a16ebb08413ae9fdb1cd413e3083dd39"
+    },
+    {
+      "path": "dist/packages/compiler/test/constants/roslyn-oracle/Program.cs",
+      "sha256": "e5dd2d222c091ceb5fbf992de77b2d97bf492929063b6b6c6019aa5c493ff4a5"
+    },
+    {
+      "path": "dist/packages/compiler/test/constants/roslyn-oracle/oracle.csproj",
+      "sha256": "f46e9cb7c2f1c843de3efe730a988c9d13f022ff58ed906a0c90d653073e38b6"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/baseline.json",
+      "sha256": "c05783611af9231cc38445c0c0a5f614b5dba75b2a0d80d4cd2bacc3cfc6db7c"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/corpus.js",
+      "sha256": "553d7b8d9989badc7085557f3f8c9e83edc03ace6246ccad437f06ec8d7430a6"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/fixtures/basics.js",
+      "sha256": "c8fd3c51254c1010b338b1cc6d7862287c7f54e9d239158d121a7581a0095f7a"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/fixtures/flow.js",
+      "sha256": "b8c5a98cb797952021d2a57ce357c59f0784b5dc716adb801c058e559b53d3f7"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/fixtures/kit.js",
+      "sha256": "ea8ca04b8cf8a0248072eff89ed309a0110c4ba8e2eb77f42fdeb0271da88b81"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/fixtures/library.js",
+      "sha256": "9d63d13ea3fcd3b960b73362954f0e583917f8a3b4dcc8958e2bb7329ae1ffec"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/fixtures/profile-flow.js",
+      "sha256": "33c7e7a3a67adb3525007652a185b0ddf1a18f4396b06dd74eb1901ea12b87d1"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/fixtures/types.js",
+      "sha256": "c9ec9e7a21c4baebe567c02aba570c89936617df8d7eb54bc91669d4e07ad1da"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/harness.js",
+      "sha256": "a6b4a9f737d2084f2730d8c4f0b7e32535fc8286d3c32c26e43850c0cde51494"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/accessibility.json",
+      "sha256": "68218a9a55608779678026e39de7d814e09fdae7d5df74708b63e4afa4821061"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/arithmetic.json",
+      "sha256": "14f69ec1d4d59cac9741173ed12ce59060101ab8457ed35ff11a3701ac27ad15"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/arrays.json",
+      "sha256": "f42ff490a126349c2dd329a0024653a64a3f8ded2fdccb45fcf9cd701e6695f7"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/async.json",
+      "sha256": "414ecea13bd7448a39cb7eb4b0e442734904bf80bb1b61ba8b2531b3f56c810c"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/classes.json",
+      "sha256": "4d9fae5a2575f0b09be3cb732f87a8a4df26b2fc324497e3d60b084d71564165"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/collections.json",
+      "sha256": "1ed61b7b8fc856220397634135382c70a434bc5b3590670d914c3127ac5b5321"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/constants.json",
+      "sha256": "6789a2fa5fc0df20d3c29daa9809a2ca35d730a1480a641292496fd68c684c64"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/control-flow.json",
+      "sha256": "761cc71e4e2bd446e0472d1a6667a7d16cfc1fc1789929f94b14a45a2ae0882b"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/conversions.json",
+      "sha256": "dcfd7fd2f531545a07472606cae5a5e6fd487f593e14743bf46369088c090adf"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/declarations.json",
+      "sha256": "73b82b9023119831a3927baf60aa31d4e3d18e9b9ae2466e285ef331878b3046"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/definite-assignment.json",
+      "sha256": "3d922c146e7209ce941f1b37bd26c8c7bee1ed32cb849ce79879a7bcab1fbcc5"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/entry-point.json",
+      "sha256": "3b56435ad7ff6017ad447c9b42c7d343b4dbc4e61bf0893da220cd9ece58effb"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/enums.json",
+      "sha256": "8fba6b77c8b030b86bc7bf4efb6cacb36327d8439b9f94b50265ce6d07f4a2d6"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/exceptions.json",
+      "sha256": "1be0be314c2ccae8f48efd734a6edd2cf4ade58090310ab0e0cb252fd5e9f21e"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/flow-assignment.json",
+      "sha256": "92135542451aaed5f55273a89e17afc13cecd08927b29327c137f4768ad2c444"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/flow-reachability.json",
+      "sha256": "f3f9260f97f4c9bb1b3f09163b83408c947f8c32996b39fa8e67f1dae13c72ab"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/flow-unused.json",
+      "sha256": "1e51c38a78c54cca1909499484c0eba86ffd67cd1d54daed5a5345abd90d6fa5"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/foreach.json",
+      "sha256": "3cd6250ba32c743d6629c5f737492e27101a47a15f303f11b1959fd6a52d5f3f"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/generics.json",
+      "sha256": "cb5f7b7e3a6a359fc0eb28c640fa6a7253020bb4d0e46223c8a099363e6c75e9"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/inheritance.json",
+      "sha256": "b50b134e616eb0bee16cb0022ed1088742a358fd322814a61a7d5a1d0aaed85f"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/interfaces.json",
+      "sha256": "ef7198c645ab40bc93ea2cb84f9840b1eb1aa244b915fce2dc80cb805d84a23d"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/interpolation.json",
+      "sha256": "ab35537c240868d70c317eca347e25ce7192bddfee8dbe814c68d714ca90fa73"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/lambdas.json",
+      "sha256": "8a28c5d805b7960a0bee0697d5d38323ac42e1fa4298af3b298b5ecdc6c33025"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/language-version.json",
+      "sha256": "95dc718cba2e82b892178e546d9ab1a2c54c5ee5e631aa1d2fe22b963cb429fc"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/linq.json",
+      "sha256": "22c239f0774fb1926d7ac0f9ab3dfc60bf89c2cd72ae87fe10502a83b70dc624"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/loops.json",
+      "sha256": "ed6e2720fd42bfc7f3db96dc490c3026ed4e8b202243b14c4b78e90bd2cf1e8b"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/member-access.json",
+      "sha256": "a0df06d630778195a97fba35c9b5b34ac901dca0d033fc8b40abf8d78103d9d3"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/methods.json",
+      "sha256": "fd8b1aa303a190647f52b0f3984254f54afb05dc269302630cd0697a22e25b92"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/name-lookup.json",
+      "sha256": "b6720edbffe6130430ea8be8e70c5d39b2b22aaed13a332d628896faa72a6675"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/namespaces.json",
+      "sha256": "8a705bfdda289495a52a369a625757abdc5968170ccd0c7540d1d99da9b56d70"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/nullable.json",
+      "sha256": "1dbac3ee60db0341712950f28e2bd20de9a7fc1648b279183b368ccd3d4db374"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/operators.json",
+      "sha256": "227367d341e8107628ec033b73a035e963178273afb67ee4a232b0eadb85cc9e"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/overload-resolution.json",
+      "sha256": "4796c91811eb412c9cc2db80f3690941d6f9dfb50323ccae236cc0ca467d988e"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/pattern-matching.json",
+      "sha256": "92b9bb7224411e7fa3d3d36d4342402677eb5d4603598bf29e5bb20be4f73e32"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/properties.json",
+      "sha256": "56cbfced02cbf3945b16d0343ad9ead1f8164f7345e08f26a5d793b1a7bf46b3"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/reachability.json",
+      "sha256": "0eb376f403f709def280590fa59df269fe43a94360a5bd24144730c730aa0356"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/records.json",
+      "sha256": "4429f9622167c468a0c306318ba1c3637dfb95917976cfa3328fb7c5ec8556d4"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/strings.json",
+      "sha256": "7b9b7fe442f8590ab738253c72c5bafd330e2069f4a93b8d9cb0d04a05205aa8"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/structs.json",
+      "sha256": "54501e5d40a58ea12582bccb3d0ae6523fa2d5ef36b3288ed9f21948d76b5aa8"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/switch.json",
+      "sha256": "1a3dbd970f64d1a0fcd0202ee151d198e6cf220f35c2984b17a013d3387dd294"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/syntax.json",
+      "sha256": "36d95691bfcc5ced56c4d60e082bf970a336d347d2c58121bf1ed44c0bb194aa"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/tuples.json",
+      "sha256": "c0e6bbd13896078aa86969cd458f6b812f78d1e744276413b034cb67b0a88ece"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/unused-warnings.json",
+      "sha256": "cf8060a6b78cb4c00c02ed0556e2e2baf6fea14e01e5af7e6984fae707bddd76"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/pinned/using-dispose.json",
+      "sha256": "2cab5fb308e8d5abb977397ffff71b3a6115e698ab2d97d2c24f9cfdc2a18303"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/run.test.js",
+      "sha256": "c429806dfb2c68a5a3f4a82371f3b711b4f0345b7b4cccd98a101769d98b321b"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/tools/Program.cs",
+      "sha256": "ae498efc7384741886967253010b81638bf8999d50745ab9a0f1d11e3781e20e"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/tools/pin.csproj",
+      "sha256": "68893c582db698f6ce4c02d5e3d0c3a4daacf4f2fb249cd4b9392bd693210d26"
+    },
+    {
+      "path": "dist/packages/compiler/test/differential/tools/pin.mjs",
+      "sha256": "d5822047cc4895e15436fdad859be531a117e907da25351668c64c62e66e635f"
+    },
+    {
+      "path": "dist/packages/compiler/test/roslyn/diagnostic-messages.json",
+      "sha256": "fc3e0a633e9101feaac89120d93d2590be15c3da5acee2e3024281075cf9cac6"
+    },
+    {
+      "path": "dist/packages/compiler/test/suppression/fixtures.js",
+      "sha256": "8ab01e41791f3f952e4f4d7fc15844be4cd6243550272dcf41e131371b75166a"
+    },
+    {
+      "path": "dist/packages/compiler/test/suppression/generate.js",
+      "sha256": "d069baf9918cb084acce3e40ce174975af97f780e34e34495d08951aa287afa3"
+    },
+    {
+      "path": "dist/packages/compiler/test/suppression/roslyn-suppression.json",
+      "sha256": "6fdb79704efc73a92b7afa02f664541c90c8957b1de1c1ebda0789bc4129f8f3"
     },
     {
       "path": "dist/packages/compute/LICENSE",
@@ -3885,7 +4397,7 @@
     },
     {
       "path": "dist/packages/editor/src/editor.css",
-      "sha256": "d541f28a587b4ddc092ed0709abceddccf9689ea916cc69da284576352c93439"
+      "sha256": "9f9246e33e9b852e133948130a53bf8470e5c076fd14ed92fea5b6f66ee3afca"
     },
     {
       "path": "dist/packages/editor/src/highlight.js",
@@ -3893,7 +4405,7 @@
     },
     {
       "path": "dist/packages/editor/src/index.js",
-      "sha256": "6c93ef24f4743eaec76a2a863a6ca678b2ff13941fb9cf954eecbca138c348e0"
+      "sha256": "2e147d680fca0c30e5910187430bc74cc36c19792c9c3fcffea6ba7d52f0da5c"
     },
     {
       "path": "dist/packages/editor/src/keymaps.js",
@@ -4289,23 +4801,35 @@
     },
     {
       "path": "dist/packages/runtime/src/cil-vm.js",
-      "sha256": "f118bf64c8005b55c8e88f70a757b91a9ed40f17d635b81ca0dede48f8bc069c"
+      "sha256": "b7bfe43866b298ea3285890c3b5283cd3c0d03f07c7f4fee565f898f9476f037"
     },
     {
       "path": "dist/packages/runtime/src/design-patch.js",
       "sha256": "0de837845d037ffb148b494520b77f3f3dfee6277042e47ac240ad553e49da50"
     },
     {
+      "path": "dist/packages/runtime/src/execution/array-ops.js",
+      "sha256": "19630a2808ca9c8b94dacb1e8c22b9a49d43bafdfd408de708f89974c0af2599"
+    },
+    {
       "path": "dist/packages/runtime/src/execution/calls.js",
-      "sha256": "9235ffbc772bfbb196a1bde0b689ad39e64547be117af6a745e2a9fcc4a73dca"
+      "sha256": "21b2dbc88892cc2c874739d8de4ea6b28af9106e1d1a6515b2ca322a244992fc"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/casting.js",
+      "sha256": "6dc83bb61bc8715d21218a3d768fdb575d755388b5f8f9c5594812931e1bb131"
     },
     {
       "path": "dist/packages/runtime/src/execution/eh.js",
-      "sha256": "31a30e6a6392d3e67c8098b4b8f6a779133223674709c2a3709172d0dede36c0"
+      "sha256": "1915e2f408ea70fc804792278fc0fbf3ce2ed0b815cc0c707ea5cd691bc23c47"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/enums.js",
+      "sha256": "140f5a63b9210a6c8d5ff52190169a6253008ce8bad953041d29e504c18565cd"
     },
     {
       "path": "dist/packages/runtime/src/execution/exception-types.js",
-      "sha256": "c8ce6c4c2f15e8d5ffa56e3b1c0ade10e596e64af8c2a037075a59cb2d606990"
+      "sha256": "6678d17008ecbcc81efa6c721b6e0b79c8bcbc680bcde65a2da0d04c05ceb407"
     },
     {
       "path": "dist/packages/runtime/src/execution/handlers/arith.js",
@@ -4313,7 +4837,7 @@
     },
     {
       "path": "dist/packages/runtime/src/execution/handlers/array.js",
-      "sha256": "bd2b965e868e6146568cb38b49874101d2c01d377df5cbe107ced22ae71c2bf4"
+      "sha256": "5b737c8089b5633a1c3e108f19d1be175da22e77fcac7a3718bacb59786c97a1"
     },
     {
       "path": "dist/packages/runtime/src/execution/handlers/branch.js",
@@ -4321,15 +4845,15 @@
     },
     {
       "path": "dist/packages/runtime/src/execution/handlers/call.js",
-      "sha256": "987fd3b069396bb4e1d968d2452cd89425304615c9c1e4cbd4759bb2036c2bd6"
+      "sha256": "7a22a259204709d17c17db09be4083434d8b836a7e17c829dc10dc3d604fda15"
     },
     {
       "path": "dist/packages/runtime/src/execution/handlers/index.js",
-      "sha256": "fe81d1306cd79c27842b3d8d9688e0375ed7c7dd5eb5553d846809f2ad7f5d72"
+      "sha256": "d82bb0a8c01d6fa86aca4cc28d76f2329265d1ec0a549be9c9d5be622fe69b66"
     },
     {
       "path": "dist/packages/runtime/src/execution/handlers/indirect.js",
-      "sha256": "f885dceca1c88a9e81444ca003881da048932a6a7c3574cbf73ec6f406c6b53a"
+      "sha256": "0bbf8a26a77dbc8852be454ddf323e8c6e4b8564e3d229e6d629e429d1a94ae1"
     },
     {
       "path": "dist/packages/runtime/src/execution/handlers/load-store.js",
@@ -4337,23 +4861,31 @@
     },
     {
       "path": "dist/packages/runtime/src/execution/handlers/object-model.js",
-      "sha256": "973c5170688cd1147720c570dd18352b5fe99b06583d8918fa4229d9c8fcabd6"
+      "sha256": "6cda825fa122f7ed2c02a3019dc2cc9f3d9c2d3a6e11342d5fdcaaa62ee07909"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/handlers/tokens.js",
+      "sha256": "dafc76e7d38901312f2888409f9165bd7c24a1ec883cf20a113f360ac8f549f4"
     },
     {
       "path": "dist/packages/runtime/src/execution/intrinsics.js",
-      "sha256": "5579baef7cac49a0124b6cc7f83028a2059c3a97906e4c163a431f8351fe4c3a"
+      "sha256": "2d559bba00ff7c9e2081fd45026b6555b9e944352a03bb6b7829a0e2006ff753"
     },
     {
       "path": "dist/packages/runtime/src/execution/method-offsets.js",
       "sha256": "ba092c008df1225c32377bad3f4b878e56ca08433d20100bab350347c45773c1"
     },
     {
+      "path": "dist/packages/runtime/src/execution/method-table.js",
+      "sha256": "5feaf8e980bdf7edc4c7883de012dad27059f05567ebf1be463983f087d42fb8"
+    },
+    {
       "path": "dist/packages/runtime/src/execution/numeric-ops.js",
-      "sha256": "5c56a82481b1500df4333545daff9741d812936f09ede2289d9003656bb18a13"
+      "sha256": "148247a3673d9e008cde0b9cf0d9f8ec1a94c9ec939619a55320e4e0b397bbed"
     },
     {
       "path": "dist/packages/runtime/src/execution/source-builtins.js",
-      "sha256": "4588ed3c2d8af8030f09546df730dc9e5ba8708a619d337c989b70a99e423d06"
+      "sha256": "8687e19a7543ae73920f472a60731ba6e749a0cc4c9de140bd72e0e4f746887e"
     },
     {
       "path": "dist/packages/runtime/src/execution/source-eh.js",
@@ -4361,15 +4893,35 @@
     },
     {
       "path": "dist/packages/runtime/src/execution/source-ops.js",
-      "sha256": "6f8b174d32ce578b30fe39cf6a5b3c78c636a5fec0c449406c486ba42c8317ee"
+      "sha256": "734c8fce317bf162323d0608a69761e0064ea79d37a73b8ab15c4d2abdb2eec5"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/static-init.js",
+      "sha256": "08257e3935e8fa94d5f5d54f53600586da7e5a0f569a9149506969b14adcef7e"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/statics.js",
+      "sha256": "7b759aa5b5d9ff01fc24fdf40c3260270f306f00c9963c629c949b7dd04ad24a"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/storage.js",
+      "sha256": "425a912af0b5b4b05a38c3ca7361daa7fc956d6fc96f889fba012d29698f3acb"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/strings.js",
+      "sha256": "a6fc2db5b46a6ee42c3c7ea96af1e38e48a244870283e0f85bab7faa6f16d6b7"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/tokens.js",
+      "sha256": "c08016e4735017e1381cb09fe9b7d4e193704792058eccfedea2be96af0eb01a"
     },
     {
       "path": "dist/packages/runtime/src/execution/type-system.js",
-      "sha256": "445b17f715a88ca7d087c68c7479dd8e9ccc3674eade1cb0438f522095b41427"
+      "sha256": "dd3ee371f04e8c8010e6c6c2ed444b2539f4c3a81d49249f42fa6d2e51aaa8aa"
     },
     {
       "path": "dist/packages/runtime/src/heap.js",
-      "sha256": "5fd22d7d5be4a87a491b2655c10574e501f857cd47658f1994022acaf404dff6"
+      "sha256": "28b86fe51a4a4cd93b7701b682fa2363a07d8a9c6370fd734e96690b16fe853c"
     },
     {
       "path": "dist/packages/runtime/src/host-operations.js",
@@ -4401,7 +4953,7 @@
     },
     {
       "path": "dist/packages/runtime/src/snapshot.js",
-      "sha256": "470724f0213108b1946dd7f61c8c4ceaf7134159fadef93b6e09e5e40162aced"
+      "sha256": "79bb359e004b5682963e0edefe490794e261be4a06bbf8c8d42ab7f5c953185b"
     },
     {
       "path": "dist/packages/runtime/src/styling.js",
@@ -4409,7 +4961,7 @@
     },
     {
       "path": "dist/packages/runtime/src/vm.js",
-      "sha256": "b58dea249bba360191fd926f4e39487ec1170a3aaead13b2765344ec987b8ddd"
+      "sha256": "adae35631aa173164dc755a60129b1d63ff61f993362c720cf704eb44b82a4c4"
     },
     {
       "path": "dist/packages/symbols/LICENSE",
@@ -4569,7 +5121,7 @@
     },
     {
       "path": "dist/packages/syntax/src/parser/core.js",
-      "sha256": "41c38257d556a582af3597537088e395fa1d6bf3fa2fc0937e7c1d4daaa44283"
+      "sha256": "18b81c9d143d1ad6bd5fc1c79c60035ef346ede6cbc0783115b799cc9e7b2c58"
     },
     {
       "path": "dist/packages/syntax/src/parser/declarations/attributes.js",
@@ -4597,7 +5149,7 @@
     },
     {
       "path": "dist/packages/syntax/src/parser/declarations/namespaces.js",
-      "sha256": "f496bad25ec54126436b633f555dd0c23b7248839e3f2a39a9ea1eb3ed1b132b"
+      "sha256": "3d691a8ca6920ee4253fdd06125b88d80ec8599860d1b910728545bbea4e94ac"
     },
     {
       "path": "dist/packages/syntax/src/parser/declarations/operators.js",
@@ -4637,7 +5189,7 @@
     },
     {
       "path": "dist/packages/syntax/src/parser/expressions/tuples.js",
-      "sha256": "250ba0e605431067c644b0a3ff8a788b31efbdba18b1208bfc89e6eecc83e4ba"
+      "sha256": "ea5562ebb5cd015472f01c7a422b96eb25ca93e4c7b5a1fca771ed7415466ff2"
     },
     {
       "path": "dist/packages/syntax/src/parser/modifiers.js",
@@ -6161,7 +6713,7 @@
     },
     {
       "path": "dist/runtime.worker.js",
-      "sha256": "617ddd3fde6fd488947710f810a11769963b680b1c3f7a699ffe8e81cec4bbbe"
+      "sha256": "7ca509d51c6ec75d16b57455557d0e6f1675b17af73d8f3f6a3e207d9366ea2b"
     },
     {
       "path": "dist/samples-designer.js",
@@ -6193,11 +6745,11 @@
     },
     {
       "path": "dist/studio.css",
-      "sha256": "61e8f836530dc95c61fabba5b6476d821ed76a526d629e8dadc1f55b46f05155"
+      "sha256": "a08627ef52a9333c94e73c9d5b8aff28f10e9c63bcdfc3604330027619b650ff"
     },
     {
       "path": "dist/studio.js",
-      "sha256": "a422c1acbba55a0f5a5c36826fb249f0c12093e0f27917b441bf12e9bd949c28"
+      "sha256": "591399e129405e4f626d28758d39883d07adb711fa2a63eb280e6bf463e78f47"
     },
     {
       "path": "dist/styles/README.md",
@@ -6305,7 +6857,7 @@
     },
     {
       "path": "dist/tools/core.js",
-      "sha256": "c874590e9978db5a46f84bb7292644524a7ca2b3466873bd29b8630dd70564cd"
+      "sha256": "416a93081e07df451374f6d9b76e2eb6421b7c992d37f2aff006e32a1e31e478"
     },
     {
       "path": "dist/tools/debugger-automation.js",

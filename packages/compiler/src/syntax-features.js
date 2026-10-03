@@ -7,7 +7,7 @@ export function syntaxFeatureChecks(files, options) {
   for (const file of files) {
     let selected;
     try { selected = languageVersion(options.langVersionByUri?.[file.source.uri] ?? options.langVersion); }
-    catch { continue; } // Compilation reports invalid options once with SF2140.
+    catch { continue; } // Compilation reports invalid options once with CS1617.
     const uses = [...(file.features ?? [])];
     const firstStatement = file.root.statements?.[0];
     if (firstStatement && !uses.some(use=>use.id==='TopLevelStatements')) uses.push({id:'TopLevelStatements',start:firstStatement.start,end:firstStatement.end});

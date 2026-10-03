@@ -436,9 +436,17 @@
       "dependencies": [
         "packages/cil/src/binary.js",
         "packages/cil/src/dispatch-profile.js",
+        "packages/cil/src/field-profile.js",
         "packages/cil/src/inspector.js",
         "packages/cil/src/intrinsic-profile.js",
         "packages/framework/src/index.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/cil/src/field-profile.js",
+      "dependencies": [
+        "packages/cil/src/binary.js"
       ],
       "external": []
     },
@@ -460,6 +468,7 @@
         "packages/cil/src/dispatch-profile.js",
         "packages/cil/src/emitter.js",
         "packages/cil/src/execution-profile.js",
+        "packages/cil/src/field-profile.js",
         "packages/cil/src/il-document.js",
         "packages/cil/src/inspector.js",
         "packages/cil/src/intrinsic-profile.js",
@@ -525,37 +534,184 @@
       "external": []
     },
     {
+      "path": "packages/compiler/scripts/generate-bound-nodes.js",
+      "dependencies": [],
+      "external": [
+        "node:fs",
+        "node:path",
+        "node:url"
+      ]
+    },
+    {
+      "path": "packages/compiler/scripts/generate-diagnostic-codes.js",
+      "dependencies": [],
+      "external": [
+        "node:fs",
+        "node:path",
+        "node:url"
+      ]
+    },
+    {
       "path": "packages/compiler/src/async-lowering.js",
       "dependencies": [
+        "packages/compiler/src/diagnostics/codes.js",
         "packages/framework/src/index.js",
         "packages/text/src/index.js"
       ],
       "external": []
     },
     {
-      "path": "packages/compiler/src/constants.js",
-      "dependencies": [],
+      "path": "packages/compiler/src/binder/accessibility.js",
+      "dependencies": [
+        "packages/compiler/src/symbols/types.js"
+      ],
       "external": []
     },
     {
-      "path": "packages/compiler/src/framework.js",
+      "path": "packages/compiler/src/binder/binder.js",
       "dependencies": [
-        "packages/bytecode/src/index.js",
+        "packages/compiler/src/symbols/types.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/binder/entry-point.js",
+      "dependencies": [
         "packages/framework/src/index.js"
       ],
       "external": []
     },
     {
-      "path": "packages/compiler/src/index.js",
+      "path": "packages/compiler/src/binder/expressions.js",
       "dependencies": [
         "packages/bytecode/src/index.js",
-        "packages/cil/src/index.js",
-        "packages/compiler/src/async-lowering.js",
+        "packages/compiler/src/binder/operators.js",
+        "packages/compiler/src/bound/nodes.js",
+        "packages/compiler/src/type-utils.js",
+        "packages/framework/src/index.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/binder/lookup.js",
+      "dependencies": [
+        "packages/compiler/src/binder/binder.js",
+        "packages/compiler/src/symbols/special-types.js",
+        "packages/compiler/src/symbols/types.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/binder/method-body.js",
+      "dependencies": [
+        "packages/compiler/src/binder/expressions.js",
+        "packages/compiler/src/binder/method-context.js",
+        "packages/compiler/src/binder/statements.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/binder/method-context.js",
+      "dependencies": [
+        "packages/bytecode/src/index.js",
+        "packages/compiler/src/binder/binder.js",
+        "packages/compiler/src/bound/nodes.js",
         "packages/compiler/src/constants.js",
-        "packages/compiler/src/framework.js",
+        "packages/compiler/src/symbols/members.js",
+        "packages/compiler/src/type-utils.js",
+        "packages/framework/src/index.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/binder/operators.js",
+      "dependencies": [
+        "packages/bytecode/src/index.js",
+        "packages/compiler/src/type-utils.js",
+        "packages/framework/src/index.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/binder/statements.js",
+      "dependencies": [
+        "packages/compiler/src/bound/nodes.js",
+        "packages/compiler/src/symbols/members.js",
+        "packages/compiler/src/type-utils.js",
+        "packages/framework/src/index.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/binder/usings.js",
+      "dependencies": [
+        "packages/compiler/src/symbols/namespaces.js",
+        "packages/compiler/src/symbols/types.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/bound/dump.js",
+      "dependencies": [
+        "packages/compiler/src/bound/nodes.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/bound/nodes.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/bound/rewriter.js",
+      "dependencies": [
+        "packages/compiler/src/bound/visitor.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/bound/visitor.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/codegen/ir-emitter.js",
+      "dependencies": [
+        "packages/bytecode/src/index.js",
+        "packages/compiler/src/binder/operators.js",
+        "packages/compiler/src/type-utils.js",
+        "packages/framework/src/index.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/compilation.js",
+      "dependencies": [
+        "packages/bytecode/src/index.js",
+        "packages/compiler/src/async-lowering.js",
+        "packages/compiler/src/binder/binder.js",
+        "packages/compiler/src/binder/entry-point.js",
+        "packages/compiler/src/binder/usings.js",
+        "packages/compiler/src/diagnostics/codes.js",
+        "packages/compiler/src/diagnostics/suppression.js",
+        "packages/compiler/src/method-compiler.js",
+        "packages/compiler/src/method-pipeline.js",
         "packages/compiler/src/modern.js",
+        "packages/compiler/src/options.js",
+        "packages/compiler/src/symbols/compilation-symbols.js",
         "packages/compiler/src/syntax-features.js",
+        "packages/compiler/src/type-utils.js",
         "packages/framework/src/index.js",
+        "packages/text/src/index.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/compile.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "packages/compiler/src/compilation.js",
+        "packages/compiler/src/diagnostics/codes.js",
         "packages/symbols/src/index.js",
         "packages/syntax/src/index.js",
         "packages/text/src/index.js"
@@ -563,11 +719,291 @@
       "external": []
     },
     {
+      "path": "packages/compiler/src/constants.js",
+      "dependencies": [
+        "packages/compiler/src/constants/fold.js",
+        "packages/compiler/src/diagnostics/codes.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/constants/constant-value.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/constants/fold.js",
+      "dependencies": [
+        "packages/compiler/src/constants/constant-value.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/diagnostics/codes.js",
+      "dependencies": [
+        "packages/compiler/src/diagnostics/roslyn-codes.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/diagnostics/roslyn-codes.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/diagnostics/suppression.js",
+      "dependencies": [
+        "packages/compiler/src/diagnostics/codes.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/flow/cfg.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/flow/definite-assignment.js",
+      "dependencies": [
+        "packages/compiler/src/flow/reachability.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/flow/method-flow.js",
+      "dependencies": [
+        "packages/compiler/src/flow/cfg.js",
+        "packages/compiler/src/flow/definite-assignment.js",
+        "packages/compiler/src/flow/reachability.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/flow/reachability.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/flow/region-analysis.js",
+      "dependencies": [
+        "packages/compiler/src/bound/nodes.js",
+        "packages/compiler/src/flow/cfg.js",
+        "packages/compiler/src/flow/definite-assignment.js",
+        "packages/compiler/src/flow/reachability.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/framework.js",
+      "dependencies": [
+        "packages/bytecode/src/index.js",
+        "packages/compiler/src/type-utils.js",
+        "packages/framework/src/index.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/index.js",
+      "dependencies": [
+        "packages/compiler/src/compilation.js",
+        "packages/compiler/src/compile.js",
+        "packages/compiler/src/constants.js",
+        "packages/compiler/src/modern.js",
+        "packages/compiler/src/semantic-model.js",
+        "packages/compiler/src/type-utils.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/lowering/generated-names.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/lowering/local-rewriter.js",
+      "dependencies": [
+        "packages/compiler/src/bound/nodes.js",
+        "packages/compiler/src/bound/rewriter.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/lowering/pipeline.js",
+      "dependencies": [
+        "packages/compiler/src/bound/rewriter.js",
+        "packages/compiler/src/lowering/local-rewriter.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/metadata-import/assembly-identity.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/metadata-import/attributes.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "packages/compiler/src/symbols/types.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/metadata-import/pe-metadata.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "packages/compiler/src/metadata-import/assembly-identity.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/metadata-import/pe-symbols.js",
+      "dependencies": [
+        "packages/compiler/src/metadata-import/assembly-identity.js",
+        "packages/compiler/src/metadata-import/attributes.js",
+        "packages/compiler/src/metadata-import/pe-metadata.js",
+        "packages/compiler/src/symbols/members.js",
+        "packages/compiler/src/symbols/namespaces.js",
+        "packages/compiler/src/symbols/types.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/metadata-import/reference-manager.js",
+      "dependencies": [
+        "packages/compiler/src/metadata-import/assembly-identity.js",
+        "packages/compiler/src/metadata-import/pe-symbols.js",
+        "packages/compiler/src/symbols/namespaces.js",
+        "packages/compiler/src/symbols/types.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/method-compiler.js",
+      "dependencies": [
+        "packages/bytecode/src/index.js",
+        "packages/compiler/src/constants.js",
+        "packages/compiler/src/framework.js",
+        "packages/compiler/src/modern.js",
+        "packages/compiler/src/type-utils.js",
+        "packages/framework/src/index.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/method-pipeline.js",
+      "dependencies": [
+        "packages/bytecode/src/index.js",
+        "packages/compiler/src/binder/method-body.js",
+        "packages/compiler/src/codegen/ir-emitter.js",
+        "packages/compiler/src/flow/method-flow.js",
+        "packages/compiler/src/lowering/pipeline.js",
+        "packages/compiler/src/symbols/well-known-members.js"
+      ],
+      "external": []
+    },
+    {
       "path": "packages/compiler/src/modern.js",
       "dependencies": [
         "packages/bytecode/src/index.js",
+        "packages/compiler/src/type-utils.js",
         "packages/framework/src/index.js",
         "packages/syntax/src/index.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/options.js",
+      "dependencies": [
+        "packages/compiler/src/diagnostics/suppression.js",
+        "packages/syntax/src/index.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/semantic-model.js",
+      "dependencies": [
+        "packages/compiler/src/binder/binder.js",
+        "packages/compiler/src/binder/method-body.js",
+        "packages/compiler/src/compilation.js",
+        "packages/compiler/src/flow/region-analysis.js",
+        "packages/compiler/src/symbols/types.js",
+        "packages/syntax/src/index.js",
+        "packages/text/src/index.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/symbols/compilation-symbols.js",
+      "dependencies": [
+        "packages/compiler/src/symbols/legacy-types.js",
+        "packages/compiler/src/symbols/members.js",
+        "packages/compiler/src/symbols/namespaces.js",
+        "packages/compiler/src/symbols/registry-bridge.js",
+        "packages/compiler/src/symbols/types.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/symbols/legacy-types.js",
+      "dependencies": [
+        "packages/compiler/src/symbols/types.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/symbols/members.js",
+      "dependencies": [
+        "packages/compiler/src/symbols/types.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/symbols/namespaces.js",
+      "dependencies": [
+        "packages/compiler/src/symbols/types.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/symbols/registry-bridge.js",
+      "dependencies": [
+        "packages/bytecode/src/index.js",
+        "packages/compiler/src/symbols/members.js",
+        "packages/compiler/src/symbols/namespaces.js",
+        "packages/compiler/src/symbols/special-types.js",
+        "packages/compiler/src/symbols/types.js",
+        "packages/framework/src/index.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/symbols/source/declaration-table.js",
+      "dependencies": [
+        "packages/compiler/src/symbols/members.js",
+        "packages/compiler/src/symbols/namespaces.js",
+        "packages/compiler/src/symbols/types.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/symbols/special-types.js",
+      "dependencies": [
+        "packages/compiler/src/symbols/types.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/symbols/types.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/symbols/well-known-members.js",
+      "dependencies": [
+        "packages/compiler/src/symbols/members.js",
+        "packages/compiler/src/symbols/special-types.js",
+        "packages/compiler/src/symbols/types.js"
       ],
       "external": []
     },
@@ -578,6 +1014,165 @@
         "packages/syntax/src/index.js"
       ],
       "external": []
+    },
+    {
+      "path": "packages/compiler/src/type-utils.js",
+      "dependencies": [
+        "packages/framework/src/index.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/test/accessibility/generate-roslyn-accessibility.js",
+      "dependencies": [],
+      "external": [
+        "node:child_process",
+        "node:fs",
+        "node:os",
+        "node:path",
+        "node:url"
+      ]
+    },
+    {
+      "path": "packages/compiler/test/bound/fixtures.js",
+      "dependencies": [
+        "packages/compiler/src/bound/dump.js",
+        "packages/compiler/src/compilation.js",
+        "packages/syntax/src/index.js",
+        "packages/text/src/index.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/test/bound/update-snapshots.js",
+      "dependencies": [
+        "packages/compiler/test/bound/fixtures.js"
+      ],
+      "external": [
+        "node:fs",
+        "node:path",
+        "node:url"
+      ]
+    },
+    {
+      "path": "packages/compiler/test/constants/expressions.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/test/constants/generate.js",
+      "dependencies": [
+        "packages/compiler/test/constants/expressions.js",
+        "packages/compiler/test/constants/oracle.js"
+      ],
+      "external": [
+        "node:fs",
+        "node:path",
+        "node:url"
+      ]
+    },
+    {
+      "path": "packages/compiler/test/constants/oracle.js",
+      "dependencies": [],
+      "external": [
+        "node:child_process",
+        "node:fs",
+        "node:path",
+        "node:url"
+      ]
+    },
+    {
+      "path": "packages/compiler/test/differential/corpus.js",
+      "dependencies": [
+        "packages/compiler/test/differential/fixtures/basics.js",
+        "packages/compiler/test/differential/fixtures/flow.js",
+        "packages/compiler/test/differential/fixtures/library.js",
+        "packages/compiler/test/differential/fixtures/profile-flow.js",
+        "packages/compiler/test/differential/fixtures/types.js"
+      ],
+      "external": [
+        "node:crypto",
+        "node:fs",
+        "node:path",
+        "node:url"
+      ]
+    },
+    {
+      "path": "packages/compiler/test/differential/fixtures/basics.js",
+      "dependencies": [
+        "packages/compiler/test/differential/fixtures/kit.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/test/differential/fixtures/flow.js",
+      "dependencies": [
+        "packages/compiler/test/differential/fixtures/kit.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/test/differential/fixtures/kit.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/test/differential/fixtures/library.js",
+      "dependencies": [
+        "packages/compiler/test/differential/fixtures/kit.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/test/differential/fixtures/profile-flow.js",
+      "dependencies": [
+        "packages/compiler/test/differential/fixtures/kit.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/test/differential/fixtures/types.js",
+      "dependencies": [
+        "packages/compiler/test/differential/fixtures/kit.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/test/differential/harness.js",
+      "dependencies": [
+        "packages/compiler/src/index.js",
+        "packages/compiler/test/differential/corpus.js",
+        "packages/runtime/src/index.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/test/differential/run.test.js",
+      "dependencies": [
+        "packages/compiler/test/differential/corpus.js",
+        "packages/compiler/test/differential/harness.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "packages/compiler/test/suppression/fixtures.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/test/suppression/generate.js",
+      "dependencies": [
+        "packages/compiler/test/constants/oracle.js",
+        "packages/compiler/test/suppression/fixtures.js"
+      ],
+      "external": [
+        "node:fs",
+        "node:path",
+        "node:url"
+      ]
     },
     {
       "path": "packages/compute/src/index.js",
@@ -1189,10 +1784,16 @@
       "dependencies": [
         "packages/cil/src/index.js",
         "packages/runtime/src/execution/calls.js",
+        "packages/runtime/src/execution/casting.js",
         "packages/runtime/src/execution/eh.js",
+        "packages/runtime/src/execution/enums.js",
         "packages/runtime/src/execution/handlers/index.js",
         "packages/runtime/src/execution/intrinsics.js",
         "packages/runtime/src/execution/numeric-ops.js",
+        "packages/runtime/src/execution/static-init.js",
+        "packages/runtime/src/execution/storage.js",
+        "packages/runtime/src/execution/strings.js",
+        "packages/runtime/src/execution/tokens.js",
         "packages/runtime/src/execution/type-system.js",
         "packages/runtime/src/heap.js",
         "packages/runtime/src/platform.js",
@@ -1211,20 +1812,46 @@
       "external": []
     },
     {
+      "path": "packages/runtime/src/execution/array-ops.js",
+      "dependencies": [
+        "packages/runtime/src/heap.js"
+      ],
+      "external": []
+    },
+    {
       "path": "packages/runtime/src/execution/calls.js",
       "dependencies": [
         "packages/cil/src/index.js",
         "packages/runtime/src/execution/eh.js",
         "packages/runtime/src/execution/method-offsets.js",
-        "packages/runtime/src/execution/numeric-ops.js",
+        "packages/runtime/src/execution/static-init.js",
+        "packages/runtime/src/execution/storage.js",
+        "packages/runtime/src/execution/strings.js",
         "packages/runtime/src/heap.js",
         "packages/runtime/src/platform.js"
       ],
       "external": []
     },
     {
+      "path": "packages/runtime/src/execution/casting.js",
+      "dependencies": [
+        "packages/runtime/src/heap.js"
+      ],
+      "external": []
+    },
+    {
       "path": "packages/runtime/src/execution/eh.js",
       "dependencies": [
+        "packages/runtime/src/execution/static-init.js",
+        "packages/runtime/src/heap.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/enums.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "packages/framework/src/index.js",
         "packages/runtime/src/heap.js"
       ],
       "external": []
@@ -1245,7 +1872,9 @@
       "path": "packages/runtime/src/execution/handlers/array.js",
       "dependencies": [
         "packages/cil/src/index.js",
-        "packages/runtime/src/execution/numeric-ops.js"
+        "packages/runtime/src/execution/numeric-ops.js",
+        "packages/runtime/src/execution/storage.js",
+        "packages/runtime/src/heap.js"
       ],
       "external": []
     },
@@ -1260,6 +1889,7 @@
     {
       "path": "packages/runtime/src/execution/handlers/call.js",
       "dependencies": [
+        "packages/runtime/src/execution/static-init.js",
         "packages/runtime/src/heap.js"
       ],
       "external": []
@@ -1273,7 +1903,8 @@
         "packages/runtime/src/execution/handlers/call.js",
         "packages/runtime/src/execution/handlers/indirect.js",
         "packages/runtime/src/execution/handlers/load-store.js",
-        "packages/runtime/src/execution/handlers/object-model.js"
+        "packages/runtime/src/execution/handlers/object-model.js",
+        "packages/runtime/src/execution/handlers/tokens.js"
       ],
       "external": []
     },
@@ -1281,7 +1912,9 @@
       "path": "packages/runtime/src/execution/handlers/indirect.js",
       "dependencies": [
         "packages/cil/src/index.js",
-        "packages/runtime/src/execution/numeric-ops.js",
+        "packages/runtime/src/execution/enums.js",
+        "packages/runtime/src/execution/statics.js",
+        "packages/runtime/src/execution/storage.js",
         "packages/runtime/src/heap.js"
       ],
       "external": []
@@ -1297,10 +1930,18 @@
     {
       "path": "packages/runtime/src/execution/handlers/object-model.js",
       "dependencies": [
-        "packages/cil/src/index.js",
         "packages/framework/src/index.js",
+        "packages/runtime/src/execution/casting.js",
         "packages/runtime/src/execution/numeric-ops.js",
+        "packages/runtime/src/execution/statics.js",
         "packages/runtime/src/heap.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/handlers/tokens.js",
+      "dependencies": [
+        "packages/runtime/src/execution/tokens.js"
       ],
       "external": []
     },
@@ -1308,7 +1949,11 @@
       "path": "packages/runtime/src/execution/intrinsics.js",
       "dependencies": [
         "packages/cil/src/index.js",
+        "packages/runtime/src/execution/array-ops.js",
+        "packages/runtime/src/execution/enums.js",
         "packages/runtime/src/execution/numeric-ops.js",
+        "packages/runtime/src/execution/strings.js",
+        "packages/runtime/src/execution/tokens.js",
         "packages/runtime/src/heap.js"
       ],
       "external": []
@@ -1316,6 +1961,14 @@
     {
       "path": "packages/runtime/src/execution/method-offsets.js",
       "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/method-table.js",
+      "dependencies": [
+        "packages/framework/src/index.js",
+        "packages/runtime/src/execution/exception-types.js"
+      ],
       "external": []
     },
     {
@@ -1327,6 +1980,10 @@
       "path": "packages/runtime/src/execution/source-builtins.js",
       "dependencies": [
         "packages/bytecode/src/index.js",
+        "packages/runtime/src/execution/array-ops.js",
+        "packages/runtime/src/execution/enums.js",
+        "packages/runtime/src/execution/strings.js",
+        "packages/runtime/src/execution/tokens.js",
         "packages/runtime/src/heap.js"
       ],
       "external": []
@@ -1341,7 +1998,51 @@
     {
       "path": "packages/runtime/src/execution/source-ops.js",
       "dependencies": [
+        "packages/bytecode/src/index.js",
+        "packages/framework/src/index.js",
+        "packages/runtime/src/execution/casting.js",
+        "packages/runtime/src/execution/enums.js",
         "packages/runtime/src/execution/numeric-ops.js",
+        "packages/runtime/src/execution/tokens.js",
+        "packages/runtime/src/heap.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/static-init.js",
+      "dependencies": [
+        "packages/runtime/src/heap.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/statics.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "packages/runtime/src/execution/storage.js",
+        "packages/runtime/src/heap.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/storage.js",
+      "dependencies": [
+        "packages/runtime/src/execution/enums.js",
+        "packages/runtime/src/execution/numeric-ops.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/strings.js",
+      "dependencies": [
+        "packages/runtime/src/heap.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/tokens.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
         "packages/runtime/src/heap.js"
       ],
       "external": []
@@ -1350,14 +2051,18 @@
       "path": "packages/runtime/src/execution/type-system.js",
       "dependencies": [
         "packages/cil/src/index.js",
+        "packages/runtime/src/execution/casting.js",
         "packages/runtime/src/execution/exception-types.js",
+        "packages/runtime/src/execution/method-table.js",
         "packages/runtime/src/heap.js"
       ],
       "external": []
     },
     {
       "path": "packages/runtime/src/heap.js",
-      "dependencies": [],
+      "dependencies": [
+        "packages/runtime/src/execution/method-table.js"
+      ],
       "external": []
     },
     {
@@ -1449,9 +2154,11 @@
       "dependencies": [
         "packages/bytecode/src/index.js",
         "packages/cil/src/index.js",
+        "packages/runtime/src/execution/method-table.js",
         "packages/runtime/src/execution/source-builtins.js",
         "packages/runtime/src/execution/source-eh.js",
         "packages/runtime/src/execution/source-ops.js",
+        "packages/runtime/src/execution/strings.js",
         "packages/runtime/src/heap.js",
         "packages/runtime/src/platform.js",
         "packages/runtime/src/scheduler.js",
@@ -3021,10 +3728,58 @@
       ]
     },
     {
+      "path": "tests/a05-21-static-init.test.js",
+      "dependencies": [
+        "packages/runtime/src/execution/static-init.js",
+        "packages/runtime/src/index.js",
+        "tests/managed-fixtures.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
       "path": "tests/a05-b03-dispatch.test.js",
       "dependencies": [
         "packages/cil/src/index.js",
         "packages/runtime/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/a05-cast-integration.test.js",
+      "dependencies": [
+        "packages/runtime/src/index.js",
+        "tests/managed-fixtures.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/a05-enum-fixtures.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "tests/managed-fixtures.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "tests/a05-enums-strings.test.js",
+      "dependencies": [
+        "packages/bytecode/src/index.js",
+        "packages/cil/src/index.js",
+        "packages/compiler/src/index.js",
+        "packages/runtime/src/execution/enums.js",
+        "packages/runtime/src/execution/strings.js",
+        "packages/runtime/src/index.js",
+        "tests/a05-enum-fixtures.js",
+        "tests/managed-fixtures.js"
       ],
       "external": [
         "node:assert/strict",
@@ -3185,6 +3940,70 @@
       ]
     },
     {
+      "path": "tests/a05-statics.test.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "packages/runtime/src/execution/statics.js",
+        "packages/runtime/src/index.js",
+        "tests/managed-fixtures.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/a05-tokens.test.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "packages/compiler/src/index.js",
+        "packages/runtime/src/execution/method-table.js",
+        "packages/runtime/src/execution/strings.js",
+        "packages/runtime/src/execution/tokens.js",
+        "packages/runtime/src/index.js",
+        "packages/runtime/src/snapshot.js",
+        "tests/managed-fixtures.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/a05-type-casting.test.js",
+      "dependencies": [
+        "packages/runtime/src/execution/casting.js",
+        "packages/runtime/src/index.js",
+        "tests/a05-type-fixtures.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/a05-type-fixtures.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "packages/runtime/src/execution/method-table.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "tests/a05-type-tables.test.js",
+      "dependencies": [
+        "packages/runtime/src/execution/method-table.js",
+        "packages/runtime/src/execution/type-system.js",
+        "packages/runtime/src/index.js",
+        "packages/runtime/src/snapshot.js",
+        "tests/a05-type-fixtures.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
       "path": "tests/animation13.test.js",
       "dependencies": [
         "packages/cil/src/index.js",
@@ -3251,12 +4070,403 @@
       "external": []
     },
     {
+      "path": "tests/compiler-accessibility.test.js",
+      "dependencies": [
+        "packages/compiler/src/binder/accessibility.js",
+        "packages/compiler/src/diagnostics/codes.js",
+        "packages/compiler/src/symbols/members.js",
+        "packages/compiler/src/symbols/namespaces.js",
+        "packages/compiler/src/symbols/types.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-binder-lookup.test.js",
+      "dependencies": [
+        "packages/compiler/src/binder/binder.js",
+        "packages/compiler/src/binder/lookup.js",
+        "packages/compiler/src/binder/usings.js",
+        "packages/compiler/src/diagnostics/codes.js",
+        "packages/compiler/src/symbols/members.js",
+        "packages/compiler/src/symbols/namespaces.js",
+        "packages/compiler/src/symbols/registry-bridge.js",
+        "packages/compiler/src/symbols/types.js",
+        "packages/syntax/src/index.js",
+        "packages/text/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-bound-tree.test.js",
+      "dependencies": [
+        "packages/compiler/src/bound/dump.js",
+        "packages/compiler/src/bound/nodes.js",
+        "packages/compiler/src/bound/rewriter.js",
+        "packages/compiler/src/bound/visitor.js",
+        "packages/compiler/src/symbols/types.js",
+        "packages/compiler/test/bound/fixtures.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:child_process",
+        "node:fs",
+        "node:path",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-constant-conversion-integration.test.js",
+      "dependencies": [
+        "packages/compiler/src/index.js",
+        "packages/runtime/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:crypto",
+        "node:fs",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-constant-folding.test.js",
+      "dependencies": [
+        "packages/compiler/src/constants.js",
+        "packages/compiler/src/constants/constant-value.js",
+        "packages/compiler/src/constants/fold.js",
+        "packages/compiler/src/diagnostics/codes.js",
+        "packages/syntax/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-core-symbols.test.js",
+      "dependencies": [
+        "packages/bytecode/src/index.js",
+        "packages/compiler/src/diagnostics/codes.js",
+        "packages/compiler/src/symbols/legacy-types.js",
+        "packages/compiler/src/symbols/members.js",
+        "packages/compiler/src/symbols/namespaces.js",
+        "packages/compiler/src/symbols/registry-bridge.js",
+        "packages/compiler/src/symbols/special-types.js",
+        "packages/compiler/src/symbols/types.js",
+        "packages/compiler/src/symbols/well-known-members.js",
+        "packages/framework/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-declaration-table.test.js",
+      "dependencies": [
+        "packages/compiler/src/diagnostics/codes.js",
+        "packages/compiler/src/symbols/members.js",
+        "packages/compiler/src/symbols/namespaces.js",
+        "packages/compiler/src/symbols/source/declaration-table.js",
+        "packages/compiler/src/symbols/types.js",
+        "packages/syntax/src/index.js",
+        "packages/text/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-diagnostic-catalog.test.js",
+      "dependencies": [
+        "packages/compiler/src/diagnostics/codes.js",
+        "packages/compiler/src/diagnostics/roslyn-codes.js",
+        "packages/compiler/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:child_process",
+        "node:fs",
+        "node:path",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-differential.test.js",
+      "dependencies": [
+        "packages/compiler/test/differential/run.test.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "tests/compiler-entry-point.test.js",
+      "dependencies": [
+        "packages/compiler/src/binder/entry-point.js",
+        "packages/compiler/src/diagnostics/codes.js",
+        "packages/compiler/src/index.js",
+        "packages/compiler/test/differential/corpus.js",
+        "packages/compiler/test/differential/harness.js",
+        "packages/runtime/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-flow-analysis.test.js",
+      "dependencies": [
+        "packages/compiler/src/bound/nodes.js",
+        "packages/compiler/src/flow/cfg.js",
+        "packages/compiler/src/flow/definite-assignment.js",
+        "packages/compiler/src/flow/method-flow.js",
+        "packages/compiler/src/flow/reachability.js",
+        "packages/compiler/src/index.js",
+        "packages/compiler/src/symbols/members.js",
+        "packages/compiler/src/symbols/registry-bridge.js",
+        "packages/compiler/src/symbols/types.js",
+        "packages/compiler/test/differential/corpus.js",
+        "packages/compiler/test/differential/harness.js",
+        "packages/syntax/src/index.js",
+        "packages/text/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-lowering.test.js",
+      "dependencies": [
+        "packages/compiler/src/bound/dump.js",
+        "packages/compiler/src/bound/rewriter.js",
+        "packages/compiler/src/index.js",
+        "packages/compiler/src/lowering/generated-names.js",
+        "packages/compiler/src/lowering/local-rewriter.js",
+        "packages/compiler/src/lowering/pipeline.js",
+        "packages/compiler/src/symbols/namespaces.js",
+        "packages/compiler/src/symbols/special-types.js",
+        "packages/compiler/src/symbols/well-known-members.js",
+        "packages/compiler/test/bound/fixtures.js",
+        "packages/syntax/src/index.js",
+        "packages/text/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-member-symbols.test.js",
+      "dependencies": [
+        "packages/compiler/src/symbols/members.js",
+        "packages/compiler/src/symbols/namespaces.js",
+        "packages/compiler/src/symbols/source/declaration-table.js",
+        "packages/compiler/src/symbols/types.js",
+        "packages/syntax/src/index.js",
+        "packages/text/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-metadata-attributes.test.js",
+      "dependencies": [
+        "packages/compiler/src/diagnostics/codes.js",
+        "packages/compiler/src/metadata-import/assembly-identity.js",
+        "packages/compiler/src/metadata-import/attributes.js",
+        "packages/compiler/src/metadata-import/pe-symbols.js",
+        "packages/compiler/src/symbols/members.js",
+        "packages/compiler/src/symbols/types.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-metadata-import.test.js",
+      "dependencies": [
+        "packages/compiler/src/metadata-import/pe-symbols.js",
+        "packages/compiler/src/symbols/members.js",
+        "packages/compiler/src/symbols/namespaces.js",
+        "packages/compiler/src/symbols/types.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-module-seams.test.js",
+      "dependencies": [
+        "packages/compiler/src/compilation.js",
+        "packages/compiler/src/index.js",
+        "packages/compiler/src/method-compiler.js",
+        "packages/compiler/src/type-utils.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs",
+        "node:path",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-namespaces.test.js",
+      "dependencies": [
+        "packages/bytecode/src/index.js",
+        "packages/compiler/src/diagnostics/codes.js",
+        "packages/compiler/src/index.js",
+        "packages/compiler/src/symbols/namespaces.js",
+        "packages/runtime/src/index.js",
+        "packages/syntax/src/index.js",
+        "packages/text/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs",
+        "node:path",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-options-integration.test.js",
+      "dependencies": [
+        "packages/compiler/src/index.js",
+        "packages/compiler/src/options.js",
+        "packages/syntax/src/index.js",
+        "packages/text/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-options.test.js",
+      "dependencies": [
+        "packages/compiler/src/modern.js",
+        "packages/compiler/src/options.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-pipeline-parity.test.js",
+      "dependencies": [
+        "packages/bytecode/src/index.js",
+        "packages/compiler/src/bound/nodes.js",
+        "packages/compiler/src/codegen/ir-emitter.js",
+        "packages/compiler/src/index.js",
+        "packages/compiler/test/bound/fixtures.js",
+        "packages/compiler/test/differential/corpus.js",
+        "packages/runtime/src/index.js",
+        "packages/syntax/src/index.js",
+        "packages/text/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs",
+        "node:path",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-reference-manager.test.js",
+      "dependencies": [
+        "packages/compiler/src/diagnostics/codes.js",
+        "packages/compiler/src/metadata-import/assembly-identity.js",
+        "packages/compiler/src/metadata-import/pe-symbols.js",
+        "packages/compiler/src/metadata-import/reference-manager.js",
+        "packages/compiler/src/symbols/namespaces.js",
+        "packages/compiler/src/symbols/types.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-semantic-model.test.js",
+      "dependencies": [
+        "packages/compiler/src/flow/region-analysis.js",
+        "packages/compiler/src/index.js",
+        "packages/compiler/src/symbols/members.js",
+        "packages/compiler/src/symbols/types.js",
+        "packages/syntax/src/index.js",
+        "packages/text/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-suppression.test.js",
+      "dependencies": [
+        "packages/compiler/src/diagnostics/codes.js",
+        "packages/compiler/src/diagnostics/suppression.js",
+        "packages/compiler/src/options.js",
+        "packages/text/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-type-symbols.test.js",
+      "dependencies": [
+        "packages/compiler/src/symbols/namespaces.js",
+        "packages/compiler/src/symbols/types.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/compiler-warnings-are-not-failures.test.js",
+      "dependencies": [
+        "packages/compiler/src/index.js",
+        "packages/language/src/index.js",
+        "packages/protocol/src/index.js",
+        "packages/refactoring/src/index.js",
+        "packages/runtime/src/index.js",
+        "packages/workspace/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
       "path": "tests/compiler.test.js",
       "dependencies": [
         "apps/studio/samples.js",
         "packages/bytecode/src/index.js",
         "packages/compiler/src/index.js",
         "packages/runtime/src/index.js",
+        "tests/fixtures/language/compiler.js",
         "tests/helpers.js",
         "tests/sample-sources.js"
       ],
@@ -3436,6 +4646,22 @@
       ]
     },
     {
+      "path": "tests/engine-parity.test.js",
+      "dependencies": [
+        "tests/support/engine-parity-allowlist.js",
+        "tests/support/engine-parity-fixtures.js",
+        "tests/support/engine-parity-harness.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs/promises",
+        "node:os",
+        "node:path",
+        "node:test",
+        "node:url"
+      ]
+    },
+    {
       "path": "tests/examples13.test.js",
       "dependencies": [
         "apps/studio/samples-release13.js",
@@ -3461,6 +4687,31 @@
         "node:assert/strict",
         "node:test"
       ]
+    },
+    {
+      "path": "tests/fixtures/language/compiler.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "tests/fixtures/language/language14.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "tests/fixtures/language/parity-boundaries.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "tests/fixtures/language/release05.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "tests/fixtures/language/release06.js",
+      "dependencies": [],
+      "external": []
     },
     {
       "path": "tests/helpers.js",
@@ -3506,7 +4757,8 @@
       "dependencies": [
         "packages/cil/src/index.js",
         "packages/compiler/src/index.js",
-        "packages/runtime/src/index.js"
+        "packages/runtime/src/index.js",
+        "tests/fixtures/language/language14.js"
       ],
       "external": [
         "node:assert/strict",
@@ -3727,7 +4979,8 @@
       "dependencies": [
         "packages/cil/src/index.js",
         "packages/compiler/src/index.js",
-        "packages/runtime/src/index.js"
+        "packages/runtime/src/index.js",
+        "tests/fixtures/language/release05.js"
       ],
       "external": [
         "node:assert/strict",
@@ -3802,6 +5055,7 @@
         "packages/compiler/src/index.js",
         "packages/runtime/src/index.js",
         "packages/syntax/src/index.js",
+        "tests/fixtures/language/release06.js",
         "tests/sample-sources.js"
       ],
       "external": [
@@ -4021,6 +5275,35 @@
       "external": [
         "node:assert/strict",
         "node:test"
+      ]
+    },
+    {
+      "path": "tests/support/engine-parity-allowlist.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "tests/support/engine-parity-fixtures.js",
+      "dependencies": [
+        "tests/sample-sources.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs/promises",
+        "node:path",
+        "node:url"
+      ]
+    },
+    {
+      "path": "tests/support/engine-parity-harness.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "packages/compiler/src/index.js",
+        "packages/runtime/src/execution/exception-types.js",
+        "packages/runtime/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict"
       ]
     },
     {

@@ -14,7 +14,7 @@ import {declareCoreTypes,TypeProvider,specialTypeFromKeyword,coreTypeDescriptor}
  * (framework members) or `builtin` (bytecode builtins) so code generation can find the ABI entry again.
  */
 const coreIds=['System_Object','System_Enum','System_MulticastDelegate','System_Delegate','System_ValueType','System_Void','System_Boolean','System_Char','System_SByte','System_Byte','System_Int16','System_UInt16','System_Int32','System_UInt32','System_Int64','System_UInt64','System_Decimal','System_Single','System_Double','System_String','System_IntPtr','System_UIntPtr','System_Array','System_IDisposable','System_Exception','System_Math','System_Console'];
-const builtinOwners=Object.freeze({Console:'System.Console',Math:'System.Math',GC:'System.GC',int:'System.Int32',double:'System.Double',Convert:'System.Convert',string:'System.String',Array:'System.Array',object:'System.Object',Exception:'System.Exception',Debug:'System.Diagnostics.Debug',Environment:'System.Environment'});
+const builtinOwners=Object.freeze({Console:'System.Console',Math:'System.Math',GC:'System.GC',int:'System.Int32',double:'System.Double',Convert:'System.Convert',string:'System.String',Array:'System.Array',object:'System.Object',Exception:'System.Exception',Debug:'System.Diagnostics.Debug',Environment:'System.Environment',Enum:'System.Enum',Type:'System.Type'});
 const builtinParameterTypes=Object.freeze({any:'object',number:'double',array:'System.Array',exception:'Exception'});
 /** Splits "A.B.Name`2<x, y<z>>" into {path:'A.B.Name', arity:2, args:['x','y<z>']}. */
 export function parseRegistryName(name){
@@ -41,7 +41,7 @@ export class RegistryBridge {
     for(const [keyword] of Object.entries({object:1,void:1,bool:1,char:1,sbyte:1,byte:1,short:1,ushort:1,int:1,uint:1,long:1,ulong:1,decimal:1,float:1,double:1,string:1,nint:1,nuint:1}))this.byName.set(keyword,this.typeProvider.getCoreType(specialTypeFromKeyword(keyword)));
     this.byName.set('Exception',this.typeProvider.getCoreType('System_Exception'));this.keywords=new Map([...this.byName].filter(([k])=>!k.includes('.')).map(([k,v])=>[v,k]));
     for(const name of this.types.keys())this.declare(name);
-    for(const owner of this.builtinsByOwner.keys())if(!this.byName.has(owner)){const dot=owner.lastIndexOf('.'),type=this.globalNamespace.ensureNamespace(owner.slice(0,dot)).addType(new NamedTypeSymbol({name:owner.slice(dot+1),isStatic:true,baseType:()=>this.objectType}));this.remember(owner,type);this.attach(type,owner);}
+    for(const owner of this.builtinsByOwner.keys())if(!this.byName.has(owner)){const dot=owner.lastIndexOf('.'),type=this.globalNamespace.ensureNamespace(owner.slice(0,dot)).addType(new NamedTypeSymbol({name:owner.slice(dot+1),isStatic:owner!=='System.Type',baseType:()=>this.objectType}));this.remember(owner,type);this.attach(type,owner);}
   }
   get objectType(){return this.typeProvider.getCoreType('System_Object');}
   remember(name,type){this.byName.set(name,type);if(!this.names.has(type))this.names.set(type,name);}
@@ -99,10 +99,10 @@ export class RegistryBridge {
     for(const b of this.builtinsByOwner.get(registryName)??[]){
       const short=b.name.slice(b.name.lastIndexOf('.')+1),prefix=b.name.slice(0,b.name.lastIndexOf('.')),result=b.result==='numeric'?'double':b.result;
       // Instance builtins list the receiver as their first parameter; `string.Concat` and friends are static.
-      const instance=b.params[0]&&(prefix==='string'&&b.params[0]==='string'&&!['Concat','IsNullOrEmpty'].includes(short)||prefix==='object'||prefix==='Exception'&&short==='Message'),params=instance?b.params.slice(1):b.params,required=b.min-(instance?1:0);
+      const instance=b.params[0]&&(prefix==='string'&&b.params[0]==='string'&&!['Concat','IsNullOrEmpty','Intern','IsInterned'].includes(short)||prefix==='object'&&short!=='ReferenceEquals'||prefix==='Exception'&&short==='Message'||prefix==='Enum'&&short==='HasFlag'||prefix==='Type'),params=instance?b.params.slice(1):b.params,required=b.min-(instance?1:0);
       const parameters=params.map((p,i)=>new ParameterSymbol({name:'arg'+i,type:this.typeFromName(builtinParameterTypes[p]??p)??this.objectType,ordinal:i,...(i>=required?{explicitDefaultValue:{value:null}}:{})}));let symbol;
       if(short==='new')symbol=new MethodSymbol({...pub,name:'.ctor',methodKind:MethodKind.Constructor,returnType:this.byName.get('void'),parameters});
-      else if(short==='Message'||short==='TickCount'){const getter=new MethodSymbol({...pub,name:'get_'+short,methodKind:MethodKind.PropertyGet,returnType:this.typeFromName(result),modifiers:instance?0:DeclarationModifiers.Static});getter.builtin=b;symbol=new PropertySymbol({...pub,name:short,type:this.typeFromName(result),getMethod:getter,modifiers:instance?0:DeclarationModifiers.Static});members.push(getter);}
+      else if(short==='Message'||short==='TickCount'||prefix==='Type'&&['Name','FullName'].includes(short)){const getter=new MethodSymbol({...pub,name:'get_'+short,methodKind:MethodKind.PropertyGet,returnType:this.typeFromName(result),modifiers:instance?0:DeclarationModifiers.Static});getter.builtin=b;symbol=new PropertySymbol({...pub,name:short,type:this.typeFromName(result),getMethod:getter,modifiers:instance?0:DeclarationModifiers.Static});members.push(getter);}
       else symbol=new MethodSymbol({...pub,name:short,returnType:this.typeFromName(result)??this.objectType,parameters,modifiers:instance?0:DeclarationModifiers.Static});
       symbol.builtin=b;this.builtinSymbols.set(b.id,symbol);members.push(symbol);
     }

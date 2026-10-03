@@ -150,6 +150,8 @@ export class IrEmitter {
       case 'EventAssignmentOperator':this.expr(node.receiver);this.expr(node.argument);this.emitContract(node.event.contract);break;
       case 'Conversion':{
         this.expr(node.operand);if(!node.isExplicit)throw new Error(`Conversion '${node.conversion?.kind}' reached code generation without being lowered`);
+        // Roslyn folds floating constants differently from runtime conv.i4 saturation.
+        if(node.constantValue&&['int','double'].includes(node.legacyType)){this.emit(Op.POP);this.emitConstant(node.constantValue.value,node.legacyType);break;}
         this.emit(Op.CONVERT,enumTypes.includes(node.legacyType)?EnumConvertBase+enumTypes.indexOf(node.legacyType):node.legacyType==='int'?0:1,node.isChecked?1:0);break;}
       case 'SwitchExpression':{
         const dispatch=this.switchDispatch(node.syntax,node.expression,node.arms.map(a=>[a.pattern])),ends=[];

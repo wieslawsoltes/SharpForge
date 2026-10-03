@@ -28,7 +28,7 @@ test('features: every Roslyn MessageID feature is catalogued with the same requi
 test('features: compiler and syntax share one LangVersion parser and table', () => {
   assert.deepEqual(compilerLanguageVersion('7.3'), languageVersion('7.3'));
   assert.deepEqual(compilerLanguageVersion('preview'), { name: 'preview', number: 15, preview: true });
-  assert.equal(compile('Console.WriteLine(1);', { langVersion: 'nonsense' }).diagnostics.some(d => d.code === 'SF2140'), true);
+  assert.equal(compile('Console.WriteLine(1);', { langVersion: 'nonsense' }).diagnostics.some(d => d.code === 'CS1617'), true);
   assert.equal(compile('class P { static void Main() { Console.WriteLine(1); } }', { langVersion: '7.2' }).success, true);
   assert.equal(compile('Console.WriteLine(1);', { langVersion: '7.2' }).success, false);
 });

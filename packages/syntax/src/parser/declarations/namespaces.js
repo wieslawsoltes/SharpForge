@@ -1,6 +1,6 @@
 import { accessibilityModifiers } from '../modifiers.js';
 /** Compilation units, extern aliases, using directives (namespace, static and alias forms) and namespace declarations, kept in source order. */
-const memberOnly = new Set([...accessibilityModifiers, 'virtual', 'override', 'abstract', 'sealed', 'volatile', 'new']);
+const memberOnly = new Set([...accessibilityModifiers, 'virtual', 'override', 'abstract', 'sealed', 'volatile']);
 const directiveFollowers = new Set([';', 'eof', 'using', 'namespace', 'class', 'struct', 'interface', 'enum', 'public', 'internal', '[']);
 export const namespaceMethods = {
   compilationUnit() {
