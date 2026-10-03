@@ -2,7 +2,8 @@
   "schemaVersion": 1,
   "area": "A02",
   "nodeGlobs": [
-    "tests/compiler.test.js"
+    "tests/compiler.test.js",
+    "tests/compiler-*.test.js"
   ],
   "browserScripts": [],
   "requiredServices": [],
