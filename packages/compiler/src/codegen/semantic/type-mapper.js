@@ -1,6 +1,7 @@
 /**
  * Maps type symbols to image type names. The bytecode image knows `int`, `double`, `bool`, `string`, `object`,
  * `Exception`, framework registry types, classes declared in the image and single-dimensional arrays of those.
+ * Arrays of a higher rank are objects of a synthesized class (lowering/arrays.js).
  * Everything else either lowers to one of them (enums to `int`, delegate types to a synthesized class) or is
  * reported as not executable on this runtime.
  */
@@ -55,7 +56,8 @@ export class TypeMapper {
   }
   compute(type, syntax) {
     if (type instanceof ArrayTypeSymbol) {
-      if (type.rank !== 1) unsupported('multi-dimensional arrays', syntax);
+      // A rank-n array is an object of a synthesized class over one flat array (lowering/arrays.js).
+      if (type.rank !== 1) return this.host.arrays.classOf(this.imageType(type.elementType, syntax), type.rank).record.name;
       return this.imageType(type.elementType, syntax) + '[]';
     }
     const special = type.specialType;
@@ -99,6 +101,8 @@ export class TypeMapper {
     // A framework generic over a type the registry does not list shares the construction over `object` (lowering/generics).
     const registry = this.host.bridge.registryName(type) ?? this.host.frameworkConstructions.imageTypeOf(type);
     if (registry) return registry;
+    const missing = this.host.frameworkConstructions.missingContract(type);
+    if (missing) return unsupported(`type '${type.toDisplayString()}' (the framework registry has no '${missing}' contracts)`, syntax);
     return unsupported(`type '${type.toDisplayString()}' (not in the framework registry)`, syntax);
   }
   /** True when values of the image type are references (cleared at scope exit, comparable with null). */

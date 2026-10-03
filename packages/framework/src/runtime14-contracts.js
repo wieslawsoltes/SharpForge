@@ -1,5 +1,7 @@
+import {registerBclModules} from '@sharpforge/bcl-core';
 /** Release 14 appends contracts so older serialized builtin identities remain stable. */
-export function registerRuntime14({define,member,ctor,prop,en,delegate}){
+export function registerRuntime14(registry){
+  const {define,member,ctor,prop,en,delegate}=registry;
   const task='System.Threading.Tasks.Task',async='SharpForge.Runtime.Async',H='System.Net.Http.',CT='System.Threading.CancellationToken',CTS='System.Threading.CancellationTokenSource';
   function taskType(r){const t=task+'`1<'+r+'>';define(t,{kind:'task',result:r,base:task});for(const [name,type]of [['Id','int'],['IsCompleted','bool'],['IsFaulted','bool'],['IsCanceled','bool'],['Result',r]])prop(t,name,type,null,true);member(t,'Wait',[],'void');member(async,'Await',[t],r,{isStatic:true,kind:'await'});delegate('System.Func`1<'+r+'>',[],r);member(async,'Start',['System.Func`1<'+r+'>'],t,{isStatic:true,kind:'startTask'});return t;}
   const responseTask=taskType(H+'HttpResponseMessage'),arrayTask=taskType('double[]');
@@ -27,9 +29,7 @@ export function registerRuntime14({define,member,ctor,prop,en,delegate}){
   }
   define('SharpForge.Runtime.ParallelMath',{kind:'numeric',family:'parallel'});
   for(const [name,params,result,operation]of [['SumAsync',['double[]'],task+'`1<double>','sum'],['DotAsync',['double[]','double[]'],task+'`1<double>','dot'],['AddAsync',['double[]','double[]'],arrayTask,'add'],['MultiplyAsync',['double[]','double[]'],arrayTask,'multiply']])member('SharpForge.Runtime.ParallelMath',name,params,result,{isStatic:true,operation});
-  define('System.Array',{kind:'bcl14',family:'array'});
-  for(const t of ['int','double','bool','string','object'])for(const [name,params,result]of [['Copy',[t+'[]',t+'[]','int'],'void'],['Copy',[t+'[]','int',t+'[]','int','int'],'void'],['Clear',[t+'[]','int','int'],'void'],['Fill',[t+'[]',t],'void'],['Fill',[t+'[]',t,'int','int'],'void'],['IndexOf',[t+'[]',t],'int'],['LastIndexOf',[t+'[]',t],'int'],['BinarySearch',[t+'[]',t],'int']])member('System.Array',name,params,result,{isStatic:true});
-  define('System.Random',{kind:'bcl14',family:'random'});ctor('System.Random');ctor('System.Random',['int']);prop('System.Random','Shared','System.Random',null,true,true);for(const p of [[],['int'],['int','int']])member('System.Random','Next',p,'int');member('System.Random','NextDouble',[],'double');
+  registerBclModules(registry, {group: 'runtime14'});
 
   const J='System.Text.Json.';
   define(J+'JsonDocument',{kind:'bcl14',family:'jsonDocument'});member(J+'JsonDocument','Parse',['string'],J+'JsonDocument',{isStatic:true});prop(J+'JsonDocument','RootElement',J+'JsonElement',null,true);member(J+'JsonDocument','Dispose',[],'void');

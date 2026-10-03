@@ -37,6 +37,7 @@ import { LocalFunctionBinding } from './body/local-functions.js';
 import { JumpBinding } from './jumps.js';
 import { ExceptionBinding } from './exceptions.js';
 import { AnonymousMethodBinding } from './anonymous-methods.js';
+import { ArrayBinding } from './arrays.js';
 import { languageRules } from './language-rules.js';
 import { CSharp6Binding } from './csharp6.js';
 import { CallerInfoBinding } from './caller-info.js';
@@ -70,6 +71,7 @@ const statementFamilies = [
   JumpBinding,
   ExceptionBinding,
   AnonymousMethodBinding,
+  ArrayBinding,
   CSharp6Binding,
   CallerInfoBinding,
   AnonymousTypeBinding,
