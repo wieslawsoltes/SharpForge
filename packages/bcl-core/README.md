@@ -5,6 +5,12 @@ runtime or framework dependency. Hosts supply `bclHost.fault(type, message)`,
 `bclHost.isReference(value)` and `bclHost.frameworkType(name)` on each platform.
 The fault service must throw the host's managed exception.
 
+Hosts may also supply `formatScalar(platform, value, format, type)`, returning a
+string for an exact scalar or `undefined` for ordinary text fallback, and
+`boxScalar(platform, value, type)` to preserve their scalar representation when
+boxing. Managed storage writes use `heap.writeData(record, index, value)` so the
+host can retain copy-on-write snapshots and write barriers.
+
 Each family module has `name`, `families`, `contracts(registry)` and
 `invoke(platform, descriptor, arguments)` members. Invocation returns
 `{handled: true, value}` or `{handled: false}` synchronously. Module registration

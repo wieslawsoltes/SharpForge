@@ -33,13 +33,18 @@ export const RuntimeArrayTranslation = Base => class extends Base {
       const array = this.holder(this.imageType(type, node.syntax), 'array');
       const linear = this.holder('int', 'index');
       const lengths = Array.from({length: type.rank}, () => this.holder('int', 'length'));
+      const lowerBounds = Array.from({length: type.rank}, () => this.holder('int', 'lowerBound'));
       const setup = [array.init(this.expression(node.collection), span), linear.init(integer(0))];
-      lengths.forEach((length, dimension) => setup.push(length.init(member(array.read(), 'GetLength', [integer(dimension)]))));
+      lengths.forEach((length, dimension) => {
+        setup.push(length.init(member(array.read(), 'GetLength', [integer(dimension)])));
+        setup.push(lowerBounds[dimension].init(member(array.read(), 'GetLowerBound', [integer(dimension)])));
+      });
       const indices = [];
       let stride = integer(1);
       for (let dimension = type.rank - 1; dimension >= 0; dimension--) {
         const quotient = dimension === type.rank - 1 ? linear.read() : n.binary('/', linear.read(), stride, 'int');
-        indices[dimension] = n.binary('%', quotient, lengths[dimension].read(), 'int');
+        indices[dimension] = n.binary('+', n.binary('%', quotient, lengths[dimension].read(), 'int'),
+          lowerBounds[dimension].read(), 'int');
         stride = n.binary('*', stride, lengths[dimension].read(), 'int');
       }
       const element = this.imageType(type.elementType, node.syntax);

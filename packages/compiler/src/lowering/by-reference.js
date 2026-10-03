@@ -4,7 +4,7 @@ import {lowered} from './tuples/translate-tuples.js';
 
 export const isByReference = entry => !!entry?.refKind && entry.refKind !== 'none';
 const readonly = entry => ['in', 'ref readonly', 'ref readonly parameter'].includes(entry?.refKind);
-const indirect = pointer => ({kind: 'ManagedIndirect', legacyType: pointer.legacyType.slice(0, -1),
+export const indirectReference = pointer => ({kind: 'ManagedIndirect', legacyType: pointer.legacyType.slice(0, -1),
   isExpression: true, pointer});
 const address = (target, immutable = false) => ({kind: 'ManagedAddress', legacyType: target.legacyType + '&',
   isExpression: true, target, readonly: immutable});
@@ -17,7 +17,7 @@ export const ByReferenceTranslation = Base => class extends Base {
       if (!isByReference(symbol)) return;
       const type = this.imageType(symbol.type, symbol.syntax);
       const slot = n.newParameter(symbol.name, type + '&', firstOrdinal + index);
-      this.frame.vars.set(symbol, () => indirect(n.parameter(slot)));
+      this.frame.vars.set(symbol, () => indirectReference(n.parameter(slot)));
     });
     return prologue;
   }
@@ -26,7 +26,7 @@ export const ByReferenceTranslation = Base => class extends Base {
     if (!isByReference(symbol)) return super.declareVariable(symbol, initializer, syntax);
     const type = this.imageType(symbol.type, symbol.syntax);
     const variable = this.addBlockLocal(n.newLocal(symbol.name, type + '&', syntax, {hidden: false}));
-    this.frame.vars.set(symbol, () => indirect(n.local(variable)));
+    this.frame.vars.set(symbol, () => indirectReference(n.local(variable)));
     return [n.declare([[variable, initializer]], syntax)];
   }
 
@@ -87,7 +87,7 @@ export const ByReferenceTranslation = Base => class extends Base {
   }
 
   exprRef(node) { return this.addressExpression(node.operand); }
-  exprRefConditional(node) { return indirect(this.addressExpression(node)); }
+  exprRefConditional(node) { return indirectReference(this.addressExpression(node)); }
 
   stmtReturn(node) {
     return node.isRef ? n.returnStatement(this.addressExpression(node.expression), this.span(node.syntax)) : super.stmtReturn(node);
@@ -102,17 +102,17 @@ export const ByReferenceTranslation = Base => class extends Base {
 
   exprCall(node) {
     const value = super.exprCall(node);
-    return isByReference(node.method) ? indirect(value) : value;
+    return isByReference(node.method) ? indirectReference(value) : value;
   }
 
   exprPropertyAccess(node) {
     if (!isByReference(node.property)) return super.exprPropertyAccess(node);
     const method = this.g.methodOf(node.property.getMethod, node.syntax);
-    return indirect(n.call(method, node.property.isStatic ? null : this.memberReceiver(node), []));
+    return indirectReference(n.call(method, node.property.isStatic ? null : this.memberReceiver(node), []));
   }
 
   exprIndexerAccess(node) {
-    return isByReference(node.property) ? indirect(super.exprIndexerAccess(node)) : super.exprIndexerAccess(node);
+    return isByReference(node.property) ? indirectReference(super.exprIndexerAccess(node)) : super.exprIndexerAccess(node);
   }
 
   target(node) {
@@ -129,7 +129,7 @@ export const ByReferenceTranslation = Base => class extends Base {
     if (node.isRef) {
       const target = this.target(node.left);
       if (target.kind !== 'ManagedIndirect') return this.unsupported('reference reassignment of this location', node.syntax);
-      return indirect(n.assign(target.pointer, this.addressExpression(node.right)));
+      return indirectReference(n.assign(target.pointer, this.addressExpression(node.right)));
     }
     if (node.left.kind === 'IndexerAccess' && isByReference(node.left.property)) {
       return n.assign(this.target(node.left), this.expression(node.right));

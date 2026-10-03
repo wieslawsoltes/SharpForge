@@ -15,6 +15,7 @@ import { TypeKind, SymbolKind, ConstructedNamedTypeSymbol } from '../../symbols/
 import { MethodKind } from '../../symbols/members.js';
 import { findImplementation } from '../../binder/interface-impl.js';
 import { n } from '../../codegen/semantic/node-factory.js';
+import {isByReference, indirectReference} from '../by-reference.js';
 
 const toObjectConversions = new Set(['Boxing', 'ImplicitReference', 'Identity']);
 
@@ -92,7 +93,8 @@ export const GenericTranslation = Base =>
         if (definition.typeParameters?.length) {
           const typeArguments = method.typeArguments.map(argument => this.g.generics.closed(argument, node.syntax)),
             entry = this.genericLocalFunction(definition, typeArguments, node.syntax);
-          return this.callLocalFunctionEntry(entry, this.arguments(node, method));
+          const value = this.callLocalFunctionEntry(entry, this.arguments(node, method));
+          return isByReference(method) ? indirectReference(value) : value;
         }
       }
       if (method?.kind === SymbolKind.Method && method.methodKind !== MethodKind.LocalFunction && receiverType) {
