@@ -17,6 +17,12 @@ const rules = [
     applies: node => node.kind === 'TryStatement' && node.catches.length > 1,
     codes: ['CS0160', 'CS1017', 'CS1058'],
   },
+  {
+    // Labeled break and continue (binder/labeled-jumps.js): the target rules of the pinned preview proposal.
+    text: /\b(?:break|continue)\s+[\p{L}_@]/u,
+    applies: node => (node.kind === 'BreakStatement' || node.kind === 'ContinueStatement') && !!node.label,
+    codes: ['CS0139', 'CS0157'],
+  },
 ];
 
 /** Rules decided from the compilation unit alone: `{ applies(file), codes }`. */
