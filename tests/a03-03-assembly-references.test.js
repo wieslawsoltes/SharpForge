@@ -94,3 +94,22 @@ test('A03 real net9/net10 reference-pack identities are confirmed by native GetR
     }
   }
 });
+
+function forgedReferenceImage(count, keySize) {
+  const metadata = new MetadataBuilder('Forged');
+  const key = metadata.blob(new Uint8Array(keySize));
+  for (let index = 0; index < count; index++) metadata.add(35, [1, 0, 0, 0, 1, key, 0xffff, 0, 0]);
+  const bytes = metadata.finish({ format: 'SharpForge.CIL', version: 1, name: 'Forged', framework: 'net8',
+    outputKind: 'library', entry: null, methods: [], types: [], statics: [], sequencePoints: [], sources: [] });
+  const section = new Uint8Array(72 + bytes.length);
+  section.set(bytes, 72);
+  return writePE(section, 72, bytes.length, 0);
+}
+
+test('A03 canonical reference count is rejected before visiting invalid shared rows', () => {
+  assert.throws(() => loadAssembly(forgedReferenceImage(1025, 16385)), /assembly reference identity count/);
+});
+
+test('A03 canonical reference key is bounded before copying or reading its invalid name', () => {
+  assert.throws(() => loadAssembly(forgedReferenceImage(1, 16385)), /public key\/token exceeds size limit/);
+});
