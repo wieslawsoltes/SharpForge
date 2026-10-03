@@ -132,7 +132,15 @@ export class DesignerToolbox {
     }
     for (const button of list.querySelectorAll('[data-control]')) {
       // The second click in a double-click does not create a second transaction.
-      button.onclick = event => { if (event.detail <= 1) this.view.safe(() => this.insert(button.dataset.control)); };
+      button.onclick = event => {
+        if (event.detail > 1) return;
+        const type = button.dataset.control;
+        this.view.safe(() => {
+          this.insert(type);
+          // Rendering replaces the activated button; keep keyboard and AT focus inside the toolbox.
+          if (event.detail === 0) this.focusControl(type);
+        });
+      };
       button.ondragstart = event => {
         event.dataTransfer.setData('application/x-sharpforge-control', button.dataset.control);
         event.dataTransfer.effectAllowed = 'copy';
@@ -156,6 +164,12 @@ export class DesignerToolbox {
     this.render();
     this.view.accessibility?.announce('Inserted ' + this.catalog.control(type).name);
     return id;
+  }
+
+  focusControl(type) {
+    if (!this.root) return;
+    const replacement = [...this.root.querySelectorAll('[data-control]')].find(button => button.dataset.control === type);
+    (replacement ?? this.root.querySelector('input'))?.focus();
   }
 
   insertionParent(selected = this.view.document.selection[0]) {
