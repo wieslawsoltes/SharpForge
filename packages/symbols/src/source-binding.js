@@ -23,29 +23,7 @@ export async function verifySourceAsync(document, input) {
   if (!globalThis.crypto?.subtle) return verifySource(document, bytes);
   return equalBytes(new Uint8Array(await crypto.subtle.digest(algorithm, bytes)), document.hash);
 }
-export function sourceLinkUrl(symbols, documentName) {
-  const matches = [];
-  for (const [pattern, url] of Object.entries(symbols.sourceLink?.documents ?? {})) {
-    const pos = pattern.indexOf('*');
-    if (pos < 0) {
-      if (pattern === documentName) matches.push({ url, specificity: Infinity });
-    } else {
-      const begin = pattern.slice(0, pos),
-        end = pattern.slice(pos + 1);
-      if (documentName.startsWith(begin) && documentName.endsWith(end)) {
-        const middle = documentName.slice(begin.length, documentName.length - end.length),
-          encoded = middle.split(/[\\/]/).map(encodeURIComponent).join('/');
-        matches.push({ url: url.replace('*', encoded), specificity: begin.length + end.length });
-      }
-    }
-  }
-  matches.sort((a, b) => b.specificity - a.specificity);
-  const value = matches[0]?.url;
-  if (!value) return null;
-  const u = new URL(value);
-  if (u.protocol !== 'https:' || u.username || u.password) fail('Source Link must use credential-free HTTPS');
-  return u.href;
-}
+export { sourceLinkUrl } from './source-link.js';
 /** Attach only checksum-verified source; never fetch Source Link implicitly. */
 export function bindSources(symbols, sources = {}, options = {}) {
   const byName = sources instanceof Map ? sources : new Map(Object.entries(sources)),
