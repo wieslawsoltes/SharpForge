@@ -8,18 +8,46 @@ import {formatMessage,defaultSeverity,featureNotAvailableCode} from './diagnosti
 import {MethodCompiler} from './method-compiler.js';
 import {BoundMethodPipeline} from './method-pipeline.js';
 import {CompilationSymbols} from './symbols/compilation-symbols.js';
+import {collectUsingDirectives} from './binder/usings.js';
 export class Compilation {
   constructor(parsedFiles, options={}) {
     this.inputFiles=parsedFiles;parsedFiles=lowerAsyncFiles(parsedFiles);this.files=parsedFiles;this.options=options;this.sources=new Map(parsedFiles.map(p=>[p.source.uri,p.source]));
     this.diagnostics=parsedFiles.flatMap(p=>p.diagnostics);this.symbols=[];this.references=[];this.types=[];this.typeMap=new Map();this.methods=[];this.statics=[];this.constants=[];this.constantMap=new Map();this.sequencePoints=[];
     // 'bound' binds to a bound tree, analyses flow, lowers and then emits; 'legacy' is the fused string-typed method compiler.
-    this.pipeline=options.pipeline??globalThis.process?.env?.SHARPFORGE_PIPELINE??Compilation.defaultPipeline;this.semantic=new CompilationSymbols(this);this.boundPipeline=null;
+    this.fullNames=new Map();this.simpleNames=new Map();this.fileUsings=new Map();this.pipeline=options.pipeline??globalThis.process?.env?.SHARPFORGE_PIPELINE??Compilation.defaultPipeline;this.semantic=new CompilationSymbols(this);this.boundPipeline=null;
   }
   static defaultPipeline='bound';
-  /** The declaration record of a user type named in source, as seen from code in `owner` (a type record or null). */
-  findType(name,owner=null){return name?this.typeMap.get(name)??null:null;}
-  /** The image name a type-name text denotes, as seen from code in `owner`. */
-  typeName(text,owner=null){return normalize(text);}
+  /** Where code lives: `context` is a type record, a method record or null (the first file's global scope). */
+  scopeOf(context){if(!context)return {namespace:'',uri:this.files[0]?.source.uri};if(context.declarations)return {namespace:context.namespace??'',uri:context.node.uri};return {namespace:context.owner?.namespace??'',uri:context.node?.uri??context.owner?.node.uri??this.files[0]?.source.uri};}
+  /** The using directives of a file: `{namespaces:[dotted names], aliases:Map<alias,dotted name>}`. */
+  usingsOf(uri){
+    let usings=this.fileUsings.get(uri);if(usings)return usings;usings={namespaces:[],aliases:new Map()};const file=this.files.find(f=>f.source.uri===uri);
+    if(file)for(const d of collectUsingDirectives(file)){if(d.kind==='namespace')usings.namespaces.push(d.name);else if(d.kind==='alias')usings.aliases.set(d.alias,d.name);}
+    this.fileUsings.set(uri,usings);return usings;
+  }
+  /**
+   * Looks a user type up by simple or dotted name from `context`, in C# order: the enclosing namespaces innermost
+   * first, then using aliases, then the namespaces imported by using directives. A simple name that only one type in
+   * the compilation has is found without a using directive (the profile's leniency).
+   * Returns `{type}`, `{ambiguous:[type,type,...]}` or null when no user type has that name.
+   */
+  lookupType(text,context=null){
+    if(!text||!this.simpleNames.size)return null;const scope=this.scopeOf(context),parts=scope.namespace?scope.namespace.split('.'):[];
+    for(let i=parts.length;i>=0;i--){const type=this.fullNames.get([...parts.slice(0,i),text].join('.'));if(type)return {type};}
+    const usings=this.usingsOf(scope.uri),dot=text.indexOf('.'),head=dot<0?text:text.slice(0,dot);
+    if(usings.aliases.has(head)){const type=this.fullNames.get(usings.aliases.get(head)+(dot<0?'':text.slice(dot)));if(type)return {type};}
+    if(dot>=0)return null;
+    const candidates=this.simpleNames.get(text);if(!candidates)return null;if(candidates.length===1)return {type:candidates[0]};
+    const imported=candidates.filter(t=>usings.namespaces.includes(t.namespace));if(imported.length===1)return {type:imported[0]};
+    return {ambiguous:imported.length?imported:candidates};
+  }
+  /** The declaration record of a user type named in source, as seen from `context`; null when unknown or ambiguous. */
+  findType(name,context=null){return this.lookupType(name,context)?.type??null;}
+  /** The image name a type-name text denotes, as seen from `context`: user types first, then the profile's built-in and framework names. */
+  typeName(text,context=null){
+    if(typeof text!=='string')return normalize(text);let base=text,suffix='';while(base.endsWith('[]')){base=base.slice(0,-2);suffix+='[]';}
+    const found=this.lookupType(base,context);return found?.type?found.type.name+suffix:found?.ambiguous?found.ambiguous[0].name+suffix:normalize(text);
+  }
   /** Reports a catalog diagnostic: `args` fill the message format; severity defaults to the catalog severity. */
   report(node,code,args=[],severity=defaultSeverity(code)){if(this.diagnostics.length>=400)return;const source=this.sources.get(node.uri)??this.files[0]?.source;if(source)this.diagnostics.push(diagnostic(source,node.start??0,Math.max(1,(node.end??node.start+1)-node.start),code,formatMessage(code,args),severity));}
   /** True when a diagnostic with this code already covers the node start (one diagnostic per literal). */
@@ -38,22 +66,29 @@ export class Compilation {
     const span=node.nameSpan??{start:node.start,end:node.end}, s={id:`${node.uri}:${span.start}:${kind}`,name:node.name,kind,type,uri:node.uri,start:span.start,end:span.end,...extra};this.symbols.push(s);this.reference(node,s,true);return s;
   }
   reference(node,symbol,declaration=false){if(!symbol||node.debugHidden)return;const span=node.nameSpan??{start:node.start,end:node.end};this.references.push({symbolId:symbol.id,uri:node.uri,start:span.start,end:span.end,declaration,type:symbol.type});}
-  resolveType(type,node,allowVar=false,owner=null){type=this.typeName(type,owner);const element=type.endsWith('[]')?type.slice(0,-2):type;if(element==='var'&&allowVar)return type;if((!supported.has(element)&&!this.typeMap.has(element)&&!frameworkType(element))||element==='var')this.report(node,'CS0246',[typeText(type)]);return type;}
+  resolveType(type,node,allowVar=false,context=null){
+    if(typeof type==='string'){const ambiguous=this.lookupType(type.replace(/(\[\])+$/,''),context)?.ambiguous;if(ambiguous)this.report(node,'CS0104',[type.replace(/(\[\])+$/,''),ambiguous[0].fullName,ambiguous[1].fullName]);}
+    type=this.typeName(type,context);const element=type.endsWith('[]')?type.slice(0,-2):type;if(element==='var'&&allowVar)return type;if((!supported.has(element)&&!this.typeMap.has(element)&&!frameworkType(element))||element==='var')this.report(node,'CS0246',[typeText(type)]);return type;}
   build(){
     if(this.pipeline==='verify')return verifyPipelines(this.inputFiles,this.options);
     const start=performance.now();try{languageVersion(this.options.langVersion);for(const value of Object.values(this.options.langVersionByUri??{}))languageVersion(value);}catch(error){this.report(this.files[0]?.root??{},'SF2140',[error.value]);}if(this.options.checkOverflow!==undefined&&typeof this.options.checkOverflow!=='boolean'||Object.values(this.options.checkOverflowByUri??{}).some(v=>typeof v!=='boolean'))this.report(this.files[0]?.root??{},'SF2009',['checkOverflow']);
     // Two-pass declarations allow forward calls and references across source files.
     for(const file of this.files)for(const decl of file.root.members.filter(n=>n.kind==='Class')){
-      if(this.typeMap.has(decl.name)){
-        const existing=this.typeMap.get(decl.name);
-        if((existing.node.namespace??'')!==(decl.namespace??'')){this.report(decl,'SF2011',[decl.name]);continue;}
+      const namespace=decl.namespace??'',fullName=(namespace?namespace+'.':'')+decl.name;
+      if(this.fullNames.has(fullName)){
+        const existing=this.fullNames.get(fullName);
         if(!decl.modifiers.includes('partial')||!existing.declarations.every(d=>d.modifiers.includes('partial'))){this.report(decl,existing.declarations.some(d=>d.modifiers.includes('partial'))||decl.modifiers.includes('partial')?'CS0260':'CS0101',[decl.name,decl.namespace||'<global namespace>']);continue;}
         const access=d=>d.modifiers.filter(m=>['public','internal','private','protected'].includes(m)).sort().join(' '),specified=existing.declarations.map(access).filter(Boolean);
         if(access(decl)&&specified.some(a=>a!==access(decl)))this.report(decl,'CS0262',[decl.name]);
         existing.declarations.push(decl);this.reference(decl,existing.symbol,true);continue;
       }
-      const type={id:this.types.length,name:decl.name,fields:[],properties:[],methods:[],interfaces:[],node:decl,declarations:[decl]};type.symbol=this.symbol(decl,'class',decl.name);this.types.push(type);this.typeMap.set(type.name,type);
+      const type={id:this.types.length,name:decl.name,namespace,fullName,fields:[],properties:[],methods:[],interfaces:[],node:decl,declarations:[decl]};type.symbol=this.symbol(decl,'class',decl.name);this.types.push(type);this.fullNames.set(fullName,type);
     }
+    // A type is identified by its namespace path. Its image name stays the simple name while that is unique in the
+    // compilation and becomes the namespace-qualified name when two namespaces declare the same simple name.
+    for(const type of this.types){const list=this.simpleNames.get(type.node.name);if(list)list.push(type);else this.simpleNames.set(type.node.name,[type]);}
+    for(const type of this.types){if(this.simpleNames.get(type.node.name).length>1)type.name=type.fullName;this.typeMap.set(type.name,type);}
+    for(const type of this.types)this.semantic.type(type);
     for(const type of this.types){for(const member of type.declarations.flatMap(d=>d.members)){if(member.kind==='Field')this.declareField(type,member);else if(member.kind==='Property')this.declareProperty(type,member);else this.declareMethod(type,member,!!member.generated);}}
     for(const type of this.types){type.interfaces=[...new Set(type.declarations.flatMap(d=>d.interfaces??[]))];if(type.interfaces.includes('System.IDisposable')){const method=type.methods.find(m=>m.name==='Dispose'&&!m.isStatic&&m.parameters.length===0&&m.returnType==='void'&&m.node.modifiers.includes('public'));if(!method)this.report(type.node,'CS0535',[type.name,'System.IDisposable.Dispose()']);else method.implementsDispose=true;}}
     const tops=[];
@@ -100,14 +135,14 @@ export class Compilation {
     return {success:errors===0,image:errors===0?image:null,diagnostics:this.diagnostics,symbols:this.symbols,references:this.references,
       metrics:{compileMs:performance.now()-start,files:this.files.length,tokens:this.files.reduce((s,f)=>s+f.tokens.length,0),internedTokenHits:this.files.reduce((s,f)=>s+f.internedTokenHits,0),nodes:this.files.reduce((s,f)=>s+f.nodeCount,0),methods:this.methods.length,instructions:this.methods.reduce((s,m)=>s+(m.code?.length??0)/3,0),errors}};
   }
-  declareField(owner,node){const type=this.resolveType(node.type,node),isStatic=node.modifiers.includes('static')||node.modifiers.includes('const');
+  declareField(owner,node){const type=this.resolveType(node.type,node,false,owner),isStatic=node.modifiers.includes('static')||node.modifiers.includes('const');
     if(owner.fields.some(f=>f.name===node.name)||owner.properties.some(p=>p.name===node.name))this.report(node,'CS0102',[owner.name,node.name]);
     if(node.modifiers.includes('readonly')||node.modifiers.includes('const'))this.report(node,'SF2001');
     if(node.modifiers.includes('partial'))this.report(node,'SF2010');
     const field={name:node.name,type,isStatic,index:isStatic?this.statics.length:owner.fields.filter(f=>!f.isStatic).length,node,owner};field.backing=!!node.backing;field.symbol=node.backing?null:this.symbol(node,'field',type,{owner:owner.name,isStatic});owner.fields.push(field);if(isStatic)this.statics.push(field);return field;
   }
   declareProperty(owner,node){
-    const type=this.resolveType(node.type,node),isStatic=node.modifiers.includes('static'),access=node.modifiers.find(m=>['public','private','internal','protected'].includes(m))??'private';
+    const type=this.resolveType(node.type,node,false,owner),isStatic=node.modifiers.includes('static'),access=node.modifiers.find(m=>['public','private','internal','protected'].includes(m))??'private';
     if(['void','var'].includes(type))this.report(node,'CS0547',[owner.name+'.'+node.name]);
     if(node.modifiers.some(m=>['const','readonly','partial'].includes(m)))this.report(node,'CS0106',[node.modifiers.find(m=>['const','readonly','partial'].includes(m))]);
     if(owner.fields.some(f=>f.name===node.name)||owner.properties.some(p=>p.name===node.name)||owner.methods.some(m=>m.name===node.name))this.report(node,'CS0102',[owner.name,node.name]);
@@ -138,7 +173,7 @@ export class Compilation {
   declareMethod(owner,node,synthetic=false){
     if(!synthetic&&owner?.properties.some(p=>p.name===node.name))this.report(node,'CS0102',[owner.name,node.name]);
     if(!synthetic&&node.modifiers.includes('partial'))this.report(node,'SF2010');
-    const parameters=node.parameters.map(p=>({...p,type:this.resolveType(p.type,p)})),returnType=this.resolveType(node.returnType,node),isStatic=node.modifiers.includes('static')||!owner;
+    const scope=owner??{owner:null,node},parameters=node.parameters.map(p=>({...p,type:this.resolveType(p.type,p,false,scope)})),returnType=this.resolveType(node.returnType,node,false,scope),isStatic=node.modifiers.includes('static')||!owner;
     const method={id:this.methods.length,name:node.name,qualifiedName:(owner?owner.name+'.':'')+node.name,returnType,parameters,isStatic,owner,node,synthetic};
     if(this.methods.some(m=>m.owner===owner&&m.name===method.name&&m.parameters.map(p=>p.type).join(',')===parameters.map(p=>p.type).join(',')))this.report(node,'CS0111',[node.name,owner?.name??'<top-level>']);
     if(!synthetic)method.symbol=this.symbol(node,'method',returnType,{owner:owner?.name,isStatic,bodyStart:node.start,bodyEnd:node.end,parameters:parameters.map(p=>({name:p.name,type:p.type}))});this.methods.push(method);owner?.methods.push(method);return method;

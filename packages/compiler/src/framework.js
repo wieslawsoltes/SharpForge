@@ -6,7 +6,7 @@ const pathOf=e=>e?.kind==='Name'?e.name:e?.kind==='Member'&&pathOf(e.target)?pat
 export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
     frameworkReceiver(node) {
       if(node?.kind!=='Member')return null;
-      const path=pathOf(node.target),staticType=path&&frameworkType(path==='string'?'System.String':path);
+      const path=pathOf(node.target),staticType=path&&!this.c.findType(path,this.m)&&frameworkType(path==='string'?'System.String':path);
       if(staticType)return {type:staticType.name,isStatic:true,node:null};
       const inferred=this.infer(node.target),type=inferred==='string'?'System.String':canonicalType(inferred);
       return frameworkType(type)?{type:frameworkType(type).name,isStatic:false,node:node.target}:null;
@@ -24,9 +24,9 @@ export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
       if(target.kind==='Name'){
         methods=this.c.methods.filter(m=>m.name===target.name&&(m.owner===this.m.owner||!m.owner)&&(!this.m.isStatic||m.isStatic));
       } else if(target.kind==='Member') {
-        const owner=this.c.findType(pathOf(target.target),this.m.owner);
+        const owner=this.c.findType(pathOf(target.target),this.m);
         if(owner)methods=owner.methods.filter(m=>m.isStatic&&m.name===target.name);
-        else {receiver=target.target;methods=this.c.findType(this.infer(receiver),this.m.owner)?.methods.filter(m=>!m.isStatic&&m.name===target.name)??[];}
+        else {receiver=target.target;methods=this.c.findType(this.infer(receiver),this.m)?.methods.filter(m=>!m.isStatic&&m.name===target.name)??[];}
       }
       methods=methods.filter(m=>m.parameters.length===contract.parameters.length&&m.parameters.every((p,i)=>this.frameworkConversion(p.type,contract.parameters[i]))&&(contract.result===m.returnType||!['int','double','bool','void'].includes(m.returnType)&&frameworkAssignable(contract.result,m.returnType)));
       const exact=methods.filter(m=>m.returnType===contract.result);if(exact.length===1)methods=exact;if(methods.length!==1){if(report)this.c.report(node,'CS0123',[target.name??'<expression>',typeText(type)]);return null;}
@@ -66,7 +66,7 @@ export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
     frameworkInfer(node) {
       if(node.kind==='Index')return findContracts(this.infer(node.target),'get_Item',false)[0]?.result;
       if(node.kind==='Member')return enumValue(pathOf(node))?.type??this.frameworkProperty(node)?.type;
-      if(node.kind==='New')return frameworkType(node.type)?.name;
+      if(node.kind==='New')return this.c.findType(node.type,this.m)?undefined:frameworkType(node.type)?.name;
       if(node.kind==='Call')return this.frameworkCall(node)?.contract.result;
       return undefined;
     }
@@ -84,7 +84,7 @@ export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
         this.emitFrameworkArguments(node.args,call.contract.parameters,frameworkType(call.contract.owner)?.kind==='bcl');return this.emitContract(call.contract);
       }
       if(node.kind==='New') {
-        const t=frameworkType(node.type);if(!t)return undefined;
+        const t=this.c.findType(node.type,this.m)?null:frameworkType(node.type);if(!t)return undefined;
         if(t.kind==='delegate')return this.emitDelegate(node,t.name);
         const candidates=findContracts(t.name,'.ctor',false).filter(d=>d.owner===t.name&&d.parameters.length===node.args.length&&d.parameters.every((p,i)=>this.frameworkConversion(p,this.infer(node.args[i]))||this.canTarget(node.args[i],p)||this.delegateMethod(node.args[i],p)));
         if(candidates.length!==1){this.c.report(node,'CS1729',[typeText(t.name),node.args.length]);this.emitConstant(null);return t.name;}

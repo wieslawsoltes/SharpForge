@@ -76,7 +76,7 @@ class Builder {
    */
   condition(node,whenTrue,whenFalse,nested=false){
     const constant=constantBool(node);
-    if(constant!==null&&!nested){this.expr(node);this.jump(constant?whenTrue:whenFalse);return;}
+    if(constant!==null&&!nested){if(node.kind==='BinaryOperator'&&(node.operator==='&&'||node.operator==='||'))this.list(node.children);else this.expr(node);this.jump(constant?whenTrue:whenFalse);return;}
     if(node.kind==='BinaryOperator'&&node.operator==='&&'){const mid=this.block();this.condition(node.left,mid,whenFalse,true);this.current=mid;this.condition(node.right,whenTrue,whenFalse,true);return;}
     if(node.kind==='BinaryOperator'&&node.operator==='||'){const mid=this.block();this.condition(node.left,whenTrue,mid,true);this.current=mid;this.condition(node.right,whenTrue,whenFalse,true);return;}
     if(node.kind==='UnaryOperator'&&node.operator==='!'){this.condition(node.operand,whenFalse,whenTrue,nested);return;}
