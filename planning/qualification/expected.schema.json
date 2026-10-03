@@ -1,0 +1,309 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sharpforge.dev/qualification/expected.schema.json",
+  "title": "Pinned native reference oracle expected output",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "fixtureId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{0,79}$"
+    },
+    "inputHash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "oracleId": {
+      "enum": [
+        "roslyn",
+        "coreclr",
+        "winui"
+      ]
+    },
+    "toolVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target": {
+      "enum": [
+        "any",
+        "darwin-arm64",
+        "darwin-x64",
+        "linux-arm64",
+        "linux-x64",
+        "win32-x64"
+      ]
+    },
+    "toolchain": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "sdk": {
+          "type": "string"
+        },
+        "runtime": {
+          "type": "string"
+        },
+        "roslyn": {
+          "type": "string"
+        },
+        "referencePack": {
+          "type": "string"
+        },
+        "windowsAppSDK": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "sdk",
+        "runtime",
+        "roslyn",
+        "referencePack",
+        "windowsAppSDK"
+      ]
+    },
+    "langVersion": {
+      "anyOf": [
+        {
+          "enum": [
+            "11.0",
+            "12.0"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "result": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "exitCode": {
+              "enum": [
+                0,
+                1
+              ]
+            },
+            "diagnostics": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^CS[0-9]{4}$"
+                  },
+                  "severity": {
+                    "enum": [
+                      "error",
+                      "warning",
+                      "note",
+                      "none"
+                    ]
+                  },
+                  "source": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "span": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "startLine": {
+                            "type": "integer",
+                            "minimum": 1
+                          },
+                          "startColumn": {
+                            "type": "integer",
+                            "minimum": 1
+                          },
+                          "endLine": {
+                            "type": "integer",
+                            "minimum": 1
+                          },
+                          "endColumn": {
+                            "type": "integer",
+                            "minimum": 1
+                          }
+                        },
+                        "required": [
+                          "startLine",
+                          "startColumn",
+                          "endLine",
+                          "endColumn"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "severity",
+                  "source",
+                  "span"
+                ]
+              }
+            },
+            "assemblySHA256": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "exitCode",
+            "diagnostics",
+            "assemblySHA256"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "stdout": {
+              "type": "string"
+            },
+            "stderr": {
+              "type": "string"
+            },
+            "exitCode": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": -2147483648,
+                  "maximum": 4294967295
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "signal": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "unhandledException": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "stdout",
+            "stderr",
+            "exitCode",
+            "signal",
+            "unhandledException"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "content": {
+              "type": "string"
+            },
+            "dependencyPropertyCleared": {
+              "type": "boolean"
+            },
+            "zeroWidth": {
+              "type": "boolean"
+            },
+            "negativeWidthException": {
+              "type": "string"
+            },
+            "malformedXamlException": {
+              "type": "string"
+            },
+            "childrenRemoved": {
+              "type": "boolean"
+            },
+            "dispatcherThreadAccess": {
+              "type": "boolean"
+            },
+            "dispatcherOrder": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "cancelledWorkRan": {
+              "type": "boolean"
+            },
+            "windowClosed": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "content",
+            "dependencyPropertyCleared",
+            "zeroWidth",
+            "negativeWidthException",
+            "malformedXamlException",
+            "childrenRemoved",
+            "dispatcherThreadAccess",
+            "dispatcherOrder",
+            "cancelledWorkRan",
+            "windowClosed"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "fixtureId",
+    "inputHash",
+    "oracleId",
+    "toolVersion",
+    "target",
+    "toolchain",
+    "langVersion",
+    "result"
+  ]
+}

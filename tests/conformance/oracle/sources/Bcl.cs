@@ -1,0 +1,1 @@
+using System; using System.Collections.Generic; using System.Globalization; using System.Text.Json; class Program { static void Main() { var values = new List<int> { 3, 1, 2 }; values.Sort(); Console.WriteLine(string.Join(",", values) + "|" + 1234.5.ToString("F2", CultureInfo.InvariantCulture) + "|" + JsonSerializer.Serialize(new { count = values.Count })); } }
