@@ -59,13 +59,20 @@ export const AsyncMethods = Base =>
         const shown = kickoff.returnType.replace('System.Threading.Tasks.', '').replace('`1', '');
         return this.unsupported(`an async function returning '${shown}' (the runtime has no task of that result type)`, origin.syntax, origin.uri);
       }
+      // The roles tell a debugger which image methods are one source function (the body carries its source range).
+      const asyncOrigin = kickoff.qualifiedName;
       const body = this.program.addMethod(kickoff.owner, origin.name + '.MoveNext', {
         isStatic: kickoff.isStatic,
         returnType: result,
         parameters: kickoff.parameters.map(p => ({ name: p.name, type: p.type })),
         node: kickoff.node,
         hasSource: kickoff.hasSource,
+        asyncRole: 'body',
+        asyncOrigin,
       });
+      kickoff.asyncRole = 'kickoff';
+      kickoff.asyncOrigin = asyncOrigin;
+      kickoff.hasSource = false;
       const capture = this.asyncCapture(kickoff, body, origin.name),
         started = n.frameworkCall({ contract: start }, null, [capture], start.result);
       // `async void`: the task is not observable; the kickoff returns once the body suspends or ends.
@@ -78,7 +85,13 @@ export const AsyncMethods = Base =>
       const record = this.program.addClass(name),
         receiverField = kickoff.isStatic ? null : this.program.addField(record, '<>4__this', kickoff.owner.name),
         fields = kickoff.parameters.map(p => this.program.addField(record, p.name, p.type));
-      const invoke = this.program.addMethod(record, 'Invoke', { isStatic: false, returnType: body.returnType, parameters: [] });
+      const invoke = this.program.addMethod(record, 'Invoke', {
+        isStatic: false,
+        returnType: body.returnType,
+        parameters: [],
+        asyncRole: 'capture',
+        asyncOrigin: body.asyncOrigin,
+      });
       const self = () => n.thisReference(record.name),
         forwarded = n.call(body, receiverField ? n.field(self(), receiverField) : null, fields.map(field => n.field(self(), field)));
       this.addSynthesizedBody(invoke, n.block([body.returnType === 'void' ? n.expressionStatement(forwarded) : n.returnStatement(forwarded)]));
