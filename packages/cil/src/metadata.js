@@ -1,6 +1,7 @@
 import {memoryTypeName, arrayType} from '@sharpforge/bytecode';
 import {signatureType, cliSystemName, systemNames} from './type-signatures.js';
 export {signatureType, cliSystemName} from './type-signatures.js';
+import {functionPointerType} from './function-pointer-signature.js';
 import {frameworkType,canonicalType} from '@sharpforge/framework';
 import { Writer, Reader, CilError, align, utf8, text, buildId } from './binary.js';
 /** ECMA-335 II.22 tables and II.24 heaps. Table/index widths are computed, never fixed. */
@@ -76,7 +77,7 @@ function signatureReader(bytes,metadata,initialDepth=0) {
     if(e===0x12||e===0x11){const full=metadata.typeName(decodeCoded('TypeDefOrRef',r.compressed()),depth+1);return Object.entries(systemNames).find(([,name])=>name===full)?.[0]??full;}
     if(e===0x15){const base=type(depth+1),n=count();return base+'<'+Array.from({length:n},()=>type(depth+1)).join(', ')+'>';}
     if(e===0x14){const base=type(depth+1),rank=count();if(rank>32)throw new CilError('Array rank limit exceeded');const sizes=Array.from({length:count()},()=>count()),bounds=Array.from({length:count()},()=>r.signedCompressed());if(sizes.length>rank||bounds.length>rank)throw new CilError('Invalid array shape');return base+'['+Array.from({length:rank},(_,i)=>sizes[i]!==undefined?`${bounds[i]??0}...${(bounds[i]??0)+sizes[i]-1}`:bounds[i]!==undefined?`${bounds[i]}...`:'').join(',')+(rank===1&&sizes.length===0&&bounds.length===0?'*':'')+']';}
-    if(e===0x1b){const s=method(depth+1);return 'method '+s.returnType+' *('+s.parameters.join(', ')+')';}
+    if(e===0x1b)return functionPointerType(method(depth+1));
     throw new CilError(`Unsupported signature element 0x${e.toString(16)}`);
   }
   function method(depth=initialDepth){

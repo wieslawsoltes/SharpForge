@@ -8,7 +8,7 @@ import {validatePointer} from '../managed-pointers.js';
 import {popFrame} from '../frame-stack.js';
 
 const handlers=new Map([['jmp',jumpMethod]]);
-for(const name of ['call','callvirt','calli','newobj'])handlers.set(name,(vm,frame,instruction)=>vm.invoke(instruction));
+for(const name of ['call','callvirt','newobj'])handlers.set(name,(vm,frame,instruction)=>vm.invoke(instruction));
 handlers.set('ldftn',(vm,frame,instruction)=>vm.push(methodPointer(vm,instruction.operand)));
 handlers.set('ldvirtftn',(vm,frame,instruction)=>vm.push(methodPointer(vm,instruction.operand,vm.pop())));
 handlers.set('tail.',(vm,frame)=>{frame.tailCall=true;});

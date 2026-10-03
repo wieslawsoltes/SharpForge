@@ -33,11 +33,10 @@ export const namespaceMethods = {
   usingDirective() {
     const global = this.atWord('global') ? this.takeWord('global') : null,
       using = this.take(),
-      isStatic = this.match('static'),
+      isStatic = this.usingStaticKeyword(),
       unsafe = this.match('unsafe');
     let alias = null;
     if (global) this.feature('GlobalUsing', this.tokens[this.i - 1]);
-    if (isStatic) this.feature('UsingStatic', this.tokens[this.i - 1]);
     if (this.isId() && this.peek().kind === '=') alias = this.n('NameEquals', this.n('IdentifierName', this.id()), this.take());
     const targetStart = this.current,
       target = alias ? this.type() : this.name();

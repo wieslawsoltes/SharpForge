@@ -54,6 +54,12 @@ import { collectionExpressionMethods } from './expressions/collection-expression
 import { switchExpressionMethods } from './expressions/switch-expression.js';
 import { interpolatedStringMethods } from './expressions/interpolated-strings.js';
 import { stackAllocMethods } from './unsafe/stackalloc.js';
+import { anonymousObjectMethods } from './expressions/anonymous-objects.js';
+import { parameterMethods } from './declarations/parameters.js';
+import { awaitMethods } from './expressions/await.js';
+import { conditionalAccessMethods } from './expressions/conditional-access.js';
+import { expressionBodyMethods } from './declarations/expression-bodies.js';
+import { csharp6Methods } from './csharp6.js';
 export const parserModules = Object.freeze([
   typeMethods,
   modifierMethods,
@@ -105,5 +111,11 @@ export const parserModules = Object.freeze([
   collectionExpressionMethods,
   switchExpressionMethods,
   interpolatedStringMethods,
-  stackAllocMethods
+  stackAllocMethods,
+  anonymousObjectMethods,
+  parameterMethods,
+  awaitMethods,
+  conditionalAccessMethods,
+  expressionBodyMethods,
+  csharp6Methods
 ]);

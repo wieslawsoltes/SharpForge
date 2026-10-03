@@ -97,7 +97,7 @@ test('128 snapshots with one percent record mutation retain less than twice a 10
   }
   assert.ok(heap.stats.liveBytes >= 10 * 1024 * 1024);
   const snapshots = [];
-  const mutationCount = Math.ceil(roots.length / 100);
+  const mutationCount = Math.ceil(heap.stats.liveObjects / 100);
   for (let revision = 0; revision < 128; revision++) {
     for (let index = 0; index < mutationCount; index++) {
       heap.writeData(roots[(revision * mutationCount + index) % roots.length], 1, revision + 1);

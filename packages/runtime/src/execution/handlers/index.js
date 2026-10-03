@@ -1,3 +1,4 @@
+import {handlers as calli} from './calli.js';
 import {handlers as loadStore} from './load-store.js';
 import {handlers as branch} from './branch.js';
 import {handlers as arith} from './arith.js';
@@ -10,7 +11,7 @@ import {handlers as block} from './block.js';
 
 /** Each group registers its exact opcode names. Instruction dispatch performs one lookup. */
 export const cilHandlers=new Map();
-for(const group of [loadStore,branch,arith,objectModel,array,indirect,call,tokens,block]) {
+for(const group of [loadStore,branch,arith,objectModel,array,indirect,call,calli,tokens,block]) {
   for(const [opcode,handler] of group) {
     if(cilHandlers.has(opcode))throw new Error(`Duplicate CIL handler '${opcode}'`);
     cilHandlers.set(opcode,handler);

@@ -131,7 +131,7 @@ export class Parser {
   }
   id() {
     if (this.isId()) return this.take('IdentifierToken');
-    this.error(this.current, 'CS1001', 'Identifier expected');
+    this.error(this.errorAnchor(), 'CS1001', 'Identifier expected');
     return this.cache.missing('IdentifierToken');
   }
   /** True when the tokens at `index` and `index + 1` touch (no trivia between), as required to merge `>` `>` into `>>`. */

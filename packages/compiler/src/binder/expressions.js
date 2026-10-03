@@ -49,7 +49,7 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
         const parts=node.parts.map(part=>{if(part.text!==undefined)return this.node(BoundLiteral,null,{value:part.text},'string');const value=this.bindExpression(part.expression);if(value.legacyType==='void')this.c.report(part.expression,'CS0029',['void','object']);return this.node(BoundStringInsert,null,{value,alignment:part.alignment,format:part.format},'string');});
         return this.node(BoundInterpolatedString,node,{parts},'string');
       }
-      case 'Await':{if(!this.m.node.asyncBody&&!this.m.name.startsWith('<startup>'))this.c.report(node,'CS4032',[typeText(this.m.returnType)]);const expression=this.bindExpression(node.expression),type=expression.legacyType,d=findContracts('SharpForge.Runtime.Async','Await',true).find(x=>x.parameters[0]===type);if(!d){this.c.report(node,'CS1061',[typeText(type),'GetAwaiter']);return this.bad(node,[expression]);}return this.node(BoundAwaitExpression,node,{expression,awaiter:this.sym.contract(d)},d.result);}
+      case 'Await':{if(!this.m.node.asyncBody&&!this.m.name.startsWith('<startup>'))this.c.report(node,'CS4032',[typeText(this.m.returnType)]);const expression=this.bindExpression(node.expression),type=expression.legacyType,d=this.frameworkExactMethod('SharpForge.Runtime.Async','Await',[type]);if(!d){this.c.report(node,'CS1061',[typeText(type),'GetAwaiter']);return this.bad(node,[expression]);}return this.node(BoundAwaitExpression,node,{expression,awaiter:this.sym.contract(d)},d.result);}
       case 'Default':{const type=this.c.resolveType(node.type,node,false,this.m);if(type==='void')this.c.report(node,'CS1547');return this.node(BoundDefaultExpression,node,{},type);}
       case 'Checked':case 'Unchecked':return this.inCheckedContext(node.kind==='Checked',()=>this.bindExpression(node.expression));
       case 'Cast':{const operand=this.bindExpression(node.expression),from=operand.legacyType,to=this.c.resolveType(node.type,node,false,this.m);if((!numeric(from)&&frameworkType(from)?.kind!=='enum')||(!numeric(to)&&frameworkType(to)?.kind!=='enum'))this.c.report(node,'CS0030',[typeText(from),typeText(to)]);return this.node(BoundConversion,node,{operand,conversion:{kind:from===to?'Identity':'ExplicitNumeric',from,to},isExplicit:true,isChecked:this.overflowChecked(node)&&to!=='double'},to,constant);}
@@ -227,7 +227,7 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
     const creation=this.bindExpression({...base,kind:'New',type:owner,args:node.arguments?.map(a=>a.expression)??[],initializers:[],collectionInitializers:[]});
     const elements=node.elements.map(item=>{
       if(item.kind==='SpreadElement'){const name=this.syntheticName('$spread');const statement=this.bindStatement({...item,kind:'Foreach',type:'var',name,synthesizedKind:'spread',expression:item.expression,body:{...base,kind:'ExpressionStatement',expression:call('Add',[{...base,kind:'Name',name}])}});return this.node(BoundCollectionSpread,item,{iterationVariable:statement.iterationVariable,statement},'void');}
-      const value=this.bindTyped(item,element);this.checkAssign(element,value.legacyType,item);return this.node(BoundCollectionElement,item,{value,addMethod:this.sym.contract(findContracts(owner,'Add',false).find(d=>d.parameters.length===1))},'void');
+      const value=this.bindTyped(item,element);this.checkAssign(element,value.legacyType,item);return this.node(BoundCollectionElement,item,{value,addMethod:this.framework.methods(owner,'Add',false).find(m=>m.parameters.length===1)??null},'void');
     });
     return this.node(BoundCollectionExpression,node,{collection,creation,elements,conversion:array?this.bindExpression(call('ToArray',[])):null},target);
   }
@@ -254,36 +254,36 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
     });
   }
   bindFrameworkExpression(node){
-    if(node.kind==='Index'){const get=findContracts(this.infer(node.target),'get_Item',false)[0];if(get){const receiver=this.bindExpression(node.target),index=this.bindExpression(node.index);this.checkAssign(get.parameters[0],index.legacyType,node.index);return this.node(BoundIndexerAccess,node,{receiver,indexer:this.frameworkPropertySymbol(get,findContracts(receiver.legacyType,'set_Item',false)[0]),args:[index]},get.result);}}
+    if(node.kind==='Index'){const get=this.frameworkMethod(this.infer(node.target),'get_Item',false);if(get){const receiver=this.bindExpression(node.target),index=this.bindExpression(node.index);this.checkAssign(get.parameters[0],index.legacyType,node.index);return this.node(BoundIndexerAccess,node,{receiver,indexer:this.frameworkPropertySymbol(get,this.frameworkMethod(receiver.legacyType,'set_Item',false)),args:[index]},get.result);}}
     if(node.kind==='Member'){
       const constant=enumValue(pathOf(node));if(constant){const field=this.type(constant.type)?.getMembers(node.name)[0]??null;return this.node(BoundFieldAccess,node,{receiver:null,field},constant.type,{constantValue:{value:constant.value}});}
       const p=this.frameworkProperty(node);if(p){if(!p.get){this.c.report(node,'CS0154',[node.name]);return this.bad(node,[],p.type);}return this.node(BoundPropertyAccess,node,{receiver:p.receiver.isStatic?null:this.bindExpression(p.receiver.node),property:this.frameworkPropertySymbol(p.get,p.set)},p.get.result);}
     }
     if(node.kind==='Call'){
       const r=this.frameworkReceiver(node.target);if(!r)return undefined;
-      if(!findContracts(r.type,node.target.name,r.isStatic).length&&this.findBuiltin(node))return undefined;
+      if(!this.framework.method(r.type,node.target.name,r.isStatic)&&this.findBuiltin(node))return undefined;
       const call=this.frameworkCall(node,true);if(!call)return this.bad(node);
       const receiver=call.receiver.isStatic?null:this.bindExpression(call.receiver.node),args=this.bindFrameworkArguments(node.args,call.contract.parameters,frameworkType(call.contract.owner)?.kind==='bcl');
       return this.node(BoundCall,node,{receiver,method:this.sym.contract(call.contract),args,intrinsic:null},call.contract.result);
     }
     if(node.kind==='New'){
       const t=this.c.findType(node.type,this.m)?null:frameworkType(node.type);if(!t)return undefined;if(t.kind==='delegate')return this.bindDelegate(node,t.name);
-      const candidates=findContracts(t.name,'.ctor',false).filter(d=>d.owner===t.name&&d.parameters.length===node.args.length&&d.parameters.every((p,i)=>this.frameworkConversion(p,this.infer(node.args[i]))||this.canTarget(node.args[i],p)||this.delegateMethod(node.args[i],p)));
-      if(candidates.length!==1){this.c.report(node,'CS1729',[typeText(t.name),node.args.length]);return this.bad(node,[],t.name);}
-      const args=this.bindFrameworkArguments(node.args,candidates[0].parameters,t.kind==='bcl'),initializers=[],collectionInitializers=[];let broken=false;
-      for(const init of node.initializers){const setter=findContracts(t.name,'set_'+init.name,false)[0];if(!setter){this.c.report(init,'CS0200',[typeText(t.name)+'.'+init.name]);broken=true;continue;}const value=this.bindExpression(init.expression);this.checkAssign(setter.parameters[0],value.legacyType,init);initializers.push(this.node(BoundObjectInitializerMember,init,{member:this.sym.contract(setter),value},setter.parameters[0]));}
-      for(const values of node.collectionInitializers??[]){const adds=findContracts(t.name,'Add',false).filter(d=>d.parameters.length===values.length&&d.parameters.every((p,i)=>this.frameworkConversion(p,this.infer(values[i]))));if(adds.length!==1){this.c.report(node,'CS1921',[typeText(t.name)+'.Add']);broken=true;continue;}collectionInitializers.push(this.node(BoundCollectionElementInitializer,null,{addMethod:this.sym.contract(adds[0]),args:this.bindFrameworkArguments(values,adds[0].parameters,t.kind==='bcl')},'void'));}
-      return this.node(BoundObjectCreationExpression,node,{constructorMethod:this.sym.contract(candidates[0]),args,initializers,collectionInitializers},t.name,broken?{hasErrors:true}:null);
+      const constructor=this.frameworkConstructor(t.name,node);
+      if(!constructor){this.c.report(node,'CS1729',[typeText(t.name),node.args.length]);return this.bad(node,[],t.name);}
+      const args=this.bindFrameworkArguments(node.args,constructor.parameters,t.kind==='bcl'),initializers=[],collectionInitializers=[];let broken=false;
+      for(const init of node.initializers){const setter=this.frameworkMethod(t.name,'set_'+init.name,false);if(!setter){this.c.report(init,'CS0200',[typeText(t.name)+'.'+init.name]);broken=true;continue;}const value=this.bindExpression(init.expression);this.checkAssign(setter.parameters[0],value.legacyType,init);initializers.push(this.node(BoundObjectInitializerMember,init,{member:this.sym.contract(setter),value},setter.parameters[0]));}
+      for(const values of node.collectionInitializers??[]){const add=this.frameworkAdd(t.name,values);if(!add){this.c.report(node,'CS1921',[typeText(t.name)+'.Add']);broken=true;continue;}collectionInitializers.push(this.node(BoundCollectionElementInitializer,null,{addMethod:this.sym.contract(add),args:this.bindFrameworkArguments(values,add.parameters,t.kind==='bcl')},'void'));}
+      return this.node(BoundObjectCreationExpression,node,{constructorMethod:this.sym.contract(constructor),args,initializers,collectionInitializers},t.name,broken?{hasErrors:true}:null);
     }
     if(node.kind==='Assignment'&&['+=','-='].includes(node.operator)){
       const r=this.frameworkReceiver(node.left),event=r&&!r.isStatic?eventsFor(r.type)[node.left.name]:null;
-      if(event){const d=findContracts(r.type,(node.operator==='+='?'add_':'remove_')+node.left.name,false)[0],receiver=this.bindExpression(r.node),argument=this.bindDelegate(node.right,event);return this.node(BoundEventAssignmentOperator,node,{receiver,event:this.sym.contract(d),isAddition:node.operator==='+=',argument},'void');}
+      if(event){const accessor=this.framework.eventAccessor(r.type,node.left.name,node.operator==='+='),receiver=this.bindExpression(r.node),argument=this.bindDelegate(node.right,event);return this.node(BoundEventAssignmentOperator,node,{receiver,event:accessor,isAddition:node.operator==='+=',argument},'void');}
     }
     return undefined;
   }
   bindFrameworkLValue(node){
     if(node.kind==='Index'){
-      const type=this.infer(node.target),get=findContracts(type,'get_Item',false)[0],set=findContracts(type,'set_Item',false)[0];
+      const type=this.infer(node.target),{get,set}=this.frameworkIndexer(type)??{};
       if(get||set){const keyType=get?.parameters[0]??set.parameters[0],valueType=get?.result??set.parameters[1];if(!set)this.c.report(node,'CS0200',[typeText(type)+'.this[]']);const receiver=this.bindExpression(node.target),index=this.bindExpression(node.index);this.checkAssign(keyType,index.legacyType,node.index);return this.node(BoundIndexerAccess,node,{receiver,indexer:this.frameworkPropertySymbol(get,set),args:[index]},valueType,set?null:{hasErrors:true});}
     }
     const p=this.frameworkProperty(node);if(!p)return null;

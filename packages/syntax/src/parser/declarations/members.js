@@ -118,52 +118,5 @@ export const memberMethods = {
     } finally {
       this.inAsync = saved;
     }
-  },
-  /** A block body, an expression body (`=> e;`) or a bare semicolon: returns [body, expressionBody, semicolonToken]. */
-  functionBody(feature) {
-    if (this.at('{')) return [this.block(), null, this.match(';')];
-    if (this.at('=>')) {
-      if (feature) this.feature(feature, this.current);
-      const arrow = this.take();
-      return [null, this.n('ArrowExpressionClause', arrow, this.expressionOrRef()), this.expect(';')];
-    }
-    return [null, null, this.expect(';')];
-  },
-  parameterList() {
-    const open = this.expect('('),
-      parameters = this.parameters(')');
-    return this.n('ParameterList', open, parameters, this.expect(')'));
-  },
-  bracketedParameterList() {
-    const open = this.expect('['),
-      parameters = this.parameters(']');
-    return this.n('BracketedParameterList', open, parameters, this.expect(']'));
-  },
-  parameters(close) {
-    const list = [];
-    while (!this.at(close) && !this.at('eof')) {
-      const before = this.i;
-      list.push(this.parameter());
-      if (this.at(',')) list.push(this.take());
-      else break;
-      if (before === this.i) break;
-    }
-    return list;
-  },
-  parameter() {
-    const attributeLists = this.attributeLists(),
-      modifiers = this.parameterModifiers();
-    if (this.at('__arglist')) return this.n('Parameter', attributeLists, modifiers, null, this.take(), null);
-    const type = this.type(),
-      identifier = this.id();
-    if (this.at('=')) this.feature('OptionalParameter', this.current);
-    return this.n(
-      'Parameter',
-      attributeLists,
-      modifiers,
-      type,
-      identifier,
-      this.at('=') ? this.n('EqualsValueClause', this.take(), this.expression()) : null
-    );
   }
 };

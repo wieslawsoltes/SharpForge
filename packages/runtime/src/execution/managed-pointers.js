@@ -2,7 +2,8 @@ import {resolveExecutionField} from '@sharpforge/cil';
 import {ManagedFault,isReference} from '../heap.js';
 import {checkArrayStore} from './casting.js';
 import {frameById} from './frame-lifetimes.js';
-import {readMemory,writeMemory,validateMemoryPointer} from './raw-memory.js';
+import {valueLayout} from './value-layout.js';
+import {readMemory,writeMemory,validateMemoryPointer,pointerOffset} from './raw-memory.js';
 import {isArrayStorage,storageRead,storageWrite} from './array-storage.js';
 import {storageValue} from './storage.js';
 import {isValueTypeValue,replaceValueField,copyValue} from './value-types.js';
@@ -56,6 +57,12 @@ export function address(vm,kind,index,owner=null,options={}) {
   if(!vm.snapshotOwner)throw invalid('Managed addresses require a VM owner');
   if(owner?.byref) {
     checkPointer(vm,owner);if(kind!=='field')throw invalid('Only fields can extend an interior pointer');
+    if (owner.memoryPointer) {
+      const field = owner.baseType.fields[index];
+      if (!field) throw invalid('Invalid raw struct field index');
+      const pointer = pointerOffset(vm, owner, valueLayout(vm, owner.baseType).offsets[index], field.type);
+      return Object.freeze({...pointer, readonly: pointer.readonly || !!options.readonly});
+    }
     const pointer=Object.freeze({...owner,path:Object.freeze([...owner.path,index]),readonly:owner.readonly||!!options.readonly});
     leaf(vm,pointer);return pointer;
   }
