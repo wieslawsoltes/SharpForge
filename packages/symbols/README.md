@@ -100,3 +100,30 @@ UTF-32 BOMs and byte-budget violations raise `SymbolError`. Decoding alone does
 not verify a document. `bindSources(symbols, sources, options)` accepts the same
 options, verifies exact raw bytes including BOMs and line endings first, and only
 then decodes trusted text; bound documents expose their selected `encoding`.
+
+`createSourceFetcher({ fetch, requestPermission, allowedOrigins })` creates an
+explicit source client. Both the transport and permission callback are injected;
+construction does not fetch. `await client.fetch(document, url, { signal })`
+returns a `SourceStatus` result with verified bytes/text only after its raw-byte
+SHA-1/256/384/512 checksum matches. For example, allowlist an exact HTTPS origin
+and have the host's existing origin-grant service answer
+`requestPermission({ origin, url, purpose, signal })`. Permission must return
+literal `true` before every request, including redirects. Requests omit credentials,
+referrers and caching; an injected transport must honor these Fetch options.
+
+Defaults are 16 MiB per response, 15 seconds including permission/verification,
+three redirects and four concurrent requests. Options `maxBytes`, `timeoutMs`,
+`maxRedirects` and `maxConcurrent` tune these bounded limits. At most 65,536 stream
+chunks are accepted; byte and time limits remain enforced without Content-Length.
+Bodies must expose a readable byte stream so the client can enforce limits before
+allocating a full response. Temporary chunk copies plus the result use at most
+roughly twice `maxBytes`, plus bounded chunk bookkeeping. Cancellation and
+`client.dispose()` stop pending waits even if a transport ignores AbortSignal.
+Cleanup rejections are retained in the client's last 16 `cleanupErrors` strings.
+
+Denied, mismatched, timed-out, malformed and unavailable sources return unverified
+results with null bytes/text and an explicit status/reason. Invalid construction
+options throw `SymbolError`. `fallbackEncoding` is opt-in and is used only after
+raw checksums pass. Browser CORS restrictions still apply; opaque redirects cannot
+be approved and are rejected. Network requests are never initiated by the reader
+or by source mapping alone.
