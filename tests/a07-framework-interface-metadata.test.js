@@ -5,6 +5,7 @@ import {RegistryBridge} from '../packages/compiler/src/symbols/registry-bridge.j
 import {TypeKind} from '../packages/compiler/src/symbols/types.js';
 import {MethodTableRegistry} from '../packages/runtime/src/execution/method-table.js';
 import {CastCache} from '../packages/runtime/src/execution/casting.js';
+import {frameworkMethodTable} from '../packages/runtime/src/execution/framework-method-table.js';
 
 const stringInterface = 'Fixture.ICompare`1<string>';
 const objectInterface = 'Fixture.ICompare`1<object>';
@@ -60,8 +61,7 @@ test('framework metadata: open comparer signatures retain abstract generic param
   assert.equal(bridge.typeFromName(stringInterface).getMembers('Compare')[0].isAbstract, true);
 });
 
-test('framework metadata: projected interfaces participate in runtime casts and contravariance', async () => {
-  const {frameworkMethodTable} = await import('../packages/runtime/src/execution/framework-method-table.js');
+test('framework metadata: projected interfaces participate in runtime casts and contravariance', () => {
   const registry = new MethodTableRegistry();
   registry.define({name: 'Fixture.IConsumer`1', ...frameworkMethodTable({typeKind: 'interface', variance: ['in']})});
   registry.define({name: 'Fixture.Parent', ...frameworkMethodTable({
