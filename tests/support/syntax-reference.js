@@ -17,6 +17,8 @@ export function fixtureOptions(text) {
   if (first.startsWith('// roslyn:')) for (const setting of first.slice(10).trim().split(/\s+/)) {
     const [key, value] = setting.split('=');
     if (key === 'langversion') options.languageVersion = value; else if (key === 'doc' && value === 'diagnose') options.documentationMode = 'diagnose'; else if (key === 'define') options.preprocessorSymbols = value.split(';'); else if (key === 'kind' && value === 'script') options.script = true;
+    // `gates=binder`: Roslyn reports this fixture's language-version errors while binding, so its parse-only dump has none.
+    else if (key === 'gates' && value === 'binder') options.gatesFromBinder = true;
   }
   return options;
 }
@@ -73,7 +75,8 @@ export function compareWithReference(tree, reference, text, limit = 8) {
   // Error codes and the offsets they are reported at; several errors at one offset are compared as a set.
   const errors = list => list.sort().join(' ');
   // Errors Roslyn only reports while binding (boundPhaseCodes) cannot appear in its parse-only diagnostics.
-  const parseErrors = tree.getDiagnostics().filter(d => d.severity === 'error' && !boundPhaseCodes.has(d.code));
+  const skipped = code => boundPhaseCodes.has(code) || (tree.options?.gatesFromBinder && gateCodes.has(code));
+  const parseErrors = tree.getDiagnostics().filter(d => d.severity === 'error' && !skipped(d.code));
   const mine = errors(parseErrors.map(d => `${d.code}@${d.start}`));
   const theirs = errors(reference.diagnostics.filter(d => d[3] === 'error').map(d => `${d[0]}@${d[1]}`));
   if (mine !== theirs) problems.push(`errors [${mine}] != [${theirs}]`);

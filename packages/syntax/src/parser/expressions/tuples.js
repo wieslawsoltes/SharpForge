@@ -7,8 +7,8 @@ export const tupleMethods = {
       saved = this.tupleContext;
     let args = [];
     this.nested(() => {
-      const end = this.matchingBracket(this.i - 1);
-      this.tupleContext = saved || this.kindAt(end + 1) === '=' || (this.declarationContext ?? 0) > 0;
+      // Roslyn: every element of a tuple literal may be a declaration, whatever follows the tuple (`var w = (var (x, y), 2);`).
+      this.tupleContext = true;
       for (;;) {
         const before = this.i;
         // Roslyn: the first element is a declaration only when a comma follows, so `(a * b)` stays a multiplication.
