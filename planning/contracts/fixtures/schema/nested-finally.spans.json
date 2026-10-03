@@ -1,0 +1,50 @@
+[
+  {
+    "documentId": "Program.cs",
+    "end": 92,
+    "endColumn": 79,
+    "endLine": 2,
+    "hidden": false,
+    "offset": 0,
+    "schemaVersion": 1,
+    "start": 63,
+    "startColumn": 50,
+    "startLine": 2
+  },
+  {
+    "documentId": "Program.cs",
+    "end": 132,
+    "endColumn": 119,
+    "endLine": 2,
+    "hidden": false,
+    "offset": 5,
+    "schemaVersion": 1,
+    "start": 105,
+    "startColumn": 92,
+    "startLine": 2
+  },
+  {
+    "documentId": "Program.cs",
+    "end": 186,
+    "endColumn": 173,
+    "endLine": 2,
+    "hidden": false,
+    "offset": 11,
+    "schemaVersion": 1,
+    "start": 159,
+    "startColumn": 146,
+    "startLine": 2
+  },
+  {
+    "documentId": "Program.cs",
+    "end": 226,
+    "endColumn": 213,
+    "endLine": 2,
+    "hidden": false,
+    "offset": 17,
+    "schemaVersion": 1,
+    "start": 199,
+    "startColumn": 186,
+    "startLine": 2
+  }
+]
