@@ -135,3 +135,49 @@ test('generated adaptive methods execute the same real property changes on sourc
     assert.equal(result.output.replace(/\r/g, ''), '100\n240\n50\n');
   }
 });
+
+test('adaptive Wrap spans keep their declared owner independent of Grid spans on both managed engines', () => {
+  const document = new DesignDocument(createDesign());
+  const wrap = document.add('VariableSizedWrapGrid', 'canvas');
+  document.move('action', wrap);
+  for (const [property, value] of [['WrapRowSpan', 1], ['WrapColumnSpan', 2], ['ColumnSpan', 3]]) {
+    document.setProperty(property, value, ['action']);
+  }
+  setResponsiveState(document, {id: 'Compact', minWidth: 0, maxWidth: 600,
+    overrides: {action: {WrapRowSpan: 2, WrapColumnSpan: 4, ColumnSpan: 5}}});
+  const source = generateDesignCode(document.value) + `
+    class Program {
+      public static void OnAction(object sender, Microsoft.UI.Xaml.RoutedEventArgs args) {}
+      static void PrintSpans() {
+        Console.WriteLine(Microsoft.UI.Xaml.Controls.VariableSizedWrapGrid.GetRowSpan(DesignedView.v_action));
+        Console.WriteLine(Microsoft.UI.Xaml.Controls.VariableSizedWrapGrid.GetColumnSpan(DesignedView.v_action));
+        Console.WriteLine(Microsoft.UI.Xaml.Controls.Grid.GetColumnSpan(DesignedView.v_action));
+      }
+      static void Main() {
+        DesignedView.Create();
+        DesignedView.ApplyAdaptive(300.0);
+        PrintSpans();
+        DesignedView.ApplyAdaptive(900.0);
+        PrintSpans();
+      }
+    }`;
+  const compiled = compileToIL(source);
+  assert.equal(compiled.success, true, JSON.stringify(compiled.diagnostics));
+  for (const machine of [new VirtualMachine(compiled.image), new CilVirtualMachine(compiled.assembly)]) {
+    const result = machine.run();
+    assert.equal(result.state, 'terminated', result.fault?.message);
+    assert.equal(result.output.replace(/\r/g, ''), '2\n4\n5\n1\n2\n3\n');
+  }
+});
+
+test('adaptive unset Wrap spans address the declared dependency property members', () => {
+  const document = new DesignDocument(createDesign());
+  setResponsiveState(document, {id: 'Compact', minWidth: 0, maxWidth: 600,
+    overrides: {action: {WrapRowSpan: 2, WrapColumnSpan: 4}}});
+  const source = generateResponsiveMethods(document.value, {symbol: id => `v_${id}`, csharpValue}).methods.join('\n');
+  assert(source.includes('v_action.ClearValue(Microsoft.UI.Xaml.Controls.VariableSizedWrapGrid.RowSpanProperty);'));
+  assert(source.includes('v_action.ClearValue(Microsoft.UI.Xaml.Controls.VariableSizedWrapGrid.ColumnSpanProperty);'));
+  assert(source.includes('Microsoft.UI.Xaml.Controls.VariableSizedWrapGrid.SetRowSpan(v_action, 2);'));
+  assert(source.includes('Microsoft.UI.Xaml.Controls.VariableSizedWrapGrid.SetColumnSpan(v_action, 4);'));
+  assert(!source.includes('SetWrap'));
+});

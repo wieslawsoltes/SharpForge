@@ -1,4 +1,3 @@
-import {CONTROLS} from '@sharpforge/framework';
 import {normalizeProperty, propertySchema} from './model.js';
 import {geometryInvariant} from './geometry-coordinates.js';
 
@@ -79,10 +78,11 @@ export function removeResponsiveState(document, id) {
 function propertyStatement(node, name, value, options) {
   const schema = propertySchema(node.type)[name];
   const variable = options.symbol(node.id);
-  const owner = schema.attached ? `${CONTROLS}${['Left', 'Top', 'ZIndex'].includes(name) ? 'Canvas' : 'Grid'}` : node.type;
-  if (value === undefined) return `${variable}.ClearValue(${owner}.${name}Property);`;
+  const owner = schema.owner ?? node.type;
+  const member = schema.member ?? name;
+  if (value === undefined) return `${variable}.ClearValue(${owner}.${member}Property);`;
   const expression = options.csharpValue(value, schema.type);
-  return schema.attached ? `${owner}.Set${name}(${variable}, ${expression});` : `${variable}.${name} = ${expression};`;
+  return schema.attached ? `${owner}.Set${member}(${variable}, ${expression});` : `${variable}.${name} = ${expression};`;
 }
 
 /** Emits real managed state changes. Hosts call ApplyAdaptive on viewport resize; no SizeChanged shim is invented. */
