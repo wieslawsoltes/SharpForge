@@ -24,6 +24,9 @@ export const LambdaBinding = Base =>
           : parameterSyntax && !parameterSyntax.length
             ? []
             : null;
+      // C# 10: `int (bool b) => ...` declares the return type; it must then be the delegate's return type exactly.
+      const returnSyntax = syntax.returnType?.kind === 'RefType' ? syntax.returnType.type : syntax.returnType,
+        declaredReturn = returnSyntax ? this.bindType(returnSyntax).type : null;
       const isAsync = (syntax.modifiers ?? []).some(m => m.text === 'async'),
         isStaticFunction = (syntax.modifiers ?? []).some(m => m.text === 'static'),
         cache = new Map();
@@ -98,7 +101,7 @@ export const LambdaBinding = Base =>
               : child.sawReturn
                 ? null
                 : this.core.void
-            : (body.type ?? (body.hasErrors ? null : this.core.void))
+            : this.expressionBodyType(body)
           : null;
         const result = {
           body,
@@ -119,6 +122,7 @@ export const LambdaBinding = Base =>
         parameterTypes: explicit,
         inferReturnType: types => {
           if (parameterSyntax && types.length !== parameterSyntax.length) return null;
+          if (declaredReturn) return declaredReturn.isErrorType() ? null : declaredReturn;
           const r = bindWith(explicit ?? types, null, true);
           return r.inferred && !r.inferred.isErrorType?.() ? r.inferred : null;
         },
@@ -152,6 +156,10 @@ export const LambdaBinding = Base =>
           ];
           return null;
         }
+        if (declaredReturn && invoke.returnType && !declaredReturn.isErrorType() && !declaredReturn.equals(invoke.returnType)) {
+          node.lastConversionError = [{ node: syntax.arrowToken ?? anchor, code: 'CS8934', args: ['lambda expression', this.display(to)] }];
+          return null;
+        }
         const r = bindWith(
           invoke.parameters.map(p => p.type),
           invoke.returnType,
@@ -159,7 +167,7 @@ export const LambdaBinding = Base =>
           invoke.parameters.map(p => p.refKind),
         );
         if (r.hasErrors) {
-          node.lastConversionError = r.diagnostics.filter(d => this.d.isError(d.code));
+          node.lastConversionError = this.withReturnMismatches(r, syntax);
           node.bodyErrors = true;
           return null;
         }
@@ -188,10 +196,34 @@ export const LambdaBinding = Base =>
       // Natural type (C# 10): explicitly typed parameters and an inferable return type.
       node.naturalType = () => {
         if (!explicit) return null;
+        if (declaredReturn) return declaredReturn.isErrorType() ? null : naturalDelegateType(this.core, explicit, declaredReturn);
         const r = bindWith(explicit, null, true);
         return r.inferred ? naturalDelegateType(this.core, explicit, r.inferred) : null;
       };
       return node;
+    }
+    /**
+     * The errors of a lambda body bound for a delegate type. A returned value that does not convert to the delegate's
+     * return type is reported twice, as in Roslyn: the conversion error and CS1662 on the same expression.
+     */
+    withReturnMismatches(bound, syntax) {
+      const errors = bound.diagnostics.filter(d => this.d.isError(d.code));
+      // The lambdas a query expression is translated to are not written in source: only the conversion error is theirs.
+      if (syntax.isQueryLambda) return errors;
+      const returned = new Set(bound.child.returns.filter(Boolean).map(value => value.syntax)),
+        what = syntax.kind === 'AnonymousMethodExpression' ? 'anonymous method' : 'lambda expression';
+      return errors.flatMap(error =>
+        ['CS0029', 'CS0266'].includes(error.code) && returned.has(error.node) ? [error, { node: error.node, code: 'CS1662', args: [what] }] : [error],
+      );
+    }
+    /**
+     * The type an expression body gives its lambda when the return type is inferred: the type of the expression, the
+     * natural delegate type of a lambda or method group (C# 10), or null when it has none (`() => null`).
+     */
+    expressionBodyType(body) {
+      if (body.type || body.hasErrors) return body.type ?? null;
+      const isFunction = body.form === 'lambda' || body.kind === 'MethodGroup';
+      return isFunction && this.version.number >= 10 ? this.naturalFunctionType(body) : null;
     }
     unwrapTask(type) {
       if (type.originalDefinition === this.core.taskT) return type.typeArguments[0].type;

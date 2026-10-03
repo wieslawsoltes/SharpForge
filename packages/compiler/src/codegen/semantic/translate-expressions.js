@@ -2,6 +2,7 @@
  * Lowering of value expressions: literals and constants, variables, member reads, operators, assignments,
  * conversions, interpolated strings and null-conditional access.
  */
+import { interpolationText } from '../../binder/csharp10.js';
 import { findContracts } from '@sharpforge/framework';
 import { TypeKind } from '../../symbols/types.js';
 import { n } from './node-factory.js';
@@ -270,7 +271,7 @@ export const ExpressionTranslation = Base =>
           const format = content.formatClause ? n.literal(content.formatClause.formatStringToken.valueText, 'string') : n.nullLiteral('string');
           const alignment = content.alignmentClause ? this.alignmentOf(content.alignmentClause) : n.literal(0, 'int');
           part = n.frameworkCall({ contract: formatValue() }, null, [value, format, alignment, n.literal(value.legacyType, 'string')], 'string');
-        } else part = n.literal(content.textToken.value ?? content.textToken.valueText, 'string');
+        } else part = n.literal(interpolationText(node.syntax, content), 'string');
         result = n.binary('+', result, part, 'string');
       }
       return result;

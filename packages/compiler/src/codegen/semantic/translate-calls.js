@@ -43,7 +43,7 @@ export const CallTranslation = Base =>
         if (mapping.expanded && positions[i] === last) rest.push(value);
         else slots[positions[i]] = value;
       });
-      const lowered = slots.map((value, i) => value ?? this.defaultArgument(parameters[i], node));
+      const lowered = slots.map((value, i) => value ?? this.defaultArgument(parameters[i], node, i));
       if (mapping.expanded) {
         const elementType = this.imageType(parameters[last].type.elementType, node.syntax);
         lowered.push(n.newArray(elementType, n.literal(rest.length, 'int'), rest));
@@ -51,7 +51,10 @@ export const CallTranslation = Base =>
       if (prefix && lowered.length) lowered[0] = n.sequence(prefix.locals, prefix.effects, lowered[0]);
       return lowered;
     }
-    defaultArgument(parameter, node) {
+    defaultArgument(parameter, node, index) {
+      // C# 10 [CallerArgumentExpression]: the omitted argument is the source text of another argument of this call.
+      const callerText = node.callerArguments?.get(index);
+      if (callerText !== undefined) return n.literal(callerText, 'string');
       const type = this.imageType(parameter.type, node.syntax),
         value = parameter.explicitDefaultValue ?? parameter.defaultValue;
       // A default that was never bound must not silently become zero.

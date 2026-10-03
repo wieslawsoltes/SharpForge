@@ -124,7 +124,13 @@ export const CreationBinding = Base =>
       }
       const call = this.finishCall(r, null, args, syntax, {});
       return this.withInitializer(
-        this.node('ObjectCreation', syntax, type, { constructor: r.method, args: call.args, expanded: r.expanded, mapping: call.mapping }),
+        this.node('ObjectCreation', syntax, type, {
+          constructor: r.method,
+          args: call.args,
+          expanded: r.expanded,
+          mapping: call.mapping,
+          callerArguments: call.callerArguments,
+        }),
         initializer,
       );
     }

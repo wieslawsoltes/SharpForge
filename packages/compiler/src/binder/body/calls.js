@@ -281,6 +281,7 @@ export const CallBinding = Base =>
         args: converted,
         expanded: result.expanded,
         mapping: result.mapping,
+        ...this.callerArgumentsOf(method.originalDefinition ?? method, result.mapping, args),
         isDelegateInvoke,
         isExtension,
         isVirtual:
