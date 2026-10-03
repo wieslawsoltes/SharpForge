@@ -13,6 +13,7 @@ import { FunctionTranslation } from './translate-functions.js';
 import { PatternTranslation } from './translate-patterns.js';
 import { StatementTranslation } from './translate-statements.js';
 import { AwaitTranslation } from '../../lowering/async/async-methods.js';
+import { AsyncStreamTranslation } from '../../lowering/async/async-streams.js';
 
 export { Frame } from './frame.js';
 
@@ -189,5 +190,13 @@ class TranslatorCore {
 }
 
 /** The body translator: the core composed with one mixin per construct family. */
-const families = [ExpressionTranslation, CallTranslation, FunctionTranslation, PatternTranslation, StatementTranslation, AwaitTranslation];
+const families = [
+  ExpressionTranslation,
+  CallTranslation,
+  FunctionTranslation,
+  PatternTranslation,
+  StatementTranslation,
+  AwaitTranslation,
+  AsyncStreamTranslation,
+];
 export class BodyTranslator extends families.reduce((composed, mixin) => mixin(composed), TranslatorCore) {}

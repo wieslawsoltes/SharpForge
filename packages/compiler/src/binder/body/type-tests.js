@@ -1,6 +1,7 @@
 /**
  * `is`, `as`, tuples, null-conditional access (lifted to Nullable<T> for value results), await and throw.
  */
+import { reportAwaitOutsideAsync } from '../async.js';
 import { SymbolKind, TypeKind, ErrorTypeSymbol } from '../../symbols/types.js';
 import { ConversionKind } from '../../conversions/classify.js';
 import { isNullableType, stripNullable } from '../../conversions/nullable.js';
@@ -199,18 +200,7 @@ export const TypeTestBinding = Base =>
     }
     await(syntax) {
       const operand = this.value(syntax.expression);
-      if (!this.c.isAsync && !this.c.isTopLevel) {
-        this.report(
-          syntax,
-          this.c.isLambda
-            ? 'CS4034'
-            : this.c.method?.returnsVoid !== false && this.c.method?.returnType?.specialType === 'System_Void'
-              ? 'CS4033'
-              : 'CS4032',
-          this.c.isLambda ? ['lambda expression'] : this.c.method?.returnsVoid ? [] : [this.display(this.c.method?.returnType)],
-        );
-        return this.bad(syntax);
-      }
+      if (reportAwaitOutsideAsync(this, syntax)) return this.bad(syntax);
       if (operand.hasErrors || !operand.type) return this.bad(syntax);
       const t = operand.type;
       if (t.originalDefinition === this.core.taskT || (t.originalDefinition?.name === 'ValueTask' && t.typeArguments?.length === 1))
