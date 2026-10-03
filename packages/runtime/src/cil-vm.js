@@ -1,9 +1,10 @@
+import {stopExecution} from './execution/stop.js';
 import {bindNativeAbi,cilNumericContext,marshalCilValue,cilValue,cilResultValue,cilArrayIndex} from './execution/cil-values.js';
 import {formatCilValue} from './value-formatting.js';
 import {runtimeTypeRoots,clearRuntimeTypes} from './execution/tokens.js';
 import {dereferenceManagedAddress} from './execution/managed-address.js';
 import {storageDefault,storageValue} from './execution/storage.js';
-import {literalString,stringRoots,clearStrings} from './execution/strings.js';
+import {literalString,stringRoots} from './execution/strings.js';
 import {ManagedPlatform} from './platform.js';
 import {CooperativeScheduler} from './scheduler.js';
 import {snapshotVM,restoreVM} from './snapshot.js';
@@ -11,12 +12,11 @@ import { AssemblyInspector, verifyCilAssembly, resolveExecutionField, CilError }
 import { ManagedHeap, ManagedFault, isReference } from './heap.js';
 import {compare as numericCompare,binary as numericBinary,convert as numericConvert,unary as numericUnary,indirect as numericIndirect} from './execution/numeric-ops.js';
 import {executeCilStep} from './execution/cil-step.js';
-import {invalidateExecutionCode} from './execution/code-version.js';
 import {call,ensureInitialized,invoke} from './execution/calls.js';
 import {CilTypeSystem} from './execution/type-system.js';
 import {throwFault,continueUnwind,exceptionRoots} from './execution/eh.js';
 import {runCilSlice} from './execution/cil-slice.js';
-import {initializeCilMethodEvents,cilRuntimeEvents,restoreCilMethodEvents,stopCilMethodEvents} from './execution/cil-method-events.js';
+import {initializeCilMethodEvents,cilRuntimeEvents,restoreCilMethodEvents} from './execution/cil-method-events.js';
 import {invokeIntrinsic} from './execution/intrinsics.js';
 import {initializationRoots} from './execution/static-init.js';
 /** Direct, cooperative CIL interpreter for a verified managed subset, independent of #SF.
@@ -90,6 +90,6 @@ export class CilVirtualMachine {
   allFrames(){return this.scheduler.allFrames();}
   run(){while(this.state==='ready'||this.state==='running')this.runSlice({instructionBudget:100000,timeBudgetMs:50});return {state:this.state,output:this.output.join(''),returnValue:this.resultValue(),exitCode:this.exitCode,fault:this.fault,stats:this.statistics()};}
   async runAsync(options={}){await this.scheduler.runAsync(options);return {state:this.state,output:this.output.join(''),returnValue:this.resultValue(),exitCode:this.exitCode,fault:this.fault,stats:this.statistics()};}
-  stop(){invalidateExecutionCode(this,'stop');clearStrings(this);clearRuntimeTypes(this);this.scheduler.cancelAll();this.platform.closeAll();this.state='terminated';this.frames=[];this.pendingFault=null;stopCilMethodEvents(this);}
+  stop(){stopExecution(this);}
   statistics(){return {artifactFormat:'ECMA-335',profile:this.report.profile,instructions:this.instructions,elapsedMs:this.elapsedMs,frames:this.frames.length,assembly:{bytes:this.inspector.pe.bytes.length,loadMs:this.loadMs},heap:{...this.heap.stats,maxBytes:this.heap.maxBytes,threshold:this.heap.threshold}};}
 }
