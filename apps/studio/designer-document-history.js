@@ -54,6 +54,13 @@ export class DesignerDocumentHistory {
     if (!this.applying) this.future = this.future.filter(entry => !entry.changes.some(change => change.uri === uri));
   }
 
+  canUndo(uri, redo = false) {
+    const entry = (redo ? this.future : this.past).findLast(item => item.changes.some(change => change.uri === uri));
+    if (!entry) return false;
+    const primary = entry.changes.find(change => change.uri === uri);
+    return this.files().find(file => file.uri === uri)?.text === (redo ? primary.before : primary.text);
+  }
+
   /** False leaves ordinary typing undo to the editor. A conflicting other file rejects the whole operation. */
   undo(uri, redo = false) {
     const source = redo ? this.future : this.past;

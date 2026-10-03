@@ -1,5 +1,6 @@
 import { CSharpDesignSession, DesignSyncProtocol } from '@sharpforge/designer';
 import { renderSourceSyncControls, bindSourceSyncControls } from './designer-source-controls.js';
+import {createDesignerSourceEvent} from './designer-source-events.js';
 
 const ignoredChanges = new Set(['selection', 'initialize', 'saved', 'source sync', 'live apply']);
 
@@ -25,6 +26,9 @@ export class DesignerSourceSync {
 
   file() { return this.view.sourceFiles?.().find(file => file.uri === this.session?.analysis.uri); }
   dirty() { return this.protocol?.designDirty ?? false; }
+  handlerCandidates() { return this.session?.analysis.handlers ?? []; }
+  createEventHandler(request) { return createDesignerSourceEvent(this, request); }
+  navigateEvent(nodeId, event) { return createDesignerSourceEvent(this, {nodeId, event}, {navigateOnly: true}); }
 
   snapshot() {
     return {

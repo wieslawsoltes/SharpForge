@@ -1,34 +1,18 @@
 import {
   analyzeDesignSources, designSourceSnapshot, designSourceDiagnostic,
-  planDesignSourceUpdate, planDesignEventHandler
+  planDesignSourceUpdate, planDesignEventHandler, discoverProjectControls
 } from '@sharpforge/designer';
-import { frameworkAssignable, CONTROLS } from '@sharpforge/framework';
 import { registerDesignerValidation } from './designer-worker-validation.js';
 
 function sameSources(left, right) {
   if (!Array.isArray(left) || !Array.isArray(right) || left.length !== right.length) return false;
   const files = new Map(left.map(file => [file.uri, file]));
+  if (files.size !== left.length || new Set(right.map(file => file.uri)).size !== right.length) return false;
   return right.every(file => files.get(file.uri)?.text === file.text && files.get(file.uri)?.version === file.version);
 }
 
-function projectControls(analysis) {
-  const types = [];
-  for (const parsed of analysis.context?.parsedFiles ?? []) {
-    for (const declaration of parsed.root.members) {
-      if (declaration.kind !== 'Class') continue;
-      const symbol = analysis.context.model.getDeclaredSymbol(declaration);
-      const legacy = symbol?.legacy;
-      const base = legacy?.baseType?.name ?? legacy?.baseType ?? legacy?.baseName;
-      if (typeof base !== 'string' || !frameworkAssignable(CONTROLS + 'UserControl', base)) continue;
-      const type = [declaration.namespace, declaration.name].filter(Boolean).join('.');
-      types.push({ type, baseType: CONTROLS + 'UserControl', uri: parsed.source.uri, analysisVersion: parsed.source.version });
-    }
-  }
-  return types;
-}
-
 /** Register an additive compiler-worker request; syntax and semantic graphs remain in the worker. */
-export function registerDesignerWorker(protocol, { maxCachedDocuments = 32, workspace = null } = {}) {
+export function registerDesignerWorker(protocol, {maxCachedDocuments = 4, maxCachedCharacters = 512000, workspace = null} = {}) {
   const unregisterValidation = workspace ? registerDesignerValidation(protocol, workspace) : null;
   const analyses = new Map();
   const options = params => ({
@@ -39,7 +23,13 @@ export function registerDesignerWorker(protocol, { maxCachedDocuments = 32, work
   const retain = analysis => {
     analyses.delete(analysis.uri);
     analyses.set(analysis.uri, analysis);
-    while (analyses.size > maxCachedDocuments) analyses.delete(analyses.keys().next().value);
+    const size = item => item.sources.reduce((sum, file) => sum + file.text.length, 0);
+    let characters = [...analyses.values()].reduce((sum, item) => sum + size(item), 0);
+    while (analyses.size && (analyses.size > maxCachedDocuments || characters > maxCachedCharacters)) {
+      const oldest = analyses.keys().next().value;
+      characters -= size(analyses.get(oldest));
+      analyses.delete(oldest);
+    }
   };
   const baseline = params => {
     const cached = analyses.get(params.uri);
@@ -48,7 +38,7 @@ export function registerDesignerWorker(protocol, { maxCachedDocuments = 32, work
   };
   const serializePlan = plan => ({
     success: plan.compilationSucceeded !== false,
-    text: plan.text, edits: plan.edits, changes: plan.changes, expectedSources: plan.expectedSources,
+    text: plan.text, edits: plan.edits, changes: plan.changes, sources: plan.sources, expectedSources: plan.expectedSources,
     document: plan.document, analysis: designSourceSnapshot(plan.analysis),
     structural: plan.structural, warnings: plan.warnings, diagnostics: plan.diagnostics ?? []
   });
@@ -59,7 +49,12 @@ export function registerDesignerWorker(protocol, { maxCachedDocuments = 32, work
       const diagnostics = snapshot.diagnostics ?? [];
       const success = !diagnostics.some(item => item.severity === 'error');
       if (success) retain(analysis);
-      return { success, analysis: snapshot, diagnostics, projectTypes: projectControls(analysis), generation: params.generation };
+      const projectTypes = discoverProjectControls({success: analysis.compilationSucceeded, files: analysis.sources, version: params.revision});
+      return {success, analysis: snapshot, diagnostics, projectTypes, generation: params.generation};
+    },
+    catalog(params) {
+      const projectTypes = discoverProjectControls({success: params.success, files: params.files, version: params.revision});
+      return {success: params.success, projectTypes, revision: params.revision};
     },
     plan(params) {
       const analysis = baseline(params);
@@ -69,9 +64,14 @@ export function registerDesignerWorker(protocol, { maxCachedDocuments = 32, work
     },
     event(params) {
       const analysis = baseline(params);
-      const plan = planDesignEventHandler(analysis, params.nodeId, params.event, params.options ?? {});
-      if (plan.navigation) return { success: true, navigation: plan.navigation };
-      return serializePlan(plan);
+      if (params.navigateOnly && !analysis.bindings[params.nodeId]?.events?.[params.event]) {
+        throw new Error('This event does not have a source handler');
+      }
+      const plan = planDesignEventHandler(analysis, params.nodeId, params.event, {
+        ...params.options, currentSources: params.files, requireCompilation: true
+      });
+      return {...serializePlan(plan), navigation: plan.navigation, existing: plan.existing,
+        readOnly: plan.readOnly, handler: plan.handler};
     }
   };
   const unregister = protocol.registerHandler('designAnalyze', params => {
