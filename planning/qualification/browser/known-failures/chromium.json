@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "engine": "chromium",
+  "failures": [
+    {
+      "id": "navigation-policy",
+      "mode": "deployed",
+      "suite": "smoke",
+      "device": null,
+      "platform": "darwin",
+      "errorContains": "Required script-src self CSP is missing",
+      "issue": "https://github.com/wieslawsoltes/SharpForge/issues/1158",
+      "reason": "The currently published Pages application has no enforced script-src policy."
+    },
+    {
+      "id": "accessible-names-and-roles",
+      "mode": "http",
+      "suite": "a11y",
+      "device": null,
+      "platform": "darwin",
+      "errorContains": "'selector': '#output-kind'",
+      "issue": "https://github.com/wieslawsoltes/SharpForge/issues/1157",
+      "reason": "Output filter combobox is unnamed in the actual accessibility tree."
+    },
+    {
+      "id": "keyboard-menu-docking-editor",
+      "mode": "http",
+      "suite": "a11y",
+      "device": null,
+      "platform": "darwin",
+      "errorContains": "Keyboard focus cannot escape <textarea",
+      "issue": "https://github.com/wieslawsoltes/SharpForge/issues/1157",
+      "reason": "Editor consumes Tab and traps keyboard traversal."
+    },
+    {
+      "id": "touch-overlay-toggle",
+      "mode": "http",
+      "suite": "mobile",
+      "device": "Pixel 5",
+      "platform": "darwin",
+      "errorContains": "Solution visibility did not restore on second touch",
+      "issue": "https://github.com/wieslawsoltes/SharpForge/issues/1156",
+      "reason": "Outside pointerdown dismisses the popup before the footer click opens it again."
+    },
+    {
+      "id": "touch-overlay-toggle",
+      "mode": "http",
+      "suite": "mobile",
+      "device": "iPhone 13",
+      "platform": "darwin",
+      "errorContains": "Solution visibility did not restore on second touch",
+      "issue": "https://github.com/wieslawsoltes/SharpForge/issues/1156",
+      "reason": "Outside pointerdown dismisses the popup before the footer click opens it again."
+    }
+  ]
+}
