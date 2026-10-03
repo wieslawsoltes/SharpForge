@@ -1,4 +1,5 @@
-import {fail, integer, bclScalar, array, makeArray, equal} from '@sharpforge/bcl-core';
+import {fail, integer, bclScalar, array, makeArray} from '@sharpforge/bcl-core';
+import {equal} from './object-equality.js';
 import {registerClosedCollections} from './legacy-contracts.js';
 import {
   count, data, version, change, reserve, commitItems, write, queueItems, queueEnqueue, append, keyOf, indexMap
