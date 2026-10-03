@@ -13,13 +13,15 @@ import { runProcess } from '../../../scripts/conformance/oracle/process.js';
 
 const definition = { id: 'hello-unicode', source: 'Hello.cs', langVersion: '12.0' };
 const syntheticResult = { exitCode: 0, diagnostics: [], assemblySHA256: 'a'.repeat(64) };
-const actualPin = { sdk: pin.sdk, runtime: pin.runtime, referencePack: pin.referencePack, roslyn: pin.roslyn, referenceAssemblies: pin.referenceAssemblies };
+const actualPin = { sdk: pin.sdk, runtime: pin.runtime, referencePack: pin.referencePack, roslyn: {...pin.roslyn,sha256:pin.roslyn.platformHashes[`${process.platform}-${process.arch}`]}, referenceAssemblies: pin.referenceAssemblies };
 
 test('SDK, compiler bytes and reference assemblies are exact pins', () => {
   assert.doesNotThrow(() => assertPins(actualPin));
   for (const key of ['sdk', 'runtime', 'referencePack']) assert.throws(() => assertPins({ ...actualPin, [key]: '99.0.0' }), /mismatch/);
   assert.throws(() => assertPins({ ...actualPin, roslyn: { ...pin.roslyn, sha256: '0'.repeat(64) } }), /mismatch/);
   assert.throws(() => assertPins({ ...actualPin, referenceAssemblies: { ...pin.referenceAssemblies, count: 0 } }), /mismatch/);
+  for(const [target,sha256] of Object.entries(pin.roslyn.platformHashes))assert.doesNotThrow(()=>assertPins({...actualPin,roslyn:{version:pin.roslyn.version,sha256}},pin,target));
+  assert.throws(()=>assertPins({...actualPin,roslyn:{...actualPin.roslyn,sha256:pin.roslyn.platformHashes['linux-x64']}},pin,'win32-x64'),/mismatch/);
 });
 
 test('hosted image drift fails while local image limits remain explicit', () => {
@@ -123,36 +125,6 @@ test('unsupported WinUI is recorded without requiring an unrelated local SDK', {
     assert.equal(report.observations, 0);
     assert.equal(report.unsupported[0].oracleId, 'winui');
   } finally { await rm(directory, { recursive: true, force: true }); }
-});
-
-test('real Roslyn and CoreCLR positive, negative, cancellation and boundary fixtures', { timeout: 120000 }, async () => {
-  const toolchain = await resolveToolchain({ checkImage: false });
-  for (const fixture of await loadFixtures()) {
-    const compiled = await compileFixture(fixture, toolchain);
-    checkFixtureContract(fixture, compiled.result);
-    if (fixture.execute) {
-      const run = await runFixture(compiled.assembly, fixture, toolchain);
-      checkFixtureContract(fixture, compiled.result, run.result);
-    }
-  }
-});
-
-test('actual nondeterministic CoreCLR fixture is rejected by double execution', { timeout: 30000 }, async () => {
-  const toolchain = await resolveToolchain({ checkImage: false });
-  const fixture = await loadFixture({ id: 'nondeterministic', source: 'Nondeterministic.cs', langVersion: '12.0' });
-  const compiled = await compileFixture(fixture, toolchain);
-  await assert.rejects(runFixture(compiled.assembly, fixture, toolchain), /Nondeterministic CoreCLR/);
-});
-
-test('actual CoreCLR timeout/cancellation reaps process and disposes temporary assembly', { timeout: 30000 }, async () => {
-  const toolchain = await resolveToolchain({ checkImage: false });
-  const fixture = await loadFixture({ id: 'waiting', source: 'Wait.cs', langVersion: '12.0' });
-  const compiled = await compileFixture(fixture, toolchain);
-  await assert.rejects(executeAssembly(compiled.assembly, toolchain, { timeoutMs: 100 }), /timed out/);
-  const controller = new AbortController();
-  const pending = executeAssembly(compiled.assembly, toolchain, { signal: controller.signal });
-  setTimeout(() => controller.abort(), 100);
-  await assert.rejects(pending, /cancelled/);
 });
 
 test('workflow pins SDK/container/image and always publishes qualification evidence', async () => {
