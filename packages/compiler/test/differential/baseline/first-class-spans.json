@@ -1,0 +1,6 @@
+{
+  "first-class-spans/conversions-receivers-and-betterness-csharp-13": ["diagnostics", "warnings"],
+  "first-class-spans/invalid-span-conversions": ["diagnostics", "warnings"],
+  "first-class-spans/invalid-span-conversions-csharp-13": ["diagnostics", "warnings"],
+  "first-class-spans/method-group-receiver-has-no-span-conversion": ["diagnostics", "warnings"]
+}

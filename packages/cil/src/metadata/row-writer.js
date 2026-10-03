@@ -36,8 +36,8 @@ export function writeMetadataRow(builder, table, values) {
   return builder.add(id, row);
 }
 
-/** Build scoped convenience writers without mutating a prototype or global registry. */
+/** Build scoped writers from table names or per-builder factories, without prototype or global mutation. */
 export function rowWriterGroup(builder, registry) {
   return Object.freeze(Object.fromEntries(Object.entries(registry).map(([method, table]) =>
-    [method, values => writeMetadataRow(builder, table, values)])));
+    [method, typeof table === 'function' ? table(builder) : values => writeMetadataRow(builder, table, values)])));
 }
