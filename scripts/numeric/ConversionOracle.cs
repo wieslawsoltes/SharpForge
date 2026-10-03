@@ -24,10 +24,12 @@ static class Program
     static object Input(ConversionCase item)
     {
         var culture = CultureInfo.InvariantCulture;
+        // Each arm must box its declared source type before the switch computes a
+        // common numeric type; reflection does not narrow a boxed Double to Int32.
         return item.source switch {
-            "i4" => int.Parse(item.input, culture), "i8" => long.Parse(item.input, culture),
-            "r4" => float.Parse(item.input, culture), "r8" => double.Parse(item.input, culture),
-            "native" => checked((nint)long.Parse(item.input, culture)), _ => throw new ArgumentException(item.source)
+            "i4" => (object)int.Parse(item.input, culture), "i8" => (object)long.Parse(item.input, culture),
+            "r4" => (object)float.Parse(item.input, culture), "r8" => (object)double.Parse(item.input, culture),
+            "native" => (object)checked((nint)long.Parse(item.input, culture)), _ => throw new ArgumentException(item.source)
         };
     }
 
