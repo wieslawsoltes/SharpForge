@@ -186,7 +186,7 @@ export const ExpressionTranslation = Base =>
     autoPropertyField(node) {
       const property = node.property.originalDefinition ?? node.property;
       if (property.setMethod || !this.g.isSource(property)) return null;
-      const record = this.g.autoProperties.get(property);
+      const record = this.g.autoProperties.get(node.property);
       if (!record) return null;
       return record.isStatic ? n.staticField(record) : n.field(this.memberReceiver(node), record);
     }
