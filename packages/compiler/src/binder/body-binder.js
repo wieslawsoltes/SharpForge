@@ -36,6 +36,7 @@ import { LocalFunctionBinding } from './body/local-functions.js';
 import { JumpBinding } from './jumps.js';
 import { ExceptionBinding } from './exceptions.js';
 import { AnonymousMethodBinding } from './anonymous-methods.js';
+import { ArrayBinding } from './arrays.js';
 import { languageRules } from './language-rules.js';
 
 const expressionFamilies = [
@@ -64,6 +65,7 @@ const statementFamilies = [
   JumpBinding,
   ExceptionBinding,
   AnonymousMethodBinding,
+  ArrayBinding,
 ];
 const compose = (base, mixins) => mixins.reduce((composed, mixin) => mixin(composed), base);
 

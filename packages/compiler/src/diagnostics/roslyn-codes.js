@@ -335,6 +335,7 @@ export const roslynCodes=Object.freeze({
  CS0843:["ERR_UnassignedThisAutoPropertyUnsupportedVersion","error",0,"Auto-implemented property '{0}' must be fully assigned before control is returned to the caller. Consider updating to language version '{1}' to auto-default the property."],
  CS0844:["ERR_VariableUsedBeforeDeclarationAndHidesField","error",0,"Cannot use local variable '{0}' before it is declared. The declaration of the local variable hides the field '{1}'."],
  CS0846:["ERR_ArrayInitializerExpected","error",0,"A nested array initializer is expected"],
+ CS0847:["ERR_ArrayInitializerIncorrectLength","error",0,"An array initializer of length '{0}' is expected"],
  CS1001:["ERR_IdentifierExpected","error",0,"Identifier expected"],
  CS1002:["ERR_SemicolonExpected","error",0,"; expected"],
  CS1003:["ERR_SyntaxError","error",0,"Syntax error, '{0}' expected"],
