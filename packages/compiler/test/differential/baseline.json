@@ -156,6 +156,8 @@
     "enums/cs0543-enum-overflow",
     "events/event-accessors",
     "events/field-like-events",
+    "exception-filters/cs0029-cs0103-filter-conditions",
+    "exception-filters/cs7095-cs8359-cs8360-constant-filters",
     "exception-handling/catch-finally-order-and-rethrow",
     "exception-handling/catch-order",
     "exception-handling/catch-order-with-source-hierarchy",
@@ -365,6 +367,8 @@
     "language-version/gate-implicit-array-at-2",
     "language-version/gate-implicit-local-at-2",
     "language-version/gate-inferred-delegate-type-at-9",
+    "language-version/gate-instance-member-in-nameof-at-11",
+    "language-version/gate-nameof-at-5",
     "language-version/gate-native-int-at-8",
     "language-version/gate-params-collections-at-12",
     "language-version/gate-readonly-auto-properties-at-5",
@@ -490,6 +494,11 @@
     "name-lookup/cs0246-unknown-type-in-new",
     "name-lookup/cs0246-unknown-type-in-signature",
     "name-lookup/shadowing-field-with-local",
+    "nameof/a-method-named-nameof-wins",
+    "nameof/cs0103-cs0117-cs0120-arguments-that-do-not-bind",
+    "nameof/cs8081-cs8082-cs8083-cs8084-arguments-without-a-name",
+    "nameof/cs9058-instance-member-in-nameof-in-csharp-11",
+    "nameof/names-of-locals-members-types-and-namespaces",
     "namespaces/alias-and-namespace-of-the-same-target",
     "namespaces/cs0101-duplicate-in-namespace",
     "namespaces/cs0104-ambiguous-reference",
@@ -713,7 +722,11 @@
     "using-dispose/dispose-on-exception",
     "using-dispose/nested-and-null",
     "using-dispose/using-declaration",
-    "using-dispose/using-statement"
+    "using-dispose/using-statement",
+    "using-static/cs0103-extension-and-instance-members-are-not-imported",
+    "using-static/cs0229-cs0121-cs0104-the-same-name-from-two-types",
+    "using-static/cs7007-cs0246-what-using-static-may-name",
+    "using-static/static-members-nested-types-and-enum-members"
   ],
   "warnings":[
     "accessibility/cs0050-inconsistent-accessibility",
@@ -881,6 +894,8 @@
     "enums/cs0543-enum-overflow",
     "events/event-accessors",
     "events/field-like-events",
+    "exception-filters/cs0029-cs0103-filter-conditions",
+    "exception-filters/cs7095-cs8359-cs8360-constant-filters",
     "exception-handling/catch-finally-order-and-rethrow",
     "exception-handling/catch-order",
     "exception-handling/catch-order-with-source-hierarchy",
@@ -1096,6 +1111,7 @@
     "language-version/gate-implicit-array-at-2",
     "language-version/gate-implicit-local-at-2",
     "language-version/gate-inferred-delegate-type-at-9",
+    "language-version/gate-instance-member-in-nameof-at-11",
     "language-version/gate-lambda-optional-parameters-at-11",
     "language-version/gate-nameof-at-5",
     "language-version/gate-params-collections-at-12",
@@ -1229,6 +1245,10 @@
     "name-lookup/cs0246-unknown-type-in-new",
     "name-lookup/cs0246-unknown-type-in-signature",
     "name-lookup/shadowing-field-with-local",
+    "nameof/a-method-named-nameof-wins",
+    "nameof/cs0103-cs0117-cs0120-arguments-that-do-not-bind",
+    "nameof/cs8081-cs8082-cs8083-cs8084-arguments-without-a-name",
+    "nameof/cs9058-instance-member-in-nameof-in-csharp-11",
     "namespaces/alias-and-namespace-of-the-same-target",
     "namespaces/cs0101-duplicate-in-namespace",
     "namespaces/cs0104-ambiguous-reference",
@@ -1460,7 +1480,11 @@
     "using-dispose/dispose-on-exception",
     "using-dispose/nested-and-null",
     "using-dispose/using-declaration",
-    "using-dispose/using-statement"
+    "using-dispose/using-statement",
+    "using-static/cs0103-extension-and-instance-members-are-not-imported",
+    "using-static/cs0229-cs0121-cs0104-the-same-name-from-two-types",
+    "using-static/cs7007-cs0246-what-using-static-may-name",
+    "using-static/static-members-nested-types-and-enum-members"
   ],
   "bytecode":[
     "anonymous-methods/captures-and-multicast",
@@ -1643,6 +1667,8 @@
     "methods/ref-and-out",
     "methods/value-vs-reference-arguments",
     "name-lookup/shadowing-field-with-local",
+    "nameof/a-method-named-nameof-wins",
+    "nameof/names-of-locals-members-types-and-namespaces",
     "namespaces/alias-and-namespace-of-the-same-target",
     "namespaces/nested-and-qualified",
     "namespaces/same-name-different-namespaces",
@@ -1698,7 +1724,8 @@
     "using-dispose/dispose-on-exception",
     "using-dispose/nested-and-null",
     "using-dispose/using-declaration",
-    "using-dispose/using-statement"
+    "using-dispose/using-statement",
+    "using-static/static-members-nested-types-and-enum-members"
   ],
   "cil":[
     "anonymous-methods/captures-and-multicast",
@@ -1881,6 +1908,8 @@
     "methods/ref-and-out",
     "methods/value-vs-reference-arguments",
     "name-lookup/shadowing-field-with-local",
+    "nameof/a-method-named-nameof-wins",
+    "nameof/names-of-locals-members-types-and-namespaces",
     "namespaces/alias-and-namespace-of-the-same-target",
     "namespaces/nested-and-qualified",
     "namespaces/same-name-different-namespaces",
@@ -1936,6 +1965,7 @@
     "using-dispose/dispose-on-exception",
     "using-dispose/nested-and-null",
     "using-dispose/using-declaration",
-    "using-dispose/using-statement"
+    "using-dispose/using-statement",
+    "using-static/static-members-nested-types-and-enum-members"
   ]
 }
