@@ -143,6 +143,7 @@ export class TypeBinder{
   /** Applies type arguments and accessibility to a looked-up symbol. */
   finish(symbol,argSyntax,scope,syntax,options,container=null){
     if(symbol.kind===SymbolKind.Namespace||symbol.kind===SymbolKind.TypeParameter)return symbol;
+    if(symbol.containingAssembly&&!options.quiet)this.host.useSite?.(symbol,scope.uri,syntax.identifier??syntax);
     if(symbol.kind===SymbolKind.NamedType&&!options.quiet&&!options.skipAccessCheck){const within=scope.containingType;if(symbol.locations?.length&&!isAccessible(symbol.originalDefinition,within?.originalDefinition??null,{withinModule:this.host.module}))this.report(scope,syntax.identifier??syntax,'CS0122',[symbol.toDisplayString()]);}
     if(!argSyntax.length){
       // A nested type named from inside a generic container keeps the container's own type parameters.

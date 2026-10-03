@@ -34,7 +34,8 @@ import {statementMethods} from './body-statements.js';
 const unknown=ErrorTypeSymbol.unknown;
 const binaryOperators={AddExpression:'+',SubtractExpression:'-',MultiplyExpression:'*',DivideExpression:'/',ModuloExpression:'%',LeftShiftExpression:'<<',RightShiftExpression:'>>',UnsignedRightShiftExpression:'>>>',LogicalOrExpression:'||',LogicalAndExpression:'&&',BitwiseOrExpression:'|',BitwiseAndExpression:'&',ExclusiveOrExpression:'^',EqualsExpression:'==',NotEqualsExpression:'!=',LessThanExpression:'<',LessThanOrEqualExpression:'<=',GreaterThanExpression:'>',GreaterThanOrEqualExpression:'>='};
 const unaryOperators={UnaryPlusExpression:'+',UnaryMinusExpression:'-',BitwiseNotExpression:'~',LogicalNotExpression:'!'};
-const isSource=symbol=>{for(let s=symbol?.originalDefinition??symbol;s;s=s.containingSymbol)if(s.isSource)return true;return false;};
+/** True for symbols whose member lists are authoritative: declared in source or imported from a referenced assembly's metadata. */
+const isSource=symbol=>{for(let s=symbol?.originalDefinition??symbol;s;s=s.containingSymbol)if(s.isSource||s.containingAssembly)return true;return false;};
 const keywordOf=type=>numericKind(type)??({System_Boolean:'bool',System_String:'string',System_Char:'char',System_Object:'object'})[type?.specialType]??null;
 
 export class BodyBinder{

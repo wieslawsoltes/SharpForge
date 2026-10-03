@@ -212,6 +212,7 @@ class Analyzer{
   }
 }
 /** Child expressions of a bound node in evaluation order (generic walk for kinds without special rules). */
+export function boundChildren(e){return children(e);}
 function children(e){
   const out=[];
   for(const key of ['receiver','operand','left','right','array','condition','whenTrue','whenFalse','governing','handler','expression','target','value']){const v=e[key];if(v&&typeof v==='object'&&typeof v.kind==='string'&&!v.toDisplayString)out.push(v);}
