@@ -1,3 +1,4 @@
+import {validVarargsSignature} from './varargs-profile.js';
 import {verifyManagedFunctionPointers,verifyIndirectSignature} from './function-pointer-profile.js';
 import {reachableAsyncMethods} from './async-profile.js';
 import {numericFieldDefinition} from './numeric-field-profile.js';
@@ -8,7 +9,7 @@ import { AssemblyInspector } from './inspector.js';
 import { CilError } from './binary.js';
 import {CilDispatchTable} from './dispatch-profile.js';
 // Broad decoding is deliberately separate from this managed execution allowlist.
-const simple = new Set(('jmp localloc cpblk initblk unaligned. volatile. tail. constrained. readonly. ldtoken ldftn ldvirtftn calli endfilter nop break ldnull dup pop ret switch ldstr newobj call callvirt throw rethrow endfinally ldlen newarr ldfld stfld ldsfld stsfld ldflda ldsflda ldobj stobj initobj ldelema ldelem stelem box unbox unbox.any cpobj sizeof castclass isinst ckfinite').split(' '));
+const simple = new Set(('arglist mkrefany refanyval refanytype jmp localloc cpblk initblk unaligned. volatile. tail. constrained. readonly. ldtoken ldftn ldvirtftn calli endfilter nop break ldnull dup pop ret switch ldstr newobj call callvirt throw rethrow endfinally ldlen newarr ldfld stfld ldsfld stsfld ldflda ldsflda ldobj stobj initobj ldelema ldelem stelem box unbox unbox.any cpobj sizeof castclass isinst ckfinite').split(' '));
 const arithmetic = /^(add|sub|mul)(\.ovf(\.un)?)?$|^(div|rem|shr)(\.un)?$|^(and|or|xor|shl|neg|not|ceq|cgt|clt)(\.un)?$/;
 const indexed = /^(ldarg|ldarga|starg|ldloc|ldloca|stloc)(\.[0-3s])?$/;
 const numeric = /^ldc\.(i4(\.(m1|[0-8]|s))?|i8|r4|r8)$/;
@@ -29,7 +30,7 @@ export function selectMethod(inspector,selection,args){
 export function stackEffect(inspector,m,i){
   const n=i.name;
   if(['unaligned.','volatile.','tail.','constrained.','readonly.'].includes(n)||n==='jmp'||n==='nop'||n==='break'||n==='endfinally'||n==='rethrow'||/^br(\.s)?$/.test(n)||/^leave/.test(n))return [0,0];
-  if(n==='ldtoken'||n==='ldftn'||n==='sizeof'||n==='ldnull'||n==='ldstr'||numeric.test(n)||/^ld(arg|loc)/.test(n)||n==='ldsfld'||n==='ldsflda')return [0,1];
+  if(n==='arglist'||n==='ldtoken'||n==='ldftn'||n==='sizeof'||n==='ldnull'||n==='ldstr'||numeric.test(n)||/^ld(arg|loc)/.test(n)||n==='ldsfld'||n==='ldsflda')return [0,1];
   if(/^st(arg|loc)/.test(n)||n==='pop'||n==='stsfld'||n==='throw'||n==='endfilter'||n==='switch'||/^br(true|false)/.test(n)||n==='initobj')return [1,0];
   if(n==='cpblk'||n==='initblk')return [3,0];
   if(n==='dup')return [1,2];
@@ -55,16 +56,18 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
     const t=pending.pop();if(visited.has(t))continue;visited.add(t);if(visited.size>maxMethods){issue(null,null,'IL_LIMIT','Reachable method limit exceeded');break;}
     let m;try{m=inspector.getMethod(t);}catch(error){issue({token:t},null,'IL_METADATA',error.message);continue;}
     enqueueType(m.ownerToken);
-    if(!m.hasBody||m.implFlags&3||m.flags&0x2000){issue(m,null,'IL_NATIVE','Native, runtime and abstract methods are not executable');continue;}
-    const illegalType=type=>/typedref/.test(type);
-    if(m.signature.callingConvention||m.signature.parameters.concat(m.locals,m.signature.returnType).some(illegalType)){issue(m,null,'IL_SIGNATURE','Varargs and typed references are inspection-only');continue;}
+    if(m.flags&0x2000){issue(m,null,'IL_UNMANAGED','Unmanaged P/Invoke is unavailable: '+m.owner+'::'+m.name,{exceptionType:'NotSupportedException',member:m.owner+'::'+m.name});continue;}
+    if(!m.hasBody||m.implFlags&3){issue(m,null,'IL_NATIVE','Native, runtime and abstract methods are not executable');continue;}
+    const illegalType=()=>false;
+    if(m.signature.callingConvention&&m.signature.callingConvention!==5){issue(m,null,'IL_SIGNATURE','Only default and managed vararg calling conventions are executable');continue;}
     if(methodGenericParameters(inspector,m.token).length!==(m.signature.genericArity??0)){issue(m,null,'IL_GENERIC','Generic parameter metadata does not match method arity');continue;}
     const map=new Map(m.instructions.map((i,index)=>[i.offset,index]));
     verifyControlRegions(inspector,m,issue);
     for(const i of m.instructions){
       if(!isExecutableOpcode(i.name)){issue(m,i,'IL_OPCODE',`Opcode '${i.name}' is inspection-only`);continue;}
+      if(i.name==='arglist'&&m.signature.callingConvention!==5)issue(m,i,'IL_VARARGS','arglist requires a vararg MethodDef');
       if(i.name==='sizeof'){try{const type=inspector.metadata.typeName(i.operand);if(!primitiveSizes[type]&&!['System.IntPtr','System.UIntPtr','System.Decimal'].includes(type)&&i.operand>>>24!==2)issue(m,i,'IL_TYPE','sizeof requires a supported managed value type');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
-      if(['cpobj','unbox','unbox.any','box','castclass','isinst','ldobj','stobj','initobj','newarr','ldelema','ldelem','stelem'].includes(i.name)){try{if(inspector.resolveToken(i.operand).kind!=='type')throw new CilError('Instruction requires a type token');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
+      if(['mkrefany','refanyval','cpobj','unbox','unbox.any','box','castclass','isinst','ldobj','stobj','initobj','newarr','ldelema','ldelem','stelem'].includes(i.name)){try{if(inspector.resolveToken(i.operand).kind!=='type')throw new CilError('Instruction requires a type token');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
       if(i.name==='ldtoken'){try{const token=inspector.resolveToken(i.operand);if(!['type','method','field'].includes(token.kind))issue(m,i,'IL_TOKEN','ldtoken requires a type, method or field');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
       if(indexed.test(i.name)){
         const index=i.operand??Number(i.name.split('.').at(-1)),limit=i.name.includes('arg')?m.signature.parameters.length+(m.signature.isStatic?0:1):m.locals.length;
@@ -74,8 +77,9 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
       if(['jmp','call','callvirt','newobj','ldftn','ldvirtftn'].includes(i.name)){
         try{const d=resolveExecutionMethod(inspector,i.operand),target=d.resolvedToken;
           for(const method of reachableAsyncMethods(inspector,d))pending.push(method);
+          if(d.signature.callingConvention===5&&target&&!validVarargsSignature(inspector.signature(target),d.signature,callSignatureKey))throw new CilError('Vararg fixed signature mismatch');
           if(i.name==='jmp'&&callSignatureKey(d.signature)!==callSignatureKey(m.signature))throw new CilError('jmp method signatures must match');
-          if(d.signature.callingConvention||d.signature.parameters.concat(d.signature.returnType).some(illegalType))throw new CilError('Unsupported managed call signature');
+          if(d.signature.callingConvention&&d.signature.callingConvention!==5||d.signature.parameters.concat(d.signature.returnType).some(illegalType))throw new CilError('Unsupported managed call signature');
           if(['callvirt','ldvirtftn'].includes(i.name)&&d.signature.isStatic)throw new CilError(i.name+' requires an instance method');
           const instructionIndex=m.instructions.indexOf(i),prefixes=[];for(let index=instructionIndex-1;index>=0&&m.instructions[index].name.endsWith('.');index--)prefixes.push(m.instructions[index]);
           if(prefixes.some(prefix=>prefix.name==='tail.')&&callStorageType(d.signature.returnType)!==callStorageType(m.signature.returnType))throw new CilError('tail. call return type must match the containing method');

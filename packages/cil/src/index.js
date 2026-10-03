@@ -28,3 +28,4 @@ export {memoryMethodDefinition} from './memory-profile.js';
 export {exceptionIntrinsicDefinitions} from './exception-profile.js';
 
 export {arrayRuntimeDefinition} from './array-runtime-profile.js';
+export {varargsIntrinsicDefinitions,varargsTypeDefinition} from './varargs-profile.js';
