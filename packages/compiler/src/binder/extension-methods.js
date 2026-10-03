@@ -77,6 +77,8 @@ export const ExtensionMethodBinding = Base =>
   class extends Base {
     groupConversion(group, to) {
       if (!group.isExtensionOnly || !group.receiver || !delegateInvoke(to)) return super.groupConversion(group, to);
+      // As an argument the group carries the argument's name in `name` (none): the method name is on the name node.
+      group.name ??= group.nameNode?.identifier?.valueText ?? null;
       // The nearest scope with a method the receiver fits decides, as for an invocation.
       for (const scope of group.extensionScopes) {
         const fitting = scope.methods.filter(
