@@ -93,25 +93,6 @@ export const CallBinding = Base =>
     }
     invocation(syntax) {
       const target = this.expression(syntax.expression, { invoked: true });
-      if (target.kind === 'NameOfMarker') {
-        this.d.gate(this.c.uri, syntax.expression, 'Nameof');
-        const a = syntax.argumentList.arguments[0];
-        if (!a) return this.bad(syntax);
-        const saved = this.quiet;
-        this.quiet = [];
-        let inner;
-        try {
-          inner = this.expression(a.expression, { nameofOperand: true });
-        } finally {
-          const errors = this.quiet;
-          this.quiet = saved;
-          if (inner.hasErrors && !this.incomplete) for (const x of errors) this.report(x.node, x.code, x.args);
-        }
-        const last = a.expression.kind === 'SimpleMemberAccessExpression' ? a.expression.name : a.expression,
-          n = this.node('NameOf', syntax, this.core.string);
-        n.constantValue = ConstantValue.string(last.identifier?.valueText ?? last.toString());
-        return n;
-      }
       const args = this.arguments(syntax.argumentList);
       // A call that could not be bound still evaluates its arguments: `out` arguments stay assigned for flow analysis.
       const outArguments = () => args.map(a => ({ expression: a, refKind: a.refKind ?? null }));

@@ -13,7 +13,7 @@
  */
 import {compile,compileToIL} from '@sharpforge/compiler';
 import {VirtualMachine,CilVirtualMachine} from '@sharpforge/runtime';
-import {loadFixtures,loadPinned,fixtureHash} from './corpus.js';
+import {loadFixtures,loadPinned,fixtureHash} from './corpus-store.js';
 
 /** The comparison axes, in report order. */
 export const AXES=Object.freeze(['diagnostics','warnings','bytecode','cil']);
