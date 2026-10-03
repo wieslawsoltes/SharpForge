@@ -18,6 +18,7 @@ export * from './guides-snaplines.js';
 export * from './guides-document.js';
 export * from './layout-authoring-anchors.js';
 export * from './layout-authoring-tracks.js';
+export * from './layout-authoring-convert.js';
 export * from './layout-authoring-insertion.js';
 export * from './layout-authoring-responsive.js';
 export * from './layout-authoring-preview.js';
