@@ -7,15 +7,16 @@ export function validateVarargsSnapshot(vm, snapshot) {
     for (const frame of context.frames) frames.set(frame.id, frame);
   }
   for (const frame of frames.values()) {
-    if (!frame.method) continue;
-    const signature = frame.method.signature;
-    if (signature.callingConvention !== 5) {
+    const method = vm.inspector ? frame.method : vm.image.methods[frame.methodId];
+    const signature = vm.inspector ? method?.signature : method;
+    if (signature?.callingConvention !== 5) {
       if (frame.varargs !== undefined) reject('packet on a non-vararg method');
       continue;
     }
     if (!Array.isArray(frame.varargs)) reject('missing argument packet');
-    const fixed = signature.parameters.length + (signature.isStatic ? 0 : 1);
-    if (frame.args.length !== fixed + frame.varargs.length) reject('packet and argument count disagree');
+    const fixed = vm.inspector ? signature.parameters.length + (signature.isStatic ? 0 : 1) : method.locals.length;
+    const slots = vm.inspector ? frame.args : frame.locals;
+    if (!Array.isArray(slots) || slots.length !== fixed + frame.varargs.length) reject('packet and argument count disagree');
     for (const [index, item] of frame.varargs.entries()) {
       if (item.index !== fixed + index || item.type?.registry !== vm.heap.methodTables ||
           item.type.containsGenericParameters || item.type.name === 'System.Void') reject('malformed argument slot');

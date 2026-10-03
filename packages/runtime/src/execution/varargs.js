@@ -10,11 +10,14 @@ function invalid(message) {
 
 function liveArguments(vm, frameId) {
   const frame = frameById(vm, frameId);
-  if (!frame || frame.method?.signature.callingConvention !== 5 || !Array.isArray(frame.varargs)) {
+  const convention = vm.inspector ? frame.method?.signature.callingConvention : vm.image.methods[frame.methodId]?.callingConvention;
+  if (convention !== 5 || !Array.isArray(frame.varargs)) {
     invalid('Runtime argument handle outlived its vararg frame');
   }
   return frame;
 }
+
+const typeTable = (vm, type) => vm.inspector ? vm.typeSystem.table(type) : vm.heap.methodTables.get(type);
 
 /** Split call-site optional arguments without changing the MethodDef's fixed signature. */
 export function splitVarargs(vm, descriptor, args) {
@@ -50,14 +53,14 @@ export function argumentHandle(vm, frame = vm.top) {
 
 export function typedReference(vm, pointer, type) {
   validatePointer(vm, pointer);
-  const table = vm.typeSystem.table(type);
+  const table = typeTable(vm, type);
   if (pointerType(vm, pointer) !== table) throw new ManagedFault('InvalidCastException', 'Typed reference type mismatch');
   return Object.freeze({typedReference: true, vmOwner: vm.snapshotOwner, pointer, type: table});
 }
 
 function validateTypedReference(vm, reference) {
   if (!reference?.typedReference || !Object.isFrozen(reference) || reference.vmOwner !== vm.snapshotOwner ||
-      reference.type.registry !== vm.heap.methodTables) invalid('Typed reference is malformed or belongs to another VM');
+      reference.type?.registry !== vm.heap.methodTables) invalid('Typed reference is malformed or belongs to another VM');
   validatePointer(vm, reference.pointer);
   if (pointerType(vm, reference.pointer) !== reference.type) invalid('Typed reference location type changed');
   return reference;
@@ -65,7 +68,7 @@ function validateTypedReference(vm, reference) {
 
 export function typedReferenceValue(vm, reference, type) {
   validateTypedReference(vm, reference);
-  if (reference.type !== vm.typeSystem.table(type)) throw new ManagedFault('InvalidCastException', 'Typed reference type mismatch');
+  if (reference.type !== typeTable(vm, type)) throw new ManagedFault('InvalidCastException', 'Typed reference type mismatch');
   return reference.pointer;
 }
 
@@ -93,7 +96,7 @@ function iteratorStep(vm, self, name, args) {
   }
   const item = frame.varargs[iterator.index];
   if (!item) throw new ManagedFault('InvalidOperationException', 'There are no remaining arguments');
-  const pointer = address(vm, 'arg', item.index, null, {frameId: frame.id, type: item.type});
+  const pointer = address(vm, vm.inspector ? 'arg' : 'local', item.index, null, {frameId: frame.id, type: item.type});
   const reference = typedReference(vm, pointer, item.type);
   if (name === 'GetNextArgType') return typedReferenceType(vm, reference);
   if (args.length && (args[0]?.runtimeHandle !== 'type' || args[0].owner !== vm.snapshotOwner || args[0].table !== item.type)) {

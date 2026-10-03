@@ -19,7 +19,8 @@ function slot(vm,pointer) {
   const {kind,index,owner}=pointer;
   if(kind==='local'||kind==='arg') {
     frame=frameById(vm,pointer.frameId);slots=kind==='arg'?(frame.args??frame.locals):frame.locals;
-    const type=vm.inspector?vm.slotType(frame,kind==='arg',index):vm.image?.methods[frame.methodId]?.locals[index]?.type;
+    const declared=vm.inspector?vm.slotType(frame,kind==='arg',index):vm.image?.methods[frame.methodId]?.locals[index]?.type;
+    const type=declared??frame.varargs?.find(item=>item.index===index)?.type;
     table=type?vm.heap.methodTables.get(type):pointer.baseType;
   } else if(kind==='static') {
     if(vm.statics instanceof Map) {
