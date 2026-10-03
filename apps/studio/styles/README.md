@@ -25,6 +25,15 @@ wins. Contribution orders leave gaps between groups for future tool additions.
 Names above have the `.css` extension. Shared responsive blocks retain their
 original grouping, including rules affecting more than one related tool.
 `tests/a00-20-styles.test.js` checks source registration, byte identity, sorted
-rules, and ordered rules against the pre-extraction fingerprint. Intentional
+rules, and ordered rules against the reviewed fingerprint. Intentional
 future appearance changes should update that reviewed fixture with their own
 browser evidence.
+
+A18 retains `designer.css` and `designer-light.css` at their original contribution
+positions as exact comment-only compatibility shims. Their surface and panel
+rules now live in `../designer-surface.css` and `../designer-panels.css`; shared
+light and dark theme tokens live in `../designer-chrome.css`. The style contract
+pins both shim contents, requires those replacements to be registered and contain
+rules, and continues to require rules in every other extracted fragment. The
+aggregate byte and rule fingerprints still cover every contributed stylesheet
+and its cascade order.
