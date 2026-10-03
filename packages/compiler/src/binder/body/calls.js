@@ -1,0 +1,391 @@
+/**
+ * Arguments and invocations: overload resolution, extension methods, delegate invocation, element access
+ * and `out` declarations. A call that cannot be bound keeps its arguments so flow analysis still sees `out` writes.
+ */
+import { SymbolKind, TypeKind, RefKind, ErrorTypeSymbol, ArrayTypeSymbol, TypeParameterSymbol } from '../../symbols/types.js';
+import { MethodKind, LocalDeclarationKind } from '../../symbols/members.js';
+import { ConstantValue } from '../../constants/constant-value.js';
+import { convertMethodGroup } from '../../conversions/method-group.js';
+import { delegateInvoke } from '../../overload/type-inference.js';
+import { resolveExtensionInvocation, extensionScopes } from '../../overload/extension-methods.js';
+import { lookupMembers } from '../inheritance.js';
+import { checkWritable, argumentRefKind } from '../ref-kinds.js';
+import { checkConstructedMethod } from '../constraints.js';
+import { isVirtualCall } from '../overrides.js';
+import { receiverPassing } from '../readonly.js';
+
+const unknown = ErrorTypeSymbol.unknown;
+const isSource = symbol => {
+  for (let s = symbol?.originalDefinition ?? symbol; s; s = s.containingSymbol) if (s.isSource || s.containingAssembly) return true;
+  return false;
+};
+
+/** Class mixin: Arguments and invocations: overload resolution, extension methods, delegate invocation, element access */
+export const CallBinding = Base =>
+  class extends Base {
+    // ---- arguments and calls ----
+    argument(a) {
+      const refKind = argumentRefKind(a),
+        name = a.nameColon?.name.identifier.valueText ?? null;
+      let e;
+      if (refKind === RefKind.Out && a.expression.kind === 'DeclarationExpression') e = this.declarationExpression(a.expression, a);
+      else if (
+        refKind === RefKind.Out &&
+        a.expression.kind === 'IdentifierName' &&
+        a.expression.identifier.valueText === '_' &&
+        !this.lookupLocal('_')
+      )
+        e = this.node('Discard', a.expression, null, { isOutVarOrDiscard: true });
+      else e = this.expression(a.expression);
+      if (e.kind === 'TypeExpression' || e.kind === 'NamespaceExpression') e = this.asValue(e);
+      else if (refKind === RefKind.Out) this.markWrite(e, null);
+      else this.markRead(e);
+      if (e.kind === 'MethodGroup' && !e.convert) e.convert = to => this.groupConversion(e, to);
+      if (e.kind === 'MethodGroup') {
+        e.methodGroup = { returnTypeFor: types => this.groupReturnType(e, types) };
+      }
+      return Object.assign(e.hasErrors ? { ...e } : e, { refKind: refKind === RefKind.None ? null : refKind, name, argumentSyntax: a });
+    }
+    arguments(list) {
+      return (list?.arguments ?? []).map(a => this.argument(a));
+    }
+    groupConversion(group, to) {
+      if (!delegateInvoke(to)) return null;
+      let methods = group.methods;
+      if (group.isExtensionOnly) methods = group.extensionScopes.flatMap(s => s.methods);
+      const r = convertMethodGroup(
+        {
+          methods,
+          hasReceiver: group.viaType ? false : group.receiver ? true : undefined,
+          isStaticContext: this.c.isStatic,
+          typeArguments: group.typeArguments,
+          name: group.name,
+        },
+        to,
+        this.d.overloads,
+        { improvedCandidates: this.version.number >= 7.3 },
+      );
+      group.lastConversionError = r.error ?? null;
+      if (r.method) r.method.uses = (r.method.uses ?? 0) + 1;
+      return r.conversion.exists ? r.conversion : null;
+    }
+    groupReturnType(group, parameterTypes) {
+      const r = this.d.overloads.resolve(
+        group.methods,
+        parameterTypes.map(type => ({ type })),
+        { typeArguments: group.typeArguments },
+      );
+      return r.succeeded ? r.method.returnType : null;
+    }
+    /** Where an overload-resolution error is reported: the offending argument, or the method name. */
+    errorNode(error, args, nameNode, offset = 0) {
+      if (error.argument !== undefined && args[error.argument - offset]?.argumentSyntax) {
+        const a = args[error.argument - offset].argumentSyntax;
+        return error.code === 'CS1739' || error.code === 'CS1740' || error.code === 'CS1744'
+          ? a.nameColon.name
+          : error.code === 'CS1620' || error.code === 'CS1615'
+            ? a.expression
+            : a.expression;
+      }
+      return nameNode;
+    }
+    invocation(syntax) {
+      const target = this.expression(syntax.expression, { invoked: true });
+      if (target.kind === 'NameOfMarker') {
+        const a = syntax.argumentList.arguments[0];
+        if (!a) return this.bad(syntax);
+        const saved = this.quiet;
+        this.quiet = [];
+        let inner;
+        try {
+          inner = this.expression(a.expression, { nameofOperand: true });
+        } finally {
+          const errors = this.quiet;
+          this.quiet = saved;
+          if (inner.hasErrors && !this.incomplete) for (const x of errors) this.report(x.node, x.code, x.args);
+        }
+        const last = a.expression.kind === 'SimpleMemberAccessExpression' ? a.expression.name : a.expression,
+          n = this.node('NameOf', syntax, this.core.string);
+        n.constantValue = ConstantValue.string(last.identifier?.valueText ?? last.toString());
+        return n;
+      }
+      const args = this.arguments(syntax.argumentList);
+      // A call that could not be bound still evaluates its arguments: `out` arguments stay assigned for flow analysis.
+      const outArguments = () => args.map(a => ({ expression: a, refKind: a.refKind ?? null }));
+      if (target.hasErrors) return this.bad(syntax, { args: outArguments() });
+      if (target.kind === 'MethodGroup') {
+        const r = this.call(target, args, syntax);
+        if (r.kind === 'Bad' && !r.args) r.args = outArguments();
+        return r;
+      }
+      const value = this.asValue(target);
+      if (value.hasErrors) return value;
+      const invoke = value.type ? delegateInvoke(value.type) : null;
+      if (invoke && value.type.typeKind === TypeKind.Delegate) {
+        const r = this.d.overloads.resolve([invoke], args, { isDelegate: true, name: this.display(value.type) });
+        if (!r.succeeded) {
+          if (args.some(a => a.hasErrors)) return this.bad(syntax);
+          const e = r.error;
+          this.report(this.errorNode(e, args, syntax), e.code, e.args);
+          return this.bad(syntax);
+        }
+        return this.finishCall(r, value, args, syntax, { isDelegateInvoke: true });
+      }
+      if (value.type?.isErrorType?.()) return this.bad(syntax);
+      if (
+        (value.kind === 'FieldAccess' || value.kind === 'PropertyAccess' || value.kind === 'EventAccess') &&
+        !isSource(value.field ?? value.property ?? value.event)
+      )
+        return this.lenient(syntax);
+      if (value.kind === 'FieldAccess' || value.kind === 'PropertyAccess' || value.kind === 'EventAccess') {
+        this.report(syntax.expression.kind === 'SimpleMemberAccessExpression' ? syntax.expression.name : syntax.expression, 'CS1955', [
+          (value.field ?? value.property ?? value.event).toDisplayString(),
+        ]);
+        return this.bad(syntax);
+      }
+      this.report(syntax.expression, 'CS0149');
+      return this.bad(syntax);
+    }
+    call(group, args, syntax) {
+      const nameNode = group.nameNode ?? group.syntax,
+        anyBad = args.some(a => a.hasErrors);
+      let result = null;
+      if (group.methods.length) {
+        // An instance method reached without a receiver from a static context is dropped before resolution only if statics remain.
+        result = this.d.overloads.resolve(group.methods, args, { typeArguments: group.typeArguments, name: group.name });
+      }
+      if ((!result || !result.succeeded) && group.receiver && !group.viaType && group.kind === 'MethodGroup') {
+        const scopes =
+          group.extensionScopes ??
+          extensionScopes(
+            this.typeScope.namespaceChain.map(l => ({
+              namespace: l.namespace,
+              usings: l.scope.usings ? this.d.typeBinder.usingsOf(l.scope) : null,
+            })),
+            group.name,
+          );
+        if (scopes.length && !anyBad) {
+          const ext = resolveExtensionInvocation(group.name, group.receiver, args, scopes, this.d.overloads, {
+            typeArguments: group.typeArguments,
+          });
+          if (ext.succeeded)
+            return this.finishCall(ext, null, [Object.assign({ ...group.receiver }, { refKind: null, name: null }), ...args], syntax, {
+              isExtension: true,
+              group,
+            });
+          if (!result && ext.found) {
+            if (ext.error && scopes.flatMap(s => s.methods).every(isSource)) {
+              const offset = ext.extensionArgumentOffset ?? 1;
+              if (ext.error.code === 'CS1503' && ext.error.argument === 0 && ext.best) {
+                // The receiver does not convert to the `this` parameter of the best candidate.
+                const candidate = ext.best.definition;
+                const receiverType = this.display(group.receiver.type);
+                const wanted = this.display(candidate.parameters[0].type);
+                this.report(group.receiver.syntax, 'CS1929', [receiverType, group.name, candidate.toDisplayString(), wanted]);
+                return this.bad(syntax);
+              }
+              this.report(
+                ext.error.argument !== undefined && ext.error.argument >= offset
+                  ? this.errorNode({ ...ext.error }, args, nameNode, offset)
+                  : nameNode,
+                ext.error.code,
+                ext.error.argument !== undefined && ext.error.code === 'CS1503'
+                  ? [ext.error.args[0], ext.error.args[1], ext.error.args[2]]
+                  : ext.error.args,
+              );
+              return this.bad(syntax);
+            }
+            return this.lenient(syntax);
+          }
+        }
+        if (!result) {
+          if (anyBad) return this.bad(syntax);
+          if (!isSource(group.receiverType))
+            return this.reportMissingFrameworkMember(group.receiverType, group.name, nameNode, syntax, 'CS1061');
+          this.report(nameNode, 'CS1061', [this.display(group.receiverType), group.name]);
+          return this.bad(syntax);
+        }
+      }
+      if (!result) return this.bad(syntax);
+      if (!result.succeeded) {
+        if (anyBad) return this.bad(syntax);
+        // The registry lists only some overloads of framework methods: a failed resolution there proves nothing.
+        if (!group.methods.every(isSource)) {
+          if (!this.d.registryIsComplete(group.methods[0].containingType, group.name)) return this.lenient(syntax);
+        }
+        const e = result.error;
+        this.report(this.errorNode(e, args, nameNode), e.code, e.args);
+        return this.bad(syntax);
+      }
+      return this.finishCall(result, group.receiver, args, syntax, { group });
+    }
+    finishCall(result, receiver, args, syntax, { group = null, isDelegateInvoke = false, isExtension = false } = {}) {
+      const method = result.method,
+        nameNode = group?.nameNode ?? group?.syntax ?? syntax;
+      if (group && !isExtension && !isDelegateInvoke) {
+        if (method.methodKind !== MethodKind.LocalFunction) {
+          if (method.isStatic) {
+            if (group.receiver && !group.viaType && group.receiver.kind !== 'This') {
+              this.report(nameNode === group.nameNode ? group.syntax : nameNode, 'CS0176', [method.toDisplayString()]);
+              return this.bad(syntax);
+            }
+            receiver = null;
+          } else if (group.viaType) {
+            this.report(group.syntax, 'CS0120', [method.toDisplayString()]);
+            return this.bad(syntax);
+          } else if (group.implicitReceiver) {
+            if (this.c.isStatic || group.outer || (this.c.isFieldInitializer && !this.c.isStaticInitializer)) {
+              this.report(group.syntax, this.c.isFieldInitializer && !this.c.isStatic ? 'CS0236' : 'CS0120', [method.toDisplayString()]);
+              return this.bad(syntax);
+            }
+            receiver = this.node('This', group.syntax, this.c.containingType, { isImplicit: true });
+          }
+        } else {
+          const definition = method.originalDefinition ?? method;
+          definition.uses = (definition.uses ?? 0) + 1;
+        }
+        for (const v of checkConstructedMethod(method, this.core)) this.report(nameNode, v.code, v.args, v.severity);
+        if (receiver?.kind === 'Base' && method.isAbstract) {
+          this.report(syntax, 'CS0205', [method.toDisplayString()]);
+        }
+      }
+      if (isExtension) for (const v of checkConstructedMethod(method, this.core)) this.report(nameNode, v.code, v.args);
+      // Convert each argument to its parameter type and check by-reference arguments are variables.
+      const converted = args.map((a, i) => {
+        const p = method.parameters[result.mapping.parameterOf[i]],
+          conversion = result.conversions[i];
+        if (a.refKind === RefKind.Ref || a.refKind === RefKind.Out) {
+          if (a.kind === 'DeclarationExpression' || a.kind === 'Discard') {
+            if (a.local && a.local.type.isErrorType()) {
+              a.local.setType(result.parameterTypes[i]);
+              a.type = result.parameterTypes[i];
+            } else if (!a.type) a.type = result.parameterTypes[i];
+          } else {
+            const w = checkWritable(a, a.refKind === RefKind.Ref ? 'ref' : 'out', this.variableContext);
+            if (w) this.report(a.syntax, w.code, w.args);
+          }
+          return { expression: a, parameter: p, refKind: a.refKind };
+        }
+        const value = conversion && a.type && !a.hasErrors ? this.applyConversion(a, result.parameterTypes[i], conversion, a.syntax) : a;
+        if (a.form === 'lambda' && !a.hasErrors) this.finishLambda(a, result.parameterTypes[i]);
+        return { expression: value, parameter: p, refKind: a.refKind ?? null };
+      });
+      const type = method.returnType ?? this.core.void;
+      const n = this.node('Call', syntax, type, {
+        method,
+        receiver,
+        args: converted,
+        expanded: result.expanded,
+        mapping: result.mapping,
+        isDelegateInvoke,
+        isExtension,
+        isVirtual:
+          !isDelegateInvoke &&
+          !isExtension &&
+          isVirtualCall(method, { isBaseAccess: receiver?.kind === 'Base', receiverType: receiver?.type }),
+        constrainedTo:
+          receiver?.type instanceof TypeParameterSymbol
+            ? receiver.type
+            : group?.viaType && group.receiverType instanceof TypeParameterSymbol
+              ? group.receiverType
+              : null,
+      });
+      if (receiver && receiver.type?.isValueType === true && !method.isStatic) {
+        const passing = receiverPassing(receiver, method, this.variableContext);
+        n.receiverPassing = passing.mode;
+        if (passing.warning) this.report(syntax, passing.warning.code, passing.warning.args);
+      }
+      if (type.isErrorType?.()) n.hasErrors = true;
+      return n;
+    }
+    declarationExpression(syntax, argument) {
+      const designation = syntax.designation,
+        bound = this.bindType(syntax.type, { allowVar: true }),
+        type = bound.isVar ? unknown : bound.type;
+      if (designation.kind === 'DiscardDesignation')
+        return this.node('Discard', syntax, bound.isVar ? null : type, { isOutVarOrDiscard: true });
+      if (designation.kind !== 'SingleVariableDesignation') return this.lenient(syntax);
+      const name = designation.identifier.valueText,
+        local = this.newLocal(name, type, designation.identifier, LocalDeclarationKind.Out);
+      local.writes++;
+      local.isOutVar = true;
+      this.declare(name, local, designation.identifier);
+      return this.node('DeclarationExpression', syntax, bound.isVar ? null : type, { local, isOutVarOrDiscard: true });
+    }
+    elementAccess(syntax) {
+      const target = this.value(syntax.expression),
+        args = this.arguments(syntax.argumentList);
+      if (target.hasErrors || args.some(a => a.hasErrors)) return this.bad(syntax);
+      const type = target.type;
+      if (!type) {
+        this.report(syntax, 'CS0021', [target.literal === 'null' ? '<null>' : 'method group']);
+        return this.bad(syntax);
+      }
+      if (type instanceof ArrayTypeSymbol) {
+        if (args.length !== type.rank) {
+          this.report(syntax, 'CS0022', [type.rank]);
+          return this.bad(syntax);
+        }
+        const indices = args.map(a => {
+          for (const t of [this.core.int, this.core.uint, this.core.long, this.core.ulong]) {
+            const c = this.conversions.classifyFromExpression(a, t);
+            if (c.exists && c.isImplicit) return this.applyConversion(a, t, c);
+          }
+          if (a.type && ['Index', 'Range'].includes(a.type.name)) return a;
+          return this.convert(a, this.core.int);
+        });
+        if (indices.some(i => i.type?.name === 'Range')) return this.node('ArrayAccess', syntax, type, { array: target, indices });
+        return this.node('ArrayAccess', syntax, type.elementType, { array: target, indices });
+      }
+      if (type.specialType === 'System_String' && args.length === 1) {
+        const c = this.conversions.classifyFromExpression(args[0], this.core.int);
+        if (c.exists && c.isImplicit) {
+          const n = this.node('IndexerAccess', syntax, this.core.char, {
+            receiver: target,
+            property: { name: 'Chars', setMethod: null, getMethod: {}, toDisplayString: () => 'string.this[int]', refKind: RefKind.None },
+            args: [{ expression: this.applyConversion(args[0], this.core.int, c) }],
+          });
+          return n;
+        }
+      }
+      const indexers = lookupMembers(type, 'this[]', this.core, { within: this.c.containingType })
+        .members.concat(isSource(type) ? [] : lookupMembers(type, 'Item', this.core, { within: this.c.containingType }).members)
+        .filter(m => m.kind === SymbolKind.Property && m.parameters.length);
+      if (!indexers.length) {
+        if (!isSource(type) && type.typeKind !== TypeKind.TypeParameter && !this.d.registryIsComplete(type, 'this[]'))
+          return this.lenient(syntax);
+        this.report(syntax, 'CS0021', [this.display(type)]);
+        return this.bad(syntax);
+      }
+      const accessorOf = p => p.getMethod ?? p.setMethod,
+        byAccessor = new Map(indexers.map(p => [accessorOf(p), p])),
+        shapes = indexers.map(p => {
+          const a = accessorOf(p);
+          if (a === p.getMethod) return a;
+          const copy = Object.create(a);
+          Object.defineProperty(copy, 'parameters', { value: a.parameters.slice(0, -1) });
+          byAccessor.set(copy, p);
+          return copy;
+        });
+      const r = this.d.overloads.resolve(shapes, args, { name: 'this' });
+      if (!r.succeeded) {
+        if (!indexers.every(isSource)) return this.lenient(syntax);
+        const e = r.error;
+        this.report(
+          this.errorNode(e, args, syntax),
+          e.code === 'CS1501' ? 'CS1501' : e.code,
+          e.code === 'CS1501' ? ['this', args.length] : e.args,
+        );
+        return this.bad(syntax);
+      }
+      const property = byAccessor.get(r.candidate.definition) ?? byAccessor.get(r.method) ?? indexers[0];
+      return this.node('IndexerAccess', syntax, property.type, {
+        receiver: target,
+        property,
+        args: args.map((a, i) => ({
+          expression: r.conversions[i] && a.type ? this.applyConversion(a, r.parameterTypes[i], r.conversions[i]) : a,
+          parameter: property.parameters[r.mapping.parameterOf[i]],
+        })),
+      });
+    }
+  };

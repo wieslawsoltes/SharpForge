@@ -4,19 +4,20 @@ Normal HTTP can be used with SHARPFORGE_BROWSER_URL; no navigation-policy bypass
 import json,os,time,traceback
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-from browser_harness import load_in_memory
+from conformance.browser.launch import launch_browser, results_dir
+RESULTS = results_dir()
+from browser_harness import load_application
 ROOT=Path(__file__).resolve().parents[1];checks=[];errors=[]
 def truth(value,message='assertion failed'):
  if not value:raise AssertionError(message)
 def checked(name,fn):
  start=time.perf_counter();fn();checks.append({'name':name,'passed':True,'milliseconds':round((time.perf_counter()-start)*1000,2)});print('PASS',name,flush=True)
-with sync_playwright() as p:
- browser=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_EXECUTABLE'),headless=True,args=['--no-sandbox']);page=browser.new_page(viewport={'width':1600,'height':1080});page.on('pageerror',lambda e:errors.append(e.stack or str(e)));workers=[];page.on('worker',lambda w:workers.append(w.url));mode='http' if os.getenv('SHARPFORGE_BROWSER_URL') else 'in-memory-production-workers'
+with sync_playwright() as p, launch_browser(p, __file__) as browser:
+ page=browser.new_page(viewport={'width':1600,'height':1080});page.on('pageerror',lambda e:errors.append(e.stack or str(e)));workers=[];page.on('worker',lambda w:workers.append(w.url));mode='http' if os.getenv('SHARPFORGE_IN_MEMORY') != '1' else 'in-memory-production-workers'
  try:
-  if mode=='http':page.goto(os.environ['SHARPFORGE_BROWSER_URL']);page.wait_for_function('window.sharpforge && sharpforge.getState().metrics')
-  else:load_in_memory(page)
+  load_application(page)
   checked('two production compiler/runtime workers initialized',lambda:truth(len(workers)==2))
-  manifest=json.loads((ROOT/'examples/features-0.6/manifest.json').read_text())
+  manifest=json.loads((ROOT/'examples/features-0.6/manifest.json').read_text(encoding='utf-8'))
   def example(sample):
    page.evaluate('(id)=>sharpforge.loadSample(id,true)',sample['id']);page.wait_for_function('sharpforge.getState().artifact!==null');page.evaluate('sharpforge.run()');page.wait_for_function('(expected)=>sharpforge.getState().debug?.state==="terminated" && sharpforge.getState().debug.output===expected',arg=sample['expectedOutput'])
   for sample in manifest:checked('production workers: '+sample['id'],lambda sample=sample:example(sample))
@@ -75,13 +76,13 @@ with sync_playwright() as p:
    page.evaluate('sharpforge.loadSample("unreachable-analyzer",true);sharpforge.openTool("extensions")');page.locator('[data-tool="extensions"] summary').click();page.locator('[data-severity="SFAN1005"]').select_option('none');page.locator('#extension-apply').click();page.wait_for_function('!sharpforge.getState().diagnostics.some(d=>d.code==="SFAN1005")');truth(page.evaluate('sharpforge.build()')['success'])
   checked('analyzer severity settings round-trip through docked tool and worker',severities)
   def screenshot():
-   page.evaluate('sharpforge.loadSample("using-resources",true);sharpforge.execute("debugLayout")');page.locator('#assembly-file-input').set_input_files(str(ROOT/'examples/managed/StorageWrites.exe'));page.locator('#assembly-history').check();page.locator('[data-il-action="debug"]').click();page.wait_for_function('sharpforge.getState().debug?.state==="paused"');page.evaluate('sharpforge.step("stepIn")');page.wait_for_function('sharpforge.getState().debug.stats.instructions===1');page.evaluate('sharpforge.step("stepIn")');page.wait_for_function('sharpforge.getState().debug.stats.instructions===2');page.evaluate('sharpforge.openTool("watch")');page.locator('[data-remove-watch]').first.click();page.locator('#watch-expression').fill('V_1');page.locator('#add-watch').click();page.evaluate('sharpforge.openTool("disassembly")');page.wait_for_selector('[data-reverse-step]:not([disabled])');page.wait_for_function('document.querySelectorAll("#toasts .toast").length===0');page.screenshot(path=str(ROOT/'docs/screenshots/release06-reversible-il.png'),full_page=True)
+   page.evaluate('sharpforge.loadSample("using-resources",true);sharpforge.execute("debugLayout")');page.locator('#assembly-file-input').set_input_files(str(ROOT/'examples/managed/StorageWrites.exe'));page.locator('#assembly-history').check();page.locator('[data-il-action="debug"]').click();page.wait_for_function('sharpforge.getState().debug?.state==="paused"');page.evaluate('sharpforge.step("stepIn")');page.wait_for_function('sharpforge.getState().debug.stats.instructions===1');page.evaluate('sharpforge.step("stepIn")');page.wait_for_function('sharpforge.getState().debug.stats.instructions===2');page.evaluate('sharpforge.openTool("watch")');page.locator('[data-remove-watch]').first.click();page.locator('#watch-expression').fill('V_1');page.locator('#add-watch').click();page.evaluate('sharpforge.openTool("disassembly")');page.wait_for_selector('[data-reverse-step]:not([disabled])');page.wait_for_function('document.querySelectorAll("#toasts .toast").length===0');page.screenshot(path=str(RESULTS/'screenshots/release06-reversible-il.png'),full_page=True)
   checked('updated docking workspace renders source, IL and reverse controls',screenshot)
   checked('active docking captions remain visible after debug preset and activation',lambda:truth(page.evaluate("""()=>[...document.querySelectorAll('.sf-dock-tabs')].every(tabs=>{const active=tabs.querySelector('[aria-selected="true"]');if(!active||!tabs.clientWidth)return true;const a=active.getBoundingClientRect(),b=tabs.getBoundingClientRect();return a.right>b.left&&a.left<b.right;})""")))
   checked('no browser JavaScript errors',lambda:truth(not errors,str(errors)))
   result={'passed':True,'browser':browser.version,'mode':mode,'checks':checks,'errors':errors}
  except Exception as error:
-  traceback.print_exc();result={'passed':False,'checks':checks,'errors':errors,'failure':str(error)};page.screenshot(path=str(ROOT/'docs/screenshots/release06-failure.png'),full_page=True,timeout=5000)
+  traceback.print_exc();result={'passed':False,'checks':checks,'errors':errors,'failure':str(error)};page.screenshot(path=str(RESULTS/'screenshots/release06-failure.png'),full_page=True,timeout=5000)
  finally:
-  (ROOT/'docs/browser-release06-results.json').write_text(json.dumps(result,indent=2)+'\n');browser.close()
+  (RESULTS/'browser-release06-results.json').write_text(json.dumps(result,indent=2)+'\n', encoding='utf-8')
  if not result['passed']:raise SystemExit(1)

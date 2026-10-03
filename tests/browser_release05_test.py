@@ -2,16 +2,18 @@
 import json,os,time,traceback
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-from browser_harness import load_in_memory
+from conformance.browser.launch import launch_browser, results_dir
+RESULTS = results_dir()
+from browser_harness import load_application
 ROOT=Path(__file__).resolve().parents[1];checks=[];errors=[]
 def truth(value,message='assertion failed'):
  if not value:raise AssertionError(message)
 def checked(name,fn):
  start=time.perf_counter();fn();checks.append({'name':name,'passed':True,'milliseconds':round((time.perf_counter()-start)*1000,2)});print('PASS',name,flush=True)
-with sync_playwright() as p:
- browser=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_EXECUTABLE'),headless=True,args=['--no-sandbox']);page=browser.new_page(viewport={'width':1536,'height':1050});page.on('pageerror',lambda e:errors.append(str(e)))
+with sync_playwright() as p, launch_browser(p, __file__) as browser:
+ page=browser.new_page(viewport={'width':1536,'height':1050});page.on('pageerror',lambda e:errors.append(str(e)))
  try:
-  load_in_memory(page)
+  load_application(page)
   def example(id,expected):
    page.evaluate('(id)=>sharpforge.loadSample(id,true)',id);page.wait_for_function('sharpforge.getState().artifact!==null');page.evaluate('sharpforge.run()');page.wait_for_function('(expected)=>sharpforge.getState().debug?.state==="terminated" && sharpforge.getState().debug.output===expected',arg=expected)
   checked('auto-property initialization and computed accessor run in production workers',lambda:example('properties','7\n18\n9\n'))
@@ -50,7 +52,7 @@ with sync_playwright() as p:
    page.locator('[data-tool="disassembly"] [data-clear]').click();page.wait_for_function('sharpforge.getState().debug.breakpoints.length===0');page.locator('[data-tool="disassembly"] [data-run-to="3"]').click();page.wait_for_function('sharpforge.getState().debug.reason?.reason==="goto"');truth(page.evaluate('sharpforge.getState().debug.frames[0].ilOffset')==3)
   checked('run-to-instruction uses a temporary stop',run_to)
   def layout():
-   page.evaluate('sharpforge.floatPanel("disassembly")');truth(page.locator('.sf-dock-floating [data-tool="disassembly"]').is_visible());page.evaluate('sharpforge.dockPanel("disassembly","tools-bottom","center")');truth(page.locator('[data-tool="disassembly"]').is_visible());page.wait_for_function('document.querySelectorAll("#toasts .toast").length===0');page.screenshot(path=str(ROOT/'docs/screenshots/release05-il-debugger.png'),full_page=True)
+   page.evaluate('sharpforge.floatPanel("disassembly")');truth(page.locator('.sf-dock-floating [data-tool="disassembly"]').is_visible());page.evaluate('sharpforge.dockPanel("disassembly","tools-bottom","center")');truth(page.locator('[data-tool="disassembly"]').is_visible());page.wait_for_function('document.querySelectorAll("#toasts .toast").length===0');page.screenshot(path=str(RESULTS/'screenshots/release05-il-debugger.png'),full_page=True)
   checked('new debugger tool floats and redocks without losing session',layout)
   def primitive():
    page.locator('#assembly-file-input').set_input_files(str(ROOT/'examples/managed/PrimitiveAddresses.exe'));page.locator('[data-il-action="invoke"]').click();page.wait_for_function('sharpforge.getState().debug?.state==="terminated" && sharpforge.getState().debug.returnValue==="52"')
@@ -59,9 +61,9 @@ with sync_playwright() as p:
    page.locator('#directory-input').set_input_files(str(ROOT/'examples/projects/PropertiesAndCleanup'));page.wait_for_function('sharpforge.getState().startupProject?.endsWith("PropertiesAndCleanup.csproj") && sharpforge.getState().artifact!==null');page.evaluate('sharpforge.run()');page.wait_for_function('sharpforge.getState().debug?.state==="terminated" && sharpforge.getState().debug.output==="cleanup\\n42\\n"')
   checked('disk SLNX and csproj execute properties with finally cleanup',project)
   checked('no browser JavaScript errors',lambda:truth(not errors,str(errors)))
-  result={'passed':True,'browser':browser.version,'mode':'in-memory-production-workers','checks':checks,'errors':errors}
+  result={'passed':True,'browser':browser.version,'mode':'in-memory-production-workers' if os.getenv('SHARPFORGE_IN_MEMORY') == '1' else 'CSP HTTP and real workers','checks':checks,'errors':errors}
  except Exception as error:
-  traceback.print_exc();result={'passed':False,'checks':checks,'errors':errors,'failure':str(error)};page.screenshot(path=str(ROOT/'docs/screenshots/release05-failure.png'),full_page=True)
+  traceback.print_exc();result={'passed':False,'checks':checks,'errors':errors,'failure':str(error)};page.screenshot(path=str(RESULTS/'screenshots/release05-failure.png'),full_page=True)
  finally:
-  (ROOT/'docs/browser-release05-results.json').write_text(json.dumps(result,indent=2)+'\n');browser.close()
+  (RESULTS/'browser-release05-results.json').write_text(json.dumps(result,indent=2)+'\n', encoding='utf-8')
  if not result['passed']:raise SystemExit(1)

@@ -10,7 +10,10 @@ export const tupleMethods = {
       this.tupleContext = true;
       for (;;) {
         const before = this.i;
+        // Roslyn: the first element is a declaration only when a comma follows, so `(a * b)` stays a multiplication.
+        this.tupleFirst = args.length === 0;
         args.push(this.argument());
+        this.tupleFirst = false;
         if (this.at(',')) args.push(this.take());
         else break;
         if (before === this.i) break;
@@ -28,7 +31,11 @@ export const tupleMethods = {
     if (this.kindAt(i) === 'await') return false;
     const end = this.scanType(i);
     if (end <= i) return false;
-    return this.isId(this.tokens[end]) && [',', ')', '='].includes(this.kindAt(end + 1));
+    const first = this.tupleFirst;
+    this.tupleFirst = false;
+    // No pointer types in tuple declarations: `(a * b, c)` multiplies.
+    if (this.tupleContext && this.kindAt(end - 1) === '*') return false;
+    return this.isId(this.tokens[end]) && (first ? [','] : [',', ')', '=']).includes(this.kindAt(end + 1));
   },
   scanDesignation(i) {
     if (this.kindAt(i) !== '(') return this.isId(this.tokens[i]) ? i + 1 : -1;
