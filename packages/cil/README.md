@@ -64,3 +64,5 @@ The [PE API](PE.md) supports AnyCPU/x86/x64/ARM64 output, console/library header
 desktop CLR import stubs, aligned multi-section layouts and all PE/CLI data directories.
 
 Embedded data emission and bounded inspection are documented in [RESOURCES.md](./RESOURCES.md).
+
+Win32 version, manifest and ICO emission is documented in [WIN32-RESOURCES.md](./WIN32-RESOURCES.md).
