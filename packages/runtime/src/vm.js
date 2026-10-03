@@ -1,5 +1,4 @@
 import {createSourceMethodTables} from './execution/method-table.js';
-import {checkArrayStore} from './execution/casting.js';
 import {ManagedPlatform,SUSPENDED} from './platform.js';
 import {CooperativeScheduler} from './scheduler.js';
 import {snapshotVM,restoreVM} from './snapshot.js';
@@ -8,7 +7,7 @@ import { Op, BinaryName, UnaryName, verifyImage } from '@sharpforge/bytecode';
 import { ManagedHeap, ManagedFault, isReference } from './heap.js';
 import {builtin} from './execution/source-builtins.js';
 import {literalString,stringRoots,clearStrings} from './execution/strings.js';
-import {binary,convert,unary,defaultValue,sourceEnum,enumToString} from './execution/source-ops.js';
+import {binary,convert,unary,defaultValue,sourceEnum,enumToString,checkSourceArrayStore} from './execution/source-ops.js';
 import {roots as exceptionRoots,frameState,makeFault,enterCatch,finalizers,finishReturn,transfer,resumeUnwind,handleFault,rethrow} from './execution/source-eh.js';
 export class VirtualMachine {
   constructor(image,options={}){
@@ -70,7 +69,7 @@ export class VirtualMachine {
           case Op.NEWOBJ:{const type=this.image.types[a];this.stack.push(this.heap.object(type.name,type.fields.map(f=>defaultValue(f.type,this))));break;}
           case Op.NEWARR:{const length=this.stack.pop(),type=this.image.constants[a],ref=this.heap.array(type,length);this.heap.get(ref).data.fill(defaultValue(type,this));this.stack.push(ref);break;}
           case Op.LDELEM:{const index=this.stack.pop(),ref=this.stack.pop();this.stack.push(this.indexed(ref,index).data[index]);break;}
-          case Op.STELEM:{const value=this.stack.pop(),index=this.stack.pop(),ref=this.stack.pop();const r=this.indexed(ref,index),oldValue=r.data[index];checkArrayStore(this.heap,r,value);r.data[index]=value;this.stack.push(value);this.notifyWrite({kind:'array',handle:ref.h,generation:ref.g,index,value,oldValue});break;}
+          case Op.STELEM:{const value=this.stack.pop(),index=this.stack.pop(),ref=this.stack.pop();const r=this.indexed(ref,index),oldValue=r.data[index];checkSourceArrayStore(this,r,value);r.data[index]=value;this.stack.push(value);this.notifyWrite({kind:'array',handle:ref.h,generation:ref.g,index,value,oldValue});break;}
           case Op.LENGTH:{const r=this.heap.get(this.stack.pop());if(r.kind!=='array'&&r.kind!=='string')throw new ManagedFault('InvalidProgramException','Length requires an array or string');this.stack.push(r.data.length);break;}
           case Op.THROW:{const ref=this.stack.pop();if(ref===null)throw new ManagedFault('NullReferenceException','A null exception was thrown');const r=this.heap.get(ref);throw new ManagedFault(r.type,this.format(r.data[0]),ref);}
           case Op.RETHROW:rethrow(frame);break;

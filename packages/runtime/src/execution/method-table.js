@@ -131,6 +131,8 @@ export class MethodTableRegistry {
       if(typeArguments.every(argument=>!argument))return definition;
       if(typeArguments.length!==definition.genericArity||typeArguments.some(argument=>!argument))throw new TypeError('Generic type argument count does not match definition');
       const args=typeArguments.map(argument=>this.get(argument));
+      // An argument's interfaces may have materialized this exact instantiation.
+      if(this.tables.has(name))return this.tables.get(name);
       // Read the definition descriptor so recursive fields (Node<T>.Next) do
       // not depend on the open table having finished materializing its fields.
       const template=this.descriptors.get(definition.name)??builtin(definition.name);
