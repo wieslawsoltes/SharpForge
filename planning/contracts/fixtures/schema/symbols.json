@@ -1,0 +1,93 @@
+[
+  {
+    "declaration": {
+      "kind": "namespace",
+      "name": "Example"
+    },
+    "id": "N:Example"
+  },
+  {
+    "declaration": {
+      "kind": "type",
+      "name": "Example.Widget`1"
+    },
+    "id": "T:Example.Widget`1"
+  },
+  {
+    "declaration": {
+      "kind": "method",
+      "module": "Example",
+      "name": "Run",
+      "owner": "Example.Widget`1",
+      "parameters": [
+        "System.Int32"
+      ],
+      "token": 100663297
+    },
+    "id": "M:Example.Widget`1.Run(System.Int32)"
+  },
+  {
+    "declaration": {
+      "kind": "method",
+      "module": "Example",
+      "name": "Run",
+      "owner": "Example.Widget`1",
+      "parameters": [
+        "System.String"
+      ],
+      "token": 100663298
+    },
+    "id": "M:Example.Widget`1.Run(System.String)"
+  },
+  {
+    "declaration": {
+      "genericArity": 1,
+      "kind": "method",
+      "name": "Map",
+      "owner": "Example.Widget`1",
+      "parameters": [
+        "``0"
+      ]
+    },
+    "id": "M:Example.Widget`1.Map``1(``0)"
+  },
+  {
+    "declaration": {
+      "kind": "method",
+      "name": "System.IDisposable.Dispose",
+      "owner": "Example.Widget`1",
+      "parameters": []
+    },
+    "id": "M:Example.Widget`1.System#IDisposable#Dispose()"
+  },
+  {
+    "declaration": {
+      "document": "Example.cs",
+      "kind": "local",
+      "name": "value",
+      "ordinal": 0,
+      "parent": "M:Example.Widget.Run()"
+    },
+    "id": "X:local:M%3AExample%2EWidget%2ERun():Example%2Ecs:0:value"
+  },
+  {
+    "declaration": {
+      "document": "Example.cs",
+      "kind": "lambda",
+      "name": "",
+      "ordinal": 1,
+      "parent": "M:Example.Widget.Run()"
+    },
+    "id": "X:lambda:M%3AExample%2EWidget%2ERun():Example%2Ecs:1:"
+  },
+  {
+    "declaration": {
+      "document": "Example.cs",
+      "kind": "localFunction",
+      "name": "Nested",
+      "ordinal": 2,
+      "parent": "M:Example.Widget.Run()"
+    },
+    "id": "X:localFunction:M%3AExample%2EWidget%2ERun():Example%2Ecs:2:Nested"
+  }
+]

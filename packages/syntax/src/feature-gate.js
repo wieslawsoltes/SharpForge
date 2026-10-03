@@ -40,16 +40,26 @@ export function checkFeature(node, featureId, version) {
   const span = node.span ?? node;
   return { ...result, start: span.start, end: span.end };
 }
+/** Roslyn's dedicated diagnostic for a modifier that needs a later language version (CS8703). */
+function invalidModifier(use, selected) {
+  const selectedName = displayLanguageVersion(selected.number),
+    requiredName = displayLanguageVersion(languageFeature(use.id).version);
+  return {
+    code: 'CS8703',
+    message: `The modifier '${use.modifier}' is not valid for this item in C# ${selectedName}. Please use language version '${requiredName}' or greater.`
+  };
+}
 /** Checks the feature uses recorded by the lexer and parser ({ id, start, end }) and returns diagnostics for `source`. */
 export function checkFeatures(source, uses, version) {
   const selected = resolve(version),
     seen = new Set(),
     diagnostics = [];
   for (const use of uses) {
-    const result = featureAvailability(use.id, selected),
-      key = use.id + ':' + use.start;
+    let result = featureAvailability(use.id, selected);
+    const key = use.id + ':' + use.start + ':' + (use.modifier ?? '');
     if (!result || seen.has(key)) continue;
     seen.add(key);
+    if (use.modifier && !result.severity) result = invalidModifier(use, selected);
     diagnostics.push(diagnostic(source, use.start, Math.max(1, use.end - use.start), result.code, result.message, result.severity));
   }
   return diagnostics;

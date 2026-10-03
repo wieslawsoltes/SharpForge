@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "fixtureId": "winui-controls-dispatcher",
+  "inputHash": "fcb1817ae928e2f371ec96d17151caa0f92f6b06ae23cd52dcb244371be8d0f1",
+  "oracleId": "winui",
+  "toolVersion": "1.8.260921001",
+  "target": "win32-x64",
+  "toolchain": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "roslyn": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "referencePack": "10.0.5",
+    "windowsAppSDK": "1.8.260921001"
+  },
+  "langVersion": null,
+  "result": {
+    "content": "Oracle → café",
+    "dependencyPropertyCleared": true,
+    "zeroWidth": true,
+    "negativeWidthException": "System.ArgumentException",
+    "malformedXamlException": "Microsoft.UI.Xaml.Markup.XamlParseException",
+    "childrenRemoved": true,
+    "dispatcherThreadAccess": true,
+    "dispatcherOrder": [
+      1,
+      2
+    ],
+    "cancelledWorkRan": false,
+    "windowClosed": true
+  }
+}

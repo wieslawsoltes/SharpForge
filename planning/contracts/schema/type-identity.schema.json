@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "identity": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/type"
+        },
+        {
+          "$ref": "#/$defs/signature"
+        }
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "identity"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "type": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "named"
+            },
+            "assembly": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "arity": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4294967295
+            },
+            "arguments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/type"
+              },
+              "maxItems": 1000000
+            }
+          },
+          "required": [
+            "kind",
+            "assembly",
+            "name",
+            "arity",
+            "arguments"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "array",
+                "byref",
+                "pointer"
+              ]
+            },
+            "element": {
+              "$ref": "#/$defs/type"
+            },
+            "rank": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 32
+            }
+          },
+          "required": [
+            "kind",
+            "element",
+            "rank"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "parameter"
+            },
+            "owner": {
+              "enum": [
+                "type",
+                "method"
+              ]
+            },
+            "index": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4294967295
+            }
+          },
+          "required": [
+            "kind",
+            "owner",
+            "index"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "functionPointer"
+            },
+            "signature": {
+              "$ref": "#/$defs/signature"
+            }
+          },
+          "required": [
+            "kind",
+            "signature"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "modified"
+            },
+            "required": {
+              "type": "boolean"
+            },
+            "modifier": {
+              "$ref": "#/$defs/type"
+            },
+            "element": {
+              "$ref": "#/$defs/type"
+            }
+          },
+          "required": [
+            "kind",
+            "required",
+            "modifier",
+            "element"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "signature": {
+      "type": "object",
+      "properties": {
+        "callingConvention": {
+          "enum": [
+            "default",
+            "vararg",
+            "cdecl",
+            "stdcall",
+            "thiscall",
+            "fastcall",
+            "unmanaged"
+          ]
+        },
+        "hasThis": {
+          "type": "boolean"
+        },
+        "explicitThis": {
+          "type": "boolean"
+        },
+        "genericArity": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "returnType": {
+          "$ref": "#/$defs/type"
+        },
+        "parameters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/type"
+          },
+          "maxItems": 1000000
+        },
+        "sentinel": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        }
+      },
+      "required": [
+        "callingConvention",
+        "hasThis",
+        "explicitThis",
+        "genericArity",
+        "returnType",
+        "parameters",
+        "sentinel"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
