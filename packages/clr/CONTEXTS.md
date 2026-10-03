@@ -52,6 +52,17 @@ parsing and after asynchronous boundaries. Native unload fixtures and JS host
 collection are qualified independently; unsupported runtime integrations remain
 explicit.
 
-Validation is queued with the other workstreams. The complete native context
-capture is `node packages/clr/tools/capture-context-reference.mjs`, followed by
+The native context capture is
+`node packages/clr/tools/capture-context-reference.mjs`, followed by
 `node --expose-gc --test --test-concurrency=1 tests/clr-context-*.test.js`.
+All nine focused tests passed with Node 24.21.0 on darwin-arm64. The independent
+CoreCLR 10.0.5 capture (SDK 10.0.201) checks identities, MVIDs, references, type
+isolation and collectible lifetime with two independently built Plugin versions.
+This is metadata/lifetime evidence, not a claim of managed method execution by
+SharpForge. The AppDomain facade is tested through the host API; registering its
+managed framework members remains part of the framework-binding work.
+
+Run `node packages/clr/examples/contexts.mjs` for the two-version example.
+`node --expose-gc packages/clr/tools/benchmark-contexts.mjs` measures cold stream
+loading, warm identity binding and cached method-body copying. These new services
+have no previous loader implementation baseline.
