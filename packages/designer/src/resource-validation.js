@@ -2,7 +2,6 @@ import {CONTROLS, MEDIA, XAML, canonicalType, frameworkAssignable, frameworkMani
 import {authoringError, boundedArray, finiteNumber, qualifiedIdentifier, resourceKey} from './property-diagnostics.js';
 import {normalizeDesignerBrush} from './property-values.js';
 
-const scalarTypes = new Set(['string', 'bool', 'int', 'double', 'object']);
 const bindingModes = new Set(['OneTime', 'OneWay', 'TwoWay']);
 const record = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 
@@ -80,7 +79,7 @@ function resourceEntries(design, services) {
   }
 }
 
-function references(design, node, services) {
+function references(design, node, services, {template = false} = {}) {
   const schema = services.propertySchema(node.type);
   for (const [property, input] of Object.entries(node.resourceReferences ?? {})) {
     const definition = schema[property];
@@ -96,7 +95,7 @@ function references(design, node, services) {
     }
     node.resourceReferences[property] = reference;
   }
-  for (const [property, input] of Object.entries(node.bindings ?? {})) {
+  for (const [property, input] of Object.entries(template ? {} : node.bindings ?? {})) {
     const definition = schema[property];
     if (!definition || definition.readOnly || definition.isStatic || definition.attached) {
       authoringError('SFD1820', `${property} does not support a designer binding.`);
@@ -195,7 +194,10 @@ function designTime(design, services) {
 }
 
 function projectTypes(design) {
-  if (design.projectTypes === undefined) return;
+  if (design.projectTypes === undefined) {
+    if (design.nodes.some(node => node.projectType)) authoringError('SFD1826', 'Project control metadata is missing.');
+    return;
+  }
   boundedArray(design.projectTypes, 256, 'Project controls');
   const types = new Map();
   for (const descriptor of design.projectTypes) {
@@ -231,6 +233,7 @@ export function validateDesignerAuthoring(design, services) {
     const parts = new Map();
     const visit = part => {
       parts.set(part.id, part);
+      references(design, part, services, {template: true});
       for (const child of part.children ?? []) visit(child);
     };
     visit(template.root);
