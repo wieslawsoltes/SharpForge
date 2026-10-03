@@ -192,10 +192,12 @@ export class DesignerSession {
     const errors = [];
     const attempt = action => { try { action(); } catch (error) { errors.push(error); } };
     attempt(() => this.documentSubscription?.());
+    this.documentSubscription = null;
     if (this.sourceSync && ![...this.resources.values()].some(value => value.resource === this.sourceSync)) {
       attempt(() => this.sourceSync.dispose());
     }
     for (const name of [...this.resources.keys()].reverse()) attempt(() => this.release(name));
+    attempt(() => this.document.dispose());
     this.sourceSync = null;
     this.live = null;
     attempt(() => this.emit({kind: 'dispose'}));

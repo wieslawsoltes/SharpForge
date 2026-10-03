@@ -45,7 +45,10 @@ removed URIs, and drops unknown node IDs after source initialization. Live attac
 reverse registration order. The source-sync object is session owned. A rendering adapter receiving a session therefore disposes its
 own visuals without disposing `session.sourceSync` again. `beginOperation(name)` aborts older work in that named channel and returns a
 `current()` guard; asynchronous callers must check it before publishing a result. `schedule` and `cancelTimer` provide keyed timers
-that cannot outlive their document. Disposal continues after a failed cleanup and then raises `AggregateError`.
+that cannot outlive their document. After releasing host resources, session disposal closes its current owned `DesignDocument`,
+cancels its staged transaction, and clears its history and listeners. An injected document transfers ownership to the session;
+document replacement leaves disposal of the previous model to the caller. Disposal continues after a failed cleanup and then
+raises `AggregateError`.
 
 ## Studio integration
 
