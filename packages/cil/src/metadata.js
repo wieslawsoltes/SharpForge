@@ -1,3 +1,4 @@
+import { initializeMetadataBuilder } from './metadata/builder-state.js';
 import { encodeTypeSignature } from './metadata/signature-writer.js';
 import { parseSignatureType } from './metadata/signature-parser.js';
 import { readTypeSignature } from './metadata/signature-members.js';
@@ -8,22 +9,15 @@ import { readMetadataTables, writeMetadataTables } from './metadata/table-stream
 import { metadataList } from './metadata/pointer-tables.js';
 import { sortMetadataRows } from './metadata/sorting.js';
 export { metadataSortedMask } from './metadata/sorting.js';
-import { interopRowWriters } from './metadata/rows-interop.js';
-import { manifestRowWriters } from './metadata/rows-manifest.js';
 import { Writer, Reader, CilError, align, utf8, text, buildId } from './binary.js';
 /** ECMA-335 II.22 tables and II.24 heaps. Table/index widths are computed, never fixed. */
 import { writeMetadataRow } from './metadata/row-writer.js';
-import { definitionRowWriters } from './metadata/rows-definitions.js';
 export * from './metadata/rows-definitions.js';
-import { MetadataHeaps } from './metadata/heaps.js';
 import { codedIndex, decodeCoded, token } from './metadata/indices.js';
 export { Tables, TableId, tableDefinitions, metadataSchemas } from './metadata/tables.js';
 export { metadataCodedIndices, codedIndex, decodeCoded, token, metadataIndexWidth } from './metadata/indices.js';
 export class MetadataBuilder {
-  constructor(name='Application', {framework='net8',uncompressed=false,extraData}={}) {
-    this.name=name;this.framework=framework;this.uncompressed=uncompressed;this.extraData=extraData;this.rows={};this.heaps=new MetadataHeaps();this.definitions=definitionRowWriters(this);this.manifest=manifestRowWriters(this);this.interop=interopRowWriters(this);this.typeRefs=new Map();this.members=new Map();this.assemblyRefs=new Map();
-    this.add(0,[0,this.string(name+'.dll'),1,0,0]);this.add(32,[0x8004,0,2,0,0,0,0,this.string(name),0]);
-  }
+  constructor(name='Application', options={}) { initializeMetadataBuilder(this,name,options); }
   add(table,row) { const rows=this.rows[table]??=[];rows.push(row);return token(table,rows.length); }
   addRow(table,values) { return writeMetadataRow(this,table,values); }
   string(value) { return this.heaps.string(value); }

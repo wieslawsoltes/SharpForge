@@ -16,31 +16,38 @@ point; core does not depend on collections, framework or runtime.
 `dictionaryEntries(platform, reference)` yields managed `[key, value]` pairs in
 Dictionary enumeration order. Upper layers such as JSON serialization use this
 public traversal seam without depending on the collection's backing layout.
+`hashSetValues(platform, reference)` similarly yields managed HashSet values,
+including null, in physical slot order. Neither iterator unwraps managed values.
 
 Hosts supply the same explicit `bclHost`, managed heap, property access,
 allocation and write-notification services as core modules. Collection backing
 arrays, counts, versions, queue positions and enumerator owners remain in the
-managed heap. Lookup caches belong to each platform; Dictionary mutations update
+managed heap. Lookup caches belong to each platform; Dictionary and HashSet mutations update
 their existing index, while restored heap records rebuild a cache on first use.
-Dictionary free-slot metadata is also heap-owned and survives snapshot restore.
+Their free-slot metadata is also heap-owned and survives snapshot restore.
 Removed keys and values are cleared immediately so they stop retaining objects.
 
 This extraction preserves the released compatibility profile: element types are
 `int`, `double`, `bool`, `string` and `object`; Dictionary keys are `string` or
 `int`. Range and set inputs use arrays. It does not add open generic collections,
-custom comparers or additional members. Dictionary removal takes constant work
+custom comparers or additional members. Dictionary and HashSet removal take constant work
 and reuses freed entry slots in the order observed in the pinned .NET 10.0.5
 fixture. Key/value traversal skips holes in physical slot order. Keys and Values
 remain snapshots in this released profile, and mutation versions retain their
 existing behavior. Payload array limits remain unchanged; the managed Int32
-free-slot array has one extra cell per entry capacity. List and HashSet mutation
-costs and default sorting remain separate A08 work.
+free-slot array has one extra cell per entry capacity. HashSet enumeration, array
+copies, JSON serialization and set algebra visit live physical slots, including
+null values. ExceptWith removes in input order; IntersectWith removes in physical
+order, retaining native free-slot reuse. Array construction deduplicates through
+the existing index. Released enumerator mutation-version/disposal rules remain
+unchanged and do not claim complete .NET enumerator parity. List mutations and
+default sorting remain separate A08 work.
 
-`tests/a08-dictionary-removal.test.js` covers native slot reuse, cached-index and
-backing-array retention, managed-object release, failed growth and heap restore
-through both VMs. The root scheduler runs
+`tests/a08-dictionary-removal.test.js` and `tests/a08-hashset-removal.test.js` cover
+native slot reuse, cached-index and backing-array retention, managed-object
+release, failed growth and heap restore through both VMs. The root scheduler runs
 `node scripts/benchmarks/a08-collection-removal.mjs` on a quiet machine to measure
-100,000 removals through each VM platform. Compilation and initial insertion are
+100,000 removals for both families through each VM platform. Compilation and initial insertion are
 outside its timed region; it also rejects index rebuilds or managed allocations.
 Performance qualification must use the resulting timings, not the unit tests.
 
