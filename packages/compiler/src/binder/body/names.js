@@ -31,7 +31,10 @@ export const NameBinding = Base =>
         const local = this.lookupLocal(name);
         if (local && (!arity || local.kind === SymbolKind.Method)) {
           if (local.kind === SymbolKind.Local) return this.localNode(local, syntax);
-          if (local.kind === SymbolKind.Parameter) return this.node('Parameter', syntax, local.type, { parameter: local });
+          if (local.kind === SymbolKind.Parameter) {
+            if (this.isOuterByRefParameter(local)) this.report(syntax, 'CS1628', [name]);
+            return this.node('Parameter', syntax, local.type, { parameter: local });
+          }
           if (local.kind === SymbolKind.Method)
             return this.node('MethodGroup', syntax, null, { methods: [local], receiver: null, name, form: 'methodGroup', typeArguments });
         }

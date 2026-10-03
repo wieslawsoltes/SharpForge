@@ -14,6 +14,7 @@ import { classifyConstantNarrowing } from '../../conversions/constant-narrowing.
 import { isNullableType, stripNullable } from '../../conversions/nullable.js';
 import { delegateInvoke } from '../../overload/type-inference.js';
 import { isAccessible } from '../accessibility.js';
+import { anonymousFunctionAnchor } from '../anonymous-methods.js';
 import { reportTupleLiteralFailure } from '../tuples.js';
 
 const keywordOf = type =>
@@ -112,10 +113,9 @@ export const ConversionBinding = Base =>
       if (e.form === 'lambda') {
         const r = e.lastConversionError;
         if (r) for (const x of r) this.report(x.node ?? node, x.code, x.args);
-        else {
-          const at = node === e.syntax ? (e.syntax.arrowToken ?? e.syntax.delegateKeyword ?? node) : node;
-          this.report(at, 'CS1660', [e.isAnonymousMethod ? 'anonymous method' : 'lambda expression', to]);
-        }
+        else if (e.isAnonymousMethod && ['System_Object', 'System_Delegate', 'System_MulticastDelegate'].includes(type.specialType))
+          this.report(anonymousFunctionAnchor(e.syntax, node), 'CS8917');
+        else this.report(anonymousFunctionAnchor(e.syntax, node), 'CS1660', [e.isAnonymousMethod ? 'anonymous method' : 'lambda expression', to]);
         return;
       }
       if (e.noNaturalType) {
@@ -243,7 +243,7 @@ export const ConversionBinding = Base =>
     convertThroughFunctionType(e, type, node) {
       const natural = this.naturalFunctionType(e);
       if (!natural) {
-        this.report(node === e.syntax ? (e.syntax.arrowToken ?? e.syntax.delegateKeyword ?? node) : node, 'CS8917');
+        this.report(anonymousFunctionAnchor(e.syntax, node), 'CS8917');
         return this.bad(node, { operand: e });
       }
       const delegate = this.convert(e, natural, node);

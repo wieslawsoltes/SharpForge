@@ -9,12 +9,13 @@ export const recordMethods = {
     return this.languageVersion >= 9 && this.isWord(token, 'record');
   },
   recordDeclaration(attributeLists, modifiers) {
-    const start = this.current,
+    const keywordIndex = this.i,
+      start = this.current,
       keyword = this.takeWord('record');
     this.feature('Records', start);
     const classOrStruct = this.recordModifier(),
       kind = classOrStruct?.kind === 'StructKeyword' ? 'RecordStructDeclaration' : 'RecordDeclaration';
-    this.typeModifierFeatures(modifiers, kind, start);
+    this.typeModifierFeatures(modifiers, kind, start, keywordIndex);
     this.closedModifier(modifiers, kind);
     if (!classOrStruct && this.isUnionStart()) {
       // The proposal resolved that a union declaration is a plain struct: `record union` is not a supported form.

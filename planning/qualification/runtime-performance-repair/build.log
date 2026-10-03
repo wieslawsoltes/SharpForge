@@ -1,0 +1,5 @@
+
+> sharpforge@0.14.0 build
+> node scripts/run.js build
+
+Built dependency-free browser application in dist/
