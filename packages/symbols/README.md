@@ -223,6 +223,7 @@ query, does not alter lookup results. The lookup retains no borrowed bytes or AS
 The naming convention and zero-length slot rule follow the primary Roslyn sources:
 [GeneratedNames](https://github.com/dotnet/roslyn/blob/main/src/Compilers/CSharp/Portable/Symbols/Synthesized/GeneratedNames.cs)
 and [StateMachineHoistedLocalScope](https://github.com/dotnet/roslyn/blob/main/src/Dependencies/CodeAnalysis.Debugging/StateMachineHoistedLocalScope.cs).
+
 `emitPortablePdb(assembly, { stateMachines })` accepts explicit records
 `{ moveNext, kickoff, catchHandlerOffset, awaits }`, where method references are
 MethodDef tokens and each await is `{ yieldOffset, resumeOffset, resumeMethod }`.
