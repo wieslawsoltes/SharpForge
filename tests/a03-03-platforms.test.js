@@ -15,7 +15,7 @@ for (const [platform, machine, magic, flags] of [
     assert.equal(pe.magic, magic);
     assert.equal(pe.flags, flags);
     assert.equal(pe.isLibrary, false);
-    assert.equal(loadAssembly(compiled.assembly).image.entryPoint, compiled.image.entryPoint);
+    assert.equal(loadAssembly(compiled.assembly).entryPoint, compiled.image.entryPoint);
   });
 }
 

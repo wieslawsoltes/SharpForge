@@ -26,7 +26,7 @@ for (const platform of ['anycpu', 'x86', 'x64']) {
     assert.equal(addresses, pe.directories.importAddressTable.rva);
     assert.equal(pe.directories.baseRelocation.size, 12);
     assert.equal(pe.bytes[pe.offsetOf(pe.addressOfEntryPoint)], 0xff);
-    assert.equal(loadAssembly(compiled.assembly).image.entryPoint, compiled.image.entryPoint);
+    assert.equal(loadAssembly(compiled.assembly).entryPoint, compiled.image.entryPoint);
   });
 }
 

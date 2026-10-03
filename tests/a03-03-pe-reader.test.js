@@ -22,10 +22,14 @@ test('A03 PE reader exposes all data and CLI directories without executing input
   assert.equal(readPE(bytes, { inspection: true }).imageKind, 'MixedMode');
   assert.throws(() => readPE(bytes), /IL-only/);
   view.setUint32(cliOffset + 16, CorFlags.ILOnly, true);
-  view.setUint32(cliOffset + 64, 0x3000, true);
+  view.setUint32(cliOffset + 64, pe.directories.cliHeader.rva + 72, true);
   view.setUint32(cliOffset + 68, 16, true);
+  // Point at a temporary R2R signature in unused CLI header bytes after reading metadata.
+  const r2rRva = pe.directories.cliHeader.rva + 40;
+  view.setUint32(cliOffset + 64, r2rRva, true);
+  view.setUint32(cliOffset + 40, 0x00525452, true);
   assert.equal(readPE(bytes, { inspection: true }).imageKind, 'ReadyToRun');
-  assert.deepEqual(readPE(bytes, { inspection: true }).managedNativeHeader, { rva: 0x3000, size: 16 });
+  assert.deepEqual(readPE(bytes, { inspection: true }).managedNativeHeader, { rva: r2rRva, size: 16 });
 });
 
 test('A03 PE header sizes, directory counts and RVA arithmetic are bounded', () => {

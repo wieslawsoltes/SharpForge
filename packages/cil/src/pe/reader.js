@@ -90,7 +90,12 @@ function readCliHeader(bytes, headers, offsetOf) {
   const flags = reader.u32(), entryPoint = reader.u32();
   const resources = cliDirectory(reader), strongNameSignature = cliDirectory(reader), codeManagerTable = cliDirectory(reader);
   const vtableFixups = cliDirectory(reader), exportAddressTableJumps = cliDirectory(reader), managedNativeHeader = cliDirectory(reader);
-  const imageKind = managedNativeHeader.size ? 'ReadyToRun' : flags & CorFlags.ILOnly ? 'ILOnly' : 'MixedMode';
+  let imageKind = flags & CorFlags.ILOnly ? 'ILOnly' : 'MixedMode';
+  if (managedNativeHeader.size) {
+    const at = offsetOf(managedNativeHeader.rva, managedNativeHeader.size);
+    const signature = new Reader(bytes, at, managedNativeHeader.size).u32();
+    imageKind = signature === 0x00525452 ? 'ReadyToRun' : 'ManagedNative';
+  }
   return { cliVersion, metadataDirectory, flags, corFlags: flags, entryPoint, resources, strongNameSignature, codeManagerTable,
     vtableFixups, exportAddressTableJumps, managedNativeHeader, imageKind, nativeEntryPoint: !!(flags & CorFlags.NativeEntryPoint) };
 }
