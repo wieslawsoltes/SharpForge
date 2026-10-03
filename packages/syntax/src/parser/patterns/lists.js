@@ -11,7 +11,6 @@ export const listPatternMethods = {
       open = this.take(),
       list = [],
       when = this.patternWhen;
-    this.feature('ListPattern', start);
     this.nested(() => {
       while (!this.at(']') && !this.at('eof')) {
         const before = this.i;
@@ -23,6 +22,7 @@ export const listPatternMethods = {
     });
     this.patternWhen = when;
     const close = this.expect(']');
+    this.feature('ListPattern', start, this.tokens[this.i - 1]);
     return this.n('ListPattern', open, list, close, this.isDesignationAhead() ? this.designation() : null);
   }
 };

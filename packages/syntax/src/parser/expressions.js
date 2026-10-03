@@ -67,7 +67,7 @@ export const expressionMethods = {
       }
       if (text === '..') {
         if (min > P.Range) break;
-        left = this.rangeExpression(left);
+        left = this.rangeExpression(left, start);
         continue;
       }
       if (this.isWithExpression()) {
