@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "area": "A05",
+  "nodeGlobs": [
+    "tests/runtime.test.js",
+    "tests/runtime14.test.js"
+  ],
+  "browserScripts": [
+    "tests/browser_release14_test.py"
+  ],
+  "requiredServices": [
+    "studio-http",
+    "chromium"
+  ],
+  "timeout": 1200000,
+  "tags": [
+    "legacy"
+  ]
+}
