@@ -32,7 +32,7 @@ const discovered = validateFixtures(await discoverFixtures());
 /** Stable content hash of what Roslyn was shown for a fixture (language version + source). */
 export function fixtureHash(fixture) {
   return createHash('sha256')
-    .update((fixture.langVersion ?? '') + '\0' + fixture.source)
+    .update((fixture.langVersion ?? '') + '\0' + fixture.source + (fixture.allowUnsafe ? '\0unsafe' : ''))
     .digest('hex')
     .slice(0, 16);
 }

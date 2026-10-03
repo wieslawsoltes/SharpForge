@@ -15,6 +15,7 @@ import { baseTypeChain } from '../symbols/substitution.js';
 import { hasExplicitReferenceConversion } from '../conversions/reference.js';
 import { argumentDisplay } from './resolution.js';
 import { resolvePredefinedOperator } from './predefined-operators.js';
+import { pointerBinaryOperator, pointerUnaryOperator } from './pointer-operators.js';
 
 export const binaryOperatorNames = Object.freeze({
   '+': 'op_Addition',
@@ -147,6 +148,11 @@ export class OperatorResolver {
   /** Binary operator resolution for bound operands. */
   binary(operator, left, right) {
     if (left.type?.isErrorType() || right.type?.isErrorType()) return { kind: 'error', suppressed: true };
+    const pointer = pointerBinaryOperator(operator, left, right, this.core, (expression, kind) => {
+      const type = this.typeOfKind(kind);
+      return this.conversions.classifyFromExpression(expression, type).isImplicit ? type : null;
+    });
+    if (pointer) return pointer;
     const name = binaryOperatorNames[operator];
     if (name) {
       const user = this.userDefined(name, [left, right], 2);
@@ -341,6 +347,8 @@ export class OperatorResolver {
     if (type?.isErrorType()) return { kind: 'error', suppressed: true };
     const fail = () => ({ kind: 'error', code: 'CS0023', args: [operator, argumentDisplay(operand)] });
     if (!type) return fail();
+    const pointer = pointerUnaryOperator(operator, operand);
+    if (pointer) return pointer;
     const name = unaryOperatorNames[operator];
     if (name) {
       const user = this.userDefined(name, [operand], 1);
