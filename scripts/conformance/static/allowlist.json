@@ -33,7 +33,7 @@
       "path": "packages/compiler/smoke.mjs",
       "operation": "dynamic-import",
       "count": 3,
-      "sha256": "a0534343013d556403e2f3e5a01b57edf69924d476c49e64309c9f0f97ab3d19",
+      "sha256": "4f5a19db3d1a4bc04a98286be2bd61675e13d3b1a0abe410973bb16759e358a8",
       "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
     },
     {
@@ -257,7 +257,7 @@
       "path": "scripts/conformance/perf/workloads.js",
       "operation": "dynamic-import",
       "count": 1,
-      "sha256": "5de4da16935fd7261ab49e07bbb11002fe1946dad3db34d32efa888dd843712b",
+      "sha256": "299d73898635ba80e64b84252f29d22477c424de01c2e4b59778a56352546749",
       "reason": "Benchmark loads explicit package entry points from the selected trusted source checkout."
     },
     {
