@@ -1,0 +1,7 @@
+# Pause and snapshot contract
+
+VM snapshots contain owner, hostRevision, platform, scheduler, frames, heap, statics, state, instructions, elapsedMs, frameId, output, outputCharacters, exitCode, returnValue, fault, pendingFault and writeRevision. Source adds stack, constantValues, sourcePause and currentPoint. CIL adds strings, initialized, heapRevision and frame method/offset maps. Scheduler includes parked/currentId/next IDs/clock/turn/steps/preferred, contexts and tasks. Heap includes records, generations, generationCounter, free list, handles, nextHandleId, stats and threshold.
+
+copyExecution preserves frozen identities, recursively copies mutable arrays/objects and ManagedFault properties using one memo so aliases/cycles survive. CIL frame method definitions and offset maps are immutable metadata retained by identity. Snapshot ownership is VM-local; it is not a serialized native state checkpoint. `snapshotRecord` exposes a portable, schema-validated inspection projection, **not** a restore format. Both JS VM captures are validated in tests.
+
+Frame IDs and heap generations never go backward on restore. Active external operations reject capture; changing host revision rejects restore. No file/network/worker side effect is reversed. Debugger defaults are 64 retained snapshots and an estimated 8 MiB budget; this is an estimate, not a physical-memory accounting guarantee. Rust must provide equivalent frame/heap identities, alias-preserving snapshots, host barriers and explicit native-state exclusions before claiming parity.

@@ -1,0 +1,318 @@
+{
+  "node": "v24.21.0",
+  "commit": "e964ff7be8626bc8c7a0c6d4a33bd36cb9f769f1",
+  "codec": {
+    "coldMs": 1.0702500000000015,
+    "warmMedianMs": 0.018375000000006025,
+    "p95Ms": 0.10233300000000156,
+    "p99Ms": 0.2665839999999946,
+    "iterations": 1000,
+    "outputArrayBufferAllocations": 1000,
+    "outputBytes": 388000,
+    "heapUsedDeltaBytes": 4146792,
+    "allocationScope": "Output ArrayBuffers only; object allocations and heap delta are not exact allocator accounting"
+  },
+  "runtime": [
+    {
+      "fixture": "parked-frame",
+      "engine": "source",
+      "kinds": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "passed",
+      "gcLatency": {
+        "coldMs": 0.17849999999999966,
+        "warmMedianMs": 0.0061249999999972715,
+        "p95Ms": 0.01645899999999756,
+        "p99Ms": 0.020832999999996105,
+        "samples": 106
+      },
+      "polls": 49,
+      "collections": 106,
+      "allocations": 6,
+      "parked": true
+    },
+    {
+      "fixture": "parked-frame",
+      "engine": "cil",
+      "kinds": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "passed",
+      "gcLatency": {
+        "coldMs": 0.09237499999997567,
+        "warmMedianMs": 0.007332999999988488,
+        "p95Ms": 0.01983299999997712,
+        "p99Ms": 0.051374999999978854,
+        "samples": 152
+      },
+      "polls": 72,
+      "collections": 152,
+      "allocations": 6,
+      "parked": true
+    },
+    {
+      "fixture": "native-callback",
+      "engine": "source",
+      "kinds": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "status": "passed",
+      "gcLatency": {
+        "coldMs": 0.012249999999994543,
+        "warmMedianMs": 0.0027090000000100645,
+        "p95Ms": 0.004707999999993717,
+        "p99Ms": 0.009417000000013331,
+        "samples": 149
+      },
+      "polls": 68,
+      "collections": 149,
+      "allocations": 4,
+      "parked": false
+    },
+    {
+      "fixture": "native-callback",
+      "engine": "cil",
+      "kinds": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "status": "passed",
+      "gcLatency": {
+        "coldMs": 0.009792000000004464,
+        "warmMedianMs": 0.004917000000006055,
+        "p95Ms": 0.015457999999995309,
+        "p99Ms": 0.04574999999999818,
+        "samples": 185
+      },
+      "polls": 86,
+      "collections": 185,
+      "allocations": 4,
+      "parked": false
+    },
+    {
+      "fixture": "cancellation",
+      "engine": "source",
+      "kinds": [
+        2,
+        3,
+        4
+      ],
+      "status": "passed",
+      "gcLatency": {
+        "coldMs": 0.012249999999994543,
+        "warmMedianMs": 0.0022499999999752163,
+        "p95Ms": 0.0042910000000233595,
+        "p99Ms": 0.010457999999999856,
+        "samples": 114
+      },
+      "polls": 52,
+      "collections": 114,
+      "allocations": 6,
+      "parked": false
+    },
+    {
+      "fixture": "cancellation",
+      "engine": "cil",
+      "kinds": [
+        2,
+        3,
+        4
+      ],
+      "status": "passed",
+      "gcLatency": {
+        "coldMs": 0.008707999999984395,
+        "warmMedianMs": 0.0032910000000185846,
+        "p95Ms": 0.011249999999989768,
+        "p99Ms": 0.06991700000000378,
+        "samples": 148
+      },
+      "polls": 69,
+      "collections": 148,
+      "allocations": 6,
+      "parked": false
+    },
+    {
+      "fixture": "nested-finally",
+      "engine": "source",
+      "kinds": [
+        2,
+        3,
+        4
+      ],
+      "status": "passed",
+      "gcLatency": {
+        "coldMs": 0.007834000000002561,
+        "warmMedianMs": 0.0014590000000112013,
+        "p95Ms": 0.0024999999999977263,
+        "p99Ms": 0.0038340000000118835,
+        "samples": 53
+      },
+      "polls": 24,
+      "collections": 53,
+      "allocations": 5,
+      "parked": false
+    },
+    {
+      "fixture": "nested-finally",
+      "engine": "cil",
+      "kinds": [
+        2,
+        3,
+        4
+      ],
+      "status": "passed",
+      "gcLatency": {
+        "coldMs": 0.006166000000007443,
+        "warmMedianMs": 0.0027500000000202363,
+        "p95Ms": 0.005625000000009095,
+        "p99Ms": 0.008000000000009777,
+        "samples": 67
+      },
+      "polls": 31,
+      "collections": 67,
+      "allocations": 5,
+      "parked": false
+    },
+    {
+      "fixture": "rethrow",
+      "engine": "source",
+      "kinds": [
+        2,
+        3,
+        4
+      ],
+      "status": "passed",
+      "gcLatency": {
+        "coldMs": 0.007166000000012218,
+        "warmMedianMs": 0.0014999999999929514,
+        "p95Ms": 0.001958999999999378,
+        "p99Ms": 0.0028330000000096334,
+        "samples": 43
+      },
+      "polls": 20,
+      "collections": 43,
+      "allocations": 3,
+      "parked": false
+    },
+    {
+      "fixture": "rethrow",
+      "engine": "cil",
+      "kinds": [
+        2,
+        3,
+        4
+      ],
+      "status": "passed",
+      "gcLatency": {
+        "coldMs": 0.03149999999999409,
+        "warmMedianMs": 0.006249999999994316,
+        "p95Ms": 0.013125000000002274,
+        "p99Ms": 0.021917000000001963,
+        "samples": 57
+      },
+      "polls": 27,
+      "collections": 57,
+      "allocations": 3,
+      "parked": false
+    },
+    {
+      "fixture": "await-fault",
+      "engine": "source",
+      "kinds": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "passed",
+      "gcLatency": {
+        "coldMs": 0.011957999999992808,
+        "warmMedianMs": 0.0037499999999965894,
+        "p95Ms": 0.0061249999999972715,
+        "p99Ms": 0.015749999999997044,
+        "samples": 131
+      },
+      "polls": 59,
+      "collections": 131,
+      "allocations": 12,
+      "parked": true
+    },
+    {
+      "fixture": "await-fault",
+      "engine": "cil",
+      "kinds": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "status": "passed",
+      "gcLatency": {
+        "coldMs": 0.0050420000000030996,
+        "warmMedianMs": 0.006540999999998576,
+        "p95Ms": 0.025958000000002812,
+        "p99Ms": 0.27704199999999446,
+        "samples": 189
+      },
+      "polls": 88,
+      "collections": 189,
+      "allocations": 12,
+      "parked": true
+    },
+    {
+      "fixture": "nested-fault",
+      "engine": "source",
+      "kinds": [
+        2,
+        3,
+        4
+      ],
+      "status": "passed",
+      "gcLatency": {
+        "coldMs": 0.0072499999999990905,
+        "warmMedianMs": 0.000916999999986956,
+        "p95Ms": 0.0018750000000125056,
+        "p99Ms": 0.0019169999999917309,
+        "samples": 22
+      },
+      "polls": 9,
+      "collections": 22,
+      "allocations": 4,
+      "parked": false
+    },
+    {
+      "fixture": "nested-fault",
+      "engine": "cil",
+      "kinds": [
+        2,
+        3,
+        4
+      ],
+      "status": "passed",
+      "gcLatency": {
+        "coldMs": 0.005124999999992497,
+        "warmMedianMs": 0.0019580000000019027,
+        "p95Ms": 0.004666999999983545,
+        "p99Ms": 0.00591700000001083,
+        "samples": 22
+      },
+      "polls": 9,
+      "collections": 22,
+      "allocations": 4,
+      "parked": false
+    }
+  ],
+  "qualification": "Node JS engines and reference codec; no native managed execution qualification"
+}
