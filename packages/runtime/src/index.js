@@ -11,3 +11,4 @@ export {ExecutionProfiler} from './execution/profiler.js';
 export {RuntimeEventLog, RuntimeEventName} from './execution/runtime-events.js';
 export {exportSpeedscope, exportRuntimeTrace} from './execution/profile-export.js';
 export {invalidateExecutionCode, executionCodeStatistics} from './execution/code-version.js';
+export {prepareExecution} from './execution/prepare.js';
