@@ -5,6 +5,7 @@ import {dictionary} from './dictionary.js';
 import {hashSet, initializeHashSet} from './hash-set.js';
 import {collectionEnumerator} from './collection-enumerator.js';
 import {listRemoval} from './list-removal.js';
+import {clearList, removeListValue} from './list-value-removal.js';
 import {reserveIndexed} from './indexed-storage.js';
 import {
   count, data, version, change, reserve, commitItems, write, queueItems, queueEnqueue, append
@@ -70,6 +71,7 @@ function compare(p, left, right) {
 
 function mutate(p, descriptor, context) {
   if (descriptor.name === 'RemoveAt' || descriptor.name === 'RemoveRange') return listRemoval(p, descriptor, context);
+  if (descriptor.name === 'Remove') return removeListValue(p, context.reference, context.values[0]);
   const {reference, values, native, size} = context;
   const items = data(p, reference).slice(0, size);
   switch (descriptor.name) {
@@ -80,13 +82,6 @@ function mutate(p, descriptor, context) {
       break;
     }
     case 'Insert': items.splice(integer(p, native[0], 0, size), 0, values[1]); break;
-    case 'Remove': {
-      const index = items.findIndex(value => equal(p, value, values[0]));
-      if (index < 0) return p.managed(false, 'bool');
-      items.splice(index, 1);
-      commitItems(p, reference, items);
-      return p.managed(true, 'bool');
-    }
     case 'Reverse': items.reverse(); break;
     case 'Sort': items.sort((left, right) => compare(p, left, right)); break;
     default: fail(p, 'MissingMethodException', descriptor.owner + '.' + descriptor.name);
@@ -114,6 +109,7 @@ function invokeMember(p, descriptor, context) {
     return null;
   }
   if (method === 'Clear') {
+    if (family === 'List') return clearList(p, reference);
     if (size) commitItems(p, reference, []);
     if (family === 'Queue') p.set(reference, '$head', 0);
     return null;

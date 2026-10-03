@@ -44,7 +44,10 @@ unchanged and do not claim complete .NET enumerator parity. List RemoveAt and
 RemoveRange shift the surviving suffix inside existing storage and clear the
 vacated tail. Tail RemoveAt takes constant work; arbitrary removals still require
 linear shifts. Valid empty ranges avoid backing writes and retain the released
-version increment. Other List mutations and default sorting remain separate work.
+version increment. Remove(value) retains its linear first-match lookup and reuses
+the same in-place removal seam. Clear writes null only to live entries and keeps
+capacity; an empty Clear preserves its released no-op version rule. Insert,
+AddRange, Reverse and Sort retain their existing storage paths.
 
 `tests/a08-dictionary-removal.test.js` and `tests/a08-hashset-removal.test.js` cover
 native slot reuse, cached-index and backing-array retention, managed-object
@@ -60,6 +63,11 @@ allocation failure and heap restore. Copy the same committed
 `scripts/benchmarks/a08-list-removal.mjs` runner to a baseline checkout for serial
 comparisons of tail and middle-range removal. It reports backing replacements
 and slot writes, and accepts an optional item count (default 2,000).
+`tests/a08-list-value-removal.test.js` separately covers first-match equality,
+Remove/Clear notifications, GC, unchanged no-op versions and allocation failures.
+`scripts/benchmarks/a08-list-value-removal.mjs` compares tail-value lookup/removal
+and Clear using the same static-import baseline workflow. It makes no claim that
+value-based List lookup becomes constant-time.
 
 Object collection equality and hash keys retain boxed primitive type identity:
 boxed `int` 1 differs from boxed `double` 1.0, while equal boxes of the same type,
