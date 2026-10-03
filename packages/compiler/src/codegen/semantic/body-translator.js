@@ -8,6 +8,7 @@
 import { hoistedLocalFieldName, hoistedSynthesizedLocalFieldName } from '../../lowering/generated-names.js';
 import {ScalarTranslation} from './scalar-translation.js';
 import {MemoryTranslation} from './memory-translation.js';
+import {SynchronizationTranslation} from './synchronization-translation.js';
 import { n } from './node-factory.js';
 import { ExpressionTranslation } from './translate-expressions.js';
 import { CallTranslation } from './translate-calls.js';
@@ -213,6 +214,7 @@ const families = [
   RuntimeGapTranslation,
   ScalarTranslation,
   MemoryTranslation,
+  SynchronizationTranslation,
   AwaitTranslation,
   AsyncStreamTranslation,
   ByReferenceTranslation,
