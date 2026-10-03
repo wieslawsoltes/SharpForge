@@ -1,5 +1,6 @@
 import { canonicalType, propertiesFor, CONTROLS, XAML } from '@sharpforge/framework';
 import { cloneSubtrees } from './document-clipboard.js';
+import {pruneDesignerAuthoring} from './resource-node-references.js';
 
 const shortName = type => type.slice(type.lastIndexOf('.') + 1);
 
@@ -56,6 +57,7 @@ export function deleteControls(document, ids) {
     }
     next.nodes = next.nodes.filter(node => !removed.has(node.id));
     for (const node of next.nodes) node.children = node.children.filter(id => !removed.has(id));
+    pruneDesignerAuthoring(next, removed);
   });
 }
 
@@ -165,6 +167,7 @@ export function ungroupControls(document, id) {
     }
     container.children.splice(container.children.indexOf(id), 1, ...children);
     next.nodes = next.nodes.filter(item => item.id !== id);
+    pruneDesignerAuthoring(next, [id]);
   });
   document.select(children.length ? children : [parent.id]);
   return children;

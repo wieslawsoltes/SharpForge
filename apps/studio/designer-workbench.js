@@ -99,6 +99,7 @@ export class DesignerWorkbench {
   getAppHost() {
     if (this.disposed) throw new Error('The designer workspace is closed');
     this.appHost ??= new DesignerAppHost({
+      idPrefix: 'designer-app-' + this.epoch,
       sessions: this.apps.registry, sourceFiles: () => this.state.files.map(file => ({...file})),
       workspaceId: () => this.workspaceId(), projectName: () => this.state.name,
       compile: options => {

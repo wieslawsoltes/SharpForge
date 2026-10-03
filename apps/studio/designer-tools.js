@@ -14,6 +14,7 @@ import {DesignerLiveAttachment} from './designer-live-attachment.js';
 import {DesignerPropertyController} from './designer-property-view.js';
 import {DesignerResourceController} from './designer-resource-view.js';
 import {DesignerOptionsController} from './designer-options-view.js';
+import {DesignerAssetPreviewController} from './designer-property-preview.js';
 import {mountDesignerSurface, resizeDesignerArtboard} from './designer-surface-view.js';
 import {createDesignerActions, renderDesignerSource} from './designer-actions.js';
 
@@ -55,6 +56,7 @@ export class DesignerTools {
       revokeObjectURL: url => URL.revokeObjectURL(url),
       makeBlob: (bytes, type) => new Blob([bytes], {type})
     });
+    this.assetPreviewController = new DesignerAssetPreviewController(this);
     this.actions = createDesignerActions(this);
     this.subscribeDocument();
   }
@@ -183,6 +185,7 @@ export class DesignerTools {
       this.chrome.renderSelection();
       this.chrome.rulers();
       if (!this.templateScope) this.sourceSync.designChanged(event);
+      if (event.kind !== 'selection') this.safe(() => this.assetPreviewController.refresh());
     } finally { this.syncing = false; }
   }
 
@@ -319,7 +322,8 @@ export class DesignerTools {
     this.modelSubscription?.();
     this.resizeObserver?.disconnect();
     for (const resource of [this.liveAttachment, this.surface, this.accessibility, this.outline, this.toolbox,
-      this.properties, this.resources, this.options, this.assetPreviews, this.chrome, this.treeView, this.host]) resource?.dispose?.();
+      this.properties, this.resources, this.options, this.assetPreviewController, this.assetPreviews,
+      this.chrome, this.treeView, this.host]) resource?.dispose?.();
     this.menu.close();
     if (this.ownsSession) this.session.dispose();
   }

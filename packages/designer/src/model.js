@@ -48,5 +48,5 @@ export function designPatch(before,after){before=validateDesign(before);after=va
   }
   const retained = new Set(after.nodes.map(node => node.id));
   for(const n of before.nodes)if(!retained.has(n.id))commands.push({op:'remove',id:n.id});
-  return {version:1,bindings:Object.fromEntries(before.nodes.filter(n=>n.runtimeId).map(n=>[n.id,n.runtimeId])),commands};
+  return {version:1,bindings:Object.fromEntries(before.nodes.filter(n=>n.runtimeId!==undefined).map(n=>[n.id,n.runtimeId])),commands};
 }
