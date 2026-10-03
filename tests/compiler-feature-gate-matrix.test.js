@@ -33,7 +33,7 @@ const notGated = {
       'PragmaWarning PragmaChecksum AliasQualifiedNames ExpressionTrees QueryContinuation QueryJoin QueryGroupBy QueryOrderBy QueryLet ' +
       'EmbeddedInteropTypes IndexedProperties CallerInfoAttributes AwaitExpression AwaitInCatchAndFinally ExtensionAddMethods ' +
       'ParameterlessStructInitializers Deconstruction GeneralizedAsyncReturnTypes IsPatternExpression CaseGuards OverrideWithConstraints ' +
-      'PropertyPatterns PositionalPatterns NullForgivingOperator NullableDirective TopLevelStatements PragmaWarningEnable WithExpressions ' +
+      'PropertyPatterns PositionalPatterns NullForgivingOperator NullableDirective PragmaWarningEnable WithExpressions ' +
       'UnmanagedCallingConventions AsyncMethodBuilderOverride CallerArgumentExpression ExtendedNameofScope NumericIntPtr ScopedRef ' +
       'SlicePattern ExperimentalAttribute SpreadElement'
     )
@@ -76,13 +76,6 @@ const notGated = {
   OverloadResolutionPriority: needsAttributeBinding,
   FirstClassSpan: needsOperandTypes,
   ExpressionOptionalAndNamedArguments: 'needs expression-tree conversion of lambdas',
-  // ---- preview features the parser does not recognise yet ----
-  ExtensionIndexers: 'preview syntax the parser does not record',
-  Unions: 'preview syntax the parser does not record',
-  ClosedClasses: 'preview syntax the parser does not record',
-  ClosedEnums: 'preview syntax the parser does not record',
-  SafeModifier: 'preview syntax the parser does not record',
-  UnsafeExpressions: 'preview syntax the parser does not record',
 };
 
 /**

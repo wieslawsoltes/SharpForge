@@ -20,8 +20,9 @@ test('workspace grammar uses configured language version and invalidates one-sho
   assert.equal(workspace.compile().success, true);
   assert.equal(parsed(workspace, 'Program.cs'), original);
   const changed = workspace.compile({langVersion: '9'});
-  assert.equal(changed.success, false);
+  assert.equal(changed.success, true, JSON.stringify(changed.diagnostics));
   assert.notEqual(parsed(workspace, 'Program.cs'), original);
+  assert.equal(parsed(workspace, 'Program.cs').syntax.members[1].members[0].kind, 'RecordDeclaration');
   assert.equal(changed.metrics.parsedThisCompilation, 1);
   const restored = workspace.compile();
   assert.equal(restored.success, true);
@@ -35,9 +36,10 @@ test('workspace per-file versions reparse only the document whose grammar change
   assert.equal(workspace.compile().success, true);
   const entry = parsed(workspace, 'Program.cs');
   const changed = workspace.compile({langVersionByUri: {'Types.cs': '9'}});
-  assert.equal(changed.success, false);
+  assert.equal(changed.success, true, JSON.stringify(changed.diagnostics));
   assert.equal(changed.metrics.parsedThisCompilation, 1);
   assert.equal(changed.metrics.reusedDocuments, 1);
+  assert.equal(parsed(workspace, 'Types.cs').syntax.members[1].members[0].kind, 'RecordDeclaration');
   assert.equal(parsed(workspace, 'Program.cs'), entry);
   const restored = workspace.compile({langVersionByUri: {'Types.cs': '8.0'}});
   assert.equal(restored.success, true);
@@ -86,7 +88,8 @@ test('generated documents honor symbols and per-file grammar without rerunning u
   assert.equal(extensions.metrics.generatorRuns, 1);
   const beforeVersion = parsed(workspace, uri);
   const newer = workspace.compile({preprocessorSymbols: [], langVersionByUri: {[uri]: '9'}});
-  assert.equal(newer.success, false);
+  assert.equal(newer.success, true, JSON.stringify(newer.diagnostics));
+  assert.equal(parsed(workspace, uri).syntax.members[1].members[0].kind, 'RecordDeclaration');
   assert.equal(newer.metrics.parsedThisCompilation, 1);
   assert.notEqual(parsed(workspace, uri), beforeVersion);
   assert.equal(extensions.metrics.generatorRuns, 1);

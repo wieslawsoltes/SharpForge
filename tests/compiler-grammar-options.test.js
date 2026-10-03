@@ -11,7 +11,9 @@ test('compiler language versions select grammar before contextual keywords are p
   const text = compile(source, { langVersion: '8' });
   assert.equal(text.success, true, JSON.stringify(text.diagnostics));
   assert.deepEqual(text.diagnostics, compile([parsed], { langVersion: '8' }).diagnostics);
-  assert.equal(compile(source, { langVersion: '9' }).success, false);
+  const record = compile(source, { langVersion: '9' });
+  assert.equal(record.success, true, JSON.stringify(record.diagnostics));
+  assert.equal(record.semantic.generated, true, 'C# 9 parses a nested record and uses semantic generation');
 });
 
 test('per-file language versions and preprocessor symbols reach parsing together', () => {
