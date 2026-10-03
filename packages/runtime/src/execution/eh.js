@@ -1,4 +1,5 @@
 import {ManagedFault} from '../heap.js';
+import {failInitialization} from './static-init.js';
 
 export const fatalFaults=new Set(['InstructionLimitException','OutputLimitException','StackOverflowException','ExecutionLimitException']);
 const within=(offset,handler)=>offset>=handler.start&&offset<handler.end;
@@ -31,8 +32,8 @@ export function continueUnwind(vm,frame,leave=null) {
     frame.caught.push({start:pending.catch.target,end:pending.catch.handlerEnd,fault:pending.error});
     frame.exception=pending.error;frame.stack=[pending.error.reference];frame.pc=frame.offsets.get(pending.catch.target);return;
   }
-  if(frame.initializes)vm.initialized.set(frame.initializes,'failed');
-  vm.frames.pop();throwFault(vm,pending.error);
+  const error=frame.initializes?failInitialization(vm,frame,pending.error):pending.error;
+  vm.frames.pop();throwFault(vm,error);
 }
 
 /** Raise a runtime fault, or execute throw/rethrow through the first-chance boundary. */
@@ -53,6 +54,9 @@ export function throwFault(vm,error,instruction=null) {
   }
   const frame=vm.top;
   if(!frame){vm.state='faulted';return;}
+  frame.volatileAccess=false;
+  // A delegate target waiting at its entry gate has not entered any protected region.
+  if(frame.needsInitialization){vm.frames.pop();throwFault(vm,fault);return;}
   const handlers=frame.method.handlers.filter(handler=>within(frame.lastOffset,handler)).sort((a,b)=>(a.end-a.start)-(b.end-b.start));
   const catcher=handlers.find(handler=>handler.flags===0&&vm.matches(fault.reference,vm.inspector.metadata.typeName(handler.catchType)));
   const finals=handlers.filter(handler=>(handler.flags===2||handler.flags===4)&&(!catcher||!within(catcher.target,handler)));

@@ -13,6 +13,9 @@ import { FunctionTranslation } from './translate-functions.js';
 import { PatternTranslation } from './translate-patterns.js';
 import { StatementTranslation } from './translate-statements.js';
 import { AwaitTranslation } from '../../lowering/async/async-methods.js';
+import { Locations } from '../../lowering/tuples/locations.js';
+import { TupleTranslation } from '../../lowering/tuples/translate-tuples.js';
+import { SynthesizedTextTranslation } from '../../lowering/tuples/translate-text.js';
 import { InitializerLowering } from '../../lowering/members/initializers.js';
 
 export { Frame } from './frame.js';
@@ -189,6 +192,21 @@ class TranslatorCore {
   }
 }
 
-/** The body translator: the core composed with one mixin per construct family. */
-const families = [ExpressionTranslation, CallTranslation, FunctionTranslation, PatternTranslation, StatementTranslation, AwaitTranslation, InitializerLowering];
-export class BodyTranslator extends families.reduce((composed, mixin) => mixin(composed), TranslatorCore) {}
+/** Construct families, innermost first: a later mixin refines the ones before it. */
+const families = [
+  ExpressionTranslation,
+  CallTranslation,
+  FunctionTranslation,
+  PatternTranslation,
+  StatementTranslation,
+  AwaitTranslation,
+  Locations,
+  TupleTranslation,
+  SynthesizedTextTranslation,
+  InitializerLowering,
+];
+
+export class BodyTranslator extends families.reduce(
+  (composed, mixin) => mixin(composed),
+  TranslatorCore,
+) {}

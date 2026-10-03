@@ -1,0 +1,60 @@
+/**
+ * Tuple expressions (SF-A02-T08.4): tuple literals and the element-wise `==` / `!=` of tuples (C# 7.3).
+ */
+import { maxTupleElements, tupleLiteralNames, tupleNameProblems, tupleTypeOf } from '../tuples.js';
+
+const isTupleType = type => !!type?.isTupleType && !type.isDefinition;
+const isTupleOperand = e => e.kind === 'Tuple' || isTupleType(e.type);
+const cardinalityOf = e => (e.kind === 'Tuple' ? e.elements.length : e.type.typeArguments.length);
+
+/** Class mixin: tuple literals and tuple equality. */
+export const TupleBinding = Base =>
+  class extends Base {
+    /** `(a, b: c)`: a tuple literal; it has a type when every element has one (`(1, null)` gets its type from the target). */
+    tuple(syntax) {
+      const elements = syntax.arguments.map(a => this.value(a.expression)),
+        { names, inferred } = tupleLiteralNames(syntax.arguments);
+      for (const problem of tupleNameProblems(names.map((name, i) => (inferred[i] ? null : name))))
+        this.report(syntax.arguments[problem.index].nameColon.name, problem.code, problem.args);
+      if (elements.some(e => e.hasErrors)) return this.bad(syntax);
+      if (elements.length > maxTupleElements) return this.lenient(syntax);
+      const typed = elements.every(e => e.type && e.type.specialType !== 'System_Void'),
+        types = elements.map(e => e.type);
+      const type = typed && elements.length >= 2 ? tupleTypeOf(this.core.bridge, types, names, inferred) : null;
+      return this.node('Tuple', syntax, type, { elements, names, form: 'tupleLiteral' });
+    }
+    /**
+     * `left == right` between tuples: the operator of each pair of elements is resolved on its own (so an element may
+     * be `null`, a literal without a type, or a nested tuple), and the results are combined.
+     * Returns null when the operands are not both tuples. The bound node keeps the per-element operators in
+     * `operation: {elements, leftParts, rightParts}`; a part is the element expression of a literal or a placeholder
+     * for the element of a tuple value.
+     */
+    tupleEquality(syntax, operator, left, right) {
+      if ((operator !== '==' && operator !== '!=') || !isTupleOperand(left) || !isTupleOperand(right)) return null;
+      const counts = [cardinalityOf(left), cardinalityOf(right)];
+      if (counts[0] !== counts[1]) {
+        this.report(syntax, 'CS8384', counts);
+        return this.bad(syntax, { left, right });
+      }
+      this.d.gate(this.c.uri, syntax, 'tupleEquality', { name: 'tuple equality', version: 7.3 });
+      const partsOf = e =>
+        e.kind === 'Tuple'
+          ? e.elements
+          : e.type.typeArguments.map((argument, index) => this.node('TupleElementPlaceholder', e.syntax, argument.type, { index }));
+      const leftParts = partsOf(left),
+        rightParts = partsOf(right);
+      const elements = leftParts.map((part, index) => {
+        const result = this.binaryOperation(syntax, operator, part, rightParts[index]);
+        return result.hasErrors || result.type?.specialType === 'System_Boolean' ? result : this.convert(result, this.core.bool, syntax);
+      });
+      return this.node('Binary', syntax, this.core.bool, {
+        operator,
+        left,
+        right,
+        family: 'tuple',
+        operation: { elements, leftParts, rightParts },
+        hasErrors: elements.some(e => e.hasErrors),
+      });
+    }
+  };
