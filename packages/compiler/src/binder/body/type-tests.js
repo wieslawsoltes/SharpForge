@@ -1,6 +1,7 @@
 /**
- * `is`, `as`, tuples, null-conditional access (lifted to Nullable<T> for value results), await and throw.
+ * `is`, `as`, null-conditional access (lifted to Nullable<T> for value results), await and throw.
  */
+import { reportAwaitOutsideAsync } from '../async.js';
 import { SymbolKind, TypeKind, ErrorTypeSymbol } from '../../symbols/types.js';
 import { ConversionKind } from '../../conversions/classify.js';
 import { isNullableType, stripNullable } from '../../conversions/nullable.js';
@@ -14,7 +15,7 @@ const isSource = symbol => {
   return false;
 };
 
-/** Class mixin: `is`, `as`, tuples, null-conditional access (lifted to Nullable<T> for value results), await and throw. */
+/** Class mixin: `is`, `as`, null-conditional access (lifted to Nullable<T> for value results), await and throw. */
 export const TypeTestBinding = Base =>
   class extends Base {
     isExpression(syntax) {
@@ -107,18 +108,6 @@ export const TypeTestBinding = Base =>
       }
       return this.node('As', syntax, type, { operand, targetType: type });
     }
-    tuple(syntax) {
-      const elements = syntax.arguments.map(a => this.value(a.expression)),
-        names = syntax.arguments.map(a => a.nameColon?.name.identifier.valueText ?? null);
-      if (elements.some(e => e.hasErrors)) return this.bad(syntax);
-      const typed = elements.every(e => e.type && e.type.specialType !== 'System_Void');
-      let type = null;
-      if (typed && elements.length >= 2 && elements.length <= 7) {
-        const t = this.core.bridge.coreType('System_ValueTuple_T' + elements.length).construct(elements.map(e => e.type));
-        type = names.some(Boolean) ? t.withTupleElementNames(names) : t;
-      } else if (elements.length > 7) return this.lenient(syntax);
-      return this.node('Tuple', syntax, type, { elements, names, form: 'tupleLiteral' });
-    }
     conditionalAccess(syntax) {
       // a?.b : the receiver is evaluated once; a value-typed result is lifted to Nullable<T> (SF-A02-B03).
       const receiver = this.value(syntax.expression);
@@ -199,18 +188,7 @@ export const TypeTestBinding = Base =>
     }
     await(syntax) {
       const operand = this.value(syntax.expression);
-      if (!this.c.isAsync && !this.c.isTopLevel) {
-        this.report(
-          syntax,
-          this.c.isLambda
-            ? 'CS4034'
-            : this.c.method?.returnsVoid !== false && this.c.method?.returnType?.specialType === 'System_Void'
-              ? 'CS4033'
-              : 'CS4032',
-          this.c.isLambda ? ['lambda expression'] : this.c.method?.returnsVoid ? [] : [this.display(this.c.method?.returnType)],
-        );
-        return this.bad(syntax);
-      }
+      if (reportAwaitOutsideAsync(this, syntax)) return this.bad(syntax);
       if (operand.hasErrors || !operand.type) return this.bad(syntax);
       const t = operand.type;
       if (t.originalDefinition === this.core.taskT || (t.originalDefinition?.name === 'ValueTask' && t.typeArguments?.length === 1))

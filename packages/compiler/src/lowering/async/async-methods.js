@@ -103,6 +103,15 @@ export const AsyncMethods = Base =>
       });
       return n.sequence([temp], effects, n.frameworkDelegate(startDelegateType(body.returnType), invoke, n.local(temp)));
     }
+    /**
+     * `Async.Start(new Func<R>(receiver.method))`: runs an image method as an async context and yields its task.
+     * @param {string} result the image type the method returns  @param method an instance method without parameters
+     */
+    startTask(result, method, receiver) {
+      const delegateType = startDelegateType(result),
+        start = asyncContract('Start', delegateType);
+      return n.frameworkCall({ contract: start }, null, [n.frameworkDelegate(delegateType, method, receiver)], start.result);
+    }
     /** `await task` as a statement or value in synthesized code (the startup method awaiting an async Main). */
     awaitTask(task, syntax = null) {
       const contract = asyncContract('Await', task.legacyType);

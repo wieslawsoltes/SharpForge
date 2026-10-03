@@ -7,6 +7,7 @@ import { isKnownMissingMember } from '../../symbols/predefined-member-names.js';
 import { ConstantValue } from '../../constants/constant-value.js';
 import { extensionScopes } from '../../overload/extension-methods.js';
 import { lookupMembers } from '../inheritance.js';
+import { tupleElement, tupleElementProblem } from '../tuples.js';
 import { checkConstructedType } from '../constraints.js';
 import { staticMembersOfTypeParameter } from '../interface-members.js';
 
@@ -307,6 +308,17 @@ export const NameBinding = Base =>
     }
     /** Member lookup on a value of `type`; falls back to extension methods when invoked. */
     instanceMember(left, type, name, nameSyntax, syntax, typeArguments, options) {
+      const problem = tupleElementProblem(type, name, this.display(type));
+      if (problem) {
+        this.report(nameSyntax, problem.code, problem.args);
+        return this.bad(syntax);
+      }
+      const element = tupleElement(type, name);
+      if (element) {
+        // A named tuple element is the field at its position; a name the literal inferred needs C# 7.1 (CS8306).
+        if (element.isInferred && this.version.number < 7.1) this.report(nameSyntax, 'CS8306', [name, '7.1']);
+        name = element.field;
+      }
       const lookupType = type instanceof ArrayTypeSymbol ? this.core.array : type;
       const found = lookupMembers(lookupType, name, this.core, {
         within: this.c.containingType,

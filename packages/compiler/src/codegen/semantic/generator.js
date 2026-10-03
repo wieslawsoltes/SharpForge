@@ -20,6 +20,8 @@ import { IteratorClasses, stateMachineBody } from '../../lowering/iterators.js';
 import { newHoist } from '../../lowering/iterators/try-regions.js';
 import { TASK } from '@sharpforge/framework';
 import { AsyncMethods, asyncResultType } from '../../lowering/async/async-methods.js';
+import { TupleClasses } from '../../lowering/tuples/tuple-classes.js';
+import { StructuralMembers } from '../../lowering/tuples/structural-members.js';
 import { stateMachineTypeName, stateMachineParameterProxyFieldName, thisProxyFieldName } from '../../lowering/generated-names.js';
 import { JumpIrEmitter } from './jump-emitter.js';
 import { ProgramModel } from './program-model.js';
@@ -45,6 +47,8 @@ class GeneratorCore {
     this.types = new TypeMapper(this);
     this.delegates = new DelegateClasses(this);
     this.iterators = new IteratorClasses(this);
+    this.structural = new StructuralMembers(this);
+    this.tuples = this.structural.register(new TupleClasses(this));
     this.classes = new Map();
     this.fields = new Map();
     this.methods = new Map();
@@ -257,8 +261,7 @@ export class SemanticGenerator extends Members(AsyncMethods(Initialization(Decla
   generate() {
     try {
       this.declareTypes();
-      this.declareTypeInitializers();
-      this.declareInstanceInitializers();
+      this.declareInitializers();
       const entry = this.entryPoint();
       this.translateMembers();
       const startup = this.startup(entry);

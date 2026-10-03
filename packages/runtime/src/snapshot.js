@@ -51,6 +51,7 @@ const retain = value => value;
 const entries = (value, memo) => copyExecution([...value], memo);
 const common = [
   component('platform'), component('scheduler'), field('frames', copyFrames), component('heap'),
+  field('typeObjects', copyExecution, {optional: true}),
   field('statics'), field('fault'), field('pendingFault'), field('state', retain),
   field('instructions', retain), field('elapsedMs', retain), field('frameId', retain, {monotonic: true}),
   field('output'), field('outputCharacters', retain), field('returnValue'), field('exitCode', retain),
@@ -73,7 +74,7 @@ const schema = (engine, fields, excluded) => Object.freeze({
 /** Every own VM field is explicitly captured or classified as host/derived metadata. */
 export const snapshotSchemas = Object.freeze({
   source: schema('source', [...common,
-    field('stack'), field('constantValues', entries, {restore: value => new Map(value)}),
+    field('strings'), field('stack'), field('constantValues', entries, {restore: value => new Map(value)}),
     field('sourcePause', retain), field('currentPoint')
   ], {image: 'Immutable bytecode for the current code generation.'}),
   cil: schema('cil', [...common,
