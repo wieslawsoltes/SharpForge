@@ -1,5 +1,5 @@
 /**
- * `is`, `as`, tuples, null-conditional access (lifted to Nullable<T> for value results), await and throw.
+ * `is`, `as`, null-conditional access (lifted to Nullable<T> for value results), await and throw.
  */
 import { reportAwaitOutsideAsync } from '../async.js';
 import { SymbolKind, TypeKind, ErrorTypeSymbol } from '../../symbols/types.js';
@@ -15,7 +15,7 @@ const isSource = symbol => {
   return false;
 };
 
-/** Class mixin: `is`, `as`, tuples, null-conditional access (lifted to Nullable<T> for value results), await and throw. */
+/** Class mixin: `is`, `as`, null-conditional access (lifted to Nullable<T> for value results), await and throw. */
 export const TypeTestBinding = Base =>
   class extends Base {
     isExpression(syntax) {
@@ -107,18 +107,6 @@ export const TypeTestBinding = Base =>
         return this.bad(syntax);
       }
       return this.node('As', syntax, type, { operand, targetType: type });
-    }
-    tuple(syntax) {
-      const elements = syntax.arguments.map(a => this.value(a.expression)),
-        names = syntax.arguments.map(a => a.nameColon?.name.identifier.valueText ?? null);
-      if (elements.some(e => e.hasErrors)) return this.bad(syntax);
-      const typed = elements.every(e => e.type && e.type.specialType !== 'System_Void');
-      let type = null;
-      if (typed && elements.length >= 2 && elements.length <= 7) {
-        const t = this.core.bridge.coreType('System_ValueTuple_T' + elements.length).construct(elements.map(e => e.type));
-        type = names.some(Boolean) ? t.withTupleElementNames(names) : t;
-      } else if (elements.length > 7) return this.lenient(syntax);
-      return this.node('Tuple', syntax, type, { elements, names, form: 'tupleLiteral' });
     }
     conditionalAccess(syntax) {
       // a?.b : the receiver is evaluated once; a value-typed result is lifted to Nullable<T> (SF-A02-B03).
