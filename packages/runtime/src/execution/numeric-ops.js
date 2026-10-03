@@ -1,4 +1,4 @@
-import {float, floatBinary, floatCompare} from '@sharpforge/bytecode';
+import {float, floatBinary, floatCompare, int64Binary, int64Compare, int64Unary} from '@sharpforge/bytecode';
 export {float} from '@sharpforge/bytecode';
 
 /** Pure operations on CIL evaluation-stack values.
@@ -29,6 +29,11 @@ export function compare(a, b, op, unsigned = false, {fault: createFault = fault,
   const floating = !!(a?.float || b?.float);
   if (floating) return floatCompare(a, b, op, unsigned);
   a = number(a); b = number(b);
+  if (typeof a === 'bigint' && typeof b === 'bigint') {
+    a = int64Compare(a, b, unsigned);
+    b = 0;
+    unsigned = false;
+  }
   if (unsigned && !floating) {
     a = typeof a === 'bigint' ? BigInt.asUintN(64, a) : a >>> 0;
     b = typeof b === 'bigint' ? BigInt.asUintN(64, b) : b >>> 0;
@@ -36,7 +41,8 @@ export function compare(a, b, op, unsigned = false, {fault: createFault = fault,
   return {eq: () => a === b, ne: () => a !== b, gt: () => a > b, ge: () => a >= b, lt: () => a < b, le: () => a <= b}[op]();
 }
 
-export function binary(name, a, b, {fault: createFault = fault, error: createError = error} = {}) {
+export function binary(name, a, b, context = {}) {
+  const {fault: createFault = fault, error: createError = error} = context;
   if (!isNumber(a) || !isNumber(b)) throw createFault('InvalidProgramException', 'Arithmetic requires numeric operands');
   const floating = !!(a?.float || b?.float), checked = name.includes('.ovf'), unsigned = name.endsWith('.un'), op = name.split('.')[0];
   if (floating) {
@@ -46,15 +52,16 @@ export function binary(name, a, b, {fault: createFault = fault, error: createErr
   a = number(a); b = number(b);
   const wide = typeof a === 'bigint';
   if (typeof b === 'bigint' !== wide && !['shl', 'shr'].includes(op)) throw createFault('InvalidProgramException', 'Mismatched integer widths');
-  if (wide || checked) {
-    let x = BigInt(a), y = BigInt(b), bits = wide ? 64 : 32;
+  if (wide) return int64Binary(name, a, b, context);
+  if (checked) {
+    let x = BigInt(a), y = BigInt(b), bits = 32;
     if (unsigned) { x = BigInt.asUintN(bits, x); y = BigInt.asUintN(bits, y); }
     if (['div', 'rem'].includes(op) && y === 0n) throw createFault('DivideByZeroException', 'Attempted to divide by zero');
     if (op === 'div' && !unsigned && x === -(1n << BigInt(bits - 1)) && y === -1n) throw createFault('OverflowException', 'Integer division overflow');
     const shift = y & BigInt(bits - 1);
     const value = {add: () => x + y, sub: () => x - y, mul: () => x * y, div: () => x / y, rem: () => x % y, and: () => x & y, or: () => x | y, xor: () => x ^ y, shl: () => x << shift, shr: () => x >> shift}[op]();
     if (checked && (value < (unsigned ? 0n : -(1n << BigInt(bits - 1))) || value > (unsigned ? (1n << BigInt(bits)) - 1n : (1n << BigInt(bits - 1)) - 1n))) throw createFault('OverflowException', 'Checked arithmetic overflow');
-    return wide ? BigInt.asIntN(64, value) : Number(BigInt.asIntN(32, value));
+    return Number(BigInt.asIntN(32, value));
   }
   if (unsigned) { a >>>= 0; b >>>= 0; }
   if (['div', 'rem'].includes(op) && b === 0) throw createFault('DivideByZeroException', 'Attempted to divide by zero');
@@ -74,14 +81,16 @@ export function binary(name, a, b, {fault: createFault = fault, error: createErr
   }
 }
 
-export function unary(name, value, {fault: createFault = fault, error: createError = error} = {}) {
+export function unary(name, value, context = {}) {
+  const {fault: createFault = fault, error: createError = error} = context;
   if (!isNumber(value)) throw createFault('InvalidProgramException', 'Numeric operand required');
   const raw = number(value);
   if (value?.float) {
     if (name === 'neg') return float(-raw, value.float);
     throw createError('not requires integer');
   }
-  return typeof raw === 'bigint' ? BigInt.asIntN(64, name === 'neg' ? -raw : ~raw) : name === 'neg' ? (-raw) | 0 : ~raw;
+  if (typeof raw === 'bigint') return int64Unary(name, raw, context);
+  return name === 'neg' ? (-raw) | 0 : ~raw;
 }
 
 export function convert(name, value, {fault: createFault = fault, error: createError = error} = {}) {

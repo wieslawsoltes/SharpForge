@@ -1,0 +1,4 @@
+{
+  "ref-locals-in-iterators-async/cs9202-below-csharp-13": ["diagnostics", "warnings"],
+  "ref-locals-in-iterators-async/cs9217-across-yield-and-await": ["diagnostics", "warnings"]
+}

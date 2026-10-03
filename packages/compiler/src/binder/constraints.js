@@ -84,6 +84,10 @@ export function checkConstraints(parameters, typeArguments, { core, display, out
         // A nullable value type satisfies only object/ValueType-like constraints through boxing of the underlying type.
         if (!(wanted.specialType === 'System_Object' || wanted.specialType === 'System_ValueType'))
           push(wanted.typeKind === TypeKind.Interface ? 'CS0313' : 'CS0312', args);
+      } else if (argument.isRefLikeType) {
+        // C# 13: a ref struct cannot be boxed, but it satisfies an interface constraint by implementing the interface
+        // (whether the type parameter allows it is CS9244, above).
+        if (!(argument.allInterfaces ?? []).some(candidate => candidate.equals(wanted))) push('CS0315', args);
       } else if (argument.isValueType === true) {
         if (!hasBoxingConversion(argument, wanted, core)) push('CS0315', args);
       } else if (!hasIdentityOrImplicitReference(argument, wanted, core)) push('CS0311', args);

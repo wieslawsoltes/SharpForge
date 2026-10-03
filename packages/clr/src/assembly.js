@@ -65,6 +65,12 @@ export class RuntimeModule {
     return new Uint8Array(this.#pe.metadata.blob(index));
   }
 
+  /** Resolve a metadata owner list, including #- pointer table indirection. */
+  list(token, column) {
+    this.#assembly.ensureUsable();
+    return Object.freeze([...this.#pe.metadata.list(token, column)]);
+  }
+
   /** Context-local canonical handle; the strong assembly edge keeps collectible metadata alive. */
   typeIdentity(token) {
     if (token >>> 24 !== 2) throw loadError(LoadErrorCode.InvalidImage, 'Type identity requires a TypeDef token');

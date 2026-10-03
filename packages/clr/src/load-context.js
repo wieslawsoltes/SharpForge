@@ -5,6 +5,7 @@ import { RuntimeAssembly } from './assembly.js';
 import { AssemblyDependencyGraph } from './dependency-graph.js';
 import { ContextRoots } from './unload.js';
 import { ContextEvents } from './context-events.js';
+import { TypeLoader } from './type-system/type-loader.js';
 import { checkCancellation, loadError, LoadErrorCode } from './load-errors.js';
 
 /** Explicit runtime session: Default context and a weak registry of collectible custom contexts. */
@@ -65,8 +66,10 @@ export class AssemblyLoadContext {
   #unloading = false;
   #loadOrder = [];
   #maxAssemblies;
+  #types;
+  #typeOptions;
   constructor(session, {
-    name = '', isCollectible = false, resolver = new AssemblyResolver(), load = null, maxAssemblies = 10000,
+    name = '', isCollectible = false, resolver = new AssemblyResolver(), load = null, maxAssemblies = 10000, typeOptions = {},
   } = {}) {
     if (!(session instanceof AssemblyLoadSession) || !(resolver instanceof AssemblyResolver)) throw new TypeError('Session and resolver required');
     if (load !== null && typeof load !== 'function') throw new TypeError('Load override must be callable');
@@ -75,6 +78,7 @@ export class AssemblyLoadContext {
     this.#resolver = resolver;
     this.#load = load;
     this.#maxAssemblies = maxAssemblies;
+    this.#typeOptions = { ...typeOptions };
     this.name = String(name);
     this.isCollectible = Boolean(isCollectible);
     this.roots = new ContextRoots(this);
@@ -87,6 +91,8 @@ export class AssemblyLoadContext {
   get assemblies() { return Object.freeze([...this.#assemblies.values()]); }
   get loadOrder() { return Object.freeze([...this.#loadOrder]); }
   get session() { return this.#session; }
+  /** Lazy, context-owned graph loading over canonical module definitions. */
+  get types() { return this.#types ??= new TypeLoader(this, this.#typeOptions); }
   ensureUsable() { /* Existing assemblies remain usable while outstanding roots delay collection. */ }
 
   ensureActive() {
