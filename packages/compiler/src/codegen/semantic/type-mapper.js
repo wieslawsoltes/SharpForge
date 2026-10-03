@@ -73,6 +73,7 @@ export class TypeMapper {
     // The non-generic forms enumerate objects.
     if (type === core.ienumerable || type === core.ienumerator) return this.host.iterators.classOf('object').record.name;
     if (this.host.tuples.handles(type)) return this.host.tuples.classOf(type, syntax).record.name;
+    if (this.host.anonymous.handles(type)) return this.host.anonymous.classOf(type, syntax).record.name;
     switch (type.typeKind) {
       case TypeKind.Enum:
         if (this.host.isSource(type)) return 'int';
