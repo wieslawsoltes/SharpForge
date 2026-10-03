@@ -55,6 +55,24 @@ function launch(engine, text = source) {
   return session;
 }
 
+// Exercise the actual managed ABI without claiming unsupported C# literal syntax compiles.
+function seedTypedItems(session, entries) {
+  const platform = session.vm.platform;
+  const owner = ref(visual(session, 'Choices').id);
+  const list = platform.getProperty(owner, {
+    owner: CONTROLS + 'ComboBox', property: 'Items', result: 'Microsoft.UI.Xaml.ItemCollection'
+  });
+  platform.heap.withRoots([owner, list], () => {
+    const items = [];
+    for (const [type, value] of entries) {
+      const item = platform.heap.allocate('box', type, [value]);
+      platform.heap.pins.push(item);
+      items.push(item);
+    }
+    platform.replaceItems(list, items);
+  });
+}
+
 function linked(session) {
   analysis ??= readDesignSource(source);
   const scene = session.vm.platform.scene();
@@ -137,7 +155,15 @@ for (const engine of ['source', 'CIL']) {
     try {
       assert.throws(() => applyDesignPatch(session, patch), /Unknown property/);
       assert.deepEqual(session.vm.platform.scene(), scene);
-      assert.deepEqual(session.vm.heap.snapshot(), heap);
+      const restored = session.vm.heap.snapshot();
+      // Rollback restores records and roots, but consumed identities must never be reused.
+      assert.ok(restored.generationCounter > heap.generationCounter);
+      assert.ok(restored.nextHandleId >= heap.nextHandleId);
+      assert.deepEqual(restored, {
+        ...heap, generationCounter: restored.generationCounter, nextHandleId: restored.nextHandleId
+      });
+      const fresh = session.vm.heap.string('After failed collection transaction');
+      assert.ok(fresh.g > restored.generationCounter);
       assert.equal(session.designRevision ?? 0, 0);
       assert.deepEqual(emitted, []);
     } finally {
@@ -188,25 +214,48 @@ for (const engine of ['source', 'CIL']) {
     assert.equal(visual(session, 'ChildItem'), undefined);
   });
 
-  test(engine + ': typed integer boundaries remain exact through source capture and live insertion', () => {
-    const values = [2147483647, 2147483648, 4294967295, 4294967296, Number.MAX_SAFE_INTEGER];
-    const text = source.replace('choices.Items.Add(true);', values.map(value => `choices.Items.Add(${value});`).join('\n'));
-    const session = launch(engine, text);
+  test(engine + ': typed ABI integer boundaries remain exact through live capture and insertion', () => {
+    const entries = [
+      ['System.Int32', 2147483647],
+      ['System.UInt32', -2147483648],
+      ['System.UInt32', -1],
+      ['System.Int64', 4294967296n],
+      ['System.Int64', 9007199254740991n],
+      ['System.UInt64', 9007199254740991n],
+      ['System.Int64', -9007199254740991n]
+    ];
+    const values = [2147483647, 2147483648, 4294967295, 4294967296,
+      Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER];
+    const session = launch(engine);
+    seedTypedItems(session, entries);
     const before = designFromScene(session.vm.platform.scene());
     const document = new DesignDocument(before);
     const choices = document.value.nodes.find(node => node.properties.Name === 'Choices');
-    assert.deepEqual(choices.collections.Items.slice(0, values.length), values);
+    assert.deepEqual(choices.collections.Items, values);
     document.change('Append typed values', draft => { draft.nodes.find(node => node.id === choices.id).collections.Items.push(...values); });
     applyDesignPatch(session, designPatch(before, document.value));
     assert.deepEqual(items(session).slice(-values.length), values);
   });
 
-  test(engine + ': integers outside the lossless designer range stay exact and produce an explicit inspection diagnostic', () => {
-    const text = source.replace('choices.Items.Add(true);', 'choices.Items.Add(9223372036854775807L);');
-    const session = launch(engine, text);
+  test(engine + ': unsafe ABI integers stay exact and produce an explicit inspection diagnostic', () => {
+    const session = launch(engine);
+    seedTypedItems(session, [['System.Int64', 9223372036854775807n], ['System.UInt64', -1n]]);
     const scene = session.vm.platform.scene();
-    assert.equal(scene.nodes.find(node => node.properties.Name === 'Choices').collections.Items[0], 9223372036854775807n);
+    assert.deepEqual(scene.nodes.find(node => node.properties.Name === 'Choices').collections.Items,
+      [9223372036854775807n, 18446744073709551615n]);
     assert.throws(() => designFromScene(scene), error => error.code === 'SFDL0010' &&
       error.diagnostics.some(diagnostic => diagnostic.capability === 'scene.collection' && /lossless/.test(diagnostic.message)));
   });
 }
+
+test('the current compiler reports unsupported out-of-range, long and unsigned literal syntax', () => {
+  for (const [literal, code] of [
+    ['2147483648', 'SF2004'], ['4294967296', 'SF1004'], ['9223372036854775807L', 'SF1003'], ['4294967295U', 'SF1003']
+  ]) {
+    const text = source.replace('choices.Items.Add(true);', `choices.Items.Add(${literal});`);
+    const compiled = compileToIL(text);
+    assert.equal(compiled.success, false, literal);
+    assert.ok(compiled.diagnostics.some(diagnostic => diagnostic.code === code && diagnostic.severity === 'error'),
+      literal + ': ' + JSON.stringify(compiled.diagnostics));
+  }
+});
