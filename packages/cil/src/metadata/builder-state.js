@@ -1,3 +1,4 @@
+import { moduleManifest } from '../pe/modules.js';
 import { assemblyReferenceRegistry } from './assembly-references.js';
 import { MetadataHeaps } from './heaps.js';
 import { definitionRowWriters } from './rows-definitions.js';
@@ -20,6 +21,7 @@ export function initializeMetadataBuilder(builder, name, { framework = 'net8', u
   builder.members = new Map();
   builder.assemblyRefs = new Map();
   builder.referenceIdentities = assemblyReferenceRegistry(identity.assemblyReferences);
-  builder.add(0, [0, builder.string(name + '.dll'), 1, 0, 0]);
-  builder.add(32, assemblyDefinitionRow(builder, identity));
+  const module = moduleManifest(name, identity);
+  builder.add(0, [0, builder.string(module.name), 1, 0, 0]);
+  if (module.hasAssembly) builder.add(32, assemblyDefinitionRow(builder, identity));
 }

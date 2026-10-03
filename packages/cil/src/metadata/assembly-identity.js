@@ -28,6 +28,7 @@ export function assemblyDefinitionRow(builder, options) {
 /** Reconstruct definition identity from metadata for canonical source replay. */
 export function assemblyDefinitionOptions(metadata) {
   const rows = metadata.rows[32];
-  if (rows?.length !== 1) throw new CilError('Canonical source replay requires exactly one Assembly definition');
+  if (!rows?.length) throw new CilError('Netmodules require a containing assembly; standalone execution is unsupported');
+  if (rows.length !== 1) throw new CilError('Canonical source replay requires exactly one Assembly definition');
   return { assemblyVersion: normalizeAssemblyVersion(rows[0].slice(1, 5)), assemblyCulture: normalizeAssemblyCulture(metadata.string(rows[0][8])) };
 }
