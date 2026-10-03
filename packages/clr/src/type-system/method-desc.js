@@ -25,6 +25,7 @@ export class MethodDesc {
   get assembly() { return this.module.assembly; }
   get loadContext() { return this.assembly.loadContext; }
   get isStatic() { return Boolean(this.flags & 0x10); }
+  get genericParameters() { return this.#state.genericParameters ??= this.module.methodGenericParameters(this.metadataToken); }
   get signature() {
     if (this.#signature) return this.#signature;
     try {

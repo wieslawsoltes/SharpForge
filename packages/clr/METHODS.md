@@ -17,6 +17,23 @@ signature AST. A malformed blob, a non-method signature or a receiver/static fla
 mismatch produces `SFCLR005` only when the signature is requested. The original
 VAR/MVAR slots are preserved. No generic method instantiation is implied.
 
+`method.genericParameters` and `module.methodGenericParameters(methodToken)` add
+canonical MethodDef-owned GenericParam descriptors. The shared generic metadata
+index supplies names, positions, attributes and raw constraint tokens. A parameter
+has `genericParameterOwner` and `declaringMethod` equal to its canonical MethodDesc,
+and `declaringType` equal to that method's type. `module.genericParameter(token)`
+works for either metadata owner kind. Type-owned parameters have a null
+`declaringMethod`. Parameter arrays, including empty arrays, are memoized on each
+method. Requesting them lazily validates that the parameter count matches the
+method signature's generic arity; mismatches produce `SFCLR012`, while arity over
+1,024 produces `SFCLR007`.
+
+The extended generic-parameter fixture captures four methods with four parameters
+covering value/reference/default-constructor and dependent/interface constraint
+tokens. Its new validation and benchmark evidence are pending a separate slot.
+Constraint resolution/enforcement and method instantiation remain unsupported;
+these metadata descriptors report `isLoaded: false` and load no executable body.
+
 `getMethodBody()` delegates to the module's existing body cache and returns a
 defensive snapshot, including copied IL bytes. A zero RVA returns `null`.
 `module.methodBodyReadCount` remains zero until a body is actually decoded and
@@ -44,7 +61,7 @@ node scripts/limited.js node packages/clr/tools/benchmark-method-definitions.mjs
 ```
 
 Validation is pending the scheduled serial slot. Full MethodInfo/ConstructorInfo
-and ParameterInfo facades, defaults, GetBaseDefinition, method-owned generic
-parameter identities, overload resolution, virtual dispatch and invocation are
+and ParameterInfo facades, defaults, GetBaseDefinition, overload resolution,
+virtual dispatch and invocation are
 separate increments. Source VM, direct CIL and Rust native/Wasm execution are
 not qualified by this host metadata API.
