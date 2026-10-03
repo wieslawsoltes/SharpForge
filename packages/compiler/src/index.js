@@ -13,7 +13,7 @@ const supported = new Set(['int','double','bool','string','object','void','var',
 const aliases = { 'System.Int32':'int','System.Double':'double','System.Boolean':'bool','System.String':'string','System.Object':'object','System.Void':'void','System.Exception':'Exception' };
 const normalize = t=>canonicalType(aliases[t]??t);
 const numeric = t=>t==='int'||t==='double';
-const isReference = t=>t==='string'||t==='object'||t==='Exception'||(!supported.has(t)&&t!=='error'&&t!=='long')||t.endsWith('[]');
+const isReference = t=>t==='string'||t==='object'||t==='Exception'||(!supported.has(t)&&t!=='error'&&t!=='long'&&frameworkType(t)?.kind!=='enum')||t.endsWith('[]');
 export function assignable(target,from) { return frameworkAssignable(target,from)||target==='error'||from==='error'||target===from||target==='object'&&from!=='void'||target==='double'&&from==='int'||from==='null'&&isReference(target); }
 function defaultValue(type){return numeric(type)?0:type==='bool'?false:null;}
 function alwaysReturns(s){return (s?.kind==='Using'||s?.kind==='OverflowContext')&&alwaysReturns(s.body)||s?.kind==='Switch'&&s.sections.some(x=>x.labels.includes(null))&&s.sections.every(x=>x.statements.some(alwaysReturns))||s?.kind==='Return'||s?.kind==='Throw'||s?.kind==='Block'&&s.statements.some(alwaysReturns)||s?.kind==='If'&&alwaysReturns(s.then)&&alwaysReturns(s.otherwise)||s?.kind==='Try'&&(alwaysReturns(s.finallyBody)||alwaysReturns(s.body)&&s.catches.every(c=>alwaysReturns(c.body)));}
@@ -295,7 +295,7 @@ class MethodCompiler {
   }
   findBuiltin(node){
     let name=pathOf(node.target);if(name?.startsWith('System.'))name=name.slice(7);if(BuiltinMap.has(name))return BuiltinMap.get(name);
-    if(node.target.kind==='Member'){const receiver=this.infer(node.target.target);if(receiver==='string'&&BuiltinMap.has('string.'+node.target.name))return BuiltinMap.get('string.'+node.target.name);if(node.target.name==='ToString')return BuiltinMap.get('object.ToString');}return null;
+    if(node.target.kind==='Member'){const receiver=this.infer(node.target.target);if(frameworkType(receiver)?.kind==='enum'&&node.target.name==='HasFlag')return BuiltinMap.get('Enum.HasFlag');if(receiver==='string'&&BuiltinMap.has('string.'+node.target.name))return BuiltinMap.get('string.'+node.target.name);if(node.target.name==='ToString')return BuiltinMap.get('object.ToString');}return null;
   }
   findMethod(node,report=true){
     let candidates=[];const target=node.target;

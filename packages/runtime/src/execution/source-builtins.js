@@ -1,10 +1,15 @@
 import {Builtins} from '@sharpforge/bytecode';
 import {ManagedFault} from '../heap.js';
+import {internString,isInternedString,referenceEquals,stringChar} from './strings.js';
+import {enumHasFlag,enumInfo,enumValue} from './enums.js';
 
 /** Invoke an intrinsic with heap/value/format/output/platform services; no image is required. */
 export function builtin(vm, id, args) {
   const entry = Builtins[id];
-  if (entry.contract) return vm.platform.invoke(entry.contract, args);
+  if (entry.contract) {
+    const result=vm.platform.invoke(entry.contract,args);
+    return enumInfo(vm,entry.contract.result)?enumValue(vm,entry.contract.result,result):result;
+  }
   const name = entry.name;
   return vm.heap.withRoots(args, () => {
     const a = vm.value(args[0]), b = vm.value(args[1]), c = vm.value(args[2]);
@@ -17,6 +22,11 @@ export function builtin(vm, id, args) {
       return Math[fn](...args);
     }
     switch (name) {
+      case 'string.Intern': return internString(vm,args[0]);
+      case 'string.IsInterned': return isInternedString(vm,args[0]);
+      case 'string.get_Chars': return stringChar(vm,args[0],args[1]);
+      case 'object.ReferenceEquals': return referenceEquals(args[0],args[1]);
+      case 'Enum.HasFlag': return enumHasFlag(vm,args[0],args[1]);
       case '$Math.Abs.Int32':
         if (a === -2147483648) throw new ManagedFault('OverflowException', 'Absolute value of Int32.MinValue is not representable');
         return Math.abs(a);
