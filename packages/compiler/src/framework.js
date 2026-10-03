@@ -24,9 +24,9 @@ export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
       if(target.kind==='Name'){
         methods=this.c.methods.filter(m=>m.name===target.name&&(m.owner===this.m.owner||!m.owner)&&(!this.m.isStatic||m.isStatic));
       } else if(target.kind==='Member') {
-        const owner=this.c.typeMap.get(pathOf(target.target));
+        const owner=this.c.findType(pathOf(target.target),this.m.owner);
         if(owner)methods=owner.methods.filter(m=>m.isStatic&&m.name===target.name);
-        else {receiver=target.target;methods=this.c.typeMap.get(this.infer(receiver))?.methods.filter(m=>!m.isStatic&&m.name===target.name)??[];}
+        else {receiver=target.target;methods=this.c.findType(this.infer(receiver),this.m.owner)?.methods.filter(m=>!m.isStatic&&m.name===target.name)??[];}
       }
       methods=methods.filter(m=>m.parameters.length===contract.parameters.length&&m.parameters.every((p,i)=>this.frameworkConversion(p.type,contract.parameters[i]))&&(contract.result===m.returnType||!['int','double','bool','void'].includes(m.returnType)&&frameworkAssignable(contract.result,m.returnType)));
       const exact=methods.filter(m=>m.returnType===contract.result);if(exact.length===1)methods=exact;if(methods.length!==1){if(report)this.c.report(node,'CS0123',[target.name??'<expression>',typeText(type)]);return null;}

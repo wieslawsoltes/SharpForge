@@ -23,7 +23,7 @@ test('A02-T36 every diagnostic id used by a compiler module is in the catalog',(
 });
 test('A02-T36 no compiler module passes a literal message string',()=>{
   for(const [file,text] of files){
-    assert(!/report\([^;]*?,'(?:CS|SF)\d{4}',\s*['"`]/.test(text),file+' passes literal message text to report()');
+    assert(!/report\([^;]*?'(?:CS|SF)\d{4}',\s*['"`]/.test(text),file+' passes literal message text to report()');
     for(const m of text.matchAll(/\bdiagnostic\(([^;]*?)\);/g))assert(!/'(?:CS|SF)\d{4}',\s*['"`]/.test(m[1]),file+' builds a diagnostic from literal text');
     assert(!/new ConstantError\([^)]*,\s*['"`][A-Z][a-z]/.test(text),file);
   }

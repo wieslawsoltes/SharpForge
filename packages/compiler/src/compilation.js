@@ -2,19 +2,32 @@ import {languageVersion,hasBackingField,rewriteBackingField} from './modern.js';
 import {lowerAsyncFiles} from './async-lowering.js';
 import {frameworkType,taskResult,findContracts} from '@sharpforge/framework';
 import {diagnostic} from '@sharpforge/text';
-import {Op,frameworkBuiltin,FORMAT_VERSION} from '@sharpforge/bytecode';
+import {Op,frameworkBuiltin,FORMAT_VERSION,serializeImage} from '@sharpforge/bytecode';
 import {supported,normalize,defaultValue,typeText} from './type-utils.js';
 import {formatMessage,defaultSeverity,featureNotAvailableCode} from './diagnostics/codes.js';
 import {MethodCompiler} from './method-compiler.js';
+import {BoundMethodPipeline} from './method-pipeline.js';
+import {CompilationSymbols} from './symbols/compilation-symbols.js';
 export class Compilation {
   constructor(parsedFiles, options={}) {
-    parsedFiles=lowerAsyncFiles(parsedFiles);this.files=parsedFiles;this.options=options;this.sources=new Map(parsedFiles.map(p=>[p.source.uri,p.source]));
+    this.inputFiles=parsedFiles;parsedFiles=lowerAsyncFiles(parsedFiles);this.files=parsedFiles;this.options=options;this.sources=new Map(parsedFiles.map(p=>[p.source.uri,p.source]));
     this.diagnostics=parsedFiles.flatMap(p=>p.diagnostics);this.symbols=[];this.references=[];this.types=[];this.typeMap=new Map();this.methods=[];this.statics=[];this.constants=[];this.constantMap=new Map();this.sequencePoints=[];
+    // 'bound' binds to a bound tree, analyses flow, lowers and then emits; 'legacy' is the fused string-typed method compiler.
+    this.pipeline=options.pipeline??globalThis.process?.env?.SHARPFORGE_PIPELINE??Compilation.defaultPipeline;this.semantic=new CompilationSymbols(this);this.boundPipeline=null;
   }
+  static defaultPipeline='bound';
+  /** The declaration record of a user type named in source, as seen from code in `owner` (a type record or null). */
+  findType(name,owner=null){return name?this.typeMap.get(name)??null:null;}
+  /** The image name a type-name text denotes, as seen from code in `owner`. */
+  typeName(text,owner=null){return normalize(text);}
   /** Reports a catalog diagnostic: `args` fill the message format; severity defaults to the catalog severity. */
   report(node,code,args=[],severity=defaultSeverity(code)){if(this.diagnostics.length>=400)return;const source=this.sources.get(node.uri)??this.files[0]?.source;if(source)this.diagnostics.push(diagnostic(source,node.start??0,Math.max(1,(node.end??node.start+1)-node.start),code,formatMessage(code,args),severity));}
   /** True when a diagnostic with this code already covers the node start (one diagnostic per literal). */
   reportedAt(node,code){return this.diagnostics.some(d=>d.code===code&&d.uri===node.uri&&d.start===node.start);}
+  /** The span of the first token of a syntax node (falls back to the node itself). */
+  firstToken(node){const tokens=this.files.find(f=>f.source.uri===node.uri)?.tokens;if(!tokens)return node;let lo=0,hi=tokens.length-1;while(lo<hi){const mid=lo+hi>>1;if(tokens[mid].start<node.start)lo=mid+1;else hi=mid;}const t=tokens[lo];return t&&t.start===node.start&&t.end<=node.end?{uri:node.uri,start:t.start,end:t.end}:node;}
+  /** The span of the last label of a switch section, from its case/default keyword through the colon. */
+  caseLabelSpan(section){const tokens=this.files.find(f=>f.source.uri===section.uri)?.tokens,label=section.labels.at(-1);if(!tokens)return section;let end=-1;for(let i=0;i<tokens.length;i++){const t=tokens[i];if(t.start<section.start)continue;if(t.start>=section.end)break;if(t.kind===':'&&(label?t.start>=label.end:true)){end=i;break;}}if(end<0)return section;let start=end;while(start>0&&tokens[start].kind!==(label?'case':'default')&&tokens[start].start>section.start)start--;return {uri:section.uri,start:tokens[start].start,end:tokens[end].end};}
   selectedVersion(node){try{return languageVersion(this.options.langVersionByUri?.[node?.uri]??this.options.langVersion);}catch{return languageVersion();}}
   /** Source text of the last label of a switch section, as Roslyn prints it in CS0163/CS8070. */
   caseLabel(section){const label=section.labels.at(-1);if(!label)return 'default:';const text=this.sources.get(label.uri)?.text.slice(label.start,label.end);return `case ${text??''}:`;}
@@ -25,8 +38,9 @@ export class Compilation {
     const span=node.nameSpan??{start:node.start,end:node.end}, s={id:`${node.uri}:${span.start}:${kind}`,name:node.name,kind,type,uri:node.uri,start:span.start,end:span.end,...extra};this.symbols.push(s);this.reference(node,s,true);return s;
   }
   reference(node,symbol,declaration=false){if(!symbol||node.debugHidden)return;const span=node.nameSpan??{start:node.start,end:node.end};this.references.push({symbolId:symbol.id,uri:node.uri,start:span.start,end:span.end,declaration,type:symbol.type});}
-  resolveType(type,node,allowVar=false){type=normalize(type);const element=type.endsWith('[]')?type.slice(0,-2):type;if(element==='var'&&allowVar)return type;if((!supported.has(element)&&!this.typeMap.has(element)&&!frameworkType(element))||element==='var')this.report(node,'CS0246',[typeText(type)]);return type;}
+  resolveType(type,node,allowVar=false,owner=null){type=this.typeName(type,owner);const element=type.endsWith('[]')?type.slice(0,-2):type;if(element==='var'&&allowVar)return type;if((!supported.has(element)&&!this.typeMap.has(element)&&!frameworkType(element))||element==='var')this.report(node,'CS0246',[typeText(type)]);return type;}
   build(){
+    if(this.pipeline==='verify')return verifyPipelines(this.inputFiles,this.options);
     const start=performance.now();try{languageVersion(this.options.langVersion);for(const value of Object.values(this.options.langVersionByUri??{}))languageVersion(value);}catch(error){this.report(this.files[0]?.root??{},'SF2140',[error.value]);}if(this.options.checkOverflow!==undefined&&typeof this.options.checkOverflow!=='boolean'||Object.values(this.options.checkOverflowByUri??{}).some(v=>typeof v!=='boolean'))this.report(this.files[0]?.root??{},'SF2009',['checkOverflow']);
     // Two-pass declarations allow forward calls and references across source files.
     for(const file of this.files)for(const decl of file.root.members.filter(n=>n.kind==='Class')){
@@ -59,20 +73,24 @@ export class Compilation {
       const statements=type.fields.filter(f=>f.node.initializer&&!f.isStatic).map(f=>({kind:'ExpressionStatement',uri:f.node.uri,start:f.node.start,end:f.node.end,expression:{kind:'Assignment',operator:'=',left:{kind:'Member',target:{kind:'Name',name:'this',uri:f.node.uri,start:f.node.start,end:f.node.start},name:f.name,nameSpan:f.node.nameSpan,uri:f.node.uri,start:f.node.start,end:f.node.end},right:f.node.initializer,uri:f.node.uri,start:f.node.start,end:f.node.end}}));
       if(statements.length)type.initializer=this.declareMethod(type,{...type.node,kind:'Method',name:'<init>',returnType:'void',parameters:[],modifiers:[],body:{...type.node,kind:'Block',statements}},true).id;
     }
-    for(const method of [...this.methods])new MethodCompiler(this,method).build();
+    const bound=this.pipeline==='bound'?new BoundMethodPipeline(this):null;this.boundPipeline=bound;
+    for(const method of [...this.methods]){if(bound)bound.bindMethod(method);else new MethodCompiler(this,method).build();}
     // Library type initializers are real .cctor methods; the CLI has no entry-point token.
-    if(library)for(const type of this.types){const fields=this.statics.filter(f=>f.owner===type&&f.node.initializer);if(!fields.length)continue;const node={...type.node,kind:'Method',name:'.cctor',parameters:[],returnType:'void',modifiers:['static'],body:{kind:'Block',statements:[],start:0,end:0,uri:type.node.uri}},method=this.declareMethod(type,node,true),b=new MethodCompiler(this,method);for(const field of fields){const actual=b.typedExpr(field.node.initializer,field.type);b.checkAssign(field.type,actual,field.node);b.emit(Op.STSTATIC,field.index);b.emit(Op.POP);}b.emitConstant(null);b.emit(Op.RET);b.finish();}
+    if(library)for(const type of this.types){const fields=this.statics.filter(f=>f.owner===type&&f.node.initializer);if(!fields.length)continue;const node={...type.node,kind:'Method',name:'.cctor',parameters:[],returnType:'void',modifiers:['static'],body:{kind:'Block',statements:[],start:0,end:0,uri:type.node.uri}},method=this.declareMethod(type,node,true);if(bound){bound.bindInitializers(method,fields);continue;}const b=new MethodCompiler(this,method);for(const field of fields){const actual=b.typedExpr(field.node.initializer,field.type);b.checkAssign(field.type,actual,field.node);b.emit(Op.STSTATIC,field.index);b.emit(Op.POP);}b.emitConstant(null);b.emit(Op.RET);b.finish();}
     let entryId=library?null:entry?.id??0;
     if(entry){
       if(entry.node.asyncRole==='kickoff'&&entry.returnType==='void')this.report(entry.node,'CS4009');
       if(!['void','int'].includes(entry.returnType)&&!['void','int'].includes(taskResult(entry.returnType)))this.report(entry.node,'CS0028',[entry.qualifiedName],'error');
       if(entry.parameters.length>1||entry.parameters.length===1&&entry.parameters[0].type!=='string[]')this.report(entry.node,'CS0028',[entry.qualifiedName],'error');
       const node={...entry.node,name:'<startup>',parameters:[],returnType:taskResult(entry.returnType)??entry.returnType,modifiers:['static'],body:{kind:'Block',statements:[],start:0,end:0,uri:entry.node.uri}};
-      const startup=this.declareMethod(null,node,true), b=new MethodCompiler(this,startup);
-      for(const field of this.statics){if(field.node.initializer){b.m.owner=field.owner;const type=b.typedExpr(field.node.initializer,field.type);b.checkAssign(field.type,type,field.node);b.emit(Op.STSTATIC,field.index);b.emit(Op.POP);}} b.m.owner=null;
-      if(entry.parameters.length){b.emitConstant(0);b.emit(Op.NEWARR,this.constant('string'));}
-      b.emit(Op.CALL,entry.id,entry.parameters.length);if(taskResult(entry.returnType)!==null){const d=findContracts('SharpForge.Runtime.Async','Await',true).find(x=>x.parameters[0]===entry.returnType),builtin=d?frameworkBuiltin(d):null;if(builtin)b.emit(Op.BUILTIN,builtin.id,1);else{this.report(entry.node,'CS0028',[entry.qualifiedName],'error');b.emit(Op.POP);b.emitConstant(null);}}b.emit(Op.RET);b.finish();entryId=startup.id;
+      const startup=this.declareMethod(null,node,true),awaited=taskResult(entry.returnType)!==null,awaitContract=awaited?findContracts('SharpForge.Runtime.Async','Await',true).find(x=>x.parameters[0]===entry.returnType):null,awaitBuiltin=awaitContract?frameworkBuiltin(awaitContract):null;
+      // The startup method runs the static initializers, calls the entry point and awaits a Task-returning Main.
+      const tail=b=>{if(entry.parameters.length){b.emitConstant(0);b.emit(Op.NEWARR,this.constant('string'));}b.emit(Op.CALL,entry.id,entry.parameters.length);if(awaited){if(awaitBuiltin)b.emit(Op.BUILTIN,awaitBuiltin.id,1);else{b.emit(Op.POP);b.emitConstant(null);}}b.emit(Op.RET);};
+      if(bound)bound.bindInitializers(startup,this.statics.filter(f=>f.node.initializer),{ownerPerField:true,tail});
+      else{const b=new MethodCompiler(this,startup);for(const field of this.statics){if(field.node.initializer){b.m.owner=field.owner;const type=b.typedExpr(field.node.initializer,field.type);b.checkAssign(field.type,type,field.node);b.emit(Op.STSTATIC,field.index);b.emit(Op.POP);}} b.m.owner=null;tail(b);b.finish();}
+      if(awaited&&!awaitBuiltin)this.report(entry.node,'CS0028',[entry.qualifiedName],'error');entryId=startup.id;
     }
+    if(bound)bound.emit();
     const image={formatVersion:FORMAT_VERSION,name:this.options.name??'Application',...(library?{outputKind:'library'}:{}),entryPoint:entryId,constants:this.constants,sequencePoints:this.sequencePoints,
       sources:this.files.map(f=>({uri:f.source.uri,text:f.source.text,version:f.source.version})),
       types:this.types.map(t=>({id:t.id,name:t.name,...(t.interfaces.length?{interfaces:t.interfaces}:{}),fields:t.fields.filter(f=>!f.isStatic).map(f=>({name:f.name,type:f.type,index:f.index,...(f.backing?{backing:true}:{} )})),...(t.properties.length?{properties:t.properties.map(p=>({name:p.name,type:p.type,isStatic:p.isStatic,access:p.access,get:p.get?.id??null,set:p.set?.id??null,backing:p.backing?.name??null}))}:{}),initializer:t.initializer})),
@@ -125,4 +143,28 @@ export class Compilation {
     if(this.methods.some(m=>m.owner===owner&&m.name===method.name&&m.parameters.map(p=>p.type).join(',')===parameters.map(p=>p.type).join(',')))this.report(node,'CS0111',[node.name,owner?.name??'<top-level>']);
     if(!synthetic)method.symbol=this.symbol(node,'method',returnType,{owner:owner?.name,isStatic,bodyStart:node.start,bodyEnd:node.end,parameters:parameters.map(p=>({name:p.name,type:p.type}))});this.methods.push(method);owner?.methods.push(method);return method;
   }
+}
+/**
+ * Pipeline verification (`pipeline:'verify'` or SHARPFORGE_PIPELINE=verify): compiles with the legacy method compiler
+ * and with the bound pipeline and checks that they agree. Returns the legacy result.
+ *
+ * Required: the same success, a byte-identical image, the same diagnostics apart from flow analysis, and the same
+ * IDE symbols and references. Tolerated: the flow diagnostics (CS0161, CS0162, CS0163, CS0165, CS0168, CS0219, CS8070),
+ * where the bound pipeline follows Roslyn's reachability and definite-assignment rules instead of the legacy
+ * approximation, and the IDE symbol the legacy compiler published for a spread temporary.
+ * A violation is thrown, or passed to `globalThis.SHARPFORGE_PIPELINE_MISMATCH` when that hook is set.
+ */
+const flowCodes=new Set(['CS0161','CS0162','CS0163','CS0165','CS0168','CS0219','CS8070']);
+function verifyPipelines(files,options){
+  const sources=files.map(f=>({uri:f.source.uri,text:f.source.text})),fail=mismatch=>{if(globalThis.SHARPFORGE_PIPELINE_MISMATCH)globalThis.SHARPFORGE_PIPELINE_MISMATCH(mismatch);else throw new Error('Pipeline mismatch: '+JSON.stringify({crash:mismatch.crash,success:mismatch.success,imageEqual:mismatch.imageEqual,onlyLegacy:mismatch.onlyLegacy,onlyBound:mismatch.onlyBound,symbols:mismatch.symbols,references:mismatch.references}));};
+  const legacy=new Compilation(files,{...options,pipeline:'legacy'}).build();let bound;
+  try{bound=new Compilation(files,{...options,pipeline:'bound'}).build();}catch(error){fail({crash:error.stack,success:[legacy.success,null],sources,options,legacy,onlyLegacy:[],onlyBound:[]});return legacy;}
+  const key=d=>[d.code,d.uri,d.start,d.length,d.severity,d.message].join('|'),count=list=>{const m=new Map();for(const d of list)m.set(key(d),(m.get(key(d))??0)+1);return m;},a=count(legacy.diagnostics),b=count(bound.diagnostics);
+  const onlyLegacy=[...a].filter(([k,n])=>(b.get(k)??0)<n).map(([k])=>k),onlyBound=[...b].filter(([k,n])=>(a.get(k)??0)<n).map(([k])=>k),isFlow=k=>flowCodes.has(k.slice(0,6));
+  const image=legacy.success&&bound.success?serializeImage(legacy.image)===serializeImage(bound.image):null;
+  const spread=new Set(legacy.symbols.filter(x=>x.name.startsWith('$spread')).map(x=>x.id)),symbols=JSON.stringify(legacy.symbols.filter(x=>!spread.has(x.id)))===JSON.stringify(bound.symbols),references=JSON.stringify(legacy.references.filter(r=>!spread.has(r.symbolId)))===JSON.stringify(bound.references);
+  const flowOnly=onlyLegacy.every(isFlow)&&onlyBound.every(isFlow),successOk=legacy.success===bound.success||flowOnly&&(onlyLegacy.length>0||onlyBound.length>0);
+  const mismatch={success:[legacy.success,bound.success],imageEqual:image,onlyLegacy,onlyBound,symbols,references,sources,options,legacy,bound,tolerated:successOk&&image!==false&&flowOnly&&symbols&&references};
+  if(!mismatch.tolerated)fail(mismatch);else if(globalThis.SHARPFORGE_PIPELINE_MISMATCH&&(onlyLegacy.length||onlyBound.length))globalThis.SHARPFORGE_PIPELINE_MISMATCH(mismatch);
+  return legacy;
 }
