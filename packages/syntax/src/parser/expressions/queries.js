@@ -9,9 +9,12 @@ export const queryMethods = {
   queryExpression() {
     this.feature('QueryExpression', this.current);
     this.queryDepth = (this.queryDepth ?? 0) + 1;
-    const query = this.n('QueryExpression', this.fromClause(), this.queryBody());
+    const query = this.inInitializer(this.queryClauses);
     this.queryDepth--;
     return query;
+  },
+  queryClauses() {
+    return this.n('QueryExpression', this.fromClause(), this.queryBody());
   },
   rangeVariable() {
     const typed = !(this.isId() && this.peek().kind === 'in');

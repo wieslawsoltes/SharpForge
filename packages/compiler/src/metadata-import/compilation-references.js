@@ -7,7 +7,7 @@
  * in; when one of them is a core library (it defines System.Object) its types replace the registry's for the
  * predefined types, so `int`, `string`, `Console` and `List<T>` are the imported symbols with their real members.
  */
-import { bindReferences } from './reference-manager.js';
+import { bindReferences, unificationCodes } from './reference-manager.js';
 import { coreTypeDescriptor } from '../symbols/special-types.js';
 import { readCompilationReferences } from './reference-input.js';
 
@@ -53,7 +53,11 @@ class MetadataCoreLibrary {
  *   and `display`, as `ReferenceManager` takes them
  * @param bridge the framework registry bridge
  * @returns {{ coreLibrary: object, globalNamespaces: object[], diagnostics: {code:string,args:any[]}[],
- *   hasCoreLibrary: boolean, manager: object|null, useSiteDiagnostics(symbol): {code:string,args:any[]}[] }}
+ *   hasCoreLibrary: boolean, manager: object|null, useSiteDiagnostics(symbol, options): {code:string,args:any[]}[],
+ *   externAlias(name): {alias, diagnostic}, forwardedToMissingAssembly(metadataName): string|null,
+ *   isUnification(code): boolean }}
+ *   `diagnostics` are the declaration-level ones (CS1703, CS1704). CS1701, CS1702 and CS1705 are use-site diagnostics:
+ *   Roslyn reports them only when a symbol that crosses the unified reference is used.
  */
 export function bindCompilationReferences(references, bridge) {
   if (!references?.length) {
@@ -64,6 +68,9 @@ export function bindCompilationReferences(references, bridge) {
       hasCoreLibrary: false,
       manager: null,
       useSiteDiagnostics: () => [],
+      externAlias: name => ({ alias: null, diagnostic: { code: name === 'global' ? 'CS1681' : 'CS0430', args: name === 'global' ? [] : [name] } }),
+      forwardedToMissingAssembly: () => null,
+      isUnification: () => false,
     };
   }
   const imported = readCompilationReferences(references);
@@ -77,9 +84,12 @@ export function bindCompilationReferences(references, bridge) {
   return {
     coreLibrary: coreAssembly ? new MetadataCoreLibrary(coreAssembly, bridge) : new RegistryCoreLibrary(bridge),
     globalNamespaces,
-    diagnostics: [...imported.diagnostics, ...manager.diagnostics, ...manager.unificationDiagnostics],
+    diagnostics: [...imported.diagnostics, ...manager.diagnostics],
     hasCoreLibrary: !!coreAssembly,
     manager,
-    useSiteDiagnostics: symbol => manager.useSiteDiagnostics(symbol),
+    useSiteDiagnostics: (symbol, options) => manager.useSiteDiagnostics(symbol, options),
+    externAlias: name => manager.resolveExternAlias(name),
+    forwardedToMissingAssembly: metadataName => manager.forwardedToMissingAssembly(metadataName),
+    isUnification: code => unificationCodes.has(code),
   };
 }

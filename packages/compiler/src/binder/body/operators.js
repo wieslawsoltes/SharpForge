@@ -2,7 +2,7 @@
  * Casts, unary and binary operators (with constant folding), assignment in all its forms, increment,
  * the conditional operator and null-coalescing.
  */
-import { RefKind, ErrorTypeSymbol, TypeParameterSymbol } from '../../symbols/types.js';
+import { RefKind, TypeKind, ErrorTypeSymbol, TypeParameterSymbol } from '../../symbols/types.js';
 import { ConstantValue, isFoldError } from '../../constants/constant-value.js';
 import { foldUnary, foldBinary } from '../../constants/fold.js';
 import { Conversion, ConversionKind } from '../../conversions/classify.js';
@@ -83,7 +83,25 @@ export const OperatorBinding = Base =>
       if (left.hasErrors || right.hasErrors) return this.bad(syntax, { left, right });
       return this.binaryOperation(syntax, operator, left, right);
     }
+    /**
+     * Delegate combination and removal (`d + handler`, `d - handler`): the other operand converts to the delegate
+     * type, so a method group or a lambda is accepted (SF-A02-T07.1).
+     */
+    delegateOperation(syntax, operator, left, right) {
+      if (operator !== '+' && operator !== '-') return null;
+      const type = [left, right].map(e => e.type).find(t => t?.typeKind === TypeKind.Delegate);
+      if (!type) return null;
+      const operands = [left, right].map(e => {
+        const converted = this.convert(e, type, e.syntax);
+        if (e.form === 'lambda' && !converted.hasErrors) this.finishLambda(e, type);
+        return converted;
+      });
+      if (operands.some(e => e.hasErrors)) return this.bad(syntax);
+      return this.node('Binary', syntax, type, { operator, left: operands[0], right: operands[1], family: 'delegate' });
+    }
     binaryOperation(syntax, operator, left, right) {
+      const delegate = this.delegateOperation(syntax, operator, left, right);
+      if (delegate) return delegate;
       for (const e of [left, right])
         if (e.kind === 'MethodGroup' || e.form === 'lambda' || e.type?.specialType === 'System_Void') {
           this.report(syntax, 'CS0019', [operator, this.operandDisplay(left), this.operandDisplay(right)]);

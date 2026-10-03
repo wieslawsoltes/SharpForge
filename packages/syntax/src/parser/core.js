@@ -41,6 +41,11 @@ export class Parser {
     this.budgetExhausted = false;
     this.cancellation = options.cancellationToken ?? null;
     this.ticks = 0;
+    // Expression variables declared in initializers and query clauses need C# 7.3 (see csharp73.js).
+    this.restrictedVariables = false;
+    this.memberStart = 0;
+    this.memberErrors = 0;
+    this.statementStart = 0;
   }
   get current() {
     return this.tokens[this.i];
@@ -134,7 +139,7 @@ export class Parser {
   }
   id() {
     if (this.isId()) return this.take('IdentifierToken');
-    this.error(this.current, 'CS1001', 'Identifier expected');
+    this.error(this.errorAnchor(), 'CS1001', 'Identifier expected');
     return this.cache.missing('IdentifierToken');
   }
   /** True when the tokens at `index` and `index + 1` touch (no trivia between), as required to merge `>` `>` into `>>`. */

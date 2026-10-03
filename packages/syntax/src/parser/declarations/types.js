@@ -43,7 +43,8 @@ export const typeDeclarationMethods = {
         null,
         this.take()
       );
-    const open = this.expect('{'),
+    if (!this.at('{')) return this.n(kind, attributeLists, modifiers, keyword, identifier, typeParameters, parameterList, baseList, constraints, ...this.missingBody());
+    const open = this.take(),
       members = this.typeBody(nameToken.value);
     return this.n(
       kind,
@@ -60,6 +61,12 @@ export const typeDeclarationMethods = {
       this.expect('}'),
       this.match(';')
     );
+  },
+  /** The body of a type whose `{` is absent: both braces are missing and no members are read, as in Roslyn. Returns [open, members, close, semicolon]. */
+  missingBody() {
+    const open = this.expect('{');
+    this.error(this.errorAnchor(), 'CS1513', '} expected');
+    return [open, null, this.missing('}'), null];
   },
   /** Members of a type body up to (not including) the closing brace. Tokens that cannot start a member are skipped with CS1519. */
   typeBody(owner, extension = false) {

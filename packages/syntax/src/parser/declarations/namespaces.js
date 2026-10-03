@@ -33,11 +33,10 @@ export const namespaceMethods = {
   usingDirective() {
     const global = this.atWord('global') ? this.takeWord('global') : null,
       using = this.take(),
-      isStatic = this.match('static'),
+      isStatic = this.usingStaticKeyword(),
       unsafe = this.match('unsafe');
     let alias = null;
     if (global) this.feature('GlobalUsing', this.tokens[this.i - 1]);
-    if (isStatic) this.feature('UsingStatic', this.tokens[this.i - 1]);
     if (this.isId() && this.peek().kind === '=') alias = this.n('NameEquals', this.n('IdentifierName', this.id()), this.take());
     const targetStart = this.current,
       target = alias ? this.type() : this.name();
@@ -125,6 +124,8 @@ export const namespaceMethods = {
   },
   /** A namespace, type, delegate, member declaration or (at compilation-unit level) a global statement. */
   namespaceMember(inNamespace) {
+    this.memberStart = this.i;
+    this.memberErrors = this.diagnostics.length;
     const attributeLists = this.isAttributeListAhead() ? this.attributeLists() : [],
       mark = this.mark(),
       modifiers = this.modifiers();
@@ -135,6 +136,7 @@ export const namespaceMethods = {
       inNamespace || modifiers.some(m => memberOnly.has(m.text)) || this.at('event') || this.at('~') || this.atAny(['implicit', 'explicit']);
     if (memberish) return this.memberDeclarationAfterModifiers(attributeLists, modifiers, null);
     this.reset(mark);
+    this.statementStart = this.memberStart;
     return this.n('GlobalStatement', null, null, this.statement(attributeLists));
   }
 };

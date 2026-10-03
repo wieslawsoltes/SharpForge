@@ -2,8 +2,9 @@
  * Definite assignment through expressions: reads, assignments, by-reference arguments, short-circuit
  * operators and the when-true / when-false states of conditions.
  */
-import { TypeKind, RefKind } from '../../symbols/types.js';
-import { isUserStruct, join, fieldKey, boundChildren } from './state.js';
+import { RefKind } from '../../symbols/types.js';
+import { join, boundChildren } from './state.js';
+import { autoDefaultVersion } from './analyzer-core.js';
 
 /** Class mixin: Definite assignment through expressions: reads, assignments, by-reference arguments, short-circuit */
 export const AssignmentExpressions = Base =>
@@ -23,21 +24,24 @@ export const AssignmentExpressions = Base =>
           }
           return state;
         case 'This':
-          if (this.thisVariable && !this.isAssigned(this.thisVariable, state) && !e.isImplicit) {
-            this.report(e.syntax, 'CS0188', ['this'], 'this');
+          // `this` as a whole (a call on it, passing it on) needs every field of the struct under construction.
+          if (this.thisVariable && !this.isAssigned(this.thisVariable, state)) {
+            this.report(e.syntax, 'CS0188', [autoDefaultVersion], 'this');
             state.add(this.thisVariable);
           }
           return state;
         case 'FieldAccess': {
-          const variable = this.variableOf(e.receiver);
-          if (variable && this.tracked(variable) && !e.field.isStatic && isUserStruct(variable.type)) {
-            if (!state.has(variable) && !state.has(fieldKey(variable, e.field))) {
-              this.report(e.syntax, 'CS0170', [e.field.name], fieldKey(variable, e.field));
-              state.add(fieldKey(variable, e.field));
-            }
-            return state;
-          }
-          return this.expr(e.receiver, state);
+          const slot = this.slotOf(e);
+          if (!slot) return this.expr(e.receiver, state);
+          if (!this.slotAssigned(slot, state)) this.reportUnassignedField(e, slot, state);
+          return state;
+        }
+        case 'PropertyAccess': {
+          const slot = this.autoPropertySlot(e);
+          if (!slot) return this.expr(e.receiver, state);
+          // Reported once per property; the property stays unassigned, so the constructor's exits still report it.
+          if (!this.slotAssigned(slot, state)) this.report(e.syntax, 'CS9014', [e.property.toDisplayString(), autoDefaultVersion], slot.key);
+          return state;
         }
         case 'Assignment':
         case 'RefAssignment':
@@ -132,6 +136,22 @@ export const AssignmentExpressions = Base =>
         }
       }
     }
+    /** A read of an unassigned field: CS0170 for a struct local, CS9015 for a field of the struct under construction. */
+    reportUnassignedField(e, slot, state) {
+      if (slot.variable === this.thisVariable) {
+        // Reported once per field; the field stays unassigned, so the constructor's exits still report CS0171.
+        this.report(e.syntax, 'CS9015', [e.field.toDisplayString(), autoDefaultVersion], slot.key);
+        return;
+      }
+      this.report(e.syntax, 'CS0170', [e.field.name], slot.key);
+      state.add(slot.key);
+    }
+    /** The backing-field slot of an auto-property of the struct under construction, or null. */
+    autoPropertySlot(e) {
+      const backingField = e.property?.backingField;
+      if (!backingField || e.receiver?.kind !== 'This' || !this.thisVariable) return null;
+      return this.fieldSlot(this.rootSlot(this.thisVariable), backingField);
+    }
     /** The variable (local, out parameter or struct `this`) an expression denotes directly, or null. */
     variableOf(e) {
       if (!e) return null;
@@ -155,12 +175,10 @@ export const AssignmentExpressions = Base =>
         case 'DeclarationExpression':
         case 'This':
           return state;
-        case 'FieldAccess': {
-          const v = this.variableOf(left.receiver);
-          if (v && this.tracked(v)) return state;
-          return this.expr(left.receiver, state);
-        }
+        case 'FieldAccess':
+          return this.slotOf(left) ? state : this.expr(left.receiver, state);
         case 'PropertyAccess':
+          return this.autoPropertySlot(left) ? state : this.expr(left.receiver, state);
         case 'EventAccess':
           return this.expr(left.receiver, state);
         case 'ArrayAccess': {
@@ -194,12 +212,8 @@ export const AssignmentExpressions = Base =>
         state.add(this.thisVariable);
         return state;
       }
-      if (left.kind === 'FieldAccess') {
-        const v = this.variableOf(left.receiver);
-        if (v && this.tracked(v) && !left.field.isStatic) state.add(fieldKey(v, left.field));
-      }
-      if (left.kind === 'PropertyAccess' && left.property.backingField && left.receiver?.kind === 'This' && this.thisVariable)
-        state.add(fieldKey(this.thisVariable, left.property.backingField));
+      const slot = left.kind === 'FieldAccess' ? this.slotOf(left) : left.kind === 'PropertyAccess' ? this.autoPropertySlot(left) : null;
+      if (slot) state.add(slot.key);
       return state;
     }
     /** Evaluates a boolean expression and returns the states when it is true and when it is false. */

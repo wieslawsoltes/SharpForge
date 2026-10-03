@@ -179,6 +179,8 @@ const dependsOn = (parameter, other, seen = new Set()) => {
 /** Unboxing: object, ValueType, Enum or an interface to a value type (or a type parameter not known to be a reference type). */
 export function hasUnboxingConversion(from, to, core) {
   if (isTypeParameter(to)) return !isReference(to) && typeParameterExplicit(from, to, core);
+  // A type parameter not known to be a reference type converts explicitly to any interface it is not known to implement.
+  if (isTypeParameter(from)) return !isReference(from) && isInterface(to) && !hasBoxingConversion(from, to, core);
   if (!isValue(to) || to.isRefLikeType) return false;
   const target = to.isNullableValueType ? to.nullableUnderlyingType : to;
   if (isObject(from) || from.equals(core.valueType)) return true;

@@ -9,6 +9,8 @@ import { frameworkBridge } from './registry-bridge.js';
 import { specialTypeFromKeyword } from './special-types.js';
 import { MethodSymbol, PropertySymbol, ParameterSymbol, MethodKind, DeclarationModifiers } from './members.js';
 import { Accessibility } from './types.js';
+import { declareSpanTypes } from './span-types.js';
+import { declareCoreTypeRelations } from './core-type-relations.js';
 
 const keywordNames = [
   'object',
@@ -66,6 +68,7 @@ export class CoreTypes {
     this.ireadOnlyListT = bridge.coreType('System_Collections_Generic_IReadOnlyList_T');
     this.ireadOnlyCollectionT = bridge.coreType('System_Collections_Generic_IReadOnlyCollection_T');
     this.augment();
+    Object.assign(this, declareSpanTypes(this), declareCoreTypeRelations(this));
     this.task = bridge.coreType('System_Threading_Tasks_Task');
     this.taskT = bridge.coreType('System_Threading_Tasks_Task_T');
     this.type = bridge.coreType('System_Type');
@@ -132,6 +135,8 @@ export class CoreTypes {
     );
     method(this.enumType, 'HasFlag', this.bool, [['flag', this.enumType]]);
     method(this.enumType, 'CompareTo', this.int, [['target', o]]);
+    this.augmentDelegates(method);
+    this.augmentEnumeration(method);
     const n = this.nullable,
       t = n.typeParameters[0];
     if (!n.getMembers('HasValue').length) {
@@ -172,6 +177,49 @@ export class CoreTypes {
         }),
       );
     }
+  }
+  /**
+   * `System.Func<...>` and `System.Action<...>` of every arity the core table lists get their `Invoke` method, so
+   * lambdas convert to them and their values can be invoked. (The registry lists only closed parameterless forms.)
+   */
+  augmentDelegates(method) {
+    for (let arity = 1; arity <= 5; arity++) {
+      const func = this.func(arity),
+        parameters = func.typeParameters.slice(0, -1).map((p, i) => ['arg' + (arity > 2 ? i + 1 : ''), p]);
+      method(func, 'Invoke', func.typeParameters.at(-1), parameters);
+    }
+    for (let arity = 0; arity <= 4; arity++) {
+      const action = this.action(arity);
+      method(
+        action,
+        'Invoke',
+        this.void,
+        action.typeParameters.map((p, i) => [arity > 1 ? 'arg' + (i + 1) : 'obj', p]),
+      );
+    }
+  }
+  /** The members of `IEnumerable<T>` and `IEnumerator<T>` that iterators and hand-written enumeration loops use. */
+  augmentEnumeration(method) {
+    const enumerable = this.ienumerableT,
+      enumerator = this.ienumeratorT,
+      element = enumerator.typeParameters[0],
+      abstract = DeclarationModifiers.Abstract;
+    method(enumerable, 'GetEnumerator', enumerator.construct(new TypeWithAnnotations(enumerable.typeParameters[0])), [], abstract);
+    method(enumerator, 'MoveNext', this.bool, [], abstract);
+    method(enumerator, 'Dispose', this.void, [], abstract);
+    if (enumerator.getMembers('Current').length) return;
+    const get = new MethodSymbol({
+      name: 'get_Current',
+      methodKind: MethodKind.PropertyGet,
+      returnType: element,
+      declaredAccessibility: Accessibility.Public,
+      modifiers: abstract,
+      isImplicitlyDeclared: true,
+    });
+    enumerator.addMember(get);
+    enumerator.addMember(
+      new PropertySymbol({ name: 'Current', type: element, getMethod: get, declaredAccessibility: Accessibility.Public, isImplicitlyDeclared: true }),
+    );
   }
   /** The type a C# type keyword denotes (including nint/nuint), or null. */
   keyword(word) {

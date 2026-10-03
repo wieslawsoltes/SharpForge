@@ -295,7 +295,9 @@ export const StatementBinding = Base =>
           if (syntax.kind === 'YieldBreakStatement') return stmt('YieldBreak', syntax, false, {});
           const element = this.iteratorElementType(),
             e = this.value(syntax.expression);
-          return stmt('YieldReturn', syntax, true, { expression: element ? this.convert(e, element, syntax.expression) : e });
+          const yielded = element ? this.convert(e, element, syntax.expression) : e;
+          if (element && e.form === 'lambda' && !yielded.hasErrors) this.finishLambda(e, element);
+          return stmt('YieldReturn', syntax, true, { expression: yielded });
         }
         case 'FixedStatement': {
           this.pushScope();

@@ -20,6 +20,7 @@ export const profileCodes=Object.freeze({
   SF2008:profile("Invalid target type '{0}': this profile produces 'exe' or 'library'",'CS2019'),
   SF2009:profile("Invalid option '{0}'; overflow-check options must be boolean",'CS2007'),
   SF2010:profile("The 'partial' modifier is supported on classes only in this profile"),
+  SF2014:profile("Static constructors are not supported by this profile"),
   SF2011:profile("Same-named types '{0}' in different namespaces cannot be represented by this back end",null,{retired:true}),
   SF2013:profile('Collection initializers require a registered collection Add contract in this profile'),
   SF2098:profile("Expression '{0}' is not implemented by this profile"),
@@ -57,3 +58,6 @@ export const roslynEquivalent=code=>diagnosticDescriptor(code)?.roslyn??null;
 /** Roslyn "feature not available" ids are per selected language version (CS8059 for C# 6 ... CS9058 for C# 11). */
 const featureCodes=Object.freeze({1:'CS8022',2:'CS8023',3:'CS8024',4:'CS8025',5:'CS8026',6:'CS8059',7:'CS8107',7.1:'CS8302',7.2:'CS8320',7.3:'CS8370',8:'CS8400',9:'CS8773',10:'CS8936',11:'CS9058',12:'CS9202',13:'CS9260',14:'CS9327'});
 export function featureNotAvailableCode(selectedVersion){return featureCodes[selectedVersion]??'CS9058';}
+const featureGateCodes=new Set([...Object.values(featureCodes),'CS8652']);
+/** True for a "feature not available in C# N" (or preview-only) diagnostic id. */
+export function isFeatureGateCode(code){return featureGateCodes.has(code);}

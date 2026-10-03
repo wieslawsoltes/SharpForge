@@ -1,6 +1,7 @@
 /**
- * Local declarations: `int a = 1, b;`, `const` locals, local functions, the lookahead that tells a declaration from an
- * expression statement, and `for` statements with comma-separated initialisers and incrementors.
+ * Local declarations: `int a = 1, b;`, `const` locals, the lookahead that tells a declaration from an expression
+ * statement, and `for` statements with comma-separated initialisers and incrementors. A declaration whose name is
+ * followed by `(` or `<` is a local function (see local-functions.js).
  */
 const localFollowers = new Set(['=', ';', ',', ')', '(', '<', '[', 'in', 'eof', '}']);
 export const localStatementMethods = {
@@ -22,8 +23,7 @@ export const localStatementMethods = {
     if (kind === 'const' || kind === 'extern' || kind === 'readonly' || kind === 'volatile') return true;
     if (kind === 'static') return this.isLocalModifier(i + 1) || this.isLocalDeclaration(i + 1);
     if (kind === 'unsafe') return this.kindAt(i + 1) !== '{' && !this.isUnsafeExpression(i);
-    if (kind === 'async' && !this.tokens[i].flags)
-      return this.isLocalModifier(i + 1) || (this.isLocalDeclaration(i + 1) && ['(', '<'].includes(this.kindAt(this.scanType(i + 1) + 1)));
+    if (kind === 'async') return this.isAsyncModifier(i, false);
     return false;
   },
   /** `type name = value, ...` without the terminating semicolon (used by for, using and fixed). */
@@ -35,7 +35,8 @@ export const localStatementMethods = {
     return this.n('VariableDeclaration', type, this.variableDeclarators());
   },
   localDeclaration(attributeLists, awaitKeyword = null, usingKeyword = null) {
-    const modifiers = [];
+    const modifiers = [],
+      firstModifier = this.i;
     while (this.isLocalModifier()) modifiers.push(this.at('async') ? this.takeWord('async') : this.take());
     const start = this.current,
       type =
@@ -44,26 +45,8 @@ export const localStatementMethods = {
           : this.type();
     if (type.kind === 'RefType') this.feature('RefLocalsReturns', start);
     const identifier = this.id();
-    if ((this.at('(') || this.at('<')) && !usingKeyword) {
-      this.feature('LocalFunctions', start);
-      const typeParameters = this.at('<') ? this.typeParameterList() : null,
-        parameters = this.parameterList(),
-        constraints = this.constraintClauses(),
-        [body, expressionBody, semicolon] = this.asyncBody(modifiers, () => this.functionBody());
-      return this.n(
-        'LocalFunctionStatement',
-        attributeLists,
-        modifiers,
-        type,
-        identifier,
-        typeParameters,
-        parameters,
-        constraints,
-        body,
-        expressionBody,
-        semicolon
-      );
-    }
+    if (this.isLocalFunctionAhead() && !usingKeyword)
+      return this.localFunctionStatement({ attributeLists, modifiers, firstModifier, type, identifier, start });
     if (type.kind === 'IdentifierName' && start.value === 'var' && !start.flags) this.feature('ImplicitLocal', start);
     return this.n(
       'LocalDeclarationStatement',
