@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-10140f242a18e392c9e7",
+  "kind": "spec",
+  "sourceText": "struct Point\n{\n    int x, y;\n\n    public int X\n    {\n        set { x = value; }\n    }\n\n    public int Y \n    {\n        set { y = value; }\n    }\n\n    public Point(int x, int y) \n    {\n        X = x; // error, this is not yet definitely assigned\n        Y = y; // error, this is not yet definitely assigned\n    }\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0188",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "31bb148d113d308759050060fcef1063a32e10d5ac33bcfa4fa5072ef06eaea2",
+  "originalSource": "struct Point\n{\n    int x, y;\n\n    public int X\n    {\n        set { x = value; }\n    }\n\n    public int Y \n    {\n        set { y = value; }\n    }\n\n    public Point(int x, int y) \n    {\n        X = x; // error, this is not yet definitely assigned\n        Y = y; // error, this is not yet definitely assigned\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "Constructors2",
+    "expectedErrors": [
+      "CS0188"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-structs",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/structs.md",
+    "sha256": "53de26bf64c1dda02bf6edd00cbb816c260511bdd95d302f759970333c1ea663",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/structs.md",
+    "license": "MIT",
+    "example": "Constructors2",
+    "offsetInUnquotedMarkdown": 25370
+  }
+}

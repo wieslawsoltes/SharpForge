@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-2f32c6bd1549943fcd76",
+  "kind": "diagnostics",
+  "sourceText": "[assembly: System.Reflection.AssemblyFileVersion(\"1.2.*\")] public class C {}",
+  "sourceSHA256": "7ff4e8eeb016bb260d9fef7dac07d09db4084491881f3a7607d8ee183f2c45b7",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Assembly.cs",
+    "sha256": "5af75c081b993313ae994c6bb25a5aa25038b265d6fc6300e8d89976fd96811a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Assembly.cs",
+    "license": "MIT",
+    "method": "FileVersionAttributeWrn_Wildcard",
+    "offset": 7783
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(s, options: TestOptions.ReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS7035",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (1,50): warning CS7035: The specified version string '1.2.*' does not conform to the recommended format - major.minor.build.revision\n                // [assembly: System.Reflection.AssemblyFileVersion(\"1.2.*\")] public class C {}\n                Diagnostic(ErrorCode.WRN_InvalidVersionFormat, @\"\"\"1.2.*\"\"\").WithArguments(\"1.2.*\").WithLocation(1, 50)\n                ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

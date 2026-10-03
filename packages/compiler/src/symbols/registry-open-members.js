@@ -14,6 +14,7 @@
  * an instantiation again (`contractOfInstance`). Code generation never calls an open member: it closes the receiver
  * type and calls the contract of the registry instantiation, or reports the contract the registry lacks.
  */
+import {registryMethodModifiers} from './registry-contracts.js';
 import { ArrayTypeSymbol, ConstructedNamedTypeSymbol, TypeWithAnnotations, TypeKind, Accessibility } from './types.js';
 import { MethodSymbol, PropertySymbol, ParameterSymbol, MethodKind, DeclarationModifiers } from './members.js';
 
@@ -116,7 +117,7 @@ function methodSymbol(owner, contract, signature, key, methodKind) {
     containingSymbol: owner,
     returnType: signature.result,
     parameters: signature.parameters.map((type, ordinal) => new ParameterSymbol({ name: 'arg' + ordinal, type, ordinal })),
-    modifiers: contract.isStatic ? DeclarationModifiers.Static : 0,
+    modifiers: registryMethodModifiers(contract, owner),
   });
   method.openContract = key;
   return method;

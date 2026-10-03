@@ -12,6 +12,7 @@
  *     argument is an identifier (CS0633). On a class the attribute needs an attribute class (CS1689). A constructor
  *     is not among the targets the attribute declares, which the attribute binder reports (CS0592).
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind, RefKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { attributesNamed } from './bound-attributes.js';
@@ -75,8 +76,8 @@ export function checkConditionalMethods(type, isAttributeClass = () => true) {
   const results = [];
   const typeUri = type.locations?.[0]?.uri;
   for (const { attribute, argument, symbol } of conditionalAttributes(type)) {
-    if (!isAttributeClass(type)) results.push({ code: 'CS1689', args: [attribute.name.toString().trim()], uri: typeUri, node: attribute });
-    else if (symbol !== null && !identifier.test(symbol)) results.push({ code: 'CS0633', args: [], uri: typeUri, node: argument });
+    if (!isAttributeClass(type)) results.push({ code: DiagnosticId.CS1689, args: [attribute.name.toString().trim()], uri: typeUri, node: attribute });
+    else if (symbol !== null && !identifier.test(symbol)) results.push({ code: DiagnosticId.CS0633, args: [], uri: typeUri, node: argument });
   }
   for (const member of type.getMembers()) {
     if (member.kind !== SymbolKind.Method || member.isImplicitlyDeclared || member.isAccessor) continue;
@@ -86,12 +87,12 @@ export function checkConditionalMethods(type, isAttributeClass = () => true) {
       // A constructor is not a target of the attribute: CS0592 from the attribute binder is the whole story.
       if (member.isConstructor) continue;
       const add = (code, args, node = attribute) => results.push({ code, args, uri, node });
-      if (type.typeKind === TypeKind.Interface) add('CS0582', []);
-      else if (member.methodKind !== MethodKind.Ordinary || member.explicitInterfaceSyntax) add('CS0577', [display]);
-      else if (member.isOverride) add('CS0243', []);
-      else if (member.returnType && member.returnType.specialType !== 'System_Void') add('CS0578', [display]);
-      else if (member.parameters.some(parameter => parameter.refKind === RefKind.Out)) add('CS0685', [display]);
-      if (symbol !== null && !identifier.test(symbol)) add('CS0633', [], argument);
+      if (type.typeKind === TypeKind.Interface) add(DiagnosticId.CS0582, []);
+      else if (member.methodKind !== MethodKind.Ordinary || member.explicitInterfaceSyntax) add(DiagnosticId.CS0577, [display]);
+      else if (member.isOverride) add(DiagnosticId.CS0243, []);
+      else if (member.returnType && member.returnType.specialType !== 'System_Void') add(DiagnosticId.CS0578, [display]);
+      else if (member.parameters.some(parameter => parameter.refKind === RefKind.Out)) add(DiagnosticId.CS0685, [display]);
+      if (symbol !== null && !identifier.test(symbol)) add(DiagnosticId.CS0633, [], argument);
     }
   }
   return results;

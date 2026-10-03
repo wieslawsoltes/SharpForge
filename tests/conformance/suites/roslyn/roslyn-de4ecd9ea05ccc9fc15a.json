@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-de4ecd9ea05ccc9fc15a",
+  "kind": "diagnostics",
+  "sourceText": "\npublic struct A\n{\n    public static void Main()\n    {\n        S1 s1 = new S1();\n        S2 s2 = new S2();\n        s2.fld = new S3();\n        s2.fld.fld.fld.fld = new S2();\n    }\n}\n",
+  "sourceSHA256": "5dca9144500d4f6824c62a9d8c96403eea45330c4442e6d73e76d6fcb4cc6927",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "sha256": "c8277ea97437cc26511c883985aea205067e653e658a9ad8e0fb3a0be387cf9c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "license": "MIT",
+    "method": "ReferencingCycledStructures",
+    "offset": 64279
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(program, new[] { TestReferences.SymbolsTests.CycledStructs })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,12): warning CS0219: The variable 's1' is assigned but its value is never used\n                //         S1 s1 = new S1();\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"s1\").WithArguments(\"s1\")",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation"
+  ]
+}

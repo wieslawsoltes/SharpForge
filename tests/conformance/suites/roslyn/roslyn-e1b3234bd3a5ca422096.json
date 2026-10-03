@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e1b3234bd3a5ca422096",
+  "kind": "diagnostics",
+  "sourceText": "partial class C\n{\n    partial event System.Action E;\n    partial event System.Action E { add { } remove { } }\n    partial C();\n    partial C() { }\n}",
+  "sourceSHA256": "3a7d379c99dcfe073438283bc2d02a750b0cb14bcae6a860fb14085a41ff21fe",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "LangVersion",
+    "offset": 11049
+  },
+  "langVersion": "13",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular13)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8703",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS9260",
+        "severity": "error"
+      },
+      {
+        "code": "CS0501",
+        "severity": "error"
+      },
+      {
+        "code": "CS0542",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS9260",
+        "severity": "error"
+      },
+      {
+        "code": "CS0542",
+        "severity": "error"
+      },
+      {
+        "code": "CS0111",
+        "severity": "error"
+      },
+      {
+        "code": "CS0161",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (3,33): error CS8703: The modifier 'partial' is not valid for this item in C# 13.0. Please use language version '14.0' or greater.\n            //     partial event System.Action E;\n            Diagnostic(ErrorCode.ERR_InvalidModifierForLanguageVersion, \"E\").WithArguments(\"partial\", \"13.0\", \"14.0\").WithLocation(3, 33),\n            // (5,5): error CS0246: The type or namespace name 'partial' could not be found (are you missing a using directive or an assembly reference?)\n            //     partial C();\n            Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"partial\").WithArguments(\"partial\").WithLocation(5, 5),\n            // (5,5): error CS9260: Feature 'partial events and constructors' is not available in C# 13.0. Please use language version 14.0 or greater.\n            //     partial C();\n            Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion13, \"partial\").WithArguments(\"partial events and constructors\", \"14.0\").WithLocation(5, 5),\n            // (5,13): error CS0501: 'C.C()' must declare a body because it is not marked abstract, extern, or partial\n            //     partial C();\n            Diagnostic(ErrorCode.ERR_ConcreteMissingBody, \"C\").WithArguments(\"C.C()\").WithLocation(5, 13),\n            // (5,13): error CS0542: 'C': member names cannot be the same as their enclosing type\n            //     partial C();\n            Diagnostic(ErrorCode.ERR_MemberNameSameAsType, \"C\").WithArguments(\"C\").WithLocation(5, 13),\n            // (6,5): error CS0246: The type or namespace name 'partial' could not be found (are you missing a using directive or an assembly reference?)\n            //     partial C() { }\n            Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"partial\").WithArguments(\"partial\").WithLocation(6, 5),\n            // (6,5): error CS9260: Feature 'partial events and constructors' is not available in C# 13.0. Please use language version 14.0 or greater.\n            //     partial C() { }\n            Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion13, \"partial\").WithArguments(\"partial events and constructors\", \"14.0\").WithLocation(6, 5),\n            // (6,13): error CS0542: 'C': member names cannot be the same as their enclosing type\n            //     partial C() { }\n            Diagnostic(ErrorCode.ERR_MemberNameSameAsType, \"C\").WithArguments(\"C\").WithLocation(6, 13),\n            // (6,13): error CS0111: Type 'C' already defines a member called 'C' with the same parameter types\n            //     partial C() { }\n            Diagnostic(ErrorCode.ERR_MemberAlreadyExists, \"C\").WithArguments(\"C\", \"C\").WithLocation(6, 13),\n            // (6,13): error CS0161: 'C.C()': not all code paths return a value\n            //     partial C() { }\n            Diagnostic(ErrorCode.ERR_ReturnExpected, \"C\").WithArguments(\"C.C()\").WithLocation(6, 13)",
+  "unsupported": []
+}

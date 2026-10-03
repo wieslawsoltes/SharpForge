@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-2a9a5648b4e828fcfaaa",
+  "kind": "spec",
+  "sourceText": "// constructors\n// arithmetic operators\n// implicit and explicit conversions\npublic static readonly IntPtr Zero; // use 0 instead\npublic static int Size { get; }     // use sizeof() instead\npublic static IntPtr Add(IntPtr pointer, int offset);\npublic static IntPtr Subtract(IntPtr pointer, int offset);\npublic int ToInt32();\npublic long ToInt64();\npublic void* ToPointer();",
+  "sourceSHA256": "183d84f943ed4b33c75b5dcd65ff7e35887eeb58e61d4496c750723b0e8046bc",
+  "target": "library",
+  "featureId": "csharp-9-0-native-sized-integers",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/native-integers.md",
+    "sha256": "d0b0b6f2a77880d7ea7898939dd15177557aacb592d26800e709b4f7749c9496",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/native-integers.md",
+    "license": "NOASSERTION",
+    "offset": 15547
+  }
+}

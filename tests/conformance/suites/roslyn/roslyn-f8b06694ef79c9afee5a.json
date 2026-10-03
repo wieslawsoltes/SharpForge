@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f8b06694ef79c9afee5a",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass Container<T>\n{\n    [Attr<T>]\n    class C1\n    {\n    }\n    \n    [AttrContainer<T>.Attr]\n    class C2\n    {\n    }\n    \n    [AttrContainer<T>.B.Attr]\n    class C3\n    {\n    }\n\n    [Attr<T[]>]\n    class C4\n    {\n    }\n}\n\nclass Attr<T> : Attribute { }\n\nclass AttrContainer<T>\n{  \n    public class Attr : Attribute\n    {\n        public T Value { get; set; }\n    }\n    \n    public class B\n    {\n        public class Attr : Attribute\n        {\n        }\n    }\n}\n\n",
+  "sourceSHA256": "ef1c5b86a35d96d3affa0e23f2dae571aa9cf00f001e48c4ef8aa453f3cea068",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "GenericAttribute_NestedType01",
+    "offset": 448277
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8968",
+        "severity": "error"
+      },
+      {
+        "code": "CS8968",
+        "severity": "error"
+      },
+      {
+        "code": "CS8968",
+        "severity": "error"
+      },
+      {
+        "code": "CS8968",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,6): error CS8968: 'T': an attribute type argument cannot use type parameters\n                //     [Attr<T>]\n                Diagnostic(ErrorCode.ERR_AttrTypeArgCannotBeTypeVar, \"Attr<T>\").WithArguments(\"T\").WithLocation(6, 6),\n                // (11,6): error CS8968: 'T': an attribute type argument cannot use type parameters\n                //     [AttrContainer<T>.Attr]\n                Diagnostic(ErrorCode.ERR_AttrTypeArgCannotBeTypeVar, \"AttrContainer<T>.Attr\").WithArguments(\"T\").WithLocation(11, 6),\n                // (16,6): error CS8968: 'T': an attribute type argument cannot use type parameters\n                //     [AttrContainer<T>.B.Attr]\n                Diagnostic(ErrorCode.ERR_AttrTypeArgCannotBeTypeVar, \"AttrContainer<T>.B.Attr\").WithArguments(\"T\").WithLocation(16, 6),\n                // (21,6): error CS8968: 'T': an attribute type argument cannot use type parameters\n                //     [Attr<T[]>]\n                Diagnostic(ErrorCode.ERR_AttrTypeArgCannotBeTypeVar, \"Attr<T[]>\").WithArguments(\"T\").WithLocation(21, 6)",
+  "unsupported": []
+}

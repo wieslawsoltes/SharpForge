@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-596093e8afc794024e77",
+  "kind": "spec",
+  "sourceText": "public class C\n{\n    public static int P\n    {\n        get\n        {\n            Func<int> f = static () => field;\n            return f();\n        }\n    }\n}",
+  "sourceSHA256": "1a54c31f5a33a418af932d54fe00981b03eeff287f978c7b0d967359deffd62b",
+  "target": "library",
+  "featureId": "csharp-14-0-field-keyword-in-properties",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/field-keyword.md",
+    "sha256": "3d56c4e42e738ff347e793381ff018b88c01edbd419585475b1a22048516100c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/field-keyword.md",
+    "license": "NOASSERTION",
+    "offset": 19465
+  }
+}

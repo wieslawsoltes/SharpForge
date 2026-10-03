@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-c5fe4d01476177075d2f",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass X\n{\n    public string F(object o)\n    {\n        return o as string;  // OK, string is a reference type\n    }\n\n    public T G<T>(object o)\n        where T : Attribute\n    {\n        return o as T;       // Ok, T has a class constraint\n    }\n\n    public U H<U>(object o)\n    {\n        return o as U;       // Error, U is unconstrained\n    }\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0413",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "67ecfea93b8f844cc45825d8a97b5cb22cc676e100de15b021faaffbe10165e3",
+  "originalSource": "class X\n{\n    public string F(object o)\n    {\n        return o as string;  // OK, string is a reference type\n    }\n\n    public T G<T>(object o)\n        where T : Attribute\n    {\n        return o as T;       // Ok, T has a class constraint\n    }\n\n    public U H<U>(object o)\n    {\n        return o as U;       // Error, U is unconstrained\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "AsOperator",
+    "expectedErrors": [
+      "CS0413"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-expressions",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/expressions.md",
+    "sha256": "86fd8ab8c2608d09cc5267e037ef05a81a46241c464078f7ee9cbb6328c04e92",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/expressions.md",
+    "license": "MIT",
+    "example": "AsOperator",
+    "offsetInUnquotedMarkdown": 333065
+  }
+}

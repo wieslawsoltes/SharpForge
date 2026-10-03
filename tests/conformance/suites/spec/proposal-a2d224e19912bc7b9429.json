@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-a2d224e19912bc7b9429",
+  "kind": "spec",
+  "sourceText": ">    using (x.EnterScope())\n>    {\n>        ...\n>    }\n>    ```\n>    **and `System.Threading.Lock` must have the following shape:**\n>    ```cs\n>    namespace System.Threading\n>    {\n>        public sealed class Lock\n>        {\n>            public Scope EnterScope();\n>    \n>            public ref struct Scope\n>            {\n>                public void Dispose();\n>            }\n>        }\n>    }\n>    ```\n> 2. where `x` is an expression of a *reference_type*, is precisely equivalent to: [...]\n\nNote that the shape might not be fully checked (e.g., there will be no errors nor warnings if the `Lock` type is not `sealed`),\nbut the feature might not work as expected (e.g., there will be no warnings when converting `Lock` to a derived type,\nsince the feature assumes there are no derived types).\n\nAdditionally, new warnings are added to implicit reference conversions ([§10.2.8](https://github.com/dotnet/csharpstandard/blob/9af5bdaa7af535f34fbb7923e5406e01db8489f7/standard/conversions.md#1028-implicit-reference-conversions))\nwhen upcasting the `System.Threading.Lock` type:\n\n> The implicit reference conversions are:\n>\n> - From any *reference_type* to `object` and `dynamic`.\n>   - **A warning is reported when the *reference_type* is known to be `System.Threading.Lock`.**\n> - From any *class_type* `S` to any *class_type* `T`, provided `S` is derived from `T`.\n>   - **A warning is reported when `S` is known to be `System.Threading.Lock`.**\n> - From any *class_type* `S` to any *interface_type* `T`, provided `S` implements `T`.\n>   - **A warning is reported when `S` is known to be `System.Threading.Lock`.**\n> - [...]\n",
+  "sourceSHA256": "9b11ade0d608bc0ee31d03419c12d617fcd349485aaf151ec546e0dd3b6e118b",
+  "target": "library",
+  "featureId": "csharp-13-0-lock-object",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/lock-object.md",
+    "sha256": "6a60605a1f68d2463393dba661c1c0d8e1e24ca2abd5e55d56eb415ef8258fb7",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/lock-object.md",
+    "license": "NOASSERTION",
+    "offset": 1560
+  }
+}

@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import {NamedTypeSymbol,TypeParameterSymbol,ArrayTypeSymbol,ErrorTypeSymbol,TypeKind,SymbolKind,Accessibility,RefKind,Variance,SymbolDisplayFormat} from '../types.js';
 import {NamespaceSymbol,NamespaceExtent} from '../namespaces.js';
 import {MethodSymbol,FieldSymbol,PropertySymbol,ParameterSymbol,MethodKind,DeclarationModifiers,modifiersFromSyntax,accessibilityFromSyntax,isAccessibilityKeyword} from '../members.js';
@@ -117,15 +118,15 @@ export class DeclarationTable {
   _declareTypes(nodes,container){
     const nested=container.kind===SymbolKind.NamedType,groups=new Map();
     for(const node of nodes){const key=node.name+'`'+(node.typeParameters?.length??0);if(!groups.has(key))groups.set(key,[]);groups.get(key).push(node);}
-    const duplicate=node=>{this.report(node,nested?'CS0102':'CS0101',nested?[container.toDisplayString(SymbolDisplayFormat.MinimallyQualified),node.name]:[node.name,container.toDisplayString()]);this._createType([node],container,true);};
+    const duplicate=node=>{this.report(node,nested?DiagnosticId.CS0102:DiagnosticId.CS0101,nested?[container.toDisplayString(SymbolDisplayFormat.MinimallyQualified),node.name]:[node.name,container.toDisplayString()]);this._createType([node],container,true);};
     for(const group of groups.values()){
       // Declarations of another kind than the first (class vs struct) never merge.
       const kind=group[0].kind,same=group.filter(n=>n.kind===kind),isPartial=n=>(n.modifiers??[]).includes('partial'),anyPartial=same.some(isPartial);
       let merged=same;
       if(same.length>1&&!anyPartial)merged=[same[0]];
-      else if(same.length>1)for(const node of same)if(!isPartial(node))this.report(node,'CS0260',[node.name]);
+      else if(same.length>1)for(const node of same)if(!isPartial(node))this.report(node,DiagnosticId.CS0260,[node.name]);
       const symbol=this._createType(merged,container,false);
-      if(merged.length>1&&new Set(merged.map(d=>explicitAccess(d.modifiers)).filter(Boolean)).size>1)this.report(merged[0],'CS0262',[symbol.toDisplayString(SymbolDisplayFormat.MinimallyQualified)]);
+      if(merged.length>1&&new Set(merged.map(d=>explicitAccess(d.modifiers)).filter(Boolean)).size>1)this.report(merged[0],DiagnosticId.CS0262,[symbol.toDisplayString(SymbolDisplayFormat.MinimallyQualified)]);
       for(const node of group)if(!merged.includes(node))duplicate(node);
     }
   }
@@ -216,14 +217,14 @@ export class DeclarationTable {
     for(const member of members){
       if(member.kind===SymbolKind.NamedType||member.isImplicitlyDeclared||member.kind===SymbolKind.Method&&member.isAccessor)continue;
       const isMethod=member.kind===SymbolKind.Method,isIndexer=member.kind===SymbolKind.Property&&member.isIndexer;
-      if(isIndexer){const key='this['+member.parameters.map(p=>(p.refKind===RefKind.None?'':'ref ')+p.typeWithAnnotations.toDisplayString(SymbolDisplayFormat.Test)).join(',')+']';if(signatures.has(key))this.report(member.syntax,'CS0111',['this',display]);else signatures.set(key,member);continue;}
+      if(isIndexer){const key='this['+member.parameters.map(p=>(p.refKind===RefKind.None?'':'ref ')+p.typeWithAnnotations.toDisplayString(SymbolDisplayFormat.Test)).join(',')+']';if(signatures.has(key))this.report(member.syntax,DiagnosticId.CS0111,['this',display]);else signatures.set(key,member);continue;}
       const previous=last.get(member.name);
-      if(typeNames.has(member.name)||previous&&!(isMethod&&previous.kind===SymbolKind.Method))this.report(member.syntax,'CS0102',[display,member.name]);
+      if(typeNames.has(member.name)||previous&&!(isMethod&&previous.kind===SymbolKind.Method))this.report(member.syntax,DiagnosticId.CS0102,[display,member.name]);
       if(isMethod){
         // signatureKey folds ref, out and in together: an exact repeat is CS0111, a difference only in those modifiers CS0663.
         const key=member.signatureKey,earlier=signatures.get(key)??[],kinds=refKinds(member),same=earlier.find(m=>refKinds(m).every((k,i)=>k===kinds[i]));
-        if(same)this.report(member.syntax,'CS0111',[member.isConstructor?type.name:member.name,display]);
-        else if(earlier.length){const other=refKinds(earlier[0]),at=kinds.findIndex((k,i)=>k!==other[i]);this.report(member.syntax,'CS0663',[display,member.isConstructor?'constructor':'method',kinds[at],other[at]]);}
+        if(same)this.report(member.syntax,DiagnosticId.CS0111,[member.isConstructor?type.name:member.name,display]);
+        else if(earlier.length){const other=refKinds(earlier[0]),at=kinds.findIndex((k,i)=>k!==other[i]);this.report(member.syntax,DiagnosticId.CS0663,[display,member.isConstructor?'constructor':'method',kinds[at],other[at]]);}
         signatures.set(key,[...earlier,member]);
       }
       last.set(member.name,member);

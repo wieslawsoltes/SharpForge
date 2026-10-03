@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-e38504d4ad2f4b3f8e84",
+  "kind": "spec",
+  "sourceText": "partial class D\n{\n    partial void M(string message);\n\n    void Example()\n    {\n        M(GetIt()); // Call to M and GetIt erased at compile time\n    }\n\n    string GetIt() => \"Hello World\";\n}",
+  "sourceSHA256": "e7f723d9237a89d1fafade778b690e5852dbcab98ae6f4cb152aa347ded02490",
+  "target": "library",
+  "featureId": "csharp-9-0-partial-methods-with-returned-values",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/extending-partial-methods.md",
+    "sha256": "6152b1fd3ccc1c2b91306b6395d48bfb438428c54472c37fcb4de1545723d7df",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/extending-partial-methods.md",
+    "license": "NOASSERTION",
+    "offset": 1186
+  }
+}

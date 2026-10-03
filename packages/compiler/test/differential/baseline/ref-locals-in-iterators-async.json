@@ -1,4 +1,9 @@
 {
+  "ref-locals-in-iterators-async/cs1629-unsafe-in-iterator-below-csharp-13": ["diagnostics", "warnings"],
+  "ref-locals-in-iterators-async/cs4007-ref-struct-iterator-local-csharp-12": ["diagnostics", "warnings"],
+  "ref-locals-in-iterators-async/cs4007-ref-struct-local-across-await-or-yield": ["diagnostics", "warnings"],
+  "ref-locals-in-iterators-async/cs4012-cs4013-ref-struct-locals-below-csharp-13": ["diagnostics", "warnings"],
   "ref-locals-in-iterators-async/cs9202-below-csharp-13": ["diagnostics", "warnings"],
-  "ref-locals-in-iterators-async/cs9217-across-yield-and-await": ["diagnostics", "warnings"]
+  "ref-locals-in-iterators-async/cs9217-across-yield-and-await": ["diagnostics", "warnings"],
+  "ref-locals-in-iterators-async/cs9238-yield-return-in-unsafe-block": ["diagnostics", "warnings"]
 }

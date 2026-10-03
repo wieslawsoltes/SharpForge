@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-de9f804a280cdb0a7735",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public static void Main()\n    {\n        var a = new { A = 1 };\n        var b = new { B = 2 };\n        var c = new { A = 1 };\n        var d = new { B = 2 };\n\n        System.Console.Write((a, b) == (a, b));\n        System.Console.Write((a, b) == (c, d));\n        System.Console.Write((a, b) != (c, d));\n    }\n}\n",
+  "sourceSHA256": "85139c7d1e121c3ff10e6bb009028fce52634b600bbb1d6f9b2ac862766d45a9",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestWithAnonymousTypes",
+    "offset": 198587
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

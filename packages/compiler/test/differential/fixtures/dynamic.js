@@ -194,5 +194,79 @@ export const fixtures = [
         }
       `,
     ),
+    diag(
+      'cs1965-cs1966-cs1967-cs1968-dynamic-in-declarations',
+      cs`
+        using System;
+        using System.Collections.Generic;
+        class A : dynamic { }
+        class B : List<dynamic> { }
+        interface I<T> { }
+        class C : I<dynamic> { }
+        class D<T> where T : dynamic { }
+        class E<T> where T : List<dynamic> { }
+        class Program
+        {
+            static void Main()
+            {
+                const dynamic none = null;
+                const dynamic one = 1;
+                const object boxed = 2;
+            }
+        }
+      `,
+    ),
+    diag(
+      'cs0111-cs1964-cs1971-cs1975-dynamic-is-object-in-signatures',
+      cs`
+        using System;
+        class Program
+        {
+            void M(dynamic x) { }
+            void M(object x) { }
+            static dynamic operator +(Program a, dynamic b) { return a; }
+            public static implicit operator Program(dynamic d) { return null; }
+            static void Main() { }
+        }
+        class Derived : BaseC
+        {
+            public override dynamic Get(object x) { return x; }
+            public override object Get2(dynamic x) { return x; }
+            public Derived(dynamic d) : base(d) { }
+            public Derived(int i) : base(i) { }
+            void Test(dynamic d) { base.Over(d); base.One(d); base.One(1); }
+        }
+        class BaseC
+        {
+            public virtual object Get(dynamic x) { return x; }
+            public virtual dynamic Get2(object x) { return x; }
+            public BaseC(int x) { }
+            public BaseC(string x) { }
+            public void Over(int x) { }
+            public void Over(string x) { }
+            public void One(int x) { }
+        }
+      `,
+    ),
+    diag(
+      'cs1963-cs1979-expression-trees-and-queries',
+      cs`
+        using System;
+        using System.Linq.Expressions;
+        class Program
+        {
+            static void Main()
+            {
+                dynamic d = 2;
+                Expression<Func<dynamic, dynamic>> member = x => x.Foo;
+                Expression<Func<int>> conversion = () => d;
+                Expression<Func<dynamic>> operation = () => d + 1;
+                Expression<Func<object>> element = () => d[0];
+                Expression<Func<dynamic, object>> identity = x => x;
+                var query = from x in d select x;
+            }
+        }
+      `,
+    ),
   ]),
 ];

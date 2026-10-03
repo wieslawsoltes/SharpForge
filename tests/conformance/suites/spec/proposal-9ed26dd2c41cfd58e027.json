@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-9ed26dd2c41cfd58e027",
+  "kind": "spec",
+  "sourceText": "record Person(string FirstName, string LastName, string MiddleName = \"\");\nrecord Student(int ID, string FirstName, string LastName, string MiddleName = \"\") : Person(FirstName, LastName, MiddleName);",
+  "sourceSHA256": "5d7614f72171b1385242d52dd090796c7734b48f4a251e133111d4a38f896e31",
+  "target": "library",
+  "featureId": "csharp-11-0-required-members",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/required-members.md",
+    "sha256": "0f731d503b589797298f8926899fe7ca9be3843141d8782b074f52d1822f1ed3",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/required-members.md",
+    "license": "NOASSERTION",
+    "offset": 2043
+  }
+}

@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 /**
  * C# 7.0 rules of throw expressions and generalized async return types (SF-A02-T64).
  *
@@ -67,13 +68,13 @@ export const CSharp70Binding = Base =>
       // The operand is still bound for its own diagnostics.
       this.value(syntax.expression);
       // Where the parser already rejected the `throw` (an operand of a binary operator is CS1525) nothing is added.
-      if (!this.hasSyntaxErrorAt(syntax.throwKeyword.span.start)) this.report(syntax.throwKeyword, 'CS8115');
+      if (!this.hasSyntaxErrorAt(syntax.throwKeyword.span.start)) this.report(syntax.throwKeyword, DiagnosticId.CS8115);
       return this.bad(syntax);
     }
     /** True when the parser reported an error that starts at `position` of this binder's file. */
     hasSyntaxErrorAt(position) {
       const file = this.d.files?.find(candidate => candidate.source.uri === this.c.uri);
-      return !!file?.diagnostics.some(diagnostic => diagnostic.start === position && diagnostic.code !== 'CS8115');
+      return !!file?.diagnostics.some(diagnostic => diagnostic.start === position && diagnostic.code !== DiagnosticId.CS8115);
     }
     /** An expression body `=> throw e` is a statement, also where no value is expected. */
     isStatementExpression(syntax) {

@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f754012b93ea7b278ca4",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class TypeAttribute : System.Attribute { }\npublic class ParamAttribute1 : System.Attribute { }\npublic class ParamAttribute2 : System.Attribute { }\npublic class ParamAttribute3 : System.Attribute { }\npublic class ParamAttribute4 : System.Attribute { }\npublic class ParamAttribute5 : System.Attribute { }\npublic class ReturnTypeAttribute : System.Attribute { }\npublic class TypeParamAttribute : System.Attribute { }\n\nclass C\n{\n    [TypeAttribute(0)]\n    [return: ReturnTypeAttribute(0)]\n    public delegate T Delegate<[TypeParamAttribute(0)]T> ([ParamAttribute1(0)]T p1, [param: ParamAttribute2(0)]ref T p2, [ParamAttribute3(0)]out T p3);\n\n    public delegate int Delegate2 ([ParamAttribute4(0)]int p1 = 0, [param: ParamAttribute5(0)]params int[] p2);\n}",
+  "sourceSHA256": "042a68f03c836b479710587b38aa28fe386dfa869c13347b256b37b5365f70f5",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "TestAttributesOnDelegates_NoDuplicateDiagnostics",
+    "offset": 127078
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1729",
+        "severity": "error"
+      },
+      {
+        "code": "CS1729",
+        "severity": "error"
+      },
+      {
+        "code": "CS1729",
+        "severity": "error"
+      },
+      {
+        "code": "CS1729",
+        "severity": "error"
+      },
+      {
+        "code": "CS1729",
+        "severity": "error"
+      },
+      {
+        "code": "CS1729",
+        "severity": "error"
+      },
+      {
+        "code": "CS1729",
+        "severity": "error"
+      },
+      {
+        "code": "CS1729",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (13,6): error CS1729: 'TypeAttribute' does not contain a constructor that takes 1 arguments\n                Diagnostic(ErrorCode.ERR_BadCtorArgCount, \"TypeAttribute(0)\").WithArguments(\"TypeAttribute\", \"1\"),\n                // (15,33): error CS1729: 'TypeParamAttribute' does not contain a constructor that takes 1 arguments\n                Diagnostic(ErrorCode.ERR_BadCtorArgCount, \"TypeParamAttribute(0)\").WithArguments(\"TypeParamAttribute\", \"1\"),\n                // (15,60): error CS1729: 'ParamAttribute1' does not contain a constructor that takes 1 arguments\n                Diagnostic(ErrorCode.ERR_BadCtorArgCount, \"ParamAttribute1(0)\").WithArguments(\"ParamAttribute1\", \"1\"),\n                // (15,93): error CS1729: 'ParamAttribute2' does not contain a constructor that takes 1 arguments\n                Diagnostic(ErrorCode.ERR_BadCtorArgCount, \"ParamAttribute2(0)\").WithArguments(\"ParamAttribute2\", \"1\"),\n                // (15,123): error CS1729: 'ParamAttribute3' does not contain a constructor that takes 1 arguments\n                Diagnostic(ErrorCode.ERR_BadCtorArgCount, \"ParamAttribute3(0)\").WithArguments(\"ParamAttribute3\", \"1\"),\n                // (14,14): error CS1729: 'ReturnTypeAttribute' does not contain a constructor that takes 1 arguments\n                Diagnostic(ErrorCode.ERR_BadCtorArgCount, \"ReturnTypeAttribute(0)\").WithArguments(\"ReturnTypeAttribute\", \"1\"),\n                // (17,37): error CS1729: 'ParamAttribute4' does not contain a constructor that takes 1 arguments\n                Diagnostic(ErrorCode.ERR_BadCtorArgCount, \"ParamAttribute4(0)\").WithArguments(\"ParamAttribute4\", \"1\"),\n                // (17,76): error CS1729: 'ParamAttribute5' does not contain a constructor that takes 1 arguments\n                Diagnostic(ErrorCode.ERR_BadCtorArgCount, \"ParamAttribute5(0)\").WithArguments(\"ParamAttribute5\", \"1\")",
+  "unsupported": []
+}
