@@ -1,8 +1,9 @@
 import {validatePointer, pointerType, asReadonly} from './managed-pointers.js';
 import {ManagedFault} from '../heap.js';
 import {sourceStore} from './source-storage.js';
-import {frameState} from './source-eh.js';
 import {pushFrame} from './frame-stack.js';
+import {framePool} from './frame-pool.js';
+import {sourceInputTypes} from './source-storage.js';
 
 /** Source arguments use the same budget and frame lifetime boundary as CIL. */
 export function callSource(vm, methodId, args, types = []) {
@@ -13,8 +14,8 @@ export function callSource(vm, methodId, args, types = []) {
     throw fault;
   }
   const method = vm.image.methods[methodId];
-  const locals = Array(method.locals.length).fill(undefined);
-  vm.heap.withRoots(args, () => {
+  const pool = framePool(vm), frame = pool.acquire(method), locals = frame.locals;
+  try { vm.heap.withRoots(args, () => {
     for (let index = 0; index < args.length; index++) {
       let argument = args[index];
       const type = method.locals[index].type;
@@ -33,14 +34,21 @@ export function callSource(vm, methodId, args, types = []) {
     if (!method.isStatic && args[0] === null) {
       throw new ManagedFault('NullReferenceException', 'Cannot call an instance method on null');
     }
-    pushFrame(vm, {
-      id: ++vm.frameId,
-      methodId,
-      pc: 0,
-      base: vm.stack.length,
-      locals,
-      point: null,
-      ...frameState()
-    });
-  });
+    frame.id = ++vm.frameId;
+    frame.methodId = methodId;
+    frame.pc = 0;
+    frame.base = vm.stack.length;
+    frame.point = null;
+    frame.exception = frame.pending = null;
+    pushFrame(vm, frame);
+  }); } catch (error) { pool.retire(frame); throw error; }
+}
+
+/** Source call arguments borrow a temporary buffer; the callee owns its copied local slots. */
+export function callSourceFromStack(vm, methodId, count) {
+  const pool = framePool(vm), input = sourceInputTypes(vm);
+  const args = pool.arguments(vm.stack, count);
+  const types = pool.arguments(input, count, false);
+  try { callSource(vm, methodId, args, types); }
+  finally { pool.releaseArguments(types); pool.releaseArguments(args); }
 }

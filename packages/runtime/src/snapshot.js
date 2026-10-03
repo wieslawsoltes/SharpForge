@@ -1,6 +1,7 @@
 import {captureGenericInstantiations, prepareGenericInstantiations} from './execution/generics.js';
 import {releaseAllFrames, rebuildFrameIndex} from './execution/frame-lifetimes.js';
 import {rebuildStackBudget} from './execution/stack-budget.js';
+import {clearFramePool} from './execution/frame-pool.js';
 import {validateSnapshotState} from './snapshot-validation.js';
 import {copyExecution, copyFrames} from './execution/execution-copy.js';
 import {snapshotSchemaVersion, SnapshotVersionError} from './execution/snapshot-version.js';
@@ -31,6 +32,7 @@ const exclusions = {
   frameIndex: 'Derived index of active and parked frames, rebuilt after restore.',
   valueLayouts: 'Derived physical value layouts for immutable metadata.',
   stackBudget: 'Derived stack accounting, rebuilt from active and parked frames.',
+  framePool: 'Cleared reusable execution storage; discarded on restore.',
   symbols: 'Debug metadata belongs to the current code generation.'
 };
 const schema = (engine, fields, excluded) => Object.freeze({
@@ -112,6 +114,7 @@ export function restoreVM(vm, snapshot, engine) {
     values.set(item.name, item.restore ? item.restore(value) : item.monotonic ? Math.max(vm[item.name] ?? 0, value) : value);
   }
   releaseAllFrames(vm);
+  clearFramePool(vm);
   vm.heap.restore(values.get('heap'),{memo,prepared:true});
   if (genericCache) vm.genericInstantiations = genericCache;
   for (const item of selected.fields) {

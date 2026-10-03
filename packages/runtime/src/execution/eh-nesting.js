@@ -27,13 +27,13 @@ export function stageExceptionalUnwind(frame, search, offset) {
   frame.pending = {kind: 'exception', error: search.error, catch: catcher,
     handlers: cleanupClauses(frame, offset, catcher?.target, true), search};
   frame.unwinds.push(frame.pending);
-  frame.stack = [];
+  frame.stack.length = 0;
   frame.volatileAccess = false;
   return frame.pending;
 }
 
 export function stageLeave(frame, instruction) {
-  frame.stack = [];
+  frame.stack.length = 0;
   frame.pending = {kind: 'leave', target: instruction.operand,
     handlers: cleanupClauses(frame, instruction.offset, instruction.operand)};
   frame.unwinds.push(frame.pending);
@@ -46,7 +46,8 @@ export function enterSelectedCatch(frame, pending) {
     handler.target < caught.end && caught.start !== handler.target);
   frame.caught.push({start: handler.target, end: handler.handlerEnd, fault: pending.error});
   frame.exception = pending.error;
-  frame.stack = [pending.error.reference];
+  frame.stack.length = 0;
+  frame.stack.push(pending.error.reference);
   frame.pc = frame.offsets.get(handler.target);
   pending.error.phase = 'handled';
 }

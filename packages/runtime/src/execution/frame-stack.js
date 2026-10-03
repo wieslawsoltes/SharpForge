@@ -1,5 +1,6 @@
 import {registerFrame, releaseFrame} from './frame-lifetimes.js';
 import {registerStackFrame, releaseStackFrame, replaceStackFrame} from './stack-budget.js';
+import {retirePooledFrame} from './frame-pool.js';
 
 /** One admission boundary for byte budgets and pointer lifetime indexing. */
 export function pushFrame(vm, frame) {
@@ -11,6 +12,7 @@ export function pushFrame(vm, frame) {
   } catch (error) {
     releaseFrame(vm, frame);
     releaseStackFrame(vm, frame);
+    retirePooledFrame(vm, frame);
     throw error;
   }
   return frame;
@@ -23,6 +25,7 @@ export function popFrame(vm) {
     if (vm.profiler) vm.profiler.leave(frame);
     releaseFrame(vm, frame);
     releaseStackFrame(vm, frame);
+    retirePooledFrame(vm, frame);
   }
   return frame;
 }
@@ -36,5 +39,6 @@ export function replaceFrame(vm, frame) {
   vm.frames[vm.frames.length - 1] = frame;
   if (vm.profiler) vm.profiler.enter(frame);
   releaseFrame(vm, previous);
+  retirePooledFrame(vm, previous);
   return frame;
 }

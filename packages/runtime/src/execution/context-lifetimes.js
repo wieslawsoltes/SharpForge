@@ -1,5 +1,6 @@
 import {releaseFrame, releaseAllFrames} from './frame-lifetimes.js';
 import {releaseStackFrame, clearStackBudget} from './stack-budget.js';
+import {retirePooledFrame} from './frame-pool.js';
 
 const terminal = new Set(['completed', 'faulted', 'canceled']);
 
@@ -12,6 +13,7 @@ export function releaseContextFrames(vm, context) {
   for (const frame of context.frames) {
     releaseFrame(vm, frame);
     releaseStackFrame(vm, frame);
+    retirePooledFrame(vm, frame);
   }
   context.frames = [];
   context.stack = [];
