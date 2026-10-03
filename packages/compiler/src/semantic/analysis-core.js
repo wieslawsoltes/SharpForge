@@ -195,7 +195,8 @@ export class AnalysisCore {
     const s = spanOf(node),
       start = s.start ?? 0,
       length = Math.max(code === DiagnosticId.CS0162 || s.end > start ? (s.end ?? start) - start : 1, s.end === start ? 0 : 1);
-    if (this.diagnostics.some(d => d.code === code && d.uri === source.uri && d.start === start && d.message === message)) return;
+    const sameSpan = d => d.start === start && d.length === (length || 1);
+    if (this.diagnostics.some(d => d.code === code && d.uri === source.uri && sameSpan(d) && d.message === message)) return;
     this.diagnostics.push(diagnostic(source, start, length || 1, code, message, severity));
   }
   /**

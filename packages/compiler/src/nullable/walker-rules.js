@@ -90,7 +90,7 @@ export const NullableRules = Base =>
       const state = this.expression(node.right, flow);
       this.checkAssignment(target, node.right, state);
       const variable = this.variableOf(target);
-      if (variable) flow.set(variable, state);
+      if (variable) flow.assign(variable, state);
       return state;
     }
     arrayCreation(node, flow) {
