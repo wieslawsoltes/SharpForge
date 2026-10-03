@@ -283,7 +283,11 @@ export class DesignerSourceSync {
     const file = this.file();
     if (!file) throw new Error('Cannot restore history for a removed source file');
     this.loading = true;
-    try { this.view.document.load(analysis.document, { label: 'source sync', history: false }); }
+    try {
+      this.view.document.load(retainDesignerRuntimeBindings(this.view.document.value, analysis.document), {
+        label: 'source sync', history: false
+      });
+    }
     finally { this.loading = false; }
     this.session = { analysis: { ...analysis, text: file.text },
       sources: (this.view.sourceFiles?.() ?? []).map(item => ({ ...item })) };

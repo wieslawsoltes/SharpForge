@@ -43,7 +43,7 @@ export class DesignerDocumentHistory {
     const entry = { uri, label, changes: structuredClone(changes),
       beforeAnalysis: structuredClone(beforeAnalysis), afterAnalysis: structuredClone(afterAnalysis),
       beforeEditors, afterEditors: this.capture(changes) };
-    entry.bytes = changes.reduce((sum, change) => sum + (change.before.length + change.text.length) * 2, 0);
+    entry.bytes = JSON.stringify(entry).length * 2;
     this.past.push(entry);
     this.future.length = 0;
     let bytes = this.past.reduce((sum, item) => sum + item.bytes, 0);
