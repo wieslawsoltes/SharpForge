@@ -33,7 +33,7 @@ export function failSource(message, node = null, code = 'SFSYNC', details = {}) 
 
 /** Converts an exception or analysis warning to an Error List / LSP compatible diagnostic. */
 export function designSourceDiagnostic(error, {uri = error?.uri ?? null} = {}) {
-  const legacyCode = error?.code ?? 'SFSYNC';
+  const legacyCode = error?.code === 'OperationCanceled' ? 'SFSYNC_CANCELLED' : error?.code ?? 'SFSYNC';
   const definition = definitions[legacyCode] ?? definitions.SFSYNC;
   const start = error?.span?.start ?? error?.start ?? 0;
   const end = error?.span?.end ?? error?.end ?? start + (error?.length ?? 0);

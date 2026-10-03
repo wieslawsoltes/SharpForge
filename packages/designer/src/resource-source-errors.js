@@ -13,6 +13,7 @@ export function resourceSourceFail(code, message, location) {
 }
 
 export function resourceSourceCheck(signal) {
+  if (typeof signal?.throwIfCancellationRequested === 'function') signal.throwIfCancellationRequested();
   if (signal?.aborted) throw signal.reason ?? new DOMException('Resource analysis cancelled', 'AbortError');
 }
 
