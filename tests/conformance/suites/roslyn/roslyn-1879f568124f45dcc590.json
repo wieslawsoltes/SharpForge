@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-1879f568124f45dcc590",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public void M()\n    {\n        var x1 = M2(() =>\n                    {\n                        bool flag = true;\n                        dynamic d = null;\n                        if (flag)\n                        {\n                            return (a: 1, b: 2);\n                        }\n                        else\n                        {\n                            if (flag)\n                            {\n                                return (a: d, c: 3);\n                            }\n                            else\n                            {\n                                return (a: d, d: 4);\n                            }\n                        }\n                    });\n    }\n    public T M2<T>(System.Func<T> f)\n    {\n        return f();\n    }\n}\n",
+  "sourceSHA256": "cec3acf835d3f27abe68f8f1f8be6053f0d3e310cd96cfb8c9acaba410848b42",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "LambdaTypeInferenceWithDynamic",
+    "offset": 844000
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8123",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8123",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8123",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (12,43): warning CS8123: The tuple element name 'b' is ignored because a different name is specified by the target type '(dynamic a, int)'.\n                //                             return (a: 1, b: 2);\n                Diagnostic(ErrorCode.WRN_TupleLiteralNameMismatch, \"b: 2\").WithArguments(\"b\", \"(dynamic a, int)\").WithLocation(12, 43),\n                // (18,47): warning CS8123: The tuple element name 'c' is ignored because a different name is specified by the target type '(dynamic a, int)'.\n                //                                 return (a: d, c: 3);\n                Diagnostic(ErrorCode.WRN_TupleLiteralNameMismatch, \"c: 3\").WithArguments(\"c\", \"(dynamic a, int)\").WithLocation(18, 47),\n                // (22,47): warning CS8123: The tuple element name 'd' is ignored because a different name is specified by the target type '(dynamic a, int)'.\n                //                                 return (a: d, d: 4);\n                Diagnostic(ErrorCode.WRN_TupleLiteralNameMismatch, \"d: 4\").WithArguments(\"d\", \"(dynamic a, int)\").WithLocation(22, 47)\n                ",
+  "unsupported": []
+}

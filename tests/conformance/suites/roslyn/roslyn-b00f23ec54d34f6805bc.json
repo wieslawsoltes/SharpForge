@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b00f23ec54d34f6805bc",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public void M0(int a, params int[] b)\n    {\n    }\n\n    public void M1(int a, int b, int c, int x, int y, int z)\n    {\n    }\n\n    public void M2()\n    {\n        M1(1, 2, 3, 4, 5, 6);\n        M1(a: 1, b: 2, c: 3, x: 4, y:5, z:6);\n        M1(a: 1, c: 2, b: 3, x: 4, y:5, z:6);\n        M1(z: 1, x: 2, y: 3, c: 4, a:5, b:6);\n        M0(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);\n        M0(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);\n        M0(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);\n        M0(1);\n        M0(1, 2);\n        M0(1, 2, 4, 3);\n    }\n\n    public void M3(int x = 0, string y = null)\n    {\n    }\n\n    public void M4()\n    {\n        M3(0, null);\n        M3(0);\n        M3(y: null);\n        M3(x: 0);\n        M3();\n    }\n\n    public void M5(int x = 0, params int[] b)\n    {\n    }\n\n    public void M6()\n    {\n        M5(1,2,3,4,5);\n        M5(1);\n        M5(b: new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});\n        M5(x: 1);\n    }\n}\n",
+  "sourceSHA256": "cd11e4ebb2707a868760f5bd96f6872fd841ddcefa72f8aba959d257368a5d4e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "sha256": "eb33d60956503b30bec29f823f9033347fac98a9029a70b139e6a57a3ad1abef",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "InvocationCSharp",
+    "offset": 11392
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

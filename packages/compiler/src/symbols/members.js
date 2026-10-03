@@ -75,7 +75,7 @@ export class MethodSymbol extends MemberSymbol {
   get parameterTypes(){return this.parameters.map(p=>p.typeWithAnnotations);}
   get metadataName(){return this.methodKind===MethodKind.Constructor?'.ctor':this.methodKind===MethodKind.StaticConstructor?'.cctor':this.name;}
   /** Name, arity and parameter types with ref kinds: two members with equal keys collide (CS0111). Type parameters compare by position. */
-  get signatureKey(){const positional=new Map(this.originalDefinition.typeParameters.map((p,i)=>[p,'!!'+i]));const text=t=>positional.get(t.type)??t.type.toDisplayString(SymbolDisplayFormat.Test).replace(/\b([A-Za-z_]\w*)\b/g,m=>{for(const [p,v] of positional)if(p.name===m)return v;return m;});
+  get signatureKey(){const positional=new Map(this.originalDefinition.typeParameters.map((p,i)=>[p,'!!'+i]));const text=t=>positional.get(t.type)??t.type.toDisplayString(SymbolDisplayFormat.Test).replace(/\bdynamic\b/g,'System.Object').replace(/\b([A-Za-z_]\w*)\b/g,m=>{for(const [p,v] of positional)if(p.name===m)return v;return m;});
     return this.name+'`'+this.arity+'('+this.parameters.map(p=>(p.refKind===RefKind.None?'':'ref ')+text(p.typeWithAnnotations)).join(',')+')';}
   /** The same method viewed as a member of a constructed containing type. */
   asMemberOf(type){return substituteMethod(this,type.typeMap,type,null);}

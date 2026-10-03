@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-4bcfee66d9db615d8f90",
+  "kind": "spec",
+  "sourceText": "public class IntVector\n{\n    public IntVector(int length) {...}\n    public int Length { get { ... } }                      // Read-only property\n    public int this[int index] { get { ... } set { ... } } // Read-write indexer\n\n    public static IntVector operator++(IntVector iv)\n    {\n        IntVector temp = new IntVector(iv.Length);\n        for (int i = 0; i < iv.Length; i++)\n        {\n            temp[i] = iv[i] + 1;\n        }\n        return temp;\n    }\n}\n\nclass Test\n{\n    static void Main()\n    {\n        IntVector iv1 = new IntVector(4); // Vector of 4 x 0\n        IntVector iv2;\n        iv2 = iv1++;              // iv2 contains 4 x 0, iv1 contains 4 x 1\n        iv2 = ++iv1;              // iv2 contains 4 x 2, iv1 contains 4 x 2\n    }\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "7f9091e7a14c1c02b04f0135029ba7aac5516157612d57e3d4da23ef81707f7a",
+  "originalSource": "public class IntVector\n{\n    public IntVector(int length) {...}\n    public int Length { get { ... } }                      // Read-only property\n    public int this[int index] { get { ... } set { ... } } // Read-write indexer\n\n    public static IntVector operator++(IntVector iv)\n    {\n        IntVector temp = new IntVector(iv.Length);\n        for (int i = 0; i < iv.Length; i++)\n        {\n            temp[i] = iv[i] + 1;\n        }\n        return temp;\n    }\n}\n\nclass Test\n{\n    static void Main()\n    {\n        IntVector iv1 = new IntVector(4); // Vector of 4 x 0\n        IntVector iv2;\n        iv2 = iv1++;              // iv2 contains 4 x 0, iv1 contains 4 x 1\n        iv2 = ++iv1;              // iv2 contains 4 x 2, iv1 contains 4 x 2\n    }\n}",
+  "metadata": {
+    "template": "standalone-console-without-using",
+    "name": "UnaryOperators",
+    "replaceEllipsis": true,
+    "customEllipsisReplacements": [
+      null,
+      "return 0;",
+      "return 0;",
+      null
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "UnaryOperators",
+    "offsetInUnquotedMarkdown": 235078
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-d4e85fbf4c6fd871df13",
+  "kind": "spec",
+  "sourceText": "var x = E;",
+  "sourceSHA256": "1041a062d4bb96b96612bfb2abdead1a712a6ee8f1514d62cd8770519989b7ba",
+  "target": "library",
+  "featureId": "csharp-8-0-nullable-reference-types",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/nullable-reference-types-specification.md",
+    "sha256": "bf70c663712b133fb18a3fc446a827d1162d68b877543ad19af4f028ec10d3d1",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/nullable-reference-types-specification.md",
+    "license": "NOASSERTION",
+    "offset": 13521
+  }
+}

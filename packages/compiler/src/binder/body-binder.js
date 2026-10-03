@@ -26,6 +26,7 @@ import { TupleBinding } from './body/tuples.js';
 import { DeconstructionBinding } from './body/deconstruction.js';
 import { WithBinding } from './with-expression.js';
 import { LambdaBinding } from './body/lambdas.js';
+import { LambdaSignatureBinding } from './lambda-signatures.js';
 import { PatternBinding } from './body/patterns.js';
 import { StructuralPatternBinding } from './body/structural-patterns.js';
 import { StackAllocBinding } from './body/stackalloc.js';
@@ -59,6 +60,7 @@ const expressionFamilies = [
   DeconstructionBinding,
   WithBinding,
   LambdaBinding,
+  LambdaSignatureBinding,
   PatternBinding,
   StructuralPatternBinding,
   StackAllocBinding,

@@ -89,3 +89,47 @@ test('a dynamic operation is SF2200 naming the missing binder; no false C# error
     assert.match(errors[0].message, new RegExp(`${operation} on a value of type 'dynamic' \\(the runtime has no late binder`), body);
   }
 });
+
+// ---- declarations (the second part of SF-A02-T55) ----
+
+function codesOf(source, options = {}) {
+  return compile(source, options)
+    .diagnostics.filter(d => d.code.startsWith('CS'))
+    .map(d => `${d.code}:${source.slice(d.start, d.start + d.length)}`);
+}
+const withMain = declarations => `using System; using System.Collections.Generic; ${declarations} class P { static void Main() { } }`;
+
+test('dynamic cannot be a base, an implemented interface argument or a constraint', () => {
+  assert.deepEqual(codesOf(withMain('class A : dynamic { }')), ['CS1965:dynamic']);
+  assert.deepEqual(codesOf(withMain('interface I<T> { } class C : I<dynamic> { }')), ['CS1966:I<dynamic>']);
+  assert.deepEqual(codesOf(withMain('class D<T> where T : dynamic { }')), ['CS1967:dynamic']);
+  assert.deepEqual(codesOf(withMain('class E<T> where T : List<dynamic> { }')), ['CS1968:List<dynamic>']);
+  // A base class over dynamic is fine.
+  assert.deepEqual(codesOf(withMain('class B : List<dynamic> { }')), []);
+});
+
+test('dynamic and object are one signature: duplicates, overrides, conversions', () => {
+  assert.deepEqual(codesOf(withMain('class C { void M(dynamic x) { } void M(object x) { } }')), ['CS0111:M']);
+  const overriding =
+    'class A { public virtual object Get(dynamic x) { return x; } } class B : A { public override dynamic Get(object x) { return x; } }';
+  assert.deepEqual(codesOf(withMain(overriding)), []);
+  assert.deepEqual(codesOf(withMain('class C { public static implicit operator C(dynamic d) { return null; } }')), ['CS1964:C']);
+});
+
+test('a call that would be late bound cannot go through base or a constructor initializer', () => {
+  const types = 'class A { public A(int x) { } public A(string x) { } public void One(int x) { } }';
+  assert.deepEqual(codesOf(withMain(types + ' class B : A { public B(dynamic d) : base(d) { } }')), ['CS1975:base']);
+  assert.deepEqual(codesOf(withMain(types + ' class B : A { public B() : base(1) { } void T(dynamic d) { base.One(d); } }')), ['CS1971:base.One(d)']);
+});
+
+test('a const of a reference type other than string can only be null (CS0134), dynamic included', () => {
+  assert.deepEqual(analysed('const dynamic none = null; const dynamic one = 1; const object boxed = 2;').sort(), ['CS0134:1', 'CS0134:2']);
+});
+
+test('an expression tree may not contain a dynamic operation (CS1963); a query needs a static source (CS1979)', () => {
+  const tree = body => `using System; using System.Linq.Expressions; class P { static void Main() { dynamic d = 2; ${body} } }`;
+  assert.deepEqual(codesOf(tree('Expression<Func<dynamic, dynamic>> e = x => x.Foo;')), ['CS1963:x.Foo']);
+  assert.deepEqual(codesOf(tree('Expression<Func<int>> e = () => d;')), ['CS1963:d']);
+  assert.deepEqual(codesOf(tree('Expression<Func<dynamic, object>> e = x => x;')), []);
+  assert.deepEqual(codesOf(tree('var q = from x in d select x;')), ['CS1979:d']);
+});

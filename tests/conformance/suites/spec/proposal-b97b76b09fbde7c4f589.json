@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-b97b76b09fbde7c4f589",
+  "kind": "spec",
+  "sourceText": "public class Base\n{\n    protected required int _field;\n\n    protected Base() {} // Contract required that _field is set\n}\npublic class Derived : Base\n{\n    public Derived() : init(_field = 1) // Contract is fulfilled and _field is removed from the required members list\n    {\n    }\n}",
+  "sourceSHA256": "bff59f4807743b6321795ecedd8cab87b20af85c51e293a09b8c84e31c24bfdc",
+  "target": "library",
+  "featureId": "csharp-11-0-required-members",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/required-members.md",
+    "sha256": "0f731d503b589797298f8926899fe7ca9be3843141d8782b074f52d1822f1ed3",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/required-members.md",
+    "license": "NOASSERTION",
+    "offset": 21985
+  }
+}

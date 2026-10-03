@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-37fc8bf0bf8f83a3b6c6",
+  "kind": "diagnostics",
+  "sourceText": "partial class C\n{\n    partial event System.Action E = null, F = null;\n    partial event System.Action E { add { } remove { } }\n    partial event System.Action F { add { } remove { } }\n}",
+  "sourceSHA256": "546235ee4adb87442ce759d200adeaced329bdd79fdba39b33c2d8bad7824bad",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "EventInitializer_Multiple_02",
+    "offset": 36911
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS9279",
+        "severity": "error"
+      },
+      {
+        "code": "CS0414",
+        "severity": "warning"
+      },
+      {
+        "code": "CS9279",
+        "severity": "error"
+      },
+      {
+        "code": "CS0414",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (3,33): error CS9279: 'C.E': partial event cannot have initializer\n            //     partial event System.Action E = null, F = null;\n            Diagnostic(ErrorCode.ERR_PartialEventInitializer, \"E\").WithArguments(\"C.E\").WithLocation(3, 33),\n            // (3,33): warning CS0414: The field 'C.E' is assigned but its value is never used\n            //     partial event System.Action E = null, F = null;\n            Diagnostic(ErrorCode.WRN_UnreferencedFieldAssg, \"E\").WithArguments(\"C.E\").WithLocation(3, 33),\n            // (3,43): error CS9279: 'C.F': partial event cannot have initializer\n            //     partial event System.Action E = null, F = null;\n            Diagnostic(ErrorCode.ERR_PartialEventInitializer, \"F\").WithArguments(\"C.F\").WithLocation(3, 43),\n            // (3,43): warning CS0414: The field 'C.F' is assigned but its value is never used\n            //     partial event System.Action E = null, F = null;\n            Diagnostic(ErrorCode.WRN_UnreferencedFieldAssg, \"F\").WithArguments(\"C.F\").WithLocation(3, 43)",
+  "unsupported": []
+}

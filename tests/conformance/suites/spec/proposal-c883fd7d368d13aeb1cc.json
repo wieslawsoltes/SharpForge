@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-c883fd7d368d13aeb1cc",
+  "kind": "spec",
+  "sourceText": "// Approximate implementation, omitting arg validation and the like\nnamespace System.Threading.Tasks\n{\n    public static class AsyncEnumerableExtensions\n    {\n        public static ConfiguredAsyncEnumerable<T> ConfigureAwait<T>(this IAsyncEnumerable<T> enumerable, bool continueOnCapturedContext) =>\n            new ConfiguredAsyncEnumerable<T>(enumerable, continueOnCapturedContext);\n\n        public struct ConfiguredAsyncEnumerable<T>\n        {\n            private readonly IAsyncEnumerable<T> _enumerable;\n            private readonly bool _continueOnCapturedContext;\n\n            internal ConfiguredAsyncEnumerable(IAsyncEnumerable<T> enumerable, bool continueOnCapturedContext)\n            {\n                _enumerable = enumerable;\n                _continueOnCapturedContext = continueOnCapturedContext;\n            }\n\n            public ConfiguredAsyncEnumerator<T> GetAsyncEnumerator() =>\n                new ConfiguredAsyncEnumerator<T>(_enumerable.GetAsyncEnumerator(), _continueOnCapturedContext);\n\n            public struct ConfiguredAsyncEnumerator<T>\n            {\n                private readonly IAsyncEnumerator<T> _enumerator;\n                private readonly bool _continueOnCapturedContext;\n\n                internal ConfiguredAsyncEnumerator(IAsyncEnumerator<T> enumerator, bool continueOnCapturedContext)\n                {\n                    _enumerator = enumerator;\n                    _continueOnCapturedContext = continueOnCapturedContext;\n                }\n\n                public ConfiguredValueTaskAwaitable<bool> MoveNextAsync() =>\n                    _enumerator.MoveNextAsync().ConfigureAwait(_continueOnCapturedContext);\n\n                public T Current => _enumerator.Current;\n\n                public ConfiguredValueTaskAwaitable DisposeAsync() =>\n                    _enumerator.DisposeAsync().ConfigureAwait(_continueOnCapturedContext);\n            }\n        }\n    }\n}",
+  "sourceSHA256": "f83798792b077b33874522d4f4d27a9650b328d61a76a2ccf4d34acc13159d4d",
+  "target": "library",
+  "featureId": "csharp-8-0-async-streams",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/async-streams.md",
+    "sha256": "944a31911115989c66e44f5c9e7eca2eeb960622f6f819166a48b91af8247c6a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/async-streams.md",
+    "license": "NOASSERTION",
+    "offset": 22783
+  }
+}

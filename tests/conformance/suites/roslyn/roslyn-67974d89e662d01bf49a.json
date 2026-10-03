@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-67974d89e662d01bf49a",
+  "kind": "diagnostics",
+  "sourceText": "#pragma warning disable CS0169 // The field is never used\nstruct A<T>\n{\n    A<A<T>> x;\n}\n\nstruct B<T>\n{\n    A<C<B<T>>> x;\n}\n\nstruct C<T>\n{\n}\n",
+  "sourceSHA256": "2d70c60be6895c624323298049ca3142a9204b3d3ae0fe49dde8653d235fe58c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/StructTests.cs",
+    "sha256": "0d6911ec2e8d7c03c9c20562c37c9d1959883735b8a2e5c0af7af46861c1379a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/StructTests.cs",
+    "license": "MIT",
+    "method": "InstanceMemberExplosion_02",
+    "offset": 7907
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(program)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0523",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,13): error CS0523: Struct member 'A<T>.x' of type 'A<A<T>>' causes a cycle in the struct layout\n                //     A<A<T>> x;\n                Diagnostic(ErrorCode.ERR_StructLayoutCycle, \"x\").WithArguments(\"A<T>.x\", \"A<A<T>>\").WithLocation(4, 13)\n                ",
+  "unsupported": []
+}

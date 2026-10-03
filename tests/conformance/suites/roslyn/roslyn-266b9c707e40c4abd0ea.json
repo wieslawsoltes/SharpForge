@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-266b9c707e40c4abd0ea",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    (long, string) _t;\n    public C(long l, string s) { _t = (l, s); }\n\n    public static void Main()\n    {\n        dynamic d = new C(1, \"hello\");\n        (long, string) tuple1 = (1, \"hello\");\n        (long, string) tuple2 = (2, \"world\");\n        System.Console.Write($\"{d == tuple1} {d != tuple1} {d == tuple2} {d != tuple2}\");\n    }\n    public static bool operator==(C c, (long, string) t)\n    {\n        return c._t.Item1 == t.Item1 && c._t.Item2 == t.Item2;\n    }\n    public static bool operator!=(C c, (long, string) t)\n    {\n        return !(c == t);\n    }\n    public override bool Equals(object o) => throw null;\n    public override int GetHashCode() => throw null;\n}\n",
+  "sourceSHA256": "f84c6b4d01fc5acd39a6a978c2aae82e43c4d05c03bb7317c4255e2e56b943e1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestComparisonOfDynamicAndTuple",
+    "offset": 188143
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, targetFramework: TargetFramework.StandardAndCSharp, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

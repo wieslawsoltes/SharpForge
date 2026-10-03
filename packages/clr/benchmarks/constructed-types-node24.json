@@ -1,0 +1,24 @@
+{
+  "node": "v24.21.0",
+  "cpu": "Apple M3 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "allocationCount": "not measured",
+  "previousEquivalentImplementation": false,
+  "results": [
+    {
+      "name": "cold vector descriptors with pre-registered BCL",
+      "unit": "microseconds/operation",
+      "median": 12.083000000004063,
+      "p95": 33.66700000000833,
+      "p99": 344.37499999999943
+    },
+    {
+      "name": "warm vector lookup",
+      "unit": "microseconds/operation",
+      "median": 0.0925582999999989,
+      "p95": 0.10918339999999917,
+      "p99": 0.14472080000000176
+    }
+  ]
+}

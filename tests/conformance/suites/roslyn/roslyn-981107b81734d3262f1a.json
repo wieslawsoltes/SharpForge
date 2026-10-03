@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-981107b81734d3262f1a",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.InteropServices;\n\n[StructLayout(LayoutKind.Sequential, Size = -1)] class S {}\n",
+  "sourceSHA256": "cbecd27c008a2e47f227e58397e4502c257a6320b2012a18a052acd294c5970d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_StructLayout.cs",
+    "sha256": "ce938700c356369c7e978139464b937226a731a78b59b5f3818c266a31875abc",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_StructLayout.cs",
+    "license": "MIT",
+    "method": "Size_Errors",
+    "offset": 11802
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0599",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,38): error CS0599: Invalid value for named attribute argument 'Size'\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"Size = -1\").WithArguments(\"Size\")",
+  "unsupported": []
+}
