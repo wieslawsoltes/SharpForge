@@ -13,10 +13,14 @@
  * records the resume state and returns true; MoveNext starts by jumping to the label of the recorded state.
  * States: 0 not started, -1 running or finished, k > 0 suspended after the k-th yield.
  *
- * Not lowered (reported as not executable): `yield` inside a try block, which needs the machine to run finally
- * blocks from Dispose, and conversions of arrays or framework collections to IEnumerable<T>.
+ * `yield` inside `try`/`finally` (and `using`, and a `foreach` that disposes) is lowered by ./iterators/try-regions.js;
+ * `Dispose` then resumes a suspended machine in dispose mode so that its pending finally blocks run.
+ *
+ * Not lowered (reported as not executable): conversions of arrays or framework collections to IEnumerable<T>.
  */
 import { n } from '../codegen/semantic/node-factory.js';
+import { resumeDispatch } from './iterators/try-regions.js';
+import { disposeBody } from './iterators/disposal.js';
 
 export class IteratorClasses {
   /** @param generator `{program}` */
@@ -33,9 +37,11 @@ export class IteratorClasses {
     info.methodField = this.program.addField(record, 'method', 'int');
     info.stateField = this.program.addField(record, '<>1__state', 'int');
     info.currentField = this.program.addField(record, '<>2__current', elementType);
+    info.disposingField = this.program.addField(record, '<>w__disposeMode', 'bool');
     const self = [{ name: 'iterator', type: record.name }];
     info.moveNext = this.program.addMethod(record, 'MoveNext', { isStatic: true, returnType: 'bool', parameters: self });
     info.getEnumerator = this.program.addMethod(record, 'GetEnumerator', { isStatic: true, returnType: record.name, parameters: self });
+    info.dispose = this.program.addMethod(record, 'Dispose', { isStatic: true, returnType: 'void', parameters: self });
     this.byElement.set(elementType, info);
     return info;
   }
@@ -48,10 +54,11 @@ export class IteratorClasses {
   /**
    * Registers the state machine of one iterator method.
    * @param {string} name the Roslyn-style machine name (`<M>d__0`)
-   * @returns `{id, moveNext, proxies}`: `proxies` collects `{initial, live}` field pairs for parameters and `this`
+   * @returns `{id, moveNext, proxies, protectedStates}`: `proxies` collects `{initial, live}` field pairs for
+   *   parameters and `this`; `protectedStates` the resume states that lie inside a try region
    */
   addMachine(info, name) {
-    const machine = { id: info.machines.length + 1, name, proxies: [] };
+    const machine = { id: info.machines.length + 1, name, proxies: [], protectedStates: [] };
     machine.moveNext = this.program.addMethod(info.record, name + '.MoveNext', {
       isStatic: true,
       returnType: 'bool',
@@ -74,7 +81,7 @@ export class IteratorClasses {
     });
     return n.sequence([temp], effects, n.local(temp));
   }
-  /** Bodies of the two dispatchers of every iterator class: `[{method, body}]`. */
+  /** Bodies of the three dispatchers of every iterator class: `[{method, body}]`. */
   finish() {
     const bodies = [];
     for (const info of this.byElement.values()) {
@@ -97,18 +104,22 @@ export class IteratorClasses {
       }
       statements.push(n.returnStatement(n.local(copy)));
       bodies.push({ method: info.getEnumerator, body: n.block(statements, [copy]) });
+      bodies.push({ method: info.dispose, body: disposeBody(info, self) });
     }
     return bodies;
   }
 }
 
-/** The MoveNext body of a state machine: resume dispatch, the lowered iterator body, and the final `return false`. */
-export function stateMachineBody(info, self, labels, body) {
-  const state = () => n.field(self(), info.stateField),
+/**
+ * The MoveNext body of a state machine: resume dispatch, the lowered iterator body, and the final `return false`.
+ * @param hoist the machine being built (`{info, self, dispatch}`)  @param body the lowered iterator body
+ */
+export function stateMachineBody(hoist, body) {
+  const { info, self } = hoist,
+    state = () => n.field(self(), info.stateField),
     finished = n.literal(-1, 'int');
-  const resume = labels.map((label, i) => n.ifStatement(n.equals(state(), n.literal(i + 1, 'int')), { kind: 'GotoStatement', syntax: n.hidden, label }));
   return n.block([
-    ...resume,
+    ...resumeDispatch(state, hoist.dispatch),
     n.ifStatement(n.notEquals(state(), n.literal(0, 'int')), n.returnStatement(n.literal(false, 'bool'))),
     n.expressionStatement(n.assign(state(), finished)),
     body,
@@ -117,23 +128,10 @@ export function stateMachineBody(info, self, labels, body) {
   ]);
 }
 
-/** The statements of `yield return value`: store, suspend, and the label MoveNext resumes at. */
-export function yieldReturn(info, self, labels, value, syntax) {
-  const label = { name: 'resume' + (labels.length + 1) };
-  labels.push(label);
+/** The statements of `yield break`: a return, so the finally blocks of enclosing try regions run on the way out. */
+export function yieldBreak(hoist, syntax) {
   return n.block([
-    n.expressionStatement(n.assign(n.field(self(), info.currentField), value), syntax),
-    n.expressionStatement(n.assign(n.field(self(), info.stateField), n.literal(labels.length, 'int'))),
-    n.returnStatement(n.literal(true, 'bool')),
-    { kind: 'LabelStatement', syntax: n.hidden, label },
-    n.expressionStatement(n.assign(n.field(self(), info.stateField), n.literal(-1, 'int'))),
-  ]);
-}
-
-/** The statements of `yield break`. */
-export function yieldBreak(info, self, syntax) {
-  return n.block([
-    n.expressionStatement(n.assign(n.field(self(), info.stateField), n.literal(-1, 'int')), syntax),
+    n.expressionStatement(n.assign(n.field(hoist.self(), hoist.info.stateField), n.literal(-1, 'int')), syntax),
     n.returnStatement(n.literal(false, 'bool')),
   ]);
 }

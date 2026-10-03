@@ -1,0 +1,1764 @@
+{
+  "version": 1,
+  "project": "https://github.com/users/wieslawsoltes/projects/4",
+  "objective": "Implement every board item in worktrees and stacked PRs; validate complete scopes; integrate concurrent agent work and resolve conflicts.",
+  "observedAt": "2026-10-03",
+  "complete": false,
+  "stack": [
+    {
+      "branch": "codex/a29-ci",
+      "base": "main",
+      "pr": 1372
+    },
+    {
+      "branch": "codex/a00-planning",
+      "base": "codex/a29-ci",
+      "pr": 1373
+    },
+    {
+      "branch": "codex/a00-services",
+      "base": "codex/a00-planning",
+      "pr": 1545
+    },
+    {
+      "branch": "codex/a00-abi",
+      "base": "codex/a00-services",
+      "pr": 1835
+    },
+    {
+      "branch": "codex/a00-governance",
+      "base": "codex/a00-abi",
+      "pr": 1836
+    },
+    {
+      "branch": "codex/a00-build-registration",
+      "base": "codex/a00-governance",
+      "pr": 1837
+    },
+    {
+      "branch": "codex/a00-gates-evidence",
+      "base": "codex/a00-build-registration",
+      "pr": null
+    },
+    {
+      "branch": "codex/a29-oracles",
+      "base": "codex/a00-gates-evidence",
+      "pr": 1774
+    },
+    {
+      "branch": "codex/a00-golden",
+      "base": "codex/a29-oracles",
+      "pr": null
+    }
+  ],
+  "integrationNotes": [
+    "External A05 runtime stack is active; do not overwrite its worktrees. Scheduler resumeFault GC root fix d387dd1 is cherry-picked into ABI scope.",
+    "External Claude syntax and compiler worktrees are active under .claude/worktrees.",
+    "Two live duplicate work IDs (SF-A01-T28 issues533/566 and SF-A02-T18 issues598/599) block strict full-backlog DAG validation; preserve unresolved status until authoritative IDs are reconciled.",
+    "Leaf implementation is not merged qualification; parent epics remain incomplete.",
+    "Project4 had244 items at the later live capture; additional A29 atomic leaves are included.",
+    "CI9682448 passed all63 hosted jobs. Integrated typedABI+governance+build-registration8fdadd4 passed all2764 Node tests.",
+    "Root proofs are being hardened after independent review: bind target obligations and immutable clean tested commits.",
+    "Reference oracle PR1774 remains draft: Linux19 real observations passed but8 target baselines await review; Windows native WinUI pending."
+  ],
+  "items": [
+    {
+      "issue": 2,
+      "title": "[SF-A00-E01] Runtime and compiler seams",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/2"
+    },
+    {
+      "issue": 3,
+      "title": "[SF-A00-E02] Agent scheduling and merge safety",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/3"
+    },
+    {
+      "issue": 4,
+      "title": "[SF-A00-T01] Freeze portable value and handle ABI",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/4"
+    },
+    {
+      "issue": 5,
+      "title": "[SF-A00-T02] Extract registry contribution interface",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/5"
+    },
+    {
+      "issue": 6,
+      "title": "[SF-A00-T03] Split Studio registration seams (commands, menus, tools, automation API)",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/6"
+    },
+    {
+      "issue": 7,
+      "title": "[SF-A00-T04] Define execution and GC safepoint contract",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/7"
+    },
+    {
+      "issue": 8,
+      "title": "[SF-A00-T05] Define metadata and semantic IR schema",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/8"
+    },
+    {
+      "issue": 9,
+      "title": "[SF-A00-T06] Partition build and test registration",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/9"
+    },
+    {
+      "issue": 10,
+      "title": "[SF-A00-T07] Implement agent claim leases",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/10"
+    },
+    {
+      "issue": 11,
+      "title": "[SF-A00-T08] Enforce changed-file ownership",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/11"
+    },
+    {
+      "issue": 12,
+      "title": "[SF-A00-T09] Validate dependency DAG and readiness",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/12"
+    },
+    {
+      "issue": 13,
+      "title": "[SF-A00-T10] Introduce merge-queue contract gates",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/13"
+    },
+    {
+      "issue": 14,
+      "title": "[SF-A00-T11] Track agent handoff and evidence",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/14"
+    },
+    {
+      "issue": 15,
+      "title": "[SF-A00-T12] Implement automated parity rollups",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/15"
+    },
+    {
+      "issue": 395,
+      "title": "[SF-A29-E01] Reproducible qualification",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/395"
+    },
+    {
+      "issue": 396,
+      "title": "[SF-A29-E02] Release and security gates",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/396"
+    },
+    {
+      "issue": 397,
+      "title": "[SF-A29-T01] Requalify hosted CI and add macOS qualification",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/397"
+    },
+    {
+      "issue": 398,
+      "title": "[SF-A29-T02] Build pinned reference-oracle harness",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/398"
+    },
+    {
+      "issue": 399,
+      "title": "[SF-A29-T03] Generate API and language coverage inventory",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/399"
+    },
+    {
+      "issue": 400,
+      "title": "[SF-A29-T04] Implement cross-engine differential runner",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/400"
+    },
+    {
+      "issue": 401,
+      "title": "[SF-A29-T05] Build shared fuzzing harness and cross-format fuzz targets",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/401"
+    },
+    {
+      "issue": 402,
+      "title": "[SF-A29-T06] Implement real browser platform matrix",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/402"
+    },
+    {
+      "issue": 403,
+      "title": "[SF-A29-T07] Implement performance regression service",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/403"
+    },
+    {
+      "issue": 404,
+      "title": "[SF-A29-T08] Implement supply-chain and license gates",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/404"
+    },
+    {
+      "issue": 405,
+      "title": "[SF-A29-T09] Implement reproducible package verification",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/405"
+    },
+    {
+      "issue": 406,
+      "title": "[SF-A29-T10] Implement native platform qualification",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/406"
+    },
+    {
+      "issue": 407,
+      "title": "[SF-A29-T11] Implement release and preview policy",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/407"
+    },
+    {
+      "issue": 408,
+      "title": "[SF-A29-T12] Implement end-to-end product acceptance",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/408"
+    },
+    {
+      "issue": 423,
+      "title": "[SF-R015-T01] Reconcile 0.15 source provenance and publish a verified implementation inventory",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/423"
+    },
+    {
+      "issue": 426,
+      "title": "[SF-R015-T04] Qualify the 0.15 Git-to-designer-to-multi-app-to-downloaded-HTML release scenario",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/426"
+    },
+    {
+      "issue": 427,
+      "title": "[SF-A00-E03] Hot-file seam extraction",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/427"
+    },
+    {
+      "issue": 428,
+      "title": "[SF-A29-E03] CI infrastructure for parallel agents",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/428"
+    },
+    {
+      "issue": 429,
+      "title": "[SF-A29-E04] External conformance suites",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/429"
+    },
+    {
+      "issue": 430,
+      "title": "[SF-A29-E05] Security qualification",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/430"
+    },
+    {
+      "issue": 431,
+      "title": "[SF-A00-T13] Split MethodCompiler statement and expression switches into handler modules",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/431"
+    },
+    {
+      "issue": 432,
+      "title": "[SF-A00-T14] Extract compiler diagnostics catalog",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/432"
+    },
+    {
+      "issue": 433,
+      "title": "[SF-A00-T15] Extract Compilation declaration binding from compiler index",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/433"
+    },
+    {
+      "issue": 434,
+      "title": "[SF-A00-T16] Split Parser class into production modules",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/434"
+    },
+    {
+      "issue": 435,
+      "title": "[SF-A00-T17] Convert source VM opcode switch to handler table",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/435"
+    },
+    {
+      "issue": 436,
+      "title": "[SF-A00-T18] Convert CIL VM opcode switch to grouped handler modules",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/436"
+    },
+    {
+      "issue": 437,
+      "title": "[SF-A00-T19] Add byte-identical output guard for seam refactors",
+      "state": "implemented-local",
+      "branch": "codex/a00-golden",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/437",
+      "pr": null
+    },
+    {
+      "issue": 438,
+      "title": "[SF-A00-T20] Split Studio CSS release layers into per-tool stylesheets",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/438"
+    },
+    {
+      "issue": 439,
+      "title": "[SF-A00-T21] Bootstrap project fields, labels and views idempotently",
+      "state": "in-review",
+      "branch": "codex/a00-governance",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/439",
+      "pr": 1836
+    },
+    {
+      "issue": 440,
+      "title": "[SF-A00-T22] Lint backlog issues against the task template",
+      "state": "in-review",
+      "branch": "codex/a00-governance",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/440",
+      "pr": 1836
+    },
+    {
+      "issue": 441,
+      "title": "[SF-A00-T23] Detect overlapping sibling sub-task write paths",
+      "state": "in-review",
+      "branch": "codex/a00-governance",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/441",
+      "pr": 1836
+    },
+    {
+      "issue": 475,
+      "title": "[SF-A00-T24] Rate-limit and retry policy for planning tools",
+      "state": "in-review",
+      "branch": "codex/a00-planning",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/475",
+      "pr": 1373
+    },
+    {
+      "issue": 476,
+      "title": "[SF-A00-T25] Agent identity and audit log",
+      "state": "in-review",
+      "branch": "codex/a00-planning",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/476",
+      "pr": 1373
+    },
+    {
+      "issue": 477,
+      "title": "[SF-A29-B01] Emacs keymap browser check fails on macOS",
+      "state": "in-review",
+      "branch": "codex/a29-ci",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/477",
+      "pr": 1372
+    },
+    {
+      "issue": 478,
+      "title": "[SF-A29-B02] CLI workspace writes fail when the temp directory is under a symlink",
+      "state": "in-review",
+      "branch": "codex/a29-ci",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/478",
+      "pr": 1372
+    },
+    {
+      "issue": 479,
+      "title": "[SF-A29-B03] Content-Security-Policy is not applied on GitHub Pages",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/479"
+    },
+    {
+      "issue": 480,
+      "title": "[SF-A29-B04] Release workflow publishes without browser or native qualification",
+      "state": "in-review",
+      "branch": "codex/a29-ci",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/480",
+      "pr": 1372
+    },
+    {
+      "issue": 481,
+      "title": "[SF-A29-B05] SOURCE-MANIFEST.json has no generator in the repository",
+      "state": "in-review",
+      "branch": "codex/a29-ci",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/481",
+      "pr": 1372
+    },
+    {
+      "issue": 482,
+      "title": "[SF-A29-B06] Syntax check is the only static gate",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/482"
+    },
+    {
+      "issue": 483,
+      "title": "[SF-A29-T13] Wire ownership, DAG and contract gates into PR workflow",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/483"
+    },
+    {
+      "issue": 484,
+      "title": "[SF-A29-T14] Add merge queue triggers and combined-tree gates",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/484"
+    },
+    {
+      "issue": 485,
+      "title": "[SF-A29-T15] Add scheduled lease reaper workflow",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/485"
+    },
+    {
+      "issue": 486,
+      "title": "[SF-A29-T16] Run per-area CI from the test manifest matrix",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/486"
+    },
+    {
+      "issue": 487,
+      "title": "[SF-A29-T17] Add flaky test detection and quarantine",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/487"
+    },
+    {
+      "issue": 488,
+      "title": "[SF-A29-T18] Add PR template and issue forms for tasks and bugs",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/488"
+    },
+    {
+      "issue": 489,
+      "title": "[SF-A29-T19] Add Rust and Wasm toolchain CI lane",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/489"
+    },
+    {
+      "issue": 490,
+      "title": "[SF-A29-T20] Add CI duration and cost budget tracking",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/490"
+    },
+    {
+      "issue": 491,
+      "title": "[SF-A29-T21] Import a Roslyn compiler test subset",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/491"
+    },
+    {
+      "issue": 492,
+      "title": "[SF-A29-T22] Import dotnet/runtime IL and JIT test subset",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/492"
+    },
+    {
+      "issue": 493,
+      "title": "[SF-A29-T23] Import dotnet/runtime libraries test subset",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/493"
+    },
+    {
+      "issue": 494,
+      "title": "[SF-A29-T24] Extract C# specification examples as tests",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/494"
+    },
+    {
+      "issue": 495,
+      "title": "[SF-A29-T25] Add GC stress and finalization conformance suite",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/495"
+    },
+    {
+      "issue": 496,
+      "title": "[SF-A29-T26] Add WinUI Gallery scenario suite",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/496"
+    },
+    {
+      "issue": 497,
+      "title": "[SF-A29-T27] Add ECMA-335 verification rule suite",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/497"
+    },
+    {
+      "issue": 498,
+      "title": "[SF-A29-T28] Add LSP and DAP protocol conformance suite",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/498"
+    },
+    {
+      "issue": 499,
+      "title": "[SF-A29-T29] Emit CSP meta policy and probe it for static hosts",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/499"
+    },
+    {
+      "issue": 500,
+      "title": "[SF-A29-T30] Add managed sandbox escape test suite",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/500"
+    },
+    {
+      "issue": 501,
+      "title": "[SF-A29-T31] Add resource-limit qualification suite",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/501"
+    },
+    {
+      "issue": 502,
+      "title": "[SF-A29-T32] Add static analysis gate for JavaScript sources",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/502"
+    },
+    {
+      "issue": 503,
+      "title": "[SF-A29-T33] Add Studio HTML injection test suite",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/503"
+    },
+    {
+      "issue": 504,
+      "title": "[SF-A29-T34] Publish threat model and disclosure policy",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/504"
+    },
+    {
+      "issue": 505,
+      "title": "[SF-A29-T35] Add Rust memory-safety qualification lane",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/505"
+    },
+    {
+      "issue": 506,
+      "title": "[SF-A29-T36] Add code coverage reporting per area",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/506"
+    },
+    {
+      "issue": 507,
+      "title": "[SF-A29-T37] Move historical validation evidence out of docs",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/507"
+    },
+    {
+      "issue": 508,
+      "title": "[SF-A29-T38] Qualify GC behaviour differentially across collectors",
+      "state": "remaining",
+      "branch": null,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/508"
+    },
+    {
+      "issue": 1032,
+      "title": "[SF-A00-T01.1] Inventory current JS value representations in both VMs",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1032",
+      "pr": 1835
+    },
+    {
+      "issue": 1033,
+      "title": "[SF-A00-T01.2] Specify portable scalar widths and tagged value encoding",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1033",
+      "pr": 1835
+    },
+    {
+      "issue": 1034,
+      "title": "[SF-A00-T01.3] Specify reference handle identity, null and ownership rules",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1034",
+      "pr": 1835
+    },
+    {
+      "issue": 1035,
+      "title": "[SF-A00-T01.4] Specify fault and exception transfer ABI",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1035",
+      "pr": 1835
+    },
+    {
+      "issue": 1036,
+      "title": "[SF-A00-T01.5] Implement reference value codec in JavaScript",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1036",
+      "pr": 1835
+    },
+    {
+      "issue": 1037,
+      "title": "[SF-A00-T01.6] Add adversarial value-ABI fixture corpus",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1037",
+      "pr": 1835
+    },
+    {
+      "issue": 1038,
+      "title": "[SF-A00-T01.7] Add ABI version registry and negotiation check",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1038",
+      "pr": 1835
+    },
+    {
+      "issue": 1039,
+      "title": "[SF-A00-T02.1] Lock current framework contract IDs in a golden file",
+      "state": "in-review",
+      "branch": "codex/a00-services",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1039",
+      "pr": 1545
+    },
+    {
+      "issue": 1040,
+      "title": "[SF-A00-T02.2] Lock bytecode builtin IDs and opcode numbering",
+      "state": "in-review",
+      "branch": "codex/a00-services",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1040",
+      "pr": 1545
+    },
+    {
+      "issue": 1041,
+      "title": "[SF-A00-T02.3] Extract framework registrar into registry.js",
+      "state": "in-review",
+      "branch": "codex/a00-services",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1041",
+      "pr": 1545
+    },
+    {
+      "issue": 1042,
+      "title": "[SF-A00-T02.4] Move inline core declarations into contribution modules",
+      "state": "in-review",
+      "branch": "codex/a00-services",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1042",
+      "pr": 1545
+    },
+    {
+      "issue": 1043,
+      "title": "[SF-A00-T02.5] Add ordered contribution manifest with reserved ID blocks",
+      "state": "in-review",
+      "branch": "codex/a00-services",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1043",
+      "pr": 1545
+    },
+    {
+      "issue": 1044,
+      "title": "[SF-A00-T02.6] Validate contributions for duplicates and unknown types",
+      "state": "in-review",
+      "branch": "codex/a00-services",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1044",
+      "pr": 1545
+    },
+    {
+      "issue": 1045,
+      "title": "[SF-A00-T02.7] Split bytecode intrinsic table into builtins module",
+      "state": "in-review",
+      "branch": "codex/a00-services",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1045",
+      "pr": 1545
+    },
+    {
+      "issue": 1046,
+      "title": "[SF-A00-T02.8] Check every contract has an implementation in both VMs",
+      "state": "in-review",
+      "branch": "codex/a00-services",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1046",
+      "pr": 1545
+    },
+    {
+      "issue": 1047,
+      "title": "[SF-A00-T03.1] Add Studio service container with rollback",
+      "state": "in-review",
+      "branch": "codex/a00-services",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1047",
+      "pr": 1545
+    },
+    {
+      "issue": 1048,
+      "title": "[SF-A00-T03.2] Extract command registry from studio.js execute chain",
+      "state": "in-review",
+      "branch": "codex/a00-services",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1048",
+      "pr": 1545
+    },
+    {
+      "issue": 1049,
+      "title": "[SF-A00-T03.3] Extract menu contribution table",
+      "state": "in-review",
+      "branch": "codex/a00-services",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1049",
+      "pr": 1545
+    },
+    {
+      "issue": 1050,
+      "title": "[SF-A00-T03.4] Extract tool panel registration",
+      "state": "in-review",
+      "branch": "codex/a00-services",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1050",
+      "pr": 1545
+    },
+    {
+      "issue": 1051,
+      "title": "[SF-A00-T03.5] Split window.sharpforge automation API into contributions",
+      "state": "in-review",
+      "branch": "codex/a00-services",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1051",
+      "pr": 1545
+    },
+    {
+      "issue": 1052,
+      "title": "[SF-A00-T03.6] Centralise Studio persistent storage keys",
+      "state": "in-review",
+      "branch": "codex/a00-services",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1052",
+      "pr": 1545
+    },
+    {
+      "issue": 1053,
+      "title": "[SF-A00-T03.7] Move icon table and static dialogs out of studio.js",
+      "state": "in-review",
+      "branch": "codex/a00-services",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1053",
+      "pr": 1545
+    },
+    {
+      "issue": 1054,
+      "title": "[SF-A00-T03.8] Define worker request protocol table",
+      "state": "in-review",
+      "branch": "codex/a00-services",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1054",
+      "pr": 1545
+    },
+    {
+      "issue": 1055,
+      "title": "[SF-A00-T04.1] Inventory GC root sources across runtime modules",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1055",
+      "pr": 1835
+    },
+    {
+      "issue": 1056,
+      "title": "[SF-A00-T04.2] Specify safepoint placement and polling contract",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1056",
+      "pr": 1835
+    },
+    {
+      "issue": 1057,
+      "title": "[SF-A00-T04.3] Specify write and read barrier contract",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1057",
+      "pr": 1835
+    },
+    {
+      "issue": 1058,
+      "title": "[SF-A00-T04.4] Specify exception dispatch across frames and host boundaries",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1058",
+      "pr": 1835
+    },
+    {
+      "issue": 1059,
+      "title": "[SF-A00-T04.5] Specify external operation and cancellation boundary",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1059",
+      "pr": 1835
+    },
+    {
+      "issue": 1060,
+      "title": "[SF-A00-T04.6] Specify pause and snapshot contract for debuggers",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1060",
+      "pr": 1835
+    },
+    {
+      "issue": 1061,
+      "title": "[SF-A00-T04.7] Build safepoint and root-set contract fixture runner",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1061",
+      "pr": 1835
+    },
+    {
+      "issue": 1062,
+      "title": "[SF-A00-T05.1] Publish bytecode image v1 schema",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1062",
+      "pr": 1835
+    },
+    {
+      "issue": 1063,
+      "title": "[SF-A00-T05.2] Define type and signature identity schema",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1063",
+      "pr": 1835
+    },
+    {
+      "issue": 1064,
+      "title": "[SF-A00-T05.3] Define symbol identity schema",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1064",
+      "pr": 1835
+    },
+    {
+      "issue": 1065,
+      "title": "[SF-A00-T05.4] Define source span and sequence point schema",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1065",
+      "pr": 1835
+    },
+    {
+      "issue": 1066,
+      "title": "[SF-A00-T05.5] Define method body semantic IR schema",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1066",
+      "pr": 1835
+    },
+    {
+      "issue": 1067,
+      "title": "[SF-A00-T05.6] Document the SharpForge custom metadata stream",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1067",
+      "pr": 1835
+    },
+    {
+      "issue": 1068,
+      "title": "[SF-A00-T05.7] Implement dependency-free schema validator and version gate",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1068",
+      "pr": 1835
+    },
+    {
+      "issue": 1069,
+      "title": "[SF-A00-T05.8] Generate reproducible golden schema fixtures",
+      "state": "in-review",
+      "branch": "codex/a00-abi",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1069",
+      "pr": 1835
+    },
+    {
+      "issue": 1070,
+      "title": "[SF-A00-T06.1] Define per-area test manifest schema",
+      "state": "in-review",
+      "branch": "codex/a00-build-registration",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1070",
+      "pr": 1837
+    },
+    {
+      "issue": 1071,
+      "title": "[SF-A00-T06.2] Assign all existing tests to area manifests",
+      "state": "in-review",
+      "branch": "codex/a00-build-registration",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1071",
+      "pr": 1837
+    },
+    {
+      "issue": 1072,
+      "title": "[SF-A00-T06.3] Implement manifest-driven test runner",
+      "state": "in-review",
+      "branch": "codex/a00-build-registration",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1072",
+      "pr": 1837
+    },
+    {
+      "issue": 1073,
+      "title": "[SF-A00-T06.4] Fail CI on missing or duplicate manifests",
+      "state": "in-review",
+      "branch": "codex/a00-build-registration",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1073",
+      "pr": 1837
+    },
+    {
+      "issue": 1074,
+      "title": "[SF-A00-T06.5] Replace package.json script sprawl with task contributions",
+      "state": "in-review",
+      "branch": "codex/a00-build-registration",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1074",
+      "pr": 1837
+    },
+    {
+      "issue": 1075,
+      "title": "[SF-A00-T06.6] Make build.js consume per-package build contributions",
+      "state": "in-review",
+      "branch": "codex/a00-build-registration",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1075",
+      "pr": 1837
+    },
+    {
+      "issue": 1076,
+      "title": "[SF-A00-T06.7] Derive package list in verify-packages from workspaces",
+      "state": "in-review",
+      "branch": "codex/a00-build-registration",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1076",
+      "pr": 1837
+    },
+    {
+      "issue": 1077,
+      "title": "[SF-A00-T06.8] Emit CI matrix JSON from manifests",
+      "state": "in-review",
+      "branch": "codex/a00-build-registration",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1077",
+      "pr": 1837
+    },
+    {
+      "issue": 1078,
+      "title": "[SF-A00-T07.1] Specify claim state machine and field semantics",
+      "state": "in-review",
+      "branch": "codex/a00-planning",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1078",
+      "pr": 1373
+    },
+    {
+      "issue": 1079,
+      "title": "[SF-A00-T07.2] Implement GitHub Projects field client",
+      "state": "in-review",
+      "branch": "codex/a00-planning",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1079",
+      "pr": 1373
+    },
+    {
+      "issue": 1080,
+      "title": "[SF-A00-T07.3] Implement atomic claim command using ref creation as the lock",
+      "state": "in-review",
+      "branch": "codex/a00-planning",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1080",
+      "pr": 1373
+    },
+    {
+      "issue": 1081,
+      "title": "[SF-A00-T07.4] Implement lease heartbeat command",
+      "state": "in-review",
+      "branch": "codex/a00-planning",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1081",
+      "pr": 1373
+    },
+    {
+      "issue": 1082,
+      "title": "[SF-A00-T07.5] Implement explicit release command",
+      "state": "in-review",
+      "branch": "codex/a00-planning",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1082",
+      "pr": 1373
+    },
+    {
+      "issue": 1083,
+      "title": "[SF-A00-T07.6] Implement expired-lease reconciliation",
+      "state": "in-review",
+      "branch": "codex/a00-planning",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1083",
+      "pr": 1373
+    },
+    {
+      "issue": 1084,
+      "title": "[SF-A00-T07.7] Implement shared lock keys for hot files",
+      "state": "in-review",
+      "branch": "codex/a00-planning",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1084",
+      "pr": 1373
+    },
+    {
+      "issue": 1085,
+      "title": "[SF-A00-T07.8] Build fake GitHub server for planning tool tests",
+      "state": "in-review",
+      "branch": "codex/a00-planning",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1085",
+      "pr": 1373
+    },
+    {
+      "issue": 1086,
+      "title": "[SF-A00-T08.1] Generate machine-readable ownership map",
+      "state": "in-review",
+      "branch": "codex/a00-governance",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1086",
+      "pr": 1836
+    },
+    {
+      "issue": 1087,
+      "title": "[SF-A00-T08.2] Resolve task identity from branch and PR metadata",
+      "state": "in-review",
+      "branch": "codex/a00-governance",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1087",
+      "pr": 1836
+    },
+    {
+      "issue": 1088,
+      "title": "[SF-A00-T08.3] Implement changed-file ownership checker",
+      "state": "in-review",
+      "branch": "codex/a00-governance",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1088",
+      "pr": 1836
+    },
+    {
+      "issue": 1089,
+      "title": "[SF-A00-T08.4] Define ownership exceptions policy",
+      "state": "in-review",
+      "branch": "codex/a00-governance",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1089",
+      "pr": 1836
+    },
+    {
+      "issue": 1090,
+      "title": "[SF-A00-T08.5] Guard hot shared files with a growth budget",
+      "state": "in-review",
+      "branch": "codex/a00-governance",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1090",
+      "pr": 1836
+    },
+    {
+      "issue": 1091,
+      "title": "[SF-A00-T08.6] Generate CODEOWNERS from the ownership map",
+      "state": "in-review",
+      "branch": "codex/a00-governance",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1091",
+      "pr": 1836
+    },
+    {
+      "issue": 1092,
+      "title": "[SF-A00-T09.1] Define dependency declaration format",
+      "state": "in-review",
+      "branch": "codex/a00-governance",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1092",
+      "pr": 1836
+    },
+    {
+      "issue": 1093,
+      "title": "[SF-A00-T09.2] Snapshot the backlog for offline validation",
+      "state": "in-review",
+      "branch": "codex/a00-governance",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1093",
+      "pr": 1836
+    },
+    {
+      "issue": 1094,
+      "title": "[SF-A00-T09.3] Implement DAG validator for cycles and unresolved IDs",
+      "state": "in-review",
+      "branch": "codex/a00-governance",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1094",
+      "pr": 1836
+    },
+    {
+      "issue": 1095,
+      "title": "[SF-A00-T09.4] Compute readiness from merged dependencies",
+      "state": "in-review",
+      "branch": "codex/a00-governance",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1095",
+      "pr": 1836
+    },
+    {
+      "issue": 1096,
+      "title": "[SF-A00-T09.5] Gate claims on readiness",
+      "state": "in-review",
+      "branch": "codex/a00-governance",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1096",
+      "pr": 1836
+    },
+    {
+      "issue": 1097,
+      "title": "[SF-A00-T09.6] Emit dependency graph visualisation",
+      "state": "in-review",
+      "branch": "codex/a00-governance",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1097",
+      "pr": 1836
+    },
+    {
+      "issue": 1098,
+      "title": "[SF-A00-T10.1] Implement contract gate script",
+      "state": "in-progress",
+      "branch": "codex/a00-gates-evidence",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1098",
+      "pr": null
+    },
+    {
+      "issue": 1099,
+      "title": "[SF-A00-T10.2] Build static import graph across packages and apps",
+      "state": "in-progress",
+      "branch": "codex/a00-gates-evidence",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1099",
+      "pr": null
+    },
+    {
+      "issue": 1100,
+      "title": "[SF-A00-T10.3] Select impacted consumer tests from changed paths",
+      "state": "in-progress",
+      "branch": "codex/a00-gates-evidence",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1100",
+      "pr": null
+    },
+    {
+      "issue": 1101,
+      "title": "[SF-A00-T10.4] Require contract-change declaration and version bump",
+      "state": "in-progress",
+      "branch": "codex/a00-gates-evidence",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1101",
+      "pr": null
+    },
+    {
+      "issue": 1102,
+      "title": "[SF-A00-T10.5] Add incompatible-pair merge simulation test",
+      "state": "in-progress",
+      "branch": "codex/a00-gates-evidence",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1102",
+      "pr": null
+    },
+    {
+      "issue": 1103,
+      "title": "[SF-A00-T11.1] Define handoff record schema",
+      "state": "in-progress",
+      "branch": "codex/a00-gates-evidence",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1103",
+      "pr": null
+    },
+    {
+      "issue": 1104,
+      "title": "[SF-A00-T11.2] Implement handoff writer command",
+      "state": "in-progress",
+      "branch": "codex/a00-gates-evidence",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1104",
+      "pr": null
+    },
+    {
+      "issue": 1105,
+      "title": "[SF-A00-T11.3] Capture test evidence per task",
+      "state": "in-progress",
+      "branch": "codex/a00-gates-evidence",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1105",
+      "pr": null
+    },
+    {
+      "issue": 1106,
+      "title": "[SF-A00-T11.4] Implement resume command for replacement agents",
+      "state": "in-progress",
+      "branch": "codex/a00-gates-evidence",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1106",
+      "pr": null
+    },
+    {
+      "issue": 1107,
+      "title": "[SF-A00-T11.5] Write agent runbook",
+      "state": "in-progress",
+      "branch": "codex/a00-gates-evidence",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1107",
+      "pr": null
+    },
+    {
+      "issue": 1108,
+      "title": "[SF-A00-T12.1] Define evidence record schema with distinct statuses",
+      "state": "in-progress",
+      "branch": "codex/a00-gates-evidence",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1108",
+      "pr": null
+    },
+    {
+      "issue": 1109,
+      "title": "[SF-A00-T12.2] Add spec revision registry",
+      "state": "in-progress",
+      "branch": "codex/a00-gates-evidence",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1109",
+      "pr": null
+    },
+    {
+      "issue": 1110,
+      "title": "[SF-A00-T12.3] Implement rollup calculator",
+      "state": "in-progress",
+      "branch": "codex/a00-gates-evidence",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1110",
+      "pr": null
+    },
+    {
+      "issue": 1111,
+      "title": "[SF-A00-T12.4] Invalidate coverage on reopen or stale commit",
+      "state": "in-progress",
+      "branch": "codex/a00-gates-evidence",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1111",
+      "pr": null
+    },
+    {
+      "issue": 1112,
+      "title": "[SF-A00-T12.5] Publish rollup report",
+      "state": "in-progress",
+      "branch": "codex/a00-gates-evidence",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1112",
+      "pr": null
+    },
+    {
+      "issue": 1113,
+      "title": "[SF-A29-T01.1] Fail CI when tests modify tracked files",
+      "state": "in-review",
+      "branch": "codex/a29-ci",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1113",
+      "pr": 1372
+    },
+    {
+      "issue": 1114,
+      "title": "[SF-A29-T01.2] Capture exact environment report for every job",
+      "state": "in-review",
+      "branch": "codex/a29-ci",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1114",
+      "pr": 1372
+    },
+    {
+      "issue": 1115,
+      "title": "[SF-A29-T01.3] Unify browser launch and failure artifacts",
+      "state": "in-review",
+      "branch": "codex/a29-ci",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1115",
+      "pr": 1372
+    },
+    {
+      "issue": 1116,
+      "title": "[SF-A29-T01.4] Shard the browser job into a matrix",
+      "state": "in-review",
+      "branch": "codex/a29-ci",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1116",
+      "pr": 1372
+    },
+    {
+      "issue": 1117,
+      "title": "[SF-A29-T01.5] Add macOS runner to core and browser qualification",
+      "state": "in-review",
+      "branch": "codex/a29-ci",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1117",
+      "pr": 1372
+    },
+    {
+      "issue": 1118,
+      "title": "[SF-A29-T01.6] Add timeouts, concurrency cancellation and dependency caching",
+      "state": "in-review",
+      "branch": "codex/a29-ci",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1118",
+      "pr": 1372
+    },
+    {
+      "issue": 1119,
+      "title": "[SF-A29-T01.7] Run the CLR Wasm validation in CI",
+      "state": "in-review",
+      "branch": "codex/a29-ci",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1119",
+      "pr": 1372
+    },
+    {
+      "issue": 1120,
+      "title": "[SF-A29-T01.8] Add aggregate required-status job",
+      "state": "in-review",
+      "branch": "codex/a29-ci",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1120",
+      "pr": 1372
+    },
+    {
+      "issue": 1121,
+      "title": "[SF-A29-T02.1] Pin oracle toolchain and container digests",
+      "state": "native-qualification-pending",
+      "branch": "codex/a29-oracles",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1121",
+      "pr": 1774
+    },
+    {
+      "issue": 1122,
+      "title": "[SF-A29-T02.2] Implement Roslyn compile oracle runner",
+      "state": "native-qualification-pending",
+      "branch": "codex/a29-oracles",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1122",
+      "pr": 1774
+    },
+    {
+      "issue": 1123,
+      "title": "[SF-A29-T02.3] Implement CLR execution oracle runner",
+      "state": "native-qualification-pending",
+      "branch": "codex/a29-oracles",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1123",
+      "pr": 1774
+    },
+    {
+      "issue": 1124,
+      "title": "[SF-A29-T02.4] Define expected-output store format",
+      "state": "native-qualification-pending",
+      "branch": "codex/a29-oracles",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1124",
+      "pr": 1774
+    },
+    {
+      "issue": 1125,
+      "title": "[SF-A29-T02.5] Implement BCL behaviour oracle fixtures",
+      "state": "remaining"
+    },
+    {
+      "issue": 1126,
+      "title": "[SF-A29-T02.6] Implement WinUI reference oracle on Windows runners",
+      "state": "remaining"
+    },
+    {
+      "issue": 1127,
+      "title": "[SF-A29-T02.7] Record oracle licensing and redistribution review",
+      "state": "remaining"
+    },
+    {
+      "issue": 1128,
+      "title": "[SF-A29-T03.1] Inventory C# language features by version",
+      "state": "in-progress",
+      "branch": "codex/a29-inventory",
+      "pr": null
+    },
+    {
+      "issue": 1129,
+      "title": "[SF-A29-T03.2] Inventory CIL opcodes and metadata tables",
+      "state": "in-progress",
+      "branch": "codex/a29-inventory",
+      "pr": null
+    },
+    {
+      "issue": 1130,
+      "title": "[SF-A29-T03.3] Diff BCL reference assemblies against framework contracts",
+      "state": "in-progress",
+      "branch": "codex/a29-inventory",
+      "pr": null
+    },
+    {
+      "issue": 1131,
+      "title": "[SF-A29-T03.4] Diff WinUI metadata against framework contracts",
+      "state": "in-progress",
+      "branch": "codex/a29-inventory",
+      "pr": null
+    },
+    {
+      "issue": 1132,
+      "title": "[SF-A29-T03.5] Inventory compiler diagnostics against Roslyn",
+      "state": "in-progress",
+      "branch": "codex/a29-inventory",
+      "pr": null
+    },
+    {
+      "issue": 1133,
+      "title": "[SF-A29-T03.6] Inventory IDE protocol capabilities",
+      "state": "in-progress",
+      "branch": "codex/a29-inventory",
+      "pr": null
+    },
+    {
+      "issue": 1134,
+      "title": "[SF-A29-T03.7] Inventory runtime and GC behaviours",
+      "state": "in-progress",
+      "branch": "codex/a29-inventory",
+      "pr": null
+    },
+    {
+      "issue": 1135,
+      "title": "[SF-A29-T03.8] Allocate stable gap IDs and sync them to issues",
+      "state": "in-progress",
+      "branch": "codex/a29-inventory",
+      "pr": null
+    },
+    {
+      "issue": 1136,
+      "title": "[SF-A29-T04.1] Define differential corpus format and seeds",
+      "state": "in-progress",
+      "branch": "codex/a29-differential",
+      "pr": null
+    },
+    {
+      "issue": 1137,
+      "title": "[SF-A29-T04.2] Implement JS source-VM and CIL-VM engine adapters",
+      "state": "in-progress",
+      "branch": "codex/a29-differential",
+      "pr": null
+    },
+    {
+      "issue": 1138,
+      "title": "[SF-A29-T04.3] Implement native CLR engine adapter",
+      "state": "in-progress",
+      "branch": "codex/a29-differential",
+      "pr": null
+    },
+    {
+      "issue": 1139,
+      "title": "[SF-A29-T04.4] Define Rust native and Wasm engine adapter contract",
+      "state": "in-progress",
+      "branch": "codex/a29-differential",
+      "pr": null
+    },
+    {
+      "issue": 1140,
+      "title": "[SF-A29-T04.5] Implement result normaliser and difference classifier",
+      "state": "in-progress",
+      "branch": "codex/a29-differential",
+      "pr": null
+    },
+    {
+      "issue": 1141,
+      "title": "[SF-A29-T04.6] Implement minimal repro reducer",
+      "state": "in-progress",
+      "branch": "codex/a29-differential",
+      "pr": null
+    },
+    {
+      "issue": 1142,
+      "title": "[SF-A29-T04.7] Wire differential runner into nightly CI with reports",
+      "state": "in-progress",
+      "branch": "codex/a29-differential",
+      "pr": null
+    },
+    {
+      "issue": 1143,
+      "title": "[SF-A29-T05.1] Build shared fuzz harness with time and memory budgets",
+      "state": "remaining"
+    },
+    {
+      "issue": 1144,
+      "title": "[SF-A29-T05.2] Add PE and metadata loader fuzz target",
+      "state": "remaining"
+    },
+    {
+      "issue": 1145,
+      "title": "[SF-A29-T05.3] Add bytecode image and verifier fuzz target",
+      "state": "remaining"
+    },
+    {
+      "issue": 1146,
+      "title": "[SF-A29-T05.4] Add Portable PDB reader fuzz target",
+      "state": "remaining"
+    },
+    {
+      "issue": 1147,
+      "title": "[SF-A29-T05.5] Add archive fuzz target",
+      "state": "remaining"
+    },
+    {
+      "issue": 1148,
+      "title": "[SF-A29-T05.6] Add LSP and DAP protocol fuzz target",
+      "state": "remaining"
+    },
+    {
+      "issue": 1149,
+      "title": "[SF-A29-T05.7] Add IL text assembler and MSBuild XML fuzz targets",
+      "state": "remaining"
+    },
+    {
+      "issue": 1150,
+      "title": "[SF-A29-T05.8] Add network message fuzz target",
+      "state": "remaining"
+    },
+    {
+      "issue": 1151,
+      "title": "[SF-A29-T05.9] Persist crash corpus and run fuzzing nightly",
+      "state": "remaining"
+    },
+    {
+      "issue": 1152,
+      "title": "[SF-A29-T06.1] Add Firefox and WebKit engines to the browser matrix",
+      "state": "remaining"
+    },
+    {
+      "issue": 1153,
+      "title": "[SF-A29-T06.2] Add HTTPS and cross-origin-isolated serving modes",
+      "state": "remaining"
+    },
+    {
+      "issue": 1154,
+      "title": "[SF-A29-T06.3] Add file-protocol standalone qualification",
+      "state": "remaining"
+    },
+    {
+      "issue": 1155,
+      "title": "[SF-A29-T06.4] Add CSP violation monitor to browser suites",
+      "state": "remaining"
+    },
+    {
+      "issue": 1156,
+      "title": "[SF-A29-T06.5] Add mobile and touch emulation suite",
+      "state": "remaining"
+    },
+    {
+      "issue": 1157,
+      "title": "[SF-A29-T06.6] Add accessibility qualification suite",
+      "state": "remaining"
+    },
+    {
+      "issue": 1158,
+      "title": "[SF-A29-T06.7] Add deployed-site smoke test after Pages deploy",
+      "state": "remaining"
+    },
+    {
+      "issue": 1159,
+      "title": "[SF-A29-T06.8] Publish qualification category report",
+      "state": "remaining"
+    },
+    {
+      "issue": 1160,
+      "title": "[SF-A29-T07.1] Unify benchmark output schema",
+      "state": "remaining"
+    },
+    {
+      "issue": 1161,
+      "title": "[SF-A29-T07.2] Implement same-runner base-versus-head comparison",
+      "state": "remaining"
+    },
+    {
+      "issue": 1162,
+      "title": "[SF-A29-T07.3] Track allocation and GC pause metrics",
+      "state": "remaining"
+    },
+    {
+      "issue": 1163,
+      "title": "[SF-A29-T07.4] Enforce artifact size budgets",
+      "state": "remaining"
+    },
+    {
+      "issue": 1164,
+      "title": "[SF-A29-T07.5] Add browser startup and interaction latency measurements",
+      "state": "remaining"
+    },
+    {
+      "issue": 1165,
+      "title": "[SF-A29-T07.6] Store baselines with review and raw evidence",
+      "state": "remaining"
+    },
+    {
+      "issue": 1166,
+      "title": "[SF-A29-T07.7] Wire performance gate workflow with PR summary",
+      "state": "remaining"
+    },
+    {
+      "issue": 1167,
+      "title": "[SF-A29-T08.1] Pin GitHub Actions by commit SHA and add update automation",
+      "state": "remaining"
+    },
+    {
+      "issue": 1168,
+      "title": "[SF-A29-T08.2] Hash-pin Python test dependencies",
+      "state": "remaining"
+    },
+    {
+      "issue": 1169,
+      "title": "[SF-A29-T08.3] Generate SBOM for dist, standalone and packages",
+      "state": "remaining"
+    },
+    {
+      "issue": 1170,
+      "title": "[SF-A29-T08.4] Verify vendored code against upstream hashes",
+      "state": "remaining"
+    },
+    {
+      "issue": 1171,
+      "title": "[SF-A29-T08.5] Add license and notice gate",
+      "state": "remaining"
+    },
+    {
+      "issue": 1172,
+      "title": "[SF-A29-T08.6] Add secret scanning gate",
+      "state": "remaining"
+    },
+    {
+      "issue": 1173,
+      "title": "[SF-A29-T08.7] Add build provenance attestation to releases",
+      "state": "remaining"
+    },
+    {
+      "issue": 1174,
+      "title": "[SF-A29-T08.8] Add workflow security lint and code scanning",
+      "state": "remaining"
+    },
+    {
+      "issue": 1175,
+      "title": "[SF-A29-T09.1] Implement source manifest generator and verifier",
+      "state": "remaining"
+    },
+    {
+      "issue": 1176,
+      "title": "[SF-A29-T09.2] Make build outputs deterministic",
+      "state": "remaining"
+    },
+    {
+      "issue": 1177,
+      "title": "[SF-A29-T09.3] Rebuild from the exact release archive offline",
+      "state": "remaining"
+    },
+    {
+      "issue": 1178,
+      "title": "[SF-A29-T09.4] Verify committed examples regenerate identically",
+      "state": "remaining"
+    },
+    {
+      "issue": 1179,
+      "title": "[SF-A29-T09.5] Add documentation and artifact link checker",
+      "state": "remaining"
+    },
+    {
+      "issue": 1180,
+      "title": "[SF-A29-T10.1] Expand native job matrix across OS, architecture and SDK",
+      "state": "remaining"
+    },
+    {
+      "issue": 1181,
+      "title": "[SF-A29-T10.2] Add Node version matrix",
+      "state": "remaining"
+    },
+    {
+      "issue": 1182,
+      "title": "[SF-A29-T10.3] Add filesystem semantics qualification suite",
+      "state": "remaining"
+    },
+    {
+      "issue": 1183,
+      "title": "[SF-A29-T10.4] Add process and permission workflow suite",
+      "state": "remaining"
+    },
+    {
+      "issue": 1184,
+      "title": "[SF-A29-T10.5] Publish platform capability matrix",
+      "state": "remaining"
+    },
+    {
+      "issue": 1185,
+      "title": "[SF-A29-T11.1] Write stable versus preview contract policy",
+      "state": "remaining"
+    },
+    {
+      "issue": 1186,
+      "title": "[SF-A29-T11.2] Gate preview language features behind explicit opt-in",
+      "state": "remaining"
+    },
+    {
+      "issue": 1187,
+      "title": "[SF-A29-T11.3] Add upstream spec revision watcher",
+      "state": "remaining"
+    },
+    {
+      "issue": 1188,
+      "title": "[SF-A29-T11.4] Add version and changelog consistency gate",
+      "state": "remaining"
+    },
+    {
+      "issue": 1189,
+      "title": "[SF-A29-T11.5] Harden release workflow into gated draft releases",
+      "state": "remaining"
+    },
+    {
+      "issue": 1190,
+      "title": "[SF-A29-T11.6] Add PR preview deployments",
+      "state": "remaining"
+    },
+    {
+      "issue": 1191,
+      "title": "[SF-A29-T12.1] Define acceptance scenario format and runner",
+      "state": "remaining"
+    },
+    {
+      "issue": 1192,
+      "title": "[SF-A29-T12.2] Add multi-project edit, build and debug scenario",
+      "state": "remaining"
+    },
+    {
+      "issue": 1193,
+      "title": "[SF-A29-T12.3] Add designer round-trip scenario",
+      "state": "remaining"
+    },
+    {
+      "issue": 1194,
+      "title": "[SF-A29-T12.4] Add Git and publish scenario",
+      "state": "remaining"
+    },
+    {
+      "issue": 1195,
+      "title": "[SF-A29-T12.5] Add release-from-source reproduction protocol",
+      "state": "remaining"
+    },
+    {
+      "issue": 1196,
+      "title": "[SF-A29-T12.6] Maintain remaining-blockers ledger",
+      "state": "remaining"
+    }
+  ],
+  "observedItemCount": 244
+}

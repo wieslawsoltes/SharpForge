@@ -30,7 +30,10 @@ export function parseCompilationUnit(lexed, options = {}) {
 export function parse(source, cache, options = {}) {
   source = asSource(source);
   const lexed = lex(source, cache, options),
-    parsed = parseCompilationUnit(lexed, { ...options, cache }),
+    // The back end runs top-level statements at every language version and wherever they stand, and checks the `field`
+    // keyword itself, so by default the legacy entry point leaves the top-level-statements feature, CS8803, CS9258 and
+    // CS9273 out (`backEndProfile: false` reports them).
+    parsed = parseCompilationUnit(lexed, { backEndProfile: true, ...options, cache }),
     diagnostics = [...parsed.diagnostics, ...lexed.profileDiagnostics];
   const syntax = createNode(parsed.green, null, 0),
     report = (start, end, code, message) => {

@@ -131,7 +131,8 @@ export function assertRecoversLikeRoslyn(relative) {
   assert(result.tree.getDiagnostics().length > 0, relative + ' reports errors');
   return result;
 }
-const gateCodes = new Set(languageFeatures.map(row => row.code).filter(Boolean));
+// Every code the feature gate can report: one per catalog row plus CS8703, the 'modifier is not valid in C# n' form.
+const gateCodes = new Set([...languageFeatures.map(row => row.code).filter(Boolean), 'CS8703']);
 /**
  * Asserts that the language-version diagnostics SharpForge reports for `relative` (a `*.rejected.cs` file under
  * packages/syntax/test, whose first line names the language version) are the ones Roslyn reports when compiling the

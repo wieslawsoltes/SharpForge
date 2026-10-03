@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "fixtureId": "int32-boundary",
+  "inputHash": "cb149a9f26b70796a6f28575c77026e363f1ffa310a001fdeb35fe96cbf5bc3d",
+  "oracleId": "roslyn",
+  "toolVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+  "target": "linux-x64",
+  "toolchain": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "roslyn": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "referencePack": "10.0.5",
+    "windowsAppSDK": null
+  },
+  "langVersion": "12.0",
+  "result": {
+    "exitCode": 0,
+    "diagnostics": [],
+    "assemblySHA256": "f10b049af56f4c7a2a35e78e3a0b067529f392bed42b32458b0ef5c6379c444c"
+  }
+}
