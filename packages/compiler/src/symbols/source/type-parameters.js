@@ -11,6 +11,7 @@
  * CS0405 (duplicate constraint), CS0406 (class type not first), CS0701 (sealed type or non-class as constraint),
  * CS0702 (special class), CS0454 (circular constraint dependency), CS0080 (clause on a non-generic declaration).
  */
+import { isDynamicType, containsDynamic } from '../dynamic-types.js';
 import { TypeParameterSymbol, Variance, TypeKind } from '../types.js';
 
 const span = node => {
@@ -117,6 +118,10 @@ export function bindConstraintClauses(parameters, clauses, bindType, report, opt
           }
           if (types.some(t => t.equals(type))) {
             report(c, 'CS0405', [type.toDisplayString(), parameter.name]);
+            break;
+          }
+          if (containsDynamic(type)) {
+            report(c.type, ...(isDynamicType(type) ? ['CS1967'] : ['CS1968', [type.toDisplayString()]]));
             break;
           }
           const isClass = type.typeKind === TypeKind.Class,

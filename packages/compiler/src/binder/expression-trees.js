@@ -15,6 +15,7 @@
  */
 import { walk } from '../bound/semantic-walker.js';
 import { MethodKind } from '../symbols/members.js';
+import { dynamicOperation } from '../bound/dynamic-operations.js';
 import { expressionTreeDelegate } from '../symbols/expression-tree-types.js';
 
 const assignmentKinds = new Set(['Assignment', 'CompoundAssignment', 'Increment', 'CoalesceAssignment', 'RefAssignment', 'EventAssignment']);
@@ -42,6 +43,7 @@ function argumentProblem(node, languageVersion) {
 }
 
 function nodeProblem(node, languageVersion) {
+  if (dynamicOperation(node)) return 'CS1963';
   if (assignmentKinds.has(node.kind)) return 'CS0832';
   if (codeByKind[node.kind]) return codeByKind[node.kind];
   if (node.kind === 'Call') {
