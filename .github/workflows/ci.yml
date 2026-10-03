@@ -1,13 +1,19 @@
 name: Validate SharpForge
+# Ordinary PRs run one core job. Full qualification requires main/manual/merge queue
+# execution or the full-ci PR label; tag releases call this workflow in full.
 on:
   push:
     branches: [main]
   pull_request:
+    types: [opened, synchronize, reopened, labeled]
+  workflow_dispatch:
+  merge_group:
+    types: [checks_requested]
   workflow_call:
 permissions:
   contents: read
 concurrency:
-  group: qualification-${{ github.workflow }}-${{ github.ref }}
+  group: qualification-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 env:
   SHARPFORGE_RESULTS_DIR: artifacts/results
@@ -15,12 +21,42 @@ env:
   PYTHON: python
 jobs:
   core:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm run check
+      - run: npm test
+      - run: npm run build
+      - name: Require a clean checkout
+        if: always()
+        run: node scripts/conformance/clean-checkout.js
+      - uses: actions/setup-python@v5
+        if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+        with:
+          python-version: '3.12'
+      - name: Full qualification infrastructure regressions
+        if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+        run: |
+          node --test tests/conformance/*.test.js
+          python -m unittest discover -s tests/conformance/browser -p 'test_*.py'
+      - uses: ./.github/actions/qualification-evidence
+        if: ${{ always() && (github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')) }}
+        with:
+          name: core-ubuntu-latest
+  core-platforms:
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [windows-latest, macos-latest]
     steps:
       - uses: actions/checkout@v4
       - name: Capture starting environment
@@ -35,6 +71,7 @@ jobs:
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npm run check
       - run: npm test
+      - run: npm run build
       - run: node --test tests/conformance/*.test.js
       - run: python -m unittest discover -s tests/conformance/browser -p 'test_*.py'
       - uses: ./.github/actions/qualification-evidence
@@ -42,6 +79,7 @@ jobs:
         with:
           name: core-${{ matrix.os }}
   build:
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -70,6 +108,7 @@ jobs:
         with:
           name: build
   packages:
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     strategy:
@@ -100,6 +139,7 @@ jobs:
         with:
           name: packages-${{ matrix.os }}
   browser:
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     needs: build
     name: browser (${{ matrix.os }}, ${{ matrix.suite }})
     runs-on: ${{ matrix.os }}
@@ -148,6 +188,7 @@ jobs:
         with:
           name: browser-${{ matrix.os }}-${{ matrix.suite }}
   native-il:
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     strategy:
@@ -176,6 +217,7 @@ jobs:
         with:
           name: native-il-${{ matrix.os }}-${{ matrix.dotnet }}
   native-msbuild:
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     # Actual SDKs/processes only; browser test doubles cannot satisfy this gate.
     runs-on: ${{ matrix.os }}
     timeout-minutes: 25
@@ -206,6 +248,7 @@ jobs:
         with:
           name: native-msbuild-${{ matrix.os }}
   clr-wasm:
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -226,8 +269,8 @@ jobs:
         with:
           name: clr-wasm
   ci-ok:
-    if: always()
-    needs: [core, build, packages, browser, native-il, native-msbuild, clr-wasm]
+    if: ${{ always() && (github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')) }}
+    needs: [core, core-platforms, build, packages, browser, native-il, native-msbuild, clr-wasm]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

@@ -1,20 +1,30 @@
 # Hosted qualification contract (SF-A29-T01)
 
-The required GitHub branch-protection check is **ci-ok**. Configure that one stable
-check; its `always()` aggregate fails on any failed, cancelled, skipped or missing
-prerequisite. Matrix job names are evidence, not separate branch-protection rules.
-This document does not claim that repository protection settings have been changed.
+Ordinary pull requests run exactly one **core** job on Ubuntu: dependency restore,
+`npm run check`, `npm test`, `npm run build`, and a clean-checkout guard. Configure
+**core** as the stable required PR check under the minimal-check policy introduced
+by PR #2099. This document does not change repository branch-protection settings.
 
-Core, package installation, every browser suite, desktop CLR (.NET 8 and 10), and
-real MSBuild (.NET 8 and 10 installed together) run independently on Ubuntu, Windows
-and macOS. Each browser shard consumes the same uploaded build; standalone consumes
-the HTML created in that build job. Matrix fail-fast is disabled. Main-branch pushes and pull requests trigger CI. Feature and lease-metadata
-branch pushes do not start a second copy of the pull-request matrix. Superseded pull-request runs cancel through the workflow/ref group.
+Full qualification runs on pushes to main, manual dispatch, merge queues, reusable
+release calls, or PRs carrying the **full-ci** label. Its **ci-ok** aggregate uses
+`always()` and fails on any failed, cancelled, skipped or missing prerequisite.
+The aggregate is intentionally skipped for ordinary PRs, which must not require it.
+Core Linux coverage comes from `core`; the gated `core-platforms` matrix adds
+Windows and macOS. Package installation, all 15 browser shards, desktop CLR (.NET
+8 and 10), and real MSBuild (.NET 8 and 10 together) retain their three-OS matrices.
+Each browser shard consumes one uploaded build; standalone consumes that build's
+HTML. Matrix fail-fast is disabled. Full qualification is an explicit completion
+step, not a claim that a core-only PR run qualified browsers or native runtimes.
+
+Push CI triggers only on main. PR events are opened, synchronize, reopened and
+labeled; adding `full-ci` starts full qualification. Implementation and agent
+metadata branch pushes do not start duplicate runs. Superseded PR runs cancel in
+the same workflow/PR-number concurrency group. Main and release work are retained.
 Every job has a hard timeout; the browser supervisor gives each suite 20 minutes
 and then requests cancellation with 60 seconds for diagnostics, within a 30-minute
 job limit. Host termination or runner loss can still prevent final artifact upload.
 
-Each job captures environment information before setup and refreshes it at the end:
+Full qualification jobs capture environment information and refresh it at the end:
 commit, OS image/release/architecture, Node/npm/Python, pinned Python Playwright,
 Chromium manifest revisions/installation, optional executable override, and actual
 .NET SDK/runtime information. Missing tools are explicit unavailable probe results,
@@ -59,7 +69,7 @@ prerequisite and removal condition. The `clr-wasm` job uploads this exclusion; i
 not reported as execution success. Desktop native jobs use real installed SDKs and
 never the process simulator.
 
-Tag releases call this same workflow for the exact tagged checkout and depend on its
+Tag releases always execute full qualification through this same reusable workflow for the exact tagged checkout and depend on its
 successful aggregate. They download that run's qualified browser and package builds,
 create a deterministic inventory of released payload bytes, verify it, and attach
 `SOURCE-MANIFEST.json` plus `SHA256SUMS`. The stale repository-root source manifest is
@@ -104,7 +114,7 @@ from actual workflow runs; a smaller duration is not claimed from the YAML alone
 | `load_application(page, connect_origins=())` | Production loopback HTTP/CSP; explicit restricted opt-in | All browser matrix suites |
 | `results_dir()` / `resultPath(name)` | Python/Node report writers, custom output path | Launcher unit tests, `qualification.test.js`, checkout guard |
 | `checkoutStatus()` | Git worktrees on all three OSes | Actual temporary Git repo: tracked/staged/untracked/ignored cases |
-| `checkStatus(needs)` | GitHub workflow aggregate | success/failure/cancellation/skipped/missing fixtures |
+| `checkStatus(needs)` | Full-qualification GitHub aggregate | success/failure/cancellation/skipped/missing fixtures |
 | `writePlan(directory, plan)` | Canonical filesystem ancestors, create-only roots | Existing CLI tests and symlink-ancestor/root/inner-link regression |
 | macOS Emacs/Sublime caret setup | CodeMirror cursor API; actual key actions unchanged | `browser_release08_test.py` |
 | Release payload generator/verifier | Same-commit qualified release assets | Changed/missing/extra binary payload regression and SHA256SUMS verification |
@@ -112,6 +122,11 @@ from actual workflow runs; a smaller duration is not claimed from the YAML alone
 
 Issue ownership: #397 leaves #1113–#1120; defects #477, #478, #480, #481. JavaScript
 static analysis (#482/#502) is a separate scope and is not claimed by syntax checks.
+
+Policy regression: `qualification.test.js` checks that only core is unconditional,
+all expensive jobs share the full-ci/event gate, the aggregate remains strict, and
+release callers retain reusable qualification. Validate YAML with actionlint. No
+full hosted matrix is needed to validate this trigger-policy-only change.
 
 Windows cancellation uses a unique request file passed to the child through
 `SHARPFORGE_CANCEL_FILE`. The browser wrapper checks it after returning from
