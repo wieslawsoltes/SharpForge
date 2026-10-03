@@ -8,9 +8,8 @@ This document does not claim that repository protection settings have been chang
 Core, package installation, every browser suite, desktop CLR (.NET 8 and 10), and
 real MSBuild (.NET 8 and 10 installed together) run independently on Ubuntu, Windows
 and macOS. Each browser shard consumes the same uploaded build; standalone consumes
-the HTML created in that build job. Matrix fail-fast is disabled. Production code
-branches trigger CI; `agent/**`, `agent-ops/**` and `agent-locks/**` lease metadata
-branches do not. Superseded pull-request runs cancel through the workflow/ref group.
+the HTML created in that build job. Matrix fail-fast is disabled. Main-branch pushes and pull requests trigger CI. Feature and lease-metadata
+branch pushes do not start a second copy of the pull-request matrix. Superseded pull-request runs cancel through the workflow/ref group.
 Every job has a hard timeout; the browser supervisor gives each suite 20 minutes
 and then requests cancellation with 60 seconds for diagnostics, within a 30-minute
 job limit. Host termination or runner loss can still prevent final artifact upload.

@@ -1,7 +1,7 @@
 name: Validate SharpForge
 on:
   push:
-    branches-ignore: ['agent/**', 'agent-ops/**', 'agent-locks/**']
+    branches: [main]
   pull_request:
   workflow_call:
 permissions:
