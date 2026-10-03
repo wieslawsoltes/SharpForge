@@ -192,3 +192,31 @@ documents unverified. The caller owns the supplied fetch client's lifetime.
 Local projection builds one method-token index per binding call. Scope processing
 is linear in methods, scopes and variables, preserves scope/variable order, and
 does not retain stale results between bindings.
+
+A result from `loadSymbols(assembly, pdb)` exposes
+`symbols.hoistedLocals(methodToken, moveNextOffset)`. It returns
+`{ available, reason, moveNext, kickoff, locals }`. For supported bound symbols,
+each live local contains `name`, `fieldToken`, `fieldName`, zero-based `slot`,
+`startOffset` and exclusive `endOffset`. The method token may be the kickoff or
+MoveNext token; the offset is always relative to MoveNext IL. This maps names and
+field identities, not field values.
+
+The current convention is Roslyn C# user fields (`<name>5__N`) paired with the
+Portable PDB hoisted-scope entry at `N - 1`. Zero-length synthesized slots do not
+become user locals. Missing scopes, unsupported conventions/slots, unknown methods
+and unbound inspection return `available: false` with an explicit reason and no
+locals. Malformed ranges, ambiguous fields and invalid query arguments throw
+`SymbolError`. Visual Basic, closure fields and compiler state reconstruction are
+not mapped by this capability.
+
+Indexes are private to the loaded symbol set and built lazily. `maxHoistedEntries`
+bounds metadata/index/expanded local entries (default 100,000; hard maximum
+1,000,000) before list expansion; field names are limited to 1,024 UTF-16 units.
+The index uses `metadata.list` for field/method ownership, including pointer-table
+indirection. Each type's fields are read once; each query scans only that method's
+hoisted locals and returns fresh records. Load a new symbol set after changing
+symbols; modifying returned records does not alter cached lookup results.
+
+The naming convention and zero-length slot rule follow the primary Roslyn sources:
+[GeneratedNames](https://github.com/dotnet/roslyn/blob/main/src/Compilers/CSharp/Portable/Symbols/Synthesized/GeneratedNames.cs)
+and [StateMachineHoistedLocalScope](https://github.com/dotnet/roslyn/blob/main/src/Dependencies/CodeAnalysis.Debugging/StateMachineHoistedLocalScope.cs).
