@@ -1,10 +1,10 @@
-import loadStore from './load-store.js';
-import branch from './branch.js';
-import arith from './arith.js';
-import objectModel from './object-model.js';
-import array from './array.js';
-import indirect from './indirect.js';
-import call from './call.js';
+import {handlers as loadStore} from './load-store.js';
+import {handlers as branch} from './branch.js';
+import {handlers as arith} from './arith.js';
+import {handlers as objectModel} from './object-model.js';
+import {handlers as array} from './array.js';
+import {handlers as indirect} from './indirect.js';
+import {handlers as call} from './call.js';
 
 /** Each group registers its exact opcode names. Instruction dispatch performs one lookup. */
 export const cilHandlers=new Map();

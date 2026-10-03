@@ -18,4 +18,4 @@ for(const suffix of ['i1','u1','i2','u2','i4','u4','i8','i','r4','r8','ref']) {
   if(['u1','u2','u4'].includes(suffix))continue;
   handlers.set('stind.'+suffix,vm=>{const value=vm.pop();vm.dereference(vm.pop(),true,vm.indirect(value,'stind.'+suffix));});
 }
-export default handlers;
+export {handlers};

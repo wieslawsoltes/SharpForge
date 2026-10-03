@@ -14,4 +14,4 @@ handlers.set('ret',(vm,frame)=>{
   if(vm.top){if(frame.returnObject||frame.method.signature.returnType!=='void')vm.push(value);}
   else {vm.returnValue=value;vm.exitCode=frame.method.signature.returnType==='int'?Number(value)|0:0;vm.state='terminated';}
 });
-export default handlers;
+export {handlers};

@@ -25,6 +25,8 @@ for (const engine of ['source', 'cil']) {
   test(`${engine}: versioned snapshots replay independently and retain host callbacks`, () => {
     const vm = make(engine);
     vm.runSlice({instructionBudget: 5, timeBudgetMs: 1000});
+    const notifyWrite = () => {};
+    vm.notifyWrite = notifyWrite;
     const saved = vm.snapshot();
     assert.equal(saved.schemaVersion, snapshotSchemaVersion);
     assert.equal(saved.engine, engine);
@@ -34,6 +36,7 @@ for (const engine of ['source', 'cil']) {
     for (let i = 0; i < 2; i++) {
       vm.restore(saved);
       assert.equal(vm.onOutput, callback);
+      assert.equal(vm.notifyWrite, notifyWrite);
       assert.equal(vm.run().output, expected);
     }
   });
@@ -82,4 +85,17 @@ test('execution copying preserves cycles, collection aliases, views and exact nu
   assert(Object.is(copied.zero, -0));
   copied.bytes[0] = 9;
   assert.equal(bytes[0], 1);
+});
+
+test('execution copying clones frozen buffers and views while retaining shared storage', () => {
+  const buffer = Object.freeze(new ArrayBuffer(8));
+  const view = Object.freeze(new DataView(buffer));
+  view.setInt32(0, 42);
+  const copy = copyExecution({buffer, view, bytes: new Uint8Array(buffer)});
+  assert.notEqual(copy.buffer, buffer);
+  assert.notEqual(copy.view, view);
+  assert.equal(copy.view.buffer, copy.buffer);
+  assert.equal(copy.bytes.buffer, copy.buffer);
+  view.setInt32(0, 99);
+  assert.equal(copy.view.getInt32(0), 42);
 });

@@ -23,4 +23,4 @@ handlers.set('ckfinite',vm=>{
   if(!value?.float||!Number.isFinite(value.value))throw new ManagedFault('ArithmeticException','Non-finite floating-point value');
   vm.push(value);
 });
-export default handlers;
+export {handlers};
