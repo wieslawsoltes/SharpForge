@@ -95,11 +95,6 @@ test('A00-T13 checked aliases restore the surrounding context on success and exc
 });
 
 const program = `
-class Box : IDisposable {
-  public int Value { get; set; }
-  public int Add(int amount) { Value += amount; return Value; }
-  public void Dispose() { Console.WriteLine("disposed"); }
-}
 var box = new Box { Value = 0 };
 using (box) {
   int[] numbers = new int[] { 1, 2, 3 };
@@ -119,6 +114,11 @@ using (box) {
   finally { Console.WriteLine(box.Value); }
   Console.WriteLine(box.Value switch { 8 => "match", _ => "wrong" });
   Console.WriteLine(checked((int)2.0) + unchecked(1));
+}
+class Box : IDisposable {
+  public int Value { get; set; }
+  public int Add(int amount) { Value += amount; return Value; }
+  public void Dispose() { Console.WriteLine("disposed"); }
 }
 `;
 
