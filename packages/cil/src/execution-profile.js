@@ -1,3 +1,4 @@
+import {verifyManagedFunctionPointers,verifyIndirectSignature} from './function-pointer-profile.js';
 import {reachableAsyncMethods} from './async-profile.js';
 import {numericFieldDefinition} from './numeric-field-profile.js';
 import {resolveExecutionField} from './field-profile.js';
@@ -45,7 +46,7 @@ export function stackEffect(inspector,m,i){
 export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethods=10000,...options}={}){
   const inspector=input instanceof AssemblyInspector?input:new AssemblyInspector(input,options),issues=[],visited=new Set(),pending=[],stackHeights={},entry=selectMethod(inspector,methodToken,args);
   const dispatch=new CilDispatchTable(inspector);
-  const issue=(m,i,code,message)=>{if(issues.length<200)issues.push({methodToken:m?.token,method:m?m.owner+'::'+m.name:undefined,offset:i?.offset,code,message});};
+  const issue=(m,i,code,message,details={})=>{if(issues.length<200)issues.push({methodToken:m?.token,method:m?m.owner+'::'+m.name:undefined,offset:i?.offset,code,message,...details});};
   if(!(inspector.pe.flags&1)||inspector.pe.flags&0x10)issue(null,null,'IL_IMAGE','Only IL-only managed images are executable');pending.push(entry);
   // Static initializers can be reached by allocation, field access or method invocation.
   const enqueueType=t=>{const type=inspector.types.find(x=>x.token===t);for(const m of type?.methods??[])if(m.name==='.cctor')pending.push(m.token);};
@@ -68,9 +69,7 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
         const index=i.operand??Number(i.name.split('.').at(-1)),limit=i.name.includes('arg')?m.signature.parameters.length+(m.signature.isStatic?0:1):m.locals.length;
         if(!Number.isInteger(index)||index<0||index>=limit)issue(m,i,'IL_SLOT','Invalid argument/local slot');
       }
-      if(i.name==='calli') {
-        try{const signature=inspector.signature(i.operand);if(i.operand>>>24!==17||signature.kind!=='method'||signature.callingConvention||signature.genericArity||signature.parameters.concat(signature.returnType).some(illegalType))throw new CilError('calli requires a managed non-vararg StandAloneSig');}catch(error){issue(m,i,'IL_SIGNATURE',error.message);}
-      }
+      if(i.name==='calli')verifyIndirectSignature(inspector,m,i,issue,illegalType);
       if(['jmp','call','callvirt','newobj','ldftn','ldvirtftn'].includes(i.name)){
         try{const d=resolveExecutionMethod(inspector,i.operand),target=d.resolvedToken;
           for(const method of reachableAsyncMethods(inspector,d))pending.push(method);
@@ -108,6 +107,7 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
       if(i.name==='switch')for(const target of i.operand)queue.push([map.get(target),after]);
       if(!/^(br|leave)(\.s)?$/.test(i.name))queue.push([index+1,after]);
     }
+    verifyManagedFunctionPointers(inspector,m,issue,stackEffect);
     stackHeights[t]=Object.fromEntries(heights);
   }
   return {stackHeights,success:issues.length===0,entryPoint:entry,methods:[...visited],issues,profile:'SharpForge.ManagedIL/1'};

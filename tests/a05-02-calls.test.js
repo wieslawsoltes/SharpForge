@@ -30,7 +30,7 @@ test('A05 T02 ref, out and in share locations and enforce readonly at the callee
 test('A05 T02 managed calli validates signatures and opaque pointer ownership',()=>{
   const build=(mismatch=false)=>controlFixture(program([{name:'Main',result:'int',body:(w,c)=>{const sig=c.md.add(17,[c.md.blob(c.signature(mismatch?'long':'int',['int']))]);w.op('ldc.i4',41).op('ldftn',c.methods.get('Program.Increment')).op('calli',sig);if(mismatch)w.op('conv.i4');w.op('ret');}},{name:'Increment',result:'int',parameters:['int'],body:w=>w.op('ldarg.0').op('ldc.i4.1').op('add').op('ret')}]));
   assert.equal(run(build()).returnValue,42);
-  const failed=new CilVirtualMachine(build(true)).run();assert.equal(failed.fault.name,'InvalidProgramException');assert.match(failed.fault.message,/signature/);
+  const rejected=verifyCilAssembly(build(true));assert.equal(rejected.success,false);assert(rejected.issues.some(issue=>issue.code==='IL_CALLI'&&/signature/.test(issue.message)));
   const first=new CilVirtualMachine(build()),second=new CilVirtualMachine(build());const pointer=methodPointer(first,0x06000002);
   assert.throws(()=>invokeFunctionPointer(second,pointer,[1]),error=>error.name==='InvalidProgramException');
 });

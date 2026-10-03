@@ -1,3 +1,4 @@
+import {verificationFault} from './execution/verification-fault.js';
 import {asyncRoots} from './execution/async-runtime.js';
 import {nativeInteger,decimalParse,decimalFromBits,decodeScalar} from '@sharpforge/bytecode';
 import {invokeDelegate} from './execution/delegate-calls.js';
@@ -32,7 +33,7 @@ export class CilVirtualMachine {
   constructor(bytes,options={}){
     const started=performance.now();this.options={maxInstructions:20_000_000,maxStackValues:65536,maxOutputCharacters:1_000_000,...options};
     this.inspector=bytes instanceof AssemblyInspector?bytes:new AssemblyInspector(bytes,options);this.report=verifyCilAssembly(this.inspector,options);
-    if(!this.report.success){const error=new CilError('Managed IL verification failed: '+this.report.issues.map(i=>`${i.method??''}${i.offset===undefined?'':` IL_${i.offset.toString(16)}`}: ${i.message}`).join('; '));error.issues=this.report.issues;throw error;}
+    if(!this.report.success)throw verificationFault(this.report);
     const entry=this.inspector.getMethod(this.report.entryPoint);this.returnType=entry.signature.returnType;if(!entry.signature.isStatic)throw new CilError('Host invocation requires a static method');
     this.heap=new ManagedHeap(options);this.heap.rootProvider=()=>this.roots();this.frames=[];this.statics=new Map();this.strings=new Map();this.initialized=new Map();this._typeSystem=null;this.layoutCache=this.typeSystem.layouts;this.frameId=0;
     this.snapshotOwner=Object.freeze({});this.writeRevision=0;this.onWrite=null;this.state='ready';this.instructions=0;this.elapsedMs=0;this.output=[];this.outputCharacters=0;this.fault=null;this.pendingFault=null;this.onException=null;this.returnValue=null;this.exitCode=0;this.onOutput=options.onOutput??(()=>{});this.loadMs=performance.now()-started;
