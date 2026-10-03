@@ -1,12 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync } from 'node:fs';
-import { AssemblyName, AssemblyLoadError, LoadErrorCode, AssemblyProvider, AssemblyResolver,
-  computePublicKeyToken, normalizeAssemblyIdentity, assemblyIdentityFromRow, compareAssemblyIdentity,
-  readDependencyManifest, runtimeFallbacks, nearestTargetFramework, selectNugetAssets, assetsFromProject,
-} from '../packages/clr/src/index.js';
+import { AssemblyLoadError, LoadErrorCode, readDependencyManifest, runtimeFallbacks } from '../packages/clr/src/index.js';
 
-const oracle = JSON.parse(readFileSync(new URL('./fixtures/clr-identity/assembly-names.json', import.meta.url)));
 const hasCode = code => error => error instanceof AssemblyLoadError && error.code === code;
 
 test('CLR deps manifest selects RID assets and preserves explicit runtime configuration', () => {
