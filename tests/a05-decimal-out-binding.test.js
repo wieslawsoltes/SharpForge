@@ -8,7 +8,7 @@ for (const pipeline of ['bound', 'legacy']) {
     const result = compile('decimal parsed;decimal.TryParse("1.20",out parsed);' +
       'Console.WriteLine(decimal.Round(parsed,1));', {pipeline});
     assert(result.success, JSON.stringify(result.diagnostics));
-    const code = result.image.methods[result.image.entryPoint].code;
+    const code = result.image.methods.flatMap(method => [...method.code]);
     let address = false, parse = false;
     for (let pc = 0; pc < code.length; pc += 3) {
       address ||= code[pc] === Op.ADDRESS;

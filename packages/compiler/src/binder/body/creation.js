@@ -190,10 +190,12 @@ export const CreationBinding = Base =>
       const elements = init ? this.arrayInitializer(init, elementType, rank) : null;
       return this.node('ArrayCreation', syntax, full, { sizes, elements });
     }
-    arrayInitializer(init, elementType, rank) {
+    arrayInitializer(init, elementType, rank, shape = []) {
+      if (shape[rank] === undefined) shape[rank] = init.expressions.length;
+      else if (shape[rank] !== init.expressions.length) this.report(init, 'CS0847', [shape[rank]]);
       return init.expressions.map(e => {
         if (e.kind === 'ArrayInitializerExpression') {
-          if (rank > 1) return this.arrayInitializer(e, elementType, rank - 1);
+          if (rank > 1) return this.arrayInitializer(e, elementType, rank - 1, shape);
           if (elementType instanceof ArrayTypeSymbol)
             return this.node('ArrayCreation', e, elementType, {
               elements: this.arrayInitializer(e, elementType.elementType, elementType.rank),

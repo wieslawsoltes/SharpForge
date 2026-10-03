@@ -102,6 +102,9 @@ for(const [engine,create] of Object.entries(engines)) {
   });
   test(`a05-06 ${engine}: monitor wait tasks and Boolean addresses replay from parked contexts`,()=>{
     const vm=create(compile('bool taken=false;Console.WriteLine(taken);')),gate=vm.heap.object('object',[]);
+    for(let steps=0;(vm.inspector?vm.top.method.locals:vm.image.methods[vm.top.methodId].locals).length===0;steps++){
+      assert(steps<20,'Startup must enter the fixture body');vm.runSlice({instructionBudget:1,timeBudgetMs:1000});
+    }
     vm.sync.enter(gate);const entry=vm.inspector?vm.top.method.token:vm.top.methodId;
     const worker=vm.scheduler.createContext(()=>{vm.call(entry,[]);return SUSPENDED;},[],{name:'Monitor waiter'});
     vm.scheduler.save();vm.scheduler.load(vm.scheduler.contexts.get(worker));
