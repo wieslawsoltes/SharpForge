@@ -1,0 +1,3 @@
+# Keep source, example and executable-script bytes identical on every checkout.
+# Auto detection preserves binary payloads (PE, PDB, WASM, PNG and ZIP fixtures).
+* text=auto eol=lf
