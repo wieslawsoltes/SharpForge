@@ -30,9 +30,28 @@ function methodOwners(metadata) {
   const owners = new Map();
   for (let row = 1; row <= (metadata.counts[2] ?? 0); row++) {
     const type = 0x02000000 | row;
-    for (const method of metadata.list(type, 'MethodList')) owners.set(method, type);
+    for (const method of metadata.list(type, 'MethodList')) {
+      if (!Number.isInteger(method) || method < 0x06000001 || method > 0x06000000 + (metadata.counts[6] ?? 0)) {
+        fail('Invalid hoisted local method ownership token');
+      }
+      if (owners.has(method)) fail('Ambiguous hoisted local method ownership');
+      owners.set(method, type);
+    }
   }
   return owners;
+}
+
+function fieldName(metadata, index) {
+  const heap = metadata.streams.get('#Strings');
+  if (!heap || !Number.isInteger(index) || index < 0 || index >= heap.length) fail('Invalid hoisted field name');
+  // A UTF-16 unit needs at most three UTF-8 bytes; bound scanning before decoding any string.
+  let end = index;
+  while (end < heap.length && end - index <= 3072 && heap[end] !== 0) end++;
+  if (end - index > 3072) fail('Hoisted field name exceeds length limit');
+  if (end === heap.length) fail('Unterminated hoisted field name');
+  const name = metadata.string(index);
+  if (name.length > 1024) fail('Hoisted field name exceeds length limit');
+  return name;
 }
 
 function typeFields(metadata, owner) {
@@ -40,14 +59,13 @@ function typeFields(metadata, owner) {
   let csharp = false;
   for (const fieldToken of metadata.list(owner, 'FieldList')) {
     const row = metadata.row(fieldToken);
-    const fieldName = metadata.string(row[1]);
-    if (fieldName.length > 1024) fail('Hoisted field name exceeds length limit');
-    if (fieldName === '<>1__state') csharp = true;
-    const match = /^<([^<>]+)>5__([1-9][0-9]*)$/u.exec(fieldName);
+    const name = fieldName(metadata, row[1]);
+    if (name === '<>1__state') csharp = true;
+    const match = /^<([^<>]+)>5__([1-9][0-9]*)$/u.exec(name);
     if (!match) continue;
     const slot = Number(match[2]) - 1;
     if (!Number.isSafeInteger(slot) || row[0] & 0x10) fail('Invalid hoisted user-local field');
-    fields.push({ name: match[1], fieldToken, fieldName, slot });
+    fields.push({ name: match[1], fieldToken, fieldName: name, slot });
   }
   return { csharp, fields };
 }

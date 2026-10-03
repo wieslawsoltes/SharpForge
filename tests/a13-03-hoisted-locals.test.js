@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { readPE, codedIndex } from '@sharpforge/cil';
+import { createHoistedLocalLookup } from '../packages/symbols/src/hoisted-locals.js';
 import {
   loadSymbols,
   emitPortablePdb,
@@ -170,4 +171,32 @@ test('query arguments and index limits are validated', () => {
   for (const maxHoistedEntries of [-1, NaN, 1.5, 1_000_001]) {
     assert.throws(() => load({ maxHoistedEntries }), /Invalid hoisted local index limit/);
   }
+});
+
+test('malformed pointer ownership is rejected before field expansion', () => {
+  const symbols = load();
+  for (const [method, message] of [
+    [native.moveNext, /Ambiguous hoisted local method ownership/],
+    [0x106000001, /Invalid hoisted local method ownership token/],
+    [0x06ffffff, /Invalid hoisted local method ownership token/],
+  ]) {
+    const metadata = { counts: { 2: 2, 4: 1, 6: native.moveNext & 0xffffff }, list: () => [method] };
+    assert.throws(() => createHoistedLocalLookup({ metadata }, symbols), message);
+  }
+});
+
+test('field name bytes are bounded before decoding even with overlapping heap indices', () => {
+  const symbols = load();
+  const heap = new Uint8Array(4097).fill(65);
+  heap[heap.length - 1] = 0;
+  const metadata = {
+    counts: { 2: 1, 4: 2, 6: native.moveNext & 0xffffff },
+    streams: new Map([['#Strings', heap]]),
+    list: (_owner, column) => (column === 'MethodList' ? [native.moveNext] : [0x04000001, 0x04000002]),
+    row: (token) => [0, token & 0xffffff],
+    string: () => {
+      throw Error('decoded before byte limit');
+    },
+  };
+  assert.throws(() => createHoistedLocalLookup({ metadata }, symbols), /Hoisted field name exceeds length limit/);
 });
