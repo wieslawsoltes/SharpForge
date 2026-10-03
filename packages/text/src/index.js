@@ -112,3 +112,8 @@ export class BoundedCache {
 }
 
 export * from './search.js';
+
+export { PieceTable, PieceTableSnapshot } from './piece-table.js';
+export { LineIndex } from './line-index.js';
+export { TextBuffer, TextVersionError } from './buffer.js';
+export { EndOfLine, analyzeEol, normalizeEol, eolEdits, decodeText, encodeText } from './eol.js';
