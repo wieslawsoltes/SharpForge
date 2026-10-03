@@ -14,9 +14,11 @@ import { PatternTranslation } from './translate-patterns.js';
 import { StatementTranslation } from './translate-statements.js';
 import { AwaitTranslation } from '../../lowering/async/async-methods.js';
 import { AsyncStreamTranslation } from '../../lowering/async/async-streams.js';
+import { ByReferenceTranslation } from '../../lowering/by-reference.js';
 import { Locations } from '../../lowering/tuples/locations.js';
 import { TupleTranslation } from '../../lowering/tuples/translate-tuples.js';
 import { SynthesizedTextTranslation } from '../../lowering/tuples/translate-text.js';
+import { DeconstructionTranslation } from '../../lowering/tuples/translate-deconstruction.js';
 import { InitializerLowering } from '../../lowering/members/initializers.js';
 
 export { Frame } from './frame.js';
@@ -202,9 +204,11 @@ const families = [
   StatementTranslation,
   AwaitTranslation,
   AsyncStreamTranslation,
+  ByReferenceTranslation,
   Locations,
   TupleTranslation,
   SynthesizedTextTranslation,
+  DeconstructionTranslation,
   InitializerLowering,
 ];
 

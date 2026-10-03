@@ -7,6 +7,7 @@
 import { SymbolKind, TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { backingFieldName } from '../../lowering/generated-names.js';
+import { isByReference } from '../../lowering/by-reference.js';
 import { spanOf } from './node-factory.js';
 
 const definitionOf = symbol => symbol.originalDefinition ?? symbol;
@@ -137,9 +138,10 @@ export const Declarations = Base =>
     }
     parametersOf(symbol) {
       return symbol.parameters.map(p => {
-        if (p.refKind && p.refKind !== 'none') this.unsupported('ref, out and in parameters', p.locations?.[0] ?? symbol.locations?.[0]);
         if (p.isParams) this.paramsParameters.add(p);
-        return { name: p.name, type: this.types.imageType(p.type, p.locations?.[0] ?? symbol.locations?.[0]) };
+        const type = this.types.imageType(p.type, p.locations?.[0] ?? symbol.locations?.[0]);
+        // A by-reference parameter receives the cell that holds the argument variable (lowering/by-reference.js).
+        return { name: p.name, type: isByReference(p) ? this.cellClass(type).record.name : type };
       });
     }
     accessorOf(symbol) {
