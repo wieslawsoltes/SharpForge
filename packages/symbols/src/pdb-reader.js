@@ -151,6 +151,7 @@ export function readPortablePdb(input, { maxBytes = 64 * 1024 * 1024, maxSourceB
   const methodMap = new Map(methods.map((m) => [m.token, m]));
   return {
     format: 'Portable PDB',
+    pdbOffset: pdb.byteOffset - bytes.byteOffset,
     id,
     idHex: hex(id),
     entryPoint,

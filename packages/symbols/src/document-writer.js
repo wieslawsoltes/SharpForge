@@ -1,12 +1,13 @@
 import { Writer, utf8, equalBytes } from '@sharpforge/cil';
 import { PdbGuids, fail } from './contracts.js';
+import { wideHash } from './hash-wide.js';
 import { sha1, sha256 } from './hash.js';
 
 const hashAlgorithms = new Map([
   [PdbGuids.sha1, { size: 20, compute: sha1 }],
   [PdbGuids.sha256, { size: 32, compute: sha256 }],
-  [PdbGuids.sha384, { size: 48 }],
-  [PdbGuids.sha512, { size: 64 }],
+  [PdbGuids.sha384, { size: 48, compute: (bytes) => wideHash(bytes, 384) }],
+  [PdbGuids.sha512, { size: 64, compute: (bytes) => wideHash(bytes, 512) }],
 ]);
 
 /** Match SRM's separator selection and deduplicate path components in the blob heap. */
@@ -24,7 +25,7 @@ function documentName(builder, name) {
   return builder.blob(writer.finish());
 }
 
-/** SHA-384/512 digests are supplied by the compiler; this synchronous writer never starts WebCrypto. */
+/** Compute all standardized document hashes synchronously and verify supplied digests. */
 function documentHash(source, bytes, algorithm) {
   const codec = hashAlgorithms.get(algorithm);
   if (!codec) fail('Unsupported document hash algorithm');

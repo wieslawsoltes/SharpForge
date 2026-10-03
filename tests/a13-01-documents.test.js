@@ -59,7 +59,7 @@ test('document writer rejects duplicate names, invalid digests and unsupported h
   );
   assert.throws(() => encode([{ uri: 'a', text: '', hash: new Uint8Array(31) }]), /hash length/);
   assert.throws(() => encode([{ uri: 'a', text: '', hash: new Uint8Array(32) }]), /checksum/);
-  assert.throws(() => encode([{ uri: 'a', text: '', hashAlgorithm: PdbGuids.sha384 }]), /precomputed/);
+  assert.equal(encode([{ uri: 'a', text: '', hashAlgorithm: PdbGuids.sha384 }]).documents[0].hash.length, 48);
   assert.throws(
     () => encode([{ uri: 'a', text: '', hashAlgorithm: '11111111-2222-3333-4444-555555555555' }]),
     /Unsupported/,

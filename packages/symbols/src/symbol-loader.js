@@ -1,11 +1,11 @@
 import { readPE, equalBytes } from '@sharpforge/cil';
 import { fail } from './contracts.js';
-import { sha256 } from './hash.js';
+import { pdbChecksum } from './pdb-checksum.js';
 import { readPortablePdb } from './pdb-reader.js';
 import { readDebugDirectory } from './debug-directory.js';
 export function loadSymbols(assembly, pdbBytes = null, options = {}) {
   if (pdbBytes instanceof ArrayBuffer) pdbBytes = new Uint8Array(pdbBytes);
-  const entries = readDebugDirectory(assembly),
+  const entries = readDebugDirectory(assembly, options),
     embedded = entries.find((e) => e.kind === 17)?.pdb;
   if (!pdbBytes) pdbBytes = embedded;
   if (!pdbBytes) fail('No Portable PDB was selected or embedded');
@@ -15,14 +15,10 @@ export function loadSymbols(assembly, pdbBytes = null, options = {}) {
     fail('Assembly has no Portable PDB identity; explicit unbound inspection is required');
   if (codeViews.length && !codeViews.some((e) => e.age === 1 && equalBytes(e.id, symbols.id)))
     fail('Portable PDB does not match assembly identity');
-  if (embedded && !equalBytes(readPortablePdb(embedded).id, symbols.id))
+  if (embedded && embedded !== pdbBytes && !equalBytes(readPortablePdb(embedded, options).id, symbols.id))
     fail('Embedded and external PDB identities differ');
   for (const e of entries.filter((e) => e.kind === 19)) {
-    if (e.algorithm !== 'SHA256') continue;
-    const zero = symbols.bytes.slice(),
-      at = symbols.metadata.streams.get('#Pdb').byteOffset - pdbBytes.byteOffset;
-    zero.fill(0, at, at + 20);
-    if (!equalBytes(sha256(zero), e.checksum)) fail('Portable PDB checksum mismatch');
+    if (!equalBytes(pdbChecksum(symbols, e.algorithm), e.checksum)) fail('Portable PDB checksum mismatch');
   }
   const pe = readPE(assembly, { inspection: true });
   for (const [t, n] of Object.entries(symbols.metadata.externalCounts))

@@ -26,8 +26,8 @@ BigInt for 64-bit integers. Invalid names, ranges, imports and references throw
 `SymbolError`.
 
 Source documents accept `hashAlgorithm` and `language` GUIDs and a `hash`
-Uint8Array. SHA-1 and SHA-256 are computed synchronously when omitted;
-SHA-384/SHA-512 need the compiler's precomputed digest. Hash inputs are exact source
+Uint8Array. SHA-1, SHA-256, SHA-384 and SHA-512 are computed synchronously when omitted;
+supplied hashes are checked against the exact source bytes. Hash inputs are exact source
 bytes, including BOMs and line endings. Document path components are deduplicated
 using System.Reflection.Metadata's separator selection. Portable PDB has a
 language column and no vendor column. References: the
@@ -66,3 +66,13 @@ Embedded sources of at least 200 bytes use the archive package's bounded
 fixed-Huffman DEFLATE encoder when smaller; short/incompressible sources retain
 raw representation. Embedded Portable PDB entries use the same encoder. This is
 real compression, independent of platform CompressionStream availability.
+
+`attachPortablePdb` replaces prior symbol entries, preserves other directory kinds
+and overlays, honors the PE's actual section/file alignment, and updates overlay
+file pointers. `checksum` accepts `true` (SHA256), `false`, or SHA256/SHA384/SHA512;
+`reproducible` defaults to true. Existing digital signatures require re-signing
+following any PE mutation. `readDebugDirectory(assembly, { maxBytes })` exposes an
+embedded entry's `pdb` through a lazy, per-entry cached getter; declared sizes are
+checked before decompression. `loadSymbols` applies the same budget and verifies
+all three standardized checksum algorithms. Document `pdbOffset` records the
+zero-based #Pdb stream position used to zero the identity while hashing.
