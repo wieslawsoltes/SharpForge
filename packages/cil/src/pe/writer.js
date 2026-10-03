@@ -47,6 +47,7 @@ function dataDirectories(sections, contributions) {
 
 /** Serialize ordered sections with computed directory RVAs and header/file alignment. */
 export function writePortableExecutable(input, inputOptions = {}) {
+  if (!Array.isArray(input) || input.length < 1 || input.length > 96) throw new CilError('Invalid PE section count');
   const options = peOptions(inputOptions);
   const optionalSize = options.pe32Plus ? 240 : 224;
   const sizeOfHeaders = align(0x80 + 24 + optionalSize + input.length * 40, options.fileAlignment);
@@ -74,6 +75,7 @@ export function writePortableExecutable(input, inputOptions = {}) {
 /** Fill a CLI header in the first section, then emit an IL-only image. */
 export function writeManagedPE(sectionBytes, metadataOffset, metadataLength, entryToken, inputOptions = {}) {
   const options = peOptions(inputOptions);
+  if (!Number.isInteger(entryToken) || entryToken < 0 || entryToken > 0xffffffff) throw new CilError('Invalid CLI entry point');
   if (!(sectionBytes instanceof Uint8Array) || sectionBytes.length < 72) throw new CilError('Missing CLI header reservation');
   if (!Number.isInteger(metadataOffset) || metadataOffset < 72 || !Number.isInteger(metadataLength) || metadataLength < 1
     || metadataOffset + metadataLength > sectionBytes.length) throw new CilError('Invalid CLI metadata range');
