@@ -67,7 +67,7 @@ The implementation and fixtures are complete before local validation. Only focus
 no broad browser/native, Rust installation, live scheduled mutation, credential setup or hosted merge-queue run is claimed.
 
 ```sh
-node --test tests/conformance/ci-planning/*.test.js tests/conformance/leases/*.test.js tests/conformance/flaky/*.test.js tests/conformance/rust/*.test.js tests/conformance/ci-stats.test.js tests/conformance/planning-templates.test.js
+node --test-concurrency=1 --test tests/conformance/ci-planning/*.test.js tests/conformance/leases/*.test.js tests/conformance/flaky/*.test.js tests/conformance/rust/*.test.js tests/conformance/ci-stats.test.js tests/conformance/planning-templates.test.js
 node scripts/conformance/flaky/detect.js --check-quarantine
 node scripts/conformance/ci-stats.js --input path/to/retained-runs.json --output artifacts/ci-stats.json
 python scripts/conformance/rust/qualify.py --plan
@@ -77,3 +77,16 @@ The flake detector defaults to the requested `planning/qualification/flaky.json`
 that path into `artifacts/`. The checked-in record says `not-measured` and the quarantine list is empty. Raw reports contain
 failed attempts, not only the final retry. Focused fixtures use fake GitHub/process results and temporary real Git repositories;
 they are not live scheduling, native Rust or provider-access evidence.
+
+## Observed focused evidence
+
+At source `d39d050aa1249d91686d91379ca3d0ab3ed6417c`, 39 focused Node regressions and 10 Python tooling regressions passed.
+Actionlint 1.7.12 accepted all six changed workflows; the policy linter accepted 19 workflow/composite documents.
+Manifest ownership covered 30 areas, 261 Node files and 22 Python scripts with no duplicate or unassigned test files.
+[The evidence record](evidence/summary.json) binds exact commands, source and retained log hashes. The expected missing-path
+stderr in the ownership-negative fixture is documented there. These runs preceded the user's serial-validation scheduling
+instruction; future validation must use the root agent's shared slot, with Node test concurrency set to one.
+
+No full suite/build, hosted workflow, live scheduled mutation, Rust installation, browser/native qualification or measured
+CI budget pass is claimed. Required automatic core and the deferred qualification targets remain explicit follow-up work.
+The primary T13 claim additionally holds `a29-e03-workflows` for the six exact workflow paths in this combined batch.
