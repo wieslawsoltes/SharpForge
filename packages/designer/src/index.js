@@ -30,3 +30,6 @@ export * from './design-data.js';
 export * from './metadata-roots.js';
 export * from './assets.js';
 export * from './designer-options.js';
+export * from './designer-session.js';
+export * from './session-registry.js';
+export * from './compatibility.js';
