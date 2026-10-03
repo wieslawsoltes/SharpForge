@@ -47,6 +47,7 @@ export class MetadataConstants {
         throw invalid('Constant lookup requires a Field, Param or Property token');
       }
       const table = token >>> 24;
+      if (this.#module.rowCount(table) > 100000) throw loadError(LoadErrorCode.LimitExceeded, 'Constant owner row limit exceeded');
       const row = this.#module.row(token);
       const constant = this.#index(table)?.get(token);
       if (Boolean(row[0] & flags.get(table)) !== Boolean(constant)) throw invalid('HasDefault flag and Constant row disagree');

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readPE } from '@sharpforge/cil';
 import { AssemblyLoadSession, FieldDesc, RuntimeModule, LoadErrorCode } from '../packages/clr/src/index.js';
 import { MetadataMemberDefinitions } from '../packages/clr/src/type-system/metadata-member-definitions.js';
+import { MetadataConstants } from '../packages/clr/src/type-system/metadata-constants.js';
 import { managedFixture } from './managed-fixtures.js';
 
 const fixture = decorate => managedFixture({ fields: [{ name: 'Number' }, { name: 'Text', type: 'string', static: false }],
@@ -95,5 +96,13 @@ test('CLR Constant owner-table validation remains lazy and bounds ownership inde
     const definitions = new MetadataMemberDefinitions({ rowCount: value => value === table ? 100001 : 0,
       row: () => [0, 0, 0] }, 'field');
     assert.throws(() => definitions.get(0x04000001), limited);
+  }
+});
+
+test('CLR direct Constant lookup bounds each owner table before retaining per-owner cache entries', () => {
+  for (const table of [4, 8, 23]) {
+    const constants = new MetadataConstants({ rowCount: value => value === table ? 100001 : 0,
+      row: () => { throw new Error('Owner row read before its bound'); } });
+    assert.throws(() => constants.get((table << 24) + 1), limited);
   }
 });

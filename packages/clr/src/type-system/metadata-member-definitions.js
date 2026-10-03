@@ -74,20 +74,23 @@ export class MetadataMemberDefinitions {
 
   /** No signature blob or executable body is read during identity lookup. */
   get(token) {
-    if (this.#descriptors.has(token)) return this.#descriptors.get(token);
-    return this.#read(() => {
-      if (!Number.isInteger(token) || token < 0 || token > 0xffffffff || token >>> 24 !== this.#kind.table || !(token & 0xffffff)) {
-        throw loadError(LoadErrorCode.InvalidImage, 'Member definition token does not match its metadata kind');
-      }
-      const row = this.#module.row(token);
-      this.#index();
-      const name = this.#module.string(row[this.#kind.name], this.#kind.nameOptions);
-      if (name.length > 4096) throw loadError(LoadErrorCode.LimitExceeded, 'Member name length exceeded');
-      const descriptor = this.#kind.create({ name, module: this.#module, token, flags: row[this.#kind.flags],
-        implementationFlags: row[this.#kind.implementationFlags], signatureIndex: row[this.#kind.signature],
-        declaringType: this.#module.typeDefinition(this.#owners[token & 0xffffff]) });
-      this.#descriptors.set(token, descriptor);
-      return descriptor;
-    });
+    const descriptor = this.#descriptors.get(token);
+    if (descriptor) return descriptor;
+    return this.#read(() => this.#create(token));
+  }
+
+  #create(token) {
+    if (!Number.isInteger(token) || token < 0 || token > 0xffffffff || token >>> 24 !== this.#kind.table || !(token & 0xffffff)) {
+      throw loadError(LoadErrorCode.InvalidImage, 'Member definition token does not match its metadata kind');
+    }
+    const row = this.#module.row(token);
+    this.#index();
+    const name = this.#module.string(row[this.#kind.name], this.#kind.nameOptions);
+    if (name.length > 4096) throw loadError(LoadErrorCode.LimitExceeded, 'Member name length exceeded');
+    const descriptor = this.#kind.create({ name, module: this.#module, token, flags: row[this.#kind.flags],
+      implementationFlags: row[this.#kind.implementationFlags], signatureIndex: row[this.#kind.signature],
+      declaringType: this.#module.typeDefinition(this.#owners[token & 0xffffff]) });
+    this.#descriptors.set(token, descriptor);
+    return descriptor;
   }
 }

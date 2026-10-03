@@ -14,8 +14,8 @@ custom modifiers. It does not resolve TypeRefs or substitute generic arguments.
 Lazy `constant` shares the module's raw Constant index with Param metadata.
 `module.constant(token)` accepts Field, Param or Property tokens and returns the
 same frozen `{type, value}` or `null` when absent. HasDefault flags must agree
-with the table. Owner validation remains lazy per owner-table kind, so malformed
-Field constants do not change when Param-only metadata access fails. Primitive
+with the table. Owner validation remains lazy per owner-table kind; Field-owner
+validation does not run during Param-only access. Primitive
 values use the public CIL codec; safe 64-bit integers are Numbers, larger values
 are BigInts, and null constants have type 18. There is no enum boxing or
 custom-attribute interpretation.
@@ -24,7 +24,8 @@ Methods and fields share one schema-driven definition ownership service, with
 separate module-owned caches. Cold traversal is O(TypeDef + member + pointer)
 rows, bounded to 100,000 combined rows. Warm descriptor and signature reads reuse
 their cached identities. The shared Constant table is indexed once in O(rows),
-bounded to 100,000 rows. Field names are limited to 4,096 UTF-8 bytes; field
+bounded to 100,000 rows, as is each owner table queried directly through
+`module.constant`. Field names are limited to 4,096 UTF-8 bytes; field
 signature and Constant blobs to 1 MiB, checked before decoding or copying.
 Malformed signatures, ownership or defaults produce `SFCLR005`; limits produce
 `SFCLR007`. Signature nesting uses existing CIL decoder bounds. Public module
