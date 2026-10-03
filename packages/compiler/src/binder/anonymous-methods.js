@@ -20,8 +20,8 @@ const declaredRefKind = parameter => {
   return word ? refWords[word] : RefKind.None;
 };
 
-/** What a diagnostic about an anonymous function as a whole points at: the `delegate` keyword, else the given node. */
-export const anonymousFunctionAnchor = (syntax, fallback = null) => syntax.delegateKeyword ?? fallback;
+/** What a diagnostic about an anonymous function as a whole points at: the `delegate` keyword or the `=>`, else the given node. */
+export const anonymousFunctionAnchor = (syntax, fallback = null) => syntax.delegateKeyword ?? syntax.arrowToken ?? fallback;
 
 /**
  * Signature errors of an anonymous method against the Invoke method of its target delegate.

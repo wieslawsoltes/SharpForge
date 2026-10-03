@@ -108,6 +108,12 @@
       "name": "Windows App SDK",
       "version": "1.8.260921001",
       "source": "https://www.nuget.org/packages/Microsoft.WindowsAppSDK/1.8.260921001"
+    },
+    {
+      "id": "sharpforge-native-platform-v1",
+      "name": "Native platform qualification: Node22/26 and .NET8/10, frozen 2026-10-03",
+      "version": "1",
+      "source": "https://github.com/wieslawsoltes/SharpForge/blob/dd50a7d386342df1aa77b93050d1dbe1cc179cf1/planning/qualification/native/toolchain.json"
     }
   ]
 }

@@ -1,0 +1,137 @@
+[
+  {
+    "name": "attrs",
+    "version": "26.1.0",
+    "metadataLicenseExpression": "MIT",
+    "metadataLicense": null,
+    "licenseFiles": [
+      {
+        "wheelPath": "attrs-26.1.0.dist-info/licenses/LICENSE",
+        "sha256": "882115c95dfc2af1eeb6714f8ec6d5cbcabf667caff8729f42420da63f714e9f",
+        "bytes": 1109
+      }
+    ]
+  },
+  {
+    "name": "greenlet",
+    "version": "3.5.6",
+    "metadataLicenseExpression": "MIT AND PSF-2.0",
+    "metadataLicense": null,
+    "licenseFiles": [
+      {
+        "wheelPath": "greenlet-3.5.6.dist-info/licenses/LICENSE",
+        "sha256": "769831d6e5dfaf2c20802faccff1fafb4c2025dd8f6253dfa47fcad59d4d0979",
+        "bytes": 1434
+      },
+      {
+        "wheelPath": "greenlet-3.5.6.dist-info/licenses/LICENSE.PSF",
+        "sha256": "e5ff3c23c110e494cd7d736c10fd96d462457bafeca310840db6527298c7d46b",
+        "bytes": 2424
+      }
+    ]
+  },
+  {
+    "name": "jsonschema",
+    "version": "4.26.0",
+    "metadataLicenseExpression": "MIT",
+    "metadataLicense": null,
+    "licenseFiles": [
+      {
+        "wheelPath": "jsonschema-4.26.0.dist-info/licenses/COPYING",
+        "sha256": "4f92a015a13c4d1a040bef018aa13430b4f1bc73b41b16bb846c346766de7439",
+        "bytes": 1057
+      }
+    ]
+  },
+  {
+    "name": "jsonschema-specifications",
+    "version": "2025.9.1",
+    "metadataLicenseExpression": "MIT",
+    "metadataLicense": null,
+    "licenseFiles": [
+      {
+        "wheelPath": "jsonschema_specifications-2025.9.1.dist-info/licenses/COPYING",
+        "sha256": "42dcd63495f87b4eb7c7757afa379bb55a53f94afd7a5f657d9adf57236e515c",
+        "bytes": 1057
+      }
+    ]
+  },
+  {
+    "name": "playwright",
+    "version": "1.57.0",
+    "metadataLicenseExpression": "Apache-2.0",
+    "metadataLicense": null,
+    "licenseFiles": [
+      {
+        "wheelPath": "playwright-1.57.0.dist-info/licenses/LICENSE",
+        "sha256": "7fab1461b41970ff376f1c9303a637076bfaaeb71cd12dd3a1c44aaf59a1a2b9",
+        "bytes": 11399
+      }
+    ]
+  },
+  {
+    "name": "pyee",
+    "version": "13.0.1",
+    "metadataLicenseExpression": null,
+    "metadataLicense": "MIT",
+    "licenseFiles": [
+      {
+        "wheelPath": "pyee-13.0.1.dist-info/licenses/LICENSE",
+        "sha256": "1ff556ca206b107f10e1c562ae454d3292e0296c3510eb90eb7f114caee32a66",
+        "bytes": 1080
+      }
+    ]
+  },
+  {
+    "name": "PyYAML",
+    "version": "6.0.3",
+    "metadataLicenseExpression": null,
+    "metadataLicense": "MIT",
+    "licenseFiles": [
+      {
+        "wheelPath": "pyyaml-6.0.3.dist-info/licenses/LICENSE",
+        "sha256": "8d3928f9dc4490fd635707cb88eb26bd764102a7282954307d3e5167a577e8a4",
+        "bytes": 1101
+      }
+    ]
+  },
+  {
+    "name": "referencing",
+    "version": "0.37.0",
+    "metadataLicenseExpression": "MIT",
+    "metadataLicense": null,
+    "licenseFiles": [
+      {
+        "wheelPath": "referencing-0.37.0.dist-info/licenses/COPYING",
+        "sha256": "42dcd63495f87b4eb7c7757afa379bb55a53f94afd7a5f657d9adf57236e515c",
+        "bytes": 1057
+      }
+    ]
+  },
+  {
+    "name": "rpds-py",
+    "version": "2026.6.3",
+    "metadataLicenseExpression": "MIT",
+    "metadataLicense": null,
+    "licenseFiles": [
+      {
+        "wheelPath": "rpds_py-2026.6.3.dist-info/licenses/LICENSE",
+        "sha256": "314e4e91be3baa93c0fb4bccc9e4e97cd643eb839b065af921782c2175fe9909",
+        "bytes": 1057
+      }
+    ]
+  },
+  {
+    "name": "typing_extensions",
+    "version": "4.16.0",
+    "metadataLicenseExpression": "PSF-2.0",
+    "metadataLicense": null,
+    "licenseFiles": [
+      {
+        "wheelPath": "typing_extensions-4.16.0.dist-info/licenses/LICENSE",
+        "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+        "bytes": 13936
+      }
+    ]
+  }
+]

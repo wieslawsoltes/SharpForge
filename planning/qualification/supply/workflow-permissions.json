@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "jobWriteGrants": {
+    ".github/workflows/pages.yml#deploy": [
+      "pages",
+      "id-token"
+    ],
+    ".github/workflows/release.yml#build": [
+      "id-token",
+      "attestations",
+      "artifact-metadata"
+    ],
+    ".github/workflows/release.yml#publish": [
+      "contents"
+    ],
+    ".github/workflows/security.yml#codeql": [
+      "security-events"
+    ],
+    ".github/workflows/release.yml#draft": [
+      "contents"
+    ],
+    ".github/workflows/spec-watch.yml#watch": [
+      "issues"
+    ]
+  },
+  "scope": "Explicit job-level write grants only. Release build cannot write repository contents."
+}

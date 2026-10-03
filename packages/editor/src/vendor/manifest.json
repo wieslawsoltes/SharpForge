@@ -13,9 +13,121 @@
     "keymap/vim.js": "dd5b3fcf007e8eee01c4e6776a6663e2a7210343b4ec546e3e7b4f71f604424f",
     "keymap/emacs.js": "2ba4ea90bae05b8784d8772adc054701b70d72f4d74647b1869aba0a946d2d00",
     "keymap/sublime.js": "e14bdecffec8f4e14635dc409339b31450a000fd22951c572099c19160095da8",
-    "addon/search/search.js": "8949cd96092b539263f282a5db3041093984488db1a57c19ad35fe6abc5210a7"
+    "addon/search/search.js": "8949cd96092b539263f282a5db3041093984488db1a57c19ad35fe6abc5210a7",
+    "lib/codemirror.css": "d30aa41229dacba5a631fd45ea0544bfdb07c78992820b67900b109b57095fb2",
+    "addon/dialog/dialog.css": "5df690d771f12118348562dd2a90060433ae2edeccd0908abcaa4480b1e3e468"
   },
   "modifications": [
     "UMD wrappers replaced by a lazy factory scoped to the owner document."
-  ]
+  ],
+  "upstreamArchive": {
+    "url": "https://registry.npmjs.org/codemirror/-/codemirror-5.58.3.tgz",
+    "sha256": "92fe9e53d1f916621ee32eb93a27252a9d97d6d2e09dd57582042618deb74ec3",
+    "integrity": "sha512-KBhB+juiyOOgn0AqtRmWyAT3yoElkuvWTI6hsHa9E6GQrl6bk/fdAYcvuqW1/upO9T9rtEtapWdw4XYcNiVDEA==",
+    "verification": "All retained source bodies independently matched npm 5.58.3 bytes on 2026-10-03; historical acquisition remains the offline nbclassic distribution."
+  },
+  "reconstruction": {
+    "format": 1,
+    "method": "Restore upstream wrappers around exact byte ranges; CSS joins use one LF separator. No body transformation.",
+    "segments": [
+      {
+        "upstream": "lib/codemirror.js",
+        "bundled": "classic-engine.js",
+        "offset": 256,
+        "length": 397457,
+        "prefix": "// CodeMirror, copyright (c) by Marijn Haverbeke and others\n// Distributed under an MIT license: https://codemirror.net/LICENSE\n\n// This is CodeMirror (https://codemirror.net), a code editor\n// implemented in JavaScript on top of the browser's DOM.\n//\n// You can find some technical background for some of the code below\n// at http://marijnhaverbeke.nl/blog/#cm-internals .\n\n(function (global, factory) {\n  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :\n  typeof define === 'function' && define.amd ? define(factory) :\n  (global = global || self, global.CodeMirror = factory());\n}(this, (function () { 'use strict';",
+        "suffix": "})));\n"
+      },
+      {
+        "upstream": "addon/dialog/dialog.js",
+        "bundled": "classic-engine.js",
+        "offset": 397772,
+        "length": 4738,
+        "prefix": "// CodeMirror, copyright (c) by Marijn Haverbeke and others\n// Distributed under an MIT license: https://codemirror.net/LICENSE\n\n// Open simple dialogs on top of an editor. Relies on dialog.css.\n\n(function(mod) {\n  if (typeof exports == \"object\" && typeof module == \"object\") // CommonJS\n    mod(require(\"../../lib/codemirror\"));\n  else if (typeof define == \"function\" && define.amd) // AMD\n    define([\"../../lib/codemirror\"], mod);\n  else // Plain browser env\n    mod(CodeMirror);\n})(function(CodeMirror) {",
+        "suffix": "});\n"
+      },
+      {
+        "upstream": "addon/search/searchcursor.js",
+        "bundled": "classic-engine.js",
+        "offset": 402585,
+        "length": 11799,
+        "prefix": "// CodeMirror, copyright (c) by Marijn Haverbeke and others\n// Distributed under an MIT license: https://codemirror.net/LICENSE\n\n(function(mod) {\n  if (typeof exports == \"object\" && typeof module == \"object\") // CommonJS\n    mod(require(\"../../lib/codemirror\"))\n  else if (typeof define == \"function\" && define.amd) // AMD\n    define([\"../../lib/codemirror\"], mod)\n  else // Plain browser env\n    mod(CodeMirror)\n})(function(CodeMirror) {",
+        "suffix": "});\n"
+      },
+      {
+        "upstream": "addon/edit/matchbrackets.js",
+        "bundled": "classic-engine.js",
+        "offset": 414458,
+        "length": 6181,
+        "prefix": "// CodeMirror, copyright (c) by Marijn Haverbeke and others\n// Distributed under an MIT license: https://codemirror.net/LICENSE\n\n(function(mod) {\n  if (typeof exports == \"object\" && typeof module == \"object\") // CommonJS\n    mod(require(\"../../lib/codemirror\"));\n  else if (typeof define == \"function\" && define.amd) // AMD\n    define([\"../../lib/codemirror\"], mod);\n  else // Plain browser env\n    mod(CodeMirror);\n})(function(CodeMirror) {",
+        "suffix": "});\n"
+      },
+      {
+        "upstream": "mode/clike/clike.js",
+        "bundled": "classic-engine.js",
+        "offset": 420705,
+        "length": 36581,
+        "prefix": "// CodeMirror, copyright (c) by Marijn Haverbeke and others\n// Distributed under an MIT license: https://codemirror.net/LICENSE\n\n(function(mod) {\n  if (typeof exports == \"object\" && typeof module == \"object\") // CommonJS\n    mod(require(\"../../lib/codemirror\"));\n  else if (typeof define == \"function\" && define.amd) // AMD\n    define([\"../../lib/codemirror\"], mod);\n  else // Plain browser env\n    mod(CodeMirror);\n})(function(CodeMirror) {",
+        "suffix": "});\n"
+      },
+      {
+        "upstream": "keymap/vim.js",
+        "bundled": "classic-engine.js",
+        "offset": 457346,
+        "length": 221213,
+        "prefix": "// CodeMirror, copyright (c) by Marijn Haverbeke and others\n// Distributed under an MIT license: https://codemirror.net/LICENSE\n\n/**\n * Supported keybindings:\n *   Too many to list. Refer to defaultKeymap below.\n *\n * Supported Ex commands:\n *   Refer to defaultExCommandMap below.\n *\n * Registers: unnamed, -, ., :, /, _, a-z, A-Z, 0-9\n *   (Does not respect the special case for number registers when delete\n *    operator is made with these commands: %, (, ),  , /, ?, n, N, {, } )\n *   TODO: Implement the remaining registers.\n *\n * Marks: a-z, A-Z, and 0-9\n *   TODO: Implement the remaining special marks. They have more complex\n *       behavior.\n *\n * Events:\n *  'vim-mode-change' - raised on the editor anytime the current mode changes,\n *                      Event object: {mode: \"visual\", subMode: \"linewise\"}\n *\n * Code structure:\n *  1. Default keymap\n *  2. Variable declarations and short basic helpers\n *  3. Instance (External API) implementation\n *  4. Internal state tracking objects (input state, counter) implementation\n *     and instantiation\n *  5. Key handler (the main command dispatcher) implementation\n *  6. Motion, operator, and action implementations\n *  7. Helper functions for the key handler, motions, operators, and actions\n *  8. Set up Vim to work as a keymap for CodeMirror.\n *  9. Ex command implementations.\n */\n\n(function(mod) {\n  if (typeof exports == \"object\" && typeof module == \"object\") // CommonJS\n    mod(require(\"../lib/codemirror\"), require(\"../addon/search/searchcursor\"), require(\"../addon/dialog/dialog\"), require(\"../addon/edit/matchbrackets.js\"));\n  else if (typeof define == \"function\" && define.amd) // AMD\n    define([\"../lib/codemirror\", \"../addon/search/searchcursor\", \"../addon/dialog/dialog\", \"../addon/edit/matchbrackets\"], mod);\n  else // Plain browser env\n    mod(CodeMirror);\n})(function(CodeMirror) {",
+        "suffix": "});\n"
+      },
+      {
+        "upstream": "keymap/emacs.js",
+        "bundled": "classic-engine.js",
+        "offset": 678621,
+        "length": 13344,
+        "prefix": "// CodeMirror, copyright (c) by Marijn Haverbeke and others\n// Distributed under an MIT license: https://codemirror.net/LICENSE\n\n(function(mod) {\n  if (typeof exports == \"object\" && typeof module == \"object\") // CommonJS\n    mod(require(\"../lib/codemirror\"));\n  else if (typeof define == \"function\" && define.amd) // AMD\n    define([\"../lib/codemirror\"], mod);\n  else // Plain browser env\n    mod(CodeMirror);\n})(function(CodeMirror) {",
+        "suffix": "});\n"
+      },
+      {
+        "upstream": "keymap/sublime.js",
+        "bundled": "classic-engine.js",
+        "offset": 692029,
+        "length": 25543,
+        "prefix": "// CodeMirror, copyright (c) by Marijn Haverbeke and others\n// Distributed under an MIT license: https://codemirror.net/LICENSE\n\n// A rough approximation of Sublime Text's keybindings\n// Depends on addon/search/searchcursor.js and optionally addon/dialog/dialogs.js\n\n(function(mod) {\n  if (typeof exports == \"object\" && typeof module == \"object\") // CommonJS\n    mod(require(\"../lib/codemirror\"), require(\"../addon/search/searchcursor\"), require(\"../addon/edit/matchbrackets\"));\n  else if (typeof define == \"function\" && define.amd) // AMD\n    define([\"../lib/codemirror\", \"../addon/search/searchcursor\", \"../addon/edit/matchbrackets\"], mod);\n  else // Plain browser env\n    mod(CodeMirror);\n})(function(CodeMirror) {",
+        "suffix": "});\n"
+      },
+      {
+        "upstream": "addon/search/search.js",
+        "bundled": "classic-engine.js",
+        "offset": 717612,
+        "length": 9895,
+        "prefix": "// CodeMirror, copyright (c) by Marijn Haverbeke and others\n// Distributed under an MIT license: https://codemirror.net/LICENSE\n\n// Define search commands. Depends on dialog.js or another\n// implementation of the openDialog method.\n\n// Replace works a little oddly -- it will do the replace on the next\n// Ctrl-G (or whatever is bound to findNext) press. You prevent a\n// replace by making sure the match is no longer selected when hitting\n// Ctrl-G.\n\n(function(mod) {\n  if (typeof exports == \"object\" && typeof module == \"object\") // CommonJS\n    mod(require(\"../../lib/codemirror\"), require(\"./searchcursor\"), require(\"../dialog/dialog\"));\n  else if (typeof define == \"function\" && define.amd) // AMD\n    define([\"../../lib/codemirror\", \"./searchcursor\", \"../dialog/dialog\"], mod);\n  else // Plain browser env\n    mod(CodeMirror);\n})(function(CodeMirror) {",
+        "suffix": "});\n"
+      },
+      {
+        "upstream": "lib/codemirror.css",
+        "bundled": "classic.css",
+        "offset": 0,
+        "length": 8722,
+        "prefix": "",
+        "suffix": ""
+      },
+      {
+        "upstream": "addon/dialog/dialog.css",
+        "bundled": "classic.css",
+        "offset": 8723,
+        "length": 507,
+        "prefix": "",
+        "suffix": ""
+      }
+    ]
+  },
+  "distributedFiles": {
+    "classic-engine.js": "02643610043f29509285db3c4a443ce93e67a09ba1cac8daadf8341f2aad45f3",
+    "classic.css": "761c0c53e457a722008459c1b030e7efb02f4117f6acdbf66fab3f29226eb351",
+    "CODEMIRROR-LICENSE.txt": "168a4becc968f5001e2ee2e0291b6e4daabafc1894a11ade1e11d56e96096e07"
+  },
+  "licenseNotice": {
+    "retained": "Historical nbclassic MIT notice retains the author contact marijn@haverbeke.berlin; npm5.58.3 uses marijnh@gmail.com. The permission text is identical.",
+    "npmLicenseSHA256": "a3f2fe2ac6b471aa80c737c5d283dd049bdc903a73835ee6d4d2cac02fdd53bf",
+    "retainedSHA256": "168a4becc968f5001e2ee2e0291b6e4daabafc1894a11ade1e11d56e96096e07"
+  }
 }
