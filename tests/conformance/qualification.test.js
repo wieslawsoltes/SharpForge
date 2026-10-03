@@ -81,3 +81,26 @@ test('browser matrix covers each discovered entry point and every OS without fai
   assert.match(workflow, /suite: \[browser, managed, workspace, release05, release06, msbuild, release08, native-explorer, release09, release10, release11, release12, release13, release14, standalone\]/);
   assert.match(workflow, /needs: \[core, build, packages, browser, native-il, native-msbuild, clr-wasm\]/);
 });
+
+test('managed Int32 process exits use Windows DWORD and POSIX low-byte representations', async () => {
+  const {nativeExitStatus} = await import('../../scripts/conformance/native-exit-status.js');
+  for (const [code, windows, posix] of [[0, 0, 0], [42, 42, 42], [256, 256, 0], [-3, 4294967293, 253], [-2, 4294967294, 254], [-2147483648, 2147483648, 0], [2147483647, 2147483647, 255]]) {
+    assert.equal(nativeExitStatus(code, 'win32'), windows);
+    for (const platform of ['linux', 'darwin']) assert.equal(nativeExitStatus(code, platform), posix);
+  }
+  for (const code of [NaN, Infinity, 1.5, '42', -2147483649, 2147483648]) assert.throws(() => nativeExitStatus(code), /Int32/);
+});
+
+test('checkout attributes override autocrlf for executable/example text without altering binary bytes', async t => {
+  const root = await temporary(t), git = (...args) => execFileSync('git', args, {cwd: root, encoding: 'utf8'});
+  git('init', '-q'); git('config', 'user.email', 'fixture@example.invalid'); git('config', 'user.name', 'Fixture');
+  git('config', 'core.autocrlf', 'true'); git('config', 'core.eol', 'crlf');
+  await writeFile(join(root, '.gitattributes'), await readFile(new URL('../../.gitattributes', import.meta.url)));
+  const sources = {'runner.js': Buffer.from('#!/usr/bin/env node\nconsole.log(42);\n'), 'Program.cs': Buffer.from('Console.WriteLine(42);\n'), 'opaque.bin': Buffer.from([0, 255, 13, 10, 0, 10])};
+  for (const [name, bytes] of Object.entries(sources)) await writeFile(join(root, name), bytes);
+  git('add', '.'); git('commit', '-qm', 'cross-platform checkout fixture');
+  for (const name of Object.keys(sources)) await rm(join(root, name));
+  git('checkout', '--', '.');
+  for (const [name, bytes] of Object.entries(sources)) assert.deepEqual(await readFile(join(root, name)), bytes, name);
+  assert.equal(checkoutStatus(root), '');
+});
