@@ -59,3 +59,5 @@ export function verifyImage(image){
   }
   return errors;
 }
+
+export {float, floatBinary, floatCompare, finiteFloat, ieeeRemainder} from './numeric/float.js';

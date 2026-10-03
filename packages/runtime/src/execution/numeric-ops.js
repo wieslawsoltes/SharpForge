@@ -1,4 +1,5 @@
-import {smallInteger, smallIntegerIndirect} from '@sharpforge/bytecode';
+import {float, floatBinary, floatCompare, smallInteger, smallIntegerIndirect} from '@sharpforge/bytecode';
+export {float} from '@sharpforge/bytecode';
 
 /** Pure operations on CIL evaluation-stack values.
  *
@@ -13,7 +14,6 @@ const reference = value => value !== null && typeof value === 'object' && Number
 const smallStorageTypes = new Set(['sbyte', 'byte', 'short', 'ushort', 'char', 'bool']);
 const smallIndirectSuffixes = new Set(['i1', 'u1', 'i2', 'u2']);
 
-export const float = (value, kind = 'r8') => Object.freeze({float: kind, value: kind === 'r4' ? Math.fround(value) : Number(value)});
 export const number = value => value?.float ? value.value : value;
 export const isNumber = value => typeof value === 'number' || typeof value === 'bigint' || !!value?.float;
 const numericAliases = {'System.SByte': 'sbyte', 'System.Byte': 'byte', 'System.Int16': 'short', 'System.UInt16': 'ushort', 'System.Char': 'char', 'System.Boolean': 'bool', 'System.Int32': 'int', 'System.UInt32': 'uint', 'System.Int64': 'long', 'System.UInt64': 'ulong', 'System.Single': 'float', 'System.Double': 'double', 'System.IntPtr':'nint', 'System.UIntPtr':'nuint'};
@@ -29,8 +29,8 @@ export function compare(a, b, op, unsigned = false, {fault: createFault = fault,
   }
   if (!isNumber(a) || !isNumber(b)) throw createFault('InvalidProgramException', 'Numeric comparison expected');
   const floating = !!(a?.float || b?.float);
+  if (floating) return floatCompare(a, b, op, unsigned);
   a = number(a); b = number(b);
-  if (floating && (Number.isNaN(a) || Number.isNaN(b))) return op === 'ne' || unsigned;
   if (unsigned && !floating) {
     a = typeof a === 'bigint' ? BigInt.asUintN(64, a) : a >>> 0;
     b = typeof b === 'bigint' ? BigInt.asUintN(64, b) : b >>> 0;
@@ -41,11 +41,11 @@ export function compare(a, b, op, unsigned = false, {fault: createFault = fault,
 export function binary(name, a, b, {fault: createFault = fault, error: createError = error} = {}) {
   if (!isNumber(a) || !isNumber(b)) throw createFault('InvalidProgramException', 'Arithmetic requires numeric operands');
   const floating = !!(a?.float || b?.float), checked = name.includes('.ovf'), unsigned = name.endsWith('.un'), op = name.split('.')[0];
-  a = number(a); b = number(b);
   if (floating) {
     if (!['add', 'sub', 'mul', 'div', 'rem'].includes(op) || checked || unsigned) throw createFault('InvalidProgramException', 'Invalid floating-point operation');
-    return float({add: () => a + b, sub: () => a - b, mul: () => a * b, div: () => a / b, rem: () => a % b}[op]());
+    return floatBinary(op, a, b, {fault: createFault});
   }
+  a = number(a); b = number(b);
   const wide = typeof a === 'bigint';
   if (typeof b === 'bigint' !== wide && !['shl', 'shr'].includes(op)) throw createFault('InvalidProgramException', 'Mismatched integer widths');
   if (wide || checked) {
@@ -80,7 +80,7 @@ export function unary(name, value, {fault: createFault = fault, error: createErr
   if (!isNumber(value)) throw createFault('InvalidProgramException', 'Numeric operand required');
   const raw = number(value);
   if (value?.float) {
-    if (name === 'neg') return float(-raw);
+    if (name === 'neg') return float(-raw, value.float);
     throw createError('not requires integer');
   }
   return typeof raw === 'bigint' ? BigInt.asIntN(64, name === 'neg' ? -raw : ~raw) : name === 'neg' ? (-raw) | 0 : ~raw;
