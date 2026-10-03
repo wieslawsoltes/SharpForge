@@ -29,6 +29,7 @@ export const profileCodes=Object.freeze({
   SF2142:profile('Labeled break and continue require a directly labeled loop or switch'),
   SF2143:profile('The supported with(...) form supplies one capacity argument to List<T> or HashSet<T>'),
   SF2200:profile('The program is valid C# but is not executable on this runtime profile: it uses {0}'),
+  SF2201:profile('Semantic analysis failed internally ({0}); only the profile diagnostics are reported'),
   SF3001:profile('CIL emission failed: {0}')
 });
 /** Number of distinct `{n}` placeholders a message format consumes. */

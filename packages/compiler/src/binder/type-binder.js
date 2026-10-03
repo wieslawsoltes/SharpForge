@@ -290,7 +290,7 @@ export class TypeBinder {
       return error(name, arity);
     }
     let found = null;
-    for (let t = container; t && !found; t = t.baseType) found = t.getTypeMembers?.(name, arity)[0] ?? null;
+    for (let t = container; t && !found; t = t.baseType) found = (t.originalDefinition ?? t).getTypeMembers?.(name, arity)[0] ?? null;
     if (!found) {
       if (!options.quiet) this.report(scope, right.identifier, 'CS0426', [name, container.toDisplayString()]);
       return error(name, arity);
