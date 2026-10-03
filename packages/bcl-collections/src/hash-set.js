@@ -74,7 +74,7 @@ export function hashSet(p, descriptor, context) {
     return null;
   }
   if (method === 'ToArray') return makeArray(p, type.element, [...hashSetValues(p, reference)]);
-  if (['UnionWith', 'IntersectWith', 'ExceptWith'].includes(method)) {
+  if (method === 'UnionWith' || method === 'IntersectWith' || method === 'ExceptWith') {
     return setOperation(p, reference, method, values[0]);
   }
   const map = indexMap(p, reference);
