@@ -283,7 +283,9 @@ export const CallBinding = Base =>
           }
           return { expression: a, parameter: p, refKind: a.refKind };
         }
-        const value = conversion && a.type && !a.hasErrors ? this.applyConversion(a, result.parameterTypes[i], conversion, a.syntax) : a;
+        // A typeless target-typed argument (`new()`, a conditional or switch expression, a collection expression) gets its type here.
+        const converts = conversion && !a.hasErrors && (a.type || a.materialize);
+        const value = converts ? this.applyConversion(a, result.parameterTypes[i], conversion, a.syntax) : a;
         if (a.form === 'lambda' && !a.hasErrors) this.finishLambda(a, result.parameterTypes[i]);
         return { expression: value, parameter: p, refKind: a.refKind ?? null };
       });

@@ -18,6 +18,7 @@ import { ConversionBinding } from './body/conversions.js';
 import { NameBinding } from './body/names.js';
 import { CallBinding } from './body/calls.js';
 import { CreationBinding } from './body/creation.js';
+import { TargetTypedBinding } from './target-typing.js';
 import { InitializerBinding } from './members/initializers.js';
 import { OperatorBinding } from './body/operators.js';
 import { TypeTestBinding } from './body/type-tests.js';
@@ -41,6 +42,7 @@ const expressionFamilies = [
   NameBinding,
   CallBinding,
   CreationBinding,
+  TargetTypedBinding,
   InitializerBinding,
   OperatorBinding,
   TypeTestBinding,

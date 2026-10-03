@@ -224,7 +224,7 @@ export const NameBinding = Base =>
       if (!nameSyntax || nameSyntax.identifier?.isMissing) return this.bad(syntax);
       const name = nameSyntax.identifier.valueText,
         typeArguments = this.typeArgumentsOf(nameSyntax);
-      let left = this.expression(syntax.expression, { ...options, invoked: false, memberAccessLeft: true });
+      let left = this.requireNaturalType(this.expression(syntax.expression, { ...options, invoked: false, memberAccessLeft: true }));
       if (left.hasErrors) {
         if (left.kind === 'Local') left.local.reads++;
         // A member named after a field of the enclosing type counts as a use of that field even though the access failed.

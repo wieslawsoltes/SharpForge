@@ -212,20 +212,7 @@ export const LambdaBinding = Base =>
         { isExpression: true, node: syntax.switchKeyword },
       );
       const type = this.bestCommonType(arms.map(a => a.value));
-      if (!type) {
-        const n = this.node('SwitchExpression', syntax, null, { governing, arms, form: 'implicitNew' });
-        n.convert = to =>
-          arms.every(a => {
-            const c = this.conversions.classifyFromExpression(a.value, to);
-            return c.exists && c.isImplicit;
-          })
-            ? new Conversion(ConversionKind.Identity)
-            : null;
-        n.materialize = to =>
-          this.node('SwitchExpression', syntax, to, { governing, arms: arms.map(a => ({ ...a, value: this.convert(a.value, to) })) });
-        n.isTargetTypedSwitch = true;
-        return n;
-      }
+      if (!type) return this.targetTypedSwitch(syntax, governing, arms);
       return this.node('SwitchExpression', syntax, type, {
         governing,
         arms: arms.map(a => ({ ...a, value: this.convert(a.value, type) })),
