@@ -4,8 +4,9 @@
 The native System.Reflection.Metadata reader in that program captures kickoff
 links and exact async stepping blobs for a two-await Task method, an async-void
 method with a catch offset, and an iterator without async stepping information.
-The methods are compiled but never executed. `reference.json` records SDK/runtime,
-source, assembly, original PDB and rewritten PDB SHA-256 identities.
+The methods are compiled but never executed. `reference.json` records SDK/runtime
+and compiler versions, plus compiler, source, assembly, original PDB and rewritten
+PDB SHA-256 identities.
 
 Generate explicitly in the serial validation slot:
 

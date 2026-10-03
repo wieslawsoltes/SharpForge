@@ -28,6 +28,8 @@ function rejectStep(update, pattern) {
 test('fixture hashes identify the native reference, source and exact emitted PE', () => {
   assert.equal(fixture.schemaVersion, 1);
   assert.match(fixture.reference.sdk, /^10\./);
+  assert.match(fixture.reference.compilerVersion, /^\d+\.\d+/);
+  assert.match(fixture.reference.compilerSha256, /^[a-f0-9]{64}$/);
   assert.equal(fixture.reference.mode, 'Debug');
   assert.equal(hash(assembly), fixture.reference.assemblySha256);
   const source = readFileSync(new URL('../packages/symbols/interop/AsyncWriter/Program.cs', import.meta.url), 'utf8');
