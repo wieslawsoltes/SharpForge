@@ -5,6 +5,7 @@ import {
 import {ContextMenu} from '@sharpforge/controls';
 import {WinUIHost} from '@sharpforge/winui';
 import {DesignerSourceSync} from './designer-source-sync.js';
+import {DesignerResourceSourceSync} from './designer-resource-sync.js';
 import {DesignerChrome} from './designer-chrome.js';
 import {DesignerSurfaceController} from './designer-surface-controller.js';
 import {DesignerToolbox} from './designer-toolbox.js';
@@ -37,7 +38,8 @@ export class DesignerTools {
     this.clipboardStore ??= {};
     this.menu = new ContextMenu({onError: error => this.error(error)});
     this.designerOptions ??= new DesignerOptionsService(services.settings);
-    this.sourceSync = this.session.sourceSync ?? new DesignerSourceSync(this);
+    const SourceSync = this.session.kind === 'resources' ? DesignerResourceSourceSync : DesignerSourceSync;
+    this.sourceSync = this.session.sourceSync ?? new SourceSync(this);
     this.session.sourceSync = this.sourceSync;
     this.sourceSync.auto = this.designerOptions.value.autoSync;
     this.naming = this.designerOptions.value.naming;
@@ -121,6 +123,7 @@ export class DesignerTools {
     this.surface.install();
     this.accessibility.install();
     this.liveAttachment.install();
+    this.sourceSync.install?.();
     this.update({kind: 'initialize'});
   }
 
@@ -297,7 +300,7 @@ export class DesignerTools {
   }
 
   async save() {
-    if (this.session.kind === 'csharp' && this.sourceSync.session) return this.sourceSync.write();
+    if (this.session.kind !== 'design' && this.sourceSync.session) return this.sourceSync.write();
     await this.saveDocument(this.path, this.session.document.serialize());
     this.session.document.savedRevision = this.session.document.revision;
     this.status = 'Saved ' + this.path;

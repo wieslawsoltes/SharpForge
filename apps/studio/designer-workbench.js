@@ -135,9 +135,10 @@ export class DesignerWorkbench {
     this.history.sourceChanged(uri);
     this.documents.sourceChanged(uri);
     for (const [owner, view] of this.documents.views) {
-      if (owner !== uri && view.tools.sourceSync.session?.sources.some(file => file.uri === uri)) {
-        view.tools.sourceSync.sourceChanged(uri, {...options, dependency: true});
-      }
+      const sync = view.tools.sourceSync;
+      const primary = sync.session?.analysis.uri;
+      if (owner === uri && primary === uri || !sync.session?.sources.some(file => file.uri === uri)) continue;
+      sync.sourceChanged(uri, {...options, dependency: primary !== uri});
     }
   }
 
