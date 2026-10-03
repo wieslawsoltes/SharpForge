@@ -1,12 +1,12 @@
-import {storage} from './settings/storage.js';
+import {storage,storageKeys} from './settings/storage.js';
 import {projectTemplates,itemTemplates,createProjectPlan,createItemPlan,defaultNamespace,searchTemplates} from '../../packages/templates/src/index.js';
 import {workspaceCandidates} from '../../packages/project-system/src/index.js';
 import {escapeHtml as E} from '../../packages/editor/src/index.js';
 const dir=p=>p?.includes('/')?p.slice(0,p.lastIndexOf('/')):'',leaf=p=>p?.split('/').at(-1)??'';
 /** The UI only prepares plans. All changes go through the workspace transaction boundary. */
 export class ProjectWizard {
- constructor(host){this.host=host;this.active=false;this.recent=[];try{const stored=JSON.parse(storage.getItem('sharpforge.templates.recent'));this.recent=Array.isArray(stored)?stored.filter(x=>typeof x==='string'&&[...projectTemplates,...itemTemplates].some(t=>t.id===x)).slice(0,8):[];}catch{}}
- remember(id){this.recent=[id,...this.recent.filter(x=>x!==id)].slice(0,8);try{storage.setItem('sharpforge.templates.recent',JSON.stringify(this.recent));}catch{}}
+ constructor(host){this.host=host;this.active=false;this.recent=[];try{const stored=JSON.parse(storage.getItem(storageKeys.recent));this.recent=Array.isArray(stored)?stored.filter(x=>typeof x==='string'&&[...projectTemplates,...itemTemplates].some(t=>t.id===x)).slice(0,8):[];}catch{}}
+ remember(id){this.recent=[id,...this.recent.filter(x=>x!==id)].slice(0,8);try{storage.setItem(storageKeys.recent,JSON.stringify(this.recent));}catch{}}
  openProject({add=false,node=null}={}){return this.open({kind:'project',add,node});}
  openItem(node=null){return this.open({kind:'item',add:true,node});}
  async open({kind,add,node}){

@@ -1,4 +1,4 @@
-import {storage} from './settings/storage.js';
+import {storage,storageKeys} from './settings/storage.js';
 import {toolDefinitions} from './tools/definitions.js';
 export {toolDefinitions} from './tools/definitions.js';
 import { DockLayout, DockHost, createGroup, createSplit } from '../../packages/docking/src/index.js';
@@ -22,8 +22,8 @@ export class StudioDocking {
     for(const [id,content] of this.content){content.dataset.tool=id;}
     this.layout=new DockLayout(toolDefinitions,defaultDockLayout());
     this.host=new DockHost(root,this.layout,{resolveContent:id=>this.resolve(id),onActivate,onError,onClose});
-    this.layout.subscribe(()=>{try{storage.setItem('sharpforge.docking.v1',this.layout.serialize());}catch{}});
-    this.pendingRestore=null;try{this.pendingRestore=storage.getItem('sharpforge.docking.v1');}catch{}
+    this.layout.subscribe(()=>{try{storage.setItem(storageKeys.docking,this.layout.serialize());}catch{}});
+    this.pendingRestore=null;try{this.pendingRestore=storage.getItem(storageKeys.docking);}catch{}
     this.mobile=false;this.media=matchMedia('(max-width: 700px)');this.mediaListener=()=>this.adapt();this.media.addEventListener('change',this.mediaListener);
   }
   resolve(id){if(this.content.has(id))return this.content.get(id);const element=this.createDocument(id.slice(7));this.content.set(id,element);return element;}
