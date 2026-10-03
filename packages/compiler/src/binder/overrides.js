@@ -115,7 +115,7 @@ const sameReturn = (a, b, x, y) => {
 };
 /**
  * Abstract members a non-abstract class leaves unimplemented.
- * @returns [{code:DiagnosticId.CS0534,args:[type,member],member}]
+ * @returns [{code:'CS0534',args:[type,member],member}]
  */
 export function checkAbstractImplementation(type, core) {
   const results = [];

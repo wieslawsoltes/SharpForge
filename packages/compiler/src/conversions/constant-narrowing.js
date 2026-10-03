@@ -25,7 +25,7 @@ export function implicitConstantConversion(from, value, to) {
  * Classifies assigning a numeric constant to a numeric destination.
  * @param {string} from numeric kind of the constant @param value its value (number, BigInt, Decimal) @param {string} to destination kind
  * @param {{isLiteralOrConstant?:boolean}} [options]
- * @returns {'identity'|'implicitNumeric'|'implicitConstant'|{code:DiagnosticId.CS0031,args:[string,string]}|{code:DiagnosticId.CS0266}|{code:DiagnosticId.CS0664}|null}
+ * @returns {'identity'|'implicitNumeric'|'implicitConstant'|{code:'CS0031',args:[string,string]}|{code:'CS0266'}|{code:'CS0664'}|null}
  *   null when either side is not numeric. CS0664 is the "literal of type double cannot be implicitly converted to
  *   float/decimal; use an F/M suffix" error Roslyn prefers over CS0266 for real literals.
  */

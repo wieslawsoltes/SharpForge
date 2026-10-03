@@ -20,7 +20,7 @@ const needsValue = member =>
 
 /**
  * @param type a source class or struct declared where nullable warnings are enabled
- * @returns {{ code: DiagnosticId.CS8618, args: string[], member: object }[]}
+ * @returns {{ code: 'CS8618', args: string[], member: object }[]}
  */
 export function uninitializedMembersWithoutConstructor(type) {
   const results = [];
