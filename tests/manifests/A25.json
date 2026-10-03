@@ -1,9 +1,11 @@
 {
   "schemaVersion": 1,
   "area": "A25",
-  "nodeGlobs": [],
+  "nodeGlobs": [
+    "tests/a25-*.test.js"
+  ],
   "browserScripts": [],
   "requiredServices": [],
-  "timeout": 300000,
+  "timeout": 1200000,
   "tags": []
 }
