@@ -231,7 +231,11 @@ export const FlowStatementBinding = Base =>
         if (!e.hasErrors)
           this.report(
             syntax.returnKeyword,
-            this.c.isAsync && this.c.declaredReturnType && this.c.declaredReturnType.equals(this.core.task) ? 'CS1997' : 'CS0127',
+            this.c.isAsync && this.c.declaredReturnType && this.c.declaredReturnType.equals(this.core.task)
+              ? 'CS1997'
+              : this.c.isLambda
+                ? 'CS8030'
+                : 'CS0127',
             this.c.isAsync && this.c.declaredReturnType?.equals(this.core.task)
               ? [this.c.method?.toDisplayString() ?? 'lambda expression', 'Task']
               : [

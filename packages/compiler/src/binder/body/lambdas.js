@@ -7,6 +7,7 @@ import { ParameterSymbol } from '../../symbols/members.js';
 import { Conversion, ConversionKind } from '../../conversions/classify.js';
 import { naturalDelegateType } from '../../conversions/method-group.js';
 import { delegateInvoke } from '../../overload/type-inference.js';
+import { anonymousFunctionAnchor, anonymousMethodSignatureErrors } from '../anonymous-methods.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 
@@ -126,15 +127,25 @@ export const LambdaBinding = Base =>
           return null;
         }
         const errors = [];
+        const anchor = anonymousFunctionAnchor(syntax);
         if (parameterSyntax && parameterSyntax.length !== invoke.parameters.length) {
-          node.lastConversionError = [{ code: 'CS1593', args: [this.display(to), parameterSyntax.length] }];
+          node.lastConversionError = [{ node: anchor, code: 'CS1593', args: [this.display(to), parameterSyntax.length] }];
+          return null;
+        }
+        const signatureErrors = anonymousMethodSignatureErrors(syntax, parameterSyntax, invoke);
+        if (signatureErrors) {
+          node.lastConversionError = signatureErrors;
           return null;
         }
         if (explicit && !explicit.every((t, i) => t.equals(invoke.parameters[i].type))) {
           const i = explicit.findIndex((t, k) => !t.equals(invoke.parameters[k].type));
           node.lastConversionError = [
-            { code: 'CS1661', args: [isAnonymousMethod ? 'anonymous method' : 'lambda expression', this.display(to)] },
-            { node: parameterSyntax[i], code: 'CS1678', args: [i + 1, this.display(explicit[i]), this.display(invoke.parameters[i].type)] },
+            { node: anchor, code: 'CS1661', args: [isAnonymousMethod ? 'anonymous method' : 'lambda expression', this.display(to)] },
+            {
+              node: isAnonymousMethod ? (parameterSyntax[i].identifier ?? parameterSyntax[i]) : parameterSyntax[i],
+              code: 'CS1678',
+              args: [i + 1, this.display(explicit[i]), this.display(invoke.parameters[i].type)],
+            },
           ];
           return null;
         }

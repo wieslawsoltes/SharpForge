@@ -35,6 +35,7 @@ import { FlowStatementBinding } from './body/flow-statements.js';
 import { LocalFunctionBinding } from './body/local-functions.js';
 import { JumpBinding } from './jumps.js';
 import { ExceptionBinding } from './exceptions.js';
+import { AnonymousMethodBinding } from './anonymous-methods.js';
 import { languageRules } from './language-rules.js';
 
 const expressionFamilies = [
@@ -54,7 +55,15 @@ const expressionFamilies = [
   StackAllocBinding,
   QueryBinding,
 ];
-const statementFamilies = [StatementBinding, DeclarationBinding, FlowStatementBinding, LocalFunctionBinding, JumpBinding, ExceptionBinding];
+const statementFamilies = [
+  StatementBinding,
+  DeclarationBinding,
+  FlowStatementBinding,
+  LocalFunctionBinding,
+  JumpBinding,
+  ExceptionBinding,
+  AnonymousMethodBinding,
+];
 const compose = (base, mixins) => mixins.reduce((composed, mixin) => mixin(composed), base);
 
 /**
