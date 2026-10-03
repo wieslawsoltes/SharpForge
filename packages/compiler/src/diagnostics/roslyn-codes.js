@@ -745,6 +745,7 @@ export const roslynCodes=Object.freeze({
  CS8917:["ERR_CannotInferDelegateType","error",0,"The delegate type could not be inferred."],
  CS8918:["ERR_InvalidNameInSubpattern","error",0,"Identifier or a simple member access expected."],
  CS8920:["ERR_GenericConstraintNotSatisfiedInterfaceWithStaticAbstractMembers","error",0,"The interface '{0}' cannot be used as type argument. Static member '{1}' does not have a most specific implementation in the interface."],
+ CS8926:["ERR_BadAbstractStaticMemberAccess","error",0,"A static virtual or abstract interface member can be accessed only on a type parameter."],
  CS8928:["ERR_CloseUnimplementedInterfaceMemberNotStatic","error",0,"'{0}' does not implement static interface member '{1}'. '{2}' cannot implement the interface member because it is not static."],
  CS8933:["HDN_DuplicateWithGlobalUsing","hidden",1,"The using directive for '{0}' appeared previously as global using"],
  CS8934:["ERR_CantConvAnonMethReturnType","error",0,"Cannot convert {0} to type '{1}' because the return type does not match the delegate return type"],
