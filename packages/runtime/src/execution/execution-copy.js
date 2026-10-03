@@ -7,6 +7,7 @@ export function immutableExecutionIdentity(value) {
     Object.keys(value).length === 0 || isReference(value) || value.registry && value.flags
     || value.byref || value.runtimeHandle || value.methodPointer || value.valueType
     || value.enumType || value.float || value.nativeInt || value.decimal
+    || value.span || value.nullableType || value.typedReference || value.runtimeArgumentHandle || value.argIterator
   );
 }
 
