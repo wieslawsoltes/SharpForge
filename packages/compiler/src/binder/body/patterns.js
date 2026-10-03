@@ -2,6 +2,7 @@
  * Patterns: constant, type, declaration, var, discard, relational, not/and/or and property patterns;
  * other forms are bound leniently so their variables enter scope.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { SymbolKind, TypeKind, ErrorTypeSymbol } from '../../symbols/types.js';
 import { LocalDeclarationKind } from '../../symbols/members.js';
 import { ConversionKind } from '../../conversions/classify.js';
@@ -50,7 +51,7 @@ export const PatternBinding = Base =>
           const e = this.value(syntax.expression);
           if (e.hasErrors) return { kind: 'ConstantPattern', syntax, hasErrors: true };
           if (!e.constantValue && e.literal !== 'null') {
-            this.report(syntax.expression, 'CS9135', [inputType ? this.display(inputType) : '?']);
+            this.report(syntax.expression, DiagnosticId.CS9135, [inputType ? this.display(inputType) : '?']);
             return { kind: 'ConstantPattern', syntax, hasErrors: true };
           }
           if (inputType && !inputType.isErrorType()) {
@@ -92,7 +93,7 @@ export const PatternBinding = Base =>
         }
         case 'RelationalPattern': {
           const e = this.value(syntax.expression);
-          if (!e.hasErrors && !e.constantValue) this.report(syntax.expression, 'CS0150');
+          if (!e.hasErrors && !e.constantValue) this.report(syntax.expression, DiagnosticId.CS0150);
           return {
             kind: 'RelationalPattern',
             syntax,
@@ -127,7 +128,7 @@ export const PatternBinding = Base =>
                 memberType = found.type;
                 if (found.kind === SymbolKind.Field)
                   (found.originalDefinition ?? found).reads = ((found.originalDefinition ?? found).reads ?? 0) + 1;
-              } else if (isSource(type)) this.report(nameNode, 'CS0117', [this.display(type), nameNode.identifier.valueText]);
+              } else if (isSource(type)) this.report(nameNode, DiagnosticId.CS0117, [this.display(type), nameNode.identifier.valueText]);
               else this.incomplete = this.d.incomplete = true;
             }
             properties.push({ member, pattern: this.pattern(sub.pattern, memberType, null), syntax: sub });
@@ -159,7 +160,7 @@ export const PatternBinding = Base =>
       if (outcome === 'never' && !(inputType.typeKind === TypeKind.TypeParameter || type.typeKind === TypeKind.TypeParameter)) {
         const c = this.conversions.classifyExplicit(inputType, type);
         if (!c.exists || c.isNumeric || c.isUserDefined || c.kind === ConversionKind.ExplicitEnumeration)
-          this.report(syntax.type ?? syntax, 'CS8121', [this.display(inputType), this.display(type)]);
+          this.report(syntax.type ?? syntax, DiagnosticId.CS8121, [this.display(inputType), this.display(type)]);
       }
       return { kind: 'TypePattern', syntax, testedType: type, outcome };
     }

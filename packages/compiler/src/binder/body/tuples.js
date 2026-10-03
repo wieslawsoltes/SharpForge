@@ -1,6 +1,7 @@
 /**
  * Tuple expressions (SF-A02-T08.4): tuple literals and the element-wise `==` / `!=` of tuples (C# 7.3).
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { maxTupleElements, tupleLiteralNames, tupleNameProblems, tupleTypeOf } from '../tuples.js';
 
 const isTupleType = type => !!type?.isTupleType && !type.isDefinition;
@@ -34,7 +35,7 @@ export const TupleBinding = Base =>
       if ((operator !== '==' && operator !== '!=') || !isTupleOperand(left) || !isTupleOperand(right)) return null;
       const counts = [cardinalityOf(left), cardinalityOf(right)];
       if (counts[0] !== counts[1]) {
-        this.report(syntax, 'CS8384', counts);
+        this.report(syntax, DiagnosticId.CS8384, counts);
         return this.bad(syntax, { left, right });
       }
       this.d.gate(this.c.uri, syntax, 'tupleEquality', { name: 'tuple equality', version: 7.3 });
