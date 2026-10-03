@@ -37,7 +37,7 @@ export const diagnosticCases=[
  ['return exits finally','int F(){try{return 1;}finally{return 2;}}Console.WriteLine(F());','CS0157'],
  ['break exits finally','while(true){try{}finally{break;}}','CS0157'],
  ['continue exits finally','while(true){try{}finally{continue;}}','CS0157'],
- ['init remains explicit limitation','class C{public int X{get;init;}}Console.WriteLine(1);','CS1014'],
+ ['init remains explicit limitation','Console.WriteLine(1);class C{public int X{get;init;}}','CS1014'],
 ];
 export const languageFixtures=[
  ...cases.map(([name,source,output])=>({id:'release05/'+name,source,expected:{output}})),

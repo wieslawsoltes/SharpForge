@@ -12,12 +12,33 @@
  */
 import { AnalysisCore } from './semantic/analysis-core.js';
 import { DeclarationChecks } from './semantic/declaration-checks.js';
-import { MemberDeclarationChecks } from './binder/members/declaration-checks.js';
+import { MemberDeclarationChecks, MemberBodyChecks } from './binder/members/declaration-checks.js';
 import { ConstantBinding } from './semantic/constants.js';
 import { BodyBinding } from './semantic/body-binding.js';
+import { TopLevelPrograms } from './binder/top-level.js';
 import { UnusedSymbolWarnings } from './semantic/unused-symbols.js';
+import { AttributeBinding } from './binder/attributes.js';
+import { CallerInfoChecks } from './binder/caller-info.js';
+import { ObsoleteUses } from './binder/obsolete.js';
+import { SpecialMemberChecks } from './binder/special-members.js';
+import { ConditionalMethodChecks } from './binder/csharp2-misc.js';
+import { modernRules } from './binder/modern-rules.js';
 
-const phases = [DeclarationChecks, MemberDeclarationChecks, ConstantBinding, BodyBinding, UnusedSymbolWarnings];
+const phases = [
+  DeclarationChecks,
+  MemberDeclarationChecks,
+  ConstantBinding,
+  AttributeBinding,
+  CallerInfoChecks,
+  SpecialMemberChecks,
+  ConditionalMethodChecks,
+  ...modernRules,
+  BodyBinding,
+  TopLevelPrograms,
+  MemberBodyChecks,
+  ObsoleteUses,
+  UnusedSymbolWarnings,
+];
 
 /** `new SemanticAnalysis(files, options).run()` returns `{ diagnostics, incomplete, assembly, bound, core }`. */
 export class SemanticAnalysis extends phases.reduce((composed, phase) => phase(composed), AnalysisCore) {}

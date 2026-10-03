@@ -1,0 +1,13 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "member-partial/methods-merge-and-unimplemented-calls-vanish":{"hash":"c7fa620cf2e1378b","kind":"output","langVersion":"14.0","diagnostics":[],"output":"hook 1\nshared s\n8\n"},
+  "member-partial/defaults-come-from-the-defining-part":{"hash":"e4f33d56d1667562","kind":"output","langVersion":"14.0","diagnostics":[],"output":"a...\nb.\nc!!!\n"},
+  "member-partial/properties-and-indexers":{"hash":"4ad0d164d08760b7","kind":"output","langVersion":"14.0","diagnostics":[],"output":"18 settings 19 6\n"},
+  "member-partial/finalizer-is-not-run-at-exit":{"hash":"c11abf08f71c1a85","kind":"output","langVersion":"14.0","diagnostics":[],"output":"used\ndone\n"},
+  "member-partial/missing-parts":{"hash":"ab66d72cdf0eefba","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0759",35,18,"error"],["CS8795",83,19,"error"],["CS8795",162,23,"error"],["CS8797",206,7,"error"]]},
+  "member-partial/repeated-parts":{"hash":"0d389f2c35569b92","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0111",57,1,"error"],["CS0756",57,1,"error"],["CS0757",104,1,"error"]]},
+  "member-partial/mismatched-parts":{"hash":"07a3d14d99107fed","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS8817",77,1,"error"],["CS0763",161,1,"error"],["CS8799",295,1,"error"]]},
+  "member-partial/partial-method-rules":{"hash":"704087e671eb1cd2","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0751",36,1,"error"],["CS8796",77,15,"error"],["CS8796",112,15,"error"]]},
+  "member-partial/unimplemented-partial-method-uses":{"hash":"0bad1009ad480b5f","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0762",97,1,"error"],["CS0219",112,6,"warning"]]},
+  "member-partial/partial-property-errors":{"hash":"aaad8e467926100d","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS9248",41,14,"error"],["CS9249",93,18,"error"],["CS9248",149,5,"error"],["CS0102",187,5,"error"],["CS9250",187,5,"error"],["CS9252",272,9,"error"],["CS9255",360,5,"error"]]},
+  "member-partial/extended-partial-language-version":{"hash":"6a90cf09a824237e","kind":"diagnostics","langVersion":"8.0","diagnostics":[["CS8400",41,1,"error"],["CS8400",69,1,"error"]]}
+}}

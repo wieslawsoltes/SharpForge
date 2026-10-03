@@ -1,0 +1,20 @@
+✔ action updater pins reviewed references and refuses unknown or changed versions (0.689125ms)
+✔ vendor gate rejects changed bytes even if the distributed hash is re-recorded (14.764417ms)
+✔ asset gate rejects unlisted assets, disallowed licenses, absent notices and changed bytes (5.020291ms)
+✔ secret scanner detects constructed fake tokens and entropy without returning matched values (1.047541ms)
+✔ secret scan covers a planted token in a separate fixture Git branch and built bundles (307.215708ms)
+✔ tree scans and reads enforce path, count, byte and cancellation boundaries (18.869084ms)
+✔ build seal binds source revision and exact downloaded payload membership/content (463.520041ms)
+✔ attestation policy binds repository, signer workflow, source commit, tag and hosted runner (0.400916ms)
+✔ secret scanner indexes large line sets, preserves leading placeholders and caps findings (0.502209ms)
+✔ SBOM inventories actual package/browser bytes and independently reconstructs vendor bodies (254.040417ms)
+✔ attestation subjects bind exact payload bytes and reject changed commits before invoking gh (388.527042ms)
+✔ payload and vendor boundaries reject linked directory roots and ancestors (3.182209ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1511.001333

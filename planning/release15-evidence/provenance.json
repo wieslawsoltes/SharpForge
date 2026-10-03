@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-03T18:32:14.646470+00:00",
+  "auditedSourceCommit": "f750562017aca877b10f74184dd7b19e2228ddda",
+  "auditedTree": "67134a6c500c4c2e37ca3b7873db7b7c27113557",
+  "worktreeBase": "codex/a29-release-policy",
+  "mainObservedCommit": "6a30463582a727c527c463af77383d790d6dc030",
+  "remoteRefs": {
+    "path": "refs.tsv",
+    "sha256": "e0aa49e3338cf558b4dfec99ab195e62e0b12d9c655f0e0b3bbe7fe28152b8a6",
+    "count": 77
+  },
+  "historicalProductBaseline": "011f2bc3bdd84f8db82a928d117100017211ca78",
+  "historicalCIFix": "7f0ca223d1b9a07725078260020019cfb276c241",
+  "earlier015Snapshot": {
+    "status": "absent",
+    "reason": "No earlier 0.15 archive, source tree, attachment, URI or verifiable commit was explicitly supplied to this audit. Conversation descriptions are not recovered code."
+  },
+  "createdSourceArchive": {
+    "path": "/tmp/SharpForge-release15-audit-f750562.tar",
+    "bytes": 37263360,
+    "sha256": "e62d2a1781ae8f1ef58a9cb16d47565bb607c6886e185514403ec969d9c45f13",
+    "format": "git archive --format=tar",
+    "sourceCommit": "f750562017aca877b10f74184dd7b19e2228ddda",
+    "availability": "Local audit asset, not a published release/download and not a supplied 0.15 snapshot"
+  },
+  "reproduction": [
+    "git archive --format=tar --output=/tmp/SharpForge-release15-audit-f750562.tar f750562017aca877b10f74184dd7b19e2228ddda",
+    "shasum -a 256 /tmp/SharpForge-release15-audit-f750562.tar"
+  ],
+  "environment": {
+    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+    "git": "git version 2.33.0",
+    "node": "v24.21.0"
+  },
+  "claim": {
+    "task": "SF-R015-T01",
+    "agent": "codex-p4-registries",
+    "branch": "codex/release15-source-inventory",
+    "expires": "2026-10-04T18:23:56.570Z",
+    "generation": "eee2801e-7351-48db-bd32-35a5830e633a",
+    "atomicClaimRef": "refs/heads/agent/SF-R015-T01",
+    "lockRef": "refs/heads/agent-locks/release15-evidence",
+    "writeScope": [
+      "planning/release15-evidence/**"
+    ],
+    "claimCommit": "de96725a86af429a34cd2173faa8924c70ff3925"
+  }
+}

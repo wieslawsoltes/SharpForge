@@ -42,7 +42,10 @@ export const snapshotSchemas = Object.freeze({
   source: schema('source', [...common,
     field('strings'), field('stack'), field('constantValues', entries, {restore: value => new Map(value)}),
     field('sourcePause', retain), field('currentPoint')
-  ], {image: 'Immutable bytecode for the current code generation.'}),
+  ], {
+    image: 'Immutable bytecode for the current code generation.',
+    builtinResults: 'VM-owned source contract return classifications; contains no managed values.'
+  }),
   cil: schema('cil', [...common,
     field('strings'), field('initialized'),
     field('genericCacheKeys', copyExecution, {capture: captureGenericInstantiations}),

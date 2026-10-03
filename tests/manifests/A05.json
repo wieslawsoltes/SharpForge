@@ -21,6 +21,7 @@
   ],
   "timeout": 1200000,
   "tags": [
-    "legacy"
+    "runtime",
+    "integration"
   ]
 }

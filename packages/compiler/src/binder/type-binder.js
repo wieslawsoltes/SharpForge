@@ -49,6 +49,8 @@ export class Scope {
 }
 const error = (name, arity = 0) => new ErrorTypeSymbol(name, arity);
 const twa = (type, annotation = NullableAnnotation.Oblivious) => new TypeWithAnnotations(type, annotation);
+/** `var` is recognised only as the whole type of a declaration, never as an element type (`var[]`, `var?`). */
+const elementOptions = options => (options.allowVar ? { ...options, allowVar: false } : options);
 const kindWord = s =>
   s.kind === SymbolKind.Namespace
     ? 'namespace'
@@ -306,6 +308,7 @@ export class TypeBinder {
   finish(symbol, argSyntax, scope, syntax, options, container = null) {
     if (symbol.kind === SymbolKind.Namespace || symbol.kind === SymbolKind.TypeParameter) return symbol;
     if (symbol.containingAssembly && !options.quiet) this.host.useSite?.(symbol, scope.uri, syntax.identifier ?? syntax, { missingBases: false });
+    if (symbol.kind === SymbolKind.NamedType && !options.quiet && !options.isAliasQualifiedExpression) this.host.noteUse?.(symbol, scope.uri, syntax);
     if (symbol.kind === SymbolKind.NamedType && !options.quiet && !options.skipAccessCheck) {
       const within = scope.containingType;
       if (
@@ -343,8 +346,12 @@ export class TypeBinder {
       }
       case 'IdentifierName': {
         const name = syntax.identifier.valueText;
-        if (options.allowVar && name === 'var' && !this.lookup('var', 0, scope))
-          return { isVar: true, type: error('var'), nullableAnnotation: NullableAnnotation.Oblivious };
+        if (name === 'var' && !this.lookup('var', 0, scope)) {
+          if (options.allowVar) return { isVar: true, type: error('var'), nullableAnnotation: NullableAnnotation.Oblivious };
+          // `var` is a type only in a local declaration: a field, a parameter, `var[]` and `var?` are CS0825.
+          if (!options.quiet) this.report(scope, syntax, 'CS0825');
+          return twa(error('var'));
+        }
         if ((name === 'nint' || name === 'nuint') && !this.lookup(name, 0, scope)) {
           this.host.useFeature?.(scope.uri, syntax, 'NativeInt');
           return plain(this.core.keyword(name));
@@ -363,7 +370,7 @@ export class TypeBinder {
         return plain(symbol);
       }
       case 'ArrayType': {
-        let element = this.bindType(syntax.elementType, scope, options);
+        let element = this.bindType(syntax.elementType, scope, elementOptions(options));
         if (element.type.isStatic && element.type.kind === SymbolKind.NamedType)
           this.report(scope, syntax.elementType, 'CS0719', [element.type.toDisplayString()]);
         // Rank specifiers read left to right from the outside in: int[][,] is an array of int[,].
@@ -371,7 +378,7 @@ export class TypeBinder {
         return element;
       }
       case 'NullableType': {
-        const element = this.bindType(syntax.elementType, scope, options),
+        const element = this.bindType(syntax.elementType, scope, elementOptions(options)),
           t = element.type;
         if (t.kind === SymbolKind.ErrorType) return element;
         if (t.isValueType === true) {
@@ -382,7 +389,12 @@ export class TypeBinder {
           return twa(this.core.nullableOf(element), NullableAnnotation.Annotated);
         }
         // T? on an unconstrained type parameter or reference type is an annotation (C# 8 nullable reference types).
-        if (!options.quiet) this.host.useFeature?.(scope.uri, syntax.questionToken ?? syntax, 'NullableReferenceTypes');
+        if (!options.quiet) {
+          const mark = syntax.questionToken ?? syntax,
+            available = this.host.useFeature?.(scope.uri, mark, 'NullableReferenceTypes');
+          // Outside a `#nullable` annotations context the annotation is accepted and has no effect (CS8632).
+          if (available !== false && this.host.nullableAnnotationsAt?.(scope.uri, mark.span?.start ?? 0) === false) this.report(scope, mark, 'CS8632');
+        }
         return twa(t, NullableAnnotation.Annotated);
       }
       case 'TupleType': {

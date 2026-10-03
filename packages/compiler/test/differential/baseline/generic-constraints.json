@@ -1,0 +1,5 @@
+{
+  "generic-constraints/constraints-in-7-2": ["diagnostics", "warnings"],
+  "generic-constraints/enum-delegate-and-unmanaged-constraints": ["diagnostics", "warnings"],
+  "generic-constraints/unmanaged-constructed-types-in-7-3": ["diagnostics", "warnings"]
+}

@@ -1,0 +1,17 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "top-level/args-local-functions-and-return-value":{"hash":"3ad5225c9f04fadf","kind":"output","langVersion":"14.0","diagnostics":[],"output":"0\n3\n","exitCode":0},
+  "top-level/await-and-return-value":{"hash":"f03bbdae2ba19769","kind":"output","langVersion":"14.0","diagnostics":[],"output":"done\n","exitCode":3},
+  "top-level/types-after-the-statements":{"hash":"3fe09024a224f2bc","kind":"output","langVersion":"14.0","diagnostics":[],"output":"6\n9\n"},
+  "top-level/statements-are-members-of-partial-program":{"hash":"8203741cf022a09e","kind":"output","langVersion":"14.0","diagnostics":[],"output":"9\n2\n"},
+  "top-level/labels-and-goto":{"hash":"75a129da12603d71","kind":"output","langVersion":"14.0","diagnostics":[],"output":"3\n"},
+  "top-level/cs8803-statement-after-a-declaration":{"hash":"c0e3e4d8a70e2f09","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS8803",65,10,"error"]]},
+  "top-level/cs8803-statement-after-a-type":{"hash":"df9d7ad2c5937b4c","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS8803",13,28,"error"]]},
+  "top-level/cs8801-locals-are-not-visible-in-types":{"hash":"1eab68ad4d6cffa9","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0219",4,1,"warning"],["CS8801",34,1,"error"],["CS8801",55,5,"error"],["CS8803",68,16,"error"],["CS8321",73,5,"warning"]]},
+  "top-level/cs0136-args-is-already-a-parameter":{"hash":"a9b5aa56d156dce1","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0136",4,4,"error"]]},
+  "top-level/cs0260-program-must-be-partial":{"hash":"efb2f7ae1f60dbd9","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0260",42,7,"error"]]},
+  "top-level/cs0101-program-must-be-a-class":{"hash":"722b1a88baa3446c","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0101",0,6,"error"]]},
+  "top-level/cs8937-only-empty-statements":{"hash":"e9e70a4be2122cae","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS8937",0,1,"error"]]},
+  "top-level/cs7022-main-is-not-the-entry-point":{"hash":"7a8f5d5348daf8a9","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS7022",63,4,"warning"],["CS8803",76,22,"error"],["CS7022",88,4,"warning"],["CS8321",88,4,"warning"]]},
+  "top-level/cs8321-a-program-of-one-unused-local-function":{"hash":"466dab6569c93bba","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS8321",5,1,"warning"]]},
+  "top-level/cs0029-cs0026-return-and-this":{"hash":"a5ddbc417ec6ccad","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0026",25,4,"error"],["CS0029",39,3,"error"]]}
+}}

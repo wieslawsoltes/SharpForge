@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { compile } from '@sharpforge/compiler';
-import { linesOf, notExecutable } from './support/semantic-codegen.js';
+import { VirtualMachine } from '@sharpforge/runtime';
+import { linesOf } from './support/semantic-codegen.js';
 
 // A query pattern whose methods record their own name and one sample result of each lambda they receive.
 const tracing = `
@@ -68,8 +69,10 @@ test('SF-A02-T09.5 transparent identifiers carry every range variable through le
   const wrong = errorsOf(typed('int e = from x in a from s in b let n = s.Length where n > x select n > 1;'));
   assert.equal(wrong.length, 1);
   assert.match(wrong[0], /CS0029 Cannot implicitly convert type 'Seq<bool>' to 'int'/);
-  // The program binds; running it needs user-defined generics.
-  assert.match(notExecutable(valid).message, /user-defined generics/);
+  // The transparent identifiers are anonymous types (SF-A02-T53): the program is generated and runs to its end.
+  const compiled = compile(valid);
+  assert.equal(compiled.success, true);
+  assert.equal(new VirtualMachine(compiled.image).run().state, 'terminated');
 });
 
 test('SF-A02-T09.5 query diagnostics: missing pattern, join keys and errors inside clauses', () => {

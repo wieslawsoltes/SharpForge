@@ -26,12 +26,12 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
   bindTyped(node,type){
     const memory=bindMemoryTyped(this,node,type);if(memory!==undefined)return memory;
     const scalar=bindScalarTyped(this,node,type);if(scalar!==undefined)return scalar;
-    if(node?.kind==='New'&&node.type==='<target>'){this.c.requireFeature(node,9,'Target-typed new');if(!type||['void','var','error','null','int','double','bool','string'].includes(type)){this.c.report(node,'CS8754',['new()']);return this.bad(node);}return this.bindExpression({...node,type});}
+    if(node?.kind==='New'&&node.type==='<target>'){this.c.requireFeature(this.c.firstToken(node),9,'target-typed object creation');if(!type||['void','var','error','null','int','double','bool','string'].includes(type)){this.c.report(node,'CS8754',['new()']);return this.bad(node);}return this.bindExpression({...node,type});}
     if(node?.kind==='CollectionExpression')return this.bindCollectionExpression(node,type);
     if(node?.kind==='Conditional'&&type)return this.bindExpression({...node,whenTrue:this.contextualize(node.whenTrue,type),whenFalse:this.contextualize(node.whenFalse,type)});
     return this.bindExpression(node);
   }
-  contextualize(node,type){if(node?.kind==='New'&&node.type==='<target>'){this.c.requireFeature(node,9,'Target-typed new');return {...node,type};}if(node?.kind==='CollectionExpression')return {...node,targetType:type};return node;}
+  contextualize(node,type){if(node?.kind==='New'&&node.type==='<target>'){this.c.requireFeature(this.c.firstToken(node),9,'target-typed object creation');return {...node,type};}if(node?.kind==='CollectionExpression')return {...node,targetType:type};return node;}
   bindExpression(node){
     if(!node)return this.bad(null);
     const vector=bindVectorExpression(this,node);if(vector!==undefined)return vector;
@@ -220,7 +220,7 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
     return this.node(BoundSwitchExpression,node,{expression:dispatch.expression,arms},type);
   }
   bindCollectionExpression(node,target){
-    this.c.requireFeature(node,12,'Collection expressions');target=canonicalType(target);const array=target?.endsWith('[]'),t=frameworkType(target),element=array?target.slice(0,-2):t?.element;
+    this.c.requireFeature(this.c.firstToken(node),12,'collection expressions');target=canonicalType(target);const array=target?.endsWith('[]'),t=frameworkType(target),element=array?target.slice(0,-2):t?.element;
     if(!element||!array&&!['List','HashSet'].includes(t?.family)){this.c.report(node,'CS9176');return this.bad(node);}
     if(node.arguments){this.c.requireFeature(node,15,'Collection expression constructor arguments');if(array||node.arguments.length!==1||node.arguments[0].name&&!['capacity'].includes(node.arguments[0].name))this.c.report(node,'SF2143');}
     const owner=array?canonicalType('List<'+element+'>'):target,base={uri:node.uri,start:node.start,end:node.end,debugHidden:true},collection=this.temp(owner),temp={...base,kind:'BoundTemp',local:collection,type:owner},call=(name,args)=>({...base,kind:'Call',target:{...base,kind:'Member',target:temp,name},args});

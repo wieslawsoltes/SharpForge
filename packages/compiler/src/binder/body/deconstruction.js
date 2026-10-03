@@ -38,6 +38,36 @@ export const DeconstructionBinding = Base =>
       }
       return this.node('DeconstructionAssignment', syntax, this.targetsType(left), { left, right, plan });
     }
+    /**
+     * `foreach ((targets) in collection) body`: a foreach over a hidden iteration variable whose body first
+     * deconstructs that variable into the targets. `enumeration` carries what binder/body/flow-statements.js found
+     * out about the collection.
+     */
+    forEachDeconstruction(syntax, enumeration) {
+      const elementType = enumeration.elementType,
+        item = this.newLocal('<item>', elementType, syntax.variable, LocalDeclarationKind.Foreach);
+      item.reads++;
+      item.writes++;
+      item.nonConstantWrite = true;
+      const left = this.deconstructionTarget(syntax.variable),
+        value = this.node('Local', syntax.variable, elementType, { local: item }),
+        failure = { isArity: false };
+      const declaresAll = target =>
+        target.kind === 'Tuple' ? target.elements.every(declaresAll) : target.kind === 'DeclarationExpression' || target.kind === 'Discard';
+      if (!left.hasErrors && !declaresAll(left)) this.report(syntax.variable, 'CS8186');
+      let split = this.bad(syntax.variable, { left });
+      if (!left.hasErrors && !elementType.isErrorType()) {
+        const plan = this.deconstructionPlan(left, { type: elementType, value, syntax: syntax.expression, whole: syntax.variable, failure });
+        if (plan) split = this.node('DeconstructionAssignment', syntax.variable, null, { left, right: value, plan });
+        else if (!failure.isArity) this.reportUninferredVariables(left);
+      }
+      const loop = this.enterLoop(),
+        body = this.embedded(syntax.statement);
+      this.exitLoop();
+      const assign = { kind: 'ExpressionStatement', syntax: syntax.variable, completes: true, expression: split },
+        block = { kind: 'Block', syntax: syntax.statement, completes: body.completes, statements: [assign, body] };
+      return { kind: 'ForEach', syntax, completes: true, ...enumeration, local: item, body: block, loop, isAwait: !!syntax.awaitKeyword };
+    }
     /** The targets of a deconstruction as a `Tuple` node of targets. */
     deconstructionTarget(syntax) {
       if (syntax.kind === 'TupleExpression') {
@@ -79,6 +109,10 @@ export const DeconstructionBinding = Base =>
         }
       }
     }
+    /** With too few parts, the variables beyond the last part have nothing to be inferred from. */
+    reportSurplusVariables(target, partCount) {
+      for (const element of target.elements.slice(partCount)) this.reportUninferredVariables(element);
+    }
     reportUninferredVariables(target) {
       if (target.kind === 'DeclarationExpression' && target.isInferred) this.report(target.local.syntax, 'CS8130', [target.local.name]);
       for (const element of target.elements ?? []) this.reportUninferredVariables(element);
@@ -99,6 +133,7 @@ export const DeconstructionBinding = Base =>
         if (value.elements.length !== count) {
           failure.isArity = true;
           this.report(source.whole, 'CS8132', [value.elements.length, count]);
+          this.reportSurplusVariables(target, value.elements.length);
           return null;
         }
         const parts = value.elements.map((element, index) => part(index, element.type, element));
@@ -113,6 +148,7 @@ export const DeconstructionBinding = Base =>
       if (split.error) {
         failure.isArity = !!split.isArity;
         for (const problem of split.error) this.report(split.isArity ? source.whole : syntax, problem.code, problem.args);
+        if (split.isArity) this.reportSurplusVariables(target, type.typeArguments.length);
         return null;
       }
       const parts = split.partTypes.map((partType, index) => part(index, partType, null));

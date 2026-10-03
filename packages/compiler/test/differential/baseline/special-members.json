@@ -1,0 +1,6 @@
+{
+  "special-members/cs0023-cs0119-cs8716-member-access-on-a-non-value": ["diagnostics", "warnings"],
+  "special-members/cs0246-local-of-unknown-type-has-no-cs0219": ["diagnostics", "warnings"],
+  "special-members/cs0571-accessor-called-by-metadata-name": ["diagnostics", "warnings"],
+  "special-members/cs0571-accessors-events-indexers-operators": ["diagnostics", "warnings"]
+}

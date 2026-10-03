@@ -6,10 +6,18 @@ import { fixtures as jumps } from './jumps.js';
 import { fixtures as exceptionHandling } from './exception-handling.js';
 import { fixtures as statementLowering } from './statement-lowering.js';
 import { fixtures as typeModifiers } from './type-modifiers.js';
+import { fixtures as conditionalMethods } from './conditional-methods.js';
+import { fixtures as anonymousMethods } from './anonymous-methods.js';
+import { fixtures as attributes } from './attributes.js';
+import { fixtures as destructorsExtern } from './destructors-extern.js';
 
 export const fixtures = [
   ...jumps,
   ...exceptionHandling,
   ...statementLowering,
   ...typeModifiers,
+  ...conditionalMethods,
+  ...anonymousMethods,
+  ...attributes,
+  ...destructorsExtern,
 ];

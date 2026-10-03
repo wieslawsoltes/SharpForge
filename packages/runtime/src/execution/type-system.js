@@ -1,10 +1,10 @@
 import {resolveCallType} from './generic-calls.js';
 import {exceptionMatches} from './exception-types.js';
-import {CilError,decodeCoded,resolveExecutionField,callStorageType} from '@sharpforge/cil';
-import {ManagedFault} from '../heap.js';
+import {CilError,decodeCoded,callStorageType} from '@sharpforge/cil';
 import {VirtualDispatch} from './vtable.js';
 import {MethodTableRegistry} from './method-table.js';
 import {castCacheFor} from './casting.js';
+import {FieldResolutionCache} from './field-resolution-cache.js';
 
 /** Assembly-derived metadata indexes. They are rebuilt on load, never snapshotted. */
 export class CilTypeSystem {
@@ -14,6 +14,7 @@ export class CilTypeSystem {
     this.types=new Map(vm.inspector.types.map(type=>[type.token,type]));
     this.names=new Map(vm.inspector.types.map(type=>[type.name,type.token]));
     this.layouts=new Map();
+    this.fieldCache=new FieldResolutionCache(this);
     this.initializers=new Map();
     this.dispatch=new VirtualDispatch(vm.inspector);
     const metadata=vm.inspector.metadata;
@@ -62,13 +63,9 @@ export class CilTypeSystem {
     return this.castCache.isAssignableFrom(target,record.methodTable);
   }
   field(token,ref) {
-    const record=ref===undefined?null:this.vm.heap.get(ref),arguments_=record?.methodTable.typeArguments.map(type=>type.name)??[];
-    const field=resolveExecutionField(this.vm.inspector,token,arguments_),resolved=field.resolvedToken;
-    if(field.kind!=='field')throw new CilError('Invalid field token');
-    if(ref===undefined)return {field,token:resolved};
-    const layout=this.layout(record.methodTable),index=layout.index.get(resolved);
-    if(index===undefined)throw new ManagedFault('InvalidProgramException','Field is not part of this object');
-    return {field,token:resolved,record,index};
+    if(ref===undefined)return this.fieldCache.resolve(token);
+    const record=this.vm.heap.get(ref);
+    return {...this.fieldCache.resolve(token,record.methodTable),record};
   }
   virtualTarget(ref,descriptor,target) {
     return this.dispatch.resolve(this.vm.heap.get(ref).methodTable.name,target,descriptor.ownerInstance);

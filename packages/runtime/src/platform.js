@@ -1,13 +1,9 @@
 import {float} from './execution/numeric-ops.js';
-import {invokeExceptionEvent,clearExceptionEvents} from './execution/exception-events.js';
+import {clearExceptionEvents} from './execution/exception-events.js';
 import {delegatesEqual} from './execution/delegate-calls.js';
-import {invokeJson} from './json.js';
+import {initializeBclHost,invokeBclPlatform} from './bcl-adapter.js';
 import {HostOperations} from './host-operations.js';
-import {invokeNetwork} from './network.js';
-import {invokeNumeric} from './numeric.js';
-import {invokeBcl14} from './bcl14.js';
 import {invokeAnimation,createManagedAnimationClock,advanceManagedAnimations} from './animation.js';
-import {invokeBcl} from './bcl.js';
 import {refreshStyle,refreshStyles,applyTemplate,updateBindings,invokeStyling} from './styling.js';
 import {canonicalType,frameworkType,propertiesFor,eventsFor,frameworkAssignable,colorValues,XAML,CONTROLS,MEDIA,TASK,THREAD,taskResult} from '@sharpforge/framework';
 import {ManagedFault,isReference} from './heap.js';
@@ -16,7 +12,7 @@ const identity=r=>`${r.h}:${r.g}`;
 const equal=(a,b)=>a===b||isReference(a)&&isReference(b)&&a.h===b.h&&a.g===b.g;
 /** A data-only boundary between managed execution and the browser. No DOM or host eval. */
 export class ManagedPlatform {
-  constructor(vm,options={}){this.vm=vm;this.heap=vm.heap;this.options=options;this.windows=new Map();this.application=null;this.singletons=new Map();this.styleDepth=0;this.sequence=0;this.pending=[];this.transaction=null;this.maxCommands=options.maxUICommands??10000;this.animations=createManagedAnimationClock(this);this.hostOperations=new HostOperations(this);}
+  constructor(vm,options={}){this.vm=vm;this.heap=vm.heap;initializeBclHost(this);this.options=options;this.windows=new Map();this.application=null;this.singletons=new Map();this.styleDepth=0;this.sequence=0;this.pending=[];this.transaction=null;this.maxCommands=options.maxUICommands??10000;this.animations=createManagedAnimationClock(this);this.hostOperations=new HostOperations(this);}
   *roots(){yield* this.hostOperations.roots();yield* this.animations.roots();yield this.application;yield* this.singletons.values();yield* this.windows.values();for(const p of this.pending)yield p;}
   record(ref){const r=this.heap.get(ref);if(!['host','delegate','collection','task','thread'].includes(r.kind))throw new ManagedFault('InvalidCastException','A managed framework object is required');return r;}
   propertyIndex(record){
@@ -118,15 +114,7 @@ export class ManagedPlatform {
   invoke(d,args){return this.heap.withRoots(args,()=>{
     // Closed ABI dispatch: a collection call must not probe every added subsystem.
     // Resolve only once and keep the common BCL path independent of networking/SIMD.
-    const type=frameworkType(d.owner),kind=type?.kind;let handled;
-    switch(kind){
-      case 'exception-events':handled=invokeExceptionEvent(this.vm,d,args);break;
-      case 'bcl':handled=invokeBcl(this,d,args);break;
-      case 'network':handled=invokeNetwork(this,d,args);break;
-      case 'numeric':handled=invokeNumeric(this,d,args);break;
-      case 'json':handled=invokeJson(this,d,args);break;
-      case 'bcl14':handled=type.family?.startsWith('json')?invokeJson(this,d,args):invokeBcl14(this,d,args);break;
-    }
+    const handled=invokeBclPlatform(this,d,args,frameworkType(d.owner));
     if(handled?.handled)return handled.value;
     const animated=invokeAnimation(this,d,args);if(animated.handled)return animated.value;
     if(d.owner===TASK||taskResult(d.owner)!==null||d.owner===THREAD||d.owner==='SharpForge.Runtime.Async')return this.vm.scheduler.invoke(d,args);

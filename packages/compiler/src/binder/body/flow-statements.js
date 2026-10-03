@@ -12,6 +12,8 @@ import { bindAsyncForEach, isOnlyAsyncEnumerable } from '../async-streams.js';
 import { extensionEnumeratorMethod } from '../foreach-extension.js';
 
 const unknown = ErrorTypeSymbol.unknown;
+/** `Span<T>` and `ReadOnlySpan<T>` enumerate their elements (their enumerator is a ref struct the registry bridge does not declare). */
+const isSpanType = (type, core) => type.originalDefinition === core.span || type.originalDefinition === core.readOnlySpan;
 const isSourceType = t => {
   for (let s = t?.originalDefinition ?? t; s; s = s.containingSymbol) if (s.isSource) return true;
   return false;
@@ -36,6 +38,7 @@ export const FlowStatementBinding = Base =>
             element = enumeration?.elementType ?? unknown;
           } else if (type instanceof ArrayTypeSymbol) element = type.elementType;
           else if (type.specialType === 'System_String') element = this.core.char;
+          else if (isSpanType(type, this.core)) element = type.typeArguments[0].type;
           else {
             const getEnumerator = lookupMembers(type, 'GetEnumerator', this.core, { within: this.c.containingType }).members.find(
               m => m.kind === SymbolKind.Method && !m.isStatic && !m.parameters.length && m.declaredAccessibility === 'public',
@@ -86,6 +89,9 @@ export const FlowStatementBinding = Base =>
           this.report(syntax.expression, 'CS0186');
         }
         element ??= unknown;
+        // `foreach (var (a, b) in items)`: each element is deconstructed into the variables (binder/body/deconstruction.js).
+        if (syntax.kind === 'ForEachVariableStatement')
+          return this.forEachDeconstruction(syntax, { collection, elementType: element, enumeration, extensionGetEnumerator: extension });
         const bound = this.bindType(syntax.type.kind === 'RefType' ? syntax.type.type : syntax.type, { allowVar: true }),
           iterationType = bound.isVar ? element : bound.type;
         if (!bound.isVar && !element.isErrorType() && !iterationType.isErrorType()) {
@@ -124,16 +130,15 @@ export const FlowStatementBinding = Base =>
       this.pushScope();
       this.enterLabels([]);
       try {
-        const type = governing.hasErrors ? null : governing.type,
-          pendingNames = [];
+        const type = governing.hasErrors ? null : governing.type;
         if (type?.specialType === 'System_Boolean') this.d.gate(this.c.uri, syntax.expression, 'SwitchOnBool');
-        for (const section of syntax.sections)
-          for (const s of section.statements)
-            if (s.kind === 'LocalDeclarationStatement')
-              for (const v of s.declaration.variables) this.pending.at(-1).add(v.identifier.valueText);
+        // The sections of a switch are one declaration space: a local of one section is in scope in the others.
+        // Pattern variables of the labels belong to their section and are removed from the scope when it ends.
+        const switchScope = this.scopes.at(-1);
+        for (const section of syntax.sections) for (const name of this.namesDeclaredIn(section.statements)) this.pending.at(-1).add(name);
         syntax.sections.forEach((section, index) => {
-          const labels = [];
-          this.pushScope();
+          const labels = [],
+            shared = new Set(switchScope.keys());
           for (const label of section.labels) {
             if (label.kind === 'DefaultSwitchLabel') {
               if (hasDefault) this.report(label, 'CS0152', ['default']);
@@ -163,6 +168,7 @@ export const FlowStatementBinding = Base =>
               when = label.whenClause ? this.condition(label.whenClause.condition) : null;
             labels.push({ ...p, when });
           }
+          const ofLabels = [...switchScope.keys()].filter(name => !shared.has(name));
           const body = this.block(section, { statements: section.statements, scoped: false });
           if (body.completes && section.statements.length) {
             const last = section.labels.at(-1),
@@ -173,7 +179,7 @@ export const FlowStatementBinding = Base =>
             this.report(last, index === syntax.sections.length - 1 ? 'CS8070' : 'CS0163', [text]);
           }
           if (body.completes) anyCompletes = true;
-          this.popScope();
+          for (const name of ofLabels) switchScope.delete(name);
           sections.push({ labels, body, syntax: section });
         });
       } finally {
@@ -228,7 +234,11 @@ export const FlowStatementBinding = Base =>
         if (!e.hasErrors)
           this.report(
             syntax.returnKeyword,
-            this.c.isAsync && this.c.declaredReturnType && this.c.declaredReturnType.equals(this.core.task) ? 'CS1997' : 'CS0127',
+            this.c.isAsync && this.c.declaredReturnType && this.c.declaredReturnType.equals(this.core.task)
+              ? 'CS1997'
+              : this.c.isLambda
+                ? 'CS8030'
+                : 'CS0127',
             this.c.isAsync && this.c.declaredReturnType?.equals(this.core.task)
               ? [this.c.method?.toDisplayString() ?? 'lambda expression', 'Task']
               : [
