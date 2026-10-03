@@ -13,7 +13,7 @@ async function save(path, value) { await mkdir(dirname(path), {recursive: true})
 
 export function runNodeCoverage({root, files, destination, timeout}) {
   return new Promise(resolveRun => {
-    const args = ['--test', '--experimental-test-coverage', '--test-reporter=' + reporter,
+    const args = ['--test', '--test-concurrency=1', '--experimental-test-coverage', '--test-reporter=' + reporter,
       '--test-reporter-destination=' + destination, ...files];
     const env = {...process.env}; delete env.NODE_TEST_CONTEXT; delete env.NODE_V8_COVERAGE;
     const child = spawn(process.execPath, args, {cwd: root, stdio: ['ignore', 'pipe', 'pipe'], env});
