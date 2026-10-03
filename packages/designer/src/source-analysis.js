@@ -47,6 +47,8 @@ export function analyzeDesignSources(sources, options = {}) {
   const {method, owner, parsed} = context.chosen;
   const ownership = {version: 1, uri: parsed.source.uri, className: ownerName(owner), methodName: method.name,
     methodSymbol: context.methodSymbol?.name ?? method.name, span: {start: method.body.start, end: method.body.end}, regions: reader.regions};
+  if (reader.rootAssignment) ownership.rootAssignment = {...reader.rootAssignment, owner: ownerName(owner), methodName: method.name,
+    childId: remap[reader.rootAssignment.childId] ?? reader.rootAssignment.childId};
   const analysis = {text: parsed.source.text, uri: parsed.source.uri, document, bindings: reader.bindings, method, owner,
     methods: context.methods, templateMethods: reader.templateMethods, resources: reader.resources,
     unmanaged: reader.unmanaged, warnings: reader.warnings, detached, fields: new Set(context.fields.keys()), parsed,
