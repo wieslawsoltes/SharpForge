@@ -1,5 +1,6 @@
 import {DesignerAppWorkerChannel} from './designer-app-host-channel.js';
 import {DesignerAppWindow} from './designer-app-host-window.js';
+import {DesignerAppControls} from './designer-app-host-controls.js';
 import {DesignerAppSourceOwnership, appLaunchParameters} from './designer-app-host-source.js';
 import {DesignerAppHostError, assertAppSignal, releaseAppResources} from './designer-app-host-errors.js';
 
@@ -17,7 +18,9 @@ export class DesignerHostedApp {
     this.layout = new Map();
     this.layoutPending = false;
     this.output = '';
-    this.state = {state: 'starting', uiActive: false, codeVersion: 0, windows: []};
+    this.runtimeState = 'starting';
+    this.controls = new DesignerAppControls(this);
+    this.state = this.controls.state({uiActive: false, codeVersion: 0, windows: []});
     this.ownership = new DesignerAppSourceOwnership({
       workspaceId: this.workspaceId, sourceProjection: this.sourceProjection,
       getWorkspaceId: this.getWorkspaceId, sourceFiles: this.sourceFiles, compile: this.compile,
@@ -116,12 +119,13 @@ export class DesignerHostedApp {
       throw new DesignerAppHostError('The runtime request targets a different app generation', 'SFDA0002');
     }
     if (method === 'stop') return this.onStop(this);
+    if (method === 'pause') return this.controls.pause(parameters, {signal});
+    if (method === 'resume') return this.controls.resume(parameters, {signal});
+    this.controls.assertInput(method);
     const compiled = method === 'hotReload' ? this.ownership.assertCodeUpdate(parameters) : null;
     let result;
     try {
-      result = await this.channel.request(method, {
-        ...parameters, sessionId: this.runtimeSessionId, sessionGeneration: this.generation
-      }, {signal});
+      result = await this.send(method, parameters, {signal});
     } catch (error) {
       if (compiled && (signal?.aborted || ['SFDA0002', 'SFDA0004', 'SFDA0005'].includes(error.code))) this.ownership.uncertain = true;
       throw error;
@@ -134,6 +138,25 @@ export class DesignerHostedApp {
     }
     assertAppSignal(signal);
     return result;
+  }
+
+  async send(method, parameters = {}, {signal} = {}) {
+    assertAppSignal(signal);
+    this.assertCurrent();
+    const result = await this.channel.request(method, {
+      ...parameters, sessionId: this.runtimeSessionId, sessionGeneration: this.generation
+    }, {signal});
+    this.assertCurrent();
+    if (method === 'uiAnimationMode') this.controls.manualAnimations = result?.manual ?? parameters.manual;
+    assertAppSignal(signal);
+    return result;
+  }
+
+  refreshState() {
+    this.state = this.controls.state(this.state);
+    this.view?.setState({...this.state, output: this.output});
+    this.update();
+    this.flushLayout();
   }
 
   receive(event) {
@@ -158,7 +181,8 @@ export class DesignerHostedApp {
       this.state.windowTitle = this.state.windows[0]?.title ?? this.projectName;
       this.state.uiActive = this.state.windows.length > 0;
     } else if (event.event === 'state') {
-      this.state = {...this.state, state: event.state, uiActive: !!event.uiActive, codeVersion: event.codeVersion ?? 0};
+      this.runtimeState = event.state;
+      this.state = this.controls.state({...this.state, uiActive: !!event.uiActive, codeVersion: event.codeVersion ?? 0});
       if (typeof event.output === 'string') this.output = event.output.slice(-65_536);
       this.view.setState({...this.state, output: this.output});
       this.flushLayout();
@@ -172,7 +196,7 @@ export class DesignerHostedApp {
   }
 
   input(id, event, payload) {
-    if (this.disposed || !this.registered) return;
+    if (this.disposed || !this.registered || this.controls.inputBlocked) return;
     this.request('uiEvent', {id, event, payload}).catch(error => {
       if (!this.disposed) this.view.error(error);
     });
@@ -187,10 +211,10 @@ export class DesignerHostedApp {
   }
 
   flushLayout() {
-    if (this.disposed || !this.registered || this.layoutPending || !this.layout.size || this.state.state === 'paused') return;
+    if (this.disposed || !this.registered || this.layoutPending || !this.layout.size || this.controls.inputBlocked) return;
     this.layoutPending = true;
     queueMicrotask(async () => {
-      if (this.disposed || this.state.state === 'paused') {
+      if (this.disposed || this.controls.inputBlocked) {
         this.layoutPending = false;
         return;
       }

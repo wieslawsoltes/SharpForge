@@ -81,8 +81,13 @@ try:
         checked('two actual worker apps run managed callbacks independently of each other and the main debugger', independent_apps)
 
         def pause_and_resume():
+            page.wait_for_function('(id) => sharpforge.designerApps.list().find(app => app.sessionId === id).runtimeState === "terminated"',
+                                   arg=first['sessionId'])
             panel(first).get_by_role('button', name='Pause', exact=True).click()
             page.wait_for_function('(id) => sharpforge.designerApps.list().find(app => app.sessionId === id).state === "paused"', arg=first['sessionId'])
+            paused = page.evaluate('(id) => sharpforge.designerApps.list().find(app => app.sessionId === id)', first['sessionId'])
+            truth(paused['pauseKind'] == 'idle-ui' and paused['runtimeState'] == 'terminated' and paused['pauseAcknowledged'])
+            truth('UI paused' in panel(first).locator('.designer-app-host-state').inner_text())
             panel(first).get_by_role('button', name='Count 1', exact=True).click()
             wait_count(first, 1)
             panel(second).get_by_role('button', name='Count 1', exact=True).click()
@@ -93,7 +98,7 @@ try:
             panel(first).get_by_role('button', name='Count 1', exact=True).click()
             wait_count(first, 2)
 
-        checked('Pause and scoped F5 Continue affect only the selected app window', pause_and_resume)
+        checked('idle UI Pause and scoped F5 Continue preserve terminated VM state and affect only that app window', pause_and_resume)
 
         def visual_selection():
             snapshot = page.evaluate('(app) => sharpforge.designerApps.snapshot(app.sessionId, app.generation)', second)

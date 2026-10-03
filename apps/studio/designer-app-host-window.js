@@ -157,8 +157,15 @@ export class DesignerAppWindow {
     if (this.disposed) return;
     this.state = state;
     this.element.dataset.appState = state.state;
+    this.element.dataset.runtimeState = state.runtimeState ?? state.state;
+    this.element.dataset.pauseKind = state.pauseKind ?? '';
     this.viewport.classList.toggle('debug-paused', state.state === 'paused');
-    this.status.textContent = state.state === 'paused' ? 'Paused · Continue to interact' : `${state.state} · generation ${this.identity.generation}`;
+    if (state.pauseKind === 'idle-ui') {
+      this.status.textContent = state.pauseAcknowledged ? 'UI paused · managed entry point has returned' :
+        'UI input paused · animation pause unconfirmed; Continue to restore';
+    } else if (state.pauseKind === 'debugger') this.status.textContent = 'Managed execution paused · Continue to interact';
+    else this.status.textContent = state.state === 'terminated' && state.uiActive ? 'Idle app · ready for managed input' :
+      `${state.state} · generation ${this.identity.generation}`;
     if (typeof state.output === 'string') this.setOutput(state.output);
     this.setBusy(this.busy);
   }
@@ -166,7 +173,8 @@ export class DesignerAppWindow {
   setBusy(value) {
     this.busy = !!value;
     const state = this.state.state;
-    this.buttons.get('pause').disabled = this.busy || !['ready', 'running', 'waiting'].includes(state);
+    const pausable = ['ready', 'running', 'waiting'].includes(state) || state === 'terminated' && this.state.uiActive;
+    this.buttons.get('pause').disabled = this.busy || !pausable;
     this.buttons.get('resume').disabled = this.busy || state !== 'paused';
     this.buttons.get('restart').disabled = this.busy;
   }
