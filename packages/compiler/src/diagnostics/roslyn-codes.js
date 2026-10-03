@@ -717,6 +717,7 @@ export const roslynCodes=Object.freeze({
  CS9015:["ERR_UseDefViolationFieldUnsupportedVersion","error",0,"Use of possibly unassigned field '{0}'. Consider updating to language version '{1}' to auto-default the field."],
  CS9023:["ERR_OperatorCantBeChecked","error",0,"User-defined operator '{0}' cannot be declared checked"],
  CS9025:["ERR_CheckedOperatorNeedsMatch","error",0,"The operator '{0}' requires a matching non-checked version of the operator to also be defined"],
+ CS9026:["ERR_CannotBeConvertedToUtf8","error",0,"The input string cannot be converted into the equivalent UTF-8 byte representation. {0}"],
  CS9029:["ERR_RequiredNameDisallowed","error",0,"Types and aliases cannot be named 'required'."],
  CS9032:["ERR_RequiredMemberCannotBeLessVisibleThanContainingType","error",0,"Required member '{0}' cannot be less visible or have a setter less visible than the containing type '{1}'."],
  CS9034:["ERR_RequiredMemberMustBeSettable","error",0,"Required member '{0}' must be settable."],
