@@ -40,7 +40,7 @@ for (const {type, suffix} of smallStorageTypes) {
   for (const location of ['local', 'arg', 'byref']) {
     test(`T08.4 ${type} normalization remains on ${location} writes`, () => {
       const bytes = smallStorageFixture(type, suffix, location, 0x12345);
-      const options = {arguments: location === 'arg' ? [0] : []};
+      const options = {arguments: location === 'arg' ? [type === 'bool' ? false : 0] : []};
       const baseline = new CilVirtualMachine(bytes, {...options, scalarSlotLoads: false}).run();
       const optimized = new CilVirtualMachine(bytes, options).run();
       assert.equal(optimized.state, 'terminated', optimized.fault?.stack);
