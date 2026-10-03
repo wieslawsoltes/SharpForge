@@ -12,6 +12,7 @@
  * delegate identity for `-=`.
  */
 import { n } from './node-factory.js';
+import { typeNameText } from '../../lowering/generics/instantiation-names.js';
 
 export class DelegateClasses {
   /** @param generator `{program, types}`: the program model and the type mapper */
@@ -33,8 +34,9 @@ export class DelegateClasses {
     }
     const invoke = type.delegateInvokeMethod;
     if (!invoke) return this.generator.unsupported(`delegate type '${type.toDisplayString()}'`, syntax);
-    // The image reads `Name<...>` as a framework generic, so type arguments are written in parentheses.
-    const record = this.program.addClass(type.toDisplayString().replace(/</g, '(').replace(/>/g, ')'));
+    // The image reads `Name<...>` as a framework generic and `,` as an argument separator (also inside the element
+    // type of an array), so the class is named like a construction: `System.Func{int;string}`.
+    const record = this.program.addClass(typeNameText(type));
     info = { type, record, targets: new Map(), thunks: [], helpers: new Map() };
     // Registered before the signature is mapped: a delegate type may mention itself.
     this.byType.set(type, info);

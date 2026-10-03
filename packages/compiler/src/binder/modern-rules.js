@@ -6,7 +6,7 @@
  *   modernBindings - class mixins of the body binder, applied after its construct families (./language-rules.js).
  */
 import { CSharp9Rules } from './csharp9.js';
-import { CSharp10Rules, CSharp10Binding } from './csharp10.js';
+import { CSharp10Binding } from './csharp10.js';
 
-export const modernRules = Object.freeze([CSharp9Rules, CSharp10Rules]);
+export const modernRules = Object.freeze([CSharp9Rules]);
 export const modernBindings = Object.freeze([CSharp10Binding]);

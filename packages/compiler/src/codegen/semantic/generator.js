@@ -8,6 +8,7 @@
  *   patterns, switches -> sequential tests over shared evaluations   (lowering/decision-dag.js, translate-patterns.js)
  *   initialization     -> initializer methods run where .NET runs them (initialization.js)
  *   async functions    -> a kickoff and a body on the runtime's continuation ABI (lowering/async/async-methods.js)
+ *   rank-n arrays      -> a class over one flat array with computed indexing (lowering/arrays.js)
  *
  * A construct that needs an instruction the runtime does not have raises `UnsupportedConstruct`; the generator then
  * produces no image and names the construct, which `compile()` reports as SF2200.
@@ -24,7 +25,8 @@ import { AsyncMethods, asyncResultType } from '../../lowering/async/async-method
 import { TupleClasses } from '../../lowering/tuples/tuple-classes.js';
 import { StructuralMembers } from '../../lowering/tuples/structural-members.js';
 import { RecordMembers } from '../../lowering/records/record-members.js';
-import { GenericInstantiations, InstantiationTable, GenericDeclarations, FrameworkConstructions } from '../../lowering/generics/index.js';
+import { AnonymousClasses } from '../../lowering/anonymous-types.js';
+import { GenericInstantiations, InstantiationTable, GenericDeclarations, FrameworkConstructions, imageTypeNameText } from '../../lowering/generics/index.js';
 import { stateMachineTypeName, stateMachineParameterProxyFieldName, thisProxyFieldName } from '../../lowering/generated-names.js';
 import { JumpIrEmitter } from './jump-emitter.js';
 import { ProgramModel } from './program-model.js';
@@ -37,6 +39,7 @@ import { Frame } from './frame.js';
 import { UnsupportedConstruct } from './unsupported.js';
 import { n } from './node-factory.js';
 import { memberGenerators } from '../../lowering/members/index.js';
+import { MultiDimensionalArrays } from '../../lowering/arrays.js';
 
 class GeneratorCore {
   /**
@@ -51,9 +54,11 @@ class GeneratorCore {
     this.types = new TypeMapper(this);
     this.delegates = new DelegateClasses(this);
     this.iterators = new IteratorClasses(this);
+    this.arrays = new MultiDimensionalArrays(this);
     this.structural = new StructuralMembers(this);
     this.tuples = this.structural.register(new TupleClasses(this));
     this.records = this.structural.register(new RecordMembers(this));
+    this.anonymous = this.structural.register(new AnonymousClasses(this));
     // Records are kept per construction: a table resolves a symbol to its key first (lowering/generics).
     this.generics = new GenericInstantiations(this);
     this.frameworkConstructions = new FrameworkConstructions(this);
@@ -91,7 +96,7 @@ class GeneratorCore {
   cellClass(type) {
     let cell = this.cells.get(type);
     if (!cell) {
-      const record = this.program.addClass(`<>Cell(${type})`);
+      const record = this.program.addClass(`<>Cell(${imageTypeNameText(type)})`);
       cell = { record, value: this.program.addField(record, 'Value', type) };
       this.cells.set(type, cell);
     }

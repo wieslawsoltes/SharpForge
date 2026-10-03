@@ -52,11 +52,15 @@ export const CallTranslation = Base =>
       return lowered;
     }
     defaultArgument(parameter, node, index) {
-      // C# 10 [CallerArgumentExpression]: the omitted argument is the source text of another argument of this call.
-      const callerText = node.callerArguments?.get(index);
-      if (callerText !== undefined) return n.literal(callerText, 'string');
       const type = this.imageType(parameter.type, node.syntax),
         value = parameter.explicitDefaultValue ?? parameter.defaultValue;
+      // Caller info replaces the declared default (binder/caller-info.js).
+      const callerInfo = node.callerInfo?.get(parameter.ordinal);
+      if (callerInfo !== undefined) {
+        const supplied = typeof callerInfo === 'number' ? 'int' : 'string';
+        if (type !== supplied && type !== 'object') return this.unsupported('caller info for a parameter of this type', node.syntax);
+        return n.literal(callerInfo, supplied);
+      }
       // A default that was never bound must not silently become zero.
       if (parameter.defaultSyntax && !parameter.defaultBound) return this.unsupported('this optional parameter default', node.syntax);
       if (value === undefined || value === null || value.isNull) return this.defaultValue(type);
