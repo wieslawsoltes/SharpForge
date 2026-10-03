@@ -15,3 +15,4 @@ export {managedDelegateSignature, supportedDelegateCall} from './delegate-profil
 
 export {resolveExecutionField,genericTypeParts,substituteTypeArguments} from './field-profile.js';
 export { sha256 } from './binary/hash.js';
+export { win32VersionFromAssembly } from './pe/version-attributes.js';
