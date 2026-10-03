@@ -20,6 +20,10 @@
     {
       "source": "apps/studio/designer-chrome.css",
       "order": 12002
+    },
+    {
+      "source": "apps/studio/designer-app-host.css",
+      "order": 12003
     }
   ],
   "workers": [],
