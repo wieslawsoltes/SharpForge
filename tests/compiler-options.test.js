@@ -39,12 +39,12 @@ test('A02-T38 accepts everything the compiler accepts today',()=>{
   assert.equal(options.langVersionFor('a.cs'),'12');assert.equal(options.langVersionFor('b.cs'),'latest');assert.equal(options.langVersionFor('c.cs'),'14');assert.equal(options.langVersionFor('z.cs'),'preview');
   assert.equal(options.somethingElse,undefined);
   // Every language version the profile's own languageVersion() accepts is accepted here with the same number, and vice versa.
-  for(const value of ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','14.0','7.0','default','latest','latestmajor','preview','PREVIEW',12]){
+  for(const value of ['1','2','3','4','5','6','7','7.1','7.2','7.3','iso-1','ISO-2','8','9','10','11','12','13','14','14.0','7.0','default','latest','latestmajor','preview','PREVIEW',12]){
     const r=parse({langVersion:value});assert.deepEqual(r.diagnostics,[],String(value));
     const mine=parseLanguageVersion(value),theirs=languageVersion(r.options.langVersion);
     assert.equal(mine.number,theirs.number,String(value));assert.equal(mine.preview,theirs.preview,String(value));
   }
-  for(const value of ['7.1','7.3','iso-1','15','0','14.1','x','1.5',''])assert.throws(()=>languageVersion(value===''?' ':value),undefined,value);
+  for(const value of ['15','0','14.1','x','1.5',''])assert.throws(()=>languageVersion(value===''?' ':value),undefined,value);
   for(const value of [true,false])assert.deepEqual(parse({checkOverflow:value}).diagnostics,[]);
 });
 test('A02-T38 invalid options report the Roslyn codes',()=>{
@@ -89,7 +89,7 @@ test('A02-T38 SharpForge codes: API typing and profile restrictions',()=>{
     const roslyn=parse({outputKind:kind},{profile:false});assert.deepEqual(roslyn.diagnostics,[]);assert.equal(roslyn.options.outputKind,kind);
   }
   for(const version of ['7.1','7.2','7.3','ISO-1','iso-2']){
-    assert.deepEqual(parse({langVersion:version}).diagnostics,[{code:'SF2140',args:[version]}]);
+    assert.deepEqual(parse({langVersion:version}).diagnostics,[]);
     const roslyn=parse({langVersion:version},{profile:false});assert.deepEqual(roslyn.diagnostics,[]);assert.equal(roslyn.options.langVersion,version.toLowerCase());
   }
   assert.deepEqual(parse({mainTypeName:'P',outputKind:'module'},{profile:false}).diagnostics,[{code:'CS2017',args:[]}]);

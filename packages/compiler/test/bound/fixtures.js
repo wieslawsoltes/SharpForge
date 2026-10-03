@@ -11,10 +11,10 @@ const shapes='class Figure{public int Sides;public string Name{get;set;}public F
 export const boundFixtures=Object.freeze([
   ['expr-literal-name','int a=1;double d=2.5;bool b=true;string s="x";object o=null;Console.WriteLine(a);Console.WriteLine(d);Console.WriteLine(b);Console.WriteLine(s);Console.WriteLine(o);'],
   ['expr-member-call',shapes+'var p=new Figure(3);Console.WriteLine(p.Sides);Console.WriteLine(p.Name);Console.WriteLine(p.Twice());Console.WriteLine(Figure.Count);string t="abc";Console.WriteLine(t.Length);Console.WriteLine(t.ToUpper());Console.WriteLine(Math.Max(1,2.5));'],
-  ['expr-new-initializers',shapes+'using System.Collections.Generic;var p=new Figure(4){Name="square",Sides=4};var list=new List<int>{1,2};var e=new Exception("boom");Console.WriteLine(p.Name+list.Count+e.Message);'],
+  ['expr-new-initializers','using System.Collections.Generic;'+shapes+'var p=new Figure(4){Name="square",Sides=4};var list=new List<int>{1,2};var e=new Exception("boom");Console.WriteLine(p.Name+list.Count+e.Message);'],
   ['expr-newarray-index','int[] a=new int[3];int[] b=new int[]{1,2,3};var c=new[]{"x","y"};a[0]=b[2];b[1]+=5;Console.WriteLine(a[0]+b[1]);Console.WriteLine(c[1]);Console.WriteLine(a.Length);'],
   ['expr-unary-binary','int a=5;int b=-a;bool c=!(a>b);int d=~a;a++;--b;double e=a/2.0;string s="n"+a;bool f=a==b||c&&e<3;int g=a<<2|b&3^1;Console.WriteLine(s+d+f+g);'],
-  ['expr-assignment-forms',shapes+'using System.Collections.Generic;var p=new Figure(1);int x=0;x=3;x+=2;x*=4;p.Sides=x;p.Sides-=1;p.Name="n";Figure.Count=7;string s=null;s??="d";var d=new Dictionary<string,int>();d["k"]=1;d["k"]+=2;Console.WriteLine(x+p.Sides+s+d["k"]);'],
+  ['expr-assignment-forms','using System.Collections.Generic;'+shapes+'var p=new Figure(1);int x=0;x=3;x+=2;x*=4;p.Sides=x;p.Sides-=1;p.Name="n";Figure.Count=7;string s=null;s??="d";var d=new Dictionary<string,int>();d["k"]=1;d["k"]+=2;Console.WriteLine(x+p.Sides+s+d["k"]);'],
   ['expr-conditional-cast-default','int a=3;double d=a>2?1.5:2;int i=(int)d;double w=(double)a;int z=default(int);string n=default(string);string s=n??"none";Console.WriteLine(i+w+z);Console.WriteLine(s);'],
   ['expr-interpolated-nameof','int a=42;string s=$"a={a,5:D3} and {a+1}";Console.WriteLine(s);Console.WriteLine(nameof(a));'],
   ['expr-await','using System.Threading.Tasks;class P{static async Task<int> One(){await Task.Delay(1);return 1;}static async Task Main(){int v=await One();Console.WriteLine(v);}}'],

@@ -10,8 +10,8 @@
  *   CS2017 /main with a library       CS8203 invalid assembly name       CS7088 invalid option value (API)
  *   CS2007 unrecognized switch value (MSBuild booleans)
  * Two SharpForge codes remain: SF2009 when `checkOverflow` is not a boolean in the JavaScript API, and - with
- * `profile:true`, the default - SF2008/SF2140 for values Roslyn accepts but this execution profile cannot produce
- * (output kinds other than exe/library, language versions 7.1-7.3 and ISO-1/2).
+ * `profile:true`, the default - SF2008 for values Roslyn accepts but this execution profile cannot produce
+ * (output kinds other than exe/library). Every Roslyn language version, including 7.1-7.3 and ISO-1/2, is selectable.
  */
 import {normalizeDiagnosticId} from './diagnostics/suppression.js';
 
@@ -39,8 +39,6 @@ export function parseLanguageVersion(value){
   if(major<1||major>14||minor!==0&&!(major===7&&minor<=3))return null;
   const number=major+minor/10;return {name,number,preview:false,display:versionDisplay(number)};
 }
-/** True when the profile's own `languageVersion()` (modern.js) can select this parsed version. */
-const profileLanguageVersion=v=>Number.isInteger(v.number)&&!v.name.startsWith('iso-');
 
 const FIELDS=Object.freeze(['name','outputKind','checkOverflow','checkOverflowByUri','allowUnsafe','nullableContext','optimizationLevel','deterministic','preprocessorSymbols','mainTypeName','langVersion','langVersionByUri','warningLevel','noWarn','warnAsError','warnNotAsError','treatWarningsAsErrors']);
 const freezeList=list=>Object.freeze([...list]);
@@ -138,7 +136,6 @@ export function parseCompilationOptions(raw={},{profile=true}={}){
   const language=(value)=>{
     const parsed=parseLanguageVersion(value);
     if(!parsed||typeof value!=='string'&&typeof value!=='number'){report('CS1617',[String(value)]);return null;}
-    if(profile&&!profileLanguageVersion(parsed)){report('SF2140',[String(value)]);return null;}
     return parsed;
   };
   let selected=null;
