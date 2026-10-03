@@ -11,6 +11,7 @@
  *
  * A type's required members include those of its base classes.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { SymbolKind, TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { baseTypeChain } from '../../symbols/substitution.js';
@@ -71,12 +72,12 @@ export function requiredMembersLeftUnset(type, constructor, initializers, core) 
 
 function declarationProblem(member, type) {
   const settable = member.kind === SymbolKind.Field ? !member.isReadOnly && !member.isConst : !!member.setMethod;
-  if (!isFieldOrProperty(member) || member.isStatic || member.isConst || member.parameters?.length) return { code: 'CS0106', args: ['required'] };
-  if (!settable) return { code: 'CS9034', args: [member.toDisplayString()] };
+  if (!isFieldOrProperty(member) || member.isStatic || member.isConst || member.parameters?.length) return { code: DiagnosticId.CS0106, args: ['required'] };
+  if (!settable) return { code: DiagnosticId.CS9034, args: [member.toDisplayString()] };
   const needed = accessRank(type.declaredAccessibility),
     setter = member.kind === SymbolKind.Property ? accessRank(member.setMethod.declaredAccessibility) : Infinity;
   if (Math.min(accessRank(member.declaredAccessibility), setter) < needed)
-    return { code: 'CS9032', args: [member.toDisplayString(), type.toDisplayString()] };
+    return { code: DiagnosticId.CS9032, args: [member.toDisplayString(), type.toDisplayString()] };
   return null;
 }
 
@@ -96,5 +97,5 @@ export function checkRequiredDeclarations(type) {
 export function chainingProblem(constructor) {
   const target = constructor.thisTarget ?? constructor.baseTarget ?? null;
   if (!target || !setsRequiredMembers(target) || setsRequiredMembers(constructor)) return null;
-  return { code: 'CS9039', args: [], at: constructor.initializerSyntax?.thisOrBaseKeyword ?? null };
+  return { code: DiagnosticId.CS9039, args: [], at: constructor.initializerSyntax?.thisOrBaseKeyword ?? null };
 }
