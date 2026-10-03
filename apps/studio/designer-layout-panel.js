@@ -1,4 +1,4 @@
-import {childSlot, editGridTracks, guideSettings, normalizeProperty, propertySchema, removeResponsiveState,
+import {childSlot, convertCanvasToGrid, editGridTracks, guideSettings, normalizeProperty, propertySchema, removeResponsiveState,
   resizeGridTracks, setResponsiveState, updateGuideSettings, validateResponsiveDesign} from '@sharpforge/designer';
 
 const formatTrack = value => value.GridUnitType === 0 ? 'Auto' : `${value.Value}${value.GridUnitType === 2 ? '*' : ''}`;
@@ -58,6 +58,11 @@ export class DesignerLayoutPanel {
         this.view.document.selection.length >= (action.startsWith('distribute') ? 3 : 2)));
     }
     this.parents(root, node);
+    if (node.type.endsWith('.Canvas')) {
+      const conversion = this.section(root, 'Container layout');
+      conversion.append(button(root.ownerDocument, 'Convert to Grid', () => this.view.safe(() => this.convertCanvas(node)),
+        !this.view.readOnly && !(this.view.outline?.isLocked(node.id) ?? false)));
+    }
     const parent = this.view.document.parent(node.id);
     const grid = node.type.endsWith('.Grid') ? node : parent?.type.endsWith('.Grid') ? parent : null;
     if (grid) {
@@ -78,6 +83,21 @@ export class DesignerLayoutPanel {
     }
     this.guides(root);
     this.responsive(root);
+  }
+
+  convertCanvas(canvas) {
+    const geometry = this.controller.geometry;
+    const layoutProperties = ['Left', 'Top', 'Width', 'Height', 'Margin', 'HorizontalAlignment', 'VerticalAlignment'];
+    const bindings = this.view.sourceSync?.session?.analysis?.bindings ?? {};
+    const canEdit = id => !(this.view.outline?.isLocked(id) ?? false) &&
+      !layoutProperties.some(property => bindings[id]?.properties?.[property]?.dynamic);
+    const measured = geometry.get(canvas.id);
+    const childBounds = Object.fromEntries(canvas.children.map(id => {
+      const child = geometry.get(id);
+      return [id, child ? {Width: child.width, Height: child.height} : {}];
+    }));
+    convertCanvasToGrid(this.view.document, {id: canvas.id, canEdit, readOnly: !!this.view.readOnly,
+      bounds: measured ? {Width: measured.width, Height: measured.height} : undefined, childBounds});
   }
 
   parents(root, node) {

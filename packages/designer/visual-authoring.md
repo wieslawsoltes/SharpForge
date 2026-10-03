@@ -15,6 +15,7 @@ The A18 surface consumes `@sharpforge/designer` and the retained `WinUIHost`. Th
 | Ordering | `reorderDesignSelection` | Stable selected-block front/back/forward/backward operations; Canvas ZIndex reflects child order. |
 | Layout anchors | `designAnchors`, `toggleDesignAnchor`, `setDesignMargin` | WinUI Margin and alignment values, with size cleared when both opposing anchors stretch. |
 | Track authoring | `editGridTracks`, `resizeGridTracks` | Insert, delete, split, reorder, Auto/Pixel/Star. Reordering rejects a spanning child that would become discontiguous. Auto tracks require a unit selection before splitting. |
+| Canvas conversion | `convertCanvasToGrid` | Pixel tracks preserve child identity, order, margins and measured geometry in one undo transaction. Automatic sizes require measurements; protected expressions, locked content and more than 64 tracks fail before mutation. |
 | Insertion | `layoutInsertion`, `createDrawnControl` | Stack and wrapped line indicators, either orientation, plus one-commit drawn creation. |
 | Guides | `guideSettings`, `setUserGuide`, `updateGuideSettings` | Versioned settings are serialized in `document.designer.guides`; up to 256 guides and configurable grid/guide/sibling snapping. |
 | Preview environment | `DesignPreviewEnvironment` | Session-only resolution, scale, light/dark palette, high-contrast palette and RTL. Source serialization and history remain untouched. |
@@ -43,6 +44,8 @@ document.undo();
 ```
 
 ## Adaptive runtime contract
+
+The Layout panel exposes **Convert to Grid** for a selected Canvas. The operation partitions each axis at child boundaries, retains fixed child dimensions and maps each control to `Row`, `Column` and span properties. Negative Canvas offsets become negative margins; original margins remain effective. It keeps children in their existing order and preserves the selected container identifier. Automatic child dimensions are measured from the real surface before conversion. Changing a container with adaptive child geometry, protected expressions or a Canvas-specific style requires resolving those constraints first; the operation reports an explicit diagnostic and leaves the document unchanged.
 
 `document.responsive` has this versioned shape:
 
