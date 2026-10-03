@@ -19,6 +19,7 @@ import {createAboutDialogs} from './dialogs/about.js';
 import {RuntimeTools} from './runtime-tools.js';
 import {createDesignerWorkbench} from './designer-workbench.js';
 import {DesignerMainAppSources} from './designer-main-app-sources.js';
+import {DesignerWorkerChannel} from './designer-worker-channel.js';
 import {ProjectWizard} from './project-wizard.js';
 import {importWorkspaceRecords,workspaceManifestRecord,importWorkspaceZip,exportWorkspaceZip,validateWorkspaceSettings,workspaceCandidates,writeNewDirectory,decodeWorkspaceFile,encodeWorkspaceFile,prefixWorkspace,convertLegacySolution} from '../../packages/project-system/src/index.js';
 import {validateFilePlan,createProjectPlan,createItemPlan,projectTemplates,itemTemplates} from '../../packages/templates/src/index.js';
@@ -57,21 +58,22 @@ const $=(selector,root=document)=>root.querySelector(selector)??(root===document
 
 
 function hydrate(root=document){$$('[data-icon]',root).forEach(el=>el.innerHTML=icon(el.dataset.icon));}
-class WorkerClient{
- constructor(url,onEvent=()=>{}){this.next=0;this.pending=new Map();this.worker=new Worker(url,{type:'module'});this.worker.onmessage=e=>{const m=e.data;if(m.event){onEvent(m);return;}const p=this.pending.get(m.id);if(!p)return;clearTimeout(p.timer);this.pending.delete(m.id);m.error?p.reject(Object.assign(new Error(m.error.message),m.error)):p.resolve(m.result);};this.worker.onerror=e=>{for(const p of this.pending.values()){clearTimeout(p.timer);p.reject(new Error(e.message||'Worker failed to initialize'));}this.pending.clear();toast('Worker failed: '+(e.message??'unknown error'),'error');};}
- request(method,params={}){const id=++this.next;return new Promise((resolve,reject)=>{const timer=setTimeout(()=>{this.pending.delete(id);reject(new Error(`Worker request '${method}' timed out`));},30000);this.pending.set(id,{resolve,reject,timer});this.worker.postMessage({id,method,params});});}
-}
 const state={langVersion:'14',debugSettings:{...debuggerDefaults},functionBreakpoints:[],debugSources:new Map(),immediateHistory:[],launchEpoch:0,launchBusy:false,extraFiles:[],folders:[],membershipDirty:false,keymap:'visual-studio',itemSelection:[],nativeMode:false,nativeWorkspace:null,nativeJob:null,projectSystem:null,projectSnapshot:null,startupProject:null,disk:null,diskRevision:0,configuration:'Debug',projectDiagnostics:[],toolReferences:[],extensionConfig:null,files:[],name:'ParticleLab',active:'Program.cs',tabs:[],revision:1,result:null,image:null,assembly:null,ilDump:null,disassemblyFormat:'cil',importedAssembly:false,buildDirty:false,dirtyFiles:new Set(),logs:[],programOutput:'',panel:'output',debug:null,breakpoints:{},watches:['total','tick','particles.Length'],watchResults:new Map(),frameId:null,readOnly:false,analyzeTimer:null,saveTimer:null,compileBusy:false,selectedMethod:null,outputKind:'all',modalClose:null};
 try{const preferences=JSON.parse(storage.getItem(storageKeys.editor)??'{}');if(EDITOR_KEYMAPS.some(k=>k.id===preferences.keymap))state.keymap=preferences.keymap;}catch{}
 try{const p=JSON.parse(storage.getItem(storageKeys.debugger)??'{}');for(const key of Object.keys(debuggerDefaults))if(typeof p[key]===typeof debuggerDefaults[key])state.debugSettings[key]=p[key];}catch{}
 const sharedMenu=new ContextMenu({root:$('#menu-popup'),onError:error=>toast(error.message,'error')});
-const compiler=new WorkerClient(new URL('./compiler.worker.js',import.meta.url));
-const runtime=new WorkerClient(new URL('./runtime.worker.js',import.meta.url),runtimeEvent);
+const workerFailure = error => toast('Worker failed: ' + error.message, 'error');
+const compiler = new DesignerWorkerChannel(new Worker(new URL('./compiler.worker.js', import.meta.url), {type: 'module'}),
+  {kind: 'compiler', onFailure: workerFailure});
+const runtime = new DesignerWorkerChannel(new Worker(new URL('./runtime.worker.js', import.meta.url), {type: 'module'}),
+  {kind: 'runtime', onEvent: runtimeEvent, onFailure: workerFailure});
+studioServices.register('compilerWorker', () => compiler, channel => channel.dispose());
+studioServices.register('runtimeWorker', () => runtime, channel => channel.dispose());
 const runtimeRequest=runtime.request.bind(runtime);let pendingDebugControl=null;
 const executionCommands=new Set(['resume','stepBack','reverseContinue','runToCursor','runToInstruction','setNextStatement','hotReload','applyDesign']);
-runtime.request=(method,params={})=>{
+runtime.request=(method,params={},options={})=>{
  if(executionCommands.has(method)&&pendingDebugControl)return pendingDebugControl;
- const promise=runtimeRequest(method,method==='launch'?params:{sessionId:state.runtimeSession,...params});
+ const promise=runtimeRequest(method,method==='launch'?params:{sessionId:state.runtimeSession,...params},options);
  if(!executionCommands.has(method))return promise;
  state.controlBusy=true;updateDebugButtons();const control=promise.finally(()=>{if(pendingDebugControl===control){pendingDebugControl=null;state.controlBusy=false;updateDebugButtons();}});pendingDebugControl=control;return control;
 };
