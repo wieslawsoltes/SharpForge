@@ -12,6 +12,7 @@ import { analyzeRefSafety } from '../flow/ref-safety.js';
 import { NullableWalker } from '../nullable/walker.js';
 import { checkIteratorBody } from '../binder/iterators.js';
 import { checkAsyncBody } from '../binder/async.js';
+import { asyncResultType } from '../binder/csharp70.js';
 import { isSourceSymbol, isClosedType, containsAwait } from './analysis-helpers.js';
 
 /** Class mixin: Binding of bodies: methods, accessors, constructors with their initializers, field and property */
@@ -35,9 +36,8 @@ export const BodyBinding = Base =>
         declared = method.returnType;
       let returnType = declared;
       if (isAsync && declared) {
-        if (declared.originalDefinition === this.core.taskT || (declared.name === 'ValueTask' && declared.typeArguments?.length === 1))
-          returnType = declared.typeArguments[0].type;
-        else if (declared.equals(this.core.task) || declared.name === 'ValueTask') returnType = this.core.void;
+        const taskResult = asyncResultType(declared, this.core);
+        if (taskResult) returnType = taskResult;
         else if (
           declared.specialType !== 'System_Void' &&
           !declared.isErrorType() &&

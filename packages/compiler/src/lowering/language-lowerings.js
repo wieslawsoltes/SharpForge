@@ -4,5 +4,6 @@
  * through `super`.
  */
 import { IndexRangeLowering } from './index-range.js';
+import { ThrowExpressionLowering } from './throw-expressions.js';
 
-export const languageLowerings = Object.freeze([IndexRangeLowering]);
+export const languageLowerings = Object.freeze([IndexRangeLowering, ThrowExpressionLowering]);
