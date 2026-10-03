@@ -12,25 +12,24 @@ export function languageVersion(value='14') {
 export function hasBackingField(n){if(!n||typeof n!=='object')return false;if(n.kind==='Name'&&n.name==='field'&&!n.escaped)return true;return Object.entries(n).some(([k,v])=>!['source','tokens','symbol'].includes(k)&&(Array.isArray(v)?v.some(hasBackingField):hasBackingField(v)));}
 export function rewriteBackingField(n,name,report){if(!n||typeof n!=='object')return n;if(n.kind==='Name'&&n.name==='field'&&!n.escaped)return {...n,name};if(n.kind==='Variable'&&n.name==='field')report(n);return Object.fromEntries(Object.entries(n).map(([k,v])=>[k,['source','tokens','symbol'].includes(k)?v:Array.isArray(v)?v.map(x=>rewriteBackingField(x,name,report)):v&&typeof v==='object'?rewriteBackingField(v,name,report):v]));}
 
-export function installModernCompiler(C){
-  const expr=C.prototype.expr,infer=C.prototype.infer,stmt=C.prototype.stmt;
-  Object.assign(C.prototype,{
-    canTarget(node,type){return node?.kind==='New'&&node.type==='<target>'&&type!=='object'||node?.kind==='CollectionExpression'&&(type?.endsWith('[]')||['List','HashSet'].includes(frameworkType(type)?.family));},
+/** Modern-syntax layer (class mixin, composed in method-compiler.js). */
+export const ModernCompiler=Base=>class ModernCompiler extends Base {
+    canTarget(node,type){return node?.kind==='New'&&node.type==='<target>'&&type!=='object'||node?.kind==='CollectionExpression'&&(type?.endsWith('[]')||['List','HashSet'].includes(frameworkType(type)?.family));}
     typedExpr(node,type){
       if(node?.kind==='New'&&node.type==='<target>'){this.c.requireFeature(node,9,'Target-typed new');if(!type||['void','var','error','null','int','double','bool','string'].includes(type)){this.c.report(node,'CS8754','No supported target type for new()');this.emitConstant(null);return 'error';}return this.expr({...node,type});}
       if(node?.kind==='CollectionExpression')return this.collectionExpression(node,type);
       if(node?.kind==='Conditional'&&type){return this.expr({...node,whenTrue:this.contextualize(node.whenTrue,type),whenFalse:this.contextualize(node.whenFalse,type)});}
       return this.expr(node);
-    },
-    contextualize(node,type){if(node?.kind==='New'&&node.type==='<target>'){this.c.requireFeature(node,9,'Target-typed new');return {...node,type};}if(node?.kind==='CollectionExpression')return {...node,targetType:type};return node;},
-    infer(node){if(node?.kind==='BoundTemp')return node.type;if(node?.kind==='CollectionExpression')return node.targetType??'error';if(node?.kind==='New'&&node.type==='<target>')return 'error';return infer.call(this,node);},
+    }
+    contextualize(node,type){if(node?.kind==='New'&&node.type==='<target>'){this.c.requireFeature(node,9,'Target-typed new');return {...node,type};}if(node?.kind==='CollectionExpression')return {...node,targetType:type};return node;}
+    infer(node){if(node?.kind==='BoundTemp')return node.type;if(node?.kind==='CollectionExpression')return node.targetType??'error';if(node?.kind==='New'&&node.type==='<target>')return 'error';return super.infer(node);}
     expr(node){
       if(node?.kind==='BoundTemp'){this.emit(Op.LDLOC,node.slot);return node.type;}
       if(node?.kind==='CollectionExpression')return this.collectionExpression(node,node.targetType);
       if(node?.kind==='New'&&node.type==='<target>')return this.typedExpr(node,null);
       if(['ConditionalMember','ConditionalIndex'].includes(node?.kind)||node?.kind==='Assignment'&&['ConditionalMember','ConditionalIndex'].includes(node.left.kind)){this.c.report(node,'SF2141','This profile supports null-conditional access as an assignment statement only');this.emitConstant(null);return 'error';}
-      return expr.call(this,node);
-    },
+      return super.expr(node);
+    }
     stmt(node){
       if(node?.kind==='Labeled'){
         const labels=[];let body=node;while(body.kind==='Labeled'){if(labels.includes(body.label)||this.loops.some(l=>l.labels?.includes(body.label)))this.c.report(body,'CS0140','Duplicate label in an enclosing construct');labels.push(body.label);body=body.body;}
@@ -43,8 +42,8 @@ export function installModernCompiler(C){
         this.seq(node);this.expr(left.target);this.emit(Op.STLOC,slot);this.emit(Op.POP);this.emit(Op.LDLOC,slot);this.emitConstant(null);this.emit(Op.BINARY,Binary['!=']);const done=this.emit(Op.JFALSE),before=new Set(this.assigned);
         this.expr({...assignment,left:{...left,kind:left.kind==='ConditionalMember'?'Member':'Index',target:{...base,kind:'BoundTemp',slot,type}}});this.emit(Op.POP);this.assigned=before;this.patch(done);this.clear(slot);return;
       }
-      return stmt.call(this,node);
-    },
+      return super.stmt(node);
+    }
     collectionExpression(node,target){
       this.c.requireFeature(node,12,'Collection expressions');target=canonicalType(target);const array=target?.endsWith('[]'),t=frameworkType(target),element=array?target.slice(0,-2):t?.element;
       if(!element||!array&&!['List','HashSet'].includes(t?.family)){this.c.report(node,'CS9176','Collection expressions require a supported array, List<T>, or HashSet<T> target');this.emitConstant(null);return 'error';}
@@ -59,5 +58,4 @@ export function installModernCompiler(C){
       }
       if(array)this.expr(call('ToArray',[]));else this.emit(Op.LDLOC,slot);this.clear(slot);return target;
     }
-  });
-}
+};

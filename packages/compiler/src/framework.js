@@ -1,22 +1,21 @@
 import {canonicalType,frameworkType,frameworkAssignable,findContracts,enumValue,enumTypes,eventsFor} from '@sharpforge/framework';
 import {Op,frameworkBuiltin} from '@sharpforge/bytecode';
 const pathOf=e=>e?.kind==='Name'?e.name:e?.kind==='Member'&&pathOf(e.target)?pathOf(e.target)+'.'+e.name:null;
-/** Install a closed framework binder; ordinary user members retain precedence. */
-export function installFrameworkCompiler(C) {
-  Object.assign(C.prototype, {
+/** Closed framework binder layer (class mixin, composed in method-compiler.js); ordinary user members retain precedence. */
+export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
     frameworkReceiver(node) {
       if(node?.kind!=='Member')return null;
       const path=pathOf(node.target),staticType=path&&frameworkType(path==='string'?'System.String':path);
       if(staticType)return {type:staticType.name,isStatic:true,node:null};
       const inferred=this.infer(node.target),type=inferred==='string'?'System.String':canonicalType(inferred);
       return frameworkType(type)?{type:frameworkType(type).name,isStatic:false,node:node.target}:null;
-    },
+    }
     frameworkProperty(node) {
       const receiver=this.frameworkReceiver(node);if(!receiver)return null;
       const get=findContracts(receiver.type,'get_'+node.name,receiver.isStatic)[0];
       const set=findContracts(receiver.type,'set_'+node.name,receiver.isStatic)[0];
       return get||set?{receiver,get,set,type:get?.result??set.parameters[0]}:null;
-    },
+    }
     delegateMethod(node,type,report=false) {
       const contract=frameworkType(type);if(contract?.kind!=='delegate')return null;
       const target=node.kind==='New'&&node.args.length===1?node.args[0]:node;
@@ -31,10 +30,10 @@ export function installFrameworkCompiler(C) {
       methods=methods.filter(m=>m.parameters.length===contract.parameters.length&&m.parameters.every((p,i)=>this.frameworkConversion(p.type,contract.parameters[i]))&&(contract.result===m.returnType||!['int','double','bool','void'].includes(m.returnType)&&frameworkAssignable(contract.result,m.returnType)));
       const exact=methods.filter(m=>m.returnType===contract.result);if(exact.length===1)methods=exact;if(methods.length!==1){if(report)this.c.report(node,'CS0123',`Method group must match ${type} (${contract.parameters.join(', ')}) -> ${contract.result}`);return null;}
       return {method:methods[0],receiver,node:target};
-    },
+    }
     frameworkConversion(target,source) {
       return target===source||target==='double'&&source==='int'||source==='null'&&!['int','double','bool','void'].includes(target)||frameworkAssignable(target,source);
-    },
+    }
     frameworkCall(node,report=false) {
       const receiver=this.frameworkReceiver(node.target);if(!receiver)return null;
       const types=node.args.map(x=>this.infer(x));
@@ -44,7 +43,7 @@ export function installFrameworkCompiler(C) {
       if(candidates.length>1){const rank=c=>c.parameters.reduce((n,t,i)=>n+(t===types[i]?0:1),0);if(rank(candidates[0])===rank(candidates[1])){if(report)this.c.report(node,'CS0121','Ambiguous framework method overload');return null;}}
       if(!candidates.length){if(report)this.c.report(node,'CS1501',`No supported ${receiver.type}.${node.target.name} overload accepts (${types.join(', ')})`);return null;}
       return {receiver,contract:candidates[0]};
-    },
+    }
     emitDelegate(node,type) {
       const binding=this.delegateMethod(node,type,true);if(!binding){this.emitConstant(null);return type;}
       if(binding.method.isStatic)this.emitConstant(null);
@@ -53,23 +52,23 @@ export function installFrameworkCompiler(C) {
       this.emit(Op.DELEGATE,binding.method.id,this.c.constant(canonicalType(type)));
       if(binding.method.symbol)this.c.reference(binding.node,binding.method.symbol);
       return canonicalType(type);
-    },
+    }
     emitFrameworkArguments(args,parameters,boxPrimitives=false) {
       args.forEach((arg,i)=>{
         if(frameworkType(parameters[i])?.kind==='delegate'&&this.delegateMethod(arg,parameters[i]))this.emitDelegate(arg,parameters[i]);
         else {const type=this.typedExpr(arg,parameters[i]);this.checkAssign(parameters[i],type,arg);if(boxPrimitives&&parameters[i]==='object'&&['int','double','bool'].includes(type)){this.emitConstant(type);this.emitContract(findContracts('SharpForge.Runtime.Formatting','BoxValue',true)[0]);}}
       });
-    },
+    }
     emitContract(contract) {
       const b=frameworkBuiltin(contract);this.emit(Op.BUILTIN,b.id,b.min);return contract.result;
-    },
+    }
     frameworkInfer(node) {
       if(node.kind==='Index')return findContracts(this.infer(node.target),'get_Item',false)[0]?.result;
       if(node.kind==='Member')return enumValue(pathOf(node))?.type??this.frameworkProperty(node)?.type;
       if(node.kind==='New')return frameworkType(node.type)?.name;
       if(node.kind==='Call')return this.frameworkCall(node)?.contract.result;
       return undefined;
-    },
+    }
     frameworkExpression(node) {
       if(node.kind==='Index'){const get=findContracts(this.infer(node.target),'get_Item',false)[0];if(get){this.expr(node.target);this.checkAssign(get.parameters[0],this.expr(node.index),node.index);return this.emitContract(get);}}
       if(node.kind==='Member') {
@@ -101,7 +100,7 @@ export function installFrameworkCompiler(C) {
         if(event){const d=findContracts(r.type,(node.operator==='+='?'add_':'remove_')+node.left.name,false)[0];this.expr(r.node);this.emitDelegate(node.right,event);this.emitContract(d);return 'void';}
       }
       return undefined;
-    },
+    }
     prepareFramework(node) {
       if(node.kind==='Index'){
         const type=this.infer(node.target),get=findContracts(type,'get_Item',false)[0],set=findContracts(type,'set_Item',false)[0];
@@ -114,14 +113,13 @@ export function installFrameworkCompiler(C) {
       if(!p.set)this.c.report(node,'CS0200',`'${node.name}' is read-only`);
       let receiver=null;if(!p.receiver.isStatic){this.expr(p.receiver.node);receiver=this.temp(p.receiver.type);this.emit(Op.STLOC,receiver);this.emit(Op.POP);}
       return {kind:'framework',property:p,type:p.type,receiver};
-    },
+    }
     loadFramework(ref) {
       if(!ref.property.get){this.emitConstant(null);return;}if(ref.receiver!==null)this.emit(Op.LDLOC,ref.receiver);if(ref.key!==undefined)this.emit(Op.LDLOC,ref.key);this.emitContract(ref.property.get);
-    },
+    }
     storeFramework(ref) {
       const value=this.temp(ref.type);this.emit(Op.STLOC,value);this.emit(Op.POP);
       if(ref.property.set){if(ref.receiver!==null)this.emit(Op.LDLOC,ref.receiver);if(ref.key!==undefined)this.emit(Op.LDLOC,ref.key);this.emit(Op.LDLOC,value);this.emitContract(ref.property.set);this.emit(Op.POP);}
       this.emit(Op.LDLOC,value);this.clear(value);if(ref.receiver!==null)this.clear(ref.receiver);if(ref.key!==undefined)this.clear(ref.key);
     }
-  });
-}
+};
