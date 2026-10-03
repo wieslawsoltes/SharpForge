@@ -1,5 +1,6 @@
 import {defaultDesignerOptions} from '../../packages/designer/src/index.js';
 import {propertyButton, propertyDialog, propertyElement, propertyField, propertyInput, propertySelect, runPropertyAction} from './designer-property-dom.js';
+import {applyDesignerOptions} from './designer-options-application.js';
 
 /** Options are saved by the settings service and applied only when a document opens or the user requests it. */
 export class DesignerOptionsController {
@@ -38,13 +39,10 @@ export class DesignerOptionsController {
     status.setAttribute('role', 'status');
     parent.append(propertyButton(document, 'Save defaults', () => runPropertyAction(() => {
       save();
-      status.textContent = 'Saved. These defaults apply to newly opened design documents.';
+      status.textContent = 'Saved. These defaults apply to new documents; existing guide settings are retained.';
     }, error)), propertyButton(document, 'Save and apply now', () => runPropertyAction(() => {
-      const options = save();
-      service.applyToNewDocument(this.view);
-      this.view.chrome?.setMode(options.defaultView);
-      this.view.documentHost?.setSplitOrientation?.(options.splitOrientation);
-      this.view.resizeArtboard();
+      save();
+      applyDesignerOptions(this.view);
       status.textContent = 'Saved and applied to the active document.';
     }, error)), status, error);
   }

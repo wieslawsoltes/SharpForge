@@ -138,3 +138,8 @@ Studio surface activation and Events-row double-click share `activateDesignerEve
 navigation operation, including protected lambdas and multiple subscriptions. Creation uses the same compiler-validated atomic source
 transaction as other designer edits. Inherited read-only previews and template parts cannot create handlers. Enter on the event row
 performs the same action; double-click within a handler editor keeps that editor's normal selection behavior.
+
+`initializeDesignerDocumentOptions(value, options)` is a creation-only helper. It returns a cloned design with default guide settings
+and the chosen snap grid size only when guide metadata is absent. Callers must use it at new-document creation, never as a generic
+load or recovery normalization step. Existing serialized guide settings take precedence. Applying saved options to an active document
+updates its actual guide metadata and calls `DesignerSourceSync.setAuto`; these guide changes remain outside the C# projection.
