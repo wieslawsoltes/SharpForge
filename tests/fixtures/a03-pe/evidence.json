@@ -1,0 +1,40 @@
+{
+  "baselineCommit": "9e40334955213d0c9960a5649c975d80ada64496",
+  "implementationCommit": "22ff93028c33879f8c7fc29ece7e0fa5e96e17b6",
+  "dotnetSdk": "10.0.201",
+  "runtime": ".NET 10.0.5",
+  "host": "darwin arm64 / Apple M3 Pro",
+  "mono": {
+    "version": "6.12.0.188",
+    "architecture": "amd64 via Rosetta",
+    "executions": [
+      {
+        "file": "desktop-anycpu.exe",
+        "exitCode": 0,
+        "stdout": "42\n"
+      },
+      {
+        "file": "desktop-x64.exe",
+        "exitCode": 0,
+        "stdout": "42\n"
+      }
+    ],
+    "note": "Mono warns about the optional #SF heap; execution succeeds."
+  },
+  "unsupported": [
+    "Native x86 execution: no x86 runtime on this host",
+    "Modern native x64 execution: dotnet host is ARM64",
+    "Windows process-loader import/stub dispatch: no Windows host in this focused run",
+    "Rust/Wasm execution of these PE fixtures: not exercised; JavaScript source and direct CIL engines covered",
+    "Real ReadyToRun differential fixture remains outside this foundation batch; classification is binary-structure tested"
+  ],
+  "validation": {
+    "focusedTests": 17,
+    "initialFocusedPassed": 15,
+    "initialFocusedFailures": "Two fixture mistakes corrected: compiler outputKind console was invalid; header overlap needed four sections. Affected nine tests then passed.",
+    "compatibilityTestsPassed": 273,
+    "check": "1309 modules, zero syntax errors; zero unassigned or duplicate test files",
+    "structure": "advisory command exit0; no new findings in added PE modules; compile.js existing long line shrank"
+  },
+  "performanceNote": "Measured end-to-end PE read includes earlier metadata changes. Added generic section validation, directory objects and bounded parsing increase median time and heap allocations. Absolute median overhead is 0.017ms write and 0.014ms read for a 64KiB section. Output remains66560bytes."
+}

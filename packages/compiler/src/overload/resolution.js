@@ -12,6 +12,7 @@ import { mapArguments, acceptsArgumentCount } from './arguments.js';
 import { inferMethodTypeArguments } from './type-inference.js';
 import { numericKind, isSignedKind, isIntegralKind } from '../conversions/numeric.js';
 import { baseTypeChain, containsTypeParameter } from '../symbols/substitution.js';
+import { paramsElementType, betterParamsCollection, keepHighestPriority } from './params-collections.js';
 
 const refOf = arg => (arg.refKind && arg.refKind !== 'none' ? arg.refKind : RefKind.None);
 const display = type => (type ? type.toDisplayString() : '<null>');
@@ -58,11 +59,15 @@ export class OverloadResolver {
       c.failure = { kind: 'mapping', error: mapping.error };
       return c;
     }
+    if (expanded && !paramsElementType(method.parameters.at(-1).type)) {
+      c.failure = { kind: 'mapping', error: { code: 'CS1501', kind: 'notExpandable' } };
+      return c;
+    }
     c.mapping = mapping;
     c.usedDefaults = mapping.defaults.length > 0;
     const formal = i => {
       const p = method.parameters[mapping.parameterOf[i]];
-      return expanded && mapping.parameterOf[i] === method.parameters.length - 1 ? p.type.elementType : p.type;
+      return expanded && mapping.parameterOf[i] === method.parameters.length - 1 ? paramsElementType(p.type) : p.type;
     };
     let constructed = method;
     if (method.arity && !method._typeArguments) {
@@ -94,7 +99,7 @@ export class OverloadResolver {
     c.method = constructed;
     const formalOf = i => {
       const p = constructed.parameters[mapping.parameterOf[i]];
-      return expanded && mapping.parameterOf[i] === constructed.parameters.length - 1 ? p.type.elementType : p.type;
+      return expanded && mapping.parameterOf[i] === constructed.parameters.length - 1 ? paramsElementType(p.type) : p.type;
     };
     c.parameterTypes = args.map((_, i) => formalOf(i));
     c.conversions = [];
@@ -165,10 +170,16 @@ export class OverloadResolver {
       const kept = applicable.filter(c => !hidden(c));
       if (kept.length) applicable = kept;
     }
+    applicable = keepHighestPriority(applicable, c => c.definition);
+    // The framework registry lists some members twice (one contract per runtime implementation): they are one member,
+    // which matters once a third candidate is applicable too (`string.Concat(string, string)` next to the params form).
+    if (applicable.length > 2) applicable = applicable.filter((c, i) => !applicable.slice(0, i).some(o => this.isSameImportedMember(o, c)));
     if (applicable.length === 1) return success(applicable[0]);
     if (applicable.length > 1) {
       const best = applicable.filter(c => applicable.every(o => o === c || this.better(c, o, args)));
       if (best.length === 1) return success(best[0]);
+      // The framework registry lists some members twice (one contract per runtime implementation): they are one member.
+      if (applicable.every(c => this.isSameImportedMember(c, applicable[0]))) return success(applicable[0]);
       const pair = best.length > 1 ? best : applicable;
       return {
         succeeded: false,
@@ -183,6 +194,16 @@ export class OverloadResolver {
       candidates: analysed,
       best: this.bestFailure(analysed, args),
     };
+  }
+  /** True for two candidates that are the same member of a type that is not declared in source. */
+  isSameImportedMember(a, b) {
+    const x = a.definition,
+      y = b.definition;
+    if (x === y) return true;
+    if (x.locations?.length || y.locations?.length || x.containingType !== y.containingType) return false;
+    if (x.name !== y.name || !!x.isStatic !== !!y.isStatic || x.parameters.length !== y.parameters.length) return false;
+    const sameParameter = (p, q) => (p.refKind ?? RefKind.None) === (q.refKind ?? RefKind.None) && this.conversions.isIdentity(p.type, q.type);
+    return x.parameters.every((p, i) => sameParameter(p, y.parameters[i]));
   }
   /** The inapplicable candidate the error is reported against: fewest problems, declaration order on ties. */
   bestFailure(analysed, args) {
@@ -244,7 +265,9 @@ export class OverloadResolver {
   better(a, b, args) {
     let anyBetter = false;
     for (let i = 0; i < args.length; i++) {
-      const r = this.betterConversion(args[i], a.parameterTypes[i], a.conversions[i], b.parameterTypes[i], b.conversions[i]);
+      const r =
+        this.betterConversion(args[i], a.parameterTypes[i], a.conversions[i], b.parameterTypes[i], b.conversions[i]) ||
+        this.betterParamsTarget(a, b, i);
       if (r < 0) return false;
       if (r > 0) anyBetter = true;
     }
@@ -260,6 +283,12 @@ export class OverloadResolver {
     const specific = this.moreSpecific(a, b);
     if (specific !== 0) return specific > 0;
     return this.prefersByValue(a, b, args) > 0;
+  }
+  /** C# 13: an argument both candidates take into their params collection prefers the better collection type. */
+  betterParamsTarget(a, b, i) {
+    const last = c => c.expanded && c.mapping.parameterOf[i] === c.method.parameters.length - 1;
+    if (!last(a) || !last(b) || !this.conversions.isIdentity(a.parameterTypes[i], b.parameterTypes[i])) return 0;
+    return betterParamsCollection(a.method.parameters.at(-1).type, b.method.parameters.at(-1).type, this.conversions);
   }
   /**
    * The last tie-breaker (C# 7.2): for an argument passed without a modifier, a by-value parameter is better than

@@ -12,6 +12,8 @@ import { bindAsyncForEach, isOnlyAsyncEnumerable } from '../async-streams.js';
 import { extensionEnumeratorMethod } from '../foreach-extension.js';
 
 const unknown = ErrorTypeSymbol.unknown;
+/** `Span<T>` and `ReadOnlySpan<T>` enumerate their elements (their enumerator is a ref struct the registry bridge does not declare). */
+const isSpanType = (type, core) => type.originalDefinition === core.span || type.originalDefinition === core.readOnlySpan;
 const isSourceType = t => {
   for (let s = t?.originalDefinition ?? t; s; s = s.containingSymbol) if (s.isSource) return true;
   return false;
@@ -31,11 +33,16 @@ export const FlowStatementBinding = Base =>
         const type = collection.type;
         if (syntax.awaitKeyword) reportAwaitOutsideAsync(this, syntax.awaitKeyword);
         if (!collection.hasErrors && type && !type.isErrorType()) {
-          if (syntax.awaitKeyword) {
+          if (type.typeKind === TypeKind.Dynamic) {
+            // The enumerator is found at run time; an asynchronous one cannot be.
+            if (syntax.awaitKeyword) this.report(syntax.expression, 'CS8416');
+            element = syntax.awaitKeyword ? unknown : type;
+          } else if (syntax.awaitKeyword) {
             enumeration = bindAsyncForEach(this, collection, syntax.expression);
             element = enumeration?.elementType ?? unknown;
           } else if (type instanceof ArrayTypeSymbol) element = type.elementType;
           else if (type.specialType === 'System_String') element = this.core.char;
+          else if (isSpanType(type, this.core)) element = type.typeArguments[0].type;
           else {
             const getEnumerator = lookupMembers(type, 'GetEnumerator', this.core, { within: this.c.containingType }).members.find(
               m => m.kind === SymbolKind.Method && !m.isStatic && !m.parameters.length && m.declaredAccessibility === 'public',
@@ -260,7 +267,7 @@ export const FlowStatementBinding = Base =>
           this.report(expressionSyntax, 'CS8151', [this.display(type)]);
         return stmt('Return', syntax, false, { expression: e, isRef: true });
       }
-      const converted = this.convert(e, type, expressionSyntax);
+      const converted = this.convertReturned(e, type, expressionSyntax);
       if (e.form === 'lambda' && !converted.hasErrors) this.finishLambda(e, type);
       return stmt('Return', syntax, false, { expression: converted });
     }

@@ -1,4 +1,4 @@
-import { readPE } from './pe.js';
+import { readPE, readManagedResources } from './pe.js';
 import { readSignature, token, decodeCoded } from './metadata.js';
 import { decodeInstructions } from './opcodes.js';
 import { CilError, Reader, text } from './binary.js';
@@ -13,19 +13,19 @@ export class AssemblyInspector {
     try{if(md.streams.has('#SF'))this.debug=JSON.parse(text(md.streams.get('#SF')));}catch{this.diagnostics.push({message:'Malformed optional #SF debug metadata'});}
     for(let i=0;i<rows.length;i++){
       const row=rows[i],t=token(2,i+1),type={token:t,name:md.typeName(t),flags:row[0],baseToken:decodeCoded('TypeDefOrRef',row[3]),fields:[],methods:[],properties:[],events:[],interfaces:[]};this.types.push(type);
-      for(let f=row[4];f<(rows[i+1]?.[4]??(md.counts[4]??0)+1);f++){
-        const ft=token(4,f),fr=md.row(ft),field={token:ft,owner:type.name,ownerToken:t,name:md.string(fr[1]),flags:fr[0],isStatic:!!(fr[0]&16),signatureToken:fr[2]};
+      for(const ft of md.list(t,'FieldList')){
+        const fr=md.row(ft),field={token:ft,owner:type.name,ownerToken:t,name:md.string(fr[1]),flags:fr[0],isStatic:!!(fr[0]&16),signatureToken:fr[2]};
         this.owners.set(ft,type);this.fields.set(ft,field);type.fields.push(field);
       }
-      for(let m=row[5];m<(rows[i+1]?.[5]??(md.counts[6]??0)+1);m++){
-        const mt=token(6,m),mr=md.row(mt),method={token:mt,owner:type.name,ownerToken:t,name:md.string(mr[3]),flags:mr[2],implFlags:mr[1],rva:mr[0],hasBody:mr[0]!==0,isEntryPoint:mt===this.pe.entryPoint};
+      for(const mt of md.list(t,'MethodList')){
+        const mr=md.row(mt),method={token:mt,owner:type.name,ownerToken:t,name:md.string(mr[3]),flags:mr[2],implFlags:mr[1],rva:mr[0],hasBody:mr[0]!==0,isEntryPoint:mt===this.pe.entryPoint};
         this.owners.set(mt,type);this.methods.set(mt,method);type.methods.push(method);
       }
     }
     // Declaration tables remain useful even when no method is executable by this runtime.
     for(const [mapTable,itemTable,key]of [[21,23,'properties'],[18,20,'events']]){
       const maps=md.rows[mapTable]??[];
-      maps.forEach((r,i)=>{const owner=this.types[r[0]-1];if(!owner)return;for(let j=r[1];j<(maps[i+1]?.[1]??(md.counts[itemTable]??0)+1);j++){const item=md.row(token(itemTable,j));owner[key].push({token:token(itemTable,j),flags:item[0],name:md.string(item[1]),signatureOrType:item[2]});}});
+      maps.forEach((r,i)=>{const owner=this.types[r[0]-1];if(!owner)return;for(const itemToken of md.list(token(mapTable,i+1),mapTable===21?'PropertyList':'EventList')){const item=md.row(itemToken);owner[key].push({token:itemToken,flags:item[0],name:md.string(item[1]),signatureOrType:item[2]});}});
     }
     for(const r of md.rows[9]??[])this.types[r[0]-1]?.interfaces.push(decodeCoded('TypeDefOrRef',r[1]));
   }
@@ -57,8 +57,8 @@ export class AssemblyInspector {
   getMethod(t){
     if(this.cache.has(t))return this.cache.get(t);
     const definition=this.methods.get(t);if(!definition)throw new CilError('MethodDef not found');
-    const md=this.metadata,signature=this.signature(t),row=md.row(t),next=md.rows[6]?.[(t&0xffffff)],parameters=[];
-    for(let p=row[5];p<(next?.[5]??(md.counts[8]??0)+1);p++){const r=md.row(token(8,p));parameters.push({sequence:r[1],name:md.string(r[2]),flags:r[0]});}
+    const md=this.metadata,signature=this.signature(t),parameters=[];
+    for(const parameterToken of md.list(t,'ParamList')){const r=md.row(parameterToken);parameters.push({sequence:r[1],name:md.string(r[2]),flags:r[0]});}
     const info=this.debug?.methods?.find(m=>m.token===t),points=new Map((this.debug?.sequencePoints??[]).filter(p=>p.methodToken===t).map(p=>[p.ilOffset,p]));
     let method={...definition,signature,parameters,id:info?.id??null,locals:[],instructions:[],handlers:[],codeSize:0,maxStack:0};
     if(definition.hasBody){
@@ -77,7 +77,7 @@ export class AssemblyInspector {
     return {name,version:row?row.slice(1,5).join('.'):null,entryPoint:this.pe.entryPoint,bytes:this.pe.bytes.length,format:'ECMA-335 PE/CLI',profile:this.debug?.format??null,
       machine:this.pe.machine,cliFlags:this.pe.flags,streams:[...md.streams].map(([name,bytes])=>({name,bytes:bytes.length})),tables:{...md.counts},
       references:(md.rows[35]??[]).map(r=>({name:md.string(r[6]),version:r.slice(0,4).join('.')})),
-      resources:(md.rows[40]??[]).map(r=>({offset:r[0],flags:r[1],name:md.string(r[2]),implementation:decodeCoded('Implementation',r[3])})),
+      resources:readManagedResources(this.pe),
       customAttributes:(md.rows[12]??[]).map(r=>({parent:decodeCoded('HasCustomAttribute',r[0]),constructor:decodeCoded('CustomAttributeType',r[1]),blobBytes:md.blob(r[2]).length})),
       genericParameters:(md.rows[42]??[]).map(r=>({index:r[0],flags:r[1],owner:decodeCoded('TypeOrMethodDef',r[2]),name:md.string(r[3])})),
       types:this.types.map(t=>({...t,methods:t.methods.map(m=>m.token),fields:t.fields.map(f=>{try{return {...f,type:this.signature(f.token).type};}catch(error){return {...f,error:error.message};}})})),methods,diagnostics:[...this.diagnostics]};

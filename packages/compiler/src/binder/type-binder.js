@@ -16,6 +16,7 @@ import {
   PointerTypeSymbol,
   NamedTypeSymbol,
   ConstructedNamedTypeSymbol,
+  DynamicTypeSymbol,
 } from '../symbols/types.js';
 import { isAccessible } from './accessibility.js';
 import { assemblyConflict, dottedName } from './reference-lookup.js';
@@ -121,7 +122,9 @@ export class TypeBinder {
         }
         continue;
       }
-      // unit / namespace
+      // unit / namespace: the file-local types of this file come first (C# 11).
+      const fileType = s.fileTypes?.get(name + '`' + arity);
+      if (fileType) return fileType;
       const ns = s.namespace,
         types = ns.getTypeMembers(name, arity);
       if (options.aliasConflicts && arity === 0 && (types.length || ns.getNamespace(name)) && this.usingsOf(s)?.aliases.has(name))
@@ -356,7 +359,7 @@ export class TypeBinder {
           this.host.useFeature?.(scope.uri, syntax, 'NativeInt');
           return plain(this.core.keyword(name));
         }
-        if (name === 'dynamic' && !this.lookup(name, 0, scope)) return plain(this.core.object);
+        if (name === 'dynamic' && !this.lookup(name, 0, scope)) return plain(DynamicTypeSymbol.instance);
       }
       // falls through
       case 'GenericName':
@@ -389,7 +392,12 @@ export class TypeBinder {
           return twa(this.core.nullableOf(element), NullableAnnotation.Annotated);
         }
         // T? on an unconstrained type parameter or reference type is an annotation (C# 8 nullable reference types).
-        if (!options.quiet) this.host.useFeature?.(scope.uri, syntax.questionToken ?? syntax, 'NullableReferenceTypes');
+        if (!options.quiet) {
+          const mark = syntax.questionToken ?? syntax,
+            available = this.host.useFeature?.(scope.uri, mark, 'NullableReferenceTypes');
+          // Outside a `#nullable` annotations context the annotation is accepted and has no effect (CS8632).
+          if (available !== false && this.host.nullableAnnotationsAt?.(scope.uri, mark.span?.start ?? 0) === false) this.report(scope, mark, 'CS8632');
+        }
         return twa(t, NullableAnnotation.Annotated);
       }
       case 'TupleType': {

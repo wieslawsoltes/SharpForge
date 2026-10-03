@@ -137,7 +137,7 @@ test('SF-A02-T41 an attribute class the registry does not list is a framework ga
   // A name that is no type at all is still reported, once per spelling as Roslyn does.
   assert.deepEqual(codesOf('[Nope] class Program { static void Main() { } }'), ['CS0246', 'CS0246']);
   // A namespace-qualified name the registry lacks is a gap too.
-  assert.deepEqual(codesOf('[System.Runtime.CompilerServices.SkipLocalsInit] class Program { static void Main() { } }'), []);
+  assert.deepEqual(codesOf('[System.Runtime.CompilerServices.TypeForwardedFrom("a")] class Program { static void Main() { } }'), []);
 });
 
 test('SF-A02-T41 attribute arguments see constants of the enclosing type and report their own binding errors', () => {

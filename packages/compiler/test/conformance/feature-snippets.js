@@ -205,7 +205,7 @@ const csharp7x = {
   AsyncMain: 'class Program { static async System.Threading.Tasks.Task Main() { await System.Threading.Tasks.Task.CompletedTask; } }\n',
   DefaultLiteral: main('int a = default;'),
   InferredTupleNames: main('int x = 1; var t = (x, 2); int y = t.x;'),
-  GenericPatternMatching: type('static bool M<T>(T value) { return value is int; }'),
+  GenericPatternMatching: type('static bool M<T>(T value) { return value is int i; }'),
   LeadingDigitSeparator: main('int a = 0x_1F;'),
   NonTrailingNamedArguments: type('static void M(int x, int y) { } static void N() { M(x: 1, 2); }'),
   PrivateProtected: unit('class A { private protected int x; }'),
@@ -252,7 +252,8 @@ const csharp8 = {
     'class A { public virtual void M<T>(T? x) where T : struct { } } ' +
       'class B : A { public override void M<T>(T? x) where T : struct { } }',
   ),
-  NestedStackalloc: main('System.Span<int> s = true ? stackalloc int[1] : stackalloc int[2];'),
+  // A conditional operator over two stackallocs initializing a local is allowed before C# 8 (pinned); parentheses are not.
+  NestedStackalloc: main('System.Span<int> s = (stackalloc int[1]);'),
   NullableReferenceTypes: main('string? s = null;'),
   NullPointerConstantPattern: type('static unsafe bool M(int* p) { return p is null; }'),
   SwitchExpression: main('int a = 1; int b = a switch { 1 => 2, _ => 3 };'),
@@ -295,7 +296,7 @@ const csharp9 = {
   DefaultTypeParameterConstraint: unit('class A { public virtual void M<T>(T? x) { } } class B : A { public override void M<T>(T? x) where T : default { } }'),
   ExtendedPartialMethods: unit('partial class A { public partial int M(); public partial int M() { return 1; } }'),
   MemberNotNull: type('static string field; [System.Diagnostics.CodeAnalysis.MemberNotNull("field")] static void Init() { field = ""; }'),
-  VarianceSafetyForStaticInterfaceMembers: unit('interface I<out T> { static T Make() { throw null; } }'),
+  VarianceSafetyForStaticInterfaceMembers: unit('interface I<out T> { static void M(T value) { } }'),
   WithExpressions: unit('record R(int X); class A { static R M(R r) { return r with { X = 1 }; } }'),
   UnmanagedCallingConventions: type('static unsafe void M(delegate* unmanaged[Cdecl]<int, void> p) { }'),
 };

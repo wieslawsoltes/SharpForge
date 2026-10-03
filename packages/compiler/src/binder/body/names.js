@@ -5,7 +5,7 @@
 import { SymbolKind, TypeKind, ErrorTypeSymbol, ArrayTypeSymbol } from '../../symbols/types.js';
 import { isKnownMissingMember } from '../../symbols/predefined-member-names.js';
 import { ConstantValue } from '../../constants/constant-value.js';
-import { extensionScopes } from '../../overload/extension-methods.js';
+import { extensionScopes, isValidReceiverConversion } from '../../overload/extension-methods.js';
 import { lookupMembers } from '../inheritance.js';
 import { tupleElement, tupleElementProblem } from '../tuples.js';
 import { checkConstructedType } from '../constraints.js';
@@ -15,7 +15,7 @@ import { staticImportsNamed } from '../csharp6.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 const isSource = symbol => {
-  for (let s = symbol?.originalDefinition ?? symbol; s; s = s.containingSymbol) if (s.isSource || s.containingAssembly) return true;
+  for (let s = symbol?.originalDefinition ?? symbol; s; s = s.containingSymbol) if (s.isSource || s.containingAssembly || s.isAnonymousType) return true;
   return false;
 };
 
@@ -301,6 +301,8 @@ export const NameBinding = Base =>
             return this.bad(syntax);
           }
           if (this.reportAccessorByName(type, name, nameSyntax)) return this.bad(syntax);
+          const extension = this.staticExtensionMember(left, type, name, syntax, typeArguments, options);
+          if (extension) return extension;
           if (!isSource(type) && type.typeKind !== TypeKind.Enum)
             return this.reportMissingFrameworkMember(type, name, nameSyntax, syntax, 'CS0117');
           this.report(nameSyntax, 'CS0117', [this.display(type), name]);
@@ -355,7 +357,7 @@ export const NameBinding = Base =>
       if (found.members.length)
         return this.memberResult(found.members, syntax, left, type, name, typeArguments, options) ?? this.bad(syntax);
       if (found.inaccessible.length) {
-        this.report(nameSyntax, 'CS0122', [found.inaccessible[0].toDisplayString()]);
+        this.reportInaccessible(found.inaccessible[0], type, nameSyntax);
         return this.bad(syntax);
       }
       if (this.reportAccessorByName(lookupType, name, nameSyntax)) return this.bad(syntax);
@@ -366,9 +368,14 @@ export const NameBinding = Base =>
         this.report(nameSyntax, 'CS1061', [this.display(type), name]);
         return this.bad(syntax);
       }
+      const extension = this.instanceExtensionMember(left, type, name, syntax, typeArguments, options);
+      if (extension) return extension;
       // A predefined type whose member names are all known cannot have the member: extension methods are next.
       const isKnownGap = isKnownMissingMember(type, name) && !this.importsUnknownNamespaces();
-      if (!isKnownGap && (type.hasUnknownConstraint || !this.d.closedHierarchy(type))) return this.lenient(syntax);
+      // On a type that is not fully known a missing member proves nothing. An array is the exception when an
+      // extension method in scope takes it as its receiver: an array has no instance method that could be meant.
+      const isOpen = !isKnownGap && (type.hasUnknownConstraint || !this.d.closedHierarchy(type));
+      if (isOpen && !(type instanceof ArrayTypeSymbol)) return this.lenient(syntax);
       // Extension methods (only meaningful when the name is invoked, but a method group conversion may also use them).
       const scopes = extensionScopes(
         this.typeScope.namespaceChain.map(l => ({
@@ -377,6 +384,8 @@ export const NameBinding = Base =>
         })),
         name,
       );
+      const takesReceiver = method => method.name === name && isValidReceiverConversion(this.conversions, left, method.parameters[0].type);
+      if (isOpen && !scopes.some(scope => scope.methods.some(takesReceiver))) return this.lenient(syntax);
       if (scopes.length)
         return this.node('MethodGroup', syntax, null, {
           methods: [],
@@ -393,6 +402,13 @@ export const NameBinding = Base =>
         return this.reportMissingFrameworkMember(type, name, nameSyntax, syntax, 'CS1061');
       this.report(nameSyntax, 'CS1061', [this.display(type), name]);
       return this.bad(syntax);
+    }
+    /** Seams of binder/extension-members.js: a member the type lacks, found among the extension members in scope (or null). */
+    instanceExtensionMember() {
+      return null;
+    }
+    staticExtensionMember() {
+      return null;
     }
     /** True when a using directive in scope names a namespace the registry does not model (it may bring extension methods). */
     importsUnknownNamespaces() {

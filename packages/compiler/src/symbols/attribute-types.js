@@ -9,6 +9,7 @@
 import { NamedTypeSymbol, TypeKind, Accessibility } from './types.js';
 import { MethodSymbol, PropertySymbol, FieldSymbol, ParameterSymbol, MethodKind, DeclarationModifiers } from './members.js';
 import { ConstantValue } from '../constants/constant-value.js';
+import { modernAttributes } from './attribute-types-modern.js';
 
 /** The values of System.AttributeTargets. */
 export const AttributeTargets = Object.freeze({
@@ -80,6 +81,11 @@ const attributes = [
   [interop, 'ComVisibleAttribute', types | T.Assembly | T.Method | T.Property | T.Field, false, [[['visibility', 'b']]], []],
   [interop, 'GuidAttribute', types | T.Assembly, false, [[['guid', 's']]], []],
   ['System.Runtime.CompilerServices', 'CompilerGeneratedAttribute', T.All, false, [[]], []],
+  // Caller info (binder/caller-info.js decodes them).
+  ['System.Runtime.CompilerServices', 'CallerMemberNameAttribute', T.Parameter, false, [[]], []],
+  ['System.Runtime.CompilerServices', 'CallerFilePathAttribute', T.Parameter, false, [[]], []],
+  ['System.Runtime.CompilerServices', 'CallerLineNumberAttribute', T.Parameter, false, [[]], []],
+  ['System.Runtime.CompilerServices', 'CallerArgumentExpressionAttribute', T.Parameter, false, [[['parameterName', 's']]], []],
   ['System.Reflection', 'AssemblyTitleAttribute', T.Assembly, false, [[['title', 's']]], []],
   ['System.Reflection', 'AssemblyVersionAttribute', T.Assembly, false, [[['version', 's']]], []],
   ['System.Reflection', 'AssemblyDescriptionAttribute', T.Assembly, false, [[['description', 's']]], []],
@@ -153,7 +159,7 @@ export function declareAttributeTypes(core) {
       }),
     );
   core.attribute.isAbstract = true;
-  for (const [namespaceName, name, validOn, allowMultiple, constructors, named] of attributes) {
+  for (const [namespaceName, name, validOn, allowMultiple, constructors, named] of [...attributes, ...modernAttributes(T)]) {
     const container = bridge.globalNamespace.ensureNamespace(namespaceName);
     let type = container.getTypeMembers(name, 0)[0];
     if (type) type._base = core.attribute;
