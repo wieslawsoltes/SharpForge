@@ -12,7 +12,7 @@ export function ensureTypedNumericFrame(vm, frame, plan) {
   const cached = frames.get(frame);
   if (cached?.method === frame.method && cached.stack === frame.stack &&
       cached.locals === frame.locals && cached.args === frame.args) return;
-  const stack = typedNumericSlots(frame.stack, frame.method.maxStack ?? 8, vm.options.maxStackValues, smallLongs);
+  const stack = typedNumericSlots(frame.stack, frame.method.maxStack, frame.method.maxStack, smallLongs, true);
   const locals = typedNumericSlots(frame.locals, undefined, undefined, smallLongs);
   const args = typedNumericSlots(frame.args, undefined, undefined, smallLongs);
   frame.stack = stack.array;

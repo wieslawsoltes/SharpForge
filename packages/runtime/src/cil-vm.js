@@ -2,6 +2,7 @@ import {createExecutionProfiler} from './execution/profiler.js';
 import {collectAtInstruction} from './execution/gc-stress.js';
 import {flushFramePool} from './execution/frame-pool.js';
 import {installRootProvider} from './execution/frame-roots.js';
+import {pushStackValue} from './execution/frame-stack.js';
 import {verificationFault} from './execution/verification-fault.js';
 import {asyncRoots} from './execution/async-runtime.js';
 import {nativeInteger,decimalParse,decimalFromBits,decodeScalar} from '@sharpforge/bytecode';
@@ -83,7 +84,7 @@ export class CilVirtualMachine {
   format(v,type){const name=runtimeTypeText(this,v)??enumToString(this,v,type);if(name!==null)return name;if(v===null)return '';if(isReference(v)&&this.heap.get(v).kind==='box'){const r=this.heap.get(v);return this.format(r.data[0],numericTypeName(r.methodTable.name));}const n=this.value(v);if(type==='System.Boolean')type='bool';if(type==='bool')return n?'True':'False';if(isDecimal(v)||v?.float||isNativeInteger(v)||numericTypeNames.includes(numericTypeName(type)))return scalarFormat(v,type,this.options);if(type==='char')return String.fromCharCode(Number(n));if(type==='uint')return String(Number(n)>>>0);if(type==='ulong')return String(BigInt.asUintN(64,n));if(isReference(n)){const r=this.heap.get(n);return r.kind==='exception'?r.type+': '+this.format(r.data[0]):r.type;}return String(n);}
   display(v){return v===null?'null':isReference(v)&&this.heap.get(v).kind==='string'?JSON.stringify(this.value(v)):this.format(v);}
   string(s){return literalString(this,s);}
-  push(v){if(this.top.stack.length>=this.options.maxStackValues)throw new ManagedFault('ExecutionLimitException','Evaluation stack budget exceeded');this.top.stack.push(v);}
+  push(v){pushStackValue(this,v);}
   pop(){if(!this.top.stack.length)throw new ManagedFault('InvalidProgramException','Evaluation stack underflow');return this.top.stack.pop();}
   call(token,args,extra={}){return call(this,token,args,extra);}
   ensureInitialized(typeToken,trigger='field',genericIdentity=null){return ensureInitialized(this,typeToken,trigger,genericIdentity);}
