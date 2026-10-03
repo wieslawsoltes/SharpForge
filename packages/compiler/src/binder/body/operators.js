@@ -158,9 +158,12 @@ export const OperatorBinding = Base =>
       return n;
     }
     assignment(syntax) {
+      if (syntax.operatorToken.text === '=' && this.isDeconstructionTarget(syntax.left)) return this.deconstruction(syntax);
+      return this.assignmentTo(syntax, this.expression(syntax.left, { allowDiscard: true }));
+    }
+    /** Binds the assignment `syntax` to an already bound target: the target of `a?.b = c` is bound on the receiver of the access. */
+    assignmentTo(syntax, left) {
       const operator = syntax.operatorToken.text;
-      if (operator === '=' && this.isDeconstructionTarget(syntax.left)) return this.deconstruction(syntax);
-      const left = this.expression(syntax.left, { allowDiscard: true });
       if (left.kind === 'Discard') {
         const v = this.value(syntax.right);
         return this.node('Assignment', syntax, v.type, { left, right: v });

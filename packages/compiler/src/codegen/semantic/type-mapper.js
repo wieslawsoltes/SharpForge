@@ -76,6 +76,7 @@ export class TypeMapper {
     // The non-generic forms enumerate objects.
     if (type === core.ienumerable || type === core.ienumerator) return this.host.iterators.classOf('object').record.name;
     if (this.host.tuples.handles(type)) return this.host.tuples.classOf(type, syntax).record.name;
+    if (this.host.anonymous.handles(type)) return this.host.anonymous.classOf(type, syntax).record.name;
     switch (type.typeKind) {
       case TypeKind.Enum:
         if (this.host.isSource(type)) return 'int';
@@ -101,6 +102,8 @@ export class TypeMapper {
     // A framework generic over a type the registry does not list shares the construction over `object` (lowering/generics).
     const registry = this.host.bridge.registryName(type) ?? this.host.frameworkConstructions.imageTypeOf(type);
     if (registry) return registry;
+    const missing = this.host.frameworkConstructions.missingContract(type);
+    if (missing) return unsupported(`type '${type.toDisplayString()}' (the framework registry has no '${missing}' contracts)`, syntax);
     return unsupported(`type '${type.toDisplayString()}' (not in the framework registry)`, syntax);
   }
   /** True when values of the image type are references (cleared at scope exit, comparable with null). */

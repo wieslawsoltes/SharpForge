@@ -42,6 +42,8 @@ import { UnsafeBinding } from './unsafe.js';
 import { ProtectedAccessBinding } from './protected-access.js';
 import { languageRules } from './language-rules.js';
 import { CSharp6Binding } from './csharp6.js';
+import { CallerInfoBinding } from './caller-info.js';
+import { AnonymousTypeBinding } from './anonymous-types.js';
 
 const expressionFamilies = [
   ConversionBinding,
@@ -72,6 +74,8 @@ const statementFamilies = [
   AnonymousMethodBinding,
   ArrayBinding,
   CSharp6Binding,
+  CallerInfoBinding,
+  AnonymousTypeBinding,
   UnsafeBinding,
   ProtectedAccessBinding,
 ];
