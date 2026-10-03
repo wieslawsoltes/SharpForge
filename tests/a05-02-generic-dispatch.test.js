@@ -116,8 +116,22 @@ test('aggregate generic values and external generic methods keep explicit unsupp
   ]);
   assert(verifyCilAssembly(bytes).issues.some(issue => /T03 value storage/.test(issue.message)));
   const external = genericCallFixture([{name: 'Program', methods: [{name: 'Main', body(writer, context) {
-    writer.op('newobj', context.member(context.typeSpec('System.Collections.Generic.List`1<int>'), '.ctor', 'void', [], false));
+    writer.op('newobj', context.member(context.typeSpec('Unsupported.Collection`1<int>'), '.ctor', 'void', [], false));
     writer.op('pop').op('ret');
   }}]}]);
   assert(verifyCilAssembly(external).issues.some(issue => issue.code === 'IL_REFERENCE'));
+});
+
+// Decimal is an admitted scalar carrier even though its CLR metadata is a value type.
+test('closed generic Decimal default and initobj retain the scalar storage contract', () => {
+  const bytes = genericCallFixture([{name: 'Program', methods: [
+    {name: 'Main', result: 'System.Decimal', body: (writer, context) => writer
+      .op('call', context.methodSpec(context.methods.get('Program.Default'), ['System.Decimal'])).op('ret')},
+    {name: 'Default', result: '!!0', locals: ['!!0'], genericParameters: [{}], body: (writer, context) => writer
+      .op('ldloca.s', 0).op('initobj', context.typeSpec('!!0')).op('ldloc.0').op('ret')}
+  ]}]);
+  const value = run(bytes);
+  assert.equal(value.coefficient, 0n);
+  assert.equal(value.scale, 0);
+  assert(Object.isFrozen(value));
 });

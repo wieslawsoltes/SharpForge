@@ -1,4 +1,4 @@
-import {decodeCoded, methodGenericParameters, substituteCallType} from '@sharpforge/cil';
+import {decodeCoded, methodGenericParameters, substituteCallType, primitiveSizes} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 
 function invalid(message) {
@@ -29,7 +29,7 @@ export function validateGenericArguments(vm, owner, arguments_, context) {
     if (type.flags.external) {
       throw new ManagedFault('NotSupportedException', 'Unregistered external generic argument is inspection-only');
     }
-    if (type.flags.valueType && !type.flags.primitive && !type.flags.enum) {
+    if (type.flags.valueType && !type.flags.primitive && !type.flags.enum && !primitiveSizes[type.name]) {
       throw new ManagedFault('NotSupportedException', 'Generic aggregate values require T03 value storage');
     }
     const badReference = parameter.flags & 4 && type.flags.valueType;

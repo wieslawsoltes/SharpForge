@@ -3,7 +3,7 @@
 This increment executes internal generic classes and methods through real TypeSpec,
 MemberRef and MethodSpec metadata. It substitutes signatures, locals, instance and
 static fields, array elements, box/unbox.any, initobj and typeof(T) in the current
-frame. Nested reference instances, primitive/enum arguments, virtual overrides and
+frame. Nested reference instances, primitive/enum/Decimal arguments, virtual overrides and
 explicit implementations of multiple closed interfaces retain separate identities.
 The existing MethodTable registry, field cache, declaration slots and PIC remain
 the runtime type/dispatch machinery.
@@ -25,7 +25,7 @@ shared. Ordinary methods retain their original identity. Cache entries, resolved
 call descriptors and selected declaring owners are derived code-epoch state,
 cleared together with token/PIC caches on edit, assembly replacement, stop and
 snapshot restore. A suspended frame retains its concrete method and context.
-`maxGenericInstantiations` bounds the derived instantiation cache (default100000).
+`maxGenericInstantiations` bounds the derived instantiation cache (default 100000).
 Generic constraints are checked before entering instantiated methods.
 
 T02.3 remains open for user aggregate value arguments (T03 storage/layout), generic
@@ -40,5 +40,8 @@ Focused files: `a05-02-generic-calls.test.js` and
 metadata without the source compiler. `fixtures/a05/generic-calls` supplies a
 net10.0 Roslyn/native differential input and expected output; reference tool version
 and measured results will be recorded when the root's serial queue runs it.
-No tests, builds, native execution or benchmarks were run while preparing this
-commit. Browser/native-width parity and performance qualification remain pending.
+Serial focused validation on Node 24.21.0 (one worker, 512 MiB) initially passed
+60 of 62 cases. The Decimal initobj admission regression and an external fixture
+that accidentally selected an already registered collection were corrected; all
+27 affected dispatch/Decimal cases then passed, including a new generic Decimal
+default regression. Browser/native/Wasm and performance qualification remain pending.
