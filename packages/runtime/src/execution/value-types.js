@@ -103,7 +103,8 @@ export function unboxValue(vm,reference,type) {
   }
   const record=vm.heap.get(reference);
   if(record.kind!=='box'||!unboxCompatible(record.methodTable,table))throw new ManagedFault('InvalidCastException','Boxed type mismatch');
-  return copyValue(vm,record.data[0],table);
+  const value=record.methodTable.flags.enum&&!table.flags.enum?enumUnderlying(record.data[0],record.methodTable.enumUnderlyingType.name):record.data[0];
+  return copyValue(vm,value,table);
 }
 export function nullableValue(vm,type,value=null,hasValue=value!==null) {
   const table=tableFor(vm,type);

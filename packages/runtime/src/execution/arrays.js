@@ -52,7 +52,7 @@ export function createArray(vm,elementType,lengths,lowerBounds=null,{reflection=
   if(lengths.length>32)throw fault('TypeLoadException','Array rank exceeds the CLI limit of 32');
   if(lowerBounds!==null&&(!Array.isArray(lowerBounds)||lowerBounds.length!==lengths.length))throw fault('ArgumentException','Array lengths and lower bounds have different ranks');
   const element=vm.inspector?vm.typeSystem.table(elementType):vm.heap.methodTables.get(elementType);
-  if(element.name==='System.Void'||element.flags.byRef||element.flags.pointer||element.containsGenericParameters)throw fault('NotSupportedException','Array element type cannot be instantiated');
+  if(element.name==='System.Void'||element.flags.byRef||element.flags.pointer||element.flags.refStruct||element.containsGenericParameters)throw fault('NotSupportedException','Array element type cannot be instantiated');
   const sizes=lengths.map(value=>integer(value,reflection?'ArgumentOutOfRangeException':'OverflowException'));
   const bounds=(lowerBounds??Array(sizes.length).fill(0)).map(value=>integer(value));
   let total=1;

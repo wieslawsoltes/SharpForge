@@ -62,6 +62,18 @@ export function rawMemoryView(vm, pointer, byteLength, {write = false} = {}) {
     try { bytes = rawArrayBytes(data); }
     catch { throw new ManagedFault('NotSupportedException', 'Raw memory cannot contain managed references'); }
     offset = pointer.index * arrayElementBytes(record.methodTable.elementType);
+  } else if (pointer?.byref && pointer.kind === 'static' && vm.inspector) {
+    if (pointer.vmOwner !== vm.snapshotOwner || write) {
+      throw new ManagedFault('InvalidProgramException', 'RVA initialization data is read-only');
+    }
+    const token = typeof pointer.index === 'string' ? JSON.parse(pointer.index)[0] : pointer.index;
+    const row = vm.inspector.metadata.rows[29]?.find(item => item[1] === (token & 0xffffff));
+    if (!row) throw new ManagedFault('NotSupportedException', 'Static field has no raw initialization data');
+    const field = vm.inspector.resolveToken(token);
+    const size = valueLayout(vm, field.signature.type).size;
+    const fileOffset = vm.inspector.pe.offsetOf(row[0], size);
+    bytes = vm.inspector.pe.bytes.subarray(fileOffset, fileOffset + size);
+    offset = 0;
   } else {
     throw new ManagedFault('NotSupportedException', 'Raw memory requires a primitive array or stack allocation');
   }

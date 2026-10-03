@@ -26,3 +26,5 @@ export {asyncIntrinsicDefinitions,asyncMethodDefinition,asyncTypeDefinition,reac
 export {memoryMethodDefinition} from './memory-profile.js';
 
 export {exceptionIntrinsicDefinitions} from './exception-profile.js';
+
+export {arrayRuntimeDefinition} from './array-runtime-profile.js';
