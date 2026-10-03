@@ -65,6 +65,7 @@ test('A05 source image tables retain type and field identities across namespaces
   assert.equal(heap.get(heap.object(second,[null])).methodTable,second);
   const frameworkEnum=registry.get('Microsoft.UI.Xaml.Visibility');
   assert.equal(frameworkEnum.flags.enum,true);assert.equal(frameworkEnum.enumUnderlyingType,registry.get('int'));
+  assert.equal(frameworkEnum.base,registry.get('System.Enum'));
 });
 
 test('A05 heap headers survive collection, snapshots and metadata registry replacement',()=>{
