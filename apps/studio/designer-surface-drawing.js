@@ -14,9 +14,9 @@ export class DesignerDrawCreate {
 
   choose(type) {
     this.type = type;
-    this.view.stage.style.cursor = type ? 'crosshair' : '';
+    if (this.view.stage) this.view.stage.style.cursor = type ? 'crosshair' : '';
     this.view.status = type ? `Draw ${type.split('.').at(-1)}; Escape cancels` : 'Selection tool';
-    this.view.statusElement.textContent = this.view.status;
+    if (this.view.statusElement) this.view.statusElement.textContent = this.view.status;
   }
 
   parent(target = null) {

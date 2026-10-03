@@ -10,13 +10,16 @@ export class DesignerAdornerLayer {
     this.maxAdorners = maxAdorners;
     this.boxes = new Map();
     this.frame = null;
+    this.frameWindow = null;
   }
 
   request() {
     if (this.frame !== null) return;
     const window = this.view.stage.ownerDocument.defaultView;
+    this.frameWindow = window;
     this.frame = window.requestAnimationFrame(() => {
       this.frame = null;
+      this.frameWindow = null;
       this.view.safe(() => this.paint());
       this.view.safe(() => this.view.surface?.drawGridTracks());
     });
@@ -49,7 +52,7 @@ export class DesignerAdornerLayer {
 
   paint(rectangles = null) {
     const view = this.view;
-    if (!view.initialized || !view.stage.isConnected) return;
+    if (!view.initialized || !view.stage?.isConnected) return;
     if (view.preview) {
       this.clear();
       return;
@@ -123,7 +126,7 @@ export class DesignerAdornerLayer {
   }
 
   guides(guides, parentId) {
-    this.view.overlay.querySelector('[data-smart-guides]')?.remove();
+    this.view.overlay?.querySelector('[data-smart-guides]')?.remove();
     if (!guides.length) return;
     const parent = this.geometry.get(parentId);
     if (!parent) return;
@@ -147,12 +150,13 @@ export class DesignerAdornerLayer {
   clear() {
     for (const box of this.boxes.values()) box.remove();
     this.boxes.clear();
-    this.view.overlay.querySelector('[data-smart-guides]')?.remove();
+    this.view.overlay?.querySelector('[data-smart-guides]')?.remove();
   }
 
   dispose() {
-    if (this.frame !== null) this.view.stage.ownerDocument.defaultView.cancelAnimationFrame(this.frame);
+    if (this.frame !== null) this.frameWindow.cancelAnimationFrame(this.frame);
     this.frame = null;
+    this.frameWindow = null;
     this.clear();
   }
 }

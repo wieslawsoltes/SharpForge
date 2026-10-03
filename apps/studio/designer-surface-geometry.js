@@ -34,19 +34,41 @@ export class DesignerSurfaceGeometry {
     this.revision = -1;
     this.pending = null;
     this.frame = null;
+    this.frameWindow = null;
     this.ensureEntry = null;
-    this.baselines = new DesignerTextBaselines(view.stage.ownerDocument);
+    this.stageElement = null;
+    this.ownerDocument = null;
+    this.baselines = null;
+  }
+
+  /** Tools are constructed before their surface is mounted; browser-owned metrics bind on the first measurement. */
+  bindSurface() {
+    const stage = this.view.stage;
+    const document = stage?.ownerDocument;
+    geometryInvariant(document?.defaultView, 'SFD_SURFACE_MOUNT', 'Mount the designer surface before measuring geometry.');
+    if (this.stageElement !== stage || this.ownerDocument !== document) {
+      this.invalidate();
+      if (this.ownerDocument !== document) {
+        this.baselines?.dispose();
+        this.baselines = new DesignerTextBaselines(document);
+      }
+      this.stageElement = stage;
+      this.ownerDocument = document;
+    }
+    return document.defaultView;
   }
 
   invalidate() {
     this.valid = false;
-    if (this.frame !== null) this.view.stage.ownerDocument.defaultView.cancelAnimationFrame(this.frame);
+    if (this.frame !== null) this.frameWindow.cancelAnimationFrame(this.frame);
     this.frame = null;
+    this.frameWindow = null;
     this.pending = null;
   }
 
   refresh({all = false} = {}) {
     const view = this.view;
+    const window = this.bindSurface();
     if (this.valid && this.document === view.document && this.revision === view.document.revision) {
       for (const id of view.document.selection.slice(0, 32)) this.ensureEntry(id);
       if (all && this.pending) this.measurePending(Infinity);
@@ -55,7 +77,6 @@ export class DesignerSurfaceGeometry {
     this.invalidate();
     this.entries.clear();
     this.index.clear();
-    const window = view.stage.ownerDocument.defaultView;
     const matrices = new WeakMap();
     const styles = new WeakMap();
     const styleOf = element => {
@@ -124,7 +145,7 @@ export class DesignerSurfaceGeometry {
   }
 
   measurePending(budgetMs) {
-    const clock = this.view.stage.ownerDocument.defaultView.performance;
+    const clock = this.ownerDocument.defaultView.performance;
     const start = clock.now();
     while (this.pending && this.pending.offset < this.pending.nodes.length) {
       this.ensureEntry(this.pending.nodes[this.pending.offset++]);
@@ -135,8 +156,10 @@ export class DesignerSurfaceGeometry {
 
   scheduleMeasurements() {
     if (!this.pending || this.frame !== null) return;
-    this.frame = this.view.stage.ownerDocument.defaultView.requestAnimationFrame(() => {
+    this.frameWindow = this.ownerDocument.defaultView;
+    this.frame = this.frameWindow.requestAnimationFrame(() => {
       this.frame = null;
+      this.frameWindow = null;
       this.view.safe(() => this.measurePending(4));
       this.view.surface?.drawAdorners();
       this.scheduleMeasurements();
@@ -186,7 +209,10 @@ export class DesignerSurfaceGeometry {
 
   dispose() {
     this.invalidate();
-    this.baselines.dispose();
+    this.baselines?.dispose();
+    this.baselines = null;
+    this.ownerDocument = null;
+    this.stageElement = null;
     this.entries.clear();
     this.index.clear();
     this.ensureEntry = null;
