@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e9541fee806f0d1c0d66",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass C\n{\n    static bool M1(object o) => o is int or long;\n    static bool M2(object o) => o is int || o is long;\n    public static void Main()\n    {\n        Console.Write(M1(1));\n        Console.Write(M1(string.Empty));\n        Console.Write(M1(1L));\n        Console.Write(M1(1UL));\n    }\n}",
+  "sourceSHA256": "c1aa417dd6acb5c716ad63074602fe2b502f5f2fb16631ddb22045d46046deef",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "IsPatternDisjunct_01",
+    "offset": 175360
+  },
+  "langVersion": "default",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe, parseOptions: TestOptions.RegularWithPatternCombinators)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

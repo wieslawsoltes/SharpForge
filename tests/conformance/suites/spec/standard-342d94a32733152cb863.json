@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-342d94a32733152cb863",
+  "kind": "spec",
+  "sourceText": "public interface I\n{\n    string Prop { get; }\n}\n\npublic class C : I\n{\n    public string Prop\n    {\n        get => \"April\";     // Must not have a modifier here\n        internal set {...}  // Ok, because I.Prop has no set accessor\n    }\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "97671dfb01869c519a5909e1494cc525e8f59d9bdc3643f4611fac9c0b571f2c",
+  "originalSource": "public interface I\n{\n    string Prop { get; }\n}\n\npublic class C : I\n{\n    public string Prop\n    {\n        get => \"April\";     // Must not have a modifier here\n        internal set {...}  // Ok, because I.Prop has no set accessor\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "Accessibility2",
+    "replaceEllipsis": true
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "Accessibility2",
+    "offsetInUnquotedMarkdown": 193238
+  }
+}

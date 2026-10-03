@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-aa0d6177055e54d87247",
+  "kind": "diagnostics",
+  "sourceText": "\nclass P\n{\n    static void M()\n    {\n        var x1 = (1, 1) is (int, int a)?;\n    }\n}",
+  "sourceSHA256": "754a5145a4fa07911a1f72423ab8d3cf08d6c2817204debcc094c5345da39b02",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "NullableTupleInIsOperator",
+    "offset": 1096790
+  },
+  "langVersion": "8",
+  "target": "library",
+  "references": "references: new[] { ValueTupleRef, SystemRuntimeFacadeRef }, parseOptions: TestOptions.Regular8)",
+  "options": "(source, references: new[] { ValueTupleRef, SystemRuntimeFacadeRef }, parseOptions: TestOptions.Regular8)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8400",
+        "severity": "error"
+      },
+      {
+        "code": "CS1525",
+        "severity": "error"
+      },
+      {
+        "code": "CS1003",
+        "severity": "error"
+      },
+      {
+        "code": "CS1525",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,29): error CS8400: Feature 'type pattern' is not available in C# 8.0. Please use language version 9.0 or greater.\n                //         var x1 = (1, 1) is (int, int a)?;\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion8, \"int\").WithArguments(\"type pattern\", \"9.0\").WithLocation(6, 29),\n                // (6,41): error CS1525: Invalid expression term ';'\n                //         var x1 = (1, 1) is (int, int a)?;\n                Diagnostic(ErrorCode.ERR_InvalidExprTerm, \";\").WithArguments(\";\").WithLocation(6, 41),\n                // (6,41): error CS1003: Syntax error, ':' expected\n                //         var x1 = (1, 1) is (int, int a)?;\n                Diagnostic(ErrorCode.ERR_SyntaxError, \";\").WithArguments(\":\").WithLocation(6, 41),\n                // (6,41): error CS1525: Invalid expression term ';'\n                //         var x1 = (1, 1) is (int, int a)?;\n                Diagnostic(ErrorCode.ERR_InvalidExprTerm, \";\").WithArguments(\";\").WithLocation(6, 41)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

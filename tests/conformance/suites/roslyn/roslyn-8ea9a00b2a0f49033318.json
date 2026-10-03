@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8ea9a00b2a0f49033318",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public int F1 = 44;\n    public string F2 = \"Hello\";\n    public int F3 = Goo();\n\n    static int Goo() { return 10; }\n    static int Bar(int P1 = 15, int F2 = 33) { return P1 + F2; }\n}\n",
+  "sourceSHA256": "60c8b9bd08a57ba3efd34a50f7710a0417068759e3bbb10905ad7072cbcbeeb7",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "sha256": "eb33d60956503b30bec29f823f9033347fac98a9029a70b139e6a57a3ad1abef",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "FieldInitializersCSharp",
+    "offset": 45207
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

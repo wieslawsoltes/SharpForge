@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-19aa1f4f3ee006210dc6",
+  "kind": "diagnostics",
+  "sourceText": "class Program\n{\n    static Buffer10 M()\n    {\n        int i;\n        return new Buffer10() { [^1] = i }; // 1\n    }\n}\n\nstruct Buffer10\n{\n    public Buffer10() { }\n\n    public int Length => throw null;\n    public int this[int x]\n    {\n        get => throw null;\n        set => throw null;\n    }\n}",
+  "sourceSHA256": "86b38912516406825c12a925e74406051e22642a3c34dd56806ffe8b756585b2",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/CodeGen/IndexAndRangeTests.cs",
+    "sha256": "a5bc66f188cd46c37d21137d5030c350782aae648af5cc9cf55e0f5accb5c0c4",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/CodeGen/IndexAndRangeTests.cs",
+    "license": "MIT",
+    "method": "InObjectInitializer_Index_Unassigned",
+    "offset": 49848
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,40): error CS0165: Use of unassigned local variable 'i'\n                //         return new Buffer10() { [^1] = i }; // 1\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"i\").WithArguments(\"i\").WithLocation(6, 40)\n                ",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

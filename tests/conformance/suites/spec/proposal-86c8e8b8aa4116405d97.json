@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-86c8e8b8aa4116405d97",
+  "kind": "spec",
+  "sourceText": "  ...\n  nint operator –(nint x);\n  ```  \n\n### 12.8.16 Postfix increment and decrement operators\n\nPredefined `++` and `--` operators exist for the following types: `sbyte`, `byte`, `short`, `ushort`, `int`, `uint`, **`nint`, `nuint`**, `long`, `ulong`, `char`, `float`, `double`, `decimal`, and any enum type.\n\n### 11.7.19 Default value expressions\n\nIn addition, a *default_value_expression* is a constant expression if the type is one of the following value types: `sbyte`, `byte`, `short`, `ushort`, `int`, `uint`, **`nint`, `nuint`**, `long`, `ulong`, `char`, `float`, `double`, `decimal`, `bool,` or any enumeration type.\n\n### 12.9.5 Bitwise complement operator\n\nThe predefined bitwise complement operators are:\n",
+  "sourceSHA256": "388388c340aae5d08578cf47a699b3e31534e5f49a45c8fd976022103aca6365",
+  "target": "library",
+  "featureId": "csharp-11-0-numeric-intptr",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/numeric-intptr.md",
+    "sha256": "b6fa2f3916ac2f585240e1ac40182daa372d04f4a8ea5a289855cf172af02f40",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/numeric-intptr.md",
+    "license": "NOASSERTION",
+    "offset": 7736
+  }
+}

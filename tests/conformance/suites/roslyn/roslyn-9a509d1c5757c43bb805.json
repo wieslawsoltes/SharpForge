@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9a509d1c5757c43bb805",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\npublic class C\n{\n    int? f1 = null;\n    ref readonly int? P1\n    {\n        get\n        {\n            Console.WriteLine(\"In Get P1\");\n            return ref f1;\n        }\n    }\n\n    ref readonly int? GetF1()\n    {\n        Console.WriteLine(\"In GetF1\");\n        return ref f1;\n    }\n\n    public static void Main()\n    {\n        var c = new C();\n        Console.WriteLine(c.P1 ??= 1);\n        c.f1 = null;\n        Console.WriteLine(c.GetF1() ??= 2);\n    }\n}",
+  "sourceSHA256": "d75d8b5516f2e68857eed9c92ad87d092e73019b1ca9b7bb683760f5e1cfa81a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "sha256": "14d37a1c90475a8d190ab227c55d1f41260459c0a6f80d570d1736b34d3ab914",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "license": "MIT",
+    "method": "RefReadonlyReturnLvalue",
+    "offset": 23256
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System;\npublic class C\n{\n    int? f1 = null;\n    ref readonly int? P1\n    {\n        get\n        {\n            Console.WriteLine(\"\"In Get P1\"\");\n            return ref f1;\n        }\n    }\n\n    ref readonly int? GetF1()\n    {\n        Console.WriteLine(\"\"In GetF1\"\");\n        return ref f1;\n    }\n\n    public static void Main()\n    {\n        var c = new C();\n        Console.WriteLine(c.P1 ??= 1);\n        c.f1 = null;\n        Console.WriteLine(c.GetF1() ??= 2);\n    }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8331",
+        "severity": "error"
+      },
+      {
+        "code": "CS8331",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (24,27): error CS8331: Cannot assign to property 'P1' or use it as the right hand side of a ref assignment because it is a readonly variable\n                //         Console.WriteLine(c.P1 ??= 1);\n                Diagnostic(ErrorCode.ERR_AssignReadonlyNotField, \"c.P1\").WithArguments(\"property\", \"P1\").WithLocation(24, 27),\n                // (26,27): error CS8331: Cannot assign to method 'GetF1' or use it as the right hand side of a ref assignment because it is a readonly variable\n                //         Console.WriteLine(c.GetF1() ??= 2);\n                Diagnostic(ErrorCode.ERR_AssignReadonlyNotField, \"c.GetF1()\").WithArguments(\"method\", \"GetF1\").WithLocation(26, 27)\n            ",
+  "unsupported": []
+}

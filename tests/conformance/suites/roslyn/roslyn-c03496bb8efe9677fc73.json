@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c03496bb8efe9677fc73",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    public static void Main()\n    {\n        var obj1 = new TestReference.TestType1();\n        var obj2 = new TestReference.TestType2();\n        var obj3 = new TestReference.TestType3(); // This should be fine\n    }\n}",
+  "sourceSHA256": "5620b27fce288110476d90d0ad9ffdc6601ae81bc062a1a42f74a94112dbbf01",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Embedded.cs",
+    "sha256": "3ba2e87803d797ee289ab5dc11406a9c3b62d3390fdf134b841246294a574f40",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Embedded.cs",
+    "license": "MIT",
+    "method": "ReferencingEmbeddedAttributesFromADifferentAssemblyFails_Public",
+    "offset": 5628
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { reference.ToMetadataReference() })",
+  "options": "(code, references: new[] { reference.ToMetadataReference() })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0234",
+        "severity": "error"
+      },
+      {
+        "code": "CS0234",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,38): error CS0234: The type or namespace name 'TestType1' does not exist in the namespace 'TestReference' (are you missing an assembly reference?)\n                //         var obj1 = new TestReference.TestType1();\n                Diagnostic(ErrorCode.ERR_DottedTypeNameNotFoundInNS, \"TestType1\").WithArguments(\"TestType1\", \"TestReference\").WithLocation(6, 38),\n                // (7,38): error CS0234: The type or namespace name 'TestType2' does not exist in the namespace 'TestReference' (are you missing an assembly reference?)\n                //         var obj2 = new TestReference.TestType2();\n                Diagnostic(ErrorCode.ERR_DottedTypeNameNotFoundInNS, \"TestType2\").WithArguments(\"TestType2\", \"TestReference\").WithLocation(7, 38)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a11ac62d22fb95d04cfd",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Collections;\n\nstatic class C\n{\n    static string M(this(object x, (ValueType, IStructuralComparable) y) self) => self.ToString();\n\n    static string GetAwaiter(this (object x, Func<int> y) self) => self.ToString();\n\n    static void Main()\n    {\n        System.Console.WriteLine((\"qq\", (Alice: 1, (null, 3))).M());\n\n        System.Console.WriteLine((\"qq\", ()=>1 ).GetAwaiter());\n    }\n}\n",
+  "sourceSHA256": "a7ac1deb2921a1ea119c6725686284dcd33b7d9f4b802ca13b80562b635eb022",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "ExtensionMethodOnConvertedTuple002Err",
+    "offset": 1084953
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0117",
+        "severity": "error"
+      },
+      {
+        "code": "CS0117",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (13,64): error CS0117: '(string, (int, (<null>, int)))' does not contain a definition for 'M'\n                //         System.Console.WriteLine((\"qq\", (Alice: 1, (null, 3))).M());\n                Diagnostic(ErrorCode.ERR_NoSuchMember, \"M\").WithArguments(\"(string, (int, (<null>, int)))\", \"M\").WithLocation(13, 64),\n                // (15,49): error CS0117: '(string, lambda expression)' does not contain a definition for 'GetAwaiter'\n                //         System.Console.WriteLine((\"qq\", ()=>1 ).GetAwaiter());\n                Diagnostic(ErrorCode.ERR_NoSuchMember, \"GetAwaiter\").WithArguments(\"(string, lambda expression)\", \"GetAwaiter\").WithLocation(15, 49)\n                ",
+  "unsupported": []
+}

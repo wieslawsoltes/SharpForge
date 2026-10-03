@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6b7453664ab7c1df0ddc",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Mybase\n{\nstatic void Main(dynamic x=null) { }\n}\nclass Myderive : Mybase\n{\n    static void Main() { }\n}\n",
+  "sourceSHA256": "4db2506965d6096f7863309e84036ec30220b3103a9172af8098c771dca6a733",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "sha256": "84a49b5872a45de355d4ac196b7221b2d05e37d0f4411cf7fa7566336209d2bb",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "license": "MIT",
+    "method": "DynamicParameterForMain",
+    "offset": 54556
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source,\n                options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0028",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    Diagnostic(ErrorCode.WRN_InvalidMainSig, \"Main\").WithArguments(\"Mybase.Main(dynamic)\")",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

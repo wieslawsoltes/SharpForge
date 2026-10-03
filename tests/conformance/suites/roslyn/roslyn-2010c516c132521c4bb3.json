@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-2010c516c132521c4bb3",
+  "kind": "diagnostics",
+  "sourceText": "\nstruct SafeBitVector\n{\n    private int _data;\n    internal bool this[int bit]\n    {\n        get\n        {\n            return (_data & bit) == bit;\n        }\n        set\n        {\n            _data = value ? _data | bit : _data & ~bit;\n        }\n    }\n    internal bool Goo(int bit)\n    {\n        return this[bit];\n    }\n}\n\nclass SectionInformation\n{\n    SafeBitVector _flags;\n    internal bool Goo(int x)\n    {\n        return _flags[x];\n    }\n}\n\nclass SectionInformation2\n{\n    SafeBitVector _flags;\n    internal bool Goo(int x)\n    {\n        return _flags.Goo(x);\n    }\n}",
+  "sourceSHA256": "1f25241e2d6629bef5d907acdd2c273d9837ac9949bb3d9c55384f6675d213a9",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/StructTests.cs",
+    "sha256": "0d6911ec2e8d7c03c9c20562c37c9d1959883735b8a2e5c0af7af46861c1379a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/StructTests.cs",
+    "license": "MIT",
+    "method": "StructIndexerReceiver",
+    "offset": 4770
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(program)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

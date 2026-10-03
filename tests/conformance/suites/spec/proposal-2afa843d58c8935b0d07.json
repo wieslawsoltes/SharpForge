@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-2afa843d58c8935b0d07",
+  "kind": "spec",
+  "sourceText": "closed class C<T> { ... }\nclass D1<U> : C<U> { ... }   // Ok, 'U' is used in base class\nclass D2<V> : C<V[]> { ... } // Ok, 'V' is used in base class\nclass D3<W> : C<int> { ... } // Error, 'W' is not used in base class",
+  "sourceSHA256": "df7638a5d24ef00694dbaa9e1cbf4716ef6d82fac5ca9dbe693c82e0e98a259c",
+  "target": "library",
+  "featureId": "csharp-15-0-closed-hierarchies",
+  "langVersion": "preview",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-15.0/closed-hierarchies.md",
+    "sha256": "42fefd4135df4a6d52f32ec44f95ddcf6f1a755a105a5fefe1cbf57d888feb96",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/closed-hierarchies.md",
+    "license": "NOASSERTION",
+    "offset": 2584
+  }
+}

@@ -9,4 +9,8 @@ export { writePortableExecutable } from './pe/writer.js';
 export { PEMachine, CorFlags, PEPlatforms, PEDirectoryNames } from './pe/headers.js';
 export { writeManagedPE as writePE } from './pe/writer.js';
 export { readPortableExecutable as readPE } from './pe/reader.js';
+export { peChecksum } from './pe/checksum.js';
+export { deterministicContentId, finalizeDeterministicPE } from './pe/determinism.js';
 export { readManagedResources, writeManagedResources, ManifestResourceVisibility } from './pe/managed-resources.js';
+export { writeWin32Resources } from './pe/win32-resources.js';
+export { readWin32Resources } from './pe/win32-reader.js';

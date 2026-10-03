@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d35c7b1871f1e11a0068",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.CompilerServices;\n\nnamespace System.Runtime.CompilerServices\n{\n    public class IsUnmanagedAttribute : System.Attribute { }\n}\n\npublic class Test\n{\n    [IsUnmanaged]\n    public int this[[IsUnmanaged]int x] => x;\n}\n",
+  "sourceSHA256": "752d7f0d02e15154fb0e0ec94ffe480b44649c30cd9a89b167e8e28aaf1009ed",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_IsUnmanaged.cs",
+    "sha256": "c8792e369226130bbbac808179535c1e1aa84e843c9cb3691e3e7502042372c6",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_IsUnmanaged.cs",
+    "license": "MIT",
+    "method": "IsUnmanagedAttributeIsDisallowedEverywhereInSource_Indexers",
+    "offset": 22414
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(code)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8335",
+        "severity": "error"
+      },
+      {
+        "code": "CS8335",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,6): error CS8335: Do not use 'System.Runtime.CompilerServices.IsUnmanagedAttribute'. This is reserved for compiler usage.\n                //     [IsUnmanaged]\n                Diagnostic(ErrorCode.ERR_ExplicitReservedAttr, \"IsUnmanaged\").WithArguments(\"System.Runtime.CompilerServices.IsUnmanagedAttribute\").WithLocation(11, 6),\n                // (12,22): error CS8335: Do not use 'System.Runtime.CompilerServices.IsUnmanagedAttribute'. This is reserved for compiler usage.\n                //     public int this[[IsUnmanaged]int x] => x;\n                Diagnostic(ErrorCode.ERR_ExplicitReservedAttr, \"IsUnmanaged\").WithArguments(\"System.Runtime.CompilerServices.IsUnmanagedAttribute\").WithLocation(12, 22)",
+  "unsupported": []
+}

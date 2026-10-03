@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-31acabbaf759023527b2",
+  "kind": "spec",
+  "sourceText": "C<string> cs = ...;\n_ = cs switch\n{\n    D1<string> d1 => ...,\n    // No need for a 'D2<...>' case - no instantiation corresponds to 'C<string>'\n}",
+  "sourceSHA256": "4be10e33e6c3a964df1801162b0ea7c5b6633b974e8101da36d1ed3cdd208cef",
+  "target": "library",
+  "featureId": "csharp-15-0-closed-hierarchies",
+  "langVersion": "preview",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-15.0/closed-hierarchies.md",
+    "sha256": "42fefd4135df4a6d52f32ec44f95ddcf6f1a755a105a5fefe1cbf57d888feb96",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/closed-hierarchies.md",
+    "license": "NOASSERTION",
+    "offset": 4446
+  }
+}

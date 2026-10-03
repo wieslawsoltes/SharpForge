@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-dee3f77d2d1c9088d897",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\n[A<>] // 1, 2\n[A<int>] // 3, 4\n[B] // 5\n[B<>] // 6, 7\n[B<int>] // 8, 9\n[C] // 10\n[C<>] // 11, 12\n[C<int>] // 13, 14\n[C<,>] // 15, 16\n[C<int, int>] // 17, 18\nclass Test\n{\n}\n\npublic class A : Attribute\n{\n}\n\npublic class B<T> : Attribute // 19\n{\n}\n\npublic class C<T, U> : Attribute // 20\n{\n}\n",
+  "sourceSHA256": "9a85c986b2de717f631ca580507dd7adbc1b62d01d15e08896d193df854320ca",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "GenericAttributeType",
+    "offset": 347531
+  },
+  "langVersion": "10",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular10)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0308",
+        "severity": "error"
+      },
+      {
+        "code": "CS8936",
+        "severity": "error"
+      },
+      {
+        "code": "CS0308",
+        "severity": "error"
+      },
+      {
+        "code": "CS8936",
+        "severity": "error"
+      },
+      {
+        "code": "CS0305",
+        "severity": "error"
+      },
+      {
+        "code": "CS7003",
+        "severity": "error"
+      },
+      {
+        "code": "CS8936",
+        "severity": "error"
+      },
+      {
+        "code": "CS8936",
+        "severity": "error"
+      },
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS0305",
+        "severity": "error"
+      },
+      {
+        "code": "CS0305",
+        "severity": "error"
+      },
+      {
+        "code": "CS8936",
+        "severity": "error"
+      },
+      {
+        "code": "CS0305",
+        "severity": "error"
+      },
+      {
+        "code": "CS8936",
+        "severity": "error"
+      },
+      {
+        "code": "CS7003",
+        "severity": "error"
+      },
+      {
+        "code": "CS8936",
+        "severity": "error"
+      },
+      {
+        "code": "CS8936",
+        "severity": "error"
+      },
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS8936",
+        "severity": "error"
+      },
+      {
+        "code": "CS8936",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,2): error CS0308: The non-generic type 'A' cannot be used with type arguments\n                // [A<>] // 1, 2\n                Diagnostic(ErrorCode.ERR_HasNoTypeVars, \"A<>\").WithArguments(\"A\", \"type\").WithLocation(4, 2),\n                // (4,2): error CS8936: Feature 'generic attributes' is not available in C# 10.0. Please use language version 11.0 or greater.\n                // [A<>] // 1, 2\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion10, \"A<>\").WithArguments(\"generic attributes\", \"11.0\").WithLocation(4, 2),\n                // (5,2): error CS0308: The non-generic type 'A' cannot be used with type arguments\n                // [A<int>] // 3, 4\n                Diagnostic(ErrorCode.ERR_HasNoTypeVars, \"A<int>\").WithArguments(\"A\", \"type\").WithLocation(5, 2),\n                // (5,2): error CS8936: Feature 'generic attributes' is not available in C# 10.0. Please use language version 11.0 or greater.\n                // [A<int>] // 3, 4\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion10, \"A<int>\").WithArguments(\"generic attributes\", \"11.0\").WithLocation(5, 2),\n                // (6,2): error CS0305: Using the generic type 'B<T>' requires 1 type arguments\n                // [B] // 5\n                Diagnostic(ErrorCode.ERR_BadArity, \"B\").WithArguments(\"B<T>\", \"type\", \"1\").WithLocation(6, 2),\n                // (7,2): error CS7003: Unexpected use of an unbound generic name\n                // [B<>] // 6, 7\n                Diagnostic(ErrorCode.ERR_UnexpectedUnboundGenericName, \"B<>\").WithLocation(7, 2),\n                // (7,2): error CS8936: Feature 'generic attributes' is not available in C# 10.0. Please use language version 11.0 or greater.\n                // [B<>] // 6, 7\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion10, \"B<>\").WithArguments(\"generic attributes\", \"11.0\").WithLocation(7, 2),\n                // (8,2): error CS8936: Feature 'generic attributes' is not available in C# 10.0. Please use language version 11.0 or greater.\n                // [B<int>] // 8, 9\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion10, \"B<int>\").WithArguments(\"generic attributes\", \"11.0\").WithLocation(8, 2),\n                // (8,2): error CS0579: Duplicate 'B<>' attribute\n                // [B<int>] // 8, 9\n                Diagnostic(ErrorCode.ERR_DuplicateAttribute, \"B<int>\").WithArguments(\"B<>\").WithLocation(8, 2),\n                // (9,2): error CS0305: Using the generic type 'C<T, U>' requires 2 type arguments\n                // [C] // 10\n                Diagnostic(ErrorCode.ERR_BadArity, \"C\").WithArguments(\"C<T, U>\", \"type\", \"2\").WithLocation(9, 2),\n                // (10,2): error CS0305: Using the generic type 'C<T, U>' requires 2 type arguments\n                // [C<>] // 11, 12\n                Diagnostic(ErrorCode.ERR_BadArity, \"C<>\").WithArguments(\"C<T, U>\", \"type\", \"2\").WithLocation(10, 2),\n                // (10,2): error CS8936: Feature 'generic attributes' is not available in C# 10.0. Please use language version 11.0 or greater.\n                // [C<>] // 11, 12\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion10, \"C<>\").WithArguments(\"generic attributes\", \"11.0\").WithLocation(10, 2),\n                // (11,2): error CS0305: Using the generic type 'C<T, U>' requires 2 type arguments\n                // [C<int>] // 13, 14\n                Diagnostic(ErrorCode.ERR_BadArity, \"C<int>\").WithArguments(\"C<T, U>\", \"type\", \"2\").WithLocation(11, 2),\n                // (11,2): error CS8936: Feature 'generic attributes' is not available in C# 10.0. Please use language version 11.0 or greater.\n                // [C<int>] // 13, 14\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion10, \"C<int>\").WithArguments(\"generic attributes\", \"11.0\").WithLocation(11, 2),\n                // (12,2): error CS7003: Unexpected use of an unbound generic name\n                // [C<,>] // 15, 16\n                Diagnostic(ErrorCode.ERR_UnexpectedUnboundGenericName, \"C<,>\").WithLocation(12, 2),\n                // (12,2): error CS8936: Feature 'generic attributes' is not available in C# 10.0. Please use language version 11.0 or greater.\n                // [C<,>] // 15, 16\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion10, \"C<,>\").WithArguments(\"generic attributes\", \"11.0\").WithLocation(12, 2),\n                // (13,2): error CS8936: Feature 'generic attributes' is not available in C# 10.0. Please use language version 11.0 or greater.\n                // [C<int, int>] // 17, 18\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion10, \"C<int, int>\").WithArguments(\"generic attributes\", \"11.0\").WithLocation(13, 2),\n                // (13,2): error CS0579: Duplicate 'C<,>' attribute\n                // [C<int, int>] // 17, 18\n                Diagnostic(ErrorCode.ERR_DuplicateAttribute, \"C<int, int>\").WithArguments(\"C<,>\").WithLocation(13, 2),\n                // (22,21): error CS8936: Feature 'generic attributes' is not available in C# 10.0. Please use language version 11.0 or greater.\n                // public class B<T> : Attribute // 19\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion10, \"Attribute\").WithArguments(\"generic attributes\", \"11.0\").WithLocation(22, 21),\n                // (26,24): error CS8936: Feature 'generic attributes' is not available in C# 10.0. Please use language version 11.0 or greater.\n                // public class C<T, U> : Attribute // 20\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion10, \"Attribute\").WithArguments(\"generic attributes\", \"11.0\").WithLocation(26, 24)",
+  "unsupported": []
+}

@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3e60ace83839ffdb020a",
+  "kind": "diagnostics",
+  "sourceText": "\n#pragma warning disable 169\n\nusing System;\nusing System.Runtime.InteropServices;\n\npublic class X\n{\n    [MarshalAs(UnmanagedType.ByValTStr, ArraySubType = UnmanagedType.ByValTStr, SafeArraySubType = VarEnum.VT_BSTR, SafeArrayUserDefinedSubType = null, SizeConst = -1, SizeParamIndex = -1)]   int ByValTStr_e1;\n    [MarshalAs(UnmanagedType.ByValTStr, SizeConst = -1)]                                                                                                                                        int ByValTStr_e2;\n    [MarshalAs(UnmanagedType.ByValTStr, SizeConst = Int32.MaxValue / 4 + 1)]                                                                                                                    int ByValTStr_e3;\n    [MarshalAs(UnmanagedType.ByValTStr)]                                                                                                                                                        int ByValTStr_e4;\n    [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1, SizeParamIndex=1)]                                                                                                                       int ByValTStr_e5;\n    [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1, ArraySubType = UnmanagedType.ByValTStr)]                                                                                                 int ByValTStr_e6;\n    [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1, SafeArraySubType = VarEnum.VT_BSTR)]                                                                                                     int ByValTStr_e7;\n}\n",
+  "sourceSHA256": "b76c80c56266d27dbfef645418eb2076b4cf081be82156b613029bb58501bcbd",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_MarshalAs.cs",
+    "sha256": "bb4e4ad059ab1c1eda93b5a74e4516301a4d849e95af99ceb05f3e76a1b628a0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_MarshalAs.cs",
+    "license": "MIT",
+    "method": "NativeTypeFixedSysString_Errors",
+    "offset": 57381
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS7045",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS7045",
+        "severity": "error"
+      },
+      {
+        "code": "CS7046",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS7046",
+        "severity": "error"
+      },
+      {
+        "code": "CS0599",
+        "severity": "error"
+      },
+      {
+        "code": "CS7046",
+        "severity": "error"
+      },
+      {
+        "code": "CS7045",
+        "severity": "error"
+      },
+      {
+        "code": "CS7045",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,41): error CS7045: Parameter not valid for the specified unmanaged type.\n                //     [MarshalAs(UnmanagedType.ByValTStr, ArraySubType = UnmanagedType.ByValTStr, SafeArraySubType = VarEnum.VT_BSTR, SafeArrayUserDefinedSubType = null, SizeConst = -1, SizeParamIndex = -1)]   int ByValTStr_e1;\n                Diagnostic(ErrorCode.ERR_ParameterNotValidForType, \"ArraySubType = UnmanagedType.ByValTStr\"),\n                // (9,153): error CS0599: Invalid value for named attribute argument 'SizeConst'\n                //     [MarshalAs(UnmanagedType.ByValTStr, ArraySubType = UnmanagedType.ByValTStr, SafeArraySubType = VarEnum.VT_BSTR, SafeArrayUserDefinedSubType = null, SizeConst = -1, SizeParamIndex = -1)]   int ByValTStr_e1;\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"SizeConst = -1\").WithArguments(\"SizeConst\"),\n                // (9,169): error CS7045: Parameter not valid for the specified unmanaged type.\n                //     [MarshalAs(UnmanagedType.ByValTStr, ArraySubType = UnmanagedType.ByValTStr, SafeArraySubType = VarEnum.VT_BSTR, SafeArrayUserDefinedSubType = null, SizeConst = -1, SizeParamIndex = -1)]   int ByValTStr_e1;\n                Diagnostic(ErrorCode.ERR_ParameterNotValidForType, \"SizeParamIndex = -1\"),\n                // (9,6): error CS7046: Attribute parameter 'SizeConst' must be specified.\n                //     [MarshalAs(UnmanagedType.ByValTStr, ArraySubType = UnmanagedType.ByValTStr, SafeArraySubType = VarEnum.VT_BSTR, SafeArrayUserDefinedSubType = null, SizeConst = -1, SizeParamIndex = -1)]   int ByValTStr_e1;\n                Diagnostic(ErrorCode.ERR_AttributeParameterRequired1, \"MarshalAs\").WithArguments(\"SizeConst\"),\n                // (10,41): error CS0599: Invalid value for named attribute argument 'SizeConst'\n                //     [MarshalAs(UnmanagedType.ByValTStr, SizeConst = -1)]                                                                                                                                        int ByValTStr_e2;\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"SizeConst = -1\").WithArguments(\"SizeConst\"),\n                // (10,6): error CS7046: Attribute parameter 'SizeConst' must be specified.\n                //     [MarshalAs(UnmanagedType.ByValTStr, SizeConst = -1)]                                                                                                                                        int ByValTStr_e2;\n                Diagnostic(ErrorCode.ERR_AttributeParameterRequired1, \"MarshalAs\").WithArguments(\"SizeConst\"),\n                // (11,41): error CS0599: Invalid value for named attribute argument 'SizeConst'\n                //     [MarshalAs(UnmanagedType.ByValTStr, SizeConst = Int32.MaxValue / 4 + 1)]                                                                                                                    int ByValTStr_e3;\n                Diagnostic(ErrorCode.ERR_InvalidNamedArgument, \"SizeConst = Int32.MaxValue / 4 + 1\").WithArguments(\"SizeConst\"),\n                // (12,6): error CS7046: Attribute parameter 'SizeConst' must be specified.\n                //     [MarshalAs(UnmanagedType.ByValTStr)]                                                                                                                                                        int ByValTStr_e4;\n                Diagnostic(ErrorCode.ERR_AttributeParameterRequired1, \"MarshalAs\").WithArguments(\"SizeConst\"),\n                // (13,56): error CS7045: Parameter not valid for the specified unmanaged type.\n                //     [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1, SizeParamIndex=1)]                                                                                                                       int ByValTStr_e5;\n                Diagnostic(ErrorCode.ERR_ParameterNotValidForType, \"SizeParamIndex=1\"),\n                // (14,56): error CS7045: Parameter not valid for the specified unmanaged type.\n                //     [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1, ArraySubType = UnmanagedType.ByValTStr)]                                                                                                 int ByValTStr_e6;\n                Diagnostic(ErrorCode.ERR_ParameterNotValidForType, \"ArraySubType = UnmanagedType.ByValTStr\")",
+  "unsupported": []
+}

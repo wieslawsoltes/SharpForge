@@ -1,5 +1,6 @@
 import {CilError} from './binary.js';
 import {decodeCoded,token} from './metadata.js';
+import {indexDispatchTable} from './vtable-profile.js';
 
 const virtual=0x40,newslot=0x100,final=0x20;
 const signatureKey=signature=>JSON.stringify([signature.returnType,signature.parameters,signature.genericArity??0,signature.callingConvention??0,!!signature.isStatic]);
@@ -9,6 +10,7 @@ const signatureKey=signature=>JSON.stringify([signature.returnType,signature.par
 export class CilDispatchTable {
   constructor(inspector) {
     this.inspector=inspector;this.types=new Map(inspector.types.map(type=>[type.token,type]));
+    this.definitions=new Map(inspector.methods);
     this.tables=new Map();this.building=new Set();this.implementations=new Map();this.targetCache=new Map();
     for(const row of inspector.metadata.rows?.[25]??[]) {
       const owner=token(2,row[0]);
@@ -17,10 +19,12 @@ export class CilDispatchTable {
     }
   }
   definition(methodToken) {
+    if(this.definitions.has(methodToken))return this.definitions.get(methodToken);
     const descriptor=this.inspector.resolveToken(methodToken),resolved=descriptor.resolvedToken??(descriptor.token>>>24===6?descriptor.token:null);
     if(!resolved)throw new CilError('External virtual declarations are not executable');
     const method=this.inspector.methods.get(resolved);
     if(!method)throw new CilError('Virtual declaration is not a MethodDef');
+    this.definitions.set(methodToken,method);
     return method;
   }
   table(typeToken) {
@@ -72,10 +76,13 @@ export class CilDispatchTable {
         explicit.add(slot);slots.set(slot,body.token);
         if(bodySlot!==undefined&&bodySlot!==slot)aliases.set(slot,bodySlot);else aliases.delete(slot);
       }
-      const table={slots,aliases,declarations,visible,ancestors};this.tables.set(typeToken,table);return table;
+      const table={slots,aliases,declarations,visible,ancestors};
+      indexDispatchTable(table,(owner,slot)=>this.resolveSlot(owner,slot));
+      this.tables.set(typeToken,table);return table;
     } finally {this.building.delete(typeToken);}
   }
   resolveSlot(table,slot) {
+    if(table.targets)return table.targets[table.slotIndexes.get(slot)];
     const seen=new Set();
     while(table.aliases.has(slot)) {
       if(seen.has(slot))throw new CilError('Cyclic MethodImpl slot mapping');
@@ -88,7 +95,8 @@ export class CilDispatchTable {
     if(!(declaration.flags&virtual))return declaration.token;
     const table=this.table(typeToken);
     if(!table.ancestors.has(declaration.ownerToken))throw new CilError('Virtual receiver is incompatible with the method declaration');
-    const slot=this.table(declaration.ownerToken).declarations.get(declaration.token),target=this.resolveSlot(table,slot);
+    const slot=this.table(declaration.ownerToken).declarations.get(declaration.token);
+    const target=table.targets[table.slotIndexes.get(slot)];
     if(target===undefined)throw new CilError('Virtual method has no implementation');
     return target;
   }

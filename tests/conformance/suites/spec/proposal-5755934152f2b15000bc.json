@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-5755934152f2b15000bc",
+  "kind": "spec",
+  "sourceText": "bool isSmallByte(object o) => o is byte and < 100;",
+  "sourceSHA256": "2fc23fb4f8a4d12c3148606231bbf5733c4e5b7df71fcbbb43240cb2fcfc8e77",
+  "target": "library",
+  "featureId": "csharp-9-0-pattern-matching-enhancements",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/patterns3.md",
+    "sha256": "cbca25304cf783787111a0e9b433fcbcab03c22eb0a3ace4c9d5ae39b34e1a81",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/patterns3.md",
+    "license": "NOASSERTION",
+    "offset": 8502
+  }
+}
