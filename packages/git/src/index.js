@@ -23,4 +23,6 @@ export * from './protocol/advertisement.js';
 export * from './pack/reader.js';
 export * from './pack/writer.js';
 export * from './pack/delta.js';
+export * from './pack/index.js';
+export * from './pack/accessor.js';
 export * from './refspec.js';
