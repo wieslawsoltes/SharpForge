@@ -61,10 +61,16 @@ export class TypeLoader {
 
   isIntrinsic(type, fullName) { return type === this.#intrinsics.get(fullName); }
   get #constructions() { return this.#constructed ??= new ConstructedTypes(this, this.#context, this.#maxConstructedTypes); }
-  szArray(element) { return this.#constructions.element(TypeKind.SZArray, element, 1); }
-  array(element, rank) { return this.#constructions.element(TypeKind.Array, element, rank); }
-  pointer(element) { return this.#constructions.element(TypeKind.Pointer, element); }
-  byRef(element) { return this.#constructions.element(TypeKind.ByRef, element); }
+  constructElement(kind, element, rank = 0) {
+    if (!(element instanceof TypeDesc)) throw new TypeError('Expected element TypeDesc');
+    if (![TypeKind.SZArray, TypeKind.Array, TypeKind.Pointer, TypeKind.ByRef].includes(kind)) throw fail('Invalid element construction');
+    const owner = element.loadContext.types;
+    return owner === this ? this.#constructions.element(kind, element, rank) : owner.constructElement(kind, element, rank);
+  }
+  szArray(element) { return this.constructElement(TypeKind.SZArray, element, 1); }
+  array(element, rank) { return this.constructElement(TypeKind.Array, element, rank); }
+  pointer(element) { return this.constructElement(TypeKind.Pointer, element); }
+  byRef(element) { return this.constructElement(TypeKind.ByRef, element); }
   functionPointer(signature) { return this.#constructions.functionPointer(signature); }
 
   #index(module) {

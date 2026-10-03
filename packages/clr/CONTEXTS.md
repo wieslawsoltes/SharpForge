@@ -56,6 +56,8 @@ and parameter types, convention/receiver flags, generic arity and vararg sentine
 construction is bounded by `maxConstructedTypes` (default 100,000) and 4,096 display
 name characters. TypeSpecs preserve element/rank identity; bounds are constructor
 arguments, not part of runtime array type identity.
+Element constructions retain their element's defining module/context, including
+when another context explicitly shares that element type.
 
 Hosts explicitly register System.Array, primitive and generic collection types.
 `defineIntrinsic` accepts `genericArity` for those host contracts; generic

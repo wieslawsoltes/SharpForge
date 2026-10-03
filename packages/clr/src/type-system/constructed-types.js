@@ -28,7 +28,7 @@ export class ConstructedTypes {
   #canonical(key, create) {
     if (!this.#types.has(key)) {
       if (this.#types.size >= this.#maxTypes) throw loadError(LoadErrorCode.LimitExceeded, 'Constructed type count limit exceeded');
-      const state = { ...create(), context: this.#context, module: null, token: 0, declaringType: null, loaded: true };
+      const state = { module: null, ...create(), context: this.#context, token: 0, declaringType: null, loaded: true };
       if (state.fullName.length > 4096) throw loadError(LoadErrorCode.LimitExceeded, 'Constructed type name length exceeded');
       if (this.#types.size >= this.#maxTypes) throw loadError(LoadErrorCode.LimitExceeded, 'Constructed type count limit exceeded');
       const type = createTypeDesc(state);
@@ -56,7 +56,7 @@ export class ConstructedTypes {
         }
       }
       return { kind, name: `${element.name}${suffix}`, namespace: element.namespace, fullName: `${element.fullName}${suffix}`,
-        elementType: element, rank, baseType, interfaces: Object.freeze([...new Set(interfaces)]),
+        module: element.module, elementType: element, rank, baseType, interfaces: Object.freeze([...new Set(interfaces)]),
         methods: array ? this.#arrayMethods(element, rank, kind === TypeKind.SZArray) : Object.freeze([]) };
     });
   }
@@ -75,7 +75,7 @@ export class ConstructedTypes {
     const voidType = this.#loader.intrinsic('System.Void');
     const indices = Array(rank).fill(integer);
     const methods = [method('Get', element, indices), method('Set', voidType, [...indices, element]),
-      method('Address', this.element(TypeKind.ByRef, element), indices), method('.ctor', voidType, indices)];
+      method('Address', this.#loader.byRef(element), indices), method('.ctor', voidType, indices)];
     if (!szarray) methods.push(method('.ctor', voidType, Array(rank * 2).fill(integer)));
     return Object.freeze(methods);
   }
@@ -107,7 +107,7 @@ export class ConstructedTypes {
     }
     if (['szarray', 'array', 'pointer', 'byref'].includes(signature.kind)) {
       const element = await this.signature(signature.element, resolveType, signal);
-      return this.element(signature.kind, element, signature.kind === 'szarray' ? 1 : signature.rank ?? 0);
+      return this.#loader.constructElement(signature.kind, element, signature.kind === 'szarray' ? 1 : signature.rank ?? 0);
     }
     if (signature.kind === 'functionPointer') {
       const parameters = [];

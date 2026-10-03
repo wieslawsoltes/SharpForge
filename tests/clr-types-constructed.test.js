@@ -44,6 +44,19 @@ test('CLR function pointer identity includes every calling convention field', ()
   assert.ok(Object.isFrozen(fn.signature.parameters));
 });
 
+test('CLR element constructions preserve the defining context of an explicitly shared type', async () => {
+  const first = arrayContext();
+  const second = arrayContext();
+  const module = (await first.loadFromStream(managedFixture())).manifestModule;
+  const element = await first.types.load(module, 0x02000002);
+  const vector = first.types.szArray(element);
+  assert.equal(vector, second.types.szArray(element));
+  assert.equal(vector.loadContext, first);
+  assert.equal(vector.module, module);
+  assert.equal(vector.assembly, module.assembly);
+  assert.equal(first.types.pointer(element), second.types.pointer(element));
+});
+
 test('CLR resolves multidimensional array constructor/accessor MemberRefs and rejects cyclic TypeSpecs', async () => {
   const context = arrayContext();
   const fixture = arrayMembers();
