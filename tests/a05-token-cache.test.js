@@ -14,12 +14,15 @@ test('T07 cached field metadata keeps closed generic types and reads current hea
   assert.notEqual(first.field, other.field);
   assert.equal(first.field.signature.type, 'System.Int32');
   assert.equal(other.field.signature.type, 'System.String');
+  const epoch = executionCodeStatistics(vm).epoch;
   const snapshot = vm.snapshot();
   vm.heap.writeData(integer, 0, 99);
   assert.equal(vm.field(fixture.field, integer).record.data[0], 99);
   vm.restore(snapshot);
   const restored = vm.field(fixture.field, integer);
-  assert.equal(restored.field, first.field);
+  assert(executionCodeStatistics(vm).epoch > epoch);
+  assert.notEqual(restored.field, first.field);
+  assert.deepEqual(restored.field, first.field);
   assert.notEqual(restored.record, first.record);
   assert.equal(restored.record.data[0], 42);
   assert.equal(vm.field(fixture.members[0], integer).field.signature.type, 'int');

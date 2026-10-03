@@ -25,6 +25,10 @@ export function abortIfNeeded(signal) {
   if (signal?.aborted) throw signal.reason instanceof Error ? signal.reason : new DOMException('Benchmark cancelled', 'AbortError');
 }
 export async function runVM(vm, signal) {
+  // Source snapshot restore intentionally parks at a debugger-resumable boundary.
+  // A benchmark explicitly resumes that boundary before measuring its slices.
+  abortIfNeeded(signal);
+  if (vm.state === 'paused') vm.state = 'running';
   while (['ready', 'running', 'paused'].includes(vm.state)) {
     abortIfNeeded(signal);
     vm.runSlice({instructionBudget: 10000, timeBudgetMs: 8});
