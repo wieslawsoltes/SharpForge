@@ -39,6 +39,10 @@ export class FieldResolutionCache {
     if (resolved.kind !== 'field') throw new CilError('Invalid field token');
     let index;
     if (receiverTable !== null) {
+      if (resolved.ownerInstance !== null && !this.typeSystem.castCache.isAssignableFrom(
+        this.typeSystem.table(resolved.ownerInstance), receiverTable)) {
+        throw new ManagedFault('InvalidProgramException', 'Field declaring type does not match the receiver');
+      }
       index = this.typeSystem.layout(receiverTable).index.get(resolved.resolvedToken);
       if (index === undefined) {
         throw new ManagedFault('InvalidProgramException', 'Field is not part of this object');
