@@ -26,6 +26,8 @@ export class FramePool {
     this.pending = [];
     this.cached = new Set();
     this.argumentBuffers = [];
+    this.argumentCapacities = new WeakMap();
+    this.argumentBytes = 0;
     this.bytes = 0;
     this.statistics = {framesAllocated: 0, arraysAllocated: 0, reused: 0, released: 0, retainedSlots: 0};
   }
@@ -83,7 +85,7 @@ export class FramePool {
         else frame[key] = undefined;
       }
       this.statistics.released++;
-      if (entry.bucket.bytes <= this.limit - this.bytes && this.vm.options.framePooling !== false) {
+      if (entry.bucket.bytes <= this.limit - this.bytes - this.argumentBytes && this.vm.options.framePooling !== false) {
         entry.retired = false;
         entry.bucket.free.push(frame);
         this.cached.add(frame);
@@ -95,7 +97,10 @@ export class FramePool {
   }
 
   arguments(stack, count, remove = true) {
-    const buffer = this.argumentBuffers.pop() ?? storage(count);
+    let buffer = this.argumentBuffers.pop();
+    if (buffer) this.argumentBytes -= this.argumentCapacities.get(buffer) * 8;
+    else { buffer = storage(count); this.statistics.arraysAllocated++; }
+    this.argumentCapacities.set(buffer, Math.max(count, this.argumentCapacities.get(buffer) ?? 0));
     const start = stack.length - count;
     for (let index = 0; index < count; index++) buffer[index] = stack[start + index];
     if (remove) stack.length = start;
@@ -103,9 +108,12 @@ export class FramePool {
   }
 
   releaseArguments(buffer) {
-    const slots = buffer.length;
+    const slots = this.argumentCapacities.get(buffer);
     buffer.length = 0;
-    if (slots * 8 <= this.limit && this.argumentBuffers.length < 16) this.argumentBuffers.push(buffer);
+    if (slots * 8 <= this.limit - this.bytes - this.argumentBytes && this.argumentBuffers.length < 16) {
+      this.argumentBuffers.push(buffer);
+      this.argumentBytes += slots * 8;
+    }
   }
 }
 
@@ -138,5 +146,5 @@ export function clearFramePool(vm) {
 
 /** Read deterministic allocation counters without running GC or sampling host memory. */
 export function framePoolStatistics(vm) {
-  return {...framePool(vm).statistics, retainedBytes: vm.framePool.bytes};
+  return {...framePool(vm).statistics, retainedBytes: vm.framePool.bytes + vm.framePool.argumentBytes};
 }

@@ -72,4 +72,21 @@ for (const engine of ['source', 'cil']) {
     vm.stop();
     assert.equal(framePoolStatistics(vm).retainedBytes, 0);
   });
+  test(`T09 ${engine}: cancellation releases active and parked slots without invalidating a saved snapshot`, () => {
+    const compiled = compileToIL(source);
+    assert(compiled.success, JSON.stringify(compiled.diagnostics));
+    const vm = engine === 'source' ? new VirtualMachine(compiled.image) : new CilVirtualMachine(compiled.assembly);
+    vm.runSlice({instructionBudget: 25, timeBudgetMs: 1000});
+    vm.scheduler.ensure();
+    const snapshot = vm.snapshot();
+    vm.stop();
+    vm.heap.collect();
+    assert.equal(vm.frames.length, 0);
+    assert.equal(vm.frameIndex.size, 0);
+    assert.equal(framePoolStatistics(vm).retainedBytes, 0);
+    vm.restore(snapshot);
+    const result = vm.run();
+    assert.equal(result.state, 'terminated', result.fault?.message);
+    assert.equal(result.output, '3240\n3240\n3240\n');
+  });
 }
