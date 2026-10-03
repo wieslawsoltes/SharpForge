@@ -16,4 +16,7 @@ without requiring an Assembly table; inspection never executes its code.
 Standalone source/direct runtime execution is unsupported: a netmodule belongs to a
 containing assembly. ModuleRef resolution, File/ExportedType linking and multi-module
 execution remain separate work under SF-A03-T03.10. This slice provides module emission
-and inspection only. Native reference captures and focused validation are pending.
+and inspection only. Native SRM on .NET 10.0.5 confirms all four emitted platforms;
+seven focused tests pass, including Portable PDB, deterministic bytes, malformed options
+and the explicit standalone execution diagnostic. Browser/cross-platform qualification
+remains open; reading architecture headers does not claim native execution on each target.
