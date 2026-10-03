@@ -1,10 +1,11 @@
+import { emissionPEOptions, debugPEOptions, finishEmittedPE } from './emit/pe-options.js';
 import { emitPropertyMetadata } from './emitter-properties.js';
 import {frameworkType,enumTypes} from '@sharpforge/framework';
 import { EnumConvertBase, Op, BinaryName, UnaryName, Builtins } from '@sharpforge/bytecode';
 import { Writer, CilError, align, utf8 } from './binary.js';
 import { MetadataBuilder, token, codedIndex, cliSystemName, methodSignature, localSignature, fieldSignature } from './metadata.js';
 import { CilWriter } from './opcodes.js';
-import { TEXT_RVA, writeMethodBody, writePE } from './pe.js';
+import { TEXT_RVA, writeMethodBody } from './pe.js';
 import { analyzeMethod, constantType, validateInput } from './analysis.js';
 const markerName='SharpForge.<>AllocationToken';
 const isValue=t=>['int','long','double','bool'].includes(t)||['enum','value'].includes(frameworkType(t)?.kind);
@@ -12,7 +13,9 @@ const binaryCodes={'+':'add','-':'sub','*':'mul','/':'div','%':'rem','&':'and','
 function safeName(name) { if(typeof name!=='string'||!name||name.length>512||/[\0/\\]/.test(name))throw new CilError('Invalid assembly name');return name.replace(/\.dll$/i,''); }
 /** Emits genuine PE/CLI metadata and CIL bodies. No JS source, host eval or embedded executable bytecode. */
 export function emitAssembly(image,options={}) { return emitAssemblyDetailed(image,options).bytes; }
-export function emitAssemblyDetailed(image,{name=image.name??'Application',framework='net8',embedSources=true,includeDebug=true}={}) {
+export function emitAssemblyDetailed(image,options={}) {
+  let {name=image.name??'Application',framework='net8',embedSources=true,includeDebug=true}=options;
+  const peOptions=emissionPEOptions(image,options,framework);
   validateInput(image);if(!['net8','mscorlib4'].includes(framework))throw new CilError('Supported reference profiles: net8, mscorlib4');name=safeName(name);const started=performance.now(),metadata=new MetadataBuilder(name,{framework});
   const context={image,metadata,framework,typeTokens:new Map(),methodTokens:new Map(),fieldTokens:new Map(),staticTokens:[],allocTokens:new Map(),descriptors:[],helperToken:0};
   context.resolveType=t=>context.typeTokens.get(t)??metadata.typeRef(cliSystemName(t));
@@ -38,9 +41,9 @@ export function emitAssemblyDetailed(image,{name=image.name??'Application',frame
   for(const d of context.descriptors){section.pad();const rva=TEXT_RVA+section.length;metadata.rows[6][(d.token&0xffffff)-1][0]=rva;const body=d.original?emitMethod(context,d):emitHelper(context,d);d.body=body;ilBytes+=body.code.length;const sig=body.locals.length?metadata.add(17,[metadata.blob(localSignature(body.locals,context.resolveType))]):0;section.bytes(writeMethodBody(body.code,sig,body.maxStack,body.handlers));
     if(d.original)debugMethods.push({...(d.original.asyncRole?{asyncRole:d.original.asyncRole,asyncOrigin:d.original.asyncOrigin}:{}),id:d.original.id,token:d.token,name:d.original.name,qualifiedName:d.original.qualifiedName,...(d.original.sourceRange?{sourceRange:d.original.sourceRange}:{}),...(d.original.accessor?{accessor:d.original.accessor}:{}),locals:d.original.locals.map(({type,...local})=>local),spans:body.spans});
   }
-  debugMethods.sort((a,b)=>a.id-b.id);const debug={format:'SharpForge.CIL',version:1,framework,name,entry:image.entryPoint,...(image.outputKind==='library'?{outputKind:'library'}:{}),types:image.types.map(t=>({id:t.id,token:context.typeTokens.get(t.name),initializer:t.initializer})),statics:context.staticTokens,methods:debugMethods,sequencePoints:image.sequencePoints.map(p=>({...p,ilOffset:debugMethods[p.methodId].spans[p.offset][0],methodToken:context.methodTokens.get(p.methodId)})),sources:image.sources.map(s=>embedSources?s:({uri:s.uri,version:s.version}))};
-  section.pad();const metadataOffset=section.length,md=metadata.finish(includeDebug?debug:null,section.finish());section.bytes(md);const bytes=writePE(section.finish(),metadataOffset,md.length,image.outputKind==='library'?0:context.methodTokens.get(image.entryPoint));
-  return {bytes,debug:includeDebug?debug:null,symbolData:{...debug,sources:image.sources},metrics:{emitIlMs:performance.now()-started,assemblyBytes:bytes.length,ilBytes,metadataBytes:md.length,methods:context.descriptors.length},framework};
+  debugMethods.sort((a,b)=>a.id-b.id);const debug={format:'SharpForge.CIL',version:1,framework,name,...debugPEOptions(peOptions),entry:image.entryPoint,...(image.outputKind==='library'?{outputKind:'library'}:{}),types:image.types.map(t=>({id:t.id,token:context.typeTokens.get(t.name),initializer:t.initializer})),statics:context.staticTokens,methods:debugMethods,sequencePoints:image.sequencePoints.map(p=>({...p,ilOffset:debugMethods[p.methodId].spans[p.offset][0],methodToken:context.methodTokens.get(p.methodId)})),sources:image.sources.map(s=>embedSources?s:({uri:s.uri,version:s.version}))};
+  const {bytes,metadataBytes}=finishEmittedPE({section,metadata,debug,includeDebug,entryToken:image.outputKind==='library'?0:context.methodTokens.get(image.entryPoint),options:peOptions});
+  return {bytes,debug:includeDebug?debug:null,symbolData:{...debug,sources:image.sources},metrics:{emitIlMs:performance.now()-started,assemblyBytes:bytes.length,ilBytes,metadataBytes,methods:context.descriptors.length},framework};
 }
 function emitHelper(c,d) {
   const w=new CilWriter(),objectCtor=c.external('object','.ctor','void',[],false);let maxStack=2;
