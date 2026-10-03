@@ -51,7 +51,7 @@ export function staticVirtualMembers(iface) {
  * The most specific implementation of an interface member for a type that does not implement it itself: among the
  * interfaces of `type`, explicit re-implementations (`void I1.M() { }` in a derived interface) and the declaring
  * member's own body; a candidate in a more derived interface wins.
- * @returns {{member}|{error:{code:DiagnosticId.CS8705,args:[member,first,second]}}|{none:true}}
+ * @returns {{member}|{error:{code:'CS8705',args:[member,first,second]}}|{none:true}}
  */
 export function mostSpecificImplementation(type, member, core) {
   const declaring = member.containingType,

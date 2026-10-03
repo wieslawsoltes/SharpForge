@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "before": {
+    "revision": "681db84fc428af04d4b779dd5a25d82afc586101",
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M3 Pro",
+    "samples": 31,
+    "note": "Shared host; one local validation job. Memory is sampled delta for one call, not a peak-allocation profiler.",
+    "results": [
+      {
+        "bytes": 0,
+        "iterations": 4096,
+        "medianUs": 1.555603027343748,
+        "p95Us": 1.672088623046875,
+        "p99Us": 2.4416911621093758,
+        "medianHeapDeltaBytes": 1752,
+        "medianArrayBufferDeltaBytes": -19648
+      },
+      {
+        "bytes": 64,
+        "iterations": 4096,
+        "medianUs": 2.548970458984376,
+        "p95Us": 2.847503662109369,
+        "p99Us": 3.1577961425781345,
+        "medianHeapDeltaBytes": 1960,
+        "medianArrayBufferDeltaBytes": -23296
+      },
+      {
+        "bytes": 65536,
+        "iterations": 32,
+        "medianUs": 1038.0481874999994,
+        "p95Us": 1070.9205624999995,
+        "p99Us": 1082.584656249999,
+        "medianHeapDeltaBytes": 329480,
+        "medianArrayBufferDeltaBytes": 65888
+      },
+      {
+        "bytes": 1048576,
+        "iterations": 2,
+        "medianUs": 16322.416999999972,
+        "p95Us": 16711.708499999986,
+        "p99Us": 16720.791499999905,
+        "medianHeapDeltaBytes": 1056888,
+        "medianArrayBufferDeltaBytes": 1048928
+      }
+    ],
+    "implementationSha256": "3b169efcecdb18e2b7de5efef5fb6aaed870ba4e8e514038cd4a7ca4cbebb8ee"
+  },
+  "after": {
+    "revision": "working-tree",
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M3 Pro",
+    "samples": 31,
+    "note": "Shared host; one local validation job. Memory is sampled delta for one call, not a peak-allocation profiler.",
+    "results": [
+      {
+        "bytes": 0,
+        "iterations": 4096,
+        "medianUs": 0.8904011230468772,
+        "p95Us": 0.9805705566406243,
+        "p99Us": 2.3494365234375,
+        "medianHeapDeltaBytes": 1632,
+        "medianArrayBufferDeltaBytes": -11584
+      },
+      {
+        "bytes": 64,
+        "iterations": 4096,
+        "medianUs": 1.147420166015628,
+        "p95Us": 1.2484030761718834,
+        "p99Us": 2.0417277832031204,
+        "medianHeapDeltaBytes": 1840,
+        "medianArrayBufferDeltaBytes": -11200
+      },
+      {
+        "bytes": 65536,
+        "iterations": 32,
+        "medianUs": 280.0703124999995,
+        "p95Us": 289.5833437499995,
+        "p99Us": 292.4231875000007,
+        "medianHeapDeltaBytes": 1840,
+        "medianArrayBufferDeltaBytes": 352
+      },
+      {
+        "bytes": 1048576,
+        "iterations": 2,
+        "medianUs": 4552.416499999992,
+        "p95Us": 4787.187500000073,
+        "p99Us": 4860.958499999924,
+        "medianHeapDeltaBytes": 1856,
+        "medianArrayBufferDeltaBytes": 352
+      }
+    ],
+    "implementationSha256": "e862567d7efcea82cf878637406f849d45f12ff125625d1193dce024c720c426"
+  },
+  "limitations": [
+    "Shared host; baseline and changed implementation run sequentially, not randomized.",
+    "Memory deltas are sampled heap/ArrayBuffer accounting, not peak memory or cumulative allocated bytes.",
+    "Negative tiny-input ArrayBuffer deltas reflect reclamation of previous samples; use the larger-input results and constant-space implementation for memory comparison."
+  ]
+}
