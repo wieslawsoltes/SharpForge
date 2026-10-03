@@ -63,7 +63,7 @@ export function createDesignerSourceServices({state, compiler, applyEdits, docum
     const result = await compiler.request('designAnalyze', {...context, ...params, projectTypes: projectTypes()});
     return {...result, workspaceRevision: context.revision};
   };
-  const applySourceEdits = async (uri, plan, version, beforeApply = () => {}) => {
+  const applySourceEdits = async (uri, plan, version, beforeApply = () => {}, ownerUri = uri) => {
     if (plan.success === false) throw new Error('The source candidate did not compile');
     const files = assertPlanCurrent(state, uri, plan, version);
     const changes = plan.changes ?? [{uri, before: files.get(uri).text, text: plan.text, expectedVersion: version, edits: plan.edits}];
@@ -75,10 +75,10 @@ export function createDesignerSourceServices({state, compiler, applyEdits, docum
       assertPlanCurrent(state, uri, {...plan, workspaceRevision: context.revision}, version);
     }
     beforeApply();
-    const beforeAnalysis = documents().get(uri)?.sourceSync?.session?.analysis;
+    const beforeAnalysis = documents().get(ownerUri)?.sourceSync?.session?.analysis;
     const beforeEditors = history.capture(changes);
     applyEdits(edits);
-    history.record({uri, changes, beforeAnalysis, afterAnalysis: plan.analysis, beforeEditors});
+    history.record({uri: ownerUri, changes, beforeAnalysis, afterAnalysis: plan.analysis, beforeEditors});
   };
   return {
     analyzeDesign,

@@ -55,23 +55,23 @@ export class DesignerDocumentHistory {
   }
 
   canUndo(uri, redo = false) {
-    const entry = (redo ? this.future : this.past).findLast(item => item.changes.some(change => change.uri === uri));
+    const entry = (redo ? this.future : this.past).findLast(item => item.uri === uri || item.changes.some(change => change.uri === uri));
     if (!entry) return false;
-    const primary = entry.changes.find(change => change.uri === uri);
-    return this.files().find(file => file.uri === uri)?.text === (redo ? primary.before : primary.text);
+    const primary = entry.changes.find(change => change.uri === uri) ?? entry.changes[0];
+    return this.files().find(file => file.uri === primary.uri)?.text === (redo ? primary.before : primary.text);
   }
 
   /** False leaves ordinary typing undo to the editor. A conflicting other file rejects the whole operation. */
   undo(uri, redo = false) {
     const source = redo ? this.future : this.past;
     const destination = redo ? this.past : this.future;
-    const index = source.findLastIndex(entry => entry.changes.some(change => change.uri === uri));
+    const index = source.findLastIndex(entry => entry.uri === uri || entry.changes.some(change => change.uri === uri));
     if (index < 0) return false;
     const entry = source[index];
     const files = new Map(this.files().map(file => [file.uri, file]));
-    const primary = entry.changes.find(change => change.uri === uri);
+    const primary = entry.changes.find(change => change.uri === uri) ?? entry.changes[0];
     const expected = change => redo ? change.before : change.text;
-    if (files.get(uri)?.text !== expected(primary)) return false;
+    if (files.get(primary.uri)?.text !== expected(primary)) return false;
     for (const change of entry.changes) {
       if (files.get(change.uri)?.text !== expected(change)) {
         throw new Error('Cannot undo the designer transaction because ' + change.uri + ' changed independently');

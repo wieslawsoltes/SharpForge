@@ -1,3 +1,5 @@
+import {designerSourceDocument, retainDesignerRuntimeBindings} from './designer-source-projection.js';
+
 /** Handler creation uses the same worker, complete-source checks, and editor transaction as visual edits. */
 export async function createDesignerSourceEvent(sync, request, {navigateOnly = false} = {}) {
   if (!sync.session || !sync.protocol) throw new Error('Connect a C# document before editing handlers');
@@ -24,7 +26,7 @@ export async function createDesignerSourceEvent(sync, request, {navigateOnly = f
     const plan = await sync.view.analyzeDesign({
       operation: 'event', uri: file.uri, nodeId: request.nodeId, event: request.event, navigateOnly,
       options: {name: request.methodName ?? request.name?.split('.').at(-1)},
-      baselineSources: baseline.sources, previous: baseline.analysis, generation
+      baselineSources: baseline.sources, previous: {...baseline.analysis, document: sync.view.document.snapshot()}, generation
     });
     if (plan.success === false) throw Object.assign(new Error(plan.diagnostics?.[0]?.message ?? 'Cannot edit this handler'), {
       diagnostics: plan.diagnostics ?? []
@@ -55,12 +57,14 @@ export async function createDesignerSourceEvent(sync, request, {navigateOnly = f
 function acceptHandlerPlan(sync, plan, token, changed) {
   const current = sync.file();
   const document = changed ? plan.document : sync.view.document.value;
-  const accepted = sync.protocol.accept(token, {document, text: current.text, sourceVersion: current.version,
+  const accepted = sync.protocol.accept(token, {document: designerSourceDocument(document), text: current.text, sourceVersion: current.version,
     designRevision: sync.view.document.revision + (changed ? 1 : 0), diagnostics: plan.diagnostics ?? []});
   if (!accepted.accepted) throw new Error('Handler source transaction became stale');
   if (changed) {
     sync.loading = true;
-    try { sync.view.document.load(document, {label: 'source sync', history: false}); }
+    try {
+      sync.view.document.load(retainDesignerRuntimeBindings(sync.view.document.value, document), {label: 'source sync', history: false});
+    }
     finally { sync.loading = false; }
     sync.session = {analysis: {...plan.analysis, text: current.text},
       sources: (sync.view.sourceFiles?.() ?? []).map(file => ({...file}))};

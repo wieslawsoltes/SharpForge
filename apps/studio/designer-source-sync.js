@@ -1,8 +1,9 @@
 import { CSharpDesignSession, DesignSyncProtocol } from '@sharpforge/designer';
 import { renderSourceSyncControls, bindSourceSyncControls } from './designer-source-controls.js';
 import {createDesignerSourceEvent} from './designer-source-events.js';
+import {designerSourceDocument, retainDesignerRuntimeBindings} from './designer-source-projection.js';
 
-const ignoredChanges = new Set(['selection', 'initialize', 'saved', 'source sync', 'live apply']);
+const ignoredChanges = new Set(['selection', 'initialize', 'saved', 'source sync', 'live apply', 'live attach']);
 
 /** Revision-guarded source coordination. Studio performs parsing and edit planning in its compiler worker. */
 export class DesignerSourceSync {
@@ -61,6 +62,7 @@ export class DesignerSourceSync {
   }
 
   async analyze(file, previous = null) {
+    if (previous) previous = {...previous, document: this.view.document.snapshot()};
     if (this.view.analyzeDesign) return this.view.analyzeDesign({
       operation: 'analyze', uri: file.uri, previous, generation: this.generation
     });
@@ -81,22 +83,29 @@ export class DesignerSourceSync {
     const generation = ++this.generation;
     const version = file.version;
     const candidate = await this.analyze(file);
-    if (generation !== this.generation || this.disposed || file.version !== version) return null;
+    if (generation !== this.generation || this.disposed || file.version !== version ||
+      candidate.workspaceRevision !== undefined && candidate.workspaceRevision !== this.view.state.revision) {
+      throw Object.assign(new Error('Source changed while opening its design preview; open it again to use the current source'), {
+        code: 'SFSYNC_STALE'
+      });
+    }
     if (candidate.success === false || !candidate.analysis?.document) {
       const diagnostics = candidate.diagnostics ?? [];
       this.report('blocked', diagnostics[0]?.message ?? 'The document has no valid design preview yet', diagnostics);
-      return null;
+      throw Object.assign(new Error(this.message), {diagnostics});
     }
+    const primary = files.find(item => item.uri === candidate.analysis.uri);
+    if (!primary) throw new Error('Construction source is no longer in the workspace');
     this.protocol?.dispose();
     this.session = { analysis: candidate.analysis, sources: files.map(item => ({ ...item })) };
-    this.session.analysis.text ??= file.text;
+    this.session.analysis.text ??= primary.text;
     this.session.analysis.warnings ??= candidate.diagnostics?.filter(item => item.severity !== 'error') ?? [];
     this.loading = true;
     try { this.view.replace(candidate.analysis.document, { path: uri.replace(/(?:\.g)?\.cs$/i, '.sfdesign.json') }); }
     finally { this.loading = false; }
     this.protocol = new DesignSyncProtocol({
-      workspaceId: this.view.workspaceId?.() ?? this.view.state.name ?? 'workspace', uri,
-      sourceText: file.text, sourceVersion: version ?? 0, document: this.view.document.value,
+      workspaceId: this.view.workspaceId?.() ?? this.view.state.name ?? 'workspace', uri: primary.uri,
+      sourceText: primary.text, sourceVersion: primary.version ?? 0, document: designerSourceDocument(this.view.document.value),
       designRevision: this.view.document.revision, generation
     });
     this.report('synced', 'Linked ' + uri + ' · ' + (candidate.analysis.method?.name ?? 'construction method'), []);
@@ -122,7 +131,7 @@ export class DesignerSourceSync {
       this.report('missing', 'Linked C# file is no longer in the workspace');
       return;
     }
-    this.protocol.designChanged(this.view.document.value, { designRevision: this.view.document.revision, origin: event.kind });
+    this.protocol.designChanged(designerSourceDocument(this.view.document.value), { designRevision: this.view.document.revision, origin: event.kind });
     if (file.text !== this.protocol.source.text) this.protocol.sourceChanged(file.text, { sourceVersion: file.version });
     clearTimeout(this.designTimer);
     if (this.protocol.sourceDirty) {
@@ -146,12 +155,13 @@ export class DesignerSourceSync {
     return this.auto;
   }
 
-  sourceChanged(uri, { external = false } = {}) {
-    if (!this.session || !this.protocol || uri !== this.session.analysis.uri || this.writing) return;
+  sourceChanged(uri, {external = false, dependency = false} = {}) {
+    if (!this.session || !this.protocol || !dependency && uri !== this.session.analysis.uri || this.writing) return;
     const file = this.file();
     if (!file) { this.protocol.markMissing(); this.report('missing', 'Linked C# file was removed'); return; }
+    if (!external && !dependency && file.text === this.protocol.source.text && file.version === this.protocol.source.version) return;
     this.operation?.abort();
-    if (external || (file.version ?? 0) < this.protocol.source.version) {
+    if (external || dependency || (file.version ?? 0) < this.protocol.source.version) {
       this.generation++;
       this.protocol.replaceSource(file.text, { sourceVersion: file.version ?? 0 });
     } else this.protocol.sourceChanged(file.text, { sourceVersion: file.version });
@@ -177,6 +187,7 @@ export class DesignerSourceSync {
     try { candidate = await this.analyze(file, this.session.analysis); }
     catch (error) { protocol.reject(token, error); throw error; }
     if (file.version !== version || !protocol.isCurrent(token) || protocol !== this.protocol) return this.snapshot();
+    if (candidate.workspaceRevision !== undefined && candidate.workspaceRevision !== this.view.state.revision) return this.snapshot();
     if (candidate.success === false) {
       const diagnostics = candidate.diagnostics ?? [];
       protocol.reject(token, diagnostics[0] ?? { message: 'Source analysis did not produce a valid design' });
@@ -185,12 +196,12 @@ export class DesignerSourceSync {
     }
     const document = candidate.analysis.document;
     const accepted = protocol.accept(token, {
-      document, sourceVersion: version, designRevision: this.view.document.revision + 1,
+      document: designerSourceDocument(document), sourceVersion: version, designRevision: this.view.document.revision + 1,
       diagnostics: candidate.diagnostics ?? []
     });
     if (!accepted.accepted) return this.snapshot();
     this.loading = true;
-    try { this.view.document.load(document, { label: 'source sync', history: false }); }
+    try { this.view.document.load(retainDesignerRuntimeBindings(this.view.document.value, document), {label: 'source sync', history: false}); }
     finally { this.loading = false; }
     this.session = { analysis: candidate.analysis, sources: (this.view.sourceFiles?.() ?? []).map(item => ({ ...item })) };
     this.session.analysis.text ??= file.text;
@@ -204,7 +215,7 @@ export class DesignerSourceSync {
     const file = this.file();
     if (!file) throw new Error('Linked C# file was removed');
     if (this.view.state.readOnly) throw new Error('Begin Edit and Continue or stop debugging before changing C#');
-    this.protocol.designChanged(this.view.document.value, { designRevision: this.view.document.revision, origin: 'design' });
+    this.protocol.designChanged(designerSourceDocument(this.view.document.value), { designRevision: this.view.document.revision, origin: 'design' });
     if (file.text !== this.protocol.source.text) this.protocol.sourceChanged(file.text, { sourceVersion: file.version });
     const operation = new AbortController();
     this.operation?.abort();
@@ -212,7 +223,7 @@ export class DesignerSourceSync {
     const token = this.protocol.begin('design', { signal: operation.signal });
     const generation = this.generation;
     const baseline = this.session;
-    const design = this.view.document.snapshot();
+    const design = designerSourceDocument(this.view.document.value);
     const version = file.version;
     this.writing = true;
     this.report('validating', 'Compile-checking the complete design transaction…', []);
@@ -270,6 +281,7 @@ export class DesignerSourceSync {
     this.cancelPending();
     this.protocol?.dispose();
     const file = this.file();
+    if (!file) throw new Error('Cannot restore history for a removed source file');
     this.loading = true;
     try { this.view.document.load(analysis.document, { label: 'source sync', history: false }); }
     finally { this.loading = false; }
@@ -277,7 +289,7 @@ export class DesignerSourceSync {
       sources: (this.view.sourceFiles?.() ?? []).map(item => ({ ...item })) };
     this.protocol = new DesignSyncProtocol({
       workspaceId: this.view.workspaceId?.() ?? this.view.state.name ?? 'workspace', uri: file.uri,
-      sourceText: file.text, sourceVersion: file.version, document: this.view.document.value,
+      sourceText: file.text, sourceVersion: file.version, document: designerSourceDocument(this.view.document.value),
       designRevision: this.view.document.revision, generation: this.generation
     });
     this.report('synced', 'Source and design history restored together', []);
