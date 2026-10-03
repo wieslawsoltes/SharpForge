@@ -23,7 +23,10 @@ concurrency:
   cancel-in-progress: true
 jobs:
   prepare:
-    if: github.event_name != 'schedule' && (github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci'))
+    if: >-
+      github.event_name != 'schedule' &&
+      (github.event_name != 'release' || !startsWith(github.event.release.tag_name, 'evidence-archive-')) &&
+      (github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci'))
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     outputs:

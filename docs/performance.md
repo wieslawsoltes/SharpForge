@@ -39,7 +39,7 @@ npm install --ignore-scripts --offline --no-audit --no-fund
 npm run bench
 ```
 
-The script rewrites `docs/benchmark-results.json`. Keep the environment and raw JSON when comparing changes. Run multiple processes on an idle target machine and use real edit traces before setting performance gates.
+The script writes `artifacts/results/benchmark-results.json` (or `SHARPFORGE_RESULTS_DIR`). Keep the environment and raw JSON when comparing changes. Run multiple processes on an idle target machine and use real edit traces before setting performance gates.
 
 ## Present bottlenecks
 
