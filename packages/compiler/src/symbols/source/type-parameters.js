@@ -86,7 +86,7 @@ export function bindConstraintClauses(parameters, clauses, bindType, report, opt
           else parameter.hasDefaultConstraint = true;
           break;
         case 'ConstructorConstraint':
-          if (!last && constraints[index + 1]?.kind !== 'AllowsConstraintClause') report(c, 'CS0401');
+          if (!last && constraints[index + 1]?.kind !== 'AllowsConstraintClause') report(c.newKeyword ?? c, 'CS0401');
           if (parameter.hasUnmanagedTypeConstraint) report(c.newKeyword ?? c, 'CS8375');
           else if (parameter.hasValueTypeConstraint) report(c, 'CS0451');
           else parameter.hasConstructorConstraint = true;

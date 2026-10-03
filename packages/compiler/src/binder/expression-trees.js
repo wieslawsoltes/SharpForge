@@ -46,6 +46,8 @@ function nodeProblem(node, languageVersion) {
   if (codeByKind[node.kind]) return codeByKind[node.kind];
   if (node.kind === 'Call') {
     if (node.method?.methodKind === MethodKind.LocalFunction) return 'CS8110';
+    // A call that is removed: a partial method without an implementing part, or an omitted [Conditional] method.
+    if ((node.method?.originalDefinition ?? node.method)?.isUnimplementedPartial || node.isOmitted) return 'CS0765';
     const before14 = argumentProblem(node, languageVersion);
     if (before14) return before14;
     if (node.mapping?.parameterOf && !isAscending(node.mapping.parameterOf)) return 'CS9307';
