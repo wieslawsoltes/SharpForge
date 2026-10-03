@@ -1,3 +1,6 @@
+import {captureGenericInstantiations, prepareGenericInstantiations} from './execution/generics.js';
+import {releaseAllFrames, rebuildFrameIndex} from './execution/frame-lifetimes.js';
+import {rebuildStackBudget} from './execution/stack-budget.js';
 import {validateSnapshotState} from './snapshot-validation.js';
 import {copyExecution, copyFrames} from './execution/execution-copy.js';
 import {snapshotSchemaVersion, SnapshotVersionError} from './execution/snapshot-version.js';
@@ -42,10 +45,12 @@ export const snapshotSchemas = Object.freeze({
   ], {image: 'Immutable bytecode for the current code generation.'}),
   cil: schema('cil', [...common,
     field('strings'), field('initialized'),
+    field('genericCacheKeys', copyExecution, {capture: captureGenericInstantiations}),
     field('stack', copyExecution, {optional: true}),
     field('currentPoint', copyExecution, {optional: true}),
     field('sourcePause', retain, {optional: true})
   ], {
+    genericInstantiations: 'Derived generic cache, captured as portable genericCacheKeys.',
     inspector: 'Assembly metadata for the current code generation.',
     report: 'Verification report for the current code generation.',
     returnType: 'Entry-point signature metadata.',
@@ -75,7 +80,7 @@ export function snapshotVM(vm, engine) {
   };
   for (const item of selected.fields) {
     if (item.optional && !Object.hasOwn(vm, item.name)) continue;
-    snapshot[item.name] = item.component
+    snapshot[item.name] = item.capture ? item.capture(vm) : item.component
       ? item.name==='heap'?vm.heap.snapshot({memo}):['scheduler','sync'].includes(item.name)?vm[item.name].snapshot(memo):copyExecution(vm[item.name].snapshot(),memo)
       : item.copier(vm[item.name], memo);
   }
@@ -95,6 +100,7 @@ export function restoreVM(vm, snapshot, engine) {
   }
   validateSnapshotState(vm,snapshot,engine);
   vm.platform.hostOperations.checkRestore(snapshot.hostRevision);
+  const genericCache = engine === 'cil' ? prepareGenericInstantiations(vm, snapshot.genericCacheKeys) : null;
   // Copy before changing the VM; the same memo preserves frame/fault aliases.
   const memo = new Map(), values = new Map();
   for (const item of selected.fields) {
@@ -102,11 +108,13 @@ export function restoreVM(vm, snapshot, engine) {
     const value = item.component
       ? item.name==='scheduler'?vm.scheduler.copySnapshot(snapshot.scheduler,memo):copyExecution(snapshot[item.name],memo)
       : item.copier(snapshot[item.name], memo);
-    values.set(item.name, item.restore ? item.restore(value) : item.monotonic ? Math.max(vm[item.name], value) : value);
+    values.set(item.name, item.restore ? item.restore(value) : item.monotonic ? Math.max(vm[item.name] ?? 0, value) : value);
   }
+  releaseAllFrames(vm);
   vm.heap.restore(values.get('heap'),{memo,prepared:true});
+  if (genericCache) vm.genericInstantiations = genericCache;
   for (const item of selected.fields) {
-    if(item.component)continue;
+    if(item.component || item.capture)continue;
     if (values.has(item.name)) vm[item.name] = values.get(item.name);
     else if (item.optional) delete vm[item.name];
   }
@@ -116,4 +124,6 @@ export function restoreVM(vm, snapshot, engine) {
   vm.sync.restore(snapshot.sync,memo);
   vm.scheduler.restore(values.get('scheduler'),memo,true);
   vm.platform.restore(values.get('platform'));
+  rebuildFrameIndex(vm);
+  rebuildStackBudget(vm);
 }

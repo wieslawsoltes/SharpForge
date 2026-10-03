@@ -101,7 +101,7 @@ export function captureGenericInstantiations(vm) {
   return [...cacheFor(vm).entries.values()].map(([token, owner, arguments_]) => [token, owner, [...arguments_]]);
 }
 
-function prepareCache(vm, tuples) {
+export function prepareGenericInstantiations(vm, tuples) {
   if (!Array.isArray(tuples) || tuples.length > limitFor(vm)) throw new TypeError('Invalid generic instantiation list');
   const cache = new GenericInstantiations(vm);
   for (const tuple of tuples) {
@@ -114,11 +114,11 @@ function prepareCache(vm, tuples) {
 
 /** Preflight metadata and constraints without changing the live instantiation cache. */
 export function validateGenericInstantiations(vm, tuples) {
-  prepareCache(vm, tuples);
+  prepareGenericInstantiations(vm, tuples);
 }
 
 /** Atomically rebuild captured entries before portable frame methods are rehydrated. */
 export function restoreGenericInstantiations(vm, tuples) {
-  const prepared = prepareCache(vm, tuples);
+  const prepared = prepareGenericInstantiations(vm, tuples);
   vm.genericInstantiations = prepared;
 }

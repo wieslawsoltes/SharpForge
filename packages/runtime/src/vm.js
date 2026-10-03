@@ -1,3 +1,4 @@
+import {collectAtInstruction} from './execution/gc-stress.js';
 import {faultFromException} from './execution/exception-object.js';
 import {callSource} from './execution/source-calls.js';
 import {createArray,arrayAddress} from './execution/arrays.js';
@@ -88,7 +89,8 @@ export class VirtualMachine {
           case Op.RETHROW:rethrow(frame);break;
           default:throw new ManagedFault('InvalidProgramException','Unknown instruction');
         }
-      }catch(error){const fault=this.makeFault(error);if(fault.fatal||fault.name==='InstructionLimitException'){this.fault=fault;this.scheduler.cancelAll();this.state='faulted';break;}if(this.onException?.(fault)){this.pendingFault=fault;this.state='paused';}else this.handleFault(fault);}
+      }catch(error){const fault=this.makeFault(error);if(fault.fatal||fault.name==='InstructionLimitException'){this.fault=fault;this.scheduler.cancelAll({preserveCurrent:true});this.state='faulted';break;}if(this.onException?.(fault)){this.pendingFault=fault;this.state='paused';}else this.handleFault(fault);}
+      collectAtInstruction(this);
       this.scheduler.afterInstruction();
     }
     this.currentPoint=this.top?.point??null;this.elapsedMs+=performance.now()-started;return this.state;

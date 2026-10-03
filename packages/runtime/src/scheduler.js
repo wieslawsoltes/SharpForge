@@ -1,10 +1,11 @@
+import {retainsContextFrames, releaseContextFrames, finishContext, cancelContexts} from './execution/context-lifetimes.js';
 import {managedDelegateSignature} from '@sharpforge/cil';
 import {callRoots} from './execution/generic-calls.js';
 import {arrayContinuationRoots} from './execution/array-ops.js';
 import {TASK,THREAD,frameworkType,taskResult} from '@sharpforge/framework';
 import {ManagedFault,isReference} from './heap.js';
 import {SUSPENDED} from './execution/suspension.js';
-import {copyExecution,copyFrames} from './snapshot.js';
+import {copyExecution,copyFrames} from './execution/execution-copy.js';
 const key = r => r && `${r.h}:${r.g}`;
 const terminal = new Set(['completed','faulted','canceled']);
 const contextFields = ['frames','stack','currentPoint','pendingFault','fault','returnValue','exitCode','sourcePause'];
@@ -29,14 +30,14 @@ export class CooperativeScheduler {
   load(c){this.parked=false;this.currentId=c.id;for(const k of contextFields)if(k in c)this.vm[k]=c[k];this.vm.state='running';c.status='running';this.steps=0;}
   get current(){return this.contexts.get(this.currentId);}
   *roots(){yield this.unhandledFault?.reference;if(!this.enabled)return;for(const c of this.contexts.values()){
-      if(terminal.has(c.status))continue;yield c.task;yield c.thread;yield c.delegate;yield c.returnValue;yield c.wait?.task;yield c.resumeFault?.reference;
+      if(!retainsContextFrames(c))continue;yield c.task;yield c.thread;yield c.delegate;yield c.returnValue;yield c.wait?.task;yield c.resumeFault?.reference;
       if(c.id===this.currentId&&!this.parked)continue;
       yield* c.stack??[];for(const f of c.frames){yield* f.locals??[];yield* f.args??[];for(const v of f.stack??[]){if(v?.byref)yield v.owner;else yield v;}yield f.returnObject;yield f.asyncBuilderTask;yield* callRoots(f);yield* arrayContinuationRoots(f);if(this.vm.exceptionRoots)yield* this.vm.exceptionRoots(f);else{yield f.exception?.reference;for(const x of f.caught??[])yield x.fault?.reference;for(const x of f.unwinds??[]){yield x.value;yield x.error?.reference;}}}
       yield c.pendingFault?.reference;yield c.fault?.reference;
     }
     for(const t of this.tasks.values())if(!terminal.has(t.status)){yield t.ref;yield* t.dependencies??[];yield t.error?.reference;}
   }
-  allFrames(){if(!this.enabled)return this.vm.frames;this.save();return [...this.contexts.values()].flatMap(c=>terminal.has(c.status)?[]:c.frames);}
+  allFrames(){if(!this.enabled)return this.vm.frames;this.save();return [...this.contexts.values()].flatMap(c=>retainsContextFrames(c)?c.frames:[]);}
   taskRecord(ref){this.vm.heap.get(ref);const id=this.vm.platform.get(ref,'Id');let t=this.tasks.get(id);if(!t){const status=this.vm.platform.get(ref,'$status');if(!terminal.has(status))throw new ManagedFault('InvalidOperationException','Task is no longer tracked');t={id,ref,status,result:this.vm.platform.get(ref,'$result'),resultType:taskResult(this.vm.heap.get(ref).type),error:null,waiters:new Set()};}return t;}
   createTask(resultType='void',extra={}){
     this.ensure();this.prune();if(this.tasks.size>=this.maxTasks){this.vm.heap.collect();this.prune();}if(this.tasks.size>=this.maxTasks)throw new ManagedFault('ExecutionLimitException','Managed task limit exceeded');
@@ -70,7 +71,7 @@ export class CooperativeScheduler {
         if(dependency&&!terminal.has(dependency.status)) {c.wait={task:waitTask,pushResult:false,voidResult:true,propagateFault};c.status='waiting';dependency.waiters.add(id);}
         else if(dependency&&dependency.status!=='completed'&&propagateFault)c.resumeFault=this.failure(dependency);
         if(task){task.contextId=id;if(terminal.has(c.status))this.complete(task,c.returnValue,c.fault);}
-      } catch(error) {this.contexts.delete(id);if(dependency)dependency.waiters.delete(id);throw error;}
+      } catch(error) {releaseContextFrames(this.vm,{frames:this.vm.frames});this.contexts.delete(id);if(dependency)dependency.waiters.delete(id);throw error;}
       finally {this.currentId=previousId;this.parked=previousParked;for(const key of contextFields)if(key in previous)this.vm[key]=previous[key];this.vm.state=previousState;}
     });
     if(eager&&c.status==='ready')this.preferred=id;
@@ -149,7 +150,7 @@ export class CooperativeScheduler {
       else if(t.dependencies){const ds=t.dependencies.map(r=>this.taskRecord(r)),done=ds.filter(x=>terminal.has(x.status));if(t.any&&done.length)this.complete(t,done[0].ref);else if(!t.any&&done.length===ds.length){const fault=ds.find(x=>x.status!=='completed');this.complete(t,null,fault?this.failure(fault):null);}}
     }
   }
-  finish(c){if(terminal.has(c.status))return;this.vm.sync?.cancelContext(c.id);c.status=this.vm.state==='faulted'?'faulted':'completed';Object.assign(c,this.capture());if(c.fault&&['awaiter-continuation','async-state-machine'].includes(c.kind)&&!c.task)this.postAsyncFault(c.fault);if(c.task){const t=this.taskRecord(c.task);this.complete(t,c.returnValue,c.fault);}c.frames=[];c.stack=[];c.delegate=null;if(c.eagerParent){this.preferred=c.eagerParent;c.eagerParent=null;}}
+  finish(c){finishContext(this,c);}
   choose(){
     const preferred=this.contexts.get(this.preferred);this.preferred=null;
     if(preferred&&preferred.status==='ready'&&!preferred.frozen)return preferred;
@@ -162,8 +163,8 @@ export class CooperativeScheduler {
   afterInstruction(){if(!this.enabled||this.suppressed)return;this.turn++;this.steps++;this.save();if(this.flushAsyncFault())return;if(this.vm.state==='paused')return;
     const c=this.current;if(!c)return;
     if(['faulted','terminated'].includes(this.vm.state)){
-      if(this.vm.fault&&/LimitException$/.test(this.vm.fault.name)){this.cancelAll();this.vm.state='faulted';return;}
-      this.finish(c);if(this.flushAsyncFault())return;
+      if(this.vm.fault&&/LimitException$/.test(this.vm.fault.name)){this.cancelAll({preserveCurrent:true});this.vm.state='faulted';return;}
+      this.finish(c);if(c.preserveFrames){this.cancelAll({preserveCurrent:true});this.vm.state='faulted';return;}if(this.flushAsyncFault())return;
     }
     this.poll();if(c.status==='waiting'&&c.eagerParent){this.preferred=c.eagerParent;c.eagerParent=null;}
     if(c.status==='running'&&!c.frozen&&this.steps<this.quantum&&!this.preferred)return;
@@ -176,7 +177,7 @@ export class CooperativeScheduler {
   nextDelay(){const external=this.vm.platform.hostOperations?.active.size,deadlines=[...this.tasks.values()].filter(t=>!terminal.has(t.status)&&t.deadline!==undefined).map(t=>Math.max(0,t.deadline-this.now())),sync=this.vm.sync?.nextDelay();if(sync!==null&&sync!==undefined)deadlines.push(sync);if(external)deadlines.push(10);return deadlines.length?Math.min(...deadlines):null;}
   advance(ms){if(!this.virtualTime)throw new ManagedFault('InvalidOperationException','Virtual time is disabled');if(!Number.isFinite(ms)||ms<0)throw new RangeError('Invalid time delta');this.clock+=ms;this.turn++;this.poll();this.beforeSlice();}
   threads(){if(!this.enabled)return [{id:1,name:'Main',kind:'main',status:this.vm.state,frozen:false,parentId:null,taskId:null,frameIds:this.vm.frames.map(f=>f.id)}];this.save();return [...this.contexts.values()].map(c=>({id:c.id,name:c.name,kind:c.kind,status:c.id===this.currentId&&this.vm.state==='paused'?'paused':c.status,frozen:c.frozen,parentId:c.parentId,taskId:c.taskId??null,waitingFor:c.wait?this.vm.platform.get(c.wait.task,'Id'):null,frameIds:c.frames.map(f=>f.id)}));}
-  parallelStacks(){this.save();const stack=c=>[...c.frames].reverse().map(f=>this.vm.inspector?{id:f.id,name:f.method.owner+'::'+f.method.name,methodToken:f.method.token,ilOffset:f.method.instructions[f.pc]?.offset??f.lastOffset}:{id:f.id,name:this.vm.image.methods[f.methodId].qualifiedName,methodId:f.methodId,point:f.point});return {kind:'cooperative',contexts:this.enabled?[...this.contexts.values()].filter(c=>!terminal.has(c.status)).map(c=>({...this.threads().find(t=>t.id===c.id),frames:stack(c)})):[{id:1,name:'Main',kind:'main',frames:stack({frames:this.vm.frames})}],tasks:[...this.tasks.values()].map(t=>({id:t.id,status:t.status,contextId:t.contextId??null,waiters:[...t.waiters],dependencies:(t.dependencies??[]).map(r=>this.vm.platform.get(r,'Id')),resultType:t.resultType}))};}
+  parallelStacks(){this.save();const stack=c=>[...c.frames].reverse().map(f=>this.vm.inspector?{id:f.id,name:f.method.owner+'::'+f.method.name,methodToken:f.method.token,ilOffset:f.method.instructions[f.pc]?.offset??f.lastOffset}:{id:f.id,name:this.vm.image.methods[f.methodId].qualifiedName,methodId:f.methodId,point:f.point});return {kind:'cooperative',contexts:this.enabled?[...this.contexts.values()].filter(retainsContextFrames).map(c=>({...this.threads().find(t=>t.id===c.id),frames:stack(c)})):[{id:1,name:'Main',kind:'main',frames:stack({frames:this.vm.frames})}],tasks:[...this.tasks.values()].map(t=>({id:t.id,status:t.status,contextId:t.contextId??null,waiters:[...t.waiters],dependencies:(t.dependencies??[]).map(r=>this.vm.platform.get(r,'Id')),resultType:t.resultType}))};}
   copySnapshot(s,memo=new Map()) {
     if(!s)return null;
     return {...s,unhandledFault:copyExecution(s.unhandledFault,memo),contexts:s.contexts.map(([id,c])=>[id,cloneContext(c,memo)]),tasks:s.tasks.map(([id,t])=>[id,copyExecution(t,memo)])};
@@ -191,8 +192,8 @@ export class CooperativeScheduler {
     this.enabled=true;this.unhandledFault=s.unhandledFault??null;this.suppressed=!!s.suppressed;this.nextId=Math.max(this.nextId,s.nextId);this.nextTaskId=Math.max(this.nextTaskId,s.nextTaskId);this.parked=!!s.parked;this.currentId=s.currentId;this.clock=s.clock;this.epoch=performance.now()-s.clock;this.turn=s.turn;this.steps=s.steps;this.preferred=s.preferred;
     this.contexts=new Map(s.contexts);this.tasks=new Map(s.tasks.map(([id,t])=>[id,{...t,waiters:new Set(t.waiters)}]));this.save();
   }
-  prune(){if(!this.enabled)return;for(const [id,t]of this.tasks)if(terminal.has(t.status)){let alive=true;try{this.vm.heap.get(t.ref);}catch{alive=false;}if(!alive)this.tasks.delete(id);}if(this.contexts.size>=this.maxContexts)for(const [id,c]of this.contexts)if(id!==1&&terminal.has(c.status))this.contexts.delete(id);}
-  cancelAll(){this.unhandledFault=null;this.vm.sync?.clear();if(!this.enabled)return;for(const c of this.contexts.values())if(!terminal.has(c.status)){c.status='canceled';c.frames=[];c.stack=[];c.wait=null;}for(const t of this.tasks.values())if(!terminal.has(t.status))this.complete(t,null,null,true);}
+  prune(){if(!this.enabled)return;for(const [id,t]of this.tasks)if(terminal.has(t.status)){let alive=true;try{this.vm.heap.get(t.ref);}catch{alive=false;}if(!alive)this.tasks.delete(id);}if(this.contexts.size>=this.maxContexts)for(const [id,c]of this.contexts)if(id!==1&&terminal.has(c.status)&&!c.preserveFrames)this.contexts.delete(id);}
+  cancelAll(options){cancelContexts(this,options);}
   async runAsync({signal=null,onSlice=null}={}){while(['ready','running','waiting'].includes(this.vm.state)){
       if(signal?.aborted){this.vm.stop();throw new ManagedFault('OperationCanceledException','Execution canceled');}
       this.vm.runSlice({instructionBudget:10000,timeBudgetMs:8});onSlice?.(this.vm);

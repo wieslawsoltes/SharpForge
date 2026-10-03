@@ -35,7 +35,7 @@ export function rebuildFrameIndex(vm) {
   vm.frameIndex = new Map();
   for (const frame of vm.frames) registerFrame(vm, frame);
   for (const context of vm.scheduler?.contexts?.values() ?? []) {
-    if (terminal.has(context.status) || context.id === vm.scheduler.currentId && !vm.scheduler.parked) continue;
+    if (terminal.has(context.status) && !context.preserveFrames || context.id === vm.scheduler.currentId && !vm.scheduler.parked) continue;
     for (const frame of context.frames) registerFrame(vm, frame);
   }
   return vm.frameIndex;

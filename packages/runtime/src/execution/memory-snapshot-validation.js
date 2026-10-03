@@ -7,7 +7,7 @@ export function validateMemorySnapshot(vm, snapshot) {
   const contexts = snapshot.scheduler?.contexts ?? [];
   for (const frame of snapshot.frames) frames.set(frame.id, frame);
   for (const [, context] of contexts) {
-    if (['completed', 'faulted', 'canceled'].includes(context.status)) continue;
+    if (['completed', 'faulted', 'canceled'].includes(context.status) && !context.preserveFrames) continue;
     for (const frame of context.frames) {
       if (frames.has(frame.id) && frames.get(frame.id) !== frame) fail('duplicate frame');
       frames.set(frame.id, frame);

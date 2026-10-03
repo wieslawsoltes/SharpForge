@@ -1,3 +1,6 @@
+import {validateStackSnapshot} from './execution/stack-budget.js';
+import {validateMemorySnapshot} from './execution/memory-snapshot-validation.js';
+import {heapDataBytes} from './execution/snapshot-buffers.js';
 import {ManagedFault,isReference} from './heap.js';
 import {validateSynchronizationSnapshot} from './execution/sync-snapshot-validation.js';
 import {validateAsyncSnapshot} from './execution/async-snapshot-validation.js';
@@ -29,6 +32,8 @@ export function validateSnapshotState(vm,s,engine) {
         if(!frame.method||!Array.isArray(frame.method.instructions)||!Array.isArray(frame.args)||!Array.isArray(frame.stack)||frame.pc>frame.method.instructions.length)fail('CIL frame');
         let original;try{original=vm.inspector.getMethod(frame.method.token);}catch{fail('method identity');}
         if(original.instructions!==frame.method.instructions)fail('method code generation');
+        if(!(frame.offsets instanceof Map)||frame.offsets.size!==original.instructions.length||
+            original.instructions.some((instruction,index)=>frame.offsets.get(instruction.offset)!==index))fail('method offsets');
       } else {
         const method=vm.image.methods[frame.methodId];
         if(!method||frame.pc>method.code.length/3||!integer(frame.base))fail('source frame');
@@ -51,15 +56,20 @@ export function validateSnapshotState(vm,s,engine) {
     if(!integer(index)||index>=heap.records.length||heap.records[index]!==null||free.has(index))fail('heap free list');
     free.add(index);
   }
+  let liveBytes=0,liveObjects=0;
   for(const [index,record] of heap.records.entries()) {
-    if(record===null)continue;
+    if(record===null){if(!free.has(index))fail('missing free record');continue;}
     if(!record||typeof record.kind!=='string'||typeof record.type!=='string'||!integer(record.size)||!integer(heap.generations[index])||heap.generations[index]===0||heap.generations[index]>heap.generationCounter)fail('heap record');
     const validData=record.kind==='string'?typeof record.data==='string'
       :record.kind==='array'?isSnapshotSequence(record.data):Array.isArray(record.data);
     if(!validData)fail('heap data');
+    const size=record.kind==='string'?24+record.data.length*2:32+heapDataBytes(record.data);
+    if(record.size!==size)fail('heap record size');
+    liveBytes+=size;liveObjects++;
     if(record.methodTable?.registry!==vm.heap.methodTables)fail('heap type identity');
     if(record.kind==='array')validateArrayShape(record);
   }
+  if(liveBytes!==heap.stats.liveBytes||liveObjects!==heap.stats.liveObjects||liveBytes>vm.heap.maxBytes)fail('heap accounting');
   const referenceRecord=reference=>{
     if(!isReference(reference)||!integer(reference.h)||!integer(reference.g)||reference.g===0||reference.heapOwner!==undefined&&reference.heapOwner!==vm.heap.handleOwner||
       heap.generations[reference.h]!==reference.g||!heap.records[reference.h])fail('managed reference');
@@ -116,7 +126,8 @@ export function validateSnapshotState(vm,s,engine) {
   }
   validateSynchronizationSnapshot(vm,s.sync,s);
   if(s.sync.blocks.length&&scheduler===null)fail('synchronization contexts');
-  const snapshotContext={snapshotOwner:vm.snapshotOwner,heap:{methodTables:vm.heap.methodTables,get:referenceRecord},
+  const snapshotContext={snapshotOwner:vm.snapshotOwner,heap:{methodTables:vm.heap.methodTables,handleOwner:vm.heap.handleOwner,get:referenceRecord},
+    frameIndex:allFrames,options:vm.options,memorySequence:s.memorySequence,
     inspector:vm.inspector,image:vm.image,frames:s.frames,statics:s.statics,slotType:vm.slotType?.bind(vm),
     scheduler:{contexts,currentId:scheduler?.currentId,parked:scheduler?.parked}};
   const queuedContexts=new Set();
@@ -136,4 +147,6 @@ export function validateSnapshotState(vm,s,engine) {
   const animations=platform.animations;
   if(!Array.isArray(animations.states)||!Array.isArray(animations.bases))fail('animation state');
   validateAsyncSnapshot(vm,s);
+  validateMemorySnapshot(vm,s);
+  validateStackSnapshot(vm,s);
 }

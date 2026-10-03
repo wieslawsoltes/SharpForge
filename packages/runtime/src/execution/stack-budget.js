@@ -118,7 +118,7 @@ export function rebuildStackBudget(vm) {
   const budget = new ManagedStackBudget(vm);
   if (vm.scheduler?.enabled) {
     for (const [id, context] of vm.scheduler.contexts) {
-      if (terminal.has(context.status)) continue;
+      if (terminal.has(context.status) && !context.preserveFrames) continue;
       const frames = id === vm.scheduler.currentId && !vm.scheduler.parked ? vm.frames : context.frames;
       for (const frame of frames) budget.register(frame, id);
     }
@@ -147,7 +147,7 @@ export function validateStackSnapshot(vm, snapshot) {
   };
   if (snapshot.scheduler) {
     for (const [id, context] of snapshot.scheduler.contexts) {
-      if (!terminal.has(context.status)) for (const frame of context.frames) add(frame, id);
+      if (!terminal.has(context.status) || context.preserveFrames) for (const frame of context.frames) add(frame, id);
     }
     for (const frame of snapshot.frames) add(frame, snapshot.scheduler.currentId);
   } else {
