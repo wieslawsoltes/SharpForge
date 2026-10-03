@@ -204,8 +204,10 @@
       "deliverable": "Move CilVirtualMachine.binary/compare/convert/storage/indirect and the float()/number()/isNumber()/defaults() helpers from cil-vm.js into packages/runtime/src/execution/numeric-ops.js as pure functions; cil-vm.js keeps one-line delegations.",
       "acceptance": "- [ ] All tests in tests/cil.test.js and tests/managed-il.test.js pass unchanged; numeric-ops.js has no import of heap or VM and is unit-testable in isolation.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implementation in progress",
-      "evidence": []
+      "status": "implemented and validated; pull request pending",
+      "evidence": [
+        "runtime-a05-e03-validation.json"
+      ]
     },
     {
       "id": "SF-A05-T14",
@@ -216,8 +218,10 @@
       "deliverable": "Replace the string if-chain in cil-vm.js step() (startsWith/regex per instruction) with a handler registry packages/runtime/src/execution/handlers/index.js plus group files load-store.js, branch.js, arith.js, object-model.js, array.js, indirect.js, call.js; cil-vm.js only looks up handler by opcode.",
       "acceptance": "- [ ] Each handler file is registered through one line in handlers/index.js; existing CIL suites pass; adding an opcode touches only one group file.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implementation in progress",
-      "evidence": []
+      "status": "implemented and validated; pull request pending",
+      "evidence": [
+        "runtime-a05-e03-validation.json"
+      ]
     },
     {
       "id": "SF-A05-T15",
@@ -228,8 +232,10 @@
       "deliverable": "Move invoke()/call()/ensureInitialized() to execution/calls.js and layout()/typeOf()/matches()/field() to execution/type-system.js with a token-keyed type index replacing inspector.types.find linear scans.",
       "acceptance": "- [ ] typeOf and matches are O(1) map lookups; existing CIL tests pass; cil-vm.js no longer contains metadata walks.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implementation in progress",
-      "evidence": []
+      "status": "implemented and validated; pull request pending",
+      "evidence": [
+        "runtime-a05-e03-validation.json"
+      ]
     },
     {
       "id": "SF-A05-T17",
@@ -240,8 +246,10 @@
       "deliverable": "Move CilVirtualMachine.intrinsic() into packages/runtime/src/execution/intrinsics.js as a Map keyed by owner::name(signature) aligned with supportedIntrinsic() in packages/cil/src/execution-profile.js.",
       "acceptance": "- [ ] A test asserts every member accepted by supportedIntrinsic has a table entry and vice versa; lookups are O(1).\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implementation in progress",
-      "evidence": []
+      "status": "implemented and validated; pull request pending",
+      "evidence": [
+        "runtime-a05-e03-validation.json"
+      ]
     },
     {
       "id": "SF-A05-T18",
@@ -252,8 +260,10 @@
       "deliverable": "Move VirtualMachine.builtin() name switch (Math.*, Console.*, GC.*, string.*, Convert.*) and binary()/CONVERT/UNARY logic from vm.js into two new modules; vm.js runSlice keeps only dispatch.",
       "acceptance": "- [ ] tests/runtime.test.js and tests/compiler.test.js pass; vm.js shrinks below 90 lines; builtins are testable without constructing a VM image.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implementation in progress",
-      "evidence": []
+      "status": "implemented and validated; pull request pending",
+      "evidence": [
+        "runtime-a05-e03-validation.json"
+      ]
     },
     {
       "id": "SF-A05-T16",
@@ -264,8 +274,10 @@
       "deliverable": "Move raise()/resumeUnwind() and the leave branch logic out of cil-vm.js into packages/runtime/src/execution/eh.js behind a two-function interface (throwFault, continueUnwind).",
       "acceptance": "- [ ] tests/cil.test.js protected-region cases pass; eh.js is the only file referencing frame.unwinds/frame.pending/frame.caught.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implementation in progress",
-      "evidence": []
+      "status": "implemented and validated; pull request pending",
+      "evidence": [
+        "runtime-a05-e03-validation.json"
+      ]
     },
     {
       "id": "SF-A05-T19",
@@ -276,8 +288,10 @@
       "deliverable": "Move the five unwinding methods of VirtualMachine into packages/runtime/src/execution/source-eh.js with the VM passed as context.",
       "acceptance": "- [ ] Existing try/finally tests in tests/runtime.test.js and tests/language.test.js pass; vm.js has no reference to frame.unwinds.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implementation in progress",
-      "evidence": []
+      "status": "implemented and validated; pull request pending",
+      "evidence": [
+        "runtime-a05-e03-validation.json"
+      ]
     },
     {
       "id": "SF-A05-T20",
@@ -288,8 +302,10 @@
       "deliverable": "Replace the hand-written field copies in VirtualMachine.snapshot/restore and CilVirtualMachine.snapshot/restore with a declarative schema (schemaVersion, field list, copier) exported from packages/runtime/src/snapshot.js.",
       "acceptance": "- [ ] Adding a VM field without registering it in the schema fails a test that diffs Object.keys(vm) against the schema; snapshot objects carry schemaVersion.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
       "dependencies": "",
-      "status": "implementation in progress",
-      "evidence": []
+      "status": "implemented and validated; pull request pending",
+      "evidence": [
+        "runtime-a05-e03-validation.json"
+      ]
     },
     {
       "id": "SF-A05-T21",
