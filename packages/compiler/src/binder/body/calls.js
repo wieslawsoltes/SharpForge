@@ -329,8 +329,10 @@ export const CallBinding = Base =>
       return this.node('DeclarationExpression', syntax, bound.isVar ? null : type, { local, isOutVarOrDiscard: true });
     }
     elementAccess(syntax) {
-      const target = this.value(syntax.expression),
-        args = this.arguments(syntax.argumentList);
+      return this.elementAccessOn(this.value(syntax.expression), this.arguments(syntax.argumentList), syntax);
+    }
+    /** `target[args]` over an already bound target (an index initializer supplies the object being initialized). */
+    elementAccessOn(target, args, syntax) {
       if (target.hasErrors || args.some(a => a.hasErrors)) return this.bad(syntax);
       const type = target.type;
       if (!type) {
