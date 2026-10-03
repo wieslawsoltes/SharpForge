@@ -2,9 +2,13 @@ import {fail, integer, bclScalar, array, makeArray} from '@sharpforge/bcl-core';
 import {equal} from './object-equality.js';
 import {registerClosedCollections} from './legacy-contracts.js';
 import {dictionary} from './dictionary.js';
+import {hashSet, initializeHashSet} from './hash-set.js';
+import {collectionEnumerator} from './collection-enumerator.js';
+import {listRemoval} from './list-removal.js';
+import {clearList, removeListValue} from './list-value-removal.js';
 import {reserveIndexed} from './indexed-storage.js';
 import {
-  count, data, version, change, reserve, commitItems, write, queueItems, queueEnqueue, append, keyOf, indexMap
+  count, data, version, change, reserve, commitItems, write, queueItems, queueEnqueue, append
 } from './legacy-storage.js';
 
 const families = Object.freeze(['List', 'HashSet', 'Queue', 'Stack', 'Dictionary', 'enumerator']);
@@ -13,60 +17,25 @@ function construct(p, descriptor, context) {
   const {native, values, family} = context;
   if (native.length === 1 && typeof native[0] === 'number') integer(p, native[0]);
   const state = {'$count': 0, '$version': 0};
-  if (family === 'Dictionary') Object.assign(state, {'$used': 0, '$free': -1, '$slots': null});
+  if (family === 'Dictionary' || family === 'HashSet') Object.assign(state, {'$used': 0, '$free': -1, '$slots': null});
   const reference = p.make(descriptor.owner, state);
   p.heap.pins.push(reference);
   if (descriptor.parameters[0]?.endsWith('[]')) {
     const items = array(p, values[0]);
-    const initial = family === 'HashSet' ? items.filter((value, index) => items.findIndex(item => equal(p, value, item)) === index) : items;
-    commitItems(p, reference, initial);
+    if (family === 'HashSet') initializeHashSet(p, reference, items);
+    else commitItems(p, reference, items);
   } else if (native[0]) {
-    if (family === 'Dictionary') reserveIndexed(p, reference, native[0], 2);
+    if (family === 'Dictionary' || family === 'HashSet') reserveIndexed(p, reference, native[0], family === 'Dictionary' ? 2 : 1);
     else reserve(p, reference, native[0]);
   }
   return reference;
 }
 
-function enumerator(p, descriptor, reference) {
-  const method = descriptor.name;
-  if (method === 'Dispose') {
-    p.set(reference, '$owner', null);
-    return null;
-  }
-  const owner = p.get(reference, '$owner');
-  if (!owner) fail(p, 'ObjectDisposedException', 'Enumerator is disposed');
-  if (version(p, owner) !== p.get(reference, '$version')) {
-    fail(p, 'InvalidOperationException', 'Collection was modified during enumeration');
-  }
-  if (method === 'MoveNext') {
-    const index = p.get(reference, '$index', -1) + 1;
-    p.set(reference, '$index', index);
-    return p.managed(index < count(p, owner), 'bool');
-  }
-  if (method !== 'get_Current') fail(p, 'MissingMethodException', descriptor.owner + '.' + method);
-  const index = p.get(reference, '$index', -1);
-  if (index < 0 || index >= count(p, owner)) fail(p, 'InvalidOperationException', 'Enumerator is not positioned on an item');
-  const type = p.bclHost.frameworkType(p.record(owner).type);
-  const position = type.family === 'Stack' ? count(p, owner) - 1 - index
-    : type.family === 'Queue' ? (p.get(owner, '$head', 0) + index) % data(p, owner).length : index;
-  return data(p, owner)[position];
-}
-
 function add(p, context) {
-  const {reference, values, family, size} = context;
-  if (family === 'Queue') {
-    queueEnqueue(p, reference, values[0]);
-    return null;
-  }
-  const map = family === 'HashSet' ? indexMap(p, reference) : null;
-  const key = map ? keyOf(p, values[0]) : null;
-  if (map?.has(key)) return p.managed(false, 'bool');
-  append(p, reference, values[0]);
-  if (map) {
-    map.set(key, size);
-    p.bclIndexes.set(p.record(reference), {version: version(p, reference), index: map});
-  }
-  return family === 'HashSet' ? p.managed(true, 'bool') : null;
+  const {reference, values, family} = context;
+  if (family === 'Queue') queueEnqueue(p, reference, values[0]);
+  else append(p, reference, values[0]);
+  return null;
 }
 
 function peekOrRemove(p, descriptor, context) {
@@ -100,23 +69,9 @@ function compare(p, left, right) {
   fail(p, 'InvalidOperationException', 'Default comparer is unavailable for this object type');
 }
 
-function setOperation(p, method, items, values) {
-  const other = new Set(array(p, values[0]).map(value => keyOf(p, value)));
-  const seen = new Set(items.map(value => keyOf(p, value)));
-  if (method === 'UnionWith') {
-    for (const value of array(p, values[0])) {
-      if (seen.has(keyOf(p, value))) continue;
-      seen.add(keyOf(p, value));
-      items.push(value);
-    }
-  } else {
-    for (let index = items.length - 1; index >= 0; index--) {
-      if (other.has(keyOf(p, items[index])) === (method === 'ExceptWith')) items.splice(index, 1);
-    }
-  }
-}
-
 function mutate(p, descriptor, context) {
+  if (descriptor.name === 'RemoveAt' || descriptor.name === 'RemoveRange') return listRemoval(p, descriptor, context);
+  if (descriptor.name === 'Remove') return removeListValue(p, context.reference, context.values[0]);
   const {reference, values, native, size} = context;
   const items = data(p, reference).slice(0, size);
   switch (descriptor.name) {
@@ -127,20 +82,8 @@ function mutate(p, descriptor, context) {
       break;
     }
     case 'Insert': items.splice(integer(p, native[0], 0, size), 0, values[1]); break;
-    case 'RemoveAt': items.splice(integer(p, native[0], 0, size - 1), 1); break;
-    case 'RemoveRange': items.splice(integer(p, native[0], 0, size), integer(p, native[1], 0, size - native[0])); break;
-    case 'Remove': {
-      const index = items.findIndex(value => equal(p, value, values[0]));
-      if (index < 0) return p.managed(false, 'bool');
-      items.splice(index, 1);
-      commitItems(p, reference, items);
-      return p.managed(true, 'bool');
-    }
     case 'Reverse': items.reverse(); break;
     case 'Sort': items.sort((left, right) => compare(p, left, right)); break;
-    case 'UnionWith': case 'IntersectWith': case 'ExceptWith':
-      setOperation(p, descriptor.name, items, values);
-      break;
     default: fail(p, 'MissingMethodException', descriptor.owner + '.' + descriptor.name);
   }
   commitItems(p, reference, items);
@@ -152,6 +95,10 @@ function invokeMember(p, descriptor, context) {
   const method = descriptor.name;
   if (method === 'get_Count') return size;
   if (family === 'Dictionary') return dictionary(p, descriptor, context);
+  if (method === 'GetEnumerator') {
+    return p.make(descriptor.result, {'$owner': reference, '$index': -1, '$version': version(p, reference)});
+  }
+  if (family === 'HashSet') return hashSet(p, descriptor, context);
   if (method === 'get_Capacity') return data(p, reference).length;
   if (method === 'set_Capacity') {
     integer(p, native[0], size);
@@ -162,12 +109,10 @@ function invokeMember(p, descriptor, context) {
     return null;
   }
   if (method === 'Clear') {
+    if (family === 'List') return clearList(p, reference);
     if (size) commitItems(p, reference, []);
     if (family === 'Queue') p.set(reference, '$head', 0);
     return null;
-  }
-  if (method === 'GetEnumerator') {
-    return p.make(descriptor.result, {'$owner': reference, '$index': -1, '$version': version(p, reference)});
   }
   if (method === 'ToArray') {
     const items = family === 'Queue' ? queueItems(p, reference)
@@ -175,9 +120,8 @@ function invokeMember(p, descriptor, context) {
     return makeArray(p, type.element, items);
   }
   if (method === 'Contains' || method === 'IndexOf') {
-    const index = family === 'HashSet' ? indexMap(p, reference).get(keyOf(p, values[0])) ?? -1
-      : (family === 'Queue' ? queueItems(p, reference) : data(p, reference).slice(0, size))
-        .findIndex(value => equal(p, value, values[0]));
+    const items = family === 'Queue' ? queueItems(p, reference) : data(p, reference).slice(0, size);
+    const index = items.findIndex(value => equal(p, value, values[0]));
     return method === 'Contains' ? p.managed(index >= 0, 'bool') : index;
   }
   if (method === 'get_Item') return data(p, reference)[integer(p, native[0], 0, size - 1)];
@@ -200,7 +144,7 @@ function invoke(p, descriptor, args, type = p.bclHost.frameworkType(descriptor.o
   const context = {reference, values, native, family: type.family, type, size: 0};
   if (descriptor.kind === 'constructor') return {handled: true, value: construct(p, descriptor, context)};
   p.record(reference);
-  if (type.family === 'enumerator') return {handled: true, value: enumerator(p, descriptor, reference)};
+  if (type.family === 'enumerator') return {handled: true, value: collectionEnumerator(p, descriptor, reference)};
   context.size = count(p, reference);
   return {handled: true, value: invokeMember(p, descriptor, context)};
 }

@@ -23,6 +23,7 @@ import {
 } from '../symbols/types.js';
 import { baseTypeChain, allInterfacesOf, containsTypeParameter } from '../symbols/substitution.js';
 import { isNullableType } from '../conversions/nullable.js';
+import { spanInferencePair } from '../conversions/span.js';
 
 class Bounds {
   constructor() {
@@ -67,6 +68,10 @@ export class TypeInferrer {
     return typeOf(this.map.substituteType(type));
   }
 
+  /** The element types of a C# 14 span inference from `u` to `v` (conversions/span.js), or null. */
+  spanPair(u, v) {
+    return this.conversions?.firstClassSpans ? spanInferencePair(u, v) : null;
+  }
   exact(u, v) {
     u = typeOf(u);
     v = typeOf(v);
@@ -81,6 +86,11 @@ export class TypeInferrer {
     }
     if (isNullableType(u) && isNullableType(v)) {
       this.exact(u.nullableUnderlyingType, v.nullableUnderlyingType);
+      return;
+    }
+    const span = this.spanPair(u, v);
+    if (span) {
+      this.exact(span.source, span.target);
       return;
     }
     if (
@@ -108,6 +118,13 @@ export class TypeInferrer {
     // A non-nullable U still infers through V1? (C# 8+): int to T? gives T = int.
     if (isNullableType(v) && u.isValueType === true && !isNullableType(u)) {
       this.exact(u, v.nullableUnderlyingType);
+      return;
+    }
+    const span = this.spanPair(u, v);
+    if (span) {
+      // To a Span<V1> the inference is exact; to a ReadOnlySpan<V1> it is a lower bound for a reference type.
+      if (span.isSpanTarget || span.source.isReferenceType !== true) this.exact(span.source, span.target);
+      else this.lower(span.source, span.target);
       return;
     }
     if (u instanceof ArrayTypeSymbol) {

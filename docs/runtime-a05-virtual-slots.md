@@ -28,8 +28,12 @@ duplicate MethodImpl and illegal final-override coverage. Their independent
 metadata assembler is shared rather than copied.
 
 `tests/fixtures/a05/virtual-slots` is a runnable .NET 10 reference fixture with
-expected output. No tests, native builds, checks or benchmarks were executed in
-this branch; qualification and latency/allocation measurements remain queued.
+expected output; the native fixture has not run. Serial validation at
+`86189289` passed all 59 tests in `a05-02-virtual-slots`, `a05-b03-dispatch`,
+`a05-type-tables` and `a05-delegate-targets` under Node 24.21.0 with one worker
+and a 512 MB heap cap. Static/manifests and build validation use the required
+core check. Broader qualification and latency/allocation measurements remain
+queued.
 
 ```sh
 dotnet run --project tests/fixtures/a05/virtual-slots/VirtualSlots.csproj

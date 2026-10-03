@@ -1,11 +1,18 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFileSync, readdirSync} from 'node:fs';
+import {join} from 'node:path';
+import {fileURLToPath} from 'node:url';
 import * as catalog from '../packages/compiler/src/diagnostics/codes.js';
 import * as diagnostics from '../packages/compiler/src/diagnostics.js';
 
 const {DiagnosticId: D, diagnosticCodes, diagnosticDescriptor, formatMessage} = diagnostics;
 const parserIds = ['SF1003', 'SF1004', 'SF1005', 'SF1010', 'SF1011', 'SF1012',
   'SF1013', 'SF1014', 'SF1015', 'SF1017', 'SF1018', 'SF1019'];
+const sourceRoot = fileURLToPath(new URL('../packages/compiler/src/', import.meta.url));
+const sourceFiles = directory => readdirSync(directory, {withFileTypes: true}).flatMap(entry =>
+  entry.isDirectory() ? sourceFiles(join(directory, entry.name)) :
+    entry.name.endsWith('.js') ? [join(directory, entry.name)] : []);
 
 test('A00-T14 the diagnostic seam shares the existing catalog and every descriptor id', () => {
   assert.deepEqual(Object.keys(diagnostics), Object.keys(catalog));
@@ -52,4 +59,17 @@ test('A00-T14 identifiers preserve formatting, missing arguments and profile map
   assert.equal(diagnostics.featureNotAvailableCode(-1), D.CS9058);
   assert.equal(diagnostics.isFeatureGateCode(D.CS8652), true);
   assert.equal(diagnostics.isFeatureGateCode(D.CS0029), false);
+});
+
+test('A00-T14 every compiler identifier reference resolves to the exact catalog id', () => {
+  let references = 0;
+  for (const file of sourceFiles(sourceRoot)) {
+    const source = readFileSync(file, 'utf8');
+    for (const match of source.matchAll(/\bDiagnosticId\.((?:CS|SF)\d{4})\b/g)) {
+      assert(Object.hasOwn(D, match[1]), `${file}: ${match[1]}`);
+      assert.equal(D[match[1]], match[1], file);
+      references++;
+    }
+  }
+  assert(references > 100, `expected compiler caller references, saw ${references}`);
 });
