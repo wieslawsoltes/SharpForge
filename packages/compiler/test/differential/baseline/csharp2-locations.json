@@ -1,0 +1,3 @@
+{
+  "csharp2-locations/static-type-arguments-and-anonymous-returns": ["diagnostics", "warnings"]
+}
