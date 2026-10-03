@@ -1,0 +1,13 @@
+{
+  "id": "million-array",
+  "clauses": [
+    "V6"
+  ],
+  "expand": {
+    "length": 1000000,
+    "element": {
+      "kind": "null"
+    }
+  },
+  "encodedSha256": "66c0aabaec02b6e500196d9fc6a5cc7795ab39518815cf3ffb04c424334a0335"
+}

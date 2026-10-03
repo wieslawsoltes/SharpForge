@@ -4,7 +4,9 @@ export const anonymousFunctionMethods = {
     const start = this.current,
       keyword = this.take();
     this.feature('AnonDelegates', start);
-    const parameters = this.at('(') ? this.parameterList() : null;
+    const open = this.i,
+      parameters = this.at('(') ? this.parameterList() : null;
+    if (parameters) this.discardParameters(open, this.i - 1);
     if (!this.at('{')) {
       this.error(this.current, 'CS1514', '{ expected');
       return this.n(
