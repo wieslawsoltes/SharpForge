@@ -19,12 +19,14 @@ import { TopLevelPrograms } from './binder/top-level.js';
 import { UnusedSymbolWarnings } from './semantic/unused-symbols.js';
 import { AttributeBinding } from './binder/attributes.js';
 import { ObsoleteUses } from './binder/obsolete.js';
+import { CSharp9Rules } from './binder/csharp9.js';
 
 const phases = [
   DeclarationChecks,
   MemberDeclarationChecks,
   ConstantBinding,
   AttributeBinding,
+  CSharp9Rules,
   BodyBinding,
   TopLevelPrograms,
   MemberBodyChecks,

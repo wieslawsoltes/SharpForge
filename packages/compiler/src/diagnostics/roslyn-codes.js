@@ -599,6 +599,10 @@ export const roslynCodes=Object.freeze({
  CS8802:["ERR_SimpleProgramMultipleUnitsWithTopLevelStatements","error",0,"Only one compilation unit can have top-level statements."],
  CS8803:["ERR_TopLevelStatementAfterNamespaceOrType","error",0,"Top-level statements must precede namespace and type declarations."],
  CS8805:["ERR_SimpleProgramNotAnExecutable","error",0,"Program using top-level statements must be an executable."],
+ CS8813:["ERR_ModuleInitializerMethodMustBeOrdinary","error",0,"A module initializer must be an ordinary member method"],
+ CS8814:["ERR_ModuleInitializerMethodMustBeAccessibleOutsideTopLevelType","error",0,"Module initializer method '{0}' must be accessible at the module level"],
+ CS8815:["ERR_ModuleInitializerMethodMustBeStaticParameterlessVoid","error",0,"Module initializer method '{0}' must be static, and non-virtual, must have no parameters, and must return 'void'"],
+ CS8816:["ERR_ModuleInitializerMethodAndContainingTypesMustNotBeGeneric","error",0,"Module initializer method '{0}' must not be generic and must not be contained in a generic type"],
  CS8817:["ERR_PartialMethodReturnTypeDifference","error",0,"Both partial method declarations must have the same return type."],
  CS8818:["ERR_PartialMemberRefReturnDifference","error",0,"Partial member declarations must have matching ref return values."],
  CS8820:["ERR_StaticAnonymousFunctionCannotCaptureVariable","error",0,"A static anonymous function cannot contain a reference to '{0}'."],
@@ -656,5 +660,6 @@ export const roslynCodes=Object.freeze({
  CS9272:["ERR_ImplicitlyTypedParamsParameter","error",0,"Implicitly typed lambda parameter '{0}' cannot have the 'params' modifier."],
  CS9273:["ERR_VariableDeclarationNamedField","error",0,"In language version {0}, 'field' is a keyword within a property accessor. Rename the variable or use the identifier '@field' instead."],
  CS9307:["ERR_ExpressionTreeContainsNamedArgumentOutOfPosition","error",0,"An expression tree may not contain a named argument specification out of position"],
- CS9327:["ERR_FeatureNotAvailableInVersion14","error",0,"Feature '{0}' is not available in C# 14.0. Please use language version {1} or greater."]
+ CS9327:["ERR_FeatureNotAvailableInVersion14","error",0,"Feature '{0}' is not available in C# 14.0. Please use language version {1} or greater."],
+ CS9334:["ERR_ExplicitInterfaceMemberReturnTypeMismatch","error",0,"'{0}': return type must be '{1}' to match implemented member '{2}'"]
 });
