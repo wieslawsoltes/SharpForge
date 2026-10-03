@@ -1,9 +1,10 @@
 import {number} from '../numeric-ops.js';
-import {continueUnwind,throwFault} from '../eh.js';
+import {continueUnwind,throwFault,endFilter} from '../eh.js';
 
 const handlers=new Map([
   ['switch',(vm,frame,instruction)=>{const index=number(vm.pop());if(Number.isInteger(index)&&index>=0&&index<instruction.operand.length)frame.pc=frame.offsets.get(instruction.operand[index]);}],
   ['endfinally',(vm,frame)=>continueUnwind(vm,frame)],
+  ['endfilter',vm=>endFilter(vm,vm.pop())],
   ['throw',(vm,frame,instruction)=>throwFault(vm,null,instruction)],
   ['rethrow',(vm,frame,instruction)=>throwFault(vm,null,instruction)]
 ]);
