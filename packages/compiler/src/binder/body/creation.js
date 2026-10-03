@@ -83,12 +83,14 @@ export const CreationBinding = Base =>
         }
         return this.withInitializer(this.node('ObjectCreation', syntax, type, { constructor: null, args: [] }), initializer);
       }
+      const all = type.getMembers('.ctor').filter(m => m.kind === SymbolKind.Method && m.methodKind === MethodKind.Constructor);
       if (type.typeKind === TypeKind.Enum || (keywordOf(type) && type.isValueType) || isNullableType(type)) {
         if (!args.length)
           return this.withInitializer(this.node('ObjectCreation', syntax, type, { constructor: null, args: [] }), initializer);
-        if (!isSource(type)) return this.lenient(syntax);
+        // Scalar runtime profiles expose real constructors (for example Decimal's
+        // five-part payload constructor). Resolve them before declaring a registry gap.
+        if (!isSource(type) && !all.length) return this.lenient(syntax);
       }
-      const all = type.getMembers('.ctor').filter(m => m.kind === SymbolKind.Method && m.methodKind === MethodKind.Constructor);
       if (!all.length) {
         if (type.isValueType === true && !args.length)
           return this.withInitializer(this.node('ObjectCreation', syntax, type, { constructor: null, args: [] }), initializer);
@@ -188,10 +190,12 @@ export const CreationBinding = Base =>
       const elements = init ? this.arrayInitializer(init, elementType, rank) : null;
       return this.node('ArrayCreation', syntax, full, { sizes, elements });
     }
-    arrayInitializer(init, elementType, rank) {
+    arrayInitializer(init, elementType, rank, shape = []) {
+      if (shape[rank] === undefined) shape[rank] = init.expressions.length;
+      else if (shape[rank] !== init.expressions.length) this.report(init, 'CS0847', [shape[rank]]);
       return init.expressions.map(e => {
         if (e.kind === 'ArrayInitializerExpression') {
-          if (rank > 1) return this.arrayInitializer(e, elementType, rank - 1);
+          if (rank > 1) return this.arrayInitializer(e, elementType, rank - 1, shape);
           if (elementType instanceof ArrayTypeSymbol)
             return this.node('ArrayCreation', e, elementType, {
               elements: this.arrayInitializer(e, elementType.elementType, elementType.rank),

@@ -57,5 +57,5 @@ export function pinnedMemoryAssembly() {
       writer.op('ldloc.0').op('ldc.i4.1').op('ldelem.i4').op('call', number);
       writer.op('ldnull').op('stloc.0').op('ret');
     }
-  ]}]);
+  }]}]);
 }

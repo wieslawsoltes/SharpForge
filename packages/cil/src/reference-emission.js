@@ -36,10 +36,12 @@ export function decodeReferenceInstruction(span, context, emit) {
     return emit(load ? Op.LDIND : Op.STIND, context.intern(context.shortType(type)));
   }
   const marker = span.at(-1)?.name === 'pop' ? span.at(-2) : null;
-  if (marker?.name === 'ldc.i4.8' || marker?.name === 'ldc.i4.s' && marker.operand === 12) {
+  const flags = marker?.name === 'ldc.i4.8' ? 8 :
+    ['ldc.i4', 'ldc.i4.s'].includes(marker?.name) ? marker.operand : null;
+  if (flags === 8 || flags === 12) {
     const local = span[0];
     const slot = local.operand ?? Number(local.name.split('.').at(-1));
-    return emit(Op.ADDRESS, marker.name === 'ldc.i4.8' ? 8 : 12, slot);
+    return emit(Op.ADDRESS, flags, slot);
   }
   return false;
 }

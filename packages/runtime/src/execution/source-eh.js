@@ -236,7 +236,11 @@ export function handleFault(vm, error) {
   try {
     prepareException(vm, fault);
     if (notifyFirstChance(vm, fault)) return;
-  } catch (failure) { markUnhandled(vm, makeFault(failure)); return; }
+  } catch (failure) {
+    const terminal = ['OutOfMemoryException','System.OutOfMemoryException'].includes(fault.name) ? fault : makeFault(failure);
+    if (terminal === fault) terminal.fatal = true;
+    markUnhandled(vm, terminal); return;
+  }
   fault.phase = 'search';
   vm.fault = null;
   drive(vm, {phase: 'search', search: createSearch(vm, fault)});

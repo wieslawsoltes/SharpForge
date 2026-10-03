@@ -12,7 +12,7 @@ import {castReference} from './casting.js';
 const terminal=new Set(['completed','faulted','canceled']);
 const fail=(name,message)=>{throw new ManagedFault(name,message);};
 const key=reference=>reference.h+':'+reference.g;
-const canonical=type=>type==='System.Object'?'object':numericTypeName(type);
+const canonical=type=>type==='System.Object'?'object':type==='System.String'?'string':numericTypeName(type);
 const scalar=value=>value?.enumType?value.value:number(value);
 
 /** Monitor ownership belongs to logical scheduler contexts. Atomic APIs run

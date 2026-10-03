@@ -53,7 +53,11 @@ export function verifyControlRegions(inspector,method,issue) {
     for(const target of targets) {
       if(tails.has(target))fail(instruction,'Control flow cannot enter a prefixed instruction after its prefix','IL_PREFIX');
       const destination=containing(target),sourceKeys=new Set(current.map(region=>region.key)),targetKeys=new Set(destination.map(region=>region.key));
-      if(destination.some(region=>!sourceKeys.has(region.key))||!instruction.name.startsWith('leave')&&current.some(region=>!targetKeys.has(region.key)))fail(instruction,'Branch crosses an exception region boundary');
+      // A leave may land at the first instruction of a subsequent protected block.
+      // Native CLR accepts this layout for consecutive try/catch statements.
+      const entersRegion=destination.some(region=>!sourceKeys.has(region.key)&&
+        !(instruction.name.startsWith('leave')&&region.kind==='try'&&target===region.start));
+      if(entersRegion||!instruction.name.startsWith('leave')&&current.some(region=>!targetKeys.has(region.key)))fail(instruction,'Branch crosses an exception region boundary');
     }
   }
 }

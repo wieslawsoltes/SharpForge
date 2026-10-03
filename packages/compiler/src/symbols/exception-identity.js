@@ -16,3 +16,16 @@ export function isExceptionType(compilation, name) {
   }
   return false;
 }
+
+/** Exception upcasts preserve the managed object and its actual runtime type. */
+export function isExceptionUpcast(from, to, exception) {
+  const derives = (type, target) => {
+    const seen = new Set();
+    for (; type && !seen.has(type); type = type.baseType) {
+      if (type === target) return true;
+      seen.add(type);
+    }
+    return false;
+  };
+  return !!exception && derives(to, exception) && derives(from, to);
+}

@@ -8,7 +8,8 @@ import {isDecimal,decimal,decimalZero,decimalMaxCoefficient,decimalFromBits,deci
 const definitions=numericIntrinsicDefinitions.filter(definition=>definition.implementation==='decimal'&&definition.owner!=='System.BitConverter');
 export const decimalIntrinsicDefinitions=Object.freeze(definitions);
 export const decimalConstants=Object.freeze({Zero:decimalZero,One:decimal(1n),MinusOne:decimal(1n,0,true),MaxValue:decimal(decimalMaxCoefficient),MinValue:decimal(decimalMaxCoefficient,0,true)});
-const key=descriptor=>{const signature=descriptor.signature??descriptor;return [descriptor.owner,descriptor.name,signature.isStatic?'static':'instance',signature.parameters.map(numericTypeName).join(','),numericTypeName(signature.returnType??signature.result)].join('|');};
+const keyType=type=>type.endsWith('&')?numericTypeName(type.slice(0,-1))+'&':numericTypeName(type);
+const key=descriptor=>{const signature=descriptor.signature??descriptor;return [descriptor.owner,descriptor.name,signature.isStatic?'static':'instance',signature.parameters.map(keyType).join(','),numericTypeName(signature.returnType??signature.result)].join('|');};
 const keys=new Set(definitions.map(key));
 const operators={Add:'+',op_Addition:'+',Subtract:'-',op_Subtraction:'-',Multiply:'*',op_Multiply:'*',Divide:'/',op_Division:'/',Remainder:'%',op_Modulus:'%',op_Equality:'==',op_Inequality:'!=',op_LessThan:'<',op_LessThanOrEqual:'<=',op_GreaterThan:'>',op_GreaterThanOrEqual:'>='};
 
@@ -23,7 +24,7 @@ export function invokeDecimal(vm,descriptor,args) {
   if(ctor) {
     let value;
     if(signature.parameters.length===5){const scale=Number(number(values[4]));if(!Number.isInteger(scale)||scale<0||scale>28)throw new ManagedFault('ArgumentOutOfRangeException','Decimal scale must be between zero and 28');value=decimalFromBits([number(values[0]),number(values[1]),number(values[2]),(scale<<16)|(number(values[3])?0x80000000:0)],context);}
-    else if(signature.parameters[0]==='int[]')value=decimalFromBits(vm.heap.get(args.at(-1)).data,context);
+    else if(signature.parameters[0]==='int[]')value=decimalFromBits(Array.from(vm.heap.get(args.at(-1)).data),context);
     else if(['float','double'].includes(signature.parameters[0]))value=decimalFromFloat(number(values[0]),signature.parameters[0]==='float'?'r4':'r8',context);
     else value=scalarConvert(values[0],signature.parameters[0],'decimal',false,context);
     if(receiver!==null){vm.dereference(receiver,true,value);return result(null);}return result(value);
@@ -38,7 +39,7 @@ export function invokeDecimal(vm,descriptor,args) {
     if(name==='TryParse'){vm.dereference(args.at(-1),true,value);return result(success);}return result(value);
   }
   if(name==='ToString')return result(vm.heap.string(decimalFormat(operand,values[0]??'G',context)));
-  if(name==='GetBits'){const bits=decimalBits(operand,context),reference=vm.heap.array('int',4);vm.heap.get(reference).data=bits;return result(reference);}
+  if(name==='GetBits'){const bits=decimalBits(operand,context),reference=vm.heap.array('int',4);vm.heap.get(reference).data.set(bits);return result(reference);}
   if(name==='Equals')return result(isDecimal(operand)&&isDecimal(hasReceiver?values[0]:values[1])&&decimalCompare(operand,hasReceiver?values[0]:values[1],context)===0);
   if(name==='Compare'||name==='CompareTo') {
     const other=hasReceiver?values[0]:values[1];if(other===null)return result(1);

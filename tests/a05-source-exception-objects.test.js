@@ -3,6 +3,18 @@ import assert from 'node:assert/strict';
 import {compile, compileToIL} from '@sharpforge/compiler';
 import {loadAssembly} from '@sharpforge/cil';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
+import {BuiltinMap} from '@sharpforge/bytecode';
+import {RegistryBridge} from '../packages/compiler/src/symbols/registry-bridge.js';
+
+test('T04 managed StackTrace string members expose one overload per CLR signature', () => {
+  const bridge = new RegistryBridge();
+  const text = bridge.typeFromName('string');
+  const contains = text.getMembers('Contains').filter(method => !method.isStatic &&
+    method.parameters.length === 1 && method.parameters[0].type === text);
+  assert.equal(contains.length, 1);
+  assert(contains[0].contract);
+  assert.equal(bridge.symbolForBuiltin(BuiltinMap.get('string.Contains')), contains[0]);
+});
 
 const cases = [
   {
@@ -33,6 +45,14 @@ const cases = [
     body: 'Func<string> get=null;try{throw new ArithmeticException("captured");}' +
       'catch(ArithmeticException e){get=()=>e.Message;}Console.WriteLine(get());',
     output: 'captured\n'
+  },
+  {
+    name: 'successive exception base conversions preserve identity and dispatch',
+    body: 'ArithmeticException arithmetic=new DivideByZeroException("base chain");' +
+      'SystemException system=arithmetic;Exception error=system;' +
+      'Console.WriteLine(error==arithmetic);Console.WriteLine(error.Message);' +
+      'Console.WriteLine(error.GetType().Name);',
+    output: 'True\nbase chain\nDivideByZeroException\n'
   }
 ];
 

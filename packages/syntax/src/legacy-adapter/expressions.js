@@ -36,7 +36,11 @@ export class LegacyExpressionAdapter extends LegacyTypeAdapter {
   // ---- expressions ------------------------------------------------------------------------------------------------
   args(list, what = 'Named and by-reference arguments') {
     return list.arguments.map(a => {
-      if (a.nameColon || a.refKindKeyword) this.fail(a, 'SF1017', `${what} are not implemented in this profile`);
+      if (a.nameColon) this.fail(a, 'SF1017', `${what} are not implemented in this profile`);
+      if (a.refKindKeyword) return this.node('RefArgument', a, {
+        modifier: a.refKindKeyword.valueText,
+        expression: this.expression(a.expression)
+      });
       return this.expression(a.expression);
     });
   }

@@ -23,17 +23,26 @@ export function numericDifferential(source, expected, options = {}) {
   assert(compiled.success, JSON.stringify(compiled.diagnostics));
   const settings = {nativeIntBits: options.nativeIntBits ?? 32, ...options.vmOptions};
   const engines = [
-    ['source', new VirtualMachine(compiled.image, settings)],
-    ['reloaded source', new VirtualMachine(loadAssembly(compiled.assembly), settings)],
-    ['direct CIL', new CilVirtualMachine(compiled.assembly, settings)],
+    ['source', () => new VirtualMachine(compiled.image, settings)],
+    ['reloaded source', () => new VirtualMachine(loadAssembly(compiled.assembly), settings)],
+    ['direct CIL', () => new CilVirtualMachine(compiled.assembly, settings)],
   ];
   const outputs = {};
-  for (const [engine, vm] of engines) {
-    const result = vm.run();
+  for (const [engine, create] of engines) {
+    const vm = create();
     const label = `${options.family ?? 'numeric'} / ${engine} / ${options.operands ?? source}`;
+    let cursor = 0;
+    if (options.streamOutput) vm.onOutput = text => {
+      assert.equal(text, expected.slice(cursor, cursor + text.length), `${label}, output offset ${cursor}`);
+      cursor += text.length;
+      // Output budgets remain cumulative; the harness consumes each verified chunk.
+      vm.output.length = 0;
+    };
+    const result = vm.run();
     assert.equal(result.state, 'terminated', label + ': ' + result.fault?.stack);
-    assert.equal(result.output, expected, label);
-    outputs[engine] = result.output;
+    if (options.streamOutput) assert.equal(cursor, expected.length, label + ': output length');
+    else assert.equal(result.output, expected, label);
+    outputs[engine] = options.streamOutput ? expected : result.output;
   }
   return {compiled, outputs};
 }

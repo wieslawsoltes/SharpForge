@@ -142,10 +142,10 @@ test('CIL numeric seam: unordered floating comparisons and reference identity us
 test('CIL numeric seam: conversions truncate and preserve signed stack representations', () => {
   for (const [target, input, expected] of [
     ['i1', 255, -1], ['u1', -1, 255], ['i2', 65535, -1], ['u2', -1, 65535],
-    ['i4', 4294967295n, -1], ['u4', -1, -1], ['i', 4294967295n, nativeInteger(-1)], ['u', -1, -1],
+    ['i4', 4294967295n, -1], ['u4', -1, -1], ['i', 4294967295n, nativeInteger(-1)], ['u', -1, nativeInteger(-1)],
     ['i8', 18446744073709551615n, -1n], ['u8', -1n, -1n],
     ['i4', float(-3.9), -3], ['i8', float(3.9), 3n],
-  ]) assert.equal(convert('conv.' + target, input), expected, target);
+  ]) assert.deepEqual(convert('conv.' + target, input), expected, target);
   assert.deepEqual(convert('conv.r4', 16777217), float(16777216, 'r4'));
   assert.deepEqual(convert('conv.r8', 16777217), float(16777217));
   assert.deepEqual(convert('conv.r.un', -1), float(4294967295));
@@ -164,8 +164,8 @@ test('CIL numeric seam: checked conversions cover every signed and unsigned targ
     ['u8', 0n, 18446744073709551615n, 0n, -1n],
     ['i', -2147483648n, 2147483647n, -2147483648, 2147483647], ['u', 0n, 4294967295n, 0, -1],
   ]) {
-    assert.equal(convert('conv.ovf.' + target, min), expectedMin, target);
-    assert.equal(convert('conv.ovf.' + target, max), expectedMax, target);
+    assert.deepEqual(convert('conv.ovf.' + target, min), ['i','u'].includes(target)?nativeInteger(expectedMin):expectedMin, target);
+    assert.deepEqual(convert('conv.ovf.' + target, max), ['i','u'].includes(target)?nativeInteger(expectedMax):expectedMax, target);
     for (const input of [min - 1n, max + 1n]) throwsFault(() => convert('conv.ovf.' + target, input), 'OverflowException', 'Checked conversion overflow');
   }
   throwsFault(() => convert('conv.ovf.i4.un', -1), 'OverflowException');

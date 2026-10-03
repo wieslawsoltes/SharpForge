@@ -1,5 +1,9 @@
 /** Shared language cases: original regression suite and automatic engine parity discovery. */
 export const cases=[
+ ['Int64 local','long x=1;Console.WriteLine(x);','1\n'],
+ ['Single literal','var x=1.2f;Console.WriteLine(x);','1.2\n'],
+ ['Decimal literal','Console.WriteLine(1m);','1\n'],
+ ['catch filter','try{Console.WriteLine(1);}catch(Exception e) when(true){}','1\n'],
  ['hello','Console.WriteLine("Hello, managed world");','Hello, managed world\n'],
  ['precedence','Console.WriteLine(2 + 3 * 4);','14\n'],
  ['Int32 wrap','int x = 2147483647; x++; Console.WriteLine(x);','-2147483648\n'],
@@ -60,17 +64,13 @@ export const diagnosticCases=[
  ['double to int','int x=1.2;','CS0029'],
  ['const write','const int x=1;x=2;','CS0131'],
  ['no entry','class A {}','CS5001'],
- ['unsupported long','long x=1;','SF2200'],
- ['unsupported float literal','var x=1.2f;','SF1005'],
  ['invalid condition','if(1)Console.WriteLine(1);','CS0029']
 ];
 export const unsupportedCases=[
  'class A<T>{}Console.WriteLine(1);',
  'class A{public int X{get;init;}}Console.WriteLine(1);',
  'class B{}class A:B{}Console.WriteLine(1);',
- 'class A{static async void Main(){}}',
- 'try{Console.WriteLine(1);}catch(Exception e) when(true){}',
- 'Console.WriteLine(1m);'
+ 'class A{static async void Main(){}}'
 ];
 export const languageFixtures=[
  ...cases.map(([name,source,output])=>({id:'compiler/'+name,source,expected:{output}})),

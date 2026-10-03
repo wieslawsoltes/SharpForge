@@ -1,4 +1,5 @@
 import {markUnhandled} from './execution/unhandled.js';
+import {startAsyncContext} from './execution/async-start.js';
 import {retainsContextFrames, releaseContextFrames, finishContext, cancelContexts} from './execution/context-lifetimes.js';
 import {managedDelegateSignature} from '@sharpforge/cil';
 import {callRoots} from './execution/generic-calls.js';
@@ -145,9 +146,7 @@ export class CooperativeScheduler {
       if(d.name==='Sleep'){const ms=Number(n(values[0]));if(!Number.isInteger(ms)||ms<0||ms>86400000)throw new ManagedFault('ArgumentOutOfRangeException','Sleep duration must be 0–86400000 milliseconds');const t=this.createTask('void',{deadline:this.now()+ms});return this.wait(t.ref,{pushResult:wantsResult,voidResult:true});}
       if(d.name==='Yield'){this.steps=this.quantum;return p.managed(true,'bool');}
     }
-    if(d.kind==='startTask'){
-      const type=taskResult(d.result),t=this.createTask(type);this.vm.heap.withRoots([t.ref],()=>this.enqueue(values[0],[],{kind:d.owner==='SharpForge.Runtime.Async'?'async':'task',task:t,eager:d.owner==='SharpForge.Runtime.Async'&&!this.suppressed}));return t.ref;
-    }
+    if(d.kind==='startTask'||d.kind==='startAsyncVoid')return startAsyncContext(this,d,values[0]);
     if(d.kind==='await')return this.wait(values[0],{pushResult:wantsResult,voidResult:d.result==='void',forceYield:!!this.taskRecord(values[0]).forceYield});
     if(d.kind==='get'){
       if(d.property==='CompletedTask'){const t=this.createTask();this.complete(t);return t.ref;}
@@ -181,7 +180,29 @@ export class CooperativeScheduler {
     for(let i=1;i<=ids.length;i++){const c=this.contexts.get(ids[(at+i)%ids.length]);if(c.status==='ready'&&!c.frozen)return c;}
     return null;
   }
-  beforeSlice(){if(this.flushAsyncFault())return;if(!this.enabled||this.suppressed)return;if(['running','ready'].includes(this.vm.state)&&this.current?.frozen){this.save();this.current.status='ready';const next=this.choose();if(next){this.load(next);return;}this.parked=true;this.vm.state='waiting';this.vm.frames=[];if(!this.vm.inspector)this.vm.stack=[];}if(this.vm.state!=='waiting')return;this.turn++;this.poll();const next=this.choose();if(next)this.load(next);}
+  beforeSlice() {
+    if (this.flushAsyncFault() || !this.enabled || this.suppressed) return;
+    // Source restore pauses at a host boundary. Resuming a parked snapshot must
+    // reenter the wait path even when the host changes that pause to running.
+    if (this.parked && ['ready', 'running'].includes(this.vm.state) && !this.vm.frames.length) {
+      this.vm.state = 'waiting';
+    }
+    if (['running', 'ready'].includes(this.vm.state) && this.current?.frozen) {
+      this.save();
+      this.current.status = 'ready';
+      const next = this.choose();
+      if (next) { this.load(next); return; }
+      this.parked = true;
+      this.vm.state = 'waiting';
+      this.vm.frames = [];
+      if (!this.vm.inspector) this.vm.stack = [];
+    }
+    if (this.vm.state !== 'waiting') return;
+    this.turn++;
+    this.poll();
+    const next = this.choose();
+    if (next) this.load(next);
+  }
   beforeInstruction(){if(!this.enabled||this.suppressed)return;const c=this.current;if(c?.resumeFault){const error=c.resumeFault;c.resumeFault=null;if(this.vm.inspector)this.vm.raise(error);else this.vm.handleFault(error);}}
   afterInstruction(){if(!this.enabled||this.suppressed)return;this.turn++;this.steps++;this.save();if(this.flushAsyncFault())return;if(this.vm.state==='paused')return;
     const c=this.current;if(!c)return;

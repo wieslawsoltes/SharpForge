@@ -6,6 +6,7 @@ import { BuiltinMap } from '@sharpforge/bytecode';
 import { TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { n } from './node-factory.js';
+import {frameworkEventAssignment, frameworkDelegateValue} from './framework-events.js';
 
 const primitiveToString = new Set(['int', 'double', 'bool', 'string']);
 
@@ -21,7 +22,14 @@ export const CallTranslation = Base =>
         args = node.args ?? [],
         mapping = node.mapping;
       for (const a of args) if (a.refKind && a.refKind !== 'none') this.unsupported('ref, out and in arguments', a.expression?.syntax ?? node.syntax);
-      let values = args.map(a => this.expression(a.expression));
+      let values = args.map((argument, index) => {
+        const position = mapping?.parameterOf?.[index] ?? index;
+        const parameter = parameters[position];
+        if (method?.contract && parameter?.type?.typeKind === TypeKind.Delegate) {
+          return frameworkDelegateValue(this, argument.expression, method.contract.parameters[position]);
+        }
+        return this.expression(argument.expression);
+      });
       if (!mapping?.parameterOf || !parameters.length) return values;
       const positions = mapping.parameterOf,
         inOrder = positions.every((p, i) => i === 0 || p >= positions[i - 1]);
@@ -83,7 +91,6 @@ export const CallTranslation = Base =>
       const type = this.imageType(node.type, node.syntax);
       if (method.contract || method.builtin) {
         const receiver = method.isStatic || !node.receiver ? null : this.expression(node.receiver);
-        this.checkFrameworkParameters(method, node.syntax);
         return n.frameworkCall(method, receiver, this.contractArguments(method.contract, this.arguments(node, method)), type);
       }
       const iterator = node.receiver && !method.isStatic ? this.g.iterators.infoOf(this.imageType(node.receiver.type, node.syntax)) : null;
@@ -112,10 +119,6 @@ export const CallTranslation = Base =>
           return this.unsupported(`'${method.toDisplayString()}' on an iterator`, syntax);
       }
     }
-    /** Lowered delegates are image classes; the framework expects its own delegate objects. */
-    checkFrameworkParameters(method, syntax) {
-      if (method.parameters.some(p => p.type?.typeKind === TypeKind.Delegate)) this.unsupported('passing a delegate to a framework method', syntax);
-    }
     exprObjectCreation(node) {
       const type = node.type;
       if (type.typeKind === TypeKind.Delegate) return this.unsupported('this delegate creation form', node.syntax);
@@ -138,7 +141,6 @@ export const CallTranslation = Base =>
       const name = this.imageType(node.type, node.syntax);
       if (!ctor || typeof ctor !== 'object' || !(ctor.contract || ctor.builtin))
         return this.unsupported(`creating '${node.type.toDisplayString()}' (constructor not in the framework registry)`, node.syntax);
-      this.checkFrameworkParameters(ctor, node.syntax);
       return {
         kind: 'ObjectCreationExpression',
         legacyType: name,
@@ -220,9 +222,9 @@ export const CallTranslation = Base =>
     /** `e += handler` and `e -= handler`: a field-like event combines into its field, otherwise the accessor is called. */
     exprEventAssignment(node) {
       const event = node.event.originalDefinition ?? node.event,
-        handler = this.expression(node.handler),
         adding = node.operator === '+=';
-      if (!this.g.isSource(event)) return this.unsupported('framework events with lowered delegates', node.syntax);
+      if (!this.g.isSource(event)) return frameworkEventAssignment(this, node, event);
+      const handler = this.expression(node.handler);
       const accessor = adding ? event.addMethod : event.removeMethod;
       if (accessor?.hasBody) {
         const record = this.g.methodOf(accessor, node.syntax);

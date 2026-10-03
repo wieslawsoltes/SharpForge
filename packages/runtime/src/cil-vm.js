@@ -77,11 +77,13 @@ export class CilVirtualMachine {
   // CLI storage locations narrow integers and round single precision on write/load.
   storage(value,type){return storageValue(this,value,type,numericContext(this));}
   slotType(frame, arg, index) {
-    if (!arg) return frame.method.locals[index] === undefined ? undefined : callStorageType(frame.method.locals[index]);
-    if (frame.method.signature.isStatic) return callStorageType(frame.method.signature.parameters[index]);
-    if (index) return callStorageType(frame.method.signature.parameters[index - 1]);
-    const owner = frame.genericIdentity ?? frame.method.owner;
-    return this.typeSystem.table(owner).flags.valueType ? owner + '&' : 'object';
+    if (arg && !frame.method.signature.isStatic && index === 0) {
+      const owner = frame.genericIdentity ?? frame.method.owner;
+      return this.typeSystem.table(owner).flags.valueType ? owner + '&' : 'object';
+    }
+    const type = arg ? frame.method.signature.parameters[index - (frame.method.signature.isStatic ? 0 : 1)]
+      : frame.method.locals[index];
+    return type === undefined ? undefined : callStorageType(type);
   }
   indirect(value,name){return numericIndirect(value,name,numericContext(this));}
   resultValue(){const value=this.value(this.returnValue);if(this.returnType==='nuint'){const bits=nativeIntegerBits(this.options),n=BigInt.asUintN(bits,BigInt(value??0));return bits===32?Number(n):n;}return this.returnType==='uint'?Number(value)>>>0:this.returnType==='ulong'?BigInt.asUintN(64,value??0n):this.returnType==='bool'?!!value:value;}

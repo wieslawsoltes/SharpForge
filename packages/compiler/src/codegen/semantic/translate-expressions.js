@@ -4,6 +4,7 @@
  */
 import { findContracts } from '@sharpforge/framework';
 import { TypeKind } from '../../symbols/types.js';
+import {isExceptionUpcast} from '../../symbols/exception-identity.js';
 import { n } from './node-factory.js';
 
 const foldableTypes = new Set(['int', 'double', 'bool', 'string']);
@@ -222,8 +223,9 @@ export const ExpressionTranslation = Base =>
     /** A reference conversion changes only the static type: the value is the same object. */
     retyped(value, node) {
       const type = this.imageType(node.type, node.syntax);
-      // The image has no subtyping: only `object` accepts another representation (interfaces and base classes need dispatch).
-      if (value.legacyType !== type && type !== 'object' && value.kind !== 'Literal' && node.conversion?.kind === 'ImplicitReference')
+      // Managed exception bases share a reference representation; other class/interface conversions still need dispatch.
+      if (value.legacyType !== type && type !== 'object' && value.kind !== 'Literal' && node.conversion?.kind === 'ImplicitReference' &&
+          !isExceptionUpcast(node.operand.type, node.type, this.g.analysis.core.exception))
         return this.unsupported(`converting '${node.operand.type?.toDisplayString()}' to '${node.type.toDisplayString()}'`, node.syntax);
       return value.legacyType === type || value.kind !== 'Literal' ? value : { ...value, legacyType: type };
     }

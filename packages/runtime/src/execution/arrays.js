@@ -32,8 +32,8 @@ export function validateArrayShape(record) {
   let total=1;
   for(let i=shape.rank-1;i>=0;i--) {
     const length=shape.lengths[i],lower=shape.lowerBounds[i];
-    if(!Number.isInteger(length)||length<0||length>Number.MAX_SAFE_INTEGER||!Number.isInteger(lower)||lower<Number.MIN_SAFE_INTEGER||lower>Number.MAX_SAFE_INTEGER||
-      length>0&&!Number.isSafeInteger(lower+length-1)||shape.strides[i]!==total)invalid();
+    if(!Number.isInteger(length)||length<0||length>2147483647||!Number.isInteger(lower)||lower< -2147483648||lower>2147483647||
+      length>0&&lower+length-1>2147483647||shape.strides[i]!==total)invalid();
     total*=length;
   }
   if(total!==record.data.length||shape.szArray&&(shape.rank!==1||shape.lowerBounds[0]!==0))invalid();
@@ -58,7 +58,10 @@ export function createArray(vm,elementType,lengths,lowerBounds=null,{reflection=
   let total=1;
   for(let i=0;i<sizes.length;i++) {
     if(sizes[i]<0)throw fault(reflection?'ArgumentOutOfRangeException':'OverflowException','Array length cannot be negative');
-    if(sizes[i]>0&&!Number.isSafeInteger(bounds[i]+sizes[i]-1))throw fault('ArgumentOutOfRangeException','Array upper bound exceeds exact addressing');
+    if(bounds[i]< -2147483648||bounds[i]>2147483647||sizes[i]>0&&bounds[i]+sizes[i]-1>2147483647) {
+      throw fault('ArgumentOutOfRangeException','Array bounds must fit signed Int32');
+    }
+    if(sizes[i]>(vm.options?.maxArrayLength??2147483647))throw fault('OutOfMemoryException','Array dimension exceeds its configured limit');
     total*=sizes[i];
     if(!Number.isSafeInteger(total)||total>0xffffffff)throw fault('OutOfMemoryException','Array dimensions exceed the supported allocation size');
   }
@@ -78,6 +81,10 @@ export function arrayOffset(record,indices,{reflection=false}={}) {
   if(!Array.isArray(indices)||indices.length!==shape.rank)throw fault(reflection?'ArgumentException':'InvalidProgramException','Index count must match array rank');
   let offset=0;
   for(let i=0;i<indices.length;i++) {
+    const raw = number(indices[i]);
+    if (reflection && typeof raw === 'bigint' && (raw < -2147483648n || raw > 2147483647n)) {
+      throw fault('ArgumentOutOfRangeException', 'Reflection array indices must fit signed Int32');
+    }
     const index=integer(indices[i],reflection&&typeof number(indices[i])==='bigint'?'ArgumentOutOfRangeException':'IndexOutOfRangeException')-shape.lowerBounds[i];
     if(index<0||index>=shape.lengths[i])throw fault('IndexOutOfRangeException','Array index is outside its dimension bounds');
     offset+=index*shape.strides[i];
@@ -88,7 +95,7 @@ export function arrayDimension(vm,reference,dimension,property='length') {
   const shape=arrayShape(arrayRecord(vm,reference)),index=integer(dimension,'IndexOutOfRangeException');
   if(index<0||index>=shape.rank)throw fault('IndexOutOfRangeException','Array dimension is outside its rank');
   if(property==='lower')return shape.lowerBounds[index];
-  if(property==='upper')return shape.lowerBounds[index]+shape.lengths[index]-1;
+  if(property==='upper')return (shape.lowerBounds[index]+shape.lengths[index]-1)|0;
   return shape.lengths[index];
 }
 export function arrayGet(vm,reference,indices,{reflection=false,type=null}={}) {

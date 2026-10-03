@@ -109,6 +109,13 @@ export const intrinsicDefinitions=Object.freeze([...definitions.values()]);
 export function intrinsicDefinition(descriptor) {
   if(descriptor?.kind!=='method'||!descriptor.signature||!Array.isArray(descriptor.signature.parameters))return null;
   const signature=descriptor.signature;
+  if(!signature.genericArity&&(descriptor.genericArguments!==undefined||descriptor.methodArguments?.length))return null;
+  if(!signature.genericArity&&!signature.callingConvention) {
+    const contract=frameworkDefinitions.get(signatureKey(canonicalType(descriptor.owner),descriptor.name,signature.parameters.map(canonicalType),canonicalType(signature.returnType),signature.isStatic));
+    if(contract)return contract;
+    const registered=builtinDefinitions.get(signatureKey(systemType(descriptor.owner),descriptor.name,signature.parameters.map(type=>type==='Array'?'System.Array':type),signature.returnType,signature.isStatic));
+    if(registered)return registered;
+  }
   const memory=memoryMethodDefinition(descriptor);if(memory)return memory;
   const array=arrayMethodDefinition(descriptor);if(array)return array;
   const async=asyncMethodDefinition(descriptor);if(async)return async;

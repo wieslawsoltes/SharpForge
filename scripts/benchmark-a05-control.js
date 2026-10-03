@@ -9,7 +9,17 @@ assert(Number.isInteger(iterations)&&iterations>=10&&iterations<=10000);
 const fixtures={
   call:controlFixture([{name:'Program',methods:[{name:'Main',result:'int',body:(w,c)=>w.op('ldc.i4',41).op('call',c.methods.get('Program.Inc')).op('ret')},{name:'Inc',parameters:['int'],result:'int',body:w=>w.op('ldarg.0').op('ldc.i4.1').op('add').op('ret')}]}]),
   tail:controlFixture([{name:'Program',methods:[{name:'Main',result:'int',body:(w,c)=>w.op('ldc.i4',42).op('ldc.i4.0').op('call',c.methods.get('Program.Count')).op('ret')},{name:'Count',parameters:['int','int'],result:'int',body:(w,c)=>w.op('ldarg.0').op('brfalse','end').op('ldarg.0').op('ldc.i4.1').op('sub').op('ldarg.1').op('ldc.i4.1').op('add').op('tail.').op('call',c.methods.get('Program.Count')).op('ret').label('end').op('ldarg.1').op('ret')}]}]),
-  exception:controlFixture([{name:'Program',methods:[{name:'Main',result:'int',body:w=>w.label('try').op('ldc.i4.1').op('ldc.i4.0').op('div').op('pop').op('leave','end').label('tryEnd').label('catch').op('pop').op('leave','end').label('catchEnd').label('end').op('ldc.i4',42).op('ret'),handlers:(labels,c)=>[{flags:0,start:labels.get('try'),end:labels.get('tryEnd'),target:labels.get('catch'),handlerEnd:labels.get('catchEnd'),catchType:c.resolve('System.Exception')}]}]})
+  exception: controlFixture([{name: 'Program', methods: [{
+    name: 'Main', result: 'int',
+    body: writer => writer.label('try').integer(1).integer(0).op('div').op('pop')
+      .op('leave', 'end').label('tryEnd').label('catch').op('pop')
+      .op('leave', 'end').label('catchEnd').label('end').integer(42).op('ret'),
+    handlers: (labels, context) => [{
+      flags: 0, start: labels.get('try'), end: labels.get('tryEnd'),
+      target: labels.get('catch'), handlerEnd: labels.get('catchEnd'),
+      catchType: context.resolve('System.Exception')
+    }]
+  }]}])
 };
 const summarize=samples=>{const values=samples.toSorted((a,b)=>a-b),at=p=>values[Math.min(values.length-1,Math.ceil(values.length*p)-1)];return {mean:values.reduce((a,b)=>a+b,0)/values.length,p50:at(.5),p95:at(.95),p99:at(.99)};};
 const cases=[];

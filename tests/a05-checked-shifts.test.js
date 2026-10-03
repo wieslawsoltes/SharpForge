@@ -34,5 +34,5 @@ for (const source of ['double x=1;Console.WriteLine(x>>>1);', 'int x=1;Console.W
 test('T01.9 unsigned right shift enforces the C# 11 feature boundary', () => {
   const result = compile('int value=-1;Console.WriteLine(value>>>1);', {langVersion: '10'});
   assert.equal(result.success, false);
-  assert(result.diagnostics.some(diagnostic => diagnostic.code === 'CS9058'));
+  assert(result.diagnostics.some(diagnostic => diagnostic.code === 'CS8936'));
 });

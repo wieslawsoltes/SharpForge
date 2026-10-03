@@ -1,3 +1,4 @@
+import {registerFrame} from '../packages/runtime/src/execution/frame-lifetimes.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {ManagedHeap} from '@sharpforge/runtime';
@@ -19,7 +20,7 @@ function harness({nativeIntBits=32}={}) {
   };
   vm.scheduler=scheduler;vm.dereference=(...args)=>dereference(vm,...args);vm.sync=new SyncPrimitives(vm);
   const select=id=>{scheduler.currentId=id;const context=contexts.get(id);if(context.status!=='waiting')context.status='running';vm.frames=context.frames;};
-  const slot=(type,value,readonly=false)=>{const id=vm.image.methods.length,frame={id:id+1,methodId:id,locals:[value]};vm.image.methods.push({locals:[{type}]});scheduler.current.frames.push(frame);vm.frames=scheduler.current.frames;return address(vm,'local',0,null,{frameId:frame.id,type,readonly});};
+  const slot=(type,value,readonly=false)=>{const id=vm.image.methods.length,frame={id:id+1,methodId:id,locals:[value]};vm.image.methods.push({locals:[{type}]});registerFrame(vm,frame);scheduler.current.frames.push(frame);vm.frames=scheduler.current.frames;return address(vm,'local',0,null,{frameId:frame.id,type,readonly});};
   const call=(owner,name,parameters,returnType,args,extra={})=>vm.sync.invoke({owner:'System.Threading.'+owner,name,signature:{parameters,returnType,isStatic:true,...extra.signature},...extra},args);
   return {vm,heap,sync:vm.sync,scheduler,tasks,contexts,select,slot,call};
 }

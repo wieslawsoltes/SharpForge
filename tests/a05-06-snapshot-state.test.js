@@ -35,7 +35,8 @@ for(const [engine,create] of Object.entries(engines)) {
     vm.stop();
     for(let i=0;i<2;i++) {
       vm.restore(saved);if(vm.state==='paused')vm.state='running';
-      const result=await vm.runAsync();assert.equal(result.state,'terminated',result.fault?.stack);assert.equal(result.output,'start\nmiddle\nend\n');
+      let slices=0;
+      const result=await vm.runAsync({onSlice(){assert(++slices<100,'Parked replay must make progress');}});assert.equal(result.state,'terminated',result.fault?.stack);assert.equal(result.output,'start\nmiddle\nend\n');
     }
   });
   test(`a05-06 ${engine}: active resume faults remain GC roots and retain aliases across components`,()=>{
@@ -67,16 +68,16 @@ for(const [engine,create] of Object.entries(engines)) {
   });
   test(`a05-06 ${engine}: synchronization and suspended intrinsics restore together after their live roots are gone`,()=>{
     const vm=create(nested),gate=vm.heap.object('object',[]),array=createArray(vm,'int',[256]);
-    vm.heap.get(array).data=Array.from({length:256},(_,index)=>256-index);
+    vm.heap.get(array).data.set(Array.from({length:256},(_,index)=>256-index));
     vm.sync.enter(gate);vm.sync.enter(gate);mutateArray(vm,'Sort',array);
     resumeArrayOperation(vm,vm.top,{workBudget:1});
     const saved=vm.snapshot(),prefix=[...vm.heap.get(array).data],work=saved.frames[0].intrinsicContinuation.work;
     vm.stop();vm.sync.clear();vm.heap.collect();assert.throws(()=>vm.heap.get(array));assert.throws(()=>vm.heap.get(gate));
     for(let replay=0;replay<2;replay++){
       vm.restore(saved);assert.equal(vm.sync.block(gate).depth,2);assert.equal(vm.scheduler.current.frames,vm.frames);
-      assert.equal(vm.top.intrinsicContinuation.work,work);assert.deepEqual(vm.heap.get(array).data,prefix);
+      assert.equal(vm.top.intrinsicContinuation.work,work);assert.deepEqual([...vm.heap.get(array).data],prefix);
       while(!resumeArrayOperation(vm,vm.top,{workBudget:2}).done){}
-      assert.deepEqual(vm.heap.get(array).data,Array.from({length:256},(_,index)=>index+1));
+      assert.deepEqual([...vm.heap.get(array).data],Array.from({length:256},(_,index)=>index+1));
       vm.sync.exit(gate);assert.equal(vm.sync.block(gate).depth,1);assert.equal(saved.sync.blocks[0][1].depth,2);
     }
   });
@@ -90,7 +91,7 @@ for(const [engine,create] of Object.entries(engines)) {
       state=>{state.frames[0].intrinsicContinuation.reference={h:array.h,g:array.g+1};},
       state=>{state.frames[0].intrinsicContinuation.owner=Object.freeze({});},
       state=>{state.frames[0].intrinsicContinuation.index=4;},
-      state=>{state.heap.records[array.h].arrayShape={rank:1,szArray:true,lengths:[127],lowerBounds:[0],strides:[1]};},
+      state=>{state.heap.records[array.h]={...state.heap.records[array.h],arrayShape:{rank:1,szArray:true,lengths:[127],lowerBounds:[0],strides:[1]}};},
       state=>{state.scheduler.contexts[0][1].frames=[{...state.frames[0]}];},
       state=>{state.scheduler.unhandledFault={name:'Exception',message:'unowned host fault'};}
     ];
@@ -101,10 +102,16 @@ for(const [engine,create] of Object.entries(engines)) {
   });
   test(`a05-06 ${engine}: monitor wait tasks and Boolean addresses replay from parked contexts`,()=>{
     const vm=create(compile('bool taken=false;Console.WriteLine(taken);')),gate=vm.heap.object('object',[]);
+    for(let steps=0;(vm.inspector?vm.top.method.locals:vm.image.methods[vm.top.methodId].locals).length===0;steps++){
+      assert(steps<20,'Startup must enter the fixture body');vm.runSlice({instructionBudget:1,timeBudgetMs:1000});
+    }
     vm.sync.enter(gate);const entry=vm.inspector?vm.top.method.token:vm.top.methodId;
     const worker=vm.scheduler.createContext(()=>{vm.call(entry,[]);return SUSPENDED;},[],{name:'Monitor waiter'});
-    vm.scheduler.save();vm.scheduler.load(vm.scheduler.contexts.get(worker));vm.top.locals[0]=vm.inspector?0:false;
-    const flag=vm.address('local',0);assert.equal(vm.sync.enter(gate,{flag}),SUSPENDED);
+    vm.scheduler.save();vm.scheduler.load(vm.scheduler.contexts.get(worker));
+    const locals=vm.inspector?vm.top.method.locals:vm.image.methods[vm.top.methodId].locals;
+    const flagIndex=locals.findIndex(local=>['bool','System.Boolean'].includes(typeof local==='string'?local:local.type));
+    assert(flagIndex>=0,'Fixture must retain its Boolean local');vm.top.locals[flagIndex]=vm.inspector?0:false;
+    const flag=vm.address('local',flagIndex);assert.equal(vm.sync.enter(gate,{flag}),SUSPENDED);
     vm.scheduler.save();vm.scheduler.load(vm.scheduler.contexts.get(1));
     const saved=vm.snapshot();assert.equal(saved.sync.blocks[0][1].entries[0].flag,flag);
     const corrupt=copyExecution(saved.sync);corrupt.blocks[0][1].entries[0].contextId=1;

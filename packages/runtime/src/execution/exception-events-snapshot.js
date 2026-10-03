@@ -43,10 +43,11 @@ export function validateExceptionEventsSnapshot(vm, snapshot) {
       || typeof event.fault.name !== 'string' || typeof event.fault.message !== 'string') fail('phase or fault');
     if (!Array.isArray(event.handlers) || !Number.isInteger(event.index) || event.index < 1 || event.index > event.handlers.length) fail('cursor');
     if (event.handlers.length > (vm.options.maxExceptionEventHandlers ?? 1024)) fail('captured handler limit');
-    if (!Array.isArray(event.args) || event.args.length !== 2 || !same(event.args[0], domain)) fail('arguments');
+    const first = event.phase === 'firstChance';
+    if (!Array.isArray(event.args) || event.args.length !== 2
+        || (first ? !same(event.args[0], domain) : event.args[0] !== null)) fail('arguments');
     record(event.fault.reference);
     const args = record(event.args[1]);
-    const first = event.phase === 'firstChance';
     for (const handler of event.handlers) subscriber(handler, first);
     const expected = first ? 'System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs' : 'System.UnhandledExceptionEventArgs';
     if (args.type !== expected || !same(property(args, first ? 'Exception' : 'ExceptionObject'), event.fault.reference)) fail('fault alias');

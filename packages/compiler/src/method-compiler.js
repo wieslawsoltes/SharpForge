@@ -1,3 +1,4 @@
+import {SynchronizationCompiler} from './synchronization.js';
 import {ScalarCompiler} from './scalar-builtins.js';
 import {compileBinary} from './binary-expression.js';
 import {prepareMemoryReference, loadMemoryReference, storeMemoryReference} from './memory-expressions.js';
@@ -139,7 +140,7 @@ class CoreMethodCompiler {
   switchType(node){const types=node.arms.map(a=>this.infer(a.expression));if(types.every(numeric))return [...new Set(types)].find(type=>node.arms.every(arm=>this.scalarAccepts(arm.expression,type)))??'error';return types.find(t=>t!=='null')??'error';}
   switchExpression(node){
     const type=this.switchType(node),before=new Set(this.assigned),dispatch=this.switchDispatch(node,node.arms.map(a=>[a.pattern])),ends=[],assigned=[];
-    node.arms.forEach((arm,index)=>{for(const p of dispatch.branches[index])this.patch(p);if(dispatch.fallback===index)this.patch(dispatch.otherwise);this.assigned=new Set(before);this.checkAssign(type,this.expr(arm.expression),arm);assigned.push(new Set(this.assigned));ends.push(this.emit(Op.JUMP));});
+    node.arms.forEach((arm,index)=>{for(const p of dispatch.branches[index])this.patch(p);if(dispatch.fallback===index)this.patch(dispatch.otherwise);this.assigned=new Set(before);this.checkAssign(type,this.typedExpr(arm.expression,type),arm);assigned.push(new Set(this.assigned));ends.push(this.emit(Op.JUMP));});
     if(dispatch.fallback<0){this.patch(dispatch.otherwise);this.emitConstant('No switch expression arm matched.');this.emit(Op.BUILTIN,BuiltinMap.get('Exception.new').id,1);this.emit(Op.THROW);this.c.report(node,'CS8509',['_']);}
     for(const p of ends)this.patch(p);this.clear(dispatch.slot);this.assigned=assigned.length?new Set([...assigned[0]].filter(x=>assigned.every(s=>s.has(x)))):before;return type;
   }
@@ -239,7 +240,7 @@ class CoreMethodCompiler {
         const property=this.property(node);if(property)return this.readProperty(property,node);
         const f=this.field(node);if(f){this.c.reference(node,f.symbol);if(f.isStatic)this.emit(Op.LDSTATIC,f.index);else{this.expr(node.target);this.emit(Op.LDFLD,f.index);}return f.type;}
         this.c.report(node,'CS1061',[typeText(type),node.name]);this.emitConstant(null);return 'error';}
-      case 'Index':{const type=this.expr(node.target);const index=this.expr(node.index);this.checkAssign('int',index,node.index);if(!type.endsWith('[]'))this.c.report(node,'SF2005',[typeText(type)]);this.emit(Op.LDELEM);return type.endsWith('[]')?type.slice(0,-2):'error';}
+      case 'Index':{const type=this.expr(node.target);this.arrayIndex(node.index);if(!type.endsWith('[]'))this.c.report(node,'SF2005',[typeText(type)]);this.emit(Op.LDELEM);return type.endsWith('[]')?type.slice(0,-2):'error';}
       case 'Binary':{
         if(['&&','||','??'].includes(node.operator)){
           const lt=this.expr(node.left);this.emit(Op.DUP);let jump;
@@ -309,4 +310,4 @@ class CoreMethodCompiler {
   storeRef(ref){if(storeMemoryReference(this,ref))return;if(ref.kind==='framework'){this.storeFramework(ref);return;}if(ref.kind==='property'){const value=this.temp(ref.type);this.emit(Op.STLOC,value);this.emit(Op.POP);if(ref.property.set){if(!ref.property.isStatic)this.emit(Op.LDLOC,ref.receiver);this.emit(Op.LDLOC,value);this.emit(Op.CALL,ref.property.set.id,ref.property.isStatic?1:2);this.emit(Op.POP);}this.emit(Op.LDLOC,value);this.clear(value);if(ref.receiver!==null)this.clear(ref.receiver);}else if(ref.kind==='local'){this.emit(Op.STLOC,ref.slot);this.assigned.add(ref.slot);}else if(ref.kind==='static')this.emit(Op.STSTATIC,ref.index);else{const value=this.temp(ref.type);this.emit(Op.STLOC,value);this.emit(Op.POP);this.emit(Op.LDLOC,ref.receiver);if(ref.kind==='index')this.emit(Op.LDLOC,ref.index);this.emit(Op.LDLOC,value);this.emit(ref.kind==='field'?Op.STFLD:Op.STELEM,ref.kind==='field'?ref.index:0);this.clear(value);this.clear(ref.receiver);if(ref.kind==='index')this.clear(ref.index);}}
 }
 /** The complete method compiler: explicit class composition instead of prototype patching. */
-export class MethodCompiler extends ScalarCompiler(ModernCompiler(FrameworkCompiler(CoreMethodCompiler))) {}
+export class MethodCompiler extends SynchronizationCompiler(ScalarCompiler(ModernCompiler(FrameworkCompiler(CoreMethodCompiler)))) {}

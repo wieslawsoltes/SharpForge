@@ -93,6 +93,7 @@ export function exceptionStackTrace(vm, reference) {
 
 /** Materialize a runtime fault and record this throw unless it is a rethrow/EDI continuation. */
 export function prepareException(vm, fault) {
+  fault.frames ??= managedStackTrace(vm);
   if (!fault.reference) {
     const inner = fault.innerException?.reference ?? null;
     fault.reference = vm.heap.withRoots([inner], () => createException(vm, fault.name, vm.heap.string(fault.message), inner));

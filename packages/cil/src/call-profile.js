@@ -5,7 +5,16 @@ import {genericTypeParts} from './field-profile.js';
 import {frameworkType} from '@sharpforge/framework';
 
 const aliases=new Map(Object.entries({'System.Void':'void','System.Boolean':'bool','System.Char':'char','System.SByte':'sbyte','System.Byte':'byte','System.Int16':'short','System.UInt16':'ushort','System.Int32':'int','System.UInt32':'uint','System.Int64':'long','System.UInt64':'ulong','System.Single':'float','System.Double':'double','System.Decimal':'decimal','System.String':'string','System.Object':'object','System.IntPtr':'nint','System.UIntPtr':'nuint'}));
-export const normalizeCallType=type=>type.replace(/[A-Za-z_][\w.+`]+/g,name=>name==='System.Exception'?'Exception':aliases.get(name)??name).replace(/,\s+/g,',');
+/** Normalize signature components, preserving opaque metadata identifiers such as closure-cell names. */
+export function normalizeCallType(type) {
+  const modifier=type.search(/\s+(?:modreq\(|modopt\(|pinned$)/);
+  if(modifier>=0)return normalizeCallType(type.slice(0,modifier))+type.slice(modifier);
+  const suffix=type.match(/(?:\[[\d\s,.*:+-]*\]|[&*])$/);
+  if(suffix)return normalizeCallType(type.slice(0,-suffix[0].length))+suffix[0];
+  const parts=genericTypeParts(type);
+  if(parts.arguments.length)return parts.definition+'<'+parts.arguments.map(normalizeCallType).join(',')+'>';
+  return type==='System.Exception'?'Exception':aliases.get(type)??type;
+}
 
 export function substituteCallType(type,typeArguments=[],methodArguments=[]) {
   return normalizeCallType(type.replace(/!!\d+|!\d+/g,variable=>variable.startsWith('!!')?methodArguments[Number(variable.slice(2))]??variable:typeArguments[Number(variable.slice(1))]??variable));

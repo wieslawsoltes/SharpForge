@@ -40,6 +40,14 @@ for (const pipeline of ['bound', 'legacy']) {
 // Local functions require semantic lowering; these prevent scalar/memory support from silently depending on the legacy adapter.
 const semanticCases = [
   {
+    name: 'semantic Decimal constructors compose with instance formatting and out arguments',
+    source: 'using System; decimal Read(){decimal initial=new decimal(12345,0,0,false,2);' +
+      'Console.WriteLine(initial.ToString());decimal parsed;' +
+      'Console.WriteLine(decimal.TryParse("12.30",out parsed));return parsed;}' +
+      'decimal result=Read();Console.WriteLine(result);Console.WriteLine(decimal.GetBits(result)[3]);',
+    output: '123.45\nTrue\n12.30\n131072\n',
+  },
+  {
     name: 'semantic scalar closures and typed framework overloads',
     source: 'using System; long seed=9223372036854775806L; long Next(){return ++seed;}' +
       'decimal Round(decimal x){return Math.Round(x,2);} Console.WriteLine(Next());' +

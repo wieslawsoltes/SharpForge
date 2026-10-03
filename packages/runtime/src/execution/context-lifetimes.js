@@ -28,7 +28,9 @@ export function finishContext(scheduler, context) {
   Object.assign(context, scheduler.capture());
   context.preserveFrames = !!context.fault && (context.fault.fatal === true
     || context.fault.unhandled === true && (!context.task || context.kind === 'thread'));
-  if (context.fault && ['awaiter-continuation', 'async-state-machine'].includes(context.kind) && !context.task) {
+  const postedFault = context.kind === 'async-void'
+    || ['awaiter-continuation', 'async-state-machine'].includes(context.kind) && !context.task;
+  if (context.fault && postedFault) {
     scheduler.postAsyncFault(context.fault);
   }
   if (context.task) scheduler.complete(scheduler.taskRecord(context.task), context.returnValue, context.fault);

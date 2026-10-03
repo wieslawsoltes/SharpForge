@@ -50,7 +50,7 @@ test('T01.1/T01.10 100,000 native operand pairs cover every signed and unsigned 
 test('T01.8/T01.10 the same 100,000-pair C# program matches native in all three execution routes', () => {
   const {text, provenance} = numericOracle('int64.txt.gz');
   numericDifferential(int64OracleSource(), text, {
-    family: '100k Int64 matrix', nativeIntBits: provenance.nativeIntBits,
+    family: '100k Int64 matrix', streamOutput: true, nativeIntBits: provenance.nativeIntBits,
     vmOptions: {maxInstructions: 2_000_000_000, maxOutputCharacters: 256 * 1024 * 1024},
   });
 });

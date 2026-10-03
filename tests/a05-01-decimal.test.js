@@ -75,7 +75,9 @@ test('A05 T01 Decimal intrinsic constructors, byrefs, bit arrays and boxing use 
   const value=call('.ctor',['int','int','int','bool','byte'],'void',[12345,0,0,false,3],false).value;
   assert.equal(decimalFormat(value),'12.345');
   call('.ctor',['int'],'void',[address,7],false);assert.equal(decimalFormat(slot.value),'7');
-  const bits=call('GetBits',['System.Decimal'],'int[]',[value]).value;assert.deepEqual(heap.get(bits).data,[12345,0,0,3<<16]);
+  const bits=call('GetBits',['System.Decimal'],'int[]',[value]).value;
+  assert(heap.get(bits).data instanceof Int32Array);
+  assert.deepEqual(Array.from(heap.get(bits).data),[12345,0,0,3<<16]);
   assert.equal(decimalFormat(call('.ctor',['int[]'],'void',[bits],false).value),'12.345');
   const boxed=heap.allocate('box','System.Decimal',[value]);
   const text=call('ToString',[],'string',[boxed],false).value;assert.equal(heap.get(text).data,'12.345');

@@ -25,7 +25,7 @@ function element(p,doc,index){return p.make(J+'JsonElement',{'$doc':doc,'$index'
 function serialize(p,input){
  const seen=new Set();let nodes=0;
  const visit=(v,depth)=>{if(depth>128||++nodes>MAX_NODES)fail('JsonException','Serialization depth or node limit exceeded');v=p.native(v);if(!isReference(v)){if(typeof v==='number'&&!Number.isFinite(v))fail('JsonException','Nonfinite numbers are not supported');return v;}
-  const id=v.h+':'+v.g;if(seen.has(id))fail('JsonException','Object cycle');seen.add(id);try{const r=p.heap.get(v),t=frameworkType(r.type);if(r.kind==='box')return visit(r.data[0],depth+1);if(r.kind==='array')return r.data.map(x=>visit(x,depth+1));
+  const id=v.h+':'+v.g;if(seen.has(id))fail('JsonException','Object cycle');seen.add(id);try{const r=p.heap.get(v),t=frameworkType(r.type);if(r.kind==='box')return visit(r.data[0],depth+1);if(r.kind==='array'){const element=r.methodTable.elementType?.name;return Array.from(r.data,x=>visit(element==='System.Boolean'?!!x:element==='System.Char'?String.fromCharCode(x):x,depth+1));}
    if(t?.kind==='bcl'&&['List','Queue','Stack','HashSet'].includes(t.family)){const data=p.get(v,'$data')?p.heap.get(p.get(v,'$data')).data:[],count=p.get(v,'$count'),head=p.get(v,'$head',0);return Array.from({length:count},(_,i)=>visit(data[t.family==='Queue'?(head+i)%data.length:t.family==='Stack'?count-1-i:i],depth+1));}
    if(t?.family==='Dictionary'&&t.key==='string'){const out=Object.create(null),data=p.get(v,'$data')?p.heap.get(p.get(v,'$data')).data:[];for(let i=0;i<p.get(v,'$count');i++)out[p.native(data[i*2])]=visit(data[i*2+1],depth+1);return out;}
    fail('NotSupportedException','JSON serialization supports primitives, arrays and the registered collections, not arbitrary object reflection');
