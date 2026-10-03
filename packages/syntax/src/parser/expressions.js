@@ -63,9 +63,7 @@ export const expressionMethods = {
       }
       if (text === '..') {
         if (min > P.Range) break;
-        this.feature('RangeOperator', start);
-        const token = this.take();
-        left = this.n('RangeExpression', left, token, this.canStartExpression() ? this.expression(P.Unary) : null);
+        left = this.rangeExpression(left);
         continue;
       }
       if (this.isWithExpression()) {
@@ -97,15 +95,11 @@ export const expressionMethods = {
       const lambda = this.anonymousFunction(min);
       if (lambda) return lambda;
     }
+    if (kind === '^') return this.indexExpression();
+    if (kind === '..') return this.rangeExpression(null);
     if (Object.hasOwn(prefixOperators, kind)) {
-      if (kind === '^') this.feature('IndexOperator', token);
       const operator = this.take();
       return this.n(prefixOperators[kind], operator, this.expression(P.Unary));
-    }
-    if (kind === '..') {
-      this.feature('RangeOperator', token);
-      const operator = this.take();
-      return this.n('RangeExpression', null, operator, this.canStartExpression() ? this.expression(P.Unary) : null);
     }
     if (kind === 'await' && this.isAwaitExpression()) return this.awaitExpression();
     if (kind === '(' && this.isCast()) {

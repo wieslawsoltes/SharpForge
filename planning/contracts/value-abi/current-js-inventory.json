@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "sources": {
+    "packages/runtime/src/heap.js": "5fd22d7d5be4a87a491b2655c10574e501f857cd47658f1994022acaf404dff6",
+    "packages/runtime/src/vm.js": "337051529a1790dc897bd8e747dcad88eb620136a0eded6d09541273606ce81d",
+    "packages/runtime/src/cil-vm.js": "867ac287808ef46aee312500e6d1f37a2e918173a0949bc6668821462f833669",
+    "packages/bytecode/src/index.js": "281674234a0d9ca3d3b656f86a5830b4ec0c6f66a0930c13bdf50919ee2545fe",
+    "packages/bytecode/src/builtins.js": "ec47a8869551dcf73f2bf0c82e32e9a50091956abb8c50df433a0091e0b0ac56"
+  },
+  "resultKinds": {
+    "int": {
+      "source": "number (Int32 narrowed by bitwise operations)",
+      "cil": "number (Int32 stack category)"
+    },
+    "long": {
+      "source": "bigint (signed Int64)",
+      "cil": "bigint (signed Int64)"
+    },
+    "double": {
+      "source": "number (IEEE 754 binary64)",
+      "cil": "frozen {float: r8, value: number}"
+    },
+    "numeric": {
+      "source": "number",
+      "cil": "number | bigint | frozen {float: r4|r8, value: number}"
+    },
+    "bool": {
+      "source": "boolean",
+      "cil": "number (0 or 1)"
+    },
+    "string": {
+      "source": "frozen {h,g} to UTF-16 string record",
+      "cil": "frozen {h,g} to UTF-16 string record"
+    },
+    "array": {
+      "source": "frozen {h,g} to array record",
+      "cil": "frozen {h,g} to array record"
+    },
+    "exception": {
+      "source": "ManagedFault with optional reference, frames",
+      "cil": "ManagedFault with optional reference, frames"
+    },
+    "any": {
+      "source": "number | bigint | boolean | null | undefined | {h,g}",
+      "cil": "number | bigint | null | undefined | {h,g} | float | byref | methodPointer"
+    }
+  },
+  "additionalShapes": [
+    {
+      "shape": "null",
+      "meaning": "null reference and default reference storage"
+    },
+    {
+      "shape": "undefined",
+      "meaning": "unassigned local; not a portable value"
+    },
+    {
+      "shape": "{h,g}",
+      "meaning": "zero-based heap index, positive safe-integer generation; neither scoped epoch nor portable uint32 checked by isReference"
+    },
+    {
+      "shape": "{byref:true,kind,index,owner,frameId}",
+      "meaning": "CIL managed interior/frame address; never portable raw pointer"
+    },
+    {
+      "shape": "{methodPointer:true,token}",
+      "meaning": "CIL ldftn pointer identity"
+    },
+    {
+      "shape": "host lease {id,owner}",
+      "meaning": "heap-local opaque strong or weak handle"
+    }
+  ],
+  "evidence": [
+    "ManagedHeap.allocate returns Object.freeze({h,g})",
+    "ManagedHeap.array caps length at 1000000",
+    "CilVirtualMachine.storage/convert implement narrow and BigInt integer categories",
+    "VirtualMachine.binary uses number with Int32 modes"
+  ],
+  "unsupported": [
+    "Rust engine qualification",
+    "Wasm runtime qualification",
+    "decimal execution parity",
+    "arbitrary value structs in source VM"
+  ]
+}
