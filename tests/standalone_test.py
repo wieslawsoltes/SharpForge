@@ -29,7 +29,7 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
     state = page.evaluate('window.sharpforge.getState()')
     assert len(workers) == 2, workers
     assert state['metrics']['files'] == 2, state['metrics']
-    assert not state['diagnostics'], state['diagnostics']
+    assert not [d for d in state['diagnostics'] if d['severity']=='error'], state['diagnostics']
     assert state['artifact']['format'] == 'ECMA-335'
     assert page.evaluate('Array.from(window.sharpforge.getAssembly().slice(0,2))') == [77,90]
     page.evaluate('window.sharpforge.run()')

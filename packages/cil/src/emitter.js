@@ -6,7 +6,7 @@ import { CilWriter } from './opcodes.js';
 import { TEXT_RVA, writeMethodBody, writePE } from './pe.js';
 import { analyzeMethod, constantType, validateInput } from './analysis.js';
 const markerName='SharpForge.<>AllocationToken';
-const isValue=t=>['int','double','bool'].includes(t)||['enum','value'].includes(frameworkType(t)?.kind);
+const isValue=t=>['int','long','double','bool'].includes(t)||['enum','value'].includes(frameworkType(t)?.kind);
 const binaryCodes={'+':'add','-':'sub','*':'mul','/':'div','%':'rem','&':'and','|':'or','^':'xor','<<':'shl','>>':'shr'};
 function safeName(name) { if(typeof name!=='string'||!name||name.length>512||/[\0/\\]/.test(name))throw new CilError('Invalid assembly name');return name.replace(/\.dll$/i,''); }
 /** Emits genuine PE/CLI metadata and CIL bodies. No JS source, host eval or embedded executable bytecode. */
@@ -127,5 +127,5 @@ function emitBuiltin(c,w,id,count,types,adapt) {
   else if(name.startsWith('string.')){owner='string';member=name.slice(7);result=['Contains','StartsWith','EndsWith','IsNullOrEmpty'].includes(member)?'bool':member==='IndexOf'?'int':'string';instance=!['Concat','IsNullOrEmpty'].includes(member);params=member==='Concat'?['string','string']:member==='IsNullOrEmpty'?['string']:member==='Substring'?Array(count-1).fill('int'):['Contains','IndexOf','StartsWith','EndsWith'].includes(member)?['string']:member==='Replace'?['string','string']:[];}
   else throw new CilError(`No CIL intrinsic mapping for ${name}`);
   if(!extra)adapt(types,[...(instance&&!newObject?[owner]:[]),...params]);
-  w.op(newObject?'newobj':instance?'callvirt':'call',c.external(owner,member,result,params,!instance));if(result==='long')w.op('conv.i4');if(result==='void'&&!newObject)w.op('ldnull');
+  w.op(newObject?'newobj':instance?'callvirt':'call',c.external(owner,member,result,params,!instance));if(result==='void'&&!newObject)w.op('ldnull');
 }

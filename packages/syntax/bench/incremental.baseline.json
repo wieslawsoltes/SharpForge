@@ -1,0 +1,14 @@
+{
+ "node": "v24.21.0",
+ "platform": "darwin arm64",
+ "characters": 1012931,
+ "fullParseMs": 187.846,
+ "keystrokeMs": 0.58,
+ "keystrokeMaxMs": 1.352,
+ "scatteredKeystrokeMs": 0.77,
+ "keystrokePercentOfFull": 0.309,
+ "scatteredPercentOfFull": 0.41,
+ "reusedNodesPerKeystroke": 117,
+ "retainedHeapFullParseMB": 85.7,
+ "retainedHeapPerKeystrokeKB": 24
+}

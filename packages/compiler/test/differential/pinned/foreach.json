@@ -1,0 +1,11 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "foreach/over-array":{"hash":"7c273624c5576c4e","kind":"output","langVersion":"14.0","diagnostics":[],"output":"14\nab\n"},
+  "foreach/over-list":{"hash":"4a7532b5629b9e73","kind":"output","langVersion":"14.0","diagnostics":[],"output":"ANN\nCY\n"},
+  "foreach/over-dictionary":{"hash":"47e9b7d6377a3a31","kind":"output","langVersion":"14.0","diagnostics":[],"output":"ann=30\nbob=25\nann bob \n55\n"},
+  "foreach/over-string":{"hash":"8f30c35ffed9429b","kind":"output","langVersion":"14.0","diagnostics":[],"output":"2\n"},
+  "foreach/with-break-and-nested":{"hash":"9e2483294076d335","kind":"output","langVersion":"14.0","diagnostics":[],"output":"1\n2\n3\n"},
+  "foreach/custom-enumerable":{"hash":"51af7578f2d21665","kind":"output","langVersion":"14.0","diagnostics":[],"output":"1\n4\n9\n"},
+  "foreach/cs1656-assign-iteration-variable":{"hash":"39da9cc146a940b4","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1656",59,1,"error"]]},
+  "foreach/cs1579-foreach-over-int":{"hash":"c4c208e20c4c052f","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1579",43,1,"error"]]},
+  "foreach/cs0030-element-type-mismatch":{"hash":"31f3396772d1bc0f","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0030",37,7,"error"]]}
+}}

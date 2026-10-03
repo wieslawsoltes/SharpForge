@@ -1,0 +1,89 @@
+{
+  "task": "SF-A05-B03",
+  "timestamp": "2026-10-03T12:54:33.691Z",
+  "revision": "0ffc75c0c3d2e6bda665f948561fc25c4b86d9aa",
+  "qualification": "Roslyn-compiled assembly executed by native .NET and directly by CilVirtualMachine",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "node": "v24.21.0",
+  "dotnetSdk": "10.0.201",
+  "dotnetRuntimes": "Microsoft.AspNetCore.App 10.0.5 [/Users/wieslawsoltes/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 10.0.5 [/Users/wieslawsoltes/.dotnet/shared/Microsoft.NETCore.App]",
+  "targetFramework": "net10.0",
+  "source": "tests/fixtures/a05-dispatch/Program.cs",
+  "sourceSha256": "6eb14f6d07f674dac536879add4d9cadc578e4623e110c7acf07ff818102cc3a",
+  "assemblySha256": "7307cea2ff6d7b2e37f2167b5a62876a9185b485cebffbb59b8b9ad6aeda2583",
+  "fixtureEvidence": {
+    "newslot": "B::F",
+    "override": "C::F",
+    "methodImplRows": 1
+  },
+  "native": {
+    "state": "terminated",
+    "exitCode": 0,
+    "output": "1\n3\n3\n7\n"
+  },
+  "cil": {
+    "state": "terminated",
+    "exitCode": 0,
+    "output": "1\n3\n3\n7\n",
+    "instructions": 35
+  },
+  "expectedOutput": "1\n3\n3\n7\n",
+  "passed": true,
+  "commands": [
+    {
+      "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+      "arguments": [
+        "--version"
+      ],
+      "status": 0
+    },
+    {
+      "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+      "arguments": [
+        "--list-runtimes"
+      ],
+      "status": 0
+    },
+    {
+      "command": "git",
+      "arguments": [
+        "rev-parse",
+        "HEAD"
+      ],
+      "status": 0
+    },
+    {
+      "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+      "arguments": [
+        "restore",
+        "VirtualDispatch.csproj",
+        "--configfile",
+        "NuGet.Config",
+        "--verbosity",
+        "quiet"
+      ],
+      "status": 0
+    },
+    {
+      "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+      "arguments": [
+        "build",
+        "VirtualDispatch.csproj",
+        "--configuration",
+        "Release",
+        "--no-restore",
+        "--verbosity",
+        "quiet"
+      ],
+      "status": 0
+    },
+    {
+      "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+      "arguments": [
+        "<temporary-project>/bin/Release/net10.0/VirtualDispatch.dll"
+      ],
+      "status": 0
+    }
+  ]
+}

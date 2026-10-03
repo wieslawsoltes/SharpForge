@@ -1,0 +1,1127 @@
+{
+"roslyn":"5.3.0.0",
+"fixtures":[
+ {
+  "name":"defaults",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"}],
+  "options":{},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"warning"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"warning"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"warning"}
+  ]
+ },
+ {
+  "name":"pragma disable by number and by id, then restore",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n#pragma warning disable 168, CS0219 // locals\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n#pragma warning restore 168\n        int d;\n    }\n}\n"}],
+  "options":{},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":261,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":276,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":296,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":301,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":312,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":329,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":365,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":395,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":419,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":466,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning"},
+    {"uri":"a.cs","start":301,"length":1,"code":"CS0078","severity":"warning"},
+    {"uri":"a.cs","start":312,"length":7,"code":"CS0612","severity":"warning"},
+    {"uri":"a.cs","start":329,"length":7,"code":"CS0618","severity":"warning"},
+    {"uri":"a.cs","start":365,"length":2,"code":"CS0162","severity":"warning"},
+    {"uri":"a.cs","start":395,"length":11,"code":"CS0164","severity":"warning"},
+    {"uri":"a.cs","start":419,"length":6,"code":"CS1030","severity":"warning"},
+    {"uri":"a.cs","start":466,"length":1,"code":"CS0168","severity":"warning"}
+  ]
+ },
+ {
+  "name":"pragma disable all, restore all",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\n#pragma warning disable\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n#pragma warning restore\n        int d;\n    }\n}\n"}],
+  "options":{},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":168,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":189,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":239,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":254,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":274,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":279,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":290,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":307,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":343,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":373,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":397,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":440,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":440,"length":1,"code":"CS0168","severity":"warning"}
+  ]
+ },
+ {
+  "name":"pragma disable all, restore one id",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\n#pragma warning disable\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n#pragma warning restore CS0219\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"}],
+  "options":{},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":168,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":189,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":270,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":285,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":305,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":310,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":321,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":338,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":374,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":404,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":428,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":447,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":285,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":305,"length":1,"code":"CS0219","severity":"warning"}
+  ]
+ },
+ {
+  "name":"pragma disable one id, restore all",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n#pragma warning disable CS0168\n#pragma warning disable CS0612\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n   #  pragma   warning   restore\n        int d;\n    }\n}\n"}],
+  "options":{},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":277,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":292,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":312,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":317,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":328,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":345,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":381,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":411,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":435,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":487,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning"},
+    {"uri":"a.cs","start":292,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":312,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":317,"length":1,"code":"CS0078","severity":"warning"},
+    {"uri":"a.cs","start":345,"length":7,"code":"CS0618","severity":"warning"},
+    {"uri":"a.cs","start":381,"length":2,"code":"CS0162","severity":"warning"},
+    {"uri":"a.cs","start":411,"length":11,"code":"CS0164","severity":"warning"},
+    {"uri":"a.cs","start":435,"length":6,"code":"CS1030","severity":"warning"},
+    {"uri":"a.cs","start":487,"length":1,"code":"CS0168","severity":"warning"}
+  ]
+ },
+ {
+  "name":"pragma id spellings",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n#pragma warning disable cs0168\n#pragma warning disable 0219\n#pragma warning disable 78,612 , CS0618\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"}],
+  "options":{},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":315,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":330,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":350,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":355,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":366,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":383,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":419,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":449,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":473,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":492,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning"},
+    {"uri":"a.cs","start":315,"length":1,"code":"CS0168","severity":"warning"},
+    {"uri":"a.cs","start":419,"length":2,"code":"CS0162","severity":"warning"},
+    {"uri":"a.cs","start":449,"length":11,"code":"CS0164","severity":"warning"},
+    {"uri":"a.cs","start":473,"length":6,"code":"CS1030","severity":"warning"},
+    {"uri":"a.cs","start":492,"length":1,"code":"CS0168","severity":"warning"}
+  ]
+ },
+ {
+  "name":"pragma text inside comments and strings is not a directive",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\n/*\n#pragma warning disable\n*/\nclass S { string s = @\"\n#pragma warning disable\n\"; string t = \"\"\"\n#pragma warning disable\n\"\"\"; char q = '\"'; string u = \"/*\"; }\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n// #pragma warning disable CS0168\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"}],
+  "options":{},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":173,"length":1,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'S.s' is assigned but its value is never used"},
+    {"uri":"a.cs","start":214,"length":1,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'S.t' is assigned but its value is never used"},
+    {"uri":"a.cs","start":256,"length":1,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'S.q' is assigned but its value is never used"},
+    {"uri":"a.cs","start":272,"length":1,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'S.u' is assigned but its value is never used"},
+    {"uri":"a.cs","start":302,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":323,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":407,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":422,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":442,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":447,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":458,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":475,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":511,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":541,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":565,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":584,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":173,"length":1,"code":"CS0414","severity":"warning"},
+    {"uri":"a.cs","start":214,"length":1,"code":"CS0414","severity":"warning"},
+    {"uri":"a.cs","start":256,"length":1,"code":"CS0414","severity":"warning"},
+    {"uri":"a.cs","start":272,"length":1,"code":"CS0414","severity":"warning"},
+    {"uri":"a.cs","start":302,"length":11,"code":"CS0169","severity":"warning"},
+    {"uri":"a.cs","start":323,"length":13,"code":"CS0414","severity":"warning"},
+    {"uri":"a.cs","start":407,"length":1,"code":"CS0168","severity":"warning"},
+    {"uri":"a.cs","start":422,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":442,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":447,"length":1,"code":"CS0078","severity":"warning"},
+    {"uri":"a.cs","start":458,"length":7,"code":"CS0612","severity":"warning"},
+    {"uri":"a.cs","start":475,"length":7,"code":"CS0618","severity":"warning"},
+    {"uri":"a.cs","start":511,"length":2,"code":"CS0162","severity":"warning"},
+    {"uri":"a.cs","start":541,"length":11,"code":"CS0164","severity":"warning"},
+    {"uri":"a.cs","start":565,"length":6,"code":"CS1030","severity":"warning"},
+    {"uri":"a.cs","start":584,"length":1,"code":"CS0168","severity":"warning"}
+  ]
+ },
+ {
+  "name":"pragma inside inactive and active conditional regions",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n#if OFF\n#pragma warning disable CS0168\n#elif ON && !OFF\n#pragma warning disable CS0219\n#else\n#pragma warning disable CS0612\n#endif\n#if !(ON || OFF) == false\n#pragma warning disable CS0618\n#if OFF\n#pragma warning disable CS0078\n#else\n#pragma warning disable CS0164\n#endif\n#endif\n#if false\n#if ON\n#pragma warning disable CS0612\n#endif\n#elif true\n#pragma warning disable CS0162\n#elif ON\n#pragma warning disable CS1030\n#endif\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"}],
+  "options":{},
+  "defines":["ON"],
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":637,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":652,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":672,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":677,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":688,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":705,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":741,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":771,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":795,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":814,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning"},
+    {"uri":"a.cs","start":637,"length":1,"code":"CS0168","severity":"warning"},
+    {"uri":"a.cs","start":677,"length":1,"code":"CS0078","severity":"warning"},
+    {"uri":"a.cs","start":688,"length":7,"code":"CS0612","severity":"warning"},
+    {"uri":"a.cs","start":795,"length":6,"code":"CS1030","severity":"warning"},
+    {"uri":"a.cs","start":814,"length":1,"code":"CS0168","severity":"warning"}
+  ]
+ },
+ {
+  "name":"pragma after #define and #undef",
+  "sources":[{"uri":"a.cs","text":"#define A\n#undef B\n#if A && !B\n#pragma warning disable CS0168\n#endif\n#if B\n#pragma warning disable CS0219\n#endif\nclass C { void M() { int a; int b = 1; } }\n"}],
+  "options":{},
+  "raw":[
+    {"uri":"a.cs","start":138,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":145,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":145,"length":1,"code":"CS0219","severity":"warning"}
+  ]
+ },
+ {
+  "name":"malformed pragmas",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n#pragma warning foo\n#pragma foo\n#pragma warning disable \"x\"\n#pragma warning disable 168 extra\n#pragma warning disable CS0219,\n#pragma warning\n#pragma\n#pragma warning disable 1e3\n#pragma warning restore , 78\n#pragma warning disable 612 // fine\n#pragma warning disable \"y\", 618\n#pragma warning restore 168 /* junk */\n#pragma checksum \"a.cs\" \"{406EA660-64CF-4C82-B6F0-42D48172A799}\" \"ab007f1d23d9\"\n#pragma warning disable @CS0162\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"}],
+  "options":{},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":642,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":657,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":677,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":682,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":693,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":710,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":746,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":776,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":800,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":819,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning"},
+    {"uri":"a.cs","start":219,"length":3,"code":"CS1634","severity":"warning"},
+    {"uri":"a.cs","start":231,"length":3,"code":"CS1633","severity":"warning"},
+    {"uri":"a.cs","start":259,"length":3,"code":"CS1072","severity":"warning"},
+    {"uri":"a.cs","start":291,"length":5,"code":"CS1696","severity":"warning"},
+    {"uri":"a.cs","start":344,"length":0,"code":"CS1634","severity":"warning"},
+    {"uri":"a.cs","start":352,"length":0,"code":"CS1633","severity":"warning"},
+    {"uri":"a.cs","start":378,"length":2,"code":"CS1696","severity":"warning"},
+    {"uri":"a.cs","start":405,"length":1,"code":"CS1072","severity":"warning"},
+    {"uri":"a.cs","start":470,"length":3,"code":"CS1072","severity":"warning"},
+    {"uri":"a.cs","start":507,"length":1,"code":"CS1696","severity":"warning"},
+    {"uri":"a.cs","start":622,"length":1,"code":"CS1072","severity":"warning"},
+    {"uri":"a.cs","start":642,"length":1,"code":"CS0168","severity":"warning"},
+    {"uri":"a.cs","start":682,"length":1,"code":"CS0078","severity":"warning"},
+    {"uri":"a.cs","start":710,"length":7,"code":"CS0618","severity":"warning"},
+    {"uri":"a.cs","start":746,"length":2,"code":"CS0162","severity":"warning"},
+    {"uri":"a.cs","start":776,"length":11,"code":"CS0164","severity":"warning"},
+    {"uri":"a.cs","start":800,"length":6,"code":"CS1030","severity":"warning"},
+    {"uri":"a.cs","start":819,"length":1,"code":"CS0168","severity":"warning"}
+  ]
+ },
+ {
+  "name":"pragma in one file does not affect another",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\n#pragma warning disable\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"},{"uri":"b.cs","text":"class D { void M() { int z; } }\n"}],
+  "options":{},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":168,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":189,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":239,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":254,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":274,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":279,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":290,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":307,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":343,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":373,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":397,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":416,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"},
+    {"uri":"b.cs","start":25,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'z' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"b.cs","start":25,"length":1,"code":"CS0168","severity":"warning"}
+  ]
+ },
+ {
+  "name":"nowarn by id and number",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"}],
+  "options":{"noWarn":["CS0168","219","0078"]},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning"}
+  ]
+ },
+ {
+  "name":"option ids accept the CS prefix in any case",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"}],
+  "options":{"noWarn":["cs0168"],"warnAsError":["Cs0219"],"warnNotAsError":["cs612"],"treatWarningsAsErrors":true},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"error"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"error"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"error"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"error"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"error"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"error"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"error"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"error"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"error"}
+  ]
+ },
+ {
+  "name":"custom option ids are case-sensitive",
+  "sources":[{"uri":"a.cs","text":"class A\n{\n    void M() { int a = 1; a++; }\n}\n"}],
+  "options":{"noWarn":["sfa001"],"warnAsError":["Sfa003"]},
+  "analyzers":true,
+  "raw":[
+    {"uri":"a.cs","start":6,"length":1,"code":"SFA003","severity":"warning","warningLevel":1,"message":"Type 'A'"},
+    {"uri":"a.cs","start":19,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'M'"},
+    {"uri":"a.cs","start":29,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'a'"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":6,"length":1,"code":"SFA003","severity":"warning"},
+    {"uri":"a.cs","start":19,"length":1,"code":"SFA002","severity":"information"},
+    {"uri":"a.cs","start":29,"length":1,"code":"SFA001","severity":"warning"}
+  ]
+ },
+ {
+  "name":"pragma directive warnings obey pragmas and options",
+  "sources":[{"uri":"a.cs","text":"#pragma warning disable CS1634\n#pragma warning foo\n#pragma warning restore CS1634\n#pragma warning bar\n#pragma nope\nclass C { }\n#pragma warning disable 1696\n#pragma warning disable 168 junk\n"}],
+  "options":{"warnAsError":["CS1633"]},
+  "raw":[
+  ],
+  "expected":[
+    {"uri":"a.cs","start":98,"length":3,"code":"CS1634","severity":"warning"},
+    {"uri":"a.cs","start":110,"length":4,"code":"CS1633","severity":"error"}
+  ]
+ },
+ {
+  "name":"directive forms and line endings",
+  "sources":[{"uri":"a.cs","text":"class C\r\n{\r\n    void M()\r\n    {\r\n\t#pragma warning disable CS0168 // crlf\r\n        int a;\r\n#pragma warning restore CS0168\r\n        int b; #pragma warning disable CS0168\r\n        int c;\r\n    }\r\n}\r\n#pragma warning disable"}],
+  "options":{},
+  "raw":[
+    {"uri":"a.cs","start":86,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":134,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'b' is declared but never used"},
+    {"uri":"a.cs","start":137,"length":1,"code":"CS1040","severity":"error","warningLevel":0,"message":"Preprocessor directives must appear as the first non-whitespace character on a line"},
+    {"uri":"a.cs","start":181,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'c' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":134,"length":1,"code":"CS0168","severity":"warning"},
+    {"uri":"a.cs","start":137,"length":1,"code":"CS1040","severity":"error"},
+    {"uri":"a.cs","start":181,"length":1,"code":"CS0168","severity":"warning"}
+  ]
+ },
+ {
+  "name":"warnaserror for specific ids",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"}],
+  "options":{"warnAsError":["CS0168","612"]},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"error"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"warning"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"error"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"error"}
+  ]
+ },
+ {
+  "name":"treat warnings as errors",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"}],
+  "options":{"treatWarningsAsErrors":true},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"error"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"error"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"error"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"error"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"error"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"error"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"error"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"error"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"error"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"error"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"error"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"error"}
+  ]
+ },
+ {
+  "name":"treat warnings as errors except some",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"}],
+  "options":{"treatWarningsAsErrors":true,"warnNotAsError":["CS0219","618"]},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"error"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"error"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"error"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"error"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"error"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"error"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"error"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"error"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"error"}
+  ]
+ },
+ {
+  "name":"nowarn wins over warnaserror",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"}],
+  "options":{"warnAsError":["CS0168","CS0219"],"noWarn":["CS0168"]},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"error"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"error"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"warning"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning"}
+  ]
+ },
+ {
+  "name":"treat warnings as errors with pragma and nowarn",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n#pragma warning disable CS0168\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n#pragma warning restore CS0168\n        int d;\n    }\n}\n"}],
+  "options":{"treatWarningsAsErrors":true,"noWarn":["CS0612"]},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":246,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":261,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":281,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":286,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":297,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":314,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":350,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":380,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":404,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":454,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"error"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"error"},
+    {"uri":"a.cs","start":261,"length":1,"code":"CS0219","severity":"error"},
+    {"uri":"a.cs","start":281,"length":1,"code":"CS0219","severity":"error"},
+    {"uri":"a.cs","start":286,"length":1,"code":"CS0078","severity":"error"},
+    {"uri":"a.cs","start":314,"length":7,"code":"CS0618","severity":"error"},
+    {"uri":"a.cs","start":350,"length":2,"code":"CS0162","severity":"error"},
+    {"uri":"a.cs","start":380,"length":11,"code":"CS0164","severity":"error"},
+    {"uri":"a.cs","start":404,"length":6,"code":"CS1030","severity":"error"},
+    {"uri":"a.cs","start":454,"length":1,"code":"CS0168","severity":"error"}
+  ]
+ },
+ {
+  "name":"pragma restore does not undo nowarn",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n#pragma warning restore CS0168\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"}],
+  "options":{"noWarn":["CS0168"]},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":246,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":261,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":281,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":286,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":297,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":314,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":350,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":380,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":404,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":423,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning"},
+    {"uri":"a.cs","start":261,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":281,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":286,"length":1,"code":"CS0078","severity":"warning"},
+    {"uri":"a.cs","start":297,"length":7,"code":"CS0612","severity":"warning"},
+    {"uri":"a.cs","start":314,"length":7,"code":"CS0618","severity":"warning"},
+    {"uri":"a.cs","start":350,"length":2,"code":"CS0162","severity":"warning"},
+    {"uri":"a.cs","start":380,"length":11,"code":"CS0164","severity":"warning"},
+    {"uri":"a.cs","start":404,"length":6,"code":"CS1030","severity":"warning"}
+  ]
+ },
+ {
+  "name":"pragma disable beats warnaserror",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n#pragma warning disable CS0168\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n#pragma warning restore CS0168\n        int d;\n    }\n}\n"}],
+  "options":{"warnAsError":["CS0168"]},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":246,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":261,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":281,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":286,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":297,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":314,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":350,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":380,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":404,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":454,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning"},
+    {"uri":"a.cs","start":261,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":281,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":286,"length":1,"code":"CS0078","severity":"warning"},
+    {"uri":"a.cs","start":297,"length":7,"code":"CS0612","severity":"warning"},
+    {"uri":"a.cs","start":314,"length":7,"code":"CS0618","severity":"warning"},
+    {"uri":"a.cs","start":350,"length":2,"code":"CS0162","severity":"warning"},
+    {"uri":"a.cs","start":380,"length":11,"code":"CS0164","severity":"warning"},
+    {"uri":"a.cs","start":404,"length":6,"code":"CS1030","severity":"warning"},
+    {"uri":"a.cs","start":454,"length":1,"code":"CS0168","severity":"error"}
+  ]
+ },
+ {
+  "name":"warning level 0",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"}],
+  "options":{"warningLevel":0},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+  ]
+ },
+ {
+  "name":"warning level 1",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"}],
+  "options":{"warningLevel":1},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning"}
+  ]
+ },
+ {
+  "name":"warning level 2",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"}],
+  "options":{"warningLevel":2},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning"}
+  ]
+ },
+ {
+  "name":"warning level 3",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"}],
+  "options":{"warningLevel":3},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"warning"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"warning"}
+  ]
+ },
+ {
+  "name":"warning level 5",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"}],
+  "options":{"warningLevel":5},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"warning"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"warning"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"warning"}
+  ]
+ },
+ {
+  "name":"warning level 9999",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"}],
+  "options":{"warningLevel":9999},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning"},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"warning"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"warning"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"warning"}
+  ]
+ },
+ {
+  "name":"warning level 2 with warnaserror for a level 3 warning",
+  "sources":[{"uri":"a.cs","text":"using System;\nclass Old { [Obsolete] public static void M() {} [Obsolete(\"use N\")] public static void N() {} }\nclass lower {}\nclass C\n{\n    int unusedField;\n    int assignedField = 1;\n    void M()\n    {\n        int a;\n        int b = 1;\n        long c = 1l;\n        Old.M();\n        Old.N();\n        goto done;\n        GC.Collect();\n    done: ;\n    unusedLabel: ;\n#warning custom\n        int d;\n    }\n}\n"}],
+  "options":{"warningLevel":2,"warnAsError":["CS0168"],"treatWarningsAsErrors":true},
+  "raw":[
+    {"uri":"a.cs","start":117,"length":5,"code":"CS8981","severity":"warning","warningLevel":7,"message":"The type name 'lower' only contains lower-cased ascii characters. Such names may become reserved for the language."},
+    {"uri":"a.cs","start":144,"length":11,"code":"CS0169","severity":"warning","warningLevel":3,"message":"The field 'C.unusedField' is never used"},
+    {"uri":"a.cs","start":165,"length":13,"code":"CS0414","severity":"warning","warningLevel":3,"message":"The field 'C.assignedField' is assigned but its value is never used"},
+    {"uri":"a.cs","start":215,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":230,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":250,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'c' is assigned but its value is never used"},
+    {"uri":"a.cs","start":255,"length":1,"code":"CS0078","severity":"warning","warningLevel":4,"message":"The 'l' suffix is easily confused with the digit '1' -- use 'L' for clarity"},
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"warning","warningLevel":1,"message":"'Old.M()' is obsolete"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"warning","warningLevel":2,"message":"'Old.N()' is obsolete: 'use N'"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"warning","warningLevel":2,"message":"Unreachable code detected"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"warning","warningLevel":2,"message":"This label has not been referenced"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"warning","warningLevel":1,"message":"#warning: 'custom'"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'd' is declared but never used"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":266,"length":7,"code":"CS0612","severity":"error"},
+    {"uri":"a.cs","start":283,"length":7,"code":"CS0618","severity":"error"},
+    {"uri":"a.cs","start":319,"length":2,"code":"CS0162","severity":"error"},
+    {"uri":"a.cs","start":349,"length":11,"code":"CS0164","severity":"error"},
+    {"uri":"a.cs","start":373,"length":6,"code":"CS1030","severity":"error"}
+  ]
+ },
+ {
+  "name":"errors are never suppressed",
+  "sources":[{"uri":"a.cs","text":"class E\n{\n#pragma warning disable\n#pragma warning disable CS0029\n    void M() { int x = \"s\"; int y; undefined(); }\n}\n"}],
+  "options":{"noWarn":["CS0029","CS0103"],"warningLevel":0},
+  "raw":[
+    {"uri":"a.cs","start":88,"length":3,"code":"CS0029","severity":"error","warningLevel":0,"message":"Cannot implicitly convert type 'string' to 'int'"},
+    {"uri":"a.cs","start":97,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'y' is declared but never used"},
+    {"uri":"a.cs","start":100,"length":9,"code":"CS0103","severity":"error","warningLevel":0,"message":"The name 'undefined' does not exist in the current context"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":88,"length":3,"code":"CS0029","severity":"error"},
+    {"uri":"a.cs","start":100,"length":9,"code":"CS0103","severity":"error"}
+  ]
+ },
+ {
+  "name":"analyzer diagnostics follow pragma, nowarn and warnaserror",
+  "sources":[{"uri":"a.cs","text":"class A\n{\n    void M() { int a = 1; a++; }\n#pragma warning disable SFA001, SFA002\n    void N() { int b = 1; b++; }\n#pragma warning restore SFA001\n    void O() { int c = 1; c++; }\n}\nclass B { }\n"}],
+  "options":{"warnAsError":["SFA001"],"noWarn":["SFA003"]},
+  "analyzers":true,
+  "raw":[
+    {"uri":"a.cs","start":6,"length":1,"code":"SFA003","severity":"warning","warningLevel":1,"message":"Type 'A'"},
+    {"uri":"a.cs","start":19,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'M'"},
+    {"uri":"a.cs","start":29,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'a'"},
+    {"uri":"a.cs","start":91,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'N'"},
+    {"uri":"a.cs","start":101,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'b'"},
+    {"uri":"a.cs","start":155,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'O'"},
+    {"uri":"a.cs","start":165,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'c'"},
+    {"uri":"a.cs","start":187,"length":1,"code":"SFA003","severity":"warning","warningLevel":1,"message":"Type 'B'"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":19,"length":1,"code":"SFA002","severity":"information"},
+    {"uri":"a.cs","start":29,"length":1,"code":"SFA001","severity":"error"},
+    {"uri":"a.cs","start":165,"length":1,"code":"SFA001","severity":"error"}
+  ]
+ },
+ {
+  "name":"analyzer info diagnostics are not promoted to errors",
+  "sources":[{"uri":"a.cs","text":"class A\n{\n    void M() { int a = 1; a++; }\n}\n"}],
+  "options":{"treatWarningsAsErrors":true,"warningLevel":0},
+  "analyzers":true,
+  "raw":[
+    {"uri":"a.cs","start":6,"length":1,"code":"SFA003","severity":"warning","warningLevel":1,"message":"Type 'A'"},
+    {"uri":"a.cs","start":19,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'M'"},
+    {"uri":"a.cs","start":29,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'a'"}
+  ],
+  "expected":[
+  ]
+ },
+ {
+  "name":"SuppressMessage on a member and a type",
+  "sources":[{"uri":"a.cs","text":"using System.Diagnostics.CodeAnalysis;\nclass A\n{\n    [SuppressMessage(\"Probe\", \"SFA001\")]\n    [SuppressMessage(\"Compiler\", \"CS0168\")]\n    void M() { int a; int b = 1; }\n    void N() { int c; }\n}\n[SuppressMessage(\"Probe\", \"SFA001:Local\", Justification = \"test\")]\n[SuppressMessage(\"Probe\", \"sfa002\")]\nclass B\n{\n    void M() { int a; int b = 1; }\n    class Inner { void N() { int d = 2; int e; } }\n}\n"}],
+  "options":{},
+  "defines":["CODE_ANALYSIS"],
+  "analyzers":true,
+  "raw":[
+    {"uri":"a.cs","start":45,"length":1,"code":"SFA003","severity":"warning","warningLevel":1,"message":"Type 'A'"},
+    {"uri":"a.cs","start":143,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'M'"},
+    {"uri":"a.cs","start":153,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":153,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'a'"},
+    {"uri":"a.cs","start":160,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":160,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'b'"},
+    {"uri":"a.cs","start":178,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'N'"},
+    {"uri":"a.cs","start":188,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'c' is declared but never used"},
+    {"uri":"a.cs","start":188,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'c'"},
+    {"uri":"a.cs","start":305,"length":1,"code":"SFA003","severity":"warning","warningLevel":1,"message":"Type 'B'"},
+    {"uri":"a.cs","start":318,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'M'"},
+    {"uri":"a.cs","start":328,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":328,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'a'"},
+    {"uri":"a.cs","start":335,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":335,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'b'"},
+    {"uri":"a.cs","start":354,"length":5,"code":"SFA003","severity":"warning","warningLevel":1,"message":"Type 'Inner'"},
+    {"uri":"a.cs","start":367,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'N'"},
+    {"uri":"a.cs","start":377,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'd' is assigned but its value is never used"},
+    {"uri":"a.cs","start":377,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'd'"},
+    {"uri":"a.cs","start":388,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'e' is declared but never used"},
+    {"uri":"a.cs","start":388,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'e'"}
+  ],
+  "suppressions":[
+    {"id":"SFA001","uri":"a.cs","span":{"start":53,"end":168}},
+    {"id":"CS0168","uri":"a.cs","span":{"start":53,"end":168}},
+    {"id":"SFA001","uri":"a.cs","span":{"start":195,"end":396}},
+    {"id":"sfa002","uri":"a.cs","span":{"start":195,"end":396}}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":45,"length":1,"code":"SFA003","severity":"warning"},
+    {"uri":"a.cs","start":143,"length":1,"code":"SFA002","severity":"information"},
+    {"uri":"a.cs","start":153,"length":1,"code":"CS0168","severity":"warning"},
+    {"uri":"a.cs","start":160,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":178,"length":1,"code":"SFA002","severity":"information"},
+    {"uri":"a.cs","start":188,"length":1,"code":"CS0168","severity":"warning"},
+    {"uri":"a.cs","start":188,"length":1,"code":"SFA001","severity":"warning"},
+    {"uri":"a.cs","start":305,"length":1,"code":"SFA003","severity":"warning"},
+    {"uri":"a.cs","start":318,"length":1,"code":"SFA002","severity":"information"},
+    {"uri":"a.cs","start":328,"length":1,"code":"CS0168","severity":"warning"},
+    {"uri":"a.cs","start":335,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":354,"length":5,"code":"SFA003","severity":"warning"},
+    {"uri":"a.cs","start":367,"length":1,"code":"SFA002","severity":"information"},
+    {"uri":"a.cs","start":377,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":388,"length":1,"code":"CS0168","severity":"warning"}
+  ]
+ },
+ {
+  "name":"SuppressMessage at assembly level",
+  "sources":[{"uri":"a.cs","text":"using System.Diagnostics.CodeAnalysis;\n[assembly: SuppressMessage(\"Probe\", \"SFA001\", Scope = \"member\", Target = \"~M:N.A.M\")]\n[assembly: SuppressMessage(\"Probe\", \"SFA002\", Scope = \"type\", Target = \"~T:N.B\")]\n[assembly: SuppressMessage(\"Compiler\", \"CS0168\", Scope = \"type\", Target = \"~T:N.B\")]\n[module: SuppressMessage(\"Probe\", \"SFA003\")]\nnamespace N\n{\n    class A\n    {\n        void M() { int a; int b = 1; }\n        void O() { int c; }\n    }\n    class B\n    {\n        void M() { int a; int b = 1; }\n        class Inner { void P() { } }\n    }\n}\n"},{"uri":"b.cs","text":"namespace N { class Z { void M() { int a; int b = 1; } } }\n"}],
+  "options":{"treatWarningsAsErrors":true},
+  "defines":["CODE_ANALYSIS"],
+  "analyzers":true,
+  "raw":[
+    {"uri":"a.cs","start":347,"length":1,"code":"SFA004","severity":"information","warningLevel":1,"message":"Namespace 'N'"},
+    {"uri":"a.cs","start":361,"length":1,"code":"SFA003","severity":"warning","warningLevel":1,"message":"Type 'A'"},
+    {"uri":"a.cs","start":382,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'M'"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":392,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'a'"},
+    {"uri":"a.cs","start":399,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":399,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'b'"},
+    {"uri":"a.cs","start":421,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'O'"},
+    {"uri":"a.cs","start":431,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'c' is declared but never used"},
+    {"uri":"a.cs","start":431,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'c'"},
+    {"uri":"a.cs","start":452,"length":1,"code":"SFA003","severity":"warning","warningLevel":1,"message":"Type 'B'"},
+    {"uri":"a.cs","start":473,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'M'"},
+    {"uri":"a.cs","start":483,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":483,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'a'"},
+    {"uri":"a.cs","start":490,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":490,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'b'"},
+    {"uri":"a.cs","start":513,"length":5,"code":"SFA003","severity":"warning","warningLevel":1,"message":"Type 'Inner'"},
+    {"uri":"a.cs","start":526,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'P'"},
+    {"uri":"b.cs","start":10,"length":1,"code":"SFA004","severity":"information","warningLevel":1,"message":"Namespace 'N'"},
+    {"uri":"b.cs","start":20,"length":1,"code":"SFA003","severity":"warning","warningLevel":1,"message":"Type 'Z'"},
+    {"uri":"b.cs","start":29,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'M'"},
+    {"uri":"b.cs","start":39,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"b.cs","start":39,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'a'"},
+    {"uri":"b.cs","start":46,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"b.cs","start":46,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'b'"}
+  ],
+  "suppressions":[
+    {"id":"SFA001","scope":"member","target":"~M:N.A.M","spans":[{"uri":"a.cs","start":377,"end":407}]},
+    {"id":"SFA002","scope":"type","target":"~T:N.B","spans":[{"uri":"a.cs","start":446,"end":541}]},
+    {"id":"CS0168","scope":"type","target":"~T:N.B","spans":[{"uri":"a.cs","start":446,"end":541}]},
+    {"id":"SFA003"}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":347,"length":1,"code":"SFA004","severity":"information"},
+    {"uri":"a.cs","start":382,"length":1,"code":"SFA002","severity":"information"},
+    {"uri":"a.cs","start":392,"length":1,"code":"CS0168","severity":"error"},
+    {"uri":"a.cs","start":399,"length":1,"code":"CS0219","severity":"error"},
+    {"uri":"a.cs","start":421,"length":1,"code":"SFA002","severity":"information"},
+    {"uri":"a.cs","start":431,"length":1,"code":"CS0168","severity":"error"},
+    {"uri":"a.cs","start":431,"length":1,"code":"SFA001","severity":"error"},
+    {"uri":"a.cs","start":483,"length":1,"code":"CS0168","severity":"error"},
+    {"uri":"a.cs","start":483,"length":1,"code":"SFA001","severity":"error"},
+    {"uri":"a.cs","start":490,"length":1,"code":"CS0219","severity":"error"},
+    {"uri":"a.cs","start":490,"length":1,"code":"SFA001","severity":"error"},
+    {"uri":"b.cs","start":10,"length":1,"code":"SFA004","severity":"information"},
+    {"uri":"b.cs","start":29,"length":1,"code":"SFA002","severity":"information"},
+    {"uri":"b.cs","start":39,"length":1,"code":"CS0168","severity":"error"},
+    {"uri":"b.cs","start":39,"length":1,"code":"SFA001","severity":"error"},
+    {"uri":"b.cs","start":46,"length":1,"code":"CS0219","severity":"error"},
+    {"uri":"b.cs","start":46,"length":1,"code":"SFA001","severity":"error"}
+  ]
+ },
+ {
+  "name":"SuppressMessage namespace scopes",
+  "sources":[{"uri":"a.cs","text":"using System.Diagnostics.CodeAnalysis;\n[assembly: SuppressMessage(\"Probe\", \"SFA001\", Scope = \"namespaceanddescendants\", Target = \"~N:N1\")]\n[assembly: SuppressMessage(\"Probe\", \"SFA001\", Scope = \"namespace\", Target = \"~N:N2\")]\n[assembly: SuppressMessage(\"Probe\", \"SFA003\", Scope = \"namespace\", Target = \"~N:N2\")]\n[assembly: SuppressMessage(\"Probe\", \"SFA004\", Scope = \"namespace\", Target = \"~N:N2\")]\n[assembly: SuppressMessage(\"Probe\", \"SFA004\", Scope = \"namespaceanddescendants\", Target = \"~N:N4\")]\n[assembly: SuppressMessage(\"Probe\", \"SFA002\", Scope = \"member\", Target = \"~M:N3.Missing.M\")]\nnamespace N1 { class A { void M() { int a; } } }\nnamespace N2 { class A { void M() { int a; } } }\nnamespace N3 { class A { void M() { int a; } } }\nnamespace N4 { namespace Inner { class A { } } }\n"}],
+  "options":{},
+  "defines":["CODE_ANALYSIS"],
+  "analyzers":true,
+  "raw":[
+    {"uri":"a.cs","start":600,"length":2,"code":"SFA004","severity":"information","warningLevel":1,"message":"Namespace 'N1'"},
+    {"uri":"a.cs","start":611,"length":1,"code":"SFA003","severity":"warning","warningLevel":1,"message":"Type 'A'"},
+    {"uri":"a.cs","start":620,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'M'"},
+    {"uri":"a.cs","start":630,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":630,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'a'"},
+    {"uri":"a.cs","start":649,"length":2,"code":"SFA004","severity":"information","warningLevel":1,"message":"Namespace 'N2'"},
+    {"uri":"a.cs","start":660,"length":1,"code":"SFA003","severity":"warning","warningLevel":1,"message":"Type 'A'"},
+    {"uri":"a.cs","start":669,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'M'"},
+    {"uri":"a.cs","start":679,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":679,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'a'"},
+    {"uri":"a.cs","start":698,"length":2,"code":"SFA004","severity":"information","warningLevel":1,"message":"Namespace 'N3'"},
+    {"uri":"a.cs","start":709,"length":1,"code":"SFA003","severity":"warning","warningLevel":1,"message":"Type 'A'"},
+    {"uri":"a.cs","start":718,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'M'"},
+    {"uri":"a.cs","start":728,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":728,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'a'"},
+    {"uri":"a.cs","start":747,"length":2,"code":"SFA004","severity":"information","warningLevel":1,"message":"Namespace 'N4'"},
+    {"uri":"a.cs","start":762,"length":5,"code":"SFA004","severity":"information","warningLevel":1,"message":"Namespace 'Inner'"},
+    {"uri":"a.cs","start":776,"length":1,"code":"SFA003","severity":"warning","warningLevel":1,"message":"Type 'A'"}
+  ],
+  "suppressions":[
+    {"id":"SFA001","scope":"namespaceanddescendants","target":"~N:N1","spans":[{"uri":"a.cs","start":590,"end":638}]},
+    {"id":"SFA001","scope":"namespace","target":"~N:N2","spans":[{"uri":"a.cs","start":639,"end":687}],"excludeSpans":[{"uri":"a.cs","start":654,"end":685}]},
+    {"id":"SFA003","scope":"namespace","target":"~N:N2","spans":[{"uri":"a.cs","start":639,"end":687}],"excludeSpans":[{"uri":"a.cs","start":654,"end":685}]},
+    {"id":"SFA004","scope":"namespace","target":"~N:N2","spans":[{"uri":"a.cs","start":639,"end":687}],"excludeSpans":[{"uri":"a.cs","start":654,"end":685}]},
+    {"id":"SFA004","scope":"namespaceanddescendants","target":"~N:N4","spans":[{"uri":"a.cs","start":737,"end":785}]},
+    {"id":"SFA002","scope":"member","target":"~M:N3.Missing.M","spans":[]}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":600,"length":2,"code":"SFA004","severity":"information"},
+    {"uri":"a.cs","start":611,"length":1,"code":"SFA003","severity":"warning"},
+    {"uri":"a.cs","start":620,"length":1,"code":"SFA002","severity":"information"},
+    {"uri":"a.cs","start":630,"length":1,"code":"CS0168","severity":"warning"},
+    {"uri":"a.cs","start":660,"length":1,"code":"SFA003","severity":"warning"},
+    {"uri":"a.cs","start":669,"length":1,"code":"SFA002","severity":"information"},
+    {"uri":"a.cs","start":679,"length":1,"code":"CS0168","severity":"warning"},
+    {"uri":"a.cs","start":679,"length":1,"code":"SFA001","severity":"warning"},
+    {"uri":"a.cs","start":698,"length":2,"code":"SFA004","severity":"information"},
+    {"uri":"a.cs","start":709,"length":1,"code":"SFA003","severity":"warning"},
+    {"uri":"a.cs","start":718,"length":1,"code":"SFA002","severity":"information"},
+    {"uri":"a.cs","start":728,"length":1,"code":"CS0168","severity":"warning"},
+    {"uri":"a.cs","start":728,"length":1,"code":"SFA001","severity":"warning"},
+    {"uri":"a.cs","start":776,"length":1,"code":"SFA003","severity":"warning"}
+  ]
+ },
+ {
+  "name":"SuppressMessage applies without CODE_ANALYSIS too",
+  "sources":[{"uri":"a.cs","text":"using System.Diagnostics.CodeAnalysis;\nclass A\n{\n    [SuppressMessage(\"Probe\", \"SFA001\")]\n    [SuppressMessage(\"Compiler\", \"CS0168\")]\n    void M() { int a; int b = 1; }\n    void N() { int c; }\n}\n[SuppressMessage(\"Probe\", \"SFA001:Local\", Justification = \"test\")]\n[SuppressMessage(\"Probe\", \"sfa002\")]\nclass B\n{\n    void M() { int a; int b = 1; }\n    class Inner { void N() { int d = 2; int e; } }\n}\n"}],
+  "options":{},
+  "analyzers":true,
+  "raw":[
+    {"uri":"a.cs","start":45,"length":1,"code":"SFA003","severity":"warning","warningLevel":1,"message":"Type 'A'"},
+    {"uri":"a.cs","start":143,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'M'"},
+    {"uri":"a.cs","start":153,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":153,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'a'"},
+    {"uri":"a.cs","start":160,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":160,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'b'"},
+    {"uri":"a.cs","start":178,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'N'"},
+    {"uri":"a.cs","start":188,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'c' is declared but never used"},
+    {"uri":"a.cs","start":188,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'c'"},
+    {"uri":"a.cs","start":305,"length":1,"code":"SFA003","severity":"warning","warningLevel":1,"message":"Type 'B'"},
+    {"uri":"a.cs","start":318,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'M'"},
+    {"uri":"a.cs","start":328,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'a' is declared but never used"},
+    {"uri":"a.cs","start":328,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'a'"},
+    {"uri":"a.cs","start":335,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'b' is assigned but its value is never used"},
+    {"uri":"a.cs","start":335,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'b'"},
+    {"uri":"a.cs","start":354,"length":5,"code":"SFA003","severity":"warning","warningLevel":1,"message":"Type 'Inner'"},
+    {"uri":"a.cs","start":367,"length":1,"code":"SFA002","severity":"information","warningLevel":1,"message":"Method 'N'"},
+    {"uri":"a.cs","start":377,"length":1,"code":"CS0219","severity":"warning","warningLevel":3,"message":"The variable 'd' is assigned but its value is never used"},
+    {"uri":"a.cs","start":377,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'd'"},
+    {"uri":"a.cs","start":388,"length":1,"code":"CS0168","severity":"warning","warningLevel":3,"message":"The variable 'e' is declared but never used"},
+    {"uri":"a.cs","start":388,"length":1,"code":"SFA001","severity":"warning","warningLevel":1,"message":"Local 'e'"}
+  ],
+  "suppressions":[
+    {"id":"SFA001","uri":"a.cs","span":{"start":53,"end":168}},
+    {"id":"CS0168","uri":"a.cs","span":{"start":53,"end":168}},
+    {"id":"SFA001","uri":"a.cs","span":{"start":195,"end":396}},
+    {"id":"sfa002","uri":"a.cs","span":{"start":195,"end":396}}
+  ],
+  "expected":[
+    {"uri":"a.cs","start":45,"length":1,"code":"SFA003","severity":"warning"},
+    {"uri":"a.cs","start":143,"length":1,"code":"SFA002","severity":"information"},
+    {"uri":"a.cs","start":153,"length":1,"code":"CS0168","severity":"warning"},
+    {"uri":"a.cs","start":160,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":178,"length":1,"code":"SFA002","severity":"information"},
+    {"uri":"a.cs","start":188,"length":1,"code":"CS0168","severity":"warning"},
+    {"uri":"a.cs","start":188,"length":1,"code":"SFA001","severity":"warning"},
+    {"uri":"a.cs","start":305,"length":1,"code":"SFA003","severity":"warning"},
+    {"uri":"a.cs","start":318,"length":1,"code":"SFA002","severity":"information"},
+    {"uri":"a.cs","start":328,"length":1,"code":"CS0168","severity":"warning"},
+    {"uri":"a.cs","start":335,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":354,"length":5,"code":"SFA003","severity":"warning"},
+    {"uri":"a.cs","start":367,"length":1,"code":"SFA002","severity":"information"},
+    {"uri":"a.cs","start":377,"length":1,"code":"CS0219","severity":"warning"},
+    {"uri":"a.cs","start":388,"length":1,"code":"CS0168","severity":"warning"}
+  ]
+ }
+]}
