@@ -1,0 +1,40 @@
+import {decodeCoded,resolveExecutionField,genericTypeParts} from '@sharpforge/cil';
+import {ManagedFault} from '../heap.js';
+import {defaults} from './numeric-ops.js';
+
+const threadFields = new WeakMap();
+function threadStaticFields(inspector) {
+  let fields = threadFields.get(inspector);
+  if (fields) return fields;
+  fields = new Set();
+  for (const row of inspector.metadata.rows[12] ?? []) {
+    const parent = decodeCoded('HasCustomAttribute', row[0]);
+    if (parent >>> 24 !== 4) continue;
+    const constructor = inspector.resolveToken(decodeCoded('CustomAttributeType', row[1]));
+    if (constructor.owner === 'System.ThreadStaticAttribute') fields.add(parent);
+  }
+  threadFields.set(inspector, fields);
+  return fields;
+}
+
+/** A physical static slot captures type instantiation and scheduler context identity.
+ * Managed addresses retain this key so switching contexts cannot redirect a byref.
+ */
+export function staticSlot(vm, token, frame = vm.top) {
+  const contextIdentity = frame?.genericIdentity ?? null;
+  const contextArguments = contextIdentity ? genericTypeParts(contextIdentity).arguments : [];
+  const field = resolveExecutionField(vm.inspector, token, contextArguments);
+  if (!field.isStatic) throw new ManagedFault('InvalidProgramException', 'Expected a static field');
+  const contextType = contextIdentity && genericTypeParts(contextIdentity).definition;
+  const genericIdentity = field.ownerInstance ?? (contextType === field.owner ? contextIdentity : null);
+  const context = threadStaticFields(vm.inspector).has(field.resolvedToken) ? vm.scheduler?.currentId ?? 1 : null;
+  const key = genericIdentity !== null || context !== null ? JSON.stringify([field.resolvedToken, genericIdentity, context]) : field.resolvedToken;
+  if (!vm.statics.has(key)) vm.statics.set(key, defaults(field.signature.type));
+  return {key, field, typeToken: field.ownerToken, genericIdentity, context};
+}
+
+/** JS cooperative contexts observe ordered instruction-granularity memory access.
+ * These operations therefore provide acquire/release ordering without host threads.
+ */
+export function volatilePrefix(frame) { frame.volatileAccess = true; }
+export function finishMemoryAccess(frame) { if (frame.volatileAccess) frame.volatileAccess = false; }
