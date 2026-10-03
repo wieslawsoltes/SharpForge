@@ -58,3 +58,5 @@ export function verifyImage(image){
   }
   return errors;
 }
+
+export {int64Binary, int64Compare, int64Unary} from './numeric/int64.js';
