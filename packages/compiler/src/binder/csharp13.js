@@ -12,6 +12,7 @@
  *   Ref locals in iterators and async methods (SF-A02-T82): `refLocalsAcrossSuspensions`, CS9217; ref struct
  *   locals read after a suspension: ./ref-struct-suspensions.js, CS4007.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, RefKind } from '../symbols/types.js';
 import { forEachChild } from '../bound/semantic-walker.js';
 import { MethodKind } from '../symbols/members.js';
@@ -22,11 +23,11 @@ import { refAndUnsafeInAsyncFeature } from './ref-struct.js';
 
 /** The diagnostic code for the attribute on `member`, or null when it is allowed there. */
 function priorityPlacementProblem(member) {
-  if (member.isOverride) return 'CS9261';
-  if (member.explicitInterfaceSyntax) return 'CS9262';
-  if (member.kind === SymbolKind.Property) return member.isIndexer ? null : 'CS9262';
+  if (member.isOverride) return DiagnosticId.CS9261;
+  if (member.explicitInterfaceSyntax) return DiagnosticId.CS9262;
+  if (member.kind === SymbolKind.Property) return member.isIndexer ? null : DiagnosticId.CS9262;
   if (member.kind !== SymbolKind.Method) return null;
-  return [MethodKind.StaticConstructor, MethodKind.Destructor, MethodKind.Conversion].includes(member.methodKind) ? 'CS9262' : null;
+  return [MethodKind.StaticConstructor, MethodKind.Destructor, MethodKind.Conversion].includes(member.methodKind) ? DiagnosticId.CS9262 : null;
 }
 
 const unsafeSyntaxKinds = new Set(['PointerType', 'AddressOfExpression']);
@@ -83,7 +84,7 @@ export function refLocalsAcrossSuspensions(body) {
       // A loop inside the local's scope that the local was declared outside of: its back edge carries the suspension.
       if (loop && contains(scope, loop) && !(loop.start <= declared && declared < loop.end)) crossed = suspensions.some(s => contains(loop, s));
     }
-    if (crossed) rows.push({ node: use.syntax, code: 'CS9217', args: [] });
+    if (crossed) rows.push({ node: use.syntax, code: DiagnosticId.CS9217, args: [] });
   }
   return rows;
 }
@@ -117,7 +118,7 @@ export const CSharp13BodyRules = Base =>
       else if (body.binder?.c?.isIterator) this.gateUnsafeIterator(method, context.uri);
       for (const row of refStructLocalsAcrossSuspensions(body)) (this.acrossSuspensions ??= []).push({ uri: context.uri, ...row });
       // `&local` in an iterator (./unsafe-iterators.js).
-      if (body.binder?.c?.isIterator) for (const operand of body.binder.addressOfLocals ?? []) this.report(context.uri, operand, 'CS9239');
+      if (body.binder?.c?.isIterator) for (const operand of body.binder.addressOfLocals ?? []) this.report(context.uri, operand, DiagnosticId.CS9239);
       return body;
     }
     /** Below C# 13 unsafe code in an iterator is the gated feature: an `unsafe` iterator, pointer types and `&` in its body. */

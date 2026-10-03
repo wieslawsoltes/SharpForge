@@ -8,6 +8,7 @@
  * Bound node: `With {receiver, initializers: [{target, value}]}` of the receiver's type; the receiver of every
  * target is the `WithCopy` placeholder that stands for the copy.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { TypeKind } from '../symbols/types.js';
 
 /** True for a type whose values `with` can copy. */
@@ -28,7 +29,7 @@ export const WithBinding = Base =>
         return this.bad(syntax);
       }
       if (!isWithReceiverType(type)) {
-        this.report(syntax.expression, 'CS8858', [this.display(type)]);
+        this.report(syntax.expression, DiagnosticId.CS8858, [this.display(type)]);
         this.initializerSilently(syntax.initializer);
         return this.bad(syntax);
       }

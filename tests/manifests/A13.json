@@ -4,6 +4,7 @@
   "nodeGlobs": [
     "tests/portable-pdb.test.js",
     "tests/a13-01-*.test.js",
+    "tests/a13-03-async-writer.test.js",
     "tests/a13-02-encoding.test.js",
     "tests/a13-02-fetch.test.js",
     "tests/a13-02-source-link.test.js",

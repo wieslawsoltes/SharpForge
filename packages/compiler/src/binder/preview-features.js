@@ -23,6 +23,7 @@
  * The proposals name no diagnostic ids, so the rules use two SharpForge codes: SF2202 "preview feature is not
  * bound" and SF2203 "preview rule", each with the proposal reference in its message.
  */
+import { DiagnosticId } from '../diagnostics/codes.js';
 import { previewStampText } from '@sharpforge/syntax';
 import { TypeKind } from '../symbols/types.js';
 import { containsTypeParameter } from '../symbols/substitution.js';
@@ -93,8 +94,8 @@ export const PreviewFeatureRules = Base =>
       super.bindAttributes();
       for (const file of this.files) {
         if (!file.syntax || !this.isPreview(file.source.uri)) continue;
-        for (const [id, name, node] of unboundPreviewConstructs(file.syntax)) this.report(file.source.uri, node, 'SF2202', [name, previewStampText(id)]);
-        for (const [text, token] of safeModifierProblems(file.syntax)) this.report(file.source.uri, token, 'SF2203', [text, previewStampText('SafeModifier')]);
+        for (const [id, name, node] of unboundPreviewConstructs(file.syntax)) this.report(file.source.uri, node, DiagnosticId.SF2202, [name, previewStampText(id)]);
+        for (const [text, token] of safeModifierProblems(file.syntax)) this.report(file.source.uri, token, DiagnosticId.SF2203, [text, previewStampText('SafeModifier')]);
       }
     }
     closedDeclarationOf(type) {
@@ -110,7 +111,7 @@ export const PreviewFeatureRules = Base =>
       for (const parameter of type.typeParameters ?? []) {
         if (containsTypeParameter(base, [parameter])) continue;
         const text = `the type parameter '${parameter.name}' of a class that derives from a closed class must be used in the base class`;
-        this.report(part.uri, part.syntax.identifier, 'SF2203', [text, previewStampText('ClosedClasses')]);
+        this.report(part.uri, part.syntax.identifier, DiagnosticId.SF2203, [text, previewStampText('ClosedClasses')]);
       }
     }
     checkType(type) {
@@ -123,7 +124,7 @@ export const PreviewFeatureRules = Base =>
       this.checkClosedBase(type);
       if (!closed) return;
       const at = closed.syntax.identifier,
-        rule = (id, text) => this.report(closed.uri, at, 'SF2203', [text, previewStampText(id)]);
+        rule = (id, text) => this.report(closed.uri, at, DiagnosticId.SF2203, [text, previewStampText(id)]);
       if (type.typeKind === TypeKind.Enum) {
         type.isClosedEnum = true;
         if (!type.getMembers().some(member => member.isEnumMember && isZero(member.constantValue)))
