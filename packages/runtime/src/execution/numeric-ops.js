@@ -88,21 +88,33 @@ export function convert(name, value, {fault: createFault = fault, error: createE
     const n = unsignedSource && !value?.float ? (typeof raw === 'bigint' ? BigInt.asUintN(64, raw) : raw >>> 0) : raw;
     return float(Number(n), target === 'r4' ? 'r4' : 'r8');
   }
-  let n;
-  if (typeof raw === 'bigint') n = unsignedSource ? BigInt.asUintN(64, raw) : raw;
-  else {
-    if (!Number.isFinite(raw)) {
-      if (checked) throw createFault('OverflowException', 'Non-finite integer conversion');
-      return target === 'i8' || target === 'u8' ? -(1n << 63n) : -2147483648;
-    }
-    n = BigInt(Math.trunc(unsignedSource && !value?.float ? raw >>> 0 : raw));
-  }
   const bits = {i1: 8, u1: 8, i2: 16, u2: 16, i4: 32, u4: 32, i8: 64, u8: 64, i: 32, u: 32}[target], signed = target.startsWith('i');
   if (!bits) throw createError('Invalid conversion');
+  // CIL F values are tagged. Direct callers can also supply bare host Numbers;
+  // only values outside the signed/unsigned Int32 domain are treated as floats.
+  // In particular, -1 and 0xffffffff remain integer bit patterns, never F values.
+  const floating = !!value?.float || typeof raw === 'number' && (!Number.isInteger(raw) || raw < -2147483648 || raw > 4294967295);
+  let n;
+  if (floating) {
+    if (checked) {
+      if (!Number.isFinite(raw)) throw createFault('OverflowException', 'Non-finite integer conversion');
+      n = BigInt(Math.trunc(raw));
+    } else {
+      // Pin unspecified ECMA overflow/NaN results to .NET 10: saturate 32/64-bit
+      // targets; small targets first saturate to Int32 and then narrow below.
+      // See docs/cil-numeric-conversions.md for the complete compatibility table.
+      const saturationBits = Math.max(bits, 32), saturationSigned = bits < 32 || signed;
+      const min = saturationSigned ? -(1n << BigInt(saturationBits - 1)) : 0n;
+      const max = (1n << BigInt(saturationSigned ? saturationBits - 1 : saturationBits)) - 1n;
+      n = Number.isNaN(raw) ? 0n : raw <= Number(min) ? min : raw >= Number(max) ? max : BigInt(Math.trunc(raw));
+    }
+  } else if (typeof raw === 'bigint') n = unsignedSource ? BigInt.asUintN(64, raw) : raw;
+  else {
+    // conv.u8 zero-extends an Int32 source. Checked conversions use the signed
+    // source unless .un is explicit; an Int64 source already supplies 64 bits.
+    n = BigInt(unsignedSource || !checked && target === 'u8' ? raw >>> 0 : raw);
+  }
   if (checked && (n < (signed ? -(1n << BigInt(bits - 1)) : 0n) || n > (signed ? (1n << BigInt(bits - 1)) - 1n : (1n << BigInt(bits)) - 1n))) throw createFault('OverflowException', 'Checked conversion overflow');
-  // CLI leaves out-of-range unchecked floating conversions unspecified. Match this
-  // profile's compiler/IR conversion deterministically rather than wrapping a float.
-  if (!checked && value?.float && signed && bits === 32 && (n < -2147483648n || n > 2147483647n)) return -2147483648;
   n = signed ? BigInt.asIntN(bits, n) : BigInt.asUintN(bits, n);
   return bits === 64 ? BigInt.asIntN(64, n) : Number(n) | 0;
 }

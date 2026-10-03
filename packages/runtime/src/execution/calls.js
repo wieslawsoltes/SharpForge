@@ -1,3 +1,4 @@
+import {methodOffsets} from './method-offsets.js';
 import {systemType,intrinsicDefinition} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {SUSPENDED} from '../platform.js';
@@ -8,7 +9,7 @@ export function call(vm,token,args,extra={}) {
   if(vm.frames.length>=vm.options.maxFrames)throw new ManagedFault('StackOverflowException','Managed call depth exceeded');
   const method=vm.inspector.getMethod(token);
   if(!method.signature.isStatic&&args[0]===null)throw new ManagedFault('NullReferenceException','Instance method receiver is null');
-  vm.frames.push({id:++vm.frameId,method,args,locals:method.locals.map(type=>method.initLocals?defaults(type):undefined),stack:[],pc:0,lastOffset:0,offsets:new Map(method.instructions.map((instruction,index)=>[instruction.offset,index])),...createExceptionState(),...extra});
+  vm.frames.push({id:++vm.frameId,method,args,locals:method.locals.map(type=>method.initLocals?defaults(type):undefined),stack:[],pc:0,lastOffset:0,offsets:methodOffsets(method),...createExceptionState(),...extra});
 }
 export function ensureInitialized(vm,typeToken) {
   if(vm.initialized.has(typeToken))return false;
@@ -35,7 +36,7 @@ export function invoke(vm,instruction) {
       return;
     }
     if(instruction.name==='callvirt'&&args[0]===null)throw new ManagedFault('NullReferenceException','Null virtual receiver');
-    const dispatch=target&&instruction.name==='callvirt'&&(descriptor.flags&0x40)?vm.typeSystem.virtualTarget(args[0],descriptor,target):target;
+    const dispatch=target&&instruction.name==='callvirt'&&(vm.inspector.methods.get(target)?.flags&0x40)?vm.typeSystem.virtualTarget(args[0],descriptor,target):target;
     if(dispatch) {
       if(!vm.report.methods.includes(dispatch))throw new ManagedFault('NotSupportedException','Unverified virtual override; select its method directly');
       vm.call(dispatch,args);

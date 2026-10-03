@@ -25,9 +25,10 @@ export function builtin(vm, id, args) {
       case 'GC.Collect': vm.heap.collect(); return null;
       case 'GC.GetTotalMemory':
         if (a === true) vm.heap.collect();
-        return vm.heap.stats.liveBytes | 0;
+        return BigInt(vm.heap.stats.liveBytes);
       case 'GC.CollectionCount':
-        if (a !== 0) throw new ManagedFault('ArgumentOutOfRangeException', 'This non-generational collector exposes generation 0 only');
+        if (!Number.isInteger(a) || a < 0 || a > 2) throw new ManagedFault('ArgumentOutOfRangeException', 'GC generation must be between 0 and 2');
+        // Every collection in this non-generational heap collects all three generations.
         return vm.heap.stats.collections;
       case 'int.Parse': {
         const s = String(a ?? '').trim();

@@ -1,4 +1,5 @@
-import {CilError,systemType} from '@sharpforge/cil';
+import {exceptionMatches} from './exception-types.js';
+import {CilError,systemType,CilDispatchTable} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 
 /** Assembly-derived metadata indexes. They are rebuilt on load, never snapshotted. */
@@ -11,7 +12,7 @@ export class CilTypeSystem {
     this.layouts=new Map();
     this.assignable=new Map();
     this.initializers=new Map();
-    this.virtualMethods=new Map();
+    this.dispatch=new CilDispatchTable(vm.inspector);
     for(const type of this.types.values()) {
       this.initializers.set(type.token,type.methods.find(method=>method.name==='.cctor')??null);
       const targets=new Set([systemType(type.name)]);
@@ -42,7 +43,7 @@ export class CilTypeSystem {
     if(ref===null)return false;
     const record=this.vm.heap.get(ref),target=systemType(typeName);
     if(target==='System.Object')return true;
-    if(record.kind==='exception')return target==='System.Exception'||systemType(record.type)===target;
+    if(record.kind==='exception')return exceptionMatches(record.type,target);
     return systemType(record.type)===target||!!this.assignable.get(record.type)?.has(target);
   }
   field(token,ref) {
@@ -53,21 +54,7 @@ export class CilTypeSystem {
     if(index===undefined)throw new ManagedFault('InvalidProgramException','Field is not part of this object');
     return {field,token:resolved,record,index};
   }
-  // Preserve the current name/signature dispatch policy. Slot-based dispatch is a separate scope.
   virtualTarget(ref,descriptor,target) {
-    const signature=JSON.stringify(descriptor.signature);
-    let token=this.typeOf(ref),depth=0;
-    while(token&&depth++<64) {
-      const type=this.types.get(token);
-      if(!type)break;
-      let methods=this.virtualMethods.get(token);
-      if(!methods){methods=new Map();this.virtualMethods.set(token,methods);}
-      const key=descriptor.name+'::'+signature;
-      if(!methods.has(key))methods.set(key,type.methods.find(method=>method.name===descriptor.name&&JSON.stringify(this.vm.inspector.signature(method.token))===signature)?.token??null);
-      const candidate=methods.get(key);
-      if(candidate)return candidate;
-      token=type.baseToken;
-    }
-    return target;
+    return this.dispatch.resolve(this.typeOf(ref),target);
   }
 }
