@@ -47,6 +47,8 @@ test('compatibility writers encode every primitive using its intrinsic element c
   assert.deepEqual([...signatureType(new Writer(), 'void').finish()], [1]);
   assert.deepEqual([...fieldSignature('System.Int32')], [6, 8]);
   assert.equal(parseSignatureType('SharpForge.<>AllocationToken', () => 0x02000001).token, 0x02000001);
+  const namedBytes = encodeTypeSignature(parseSignatureType('constructor', () => 0x02000001));
+  assert.equal(readTypeSignature(namedBytes, { typeName: () => 'constructor' }), 'constructor');
   assert.deepEqual(readSignature(localSignature(['typedref', 'int& pinned']), metadata), {
     kind: 'locals', types: ['typedref', 'int& pinned'],
   });

@@ -7,7 +7,7 @@ export function formatSignatureType(node, metadata, options = {}) {
   function name(token, depth) {
     const full = metadata?.typeName(token, depth);
     if (typeof full !== 'string') throw new CilError('Type name resolver is required');
-    return signatureAliases[full] ?? full;
+    return Object.hasOwn(signatureAliases, full) ? signatureAliases[full] : full;
   }
   function format(type, depth = options.initialDepth ?? 0) {
     budget(depth);

@@ -4,7 +4,7 @@ import { parseSignatureType } from './signature-parser.js';
 import { formatSignature, formatSignatureType } from './signature-format.js';
 import { signatureSystemNames } from './signature-types.js';
 
-export function cliSystemName(type) { return signatureSystemNames[type] ?? type; }
+export function cliSystemName(type) { return Object.hasOwn(signatureSystemNames, type) ? signatureSystemNames[type] : type; }
 
 /** Compatibility writer for a type; contextual validation is provided by member writers. */
 export function signatureType(writer, type, resolveToken) {

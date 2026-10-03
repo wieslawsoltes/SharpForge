@@ -119,7 +119,7 @@ export function parseSignatureType(value, resolveToken, options = {}) {
         arguments: args.map(argument => parse(argument, depth + 1)),
       };
     }
-    const alias = signatureAliases[text] ?? text;
+    const alias = Object.hasOwn(signatureAliases, text) ? signatureAliases[text] : text;
     if (!kind && Object.hasOwn(signaturePrimitives, alias)) return { kind: 'primitive', name: alias };
     // Compiler-generated names such as <>AllocationToken and <Run>d__1 are atomic identifiers.
     const identifier = text.replace(/(^|[.+])<[^<>]*>(?=[\w])/g, '$1Generated');
