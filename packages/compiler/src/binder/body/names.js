@@ -40,7 +40,9 @@ export const NameBinding = Base =>
         }
         if (!arity && this.isPending(name)) {
           this.report(syntax, 'CS0841', [name]);
-          (this.rootBinder.usedBeforeDeclaration ??= new Set()).add(name);
+          // The use still counts for the unused-variable warnings: an assignment as a write, anything else as a read.
+          const isWrite = syntax.parent?.kind === 'SimpleAssignmentExpression' && syntax.parent.left === syntax;
+          (this.rootBinder.usedBeforeDeclaration ??= new Map()).set(name, isWrite && !this.rootBinder.usedBeforeDeclaration.has(name));
           return this.bad(syntax);
         }
         if (!arity && name === '_' && options.allowDiscard) return this.node('Discard', syntax, null, { isOutVarOrDiscard: true });

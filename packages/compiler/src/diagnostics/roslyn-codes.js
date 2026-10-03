@@ -554,6 +554,7 @@ export const roslynCodes=Object.freeze({
  CS8661:["ERR_DuplicatePropertyReadOnlyMods","error",0,"Cannot specify 'readonly' modifiers on both accessors of property or indexer '{0}'. Instead, put a 'readonly' modifier on the property itself."],
  CS8705:["ERR_MostSpecificImplementationIsNotFound","error",0,"Interface member '{0}' does not have a most specific implementation. Neither '{1}', nor '{2}' are most specific."],
  CS8714:["WRN_NullabilityMismatchInTypeParameterNotNullConstraint","warning",1,"The type '{2}' cannot be used as type parameter '{1}' in the generic type or method '{0}'. Nullability of type argument '{2}' doesn't match 'notnull' constraint."],
+ CS8716:["ERR_DefaultLiteralNoTargetType","error",0,"There is no target type for the default literal."],
  CS8752:["ERR_ImplicitObjectCreationIllegalTargetType","error",0,"The type '{0}' may not be used as the target type of new()"],
  CS8754:["ERR_ImplicitObjectCreationNoTargetType","error",0,"There is no target type for '{0}'"],
  CS8764:["WRN_TopLevelNullabilityMismatchInReturnTypeOnOverride","warning",1,"Nullability of return type doesn't match overridden member (possibly because of nullability attributes)."],
