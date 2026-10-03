@@ -29,6 +29,7 @@ const pipelineCodes = new Set([
   DiagnosticId.CS1558,
   DiagnosticId.CS4009,
   DiagnosticId.CS9273,
+  DiagnosticId.CS8803,
   DiagnosticId.CS1617,
   DiagnosticId.CS2019,
   DiagnosticId.CS8630,

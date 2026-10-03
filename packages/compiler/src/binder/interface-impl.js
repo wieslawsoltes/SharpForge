@@ -38,13 +38,16 @@ const parametersMatch = (a, b) =>
   a.parameters.every((p, i) => p.refKind === b.parameters[i].refKind && sameType(p.type, b.parameters[i].type, a, b));
 const typeOfMember = m => (m.kind === SymbolKind.Method ? m.returnType : m.type);
 const simpleName = m => m.simpleName ?? m.name;
-/** Members of an interface that need (or can take) an implementation: instance methods, properties, indexers and events. */
+/**
+ * Members of an interface that need (or can take) an implementation: instance methods, properties, indexers and
+ * events, and - C# 11 - the static abstract ones.
+ */
 export function implementableMembers(iface) {
   return iface
     .getMembers()
     .filter(
       m =>
-        !m.isStatic &&
+        (!m.isStatic || m.isAbstract) &&
         ((m.kind === SymbolKind.Method && m.methodKind === MethodKind.Ordinary) ||
           m.kind === SymbolKind.Property ||
           m.kind === SymbolKind.Event) &&
@@ -75,8 +78,9 @@ export function findImplementation(type, iface, member, core) {
     for (const c of t.getMembers(member.name)) {
       if (c.explicitInterfaceSyntax || !matches(c, member)) continue;
       const sameReturn = sameType(typeOfMember(c), typeOfMember(member), c, member);
-      if (c.isStatic) {
-        close ??= { code: DiagnosticId.CS0736, candidate: c };
+      // A static abstract member is implemented by a static member, an instance member by an instance member.
+      if (!!c.isStatic !== !!member.isStatic) {
+        close ??= { code: member.isStatic ? DiagnosticId.CS8928 : DiagnosticId.CS0736, candidate: c };
         continue;
       }
       if (c.declaredAccessibility !== Accessibility.Public) {
@@ -103,7 +107,7 @@ export function findImplementation(type, iface, member, core) {
     return {
       error: { code: DiagnosticId.CS0738, args: [typeName, memberName, close.candidate.toDisplayString(), typeOfMember(member).toDisplayString()] },
     };
-  if (close?.code === DiagnosticId.CS0736 || close?.code === DiagnosticId.CS0737)
+  if (close?.code === DiagnosticId.CS0736 || close?.code === DiagnosticId.CS0737 || close?.code === DiagnosticId.CS8928)
     return { error: { code: close.code, args: [typeName, memberName, close.candidate.toDisplayString()] } };
   if (close?.accessor) return { error: { code: DiagnosticId.CS0535, args: [typeName, memberName + '.' + close.accessor] } };
   if (member.kind === SymbolKind.Property && !member.isIndexer) {
@@ -161,6 +165,23 @@ export function bindInterfaceImplementations(type, core) {
     }
   }
   return { map, diagnostics };
+}
+/**
+ * Implicit implementations of non-public interface methods and accessors (C# 10; CS8704 below it, reported at the
+ * implementing method).
+ * @param {Map<object,object>} map interface member -> implementation, as `bindInterfaceImplementations` returns it
+ * @returns {{implementation:object, args:string[]}[]} the type, the interface member and the implementation as displayed
+ */
+export function nonPublicImplicitImplementations(type, map) {
+  const rows = [];
+  for (const [member, implementation] of map) {
+    if (member.kind !== SymbolKind.Method || implementation === member || implementation.explicitInterfaceType) continue;
+    if (implementation.containingType !== type || implementation.associatedSymbol?.explicitInterfaceType) continue;
+    const accessibility = member.declaredAccessibility ?? member.associatedSymbol?.declaredAccessibility;
+    if (accessibility === Accessibility.Public) continue;
+    rows.push({ implementation, args: [type.toDisplayString(), member.toDisplayString(), implementation.toDisplayString()] });
+  }
+  return rows;
 }
 /** The MethodImpl rows a type needs: explicit implementations, and implicit ones whose name or declaring type differs from the interface method. */
 export function methodImplRows(type, map) {

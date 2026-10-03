@@ -1,26 +1,20 @@
 name: Supply chain and code security
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, labeled]
-  push:
-    branches: [main]
-  schedule:
-    - cron: '37 4 * * 1'
   workflow_dispatch:
 permissions:
   contents: read
 concurrency:
   group: security-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  cancel-in-progress: false
 defaults:
   run:
     shell: bash
 jobs:
   supply:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ${{ matrix.os }}
     timeout-minutes: 25
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         os: [ubuntu-24.04, windows-2025, macos-26]
@@ -41,14 +35,17 @@ jobs:
           node scripts/conformance/supply/verify-vendor.js
           node scripts/conformance/supply/license-gate.js
           node scripts/conformance/supply/secret-scan.js
+          node scripts/conformance/static/check-imports.js --output artifacts/security/static-imports.json
       - name: Positive, negative, bounds and cancellation regressions
         run: |
-          node --test tests/conformance/supply/*.test.js
+          node --test --test-concurrency=1 tests/conformance/supply/*.test.js tests/conformance/security/*.test.js
           python -m unittest discover -s tests/conformance/supply -p 'test_*.py'
       - name: Build actual payloads and SBOM
         run: |
           npm run build
           npm run standalone
+          node scripts/conformance/security/header-probe.js dist/index.html --output artifacts/security/csp-browser.json
+          node scripts/conformance/security/header-probe.js artifacts/SharpForge-standalone.html --standalone --output artifacts/security/csp-standalone.json
           npm run test:packages
           node scripts/conformance/repro/package-release.js
           node scripts/conformance/supply/sbom.js
@@ -65,13 +62,14 @@ jobs:
           retention-days: 30
           if-no-files-found: error
   codeql:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+    needs: supply
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     permissions:
       contents: read
       security-events: write
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         language: [javascript-typescript, python]

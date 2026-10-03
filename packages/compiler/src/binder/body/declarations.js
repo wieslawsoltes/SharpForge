@@ -238,6 +238,8 @@ export const DeclarationBinding = Base =>
       if (!type || type.isErrorType?.() || value?.hasErrors || value?.literal === 'null') return;
       if (isAwait ? isAsyncDisposable(type, this.core) : implementsInterface(type, this.core.idisposable, this.core)) return;
       if (type.typeKind === TypeKind.TypeParameter && type.constraintTypes.length) return;
+      // A dynamic resource is converted to IDisposable at run time.
+      if (type.typeKind === TypeKind.Dynamic) return;
       // Registry types do not list their interfaces completely: only source types and primitives are known not to be disposable.
       if (
         !isSourceType(type) &&
