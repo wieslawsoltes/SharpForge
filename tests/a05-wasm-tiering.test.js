@@ -103,3 +103,33 @@ test('T11.3 unsupported byrefs use explicit interpreter fallback', async () => {
   assert.equal(vm.run().returnValue, 7);
   assert.equal(wasmTierStatistics(vm).nativeInstructions, 0);
 });
+
+test('T11.3 call counters compile a hot callee and switch its next invocation', async () => {
+  const bytes = managedFixture({methods: [
+    {name: 'Main', result: 'int', body: (writer, context) => writer
+      .op('ldc.i4.2').op('call', context.methods.Square).op('pop')
+      .op('ldc.i4.3').op('call', context.methods.Square).op('pop')
+      .op('ldc.i4.4').op('call', context.methods.Square).op('ret')},
+    {name: 'Square', result: 'int', parameters: ['int'], body: writer =>
+      writer.op('ldarg.0').op('ldarg.0').op('mul').op('ret')},
+  ]});
+  const vm = new CilVirtualMachine(bytes, {wasmTiering: {callThreshold: 2}});
+  vm.runSlice({instructionBudget: 10, timeBudgetMs: 1000});
+  assert.equal(vm.top.method.name, 'Square');
+  assert.equal((await prepareWasmTier(vm, vm.top.method.token)).status, 'ready');
+  assert.equal(vm.run().returnValue, 16);
+  const stats = wasmTierStatistics(vm);
+  assert.equal(stats.methods.find(method => method.token === 0x06000002).calls, 3);
+  assert.equal(stats.entryTransitions, 1);
+  assert.equal(stats.osrTransitions, 0);
+});
+
+test('T11.4 asynchronous cancellation drops all native code on the VM stop boundary', async () => {
+  const vm = new CilVirtualMachine(loopFixture(), {wasmTiering: true});
+  await prepareWasmTier(vm);
+  const abort = new AbortController();
+  abort.abort();
+  await assert.rejects(vm.runAsync({signal: abort.signal}), {name: 'OperationCanceledException'});
+  assert.equal(vm.frames.length, 0);
+  assert.equal(wasmTierStatistics(vm).compilations, 0);
+});
