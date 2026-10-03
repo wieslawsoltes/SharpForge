@@ -1,7 +1,7 @@
 import { Reader, CilError } from '../binary.js';
 import { decodeCoded } from './indices.js';
 import {
-  signaturePrimitiveNames, signatureBudget, signatureCount, checkSignatureType, checkMethodHeader,
+  signaturePrimitiveNames, signaturePrimitiveNodes, signatureBudget, signatureCount, checkSignatureType, checkMethodHeader,
 } from './signature-types.js';
 
 const unaryKinds = new Map([[0x0f, 'pointer'], [0x10, 'byref'], [0x1d, 'szarray'], [0x45, 'pinned']]);
@@ -23,7 +23,7 @@ function decoder(bytes, options) {
     budget(depth);
     const code = reader.u8();
     let result;
-    if (signaturePrimitiveNames[code]) result = { kind: 'primitive', name: signaturePrimitiveNames[code] };
+    if (signaturePrimitiveNames[code]) result = signaturePrimitiveNodes[signaturePrimitiveNames[code]];
     else if (unaryKinds.has(code)) {
       const kind = unaryKinds.get(code);
       checkSignatureType({ kind }, context);

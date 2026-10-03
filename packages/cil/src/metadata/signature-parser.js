@@ -1,6 +1,6 @@
 import { canonicalType, frameworkType } from '@sharpforge/framework';
 import { CilError } from '../binary.js';
-import { signaturePrimitives, signatureAliases, signatureBudget } from './signature-types.js';
+import { signaturePrimitives, signaturePrimitiveNodes, signatureAliases, signatureBudget } from './signature-types.js';
 
 const collections = new Set(['List', 'Dictionary', 'HashSet', 'Queue', 'Stack', 'IEnumerable', 'IList', 'ICollection']);
 const genericValues = new Set([
@@ -124,7 +124,7 @@ export function parseSignatureType(value, resolveToken, options = {}) {
       };
     }
     const alias = Object.hasOwn(signatureAliases, text) ? signatureAliases[text] : text;
-    if (!kind && Object.hasOwn(signaturePrimitives, alias)) return { kind: 'primitive', name: alias };
+    if (!kind && Object.hasOwn(signaturePrimitives, alias)) return signaturePrimitiveNodes[alias];
     // Compiler-generated names such as <>AllocationToken and <Run>d__1 are atomic identifiers.
     const identifier = text.replace(/(^|[.+])<[^<>]*>(?=[\w])/g, '$1Generated');
     if (/[<>\[\](),&*\s]/.test(identifier)) throw new CilError('Invalid signature type name');

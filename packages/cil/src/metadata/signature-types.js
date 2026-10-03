@@ -9,6 +9,9 @@ export const signaturePrimitives = Object.freeze({
 export const signaturePrimitiveNames = Object.freeze(Object.fromEntries(
   Object.entries(signaturePrimitives).map(([name, code]) => [code, name]),
 ));
+export const signaturePrimitiveNodes = Object.freeze(Object.fromEntries(
+  Object.keys(signaturePrimitives).map(name => [name, Object.freeze({ kind: 'primitive', name })]),
+));
 export const signatureSystemNames = Object.freeze({
   void: 'System.Void', bool: 'System.Boolean', char: 'System.Char', sbyte: 'System.SByte', byte: 'System.Byte',
   short: 'System.Int16', ushort: 'System.UInt16', int: 'System.Int32', uint: 'System.UInt32',

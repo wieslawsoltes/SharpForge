@@ -29,6 +29,7 @@ resolving names. Named types preserve `class` versus `valuetype` and their metad
 tokens. Generic parameters retain type/method scope; modifiers retain nesting
 order; arrays retain rank, sizes and signed lower bounds. Method signatures retain
 calling convention, `hasThis`, `explicitThis`, generic arity and sentinel position.
+Primitive nodes are immutable and shared to avoid repeated allocations.
 
 `readSignature` and `readTypeSignature` retain the existing formatted inspection
 API. Its strings intentionally omit some binary distinctions; use the AST for

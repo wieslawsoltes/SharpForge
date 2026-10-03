@@ -17,106 +17,110 @@ export function writeSignedCompressed(writer, value) {
   return writer;
 }
 
-function encoder(writer, options) {
-  const budget = signatureBudget(options);
-  const reference = value => {
+const typeWriters = {
+  primitive(node) { this.writer.u8(signaturePrimitives[node.name]); },
+  class(node) { this.writer.u8(0x12); this.reference(node.token); },
+  valuetype(node) { this.writer.u8(0x11); this.reference(node.token); },
+  pointer(node, depth) { this.writer.u8(0x0f); this.type(node.element, depth + 1, 'pointer'); },
+  byref(node, depth) { this.writer.u8(0x10); this.type(node.element, depth + 1); },
+  szarray(node, depth) { this.writer.u8(0x1d); this.type(node.element, depth + 1); },
+  pinned(node, depth) { this.writer.u8(0x45); this.type(node.element, depth + 1, 'localUnpinned'); },
+  modreq(node, depth, context) { this.writer.u8(0x1f); this.reference(node.token); this.type(node.element, depth + 1, context); },
+  modopt(node, depth, context) { this.writer.u8(0x20); this.reference(node.token); this.type(node.element, depth + 1, context); },
+  genericParameter(node) {
+    if (!['type', 'method'].includes(node.scope)) throw new CilError('Invalid generic parameter scope');
+    this.writer.u8(node.scope === 'type' ? 0x13 : 0x1e).compressed(signatureCount(node.index, 'Generic parameter index'));
+  },
+  genericInstance(node, depth) {
+    if (!['class', 'valuetype'].includes(node.type?.kind)) throw new CilError('Generic instance requires a class or valuetype');
+    if (!node.arguments?.length) throw new CilError('Generic instance requires arguments');
+    this.writer.u8(0x15);
+    this.type(node.type, depth + 1);
+    this.values(node.arguments, 'Generic arguments');
+    for (const argument of node.arguments) this.type(argument, depth + 1);
+  },
+  array(node, depth) {
+    const rank = signatureCount(node.rank, 'Array rank', 32);
+    if (!rank) throw new CilError('Array rank must be positive');
+    if (!Array.isArray(node.sizes) || !Array.isArray(node.lowerBounds) ||
+        node.sizes.length > rank || node.lowerBounds.length > rank) throw new CilError('Invalid array shape');
+    this.writer.u8(0x14);
+    this.type(node.element, depth + 1);
+    this.writer.compressed(rank);
+    this.values(node.sizes, 'Array sizes');
+    for (const size of node.sizes) this.writer.compressed(size);
+    this.values(node.lowerBounds, 'Array bounds');
+    for (const bound of node.lowerBounds) writeSignedCompressed(this.writer, bound);
+  },
+  functionPointer(node, depth) {
+    if (node.signature?.kind !== 'method') throw new CilError('Function pointer requires a method signature');
+    this.writer.u8(0x1b);
+    this.method(node.signature, depth + 1);
+  },
+};
+
+class SignatureEncoder {
+  constructor(writer, options) {
+    this.writer = writer;
+    this.budget = signatureBudget(options);
+  }
+  reference(value) {
     if (!Number.isInteger(value) || value < 0 || value > 0xffffffff || !(value & 0xffffff)) {
       throw new CilError('Invalid signature type token');
     }
-    writer.compressed(codedIndex('TypeDefOrRef', value));
-  };
-  function values(items, label) {
+    this.writer.compressed(codedIndex('TypeDefOrRef', value));
+  }
+  values(items, label) {
     if (!Array.isArray(items)) throw new CilError(`Invalid ${label}`);
-    writer.compressed(signatureCount(items.length, label));
+    this.writer.compressed(signatureCount(items.length, label));
   }
-  const handlers = {
-    primitive(node) { writer.u8(signaturePrimitives[node.name]); },
-    class(node) { writer.u8(0x12); reference(node.token); },
-    valuetype(node) { writer.u8(0x11); reference(node.token); },
-    pointer(node, depth) { writer.u8(0x0f); type(node.element, depth + 1, 'pointer'); },
-    byref(node, depth) { writer.u8(0x10); type(node.element, depth + 1); },
-    szarray(node, depth) { writer.u8(0x1d); type(node.element, depth + 1); },
-    pinned(node, depth) { writer.u8(0x45); type(node.element, depth + 1, 'localUnpinned'); },
-    modreq(node, depth, context) { writer.u8(0x1f); reference(node.token); type(node.element, depth + 1, context); },
-    modopt(node, depth, context) { writer.u8(0x20); reference(node.token); type(node.element, depth + 1, context); },
-    genericParameter(node) {
-      if (!['type', 'method'].includes(node.scope)) throw new CilError('Invalid generic parameter scope');
-      writer.u8(node.scope === 'type' ? 0x13 : 0x1e).compressed(signatureCount(node.index, 'Generic parameter index'));
-    },
-    genericInstance(node, depth) {
-      if (!['class', 'valuetype'].includes(node.type?.kind)) throw new CilError('Generic instance requires a class or valuetype');
-      if (!node.arguments?.length) throw new CilError('Generic instance requires arguments');
-      writer.u8(0x15);
-      type(node.type, depth + 1);
-      values(node.arguments, 'Generic arguments');
-      for (const argument of node.arguments) type(argument, depth + 1);
-    },
-    array(node, depth) {
-      const rank = signatureCount(node.rank, 'Array rank', 32);
-      if (!rank) throw new CilError('Array rank must be positive');
-      if (!Array.isArray(node.sizes) || !Array.isArray(node.lowerBounds) ||
-          node.sizes.length > rank || node.lowerBounds.length > rank) throw new CilError('Invalid array shape');
-      writer.u8(0x14);
-      type(node.element, depth + 1);
-      writer.compressed(rank);
-      values(node.sizes, 'Array sizes');
-      for (const size of node.sizes) writer.compressed(size);
-      values(node.lowerBounds, 'Array bounds');
-      for (const bound of node.lowerBounds) writeSignedCompressed(writer, bound);
-    },
-    functionPointer(node, depth) {
-      if (node.signature?.kind !== 'method') throw new CilError('Function pointer requires a method signature');
-      writer.u8(0x1b);
-      method(node.signature, depth + 1);
-    },
-  };
-  function type(node, depth = 0, context = 'type') {
-    budget(depth);
+
+  type(node, depth = 0, context = 'type') {
+    this.budget(depth);
     checkSignatureType(node, context);
-    if (!Object.hasOwn(handlers, node.kind)) throw new CilError('Unknown signature type kind');
-    handlers[node.kind](node, depth, context);
+    if (!Object.hasOwn(typeWriters, node.kind)) throw new CilError('Unknown signature type kind');
+    typeWriters[node.kind].call(this, node, depth, context);
   }
-  function method(node, depth = 0) {
-    budget(depth);
+  method(node, depth = 0) {
+    this.budget(depth);
     if (!Array.isArray(node.parameters)) throw new CilError('Invalid signature parameters');
     const property = node.kind === 'property';
-    writer.u8(property ? 8 | (node.hasThis ? 0x20 : 0) : checkMethodHeader(node));
-    if (!property && node.genericArity) writer.compressed(node.genericArity);
-    values(node.parameters, 'Parameters');
-    type(node.returnType, depth + 1, property ? 'property' : 'return');
+    this.writer.u8(property ? 8 | (node.hasThis ? 0x20 : 0) : checkMethodHeader(node));
+    if (!property && node.genericArity) this.writer.compressed(node.genericArity);
+    this.values(node.parameters, 'Parameters');
+    this.type(node.returnType, depth + 1, property ? 'property' : 'return');
     node.parameters.forEach((parameter, index) => {
-      if (!property && node.sentinel === index) writer.u8(0x41);
-      type(parameter, depth + 1, 'parameter');
+      if (!property && node.sentinel === index) this.writer.u8(0x41);
+      this.type(parameter, depth + 1, 'parameter');
     });
   }
-  function signature(node) {
+  signature(node) {
     if (!node || typeof node !== 'object') throw new CilError('Invalid signature');
     if (node.kind === 'field') {
-      writer.u8(6);
-      type(node.type, 0, 'field');
+      this.writer.u8(6);
+      this.type(node.type, 0, 'field');
     } else if (node.kind === 'locals' || node.kind === 'methodSpec') {
       const locals = node.kind === 'locals';
       const items = locals ? node.types : node.arguments;
       if (!locals && !items?.length) throw new CilError('MethodSpec requires arguments');
-      writer.u8(locals ? 7 : 10);
-      values(items, 'Signature types');
-      for (const item of items) type(item, 0, locals ? 'local' : 'type');
-    } else if (node.kind === 'method' || node.kind === 'property') method(node);
+      this.writer.u8(locals ? 7 : 10);
+      this.values(items, 'Signature types');
+      for (const item of items) this.type(item, 0, locals ? 'local' : 'type');
+    } else if (node.kind === 'method' || node.kind === 'property') this.method(node);
     else throw new CilError('Unknown signature kind');
   }
-  return { type, signature };
 }
 
 /** Encode an AST signature with ECMA-335 context checks and bounded traversal. */
 export function encodeSignature(signature, options = {}) {
   const writer = new Writer();
-  encoder(writer, options).signature(signature);
+  new SignatureEncoder(writer, options).signature(signature);
   return writer.finish();
 }
 
 /** Encode a TypeSpec AST; metadata tokens retain their original table identity. */
 export function encodeTypeSignature(type, options = {}) {
   const writer = new Writer();
-  encoder(writer, options).type(type, 0, options.context ?? 'type');
+  new SignatureEncoder(writer, options).type(type, 0, options.context ?? 'type');
   return writer.finish();
 }

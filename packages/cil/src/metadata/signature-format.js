@@ -2,7 +2,7 @@ import { CilError } from '../binary.js';
 import { signatureAliases, signatureBudget } from './signature-types.js';
 
 /** Format an AST using the historical inspection strings; use the AST for binary fidelity. */
-export function formatSignatureType(node, metadata, options = {}) {
+function formatter(metadata, options = {}) {
   const budget = signatureBudget(options);
   function name(token, depth) {
     const full = metadata?.typeName(token, depth);
@@ -39,12 +39,16 @@ export function formatSignatureType(node, metadata, options = {}) {
     }
     throw new CilError('Unknown signature type kind');
   }
-  return format(node);
+  return type => format(type);
+}
+
+export function formatSignatureType(node, metadata, options = {}) {
+  return formatter(metadata, options)(node);
 }
 
 /** Project the lossless AST into the original readSignature result shape. */
 export function formatSignature(signature, metadata) {
-  const format = type => formatSignatureType(type, metadata);
+  const format = formatter(metadata);
   if (signature.kind === 'field') return { kind: 'field', type: format(signature.type) };
   if (signature.kind === 'locals') return { kind: 'locals', types: signature.types.map(format) };
   if (signature.kind === 'methodSpec') return { kind: 'methodSpec', arguments: signature.arguments.map(format) };
