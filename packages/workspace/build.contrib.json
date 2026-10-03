@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "styles": [],
+  "workers": [],
+  "assets": [
+    {
+      "source": "packages/workspace",
+      "target": "packages/workspace",
+      "order": 100
+    }
+  ]
+}

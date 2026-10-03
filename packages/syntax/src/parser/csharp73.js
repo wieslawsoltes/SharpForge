@@ -9,7 +9,8 @@ export const csharp73Methods = {
   /** Records the feature for every `[field: ...]` attribute list among those starting at token index `from`. */
   backingFieldAttributes(from) {
     for (let i = from; this.kindAt(i) === '['; ) {
-      if (this.isWord(this.tokens[i + 1], 'field') && this.kindAt(i + 2) === ':') this.feature('AttributesOnBackingFields', this.tokens[i + 1], this.tokens[i + 2]);
+      const target = this.tokens[i + 1];
+      if (this.isWord(target, 'field') && this.kindAt(i + 2) === ':') this.feature('AttributesOnBackingFields', target, this.tokens[i + 2]);
       const close = this.matchingBracket(i);
       if (close < 0) return;
       i = close + 1;

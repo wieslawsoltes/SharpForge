@@ -7,10 +7,11 @@ export const propertyMethods = {
   propertyDeclaration(attributeLists, modifiers, type, explicit, identifier) {
     const bodies = this.accessorBodies,
       nameToken = this.memberName,
-      accessors = this.at('{') ? this.accessorList() : null,
+      accessors = this.at('{') ? this.inPropertyAccessors(this.accessorList) : null,
       tail = this.i,
-      [expressionBody, initializer, semicolon] = this.propertyTail();
+      [expressionBody, initializer, semicolon] = this.at('=>') ? this.inPropertyAccessors(this.propertyTail) : this.propertyTail();
     this.accessorMemberForm(nameToken, bodies, expressionBody ? tail + 1 : -1);
+    if (initializer) this.structFieldInitializer(nameToken);
     return this.n('PropertyDeclaration', attributeLists, modifiers, type, explicit, identifier, accessors, expressionBody, initializer, semicolon);
   }
 };

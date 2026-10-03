@@ -13,7 +13,7 @@ export const partialMemberMethods = {
       this.feature('PartialMethod', token);
       const isVoid = returnType?.kind === 'PredefinedType' && returnType.children[0].kind === 'VoidKeyword';
       if (!isVoid || modifiers.some(modifier => extendedModifiers.has(modifier.text))) this.feature('ExtendedPartialMethods', token);
-    } else if (kind === 'PropertyDeclaration' || kind === 'IndexerDeclaration') this.feature('PartialProperties', token);
+    } else if (kind === 'PropertyDeclaration' || kind === 'IndexerDeclaration') this.feature('PartialProperties', token, token, 'partial');
     else this.feature('PartialEventsAndConstructors', token);
   }
 };

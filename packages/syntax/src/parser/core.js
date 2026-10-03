@@ -52,6 +52,14 @@ export class Parser {
     this.memberName = null;
     this.containerKind = null;
     this.accessorBodies = 0;
+    this.typeDepth = 0;
+    // True inside the accessors of a property from C# 14 on, where `field` is the backing-field keyword.
+    this.fieldKeyword = false;
+    // The namespace-like node whose members are being parsed and the token that closes it (null for the end of file).
+    this.namespaceKind = null;
+    this.namespaceClose = null;
+    // True while the first element of a parenthesised expression or tuple is parsed (it declares a variable only before a comma).
+    this.tupleFirst = false;
   }
   get current() {
     return this.tokens[this.i];
