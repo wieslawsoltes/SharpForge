@@ -881,7 +881,7 @@
       "source": "37ac8e1b144d49a76d4494c2c18ca070e0fd06a45113e6c218ec55e5ea2af458",
       "syntax": "0a736705440413698f19054b380b3a3918ec51bbd7ad9a4897ac1112116b6886",
       "status": "not-emitted",
-      "diagnostics": "85b58281dc77156f4bf8393de461333ffb1af98e6588f6ca7dbffd075c266bc5",
+      "diagnostics": "5cee1c196a53765d917b74526714136f8fde908abb2740db1c18e7181e4f0086",
       "assembly": null,
       "bytecode": null
     },
@@ -1241,7 +1241,7 @@
     },
     {
       "path": "dist/build.contrib.json",
-      "sha256": "067ca4ba7239c50e39711175f82bcaaf43a42b6a19959f6494267d9f19eec4c8"
+      "sha256": "7f5f330ae7a7b2eeabcb41b7c7088043e4cada378a15d7a559fa30a3161d0031"
     },
     {
       "path": "dist/commands/core.js",
@@ -1253,7 +1253,7 @@
     },
     {
       "path": "dist/compiler.worker.js",
-      "sha256": "f92b55c38f343858fc2e78e99503cb9364d4ef51055a33784201c11eee26f4c0"
+      "sha256": "0e7d350945e8992e448dd7639a456274b4480980d200ba890d24e026a82b30cd"
     },
     {
       "path": "dist/debugger-extensions.js",
@@ -3637,11 +3637,15 @@
     },
     {
       "path": "dist/packages/compiler/src/index.js",
-      "sha256": "5e5bc6b8c6314ab80e58b79a8f4fe036a784b3a7b97097baac292c88b754a7c6"
+      "sha256": "232afe03689152d9aca4d23ec891dffbca57c361b587248ca91d52b1b056cde1"
     },
     {
       "path": "dist/packages/compiler/src/modern.js",
       "sha256": "253d97f890fdcc6512aa6ba3e81b38fb23a8295c9926cfcd2d07c88332f263c9"
+    },
+    {
+      "path": "dist/packages/compiler/src/syntax-features.js",
+      "sha256": "2b7411eee77d2e03c90e95aa409a8e719110321fa8705ea8c3263cb2cbc5c0c7"
     },
     {
       "path": "dist/packages/compute/LICENSE",
@@ -3697,7 +3701,7 @@
     },
     {
       "path": "dist/packages/controls/build.contrib.json",
-      "sha256": "d8835746df716c7d97da8a3c05ff4949859309e65c7ce8ea9fe0d384dd9ee915"
+      "sha256": "2e4cc23a16aa4e6e73c7b30f11d1abac47634faa2a5e419e38082da08840290e"
     },
     {
       "path": "dist/packages/controls/package.json",
@@ -3869,7 +3873,7 @@
     },
     {
       "path": "dist/packages/editor/build.contrib.json",
-      "sha256": "2ddea4d03a2e91f40e5dc2a8e6b8a2aacde2b6f69d754eaaf273c1e1d36912b0"
+      "sha256": "0e6307db0bd159b4fa0942876706b3678ce398cde9db0df0aa8017bfcb88ec72"
     },
     {
       "path": "dist/packages/editor/package.json",
@@ -6085,7 +6089,7 @@
     },
     {
       "path": "dist/packages/winui/build.contrib.json",
-      "sha256": "025cb4489a883b41154c81286f91c7d446d1ef7ab358c7a03361d5d442745b79"
+      "sha256": "e1fcca577c5492f54d7cad0ed2fd2be32cb4bbf98c36967d810426a93bba1c6e"
     },
     {
       "path": "dist/packages/winui/package.json",
@@ -6152,34 +6156,6 @@
       "sha256": "f6cb55591a3d51e54a2b551a452fa2dc6d2716d3ee18b0ef04e888918df1a99c"
     },
     {
-      "path": "dist/release08.css",
-      "sha256": "aaf586641bea7711ec0d886d7643282049fb51e7687f574c8583335d81796a27"
-    },
-    {
-      "path": "dist/release09.css",
-      "sha256": "0ebcf3c6f698c8e9aad099abccb8cb22174970335d41f7be6fb460c36aa801ec"
-    },
-    {
-      "path": "dist/release10.css",
-      "sha256": "4e4f3ca2b85925112aa0bce3588fef0c17ae3551a3f97d31f81b2b5d99deed49"
-    },
-    {
-      "path": "dist/release11.css",
-      "sha256": "8b03ae715893f7d84113556ace12f10c07e5dcedbfa31b3b2d22c8fdc4858964"
-    },
-    {
-      "path": "dist/release12.css",
-      "sha256": "e613bfab0b4ec664defafe0795380d8ccc91c45954144aa998816d30ccdaef93"
-    },
-    {
-      "path": "dist/release13.css",
-      "sha256": "2933edd0e28d2e0d2383495e9133c08b6b213d75e9c56a09c3ff2f34e67b5421"
-    },
-    {
-      "path": "dist/release14.css",
-      "sha256": "df9e961033ab2e698945af0d85712621ba521ca3d999a66a196e43411c225460"
-    },
-    {
       "path": "dist/runtime-tools.js",
       "sha256": "180ea9064aed746229661a8180250a9e0bb8bfaae7c705e7c681924ba19abaa5"
     },
@@ -6222,6 +6198,110 @@
     {
       "path": "dist/studio.js",
       "sha256": "a422c1acbba55a0f5a5c36826fb249f0c12093e0f27917b441bf12e9bd949c28"
+    },
+    {
+      "path": "dist/styles/README.md",
+      "sha256": "8dc32822515f84b342d1877b289d076860e503f5aed24a7ed5e5cd4efc2449fe"
+    },
+    {
+      "path": "dist/styles/context-menus.css",
+      "sha256": "375b1dd142cbe7200cf2be3ae04833eb8373f47adbcee8c6eae81f5b8cc65499"
+    },
+    {
+      "path": "dist/styles/debugger-advanced.css",
+      "sha256": "d6c755d2cdf31ca3cb143f0d6fcd623d93e15bbedee34c3dc3fbecf73ab6cb6a"
+    },
+    {
+      "path": "dist/styles/debugger-effects.css",
+      "sha256": "a7125d57e08b131518a1db29a1f9c22d59f1e07c1a62bab3cba8868429f209da"
+    },
+    {
+      "path": "dist/styles/debugger-parallel.css",
+      "sha256": "38d4b3b8d9c5941b0e1082d9d7612e1b2db175d3cbfc85cd1760f94c898f4cf6"
+    },
+    {
+      "path": "dist/styles/debugger-responsive.css",
+      "sha256": "f033b1660b128ec3c4e1f3701b58e78a39e407c6ef7a33b0e334a07ba5a54f9a"
+    },
+    {
+      "path": "dist/styles/debugger.css",
+      "sha256": "0ebcf3c6f698c8e9aad099abccb8cb22174970335d41f7be6fb460c36aa801ec"
+    },
+    {
+      "path": "dist/styles/designer-light.css",
+      "sha256": "8b385cc3826d8df72f0364acfc6cc8623f74129ed459bf356f064af66ef91bb3"
+    },
+    {
+      "path": "dist/styles/designer-sync.css",
+      "sha256": "cca6e0db430f3113628309929f07309a81f499b4189513e4c4c6a5581bbfbd34"
+    },
+    {
+      "path": "dist/styles/designer.css",
+      "sha256": "e613bfab0b4ec664defafe0795380d8ccc91c45954144aa998816d30ccdaef93"
+    },
+    {
+      "path": "dist/styles/docking.css",
+      "sha256": "a7028b40509dcb728649252d4eb5c19f41ca22f4236ef821b9f8732dd4c3dc88"
+    },
+    {
+      "path": "dist/styles/editor-overlays.css",
+      "sha256": "6eabde6c38f340bc4c29e0a634a5109e22e8dab294db81479f47f6f919118eac"
+    },
+    {
+      "path": "dist/styles/editor-theme.css",
+      "sha256": "02b11d909bfbf9ca7fd9cbbe956f50e9dfa75825bb965d95b815e8fcac4fb953"
+    },
+    {
+      "path": "dist/styles/explorer-dialogs.css",
+      "sha256": "d322535b42a7ce0365139529b848139994f9da39718803f58a8c159b13f5459a"
+    },
+    {
+      "path": "dist/styles/project-wizard.css",
+      "sha256": "8b03ae715893f7d84113556ace12f10c07e5dcedbfa31b3b2d22c8fdc4858964"
+    },
+    {
+      "path": "dist/styles/property-grid.css",
+      "sha256": "74b2153dd41fecf9fc1feb2fe42a0b17ebe75376d9b0574664574212f7cce51a"
+    },
+    {
+      "path": "dist/styles/runtime-settings.css",
+      "sha256": "df9e961033ab2e698945af0d85712621ba521ca3d999a66a196e43411c225460"
+    },
+    {
+      "path": "dist/styles/settings.css",
+      "sha256": "aa49c45fc575e580746554c200221fc481481517e5949489d588816976a98d25"
+    },
+    {
+      "path": "dist/styles/solution-explorer.css",
+      "sha256": "60b7f14957980b29c06023f4271937e6e747f75885aa622b6cb5e597b5a3953a"
+    },
+    {
+      "path": "dist/styles/status-bar.css",
+      "sha256": "60d80ed96bb9d1cff52827c1f332f56eaf62b597e76b1ba5311c6e564b0ebeba"
+    },
+    {
+      "path": "dist/styles/symbols.css",
+      "sha256": "8e4f722e65a59ed9385759426aebcb83acb212ee6ea246b3eb784ec88e485079"
+    },
+    {
+      "path": "dist/styles/winui-app.css",
+      "sha256": "3bb445e005ac916e25176ea876d490cb51e195315b0383f37553557bd2cf0401"
+    },
+    {
+      "path": "dist/styles/workbench-density.css",
+      "sha256": "b15369cc32372f9763deff8ae1433512e9996352911b913d8cf23bfd81f138d8"
+    },
+    {
+      "path": "dist/styles/workbench-light.css",
+      "sha256": "f6b82592135a5f3cfec73ab28c40afdb04a13f186f6d8ecf015ac3462e188739"
+    },
+    {
+      "path": "dist/styles/workbench-responsive.css",
+      "sha256": "7839974e9129f1a144e3cb8a39258f5ff9879eb82de19a4c1b61b13db2e0074e"
+    },
+    {
+      "path": "dist/styles/workbench-theme.css",
+      "sha256": "ce16fa629e4660e34aa0389fb4ba40cfd78ef285256c20ed9a7be2c0532c310c"
     },
     {
       "path": "dist/tools/core.js",

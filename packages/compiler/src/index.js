@@ -1,4 +1,5 @@
 import {installModernCompiler,languageVersion,hasBackingField,rewriteBackingField} from './modern.js';
+import {syntaxFeatureChecks} from './syntax-features.js';
 import {lowerAsyncFiles} from './async-lowering.js';
 import {canonicalType,frameworkType,frameworkAssignable,taskResult,findContracts} from '@sharpforge/framework';
 import {installFrameworkCompiler} from './framework.js';
@@ -20,11 +21,12 @@ function alwaysReturns(s){return (s?.kind==='Using'||s?.kind==='OverflowContext'
 function pathOf(e){return e.kind==='Name'?e.name:e.kind==='Member'?`${pathOf(e.target)}.${e.name}`:null;}
 export class Compilation {
   constructor(parsedFiles, options={}) {
+    const syntaxChecks=syntaxFeatureChecks(parsedFiles,options);this.syntaxFeatureFailures=syntaxChecks.unavailable;
     parsedFiles=lowerAsyncFiles(parsedFiles);this.files=parsedFiles;this.options=options;this.sources=new Map(parsedFiles.map(p=>[p.source.uri,p.source]));
-    this.diagnostics=parsedFiles.flatMap(p=>p.diagnostics);this.symbols=[];this.references=[];this.types=[];this.typeMap=new Map();this.methods=[];this.statics=[];this.constants=[];this.constantMap=new Map();this.sequencePoints=[];
+    this.diagnostics=parsedFiles.flatMap(p=>p.diagnostics);for(const d of syntaxChecks.diagnostics)if(!this.diagnostics.some(existing=>existing.uri===d.uri&&existing.start===d.start&&existing.length===d.length&&existing.code===d.code&&existing.message===d.message))this.diagnostics.push(d);this.symbols=[];this.references=[];this.types=[];this.typeMap=new Map();this.methods=[];this.statics=[];this.constants=[];this.constantMap=new Map();this.sequencePoints=[];
   }
   report(node,code,message,severity='error'){if(this.diagnostics.length>=400)return;const source=this.sources.get(node.uri)??this.files[0]?.source;if(source)this.diagnostics.push(diagnostic(source,node.start??0,Math.max(1,(node.end??node.start+1)-node.start),code,message,severity));}
-  requireFeature(node,version,name){let selected;try{selected=languageVersion(this.options.langVersionByUri?.[node.uri]??this.options.langVersion);}catch(error){this.report(node,'SF2140',error.message);return false;}if(version===15?!selected.preview:selected.number<version){this.report(node,version===15?'CS8652':'CS9058',`${name} requires ${version===15?'LangVersion=preview':'C# '+version+' or later'}; selected ${selected.name}`);return false;}return true;}
+  requireFeature(node,version,name){let selected;try{selected=languageVersion(this.options.langVersionByUri?.[node.uri]??this.options.langVersion);}catch(error){this.report(node,'SF2140',error.message);return false;}if(version===15?!selected.preview:selected.number<version){if(this.syntaxFeatureFailures.some(use=>use.uri===node.uri&&use.version===version&&use.start<(node.end??node.start+1)&&use.end>=(node.start??0)))return false;this.report(node,version===15?'CS8652':'CS9058',`${name} requires ${version===15?'LangVersion=preview':'C# '+version+' or later'}; selected ${selected.name}`);return false;}return true;}
   constant(value){const key=JSON.stringify([typeof value,value]);if(this.constantMap.has(key))return this.constantMap.get(key);const id=this.constants.length;this.constants.push(value);this.constantMap.set(key,id);return id;}
   symbol(node,kind,type,extra={}){
     if(node.generated||node.debugHidden)return null;

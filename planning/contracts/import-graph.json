@@ -411,6 +411,14 @@
       "external": []
     },
     {
+      "path": "packages/cil/src/dispatch-profile.js",
+      "dependencies": [
+        "packages/cil/src/binary.js",
+        "packages/cil/src/metadata.js"
+      ],
+      "external": []
+    },
+    {
       "path": "packages/cil/src/emitter.js",
       "dependencies": [
         "packages/bytecode/src/index.js",
@@ -427,7 +435,9 @@
       "path": "packages/cil/src/execution-profile.js",
       "dependencies": [
         "packages/cil/src/binary.js",
+        "packages/cil/src/dispatch-profile.js",
         "packages/cil/src/inspector.js",
+        "packages/cil/src/intrinsic-profile.js",
         "packages/framework/src/index.js"
       ],
       "external": []
@@ -447,10 +457,12 @@
         "packages/cil/src/binary.js",
         "packages/cil/src/decompiler.js",
         "packages/cil/src/disassembler.js",
+        "packages/cil/src/dispatch-profile.js",
         "packages/cil/src/emitter.js",
         "packages/cil/src/execution-profile.js",
         "packages/cil/src/il-document.js",
         "packages/cil/src/inspector.js",
+        "packages/cil/src/intrinsic-profile.js",
         "packages/cil/src/loader.js",
         "packages/cil/src/metadata.js",
         "packages/cil/src/opcodes.js",
@@ -465,6 +477,13 @@
         "packages/cil/src/metadata.js",
         "packages/cil/src/opcodes.js",
         "packages/cil/src/pe.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/cil/src/intrinsic-profile.js",
+      "dependencies": [
+        "packages/framework/src/index.js"
       ],
       "external": []
     },
@@ -535,6 +554,7 @@
         "packages/compiler/src/constants.js",
         "packages/compiler/src/framework.js",
         "packages/compiler/src/modern.js",
+        "packages/compiler/src/syntax-features.js",
         "packages/framework/src/index.js",
         "packages/symbols/src/index.js",
         "packages/syntax/src/index.js",
@@ -546,7 +566,16 @@
       "path": "packages/compiler/src/modern.js",
       "dependencies": [
         "packages/bytecode/src/index.js",
-        "packages/framework/src/index.js"
+        "packages/framework/src/index.js",
+        "packages/syntax/src/index.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/compiler/src/syntax-features.js",
+      "dependencies": [
+        "packages/compiler/src/modern.js",
+        "packages/syntax/src/index.js"
       ],
       "external": []
     },
@@ -1159,7 +1188,12 @@
       "path": "packages/runtime/src/cil-vm.js",
       "dependencies": [
         "packages/cil/src/index.js",
-        "packages/framework/src/index.js",
+        "packages/runtime/src/execution/calls.js",
+        "packages/runtime/src/execution/eh.js",
+        "packages/runtime/src/execution/handlers/index.js",
+        "packages/runtime/src/execution/intrinsics.js",
+        "packages/runtime/src/execution/numeric-ops.js",
+        "packages/runtime/src/execution/type-system.js",
         "packages/runtime/src/heap.js",
         "packages/runtime/src/platform.js",
         "packages/runtime/src/scheduler.js",
@@ -1173,6 +1207,151 @@
         "packages/designer/src/index.js",
         "packages/framework/src/index.js",
         "packages/runtime/src/styling.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/calls.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "packages/runtime/src/execution/eh.js",
+        "packages/runtime/src/execution/method-offsets.js",
+        "packages/runtime/src/execution/numeric-ops.js",
+        "packages/runtime/src/heap.js",
+        "packages/runtime/src/platform.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/eh.js",
+      "dependencies": [
+        "packages/runtime/src/heap.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/exception-types.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/handlers/arith.js",
+      "dependencies": [
+        "packages/runtime/src/heap.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/handlers/array.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "packages/runtime/src/execution/numeric-ops.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/handlers/branch.js",
+      "dependencies": [
+        "packages/runtime/src/execution/eh.js",
+        "packages/runtime/src/execution/numeric-ops.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/handlers/call.js",
+      "dependencies": [
+        "packages/runtime/src/heap.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/handlers/index.js",
+      "dependencies": [
+        "packages/runtime/src/execution/handlers/arith.js",
+        "packages/runtime/src/execution/handlers/array.js",
+        "packages/runtime/src/execution/handlers/branch.js",
+        "packages/runtime/src/execution/handlers/call.js",
+        "packages/runtime/src/execution/handlers/indirect.js",
+        "packages/runtime/src/execution/handlers/load-store.js",
+        "packages/runtime/src/execution/handlers/object-model.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/handlers/indirect.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "packages/runtime/src/execution/numeric-ops.js",
+        "packages/runtime/src/heap.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/handlers/load-store.js",
+      "dependencies": [
+        "packages/runtime/src/execution/numeric-ops.js",
+        "packages/runtime/src/heap.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/handlers/object-model.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "packages/framework/src/index.js",
+        "packages/runtime/src/execution/numeric-ops.js",
+        "packages/runtime/src/heap.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/intrinsics.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "packages/runtime/src/execution/numeric-ops.js",
+        "packages/runtime/src/heap.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/method-offsets.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/numeric-ops.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/source-builtins.js",
+      "dependencies": [
+        "packages/bytecode/src/index.js",
+        "packages/runtime/src/heap.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/source-eh.js",
+      "dependencies": [
+        "packages/runtime/src/heap.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/source-ops.js",
+      "dependencies": [
+        "packages/runtime/src/execution/numeric-ops.js",
+        "packages/runtime/src/heap.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/runtime/src/execution/type-system.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "packages/runtime/src/execution/exception-types.js",
+        "packages/runtime/src/heap.js"
       ],
       "external": []
     },
@@ -1270,7 +1449,9 @@
       "dependencies": [
         "packages/bytecode/src/index.js",
         "packages/cil/src/index.js",
-        "packages/framework/src/index.js",
+        "packages/runtime/src/execution/source-builtins.js",
+        "packages/runtime/src/execution/source-eh.js",
+        "packages/runtime/src/execution/source-ops.js",
         "packages/runtime/src/heap.js",
         "packages/runtime/src/platform.js",
         "packages/runtime/src/scheduler.js",
@@ -1300,33 +1481,434 @@
       "external": []
     },
     {
+      "path": "packages/syntax/src/directives/conditional.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/directives/misc.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/directives/script.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/feature-gate.js",
+      "dependencies": [
+        "packages/syntax/src/features.js",
+        "packages/syntax/src/langversion.js",
+        "packages/syntax/src/preview-revisions.js",
+        "packages/text/src/index.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/features.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/generated/nodes.js",
+      "dependencies": [
+        "packages/syntax/src/green.js",
+        "packages/syntax/src/red.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/green.js",
+      "dependencies": [
+        "packages/text/src/index.js"
+      ],
+      "external": []
+    },
+    {
       "path": "packages/syntax/src/index.js",
       "dependencies": [
+        "packages/syntax/src/feature-gate.js",
+        "packages/syntax/src/features.js",
+        "packages/syntax/src/generated/nodes.js",
+        "packages/syntax/src/green.js",
+        "packages/syntax/src/kinds.js",
+        "packages/syntax/src/langversion.js",
+        "packages/syntax/src/legacy-adapter.js",
         "packages/syntax/src/lexer.js",
-        "packages/syntax/src/parser.js"
+        "packages/syntax/src/parser.js",
+        "packages/syntax/src/preview-revisions.js",
+        "packages/syntax/src/red.js",
+        "packages/syntax/src/syntax-tree.js",
+        "packages/syntax/src/visitor.js"
       ],
       "external": []
     },
     {
       "path": "packages/syntax/src/interpolation.js",
+      "dependencies": [
+        "packages/syntax/src/lexer/escapes.js",
+        "packages/syntax/src/lexer/raw-strings.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/kinds.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/langversion.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/legacy-adapter.js",
       "dependencies": [],
       "external": []
     },
     {
       "path": "packages/syntax/src/lexer.js",
       "dependencies": [
+        "packages/syntax/src/directives/conditional.js",
+        "packages/syntax/src/directives/misc.js",
+        "packages/syntax/src/directives/script.js",
         "packages/syntax/src/interpolation.js",
+        "packages/syntax/src/lexer/escapes.js",
+        "packages/syntax/src/lexer/identifiers.js",
+        "packages/syntax/src/lexer/keywords.js",
+        "packages/syntax/src/lexer/numbers.js",
+        "packages/syntax/src/lexer/operators.js",
+        "packages/syntax/src/lexer/raw-strings.js",
+        "packages/syntax/src/lexer/reals.js",
+        "packages/syntax/src/lexer/scanner.js",
+        "packages/syntax/src/lexer/strings.js",
+        "packages/syntax/src/lexer/trivia.js",
+        "packages/syntax/src/lexer/utf8-suffix.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/lexer/escapes.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/lexer/identifiers.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/lexer/keywords.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/lexer/numbers.js",
+      "dependencies": [
+        "packages/syntax/src/lexer/reals.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/lexer/operators.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/lexer/raw-strings.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/lexer/reals.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/lexer/scanner.js",
+      "dependencies": [
+        "packages/syntax/src/directives/conditional.js",
+        "packages/syntax/src/green.js",
+        "packages/syntax/src/interpolation.js",
+        "packages/syntax/src/lexer/identifiers.js",
+        "packages/syntax/src/lexer/keywords.js",
+        "packages/syntax/src/lexer/numbers.js",
+        "packages/syntax/src/lexer/operators.js",
+        "packages/syntax/src/lexer/raw-strings.js",
+        "packages/syntax/src/lexer/reals.js",
+        "packages/syntax/src/lexer/strings.js",
+        "packages/syntax/src/lexer/trivia.js",
+        "packages/syntax/src/lexer/utf8-suffix.js",
         "packages/text/src/index.js"
       ],
       "external": []
     },
     {
+      "path": "packages/syntax/src/lexer/strings.js",
+      "dependencies": [
+        "packages/syntax/src/lexer/escapes.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/lexer/trivia.js",
+      "dependencies": [
+        "packages/syntax/src/directives/conditional.js",
+        "packages/syntax/src/directives/misc.js",
+        "packages/syntax/src/directives/script.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/lexer/utf8-suffix.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
       "path": "packages/syntax/src/parser.js",
       "dependencies": [
-        "packages/syntax/src/lexer.js",
+        "packages/syntax/src/feature-gate.js",
+        "packages/syntax/src/generated/nodes.js",
+        "packages/syntax/src/legacy-adapter.js",
+        "packages/syntax/src/lexer/scanner.js",
+        "packages/syntax/src/parser/core.js",
+        "packages/syntax/src/parser/declarations/attributes.js",
+        "packages/syntax/src/parser/declarations/constructors.js",
+        "packages/syntax/src/parser/declarations/delegates.js",
+        "packages/syntax/src/parser/declarations/enums.js",
+        "packages/syntax/src/parser/declarations/events.js",
+        "packages/syntax/src/parser/declarations/members.js",
+        "packages/syntax/src/parser/declarations/namespaces.js",
+        "packages/syntax/src/parser/declarations/operators.js",
+        "packages/syntax/src/parser/declarations/type-parameters.js",
+        "packages/syntax/src/parser/declarations/types.js",
+        "packages/syntax/src/parser/expressions.js",
+        "packages/syntax/src/parser/expressions/anonymous-functions.js",
+        "packages/syntax/src/parser/expressions/generic-names.js",
+        "packages/syntax/src/parser/expressions/lambdas.js",
+        "packages/syntax/src/parser/expressions/nullability.js",
+        "packages/syntax/src/parser/expressions/queries.js",
+        "packages/syntax/src/parser/expressions/tuples.js",
+        "packages/syntax/src/parser/modifiers.js",
+        "packages/syntax/src/parser/patterns/basic.js",
+        "packages/syntax/src/parser/patterns/combinators.js",
+        "packages/syntax/src/parser/patterns/lists.js",
+        "packages/syntax/src/parser/patterns/recursive.js",
+        "packages/syntax/src/parser/statements.js",
+        "packages/syntax/src/parser/types.js",
+        "packages/syntax/src/red.js",
         "packages/text/src/index.js"
       ],
       "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/core.js",
+      "dependencies": [
+        "packages/syntax/src/green.js",
+        "packages/syntax/src/lexer/keywords.js",
+        "packages/syntax/src/lexer/operators.js",
+        "packages/syntax/src/parser/recovery.js",
+        "packages/text/src/index.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/declarations/attributes.js",
+      "dependencies": [
+        "packages/syntax/src/lexer/keywords.js",
+        "packages/syntax/src/parser/modifiers.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/declarations/constructors.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/declarations/delegates.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/declarations/enums.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/declarations/events.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/declarations/members.js",
+      "dependencies": [
+        "packages/syntax/src/parser/modifiers.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/declarations/namespaces.js",
+      "dependencies": [
+        "packages/syntax/src/parser/modifiers.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/declarations/operators.js",
+      "dependencies": [
+        "packages/syntax/src/lexer/operators.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/declarations/type-parameters.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/declarations/types.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/expressions.js",
+      "dependencies": [
+        "packages/syntax/src/lexer/operators.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/expressions/anonymous-functions.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/expressions/generic-names.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/expressions/lambdas.js",
+      "dependencies": [
+        "packages/syntax/src/lexer/operators.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/expressions/nullability.js",
+      "dependencies": [
+        "packages/syntax/src/lexer/operators.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/expressions/queries.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/expressions/tuples.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/modifiers.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/patterns/basic.js",
+      "dependencies": [
+        "packages/syntax/src/lexer/operators.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/patterns/combinators.js",
+      "dependencies": [
+        "packages/syntax/src/lexer/operators.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/patterns/lists.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/patterns/recursive.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/recovery.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/statements.js",
+      "dependencies": [
+        "packages/syntax/src/parser/modifiers.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/parser/types.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/preview-revisions.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/red.js",
+      "dependencies": [
+        "packages/syntax/src/green.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/syntax-tree.js",
+      "dependencies": [
+        "packages/syntax/src/directives/misc.js",
+        "packages/syntax/src/feature-gate.js",
+        "packages/syntax/src/langversion.js",
+        "packages/syntax/src/lexer/scanner.js",
+        "packages/syntax/src/parser.js",
+        "packages/syntax/src/red.js",
+        "packages/text/src/index.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/src/visitor.js",
+      "dependencies": [
+        "packages/syntax/src/green.js",
+        "packages/syntax/src/red.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "packages/syntax/tools/generate-nodes.js",
+      "dependencies": [],
+      "external": [
+        "node:fs",
+        "node:url"
+      ]
+    },
+    {
+      "path": "packages/syntax/tools/update-reference.js",
+      "dependencies": [],
+      "external": [
+        "node:child_process",
+        "node:fs",
+        "node:path",
+        "node:url"
+      ]
     },
     {
       "path": "packages/templates/src/index.js",
@@ -1449,6 +2031,22 @@
       ],
       "external": [
         "node:assert/strict",
+        "node:child_process",
+        "node:fs",
+        "node:os",
+        "node:path",
+        "node:test",
+        "node:url"
+      ]
+    },
+    {
+      "path": "planning/contracts/tests/golden-output.test.js",
+      "dependencies": [
+        "scripts/planning/golden-output.js",
+        "scripts/planning/lib/io.js"
+      ],
+      "external": [
+        "node:assert/strict",
         "node:fs",
         "node:os",
         "node:path",
@@ -1520,6 +2118,17 @@
       ]
     },
     {
+      "path": "scripts/build-contributions.js",
+      "dependencies": [
+        "scripts/planning/lib/paths.js"
+      ],
+      "external": [
+        "node:fs/promises",
+        "node:path",
+        "node:url"
+      ]
+    },
+    {
       "path": "scripts/conformance/ci-status.js",
       "dependencies": [],
       "external": [
@@ -1555,6 +2164,106 @@
       "dependencies": [],
       "external": [
         "node:fs",
+        "node:path"
+      ]
+    },
+    {
+      "path": "scripts/conformance/oracle/clr-run.js",
+      "dependencies": [
+        "scripts/conformance/oracle/process.js",
+        "scripts/conformance/oracle/roslyn-compile.js",
+        "scripts/conformance/oracle/toolchain.js"
+      ],
+      "external": [
+        "node:fs/promises",
+        "node:os",
+        "node:path"
+      ]
+    },
+    {
+      "path": "scripts/conformance/oracle/fixtures.js",
+      "dependencies": [
+        "scripts/conformance/oracle/toolchain.js"
+      ],
+      "external": [
+        "node:fs/promises",
+        "node:path"
+      ]
+    },
+    {
+      "path": "scripts/conformance/oracle/process.js",
+      "dependencies": [],
+      "external": [
+        "node:child_process",
+        "node:perf_hooks"
+      ]
+    },
+    {
+      "path": "scripts/conformance/oracle/qualify.js",
+      "dependencies": [
+        "scripts/conformance/oracle/clr-run.js",
+        "scripts/conformance/oracle/fixtures.js",
+        "scripts/conformance/oracle/process.js",
+        "scripts/conformance/oracle/roslyn-compile.js",
+        "scripts/conformance/oracle/store.js",
+        "scripts/conformance/oracle/toolchain.js",
+        "scripts/conformance/oracle/winui-run.js"
+      ],
+      "external": [
+        "node:fs/promises",
+        "node:os",
+        "node:path",
+        "node:url"
+      ]
+    },
+    {
+      "path": "scripts/conformance/oracle/roslyn-compile.js",
+      "dependencies": [
+        "scripts/conformance/oracle/fixtures.js",
+        "scripts/conformance/oracle/process.js",
+        "scripts/conformance/oracle/toolchain.js"
+      ],
+      "external": [
+        "node:fs/promises",
+        "node:os",
+        "node:path"
+      ]
+    },
+    {
+      "path": "scripts/conformance/oracle/store.js",
+      "dependencies": [
+        "scripts/conformance/oracle/fixtures.js",
+        "scripts/conformance/oracle/toolchain.js",
+        "scripts/conformance/oracle/winui-run.js"
+      ],
+      "external": [
+        "node:fs/promises",
+        "node:path"
+      ]
+    },
+    {
+      "path": "scripts/conformance/oracle/toolchain.js",
+      "dependencies": [
+        "scripts/conformance/oracle/process.js"
+      ],
+      "external": [
+        "node:crypto",
+        "node:fs/promises",
+        "node:os",
+        "node:path",
+        "node:url"
+      ]
+    },
+    {
+      "path": "scripts/conformance/oracle/winui-run.js",
+      "dependencies": [
+        "scripts/conformance/oracle/process.js",
+        "scripts/conformance/oracle/roslyn-compile.js",
+        "scripts/conformance/oracle/toolchain.js"
+      ],
+      "external": [
+        "node:fs/promises",
+        "node:os",
         "node:path"
       ]
     },
@@ -1687,6 +2396,16 @@
       ]
     },
     {
+      "path": "scripts/planning/ci-matrix.js",
+      "dependencies": [
+        "scripts/planning/schema/validate.js",
+        "scripts/planning/test-manifests.js"
+      ],
+      "external": [
+        "node:path"
+      ]
+    },
+    {
       "path": "scripts/planning/contract-gate.js",
       "dependencies": [
         "scripts/planning/check-contract-change.js",
@@ -1697,6 +2416,13 @@
         "node:fs",
         "node:path",
         "node:util"
+      ]
+    },
+    {
+      "path": "scripts/planning/css-rules.js",
+      "dependencies": [],
+      "external": [
+        "node:crypto"
       ]
     },
     {
@@ -1745,8 +2471,23 @@
       ]
     },
     {
+      "path": "scripts/planning/golden-output.js",
+      "dependencies": [
+        "scripts/planning/lib/io.js"
+      ],
+      "external": [
+        "node:child_process",
+        "node:crypto",
+        "node:fs",
+        "node:path",
+        "node:url",
+        "node:util"
+      ]
+    },
+    {
       "path": "scripts/planning/handoff.js",
       "dependencies": [
+        "scripts/planning/capture-evidence.js",
         "scripts/planning/lib/evidence.js",
         "scripts/planning/lib/github-project.js",
         "scripts/planning/lib/io.js"
@@ -1808,6 +2549,8 @@
     {
       "path": "scripts/planning/lib/evidence.js",
       "dependencies": [
+        "scripts/conformance/node-tools.js",
+        "scripts/planning/lib/io.js",
         "scripts/planning/schema/validate.js"
       ],
       "external": [
@@ -1815,7 +2558,8 @@
         "node:crypto",
         "node:fs",
         "node:os",
-        "node:path"
+        "node:path",
+        "node:util"
       ]
     },
     {
@@ -1890,7 +2634,8 @@
       "path": "scripts/planning/rollup-invalidation.js",
       "dependencies": [
         "scripts/planning/lib/evidence.js",
-        "scripts/planning/lib/paths.js"
+        "scripts/planning/lib/paths.js",
+        "scripts/planning/schema/validate.js"
       ],
       "external": [
         "node:child_process",
@@ -1939,10 +2684,19 @@
       ]
     },
     {
+      "path": "scripts/planning/run-tests.js",
+      "dependencies": [
+        "scripts/planning/test-manifests.js"
+      ],
+      "external": [
+        "node:child_process"
+      ]
+    },
+    {
       "path": "scripts/planning/schema/adapters.js",
       "dependencies": [
-        "packages/bytecode/src/index.js",
         "packages/framework/src/index.js",
+        "scripts/planning/schema/lower-method-body.js",
         "scripts/planning/schema/validate.js"
       ],
       "external": []
@@ -1959,6 +2713,15 @@
         "node:path",
         "node:url"
       ]
+    },
+    {
+      "path": "scripts/planning/schema/lower-method-body.js",
+      "dependencies": [
+        "packages/bytecode/src/index.js",
+        "packages/framework/src/index.js",
+        "scripts/planning/schema/validate.js"
+      ],
+      "external": []
     },
     {
       "path": "scripts/planning/schema/validate.js",
@@ -1985,6 +2748,19 @@
       "external": [
         "node:fs/promises",
         "node:path",
+        "node:url",
+        "node:util"
+      ]
+    },
+    {
+      "path": "scripts/planning/test-manifests.js",
+      "dependencies": [
+        "scripts/planning/lib/paths.js",
+        "scripts/planning/schema/validate.js"
+      ],
+      "external": [
+        "node:fs/promises",
+        "node:path",
         "node:url"
       ]
     },
@@ -2006,6 +2782,36 @@
       ],
       "external": [
         "node:util"
+      ]
+    },
+    {
+      "path": "scripts/run.js",
+      "dependencies": [
+        "scripts/conformance/node-tools.js",
+        "scripts/planning/lib/paths.js",
+        "scripts/planning/run-tests.js",
+        "scripts/planning/test-manifests.js"
+      ],
+      "external": [
+        "node:fs/promises",
+        "node:path",
+        "node:url"
+      ]
+    },
+    {
+      "path": "scripts/verify-packages.js",
+      "dependencies": [
+        "scripts/conformance/node-tools.js",
+        "scripts/conformance/results.js",
+        "scripts/planning/lib/paths.js",
+        "scripts/planning/test-manifests.js"
+      ],
+      "external": [
+        "node:child_process",
+        "node:fs/promises",
+        "node:os",
+        "node:path",
+        "node:url"
       ]
     },
     {
@@ -2109,6 +2915,42 @@
       ]
     },
     {
+      "path": "tests/a00-05-typed-ir.test.js",
+      "dependencies": [
+        "packages/bytecode/src/index.js",
+        "packages/cil/src/index.js",
+        "packages/compiler/src/index.js",
+        "scripts/planning/schema/adapters.js",
+        "scripts/planning/schema/lower-method-body.js",
+        "scripts/planning/schema/validate.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/a00-06-registration.test.js",
+      "dependencies": [
+        "scripts/build-contributions.js",
+        "scripts/planning/ci-matrix.js",
+        "scripts/planning/schema/validate.js",
+        "scripts/planning/test-manifests.js",
+        "scripts/run.js",
+        "scripts/verify-packages.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:child_process",
+        "node:crypto",
+        "node:fs/promises",
+        "node:os",
+        "node:path",
+        "node:test"
+      ]
+    },
+    {
       "path": "tests/a00-07-agent-leases.test.js",
       "dependencies": [
         "planning/contracts/tests/claim-race.test.js"
@@ -2143,6 +2985,204 @@
         "planning/contracts/tests/rollup.test.js"
       ],
       "external": []
+    },
+    {
+      "path": "tests/a00-19-golden-output.test.js",
+      "dependencies": [
+        "planning/contracts/tests/golden-output.test.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "tests/a00-20-styles.test.js",
+      "dependencies": [
+        "scripts/build-contributions.js",
+        "scripts/planning/css-rules.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs/promises",
+        "node:os",
+        "node:path",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/a00-integration-contracts.test.js",
+      "dependencies": [
+        "packages/bytecode/src/index.js",
+        "packages/compiler/src/index.js",
+        "scripts/planning/schema/validate.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/a05-b03-dispatch.test.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "packages/runtime/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/a05-fault-correctness.test.js",
+      "dependencies": [
+        "packages/runtime/src/execution/exception-types.js",
+        "packages/runtime/src/index.js",
+        "tests/managed-fixtures.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/a05-gc-correctness.test.js",
+      "dependencies": [
+        "packages/bytecode/src/index.js",
+        "packages/cil/src/index.js",
+        "packages/compiler/src/index.js",
+        "packages/runtime/src/execution/source-builtins.js",
+        "packages/runtime/src/index.js",
+        "tests/managed-fixtures.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/a05-numeric-conversions.test.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "packages/runtime/src/execution/numeric-ops.js",
+        "packages/runtime/src/index.js",
+        "tests/a05-numeric-fixtures.js",
+        "tests/managed-fixtures.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/a05-numeric-fixtures.js",
+      "dependencies": [
+        "tests/managed-fixtures.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "tests/a05-offset-cache.test.js",
+      "dependencies": [
+        "packages/runtime/src/execution/method-offsets.js",
+        "packages/runtime/src/index.js",
+        "tests/managed-fixtures.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/a05-seams-cil-eh.test.js",
+      "dependencies": [
+        "packages/compiler/src/index.js",
+        "packages/runtime/src/execution/eh.js",
+        "packages/runtime/src/index.js",
+        "tests/managed-fixtures.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/a05-seams-cil-handlers.test.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "packages/runtime/src/execution/handlers/index.js",
+        "packages/runtime/src/index.js",
+        "tests/managed-fixtures.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/a05-seams-cil-intrinsics.test.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "packages/framework/src/index.js",
+        "packages/runtime/src/execution/intrinsics.js",
+        "packages/runtime/src/index.js",
+        "tests/managed-fixtures.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/a05-seams-cil-types.test.js",
+      "dependencies": [
+        "packages/cil/src/index.js",
+        "packages/compiler/src/index.js",
+        "packages/runtime/src/execution/type-system.js",
+        "packages/runtime/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/a05-seams-numeric.test.js",
+      "dependencies": [
+        "packages/runtime/src/execution/numeric-ops.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/a05-seams-snapshot.test.js",
+      "dependencies": [
+        "packages/compiler/src/index.js",
+        "packages/runtime/src/index.js",
+        "packages/runtime/src/snapshot.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/a05-seams-source.test.js",
+      "dependencies": [
+        "packages/bytecode/src/index.js",
+        "packages/runtime/src/execution/source-builtins.js",
+        "packages/runtime/src/execution/source-eh.js",
+        "packages/runtime/src/execution/source-ops.js",
+        "packages/runtime/src/heap.js",
+        "packages/runtime/src/index.js",
+        "packages/runtime/src/platform.js",
+        "tests/helpers.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
     },
     {
       "path": "tests/animation13.test.js",
@@ -2245,6 +3285,39 @@
       ],
       "external": [
         "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/conformance/oracle/oracle.native.js",
+      "dependencies": [
+        "scripts/conformance/oracle/clr-run.js",
+        "scripts/conformance/oracle/fixtures.js",
+        "scripts/conformance/oracle/qualify.js",
+        "scripts/conformance/oracle/roslyn-compile.js",
+        "scripts/conformance/oracle/toolchain.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/conformance/oracle/oracle.test.js",
+      "dependencies": [
+        "scripts/conformance/oracle/clr-run.js",
+        "scripts/conformance/oracle/fixtures.js",
+        "scripts/conformance/oracle/process.js",
+        "scripts/conformance/oracle/qualify.js",
+        "scripts/conformance/oracle/roslyn-compile.js",
+        "scripts/conformance/oracle/store.js",
+        "scripts/conformance/oracle/toolchain.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs/promises",
+        "node:os",
+        "node:path",
         "node:test"
       ]
     },
@@ -2951,6 +4024,38 @@
       ]
     },
     {
+      "path": "tests/support/legacy-syntax/interpolation.js",
+      "dependencies": [],
+      "external": []
+    },
+    {
+      "path": "tests/support/legacy-syntax/lexer.js",
+      "dependencies": [
+        "packages/text/src/index.js",
+        "tests/support/legacy-syntax/interpolation.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "tests/support/legacy-syntax/parser.js",
+      "dependencies": [
+        "packages/text/src/index.js",
+        "tests/support/legacy-syntax/lexer.js"
+      ],
+      "external": []
+    },
+    {
+      "path": "tests/support/syntax-reference.js",
+      "dependencies": [
+        "packages/syntax/src/index.js"
+      ],
+      "external": [
+        "node:fs",
+        "node:path",
+        "node:url"
+      ]
+    },
+    {
       "path": "tests/support/trimmed-runtime-facade.js",
       "dependencies": [
         "packages/cil/src/binary.js",
@@ -2958,6 +4063,118 @@
         "packages/cil/src/pe.js"
       ],
       "external": []
+    },
+    {
+      "path": "tests/syntax-designer-sync.test.js",
+      "dependencies": [
+        "packages/designer/src/index.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/syntax-features.test.js",
+      "dependencies": [
+        "packages/compiler/src/index.js",
+        "packages/syntax/src/index.js",
+        "packages/text/src/index.js",
+        "tests/support/syntax-reference.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs",
+        "node:path",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/syntax-legacy-adapter.test.js",
+      "dependencies": [
+        "packages/compiler/src/index.js",
+        "packages/syntax/src/index.js",
+        "packages/text/src/index.js",
+        "tests/support/legacy-syntax/parser.js",
+        "tests/support/syntax-reference.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs",
+        "node:path",
+        "node:test",
+        "node:zlib"
+      ]
+    },
+    {
+      "path": "tests/syntax-lexing.test.js",
+      "dependencies": [
+        "packages/compiler/src/index.js",
+        "packages/syntax/src/index.js",
+        "packages/text/src/index.js",
+        "tests/support/syntax-reference.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs",
+        "node:path",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/syntax-lossless.test.js",
+      "dependencies": [
+        "packages/syntax/src/index.js",
+        "packages/text/src/index.js",
+        "tests/support/syntax-reference.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:child_process",
+        "node:fs",
+        "node:path",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/syntax-matrix.test.js",
+      "dependencies": [
+        "packages/syntax/src/index.js",
+        "tests/support/syntax-reference.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs",
+        "node:path",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/syntax-parsing.test.js",
+      "dependencies": [
+        "packages/syntax/src/index.js",
+        "packages/text/src/index.js",
+        "tests/support/syntax-reference.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs",
+        "node:path",
+        "node:test"
+      ]
+    },
+    {
+      "path": "tests/syntax-reference-trees.test.js",
+      "dependencies": [
+        "packages/syntax/src/index.js",
+        "tests/support/syntax-reference.js"
+      ],
+      "external": [
+        "node:assert/strict",
+        "node:fs",
+        "node:path",
+        "node:test"
+      ]
     },
     {
       "path": "tests/syntax.test.js",
