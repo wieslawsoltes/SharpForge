@@ -215,3 +215,19 @@ input remains available through `debug.custom` and its existing codec validation
 This API consumes explicit producer data. It does not infer Roslyn states or
 stepping offsets from SharpForge's preserved-stack async roles, nor reconstruct
 hoisted fields, logical frames or async-iterator state.
+
+`readPortablePdb(bytes).asyncInfo(methodToken)` returns `{ stateMachine, steps }`.
+Kickoff and MoveNext aliases return the same `{ moveNext, kickoff }` link and
+MoveNext await records (`yieldOffset`, `resumeOffset`, `resumeMethod`). Table-only
+iterator links have no await records. An independent stepping record without a
+state-machine link remains queryable with `stateMachine: null`; unknown tokens
+return `{ stateMachine: null, steps: [] }`.
+
+Async information snapshots only its relevant values while reading and lazily
+indexes them on the first query. Input-byte, exposed-table and returned-result
+mutations cannot change later queries. `maxAsyncEntries` bounds the aggregate
+alias entries, stepping parents and awaits before snapshot allocation (default
+100,000; hard maximum 1,000,000). Invalid method references, duplicate stepping
+parents and ambiguous aliases throw `SymbolError`. Each lookup costs O(returned
+awaits), with fresh state and step records. This API exposes PDB stepping metadata;
+it does not infer runtime states or iterator yield positions.
