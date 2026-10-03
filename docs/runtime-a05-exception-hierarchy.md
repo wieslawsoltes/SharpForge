@@ -34,7 +34,7 @@ typed-catch syntax are unchanged.
 `tests/a05-exception-hierarchy.test.js` covers framework ancestry, siblings, internal
 aliases, custom namespaces, user MethodTable inheritance, source handler selection,
 and independent direct CIL fixtures. Existing runtime-fault fixtures include native
-Roslyn-produced arithmetic/SystemException catches. This slice has not run tests;
-validation belongs to the serialized integration queue. No new browser, native,
-Rust/Wasm, or performance result is claimed. Hierarchy lookup uses precomputed maps
+Roslyn-produced arithmetic/SystemException catches. The serialized queue passed
+62 focused hierarchy/fault/source-seam tests and 15 ABI contract tests on Node
+24.21.0. No new browser, native, Rust/Wasm, or performance result is claimed. Hierarchy lookup uses precomputed maps
 and ancestor sets; it allocates no per-match collection.
