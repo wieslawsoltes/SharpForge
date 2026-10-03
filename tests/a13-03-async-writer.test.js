@@ -133,3 +133,48 @@ test('many awaits preserve ordered records and separate resume methods', () => {
   }));
   assert.deepEqual(readPortablePdb(emit([record])).asyncInfo(record.moveNext).steps, record.awaits);
 });
+
+test('aggregate async budgets reject expansion across records and distinct bodies', () => {
+  const input = records();
+  const bounded = (asyncLimits) => emitPortablePdb(assembly, { stateMachines: input }, { asyncLimits });
+  assert.throws(() => bounded({ maxStateMachines: 2 }), /state-machine record limit/);
+  assert.throws(() => bounded({ maxAwaits: 2 }), /Aggregate async await limit/);
+  const bodies = input.filter((record) => record.awaits).map((record) => pe.methodBody(record.moveNext));
+  assert.throws(
+    () => bounded({ maxBodyBytes: Math.max(...bodies.map((body) => body.code.length)) }),
+    /body byte limit/,
+  );
+  const instructions = bodies.map((body) => decodeInstructions(body.code).length);
+  assert.throws(() => bounded({ maxInstructions: Math.max(...instructions) }), /IL instruction limit/);
+  assert.doesNotThrow(() =>
+    bounded({
+      maxStateMachines: input.length,
+      maxAwaits: 3,
+      maxBodyBytes: bodies.reduce((sum, body) => sum + body.code.length, 0),
+      maxInstructions: instructions.reduce((sum, count) => sum + count, 0),
+    }),
+  );
+});
+
+test('default state budget and body preflight run before record mapping or IL decoding', () => {
+  assert.throws(() => emitPortablePdb(assembly, { stateMachines: new Array(10_001) }), /state-machine record limit/);
+  const record = taskRecord();
+  const body = pe.methodBody(record.moveNext);
+  const malformed = new Uint8Array(assembly);
+  malformed[body.fileOffset + body.headerSize] = 0xff;
+  assert.throws(
+    () => emitPortablePdb(malformed, { stateMachines: [record] }, { asyncLimits: { maxBodyBytes: 1 } }),
+    /Aggregate async body byte limit/,
+  );
+  for (const asyncLimits of [
+    null,
+    { maxAwaits: -1 },
+    { maxBodyBytes: 64 * 1024 * 1024 + 1 },
+    { maxInstructions: 1.5 },
+  ]) {
+    assert.throws(
+      () => emitPortablePdb(assembly, { stateMachines: [record] }, { asyncLimits }),
+      /Invalid async stepping/,
+    );
+  }
+});
