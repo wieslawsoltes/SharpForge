@@ -32,6 +32,8 @@ export const SynchronizationBinder = Base => class extends SynchronizationQuerie
     if (this.synchronizationValueType(type)) this.c.report(node.expression, 'CS0185', [type]);
     const object = this.temp(type === 'null' ? 'object' : type, 'lockObject'), taken = this.temp('bool', 'lockTaken');
     const base = {uri: node.uri, start: node.start, end: node.end, debugHidden: true};
+    object.syntax = base;
+    taken.syntax = base;
     const gate = {...base, kind: 'BoundTemp', local: object, type: object.legacyType};
     const flag = {...base, kind: 'BoundTemp', local: taken, type: 'bool'};
     const call = (name, args) => ({...base, kind: 'ExpressionStatement', expression: {...base, kind: 'Call',
