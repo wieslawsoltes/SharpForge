@@ -51,6 +51,7 @@ function indexRuntime(document, scene) {
 function checkOwnedChildren(entry, runtimeNodes) {
   const slot = childSlot(entry.node.type);
   if (!entry.captured || !slot) return;
+  if (slot.property === 'Items' && Object.hasOwn(entry.node.collections ?? {}, 'Items')) return;
   const values = slot.many ? entry.captured.collections?.[slot.property] ?? [] : [entry.captured.properties?.[slot.property]];
   if (!Array.isArray(values)) reject('the running child collection is malformed', entry.node.id);
   const references = values.filter(value => value && Object.hasOwn(value, '$ref')).map(value => value.$ref);

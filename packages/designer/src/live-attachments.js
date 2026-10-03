@@ -2,6 +2,7 @@ import {designFromScene, designPatch, validateDesign} from './model.js';
 import {bindLinkedLiveDesign} from './live-source-binding.js';
 
 export {bindLinkedLiveDesign, LiveSourceBindingError} from './live-source-binding.js';
+export {LiveDesignCapabilityError} from './live-capabilities.js';
 
 /** Stable failure codes for stale targets, unsupported channels and conflicting live operations. */
 export class DesignerLiveError extends Error {
@@ -169,7 +170,9 @@ export class LiveDesignAttachment {
       throw new DesignerLiveError('The chosen app window no longer exists', 'SFDL0001');
     }
     const selectedScene = windowId === undefined ? scene : {...scene, windows: [windowId]};
-    const captured = designFromScene(selectedScene, {name: session.projectName ?? session.windowTitle ?? 'Running app'});
+    const collectionOwners = linkedBaseline?.nodes.filter(node => Object.hasOwn(node.collections ?? {}, 'Items'))
+      .map(node => ({type: node.type, name: node.properties.Name ?? ''}));
+    const captured = designFromScene(selectedScene, {name: session.projectName ?? session.windowTitle ?? 'Running app', collectionOwners});
     const bound = linkedDocument ? bindLinkedLiveDesign(linkedDocument, captured, {scene, baseline: linkedBaseline}) : null;
     const document = bound?.document ?? captured;
     Object.assign(target, {
@@ -232,6 +235,7 @@ export class LiveDesignAttachment {
     }
     const epoch = this.epoch;
     const sent = validateDesign(document);
+    const patch = designPatch(target.baseline, sent);
     this.busy = true;
     let sourceWritten = false;
     let codeApplied = false;
@@ -253,7 +257,6 @@ export class LiveDesignAttachment {
       codeApplied = true;
       target.codeVersion = code.codeVersion ?? target.codeVersion + 1;
       if (epoch !== this.epoch || target !== this.target) throw new DesignerLiveError('Attachment changed after the code update', 'SFDL0004');
-      const patch = designPatch(target.baseline, sent);
       const applied = await this.request(target, 'applyDesign', {patch, expectedRevision: target.sceneRevision}, signal);
       if (epoch !== this.epoch || target !== this.target) throw new DesignerLiveError('Designer target changed during Hot Reload', 'SFDL0004');
       if (!Number.isSafeInteger(applied?.revision) || applied.revision < target.sceneRevision || !applied.bindings) {
