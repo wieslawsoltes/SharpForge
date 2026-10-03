@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fixtureId": "collection-expression-11",
-  "inputHash": "515cca873d03efbbc7e182903df3be6c6b3f75b7f5321974bb88998cdbf1a711",
+  "fixtureId": "type-negative",
+  "inputHash": "057804b70cd69a38e21d4946b239f114151a17ff5fba7702ab2a0022290f9033",
   "oracleId": "roslyn",
   "toolVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
-  "target": "any",
+  "target": "linux-x64",
   "toolchain": {
     "sdk": "10.0.201",
     "runtime": "10.0.5",
@@ -12,19 +12,19 @@
     "referencePack": "10.0.5",
     "windowsAppSDK": null
   },
-  "langVersion": "11.0",
+  "langVersion": "12.0",
   "result": {
     "exitCode": 1,
     "diagnostics": [
       {
-        "id": "CS9058",
+        "id": "CS0029",
         "severity": "error",
-        "source": "Collection.cs",
+        "source": "Type.cs",
         "span": {
           "startLine": 1,
-          "startColumn": 67,
+          "startColumn": 51,
           "endLine": 1,
-          "endColumn": 68
+          "endColumn": 55
         }
       }
     ],

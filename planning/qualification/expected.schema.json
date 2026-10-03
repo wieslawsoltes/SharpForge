@@ -29,7 +29,6 @@
     },
     "target": {
       "enum": [
-        "any",
         "darwin-arm64",
         "darwin-x64",
         "linux-arm64",

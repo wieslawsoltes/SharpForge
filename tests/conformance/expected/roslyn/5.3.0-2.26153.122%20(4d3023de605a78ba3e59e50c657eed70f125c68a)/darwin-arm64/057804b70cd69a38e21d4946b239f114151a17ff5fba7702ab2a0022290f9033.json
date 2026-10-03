@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fixtureId": "syntax-negative",
-  "inputHash": "5d3b5e0729f21afc7f82710c1183a804daeb32a3e31012171bac7d0668cae6e0",
+  "fixtureId": "type-negative",
+  "inputHash": "057804b70cd69a38e21d4946b239f114151a17ff5fba7702ab2a0022290f9033",
   "oracleId": "roslyn",
   "toolVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
-  "target": "any",
+  "target": "darwin-arm64",
   "toolchain": {
     "sdk": "10.0.201",
     "runtime": "10.0.5",
@@ -17,14 +17,14 @@
     "exitCode": 1,
     "diagnostics": [
       {
-        "id": "CS1525",
+        "id": "CS0029",
         "severity": "error",
-        "source": "Syntax.cs",
+        "source": "Type.cs",
         "span": {
           "startLine": 1,
           "startColumn": 51,
           "endLine": 1,
-          "endColumn": 52
+          "endColumn": 55
         }
       }
     ],

@@ -36,7 +36,7 @@ export function checkFixtureContract(fixture, compileResult, runResult, target =
     throw new Error(`${fixture.id} compiler diagnostic contract failed: ${JSON.stringify(compileResult)}`);
   }
   if (runResult) {
-    if (runResult.stdout.replaceAll('\r\n', '\n') !== fixture.stdout) throw new Error(`${fixture.id} stdout contract failed`);
+    if (runResult.stdout.replaceAll('\r\n', '\n') !== fixture.stdout) throw new Error(`${fixture.id} stdout contract failed: expected ${JSON.stringify(fixture.stdout)}, observed ${JSON.stringify(runResult.stdout)}`);
     if (fixture.unhandledException) {
       if (runResult.unhandledException !== fixture.unhandledException || (runResult.exitCode === 0 && runResult.signal === null)) throw new Error(`${fixture.id} must produce native unhandled ${fixture.unhandledException}`);
     } else {
