@@ -115,7 +115,10 @@ export const CallBinding = Base =>
         if (!r.succeeded) {
           if (args.some(a => a.hasErrors)) return this.bad(syntax);
           const e = r.error;
-          this.report(this.errorNode(e, args, syntax), e.code, e.args);
+          // A wrong argument count is reported on the invoked expression (the member name of `a.b`), as Roslyn does.
+          const invoked = syntax.expression?.kind === 'SimpleMemberAccessExpression' ? syntax.expression.name : syntax.expression,
+            isCount = e.code === 'CS1593' || e.code === 'CS7036';
+          this.report(isCount && invoked ? invoked : this.errorNode(e, args, syntax), e.code, e.args);
           return this.bad(syntax);
         }
         return this.finishCall(r, value, args, syntax, { isDelegateInvoke: true });
@@ -322,6 +325,8 @@ export const CallBinding = Base =>
         local = this.newLocal(name, type, designation.identifier, LocalDeclarationKind.Out);
       local.writes++;
       local.isOutVar = true;
+      // The nullable analysis checks what the callee stores against the declared type (`out string s`); `var` takes any state.
+      local.declaredAnnotation = bound.isVar ? null : bound.nullableAnnotation;
       this.declare(name, local, designation.identifier);
       return this.node('DeclarationExpression', syntax, bound.isVar ? null : type, { local, isOutVarOrDiscard: true });
     }

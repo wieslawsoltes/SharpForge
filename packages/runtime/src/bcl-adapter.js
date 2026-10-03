@@ -16,7 +16,7 @@ const services = Object.freeze({
     return isDecimal(value) ? decimalFormat(value, format, {fault: (name, message) => new ManagedFault(name, message)}) : null;
   },
   isReference,
-  fault(type, message) { throw new ManagedFault(type, message); }
+  fault(type, message, reference = null) { throw new ManagedFault(type, message, reference); }
 });
 
 /** Attach immutable services; each platform retains its own managed state. */

@@ -3,9 +3,9 @@ import {formatDoubleDefault} from './formatting/double-format.js';
 /** The legacy managed text/collection limit, measured in UTF-16 units or items. */
 export const MAX = 1_000_000;
 
-/** Raise the engine's managed fault without importing a runtime implementation. */
-export function fail(platform, type, message) {
-  platform.bclHost.fault(type, message);
+/** Raise a managed fault, optionally retaining an already-rooted managed exception reference. */
+export function fail(platform, type, message, reference = null) {
+  platform.bclHost.fault(type, message, reference);
   throw new Error('BCL host fault service must throw');
 }
 
