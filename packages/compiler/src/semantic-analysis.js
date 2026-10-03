@@ -18,12 +18,14 @@ import { BodyBinding } from './semantic/body-binding.js';
 import { UnusedSymbolWarnings } from './semantic/unused-symbols.js';
 import { AttributeBinding } from './binder/attributes.js';
 import { ObsoleteUses } from './binder/obsolete.js';
+import { CallerInfoChecks } from './binder/caller-info.js';
 
 const phases = [
   DeclarationChecks,
   MemberDeclarationChecks,
   ConstantBinding,
   AttributeBinding,
+  CallerInfoChecks,
   BodyBinding,
   MemberBodyChecks,
   ObsoleteUses,
