@@ -107,3 +107,7 @@ export class AssemblyName {
 
   toString() { return this.fullName; }
 }
+
+export function asAssemblyName(value) {
+  return value instanceof AssemblyName ? value : typeof value === 'string' ? AssemblyName.parse(value) : new AssemblyName(value);
+}

@@ -1,6 +1,6 @@
 {
-  "runtime": ".NET 10.0.5",
   "sdk": "10.0.201",
+  "runtime": ".NET 10.0.5",
   "cases": [
     {
       "input": "Simple",
@@ -57,14 +57,14 @@
       "fullName": "Simple"
     },
     {
-      "input": "\u0022 A, B \u0022",
+      "input": "\" A, B \"",
       "name": " A, B ",
       "version": null,
       "culture": null,
       "token": null,
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022 A\\, B \u0022"
+      "fullName": "\" A\\, B \""
     },
     {
       "input": "A\\,B",
@@ -97,7 +97,7 @@
       "fullName": "A\\\\B"
     },
     {
-      "input": "\u0027A,B\u0027",
+      "input": "'A,B'",
       "name": "A,B",
       "version": null,
       "culture": null,
@@ -667,184 +667,184 @@
       "fullName": "A\\,B, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u0022 leading \u0022, Version=0.0, Culture=neutral, PublicKeyToken=null",
+      "input": "\" leading \", Version=0.0, Culture=neutral, PublicKeyToken=null",
       "name": " leading ",
       "version": "0.0",
       "culture": "",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022 leading \u0022, Version=0.0, Culture=neutral, PublicKeyToken=null"
+      "fullName": "\" leading \", Version=0.0, Culture=neutral, PublicKeyToken=null"
     },
     {
-      "input": "\u0022 leading \u0022, Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "input": "\" leading \", Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "name": " leading ",
       "version": "0.0",
       "culture": "",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022 leading \u0022, Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      "fullName": "\" leading \", Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u0022 leading \u0022, Version=0.0, Culture=en-US, PublicKeyToken=null",
+      "input": "\" leading \", Version=0.0, Culture=en-US, PublicKeyToken=null",
       "name": " leading ",
       "version": "0.0",
       "culture": "en-US",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022 leading \u0022, Version=0.0, Culture=en-US, PublicKeyToken=null"
+      "fullName": "\" leading \", Version=0.0, Culture=en-US, PublicKeyToken=null"
     },
     {
-      "input": "\u0022 leading \u0022, Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "input": "\" leading \", Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089",
       "name": " leading ",
       "version": "0.0",
       "culture": "en-US",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022 leading \u0022, Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+      "fullName": "\" leading \", Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u0022 leading \u0022, Version=0.0, Culture=pl-PL, PublicKeyToken=null",
+      "input": "\" leading \", Version=0.0, Culture=pl-PL, PublicKeyToken=null",
       "name": " leading ",
       "version": "0.0",
       "culture": "pl-PL",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022 leading \u0022, Version=0.0, Culture=pl-PL, PublicKeyToken=null"
+      "fullName": "\" leading \", Version=0.0, Culture=pl-PL, PublicKeyToken=null"
     },
     {
-      "input": "\u0022 leading \u0022, Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "input": "\" leading \", Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
       "name": " leading ",
       "version": "0.0",
       "culture": "pl-PL",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022 leading \u0022, Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+      "fullName": "\" leading \", Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u0022 leading \u0022, Version=1.2.3.4, Culture=neutral, PublicKeyToken=null",
+      "input": "\" leading \", Version=1.2.3.4, Culture=neutral, PublicKeyToken=null",
       "name": " leading ",
       "version": "1.2.3.4",
       "culture": "",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022 leading \u0022, Version=1.2.3.4, Culture=neutral, PublicKeyToken=null"
+      "fullName": "\" leading \", Version=1.2.3.4, Culture=neutral, PublicKeyToken=null"
     },
     {
-      "input": "\u0022 leading \u0022, Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "input": "\" leading \", Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "name": " leading ",
       "version": "1.2.3.4",
       "culture": "",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022 leading \u0022, Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      "fullName": "\" leading \", Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u0022 leading \u0022, Version=1.2.3.4, Culture=en-US, PublicKeyToken=null",
+      "input": "\" leading \", Version=1.2.3.4, Culture=en-US, PublicKeyToken=null",
       "name": " leading ",
       "version": "1.2.3.4",
       "culture": "en-US",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022 leading \u0022, Version=1.2.3.4, Culture=en-US, PublicKeyToken=null"
+      "fullName": "\" leading \", Version=1.2.3.4, Culture=en-US, PublicKeyToken=null"
     },
     {
-      "input": "\u0022 leading \u0022, Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "input": "\" leading \", Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089",
       "name": " leading ",
       "version": "1.2.3.4",
       "culture": "en-US",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022 leading \u0022, Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+      "fullName": "\" leading \", Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u0022 leading \u0022, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null",
+      "input": "\" leading \", Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null",
       "name": " leading ",
       "version": "1.2.3.4",
       "culture": "pl-PL",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022 leading \u0022, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null"
+      "fullName": "\" leading \", Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null"
     },
     {
-      "input": "\u0022 leading \u0022, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "input": "\" leading \", Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
       "name": " leading ",
       "version": "1.2.3.4",
       "culture": "pl-PL",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022 leading \u0022, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+      "fullName": "\" leading \", Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u0022 leading \u0022, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null",
+      "input": "\" leading \", Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null",
       "name": " leading ",
       "version": "65534.65534.65534.65534",
       "culture": "",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022 leading \u0022, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null"
+      "fullName": "\" leading \", Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null"
     },
     {
-      "input": "\u0022 leading \u0022, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "input": "\" leading \", Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "name": " leading ",
       "version": "65534.65534.65534.65534",
       "culture": "",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022 leading \u0022, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      "fullName": "\" leading \", Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u0022 leading \u0022, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null",
+      "input": "\" leading \", Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null",
       "name": " leading ",
       "version": "65534.65534.65534.65534",
       "culture": "en-US",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022 leading \u0022, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null"
+      "fullName": "\" leading \", Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null"
     },
     {
-      "input": "\u0022 leading \u0022, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "input": "\" leading \", Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089",
       "name": " leading ",
       "version": "65534.65534.65534.65534",
       "culture": "en-US",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022 leading \u0022, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+      "fullName": "\" leading \", Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u0022 leading \u0022, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null",
+      "input": "\" leading \", Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null",
       "name": " leading ",
       "version": "65534.65534.65534.65534",
       "culture": "pl-PL",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022 leading \u0022, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null"
+      "fullName": "\" leading \", Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null"
     },
     {
-      "input": "\u0022 leading \u0022, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "input": "\" leading \", Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
       "name": " leading ",
       "version": "65534.65534.65534.65534",
       "culture": "pl-PL",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022 leading \u0022, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+      "fullName": "\" leading \", Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
     },
     {
       "input": "A\\=B, Version=0.0, Culture=neutral, PublicKeyToken=null",
@@ -1027,364 +1027,364 @@
       "fullName": "A\\=B, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u0027quote\\\u0027name\u0027, Version=0.0, Culture=neutral, PublicKeyToken=null",
-      "name": "quote\u0027name",
+      "input": "'quote\\'name', Version=0.0, Culture=neutral, PublicKeyToken=null",
+      "name": "quote'name",
       "version": "0.0",
       "culture": "",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022quote\\\u0027name\u0022, Version=0.0, Culture=neutral, PublicKeyToken=null"
+      "fullName": "\"quote\\'name\", Version=0.0, Culture=neutral, PublicKeyToken=null"
     },
     {
-      "input": "\u0027quote\\\u0027name\u0027, Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "name": "quote\u0027name",
+      "input": "'quote\\'name', Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "quote'name",
       "version": "0.0",
       "culture": "",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022quote\\\u0027name\u0022, Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      "fullName": "\"quote\\'name\", Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u0027quote\\\u0027name\u0027, Version=0.0, Culture=en-US, PublicKeyToken=null",
-      "name": "quote\u0027name",
+      "input": "'quote\\'name', Version=0.0, Culture=en-US, PublicKeyToken=null",
+      "name": "quote'name",
       "version": "0.0",
       "culture": "en-US",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022quote\\\u0027name\u0022, Version=0.0, Culture=en-US, PublicKeyToken=null"
+      "fullName": "\"quote\\'name\", Version=0.0, Culture=en-US, PublicKeyToken=null"
     },
     {
-      "input": "\u0027quote\\\u0027name\u0027, Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089",
-      "name": "quote\u0027name",
+      "input": "'quote\\'name', Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "quote'name",
       "version": "0.0",
       "culture": "en-US",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022quote\\\u0027name\u0022, Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+      "fullName": "\"quote\\'name\", Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u0027quote\\\u0027name\u0027, Version=0.0, Culture=pl-PL, PublicKeyToken=null",
-      "name": "quote\u0027name",
+      "input": "'quote\\'name', Version=0.0, Culture=pl-PL, PublicKeyToken=null",
+      "name": "quote'name",
       "version": "0.0",
       "culture": "pl-PL",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022quote\\\u0027name\u0022, Version=0.0, Culture=pl-PL, PublicKeyToken=null"
+      "fullName": "\"quote\\'name\", Version=0.0, Culture=pl-PL, PublicKeyToken=null"
     },
     {
-      "input": "\u0027quote\\\u0027name\u0027, Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
-      "name": "quote\u0027name",
+      "input": "'quote\\'name', Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "quote'name",
       "version": "0.0",
       "culture": "pl-PL",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022quote\\\u0027name\u0022, Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+      "fullName": "\"quote\\'name\", Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u0027quote\\\u0027name\u0027, Version=1.2.3.4, Culture=neutral, PublicKeyToken=null",
-      "name": "quote\u0027name",
+      "input": "'quote\\'name', Version=1.2.3.4, Culture=neutral, PublicKeyToken=null",
+      "name": "quote'name",
       "version": "1.2.3.4",
       "culture": "",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022quote\\\u0027name\u0022, Version=1.2.3.4, Culture=neutral, PublicKeyToken=null"
+      "fullName": "\"quote\\'name\", Version=1.2.3.4, Culture=neutral, PublicKeyToken=null"
     },
     {
-      "input": "\u0027quote\\\u0027name\u0027, Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "name": "quote\u0027name",
+      "input": "'quote\\'name', Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "quote'name",
       "version": "1.2.3.4",
       "culture": "",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022quote\\\u0027name\u0022, Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      "fullName": "\"quote\\'name\", Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u0027quote\\\u0027name\u0027, Version=1.2.3.4, Culture=en-US, PublicKeyToken=null",
-      "name": "quote\u0027name",
+      "input": "'quote\\'name', Version=1.2.3.4, Culture=en-US, PublicKeyToken=null",
+      "name": "quote'name",
       "version": "1.2.3.4",
       "culture": "en-US",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022quote\\\u0027name\u0022, Version=1.2.3.4, Culture=en-US, PublicKeyToken=null"
+      "fullName": "\"quote\\'name\", Version=1.2.3.4, Culture=en-US, PublicKeyToken=null"
     },
     {
-      "input": "\u0027quote\\\u0027name\u0027, Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089",
-      "name": "quote\u0027name",
+      "input": "'quote\\'name', Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "quote'name",
       "version": "1.2.3.4",
       "culture": "en-US",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022quote\\\u0027name\u0022, Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+      "fullName": "\"quote\\'name\", Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u0027quote\\\u0027name\u0027, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null",
-      "name": "quote\u0027name",
+      "input": "'quote\\'name', Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null",
+      "name": "quote'name",
       "version": "1.2.3.4",
       "culture": "pl-PL",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022quote\\\u0027name\u0022, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null"
+      "fullName": "\"quote\\'name\", Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null"
     },
     {
-      "input": "\u0027quote\\\u0027name\u0027, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
-      "name": "quote\u0027name",
+      "input": "'quote\\'name', Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "quote'name",
       "version": "1.2.3.4",
       "culture": "pl-PL",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022quote\\\u0027name\u0022, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+      "fullName": "\"quote\\'name\", Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u0027quote\\\u0027name\u0027, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null",
-      "name": "quote\u0027name",
+      "input": "'quote\\'name', Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null",
+      "name": "quote'name",
       "version": "65534.65534.65534.65534",
       "culture": "",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022quote\\\u0027name\u0022, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null"
+      "fullName": "\"quote\\'name\", Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null"
     },
     {
-      "input": "\u0027quote\\\u0027name\u0027, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "name": "quote\u0027name",
+      "input": "'quote\\'name', Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "quote'name",
       "version": "65534.65534.65534.65534",
       "culture": "",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022quote\\\u0027name\u0022, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      "fullName": "\"quote\\'name\", Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u0027quote\\\u0027name\u0027, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null",
-      "name": "quote\u0027name",
+      "input": "'quote\\'name', Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null",
+      "name": "quote'name",
       "version": "65534.65534.65534.65534",
       "culture": "en-US",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022quote\\\u0027name\u0022, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null"
+      "fullName": "\"quote\\'name\", Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null"
     },
     {
-      "input": "\u0027quote\\\u0027name\u0027, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089",
-      "name": "quote\u0027name",
+      "input": "'quote\\'name', Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "quote'name",
       "version": "65534.65534.65534.65534",
       "culture": "en-US",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022quote\\\u0027name\u0022, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+      "fullName": "\"quote\\'name\", Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u0027quote\\\u0027name\u0027, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null",
-      "name": "quote\u0027name",
+      "input": "'quote\\'name', Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null",
+      "name": "quote'name",
       "version": "65534.65534.65534.65534",
       "culture": "pl-PL",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022quote\\\u0027name\u0022, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null"
+      "fullName": "\"quote\\'name\", Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null"
     },
     {
-      "input": "\u0027quote\\\u0027name\u0027, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
-      "name": "quote\u0027name",
+      "input": "'quote\\'name', Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "quote'name",
       "version": "65534.65534.65534.65534",
       "culture": "pl-PL",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u0022quote\\\u0027name\u0022, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+      "fullName": "\"quote\\'name\", Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u65E5\u672C\u8A9E, Version=0.0, Culture=neutral, PublicKeyToken=null",
-      "name": "\u65E5\u672C\u8A9E",
+      "input": "日本語, Version=0.0, Culture=neutral, PublicKeyToken=null",
+      "name": "日本語",
       "version": "0.0",
       "culture": "",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u65E5\u672C\u8A9E, Version=0.0, Culture=neutral, PublicKeyToken=null"
+      "fullName": "日本語, Version=0.0, Culture=neutral, PublicKeyToken=null"
     },
     {
-      "input": "\u65E5\u672C\u8A9E, Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "name": "\u65E5\u672C\u8A9E",
+      "input": "日本語, Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "日本語",
       "version": "0.0",
       "culture": "",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u65E5\u672C\u8A9E, Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      "fullName": "日本語, Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u65E5\u672C\u8A9E, Version=0.0, Culture=en-US, PublicKeyToken=null",
-      "name": "\u65E5\u672C\u8A9E",
+      "input": "日本語, Version=0.0, Culture=en-US, PublicKeyToken=null",
+      "name": "日本語",
       "version": "0.0",
       "culture": "en-US",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u65E5\u672C\u8A9E, Version=0.0, Culture=en-US, PublicKeyToken=null"
+      "fullName": "日本語, Version=0.0, Culture=en-US, PublicKeyToken=null"
     },
     {
-      "input": "\u65E5\u672C\u8A9E, Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089",
-      "name": "\u65E5\u672C\u8A9E",
+      "input": "日本語, Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "日本語",
       "version": "0.0",
       "culture": "en-US",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u65E5\u672C\u8A9E, Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+      "fullName": "日本語, Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u65E5\u672C\u8A9E, Version=0.0, Culture=pl-PL, PublicKeyToken=null",
-      "name": "\u65E5\u672C\u8A9E",
+      "input": "日本語, Version=0.0, Culture=pl-PL, PublicKeyToken=null",
+      "name": "日本語",
       "version": "0.0",
       "culture": "pl-PL",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u65E5\u672C\u8A9E, Version=0.0, Culture=pl-PL, PublicKeyToken=null"
+      "fullName": "日本語, Version=0.0, Culture=pl-PL, PublicKeyToken=null"
     },
     {
-      "input": "\u65E5\u672C\u8A9E, Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
-      "name": "\u65E5\u672C\u8A9E",
+      "input": "日本語, Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "日本語",
       "version": "0.0",
       "culture": "pl-PL",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u65E5\u672C\u8A9E, Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+      "fullName": "日本語, Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u65E5\u672C\u8A9E, Version=1.2.3.4, Culture=neutral, PublicKeyToken=null",
-      "name": "\u65E5\u672C\u8A9E",
+      "input": "日本語, Version=1.2.3.4, Culture=neutral, PublicKeyToken=null",
+      "name": "日本語",
       "version": "1.2.3.4",
       "culture": "",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u65E5\u672C\u8A9E, Version=1.2.3.4, Culture=neutral, PublicKeyToken=null"
+      "fullName": "日本語, Version=1.2.3.4, Culture=neutral, PublicKeyToken=null"
     },
     {
-      "input": "\u65E5\u672C\u8A9E, Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "name": "\u65E5\u672C\u8A9E",
+      "input": "日本語, Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "日本語",
       "version": "1.2.3.4",
       "culture": "",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u65E5\u672C\u8A9E, Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      "fullName": "日本語, Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u65E5\u672C\u8A9E, Version=1.2.3.4, Culture=en-US, PublicKeyToken=null",
-      "name": "\u65E5\u672C\u8A9E",
+      "input": "日本語, Version=1.2.3.4, Culture=en-US, PublicKeyToken=null",
+      "name": "日本語",
       "version": "1.2.3.4",
       "culture": "en-US",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u65E5\u672C\u8A9E, Version=1.2.3.4, Culture=en-US, PublicKeyToken=null"
+      "fullName": "日本語, Version=1.2.3.4, Culture=en-US, PublicKeyToken=null"
     },
     {
-      "input": "\u65E5\u672C\u8A9E, Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089",
-      "name": "\u65E5\u672C\u8A9E",
+      "input": "日本語, Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "日本語",
       "version": "1.2.3.4",
       "culture": "en-US",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u65E5\u672C\u8A9E, Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+      "fullName": "日本語, Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u65E5\u672C\u8A9E, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null",
-      "name": "\u65E5\u672C\u8A9E",
+      "input": "日本語, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null",
+      "name": "日本語",
       "version": "1.2.3.4",
       "culture": "pl-PL",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u65E5\u672C\u8A9E, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null"
+      "fullName": "日本語, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null"
     },
     {
-      "input": "\u65E5\u672C\u8A9E, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
-      "name": "\u65E5\u672C\u8A9E",
+      "input": "日本語, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "日本語",
       "version": "1.2.3.4",
       "culture": "pl-PL",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u65E5\u672C\u8A9E, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+      "fullName": "日本語, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u65E5\u672C\u8A9E, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null",
-      "name": "\u65E5\u672C\u8A9E",
+      "input": "日本語, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null",
+      "name": "日本語",
       "version": "65534.65534.65534.65534",
       "culture": "",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u65E5\u672C\u8A9E, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null"
+      "fullName": "日本語, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null"
     },
     {
-      "input": "\u65E5\u672C\u8A9E, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-      "name": "\u65E5\u672C\u8A9E",
+      "input": "日本語, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "日本語",
       "version": "65534.65534.65534.65534",
       "culture": "",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u65E5\u672C\u8A9E, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      "fullName": "日本語, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u65E5\u672C\u8A9E, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null",
-      "name": "\u65E5\u672C\u8A9E",
+      "input": "日本語, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null",
+      "name": "日本語",
       "version": "65534.65534.65534.65534",
       "culture": "en-US",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u65E5\u672C\u8A9E, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null"
+      "fullName": "日本語, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null"
     },
     {
-      "input": "\u65E5\u672C\u8A9E, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089",
-      "name": "\u65E5\u672C\u8A9E",
+      "input": "日本語, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "日本語",
       "version": "65534.65534.65534.65534",
       "culture": "en-US",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u65E5\u672C\u8A9E, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+      "fullName": "日本語, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089"
     },
     {
-      "input": "\u65E5\u672C\u8A9E, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null",
-      "name": "\u65E5\u672C\u8A9E",
+      "input": "日本語, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null",
+      "name": "日本語",
       "version": "65534.65534.65534.65534",
       "culture": "pl-PL",
       "token": "",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u65E5\u672C\u8A9E, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null"
+      "fullName": "日本語, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null"
     },
     {
-      "input": "\u65E5\u672C\u8A9E, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
-      "name": "\u65E5\u672C\u8A9E",
+      "input": "日本語, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "日本語",
       "version": "65534.65534.65534.65534",
       "culture": "pl-PL",
       "token": "b77a5c561934e089",
       "flags": 0,
       "contentType": "Default",
-      "fullName": "\u65E5\u672C\u8A9E, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+      "fullName": "日本語, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
     },
     {
       "input": "A, Version=1.2.65535.4",
@@ -1407,7 +1407,7 @@
       "fullName": "A, Version=1.2.3"
     },
     {
-      "input": "A, PublicKeyToken=\u0022\u0022",
+      "input": "A, PublicKeyToken=\"\"",
       "name": "A",
       "version": null,
       "culture": null,
@@ -1417,7 +1417,7 @@
       "fullName": "A, PublicKeyToken=null"
     },
     {
-      "input": "A, Culture=\u0022\u0022",
+      "input": "A, Culture=\"\"",
       "name": "A",
       "version": null,
       "culture": "",
@@ -1459,7 +1459,7 @@
       "fullName": "A, Version=1.2.3"
     },
     {
-      "input": "A, Version=\u00221.2\u0022",
+      "input": "A, Version=\"1.2\"",
       "name": "A",
       "version": "1.2",
       "culture": null,
