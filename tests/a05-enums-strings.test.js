@@ -153,3 +153,8 @@ test('enums CIL: boxed enum managed addresses cannot be confused with underlying
   const assembly=enumFixture({result:'int',body:(w,c)=>w.op('ldc.i4.1').op('box',c.enumToken).op('unbox',c.enumToken).op('ldind.i4').op('ret')});
   const result=new CilVirtualMachine(assembly).run();assert.equal(result.state,'terminated',result.fault?.stack);assert.equal(result.returnValue,1);
 });
+
+test('enums CIL: UInt32 enum unboxing retains signed evaluation-stack bits for conv.i8',()=>{
+  const assembly=enumFixture({underlying:'uint',result:'long',body:(w,c)=>w.op('ldc.i4.m1').op('box',c.enumToken).op('unbox.any',c.enumToken).op('conv.i8').op('ret')});
+  const result=new CilVirtualMachine(assembly).run();assert.equal(result.state,'terminated',result.fault?.stack);assert.equal(result.returnValue,-1n);
+});
