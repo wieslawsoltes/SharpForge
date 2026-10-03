@@ -1,5 +1,18 @@
 # Assembly contexts and metadata lifetimes
 
+`RuntimeModule.typeDefinition(token)` returns a canonical frozen `TypeDesc` for a
+TypeDef token. It exposes metadata name/namespace/fullName, flags, interface flag,
+module, assembly, context and declaring-type identity. Nested types inherit their
+enclosing namespace. Handles keep collectible metadata alive and stay readable
+after cooperative unload begins. Repeated lookup is cached; indexing nested
+ownership is linear, with 100,000 relevant rows, 128 nesting levels and 4,096 name
+characters as limits. Malformed tokens use `SFCLR005`, invalid nested ownership
+uses `SFCLR012` / TypeLoadException, and resource limits use `SFCLR007`.
+
+This API is metadata identity only. Base/interface graphs, class/value/enum
+classification, constructed types, layout and dispatch are subsequent batches;
+no reference assembly is loaded and no method body is decoded by identity lookup.
+
 `AssemblyLoadSession` owns a Default context and a registry of custom contexts.
 No process-global assembly registry is used. `createContext` accepts a name,
 collectibility flag, finite `AssemblyResolver`, optional asynchronous load
