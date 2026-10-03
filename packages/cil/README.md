@@ -109,3 +109,5 @@ The browser/worker implementation uses no host crypto or asynchronous work. `@sh
 its existing `sha256` export as a reexport of this function; SHA-1 remains in the symbols package.
 
 Embedded data emission and bounded inspection are documented in [RESOURCES.md](./RESOURCES.md).
+
+Win32 version, manifest and ICO emission is documented in [WIN32-RESOURCES.md](./WIN32-RESOURCES.md).
