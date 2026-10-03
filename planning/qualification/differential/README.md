@@ -25,7 +25,9 @@ as local/unpinned. Missing SDK is a host failure, not a skipped native pass.
 The report contains every raw and normalized repetition, actual assembly hashes,
 compiler/runtime identities, unsupported adapters, difference classes, fingerprints
 and reproduction paths. Repro folders include a corpus-compatible `fixture.json`,
-`repro.cs` and reduction record. Delta debugging removes C# statements and members
+`repro.cs`, `corpus.json` and reduction record. Replay with
+`node scripts/conformance/diff/run.js --corpus <repro-directory>/corpus.json --no-reduce`.
+Delta debugging removes C# statements and members
 only while the same engine-pair/status/phase difference class persists; native
 runs continue using the pinned oracle during minimization. A bounded run may
 retain a larger reproducer and labels it budget-exhausted; it does not claim
