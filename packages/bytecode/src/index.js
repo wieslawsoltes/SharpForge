@@ -9,7 +9,7 @@ export const FORMAT_VERSION = 1;
 export const EnumConvertBase = 65536;
 export const Op = Object.freeze(Object.fromEntries(['SEQ','CONST','LDLOC','STLOC','LDSTATIC','STSTATIC','LDFLD','STFLD','DUP','POP','BINARY','UNARY','JUMP','JFALSE','JTRUE','CALL','BUILTIN','RET','NEWOBJ','NEWARR','LDELEM','STELEM','LENGTH','THROW','RETHROW','CONVERT','NOP','ENDFINALLY','DELEGATE','ENUM','ADDRESS'].map((n,i)=>[n,i])));
 export const OpName = Object.freeze(Object.keys(Op));
-export const Binary = Object.freeze(Object.fromEntries(['+','-','*','/','%','==','!=','<','<=','>','>=','&','|','^','<<','>>'].map((n,i)=>[n,i])));
+export const Binary = Object.freeze(Object.fromEntries(['+','-','*','/','%','==','!=','<','<=','>','>=','&','|','^','<<','>>','>>>'].map((n,i)=>[n,i])));
 export const BinaryName = Object.freeze(Object.keys(Binary));
 export const Unary = Object.freeze({ '-':0, '+':1, '!':2, '~':3 });
 export const UnaryName = Object.freeze(Object.keys(Unary));

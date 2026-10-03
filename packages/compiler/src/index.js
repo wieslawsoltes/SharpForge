@@ -1,3 +1,6 @@
+import {compileBinary} from './binary-expression.js';
+import {assignable, isReference} from './type-rules.js';
+export {assignable} from './type-rules.js';
 import {installSynchronizationCompiler} from './synchronization.js';
 import {installScalarCompiler} from './scalar-builtins.js';
 import {numeric,normalizeNumeric,implicitNumeric,integral,unaryPromotion,binaryPromotion,scalarLiteral,constantValue,numericDefault,constantFits} from './numeric.js';
@@ -16,8 +19,6 @@ import { Op, Binary, Unary, BuiltinMap, frameworkBuiltin, EnumConvertBase, FORMA
 const supported = new Set([...numericTypeNames,'int','double','bool','string','object','void','var','null','error','Exception']);
 const aliases = { 'System.Int32':'int','System.Double':'double','System.Boolean':'bool','System.String':'string','System.Object':'object','System.Void':'void','System.Exception':'Exception' };
 const normalize = t=>canonicalType(normalizeNumeric(aliases[t]??t));
-const isReference = t=>t==='string'||t==='object'||t==='Exception'||(!supported.has(t)&&t!=='error'&&t!=='long'&&frameworkType(t)?.kind!=='enum')||t.endsWith('[]');
-export function assignable(target,from) { return frameworkAssignable(target,from)||target==='error'||from==='error'||target===from||target==='object'&&from!=='void'||numeric(target)&&numeric(from)&&implicitNumeric(from,target)||from==='null'&&isReference(target); }
 function defaultValue(type){return numeric(type)?numericDefault(type):type==='bool'?false:null;}
 function alwaysReturns(s){return (s?.kind==='Using'||s?.kind==='OverflowContext'||s?.kind==='Lock')&&alwaysReturns(s.body)||s?.kind==='Switch'&&s.sections.some(x=>x.labels.includes(null))&&s.sections.every(x=>x.statements.some(alwaysReturns))||s?.kind==='Return'||s?.kind==='Throw'||s?.kind==='Block'&&s.statements.some(alwaysReturns)||s?.kind==='If'&&alwaysReturns(s.then)&&alwaysReturns(s.otherwise)||s?.kind==='Try'&&(alwaysReturns(s.finallyBody)||alwaysReturns(s.body)&&s.catches.every(c=>alwaysReturns(c.body)));}
 function pathOf(e){return e.kind==='Name'?e.name:e.kind==='Member'?`${pathOf(e.target)}.${e.name}`:null;}
@@ -401,18 +402,7 @@ class MethodCompiler {
     }
   }
   arrayIndex(node){const type=this.expr(node);if(!integral(type))this.c.report(node,'CS0266','Array indexes and lengths require an integral type');const target=type==='uint'?'nuint':['long','ulong'].includes(type)?'nint':type;if(target!==type)this.emit(Op.CONVERT,NumericType[target],numericMode(type,type!=='uint'));return target;}
-  binary(operator,left,right,node){
-    if(frameworkType(left)?.family==='vector'&&left===right){const name={'+':'Add','-':'Subtract','*':'Multiply','/':'Divide','&':'BitwiseAnd','^':'Xor','==':'EqualsAll','!=':'EqualsAll'}[operator],contract=name&&findContracts('System.Numerics.Vector',name,true).find(d=>d.parameters[0]===left);if(contract){this.emitContract(contract);if(operator==='!=')this.emit(Op.UNARY,Unary['!']);return contract.result;}}
-    let result,promoted=numeric(left)&&numeric(right)?binaryPromotion(left,right,operator,this.constant(node?.left),node?.kind==='Unary'&&['++','--'].includes(node.operator)?{type:'int',value:1}:this.constant(node?.right)):null;
-    if(operator==='+'&&(left==='string'||right==='string')){if(numeric(left)){const saved=this.temp(right);this.emit(Op.STLOC,saved);this.emit(Op.POP);this.scalarString(left);this.emit(Op.LDLOC,saved);}if(numeric(right))this.scalarString(right);result='string';}
-    else if(promoted){if(['&','|','^','<<','>>'].includes(operator)&&!integral(promoted))this.c.report(node,'CS0019','Bitwise operators require integers');result=['==','!=','<','<=','>','>='].includes(operator)?'bool':promoted;}
-    else if(['==','!='].includes(operator)){if(!assignable(left,right)&&!assignable(right,left))this.c.report(node,'CS0019',`Operator '${operator}' cannot compare '${left}' and '${right}'`);result='bool';}
-    else if(['&','|','^'].includes(operator)&&left==='bool'&&right==='bool')result='bool';
-    else {this.c.report(node,'CS0019',`Operator '${operator}' cannot be applied to '${left}' and '${right}'`);result='error';}
-    if(!(operator in Binary)){this.c.report(node,'SF2006',`Operator '${operator}' is not implemented`);this.emit(Op.POP);return 'error';}
-    if(promoted){const rightType=['<<','>>'].includes(operator)?'int':promoted;if(left!==promoted){const saved=this.temp(right);this.emit(Op.STLOC,saved);this.emit(Op.POP);this.emit(Op.CONVERT,NumericType[promoted],numericMode(left,false));this.emit(Op.LDLOC,saved);}if(right!==rightType)this.emit(Op.CONVERT,NumericType[rightType],numericMode(right,false));}
-    this.emit(Op.BINARY,Binary[operator],promoted?numericMode(promoted,this.overflowChecked(node)):result==='int'?(this.overflowChecked(node)&&['+','-','*'].includes(operator)?5:1):result==='string'?2:result==='bool'&&left==='bool'?3:0);return result;
-  }
+  binary(operator,left,right,node){return compileBinary(this,operator,left,right,node);}
   prepare(node,allowReadOnly=false){const framework=this.prepareFramework(node);if(framework)return framework;
     if(node.kind==='Name'){const l=this.lookup(node.name);if(l){if(l.isConst)this.c.report(node,'CS0131','A const local cannot be modified');if(l.isUsing)this.c.report(node,'CS1656','A using variable cannot be reassigned');if(l.isIteration)this.c.report(node,'CS1656','A foreach iteration variable cannot be reassigned');if(l.symbol)this.c.reference(node,l.symbol);return {kind:'local',...l};}}
     const property=this.property(node);

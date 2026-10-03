@@ -36,7 +36,7 @@ export function emitScalarConversion(w,c,from,to,checked=false) {
   if((to==='long'||to==='ulong')&&source?.unsigned&&source.bits<=32)w.op('conv.u8');
   else w.op('conv.'+suffix);
 }
-const arithmetic={'+':'add','-':'sub','*':'mul','/':'div','%':'rem','&':'and','|':'or','^':'xor','<<':'shl','>>':'shr'};
+const arithmetic={'+':'add','-':'sub','*':'mul','/':'div','%':'rem','&':'and','|':'or','^':'xor','<<':'shl','>>':'shr','>>>':'shr'};
 const decimalOperators={'+':'Addition','-':'Subtraction','*':'Multiply','/':'Division','%':'Modulus','==':'Equality','!=':'Inequality','<':'LessThan','<=':'LessThanOrEqual','>':'GreaterThan','>=':'GreaterThanOrEqual'};
 export function emitScalarBinary(w,c,operator,mode) {
   const {type,checked}=decodeNumericMode(mode),integer=integerType(type),comparison=['==','!=','<','<=','>','>='].includes(operator);
@@ -44,7 +44,7 @@ export function emitScalarBinary(w,c,operator,mode) {
     const name=decimalOperators[operator];if(!name)throw new CilError('Invalid Decimal operator');
     w.op('call',c.external('System.Decimal','op_'+name,comparison?'bool':'System.Decimal',['System.Decimal','System.Decimal']));
   } else if(operator in arithmetic) {
-    const overflow=integer&&checked&&['+','-','*'].includes(operator),unsigned=integer?.unsigned&&(overflow||['/','%','>>'].includes(operator));
+    const overflow=integer&&checked&&['+','-','*'].includes(operator),unsigned=operator==='>>>'||integer?.unsigned&&(overflow||['/','%','>>'].includes(operator));
     w.op(arithmetic[operator]+(overflow?'.ovf':'')+(unsigned?'.un':''));
     if(type==='float'||type==='double')w.op('conv.'+scalarCilNames[type]);
   } else if(operator==='==')w.op('ceq');
@@ -54,6 +54,7 @@ export function emitScalarBinary(w,c,operator,mode) {
   else if(operator==='<=')w.op(integer?.unsigned||!integer?'cgt.un':'cgt').integer(0).op('ceq');
   else if(operator==='>=')w.op(integer?.unsigned||!integer?'clt.un':'clt').integer(0).op('ceq');
   else throw new CilError('Invalid scalar operator');
+  if (operator === '>>>') w.integer(3).op('pop');
   scalarMarker(w,c,type,checked);
 }
 export function emitScalarUnary(w,c,operator,mode) {

@@ -41,7 +41,7 @@ export function scalarSpan(span,c) {
     }
     return emit(Op.CONST,c.intern(wire),type==='double'?1:0);
   }
-  let operator;
+  let operator = body.at(-1)?.name === 'pop' && constant(body.at(-2)) === 3 ? '>>>' : undefined;
   if(target?.owner==='System.Decimal')operator=decimalOperators[target.name?.replace(/^op_/,'')];
   if(!operator){const operation=body.find(i=>arithmetic[i.name.split('.')[0]]);if(operation)operator=arithmetic[operation.name.split('.')[0]];}
   if(!operator) {

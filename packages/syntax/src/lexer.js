@@ -1,7 +1,8 @@
+import {operatorTokens as operators} from './operators.js';
 import {scanInterpolated} from './interpolation.js';
 import { diagnostic, BoundedCache } from '@sharpforge/text';
 export const keywords = new Set(('using namespace class public private internal protected static readonly const sealed partial void int double float bool string object char long decimal uint ulong short ushort byte sbyte nint nuint var new null true false if else while do for foreach in break continue return throw try catch finally this base get set enum struct interface async await virtual override abstract is as typeof default switch case out ref params lock unchecked checked').split(' '));
-const operators = ['..', '>>=', '<<=', '??=', '=>', '==', '!=', '<=', '>=', '&&', '||', '++', '--', '+=', '-=', '*=', '/=', '%=', '??', '?.', '<<', '>>', '&=', '|=', '^=', '::'];
+
 const identifierStart = /[\p{L}_]/u, identifierPart = /[\p{L}\p{N}\p{Mn}\p{Mc}\p{Pc}]/u;
 const escapes = { e: '\x1b', n: '\n', r: '\r', t: '\t', '0': '\0', b: '\b', f: '\f', v: '\v', '\\': '\\', "'": "'", '"': '"' };
 export function lex(source, cache = new BoundedCache()) {
