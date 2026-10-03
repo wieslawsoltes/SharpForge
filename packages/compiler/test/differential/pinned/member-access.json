@@ -1,0 +1,14 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "member-access/cs1061-unknown-instance-member":{"hash":"6d0fe56ab3970037","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1061",51,7,"error"]]},
+  "member-access/cs1061-unknown-method":{"hash":"9a4062b6d6f86d74","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1061",33,2,"error"]]},
+  "member-access/cs1061-on-int":{"hash":"d648622be6c9d28b","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1061",45,6,"error"]]},
+  "member-access/cs1061-on-list":{"hash":"d6a86a08879a9cce","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1061",95,6,"error"]]},
+  "member-access/cs0117-unknown-static-member":{"hash":"34ca99972552d9cb","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0117",34,7,"error"]]},
+  "member-access/cs0117-console-typo":{"hash":"6b7e68ac1521bae6","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0117",22,8,"error"]]},
+  "member-access/cs0117-math-typo":{"hash":"a79818eea57ababf","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0117",37,10,"error"]]},
+  "member-access/cs0117-object-initializer":{"hash":"ae561b47f1a9488a","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0117",30,7,"error"]]},
+  "member-access/cs1955-invoke-non-method":{"hash":"125af29e7b236b6f","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1955",51,5,"error"]]},
+  "member-access/cs0428-method-group-to-int":{"hash":"b7968095f4e7607a","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0428",41,3,"error"]]},
+  "member-access/cs0021-index-non-indexable":{"hash":"9717d9a7c8e05c09","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0021",43,4,"error"]]},
+  "member-access/cs0149-call-non-method-local":{"hash":"00cea0259a832562","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0149",43,1,"error"]]}
+}}

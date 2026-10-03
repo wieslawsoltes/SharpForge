@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "area": "A01",
   "nodeGlobs": [
-    "tests/syntax.test.js"
+    "tests/syntax*.test.js"
   ],
   "browserScripts": [],
   "requiredServices": [],

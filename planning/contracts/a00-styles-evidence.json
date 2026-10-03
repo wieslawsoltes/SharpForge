@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "task": "SF-A00-T20",
+  "platform": "Darwin arm64",
+  "node": "v24.21.0",
+  "sourceCssFiles": 25,
+  "totalContributionStyles": 30,
+  "legacyCssFilesRemaining": 0,
+  "baseline": {
+    "schemaVersion": 1,
+    "sourceCommit": "b8e6dbd8f978517a00458b7b3df6a8f5a423e036",
+    "bytes": 111841,
+    "sha256": "61e8f836530dc95c61fabba5b6476d821ed76a526d629e8dadc1f55b46f05155",
+    "ruleCount": 1179,
+    "orderedRulesSha256": "b604b5a42511e737c456a55d2df079f17df258d02c1c52a80ddeb1daedc8f599",
+    "sortedRulesSha256": "a236737085c6e085fa9af8e8e86f524f27e1a6ae2e16199f86098ed6074495a5"
+  },
+  "builtCssByteIdentical": true,
+  "browserCssom": {
+    "ruleCount": 1176,
+    "actualRuleCount": 1176,
+    "orderedEquivalent": true,
+    "sortedEquivalent": true,
+    "chromium": "143.0.7499.4",
+    "serializedRulesSha256": "4ce65e306e2a760e909af1a4d01f702e41433fa5256a0429e2c552c6b2d87661"
+  },
+  "tests": {
+    "registrationAndStyles": {
+      "passed": 16,
+      "failed": 0
+    },
+    "syntax": {
+      "modules": 384,
+      "errors": 0
+    },
+    "manifestOwnership": {
+      "areas": 30,
+      "nodeFiles": 83,
+      "pythonSuites": 16,
+      "unassigned": 0,
+      "duplicate": 0
+    }
+  },
+  "browserSuites": [
+    {
+      "suite": "browser",
+      "command": [
+        "python",
+        "tests/browser_test.py"
+      ],
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 5.0527046660427,
+      "checks": 29
+    },
+    {
+      "suite": "release12",
+      "command": [
+        "python",
+        "tests/browser_release12_test.py"
+      ],
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 8.478791250148788,
+      "checks": 20
+    },
+    {
+      "suite": "release13",
+      "command": [
+        "python",
+        "tests/browser_release13_test.py"
+      ],
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 8.448524416889995,
+      "checks": 16
+    }
+  ],
+  "platformBoundaries": [
+    "Chromium 143 on macOS arm64 executed locally",
+    "Windows/Linux browsers and other browser engines were not executed locally; original and resulting CSS bytes remain identical",
+    "No runtime-engine or native-platform qualification is inferred from style equivalence"
+  ]
+}

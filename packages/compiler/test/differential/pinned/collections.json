@@ -1,0 +1,16 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "collections/list-basics":{"hash":"42b1bdc172d50be2","kind":"output","langVersion":"14.0","diagnostics":[],"output":"3\n5\nTrue\n2\n7,10\n0\n"},
+  "collections/list-sort-and-search":{"hash":"9531affd0fbaf5b5","kind":"output","langVersion":"14.0","diagnostics":[],"output":"ann bob cy\ncy\n5\n5\n"},
+  "collections/dictionary-basics":{"hash":"5031208b2444384d","kind":"output","langVersion":"14.0","diagnostics":[],"output":"2\n11\nTrue False\n2\nFalse 0\n1\n"},
+  "collections/dictionary-exceptions":{"hash":"2ba9203bbcce920c","kind":"output","langVersion":"14.0","diagnostics":[],"output":"missing key\nduplicate key\n3\n"},
+  "collections/word-count":{"hash":"96464005278d4030","kind":"output","langVersion":"14.0","diagnostics":[],"output":"the:3\ncat:1\nand:2\nhat:1\nbat:1\n"},
+  "collections/hashset":{"hash":"bd1121d04db20348","kind":"output","langVersion":"14.0","diagnostics":[],"output":"3 2\nTrue\nFalse\n"},
+  "collections/stack-and-queue":{"hash":"970420e7f75607f2","kind":"output","langVersion":"14.0","diagnostics":[],"output":"3 2 2\nq1 q2 2\nempty\n"},
+  "collections/list-of-objects":{"hash":"6e6a66cbf9568991","kind":"output","langVersion":"14.0","diagnostics":[],"output":"96\nBob\n"},
+  "collections/list-index-out-of-range":{"hash":"2d63df824deae5cc","kind":"output","langVersion":"14.0","diagnostics":[],"output":"out of range\n"},
+  "collections/collection-expression":{"hash":"5b92db7609996eb9","kind":"output","langVersion":"14.0","diagnostics":[],"output":"7\n"},
+  "collections/cs1503-add-wrong-type":{"hash":"d5108f237da6ef67","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1503",81,5,"error"]]},
+  "collections/cs0029-element-assignment":{"hash":"4998d40c9dbd1e05","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0029",91,5,"error"]]},
+  "collections/cs1503-dictionary-key-type":{"hash":"4dbb5b538682483c","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1503",89,1,"error"]]},
+  "collections/cs1501-count-as-method-without-linq":{"hash":"d90793c9c142e5ca","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1501",95,5,"error"]]}
+}}

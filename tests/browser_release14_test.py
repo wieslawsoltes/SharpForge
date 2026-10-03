@@ -34,8 +34,8 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
  def wait(code):return wait_condition(page,code,timeout=30000)
  def state():return ev('sharpforge.getState()')
  def stop():return ev('sharpforge.execute("stop")')
- def load(id):ev('id=>sharpforge.loadSample(id)',id);truth(not state()['diagnostics'],str(state()['diagnostics']))
- def source(text):stop();ev('text=>sharpforge.loadDiskRecords([{path:"Program.cs",text}],{name:"RuntimeQualification"})',text);ev('sharpforge.build()');truth(not state()['diagnostics'],str(state()['diagnostics']))
+ def load(id):ev('id=>sharpforge.loadSample(id)',id);truth(not [d for d in state()['diagnostics'] if d['severity']=='error'],str(state()['diagnostics']))
+ def source(text):stop();ev('text=>sharpforge.loadDiskRecords([{path:"Program.cs",text}],{name:"RuntimeQualification"})',text);ev('sharpforge.build()');truth(not [d for d in state()['diagnostics'] if d['severity']=='error'],str(state()['diagnostics']))
  def run():ev('sharpforge.run()');wait('sharpforge.getState().debug?.state==="terminated"');r=state()['debug'];truth(not r['fault'],str(r));return r
  def configure(value):return ev('s=>sharpforge.configureRuntime(s)',value)
  try:
@@ -44,7 +44,7 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
    truth(len(workers)==2);truth(ev('sharpforge.getKeymap().id')=='visual-studio');s=ev('sharpforge.getRuntimeSettings()');truth(s['langVersion']=='14' and not s['enabled']);ev('sharpforge.openTool("runtime-settings")');truth(page.locator('#runtime-network').is_visible());truth(not page.locator('#runtime-network').is_checked());truth(page.locator('#runtime-backend').input_value()=='auto')
   check('stable default language, Visual Studio keys, and explicit-deny runtime panel',defaults)
   def preview():
-   load('csharp-preview-collections');truth(ev('sharpforge.getRuntimeSettings().langVersion')=='preview');truth(run()['output']=='1,2,3,4\n22\n');stop();configure({'langVersion':'14'});ev('sharpforge.build()');truth(any('preview' in d['message'].lower() or '15' in d['message'] for d in state()['diagnostics']));configure({'langVersion':'preview'});ev('sharpforge.build()');truth(not state()['diagnostics'])
+   load('csharp-preview-collections');truth(ev('sharpforge.getRuntimeSettings().langVersion')=='preview');truth(run()['output']=='1,2,3,4\n22\n');stop();configure({'langVersion':'14'});ev('sharpforge.build()');truth(any('preview' in d['message'].lower() or '15' in d['message'] for d in state()['diagnostics']));configure({'langVersion':'preview'});ev('sharpforge.build()');truth(not [d for d in state()['diagnostics'] if d['severity']=='error'],str(state()['diagnostics']))
   check('preview language selection gates capacity expressions and labeled loops in compiler worker',preview)
   def modern():
    load('csharp-modern-properties');truth(run()['output']=='42\n0\n');load('bcl-json-document');truth(run()['output']=='items: 3\nTotal: 42\n{"total":42}\n');load('bcl-array-random');truth(run()['output'].endswith('534011718\n237820880\n'))
@@ -72,7 +72,7 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
    stop();configure({'enabled':True,'allowedOrigins':[origin]});r=run();truth(r['output']=='42\n',str(r));truth(requests[-1]['path']=='/data' and requests[-1]['cookie'] is None);truth(r['runtime']['network']['completed']==1 and r['runtime']['pendingExternal']==0)
   check('managed HttpClient fetches a real CORS-enabled loopback endpoint and parses its response',allowed)
   def post():
-   source(f'''using System;using System.Net.Http;using System.Threading.Tasks;class P{{static async Task Main(){{using var c=new HttpClient();c.BaseAddress=new Uri("{origin}/");c.DefaultRequestHeaders.Add("x-demo","explicit");var r=await c.PostAsync("echo",new StringContent("hello"));Console.WriteLine(await r.Content.ReadAsStringAsync());Console.WriteLine(r.StatusCode);}}}}''');configure({'enabled':True,'allowedOrigins':[origin]});r=run();truth(r['output']=='hello\n200\n');truth(requests[-1]['body']=='hello' and requests[-1]['header']=='explicit')
+   source(f'''using System;using System.Net.Http;using System.Threading.Tasks;class P{{static async Task Main(){{using var c=new HttpClient();c.BaseAddress=new Uri("{origin}/");c.DefaultRequestHeaders.Add("x-demo","explicit");var r=await c.PostAsync("echo",new StringContent("hello"));Console.WriteLine(await r.Content.ReadAsStringAsync());Console.WriteLine(r.StatusCode);Console.WriteLine((int)r.StatusCode);}}}}''');configure({'enabled':True,'allowedOrigins':[origin]});r=run();truth(r['output']=='hello\nOK\n200\n');truth(requests[-1]['body']=='hello' and requests[-1]['header']=='explicit')
   check('relative BaseAddress, POST content, explicit headers and buffered response cross actual HTTP',post)
   def cancel_http():
    source(f'''using System;using System.Net.Http;using System.Threading;using System.Threading.Tasks;class P{{static async Task Main(){{using var c=new HttpClient();using var token=new CancellationTokenSource();var job=c.GetAsync("{origin}/slow",token.Token);await Task.Delay(30);token.Cancel();try{{await job;}}catch(Exception e){{Console.WriteLine("canceled");}}}}}}''');configure({'enabled':True,'allowedOrigins':[origin]});r=run();truth(r['output']=='canceled\n');truth(r['runtime']['pendingExternal']==0)

@@ -1,0 +1,48 @@
+/**
+ * Pins real Roslyn results for the differential fixtures (SF-A02-T40).
+ *
+ *   node packages/compiler/test/differential/tools/pin.mjs [--dotnet <path>] [--scratch <dir>]
+ *
+ * Builds tools/Program.cs + tools/pin.csproj in a scratch directory (default node_modules/.sf/differential/pin), runs
+ * every fixture through Roslyn and rewrites pinned/*.json. Needs a .NET SDK; the test run itself never does.
+ * The run fails (and writes nothing) when a fixture contradicts its declared kind: an 'output' fixture must compile
+ * without errors and finish in time, a 'diagnostics' fixture must produce at least one error or warning.
+ */
+import {execFileSync} from 'node:child_process';
+import {mkdirSync,copyFileSync,writeFileSync,readFileSync,existsSync} from 'node:fs';
+import {join,resolve} from 'node:path';
+import {homedir} from 'node:os';
+import {root,loadFixtures,fixtureHash,savePinned} from '../corpus.js';
+
+const args=process.argv.slice(2),option=name=>{const i=args.indexOf(name);return i>=0?args[i+1]:null;};
+const home=join(homedir(),'.dotnet','dotnet');
+const dotnet=option('--dotnet')??process.env.DOTNET??(existsSync(home)?home:'dotnet');
+const scratch=resolve(option('--scratch')??'node_modules/.sf/differential/pin');
+const fixtures=loadFixtures();
+
+mkdirSync(scratch,{recursive:true});
+for(const name of ['Program.cs','pin.csproj'])copyFileSync(join(root,'tools',name),join(scratch,name));
+const input=join(scratch,'input.json'),output=join(scratch,'output.json');
+writeFileSync(input,JSON.stringify(fixtures.map(f=>({id:f.id,langVersion:f.langVersion??null,source:f.source}))));
+const env={...process.env,DOTNET_CLI_TELEMETRY_OPTOUT:'1',DOTNET_NOLOGO:'1',DOTNET_SKIP_FIRST_TIME_EXPERIENCE:'1'};
+execFileSync(dotnet,['build',join(scratch,'pin.csproj'),'-c','Release','-o',join(scratch,'out'),'--nologo','-v','q'],{stdio:'inherit',env});
+execFileSync(dotnet,[join(scratch,'out','pin.dll'),input,output],{stdio:'inherit',env});
+
+const document=JSON.parse(readFileSync(output,'utf8')),problems=[],results=new Map();
+for(const f of fixtures){
+  const r=document.results[f.id];if(!r){problems.push(`${f.id}: no result`);continue;}
+  const errors=r.diagnostics.filter(d=>d[3]==='error'),warnings=r.diagnostics.filter(d=>d[3]==='warning');
+  if(f.kind==='output'){
+    if(errors.length)problems.push(`${f.id}: output fixture has Roslyn errors ${errors.map(d=>d[0]+'@'+d[1]).join(' ')}`);
+    else if(r.timedOut)problems.push(`${f.id}: output fixture timed out`);
+    else if(typeof r.output!=='string')problems.push(`${f.id}: output fixture produced no output record`);
+  }else if(!errors.length&&!warnings.length)problems.push(`${f.id}: diagnostics fixture produced no Roslyn error or warning`);
+  const pinned={hash:fixtureHash(f),kind:f.kind,langVersion:r.langVersion,diagnostics:r.diagnostics};
+  if(f.kind==='output'){pinned.output=r.output;if(r.exception)pinned.exception=r.exception;if(r.exitCode!==undefined)pinned.exitCode=r.exitCode;}
+  results.set(f.id,pinned);
+}
+if(args.includes('--list'))for(const f of fixtures){const r=results.get(f.id);if(r)console.log(f.id.padEnd(58),f.kind==='output'?String(JSON.stringify(r.output)).slice(0,60)+(r.exception?' !'+r.exception:''):'',r.diagnostics.map(d=>`${d[0]}${d[3]==='error'?'':'('+d[3][0]+')'}@${d[1]}+${d[2]}`).join(' '));}
+if(problems.length){console.error(`\n${problems.length} fixture problem(s); nothing was pinned:\n`+problems.map(p=>'  '+p).join('\n'));process.exit(1);}
+const meta={version:document.roslyn,informationalVersion:document.informationalVersion,runtime:document.runtime,references:document.references,options:'OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture'};
+savePinned(meta,fixtures,results);
+console.log(`Pinned ${fixtures.length} fixtures against Roslyn ${document.roslyn} (${document.informationalVersion}).`);
