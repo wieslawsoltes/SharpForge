@@ -11,7 +11,7 @@ export const PartialMemberBinding = Base =>
       const target = conversion ? group.methods.find(method => (method.originalDefinition ?? method).isUnimplementedPartial) : null;
       if (target && group.methods.length === 1 && !group.reportedUnimplementedPartial) {
         group.reportedUnimplementedPartial = true;
-        this.report(group.nameNode ?? group.syntax, 'CS0762', [target.toDisplayString()]);
+        this.report(group.syntax ?? group.nameNode, 'CS0762', [target.toDisplayString()]);
       }
       return conversion;
     }

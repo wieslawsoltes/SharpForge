@@ -1,0 +1,9 @@
+{
+  "extension-methods/cs0411-generic-array-receiver": ["diagnostics", "warnings"],
+  "extension-methods/cs1510-ref-this-receiver": ["diagnostics", "warnings"],
+  "extension-methods/cs1929-best-overload": ["diagnostics", "warnings"],
+  "extension-methods/cs1929-numeric-conversion-is-not-enough": ["diagnostics", "warnings"],
+  "extension-methods/cs1929-receiver-of-another-type": ["diagnostics", "warnings"],
+  "extension-methods/cs1929-reference-types": ["diagnostics", "warnings"],
+  "extension-methods/cs1929-user-conversion-is-not-enough": ["diagnostics", "warnings"]
+}

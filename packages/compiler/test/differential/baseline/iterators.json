@@ -1,0 +1,5 @@
+{
+  "iterators/iterators-with-closures-and-local-functions": ["diagnostics", "warnings", "bytecode", "cil"],
+  "iterators/laziness-and-re-enumeration": ["diagnostics", "warnings", "bytecode", "cil"],
+  "iterators/yield-in-loops-and-branches": ["diagnostics", "warnings", "bytecode", "cil"]
+}

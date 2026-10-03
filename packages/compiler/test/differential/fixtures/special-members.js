@@ -57,6 +57,23 @@ export const fixtures = feature('special-members', [
     `,
   ),
   diag(
+    'cs0023-cs0119-cs8716-member-access-on-a-non-value',
+    cs`
+      class Program
+      {
+          static void V() { }
+          static void Main()
+          {
+              V().ToString();
+              var a = null.ToString();
+              var b = (x => x).ToString();
+              var c = Main.ToString();
+              var d = default.ToString();
+          }
+      }
+    `,
+  ),
+  diag(
     'cs0246-local-of-unknown-type-has-no-cs0219',
     cs`
       class Program

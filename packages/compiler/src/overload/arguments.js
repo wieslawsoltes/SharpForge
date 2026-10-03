@@ -41,7 +41,8 @@ export function mapArguments(parameters, args, { expanded = false } = {}) {
       taken[i] = true;
       continue;
     }
-    const index = parameters.findIndex(p => p.name === name);
+    // The parameters of a partial method are named by its defining declaration (symbols/source/partial-members.js).
+    const index = parameters.findIndex(p => ((p.originalDefinition ?? p).callerName ?? p.name) === name);
     if (index < 0) return { ok: false, error: { code: 'CS1739', kind: 'noSuchName', argument: i, name } };
     // A named argument may be followed by positional ones only when it stands in its parameter's position (C# 7.2).
     if (index !== i && positionalAfter(i)) return { ok: false, error: { code: 'CS8323', kind: 'badNonTrailingName', argument: i, name } };
