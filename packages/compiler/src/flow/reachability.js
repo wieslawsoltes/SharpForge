@@ -25,7 +25,7 @@ function reportable(node){
   return isUserCode(node)?node:null;
 }
 /** The statements directly nested in a statement, grouped as lists that execute in sequence. */
-function nestedLists(node){
+export function nestedStatementLists(node){
   switch(node.kind){
     case 'Block':return [node.statements];
     case 'IfStatement':return [[node.consequence],[node.alternative]];
@@ -45,7 +45,7 @@ export function analyzeReachability(graph,body,options={}){
   const startReachable=node=>{
     if(!node)return true;const blocks=graph.blocksOf(node);if(blocks.length)return blocks.some(b=>reachable.has(b));
     // Statements that do not begin a block of their own start where their first nested statement starts.
-    for(const list of nestedLists(node))for(const s of list)if(s)return startReachable(s);
+    for(const list of nestedStatementLists(node))for(const s of list)if(s)return startReachable(s);
     return true;
   };
   const visit=(list,containerReachable)=>{
@@ -53,7 +53,7 @@ export function analyzeReachability(graph,body,options={}){
     for(const s of list){
       if(!s)continue;const r=startReachable(s);
       if(!r&&previous){const at=reportable(s);if(at){diagnostics.push({code:'CS0162',args:[],node:at.syntax});previous=false;}}else previous=r;
-      for(const nested of nestedLists(s))visit(nested,r);
+      for(const nested of nestedStatementLists(s))visit(nested,r);
     }
   };
   if(body&&!body.isExpression)visit([body],true);
