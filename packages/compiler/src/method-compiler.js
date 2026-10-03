@@ -4,6 +4,7 @@ import {evaluateConstant,ConstantError} from './constants.js';
 import {normalize,numeric,isReference,assignable,defaultValue,alwaysReturns,pathOf,typeText,usingSpan} from './type-utils.js';
 import {FrameworkCompiler} from './framework.js';
 import {ModernCompiler} from './modern.js';
+import {CallScopedInference} from './binder/inference-cache.js';
 /** Core statement/expression compiler for the string-typed profile; framework and modern layers are composed below. */
 class CoreMethodCompiler {
   constructor(compilation,method){this.c=compilation;this.m=method;this.code=[];this.locals=[];this.scopes=[new Map()];this.assigned=new Set();this.loops=[];this.handlers=[];this.catchDepth=0;this.finallyScopes=[];this.checkedContext=null;this.constantDiagnostics=new Set();
@@ -290,4 +291,4 @@ class CoreMethodCompiler {
   storeRef(ref){if(ref.kind==='framework'){this.storeFramework(ref);return;}if(ref.kind==='property'){const value=this.temp(ref.type);this.emit(Op.STLOC,value);this.emit(Op.POP);if(ref.property.set){if(!ref.property.isStatic)this.emit(Op.LDLOC,ref.receiver);this.emit(Op.LDLOC,value);this.emit(Op.CALL,ref.property.set.id,ref.property.isStatic?1:2);this.emit(Op.POP);}this.emit(Op.LDLOC,value);this.clear(value);if(ref.receiver!==null)this.clear(ref.receiver);}else if(ref.kind==='local'){this.emit(Op.STLOC,ref.slot);this.assigned.add(ref.slot);}else if(ref.kind==='static')this.emit(Op.STSTATIC,ref.index);else{const value=this.temp(ref.type);this.emit(Op.STLOC,value);this.emit(Op.POP);this.emit(Op.LDLOC,ref.receiver);if(ref.kind==='index')this.emit(Op.LDLOC,ref.index);this.emit(Op.LDLOC,value);this.emit(ref.kind==='field'?Op.STFLD:Op.STELEM,ref.kind==='field'?ref.index:0);this.clear(value);this.clear(ref.receiver);if(ref.kind==='index')this.clear(ref.index);}}
 }
 /** The complete method compiler: explicit class composition instead of prototype patching. */
-export class MethodCompiler extends ModernCompiler(FrameworkCompiler(CoreMethodCompiler)) {}
+export class MethodCompiler extends CallScopedInference(ModernCompiler(FrameworkCompiler(CoreMethodCompiler))) {}
