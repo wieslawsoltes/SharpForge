@@ -61,5 +61,5 @@ test('A02-T16 source types are symbols in the merged global namespace',()=>{
 });
 test('A02-T16 no compiler module reports SF2011 any more',()=>{
   const root=fileURLToPath(new URL('../packages/compiler/src/',import.meta.url)),walk=dir=>readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(join(dir,e.name)):e.name.endsWith('.js')?[join(dir,e.name)]:[]);
-  for(const file of walk(root))if(!file.endsWith('diagnostics/codes.js'))assert(!readFileSync(file,'utf8').includes('SF2011'),file);
+  for(const file of walk(root))if(!file.replaceAll('\\','/').endsWith('diagnostics/codes.js'))assert(!readFileSync(file,'utf8').includes('SF2011'),file);
 });
