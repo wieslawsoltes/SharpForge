@@ -220,23 +220,13 @@ export const DeclarationBinding = Base =>
       if (value.form === 'lambda') return value.naturalType();
       return value.methods.length === 1 && !value.methods[0].arity ? this.naturalGroupType(value) : null;
     }
-    naturalGroupType(group) {
-      const m = group.methods[0];
-      if (m.parameters.some(p => p.refKind !== RefKind.None) || m.parameters.length > 4) return null;
-      const types = m.parameters.map(p => p.type);
-      return m.returnsVoid
-        ? types.length
-          ? this.core.action(types.length).construct(types)
-          : this.core.action(0)
-        : types.length > 4
-          ? null
-          : this.core.func(types.length + 1).construct([...types, m.returnType]);
-    }
     /** A `using` resource must convert to IDisposable (IAsyncDisposable for await using); ../csharp8.js adds pattern-based disposal. */
     checkDisposable(type, node, isAwait, value) {
       if (!type || type.isErrorType?.() || value?.hasErrors || value?.literal === 'null') return;
       if (isAwait ? isAsyncDisposable(type, this.core) : implementsInterface(type, this.core.idisposable, this.core)) return;
       if (type.typeKind === TypeKind.TypeParameter && type.constraintTypes.length) return;
+      // A dynamic resource is converted to IDisposable at run time.
+      if (type.typeKind === TypeKind.Dynamic) return;
       // Registry types do not list their interfaces completely: only source types and primitives are known not to be disposable.
       if (
         !isSourceType(type) &&
