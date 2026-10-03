@@ -1,14 +1,9 @@
 import {Op,Binary} from '@sharpforge/bytecode';
 import {canonicalType,frameworkType,findContracts} from '@sharpforge/framework';
+import {languageVersion as parseLangVersion} from '@sharpforge/syntax';
 
-/** Feature selection is not a claim that all features of that C# version are implemented. */
-export function languageVersion(value='14') {
-  const name=String(value??'14').toLowerCase();
-  if(name==='preview')return {name,number:15,preview:true};
-  if(['default','latest','latestmajor'].includes(name))return {name,number:14,preview:false};
-  if(!/^(?:[1-9]|1[0-4])(?:\.0)?$/.test(name))throw new Error('Supported LangVersion values are 1–14, default, latest, and preview (selected C# 15 features)');
-  return {name,number:Number(name),preview:false};
-}
+/** Feature selection is not a claim that all features of that C# version are implemented. LangVersion spellings are parsed by @sharpforge/syntax. */
+export function languageVersion(value='14') { return parseLangVersion(value); }
 export function hasBackingField(n){if(!n||typeof n!=='object')return false;if(n.kind==='Name'&&n.name==='field'&&!n.escaped)return true;return Object.entries(n).some(([k,v])=>!['source','tokens','symbol'].includes(k)&&(Array.isArray(v)?v.some(hasBackingField):hasBackingField(v)));}
 export function rewriteBackingField(n,name,report){if(!n||typeof n!=='object')return n;if(n.kind==='Name'&&n.name==='field'&&!n.escaped)return {...n,name};if(n.kind==='Variable'&&n.name==='field')report(n);return Object.fromEntries(Object.entries(n).map(([k,v])=>[k,['source','tokens','symbol'].includes(k)?v:Array.isArray(v)?v.map(x=>rewriteBackingField(x,name,report)):v&&typeof v==='object'?rewriteBackingField(v,name,report):v]));}
 
