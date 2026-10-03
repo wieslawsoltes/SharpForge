@@ -14,6 +14,8 @@ import {DesignerAccessibility} from './designer-accessibility.js';
 import {DesignerLiveAttachment} from './designer-live-attachment.js';
 import {DesignerPropertyController} from './designer-property-view.js';
 import {DesignerResourceController} from './designer-resource-view.js';
+import {DesignerResourceGallery} from './designer-resource-gallery.js';
+import {DesignerResourceContext, assertDesignerResourceAction, isDesignerResourceDocument} from './designer-resource-context.js';
 import {DesignerOptionsController} from './designer-options-view.js';
 import {DesignerAssetPreviewController} from './designer-property-preview.js';
 import {mountDesignerSurface, resizeDesignerArtboard} from './designer-surface-view.js';
@@ -50,6 +52,8 @@ export class DesignerTools {
     this.surface = new DesignerSurfaceController(this);
     this.properties = new DesignerPropertyController(this);
     this.resources = new DesignerResourceController(this);
+    this.resourceContext = new DesignerResourceContext(this);
+    this.resourceGallery = new DesignerResourceGallery(this);
     this.options = new DesignerOptionsController(this);
     this.liveAttachment = new DesignerLiveAttachment(this);
     this.assetPreviews = new DesignerAssetPreviewStore({
@@ -64,6 +68,7 @@ export class DesignerTools {
   }
 
   get document() { return this.templateScope?.document ?? this.session.document; }
+  get resourceDocument() { return isDesignerResourceDocument(this); }
   get zoom() { return this.session.zoom; }
   set zoom(value) { this.session.zoom = value; }
   get mode() { return this.session.mode; }
@@ -142,6 +147,7 @@ export class DesignerTools {
 
   replace(value, {live = null, path = 'View.sfdesign.json'} = {}) {
     const next = new DesignDocument(value);
+    this.cancelSurfaceEdits();
     if (this.templateScope) this.resources.leaveTemplate(false);
     if (this.sourceSync.session && !this.sourceSync.loading) this.sourceSync.disconnect();
     const previous = this.session.document;
@@ -156,6 +162,7 @@ export class DesignerTools {
 
   enterTemplateScope(scope) {
     if (this.templateScope) throw new Error('A template is already being edited');
+    this.cancelSurfaceEdits();
     this.templateScope = scope;
     this.subscribeDocument();
     this.update({kind: 'template-scope'});
@@ -163,16 +170,25 @@ export class DesignerTools {
 
   leaveTemplateScope(scope) {
     if (this.templateScope !== scope) return;
+    this.cancelSurfaceEdits();
     this.templateScope = null;
     this.subscribeDocument();
     this.update({kind: 'template-scope'});
     this.sourceSync.designChanged({kind: 'template edit'});
   }
 
+  cancelSurfaceEdits() {
+    this.surface.cancelPointer?.();
+    this.surface.finishKeyboard(true);
+    this.surface.text.cancel();
+    this.resources?.playback.stop(false);
+  }
+
   update(event = {}) {
     if (!this.initialized || this.disposed) return;
     this.syncing = true;
     try {
+      this.resourceContext.update();
       this.surface.onDocumentChanged(event);
       this.updateTree(event);
       if (event.kind !== 'selection') this.updatePreview();
@@ -182,10 +198,12 @@ export class DesignerTools {
       this.renderResources();
       this.updateButtons();
       this.statusElement.textContent = this.status + ' · revision ' + this.document.revision;
-      this.outline.render();
-      this.accessibility.update(event);
-      this.liveAttachment.update(event);
-      this.chrome.renderSelection();
+      if (!this.resourceDocument) {
+        this.outline.render();
+        this.accessibility.update(event);
+        this.liveAttachment.update(event);
+      }
+      this.chrome.renderSelection(this.resourceContext.breadcrumbContext());
       this.chrome.rulers();
       if (!this.templateScope) this.sourceSync.designChanged(event);
       if (event.kind !== 'selection') this.safe(() => this.assetPreviewController.refresh());
@@ -193,6 +211,12 @@ export class DesignerTools {
   }
 
   updateTree(event) {
+    if (this.resourceContext.renderPanel('designer-tree')) {
+      this.treeModel.setNodes([]);
+      this.treeModel.selected = new Set();
+      this.treeView.render();
+      return;
+    }
     const document = this.document;
     const tree = id => {
       const node = document.node(id);
@@ -222,6 +246,8 @@ export class DesignerTools {
   }
 
   updatePreview() {
+    this.resourceGallery.render();
+    if (this.resourceDocument) return;
     const scene = this.buildPreviewScene();
     this.host.load(scene);
     this.host.flush();
@@ -248,23 +274,26 @@ export class DesignerTools {
     this.chrome.rulers();
   }
 
-  renderToolbox() { this.toolbox.render(); }
-  insert(type, point) { return this.toolbox.insert(type, point); }
-  renderProperties() { this.properties.render(); }
+  renderToolbox() {
+    this.toolbox.install();
+    if (!this.resourceContext.renderPanel('designer-toolbox')) this.toolbox.render();
+  }
+  insert(type, point) { assertDesignerResourceAction(this, 'insert'); return this.toolbox.insert(type, point); }
+  renderProperties() { if (!this.resourceContext.renderPanel('designer-properties')) this.properties.render(); }
   renderResources() { this.resources.render(); }
-  renderLayout() { this.surface.layout.render(); }
+  renderLayout() { if (!this.resourceContext.renderPanel('designer-layout')) this.surface.layout.render(); }
   renderSource() { renderDesignerSource(this); }
   rect(id) { return this.surface.rect(id); }
-  drawAdorners() { this.surface.drawAdorners(); this.accessibility.adorners(); }
-  pointerDown(event) { return this.surface.pointerDown(event); }
-  keydown(event) { return this.surface.keydown(event); }
-  context(event) { return this.surface.context(event); }
-  align(action) { return this.surface.align(action); }
+  drawAdorners() { if (!this.resourceDocument) { this.surface.drawAdorners(); this.accessibility.adorners(); } }
+  pointerDown(event) { if (!this.resourceDocument) return this.surface.pointerDown(event); }
+  keydown(event) { if (!this.resourceDocument) return this.surface.keydown(event); }
+  context(event) { if (!this.resourceDocument) return this.surface.context(event); }
+  align(action) { assertDesignerResourceAction(this, action); return this.surface.align(action); }
   drawGridTracks() { return this.surface.drawGridTracks(); }
   trackPointer(...args) { return this.surface.trackPointer(...args); }
-  reorder(delta) { return this.surface.command(delta < 0 ? 'order:backward' : 'order:forward'); }
-  attach(sessionId, options) { return this.liveAttachment.attach(sessionId, options); }
-  applyLive(options) { return this.liveAttachment.apply(options); }
+  reorder(delta) { assertDesignerResourceAction(this, 'reorder'); return this.surface.command(delta < 0 ? 'order:backward' : 'order:forward'); }
+  attach(sessionId, options) { assertDesignerResourceAction(this, 'attach'); return this.liveAttachment.attach(sessionId, options); }
+  applyLive(options) { assertDesignerResourceAction(this, 'apply'); return this.liveAttachment.apply(options); }
   componentDefinition(id) {
     const node = this.document.node(id);
     return node ? this.projectRoots?.definition(node) ?? null : null;
@@ -309,6 +338,7 @@ export class DesignerTools {
 
   async action(action) {
     this.ensure();
+    assertDesignerResourceAction(this, action);
     if (this.actions.has(action)) return this.actions.get(action)();
     return this.surface.command(action);
   }
@@ -325,7 +355,7 @@ export class DesignerTools {
     this.modelSubscription?.();
     this.resizeObserver?.disconnect();
     for (const resource of [this.liveAttachment, this.surface, this.accessibility, this.outline, this.toolbox,
-      this.properties, this.resources, this.options, this.assetPreviewController, this.assetPreviews,
+      this.properties, this.resources, this.resourceGallery, this.resourceContext, this.options, this.assetPreviewController, this.assetPreviews,
       this.chrome, this.treeView, this.host]) resource?.dispose?.();
     this.menu.close();
     if (this.ownsSession) this.session.dispose();

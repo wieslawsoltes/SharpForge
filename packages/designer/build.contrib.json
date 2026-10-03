@@ -24,6 +24,10 @@
     {
       "source": "apps/studio/designer-app-host.css",
       "order": 12003
+    },
+    {
+      "source": "apps/studio/designer-resource-gallery.css",
+      "order": 12004
     }
   ],
   "workers": [],

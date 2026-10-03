@@ -1,4 +1,5 @@
 import {authoringError, finiteNumber} from './property-diagnostics.js';
+import {validateGuideSettings} from './guides-document.js';
 
 export const designerOptionsKey = 'sharpforge.designer.settings.v1';
 export const defaultDesignerOptions = Object.freeze({version: 1, defaultView: 'design', splitOrientation: 'vertical',
@@ -19,6 +20,17 @@ export function validateDesignerOptions(value) {
   }
   result.collapsed = {...result.collapsed};
   return result;
+}
+
+/** Creation-only initialization returns a clone and never overwrites serialized or recovered guide settings. */
+export function initializeDesignerDocumentOptions(input, options) {
+  const value = structuredClone(input);
+  const settings = validateDesignerOptions(options);
+  if (value.designer?.guides === undefined) {
+    value.designer ??= {};
+    value.designer.guides = validateGuideSettings({gridSize: settings.snap});
+  }
+  return value;
 }
 
 /** The existing settings service owns persistence. Failed writes are reported before state changes. */
@@ -48,6 +60,7 @@ export class DesignerOptionsService {
     view.zoom = this.value.zoom;
     view.snap = this.value.snap;
     view.autoSync = this.value.autoSync;
+    view.sourceSync?.setAuto?.(this.value.autoSync);
     view.naming = this.value.naming;
     return {mode: this.value.defaultView, splitOrientation: this.value.splitOrientation, zoom: this.value.zoom};
   }

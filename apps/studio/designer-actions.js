@@ -1,6 +1,7 @@
 import {createDesign, createDesignerRoot, createDesignerResourceDocument,
   generateDesignCode, generateDesignProject, generateDesignerResourceClass} from '@sharpforge/designer';
 import {escapeHtml} from '@sharpforge/editor';
+import {assertDesignerResourceAction, isDesignerResourceDocument} from './designer-resource-context.js';
 
 /** Feature controllers contribute actions through explicit composition rather than a shared switch. */
 export function createDesignerActions(view) {
@@ -17,7 +18,7 @@ export function createDesignerActions(view) {
       const parent = view.document.parent(view.document.selection[0]);
       if (parent) view.document.select(parent.id);
     },
-    properties: () => view.docking.activate('designer-properties'),
+    properties: () => view.docking.activate(isDesignerResourceDocument(view) ? 'designer-styles' : 'designer-properties'),
     rename: () => view.outline.rename(),
     cut: () => copySelection(view, true),
     copy: () => copySelection(view),
@@ -48,7 +49,7 @@ export function createDesignerActions(view) {
       view.status = 'Generated project is running. Attach it to edit live state.';
     },
     options: () => view.options.open()
-  }));
+  }).map(([id, action]) => [id, () => { assertDesignerResourceAction(view, id); return action(); }]));
 }
 
 async function createNewDocument(view) {
@@ -100,7 +101,8 @@ export function renderDesignerSource(view) {
   const panel = view.panel('designer-source');
   if (!panel) return;
   let source;
-  try { source = generateDesignCode(view.document.value); }
+  try { source = view.document.value.documentKind === 'resources' ? generateDesignerResourceClass(view.document.value) :
+    generateDesignCode(view.document.value); }
   catch (error) { source = '// ' + error.message; }
   panel.innerHTML = `<div class="panel-tools"><b>Design source</b>
     <button data-source-download>Export .g.cs</button><button data-source-json>Export JSON</button></div>

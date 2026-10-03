@@ -1,4 +1,6 @@
 import {DesignerAuthoringError, designScene, projectDesignerAuthoringScene, referencedDesignerAssets} from '../../packages/designer/src/index.js';
+import {designerAssetReferenceScene} from './designer-property-asset-references.js';
+import {isDesignerResourceDocument} from './designer-resource-context.js';
 
 /** Loads images referenced by an opened design through the same authorized store used by the picker. */
 export class DesignerAssetPreviewController {
@@ -7,6 +9,7 @@ export class DesignerAssetPreviewController {
     this.basePath = basePath;
     this.onError = onError;
     this.generation = 0;
+    this.version = 0;
     this.disposed = false;
     this.diagnostics = [];
     this.reported = new Set();
@@ -18,8 +21,10 @@ export class DesignerAssetPreviewController {
     const document = this.view.document;
     const revision = document.revision;
     const store = this.view.assetPreviews;
-    const scene = this.view.buildPreviewScene?.() ?? projectDesignerAuthoringScene(document.value, designScene(document.value));
-    const pending = referencedDesignerAssets(scene, this.view.records(), {basePath: this.basePath, resolveAsset: uri => store?.resolve(uri)});
+    const scene = isDesignerResourceDocument(this.view) ? null : this.view.buildPreviewScene?.() ??
+      projectDesignerAuthoringScene(document.value, designScene(document.value));
+    const references = designerAssetReferenceScene(document.value, scene);
+    const pending = referencedDesignerAssets(references, this.view.records(), {basePath: this.basePath, resolveAsset: uri => store?.resolve(uri)});
     let outcomes = [];
     if (pending.assets.length) {
       if (store) outcomes = await Promise.allSettled(pending.assets.map(asset => store.preview(asset)));
@@ -42,7 +47,11 @@ export class DesignerAssetPreviewController {
       this.onError(new DesignerAuthoringError(diagnostic.code, diagnostic.message, diagnostic));
     }
     this.reported = reported;
-    if (loaded) this.view.updatePreview();
+    if (loaded) {
+      this.version++;
+      this.view.updatePreview();
+      this.view.resources?.refreshPreviews?.();
+    }
     return {loaded, diagnostics: this.diagnostics, stale: false};
   }
 
