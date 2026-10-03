@@ -1,5 +1,5 @@
 {
-  "member-primary-constructors/capture-and-initialization": ["diagnostics", "warnings"],
+  "member-primary-constructors/capture-and-initialization": ["diagnostics", "warnings", "bytecode", "cil"],
   "member-primary-constructors/captured-parameter-is-mutable-state": ["diagnostics", "warnings", "bytecode", "cil"],
   "member-primary-constructors/initializer-order-and-lambdas": ["diagnostics", "warnings", "bytecode", "cil"],
   "member-primary-constructors/language-version": ["diagnostics", "warnings"],
