@@ -1,6 +1,7 @@
 import {DesignerSessionRegistry} from '../../packages/designer/src/index.js';
 import {classifyDesignerSource} from './designer-source-classification.js';
 import {DesignerDocumentView} from './designer-document-view.js';
+import {disposeFailedDesigner} from './designer-document-errors.js';
 import {DesignerToolRouter} from './designer-tool-router.js';
 
 /** Composes URI sessions, permanent source editors, per-document surfaces, and the shared side-panel router. */
@@ -81,8 +82,7 @@ export class DesignerDocuments {
         onActivate: activeUri => this.activate(activeUri), onHistory: this.onHistory
       });
     } catch (error) {
-      this.registry.close(uri);
-      throw error;
+      throw disposeFailedDesigner(error, () => this.registry.close(uri));
     }
     session.documentHost = view;
     session.own('document-host', view);

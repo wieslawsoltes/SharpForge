@@ -1,5 +1,6 @@
 import {designerViewModes} from '../../packages/designer/src/index.js';
 import {DesignerSplitView} from './designer-split-view.js';
+import {disposeFailedDesigner} from './designer-document-errors.js';
 
 export const designerSidePanelIds = Object.freeze([
   'designer-toolbox', 'designer-tree', 'designer-properties', 'designer-layout', 'designer-styles'
@@ -68,8 +69,7 @@ export class DesignerDocumentView {
       this.bindViewport();
       this.renderState();
     } catch (error) {
-      this.dispose();
-      throw error;
+      throw disposeFailedDesigner(error, () => this.dispose());
     }
   }
 
@@ -195,13 +195,17 @@ export class DesignerDocumentView {
   dispose({restoreSource = true} = {}) {
     if (this.disposed) return;
     this.disposed = true;
-    this.unsubscribe?.();
-    this.split.dispose();
-    for (const cleanup of this.cleanup.splice(0)) cleanup();
-    for (const panel of this.panels.values()) panel.remove();
-    if (restoreSource) this.element.replaceChildren(...this.codePane.childNodes);
-    this.element.classList.remove('designer-document');
-    delete this.element.dataset.designerDocument;
-    delete this.element.dataset.designerMode;
+    const errors = [];
+    const attempt = action => { try { action(); } catch (error) { errors.push(error); } };
+    attempt(() => this.unsubscribe?.());
+    this.unsubscribe = null;
+    attempt(() => this.split?.dispose());
+    for (const cleanup of this.cleanup.splice(0)) attempt(cleanup);
+    for (const panel of this.panels.values()) attempt(() => panel.remove());
+    if (restoreSource) attempt(() => this.element.replaceChildren(...this.codePane.childNodes));
+    attempt(() => this.element.classList.remove('designer-document'));
+    attempt(() => { delete this.element.dataset.designerDocument; });
+    attempt(() => { delete this.element.dataset.designerMode; });
+    if (errors.length) throw new AggregateError(errors, `Could not dispose every designer view resource for ${this.session.uri}`);
   }
 }
