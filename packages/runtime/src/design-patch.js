@@ -3,11 +3,11 @@ import {childSlot,propertySchema,track,designControls} from '@sharpforge/designe
 import {clearProperty} from './styling.js';
 import {assignDesignValue as assign,designManagedValue as valueFromData} from './design-values.js';
 import {applyDesignCollection} from './design-collections.js';
+import {setDesignChildren as setChildren} from './design-children.js';
 const extendedDesignCommands = new Map([['collection', applyDesignCollection]]);
 const key=r=>`${r.h}:${r.g}`;
 const fail=m=>{throw new Error(m);};
 function collection(p,ref,property){return p.getProperty(ref,{property,result:propertiesFor(p.record(ref).type)[property].type,owner:p.record(ref).type});}
-function setChildren(p,ref,children){const slot=childSlot(p.record(ref).type);if(!slot&&children.length)fail('Control cannot contain children');if(!slot)return;if(!slot.many&&children.length>1)fail('Content controls accept one child');if(slot.many){const list=collection(p,ref,slot.property);for(const child of p.items(list))if(p.isElement(child))p.set(child,'$parent',null);for(const child of children)if(p.isElement(child))p.parent(child,ref);p.replaceItems(list,children);}else p.setProperty(ref,{owner:p.record(ref).type,property:slot.property},children[0]??null);}
 function templateFromData(p,data){const template=p.construct(CONTROLS+'ControlTemplate',[]);p.heap.pins.push(template);const ids=new Set();let count=0;function part(data,depth=0){if(++count>500||depth>50||ids.has(data.id))fail('Template is cyclic or oversized');ids.add(data.id);if(!designControls.some(c=>c.type===data.type))fail('Invalid template control');const node=p.construct(data.type,[]);p.heap.pins.push(node);for(const [name,value]of Object.entries(data.properties??{}))assign(p,node,name,value);for(const [target,source]of Object.entries(data.bindings??{})){const to=propertiesFor(data.type)[target];if(!to||to.readOnly||typeof source!=='string')fail('Invalid template binding');}
     if(data.bindings){const json=p.heap.string(JSON.stringify(data.bindings));p.heap.pins.push(json);p.set(node,'$bindings',json);}if(data.children?.length)setChildren(p,node,data.children.map(n=>part(n,depth+1)));return node;}
   const root=part(data.root);p.set(template,'VisualTree',root);return template;}
