@@ -79,7 +79,7 @@ test('browser matrix covers each discovered entry point and every OS without fai
   }
   assert.match(workflow, /os: \[ubuntu-latest, windows-latest, macos-latest\]/);
   assert.match(workflow, /suite: \[browser, managed, workspace, release05, release06, msbuild, release08, native-explorer, release09, release10, release11, release12, release13, release14, standalone\]/);
-  assert.match(workflow, /needs: \[core, build, packages, browser, native-il, native-msbuild, clr-wasm\]/);
+  assert.match(workflow, /needs: \[core, core-platforms, build, packages, browser, native-il, native-msbuild, clr-wasm\]/);
 });
 
 test('managed Int32 process exits use Windows DWORD and POSIX low-byte representations', async () => {
@@ -103,4 +103,31 @@ test('checkout attributes override autocrlf for executable/example text without 
   git('checkout', '--', '.');
   for (const [name, bytes] of Object.entries(sources)) assert.deepEqual(await readFile(join(root, name)), bytes, name);
   assert.equal(checkoutStatus(root), '');
+});
+
+
+test('ordinary PRs have one core job while full qualification and releases remain explicit', async () => {
+  const workflow = await readFile(new URL('../../.github/workflows/ci.yml', import.meta.url), 'utf8');
+  const release = await readFile(new URL('../../.github/workflows/release.yml', import.meta.url), 'utf8');
+  const jobs = new Map([...workflow.matchAll(/^  ([a-z][a-z-]*):\n([\s\S]*?)(?=^  [a-z][a-z-]*:\n|$(?![\s\S]))/gm)].filter(match => workflow.indexOf(match[0]) > workflow.indexOf('jobs:')).map(match => [match[1], match[2]]));
+  assert.deepEqual([...jobs.keys()], ['core','core-platforms','build','packages','browser','native-il','native-msbuild','clr-wasm','ci-ok']);
+  const full = "github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')";
+  const core = jobs.get('core');
+  assert.match(core, /^    runs-on: ubuntu-latest$/m);
+  assert.doesNotMatch(core, /^    (if|strategy):/m);
+  for (const command of ['npm run check','npm test','npm run build']) assert.ok(core.includes(`run: ${command}\n`), command);
+  assert.doesNotMatch(core, /run: npm run (test:packages|test:dotnet|test:browser|bench)/);
+  assert.ok(core.includes('if: '+full+'\n        run: |\n          node --test tests/conformance/*.test.js'));
+  assert.match(core, /if: always\(\)\n        run: node scripts\/conformance\/clean-checkout.js/);
+  for (const [name, job] of jobs) if (name !== 'core') {
+    const condition = job.match(/^    if: (.+)$/m)?.[1];
+    assert.equal(condition, name === 'ci-ok' ? '${{ always() && ('+full+') }}' : full, name);
+  }
+  assert.match(jobs.get('core-platforms'), /os: \[windows-latest, macos-latest\]/);
+  assert.match(workflow, /push:\n    branches: \[main\]/);
+  assert.match(workflow, /pull_request:\n    types: \[opened, synchronize, reopened, labeled\]/);
+  for (const event of ['workflow_dispatch','merge_group','workflow_call']) assert.match(workflow, new RegExp('^  '+event+':','m'));
+  assert.match(workflow, /github.event.pull_request.number \|\| github.ref/);
+  assert.match(release, /qualification:\n    uses: \.\/\.github\/workflows\/ci.yml/);
+  assert.match(release, /needs: qualification/);
 });
