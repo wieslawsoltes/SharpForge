@@ -30,6 +30,13 @@ for (const row of languageFeatures) {
   test(`matrix: ${version}/${row.id} is accepted at C# ${version} and rejected at C# ${previous} with ${row.code}`, () => {
     const positive = readFileSync(join(directory, 'positive.cs'), 'utf8'), rejected = readFileSync(join(directory, 'rejected.cs'), 'utf8');
     for (const accepted of [version, 'latest', 'preview']) { if (row.preview && accepted === 'latest') continue; const tree = SyntaxTree.parseText(positive, { languageVersion: accepted }); assert.deepEqual(tree.getDiagnostics().map(d => d.code + ' ' + d.message), [], accepted); assert.equal(tree.toFullString(), positive); }
+    if (row.olderMeaning) {
+      // Below its version this syntax means something else, so it parses cleanly to a different tree instead of being rejected.
+      const first = rejected.indexOf('\n') + 1; assert.match(rejected.slice(0, first), new RegExp(`^// langversion ${previous}: expect an older meaning`)); assert.equal(rejected.slice(first), positive);
+      const older = SyntaxTree.parseText(positive, { languageVersion: previous }), newer = SyntaxTree.parseText(positive, { languageVersion: version });
+      assert.deepEqual(older.getDiagnostics(), []); assert.notDeepEqual([...older.root.descendantNodes()].map(n => n.kind), [...newer.root.descendantNodes()].map(n => n.kind));
+      entry.status = 'passed'; return;
+    }
     const header = /^\/\/ langversion (\S+): expect (CS\d{4}) at (\d+) (".*")\n/.exec(rejected); assert(header, 'rejected.cs starts with its expectation');
     assert.equal(header[1], previous); assert.equal(header[2], row.code); assert.equal(rejected.slice(header[0].length), positive, 'rejected.cs is the positive fixture plus the expectation line');
     const span = JSON.parse(header[4]), diagnostics = SyntaxTree.parseText(rejected, { languageVersion: previous }).getDiagnostics();

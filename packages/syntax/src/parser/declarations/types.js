@@ -5,6 +5,7 @@ export const typeDeclarationMethods = {
   /** Parses a type or delegate declaration when one starts here; returns null otherwise. */
   typeLikeDeclaration(attributeLists, modifiers) {
     this.interfaceNestedType();
+    this.fileTypeName(modifiers);
     if (this.atAny(['class', 'struct', 'interface'])) return this.typeDeclaration(attributeLists, modifiers);
     if (this.at('enum')) return this.enumDeclaration(attributeLists, modifiers);
     if (this.at('delegate') && this.peek().kind !== '*') return this.delegateDeclaration(attributeLists, modifiers);
@@ -82,8 +83,10 @@ export const typeDeclarationMethods = {
     this.inExtension = extension;
     this.owner = owner;
     this.containerKind = kind;
+    this.typeDepth++;
     if (!this.enter('Type nesting limit exceeded')) {
       this.leave();
+      this.typeDepth--;
       this.inAsync = async;
       this.inExtension = outer;
       this.owner = enclosing;
@@ -105,6 +108,7 @@ export const typeDeclarationMethods = {
       this.guardProgress(before);
     }
     this.leave();
+    this.typeDepth--;
     this.inAsync = async;
     this.inExtension = outer;
     this.owner = enclosing;

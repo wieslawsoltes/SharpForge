@@ -31,7 +31,7 @@ export const modifierMethods = {
     const token = this.tokens[index],
       kind = token.kind,
       next = this.tokens[Math.min(index + 1, this.tokens.length - 1)];
-    if (kind === 'identifier') return !token.flags && (this.isRequiredModifier(index) || this.isClosedModifier(index) || this.isSafeModifier(index));
+    if (kind === 'identifier') return !token.flags && this.isContextualModifier(index);
     if (!declarationModifiers.has(kind)) return false;
     if (kind === 'async') return this.isAsyncModifier(index);
     if (kind === 'partial') return !token.flags && this.canFollowContextualModifier(next);
@@ -42,6 +42,10 @@ export const modifierMethods = {
     if (kind === 'unsafe') return next.kind !== '{';
     return true;
   },
+  /** The contextual modifiers the lexer leaves as identifiers: `required`, `file` and the preview `closed` and `safe`. */
+  isContextualModifier(index) {
+    return this.isRequiredModifier(index) || this.isFileModifier(index) || this.isClosedModifier(index) || this.isSafeModifier(index);
+  },
   /**
    * True when a declaration can continue at `next` after a contextual modifier: another modifier, a type keyword or a type
    * name. With `index` (the position of `next`) a plain identifier must be a type followed by a member name, so a word
@@ -51,7 +55,7 @@ export const modifierMethods = {
     if ((declarationModifiers.has(next.kind) && next.kind !== 'new') || typeKeywords.includes(next.kind) || this.isPredefined(next)) return true;
     if (!this.isId(next)) return false;
     if (index === undefined) return true;
-    if (this.isRequiredModifier(index) || this.isClosedModifier(index) || this.isWord(next, 'record')) return true;
+    if (this.isRequiredModifier(index) || this.isClosedModifier(index) || this.isFileModifier(index) || this.isWord(next, 'record')) return true;
     const end = this.scanType(index);
     if (end === index + 1 && this.kindAt(end) === '(') return next.value === this.owner;
     return end > index && (this.isId(this.tokens[end]) || this.kindAt(end) === 'this' || this.kindAt(end) === 'operator');
@@ -68,7 +72,7 @@ export const modifierMethods = {
       if (token.kind === 'identifier') {
         if (kind === 'required') this.feature('RequiredMembers', token);
         else if (kind === 'closed') this.closedAt = token;
-        else this.safeModifier(token);
+        else if (kind === 'safe') this.safeModifier(token);
         list.push(this.takeWord(kind));
         continue;
       }
