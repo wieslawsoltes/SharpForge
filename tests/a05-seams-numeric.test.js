@@ -20,7 +20,7 @@ test('CIL numeric seam: tagged floats retain precision, special values and immut
 });
 
 test('CIL numeric seam: initialized locals receive the declared primitive defaults', () => {
-  for (const type of ['int', 'uint', 'short', 'ushort', 'byte', 'sbyte', 'char', 'bool', 'nint', 'nuint']) assert.equal(defaults(type), 0, type);
+  for (const type of ['int', 'uint', 'short', 'ushort', 'byte', 'sbyte', 'char', 'bool', 'nint', 'nuint']) assert.equal(number(defaults(type)), 0, type);
   for (const type of ['long', 'ulong']) assert.equal(defaults(type), 0n, type);
   assert.deepEqual(defaults('double'), float(0));
   assert.deepEqual(defaults('float'), float(0, 'r4'));
@@ -142,7 +142,11 @@ test('CIL numeric seam: conversions truncate and preserve signed stack represent
     ['i4', 4294967295n, -1], ['u4', -1, -1], ['i', 4294967295n, -1], ['u', -1, -1],
     ['i8', 18446744073709551615n, -1n], ['u8', -1n, -1n],
     ['i4', float(-3.9), -3], ['i8', float(3.9), 3n],
-  ]) assert.equal(convert('conv.' + target, input), expected, target);
+  ]) {
+    const actual = convert('conv.' + target, input);
+    if (target === 'i' || target === 'u') assert.deepEqual(actual, {nativeInt: 32, value: expected}, target);
+    else assert.equal(actual, expected, target);
+  }
   assert.deepEqual(convert('conv.r4', 16777217), float(16777216, 'r4'));
   assert.deepEqual(convert('conv.r8', 16777217), float(16777217));
   assert.deepEqual(convert('conv.r.un', -1), float(4294967295));
@@ -161,8 +165,13 @@ test('CIL numeric seam: checked conversions cover every signed and unsigned targ
     ['u8', 0n, 18446744073709551615n, 0n, -1n],
     ['i', -2147483648n, 2147483647n, -2147483648, 2147483647], ['u', 0n, 4294967295n, 0, -1],
   ]) {
-    assert.equal(convert('conv.ovf.' + target, min), expectedMin, target);
-    assert.equal(convert('conv.ovf.' + target, max), expectedMax, target);
+    if (target === 'i' || target === 'u') {
+      assert.deepEqual(convert('conv.ovf.' + target, min), {nativeInt: 32, value: expectedMin}, target);
+      assert.deepEqual(convert('conv.ovf.' + target, max), {nativeInt: 32, value: expectedMax}, target);
+    } else {
+      assert.equal(convert('conv.ovf.' + target, min), expectedMin, target);
+      assert.equal(convert('conv.ovf.' + target, max), expectedMax, target);
+    }
     for (const input of [min - 1n, max + 1n]) throwsFault(() => convert('conv.ovf.' + target, input), 'OverflowException', 'Checked conversion overflow');
   }
   throwsFault(() => convert('conv.ovf.i4.un', -1), 'OverflowException');
@@ -202,7 +211,7 @@ test('CIL numeric seam: storage narrows declared primitive aliases without chang
 
 test('CIL numeric seam: indirect opcode suffixes narrow loads and stores', () => {
   for (const prefix of ['ldind', 'stind', 'ldelem', 'stelem']) {
-    for (const [suffix, input, expected] of [['i1', 255, -1], ['u1', -1, 255], ['i2', 65535, -1], ['u2', -1, 65535], ['i4', 4294967295n, -1], ['u4', -1, -1], ['i8', -1, -1n], ['i', 4294967295n, -1], ['r4', 16777217, float(16777216, 'r4')], ['r8', 16777217, float(16777217)]]) assert.deepEqual(indirect(input, prefix + '.' + suffix), expected);
+    for (const [suffix, input, expected] of [['i1', 255, -1], ['u1', -1, 255], ['i2', 65535, -1], ['u2', -1, 65535], ['i4', 4294967295n, -1], ['u4', -1, -1], ['i8', -1, -1n], ['i', 4294967295n, {nativeInt: 32, value: -1}], ['r4', 16777217, float(16777216, 'r4')], ['r8', 16777217, float(16777217)]]) assert.deepEqual(indirect(input, prefix + '.' + suffix), expected);
   }
   const ref = Object.freeze({h: 1, g: 1});
   assert.equal(indirect(ref, 'ldind.ref'), ref);

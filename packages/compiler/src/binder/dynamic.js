@@ -20,6 +20,7 @@
  *
  * Nothing here runs: the runtime has no late binder (see `dynamicOperation` in codegen/semantic/unsupported.js).
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { TypeKind, RefKind, DynamicTypeSymbol, ArrayTypeSymbol } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { isRefLike } from './ref-struct.js';
@@ -58,7 +59,7 @@ export const DynamicBinding = Base =>
       const errors = captured.filter(d => this.d.isError(d.code)),
         isRegistryGap = node.kind === 'Bad' && !errors.length && this.incomplete && !flags[0];
       if (isRegistryGap) [this.incomplete, this.d.incomplete] = flags;
-      const isLateBound = isRegistryGap || errors.every(d => d.code === 'CS0121');
+      const isLateBound = isRegistryGap || errors.every(d => d.code === DiagnosticId.CS0121);
       for (const d of captured) if (!isLateBound || !this.d.isError(d.code)) this.report(d.node, d.code, d.args);
       return { node, isLateBound };
     }
@@ -75,14 +76,14 @@ export const DynamicBinding = Base =>
           continue;
         }
         const node = a.argumentSyntax?.expression ?? a.syntax;
-        if (a.refKind === RefKind.In) fail(node, 'CS8364');
-        else if (a.kind === 'DeclarationExpression' && !a.type) fail(node.designation ?? node, 'CS8197', [a.local?.name ?? '']);
-        else if (a.kind === 'Discard') fail(node, 'CS8183');
-        else if (a.form === 'lambda') fail(node, 'CS1977');
-        else if (a.kind === 'MethodGroup') fail(node, 'CS1976');
-        else if (a.literal === 'default') fail(node, 'CS8716');
+        if (a.refKind === RefKind.In) fail(node, DiagnosticId.CS8364);
+        else if (a.kind === 'DeclarationExpression' && !a.type) fail(node.designation ?? node, DiagnosticId.CS8197, [a.local?.name ?? '']);
+        else if (a.kind === 'Discard') fail(node, DiagnosticId.CS8183);
+        else if (a.form === 'lambda') fail(node, DiagnosticId.CS1977);
+        else if (a.kind === 'MethodGroup') fail(node, DiagnosticId.CS1976);
+        else if (a.literal === 'default') fail(node, DiagnosticId.CS8716);
         else if (a.type && (a.type.specialType === 'System_Void' || a.type.typeKind === TypeKind.Pointer || isRefLike(a.type)))
-          fail(node, 'CS1978', [this.display(a.type)]);
+          fail(node, DiagnosticId.CS1978, [this.display(a.type)]);
       }
       return isValid;
     }
@@ -94,7 +95,7 @@ export const DynamicBinding = Base =>
     instanceMember(left, type, name, nameSyntax, syntax, typeArguments, options) {
       if (!isDynamic(type)) return super.instanceMember(left, type, name, nameSyntax, syntax, typeArguments, options);
       if (typeArguments && !options.invoked) {
-        this.report(nameSyntax, 'CS0307', [name, 'property']);
+        this.report(nameSyntax, DiagnosticId.CS0307, [name, 'property']);
         return this.bad(syntax);
       }
       return this.dynamicNode('DynamicMemberAccess', syntax, { receiver: left, name, typeArguments: typeArguments ?? null });
@@ -125,15 +126,15 @@ export const DynamicBinding = Base =>
       // An extension method is found through the static type of its receiver, which a late-bound call does not have.
       const isExtension = node.isExtension || (node.kind === 'Bad' && !group.methods.length && this.extensionScopesOf(group).length);
       if (isExtension && group.receiver && !group.viaType) {
-        this.report(syntax, 'CS1973', [this.display(group.receiver.type), group.name]);
+        this.report(syntax, DiagnosticId.CS1973, [this.display(group.receiver.type), group.name]);
         return this.bad(syntax, { args: argumentList(args) });
       }
       if (node.kind === 'Bad' && group.methods.length && group.methods.every(isSource)) {
         const r = this.d.overloads.resolve(group.methods, args, { typeArguments: group.typeArguments, name: group.name });
-        if (!r.succeeded && r.error.code !== 'CS0121') return node;
+        if (!r.succeeded && r.error.code !== DiagnosticId.CS0121) return node;
       }
       if (group.receiver?.kind === 'Base') {
-        this.report(syntax, 'CS1971', [group.name]);
+        this.report(syntax, DiagnosticId.CS1971, [group.name]);
         return this.bad(syntax, { args: argumentList(args) });
       }
       if (!this.checkDynamicArguments(args)) return this.bad(syntax, { args: argumentList(args) });
@@ -164,7 +165,7 @@ export const DynamicBinding = Base =>
     }
     create(type, args, syntax, typeNode, initializer) {
       if (isDynamic(type)) {
-        this.report(typeNode, 'CS8386');
+        this.report(typeNode, DiagnosticId.CS8386);
         return this.bad(syntax);
       }
       if (!hasDynamicArgument(args) || type.typeKind === TypeKind.Delegate) return super.create(type, args, syntax, typeNode, initializer);
@@ -187,12 +188,12 @@ export const DynamicBinding = Base =>
 
     // ---- the type itself ----
     typeTest(syntax, operand, type) {
-      if (isDynamic(type)) this.report(syntax, 'CS1981', ['is', 'dynamic', 'Object']);
+      if (isDynamic(type)) this.report(syntax, DiagnosticId.CS1981, ['is', 'dynamic', 'Object']);
       return super.typeTest(syntax, operand, type);
     }
     expression(syntax, options = {}) {
       const node = super.expression(syntax, options);
-      if (syntax.kind === 'TypeOfExpression' && isDynamic(node.operandType)) this.report(syntax, 'CS1962');
+      if (syntax.kind === 'TypeOfExpression' && isDynamic(node.operandType)) this.report(syntax, DiagnosticId.CS1962);
       return node;
     }
   };

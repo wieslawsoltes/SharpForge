@@ -7,11 +7,13 @@
  * location that is not a tuple element. A location is `{locals, effects, read(), write(value)}`: `effects` evaluate
  * the receivers and indices once, `read()` and `write(value)` then use them any number of times.
  */
-import { tupleElementIndex } from '../../binder/tuples.js';
+import { tupleElementIndex, isWideTuple, maxTupleElements } from '../../binder/tuples.js';
 import { n } from '../../codegen/semantic/node-factory.js';
 
 /** True when a bound expression is an element of a tuple (`t.Item1`, `t.name`). */
-export const isTupleElement = node => node?.kind === 'FieldAccess' && tupleElementIndex(node.field) >= 0;
+/** `tuple.Rest` of a tuple of more than seven elements: the tuple of the elements from the eighth on. */
+export const isTupleRest = node => node?.kind === 'FieldAccess' && node.field?.name === 'Rest' && isWideTuple(node.receiver?.type);
+export const isTupleElement = node => node?.kind === 'FieldAccess' && (tupleElementIndex(node.field) >= 0 || isTupleRest(node));
 
 /** Class mixin: locations. */
 export const Locations = Base =>
@@ -28,6 +30,7 @@ export const Locations = Base =>
             write: value => n.assign(this.expression(node), value),
           };
         case 'FieldAccess':
+          if (isTupleRest(node)) return this.restLocation(node);
           return isTupleElement(node) ? this.elementLocation(node) : this.fieldLocation(node);
         case 'ArrayAccess':
           return this.arrayElementLocation(node);
@@ -70,6 +73,22 @@ export const Locations = Base =>
         read: () => n.field(tuple(), info.fields[index]),
         write: value => owner.write(tuples.withElement(info, tuple, index, value)),
       };
+    }
+    /** `Rest` of a long tuple held in another location: a read builds it, a store replaces the elements it stands for. */
+    restLocation(node) {
+      const owner = this.location(node.receiver),
+        tuples = this.g.tuples,
+        info = tuples.classOf(node.receiver.type, node.syntax),
+        rest = tuples.classOf(node.type, node.syntax),
+        tuple = () => this.tupleOrDefault(owner.read(), info),
+        head = info.fields.slice(0, maxTupleElements),
+        tail = info.fields.slice(maxTupleElements);
+      const write = value => {
+        const stored = this.temp(rest.record.name, 'rest'),
+          elements = [...head.map(field => n.field(tuple(), field)), ...rest.fields.map(field => n.field(n.local(stored), field))];
+        return n.sequence([stored], [n.assign(n.local(stored), value)], owner.write(tuples.create(info, elements)));
+      };
+      return { locals: owner.locals, effects: owner.effects, read: () => tuples.create(rest, tail.map(field => n.field(tuple(), field))), write };
     }
     /** `location = value` as an expression whose value is the stored value. */
     storeInto(location, value) {

@@ -2,6 +2,7 @@
  * Local declarations: explicit and `var` typing, const, ref and scoped locals, using declarations and the
  * disposability check of `using` resources.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { SymbolKind, TypeKind, RefKind, ErrorTypeSymbol, ArrayTypeSymbol } from '../../symbols/types.js';
 import { LocalDeclarationKind } from '../../symbols/members.js';
 import { implementsInterface } from '../../symbols/substitution.js';
@@ -53,9 +54,9 @@ export const DeclarationBinding = Base =>
         isVar = !!bound.isVar,
         declaredType = isVar ? null : bound.type,
         results = [];
-      if (isVar && syntax.variables.length > 1) this.report(syntax, 'CS0819');
-      if (isVar && isConst) this.report(syntax, 'CS0822');
-      if (declaredType && declaredType.isStatic) this.report(typeSyntax, 'CS0723', [this.display(declaredType)]);
+      if (isVar && syntax.variables.length > 1) this.report(syntax, DiagnosticId.CS0819);
+      if (isVar && isConst) this.report(syntax, DiagnosticId.CS0822);
+      if (declaredType && declaredType.isStatic) this.report(typeSyntax, DiagnosticId.CS0723, [this.display(declaredType)]);
       if (declaredType && !declaredType.isErrorType()) {
         const bad = checkAsyncOrIteratorUse(
           declaredType,
@@ -90,13 +91,13 @@ export const DeclarationBinding = Base =>
           // `var x = x;` cannot see x: the initializer is bound before the local enters scope.
           this.pending.at(-1).add(name);
           if (!init) {
-            this.report(v.identifier, 'CS0818');
+            this.report(v.identifier, DiagnosticId.CS0818);
             this.declare(name, local, v.identifier);
             results.push({ local, value: null });
             continue;
           }
           if (init.kind === 'ArrayInitializerExpression') {
-            this.report(v, 'CS0820');
+            this.report(v, DiagnosticId.CS0820);
             // The local counts as assigned: Roslyn reports the initializer, not an unused variable.
             local.writes++;
             this.declare(name, local, v.identifier);
@@ -119,7 +120,7 @@ export const DeclarationBinding = Base =>
                   elements: this.arrayInitializer(init, declaredType.elementType, declaredType.rank),
                 });
               else {
-                if (!declaredType.isErrorType()) this.report(init, 'CS0622');
+                if (!declaredType.isErrorType()) this.report(init, DiagnosticId.CS0622);
                 value = this.bad(init);
               }
             } else {
@@ -127,13 +128,13 @@ export const DeclarationBinding = Base =>
               if (isRef) {
                 value = this.markAliased(raw);
                 if (!raw.hasErrors && raw.type && !raw.type.equals(declaredType) && !declaredType.isErrorType())
-                  this.report(init, 'CS8173', [this.display(declaredType)]);
+                  this.report(init, DiagnosticId.CS8173, [this.display(declaredType)]);
               } else {
                 value = this.convert(raw, declaredType, init);
                 if (raw.form === 'lambda' && !value.hasErrors) this.finishLambda(raw, declaredType);
               }
             }
-          } else if (isConst) this.report(v.identifier, 'CS0145');
+          } else if (isConst) this.report(v.identifier, DiagnosticId.CS0145);
         }
         if (init || isRef) {
           const r = checkRefLocalInitializer(
@@ -142,7 +143,7 @@ export const DeclarationBinding = Base =>
             value && !value.hasErrors ? value : null,
             this.variableContext,
           );
-          if (r && !value?.hasErrors) this.report(r.code === 'CS8174' ? v.identifier : (init ?? v), r.code, r.args);
+          if (r && !value?.hasErrors) this.report(r.code === DiagnosticId.CS8174 ? v.identifier : (init ?? v), r.code, r.args);
           else if (isRef && value && !value.hasErrors) {
             const w = checkRefWritability(value, isRefReadonly, this.variableContext);
             if (w) this.report(init, w.code, w.args);
@@ -170,9 +171,9 @@ export const DeclarationBinding = Base =>
           // A const of a reference type other than string can only be null (the rule fields have in semantic/constants.js).
           const onlyNull = t?.isReferenceType === true && t.specialType !== 'System_String' && !t.isErrorType(),
             written = value.constantValue ?? value.operand?.constantValue ?? null;
-          if (cannotBeConst) this.report(typeSyntax, 'CS0283', [this.display(t)]);
-          else if (onlyNull && written && !written.isNull) this.report(init, 'CS0134', [name, this.display(t)]);
-          else if (!value.constantValue) this.report(init, 'CS0133', [name]);
+          if (cannotBeConst) this.report(typeSyntax, DiagnosticId.CS0283, [this.display(t)]);
+          else if (onlyNull && written && !written.isNull) this.report(init, DiagnosticId.CS0134, [name, this.display(t)]);
+          else if (!value.constantValue) this.report(init, DiagnosticId.CS0133, [name]);
           if (value.constantValue) {
             local.constantValueObject = value.constantValue;
             local.hasConstantValue = true;
@@ -189,11 +190,11 @@ export const DeclarationBinding = Base =>
      */
     implicitLocalType(value, init, declarator) {
       if (value.noNaturalType) {
-        this.report(init, 'CS0173', [this.operandDisplay(value.noNaturalType.left), this.operandDisplay(value.noNaturalType.right)]);
+        this.report(init, DiagnosticId.CS0173, [this.operandDisplay(value.noNaturalType.left), this.operandDisplay(value.noNaturalType.right)]);
         return { value: this.bad(init), type: null };
       }
       if (value.isTargetTypedSwitch) {
-        this.report(init.switchKeyword ?? init, 'CS8506');
+        this.report(init.switchKeyword ?? init, DiagnosticId.CS8506);
         return { value: this.bad(init), type: null };
       }
       if (value.form === 'lambda' || value.kind === 'MethodGroup') return this.inferredDelegateLocal(value, init);
@@ -203,7 +204,7 @@ export const DeclarationBinding = Base =>
         return { value, type: null };
       }
       if (value.type.specialType === 'System_Void') {
-        this.report(declarator, 'CS0815', ['void']);
+        this.report(declarator, DiagnosticId.CS0815, ['void']);
         return { value, type: null };
       }
       return { value, type: value.type };
@@ -213,7 +214,7 @@ export const DeclarationBinding = Base =>
       if (!this.d.gate(this.c.uri, init, 'inferredDelegateType')) return { value, type: null };
       const natural = this.naturalFunctionType(value);
       if (!natural) {
-        this.report(init, 'CS8917');
+        this.report(init, DiagnosticId.CS8917);
         return { value, type: null };
       }
       const converted = this.convert(value, natural, init);
@@ -243,7 +244,7 @@ export const DeclarationBinding = Base =>
         this.incomplete = this.d.incomplete = true;
         return;
       }
-      const syncCode = isAsyncDisposable(type, this.core) ? 'CS8418' : 'CS1674';
-      this.report(node, isAwait ? 'CS8410' : syncCode, [this.display(type)]);
+      const syncCode = isAsyncDisposable(type, this.core) ? DiagnosticId.CS8418 : DiagnosticId.CS1674;
+      this.report(node, isAwait ? DiagnosticId.CS8410 : syncCode, [this.display(type)]);
     }
   };

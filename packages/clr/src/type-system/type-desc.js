@@ -23,6 +23,7 @@ export class TypeDesc {
   get loadContext() { return this.#state.context ?? this.assembly.loadContext; }
   get metadataToken() { return this.#state.token; }
   get declaringType() { return this.#state.declaringType; }
+  get declaringMethod() { return this.#state.declaringMethod ?? null; }
   get baseType() { return this.#state.baseType ?? null; }
   get interfaces() { return this.#state.interfaces ?? empty; }
   get underlyingType() { return this.#state.underlyingType ?? null; }
@@ -33,10 +34,14 @@ export class TypeDesc {
   get signature() { return this.#state.signature ?? null; }
   get genericDefinition() { return this.#state.genericDefinition ?? null; }
   get genericArguments() { return this.#state.genericArguments ?? empty; }
-  get genericParameters() { return this.#state.genericParameters ?? empty; }
+  get genericParameters() {
+    return this.#state.genericParameters ??= (this.metadataToken >>> 24 === 2 ? this.module.genericParameters(this.metadataToken) : empty);
+  }
   get genericParameterPosition() { return this.#state.position ?? -1; }
   get genericParameterOwner() { return this.#state.owner ?? null; }
-  toString() { return this.fullName; }
+  get genericParameterAttributes() { return this.#state.genericParameterAttributes ?? 0; }
+  get genericParameterConstraintTokens() { return this.#state.constraintTokens ?? empty; }
+  toString() { return this.fullName ?? this.name; }
   static complete(type, graph, key) {
     if (key !== creationKey) throw new TypeError('Type graphs are completed by their context type service');
     Object.assign(type.#state, graph);
