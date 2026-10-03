@@ -14,6 +14,7 @@ import { PatternTranslation } from './translate-patterns.js';
 import { StatementTranslation } from './translate-statements.js';
 import { JumpTranslation } from './translate-jumps.js';
 import { RuntimeGapTranslation } from './runtime-gaps.js';
+import { ArrayTranslation } from '../../lowering/arrays.js';
 import { AwaitTranslation } from '../../lowering/async/async-methods.js';
 import { AsyncStreamTranslation } from '../../lowering/async/async-streams.js';
 import { ByReferenceTranslation } from '../../lowering/by-reference.js';
@@ -211,6 +212,7 @@ const families = [
   StatementTranslation,
   JumpTranslation,
   RuntimeGapTranslation,
+  ArrayTranslation,
   AwaitTranslation,
   AsyncStreamTranslation,
   ByReferenceTranslation,

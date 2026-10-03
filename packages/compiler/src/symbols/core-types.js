@@ -16,6 +16,8 @@ import { declareExpressionTreeTypes } from './expression-tree-types.js';
 import { declareCoreTypeRelations } from './core-type-relations.js';
 import { declareExceptionTypes } from './exception-types.js';
 import { declareAttributeTypes } from './attribute-types.js';
+import { declareArrayMembers } from './array-members.js';
+import { declareComparisonInterfaces } from './comparison-interfaces.js';
 
 const keywordNames = [
   'object',
@@ -84,6 +86,8 @@ export class CoreTypes {
     this.type = bridge.coreType('System_Type');
     this.attribute = bridge.coreType('System_Attribute');
     declareAttributeTypes(this);
+    declareArrayMembers(this);
+    Object.assign(this, declareComparisonInterfaces(this));
   }
   /**
    * Members every C# program may use but the closed registry does not list: the System.Object surface (so user types
