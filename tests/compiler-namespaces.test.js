@@ -1,3 +1,4 @@
+import {fileURLToPath} from 'node:url';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,readdirSync} from 'node:fs';
@@ -59,6 +60,6 @@ test('A02-T16 source types are symbols in the merged global namespace',()=>{
   assert.equal(compilation.findType('Item',null),null,'ambiguous from the global scope');assert.equal(compilation.findType('Item',compilation.types[1]).fullName,'B.Item','resolved from inside namespace B');assert.deepEqual(compilation.lookupType('Item').ambiguous.map(t=>t.fullName),['A.Item','B.Item']);
 });
 test('A02-T16 no compiler module reports SF2011 any more',()=>{
-  const root=new URL('../packages/compiler/src/',import.meta.url).pathname,walk=dir=>readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(join(dir,e.name)):e.name.endsWith('.js')?[join(dir,e.name)]:[]);
-  for(const file of walk(root))if(!file.endsWith('diagnostics/codes.js'))assert(!readFileSync(file,'utf8').includes('SF2011'),file);
+  const root=fileURLToPath(new URL('../packages/compiler/src/',import.meta.url)),walk=dir=>readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(join(dir,e.name)):e.name.endsWith('.js')?[join(dir,e.name)]:[]);
+  for(const file of walk(root))if(!file.replaceAll('\\','/').endsWith('diagnostics/codes.js'))assert(!readFileSync(file,'utf8').includes('SF2011'),file);
 });

@@ -17,6 +17,7 @@ import { formatMessage, isFeatureGateCode } from './diagnostics/codes.js';
 import { suspiciousUsings, usingDiagnosticClassifier } from './binder/using-check.js';
 import { featureDiagnosticCodes, newestLanguageVersion } from './binder/feature-check.js';
 import { generateFromSemanticAnalysis, isEntryPointCandidate } from './codegen/semantic/generator.js';
+import { needsSemanticRules, semanticRuleCodes } from './semantic/profile-rechecks.js';
 
 /** Profile diagnostics that mark a construct the execution profile cannot run (as opposed to option and API errors). */
 export const isProfileConstructDiagnostic = code =>
@@ -104,11 +105,14 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   const legacy = compilation.diagnostics,
     files = compilation.inputFiles,
     hasReferences = !!compilation.options.references?.length;
-  const profile = legacy.filter(d => isProfileConstructDiagnostic(d.code));
+  // The syntax adapter's stand-in errors (an `init` accessor) mark a construct outside the profile like the SF codes do,
+  // but they are not diagnostics of the program: they select the analysis and are never reported with its results.
+  const outside = legacy.filter(d => isProfileConstructDiagnostic(d.code) || adapterPseudo(d)),
+    profile = outside.filter(d => !adapterPseudo(d));
   // The semantic analysis is consulted when the execution pipeline could not compile the program: it names constructs
   // outside the profile, or its string-typed binder rejected something (possibly valid C# it does not understand).
   // A program the pipeline compiles is analysed only for its using directives, and only when one of them looks wrong.
-  const compiled = !profile.length && !legacy.some(d => d.severity === 'error');
+  const compiled = !outside.length && !legacy.some(d => d.severity === 'error');
   if (!files.every(f => f.syntax)) return null;
   // ... and for the language-version gates of features only binding recognises, when a lower version is selected.
   const options = compilation.options,
@@ -118,9 +122,11 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   // would say, so a program that has only those is not analysed at all: this is the common case of a file without Main.
   // Nor is a program without an entry point: nothing can be generated for it, so the pipeline's diagnostics stand.
   const nothingToGenerate = onlyStandingErrors(legacy, files) || hasNoEntryPoint(legacy);
-  if (!compiled && !gatesVersion && !profile.length && !hasReferences && nothingToGenerate) return null;
-  const usings = compiled && !gatesVersion ? suspiciousUsings(compilation) : null;
-  if (compiled && !gatesVersion && !usings) return null;
+  if (!compiled && !gatesVersion && !outside.length && !hasReferences && nothingToGenerate) return null;
+  const usings = compiled && !gatesVersion ? suspiciousUsings(compilation) : null,
+    // ... and for the few language rules the pipeline does not check on constructs it compiles.
+    rechecked = compiled && needsSemanticRules(files);
+  if (compiled && !gatesVersion && !usings && !rechecked) return null;
   let result;
   try {
     const analysis = new SemanticAnalysis(files, {
@@ -128,7 +134,7 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
       nullableContext: compilation.typedOptions?.nullableContext ?? compilation.options.nullableContext,
     });
     // Wrong using directives of a program that compiles are diagnosed from the directives alone.
-    result = usings === 'directives' ? analysis.runUsings() : analysis.run();
+    result = usings === 'directives' && !rechecked ? analysis.runUsings() : analysis.run();
   } catch (error) {
     // An internal failure of the analysis must not hide the profile diagnostics the pipeline already has, and it must
     // not pass silently either: it is reported as a diagnostic of its own.
@@ -161,7 +167,8 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   const unchanged = () => (featureGates.length ? { diagnostics: merge(legacy, featureGates), semantic: result } : null);
   if (compiled) {
     // The image stands; the analysis only adds what it found in the using directives and alias declarations.
-    const extra = [...semantic.filter(d => isUsingDiagnostic(d) || d.code === 'CS0576'), ...featureGates];
+    const taken = d => isUsingDiagnostic(d) || d.code === 'CS0576' || (rechecked && semanticRuleCodes.has(d.code));
+    const extra = [...semantic.filter(taken), ...featureGates];
     return extra.length ? { diagnostics: merge(legacy, extra), semantic: result } : null;
   }
   if (errors.length) {
@@ -170,7 +177,7 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
     // ... or the program has async functions: the pipeline binds those after a source-level rewrite into a kickoff and
     // a body, which moves and renames what its binder reports.
     const rewritten = compilation.methods.some(m => m.node?.asyncRole) || legacy.some(d => asyncRewriteCodes.has(d.code));
-    if (result.incomplete && !profile.length && !hasReferences && !rewritten && !errors.some(isNamespaceDiagnostic)) return unchanged();
+    if (result.incomplete && !outside.length && !hasReferences && !rewritten && !errors.some(isNamespaceDiagnostic)) return unchanged();
     // Not valid C#: the semantic diagnostics replace the errors the string-typed binder derived from the constructs it does not
     // know. The profile diagnostics stay (the program still names constructs the profile lacks), except a literal-range one
     // that sits on the very literal a C# error is reported for (one diagnostic per literal).
@@ -186,7 +193,10 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   // analysis says; if one of them is an error there is nothing to generate.
   const standing = legacy.filter(d => (owned(d) && !(d.code === 'CS5001' && hasEntry)) || isFeatureGateCode(d.code)),
     blocked = standing.some(d => d.severity === 'error');
-  if (!profile.length && blocked) return unchanged();
+  if (!profile.length && blocked) {
+    // Only a stand-in error named a construct outside the profile: the standing errors are the whole story.
+    return outside.length ? { diagnostics: merge(standing, semantic), semantic: result } : unchanged();
+  }
   // Outside the execution profile: generate code from the semantic bound trees (codegen/semantic). What the profile's
   // own binder said about the constructs it does not know no longer applies.
   const generated = blocked ? null : generateFromSemanticAnalysis(result, files, compilation.options);

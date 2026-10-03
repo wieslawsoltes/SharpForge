@@ -46,8 +46,8 @@ export const UnusedSymbolWarnings = Base =>
           if (!isPrivate && !isInternal) continue;
           if (!f.reads && !f.writes) {
             if (isPrivate) this.reportAt(f, 'CS0169', [f.toDisplayString()]);
-            else this.reportAt(f, 'CS0649', [f.toDisplayString(), defaultText(f.type)]);
-          } else if (!f.writes) this.reportAt(f, 'CS0649', [f.toDisplayString(), defaultText(f.type)]);
+            else if (!f.isRequired) this.reportAt(f, 'CS0649', [f.toDisplayString(), defaultText(f.type)]);
+          } else if (!f.writes && !f.isRequired) this.reportAt(f, 'CS0649', [f.toDisplayString(), defaultText(f.type)]);
           else if (!f.reads && isPrivate && !f.nonConstantWrite) this.reportAt(f, 'CS0414', [f.toDisplayString()]);
         }
       }

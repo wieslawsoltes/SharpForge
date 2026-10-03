@@ -8,6 +8,10 @@ import { MethodKind } from '../../symbols/members.js';
 import { n } from './node-factory.js';
 
 const primitiveToString = new Set(['int', 'double', 'bool', 'string']);
+const derivesFrom = (type, ancestor) => {
+  for (let current = type.baseType; current; current = current.baseType) if (current.equals(ancestor)) return true;
+  return false;
+};
 
 /** Class mixin: calls, creation, properties, indexers, events. */
 export const CallTranslation = Base =>
@@ -58,6 +62,8 @@ export const CallTranslation = Base =>
       return n.literal(typeof raw === 'bigint' ? Number(raw) : raw, type);
     }
     exprCall(node) {
+      // An omitted call to a [Conditional] method evaluates nothing, not even its arguments.
+      if (node.isOmitted) return n.nullLiteral('object');
       const method = node.method,
         definition = method.originalDefinition ?? method;
       if (method.methodKind === MethodKind.DelegateInvoke || node.isDelegateInvoke) {
@@ -132,8 +138,13 @@ export const CallTranslation = Base =>
       return this.withInitializers(node, creation);
     }
     frameworkCreation(node) {
+      if (node.type.specialType === 'System_Object')
+        return this.unsupported("creating 'object' (the framework registry has no System.Object constructor)", node.syntax);
       const ctor = node.constructor,
-        name = this.imageType(node.type, node.syntax);
+        exception = this.g.analysis.core.exception;
+      if (!node.type.equals(exception) && derivesFrom(node.type, exception))
+        return this.unsupported(`exception class '${node.type.toDisplayString()}' (the runtime creates System.Exception only)`, node.syntax);
+      const name = this.imageType(node.type, node.syntax);
       if (!ctor || typeof ctor !== 'object' || !(ctor.contract || ctor.builtin))
         return this.unsupported(`creating '${node.type.toDisplayString()}' (constructor not in the framework registry)`, node.syntax);
       this.checkFrameworkParameters(ctor, node.syntax);
