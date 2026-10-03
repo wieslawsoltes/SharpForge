@@ -19,7 +19,7 @@
     "files": [
       {
         "uri": "Program.cs",
-        "text": "class Lease : IDisposable\n{\n    public string Name { get; }\n    public Lease(string name) { Name = name; Console.WriteLine(\"acquire \" + name); }\n    public void Dispose() { Console.WriteLine(\"dispose \" + Name); }\n}\nint Work()\n{\n    using var outer = new Lease(\"outer\");\n    using (var inner = new Lease(\"inner\"))\n    {\n        Console.WriteLine(\"body\");\n        return 42;\n    }\n}\nConsole.WriteLine(Work());\n"
+        "text": "int Work()\n{\n    using var outer = new Lease(\"outer\");\n    using (var inner = new Lease(\"inner\"))\n    {\n        Console.WriteLine(\"body\");\n        return 42;\n    }\n}\nConsole.WriteLine(Work());\nclass Lease : IDisposable\n{\n    public string Name { get; }\n    public Lease(string name) { Name = name; Console.WriteLine(\"acquire \" + name); }\n    public void Dispose() { Console.WriteLine(\"dispose \" + Name); }\n}\n"
       }
     ]
   },
@@ -31,7 +31,7 @@
     "files": [
       {
         "uri": "Program.cs",
-        "text": "class Lease : IDisposable\n{\n    public string Name { get; }\n    public Lease(string name) { Name = name; Console.WriteLine(\"acquire \" + name); }\n    public void Dispose() { Console.WriteLine(\"dispose \" + Name); }\n}\nLease Fail() { throw new Exception(\"acquisition failed\"); }\ntry\n{\n    using Lease outer = new Lease(\"outer\"), inner = Fail();\n}\ncatch (Exception error) { Console.WriteLine(error.Message); }\nusing (Lease missing = null) { Console.WriteLine(\"null skipped\"); }\n"
+        "text": "Lease Fail() { throw new Exception(\"acquisition failed\"); }\ntry\n{\n    using Lease outer = new Lease(\"outer\"), inner = Fail();\n}\ncatch (Exception error) { Console.WriteLine(error.Message); }\nusing (Lease missing = null) { Console.WriteLine(\"null skipped\"); }\nclass Lease : IDisposable\n{\n    public string Name { get; }\n    public Lease(string name) { Name = name; Console.WriteLine(\"acquire \" + name); }\n    public void Dispose() { Console.WriteLine(\"dispose \" + Name); }\n}\n"
       }
     ]
   },
@@ -55,7 +55,7 @@
     "files": [
       {
         "uri": "Program.cs",
-        "text": "class Lease : IDisposable\n{\n    public string Name { get; }\n    public Lease(string name) { Name = name; Console.WriteLine(\"acquire \" + name); }\n    public void Dispose() { Console.WriteLine(\"dispose \" + Name); }\n}\nint Select(int value)\n{\n    if (value > 0) { return 42; }\n    else { return 0; }\n}\nclass Printer { public static void Print(int value) { Console.WriteLine(value); } }\nint amount = 7;\nusing (var lease = new Lease(\"local\"))\n{\n    Printer.Print(Select(amount));\n}\nConsole.WriteLine(\"after\");\n"
+        "text": "int Select(int value)\n{\n    if (value > 0) { return 42; }\n    else { return 0; }\n}\nint amount = 7;\nusing (var lease = new Lease(\"local\"))\n{\n    Printer.Print(Select(amount));\n}\nConsole.WriteLine(\"after\");\nclass Lease : IDisposable\n{\n    public string Name { get; }\n    public Lease(string name) { Name = name; Console.WriteLine(\"acquire \" + name); }\n    public void Dispose() { Console.WriteLine(\"dispose \" + Name); }\n}\nclass Printer { public static void Print(int value) { Console.WriteLine(value); } }\n"
       }
     ]
   },
@@ -107,7 +107,7 @@
     "files": [
       {
         "uri": "Program.cs",
-        "text": "class Cell { public int Value; }\nvar cell = new Cell();\nint[] values = new int[2];\ntry\n{\n    cell.Value = 40;\n    values[0] = cell.Value;\n    GC.Collect();\n    values[1] = values[0] + 2;\n    Console.WriteLine(values[1]);\n}\nfinally { Console.WriteLine(\"cleanup\"); }\n"
+        "text": "var cell = new Cell();\nint[] values = new int[2];\ntry\n{\n    cell.Value = 40;\n    values[0] = cell.Value;\n    GC.Collect();\n    values[1] = values[0] + 2;\n    Console.WriteLine(values[1]);\n}\nfinally { Console.WriteLine(\"cleanup\"); }\nclass Cell { public int Value; }\n"
       }
     ]
   }

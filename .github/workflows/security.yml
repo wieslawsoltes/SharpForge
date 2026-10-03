@@ -35,14 +35,17 @@ jobs:
           node scripts/conformance/supply/verify-vendor.js
           node scripts/conformance/supply/license-gate.js
           node scripts/conformance/supply/secret-scan.js
+          node scripts/conformance/static/check-imports.js --output artifacts/security/static-imports.json
       - name: Positive, negative, bounds and cancellation regressions
         run: |
-          node --test --test-concurrency=1 tests/conformance/supply/*.test.js
+          node --test --test-concurrency=1 tests/conformance/supply/*.test.js tests/conformance/security/*.test.js
           python -m unittest discover -s tests/conformance/supply -p 'test_*.py'
       - name: Build actual payloads and SBOM
         run: |
           npm run build
           npm run standalone
+          node scripts/conformance/security/header-probe.js dist/index.html --output artifacts/security/csp-browser.json
+          node scripts/conformance/security/header-probe.js artifacts/SharpForge-standalone.html --standalone --output artifacts/security/csp-standalone.json
           npm run test:packages
           node scripts/conformance/repro/package-release.js
           node scripts/conformance/supply/sbom.js

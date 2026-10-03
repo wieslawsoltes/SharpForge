@@ -39,8 +39,8 @@ test('A02-T29 the differential and binder fixture corpora compile to byte-identi
   for(const [id,source,options] of boundFixtures)verify([{uri:'Program.cs',text:source}],options??{});
 });
 test('A02-T29 multi-file and language-version programs keep their images',()=>{
-  verify([{uri:'A.cs',text:'partial class C{public int X=1;public int Sum(){return X+Y;}}'},{uri:'B.cs',text:'partial class C{public int Y=2;} var c=new C();Console.WriteLine(c.Sum());'}]);
-  for(const langVersion of ['7','9','12','14','preview'])verify('using System.Collections.Generic;class B{public int V;}B b=new();List<int> l=[1,2];int[] a=[..l,3];b?.V=a.Length;Console.WriteLine(b.V);',{langVersion});
+  verify([{uri:'A.cs',text:'partial class C{public int X=1;public int Sum(){return X+Y;}}'},{uri:'B.cs',text:'var c=new C(); Console.WriteLine(c.Sum()); partial class C{public int Y=2;}'}]);
+  for(const langVersion of ['7','9','12','14','preview'])verify('using System.Collections.Generic;B b=new();List<int> l=[1,2];int[] a=[..l,3];b?.V=a.Length;Console.WriteLine(b.V);class B{public int V;}',{langVersion});
   verify('using System.Threading.Tasks;class P{static int total;static async Task<int> Add(int a){await Task.Delay(1);total+=a;return total;}static async Task Main(){Console.WriteLine(await Add(2)+await Add(3));}}');
 });
 test('integrated type intrinsics and enum conversions preserve both pipelines and execution engines',()=>{
@@ -65,7 +65,7 @@ test('integrated type intrinsics and enum conversions preserve both pipelines an
   }
 });
 test('A02-T29 images from the bound pipeline run on the bytecode VM and, through CIL, on the CIL VM',()=>{
-  const source='using System.Collections.Generic;class Acc:IDisposable{public int Total;public void Add(int v){Total+=v;}public void Dispose(){Console.WriteLine($"disposed {Total}");}}var list=new List<int>{3,4};using(var acc=new Acc()){foreach(var v in list)acc.Add(v);int[] extra=[..list,5];foreach(int v in extra){if(v==4)continue;acc.Add(v);}Console.WriteLine(acc.Total switch{15=>"fifteen",_=>"other"});}';
+  const source='using System.Collections.Generic;var list=new List<int>{3,4};using(var acc=new Acc()){foreach(var v in list)acc.Add(v);int[] extra=[..list,5];foreach(int v in extra){if(v==4)continue;acc.Add(v);}Console.WriteLine(acc.Total switch{15=>"fifteen",_=>"other"});}class Acc:IDisposable{public int Total;public void Add(int v){Total+=v;}public void Dispose(){Console.WriteLine($"disposed {Total}");}}';
   const image=compile(source);assert.equal(image.success,true,JSON.stringify(image.diagnostics));const run=new VirtualMachine(image.image).run();assert.equal(run.state,'terminated',run.fault?.stack);assert.equal(run.output,'fifteen\ndisposed 15\n');
   const il=compileToIL(source);assert.equal(il.success,true);const cil=new CilVirtualMachine(il.assembly).run();assert.equal(cil.output,run.output);
 });
@@ -76,7 +76,7 @@ test('A02-T29 the emitter makes no semantic decisions and refuses unlowered tree
   assert.throws(()=>new IrEmitter(compilation,method).expr(new BoundInterpolatedString(null,{parts:[]})),/without being lowered/);
 });
 test('A02-T29 a compilation with errors binds and analyses every method but emits nothing',()=>{
-  const compilation=new Compilation([parse(new SourceText('class C{public int Ok(){return 1;}public int Bad(){return "x";}} Console.WriteLine(new C().Ok());','Program.cs'))],{}),result=compilation.build();
+  const compilation=new Compilation([parse(new SourceText('Console.WriteLine(new C().Ok()); class C{public int Ok(){return 1;}public int Bad(){return "x";}}','Program.cs'))],{}),result=compilation.build();
   assert.equal(result.success,false);assert.equal(result.image,null);assert.deepEqual(result.diagnostics.map(d=>d.code),['CS0029']);assert.equal(compilation.methods.every(m=>m.code===undefined),true);assert.equal(compilation.constants.length,0);assert.equal(compilation.sequencePoints.length,0);
   assert.equal(compilation.boundPipeline.units.filter(u=>u.body).length,3,'all bodies are bound for the semantic model');assert(result.symbols.some(s=>s.name==='Ok'));
 });
