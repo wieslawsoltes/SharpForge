@@ -4,17 +4,22 @@
  */
 import { SymbolKind } from '../../symbols/types.js';
 import { walk } from '../../bound/semantic-walker.js';
-import { yieldReturn, yieldBreak } from '../../lowering/iterators.js';
+import { yieldBreak } from '../../lowering/iterators.js';
+import { yieldReturn, openRegion, closeRegion } from '../../lowering/iterators/try-regions.js';
 import { n } from './node-factory.js';
 
-const containsYield = node => {
+/** True when a `yield return` of the enclosing iterator suspends inside `node`. */
+const suspendsInside = node => {
   let found = false;
   walk(node, child => {
-    if (child.kind === 'YieldReturn' || child.kind === 'YieldBreak') found = true;
-    return !found && child.kind !== 'Lambda';
+    if (child.kind === 'YieldReturn') found = true;
+    return !found && child.kind !== 'Lambda' && child.kind !== 'LocalFunction';
   });
   return found;
 };
+
+/** True for `IEnumerable<T>` and `IEnumerable`: a sequence is enumerated through a fresh enumerator. */
+const isEnumerableType = (type, core) => type.originalDefinition === core.ienumerableT || type === core.ienumerable;
 
 /** Class mixin: statements. */
 export const StatementTranslation = Base =>
@@ -130,26 +135,41 @@ export const StatementTranslation = Base =>
       const collection = node.collection,
         type = collection.type;
       const iterator = type && !type.elementType ? this.g.iterators.infoOf(this.imageType(type, node.syntax)) : null;
-      if (iterator) return this.forEachIterator(node, iterator);
+      if (iterator) {
+        const source = () => this.expression(collection),
+          fresh = () => n.call(iterator.getEnumerator, null, [source()]);
+        return this.forEachIterator(node, iterator, isEnumerableType(type, this.g.analysis.core) ? fresh : source);
+      }
       if (type?.elementType && type.rank === 1) return this.frame.hoist ? this.forEachArrayHoisted(node) : this.forEachArray(node);
       return this.forEachEnumerator(node);
     }
     /** foreach over an IEnumerable<T> or IEnumerator<T> produced by an iterator: the shared class's dispatchers drive it. */
-    forEachIterator(node, info) {
+    forEachIterator(node, info, start) {
       return this.scoped(() => {
         const span = this.span(node.syntax),
-          enumerator = this.holder(info.record.name, 'enumerator'),
-          isEnumerable = node.collection.type.originalDefinition === this.g.analysis.core.ienumerableT,
-          source = this.expression(node.collection),
-          start = isEnumerable ? n.call(info.getEnumerator, null, [source]) : source;
-        const body = this.scoped(() => {
+          enumerator = this.holder(info.record.name, 'enumerator');
+        const body = () => this.scoped(() => {
           const elementType = this.imageType(node.local.type, node.syntax),
             current = n.field(enumerator.read(), info.currentField),
             value = current.legacyType === elementType ? current : n.convert(current, elementType);
           return [...this.declareVariable(node.local, value, span), this.embedded(node.body)];
         });
-        return [enumerator.init(start, span), n.whileStatement(n.call(info.moveNext, null, [enumerator.read()]), body, span)];
+        const loop = () => n.whileStatement(n.call(info.moveNext, null, [enumerator.read()]), body(), span),
+          dispose = () => n.block([n.expressionStatement(n.call(info.dispose, null, [enumerator.read()]))]);
+        return [enumerator.init(start(), span), this.protect(node.body, loop, dispose)];
       });
+    }
+    /**
+     * `try { body } finally { cleanup }` around lowered statements. In a state machine a `yield return` inside `source`
+     * suspends the method in the middle of the try block, which takes a try region instead of a plain statement.
+     * @param source the bound node the protected statements come from  @param body,cleanup build the lowered blocks
+     */
+    protect(source, body, cleanup) {
+      const hoist = this.frame.hoist;
+      if (!hoist || !suspendsInside(source)) return n.tryStatement(body(), [], cleanup());
+      const region = openRegion(hoist),
+        protectedBlock = body();
+      return closeRegion(hoist, region, protectedBlock, cleanup());
     }
     /** foreach over an array inside a state machine: the array and the index are hoisted, so a `yield` in the body keeps them. */
     forEachArrayHoisted(node) {
@@ -180,12 +200,12 @@ export const StatementTranslation = Base =>
     stmtYieldReturn(node) {
       const hoist = this.frame.hoist;
       if (!hoist) return this.unsupported('yield outside an iterator method', node.syntax);
-      return yieldReturn(hoist.info, hoist.self, hoist.labels, this.expression(node.expression), this.span(node.syntax));
+      return yieldReturn(hoist, this.expression(node.expression), this.span(node.syntax));
     }
     stmtYieldBreak(node) {
       const hoist = this.frame.hoist;
       if (!hoist) return this.unsupported('yield outside an iterator method', node.syntax);
-      return yieldBreak(hoist.info, hoist.self, this.span(node.syntax));
+      return yieldBreak(hoist, this.span(node.syntax));
     }
     /** foreach over an array: the emitter indexes it; a captured iteration variable gets a fresh cell per iteration. */
     forEachArray(node) {
@@ -232,6 +252,10 @@ export const StatementTranslation = Base =>
         current = enumeratorType.getMembers('Current').find(m => m.kind === SymbolKind.Property),
         dispose = member(enumeratorType, 'Dispose');
       if (!moveNext || !current) return this.unsupported('foreach over this enumerator type', node.syntax);
+      // A GetEnumerator that is itself an iterator returns the shared iterator class.
+      const iterator = this.g.iterators.infoOf(this.imageType(enumeratorType, node.syntax));
+      const start = () => this.memberCall(getEnumerator, this.expression(node.collection), [], node.syntax);
+      if (iterator) return this.forEachIterator(node, iterator, start);
       return this.scoped(() => {
         const span = this.span(node.syntax),
           holder = this.holder(this.imageType(enumeratorType, node.syntax), 'enumerator'),
@@ -239,19 +263,25 @@ export const StatementTranslation = Base =>
         const callOn = method => this.memberCall(method, read(), [], node.syntax);
         const element = this.propertyReference({ property: current, type: current.type, syntax: node.syntax, receiver: null });
         element.receiver = read();
-        const body = this.scoped(() => {
+        const body = () => this.scoped(() => {
           const elementType = this.imageType(node.local.type, node.syntax);
           const value = element.legacyType === elementType ? element : n.convert(element, elementType);
           return [...this.declareVariable(node.local, value, span), this.embedded(node.body)];
         });
-        const loop = n.whileStatement(callOn(moveNext), body, span);
+        const loop = () => n.whileStatement(callOn(moveNext), body(), span);
         const statements = [holder.init(this.memberCall(getEnumerator, this.expression(node.collection), [], node.syntax), span)];
-        if (dispose && this.frame.hoist && containsYield(node.body))
-          return this.unsupported('yield inside a foreach that disposes its enumerator', node.syntax);
-        if (dispose) statements.push(n.tryStatement(loop, [], n.block([n.expressionStatement(callOn(dispose))])));
-        else statements.push(loop);
+        if (dispose) statements.push(this.protect(node.body, loop, () => n.block([n.expressionStatement(callOn(dispose))])));
+        else statements.push(loop());
         return statements;
       });
+    }
+    /** `resource.Dispose()`: an iterator object is disposed through its class's dispatcher, anything else by its method. */
+    disposeCall(resource, syntax) {
+      const iterator = this.g.iterators.infoOf(this.imageType(resource.type, syntax));
+      if (iterator) return n.call(iterator.dispose, null, [resource.read()]);
+      const dispose = resource.type.getMembers('Dispose').find(m => m.kind === SymbolKind.Method && !m.parameters.length);
+      if (!dispose) return this.unsupported('using a resource without a Dispose method', syntax);
+      return this.memberCall(dispose, resource.read(), [], syntax);
     }
     /** A call of a parameterless-or-not instance method that is either a source method or a framework member. */
     memberCall(method, receiver, args, syntax) {
@@ -297,7 +327,6 @@ export const StatementTranslation = Base =>
       return this.statement(node.block);
     }
     stmtTry(node) {
-      if (this.frame.hoist && containsYield(node)) return this.unsupported('yield inside a try block', node.syntax);
       const catches = node.catches.map(clause => {
         if (clause.filter) return this.unsupported('exception filters', node.syntax);
         if (clause.type && clause.type.specialType !== 'System_Object' && this.imageType(clause.type, node.syntax) !== 'Exception')
@@ -313,16 +342,15 @@ export const StatementTranslation = Base =>
         body.syntax = this.span(clause.block.syntax);
         return { kind: 'CatchBlock', exceptionType: null, local: variable, body };
       });
-      return n.tryStatement(
-        this.statement(node.body),
-        catches,
-        node.finallyBlock ? this.statement(node.finallyBlock) : null,
-        this.span(node.syntax),
-      );
+      const span = this.span(node.syntax);
+      if (!catches.length && node.finallyBlock) {
+        const statement = this.protect(node.body, () => this.statement(node.body), () => this.statement(node.finallyBlock));
+        return statement.kind === 'TryStatement' ? { ...statement, syntax: span } : statement;
+      }
+      return n.tryStatement(this.statement(node.body), catches, node.finallyBlock ? this.statement(node.finallyBlock) : null, span);
     }
     /** `using (R r = e) body` is `{ R r = e; try body finally { if (r != null) r.Dispose(); } }`. */
     stmtUsing(node) {
-      if (this.frame.hoist && containsYield(node)) return this.unsupported('yield inside a using statement', node.syntax);
       return this.scoped(() => {
         const statements = [],
           resources = [];
@@ -333,19 +361,21 @@ export const StatementTranslation = Base =>
           }
         } else if (node.resources) {
           const value = this.expression(node.resources),
-            holder = this.addBlockLocal(this.temp(value.legacyType, 'using'));
-          statements.push(n.declare([[holder, value]], this.span(node.syntax)));
-          resources.push({ read: () => n.local(holder), type: node.resources.type });
+            holder = this.holder(value.legacyType, 'using');
+          statements.push(holder.init(value, this.span(node.syntax)));
+          resources.push({ read: holder.read, type: node.resources.type });
         }
-        let body = this.embedded(node.body);
-        for (const resource of resources.reverse()) {
-          const dispose = resource.type.getMembers('Dispose').find(m => m.kind === SymbolKind.Method && !m.parameters.length);
-          if (!dispose) return this.unsupported('using a resource without a Dispose method', node.syntax);
-          const call = n.expressionStatement(this.memberCall(dispose, resource.read(), [], node.syntax));
-          const guard = n.ifStatement(n.notEquals(resource.read(), n.nullLiteral(resource.read().legacyType)), call);
-          body = n.tryStatement(body, [], n.block([guard]));
-        }
-        return [...statements, body];
+        // The first resource is the outermost try statement, so the regions are built from the outside in.
+        const guarded = index => {
+          if (index === resources.length) return this.embedded(node.body);
+          const resource = resources[index];
+          const cleanup = () => {
+            const call = n.expressionStatement(this.disposeCall(resource, node.syntax));
+            return n.block([n.ifStatement(n.notEquals(resource.read(), n.nullLiteral(resource.read().legacyType)), call)]);
+          };
+          return this.protect(node.body, () => guarded(index + 1), cleanup);
+        };
+        return [...statements, guarded(0)];
       });
     }
   };
