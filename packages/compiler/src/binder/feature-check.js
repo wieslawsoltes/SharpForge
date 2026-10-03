@@ -7,7 +7,31 @@
  * inferred tuple names, target-typed conditional, unmanaged/Enum/Delegate constraints ... - are gated here with the
  * same catalog (`languageFeature(id)`), so syntax and semantic rows share one feature id, name and version.
  */
-import { languageFeature, featureAvailability, parseLanguageVersion } from '@sharpforge/syntax';
+import { languageFeature, languageFeatures, featureAvailability, parseLanguageVersion, checkFeatures } from '@sharpforge/syntax';
+import { collectSyntaxFeatures } from './syntax-features.js';
+
+/** The newest released language version of the catalog; below it a feature gate can fire for a released feature. */
+export const newestLanguageVersion = Math.max(...languageFeatures.filter(row => !row.preview).map(row => row.version));
+
+/** The diagnostic codes of "feature is not available in this language version" (one per selected version, and preview). */
+export const featureDiagnosticCodes = new Set(
+  'CS8022 CS8023 CS8024 CS8025 CS8026 CS8059 CS8107 CS8302 CS8320 CS8370 CS8400 CS8773 CS8936 CS9058 CS9202 CS9260 CS9327 CS8652'.split(' '),
+);
+
+/**
+ * The language-version diagnostics of one parsed file: the features the parser recorded and, when a version below
+ * the newest is selected, the features only the syntax tree shows (./syntax-features.js).
+ * @param file a `parse()` result (`source`, `features`, `syntax`)  @param version the selected language version
+ */
+export function featureDiagnosticsOf(file, version) {
+  const recorded = file.features ?? [],
+    needsWalk = !!file.syntax && version.number < newestLanguageVersion;
+  if (!needsWalk) return recorded.length ? checkFeatures(file.source, recorded, version) : [];
+  const ids = new Set(recorded.map(use => use.id)),
+    // A feature the parser records is the parser's to report: the walker only adds the ones it never saw.
+    found = collectSyntaxFeatures(file.syntax).filter(use => !ids.has(use.id));
+  return checkFeatures(file.source, [...recorded, ...found], version);
+}
 
 /** Semantic features the binder gates: binder-facing key -> A01 catalog feature id. */
 export const semanticFeatures = Object.freeze({

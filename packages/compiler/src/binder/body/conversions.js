@@ -160,6 +160,12 @@ export const ConversionBinding = Base =>
         this.report(e.syntax, 'CS0119', [e.namespace.toDisplayString(), 'namespace']);
         return this.bad(e.syntax);
       }
+      // Outside its declaring type an event is not a value: it can only be subscribed to (SF-A02-T07.6).
+      if (e.kind === 'EventAccess' && !this.inDeclaringType(e.event)) {
+        const at = e.syntax.kind === 'SimpleMemberAccessExpression' ? e.syntax.name : e.syntax;
+        this.report(at, 'CS0070', [e.event.toDisplayString(), this.display(e.event.containingType)]);
+        return this.bad(e.syntax);
+      }
       return this.markRead(e);
     }
     markRead(e) {
@@ -193,7 +199,14 @@ export const ConversionBinding = Base =>
         const f = e.field.originalDefinition ?? e.field;
         f.writes = (f.writes ?? 0) + 1;
         if ((value && !(value.constantValue || value.literal || value.kind === 'Default')) || !value) f.nonConstantWrite = true;
+        // Writing a field of a struct-typed field writes (part of) that field too.
+        if (e.receiver?.kind === 'FieldAccess' && e.receiver.type?.isValueType === true) this.markWrite(e.receiver, null);
       }
+    }
+    /** A field whose reference is taken (`ref o.f`) may be written through the alias: it counts as assigned (no CS0649). */
+    markAliased(e) {
+      if (e.kind === 'FieldAccess') this.markWrite(e, null);
+      return e;
     }
     /** Binds and converts to bool (conditions), accepting `operator true`. */
     condition(syntax) {
