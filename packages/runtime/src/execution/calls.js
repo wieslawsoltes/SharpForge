@@ -3,7 +3,7 @@ import {arrayCall} from './array-calls.js';
 import {invokeNumericIntrinsic} from './numeric-intrinsics.js';
 import {stringFromChars} from './strings.js';
 import {methodOffsets} from './method-offsets.js';
-import {systemType,intrinsicDefinition,resolveExecutionMethod,callSignatureKey,supportedIntrinsic,supportedDelegateCall,instantiateSignature} from '@sharpforge/cil';
+import {systemType,intrinsicDefinition,resolveExecutionMethod,callSignatureKey,supportedIntrinsic,supportedDelegateCall} from '@sharpforge/cil';
 import {ManagedFault,isReference} from '../heap.js';
 import {SUSPENDED} from './suspension.js';
 import {storageDefault} from './storage.js';
@@ -122,13 +122,7 @@ function constrainedTarget(vm,descriptor,args,type) {
 
 export function invoke(vm,instruction) {
   const caller=vm.top;
-  if(instruction.name==='calli') {
-    const signature=instantiateSignature(vm.inspector.signature(instruction.operand),caller.method.typeArguments,caller.methodArguments),pointer=caller.stack.at(-1),count=signature.parameters.length+(signature.isStatic?0:1);
-    if(signature.callingConvention||!pointer?.methodPointer||pointer.vmOwner!==vm.snapshotOwner||callSignatureKey(signature)!==callSignatureKey(pointer.signature))throw new ManagedFault('InvalidProgramException','Managed calli signature mismatch');
-    if(caller.stack.length<count+1)throw new ManagedFault('InvalidProgramException','calli argument stack underflow');
-    caller.stack.pop();const args=caller.stack.splice(caller.stack.length-count,count),tail=!!caller.tailCall;caller.tailCall=false;
-    return vm.heap.withRoots(args,()=>{const result=invokeFunctionPointer(vm,pointer,args,{tail});if(result!==SUSPENDED&&signature.returnType!=='void')caller.stack.push(result);});
-  }
+
   let descriptor=resolveExecutionMethod(vm.inspector,instruction.operand,context(caller)),target=descriptor.resolvedToken;
   const count=descriptor.signature.parameters.length+(instruction.name!=='newobj'&&!descriptor.signature.isStatic?1:0);
   const instance=descriptor.ownerInstance??(caller.method.ownerToken===descriptor.ownerToken?caller.genericIdentity:null)??null;
