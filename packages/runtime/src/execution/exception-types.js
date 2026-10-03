@@ -32,6 +32,7 @@ for (const type of bases.keys()) {
   ancestors.set(type, chain);
 }
 export function exceptionTypeName(name) { return aliases.get(name) ?? name; }
+export function exceptionBaseType(name) { return bases.get(exceptionTypeName(name)) ?? null; }
 export function exceptionMatches(actual, expected) {
   actual = exceptionTypeName(actual); expected = exceptionTypeName(expected);
   // Custom runtime faults still derive from Exception, never from an unrelated
