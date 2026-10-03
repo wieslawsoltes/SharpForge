@@ -7,6 +7,7 @@ import { fixtures as exceptionHandling } from './exception-handling.js';
 import { fixtures as statementLowering } from './statement-lowering.js';
 import { fixtures as typeModifiers } from './type-modifiers.js';
 import { fixtures as conditionalMethods } from './conditional-methods.js';
+import { fixtures as anonymousMethods } from './anonymous-methods.js';
 
 export const fixtures = [
   ...jumps,
@@ -14,4 +15,5 @@ export const fixtures = [
   ...statementLowering,
   ...typeModifiers,
   ...conditionalMethods,
+  ...anonymousMethods,
 ];
