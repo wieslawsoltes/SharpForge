@@ -5,5 +5,6 @@
  */
 import { CSharp9Rules } from './csharp9.js';
 import { CSharp13Rules } from './csharp13.js';
+import { ReservedTypeNames } from './reserved-type-names.js';
 
-export const modernRules = Object.freeze([CSharp9Rules, CSharp13Rules]);
+export const modernRules = Object.freeze([CSharp9Rules, CSharp13Rules, ReservedTypeNames]);
