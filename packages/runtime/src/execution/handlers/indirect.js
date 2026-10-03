@@ -1,6 +1,7 @@
 import {primitiveSizes} from '@sharpforge/cil';
 import {ManagedFault} from '../../heap.js';
 import {defaults} from '../numeric-ops.js';
+import {finishMemoryAccess} from '../statics.js';
 
 const handlers=new Map([
   ['sizeof',(vm,frame,instruction)=>vm.push(primitiveSizes[vm.inspector.metadata.typeName(instruction.operand)])],
@@ -17,5 +18,8 @@ for(const suffix of ['i1','u1','i2','u2','i4','u4','i8','i','r4','r8','ref']) {
   handlers.set('ldind.'+suffix,vm=>vm.push(vm.indirect(vm.dereference(vm.pop()),'ldind.'+suffix)));
   if(['u1','u2','u4'].includes(suffix))continue;
   handlers.set('stind.'+suffix,vm=>{const value=vm.pop();vm.dereference(vm.pop(),true,vm.indirect(value,'stind.'+suffix));});
+}
+for(const [opcode,handler] of handlers)if(['ldobj','stobj'].includes(opcode)||opcode.startsWith('ldind.')||opcode.startsWith('stind.')) {
+  handlers.set(opcode,(vm,frame,instruction)=>{handler(vm,frame,instruction);finishMemoryAccess(frame);});
 }
 export {handlers};
