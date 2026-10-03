@@ -1,0 +1,659 @@
+{
+  "schemaVersion": 1,
+  "harnessCommit": "5108268106ed9a6140198d2e2371019de57ff407",
+  "runnerId": "0496ac14920a9c411b97ae8d",
+  "commit": "a3093d496861383e0b26b4aaab7dfced552251b9",
+  "environment": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M3 Pro",
+    "logicalCpus": 11,
+    "osRelease": "25.6.0",
+    "runnerName": "MacBook-Pro.local",
+    "commit": "a3093d496861383e0b26b4aaab7dfced552251b9"
+  },
+  "benchmarks": [
+    {
+      "id": "A02/compile-1k",
+      "area": "A02",
+      "engine": "sharpforge-compiler",
+      "unit": "ms",
+      "samples": [
+        15.899124999999913,
+        13.948417000000063,
+        14.604417000000012,
+        12.881458000000066,
+        16.62758400000007,
+        12.932792000000063,
+        12.831667000000039,
+        13.404999999999973,
+        13.232624999999985,
+        12.652332999999999,
+        17.707708000000025,
+        12.99591600000008,
+        14.139125000000035,
+        12.925749999999994,
+        14.324416000000042,
+        15.539833999999928,
+        14.722540999999978,
+        14.059083999999984,
+        14.570667000000071,
+        13.720916999999986
+      ],
+      "coldSamples": [
+        43.097999999999956,
+        42.43662499999999,
+        41.27883399999996,
+        40.878083000000004,
+        45.73754199999996,
+        39.876125,
+        39.13150000000002,
+        39.97070899999994,
+        37.50725,
+        39.41037499999999,
+        38.738125000000025,
+        39.738125000000025,
+        39.343875000000025,
+        39.496083,
+        43.17016699999999,
+        40.974084000000005,
+        40.85999999999996,
+        39.15725000000003,
+        41.24808299999995,
+        43.72983400000004
+      ],
+      "statistics": {
+        "count": 20,
+        "median": 14.003750500000024,
+        "p95": 16.62758400000007,
+        "p99": 17.707708000000025,
+        "min": 12.652332999999999,
+        "max": 17.707708000000025
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "verified-generated-sum:4005"
+      },
+      "metrics": {
+        "samples": [
+          {
+            "nodeHeapDeltaBytes": 1097096,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 11,
+            "sourceLines": 981
+          },
+          {
+            "nodeHeapDeltaBytes": 1076320,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 11,
+            "sourceLines": 981
+          },
+          {
+            "nodeHeapDeltaBytes": 991856,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 11,
+            "sourceLines": 981
+          },
+          {
+            "nodeHeapDeltaBytes": 984568,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 11,
+            "sourceLines": 981
+          },
+          {
+            "nodeHeapDeltaBytes": 1083384,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 11,
+            "sourceLines": 981
+          },
+          {
+            "nodeHeapDeltaBytes": 870648,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 11,
+            "sourceLines": 981
+          },
+          {
+            "nodeHeapDeltaBytes": 934712,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 11,
+            "sourceLines": 981
+          },
+          {
+            "nodeHeapDeltaBytes": 1016432,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 11,
+            "sourceLines": 981
+          },
+          {
+            "nodeHeapDeltaBytes": 933336,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 11,
+            "sourceLines": 981
+          },
+          {
+            "nodeHeapDeltaBytes": 896720,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 11,
+            "sourceLines": 981
+          },
+          {
+            "nodeHeapDeltaBytes": 1036808,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 11,
+            "sourceLines": 981
+          },
+          {
+            "nodeHeapDeltaBytes": 975840,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 11,
+            "sourceLines": 981
+          },
+          {
+            "nodeHeapDeltaBytes": 1015272,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 11,
+            "sourceLines": 981
+          },
+          {
+            "nodeHeapDeltaBytes": 899472,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 11,
+            "sourceLines": 981
+          },
+          {
+            "nodeHeapDeltaBytes": 918264,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 11,
+            "sourceLines": 981
+          },
+          {
+            "nodeHeapDeltaBytes": 912352,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 11,
+            "sourceLines": 981
+          },
+          {
+            "nodeHeapDeltaBytes": 879544,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 11,
+            "sourceLines": 981
+          },
+          {
+            "nodeHeapDeltaBytes": 1011536,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 11,
+            "sourceLines": 981
+          },
+          {
+            "nodeHeapDeltaBytes": 922848,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 11,
+            "sourceLines": 981
+          },
+          {
+            "nodeHeapDeltaBytes": 1159032,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 11,
+            "sourceLines": 981
+          }
+        ]
+      }
+    },
+    {
+      "id": "A02/compile-10k",
+      "area": "A02",
+      "engine": "sharpforge-compiler",
+      "unit": "ms",
+      "samples": [
+        91.57824999999991,
+        96.02266699999996,
+        105.64333299999998,
+        101.03125,
+        91.89558299999999,
+        114.40295800000013,
+        92.35087500000009,
+        98.75525000000005,
+        92.02870799999994,
+        91.61170900000002,
+        90.6104170000001,
+        97.415708,
+        89.27333299999998,
+        92.47645899999998,
+        209.25783300000012,
+        190.74912499999982,
+        142.0814170000001,
+        105.74341700000014,
+        105.94637499999999,
+        111.5763750000001
+      ],
+      "coldSamples": [
+        155.05833299999995,
+        141.72616699999998,
+        153.65616600000004,
+        165.95570799999996,
+        153.115292,
+        143.02416600000004,
+        138.87166700000006,
+        140.98341599999998,
+        136.43741600000004,
+        137.52675,
+        139.892542,
+        156.578083,
+        148.02537499999994,
+        145.61620799999997,
+        319.337625,
+        324.88154099999997,
+        241.79091700000004,
+        162.3678339999999,
+        197.54704100000004,
+        161.78483299999994
+      ],
+      "statistics": {
+        "count": 20,
+        "median": 98.08547900000002,
+        "p95": 190.74912499999982,
+        "p99": 209.25783300000012,
+        "min": 89.27333299999998,
+        "max": 209.25783300000012
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "verified-generated-sum:18625"
+      },
+      "metrics": {
+        "samples": [
+          {
+            "nodeHeapDeltaBytes": 65743632,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": 66399664,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": 65152264,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": 65639592,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": 65495624,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": 19721360,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": 70515384,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": 19617096,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": 65526816,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": 19692824,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": 65464696,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": 66508976,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": 65108232,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": 65678464,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": 20506840,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": 20628488,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": 66020448,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": 65172400,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": 69190856,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": 19687480,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "Full parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          }
+        ]
+      }
+    },
+    {
+      "id": "A02/edit-10k",
+      "area": "A02",
+      "engine": "sharpforge-compiler",
+      "unit": "ms",
+      "samples": [
+        27.195749999999975,
+        25.67704200000003,
+        26.666375000000016,
+        25.115832999999952,
+        27.482124999999996,
+        25.811874999999986,
+        23.71670800000004,
+        23.410499999999956,
+        23.749624999999924,
+        24.735166999999933,
+        22.69516699999997,
+        23.556291999999985,
+        23.404457999999977,
+        21.655750000000012,
+        23.786957999999913,
+        22.694834000000014,
+        23.87366700000007,
+        23.375042000000008,
+        23.039833000000044,
+        23.54920800000002
+      ],
+      "coldSamples": [
+        40.798374999999965,
+        32.81474999999989,
+        34.913791999999944,
+        34.328416999999945,
+        32.3961250000001,
+        34.37958399999991,
+        30.68954199999996,
+        31.068167000000017,
+        29.689000000000078,
+        28.353707999999983,
+        30.851499999999987,
+        29.01795900000002,
+        28.503125000000068,
+        29.215749999999957,
+        34.10349999999994,
+        28.80345800000009,
+        30.25233400000002,
+        29.35120900000004,
+        29.146208,
+        29.44070899999997
+      ],
+      "statistics": {
+        "count": 20,
+        "median": 23.73316649999998,
+        "p95": 27.195749999999975,
+        "p99": 27.482124999999996,
+        "min": 21.655750000000012,
+        "max": 27.482124999999996
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "verified-generated-sum:18625"
+      },
+      "metrics": {
+        "samples": [
+          {
+            "nodeHeapDeltaBytes": -13126536,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "One-file update plus parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": -9367504,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "One-file update plus parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": -9386928,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "One-file update plus parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": -13203232,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "One-file update plus parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": -8755784,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "One-file update plus parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": -13103608,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "One-file update plus parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": -13743232,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "One-file update plus parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": -13369104,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "One-file update plus parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": -16389000,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "One-file update plus parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": -13535632,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "One-file update plus parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": -13189504,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "One-file update plus parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": -13529096,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "One-file update plus parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": -13099456,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "One-file update plus parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": 39650336,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "One-file update plus parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": -13481640,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "One-file update plus parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": -13480792,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "One-file update plus parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": -13198848,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "One-file update plus parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": -13269592,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "One-file update plus parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": -13096304,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "One-file update plus parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          },
+          {
+            "nodeHeapDeltaBytes": -13790528,
+            "memoryScope": "Retained JS heap delta around compilation; not native or total allocations",
+            "timingScope": "One-file update plus parse/bind/emit; VM assertion excluded",
+            "fileCount": 26,
+            "sourceLines": 9951
+          }
+        ]
+      }
+    }
+  ],
+  "unsupported": [],
+  "registry": {
+    "commit": "3ef11211775ac10e65415c69bdda1d5bf7d80575",
+    "path": "registry.json",
+    "sha256": "d1bd81203e11cdd027086f7700d2e3968f4ef88b084afd6762bffa1a6fd881bd",
+    "modules": [
+      {
+        "id": "A02/compile-1k",
+        "path": "compiler.mjs",
+        "sha256": "769d2f2dc7f2fe3984c2446278d84ef9beba29ad9125811b0bfc3cf63e40e2d7"
+      },
+      {
+        "id": "A02/compile-10k",
+        "path": "compiler.mjs",
+        "sha256": "769d2f2dc7f2fe3984c2446278d84ef9beba29ad9125811b0bfc3cf63e40e2d7"
+      },
+      {
+        "id": "A02/edit-10k",
+        "path": "compiler.mjs",
+        "sha256": "769d2f2dc7f2fe3984c2446278d84ef9beba29ad9125811b0bfc3cf63e40e2d7"
+      }
+    ]
+  }
+}

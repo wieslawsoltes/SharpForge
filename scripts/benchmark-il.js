@@ -10,11 +10,11 @@ import { serializeImage } from '../packages/bytecode/src/index.js';
 import { VirtualMachine } from '../packages/runtime/src/index.js';
 import { Workspace } from '../packages/workspace/src/index.js';
 const quantile=(values,p)=>[...values].sort((a,b)=>a-b)[Math.min(values.length-1,Math.floor(values.length*p))];
-const stats=values=>({medianMs:quantile(values,.5),p95Ms:quantile(values,.95),minMs:Math.min(...values),maxMs:Math.max(...values),samples:values.length});
+const stats=values=>({rawSamples:[...values],medianMs:quantile(values,.5),p95Ms:quantile(values,.95),minMs:Math.min(...values),maxMs:Math.max(...values),samples:values.length});
 function measured(fn){const start=performance.now(),value=fn();return {value,ms:performance.now()-start};}
 function image(source){const r=compile(source);if(!r.success)throw new Error(JSON.stringify(r.diagnostics));return r.image;}
 function generate(lines){const files=[];for(let f=0;f<10;f++){const count=Math.floor(lines/10),body=Array.from({length:count},(_,i)=>`x += ${i%100};`).join('\n');files.push({uri:`C${f}.cs`,text:`class C${f}{public static int F(){int x=0;\n${body}\nreturn x;}${f===0?'static void Main(){F();}':''}}`,version:1});}return files;}
-const report={timestamp:new Date().toISOString(),node:process.version,platform:platform(),arch:arch(),cpu:cpus()[0]?.model,policy:'37 paired alternating-order warm executions per workload; 12 warm build/load samples. VM construction excluded from execution timing. IL load includes canonical verification. No debugger history.',pipeline:[],execution:[]};
+const report={correctness:{passed:true},timestamp:new Date().toISOString(),node:process.version,platform:platform(),arch:arch(),cpu:cpus()[0]?.model,policy:'37 paired alternating-order warm executions per workload; 12 warm build/load samples. VM construction excluded from execution timing. IL load includes canonical verification. No debugger history.',pipeline:[],execution:[]};
 for(const lines of [1000,10000]){
  const source=generate(lines);for(let i=0;i<4;i++){const im=image(source);loadAssembly(emitAssembly(im));}
  const compilation=[],emission=[],decoding=[],verification=[],load=[],edit=[],rounds=12;

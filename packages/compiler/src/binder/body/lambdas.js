@@ -208,6 +208,11 @@ export const LambdaBinding = Base =>
         this.popScope();
       }
       if (governing.hasErrors || arms.some(a => a.value.hasErrors)) return this.bad(syntax);
+      this.reportSwitchArms(
+        governing.type,
+        arms.map(a => ({ pattern: a.pattern, when: a.when, node: a.syntax.pattern })),
+        { isExpression: true, node: syntax.switchKeyword },
+      );
       const type = this.bestCommonType(arms.map(a => a.value));
       if (!type) {
         const n = this.node('SwitchExpression', syntax, null, { governing, arms, form: 'implicitNew' });

@@ -12,6 +12,8 @@ import { CallTranslation } from './translate-calls.js';
 import { FunctionTranslation } from './translate-functions.js';
 import { PatternTranslation } from './translate-patterns.js';
 import { StatementTranslation } from './translate-statements.js';
+import { JumpTranslation } from './translate-jumps.js';
+import { RuntimeGapTranslation } from './runtime-gaps.js';
 import { AwaitTranslation } from '../../lowering/async/async-methods.js';
 import { AsyncStreamTranslation } from '../../lowering/async/async-streams.js';
 import { ByReferenceTranslation } from '../../lowering/by-reference.js';
@@ -20,6 +22,9 @@ import { TupleTranslation } from '../../lowering/tuples/translate-tuples.js';
 import { SynthesizedTextTranslation } from '../../lowering/tuples/translate-text.js';
 import { DeconstructionTranslation } from '../../lowering/tuples/translate-deconstruction.js';
 import { memberLowerings } from '../../lowering/members/index.js';
+import { InitializerLowering } from '../../lowering/members/initializers.js';
+import { RecordTranslation } from '../../lowering/records/translate-records.js';
+import { StructuralPatternTranslation } from '../../lowering/patterns/translate-structural-patterns.js';
 
 export { Frame } from './frame.js';
 
@@ -202,6 +207,8 @@ const families = [
   FunctionTranslation,
   PatternTranslation,
   StatementTranslation,
+  JumpTranslation,
+  RuntimeGapTranslation,
   AwaitTranslation,
   AsyncStreamTranslation,
   ByReferenceTranslation,
@@ -210,6 +217,9 @@ const families = [
   SynthesizedTextTranslation,
   DeconstructionTranslation,
   ...memberLowerings,
+  InitializerLowering,
+  RecordTranslation,
+  StructuralPatternTranslation,
 ];
 
 export class BodyTranslator extends families.reduce(

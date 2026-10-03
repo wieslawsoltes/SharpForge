@@ -33,10 +33,11 @@ export const unionMethods = {
     return end > j + 1 && (this.kindAt(end) === ',' || this.kindAt(end) === ')');
   },
   unionDeclaration(attributeLists, modifiers) {
-    const start = this.current,
+    const keywordIndex = this.i,
+      start = this.current,
       keyword = this.takeWord('union');
     this.feature('Unions', start);
-    this.typeModifierFeatures(modifiers, 'UnionDeclaration', start);
+    this.typeModifierFeatures(modifiers, 'UnionDeclaration', start, keywordIndex);
     const nameToken = this.current,
       identifier = this.id(),
       typeParameters = this.at('<') ? this.typeParameterList() : null,

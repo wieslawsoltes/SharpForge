@@ -1,3 +1,4 @@
+import {installTabEscape} from './tab-focus.js';
 import {createClassicEngine} from './vendor/classic-engine.js';
 export const EDITOR_KEYMAPS=[{id:'visual-studio',label:'Visual Studio (default)'},{id:'vscode',label:'Visual Studio Code'},{id:'vim',label:'Vim'},{id:'emacs',label:'Emacs'},{id:'sublime',label:'Sublime Text'}];
 const engines=new WeakMap();
@@ -28,6 +29,7 @@ export class ClassicKeymapAdapter {
   cm.on('gutterContextMenu',(_,line,gutter,event)=>{event.preventDefault();event.stopPropagation();e.onBreakpointEdit(line+1,event);});
   cm.on('vim-mode-change',status=>{e.modalMode=status.mode+(status.subMode?' '+status.subMode:'');e.onKeymapState?.({keymap:mode,mode:e.modalMode});});
   cm.on('vim-command-done',()=>e.onKeymapState?.({keymap:mode,mode:e.modalMode??'normal'}));
+  this.disposeTabEscape=installTabEscape(cm.getInputField());
   cm.getInputField().setAttribute('aria-label',e.uri+' — '+EDITOR_KEYMAPS.find(k=>k.id===mode)?.label+' editor');
   if(e.classicHistory?.mode===mode&&e.classicHistory.text===e.value)cm.setHistory(e.classicHistory.history);
   this.goto(e.offset,e.input.selectionEnd,false);cm.refresh();this.decorate();e.modalMode=mode==='vim'?'normal':'editing';e.onKeymapState?.({keymap:mode,mode:e.modalMode});
@@ -49,7 +51,7 @@ export class ClassicKeymapAdapter {
   });
  }
  coordinates(event){return this.cm.indexFromPos(this.cm.coordsChar({left:event.clientX,top:event.clientY},'window'));}
- dispose(){this.editor.classicHistory={mode:this.mode,text:this.cm.getValue(),history:this.cm.getHistory()};this.cm.state.sharpforgeEditor=null;this.cm.getInputField().blur();this.host.remove();this.editor.element.classList.remove('sf-classic-active');}
+ dispose(){this.disposeTabEscape();this.editor.classicHistory={mode:this.mode,text:this.cm.getValue(),history:this.cm.getHistory()};this.cm.state.sharpforgeEditor=null;this.cm.getInputField().blur();this.host.remove();this.editor.element.classList.remove('sf-classic-active');}
 }
 /** Chord-aware VS bindings; unrecognized keys retain the ordinary editor's behavior. */
 export function handleVisualStudioKey(editor,event){

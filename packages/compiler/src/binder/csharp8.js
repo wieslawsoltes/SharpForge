@@ -118,15 +118,13 @@ export const CSharp8Binding = Base =>
       (this.labelBlocks ??= new Map()).set(syntax, this.openBlocks.at(-1));
       return super.declareLabel(syntax);
     }
-    statement(syntax) {
-      const bound = super.statement(syntax);
-      if (syntax.kind === 'GotoStatement' && syntax.expression?.kind === 'IdentifierName') this.checkJumpOverUsing(syntax);
+    gotoLabel(syntax) {
+      const bound = super.gotoLabel(syntax);
+      if (bound.label) this.checkJumpOverUsing(syntax, bound.label);
       return bound;
     }
     /** CS8648 and CS8649: the using declarations in scope at a goto are those of its enclosing blocks. */
-    checkJumpOverUsing(syntax) {
-      const label = this.findLabel(syntax.expression.identifier.valueText);
-      if (!label || label.binder !== this) return;
+    checkJumpOverUsing(syntax, label) {
       const source = syntax.span.start,
         target = label.syntax.span.start,
         labelBlock = this.labelBlocks?.get(label.syntax);

@@ -18,39 +18,43 @@ import { ConversionBinding } from './body/conversions.js';
 import { NameBinding } from './body/names.js';
 import { CallBinding } from './body/calls.js';
 import { CreationBinding } from './body/creation.js';
-import { InitializerBinding } from './members/initializers.js';
+import { memberBindings } from './members/index.js';
 import { OperatorBinding } from './body/operators.js';
 import { TypeTestBinding } from './body/type-tests.js';
 import { TupleBinding } from './body/tuples.js';
 import { DeconstructionBinding } from './body/deconstruction.js';
+import { WithBinding } from './with-expression.js';
 import { LambdaBinding } from './body/lambdas.js';
 import { PatternBinding } from './body/patterns.js';
+import { StructuralPatternBinding } from './body/structural-patterns.js';
 import { StackAllocBinding } from './body/stackalloc.js';
 import { QueryBinding } from './queries.js';
 import { StatementBinding } from './body/statements.js';
 import { DeclarationBinding } from './body/declarations.js';
 import { FlowStatementBinding } from './body/flow-statements.js';
 import { LocalFunctionBinding } from './body/local-functions.js';
-import { CSharp8Binding } from './csharp8.js';
+import { JumpBinding } from './jumps.js';
+import { ExceptionBinding } from './exceptions.js';
+import { languageRules } from './language-rules.js';
 
 const expressionFamilies = [
   ConversionBinding,
   NameBinding,
   CallBinding,
   CreationBinding,
-  InitializerBinding,
+  ...memberBindings,
   OperatorBinding,
   TypeTestBinding,
   TupleBinding,
   DeconstructionBinding,
+  WithBinding,
   LambdaBinding,
   PatternBinding,
+  StructuralPatternBinding,
   StackAllocBinding,
   QueryBinding,
 ];
-const statementFamilies = [StatementBinding, DeclarationBinding, FlowStatementBinding, LocalFunctionBinding];
-/** Rules of one language version that refine several families at once; applied last so they see every family. */
-const versionRules = [CSharp8Binding];
+const statementFamilies = [StatementBinding, DeclarationBinding, FlowStatementBinding, LocalFunctionBinding, JumpBinding, ExceptionBinding];
 const compose = (base, mixins) => mixins.reduce((composed, mixin) => mixin(composed), base);
 
 /**
@@ -59,6 +63,6 @@ const compose = (base, mixins) => mixins.reduce((composed, mixin) => mixin(compo
  * operator resolvers, type binder, diagnostics sink); `context` says where the body lives: `{ uri, scope,
  * containingType, method, isStatic, returnType, returnRefKind, isAsync, isIterator, isFieldInitializer, parent }`.
  */
-export class BodyBinder extends compose(BinderCore, [...expressionFamilies, ...statementFamilies, ...versionRules]) {}
+export class BodyBinder extends compose(BinderCore, [...expressionFamilies, ...statementFamilies, ...languageRules]) {}
 
 export { dumpSemanticTree } from '../bound/semantic-dump.js';

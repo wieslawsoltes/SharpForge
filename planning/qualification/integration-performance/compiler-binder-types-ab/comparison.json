@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "defb7ccbe13dae9dfe9a67cc24281b2a0b5f9e99",
+  "headCommit": "a3093d496861383e0b26b4aaab7dfced552251b9",
+  "runnerId": "0496ac14920a9c411b97ae8d",
+  "policy": {
+    "threshold": 0.05,
+    "alpha": 0.01,
+    "minSamples": 20,
+    "test": "one-sided paired sign test"
+  },
+  "passed": false,
+  "rows": [
+    {
+      "id": "A02/compile-1k",
+      "engine": "sharpforge-compiler",
+      "base": {
+        "count": 20,
+        "median": 11.052686999999992,
+        "p95": 12.731166999999914,
+        "p99": 12.784917000000064,
+        "min": 10.48012499999993,
+        "max": 12.784917000000064
+      },
+      "head": {
+        "count": 20,
+        "median": 14.003750500000024,
+        "p95": 16.62758400000007,
+        "p99": 17.707708000000025,
+        "min": 12.652332999999999,
+        "max": 17.707708000000025
+      },
+      "relative": 0.26699964452083313,
+      "pValue": 9.5367431640625e-7,
+      "threshold": 0.05,
+      "verdict": "regression",
+      "quarantine": null
+    },
+    {
+      "id": "A02/compile-10k",
+      "engine": "sharpforge-compiler",
+      "base": {
+        "count": 20,
+        "median": 91.80793749999992,
+        "p95": 165.05320800000004,
+        "p99": 174.07074999999986,
+        "min": 76.87479199999996,
+        "max": 174.07074999999986
+      },
+      "head": {
+        "count": 20,
+        "median": 98.08547900000002,
+        "p95": 190.74912499999982,
+        "p99": 209.25783300000012,
+        "min": 89.27333299999998,
+        "max": 209.25783300000012
+      },
+      "relative": 0.06837689279317605,
+      "pValue": 0.020694732666015604,
+      "threshold": 0.05,
+      "verdict": "pass",
+      "quarantine": null
+    },
+    {
+      "id": "A02/edit-10k",
+      "engine": "sharpforge-compiler",
+      "base": {
+        "count": 20,
+        "median": 10.780167000000006,
+        "p95": 12.688790999999924,
+        "p99": 15.385999999999967,
+        "min": 9.599792000000093,
+        "max": 15.385999999999967
+      },
+      "head": {
+        "count": 20,
+        "median": 23.73316649999998,
+        "p95": 27.195749999999975,
+        "p99": 27.482124999999996,
+        "min": 21.655750000000012,
+        "max": 27.482124999999996
+      },
+      "relative": 1.2015583339293325,
+      "pValue": 9.5367431640625e-7,
+      "threshold": 0.05,
+      "verdict": "regression",
+      "quarantine": null
+    }
+  ]
+}

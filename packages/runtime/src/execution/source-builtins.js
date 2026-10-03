@@ -2,7 +2,8 @@ import {mutateArray} from './array-ops.js';
 import {Builtins} from '@sharpforge/bytecode';
 import {ManagedFault} from '../heap.js';
 import {internString,isInternedString,referenceEquals,stringChar} from './strings.js';
-import {enumHasFlag,enumInfo,enumValue} from './enums.js';
+import {enumHasFlag} from './enums.js';
+import {SourceBuiltinResults} from './source-values.js';
 import {objectType,typeName,runtimeTypeText} from './tokens.js';
 
 /** Invoke an intrinsic with heap/value/format/output/platform services; no image is required. */
@@ -10,7 +11,7 @@ export function builtin(vm, id, args) {
   const entry = Builtins[id];
   if (entry.contract) {
     const result=vm.platform.invoke(entry.contract,args);
-    return enumInfo(vm,entry.contract.result)?enumValue(vm,entry.contract.result,result):result;
+    return (vm.builtinResults ??= new SourceBuiltinResults()).convert(vm, entry, result);
   }
   const name = entry.name;
   return vm.heap.withRoots(args, () => {
