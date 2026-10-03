@@ -23,7 +23,14 @@ function constant(metadata,row) {
   return enumUnderlying(value,kind);
 }
 /** Read framework or independent ECMA-335 enum metadata without treating it as Int32. */
+const metadataEnums=new WeakMap(),frameworkEnums=new Map();
 export function enumInfo(vm,type) {
+  let cache=frameworkEnums;
+  if(vm.inspector){cache=metadataEnums.get(vm.inspector);if(!cache){cache=new Map();metadataEnums.set(vm.inspector,cache);}}
+  if(!cache.has(type))cache.set(type,readEnumInfo(vm,type));
+  return cache.get(type);
+}
+function readEnumInfo(vm,type) {
   const framework=frameworkType(type);
   if(framework?.kind==='enum')return {name:framework.name,underlyingType:framework.underlyingType??'int',members:Object.entries(framework.values),flags:!!framework.flags};
   const inspector=vm.inspector;
