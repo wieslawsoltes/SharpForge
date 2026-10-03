@@ -1,6 +1,6 @@
 import {enumTypes,frameworkType} from '@sharpforge/framework';
 /** Versioned, structured-cloneable stack bytecode. Each instruction is three signed 32-bit words. */
-export const FORMAT_VERSION = 1;
+export const FORMAT_VERSION = 2;
 export const Op = Object.freeze(Object.fromEntries(['SEQ','CONST','LDLOC','STLOC','LDSTATIC','STSTATIC','LDFLD','STFLD','DUP','POP','BINARY','UNARY','JUMP','JFALSE','JTRUE','CALL','BUILTIN','RET','NEWOBJ','NEWARR','LDELEM','STELEM','LENGTH','THROW','RETHROW','CONVERT','NOP','ENDFINALLY','DELEGATE','ENUM'].map((n,i)=>[n,i])));
 export const OpName = Object.freeze(Object.keys(Op));
 export const Binary = Object.freeze(Object.fromEntries(['+','-','*','/','%','==','!=','<','<=','>','>=','&','|','^','<<','>>'].map((n,i)=>[n,i])));

@@ -6,25 +6,25 @@
     {
       "input": "examples/Language03.cs",
       "source": "dbc7b10d05806faac1eb63e42720b03fd2aabf14e122752dd3021ce6b46dfc78",
-      "syntax": "bf54eaad4324069d438eff8a2968a117a5b96a6e11f17fc23a621cef2e9cff55",
+      "syntax": "7cc6dfdc2b05c34b3337f3f14c54ec5e94a4b834ec0189ac8700faab598be6bf",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "b8f5b562673500069f6e9e5620f5732001985d1c966c3bc90e6c3839f5d50f92",
-      "bytecode": "1e8b89875a50d8705fc00219f023a183f46c64847ac941a2157f5784a0f0eb5a"
+      "bytecode": "80b5861af7a4556b98a40863283667743b7795a52e0d4baa8355d3c18147f493"
     },
     {
       "input": "examples/arrays/Program.cs",
       "source": "1eea4b29c6ae0d6f8782018fdf2865b67a57cabb6931b3db8bf1977953fe8772",
-      "syntax": "34d6d25a203be7bcd98ecc7ec57cfd830347ddbede4712deefe1a09f6e6024d6",
+      "syntax": "28aec804b87044040541383d3040d62f238508188789db47b4c9f8dc9fbc26e9",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "b563a355f06f0bddaaf246a6582e86c38f67e710e46020122dda89d58006ba0d",
-      "bytecode": "88f0a5b0ad1b98dca6b12803628df318c76de0f03071bdbb3db5e8a1f05f7d89"
+      "bytecode": "c0e690c934a3a85b95e71155a99d39f736615cbb68c95dd928f61ceebd6548ef"
     },
     {
       "input": "examples/designer/CanvasCounter/DesignedView.g.cs",
       "source": "a9a70b334c20d0b709d283aee7f6901a8dc33ec71f0af4df2ae8b19f7661245b",
-      "syntax": "71989011e9d6400881910f3d3c4b361aecfcbaaca8d17e0b3758f3f8369a3410",
+      "syntax": "d091911523082358eb5b845fbbfc377379613583ba6f2291a8ab07f57fd5a914",
       "status": "not-emitted",
       "diagnostics": "ce4ab99e2cde842a331aecb1b3c42ac285ff7b447e7cfeac6ab51001095faef1",
       "assembly": null,
@@ -33,7 +33,7 @@
     {
       "input": "examples/designer/CanvasCounter/Program.cs",
       "source": "29dd1e45942aa100cf116b1c61d7ab1c319cee97345fc00f2fcc77c57a6dbe6a",
-      "syntax": "f656f0b699575488adc9597950f93e5a636fc814ac020fe410b3d208c45d3c57",
+      "syntax": "c42340715e0ec0a5f99180af591c8fa0f834195a11541c321044000b056c88ab",
       "status": "not-emitted",
       "diagnostics": "a088a56367d28a5540e377236c7b29466a153b0e4b20c11d96c417e4b507b769",
       "assembly": null,
@@ -42,25 +42,25 @@
     {
       "input": "examples/designer/ControlGallery/Program.cs",
       "source": "775256f98aeb47dbffa938a3dcf55b2f5139595e80e29e5f8a13b828c419da28",
-      "syntax": "eef8f7d192e224a7a807f1802db256dd49e22479d9e1be4ed13f163dd7257a75",
+      "syntax": "fca0259552cab9711e1b4e45b65162899f7e1118568cfd402a56698b42739823",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "907b3c946b36ac445e54d778ed6de0ae541efa29307f59df8c1299f5cb67ff94",
-      "bytecode": "34a9c3fa49bb4330407cfc303bc341d95d7c9b21b16f67be87cdcd8f0d13061e"
+      "bytecode": "24383bb702ed0ccbf91e612027721dcb255db48f9881c83b41a6be4f5f647cc6"
     },
     {
       "input": "examples/designer/EditContinue/Program.cs",
       "source": "0cfb218e57a3eb550a8dd5b81231b163b6cb7f66eb26b2bf23dbea39a51df84c",
-      "syntax": "a58cb4bff812dba965cf4cb1702026fd9b1448dc64ce1bc7bff2d6769404c613",
+      "syntax": "87c3ae780b5fa9a442c63e7bfb80db33ca2731465e47600d1ab1051410a71157",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "a6405f060b772510737cf74296accf66926b3bdd13c6ff0760d4db2ad90e1e2e",
-      "bytecode": "c0eb2ca9330a48c19adbfd1f932f6cc12a682f3d2c9afb765909e2f6dabc8756"
+      "bytecode": "3784f0d4e735fd902e447d7980a8dc6735c6cebd553c29fd378c9f5553dd8909"
     },
     {
       "input": "examples/designer/GridWorkspace/DesignedView.g.cs",
       "source": "573cfefc4cf9350cb95846cb3b9c8254fa87813abb700a817fb367fffbf8fbea",
-      "syntax": "69db9933b7f5903ec8b22383a36b714a703d29da07ffb70c09bafa0e46c15172",
+      "syntax": "17b5129d12fd5a8a13129bc3a6d6100f8ba53fd4e5bac22c46a0ae32e27e2280",
       "status": "not-emitted",
       "diagnostics": "d642db5e92c7113eda6d687cb5825935b1e6b1d285c404e8ee5366b10c9ed156",
       "assembly": null,
@@ -69,7 +69,7 @@
     {
       "input": "examples/designer/GridWorkspace/Program.cs",
       "source": "eb45c7df090ff07508d7c073ac624c339320d689accc3a5096355c4b272218f2",
-      "syntax": "5d63405913014178733723f3bea7a73695a3e67a6936be06c8f839b448695a28",
+      "syntax": "bc1d4a50401f7e0c61f1dbc0a0e99b9cfb07f29c426c2013a160066cee7c2ffc",
       "status": "not-emitted",
       "diagnostics": "bc8c79e5ecc6bdfbdd2307a852370621791dbaa38b8046ed719194554c579511",
       "assembly": null,
@@ -78,16 +78,16 @@
     {
       "input": "examples/designer/SharedStyles/Program.cs",
       "source": "4fb34ccd8d500d4cf3928efef47de55feec277e50b03f50b476e8fb0223bd2e9",
-      "syntax": "5d289eb927405ebc3afbd745fbfd973c06028dc506b48aed99db47f061822368",
+      "syntax": "e60fa87122a0f4917b3bd5f4673a167ac20728706d1c57275153fccab09f6381",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "a5b8d36905889c2544382e1affcd812cf3f71e753f4871cb5213f370d408e760",
-      "bytecode": "65ab2d10f1fd8858bf9f6b21f22915f40b9349be484f73c4e917585a3a5aca56"
+      "bytecode": "81f4a3e3f9261010a2c9c8353172a769b8ad82a46bb27631cc47c9982094c02f"
     },
     {
       "input": "examples/errors/Program.cs",
       "source": "616d53dba6ef8e361bcdb2a52be548fe55bf4d4a604ee77c8d23bc5bfb0c393d",
-      "syntax": "4a7250a43690400cb0189e6936a3e06ad90043276a0c16a5cb81b5b9daf5a8c9",
+      "syntax": "f4420ecd3ba2ba56177ef3fd47d5d3c04a9080e229cbadf125fb80a855046c6e",
       "status": "not-emitted",
       "diagnostics": "98f5fe16ac526fab203bf9580a3b6042260b59edbad867bc5b8baca5a5982224",
       "assembly": null,
@@ -96,52 +96,52 @@
     {
       "input": "examples/exceptions/Program.cs",
       "source": "c4c554ea43e29c6f980a3903400339b89ff8113ed7b7830a2afa6ae7f61d53e2",
-      "syntax": "b4eba10b7d5cde4b6668594c2b257377100071c7f7587f4942f2287c517a1972",
+      "syntax": "48d3e050152ceec915c8fdd1a0c1f2b3a21c8fa0caa01308202f5203272e319a",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "63b8bed35a6fee8cb00927d37ebabd2b966f58913c1c42f2b12b922e68949794",
-      "bytecode": "08cf5651b8b8b235286b20c5a8576fedc46c9c2f82b8dbfac70dfe28b05087ad"
+      "bytecode": "420f4bc068b028ae9dcbc532b3a8930c37bcfc799fd6a140ce78c21a3dcf7610"
     },
     {
       "input": "examples/features-0.10/async-stacks/Program.cs",
       "source": "9081f99992be92dabc0de30e529a208e75ee51fbd22af644720f64caaaa29f68",
-      "syntax": "5d2c057cfb3c86070e82c56d81f60dc29f3e919f749f529a55f3b1ca12e991cc",
+      "syntax": "c85a7c0d7fe7b88a1a1ae6ab750d434b9a3e5f2a51b7811bacb986e3d0924c3e",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "8eca1d05a269dacd630b0118c2df5513640532976687ddc2c8bce39a47a64359",
-      "bytecode": "2ecb9dc3c7dde5766690ad3b41133b83f8f295a7e09f4017fa0ab41ac97b6d4e"
+      "bytecode": "3b687fb821cb7cbed7b5c8ed0472509db16bd8d1bdd99db575b2c13a49e179ce"
     },
     {
       "input": "examples/features-0.10/function-evaluation/Program.cs",
       "source": "f8e672c79e41d3b8261093d56f84a167fa7cb6b1a61969392adb1869606687fc",
-      "syntax": "189dd90053b23795d888dd51a8b89458372eac8a2d837311b88330ae09d7821a",
+      "syntax": "20d422dcd8318c8197f78407ccd6d77f9e48af2b7ecc731a323c2897be9615f8",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "5364301def34786bdf0fdba789a7e1f9d12e68860d2ba1c8a237c7a7cdf08573",
-      "bytecode": "592e0671446180edd131dc9507cd25501f124f6d2d9a59ad3f4274ad6c3d742f"
+      "bytecode": "36d0b26f4638e51634d9fb840d114e3f539c6788b1d4673909e8d44e1974abf6"
     },
     {
       "input": "examples/features-0.10/hot-reload/Program.cs",
       "source": "6bcd90a86974cce99bdc71703172a65c25a1fade68558d6cad0f46ab53ca6623",
-      "syntax": "1b64d4895cba53c1ad001cd1ab49ffd72cbffe9add639a620a5efc3085aa0376",
+      "syntax": "a8134c7e83aea9cdb0ee88e3bf06185371ae4293bded8a6d84e859b33336551e",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "6b99d74475ab2e20683efeb7dd8e967c5d401cca0601f89877706465dfbcd00b",
-      "bytecode": "63667c7983dc605458f1432286e15dcfbabc719313d6c71e764bf13118eee40e"
+      "bytecode": "c4b743bbb53d098b8114141b2657dde48c80c1bac44865f7bc88c7f94f28ccc6"
     },
     {
       "input": "examples/features-0.10/logical-threads/Program.cs",
       "source": "16cba278276faccff1573744e738688133a93f5ccbe0f71aead92ffe9cc4b957",
-      "syntax": "ddb2b5060107013f5457078b9e6d9d4eca39c0e702cb0ca5d109739038a539e5",
+      "syntax": "db6c4e59d01303eef7d6c6cd436c702edc4dae0f09cfc673e1f4bb702894aa63",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "004cf54c2e226620a687549c1d4351e12870bd7395212bf84c51fb2746590426",
-      "bytecode": "0b0de986cc957fc0b99305ced04b94181bb09d0a8bb77dafbb6b5e07ec1613ed"
+      "bytecode": "f708b934d55934bf1ddc8d0bf94cc3f72db53bb8ae159373db25985b955f1987"
     },
     {
       "input": "examples/features-0.10/portable-symbols/Calculator.cs",
       "source": "ab902b911b16a2be2f75c774eb558333d0248c8f1c6094327393cf88fe3232b0",
-      "syntax": "f3a6267974f5ba449b62bda5edf6fe8726a662b679d6c6f642fa77aa555c1ffc",
+      "syntax": "a1fcfe9e44242531b77e0d70d6eeceda5eebe515631ba6c0d13a735261066385",
       "status": "not-emitted",
       "diagnostics": "d10fd78353b355c8f411a4ade3c512d9e5d155c5e5b86c25f5fbc52bd66b8144",
       "assembly": null,
@@ -150,7 +150,7 @@
     {
       "input": "examples/features-0.10/portable-symbols/Program.cs",
       "source": "a99065c058416fb7f5106822358fdfa9efc754694162c23c80154e67bf5fc43a",
-      "syntax": "3c4fe6bb73402b3c3bacd969283be4e25c2e95fdea165ecf33b5ac80b9905280",
+      "syntax": "8ee9066134303e31dad965d24525c30952cebc102d83835ec87f81a66ccff978",
       "status": "not-emitted",
       "diagnostics": "fade1a2e0635c22cc60c44237a147632e558404a2e144d23f821cc754392804b",
       "assembly": null,
@@ -159,133 +159,133 @@
     {
       "input": "examples/features-0.10/set-next/Program.cs",
       "source": "3dad3baee601ecf51858e9c4f255eb8edb35b1631347b0b4cc8e27720afa6218",
-      "syntax": "d837be1114ae72938af1c8c65da724dd7be452ee7537d4690c6a8427869d6995",
+      "syntax": "3faf2c9df39763ee4f54e50ff52da7b742c3afb85a5fff96d33ceaf0f3443747",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "dd06e2a9258b51523f6e41e78d769994095007df20e0c4161bf9696d0f6bfb47",
-      "bytecode": "9e7ac56756ecbcf1a9f4fdb3f80bf56f5ad0d3dcb8579bbb4cc8ff1142ff8704"
+      "bytecode": "22d0b28437163daa7b5552349d427ffda2d116b3fd7fb2c366cb38b7bc9c939d"
     },
     {
       "input": "examples/features-0.10/winui-async/Program.cs",
       "source": "38c6880e3f14840f339a25e2e4c653e25ef55e8c420818a7178a3834380e4b3b",
-      "syntax": "7df78306adcca173f1f95d369a6b920f87ed0132bdf1f5b45be4626716f9010b",
+      "syntax": "6cd643ba39393af1612e5b49036e4863d7a391fa875ec9088ee08e17f6b716e0",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "7061204598b835b36a0813cb9b8561813d643ee6d40598aecc1ec9d1195512d4",
-      "bytecode": "d118b468ac0da6dbaf2ff6a168ddbc4c1dabd0803cb025ab2c47d3ebace3fa8d"
+      "bytecode": "500a6cd7e541c436683e4a0c7ce305275e7ed914990557721f92a5daa147e0b9"
     },
     {
       "input": "examples/features-0.10/winui-controls/Program.cs",
       "source": "848c1eec18ef7f7de2110264673b1911ea0a70513d2d31f7266140ea0fbcad19",
-      "syntax": "4b0ab28e16df45e4d2889950afb7b338105562f602543c38ad4ea12fa4865e6e",
+      "syntax": "5254013145f37eee786223776d752f32d8d7a6fe0e1989c4866c8208b745daef",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "71a7ba8c4b71a22a93f2e97e41eb32783ddf865d794c509982410c309442a608",
-      "bytecode": "2ce2c4477ca60c69646eabfb2e00a8dad71a85ff4210a91e54c9ad95201c6006"
+      "bytecode": "86490aa8962ade44101db29cc59c8038b02385614f953336d7f1a25b93d6606b"
     },
     {
       "input": "examples/features-0.10/winui-counter/Program.cs",
       "source": "6da20a6d458e50d9817065ebf6a7fffda970f89d330e9a23e2dd92c10f2c08f7",
-      "syntax": "753491874b2b500ad74a8983492c5bb74d983d796af09c45bc5961ad1d46b5ef",
+      "syntax": "ae8153b9ebf4e593763906819b2d30e0dc48adffc1e9ad12252cad00bf94dc4c",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "b02582f72845c49e17af076adf5300a4833b1b14f89e49c2a3c956b1ec9ff528",
-      "bytecode": "ff2249ab627de8b4de6b3c30be7a0835ffbc03e3a87021b2968f06942d75f7d2"
+      "bytecode": "00c904383a8f09f51890546efef2ca8ab3e029425be5ca65a554ef5d22de174f"
     },
     {
       "input": "examples/features-0.10/winui-graphics/Program.cs",
       "source": "3c0d2a86265dbee768438b93a63ade09621054386d04fd8d226b9e11e0b51b35",
-      "syntax": "c20391b31f12bdfdb37f1d3184c9343722c26b0778abb95a80efd8619efd0491",
+      "syntax": "e811987d4558d891c15cfe21a47facf8724852cf8111817de80255bb999c793e",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "ba098c0d3475f784e24d66b00dd92f7b22354e1c18dfab7c2eeba9bc085e9f59",
-      "bytecode": "c796a69c83424f2206b9cf0e6909dabf330ac1d52f271aa80ae174f2942db42b"
+      "bytecode": "5ac4bb8394e1ac042c017e2ee4c8c8b7e02e8b7a0cd5b0487cbdc0c0aa3f67c8"
     },
     {
       "input": "examples/features-0.5/analyzer-tasks.cs",
       "source": "3b3436ec37e04bb88a7998ad1e21e9a9bb5c9d42d84875c09f378eb3f66edda0",
-      "syntax": "b0957b51b1a0e3db5843171ca086c8dc21a01ccaaff6aa94c3ba94431898fb5a",
+      "syntax": "6c83cf5fab6ddbdd4babdade2a9811bcde41f68888763708b3a3025f2a6800ff",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "4f48cb23371fdad483fa603867211d6944258a612872199df7fe0b058dd86841",
-      "bytecode": "7a19ae09e1f9bd569a6e4a568f4ad296bd77dc976f47eb1f238578cf1d933af3"
+      "bytecode": "6d9a3f0d4ed4daf2c9ff9a365ddd2e738678960e98e07966b7c7340af2855b61"
     },
     {
       "input": "examples/features-0.5/finally-loop.cs",
       "source": "55125800b30a35418237f1164a0cdd41341d6670b7ad936fdcdface0224c2120",
-      "syntax": "7ba9a54e04d3170f5e1f23ca153bea664a15cd873398f45baddfc39f94b56d28",
+      "syntax": "0f727a394b259f6991031e3a5337f49f7333bbacd5e31c675db6ca42d86ef8b8",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "bb82acaf76476add54fd628ac55a41fbe226dcc79bbe74984ffb67ef6c904439",
-      "bytecode": "38d48487aa3366ce67dacdebd7e7eb87c246e7290a98d122c237c0d05eaac761"
+      "bytecode": "97093152ab6ac70cf90b96d714d75ce55c62411ee7b6859a907fcc097f6fdd48"
     },
     {
       "input": "examples/features-0.5/finally.cs",
       "source": "f2a1d47ed6ec58b9de3ef87aa5c90ca328aba98371c3092468af41a5f78a8007",
-      "syntax": "5906edbb7ea7fc881a71d34560cbf6fa8ed379325af71dce7a05126727254d71",
+      "syntax": "230583b0432bf346b4498b19384eeb43ec83483869e4e7666af02050b67eaa84",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "7878508a17910a528d790388d289ab08cb203639457b753af7cbaca324374206",
-      "bytecode": "9636ebce2b58a9bed385f65a7afeb559a1ec03540468dfa58a42c6463b9f6b4c"
+      "bytecode": "3db9b3f181998325aff9e15b89fe2c73d6ee9e4b88ae7602ecac4453b97e87cd"
     },
     {
       "input": "examples/features-0.5/properties.cs",
       "source": "9cf36084aaa0c1b099a15b25fb36a6f0eb81a63a54b0db672fb1cdd12d841ce9",
-      "syntax": "3ba7a959161c30fb2f8e3ee8e18e0085f82a82204c8c8a56f164ba80c57d5db0",
+      "syntax": "cc98a476b1a385138e141ac3c3ea6d0e9a9b52e42a591099fc508084dab68fe6",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "5a9f2c8edf12869d8ca2ef3518e3a7c7b1450ef78a46109229a2ca6b8e27af9f",
-      "bytecode": "31b499007b9a1d5cba30bbe3e8ed3374c57db89e62f5ebf957b0a2b32841f557"
+      "bytecode": "e7aed23411822a036a663b1b42417f3888198bb84e296ec214bd6e1f214c5606"
     },
     {
       "input": "examples/features-0.5/readonly-properties.cs",
       "source": "8d7d2015cbe29505cc6bd850321b9cf032396df9f0924ff63a74d118a01da226",
-      "syntax": "def2067dfc2d3f42a3c8f52eca056889c681c4f190ccd0a86a430355196566e3",
+      "syntax": "5337db612b81a75801b0f021423d850c4662b06909edd6c6a300c2244e66afed",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "9ed2fe7cf06d3486c2353d45b9f8852cc0242bf549aca0822adb1ec9361f5688",
-      "bytecode": "acf44fc6c1ce7d317412394be092bcd28afbe400ed559dcde66d477c6be82ab3"
+      "bytecode": "e0728f7730c577046032b28b4f2b78a5ea8e69b8cf218b177f21b2d37e71f7b2"
     },
     {
       "input": "examples/features-0.5/safe-watches.cs",
       "source": "25513a8c3ddfa80915d7e0dc2e73f0b132b0b6bc47f123fb299ad0aaf9a1d702",
-      "syntax": "a110464fa75e5f1ad67abd2072df253db44ae1b4c6b3f2d396ed3e958de4b340",
+      "syntax": "f77b6987f506f46f931751301243a56bde48609ca196ffb60815a24e00a72957",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "f8d840ba081208553152dc90b4deeeb6f011c24ba8fbb3560e3c11e9d5889a2b",
-      "bytecode": "81c4d17322a94b9f5589abf26da537805ce6db22bb2f147b3d9e26241e49e2b9"
+      "bytecode": "6d6d3e08ff7c8e09079180780f186f4d66dc68cbf5fb356b59208d309d87c253"
     },
     {
       "input": "examples/features-0.5/structural-refactoring.cs",
       "source": "6ed0b7b081922303b2c2fa63aac8c01775b085a0839aac3599ac207640ade191",
-      "syntax": "140bb8c07fd2470f6858d396f25fb7d1c89b0c24016ca25fae7c59f5e8316357",
+      "syntax": "d7c953afdf0924c1711ab5cba581eb1b4dac4bd3cf1f980c99806f3871b85634",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "ace883f3feb6cb22502e2e15f3e39b22040fd854e17e9f67af3d72cfe2c5320b",
-      "bytecode": "a0c2a6cfc4d54549900e51170faf94db369fd47988d15b65306a2ea827b2233c"
+      "bytecode": "45da0fd3b362d466040a2469d612f894eb2e062b30c696e9df41f5fa014f8000"
     },
     {
       "input": "examples/features-0.6/checked-arithmetic.cs",
       "source": "a129bed1015efea8833194d9f61615e2777a31710e9b31978ce9ce116e4f62d2",
-      "syntax": "87d2ffee074789aa93336c1da495b5ffe956e53f5f5c1bdd0da202967a983832",
+      "syntax": "48e0507717745c25fb018dccda791fdab3173b57900be4e0aa021598483501b5",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "c7bb37e2e05ad90977a997aab8cfdc499307ec9d35e26da17aee552b8739c3e2",
-      "bytecode": "5cedfe2e78d49e3cd674362ef4e4380de5d3c3974c23b9534288f9431cd6afcb"
+      "bytecode": "7dfe12443411267e8f37ee70959f38031805811889855083e902fe89f3cb120c"
     },
     {
       "input": "examples/features-0.6/constant-patterns.cs",
       "source": "dbdb5284bd434404ff99a2fb880e031a196f6b51be7d411f0f3c800b6b12f29e",
-      "syntax": "15fda67ff25f4614d82b2743fae42f34aea66b1b0e78f63dd91815d0ad067519",
+      "syntax": "d7730da8b9b53cbf2a11c3328437b1b8c657a0c61efa9fd191d442a69ebf49f1",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "b825b2cb6268334ea0813a2d1eb89e9280a93ad0ad258fc25c31374897a92d4d",
-      "bytecode": "231089f0c2c984ce60417698b654f75eeb1344e95f3590ab461d454ded1de3cc"
+      "bytecode": "999ad8ed3dbb29c0e32ba03bb11111f2f8d749e4e60efa93c76706578a9f3b1a"
     },
     {
       "input": "examples/features-0.6/immutable-schema.cs",
       "source": "e77ebb54ebfa2b70c20cd25fd625b12a91f2c6af5cab5d3faab974c88f5c1a9b",
-      "syntax": "bb180356571d018fd1b082e1fc08a82e20d98dc37175063a6062aaf379bb291f",
+      "syntax": "05e883879ab0ce1c5ebf43be90f43b33c091d6363098b9c2d05b8da85873ae60",
       "status": "not-emitted",
       "diagnostics": "ee5391992365d4ab3f63e6ab24d25cc29718b738d3a4354794ad8ee47c7205a2",
       "assembly": null,
@@ -294,70 +294,70 @@
     {
       "input": "examples/features-0.6/refactor-safe06.cs",
       "source": "f7038b0b346257a0ba2aa89a1c571c4e6ba938d912d937b219d63b1d0d94811a",
-      "syntax": "d1442f2d963b0de29c23db55eba26eb31b25c312d4cf0dc880d4cd99975d8b87",
+      "syntax": "8bfdf36608ffeaeaf581e18aa8ad2caec4538e3a465fe9e4a600cdfc5faf6892",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "f41f9cd7ed28bf5d638ea6f64dcc96c390ba0f15a9ffaec68cded4e9c595d51e",
-      "bytecode": "ce0da0634e3a8ace34591b1a4d48b610ef1d66d72562ada71b1792c3051c0d5d"
+      "bytecode": "f592daca9c194a9847d6948f22f16f8009cccc1798f23fb706f412cc69bed1e6"
     },
     {
       "input": "examples/features-0.6/reversible-storage.cs",
       "source": "83756b41164bd22841130e2a4aec97eca1e26d3a4aee2db9794cfed24448a311",
-      "syntax": "ebd3e440fda2f0aa7d7cdc96889c1d75f414891ac87f1ee555ba3626d4d9cbce",
+      "syntax": "3b6fa607e812c434221bb4a625f7870dea3d86a48090daf185aeaa284d4720b4",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "0b6bce928e8ce2b31c8e91af8fc70525c16f4c3e21609b7dfea1c63a2ad39ddd",
-      "bytecode": "5a9d27fbeb4edf63f32cd3ca2eae660c2e5fec140f96c1c3919efbed13ba64bd"
+      "bytecode": "25125322159ee70a9f498a848ad375bc844d98bcf528a80494751717b03706b6"
     },
     {
       "input": "examples/features-0.6/unreachable-analyzer.cs",
       "source": "ed551557f5d3a30a815437332c8fdde2709bc03a70400bb1967a182690964f3b",
-      "syntax": "0982b2514d46e96afe34a3d42b5e088d681ec41ea17b37e883aa3fe8600017f9",
+      "syntax": "191bb1951c5be3ab86b679ebc6078def6b60dde9d3b3862ea728067eeea6e30d",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "08e032a8e7c9fd068d0cfbb0958291bafb4fd793f18c08d1aa2d8a4a66eeb155",
-      "bytecode": "5962ad9b20ecafd290bf0a387519bd1419723bca8a7266fd34ca10a934f35dce"
+      "bytecode": "de8164f10de66aec3ee4a4497b2b0b3326755a1a4f6b88b2630d2c7b803deb54"
     },
     {
       "input": "examples/features-0.6/using-failure.cs",
       "source": "13886c49fd0061fbaaf4ca44091a682422c838cf5cc229e1ffa8d1822acf3139",
-      "syntax": "2a16cf744f5f3fddf0acf37c3b907c9dcd7b05c7dda223b9fae70aff900740a7",
+      "syntax": "eacb10783e1f62c9cbdb6caae96e37e7700f407341817647d38e4c75cf6ee035",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "750353622f80f6eb673ae899be497b755a7ec34d69f4dd6bdafd6e23ffa7fc90",
-      "bytecode": "c1891416402ae85c8e15ac48542a5a8414e6c5be348cd1b07f09178767579e44"
+      "bytecode": "ae665cdd92ea109999ad0420ac7549d7d582a4cae81dcd945df1eca474c12eb5"
     },
     {
       "input": "examples/features-0.6/using-resources.cs",
       "source": "c132d6a32d40935914c0173ba57f8dde96891f95ce04c382cd254b4156f9b701",
-      "syntax": "101064b43a1f1df044fcdfb8e84be8ffb801a1df890480b2ac3cc3614b42d2b0",
+      "syntax": "056fa83cc338d8369ab2db07ec17a1e265e4375e63ea339b35d60138c398feb2",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "1aff0e465dc96a608c51c8bcd27637dc5e1780812c6c8423b24886c26c6b017d",
-      "bytecode": "333534aff2518ce7ae3f4bbae2dc8f3b9e65b37fadf92a362d6be14e8e45c13b"
+      "bytecode": "6c3ef3301e3e7a9ce87d30e968c2949e0d2d410a5ef3d545bc5071229ba0c044"
     },
     {
       "input": "examples/features-0.8/breakpoint-workbench/Program.cs",
       "source": "64808d5094b7b795844d21f4be576b5929e6dc0ac3025618b6d2094eef4749c7",
-      "syntax": "04aedd82089ab524d01569348d106c1fa68973ccba292ab33aa86952340b3207",
+      "syntax": "ccabea0a6fbb584c701b6438ee95d7e5291f67bec3ec144859c400dc28aaa1a7",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "64a7e95ed91b382d3e27dfedd76f263f8f5c1ae4fc0c3e009701f7a866a85d04",
-      "bytecode": "6ab437fa00742ec57d07b0530dc44a1fc1cb56c07933b1e8af0018325e79923e"
+      "bytecode": "df8132e7d43ecf3640aafe49f1beba8aa8598d8287f956b18fff14ee0bb3c626"
     },
     {
       "input": "examples/features-0.8/editor-keymaps/Program.cs",
       "source": "a96e21ba99d95418d02ecb2a8b43328413fe1f3f9c172635de8ac25f92fd1a9f",
-      "syntax": "d3d5c2b306ff05b90b8ab986440a4f41ece6fe868c0cf4c443427f3f97acbb21",
+      "syntax": "4017f9251250450362af5733aa83bb66d9f1cb3141cec1fe463949ea9aa46754",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "e5b7275a44682fc32079240b6a820ad9205abe7bd190479c8f99a1e01871777d",
-      "bytecode": "a2298009db737aaf0842b6a9573a6d45df6cd03ee46516f98f74f5b5057049cd"
+      "bytecode": "0d2f386e2ce9dec84ee9c3649c2871ae5e5f8be29225da6f2773e03582f77f05"
     },
     {
       "input": "examples/features-0.8/explorer-members/Models/Counter.Operations.cs",
       "source": "723a3294dc3b8b3e1361b80017936e4bd5a25c6d19b6d4a172dc62e454648cd9",
-      "syntax": "af1dcdc4dd5e824e2e9a73bc71d29fb276713d8ae18e1cc265703a6b80eed933",
+      "syntax": "4cbc94d3b6f90a47ddd5a48771dc18680315b0c07e7aeb4116ec8d85c41f0a2b",
       "status": "not-emitted",
       "diagnostics": "8dbe69caf5854a269766f7db0a4556b8c8f7d33bb402349e7da55a3149d4b8df",
       "assembly": null,
@@ -366,7 +366,7 @@
     {
       "input": "examples/features-0.8/explorer-members/Models/Counter.cs",
       "source": "7a94c5b12aad00a6e6e62bfb2a723d22776965b13dc2f387a4d8b980124c75cf",
-      "syntax": "75bbe9a1cb5e628e3fafd31b510d1b6e9903824eb8bd1f4926d354cc6f63f221",
+      "syntax": "2fbb2585f7f2276864edd3593703902b24796678195d0d252694b6c9e4a7a459",
       "status": "not-emitted",
       "diagnostics": "afff7b708c8fe133f02c44d3ab77df0a115c97875f22d55979b3ce4c4607ec0f",
       "assembly": null,
@@ -375,7 +375,7 @@
     {
       "input": "examples/features-0.8/explorer-members/Program.cs",
       "source": "593e26e8039789daced332652515de57cd6a0a070501827e965823bc962914f1",
-      "syntax": "9d5a18064d016a7f32fd655c40d539371bc24ff266fe911215df5e498821ad8e",
+      "syntax": "48a233855bc39e12ceff34422f0e3b4f87f8d017e2f19922d737277b6ce2c84c",
       "status": "not-emitted",
       "diagnostics": "44696e8d0b35171e5a32463f18c2c6667571c287ad1acb18e0c172f4d88b8bb3",
       "assembly": null,
@@ -384,7 +384,7 @@
     {
       "input": "examples/features-0.9/debug-callsite/Answers.cs",
       "source": "3210b52e09360cf2a31907fdff0307fcb04857fa9ee6074628532b66e5c31412",
-      "syntax": "012b7e1b2585f61a38f06ebac8934fb4fd666cbafeae4c534227564644e8c523",
+      "syntax": "d734f7b9334340b566c09aa7eb34bfbc93e583ed25dced72c3472e2d4099e97b",
       "status": "not-emitted",
       "diagnostics": "36a5c54b8f6d0defab090e55ab954053c2b5901d7da4601c9e47c34b62959f97",
       "assembly": null,
@@ -393,7 +393,7 @@
     {
       "input": "examples/features-0.9/debug-callsite/Program.cs",
       "source": "606a7294d312cf56b3518a75a4dfb4024af90205289684c59291ab2aed80f872",
-      "syntax": "f1aefa1ece8cc2e3a1b121086ccfd0d212cbbebdb04e8aebb539f47a707848b5",
+      "syntax": "2cacfe7ff3a01869e94b98054ca52014d732b4b0470b0ac7d9f342659160d69f",
       "status": "not-emitted",
       "diagnostics": "8a860c637e4921e0821c615bf7f3e1ddce5405f2455ed5dda9f3274d3f49ce77",
       "assembly": null,
@@ -402,34 +402,34 @@
     {
       "input": "examples/features-0.9/debug-conditions/Program.cs",
       "source": "f1943279f50478ef022cb72536025ed4b7276fabda2779619dfd752ff7e413e4",
-      "syntax": "f89ab2d2c785a692cb2081f531eabd87e83e1fd55eb3f53d4a35ad9521eb4204",
+      "syntax": "85d9e9d9b9f880947bfba279da154c807f75decc5b513b3620c0893b1fb06ee5",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "da702fb2154b340fb253b7ca2f3c7ae6a2f85bcfe3ab9a1f011a5367d9737474",
-      "bytecode": "2ca92dc920c194c2323f660f9b500737304e8c2dc87ae7db7e2b72e4c8b6c624"
+      "bytecode": "bdbea5b179ce2db17b6f40bdbf47b1bccd70c78e26e65348ca23fcad7d7f75bd"
     },
     {
       "input": "examples/features-0.9/debug-exact/Program.cs",
       "source": "eb8acf382166ed6868f5d5128529b1fa810d86ca8a72c48108317834fe790d6e",
-      "syntax": "035363af1abd491fa56efe54b5184f7eae39f4bead15f0d5313651bccf7fbc17",
+      "syntax": "44b62fa10c6577ffb45d675f15e04ef936b9969fceae1a973a24996e130ac9f6",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "b1d3a786b137dc15e9011a3c5653784e6f2cf87c7190ee69ab9bf93bc6104c0d",
-      "bytecode": "b4308434694680526327fc50b550f32457bfba9cabe15604330b9d712e030402"
+      "bytecode": "606c00947fac2835cce09857c9c55e10f76420e66ef075e19778f56425003cac"
     },
     {
       "input": "examples/features-0.9/debug-exception/Program.cs",
       "source": "5821d64ae45690b394583a064f391bcdeb24b98953efdb616752ccc0fbb5c8a9",
-      "syntax": "36ca4c0729839faa09b4a5aecafc22cd9963f1df803feb989296beb58cde47ce",
+      "syntax": "ae78923149bc17682f2bdcb927159ab5cb05fc94cae2b4eaad5182f7a63f4c05",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "7c464576a5744cae03fe8f5f5820c06ce35a26f7610533d81d389e05b8c51790",
-      "bytecode": "11b0e89ce320510b5a5952b389fa5993d0782f29810324370c8b9e92c23a9e95"
+      "bytecode": "5550810122781aa423f800419e652f14dbfeb9f9940c3c522d75c92eb59680a2"
     },
     {
       "input": "examples/features-0.9/debug-function/MathBox.cs",
       "source": "32ddaac03b533b44055430d88767c3608f447a370f7059c01ce5b4844ffeb619",
-      "syntax": "f350b52f7a1e851c5a2565422f6449d674edc96080f80133b8b9086229066951",
+      "syntax": "4370b8f28fa6a23a0b8c8f3144eb9e41a09ad72aeaea620c9528de3fbdd87c3f",
       "status": "not-emitted",
       "diagnostics": "39a2f0c1e69cce6762b97ed9eb4913979be4961b9d1208f60c698e571492fa42",
       "assembly": null,
@@ -438,7 +438,7 @@
     {
       "input": "examples/features-0.9/debug-function/Program.cs",
       "source": "8c0e47a54e9211d65fede11bd1667b8c1ae774d217012b0b65d6bd4bae659e9d",
-      "syntax": "6006068ca34dda66bbcf5f10f63be48b02206983548175284328089a3627e13f",
+      "syntax": "d257f32423a42ca7ab5c92b5b9b61e0d7082873f94915de35776f5ff87f2a428",
       "status": "not-emitted",
       "diagnostics": "39b27e67a14a5998903a6e713448f583d725247d2e9df08070765b3aec218b1e",
       "assembly": null,
@@ -447,34 +447,34 @@
     {
       "input": "examples/gc/Program.cs",
       "source": "374097abc56020dc6756d18970cead48cbe3601720e1d045baf9e3a1272ea87a",
-      "syntax": "bf6bde94da4353079d037095a473fdb7aaabf013800412b63ad2d865fe12d59d",
+      "syntax": "9077d6b0883114e2b8ef313169fca9ff9568d6bec2a5fe8a7a17544ffacf6c47",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-      "assembly": "49fbbd189681165b0c32fe992d7cc0f9fdbf31bfdf24b405f218dacbf69bda1d",
-      "bytecode": "d7f72bd84eb7d21957527a4482d5609e713a79480fcea6840b59eb18527b3ae7"
+      "assembly": "876c9e48690f1ed5001451fc93e804123c8993395ce197a17f9dd4abd9a05f4e",
+      "bytecode": "f43f372c12e2b5266dbb22487b30bd446be966fd92c8354099b271b797261ecd"
     },
     {
       "input": "examples/il/Program.cs",
       "source": "b6b44df37ad390c4b68a34ff2355889eb5f4a7f8e0daad65015b78674cef82f7",
-      "syntax": "fef43b494bd653003d7bbb8477574c63107f4240dedfa2f739c9cb9d4da1af4e",
+      "syntax": "432d17b6f0ea29b9e8bb715320a10f1c2a619182930829d7598ec705538fa8d5",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "073e093faf1791bf0c966895e2f35da3490faf0e9727993659a240559662540e",
-      "bytecode": "6545a9eb0e5a15c8cc724ff18cf46660e88c308d394990bf3783cbf7abd4523e"
+      "bytecode": "c69ad6ab2b59c4147350696448824772567fdfc98792a190b62e26b5f20d2ec2"
     },
     {
       "input": "examples/managed/PortableSymbols.cs",
       "source": "16223ce294fc74772b1300b397ed3c56ab74f4fe7d2b0da879a44dbaf0b098ea",
-      "syntax": "889ade2db06d7090b2231dd9a1ab49596c175907bbd666fa0b468e880b54425b",
+      "syntax": "ea9c4f53e8f0bdc56ed3da82e221cb50d37ff020d963ddea3a62f6d826c715c6",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "cc6322d5acc1adf0246de0a0300ba5cee52c7c515d8002bf1f85052903ffe455",
-      "bytecode": "dfed0995ae8a3b2584e71cbeabafa4b4cd606a4c672acfe6ee2c5ffe3d8ff274"
+      "bytecode": "672a518a90f03db9db046a168116e8730f3b95aa91d82e9af770f97d1d68bff6"
     },
     {
       "input": "examples/msbuild/LocalPackages/Consumer/Program.cs",
       "source": "ab5a684a63839255f9feb24d13ea2166deaa37636bab03b25a0c0c6527095513",
-      "syntax": "0397970ce118525ec64d552afa1a87684fca926a2406ab1d0b866ec7275cfc0a",
+      "syntax": "ec53de6d75e2074cb5eaabfb5074cb035e70367d7f63b4e2343e4b4cc36ff8e0",
       "status": "not-emitted",
       "diagnostics": "a0d45b95437d768762f5af3329bafff98ee7066253bfd3bafe42118738253cbb",
       "assembly": null,
@@ -483,7 +483,7 @@
     {
       "input": "examples/msbuild/LocalPackages/Producer/Value.cs",
       "source": "a9a151e5aef36b027919dbbe68427161403569162faa83fb6610f75b65cd9b7f",
-      "syntax": "42a61fbff4d35395fae6356b304dab9f6358d32d05ae8aa8b2fc739c4caa34f2",
+      "syntax": "95d34c9efd89ab413e7218229fbd62f4a81b96e4b5c14bb294fa1e21be2fe39e",
       "status": "not-emitted",
       "diagnostics": "2bc9154f1b75c5073ccdce9b3e3f8c8792d7a082e375e0b0f1b22aa711523872",
       "assembly": null,
@@ -492,7 +492,7 @@
     {
       "input": "examples/msbuild/MultiTarget/Runtime.cs",
       "source": "32918f95cc92114727364a92cda505b7cc745e4820be7b02f375c54548953390",
-      "syntax": "133c5584e377ae3e316f5981a9ec395c9557895c0b00efb6f08c038a7722c766",
+      "syntax": "dae0e5d84450b0b07665830fe3ec4fc66c10c6121d4d4aa984afc0559b8e3313",
       "status": "not-emitted",
       "diagnostics": "83f174b2b1b9983417e6753730c733d4e2766145a5103dd1a420cf42256285cd",
       "assembly": null,
@@ -501,25 +501,25 @@
     {
       "input": "examples/msbuild/SdkWorkspace/App/Program.cs",
       "source": "168ce631c717bd84da7a41f95a6c56a5535bbb799712b0f008d3d633ef6d360e",
-      "syntax": "a95b0146adb73f853932115e2e97ae8b0e38f7e16cada965ac06f11bfa4d3ad1",
+      "syntax": "a7fa6a90c7394b2615d8080486ebacadbdb150e05f329e9c96801cf2c9bbc600",
       "status": "not-emitted",
-      "diagnostics": "a5d230b309f324d65812afe6686f33c39cacf2dc8f4d1cb6d4733a9e7154335a",
+      "diagnostics": "607be6238a4ce213c4803cbd95cbfc26c7fd98fb5395c06303adfde1e56e55c2",
       "assembly": null,
       "bytecode": null
     },
     {
       "input": "examples/msbuild/SdkWorkspace/Library/Numbers.cs",
       "source": "83536968c9c3bb56a05180287268971a4eee4464f9912c36c35f489e078c1ffb",
-      "syntax": "ba60195e6a62558997ba1494442eccfa9cf4cfbbc17a2cc9ef86db5490d9df0d",
+      "syntax": "3c4f9907f3310dcddfc34e0d1854c5c5ac0f85855568b3a5da47b5f9feaddcbe",
       "status": "not-emitted",
-      "diagnostics": "b441a00d3ac28b1bb5dac7b1de4d2e11497fe03c5f55f6d66d340476c93f1cf1",
+      "diagnostics": "9a8fc02e25b52bb78296a15217853e54cd95ef6c291b9d315f9603dd39ac3718",
       "assembly": null,
       "bytecode": null
     },
     {
       "input": "examples/particles/Particle.cs",
       "source": "be036c8b41d23682285bc120e64d443e5390771cfd56145e199376a2a31012d3",
-      "syntax": "f3df2cd535e75528f0949e8bb87c19eaea34bbdb0e02ce52cc20a8882370ade0",
+      "syntax": "1e911e31e537d7b8a4e3d13e8fe46f7531387b74d858bd78a6b7291d2330a861",
       "status": "not-emitted",
       "diagnostics": "5a7e264cab63caed42844f2e1919bfd1480b47882af6cdfdcac742dd3674fde6",
       "assembly": null,
@@ -528,7 +528,7 @@
     {
       "input": "examples/particles/Program.cs",
       "source": "2211f96031998b6320e964bb3aff6e71c6ba5e33a52e8a6e500d0cd7ee518385",
-      "syntax": "60cd211fa6cc207b7e91b1b401961a9770dee5939be23da3038791b4e9b4792a",
+      "syntax": "6f4dccc538bd2a4fe2ec3ddc1249ae2e26ea6e1ee6a13d82b59fbc1bc6a94bde",
       "status": "not-emitted",
       "diagnostics": "6ba70ed9d281ef0ff0a6ee01d60b9cfbbe821bfc2050a220ee2b3185e7f04d12",
       "assembly": null,
@@ -537,16 +537,16 @@
     {
       "input": "examples/projects/AsyncWorkshop/Program.cs",
       "source": "9081f99992be92dabc0de30e529a208e75ee51fbd22af644720f64caaaa29f68",
-      "syntax": "c11bd26eeadedafc633d4423d7396b11be3f9f08f93c56590f98d6a1312d87ce",
+      "syntax": "933c82e23e8ef69382d1d27839dd13cbc7662174da05413f9669636a7aa089bd",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "0ebfebefdab87772cc500bb88e348f9d9e58be26e7c4eb4a1979509fdce7f267",
-      "bytecode": "e2d364c81ee6978c91ea04637d54cbcacc723a8799d817f6a6af45ea5206c650"
+      "bytecode": "e9c5a7e7188bc5c2a3eb85bf231d31c2f7535c0f5593286c13f6f520cee2fc66"
     },
     {
       "input": "examples/projects/CheckedResources/App/Program.cs",
       "source": "dc36b0bd882a4e2af6af60842a1393989e7949af88f4ff800ac03373ca542dae",
-      "syntax": "aab169406a10931e932a367d226b02a47e28315dbcde07948945fd5586eab0a4",
+      "syntax": "e9775c7a742a6af1647151894ee3aff2d08c8dca438a9bf8f6a71a360ed4b63d",
       "status": "not-emitted",
       "diagnostics": "e1eaea90342d05a798be4aad04a1aa26bb3f163a18f461edb0dd2f093030e44c",
       "assembly": null,
@@ -555,7 +555,7 @@
     {
       "input": "examples/projects/CheckedResources/Library/Arithmetic.cs",
       "source": "fa6430063ce11c28b8f431218d3769b73d87341091a75fb2f223a90c09a72aec",
-      "syntax": "b0da48eb13917f0eac5add2cff0b91d07f104b0712f5129ca6dcdb47eca81b82",
+      "syntax": "f8044f47c4129175590894a20c335c47292dc73c51e7a187163d2a0433fd4259",
       "status": "not-emitted",
       "diagnostics": "9a3bd0cdbcbb8ae3aa39e9a62b9544965219fc2e1ab06d249d2229f4770f349a",
       "assembly": null,
@@ -564,25 +564,25 @@
     {
       "input": "examples/projects/Configurations/Debug.cs",
       "source": "b99a2f69d52bf6e899e519bd24e46711ecb838eaf8a91e72fba7ef2e03e10dd9",
-      "syntax": "2a51df4ffe1e966c18b94d88d6c74f3ce2aea8c1abeb1520bc32fdb594450205",
+      "syntax": "d66e08e3524079c039d9cbae91fbea60340624eff238124477523b20317289e2",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "01a8db5094dbb3e9b71e1a205f540d250aeea97a61a5bac2ec1b1d820ee46864",
-      "bytecode": "df0753081cc8f9268455e104541e0b1eec9b5283116faeb8e0ad71820bbc7a98"
+      "bytecode": "2682e8e5f6de61fa7429499ee2620188857da411d389e8c3446060bb5efd663e"
     },
     {
       "input": "examples/projects/Configurations/Release.cs",
       "source": "1fdfca6112da8feea32f7b51a046b2326da72dafe4217298d0ac24d171ff548f",
-      "syntax": "770419d1d4547a1132ddec8c76d0a034a919222d7fee415c51caf1526aa9ea84",
+      "syntax": "ed3b93131fb55f048b919d91a087eee53e859a471a5b9b7df5d82428e5b5e67f",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "c20394df2fcb92eb130cfc991be28d357221a25b2d4d5a0fddf90e4b12422210",
-      "bytecode": "4271dc90664e97d75f2647b62001fea7fe09da1dfc51f7b117265a33a20b2111"
+      "bytecode": "eb1a75a5bb85e0cccacd618f98dcf9600113c72291224388f550b2a995c0ee6c"
     },
     {
       "input": "examples/projects/DebuggerWorkshop/Answers.cs",
       "source": "3210b52e09360cf2a31907fdff0307fcb04857fa9ee6074628532b66e5c31412",
-      "syntax": "dd17e0c53b9700095cc0d3a155e65fae5c6572c8efeab71f6f7a16758bb3400b",
+      "syntax": "fe6b853afb4361eeb68f7474ada4cd25db79552010d0154e76120d35b986092d",
       "status": "not-emitted",
       "diagnostics": "2077688cfd8b73d692ab9f23d0b752601f2e906c801aa3bbe114fbe771e9e612",
       "assembly": null,
@@ -591,7 +591,7 @@
     {
       "input": "examples/projects/DebuggerWorkshop/Program.cs",
       "source": "606a7294d312cf56b3518a75a4dfb4024af90205289684c59291ab2aed80f872",
-      "syntax": "68d45f2bb66d0c28dae8d460bc05803abfbfaf607b7a035e8a4a9cc9d5561277",
+      "syntax": "9c4281422fbca07dbc27191215518c3be5ef3cee7f64a85aa2a9b7ee8dd17018",
       "status": "not-emitted",
       "diagnostics": "c3401cc47c6b327542da0a0e54a89497cf932270a63dc5cd7896d324ad35c78b",
       "assembly": null,
@@ -600,7 +600,7 @@
     {
       "input": "examples/projects/ExplorerWorkshop/App/Program.cs",
       "source": "252cbde62a0ea026b16e5d032961faa61ce0f9da8781179ffcba9a306033c65c",
-      "syntax": "568b6d3bf407dfa9289adb75d3a21e649ecca8e385f86f7f5e7cdffe86a29473",
+      "syntax": "1f7e8ae1befaf6c10786e3dbbf07b9a67cbef29ea8f60cb67e177a8392f90934",
       "status": "not-emitted",
       "diagnostics": "54b88764a3b5ea9fc963391284666948ffaa58697adecd0aae37046ad387fb7f",
       "assembly": null,
@@ -609,16 +609,16 @@
     {
       "input": "examples/projects/ExplorerWorkshop/App/Scratch.cs",
       "source": "8c84414ac492a2aa5f934e55457cbfdd0c51914cd75724f29e4d18c5836043b4",
-      "syntax": "71855f6c1d3a033b6fc69cc2ecb45c01fa5f51b50cc40ecb2614a0e5a84aeb42",
+      "syntax": "28a6c209e2615ceb254e81b59448f1172ebd89b2b416adcdae2b6ed1edade806",
       "status": "not-emitted",
-      "diagnostics": "807f22e954a89b83bc864bdbb7746bad6ec196ce519e405867ddd83c30589cb4",
+      "diagnostics": "f13a36f554224b140e08f8381c7c29ca1a4c79a25dd0759de5d3b4975faeb0ca",
       "assembly": null,
       "bytecode": null
     },
     {
       "input": "examples/projects/ExplorerWorkshop/Library/Models/Counter.Operations.cs",
       "source": "723a3294dc3b8b3e1361b80017936e4bd5a25c6d19b6d4a172dc62e454648cd9",
-      "syntax": "eabe9cc5d0a27753b32f32fced46b0257ddd2ece507b93218d28682d5fbc457e",
+      "syntax": "1f9d6311c377f865ea12a8802d65de76efd2467aec0594fd912f01e8d1c2d925",
       "status": "not-emitted",
       "diagnostics": "568d3e8371d730a2dde53c7c2676603f76a095494941ffbe47b8b9ac6582588e",
       "assembly": null,
@@ -627,7 +627,7 @@
     {
       "input": "examples/projects/ExplorerWorkshop/Library/Models/Counter.cs",
       "source": "7a94c5b12aad00a6e6e62bfb2a723d22776965b13dc2f387a4d8b980124c75cf",
-      "syntax": "857187db39788ea93a5621f714cb22f0d858ae5a541b012ddfec6431ca6e9917",
+      "syntax": "e8a6177cd22d01e81359a098178931c64be251847508abb4fd4c3f72ef382f4c",
       "status": "not-emitted",
       "diagnostics": "978e295d7f3ef5fc4aa933173f4b7a2673179db065a76ba8e82bed8fac92858f",
       "assembly": null,
@@ -636,7 +636,7 @@
     {
       "input": "examples/projects/ExplorerWorkshop/Shared/Answer.cs",
       "source": "a50629085a6e68edf1efe22964ca96df01b0cfae45344116c65ea94ee2556af2",
-      "syntax": "f4a84aa24dc18d244b6ac2521301fd4760c5f7126247ec279ec5b3b1cfef98d3",
+      "syntax": "fcf3db9ef377fc03bf288bb225dde74366a5d128da32ac7917f97aaec67bfc89",
       "status": "not-emitted",
       "diagnostics": "6a2002ed19eea9327c0b29d18ce96ee0a2a3144f9409618242ae1503ae7fbf15",
       "assembly": null,
@@ -645,7 +645,7 @@
     {
       "input": "examples/projects/Generated/Program.cs",
       "source": "d00ce2977c4fc3a2c2e9ff85383f7e39f5b3c531913f9b2b24299c31bdab5693",
-      "syntax": "ba788cb07151c88b5868b568180fbffe2c1f39d0f31ef24efb70602c647c27b8",
+      "syntax": "52a5b629d46c593a97f8de270f1fa349078d4bda9626431d4f9fb0266d4ca78e",
       "status": "not-emitted",
       "diagnostics": "e76eec5991ee16377caca2df0b0dc9085da85367cf5c8cdf4198c9eb43948cea",
       "assembly": null,
@@ -654,7 +654,7 @@
     {
       "input": "examples/projects/Library/Arithmetic.Names.cs",
       "source": "a6fd8f4a370723db2a47c1a50bbb53af47b1f1e5b641a214d78e12074369f02a",
-      "syntax": "a9349b0fc36a235a4277739427f43637c733dc7c2aa93ca1bc6a50085b21240f",
+      "syntax": "d7fdf3b6a432542767a6b073a0162086b131bc250c595829f565de0a657f7a1f",
       "status": "not-emitted",
       "diagnostics": "e4e470bcb92407c462c80721cbc72b0b0bed6f423d87b1da6b9b070b69a6c977",
       "assembly": null,
@@ -663,7 +663,7 @@
     {
       "input": "examples/projects/Library/Arithmetic.cs",
       "source": "75eb996e0b26b7edcd42549f774ca4fa1c3a6c582db395d8e5e5582cbc2c3b7a",
-      "syntax": "c6f13b45a7fa0c5e297a322eaf71ea16677ff9f416b21573b9e3ba1a0efd2ad7",
+      "syntax": "3d05387143147f2bdd263d33a57e64a57c3dafffd30617e47b0ffdc6b8161fa0",
       "status": "not-emitted",
       "diagnostics": "e1b8a4444018e35f8c87db76762f86a102000dab1122a1ed1dd677b44d8e1a05",
       "assembly": null,
@@ -672,7 +672,7 @@
     {
       "input": "examples/projects/Linked/Shared/Value.cs",
       "source": "790326d8106ae7a8ec7a71eae80adff06d428304a24ccf850314e12706851ebe",
-      "syntax": "8afddb300920bf03586d8d05f92426e0678905d7405776cb806ff4389104e4b0",
+      "syntax": "7148084cedb2cd85575be07a0374a05341e59c43c4fa53dc42b6f167d0378a9b",
       "status": "not-emitted",
       "diagnostics": "7cfb070b8dae7364ec04e4414f9fa8cfc7811ce18139e32612bb986808ad6671",
       "assembly": null,
@@ -681,16 +681,16 @@
     {
       "input": "examples/projects/Linked/Source/Ignored.cs",
       "source": "0fa06871a35726a83e59fc215a09376ed5be31dc1ce6218468d2e330fc9acf2b",
-      "syntax": "6ef23d9ed8f2bf9c14cc1ae0a1bb1c214739ff2ec52c605e76c4771784c7de60",
+      "syntax": "28fa6a975399d0943f454aede265e6ed156c64e09a6f3735257c490b55cf1eb4",
       "status": "not-emitted",
-      "diagnostics": "6f27e59e499d5ace9c3f025ccdf26066f2835929638fe770614389b5ee2f57ca",
+      "diagnostics": "80e5931965b5e8643517001f2c2e92366531f25eea22b16eee7bb7025755d719",
       "assembly": null,
       "bytecode": null
     },
     {
       "input": "examples/projects/Linked/Source/Program.cs",
       "source": "683dcc6da5321de0da7de86a90346c44884fb578720ebd5848ba0927a6337cb8",
-      "syntax": "8fddf90537e9c0d1ebce67fe9dc85bcc69f55a5ea471e3b700a49a0cbbe85d42",
+      "syntax": "b25a9bbcd7518a2603bba5c9d90e1c3cee25c19929693db33e60680ac70d4b2e",
       "status": "not-emitted",
       "diagnostics": "6b23866967ac56ac7d9fb9dfb80ef753878a3323c025d49b49fabf3d39e20362",
       "assembly": null,
@@ -699,16 +699,16 @@
     {
       "input": "examples/projects/PropertiesAndCleanup/Program.cs",
       "source": "61685fe36d3e6a7944d56bc32b4c9b7c8f01d6ea5e29fdf57ccdac4ba484334e",
-      "syntax": "227cc1b7726c790c432f5c55bf7a3dda0e708fe18e6c2bb4cd86a9dae573704f",
+      "syntax": "9794be2bbb2616735844f6c9bd8895fb672d27eba11922b6a4855ab73fa7e702",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "04c3381422c623267652ec4b4fb2fa4addc0aee179603d88e672ad8517f33c51",
-      "bytecode": "54e0fa53e5eebc69d88c8d85efc873ca0988b924dd5da28951711757d1cbecba"
+      "bytecode": "cdd4c4e170477590a239203ac320227a83c3cb0e44a33d0871291a4174260493"
     },
     {
       "input": "examples/projects/SymbolWorkshop/Calculator.cs",
       "source": "ab902b911b16a2be2f75c774eb558333d0248c8f1c6094327393cf88fe3232b0",
-      "syntax": "485f8ad990c376872ac39fc12ae3e8531d0c0c7c0c43896d590add197b0544d7",
+      "syntax": "4576b253d20328368e31b6056cd8d3ad1f63ca04cdf50c921918727894d74889",
       "status": "not-emitted",
       "diagnostics": "ac780f6708c6cacdd8b61544e34a3c46eaae7a0ed3391795aceafb2d9c630e55",
       "assembly": null,
@@ -717,7 +717,7 @@
     {
       "input": "examples/projects/SymbolWorkshop/Program.cs",
       "source": "a99065c058416fb7f5106822358fdfa9efc754694162c23c80154e67bf5fc43a",
-      "syntax": "b6f80c2b29bbbaddea17c83cd4d86e2637333dbecb9ed28945a00f0fee897afa",
+      "syntax": "71f7f884b66d67a477ada8a3db56b48fc90b39659c7ee98f1a5aeca05ed2f910",
       "status": "not-emitted",
       "diagnostics": "33080377f9c561d9ef89d95571a8075bc1d772ba46718fd1878bf72e9b3bbd2b",
       "assembly": null,
@@ -726,25 +726,25 @@
     {
       "input": "examples/projects/Unsupported/Program.cs",
       "source": "169342a884082c505a0df396903b14a7b16f22515c804843e490b0df05ff101f",
-      "syntax": "157e4c5e7b7b32f228e495190513984f049253bb66f2affeac34e2e0c42c05fc",
+      "syntax": "b11e1a503951d568cf5a6c0d6989955a9bff2a2fc0cc6e2e29bd89341861150d",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "5b38d07c6d866b7d83a73649875775b61050bec62aaefacccf2c4e5a800f36e8",
-      "bytecode": "8f74006bffbc146df3490a92506e7db01659be888056505a9b9de0be96c15884"
+      "bytecode": "65e1a94c2305385df68513aac4fbc7d9949e518bef95b9f6d09233e4a6ef7d04"
     },
     {
       "input": "examples/projects/WinUICounter/Program.cs",
       "source": "6da20a6d458e50d9817065ebf6a7fffda970f89d330e9a23e2dd92c10f2c08f7",
-      "syntax": "1fac28ee29088a98fdf6ca0c5976371fe77657217ec35008361639ddb25b1772",
+      "syntax": "9242d36d371b149f81477662b8cdcdc4913aecd888f37f54d950f629382ed0a2",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "ba117d0b494f36339bdb7994af0ee03ccb28d0876265e1d650ddd9e19fc7a425",
-      "bytecode": "a4fb58adc13822094f189e08929bbca9e4b511aa48f458bad89af35b7c2e2d6a"
+      "bytecode": "b13f02187a88121c92a19e52e1164d57187766a3d1d8d6247835f1f53fdbb98e"
     },
     {
       "input": "examples/projects/Workshop/App/Program.cs",
       "source": "a9fe8b8369ed5d570809fb125bdb459e094ac7d41a7ac2accca7b89c55aa14ec",
-      "syntax": "89cd78c67ecc201f41b233cffaa55b1d1e9adc74636ac971b19285e813080471",
+      "syntax": "4bf2cd5cede006a22dc6871ce60416f2cb822afa3b2920c9415ebacfc362ab3d",
       "status": "not-emitted",
       "diagnostics": "b9e51603709659decbe2ba223b8ec73970df37376217467b65eaa592a2b6dc52",
       "assembly": null,
@@ -753,7 +753,7 @@
     {
       "input": "examples/projects/Workshop/Core/Calculator.State.cs",
       "source": "a027d1a2628539fb18b0972194caf340d0bc2ecbcc0edc40790044bbe90eed8d",
-      "syntax": "f32fd918591946552ea0a4b0ac040d56f5d3f59b2ec26cee1ea619c0cb32f5a7",
+      "syntax": "db87726db9eae745b6174f7377905b912c5366eb2cc6a34020ff935fe456bbc2",
       "status": "not-emitted",
       "diagnostics": "2aba9ad8400b8f46f70213c9d7bdf968ad62830abab45ca0f295292bb89a959b",
       "assembly": null,
@@ -762,7 +762,7 @@
     {
       "input": "examples/projects/Workshop/Core/Calculator.cs",
       "source": "16b3d730ba6fe13bf8359c56721d31c65753b349d68c465c80b8a75ab128b2fc",
-      "syntax": "2cf25eb983db01cbc8efc6cb1a252c328e6aeaa6574c78db08a346c953cbeb87",
+      "syntax": "69deb52f0e3674f85a803e4ddebb826e1e7fa0ac50a621277682caa590798966",
       "status": "not-emitted",
       "diagnostics": "f355d4a7477395d8ddee8d3f3a4cfcd32a3614993bd673b20b4e63e4052ed08d",
       "assembly": null,
@@ -771,115 +771,115 @@
     {
       "input": "examples/recursion/Program.cs",
       "source": "9be26335b0d76381b8db32d55558a2cb0bb9b50dace42dc7f903778deaaf2ee9",
-      "syntax": "2273f93b93fc6af798b996bae04281629dc21b9cb289da79e0b4d40a06a21427",
+      "syntax": "b203277aef9b8273878f3959199c1c89956841091196ea6f089c3a0cd59b9b9e",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "0bb644e67f9e9ce1937deb8366bbc36323f0c73cda3740ded502ca927aa5af9c",
-      "bytecode": "33d78c1d77c9e73b154ec93d3907ddad17d3374b43e6c468f3364273fd87880f"
+      "bytecode": "5efb85fbdc05cfabf5bef0fe0977c4136c8b22775fc8c7ef7e72b4ee7ba6223f"
     },
     {
       "input": "examples/release13/AnimationStylePrecedence/Program.cs",
       "source": "1c6be6e8cec785599b1281a17e9d57e539cc24d01c9d3353358dc8e8faa88d53",
-      "syntax": "148f8f9674714b4cfd6d19e5483b8f1be6721e5d5c97daba3bdb1e7d15fcac77",
+      "syntax": "26377c52983516122d7090324b3d01cd748c8ea40c213b808bb1825e33b4c981",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "677bac6842f77693e843be277cdd5c07f514afaa73da94fbbcdb4edbe316bd24",
-      "bytecode": "8b7d444a6bdebe0ecad8749f44b0dc5852287c3b31b1ff8232605382c8303091"
+      "bytecode": "93e0ef99d20f289d96e0586d03aec5b46fd7f7b22557c9b94ccf6646ad756589"
     },
     {
       "input": "examples/release13/BclCollections/Program.cs",
       "source": "1b72e900a6dde5ded5b54920f47aaac2b93a4851eb20ca11fb50a8746f0814f9",
-      "syntax": "e119860943f8399162a59847a456f98a756d399dcb5bb2d0b3df55c301d9ad00",
+      "syntax": "429feccb821d9b28952c1526a55f58c8dd154247ba837cc1d1ad64decef9d03a",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "ff5cf8411a3da090454f616780afce899106a2909ce983a048a6bff037aac2a2",
-      "bytecode": "c9ea9cb23a4f14f7d865ab3efe96ea66fc66fe9a7ee1c064c20b88ae68131064"
+      "bytecode": "2b5ce867603a1100b2ad708ab28e51f9e3bc3955080c269d456515c535654c7b"
     },
     {
       "input": "examples/release13/BclDictionary/Program.cs",
       "source": "5c8d316277774e7961e67ca2588132201d22cc6a9c6a3fab9acc50eaea6ab13f",
-      "syntax": "0ed2d6d40237dc39494c25205857e5c18c9350cf33a5f0c5091aa48f691e397b",
+      "syntax": "372e7ac1dbebc8f94c7e09e2a567a11608b91489a690f0ae023c42143907c33d",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "30926c3a4a0077c258a46ca054374b1af5fe4567416c294706df619371c97aa5",
-      "bytecode": "317ce7af90951f5bb91eea22252e3af7b7e86238e9ad2f3e7cc7687a61a30038"
+      "bytecode": "023cd5f9a2f8267a10067ff4f74f6fb80b23f11f3f3eba68414a0e931bd3d1b6"
     },
     {
       "input": "examples/release13/BclStringbuilder/Program.cs",
       "source": "27003d8d5a4d22f3d5ec8a148af5611f30adf2217e2f93f75ed013cdba3de944",
-      "syntax": "024a420e2f34398b86f9d60639719fb24ae60add1e0b086e7df4f91c449d5665",
+      "syntax": "3f6abbb590206664669fffed03c5cd741228afbd09dec09cfc67c9349031f64e",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "ff9004e76d932a0943af3efd6b904a6550629b17e27f602d87f36d0d8cbf626f",
-      "bytecode": "03372d1dbb8fe68aeb38c01144645a7863f92a857ffe078de3c9e2b511a0fc02"
+      "bytecode": "1747c6534da360c7167c17613b924d377fe612ec22ab5171628cd82bbfb7363e"
     },
     {
       "input": "examples/release13/CsharpInterpolation/Program.cs",
       "source": "b64cc7ebfc26155beb174ed579834d2aa03983e72234c708b608e1155a8cdd90",
-      "syntax": "9351a5c0907fb830cb83c4c48f7b5d5fffa9403e3cce5711773c562fbbc295fa",
+      "syntax": "3365d5c11d6362f6499724bce4adb7bc6b7c68da0594b656f21f59e67b76310f",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "5f6ca46be13f8af69955cf03da2ce02c9c5a890c023d341d449d7a4e2eda4664",
-      "bytecode": "455c7d09ad90f12ee05de083b75184bef5a87d8b489280ea7e3cb8fcc3e65890"
+      "bytecode": "5ebe17e4d9d6fca3a5cd49c7f12035cd42e8f9d676e596d1a8b6838b8dfbebd5"
     },
     {
       "input": "examples/release13/DesignerCsharpSync/Program.cs",
       "source": "95a663a850c64adfcdabfffc58e41855cab9c7dca4fb1f85f813fd5c84b34660",
-      "syntax": "4f113495cc18c7f98b40a9f0f781f8c790fa204c6782faa2fe88b6f6dd66ad2f",
+      "syntax": "2b93599d02f668bfe5a86fb5b785adb0cbeca463403dc1aa6a18231190fdb7de",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "d18abc3d3a1527b488d3495126fe4570d88e9143a6b07b2dfe07263cd3b77072",
-      "bytecode": "0bf2152a4af153dc12f192083706bd6dc5566440fd7b0729eb7b3001bd41ebfb"
+      "bytecode": "dc48f9cca7b8bf29152d1bdb381e19c36e330f37e95da9d0d3442065214bec84"
     },
     {
       "input": "examples/release13/WinuiStoryboards/Program.cs",
       "source": "e94d2dbe9e075553fe383439fbed5114c73fec065e3ed220f10c3314e86e6c77",
-      "syntax": "924e23cb7f3ff650eadc5cfa7866a8f8cd08870e3635743898af82e116a2751b",
+      "syntax": "02f80bba046ea2d26712bcb00b39dc27dcb4c6db3749a165131888c38ee28309",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "18e18c9aaeabad70c7b742bbd0f3d95984a3947fc372e863e0927a4179fef2c9",
-      "bytecode": "c43cb02b7951e4ba0536fdaf85feafa5b06f6e2ffca4e488a89e6739f534f120"
+      "bytecode": "adb0c8d850e12e0726736572599de988c946e07d06e9b3036030a24a727c6e46"
     },
     {
       "input": "examples/release13/WinuiWrapPanels/Program.cs",
       "source": "9182e622dde0aee87f7754590113d22a76482a7c84bc270d583eb6256ca84b82",
-      "syntax": "beee4211d8f96ef6eabc8862bab90d4e3bd7b1962c9af0e680fb41416242c276",
+      "syntax": "8b237edf28110da0672262ab738a0d3a8f58c9180415afb2baf1080015781201",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "95b3276f06c3c862ed4776e7e41650cb17393371246064ca784853051864eb0f",
-      "bytecode": "0743165bbba2a29d274046ec51c9ce686eb5cfe9b451fb1771ec6bfeb384b5e4"
+      "bytecode": "21a1461277714ac81f7e7ef31760d58ab2ce78eb6e7640a00ce18c70e21897d4"
     },
     {
       "input": "examples/release14/BclArrayRandom/Program.cs",
       "source": "e0487a1881732918e77d0c9162c71fb968787e11d1fa98939ac06c0442867584",
-      "syntax": "afc426b885c556b9ea949545f78b2994a545d8bdd6580a0826d1779ee01996a0",
+      "syntax": "d058bccb3fa19c9e3ee957e298078e9e097595a001d736d43b16ec6985cfc16d",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "1bfc04e5429d44ebfdfbbbb89e6684718080c05d7b885c18a63b3ddd0009088c",
-      "bytecode": "52d87158f98f6db23a2ce3d0a4af94c6d902a8b69bfd13350e47d894d9245310"
+      "bytecode": "4d4171f087218a79b055eb6094b8c55223fc3e9ec4ae5b8e1c4eb81ef7fa0ad9"
     },
     {
       "input": "examples/release14/BclJsonDocument/Program.cs",
       "source": "b5af06f7e94ee811487b4601cdf2c8db51c8d7b9c183686a451ee991854021d6",
-      "syntax": "e3c7a99637e93696a942a360f9be1106af54899056347c2d9e7e93e09ebbfffb",
+      "syntax": "e0a347ddd43b247c6b9bd4e132da0f4733a49610a20c238d6c899e73200ec200",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "ba4e383a3bbbaf5cb6e24e857e446de58ee58a4a6904ee80bd5244fdd06a534b",
-      "bytecode": "1fdec703c7b7cf6dff3543ad0386e77f0ff1a0f9395e4edfbe6b044bd5a47301"
+      "bytecode": "f339141e2b0efe4b0b056cec68dc5d453bc0a5533b66b8221c78fca4e9673139"
     },
     {
       "input": "examples/release14/CsharpModernProperties/Program.cs",
       "source": "deb3d3e9931f7a55dcfd7664825ba63e4ea6292d681c1ea0182e9a3a6ffc6a0f",
-      "syntax": "ffc812d2524921fccadbaf12d913668f8e3007ad5a5a89b6a1a0fd159413700c",
+      "syntax": "de357aeb6a0e93bca84f18fa1d6582d15c73e729b75da58f843c16ead0ee7994",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "c0b818a81a922cc86cceba98361077916f6b93ac5e1892aa96f775693dd5a0f2",
-      "bytecode": "84577f4c2a9c61047ae29b213ace7e53404b65fc0b0b9a230552f8c236122a06"
+      "bytecode": "7d0400f530f1ec52dff3e1aecab08ae44116de534d2673f2d923e872e51d37c8"
     },
     {
       "input": "examples/release14/CsharpPreviewCollections/Program.cs",
       "source": "37ac8e1b144d49a76d4494c2c18ca070e0fd06a45113e6c218ec55e5ea2af458",
-      "syntax": "58c4609e335ca6575fef146804309904c3e8c69535698b01b51bc53c78cf666c",
+      "syntax": "0a736705440413698f19054b380b3a3918ec51bbd7ad9a4897ac1112116b6886",
       "status": "not-emitted",
       "diagnostics": "85b58281dc77156f4bf8393de461333ffb1af98e6588f6ca7dbffd075c266bc5",
       "assembly": null,
@@ -888,43 +888,43 @@
     {
       "input": "examples/release14/NetworkHttpClient/Program.cs",
       "source": "d44868ad7fecbc8f9aad2c93b0c03dc8fd23502f46669590b4de41000c8781a2",
-      "syntax": "d6f8e776c67dd681691804711f0c50764838f4caaf8c72e208f289b894fd545d",
+      "syntax": "6778639c6b19c14fc47978ddfd0cc9cade3004a288faf84fc7b6310ff0c82d6a",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "26a185012df8fd8e81748cf634f55def37b18250d786044ac4db4b293d22a48d",
-      "bytecode": "e30deedceebd1cb36efe094ce6e1c0a65b0c8b77a783f08d078df6f30fb1f9dd"
+      "bytecode": "eba14d46e61ad0119d81aca21d94eee260075555ad8b2347c84fc8a605c0222c"
     },
     {
       "input": "examples/release14/ParallelCompute/Program.cs",
       "source": "acb9ed107fe7f13f9d941a40ac64b0299446984fd1843c05a8a7a81f9a246052",
-      "syntax": "1f067c95818106c647f3c92cd88dfdb874915a44a80aaad5b7337d16ba32f0af",
+      "syntax": "8b4029f9fd90cbf5114585acc3b8743fc1ae3128ad0f86c660bef3f9a5bc07dd",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "67722e698e196a36a38e3bfb42b74e2e32af5f67f82bd72f657a266ad065c811",
-      "bytecode": "7f264da6df4c91b292a4545a4337f4fd6b1cea4c0031db5c8e379afc0271a279"
+      "bytecode": "7449a8793e70a0b780bad0288d7ac380cf189a83afdd25eab404b4c8d7332de0"
     },
     {
       "input": "examples/release14/SimdVectorMath/Program.cs",
       "source": "5df88d280713aeba7e10e4c0c9b76f7d28774d66b432833687980e2b2d132562",
-      "syntax": "548bb73dfa94a79fb271b77b19212613942b5f7fc80ece45df15a56ccbb2b6c2",
+      "syntax": "4ad2699ff6c92ad2c8d0f390922ecb2312094823dfa058d91d57390270c50cf2",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "ede8b6b314da50c606d62b3d0bb80a9eb8aee3e1a5139a55a188d5ad44cdb350",
-      "bytecode": "116a6ea344cf5423dcb0c9f9142a3775afbc72cd2244ffdad7cacd028e0c93ea"
+      "bytecode": "c88f941e4927f3f595b5216e596bb81a5df88f5d4225fad24d9d5d7f69b9bf2e"
     },
     {
       "input": "examples/release14/WinuiComputeMonitor/Program.cs",
       "source": "8b5d389c18c118c9dc28bb12b8724d68edd0331502c164041eaa8c08cb7d16c2",
-      "syntax": "dd21ad63a0415d558473e993a751a9ae078fd1f498587752dc0517f1d00b0a1f",
+      "syntax": "5bbe8f53002ae3d5cb8027a2b474993a95ac538457f0857054ff26ea41bbd57c",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "814eff3236043fc4d0db1e0668ac32af5510869d215c6857da84d673903c1760",
-      "bytecode": "42d6685e17f997b1c46e4e8a477fec6b5c5b7f4d094356c063b04e54e1383879"
+      "bytecode": "1be7ac8e3593f00aa7d86ea46b66d19265150dc1c426fd24bb4f753cf189407b"
     },
     {
       "input": "examples/templates/class-library/ClassLibraryExample/Calculator.cs",
       "source": "84f0d318b21ca86f15ed5348acc7ba41dac48934a05e81267aebf703a4935328",
-      "syntax": "9fe8fa8bd8f2230bab732e0965cb0f70ea335d4009299701af925fe3b9e634d9",
+      "syntax": "70f7971de8e1c44c47f30c744d2866bb7f9f0f992b22501576df1964c45777c3",
       "status": "not-emitted",
       "diagnostics": "54bdb3ea4c45dfbbd804315dd7b1c057be093e32f0362b242a496edea4062da9",
       "assembly": null,
@@ -933,16 +933,16 @@
     {
       "input": "examples/templates/console-async/ConsoleAsyncExample/Program.cs",
       "source": "2c70eea2c8f1d88ddb7e548958731d6d829f4edc9ea9a172fffd9a844e137ac7",
-      "syntax": "b7d1b44d9931dc393cabf5c84ef65f3a7f877205f9345149569cd49067531dc6",
+      "syntax": "d2e968994ab739478a13b6aa6094aa4c514bd9e342fddb8a9db8c8c25f712f86",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "3e03526394fbf8484117633df885f031cba169ab5b8d93d04d94e6ee3f9f7102",
-      "bytecode": "514419405bad7390fa629758cb9b0bae993e812d04706e175feb1fde38c73d8c"
+      "bytecode": "5cd49d00c6c9e24ea17490bd2dab10586ea1ac4fe5e92fc4772673cdb73205b4"
     },
     {
       "input": "examples/templates/console-library-solution/ConsoleLibrarySolutionExample.Core/Calculator.cs",
       "source": "7386fb4adf79afe2c805a987566fc8882fc3b729cf28f65263fd674819049ffb",
-      "syntax": "ca9d4dc242e4f41b57dd40e8865fe594bcf6a0880802297f9f20d67bbcf0db45",
+      "syntax": "146a1f6a3d56f26765fd309c6797d777a8005a1b1a3150bcdc44bfccc1eea42a",
       "status": "not-emitted",
       "diagnostics": "57e3f342efc1656d81b3bcc83709bb47a5b3de62100c1612b4b13bbf69a841a8",
       "assembly": null,
@@ -951,7 +951,7 @@
     {
       "input": "examples/templates/console-library-solution/ConsoleLibrarySolutionExample/Program.cs",
       "source": "e41363e83f9250a8589fd0cfca64f49fe0da255160dc40e22996407cd23eddf5",
-      "syntax": "a5cb22f299966ba25551d71a55253d200b2a23721844b79a42b6fa404b8f2cbb",
+      "syntax": "6b984febbd7e9213a2f8604c9e38ce801d9de4d2a75f1e70e64172d185b4370f",
       "status": "not-emitted",
       "diagnostics": "65d82f4d3e9a3583127a81b4bb549c460e253837e8ae9b43118ebccb3dd20228",
       "assembly": null,
@@ -960,16 +960,16 @@
     {
       "input": "examples/templates/console/ConsoleExample/Program.cs",
       "source": "e19bbcb2c7954f8c4a5681270d1b4e72660d194c2dad45bc06fb54f3dd1ec675",
-      "syntax": "94ebadff7706ad9ac8ad7d557401d049d42cca2a55f3bcee36858a34694de0d9",
+      "syntax": "8f5fbd7c0343fec7d19a0b2c38d541f98ec025a80b83243cf4037b614ee56c9f",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "6d7f1976bfb211d1843538bc02de55185517500ee23737982c52b426a9e5bf75",
-      "bytecode": "d9974e802953f4622d922c7c233ddf43acd98614bd7d131f6e62eb8350737d3c"
+      "bytecode": "b696c9bf2608c7efb7bcdf8addd6866340b8634cb73d63bd8f356d5892f1e173"
     },
     {
       "input": "examples/templates/item-gallery/ItemGallery/CardControl.cs",
       "source": "de5348facf430b499ff86fc5b13508726952baee669d6c996e3c4b17ce99ab5f",
-      "syntax": "376b322ed58d4eca05e0a93a4dab9f992e8d1b55bb741d5dbc43970e9b881c00",
+      "syntax": "f3045a3147acc3d24ca9a6e82dd87eeba0b4d40ff85629388e4ce21d6859acad",
       "status": "not-emitted",
       "diagnostics": "51b7f34c2e077c5aa4cd28b33f5300365a0ce8a0465aa67abd6fa3678a402258",
       "assembly": null,
@@ -978,7 +978,7 @@
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/class/ClassExample.cs",
       "source": "5daaa7c7668d400f40659fad382d669e4b12532362e28609aab42ef0c0a33a82",
-      "syntax": "8dd62323f0973cd3d78aefe81943cf140b691f9b1762a7aac7007f44995b6001",
+      "syntax": "0177f4a7e1a332baf2e21c0b990a6d7fd352e5a9ccb5c94b1f9ab6fea2cb6e94",
       "status": "not-emitted",
       "diagnostics": "ffe0911ecdfb1abb09197c9ede4a54086709e5d255a98f97dc7353c26cf0b391",
       "assembly": null,
@@ -987,7 +987,7 @@
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/disposable-class/DisposableClassExample.cs",
       "source": "621a0a6fab971c81843585247a162c1b84e9c3594b78ddb7ef9f51cc8b37350b",
-      "syntax": "1ff2ca0039a206b74bd099aff52ea986dcc5154d1f8b378a32b5eea2b64092b2",
+      "syntax": "a60ada836a86e500cbe5eb452e3a9e8a0a59e7e8f981f357d3d1d394e390f5ce",
       "status": "not-emitted",
       "diagnostics": "249558ee2da1311bd4e03295a4c96c76f35d10a7d72ec3161a1979195c4d6cdc",
       "assembly": null,
@@ -996,7 +996,7 @@
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/partial-class/PartialClassExample.Methods.cs",
       "source": "f8844623ede8d3bcc607e5dda3530add74ae4c8b1d60bb55d9adc0ad7bb746ed",
-      "syntax": "15b3f36471f95fa1b00329991687a20bda0e01412656f43cf96d68a45230466d",
+      "syntax": "824ea8bf068687e6c13b8651a9cb7875de6ac0e3a5e93b3af7bd52e22938927a",
       "status": "not-emitted",
       "diagnostics": "8ea7d80cfb5f4d345d8955e19560e1c7329ff1b3a9a23bc299485c9ea61d486d",
       "assembly": null,
@@ -1005,7 +1005,7 @@
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/partial-class/PartialClassExample.cs",
       "source": "29fc906b317efcefa29eaf83903983384bb8c916b67c8e58b241fe54b9cdca57",
-      "syntax": "95088d2858d01eed025e756e76a62811352de5a08a84ae670acd1c7c6063107f",
+      "syntax": "121327d526e3d50b20a83aad07c9cec17d3aa0f3fa61591e35cf9e5baa8109cb",
       "status": "not-emitted",
       "diagnostics": "7cbebb06450bcb60222fa6533aeca20e737ba57d82bfafc885b90682b67f76ec",
       "assembly": null,
@@ -1014,7 +1014,7 @@
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/static-class/StaticClassExample.cs",
       "source": "4d85d4e654d12bc59375c72bf3ad028f5f8be32e9b8d815fd688127e3147eab6",
-      "syntax": "503419b5f7510e406940c802ec804c78662929d2e40ad06744ad3d835bdced95",
+      "syntax": "655d4336f75d7a9bfda45a61307a7c846d2e38b02834932d797e3033b1d4016f",
       "status": "not-emitted",
       "diagnostics": "b24514b99dfbc5371a7e45f87937898e9dd95c805f20c4f41c2d8323772c1caa",
       "assembly": null,
@@ -1023,7 +1023,7 @@
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/view-model/ViewModelExample.cs",
       "source": "826512d35b4d6f63964fe1022880793226db0afc2a82d4ed9769b01f2a013721",
-      "syntax": "db38c33dcf71681520ca9d2eb0941c8a0bddd38ccf3ebec882eef13b4ae572a7",
+      "syntax": "e67cc9945c30056437749fb4d12c53d6081a731006523fa27771cceb09f0bd9d",
       "status": "not-emitted",
       "diagnostics": "ec6c6cd3db4b7fa16b9b372f500a8b262a0c78c1ff4a0aed26bc3320778a64fc",
       "assembly": null,
@@ -1032,7 +1032,7 @@
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/winui-counter-page/WinuiCounterPageExample.cs",
       "source": "fd9e9f9bd9b4807873c87c5b540683c7fca35b90c0c57e929a6a4ca18b55be75",
-      "syntax": "ebae1a538bb3c5cc258ab07d012707ae7d11fa9b8cac11f0240f13d6357ebd47",
+      "syntax": "7b0ba47558d6cfe286fd2f8b6258f5070624fbdcc97cceba904b081914a7911b",
       "status": "not-emitted",
       "diagnostics": "7b56789db858975d22693b08d42d3fb6673e576c4de6ac68283ea1db4cc1f8a1",
       "assembly": null,
@@ -1041,7 +1041,7 @@
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/winui-custom-control/WinuiCustomControlExample.cs",
       "source": "7c7dcda23f367b6c956ed2586674ec54e6bde7ed01af777df71d13fb2300210c",
-      "syntax": "6b56e8278db96641a052078e5a6f4085a282f2bfa48a8bd24e2faacc3d4a6534",
+      "syntax": "c49911f58e52e091bb92d215b65fd4686ba4d82cacbf01423f155875af80c9e9",
       "status": "not-emitted",
       "diagnostics": "869d787360867411f5dd78ea2f39219a55e054b2a73e1b536a4b25f7882a5dd4",
       "assembly": null,
@@ -1050,7 +1050,7 @@
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/winui-flyout/WinuiFlyoutExample.cs",
       "source": "05bfce2f9e0021c280762f5f49d3cda14bfda631c1b5634aeed9a9c8071d09f9",
-      "syntax": "344699f07492133bee4d98c4cd2c94797e74caca41a076258c266dc7f51486e1",
+      "syntax": "e3273db8a2a70ad144fc81bfc0f538a391254c285ac3f0721af9f38140f18a5c",
       "status": "not-emitted",
       "diagnostics": "931c0eb193202336e055cdea853b0a09aa3609090477cda44c2f3e36f8532d0d",
       "assembly": null,
@@ -1059,7 +1059,7 @@
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/winui-grid-page/WinuiGridPageExample.cs",
       "source": "ea65e11ce3d03455cc8aa4a358604742629adfc9f2dcf59aec3009b2bc0da42e",
-      "syntax": "2455dde0d18c4f9d2966ef744461356d3bca937635d2a66693f9f73de7a65c70",
+      "syntax": "bff60484f781cff2533e01ad22c7040c3511d2a83bcbe622ddc482b49cfa4916",
       "status": "not-emitted",
       "diagnostics": "69945abde985878e4a501bb18264c3144a12ef7fdfc817521d5b5ab02a7d8264",
       "assembly": null,
@@ -1068,7 +1068,7 @@
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/winui-page/WinuiPageExample.cs",
       "source": "c8e1c846536929eb9dfa2f431a32603bf5eb3ca2b07eb68b1f641783b5fbc3f6",
-      "syntax": "2d29e293b9646bdfd107a17ccafc9f8e649f617675e573979138aee62a3b5a99",
+      "syntax": "fb2cfdefee8aefc4d384f456adbe6edd1ac5639aa035270ee0050c177f719446",
       "status": "not-emitted",
       "diagnostics": "7daaf582aa7bb1faa46162f243608a09b445aecdb5a28bdd30ada4ecd8d1b00d",
       "assembly": null,
@@ -1077,7 +1077,7 @@
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/winui-resources/WinuiResourcesExample.cs",
       "source": "577c1e713c2383e89cc2aeae89ce7ba9ef6918637f42577901618cfaa45e7c59",
-      "syntax": "40b40b0cf12e416be240aee6832001cb3bea5c8232d1f101329635f9d2c19cc7",
+      "syntax": "50479b93df95504d0540c77269f924829aa782462303ba790142a9a7bb39afb2",
       "status": "not-emitted",
       "diagnostics": "dea196664185f5c57ec4f92ed505503453545f9d4b2c94f6d3265dc72c97f285",
       "assembly": null,
@@ -1086,7 +1086,7 @@
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/winui-settings-page/WinuiSettingsPageExample.cs",
       "source": "4ed5e57bf9b89760a873839e68ece3fe0bdf5e24565f711f90bd7301796d6e6c",
-      "syntax": "5c3f019d349bffed35c1e37ffe928102ec59ee2070ea4033cb78d39c69c18490",
+      "syntax": "a025f047257ddc26025d46b593758db97c437643b4f5be5e2c28e43dcb6249f0",
       "status": "not-emitted",
       "diagnostics": "e24dd671e49e11fc2b2a2396474a334f55743c87583e14a9fb064e48b514ee45",
       "assembly": null,
@@ -1095,7 +1095,7 @@
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/winui-user-control/WinuiUserControlExample.cs",
       "source": "9331e09f458054e6103b58e15bd601b6ced6a8dbcaedced7c1098612b1ccbfec",
-      "syntax": "174e81414de213a7ce7c964ac28737e254dc34286418fbf31142153b366491a2",
+      "syntax": "c08b60aa11ae6d0f6cb79055b9d11b76ac6c756d69522f91157cb5a57a322998",
       "status": "not-emitted",
       "diagnostics": "fba8df1f5eb6c41239c47a2a3c300d67af6caf8f42be8a20b175ea2a9a864c76",
       "assembly": null,
@@ -1104,7 +1104,7 @@
     {
       "input": "examples/templates/item-gallery/ItemGallery/Items/winui-window/WinuiWindowExample.cs",
       "source": "4b64cb542476de05037a46d7a84814cef0b23d83ffbb74ed14a94ea7e77f01c9",
-      "syntax": "e5c86e156822aa99c975a810a0b63badcf6bb3890eea73547f88d37748758cbd",
+      "syntax": "5748d1e381b5a1ddadce5bb677cf1750d342fd1360d6d14e75ecb98b2757150b",
       "status": "not-emitted",
       "diagnostics": "9ff38a55c44265fea6d5320e8bdd786be901e9722c26b6988df3747eba9f02ca",
       "assembly": null,
@@ -1113,16 +1113,16 @@
     {
       "input": "examples/templates/test-console/TestConsoleExample/Program.cs",
       "source": "f0486cd9501d65aa387d0c48676d65a0cf9243370a377508ea1fa0f1e6367d68",
-      "syntax": "60ac5c69dcd078b44049905d4b2bc771203b8a6975fa8a9150134e4bde22c95e",
+      "syntax": "a5ba5dc3ce36b572a72c6699de6affadbba8d606a3a2abf9550d4cb5836937d2",
       "status": "emitted",
       "diagnostics": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "assembly": "a0fc4062c3e7bea99794a4f1ff43440c0d5cc5809ff0f8e3594b5e14fea3ad3c",
-      "bytecode": "177fcdbc23e30aae640439efeed90af8885334672b60dd4bc97205b59c97e69a"
+      "bytecode": "86f04f4ae9df8b2d6e39a7f88e0292ceabbc2a991bff22fabe68c70da8610bdd"
     },
     {
       "input": "examples/templates/winui-blank/WinuiBlankExample/Pages/MainPage.cs",
       "source": "2e53d27ef6052bf027d871b269f5af8903e7a75d564a6c2712e63a0c7526e833",
-      "syntax": "1b0f105230998d31cbb964f8d18e6893596615ce65a96cb328cbd859a8e22235",
+      "syntax": "4d9d4833a6d86d674b0638e8ead7cbb49e464a7e4a19e226d341d328b15b974b",
       "status": "not-emitted",
       "diagnostics": "9b632f4fa853432dfa923518a942db13bfaeee6be0a7c63d2e386b3b028f19e1",
       "assembly": null,
@@ -1131,7 +1131,7 @@
     {
       "input": "examples/templates/winui-blank/WinuiBlankExample/Program.cs",
       "source": "b6334b5db86f3ef42a62d94e4329c83e8a09bc23c4130fa8e14be26181ae6db7",
-      "syntax": "a87b62464edf215a3f2f0c2cb554e9231cb42145cd20e9a089fbac61658343ac",
+      "syntax": "638a8af8c87a4485873d8980a96223489beb8b4cecbdd95889f6f7e6dff038d1",
       "status": "not-emitted",
       "diagnostics": "9d7b4e492d5d62ceaf49868cfe89f5ff38db5421956a9ca9917fd914137b6e5e",
       "assembly": null,
@@ -1140,7 +1140,7 @@
     {
       "input": "examples/templates/winui-controls-library/WinuiControlsLibraryExample/CardControl.cs",
       "source": "4f7d49822fc90b54a4db8c5bdb0943f30c6883c0e47981d713a5bdca64fcaf91",
-      "syntax": "15b6c6884a8894d30e70f1acc07a3decc500db9fe4308b1c5238bf72818f41ee",
+      "syntax": "9d231d43644394e237b8907baacf97e16a8d63574d21f3364da2e82194642011",
       "status": "not-emitted",
       "diagnostics": "76cfed5ebefe0b89b117d1d2201e362e903dc2f33e662fd520aa05cd5773b9de",
       "assembly": null,
@@ -1149,7 +1149,7 @@
     {
       "input": "examples/templates/winui-library-solution/WinuiLibrarySolutionExample.Controls/CardControl.cs",
       "source": "0c423b6114e1a813d6fd9f55c8370883f0bc15360ef9f7d4428e90068cb44e13",
-      "syntax": "1b08e5fadb417f615c1dd78e8265606edacb066d98dbb2a53150746db5eb3bac",
+      "syntax": "a7ae48940b117b21147fa9ad602f168601f7060d6c53f3497cebae0aa7395501",
       "status": "not-emitted",
       "diagnostics": "d4bff73bd0598925e14212b905e444bd62daafbe541b500b58ece62692356512",
       "assembly": null,
@@ -1158,7 +1158,7 @@
     {
       "input": "examples/templates/winui-library-solution/WinuiLibrarySolutionExample/Pages/MainPage.cs",
       "source": "5690cb35f33da6b98238679f65021da01ad008da812b084deeb9d5d4ee0fcba3",
-      "syntax": "62fa62ce007bd28977df7d371c701cf5c9007f7ac741a92b9471fb2527b617b5",
+      "syntax": "ab4a783a86f55956841cfad1328ad789fcff9ad208d85cf8c62683e97f97f4ce",
       "status": "not-emitted",
       "diagnostics": "011bb4357f03aecd969d3b8118cceaca6d3128cb69844ab6b171b5a67ca10340",
       "assembly": null,
@@ -1167,7 +1167,7 @@
     {
       "input": "examples/templates/winui-library-solution/WinuiLibrarySolutionExample/Program.cs",
       "source": "7635e72bb71ed37e00e72fe36b5c25b5822b9f2067e09b3890717cc2077110d3",
-      "syntax": "051fbaedaaca889511a2c5178dd9cd7d2606bb22c9dd21bb03687f8ba1c913a7",
+      "syntax": "00a6af3834ae45f896d049596fcf3a820f9d72c31afaca9f3cf1eb1c3178fce6",
       "status": "not-emitted",
       "diagnostics": "38a53899523e1148637d6cdefd37d51ff34626587c1c8c21f48a7d04f73da196",
       "assembly": null,
@@ -1176,7 +1176,7 @@
     {
       "input": "examples/templates/winui-navigation/WinuiNavigationExample/Pages/MainPage.cs",
       "source": "d176b956dde5688e5484b9530312d1bec0d439f735eb3ed824da5172113d343e",
-      "syntax": "827bc776a2833163d0fc20589ac5c0aca67d96bc22b0707957ca4db96993d781",
+      "syntax": "d99204e6e17b1f37cdd541e9d00feaa9116cc015962e2f2fe1e17f0cb688c490",
       "status": "not-emitted",
       "diagnostics": "7d26473fe980bff734eac3913c2b266ed35a0c09ed29b2b483eb5cac721435ca",
       "assembly": null,
@@ -1185,7 +1185,7 @@
     {
       "input": "examples/templates/winui-navigation/WinuiNavigationExample/Pages/SettingsPage.cs",
       "source": "7b8a2f1a1f27b3f0c3e3acf004df969924584211bffcc59e655bf2a6396543d5",
-      "syntax": "9d3d8d6196d8fde67e72382f26130251bd2f6b73a7d10c53acad4a0306b96af1",
+      "syntax": "12d73556fb5321a8558e57400d4aa53266837450c5daaafc6f81759aa0313c77",
       "status": "not-emitted",
       "diagnostics": "8d9d0d1f0cf9ccd1850fbba0604fcc0a8b84494a29c687013cd69a20064cd480",
       "assembly": null,
@@ -1194,7 +1194,7 @@
     {
       "input": "examples/templates/winui-navigation/WinuiNavigationExample/Program.cs",
       "source": "9dd4af58924e3e7430aa761e4a8fc9f082e48d88a4fd397ab5bc8b9416d0ca01",
-      "syntax": "34c8677ddeea7678e9234cf5f11bd377ab093a7ad7c48996e35eb296fa8a1390",
+      "syntax": "7c16cda2b01a6c8c5097fa098df3c3ad422ca8d218296bb80bfec3bd7d0ff903",
       "status": "not-emitted",
       "diagnostics": "801483fb771c9cfd8bd961f6dbcdf7dd8a8e93948ee3f868cb69e1e9d8574240",
       "assembly": null,
@@ -1203,7 +1203,7 @@
     {
       "input": "examples/templates/winui-navigation/WinuiNavigationExample/Shell.cs",
       "source": "11dda7d4b3fd8488442a6d3b55fac0e9c70a8bb89d0ab1700f2420ac732e8897",
-      "syntax": "07661738bf79ff07601defd551d7576be78a45902941aaae41010e0a929e0f3c",
+      "syntax": "dbd56eda388b9d1d298d392c1939e9a1f76849c31ad24041424bf9fa9c7113b4",
       "status": "not-emitted",
       "diagnostics": "bc93572ca673c358df648ced9939b18bd38f12d6ed50b3095bbf0000f83794c7",
       "assembly": null,
@@ -1253,7 +1253,7 @@
     },
     {
       "path": "dist/compiler.worker.js",
-      "sha256": "04eb6750e5bd98df6bf6db4b4cf7bd1a506fa2b83ceff251937b7035a99da974"
+      "sha256": "f92b55c38f343858fc2e78e99503cb9364d4ef51055a33784201c11eee26f4c0"
     },
     {
       "path": "dist/debugger-extensions.js",
@@ -1380,6 +1380,10 @@
       "sha256": "5ffb147e5ab176c801f1bf3076857a562ab6367a9a0a6b0ed754e04fc525d67e"
     },
     {
+      "path": "dist/docs/cil-numeric-conversions.md",
+      "sha256": "8dd5e66ca37756466064b65ba2941470ae762c9ab2077d00bdd2ea5b5083d032"
+    },
+    {
       "path": "dist/docs/cli-http-0.14.0.txt",
       "sha256": "aa22b2b462885e03ffdc2e2f0378252534cc0970e1449464e20c2406c0116938"
     },
@@ -1389,7 +1393,7 @@
     },
     {
       "path": "dist/docs/compatibility.md",
-      "sha256": "bf0ad9460fe8614a6c2b7dd1eda8e651bf267418c2443b325985185b2ec27158"
+      "sha256": "c3e7c4c1f2c6026edc32308cc4e2d70c9531ec680ec6b207ea70374aa48b23c8"
     },
     {
       "path": "dist/docs/core-results-0.10.0.tap",
@@ -1638,6 +1642,22 @@
     {
       "path": "dist/docs/roadmap.md",
       "sha256": "c66a3b7436fbce50ae5885c30ee072ff477592e2b5e3ba6b71649c410cc3ed8a"
+    },
+    {
+      "path": "dist/docs/runtime-a05-bugs-validation.json",
+      "sha256": "a3c2b39f43df3acdb91ec8b014ab84e87de66c354859dac129eede45e0edcccf"
+    },
+    {
+      "path": "dist/docs/runtime-a05-e03-validation.json",
+      "sha256": "ae3d9c871910db8f63454fae641d8fc3867216f87afa747457b90397acb2552b"
+    },
+    {
+      "path": "dist/docs/runtime-a05-scope.json",
+      "sha256": "5e8d6cfa959f4d5c5a6cc878193942c6dc8df220ca611728de473ec585783658"
+    },
+    {
+      "path": "dist/docs/runtime-a05.md",
+      "sha256": "bddab5110c3cd2320f1cb5b65e9d290cfe330a5c64c4686dc21e055485abd23e"
     },
     {
       "path": "dist/docs/runtime14-api.md",
@@ -3060,6 +3080,10 @@
       "sha256": "32b37c78ae496b1e053f29708aeb4c10035d1230c69cb0b1ce49d93570c98592"
     },
     {
+      "path": "dist/examples/runtime/snapshot-replay.mjs",
+      "sha256": "2dc9958626a5044ab23d708513008af134ed5249e0c6022e4f803ea158276817"
+    },
+    {
       "path": "dist/examples/templates/README.md",
       "sha256": "b9cd44c8dc34723ecbfae45e280de45e16b999cba8f11c58fae7aa5360032ebf"
     },
@@ -3493,11 +3517,11 @@
     },
     {
       "path": "dist/packages/bytecode/src/builtins.js",
-      "sha256": "7b70cd96a1e25d17e4e410b3f47c3daae15ca3148b3f229ef00c9188ba7b6d45"
+      "sha256": "e7ec1930a0ceee6ccf3da079eeae041e40946ece05984461f6677a99b3d68238"
     },
     {
       "path": "dist/packages/bytecode/src/index.js",
-      "sha256": "348b47363bdd50b432c8ce0aebd4a036809a072b78f78e0b33334000d8546831"
+      "sha256": "6cbb9d11f706d8d4a425d4678be4c0fac0048899be7c8d13e6b78808ab968a27"
     },
     {
       "path": "dist/packages/cil/LICENSE",
@@ -3536,12 +3560,16 @@
       "sha256": "1914539aa592b482284ce0af2a84ba912c3bb741b2fdbc38ce899a22141fb900"
     },
     {
+      "path": "dist/packages/cil/src/dispatch-profile.js",
+      "sha256": "7406a437b2e5f2ea956bfe62b5a643be13c52b4bf9dde470b0fbbf58aa58f4ef"
+    },
+    {
       "path": "dist/packages/cil/src/emitter.js",
-      "sha256": "977f52c69c2459eaf5f3d6247d3d19186e97af41dda31f300fa959189163866a"
+      "sha256": "6a59e421574a57212743a7fde1d4fa74d3a352ccc8e9c50b3eb1c30220453dcb"
     },
     {
       "path": "dist/packages/cil/src/execution-profile.js",
-      "sha256": "7042058b87ea248100816493db22bc15373bcb06eae7f8a6bd5b94939b3220dc"
+      "sha256": "85035e1ac6b93d89bb0b6d98e0b7e0b79642b0968223d1348f3348312031f9b1"
     },
     {
       "path": "dist/packages/cil/src/il-document.js",
@@ -3549,11 +3577,15 @@
     },
     {
       "path": "dist/packages/cil/src/index.js",
-      "sha256": "6d02ed6f12a21b3946cd2c0921e9ae0ef4b3bebbc68cf9113816aec473b6cf45"
+      "sha256": "5a3147d38e8a223ca1abae03a2d3d6b02902e0ff66c971cbde5fbfd111243383"
     },
     {
       "path": "dist/packages/cil/src/inspector.js",
       "sha256": "993bc668d14860169097d493b8315d145f1785010f5a67f52c00d4eaf2ef1f9e"
+    },
+    {
+      "path": "dist/packages/cil/src/intrinsic-profile.js",
+      "sha256": "1bb628b6645a7608e6e9a90051b9d6272a8d4001b328b2a1e95e500d82f26944"
     },
     {
       "path": "dist/packages/cil/src/loader.js",
@@ -3597,7 +3629,7 @@
     },
     {
       "path": "dist/packages/compiler/src/constants.js",
-      "sha256": "e95b3f4b93d1817e8195fb4602039799a1dbbf35ce0170bf533af993b74fd46d"
+      "sha256": "48e44c2a7b032308815c39f6aeda5e1b3990adab295264cb9f62ea4ad9e8921d"
     },
     {
       "path": "dist/packages/compiler/src/framework.js",
@@ -3605,11 +3637,11 @@
     },
     {
       "path": "dist/packages/compiler/src/index.js",
-      "sha256": "8ea6f6e2b2dc0ddb480efb9d484100228cd10e202c256f8130f71c0de024a7e6"
+      "sha256": "5e5bc6b8c6314ab80e58b79a8f4fe036a784b3a7b97097baac292c88b754a7c6"
     },
     {
       "path": "dist/packages/compiler/src/modern.js",
-      "sha256": "b881f1021156ff64195bfc073e431f754da87c3bab66ecc8aee4486489ed4673"
+      "sha256": "253d97f890fdcc6512aa6ba3e81b38fb23a8295c9926cfcd2d07c88332f263c9"
     },
     {
       "path": "dist/packages/compute/LICENSE",
@@ -4253,11 +4285,83 @@
     },
     {
       "path": "dist/packages/runtime/src/cil-vm.js",
-      "sha256": "77f4c0e340420cc003dca1ca9609a25875c02cd08ea3ac88550ef997b142d929"
+      "sha256": "f118bf64c8005b55c8e88f70a757b91a9ed40f17d635b81ca0dede48f8bc069c"
     },
     {
       "path": "dist/packages/runtime/src/design-patch.js",
       "sha256": "0de837845d037ffb148b494520b77f3f3dfee6277042e47ac240ad553e49da50"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/calls.js",
+      "sha256": "9235ffbc772bfbb196a1bde0b689ad39e64547be117af6a745e2a9fcc4a73dca"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/eh.js",
+      "sha256": "31a30e6a6392d3e67c8098b4b8f6a779133223674709c2a3709172d0dede36c0"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/exception-types.js",
+      "sha256": "c8ce6c4c2f15e8d5ffa56e3b1c0ade10e596e64af8c2a037075a59cb2d606990"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/handlers/arith.js",
+      "sha256": "3e9b546260b5e20cc063411cfff4f708eb091b9bc38b65216076fe531e219bbf"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/handlers/array.js",
+      "sha256": "bd2b965e868e6146568cb38b49874101d2c01d377df5cbe107ced22ae71c2bf4"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/handlers/branch.js",
+      "sha256": "7213f712671bcec0cad07ebb3a7f1eb1d19840e162db92660952eea487418b18"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/handlers/call.js",
+      "sha256": "987fd3b069396bb4e1d968d2452cd89425304615c9c1e4cbd4759bb2036c2bd6"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/handlers/index.js",
+      "sha256": "fe81d1306cd79c27842b3d8d9688e0375ed7c7dd5eb5553d846809f2ad7f5d72"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/handlers/indirect.js",
+      "sha256": "f885dceca1c88a9e81444ca003881da048932a6a7c3574cbf73ec6f406c6b53a"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/handlers/load-store.js",
+      "sha256": "55fd51ecfe00297b59c504287b66613023309366800afe0914fd6b6c658b58bd"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/handlers/object-model.js",
+      "sha256": "973c5170688cd1147720c570dd18352b5fe99b06583d8918fa4229d9c8fcabd6"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/intrinsics.js",
+      "sha256": "5579baef7cac49a0124b6cc7f83028a2059c3a97906e4c163a431f8351fe4c3a"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/method-offsets.js",
+      "sha256": "ba092c008df1225c32377bad3f4b878e56ca08433d20100bab350347c45773c1"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/numeric-ops.js",
+      "sha256": "5c56a82481b1500df4333545daff9741d812936f09ede2289d9003656bb18a13"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/source-builtins.js",
+      "sha256": "4588ed3c2d8af8030f09546df730dc9e5ba8708a619d337c989b70a99e423d06"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/source-eh.js",
+      "sha256": "5055e3a96ac5f4839a8fc66162a8835a64b8f4cc37babd827e2e0529bb56da7d"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/source-ops.js",
+      "sha256": "6f8b174d32ce578b30fe39cf6a5b3c78c636a5fec0c449406c486ba42c8317ee"
+    },
+    {
+      "path": "dist/packages/runtime/src/execution/type-system.js",
+      "sha256": "445b17f715a88ca7d087c68c7479dd8e9ccc3674eade1cb0438f522095b41427"
     },
     {
       "path": "dist/packages/runtime/src/heap.js",
@@ -4289,11 +4393,11 @@
     },
     {
       "path": "dist/packages/runtime/src/scheduler.js",
-      "sha256": "35d82ec5f41cbc76fecb88ec9fb220815c8c006946947220f70e496da8ab8d69"
+      "sha256": "f98a7bdae9d0d2acfef14a647c60be43da54202c234110cecc539000317d5aac"
     },
     {
       "path": "dist/packages/runtime/src/snapshot.js",
-      "sha256": "749cffe4c0b54bd94aa76b608c050bf2a79ae317e4dc2c6331b1c17155a6a4f1"
+      "sha256": "470724f0213108b1946dd7f61c8c4ceaf7134159fadef93b6e09e5e40162aced"
     },
     {
       "path": "dist/packages/runtime/src/styling.js",
@@ -4301,7 +4405,7 @@
     },
     {
       "path": "dist/packages/runtime/src/vm.js",
-      "sha256": "f9e2742bbb2eda3697db951a989987ebec4077a60c407517346626fb8e55e4b7"
+      "sha256": "b58dea249bba360191fd926f4e39487ec1170a3aaead13b2765344ec987b8ddd"
     },
     {
       "path": "dist/packages/symbols/LICENSE",
@@ -4341,7 +4445,7 @@
     },
     {
       "path": "dist/packages/syntax/README.md",
-      "sha256": "57f0ba47298ec5b28188f4b6fa663d2f4e171bf4525116e5ed36364c8f9362ad"
+      "sha256": "60a45128a48c33f8981aca62557318123306c1c60cfd058d56d441ae836273b4"
     },
     {
       "path": "dist/packages/syntax/build.contrib.json",
@@ -4356,20 +4460,1568 @@
       "sha256": "7300d8a12f40fd7b1d3970dc541a8c8dbeae77c11206aa91a3b4a1475656d478"
     },
     {
+      "path": "dist/packages/syntax/src/directives/conditional.js",
+      "sha256": "b842b5a288e8d02679bf8da169ee29a1592231d6f2922f97b4f8e6fef12a4091"
+    },
+    {
+      "path": "dist/packages/syntax/src/directives/misc.js",
+      "sha256": "f378963c2b6664cef480d45ab28452e510f5424059c232322fd22a1debeb170a"
+    },
+    {
+      "path": "dist/packages/syntax/src/directives/script.js",
+      "sha256": "1f81ccadcf849ca33581dd6c6223e6616c106b105d553de6eb719ac0cd7911a3"
+    },
+    {
+      "path": "dist/packages/syntax/src/feature-gate.js",
+      "sha256": "415ce4d7e51cb066250afec0f0ada3929180655f3864272c8541d2a6c88ca37e"
+    },
+    {
+      "path": "dist/packages/syntax/src/features.js",
+      "sha256": "664cbe7a40f1da3d4432ac2787025d6940ad01ae017ee6a4d2870f4198e6aedb"
+    },
+    {
+      "path": "dist/packages/syntax/src/generated/nodes.js",
+      "sha256": "f550db318aee0f78f57388817099e67a86aa6015d7005d26849b1ed14aadadc1"
+    },
+    {
+      "path": "dist/packages/syntax/src/grammar/syntax.json",
+      "sha256": "2ff54dbe12b64b61f444c24f7921f7444f5b97f970fa0c06af3528cd0b567042"
+    },
+    {
+      "path": "dist/packages/syntax/src/green.js",
+      "sha256": "f6c1bf87ea340bbdfb91d247680a9b4316b37abaff4b82a31217696203095224"
+    },
+    {
       "path": "dist/packages/syntax/src/index.js",
-      "sha256": "d6cab24cbb5c2bfb9e93ea3e76ec542eafa584fd4a456a7488ff26e2e029aab9"
+      "sha256": "de13e63f53e9256c0190e3a85c75b82c9a4cae7f42537a554e82299712c02b6e"
     },
     {
       "path": "dist/packages/syntax/src/interpolation.js",
-      "sha256": "a47df8f706024cdd208541891bd2f1f36aa0119e1fa87b62516b5477e16ffb2b"
+      "sha256": "d34d620c1f1f49ecfb742deb412e3cccbcfcff24c66f28a74ecc3c311f90e8b2"
+    },
+    {
+      "path": "dist/packages/syntax/src/kinds.js",
+      "sha256": "36e9ba36dde103c30f9a09d70a72864d866a396b159b8f053681ea89aa311155"
+    },
+    {
+      "path": "dist/packages/syntax/src/langversion.js",
+      "sha256": "2514fd5c422c066cbdfb12515213f6619524202277186e671b45212dc40dc80f"
+    },
+    {
+      "path": "dist/packages/syntax/src/legacy-adapter.js",
+      "sha256": "902ebd3eaaf077f287a7ef727a52f65efb173e354fccaaf4f288bc1ebf2468b5"
     },
     {
       "path": "dist/packages/syntax/src/lexer.js",
-      "sha256": "299bd9c984c42c75a1ff06b15c7e21474de0b84ab1bd0a4185057daaa6ac9a05"
+      "sha256": "899af357976a9a7021807e591f295ec8d58f6f27a9bc8b6312c6d3fbf4fde537"
+    },
+    {
+      "path": "dist/packages/syntax/src/lexer/escapes.js",
+      "sha256": "97f198991f3bf4e252a966ae1591c58b7c9a1c50a7244afa6d7446ad11246809"
+    },
+    {
+      "path": "dist/packages/syntax/src/lexer/identifiers.js",
+      "sha256": "7ead2b431e9b1be178c0757f803c861ce96fd022a891a705572b1acee393ae64"
+    },
+    {
+      "path": "dist/packages/syntax/src/lexer/keywords.js",
+      "sha256": "a78db5a883bbfe411603cb29c70c3efc6933576324e85a2fc5a781c0d9755aca"
+    },
+    {
+      "path": "dist/packages/syntax/src/lexer/numbers.js",
+      "sha256": "3e7d8d2eb7feb09ab63037811fcf1abfd8e10d57fb2d19799409cf7210e2b6c9"
+    },
+    {
+      "path": "dist/packages/syntax/src/lexer/operators.js",
+      "sha256": "ff2a52b3a4308af875ebf2737e8a278e90e2c5893246cb020f6e5f807a3cbdfa"
+    },
+    {
+      "path": "dist/packages/syntax/src/lexer/raw-strings.js",
+      "sha256": "06ef2854aea415998c0d1d5db0cc3c61e7540fa2c7f2299e10146aefa94ad727"
+    },
+    {
+      "path": "dist/packages/syntax/src/lexer/reals.js",
+      "sha256": "3ea2911038bbac073bd4c1196cf92122839b0175fc7c543bfcd45e0b1e9eafd6"
+    },
+    {
+      "path": "dist/packages/syntax/src/lexer/scanner.js",
+      "sha256": "4a4976a1b57319afd71201d499230327ebce1096fd3b50816e6d7e615fb9d852"
+    },
+    {
+      "path": "dist/packages/syntax/src/lexer/strings.js",
+      "sha256": "7aa0a915e2ebb97dc369a8f5c8f86b3c0f297f975f3eb0766b5521b5a2275914"
+    },
+    {
+      "path": "dist/packages/syntax/src/lexer/trivia.js",
+      "sha256": "5415e441eb5ad76954e568e20f576c294d35aed62523a8bfde45f61ef62415cd"
+    },
+    {
+      "path": "dist/packages/syntax/src/lexer/utf8-suffix.js",
+      "sha256": "0765d1bba748fc0767eca3bb8c078bd9b58076d64975a2225a1783ffb7db6ba0"
     },
     {
       "path": "dist/packages/syntax/src/parser.js",
-      "sha256": "6cc2c169ccdbe2c71298c803b1afa7828bf83cb2a6821dc5d69f63de26ac0b01"
+      "sha256": "2dbb30e7a8a7732ec9827238ae6a6664b38ab74969769e94912e4db762cf7bb3"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/core.js",
+      "sha256": "41c38257d556a582af3597537088e395fa1d6bf3fa2fc0937e7c1d4daaa44283"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/declarations/attributes.js",
+      "sha256": "2ea5025d0377fddff9cc106363b077bf7424adb3e2ad580eb2e0ec2516632976"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/declarations/constructors.js",
+      "sha256": "a31bfc77a3dc9c2c92712e4d26352bb3655bb4f993390c3b772137f9e2e18aac"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/declarations/delegates.js",
+      "sha256": "864f556a35951b9f6843ddc840da8790897705877f7f15a2efe00f745e6c1ec0"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/declarations/enums.js",
+      "sha256": "2850a61586ad99d26712b9ede4471d5c4777627ca001eff58a0a313efee3b8c6"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/declarations/events.js",
+      "sha256": "460161bb7c9576ff2b0fc8160f33cdd9bb2ba99d9a81d05a3c9060e471c40e9c"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/declarations/members.js",
+      "sha256": "ae19b00a6565114a363728b1dece859193230f9657ab7d08aeabda64cab7fcd4"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/declarations/namespaces.js",
+      "sha256": "f496bad25ec54126436b633f555dd0c23b7248839e3f2a39a9ea1eb3ed1b132b"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/declarations/operators.js",
+      "sha256": "db825b78431a22c4bdb9dc3b0156575b43837351696bc60cce3c64fad46de8e5"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/declarations/type-parameters.js",
+      "sha256": "d56d2c466526e33556a7f3daedbb1783b02209722ae8a75c532ad4abbd939978"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/declarations/types.js",
+      "sha256": "06562f63e4941130ad0b530e42b97d2572577ea5296938013ad8e5bf5517cb9b"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/expressions.js",
+      "sha256": "ef039738b7a9e9b9f5e332ad36ef527f80035b076789427cf31b79fe74ef7b7c"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/expressions/anonymous-functions.js",
+      "sha256": "94cc3af7c33453f22065533cf24927db831e4e648c2de0d10871c2a3555285aa"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/expressions/generic-names.js",
+      "sha256": "6bfb55fbd490d6672f5cb91bc01d5ac00732cad45df7ee5a2292ea8717baee79"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/expressions/lambdas.js",
+      "sha256": "cd35dd3cd0d234f61451eb433d53445feb61153fa13c382d0f17706ea44d4f84"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/expressions/nullability.js",
+      "sha256": "1209f52a792eab1b6cfe9c1b804d2a72daf6383666309bcb19eae80bb9afb0df"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/expressions/queries.js",
+      "sha256": "bff820816f88d9c23c4c2781a5d4baec2c6d49fdecade4e7ef632ccbe19e0f96"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/expressions/tuples.js",
+      "sha256": "250ba0e605431067c644b0a3ff8a788b31efbdba18b1208bfc89e6eecc83e4ba"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/modifiers.js",
+      "sha256": "f8e1ea25a2d02ffd17ed3c1229d419cbad182a03627e792a4748e775edaea51f"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/patterns/basic.js",
+      "sha256": "9f6f197e52379dec088bde7924aecdd11e63990e29e0a0812c574f5503f0d4db"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/patterns/combinators.js",
+      "sha256": "7d5e0954593657b12465ab9af05cdceeba6d3bf0718e6ab3aaa1fa3d36fd9cfb"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/patterns/lists.js",
+      "sha256": "9f1d28df891fb30ec76c5c7c16d7644933eea999759d362646fb3a5cec93809a"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/patterns/recursive.js",
+      "sha256": "58548f6a76e11ef0195a966db27de4e093ee18cd3a25368b86a8cd4a1536a295"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/recovery.js",
+      "sha256": "78d7e3624aed76991ac84533929e86ec13bf72f38e8339535d5898968f5a4dbb"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/statements.js",
+      "sha256": "57e604049154bb1c7fe2654013348498afc3e7ceb313b644e7697d67b01ae587"
+    },
+    {
+      "path": "dist/packages/syntax/src/parser/types.js",
+      "sha256": "2c6d6689d482ffd22f828b8ecb8e55de004f225a3d4622a3aba793c4de9569cf"
+    },
+    {
+      "path": "dist/packages/syntax/src/preview-revisions.js",
+      "sha256": "1e8bbd35ddeea3e5ac582a3117da6165c1cf7e7c2a9131daa8d0c9046e5c3697"
+    },
+    {
+      "path": "dist/packages/syntax/src/red.js",
+      "sha256": "2fe5f81048656aaffadbe669afa9ed5be7c4e1525980c99c5dc30c6a6c77e64b"
+    },
+    {
+      "path": "dist/packages/syntax/src/syntax-tree.js",
+      "sha256": "6ce971ab248a493eee74f19a7a71bae3de2fed537d6d1c71ed52518ec1c07096"
+    },
+    {
+      "path": "dist/packages/syntax/src/visitor.js",
+      "sha256": "96e3f3ffb898b89c1d93b671cd00c6ad143387c02acc8095d76f837e9a615748"
+    },
+    {
+      "path": "dist/packages/syntax/test/expression-corpus/precedence.cs",
+      "sha256": "d63f19c845589ec3717d8ab7f45b0ba7799a6cb46a72309a1f34d1d7c8b04457"
+    },
+    {
+      "path": "dist/packages/syntax/test/expression-corpus/precedence.cs.json",
+      "sha256": "66a5a5c120ea117abae2f2e3b81ac7b8decd90a8cd741798b92739fe1a349966"
+    },
+    {
+      "path": "dist/packages/syntax/test/lexer-corpus/identifiers.cs",
+      "sha256": "dc44424a572a14052df705443f7223f9409bca26ca8e2e6be1447102c2ad76eb"
+    },
+    {
+      "path": "dist/packages/syntax/test/lexer-corpus/identifiers.cs.json",
+      "sha256": "7396de9c419f1f710017c06ffe03cd255ed21bb23eabd32afe998709918c909a"
+    },
+    {
+      "path": "dist/packages/syntax/test/lexer-corpus/interpolation.cs",
+      "sha256": "10443bff534d7eaeb739d31e9fd012339d700da27d9f412612c3ee4433ba3951"
+    },
+    {
+      "path": "dist/packages/syntax/test/lexer-corpus/interpolation.cs.json",
+      "sha256": "ac691649e59a03d51e013cf4e552f04254e672d7d750feeab7ff98f8cceac9f3"
+    },
+    {
+      "path": "dist/packages/syntax/test/lexer-corpus/numbers.cs",
+      "sha256": "6703e35aa58d82c416224fcfd5121151480332a7fac77ceead69f65d8abe4b83"
+    },
+    {
+      "path": "dist/packages/syntax/test/lexer-corpus/numbers.cs.json",
+      "sha256": "00799a85edcd76ab9ad62f87045d7228d286c153dd2633474129551212b60f21"
+    },
+    {
+      "path": "dist/packages/syntax/test/lexer-corpus/operators.cs",
+      "sha256": "90eee23e4f4bc4439859db7dc2f32dc117cd9d39b76dd2448bed5fb1bbbc4515"
+    },
+    {
+      "path": "dist/packages/syntax/test/lexer-corpus/operators.cs.json",
+      "sha256": "f0d24b46ba752fd4ceb09ae9731d9034f876d68fa8205952dd6b3a4a2342610b"
+    },
+    {
+      "path": "dist/packages/syntax/test/lexer-corpus/raw-strings.cs",
+      "sha256": "02ecdcc99803c0aa7b9982397c0fcf559087577be780ffcd3aa2bfec440891f9"
+    },
+    {
+      "path": "dist/packages/syntax/test/lexer-corpus/raw-strings.cs.json",
+      "sha256": "0d7de12767d5dffc9b8b28186e2f92745269179773f1c5f70521bdf750cf1e31"
+    },
+    {
+      "path": "dist/packages/syntax/test/lexer-corpus/strings.cs",
+      "sha256": "25afcd5d78405619464ce5763d57c9ae0759e9abef13beeccf621098f93756cf"
+    },
+    {
+      "path": "dist/packages/syntax/test/lexer-corpus/strings.cs.json",
+      "sha256": "a42b208f9dd2c4f8ece2b64bfe7fc6f08ee0b298d12273703cb1bf4db20312d1"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/10/ExtendedPropertyPatterns/positive.cs",
+      "sha256": "d10f5673d6dc46012112b9a444466654efabc5d45e93a628d8146912f0dc7bdc"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/10/ExtendedPropertyPatterns/positive.cs.json",
+      "sha256": "b3811a0e3917568f841f1c80bd039e61f02770c85208ce008d32f3456770b3c6"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/10/ExtendedPropertyPatterns/rejected.cs",
+      "sha256": "f80a31e7eab41bfd20c8c9b8d14c718ded9b8b879e146aebc87c394c0082b6bc"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/10/FileScopedNamespace/positive.cs",
+      "sha256": "d8789bd7deb964369ec62880246a0c7017210d8abdbaeb17601858826e641d68"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/10/FileScopedNamespace/positive.cs.json",
+      "sha256": "609e0b77f35dfa0389b9431a78698a6becf07c0bf94c463d274603235d41dcf1"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/10/FileScopedNamespace/rejected.cs",
+      "sha256": "6dd6d232d161a63cf3d695e8bafbecddf4de49405a99e06358641aa0fbb7933e"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/10/GlobalUsing/positive.cs",
+      "sha256": "dab3f38a193167ab82486ccf8e6f6589d172bc206b6d75460d4cc96290a2c142"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/10/GlobalUsing/positive.cs.json",
+      "sha256": "360ba859dbe228629b465de046791e15026ecf4a5369b905b8013e9850937fc0"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/10/GlobalUsing/rejected.cs",
+      "sha256": "3df938fe5843ef09b5b61ea46150dbb79d42a19374db79de08ce22611f492374"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/10/LambdaReturnType/positive.cs",
+      "sha256": "686fb9e466f706b7c00e6f34b0fd1666bb2443989e020abb2115ac3655d22f31"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/10/LambdaReturnType/positive.cs.json",
+      "sha256": "7a0fd10433391897df2ce31338bf443734338d556eb9ba680c47845b655ca671"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/10/LambdaReturnType/rejected.cs",
+      "sha256": "67599ec4735acb0324efff4c336418cf5ebbb3f28a04f96991f8a2c4673e40a3"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/10/LineSpanDirective/positive.cs",
+      "sha256": "45a1dcf1aa98703f2d38187013666da80a8cb271adf8a6077a411bd9b765e15a"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/10/LineSpanDirective/positive.cs.json",
+      "sha256": "fdf745d34850867614160c598748f624faa2bdae0e1f277255fe189f9c8923b7"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/10/LineSpanDirective/rejected.cs",
+      "sha256": "cd9d46ef383f2493cdbe54ca06ec3346ee17462266c450515b351de149fa2ac6"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/11/CheckedUserDefinedOperators/positive.cs",
+      "sha256": "f81cced4cf891cc907df6760914e1a3d4fbe47606c8e071911280e0132e30af2"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/11/CheckedUserDefinedOperators/positive.cs.json",
+      "sha256": "2bca34b69c8d777c0c33d21df06c02d20bc1f2e12a990a92216c0df88cea3971"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/11/CheckedUserDefinedOperators/rejected.cs",
+      "sha256": "47f08f8ff8f7d2d76d41ad322a7d67938a2a27521d573ffc6439c1c872bf8677"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/11/ListPattern/positive.cs",
+      "sha256": "0e6c8f0e69a7f64bcbb515a9f0a8af5cc4714b95fafabcc44a662a839ca7ed34"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/11/ListPattern/positive.cs.json",
+      "sha256": "02fac911313e847659beca025a98cf507d3233287591c46a0ea7c3051252e3dc"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/11/ListPattern/rejected.cs",
+      "sha256": "4b816e9b0b43bf95d5edc85b6c9332659b274716351e5de710968b4a49ac7c22"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/11/NewLinesInInterpolations/positive.cs",
+      "sha256": "9d2d620d1eff6247a06be9c42f8862bbd067a000b42c897424757e7648462983"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/11/NewLinesInInterpolations/positive.cs.json",
+      "sha256": "3f5e88e0d7421861de497de9024bb4fcf70308751bd0daa4ab63c5200ba6219d"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/11/NewLinesInInterpolations/rejected.cs",
+      "sha256": "c35c4aa1fdd47e19ed9c38f4a4c2319cbf2e714e87014096de71fb0c1a2f8071"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/11/RawStringLiterals/positive.cs",
+      "sha256": "8a215a64397ae2b9817f45288b25db8fe35c808e0ab32f2352fa1fae78383bdd"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/11/RawStringLiterals/positive.cs.json",
+      "sha256": "37b6561e239c61bc43ecba7b4f958c405cdf8fa0feaa012339c8f4d1a6ee366f"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/11/RawStringLiterals/rejected.cs",
+      "sha256": "933f09a659bcdecee6e8f6eafbafa22d02b1e5bb3539c3ee89835484006bf37a"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/11/UnsignedRightShift/positive.cs",
+      "sha256": "f26dd34d3c7b0c67f0187c3fe6452fb3f28d0010002f9490986bb4495f769136"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/11/UnsignedRightShift/positive.cs.json",
+      "sha256": "c4e5283a4e350a8c73d26106aedca2b12d405f6d2bc13db7667f3b4b336645c3"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/11/UnsignedRightShift/rejected.cs",
+      "sha256": "9cf05af221fb11eb11a630fabe975ead31c90902be0b19f7d851d5b4c687d625"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/11/Utf8StringLiterals/positive.cs",
+      "sha256": "70e62b2396ae48f41958491be78e888ec128865efbeafca6e398da5e5da5e314"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/11/Utf8StringLiterals/positive.cs.json",
+      "sha256": "b8d33bac0f97686221334cdfb3844e12612c7bbfe69968500bf3b49f8ad118db"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/11/Utf8StringLiterals/rejected.cs",
+      "sha256": "54590a3f77bdc6333f7ce1ff2b9ca1ae082c54e3c4b13ec6df795220e335efd1"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/12/CollectionExpressions/positive.cs",
+      "sha256": "ec9d85519038b3e62f81a418feeae90f2154ecbbc3da9bf7ea686bcf61bb6bc2"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/12/CollectionExpressions/positive.cs.json",
+      "sha256": "53f16d8506ec92e871d61641f68e202e70e77da799d7aa23aa8ca06a044f8d95"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/12/CollectionExpressions/rejected.cs",
+      "sha256": "0139cf1f90f570468f6383d36fe36226075885b8cbeafecff8469404dfd99f2d"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/12/PrimaryConstructors/positive.cs",
+      "sha256": "93d563effbb622d662cd5b99b5822c44cde9ab0381070839fde09782fef63c96"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/12/PrimaryConstructors/positive.cs.json",
+      "sha256": "cd053122f0fc0e01c511c58f351d221c6cee72cd2a7bace2b75568ba72ada546"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/12/PrimaryConstructors/rejected.cs",
+      "sha256": "33815d8f4ef95226bd7433141c7927bdbae6e86b16f5d686278c27a2d27f99d6"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/12/RefReadonlyParameters/positive.cs",
+      "sha256": "eb712ef67b78d5dbc260d2a2628c475646adbb7ad5d9eb9ede7051c87a97a12b"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/12/RefReadonlyParameters/positive.cs.json",
+      "sha256": "f5d136208460091d305f883e965b7d28be233fe7ea25d64487ff30c7ea8df53a"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/12/RefReadonlyParameters/rejected.cs",
+      "sha256": "ad18de604daaf5af8eb2c72ffb5ef79a2c17afdc82cd9027db11793933e4fbec"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/12/UsingTypeAlias/positive.cs",
+      "sha256": "b7861bb5c08ec3f47ffaf8fba5d1f88585fa8e3410e323a7a35e5998dee7a26b"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/12/UsingTypeAlias/positive.cs.json",
+      "sha256": "d81619312829b8c6f67826f078cbba78056d6357e87ba4ba8f3615d6e3753ac1"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/12/UsingTypeAlias/rejected.cs",
+      "sha256": "a75a292ef90dc0a1373b454d43df9cb4e0a661d247dba5a85f2d5791a7df8b90"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/13/AllowsRefStructConstraint/positive.cs",
+      "sha256": "4000c0054ec9d606e1f81fbfbfd2584616edc9a211980ead00f9452c61c36350"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/13/AllowsRefStructConstraint/positive.cs.json",
+      "sha256": "5cfd8bea4989e44696c6a8e47a4103c2d5a37b63efb3db810c5e1031f2971438"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/13/AllowsRefStructConstraint/rejected.cs",
+      "sha256": "42b77718be16bdf74e3fe2947a6d627fc1cd04ffc11b54e01fd739098b283625"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/13/StringEscapeCharacter/positive.cs",
+      "sha256": "73df2f8edf3bd09169172567a9307a64bd6219b5f4b9de5cb0da44c3cd818536"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/13/StringEscapeCharacter/positive.cs.json",
+      "sha256": "d96663a10b3b3f0cafaa6886373f600abec96a5680f0126cb7350005aa9d65ec"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/13/StringEscapeCharacter/rejected.cs",
+      "sha256": "b3c088050c8e19da4cb9ad6ae0fdf433b1bf26ccbc2cbdec6adeef522c0bef61"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/14/IgnoredDirectives/positive.cs",
+      "sha256": "3701a77a0df431361224d391b6620fe19bcc275e403c0c31f63a8f1c7ac840e0"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/14/IgnoredDirectives/positive.cs.json",
+      "sha256": "b782c72a376e5ab8788c47b49e56f917e693fb5b27b3881efea8eb7b2a542fe4"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/14/IgnoredDirectives/rejected.cs",
+      "sha256": "f22fcfc76c9482077eebff7e36d491cec8a9e1be52fa7c955b186aadc97a1517"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/14/NullConditionalAssignment/positive.cs",
+      "sha256": "b5a506c033e81f96e5333cb6bd5020201c1f18d9b7574f030bfd136509d38db3"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/14/NullConditionalAssignment/positive.cs.json",
+      "sha256": "1e91f3401cd442d93fbdcc6a2ad0a307ca6627f91894634f529980e61dc7bd8d"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/14/NullConditionalAssignment/rejected.cs",
+      "sha256": "7b742b88d03549c8ec33180c0774a9c245ff6b25d45d4f8c20135a22c9c9cf18"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/14/UserDefinedCompoundAssignmentOperators/positive.cs",
+      "sha256": "5d27a2db64f55647e46e58aede363a037e6bb02e46542cae27cd524a8b34a6cd"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/14/UserDefinedCompoundAssignmentOperators/positive.cs.json",
+      "sha256": "6f5ec04d1d7c518360aa6b72ae49e214dfb013c5923e4db76dfd4aaab03b3a11"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/14/UserDefinedCompoundAssignmentOperators/rejected.cs",
+      "sha256": "06d371aacbadeadf0cfcc644865f8e4a12a94c42cbdb730d790e36066b54e76f"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/AnonDelegates/positive.cs",
+      "sha256": "4019918647be036a66bce7ba4b0cead7eb4e5dd768c71e6f16471203261ac843"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/AnonDelegates/positive.cs.json",
+      "sha256": "8c6aa8a57508e494a5d6920527e755cd3a812b93b452443d6ab48a02c148c61a"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/AnonDelegates/rejected.cs",
+      "sha256": "7b62f1601705a8b49e2a0d4f6ca4c508f38ace92146693bfdc8f0b71d0ac21e6"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/Default/positive.cs",
+      "sha256": "a4c8ecbf6d3823c1a2df05305bf98e909ef60b31447f42ff2635ec30563b03ee"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/Default/positive.cs.json",
+      "sha256": "95f5d9161042cf8f0d4e0ea69f0200665af82d1db1957323b7fe9fa638b0f34b"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/Default/rejected.cs",
+      "sha256": "448752f6ee90653926e716eb5db2ebb6a4ae4137edb7074b6ba92f82edf5f53b"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/ExternAlias/positive.cs",
+      "sha256": "cf9e6ff8193d402b2e80e769e9c31541548e34d2f88bfc0f55ac676a6e1128cf"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/ExternAlias/positive.cs.json",
+      "sha256": "12d68718ec0eaa15e06d342ce59c01e9ab5aa09a627d9321400025c4d5de1406"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/ExternAlias/rejected.cs",
+      "sha256": "89ccd640a01ff399a03b9549c3ab7107c765e92f2296dc4d9b688d8fcb03fd53"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/FixedBuffer/positive.cs",
+      "sha256": "e63b372b39ccdbbf2e8c0e602e76698ee6e2fee9eb32ba856f8b848763d8b055"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/FixedBuffer/positive.cs.json",
+      "sha256": "89247d744b66770368de57183ae63783e0aa4009d715c7016fdbd3f4d315ebd2"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/FixedBuffer/rejected.cs",
+      "sha256": "8efb9d6717cbe779338965549b5110426a27e2d9ff532e32968374f87332c68e"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/Generics/positive.cs",
+      "sha256": "c547d05a5c0a5331cfd3ec90115b90fec93b0fbe79dda929bd432cc2c831099c"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/Generics/positive.cs.json",
+      "sha256": "43da01ec4323f11042ee475d426dca6b2ad50104409e1f610bf01c44ec878abf"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/Generics/rejected.cs",
+      "sha256": "1d1d434ac05523fc9f5eddab3a14e9f7a9639bc6f520c5ddf9d48bb4e9267fdb"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/GlobalNamespace/positive.cs",
+      "sha256": "4e30db9fd91c77eb09053f15225b1b396a1f92d23a15acc9b19fd4684386fa9b"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/GlobalNamespace/positive.cs.json",
+      "sha256": "794b3608cc8ea4bdbf392515bef1ac534fab48e971f54469d5b06f89ffdbc09f"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/GlobalNamespace/rejected.cs",
+      "sha256": "7a711761e92e8e7d656b9efe33a41799dfd5887dd1ed30143eeb9ac993103829"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/Iterators/positive.cs",
+      "sha256": "3811ef9f4c35a465760d9ae9641e2adf290a37b6666ae5b8803514ce8d4c2c3c"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/Iterators/positive.cs.json",
+      "sha256": "53602b2d0aa935ed554df5d7bdbf916afaa5fb879027cf5161ff84ef7c697e64"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/Iterators/rejected.cs",
+      "sha256": "604008f095615ad872673c27bec34cf64a0b0ffe5822bcdc78f61e5365e4d8b6"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/Nullable/positive.cs",
+      "sha256": "61a6fa61ace61680536851f910f4023a963fd2627335484c2cd174b6a7ede17c"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/Nullable/positive.cs.json",
+      "sha256": "9ef9e91e9ffa684ec47614e4c984996d02f4779995d3e0b061241e8f5ad0ab5d"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/Nullable/rejected.cs",
+      "sha256": "af3dbdfd251b02cbd28d81352a98c934286159d52950f2389fb7ae39693626b0"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/PartialTypes/positive.cs",
+      "sha256": "bc5d09e4de6f81270a9ee22d75b6ef51398144ecc06b44be72ef53098a967103"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/PartialTypes/positive.cs.json",
+      "sha256": "8cf3020fc8401ef85029cda7b405fca7b948be5f8597a862a2b6cea44630ceac"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/PartialTypes/rejected.cs",
+      "sha256": "080d1f1ebf35cb1061906a3d355399567fbe4f5b4a928c967ea1eb6b35febdfb"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/Pragma/positive.cs",
+      "sha256": "77834644369574f26ebd4c4f5ae2bc7abdfddb9c680aa968906eaf1d3470f22b"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/Pragma/positive.cs.json",
+      "sha256": "9f9851b674ebf7e0d522cc705ccd19adfc78d2543c3b9b88509f9c92986c787f"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/Pragma/rejected.cs",
+      "sha256": "318b7d214139f2ac4e0bf5f0a4951f93e261065f38529a18b72f2792b53caf1e"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/PropertyAccessorMods/positive.cs",
+      "sha256": "d1f5e65b3a2ecdbec39b41ee3fe11188877b6e3b135c97d2a0e5a400b7f982c4"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/PropertyAccessorMods/positive.cs.json",
+      "sha256": "9bceaf64c0904adc496ef8de6ad4091efd5c02363c72c73a986c9880448e43ce"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/PropertyAccessorMods/rejected.cs",
+      "sha256": "5ea01bf853781f01a1c18e12bbc649528e26f4b4b56457d0f5211c285b05df89"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/StaticClasses/positive.cs",
+      "sha256": "001d9eca491e33b7fa0d887229144d7bf982742665bb0312cb5768380ef46d47"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/StaticClasses/positive.cs.json",
+      "sha256": "fb2a72da09d3a735a01ecb7160a8ea04497e978672d356cc3da99ef12a89eb43"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/2/StaticClasses/rejected.cs",
+      "sha256": "3a3c6a60b94a275a064c2b7fa3d9a49b8a0c515ea8dcd208c3a4ec03ff320ec5"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/AnonymousTypes/positive.cs",
+      "sha256": "63aa9c10e5b7f26b470b7bc6f8ba429b89bcd715cfca100680f2d5f126811a77"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/AnonymousTypes/positive.cs.json",
+      "sha256": "dfc59a6b278d0d8cf976ddf2fc675b1253afdb355ebffaa58a535d0bc73f71a9"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/AnonymousTypes/rejected.cs",
+      "sha256": "30593d00e1ea66f97bb6d1e58e1a7c407744ef73ec74a5ed9cf73f2cc0e0c6d2"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/CollectionInitializer/positive.cs",
+      "sha256": "66f5351a698939f768ed3f55c7636930b09555e6d51b1121ead58531489e7e68"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/CollectionInitializer/positive.cs.json",
+      "sha256": "349211c4e9b585d01468f178d70d59a11f6f9b94f48785a825fa58fb0b17eff3"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/CollectionInitializer/rejected.cs",
+      "sha256": "a35c78de574941d49f445987d443aef6bdd87af9011126aae5d4fc8e490aaaa4"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/ExtensionMethod/positive.cs",
+      "sha256": "33e112e62eae2c6d41b9f387c3f2168e2e91136b6322c33d85da67ea812a2c8c"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/ExtensionMethod/positive.cs.json",
+      "sha256": "8b58f3341c31a492f50427c6ca64388641958098ab1e7d4af283edbbb14e45cd"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/ExtensionMethod/rejected.cs",
+      "sha256": "1b3352b7e3a298384fa41c74a40157f7ef74b7207f8b037c9996b8f50500a066"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/ImplicitArray/positive.cs",
+      "sha256": "324784b0c464162167533266cca3ede4e2bd669be886696f78023cea30cf8659"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/ImplicitArray/positive.cs.json",
+      "sha256": "f3272fdaf8d70688cb25f7c69defa97e3f13c07ae809f64c2e800f31ee645ced"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/ImplicitArray/rejected.cs",
+      "sha256": "eb46e134432571f37287a4e7c711bf7e9194627a25f03b31ec9a9af164a27f13"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/ImplicitLocal/positive.cs",
+      "sha256": "abc3b6d8c2e80e2deaf56e8ff994dd5835cd56240d08cd537fe979c9d40b351d"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/ImplicitLocal/positive.cs.json",
+      "sha256": "836115da9bbd156ccb9a136cc59f9d1371b540a6aac978d8beaffd6336008881"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/ImplicitLocal/rejected.cs",
+      "sha256": "6fe9f7d50eb69fcf59d1d90e139d3062ee2060b94b130cba66e234badbecccaa"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/Lambda/positive.cs",
+      "sha256": "b3a3596d0ac897b691ed9046760cb6f914c2cccf392b6b6ba705d35b5170f751"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/Lambda/positive.cs.json",
+      "sha256": "38f91ad488b1be2ec9b65c23abe40e9861c99ffa033ec297babe951a819e6a37"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/Lambda/rejected.cs",
+      "sha256": "27a68338903cbd7321e0aefa6b374036902ce4172e684e24d69641049dc5f652"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/ObjectInitializer/positive.cs",
+      "sha256": "2b0fbadc4e3f6175c5e7f47b02805e65484458bba8990fdfadd7de8ed0fc57ad"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/ObjectInitializer/positive.cs.json",
+      "sha256": "68f0104d1d03000692e2aa16c446f03244c64a964dde41cb28333ff1f437f704"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/ObjectInitializer/rejected.cs",
+      "sha256": "2f7c829e9ba3eba21da98224c22ea4bff33d9cf6b7a566d96661ec4e756bd78f"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/QueryExpression/positive.cs",
+      "sha256": "0469533f0649c0ce428cc1e3fc7c380078e1e7a6d179039362edd75e76d8bde3"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/QueryExpression/positive.cs.json",
+      "sha256": "6214aae46c096fac17376d422064a92e427fdbca3a6e63ec55ea1e6206f9d111"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/3/QueryExpression/rejected.cs",
+      "sha256": "1acb0dbbcf6e0ac40cc6f65e2ab82182ac4363b9b0099bc36d712e3bd82e8598"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/4/NamedArgument/positive.cs",
+      "sha256": "91f4632697985dddb835bac89f829ba3979597c13a676c23231eb19d4567885e"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/4/NamedArgument/positive.cs.json",
+      "sha256": "4b5d85ec990492b649fdd53e7fa04abc1b8fa5943b8fc05d87739da00b138026"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/4/NamedArgument/rejected.cs",
+      "sha256": "0cf8f8f8386b6208818991cbccf7272b11300b7b0a4a840a048571ec570fa149"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/4/OptionalParameter/positive.cs",
+      "sha256": "a80ba7fe4d44415961cc94be869fae662e93df3941dc0e09aec14acbad4a89f3"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/4/OptionalParameter/positive.cs.json",
+      "sha256": "b728dd27fcfb15003cd88106e4327c5c9f780ec22a3f501597d1c1fefe851ce8"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/4/OptionalParameter/rejected.cs",
+      "sha256": "8a66ad59f8045e40ec2fe8641b6f39fc80443580170fcebb97189e87525b6b6a"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/4/TypeVariance/positive.cs",
+      "sha256": "522cb9d6727f38ff629e03c284b23ff38ab8b78acda6a3f40492e6e7e65c0991"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/4/TypeVariance/positive.cs.json",
+      "sha256": "98aff6a7a5cb034b026991d9e2098fea807a337e93fae91363ae29074ab9534a"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/4/TypeVariance/rejected.cs",
+      "sha256": "0e9350962b9b154102d81c79632e20aeb8711db2fc02d0542b897a4be87b6f0c"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/5/Async/positive.cs",
+      "sha256": "954a183b4755a775f77059a5686a235d483d011e3654245317e4a80e5e7dc895"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/5/Async/positive.cs.json",
+      "sha256": "fcc711e5fca19e1f0140d028a2ef4c94099042e216d725254b1ca20f8033a1b6"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/5/Async/rejected.cs",
+      "sha256": "d24405cb8fb78f20e539766edeb9b5f2092858d3bcc236d140f21b948efb1295"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/AutoPropertyInitializer/positive.cs",
+      "sha256": "9accfc6d52f34380620747a429065780c95b8fa658daf48906551734775ad1a8"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/AutoPropertyInitializer/positive.cs.json",
+      "sha256": "fb8c42acdaa74a2b328b6a35b774df56001c766943207d84ce7d41215c7b4b6a"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/AutoPropertyInitializer/rejected.cs",
+      "sha256": "f2d767bab71f90c6b2f141720e73bfeec67fb7d7dce95121c0043aa6872dca44"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/DictionaryInitializer/positive.cs",
+      "sha256": "1e17b118996af0ade03d7dfaafd07b1d58e35dfc9eb45ae4953e780aaff85863"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/DictionaryInitializer/positive.cs.json",
+      "sha256": "252c0ab4c1a534da293990bb91e0a47a4c7241d2612f271e5a6745f02a3d0eb5"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/DictionaryInitializer/rejected.cs",
+      "sha256": "0528eef8a65e12bb034e91125534f6c64a3c9122574dfdefee296bdd103b65f1"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/ExceptionFilter/positive.cs",
+      "sha256": "c6709992572288056368167663492275eac0e9991a290c26c87fa25f00c52739"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/ExceptionFilter/positive.cs.json",
+      "sha256": "0e78765f72c89f6f651be8aeee08740aa93a0ab67fc45bea25499f7589f96b93"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/ExceptionFilter/rejected.cs",
+      "sha256": "4e38f4e2f245c8d879f90bacc5068046d881549fe6b1a1a1b46e018c372dd588"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/ExpressionBodiedIndexer/positive.cs",
+      "sha256": "be42fa89c39701e7c5744105a92d2df4c5d46b95a0e403acad8808c5c3e23f03"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/ExpressionBodiedIndexer/positive.cs.json",
+      "sha256": "e670c7f9317a034c7207ac9fb77d0bb62e87d11a047129909c5e7a90e62a0e3b"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/ExpressionBodiedIndexer/rejected.cs",
+      "sha256": "25ba5c3a1ead9d2de0eff0a1c44ecf95bd71e356ee3e6edd6f6e3d7a2e35be10"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/ExpressionBodiedMethod/positive.cs",
+      "sha256": "a9461b8599e46d4a6f117750da0a9606ee2c27b5d1bc579628c98c326ff1d176"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/ExpressionBodiedMethod/positive.cs.json",
+      "sha256": "f07c2b5b389478c36f715a248d17887476a44de1a1bf2a3da0b7ace230cbe99c"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/ExpressionBodiedMethod/rejected.cs",
+      "sha256": "5c50c1cc5e546582a6e75b8272398d955a91b4378315649f1c78d77d331d2b66"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/ExpressionBodiedProperty/positive.cs",
+      "sha256": "00d684c36d93627d3cf4f815e49f0394b2052bfd5885f330f0bef8337b162e93"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/ExpressionBodiedProperty/positive.cs.json",
+      "sha256": "1dc70b066256f5bdfdf93fc374ab9e7b16a8d9d4bd1f07ceb0ff476942ebd053"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/ExpressionBodiedProperty/rejected.cs",
+      "sha256": "6170d9e8b7ce84393c6bce3e1fd06c19ba02e690d72428a4c8aaeada90b53aac"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/InterpolatedStrings/positive.cs",
+      "sha256": "32ef2aa182ea8d4b28c807fb4c21ac24f2189cd29b1cb37c51c55c16f3c77816"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/InterpolatedStrings/positive.cs.json",
+      "sha256": "583068a683c3c36bb95bb3053c0dc95ae2942a9b181957093710bc4b1abacef6"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/InterpolatedStrings/rejected.cs",
+      "sha256": "69dd8775d0d0e66fc42d3329063edd8e37ad21ec8b8e4c2fb598216057abb144"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/NullPropagatingOperator/positive.cs",
+      "sha256": "c4471c0b2400ebf12e1beee24f9517b3eaf0aa2de8f21b4337e27199dacb8985"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/NullPropagatingOperator/positive.cs.json",
+      "sha256": "6e94f89a76b59594eed9080c6ed8d6a1948ede22505820087516722fbc38f8e5"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/NullPropagatingOperator/rejected.cs",
+      "sha256": "70324f759820810f491f96e15fe0d7d0aced7c16e4d6b3c999b2b01723a9f6aa"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/UsingStatic/positive.cs",
+      "sha256": "e5321f5f66e1c8550d0cb01652c4779f651fbc5e103ccff5627e08778837332c"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/UsingStatic/positive.cs.json",
+      "sha256": "1eea147ee57f11717fd621edafdda282a917272517436d375dd7f0959bf214c1"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/6/UsingStatic/rejected.cs",
+      "sha256": "c2a4d6b5571f1c379ffbc7493dc3cf0e2b875816bce746ffaad8cf904dd1c51b"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.1/DefaultLiteral/positive.cs",
+      "sha256": "ce51980f1650e1e3e2a39f8a03b56f7faf3ef466f93ba9abc84be6b584460e5a"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.1/DefaultLiteral/positive.cs.json",
+      "sha256": "77df68975decb4a2678ff7f93071ef4873b0e98b6d58c367f066f8fb954c3ca8"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.1/DefaultLiteral/rejected.cs",
+      "sha256": "3bb9e3c80bf49192d77a37909c6c809ededdf25c8846c647a4bdeddf41b63e2e"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.2/LeadingDigitSeparator/positive.cs",
+      "sha256": "2b67a31d35295227d8359e84b2d17a2e571d9adee72d06868f40ac87b9562764"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.2/LeadingDigitSeparator/positive.cs.json",
+      "sha256": "09afd85a99ed18573a7ab93456b28461990f0a94e923bdc7b754110fc8b0d810"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.2/LeadingDigitSeparator/rejected.cs",
+      "sha256": "caa2b6c7a59940322ce877ad6b9e6562517dc04ea5ebf26fe55b38e335e0ba38"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.2/PrivateProtected/positive.cs",
+      "sha256": "d66074394dd551bb864c173929d810b43173f74a1cca32c964be4aef8e108067"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.2/PrivateProtected/positive.cs.json",
+      "sha256": "8a18d1a3fa418b8cd3c99f8ed1f677a905fb6d6610a92907be2485500d984506"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.2/PrivateProtected/rejected.cs",
+      "sha256": "1340d51bd7063f85a4f6e6d746cb9d73b594bd094f2f3cef5d77d25c4d854ec5"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.2/ReadOnlyReferences/positive.cs",
+      "sha256": "eb404a643fde346c45d633b4e9810fdd4caa511e0f574c3736e9b3f84da03e8c"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.2/ReadOnlyReferences/positive.cs.json",
+      "sha256": "ef91b679d79ad0ea23172a26e2ec5d3a06897b45de1c5a3f4de166ddd20b75e3"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.2/ReadOnlyReferences/rejected.cs",
+      "sha256": "93f8b4fcd97abff708b1bbed60ed30eb2a73be8421a416e30c347cd56a0fc339"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.2/ReadOnlyStructs/positive.cs",
+      "sha256": "1846e779414d693d62fc2b61f9c67d88ce8afceab390c05ddd2feb528f56713f"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.2/ReadOnlyStructs/positive.cs.json",
+      "sha256": "508d872c9aad40cbd304690b41ff5b94abfebe71a350484ae9a7efb5b02c602d"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.2/ReadOnlyStructs/rejected.cs",
+      "sha256": "7c540a658a96c6f0a744019f5b35c908b087f26ea550c3fc265b270b73756a96"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.2/RefStructs/positive.cs",
+      "sha256": "37489354f412679ca03e4194ac2c9e872fcc1a45159d6533f2d303a9a18771c4"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.2/RefStructs/positive.cs.json",
+      "sha256": "d30c7a1d5dc9e28effe5874fb70797a5c82cec07a994c151a9efd7efcbfed6e0"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.2/RefStructs/rejected.cs",
+      "sha256": "dd203109a9036223cb3e72e70ba1de3b6570a0aca02323016e90835ff056da74"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.3/StackAllocInitializer/positive.cs",
+      "sha256": "77eb8a40869c096e0ca0da95aaad44cdd39d303ea44dd4cff488db49959ba604"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.3/StackAllocInitializer/positive.cs.json",
+      "sha256": "36859e3681089e07bc694dc503ebb9f8313149b424df053e09a97816d48cb402"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7.3/StackAllocInitializer/rejected.cs",
+      "sha256": "87ce965bafd4d56554d49bbabf50081d879380c36f1caef7d769dbb3378542e3"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/BinaryLiteral/positive.cs",
+      "sha256": "8a1e949f7d6f99dd7daaab6565f8673e4c23f15a22016c3ae3be7efd81b714be"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/BinaryLiteral/positive.cs.json",
+      "sha256": "e5eca9d578234a905135ec953a539e0713ece7145f29b8ca337faa3e607d117c"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/BinaryLiteral/rejected.cs",
+      "sha256": "73a898607c07b7a901863226186d4c68ee51d7575d64a783980351d5cad26226"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/DigitSeparator/positive.cs",
+      "sha256": "39ff5930286427c96493ef76a6c8cce5d00502b87f372e87f204ce1ffa96f181"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/DigitSeparator/positive.cs.json",
+      "sha256": "19258fe28a2be08a810611c207e7a1b1dc5568a616db80e8e0c3dd9523fe86b9"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/DigitSeparator/rejected.cs",
+      "sha256": "bcc94d180dd21ce96dfb0fb54740a82c0a11d289eea5a92de053b595fe6924ec"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/ExpressionBodiedAccessor/positive.cs",
+      "sha256": "e755cf260b271515a6718dce3106fedf2119abc30ef2a9b35a6f34e00d8ee9cf"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/ExpressionBodiedAccessor/positive.cs.json",
+      "sha256": "e08712c685a46e9decbbc8d63429b2743cbe7173dfc5926da319ccb23ae9bd84"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/ExpressionBodiedAccessor/rejected.cs",
+      "sha256": "0f4056c9a690ab0529daacaba42d7569e2ee4913c490db898db0347b9617d784"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/ExpressionBodiedDeOrConstructor/positive.cs",
+      "sha256": "97019decac7720cbd8d5c8c95c410afed2c5e9bfbae7e99155f887a91159251c"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/ExpressionBodiedDeOrConstructor/positive.cs.json",
+      "sha256": "ce1b966ef3ec9456650f4809bc013f39bca354ae7e77fa4f2daa1bef4e17a52e"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/ExpressionBodiedDeOrConstructor/rejected.cs",
+      "sha256": "078a9881c9de227e13a9bf3a0927795a437752398eb799b8f91011171bbd90c7"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/LocalFunctions/positive.cs",
+      "sha256": "8ad4480355a904f19777b2098a5dd145d7e4a1dc3e744dafaaf3d2dd5d935946"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/LocalFunctions/positive.cs.json",
+      "sha256": "efa5d6a801e2c5ebf0d6c8dc92238d6c9c2a8883ca417989d11ad2af5978077d"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/LocalFunctions/rejected.cs",
+      "sha256": "fe0f53d10da92d90ae95b2e865a5bb9661666e41716286e18b941def7f22a1de"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/OutVar/positive.cs",
+      "sha256": "9a826122ca6899f8dd63c9f54ab878cb4e7739456efed7845cdbbca5980b6077"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/OutVar/positive.cs.json",
+      "sha256": "0aa0063bee1aad83d9aaf39e6337eebe6c35dbb09755deae24d5b56084346fac"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/OutVar/rejected.cs",
+      "sha256": "e0283b710e92612c5ebfa6b8ce03cdbd3cf26ed92b83e10555c93bea5d04af08"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/PatternMatching/positive.cs",
+      "sha256": "f66ad35b02ffad2161448aa023c93b35b15f101ef7d8fb9309543c6d27397844"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/PatternMatching/positive.cs.json",
+      "sha256": "d4a14597074b1676cd6c563051e67b97c952dde943fa8d048f8faef7bae3b06e"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/PatternMatching/rejected.cs",
+      "sha256": "f95b03f856cb162f16046d6efe8f183b693469b2f8c9a8bb63f6a5133be0567a"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/RefLocalsReturns/positive.cs",
+      "sha256": "7e1b34971491c664ceaa8c96dc6c6994e77e3fc18ef0f0a002f74e4b045efcd6"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/RefLocalsReturns/positive.cs.json",
+      "sha256": "ca994ba4e8023ef88d47a9c879985382e4f39b4f44d99331f2c4aee010ac44b7"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/RefLocalsReturns/rejected.cs",
+      "sha256": "10fa578d21620b23917f07f47f1280fd83b8650b5fa2db2c9bbae9b57b5729a6"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/ThrowExpression/positive.cs",
+      "sha256": "d2d78ebc40939ea2c69f1c67d2044659181f7d63c0079d31e656c03b4eb45a55"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/ThrowExpression/positive.cs.json",
+      "sha256": "2ba782b98d1ddd959e658b2932dcd6a66a0f6adcd81ea6a747e45d829d134784"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/ThrowExpression/rejected.cs",
+      "sha256": "10b6db732110aa9b23f6d70ec7a1fe3ea50b27df604e27588e629e488e2fa9da"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/Tuples/positive.cs",
+      "sha256": "6e7bb53ae53600ef24cb846bd4f75f0dcc57136b1ab25f51998400713fe86767"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/Tuples/positive.cs.json",
+      "sha256": "f6e6926804af264a2833d9cc3e4dad613afce969e9b78a87048e6fd5130c6888"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/7/Tuples/rejected.cs",
+      "sha256": "e5fe8a01dd3462bfb420bb02648323bb3046c446d3aeb163d79c1857bd3676f8"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/AltInterpolatedVerbatimStrings/positive.cs",
+      "sha256": "ac96f23011184436b57898d0fa7c7a4c3a660b67e4ff1bbe1a309f9d8cfc9e67"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/AltInterpolatedVerbatimStrings/positive.cs.json",
+      "sha256": "cea711e19aba74694ad5d06daf9151dcfaad42cca106261fb0b1e8157df2e6a2"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/AltInterpolatedVerbatimStrings/rejected.cs",
+      "sha256": "b52f9936244e814d9dd4f1db4b0f1457243e2f88982a013ccfd4e3d6ff669cc4"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/AsyncStreams/positive.cs",
+      "sha256": "f7c9e4f9ec936da3df17e71c25c8f29c3e1912a1eeb1fa59c1817f31602ad28a"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/AsyncStreams/positive.cs.json",
+      "sha256": "32845e3fdcd33f932249ec6b2cd5363fa09f58cd9a05815a621c0c65f0e23eb2"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/AsyncStreams/rejected.cs",
+      "sha256": "26dc2a106c2c3bd32bd1c362293c8e70f5a768f15d96175a1388abafefa5c4a2"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/CoalesceAssignmentExpression/positive.cs",
+      "sha256": "f56d6f7161ac7809569ff08f5c512f6f0d95a1b3d027aad4db99f29055e93e8a"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/CoalesceAssignmentExpression/positive.cs.json",
+      "sha256": "c428e56f8d08478568b60d629f73268d2b801b78267a2dd6d67f2904a5f14f14"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/CoalesceAssignmentExpression/rejected.cs",
+      "sha256": "8308b331d0143a53341cd856dab7570769cc6f6c28015216e7ed4a260988c19a"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/IndexOperator/positive.cs",
+      "sha256": "84cdefa40ee3b977222f56bebb3b1bedfee5cb51f9dfb3c700990a9b801d5977"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/IndexOperator/positive.cs.json",
+      "sha256": "12461598ebbe2e68409837015bdd7f3d176860c9f936b25dbb4eea4407090530"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/IndexOperator/rejected.cs",
+      "sha256": "c67ec69a4f130a09a19e9dfd6c7a06a942c47d7b259849ee2d363013857916c9"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/NullableReferenceTypes/positive.cs",
+      "sha256": "d928bd3f581d39671610aa80fe51da060a142eea78b6d56f27c8daca0d6ba377"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/NullableReferenceTypes/positive.cs.json",
+      "sha256": "4de78702042eab4e028030c232983011ee1725d5a0e86b4711057791619346ff"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/NullableReferenceTypes/rejected.cs",
+      "sha256": "4f50d4460cfed4aefb47624719161fb2959acda3ddf5ac069bcf1b13954745aa"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/RangeOperator/positive.cs",
+      "sha256": "5449a6fc45980f76180258cc2b1054961e09e9b0bc48305bb1894fb064895c8a"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/RangeOperator/positive.cs.json",
+      "sha256": "875e5c2a42928e4c982bf3dc3622838a24094b47b9d41b38b0f2bf4027fea9e6"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/RangeOperator/rejected.cs",
+      "sha256": "63926d2b4298c5aba59f65176321974b66faf69cdeafc002ee2c0007e277b56d"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/RecursivePatterns/positive.cs",
+      "sha256": "5aa51dd45edd4d5a5ef59980a9ef7f937813bb005e67f66199f953637e99355a"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/RecursivePatterns/positive.cs.json",
+      "sha256": "2a920d8c54fb96c4bc8dabd672aaeac5a1d0a9dd47506b40f9533a9b91410df8"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/RecursivePatterns/rejected.cs",
+      "sha256": "97505fd425c7c851590cfa7e12d84abff9d730299ef2734327e76578dd9c9bc3"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/SwitchExpression/positive.cs",
+      "sha256": "ec7ddb5af1e9d84c549fcc195527e0bc970fe7ded9a3f5bcc5439fc0ade48c4a"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/SwitchExpression/positive.cs.json",
+      "sha256": "20b59775042db46a698e1d472ebaad51d6b3b8a542256edfe5c49d8836df5913"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/SwitchExpression/rejected.cs",
+      "sha256": "3f740adefd2eacbb3a84f200091c6393b95f6116bc5da3769b6596cd6a0bdafc"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/UsingDeclarations/positive.cs",
+      "sha256": "109291b98dd3c17b411f95c56362f05014d32138b8037c9ea0117a2fd3a70a8a"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/UsingDeclarations/positive.cs.json",
+      "sha256": "474ee5df154c9bdc979bb4001bb2f3d7562f4c4c1b0f048003a51f9469bdd0e3"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/8/UsingDeclarations/rejected.cs",
+      "sha256": "49f4ad9eccaef64e92245f625305d7c25bbb9de7813c883dece97bf5fcef665c"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/AndPattern/positive.cs",
+      "sha256": "23bf1d1f80783abf06f1a707e5d3acd2e684e9bb61c9ce6e25b2d9d020e2e204"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/AndPattern/positive.cs.json",
+      "sha256": "a56266882c5214db96d880965211192a9f8a61a0621414aa6d27b01692cc3f7c"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/AndPattern/rejected.cs",
+      "sha256": "36765627002e3d97e7e0e0c60c3f2a547a2029f8bc26d5e86cc89c25ff90922e"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/DefaultTypeParameterConstraint/positive.cs",
+      "sha256": "28ccac9e781bba63e274ca78b0e2a37d6013c13282d761998fa0ccb8f0be23fa"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/DefaultTypeParameterConstraint/positive.cs.json",
+      "sha256": "0a44f222260a58c1e7eac65009ff5954dbfa4c26045e23023ed760cf38aae98d"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/DefaultTypeParameterConstraint/rejected.cs",
+      "sha256": "bbc3e0c2ada1568fea3aea4e8652675690eec296a8133a44098708912a9753f0"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/FunctionPointers/positive.cs",
+      "sha256": "70cc1efbaceeca1fb88ecd078e873ba5eb970ab53e1428184bc0e1dc9d2ccad8"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/FunctionPointers/positive.cs.json",
+      "sha256": "d64a9300c43c04bf746b3174588cbdc96c4c4aae2f460ebe12e1e5b3bc9cef62"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/FunctionPointers/rejected.cs",
+      "sha256": "c21bf55a3404545b5dd0cc9b3bbaec639915189ae384c5fb00c3c6fef59a1b8f"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/ImplicitObjectCreation/positive.cs",
+      "sha256": "0cf5bdb2f55f9b075f8fc20ae56e4f03c4a7ca2b895776450c36ce02c4376690"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/ImplicitObjectCreation/positive.cs.json",
+      "sha256": "130d11853b93a1c1b65bf32dc21363e25523a6a625e1fce333449ebf3403fb35"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/ImplicitObjectCreation/rejected.cs",
+      "sha256": "b4338bb0f31d1b714d1e0bad1e5885ece4cd6072b1564eba3e3988e9d7317ac7"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/InitOnlySetters/positive.cs",
+      "sha256": "af6d9ea74c5837a919ccd60c0deaf4549bee8cd91f6ba8738f15c42ae961c1c1"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/InitOnlySetters/positive.cs.json",
+      "sha256": "12c4c13a07f4004a9cb41708c7fe1fa0b3282c947e49146a2e345117a50c2d2d"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/InitOnlySetters/rejected.cs",
+      "sha256": "c871bb660103c56ff63762df3e83745d516fe864809b9ae04d83230b0b93c832"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/NotPattern/positive.cs",
+      "sha256": "e228c238ebd00cfe722924868f9accc1aa412a142c46ee2ef68d97aafd184011"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/NotPattern/positive.cs.json",
+      "sha256": "307062c89da4639f996ddac6a22b80a0029c89be2de39e7e7e0eb983c213e3db"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/NotPattern/rejected.cs",
+      "sha256": "c00cf9b8954bf8a14da3fcc415a013c3df7fc4767a928f9ece65cef72ee5495e"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/OrPattern/positive.cs",
+      "sha256": "39d2afd885d45c76d16e70dc984a495926a6b0724a04dff74e47af54ebf8a52c"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/OrPattern/positive.cs.json",
+      "sha256": "9b96075e36aef20fc361ec2b4fc4d562085698f2734c2a5a3638b151592e431d"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/OrPattern/rejected.cs",
+      "sha256": "b19bd68082fc3d74a656e65aae29de36fab69a296c73da420958a3a52dd1fa43"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/ParenthesizedPattern/positive.cs",
+      "sha256": "fbcd123e54e4972cb03da4909ca073c7a31332ce4a20e21166908529560485fa"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/ParenthesizedPattern/positive.cs.json",
+      "sha256": "7f85a1820a7fea4855ab58b2fe4aa5c57044d411e1fcf0895cbb962217f82dc7"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/ParenthesizedPattern/rejected.cs",
+      "sha256": "3809044ca956a03f7cee9abdc9e0b06f3551f3272c37533d930dcb2bb5faed9f"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/Records/positive.cs",
+      "sha256": "79e9ccae689e901249e1bd45adf3a46c1196b8862514c8a64475906edc7b30e3"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/Records/positive.cs.json",
+      "sha256": "52d9ca38e8cf9b486884cbd73382b5a4df76c822b2d715e60c6897d1b0317045"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/Records/rejected.cs",
+      "sha256": "0738f5d56eb1e80063e33a5742498fe91599266f85cfe9e4c8153b2fb9d56ea6"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/RelationalPattern/positive.cs",
+      "sha256": "e88b7df5659d7f74ae2acb7af3d9beaa9e5fb968116a492f519b7bcd414753e3"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/RelationalPattern/positive.cs.json",
+      "sha256": "79b6e73635a8fcc29f8da282c4595c693e182341682dd2389c16cb93237a3c2b"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/RelationalPattern/rejected.cs",
+      "sha256": "89c63f0d1aa430b2752e6499fe895a1b03c6b42faf574345165a2c83423f6c45"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/StaticAnonymousFunction/positive.cs",
+      "sha256": "5de77c0d0bc7f949d46376d1fb3071dfe1322484e10ef702687ecc881780c34b"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/StaticAnonymousFunction/positive.cs.json",
+      "sha256": "de1b3b63a57b674c58c231a1f013d4750d8bf2c1b6a19334e8e5d4c9e382f6c0"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/StaticAnonymousFunction/rejected.cs",
+      "sha256": "e5667f354caef8176c73b33f662fba3cd61eeafdf0702af66e76fba9b08ebcbd"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/TypePattern/positive.cs",
+      "sha256": "a3abe0e41247563dbe2cbc2876c22d2632420c1f98547e70be357ed22ca2f7e9"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/TypePattern/positive.cs.json",
+      "sha256": "cbe2b1e1524828a7ee8823cc3685aee90950f5638ca7446a577b44574031b8fd"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/9/TypePattern/rejected.cs",
+      "sha256": "6a0ca6de046410ebb95bff048c2a6f62a76fd13642636b385277cdf99848c746"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/preview/CollectionExpressionArguments/positive.cs",
+      "sha256": "6ce51a37193f69733b7563b7692034373c5ca20ad744848925281d5675cc4b05"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/preview/CollectionExpressionArguments/positive.cs.json",
+      "sha256": "de534b1f8d235ef32200f6a0596a6a37b80a0bc2e481f49c6cc17f8ae313767b"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/preview/CollectionExpressionArguments/rejected.cs",
+      "sha256": "e3ec130b9890c11ec284ee89c93c7923d3ea8e80e60e7e8b42909624fe4d06bb"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/preview/LabeledBreakContinue/positive.cs",
+      "sha256": "aa068bb2d75b0882f512afc394e785b974331617ddb474ccff078e2a37c3b5e9"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/preview/LabeledBreakContinue/positive.cs.json",
+      "sha256": "42445b2c06fbabb598d634ef8f7f46458cc6463ae32da0e47d234301e8f291ef"
+    },
+    {
+      "path": "dist/packages/syntax/test/matrix/preview/LabeledBreakContinue/rejected.cs",
+      "sha256": "e6711ea38faafbf29d10f20c0a30b142e82fab5573bbc23ccdf5127b4c17b2d7"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/declarations/attributes.cs",
+      "sha256": "8648baedd9f1ac15eddf38dc1c3eea094ebbaefd9b1128eee6d28f9fcc9ff9d6"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/declarations/attributes.cs.json",
+      "sha256": "782873b4a2889b49e43bb1224630ba627aed9e702a67f34e82947de2c8764a22"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/declarations/enums-delegates.cs",
+      "sha256": "f3c987ca5ad51e1a13e9d272ccd0f398bf5a9fa39eb38e212e0fb66ea5948e2f"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/declarations/enums-delegates.cs.json",
+      "sha256": "6d2ec0110db7f3aef7672d86a4aee08ce0d8495a9181a23e9ef5da64e2d1fb88"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/declarations/file-scoped-namespace.cs",
+      "sha256": "4fe523723f19ba5d99f7f4968d5202c63e3a9b2878eda9a05f227010b6f7ab20"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/declarations/file-scoped-namespace.cs.json",
+      "sha256": "74b0594082004c8bd5887a2bd3178feb7078492e8e6587e117ee67960854fe5c"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/declarations/members.cs",
+      "sha256": "c51f2f111d58e8c224041c7c6f3a620af6ab964845afc7de620739553ff1ddef"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/declarations/members.cs.json",
+      "sha256": "e2abf4d6194898af03d27844b8267d9c268ecf21f546c269a3debed301cf0be4"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/declarations/modifiers.cs",
+      "sha256": "e1049781f6f0af6af059596987212ee57a8f52cf3c760341ea6777e3bd17b215"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/declarations/modifiers.cs.json",
+      "sha256": "fc7dfa2dcdf9fde4baaa5d3c6e217c02dbaef7d423e78ac1f3d5dff82a3b1efb"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/declarations/namespaces.cs",
+      "sha256": "cae63403693a2bb6f2024ac79f54aaee05cef192aa07a74cd0ac77e90ce454cd"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/declarations/namespaces.cs.json",
+      "sha256": "04d2bf8ba121d23958dbe238b5c65b6930670b75f800d6050c312ff5f570cd0b"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/declarations/type-parameters.cs",
+      "sha256": "3e8522108a13f1e45681d33966c78ac7079f64b8de92e37fde7ba161aa0a8f90"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/declarations/type-parameters.cs.json",
+      "sha256": "694b19ae4adbb2d7e26f462a7af746381085a2a7818e5caf19d8c2923948203a"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/declarations/types.cs",
+      "sha256": "4b4a7f8f1f9acc63155c3fb1c72596120832f8f9b037269089040dc68b71cde6"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/declarations/types.cs.json",
+      "sha256": "e3f3638eff8c34353b18e9fd0b35c2dd7c9c3526ff5d41d37ca4115095428ca6"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/expressions/lambdas.cs",
+      "sha256": "1fae96cc070fb6007d07ac3693e688819160acdcbdd9e3e1cf773b322d6fc132"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/expressions/lambdas.cs.json",
+      "sha256": "e7d31292d85e8ac961e7d8e0440a067bbde9f30d0e67ba414f1dc85b89bcf184"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/expressions/nullability-generics.cs",
+      "sha256": "ece282a2640e86a234a9b4d7d2d4bd580b9e9d0ff51ae35beb1e87338ca656ac"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/expressions/nullability-generics.cs.json",
+      "sha256": "8cd9508a941c3d1f043a0cf74ce71468fef4c50e2b5001bacfc42646a3a01aff"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/expressions/patterns.cs",
+      "sha256": "d38b5f933f30c452dee633fca3c84291e8d70498eea0f98ba1263ff92f14b20c"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/expressions/patterns.cs.json",
+      "sha256": "82031dfc40cfcb84af4a4f88d0fa2380e3ab9da16862dcc1680271559e32f533"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/expressions/queries.cs",
+      "sha256": "649de5f364057e2f431193d8a29b8afe3f7cb7e5c8ac65bb796ca5f0f4a10edf"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/expressions/queries.cs.json",
+      "sha256": "426c1dd8f3d1d180f8d5f56a0c11a9177ebacbfc7bbdd224d21fa95f84735cd5"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/expressions/tuples.cs",
+      "sha256": "9ed5799442b8b64b3298ee1de3cee020c987b542c7f847a6c316cba9b143b276"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/expressions/tuples.cs.json",
+      "sha256": "09f11567cf07eb5042ed8d0938eabbfdba1555790e709c1b0f5dff0b0451d43d"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/roslyn-features.json",
+      "sha256": "4ca5cab8e89bbe81811cd0361a981a0c59624c4206a2dba0bcc5fae7e2566d3e"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/statements/statements.cs",
+      "sha256": "11931f6c79d34a4f7247fe6cbe6e0b5a5d5c0a4fc0661ed61d453f3ab0be5f10"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/statements/statements.cs.json",
+      "sha256": "58c222aa7abb97d855c065142b3c2592b88e6154f42add4bf1b9f68dc14918e7"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/statements/top-level.cs",
+      "sha256": "e46241bc83bb004baf2911255ab8e195189850ba7aacc9c2520a4579c1f4f0ec"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/statements/top-level.cs.json",
+      "sha256": "1b522a6f0a8dbe15e77fc77799a31c80c08ae31f9b2e347bec23b0e0fe16ead9"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/trivia/comments.cs",
+      "sha256": "4d8aaafc708c2c9ffc20bbbd0923946ac218e34a6047c1559dd16ff4eaabb1df"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/trivia/comments.cs.json",
+      "sha256": "f6105b938bfd55eb35afb4c97fb68c682b8c501f2c3ffd969bad54ed5882b4a2"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/trivia/directives.cs",
+      "sha256": "a88e313d09b14b14f66dc2abc0f3e66d4b9b51fece5cf811db65fb4144c852f3"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/trivia/directives.cs.json",
+      "sha256": "f63f766008f53bc823529cd64139d277d7388ccdbbccb1332f5415abede54168"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/types/types.cs",
+      "sha256": "35fe5a96fa7b448cc38dd349a2f5ab90f58fb2bdcf217ade9578dd88990f5f98"
+    },
+    {
+      "path": "dist/packages/syntax/test/reference/types/types.cs.json",
+      "sha256": "d6d584e5accbb0f5f134ff7a09380ccc00379f6a6ed6519b4f28e374aa41a135"
+    },
+    {
+      "path": "dist/packages/syntax/tools/generate-nodes.js",
+      "sha256": "5c7d31bd1f904b85a9bcc535f5d43dbfdb5a9261e7a3a33f5d40492385581e8b"
+    },
+    {
+      "path": "dist/packages/syntax/tools/roslyn-tree-export/.gitignore",
+      "sha256": "6c5082c7e6de3e350189c67a1aacf757485ecc26e0a3cf96683528565f3e5f12"
+    },
+    {
+      "path": "dist/packages/syntax/tools/roslyn-tree-export/Program.cs",
+      "sha256": "9ee8e06834c85f0bc2f3bff7f03946c2349828e33c499ffa016fb45327de0698"
+    },
+    {
+      "path": "dist/packages/syntax/tools/roslyn-tree-export/roslyn-tree-export.csproj",
+      "sha256": "8536c43ff664bf9479523f873502f4523231ceaf0f8b4cdce5b18bf4221a5454"
+    },
+    {
+      "path": "dist/packages/syntax/tools/update-reference.js",
+      "sha256": "1ae7ca07d9b2105e29ad0a94a28f7cbae452c305a2ed124d4a7481475445bc9a"
     },
     {
       "path": "dist/packages/templates/LICENSE",
@@ -4533,7 +6185,7 @@
     },
     {
       "path": "dist/runtime.worker.js",
-      "sha256": "a843dfe5e2b321a04e6fa5324b8d7c388e5951c1b17b79d9328f481e2104208c"
+      "sha256": "617ddd3fde6fd488947710f810a11769963b680b1c3f7a699ffe8e81cec4bbbe"
     },
     {
       "path": "dist/samples-designer.js",

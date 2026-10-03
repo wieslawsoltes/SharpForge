@@ -8,6 +8,14 @@ import { isMain, readJSON, writeJSON, report, git } from './lib/io.js';
 
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
 const json=value=>JSON.stringify(value,(_key,value)=>typeof value==='bigint'?{$bigint:String(value)}:value);
+/** Red nodes are derived parent-linked facades; green allocation IDs are process-local. */
+export function syntaxSnapshot(syntax) {
+  const {syntax: redFacade, ...snapshot} = syntax;
+  return JSON.stringify(snapshot, function(key, value) {
+    if (key === 'id' && (this.isNode || this.isToken || this.isTrivia)) return undefined;
+    return typeof value === 'bigint' ? {$bigint: String(value)} : value;
+  });
+}
 export function filesUnder(root,directory) {
   const files=[];
   const walk=path=>{
@@ -32,7 +40,7 @@ export async function goldenOutput({root=process.cwd(),build=true}={}) {
   const examples=[];
   for(const input of filesUnder(root,'examples').filter(path=>path.endsWith('.cs'))){
     const source=readFileSync(resolve(root,input),'utf8'),syntax=parse(new SourceText(source,input)),result=compileToIL([{text:source,uri:input,version:0}]);
-    examples.push({input,source:hash(source),syntax:hash(json(syntax)),status:result.success?'emitted':'not-emitted',
+    examples.push({input,source:hash(source),syntax:hash(syntaxSnapshot(syntax)),status:result.success?'emitted':'not-emitted',
       diagnostics:hash(json(result.diagnostics)),assembly:result.success?hash(result.assembly):null,bytecode:result.success?hash(serializeImage(result.image)):null});
   }
   if(!examples.length)throw new Error('Examples corpus is empty');

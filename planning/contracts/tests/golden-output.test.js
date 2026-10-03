@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { compareGolden, filesUnder, checkSeamLock } from '../../../scripts/planning/golden-output.js';
+import { compareGolden, filesUnder, checkSeamLock, syntaxSnapshot } from '../../../scripts/planning/golden-output.js';
 import { git } from '../../../scripts/planning/lib/io.js';
 
 test('golden comparison reports precise assembly bytecode syntax and distribution drift including removals',()=>{
@@ -25,4 +25,24 @@ test('seam label rejects rewritten lock even when a newly generated lock matches
     assert.equal(checkSeamLock({root,base,labels:['seam']}).errors.length,1);assert.deepEqual(checkSeamLock({root,base,labels:[]}).errors,[]);
     assert.deepEqual(filesUnder(root,'planning'),['planning/contracts/golden-output.lock.json']);
   }finally{rmSync(root,{recursive:true,force:true});}
+});
+
+
+test('lossless syntax golden retains tree structure without red parent cycles or allocation IDs', async () => {
+  const {parse} = await import('@sharpforge/syntax');
+  const source = '// trivia\nConsole.WriteLine(42);';
+  const first = parse(source), snapshot = syntaxSnapshot(first);
+  first.syntax.childNodes();
+  assert.equal(syntaxSnapshot(first), snapshot);
+  parse('class Unrelated { }');
+  const repeated = parse(source);
+  assert.notEqual(first.green.id, repeated.green.id);
+  assert.equal(syntaxSnapshot(repeated), snapshot);
+  for (const changed of ['// changed\nConsole.WriteLine(42);', '// trivia\nConsole.WriteLine(43);']) {
+    assert.notEqual(syntaxSnapshot(parse(changed)), snapshot);
+  }
+  const tree = JSON.parse(snapshot);
+  assert.equal(tree.green.kind, 'CompilationUnit');
+  assert.ok(tree.green.children.length);
+  assert.ok(tree.root.statements.length);
 });

@@ -333,11 +333,9 @@
       "input": "examples/msbuild/SdkWorkspace/App/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0103: The name 'x' does not exist in the current context",
-        "CS1003: ')' expected",
-        "CS1003: Unexpected trailing interpolation input",
         "CS1061: 'error' does not contain member 'Answer'",
-        "CS1501: No applicable method 'Numbers.Sum' accepts these argument types"
+        "CS1501: No applicable method 'Numbers.Sum' accepts these argument types",
+        "SF2098: Expression 'SimpleLambdaExpression' is not implemented"
       ]
     },
     {
@@ -346,11 +344,9 @@
       "diagnostics": [
         "CS0246: The type or namespace name 'IEnumerable<T>' could not be found in this compiler profile",
         "CS0246: The type or namespace name 'System.Func`2<T, int>' could not be found in this compiler profile",
-        "CS1003: ';' expected",
-        "CS1003: 'identifier' expected",
-        "CS1031: Type expected",
         "CS1501: No applicable method 'values.Sum' accepts these argument types",
         "CS5001: Program does not contain a suitable static Main method or top-level statements",
+        "SF1012: Generic methods are not implemented in this profile",
         "SF1012: Only registered closed framework generic types are supported"
       ]
     },
@@ -433,19 +429,13 @@
       "input": "examples/projects/ExplorerWorkshop/App/Scratch.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0019: Operator 'is' cannot be applied to 'error' and 'error'",
-        "CS0103: The name 'C' does not exist in the current context",
-        "CS0103: The name 'This' does not exist in the current context",
-        "CS0103: The name 'a' does not exist in the current context",
         "CS0103: The name 'not' does not exist in the current context",
-        "CS0103: The name 'note' does not exist in the current context",
-        "CS0103: The name 'valid' does not exist in the current context",
         "CS0201: Only assignment, call, increment, decrement and new expressions can be used as statements",
-        "CS1003: ';' expected",
-        "CS1525: Invalid expression term '#.'",
+        "CS0246: The type or namespace name 'valid' could not be found in this compiler profile",
+        "CS1002: ; expected",
+        "CS1040: Preprocessor directives must appear as the first non-whitespace character on a line",
         "CS1525: Invalid expression term ','",
-        "SF1001: Preprocessor directives are not supported by this compiler profile",
-        "SF2006: Operator 'is' is not implemented"
+        "SF2098: Expression 'IsPatternExpression' is not implemented"
       ]
     },
     {
@@ -507,12 +497,9 @@
       "input": "examples/projects/Linked/Source/Ignored.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0103: The name 'C' does not exist in the current context",
-        "CS0103: The name 'not' does not exist in the current context",
-        "CS0201: Only assignment, call, increment, decrement and new expressions can be used as statements",
-        "CS1003: ';' expected",
-        "CS1525: Invalid expression term '#'",
-        "SF1001: Preprocessor directives are not supported by this compiler profile"
+        "CS0246: The type or namespace name 'not' could not be found in this compiler profile",
+        "CS1002: ; expected",
+        "CS1040: Preprocessor directives must appear as the first non-whitespace character on a line"
       ]
     },
     {

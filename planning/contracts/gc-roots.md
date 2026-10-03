@@ -6,6 +6,7 @@ The non-moving collector calls ManagedHeap.rootProvider, pins, extra allocation 
 | --- | --- | --- |
 | Active frames | vm.js VirtualMachine.roots | locals, evaluation stack, return value, unwind return/fault, caught/pending/current faults |
 | CIL active frames | cil-vm.js CilVirtualMachine.roots | args, locals, stack, constructor return object, byref owners, exceptions |
+| Source exception continuations | execution/source-eh.js roots | unwind return values/faults, current/caught frame exceptions, VM current/pending faults |
 | Static/cache | both VM roots | statics and cached string/constant references |
 | Parked contexts | scheduler.js CooperativeScheduler.roots | task/thread/delegate, wait task, frame state, resume fault; terminal contexts excluded |
 | Pending tasks | scheduler.js CooperativeScheduler.roots | waiting task, dependencies, error reference |
@@ -30,3 +31,5 @@ Snapshot heap copies retain old contents without making them current live object
 - `vm.js:roots:2` — packages/runtime/src/vm.js:19; ;this.call(image.entryPoint,[]); } *roots(){yield* this.platform?.roots()??[
 - `vm.js:roots:3` — packages/runtime/src/vm.js:19; ); } *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots
 - `vm.js:roots:4` — packages/runtime/src/vm.js:19; orm?.roots()??[];yield* this.scheduler?.roots()??[];yield this.returnValue;yield
+
+- `execution/source-eh.js:roots:1` — extracted source EH provider retains unwind values, fault references and caught exceptions; vm.js delegates to it. Scheduler frames continue to retain the same references while parked.
