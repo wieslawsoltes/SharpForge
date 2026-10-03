@@ -10,8 +10,8 @@
   },
   "files": [
     "src",
-    "LICENSE",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "dependencies": {
     "@sharpforge/archive": "0.14.0",
