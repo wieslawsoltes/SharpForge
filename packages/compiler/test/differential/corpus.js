@@ -14,6 +14,7 @@ import {fixtures as flow} from './fixtures/flow.js';
 import {fixtures as types} from './fixtures/types.js';
 import {fixtures as library} from './fixtures/library.js';
 import {profileFlow} from './fixtures/profile-flow.js';
+import {fixtures as typeSystem} from './fixtures/type-system.js';
 
 /** Directory of the differential harness. */
 export const root=dirname(fileURLToPath(import.meta.url));
@@ -27,7 +28,7 @@ export function fixtureHash(fixture){return createHash('sha256').update((fixture
 
 /** Every fixture `{id,feature,kind,langVersion?,source}`, validated for unique ids and well-formed fields. */
 export function loadFixtures(){
-  const all=[...basics,...flow,...types,...library,...profileFlow],seen=new Set();
+  const all=[...basics,...flow,...types,...library,...profileFlow,...typeSystem],seen=new Set();
   for(const f of all){
     if(typeof f.id!=='string'||!/^[a-z0-9-]+\/[a-z0-9-]+$/.test(f.id))throw new Error(`Invalid fixture id ${JSON.stringify(f.id)}`);
     if(seen.has(f.id))throw new Error(`Duplicate fixture id ${f.id}`);seen.add(f.id);

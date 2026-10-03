@@ -1,0 +1,348 @@
+/**
+ * Conversion classification (SF-A02-T06.1): the replacement for the string-typed `assignable`.
+ *
+ * `Conversions.classifyImplicit(from,to)` / `classifyExplicit(from,to)` classify a conversion between two types and
+ * `classifyFromExpression(expression,to)` adds the conversions that depend on the expression (null and default
+ * literals, constant narrowing, the 0-to-enum conversion, method groups, anonymous functions, interpolated strings,
+ * tuple literals, throw). The result is an immutable `Conversion` whose `kind` follows Roslyn's ConversionKind.
+ */
+import { TypeKind, NamedTypeSymbol, ArrayTypeSymbol, TypeParameterSymbol, TypeCompareKind } from '../symbols/types.js';
+import { numericKind, implicitNumericConversion, explicitNumericConversion } from './numeric.js';
+import { implicitConstantConversion } from './constant-narrowing.js';
+import { nativeIntegerKind, isNativeIdentity, isIntPtrFamily } from './native-int.js';
+import { isNullableType, stripNullable, acceptsNullLiteral } from './nullable.js';
+import { hasImplicitReferenceConversion, hasBoxingConversion, hasExplicitReferenceConversion, hasUnboxingConversion } from './reference.js';
+import { resolveUserDefinedConversion } from './user-defined.js';
+
+export const ConversionKind = Object.freeze(
+  Object.fromEntries(
+    [
+      'NoConversion',
+      'Identity',
+      'ImplicitNumeric',
+      'ImplicitEnumeration',
+      'ImplicitNullable',
+      'NullLiteral',
+      'DefaultLiteral',
+      'ImplicitReference',
+      'Boxing',
+      'ImplicitConstant',
+      'ImplicitUserDefined',
+      'ImplicitTuple',
+      'ImplicitTupleLiteral',
+      'InterpolatedString',
+      'MethodGroup',
+      'AnonymousFunction',
+      'ImplicitThrow',
+      'ImplicitSpan',
+      'ImplicitDynamic',
+      'ObjectCreation',
+      'CollectionExpression',
+      'ExplicitNumeric',
+      'ExplicitEnumeration',
+      'ExplicitNullable',
+      'ExplicitReference',
+      'Unboxing',
+      'ExplicitUserDefined',
+      'ExplicitTuple',
+      'ExplicitDynamic',
+      'ExplicitSpan',
+      'IntPtr',
+    ].map(k => [k, k]),
+  ),
+);
+const implicitKinds = new Set([
+  'Identity',
+  'ImplicitNumeric',
+  'ImplicitEnumeration',
+  'ImplicitNullable',
+  'NullLiteral',
+  'DefaultLiteral',
+  'ImplicitReference',
+  'Boxing',
+  'ImplicitConstant',
+  'ImplicitUserDefined',
+  'ImplicitTuple',
+  'ImplicitTupleLiteral',
+  'InterpolatedString',
+  'MethodGroup',
+  'AnonymousFunction',
+  'ImplicitThrow',
+  'ImplicitSpan',
+  'ImplicitDynamic',
+  'ObjectCreation',
+  'CollectionExpression',
+]);
+/** The classification of one conversion. `underlying` is the element conversion of a nullable/tuple conversion. */
+export class Conversion {
+  constructor(kind, extra = {}) {
+    this.kind = kind;
+    this.method = extra.method ?? null;
+    this.underlying = extra.underlying ?? null;
+    this.isLifted = !!extra.isLifted;
+    this.isAmbiguous = !!extra.isAmbiguous;
+    this.candidates = extra.candidates ?? null;
+    this.error = extra.error ?? null;
+    this.steps = extra.steps ?? null;
+    Object.freeze(this);
+  }
+  get exists() {
+    return this.kind !== ConversionKind.NoConversion;
+  }
+  get isImplicit() {
+    return implicitKinds.has(this.kind);
+  }
+  get isExplicit() {
+    return this.exists && !this.isImplicit;
+  }
+  get isIdentity() {
+    return this.kind === ConversionKind.Identity;
+  }
+  get isNumeric() {
+    return this.kind === ConversionKind.ImplicitNumeric || this.kind === ConversionKind.ExplicitNumeric;
+  }
+  get isReference() {
+    return this.kind === ConversionKind.ImplicitReference || this.kind === ConversionKind.ExplicitReference;
+  }
+  get isBoxing() {
+    return this.kind === ConversionKind.Boxing;
+  }
+  get isUnboxing() {
+    return this.kind === ConversionKind.Unboxing;
+  }
+  get isNullable() {
+    return this.kind === ConversionKind.ImplicitNullable || this.kind === ConversionKind.ExplicitNullable;
+  }
+  get isUserDefined() {
+    return this.kind === ConversionKind.ImplicitUserDefined || this.kind === ConversionKind.ExplicitUserDefined;
+  }
+  get isStandard() {
+    return this.exists && !this.isUserDefined;
+  }
+  toString() {
+    return this.kind + (this.underlying ? '(' + this.underlying.kind + ')' : '') + (this.isLifted ? ' lifted' : '');
+  }
+}
+const NONE = new Conversion(ConversionKind.NoConversion),
+  IDENTITY = new Conversion(ConversionKind.Identity);
+const make = kind => new Conversion(kind);
+const K = ConversionKind;
+const simple = Object.fromEntries(Object.keys(K).map(k => [k, make(k)]));
+const isEnum = t => t.typeKind === TypeKind.Enum;
+const isTuple = t => t instanceof NamedTypeSymbol && t.isTupleType && !t.isDefinition;
+const spanOf = (t, name) =>
+  t instanceof NamedTypeSymbol &&
+  !t.isDefinition &&
+  t.originalDefinition.name === name &&
+  t.originalDefinition.arity === 1 &&
+  t.originalDefinition.containingNamespace?.name === 'System'
+    ? t.typeArguments[0].type
+    : null;
+
+export class Conversions {
+  /** @param core CoreTypes  @param {{numericIntPtr?:boolean,firstClassSpans?:boolean}} [options] language-version dependent rules (C# 11, C# 14) */
+  constructor(core, options = {}) {
+    this.core = core;
+    this.options = options;
+    this.standard = {
+      implicit: (a, b) => {
+        const c = this.classifyStandardImplicit(a, b);
+        return c.exists && !c.isIdentity;
+      },
+      explicit: (a, b) => {
+        const c = this.classifyStandardExplicit(a, b);
+        return c.exists && !c.isIdentity;
+      },
+    };
+  }
+  static noConversion = NONE;
+  static identity = IDENTITY;
+  kindOf(type) {
+    return nativeIntegerKind(type, this.options) ?? numericKind(type);
+  }
+  isIdentity(from, to) {
+    return (
+      from.equals(
+        to,
+        TypeCompareKind.IgnoreTupleNames | TypeCompareKind.IgnoreDynamic | TypeCompareKind.IgnoreNullableModifiersForReferenceTypes,
+      ) ||
+      (isNativeIdentity(from, to) && from.equals(to, TypeCompareKind.IgnoreNativeIntegers))
+    );
+  }
+  /** Standard implicit conversions only (no user-defined operators): identity, numeric, nullable, reference, boxing, tuple, span. */
+  classifyStandardImplicit(from, to) {
+    if (!from || !to || from.isErrorType() || to.isErrorType()) return NONE;
+    if (this.isIdentity(from, to)) return IDENTITY;
+    const a = this.kindOf(from),
+      b = this.kindOf(to);
+    if (a && b) {
+      if (a === b) return IDENTITY;
+      if (implicitNumericConversion(a, b)) return simple.ImplicitNumeric;
+    }
+    if (isNullableType(to) && to.isValueType) {
+      const inner = this.classifyStandardImplicit(stripNullable(from), stripNullable(to));
+      if (inner.exists && (inner.isIdentity || inner.kind === K.ImplicitNumeric || inner.kind === K.ImplicitTuple))
+        return new Conversion(K.ImplicitNullable, { underlying: inner, steps: isNullableType(from) ? ['lift'] : ['wrap'] });
+    }
+    if (from.typeKind === TypeKind.Dynamic) return simple.ImplicitDynamic;
+    if (hasImplicitReferenceConversion(from, to, this.core)) return simple.ImplicitReference;
+    if (hasBoxingConversion(from, to, this.core)) return simple.Boxing;
+    if (isTuple(from) && isTuple(to) && from.typeArguments.length === to.typeArguments.length) {
+      const parts = from.typeArguments.map((x, i) => this.classifyImplicit(x.type, to.typeArguments[i].type));
+      if (parts.every(p => p.exists && p.isImplicit)) return new Conversion(K.ImplicitTuple, { underlying: parts });
+    }
+    if (this.options.firstClassSpans !== false) {
+      // C# 14 first-class spans: T[] -> Span<T> / ReadOnlySpan<U>, Span<T> -> ReadOnlySpan<U>, string -> ReadOnlySpan<char>.
+      const ros = spanOf(to, 'ReadOnlySpan'),
+        span = spanOf(to, 'Span');
+      if (from instanceof ArrayTypeSymbol && from.isSZArray) {
+        if (span && span.equals(from.elementType)) return simple.ImplicitSpan;
+        if (ros && (ros.equals(from.elementType) || hasImplicitReferenceConversion(from.elementType, ros, this.core)))
+          return simple.ImplicitSpan;
+      }
+      const fromSpan = spanOf(from, 'Span');
+      if (fromSpan && ros && (ros.equals(fromSpan) || hasImplicitReferenceConversion(fromSpan, ros, this.core))) return simple.ImplicitSpan;
+      if (from.specialType === 'System_String' && ros && ros.specialType === 'System_Char') return simple.ImplicitSpan;
+    }
+    return NONE;
+  }
+  /** Standard explicit conversions (the implicit ones included). */
+  classifyStandardExplicit(from, to) {
+    const implicit = this.classifyStandardImplicit(from, to);
+    if (implicit.exists) return implicit;
+    if (!from || !to || from.isErrorType() || to.isErrorType()) return NONE;
+    const a = this.kindOf(from),
+      b = this.kindOf(to);
+    if (a && b && explicitNumericConversion(a, b)) return simple.ExplicitNumeric;
+    // Enumerations convert explicitly to and from every numeric type and each other.
+    if ((isEnum(from) && (b || isEnum(to))) || (isEnum(to) && a)) return simple.ExplicitEnumeration;
+    if (isNullableType(from) || isNullableType(to)) {
+      const inner = this.classifyStandardExplicit(stripNullable(from), stripNullable(to));
+      if (
+        inner.exists &&
+        [K.Identity, K.ImplicitNumeric, K.ExplicitNumeric, K.ExplicitEnumeration, K.ImplicitTuple, K.ExplicitTuple].includes(inner.kind)
+      )
+        return new Conversion(K.ExplicitNullable, {
+          underlying: inner,
+          steps: isNullableType(from) && isNullableType(to) ? ['lift'] : isNullableType(to) ? ['wrap'] : ['unwrap'],
+        });
+    }
+    if (to.typeKind === TypeKind.Dynamic) return simple.ExplicitDynamic;
+    if (hasExplicitReferenceConversion(from, to, this.core)) return simple.ExplicitReference;
+    if (hasUnboxingConversion(from, to, this.core)) return simple.Unboxing;
+    if (isTuple(from) && isTuple(to) && from.typeArguments.length === to.typeArguments.length) {
+      const parts = from.typeArguments.map((x, i) => this.classifyExplicit(x.type, to.typeArguments[i].type));
+      if (parts.every(p => p.exists)) return new Conversion(K.ExplicitTuple, { underlying: parts });
+    }
+    // Before C# 11 plain IntPtr/UIntPtr convert through their own operators; they are classified as IntPtr conversions.
+    if (((isIntPtrFamily(from) && (b || isEnum(to))) || (isIntPtrFamily(to) && (a || isEnum(from)))) && !(a && b)) return simple.IntPtr;
+    return NONE;
+  }
+  /** Implicit conversion between types, user-defined operators included. */
+  classifyImplicit(from, to) {
+    const standard = this.classifyStandardImplicit(from, to);
+    if (standard.exists) return standard;
+    if (!from || !to || from.isErrorType() || to.isErrorType()) return NONE;
+    return this.userDefined(from, to, false);
+  }
+  /** Explicit (cast) conversion between types: standard implicit, user-defined implicit, standard explicit, user-defined explicit. */
+  classifyExplicit(from, to) {
+    const implicit = this.classifyImplicit(from, to);
+    if (implicit.exists) return implicit;
+    if (!from || !to || from.isErrorType() || to.isErrorType()) return NONE;
+    const standard = this.classifyStandardExplicit(from, to);
+    if (standard.exists) return standard;
+    return this.userDefined(from, to, true);
+  }
+  userDefined(from, to, explicit) {
+    if (from.typeKind === TypeKind.Interface && to.typeKind === TypeKind.Interface) return NONE;
+    const found = resolveUserDefinedConversion(from, to, { explicit }, this.standard, this.core);
+    if (!found) return NONE;
+    if (found.ambiguous)
+      return explicit
+        ? new Conversion(K.ExplicitUserDefined, { isAmbiguous: true, candidates: found.candidates })
+        : implicitAmbiguity(found);
+    if (!explicit && !found.isImplicit) return NONE;
+    return new Conversion(found.isImplicit ? K.ImplicitUserDefined : K.ExplicitUserDefined, {
+      method: found.method,
+      isLifted: found.isLifted,
+    });
+  }
+  /**
+   * Implicit conversion of an expression to a type.
+   * @param expression `{type, constantValue?, literal?:'null'|'default',
+   *   form?:'methodGroup'|'lambda'|'interpolatedString'|'throw'|'tupleLiteral'|'implicitNew'|'collection', convert?:(to)=>Conversion|null,
+   *   elements?:[expression]}`
+   */
+  classifyFromExpression(expression, to) {
+    if (!to || to.isErrorType()) return NONE;
+    switch (expression.literal) {
+      case 'null':
+        return acceptsNullLiteral(to) || (to instanceof TypeParameterSymbol && to.isReferenceType === true) ? simple.NullLiteral : NONE;
+      case 'default':
+        return simple.DefaultLiteral;
+    }
+    switch (expression.form) {
+      case 'throw':
+        return simple.ImplicitThrow;
+      case 'methodGroup':
+      case 'lambda':
+      case 'implicitNew':
+      case 'collection': {
+        const c = expression.convert?.(to);
+        return c ?? NONE;
+      }
+      case 'tupleLiteral': {
+        const target = isNullableType(to) ? stripNullable(to) : to;
+        if (isTuple(target) && target.typeArguments.length === expression.elements.length) {
+          const parts = expression.elements.map((e, i) => this.classifyFromExpression(e, target.typeArguments[i].type));
+          if (parts.every(p => p.exists && p.isImplicit)) return new Conversion(K.ImplicitTupleLiteral, { underlying: parts });
+        }
+        if (!expression.type) return NONE;
+        break;
+      }
+      case 'interpolatedString':
+        if (['FormattableString', 'IFormattable'].includes(to.name) && to.containingNamespace?.name === 'System')
+          return simple.InterpolatedString;
+        break;
+    }
+    const from = expression.type;
+    if (!from) return NONE;
+    const typed = this.classifyStandardImplicit(from, to);
+    if (typed.exists) return typed;
+    const constant = expression.constantValue;
+    if (constant && !constant.isNull) {
+      const target = stripNullable(to),
+        a = this.kindOf(from),
+        b = this.kindOf(target),
+        wrap = c => (target === to ? c : new Conversion(K.ImplicitNullable, { underlying: c, steps: ['wrap'] }));
+      // The literal 0 (any numeric constant zero, as Roslyn accepts) converts to every enum type.
+      if (isEnum(target) && a && !constant.isEnum && isZero(constant)) return wrap(simple.ImplicitEnumeration);
+      if (
+        a &&
+        b &&
+        constant.isIntegral &&
+        !constant.isEnum &&
+        constant.type !== 'char' &&
+        implicitConstantConversion(a, constant.bigint, b)
+      )
+        return wrap(simple.ImplicitConstant);
+    }
+    return this.userDefined(from, to, false);
+  }
+  /** Explicit conversion of an expression (a cast): the expression-based implicit conversions, then `classifyExplicit`. */
+  classifyCastFromExpression(expression, to) {
+    const implicit = this.classifyFromExpression(expression, to);
+    if (implicit.exists) return implicit;
+    return expression.type ? this.classifyExplicit(expression.type, to) : NONE;
+  }
+  hasImplicit(from, to) {
+    return this.classifyImplicit(from, to).exists;
+  }
+  /** Identity or implicit reference conversion: the relation variance, array covariance and delegate compatibility use. */
+  hasIdentityOrReference(from, to) {
+    return this.isIdentity(from, to) || hasImplicitReferenceConversion(from, to, this.core);
+  }
+}
+const isZero = c => (c.type === 'decimal' ? c.value.mantissa === 0n : c.isIntegral ? c.bigint === 0n : c.isFloatingPoint && c.value === 0);
+const implicitAmbiguity = found => new Conversion(K.ImplicitUserDefined, { isAmbiguous: true, candidates: found.candidates });

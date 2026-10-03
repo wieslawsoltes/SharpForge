@@ -61,7 +61,9 @@ export const namespaceMethods = {
     const attributeLists = this.isAttributeListAhead() ? this.attributeLists() : [], mark = this.mark(), modifiers = this.modifiers();
     if (this.at('namespace')) return this.namespaceDeclaration(attributeLists, modifiers);
     const type = this.typeLikeDeclaration(attributeLists, modifiers); if (type) return type;
-    const memberish = inNamespace || modifiers.some(m => memberOnly.has(m.text)) || this.at('event') || this.at('~') || this.atAny(['implicit', 'explicit']);
+    // `new T(...);` at compilation-unit level is an object-creation statement: `new` is a modifier only before `Type name`.
+    const creation = !inNamespace && modifiers.length === 1 && modifiers[0].text === 'new' && !this.isId(this.tokens[this.scanType(this.i)]);
+    const memberish = !creation && (inNamespace || modifiers.some(m => memberOnly.has(m.text)) || this.at('event') || this.at('~') || this.atAny(['implicit', 'explicit']));
     if (memberish) return this.memberDeclarationAfterModifiers(attributeLists, modifiers, null);
     this.reset(mark);
     return this.n('GlobalStatement', null, null, this.statement(attributeLists));
