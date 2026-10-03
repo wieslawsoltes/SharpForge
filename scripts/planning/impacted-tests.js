@@ -27,5 +27,5 @@ if (isMain(import.meta.url)) {
   const { values, positionals } = parseArgs({ allowPositionals:true, options:{root:{type:'string',default:'.'},base:{type:'string',default:'origin/main'}} });
   const root = resolve(values.root), { discoverManifests } = await import(pathToFileURL(resolve(root,'scripts/planning/test-manifests.js')));
   const files = positionals.length ? positionals : git(['diff','--no-renames','--name-only','-z',`${values.base}...HEAD`],root).split('\0').filter(Boolean);
-  report(impactedTests({graph:importGraph(root),files,manifests:discoverManifests(root)}));
+  report(impactedTests({graph:importGraph(root),files,manifests:await discoverManifests(root)}));
 }
