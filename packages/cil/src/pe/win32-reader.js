@@ -39,7 +39,7 @@ export function readWin32Resources(pe, { includeBytes = false } = {}) {
         if (payload < 0) throw new CilError('Win32 resource payload precedes directory');
         const bytes = readerAt(payload, size);
         const resource = { type: path[0], name: path[1], language: name, codePage, size };
-        if (includeBytes) resource.bytes = bytes.take(size).slice();
+        if (includeBytes) resource.bytes = new Uint8Array(bytes.take(size));
         resources.push(resource);
         if (resources.length > 65535) throw new CilError('Win32 resource count exceeds limit');
       }

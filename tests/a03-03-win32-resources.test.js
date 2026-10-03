@@ -97,3 +97,15 @@ test('A03 resource tree readers bound all offsets and reject cycles or excess de
     assert.throws(() => readWin32Resources(pe), /Win32/);
   }
 });
+
+
+test('A03 Win32 resource copies own Buffer payloads from offset subarrays', () => {
+  const compiled = compile();
+  const carrier = Buffer.alloc(compiled.assembly.length + 16, 0x78);
+  const bytes = carrier.subarray(5, 5 + compiled.assembly.length);
+  bytes.set(compiled.assembly);
+  const before = Buffer.from(carrier);
+  for (const resource of readWin32Resources(readPE(bytes), { includeBytes: true })) resource.bytes.fill(0);
+  assert.equal(loadAssembly(bytes).entryPoint, compiled.image.entryPoint);
+  assert.deepEqual(carrier, before);
+});
