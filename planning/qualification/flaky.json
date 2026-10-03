@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "status": "not-measured",
+  "results": [],
+  "reason": "No detector execution claimed. CI and manual runs retain their own exact-source reports."
+}

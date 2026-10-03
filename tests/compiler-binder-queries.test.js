@@ -68,8 +68,8 @@ test('SF-A02-T09.5 transparent identifiers carry every range variable through le
   const wrong = errorsOf(typed('int e = from x in a from s in b let n = s.Length where n > x select n > 1;'));
   assert.equal(wrong.length, 1);
   assert.match(wrong[0], /CS0029 Cannot implicitly convert type 'Seq<bool>' to 'int'/);
-  // The program binds; running it needs user-defined generics.
-  assert.match(notExecutable(valid).message, /user-defined generics/);
+  // The program binds and its generic query methods are instantiated; running it needs anonymous types (the transparent identifiers).
+  assert.match(notExecutable(valid).message, /anonymous type/);
 });
 
 test('SF-A02-T09.5 query diagnostics: missing pattern, join keys and errors inside clauses', () => {
