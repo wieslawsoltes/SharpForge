@@ -162,7 +162,8 @@ export const Declarations = Base =>
     }
     /** The image method of a source method symbol. */
     methodOf(symbol, syntax = null) {
-      const record = this.methods.get(symbol) ?? this.records.methodOf(definitionOf(symbol), syntax);
+      // The key is resolved here so that a construction declared by this reference is reported at the reference.
+      const record = this.methods.get(this.generics.keyOf(symbol, syntax)) ?? this.records.methodOf(definitionOf(symbol), syntax);
       if (!record && definitionOf(symbol).isExtern)
         return this.unsupported(`a call to the extern method '${symbol.toDisplayString()}' (the runtime has no platform invoke)`, syntax);
       return record ?? this.unsupported(`method '${symbol.toDisplayString()}'`, syntax);
