@@ -5,6 +5,7 @@
   "switch/cs8070-fall-out-of-last": ["diagnostics", "warnings"],
   "switch/cs8509-non-exhaustive-expression": ["diagnostics"],
   "switch/cs8510-subsumed-arm": ["warnings"],
+  "switch/int-switch": ["diagnostics", "warnings", "bytecode", "cil"],
   "switch/string-switch": ["diagnostics", "warnings", "bytecode", "cil"],
   "switch/switch-expression": ["diagnostics", "warnings", "bytecode", "cil"],
   "switch/switch-expression-unmatched-throws": ["diagnostics"],

@@ -1,0 +1,265 @@
+{
+  "schemaVersion": 1,
+  "harnessCommit": "e3bf896bcc74802ea7031267635140cb6eae1744",
+  "runnerId": "0496ac14920a9c411b97ae8d",
+  "commit": "e3bf896bcc74802ea7031267635140cb6eae1744",
+  "environment": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M3 Pro",
+    "logicalCpus": 11,
+    "osRelease": "25.6.0",
+    "runnerName": "MacBook-Pro.local",
+    "commit": "e3bf896bcc74802ea7031267635140cb6eae1744"
+  },
+  "benchmarks": [
+    {
+      "id": "benchmark-release14.js/0-dictionary",
+      "area": "A08",
+      "engine": "source",
+      "unit": "ms",
+      "samples": [
+        13.12337500000001,
+        10.759833,
+        10.498374999999996,
+        6.169916000000001
+      ],
+      "coldSamples": [
+        23.105250000000005
+      ],
+      "statistics": {
+        "count": 4,
+        "median": 10.629103999999998,
+        "p95": 13.12337500000001,
+        "p99": 13.12337500000001,
+        "min": 6.169916000000001,
+        "max": 13.12337500000001
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "838bf4d5a5709a9c03d5f2acdf0f902f6ed99fc1b55f79d2173516fb77658f2c"
+      },
+      "metrics": {
+        "managedAllocatedBytes": 131440
+      }
+    },
+    {
+      "id": "benchmark-release14.js/1-dictionary",
+      "area": "A08",
+      "engine": "cil",
+      "unit": "ms",
+      "samples": [
+        40.40379199999998,
+        34.713374999999985,
+        33.66404200000002,
+        32.82570799999996
+      ],
+      "coldSamples": [
+        51.121707999999984
+      ],
+      "statistics": {
+        "count": 4,
+        "median": 34.188708500000004,
+        "p95": 40.40379199999998,
+        "p99": 40.40379199999998,
+        "min": 32.82570799999996,
+        "max": 40.40379199999998
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "838bf4d5a5709a9c03d5f2acdf0f902f6ed99fc1b55f79d2173516fb77658f2c"
+      },
+      "metrics": {
+        "managedAllocatedBytes": 131440
+      }
+    },
+    {
+      "id": "benchmark-release14.js/2-list",
+      "area": "A08",
+      "engine": "source",
+      "unit": "ms",
+      "samples": [
+        14.368291,
+        13.99995800000005,
+        13.074457999999993,
+        13.64429100000001
+      ],
+      "coldSamples": [
+        22.786666000000025
+      ],
+      "statistics": {
+        "count": 4,
+        "median": 13.82212450000003,
+        "p95": 14.368291,
+        "p99": 14.368291,
+        "min": 13.074457999999993,
+        "max": 14.368291
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "c528a7c46b06e930e20cda13e246b7512afb968d38e002d25768a50ac30ed86c"
+      },
+      "metrics": {
+        "managedAllocatedBytes": 131504
+      }
+    },
+    {
+      "id": "benchmark-release14.js/3-list",
+      "area": "A08",
+      "engine": "cil",
+      "unit": "ms",
+      "samples": [
+        97.14495799999997,
+        95.45358299999998,
+        95.92483299999992,
+        99.83487500000001
+      ],
+      "coldSamples": [
+        99.25374999999997
+      ],
+      "statistics": {
+        "count": 4,
+        "median": 96.53489549999995,
+        "p95": 99.83487500000001,
+        "p99": 99.83487500000001,
+        "min": 95.45358299999998,
+        "max": 99.83487500000001
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "c528a7c46b06e930e20cda13e246b7512afb968d38e002d25768a50ac30ed86c"
+      },
+      "metrics": {
+        "managedAllocatedBytes": 131504
+      }
+    },
+    {
+      "id": "benchmark-release14.js/4-queue",
+      "area": "A08",
+      "engine": "source",
+      "unit": "ms",
+      "samples": [
+        7.860875000000078,
+        7.36587499999996,
+        6.539625000000001,
+        6.3524589999999534
+      ],
+      "coldSamples": [
+        11.749042000000031
+      ],
+      "statistics": {
+        "count": 4,
+        "median": 6.9527499999999804,
+        "p95": 7.860875000000078,
+        "p99": 7.860875000000078,
+        "min": 6.3524589999999534,
+        "max": 7.860875000000078
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "c39f1f2c4bd26357e369e681730eaaf2ed4595bbeee82e9867594827313c2c6b"
+      },
+      "metrics": {
+        "managedAllocatedBytes": 65952
+      }
+    },
+    {
+      "id": "benchmark-release14.js/5-queue",
+      "area": "A08",
+      "engine": "cil",
+      "unit": "ms",
+      "samples": [
+        40.466583000000014,
+        39.858999999999924,
+        39.841042000000016,
+        39.52475000000004
+      ],
+      "coldSamples": [
+        40.68183299999998
+      ],
+      "statistics": {
+        "count": 4,
+        "median": 39.85002099999997,
+        "p95": 40.466583000000014,
+        "p99": 40.466583000000014,
+        "min": 39.52475000000004,
+        "max": 40.466583000000014
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "c39f1f2c4bd26357e369e681730eaaf2ed4595bbeee82e9867594827313c2c6b"
+      },
+      "metrics": {
+        "managedAllocatedBytes": 65952
+      }
+    },
+    {
+      "id": "benchmark-release14.js/6-builder",
+      "area": "A08",
+      "engine": "source",
+      "unit": "ms",
+      "samples": [
+        7.142166999999972,
+        7.690500000000156,
+        6.336334000000079,
+        5.592750000000024
+      ],
+      "coldSamples": [
+        8.30012499999998
+      ],
+      "statistics": {
+        "count": 4,
+        "median": 6.739250500000026,
+        "p95": 7.690500000000156,
+        "p99": 7.690500000000156,
+        "min": 5.592750000000024,
+        "max": 7.690500000000156
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "cd501d96c7c64497311d959c3ff5ddca0a9bb767c2571f60f24dac31738487ff"
+      },
+      "metrics": {
+        "managedAllocatedBytes": 177996
+      }
+    },
+    {
+      "id": "benchmark-release14.js/7-builder",
+      "area": "A08",
+      "engine": "cil",
+      "unit": "ms",
+      "samples": [
+        24.600209000000177,
+        22.221874999999955,
+        20.207000000000107,
+        20.598375000000033
+      ],
+      "coldSamples": [
+        27.40454100000011
+      ],
+      "statistics": {
+        "count": 4,
+        "median": 21.410124999999994,
+        "p95": 24.600209000000177,
+        "p99": 24.600209000000177,
+        "min": 20.207000000000107,
+        "max": 24.600209000000177
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "cd501d96c7c64497311d959c3ff5ddca0a9bb767c2571f60f24dac31738487ff"
+      },
+      "metrics": {
+        "managedAllocatedBytes": 177996
+      }
+    }
+  ],
+  "unsupported": [
+    {
+      "target": "historical summary-only reports",
+      "reason": "Discarded samples cannot be reconstructed from medians"
+    }
+  ],
+  "producer": "benchmark-release14.js"
+}

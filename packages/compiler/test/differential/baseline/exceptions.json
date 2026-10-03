@@ -3,8 +3,8 @@
   "exceptions/cs0155-catch-non-exception": ["diagnostics", "warnings"],
   "exceptions/cs0156-rethrow-outside-catch": ["warnings"],
   "exceptions/cs0157-return-in-finally": ["warnings"],
+  "exceptions/cs0160-catch-order": ["diagnostics", "warnings"],
   "exceptions/cs1524-try-without-catch": ["warnings"],
   "exceptions/finally-on-return": ["diagnostics", "warnings", "bytecode", "cil"],
-  "exceptions/rethrow-and-nested": ["diagnostics", "warnings", "bytecode", "cil"],
-  "exceptions/unhandled-exception": ["warnings"]
+  "exceptions/rethrow-and-nested": ["diagnostics", "warnings", "bytecode", "cil"]
 }

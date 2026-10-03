@@ -163,7 +163,7 @@ export const PatternTranslation = Base =>
         kind: 'SwitchSection',
         syntax: this.span(section.syntax),
         switchLabels: [{ pattern: { value: index, valueType: 'int' } }],
-        statements: [this.statement(section.body)],
+        statements: node.gotoTargets ? [this.sectionEntry(node.gotoTargets, index), this.statement(section.body)] : [this.statement(section.body)],
       }));
       const select = n.sequence([...governing.locals, ...decision.locals], [...governing.effects, ...decision.resets], choice);
       const switchStatement = {

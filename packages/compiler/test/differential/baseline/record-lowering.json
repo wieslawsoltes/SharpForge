@@ -1,0 +1,8 @@
+{
+  "record-lowering/declared-members-replace-synthesized-ones": ["diagnostics", "warnings", "bytecode", "cil"],
+  "record-lowering/members-of-every-kind": ["diagnostics", "warnings", "bytecode", "cil"],
+  "record-lowering/positional-record-equality-text-and-deconstruction": ["diagnostics", "warnings", "bytecode", "cil"],
+  "record-lowering/synthesized-member-use": ["diagnostics", "warnings"],
+  "record-lowering/with-copies-and-assigns": ["diagnostics", "warnings", "bytecode", "cil"],
+  "record-lowering/with-errors": ["diagnostics", "warnings"]
+}

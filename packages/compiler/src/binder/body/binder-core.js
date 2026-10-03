@@ -371,10 +371,11 @@ export class BinderCore {
       case 'StackAllocArrayCreationExpression':
       case 'ImplicitStackAllocArrayCreationExpression':
         return this.stackAlloc(syntax);
+      case 'WithExpression':
+        return this.withExpression(syntax);
       case 'AnonymousObjectCreationExpression':
       case 'QueryExpression':
       case 'RangeExpression':
-      case 'WithExpression':
       case 'IndexExpression':
         // Bound by later epics (anonymous types, queries, ranges, records): operands are still bound for their own diagnostics.
         for (const child of syntax.childNodes())
@@ -395,6 +396,7 @@ export class BinderCore {
       isFieldInitializer: this.c.isFieldInitializer,
       isStatic: this.c.isStatic,
       inObjectInitializer: this.inObjectInitializer,
+      isLambda: !!this.c.isLambda,
     };
   }
 }

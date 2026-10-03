@@ -1,0 +1,19 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"Seeded differential corpus fixture v1",
+  "type":"object","additionalProperties":false,
+  "required":["id","source","entry","stdin","capabilities","seed","normalisers","langVersion"],
+  "properties":{
+    "id":{"type":"string","pattern":"^[a-z0-9][a-z0-9-]{0,79}$"},
+    "source":{"type":"string","pattern":"^(corpus/)?[A-Za-z0-9_-]+\\.cs$"},
+    "entry":{"const":"Main"},
+    "stdin":{"type":"string","maxLength":65536},
+    "capabilities":{"type":"array","items":{"type":"string","pattern":"^[a-z][a-z0-9.-]+$"},"uniqueItems":true,"minItems":1,"maxItems":64},
+    "seed":{"type":"integer","minimum":0,"maximum":2147483647},
+    "normalisers":{"type":"array","items":{"enum":["newlines","float-format","exception-text","wall-clock","unordered-lines"]},"uniqueItems":true,"maxItems":5},
+    "langVersion":{"enum":["11.0","12.0"]},
+    "limits":{"type":"object","additionalProperties":false,"properties":{
+      "timeoutMs":{"type":"integer","minimum":1,"maximum":2147483647},"maxInstructions":{"type":"integer","minimum":1,"maximum":2147483647},"maxOutputBytes":{"type":"integer","minimum":1,"maximum":2147483647},"maxFrames":{"type":"integer","minimum":1,"maximum":2147483647},"maxHeapBytes":{"type":"integer","minimum":1,"maximum":2147483647}
+    }}
+  }
+}
