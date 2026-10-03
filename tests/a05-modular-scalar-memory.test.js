@@ -70,3 +70,11 @@ for (const item of semanticCases) test(item.name, () => {
     assert.equal(result.output, item.output);
   }
 });
+
+test('semantic numeric profiles retain tuple text and numeric increments', () => {
+  const source = 'using System; var pair=(amount:1.25M,total:4294967295U);' +
+    'pair.amount++; pair.total++; Console.WriteLine(pair);';
+  const compiled = compileToIL(source);
+  assert(compiled.success, JSON.stringify(compiled.diagnostics));
+  assert.equal(new VirtualMachine(compiled.image).run().output, '(2.25, 0)\n');
+});

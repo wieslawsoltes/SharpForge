@@ -204,7 +204,8 @@ const families = [
   FunctionTranslation,
   PatternTranslation,
   StatementTranslation,
-  AwaitTranslation,
+  ScalarTranslation,
+  MemoryTranslation,  AwaitTranslation,
   AsyncStreamTranslation,
   ByReferenceTranslation,
   Locations,
@@ -212,8 +213,6 @@ const families = [
   SynthesizedTextTranslation,
   DeconstructionTranslation,
   ...memberLowerings,
-  ScalarTranslation,
-  MemoryTranslation,
 ];
 
 export class BodyTranslator extends families.reduce(
