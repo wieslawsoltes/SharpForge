@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "b8e6dbd8f978517a00458b7b3df6a8f5a423e036",
-  "bytes": 111841,
-  "sha256": "61e8f836530dc95c61fabba5b6476d821ed76a526d629e8dadc1f55b46f05155",
-  "ruleCount": 1179,
-  "orderedRulesSha256": "b604b5a42511e737c456a55d2df079f17df258d02c1c52a80ddeb1daedc8f599",
-  "sortedRulesSha256": "a236737085c6e085fa9af8e8e86f524f27e1a6ae2e16199f86098ed6074495a5"
+  "sourceCommit": "d506251568c9e441feb468541cca175953965215",
+  "bytes": 112012,
+  "sha256": "a08627ef52a9333c94e73c9d5b8aff28f10e9c63bcdfc3604330027619b650ff",
+  "ruleCount": 1181,
+  "orderedRulesSha256": "17be8347c808418eb2dfe9f4927dce68009da2c05537c40ec2cda4aa9452590a",
+  "sortedRulesSha256": "d1cd118765fb192322c5435988a3b975b2dfd291c004c2908ccaa7b09264aeeb"
 }
