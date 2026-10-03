@@ -54,6 +54,7 @@ export function throwFault(vm,error,instruction=null) {
   }
   const frame=vm.top;
   if(!frame){vm.state='faulted';return;}
+  frame.volatileAccess=false;
   // A delegate target waiting at its entry gate has not entered any protected region.
   if(frame.needsInitialization){vm.frames.pop();throwFault(vm,fault);return;}
   const handlers=frame.method.handlers.filter(handler=>within(frame.lastOffset,handler)).sort((a,b)=>(a.end-a.start)-(b.end-b.start));
