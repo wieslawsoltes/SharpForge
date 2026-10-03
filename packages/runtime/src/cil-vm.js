@@ -17,7 +17,7 @@ import {literalString,stringRoots,clearStrings} from './execution/strings.js';
 import {ManagedPlatform} from './platform.js';
 import {CooperativeScheduler} from './scheduler.js';
 import {snapshotVM,restoreVM} from './snapshot.js';
-import { AssemblyInspector, verifyCilAssembly, resolveExecutionField, CilError } from '@sharpforge/cil';
+import { AssemblyInspector, verifyCilAssembly, resolveExecutionField, callStorageType, CilError } from '@sharpforge/cil';
 import { ManagedHeap, ManagedFault, isReference } from './heap.js';
 import {float,number,compare as numericCompare,binary as numericBinary,convert as numericConvert,unary as numericUnary,indirect as numericIndirect} from './execution/numeric-ops.js';
 import {cilHandlers} from './execution/handlers/index.js';
@@ -71,7 +71,13 @@ export class CilVirtualMachine {
   }
   // CLI storage locations narrow integers and round single precision on write/load.
   storage(value,type){return storageValue(this,value,type,numericContext(this));}
-  slotType(frame,arg,index){return arg?(frame.method.signature.isStatic?frame.method.signature.parameters[index]:index===0?(this.typeSystem.table(frame.genericIdentity??frame.method.ownerToken).flags.valueType?(frame.genericIdentity??frame.method.owner)+'&':'object'):frame.method.signature.parameters[index-1]):frame.method.locals[index];}
+  slotType(frame, arg, index) {
+    if (!arg) return frame.method.locals[index] === undefined ? undefined : callStorageType(frame.method.locals[index]);
+    if (frame.method.signature.isStatic) return callStorageType(frame.method.signature.parameters[index]);
+    if (index) return callStorageType(frame.method.signature.parameters[index - 1]);
+    const owner = frame.genericIdentity ?? frame.method.owner;
+    return this.typeSystem.table(owner).flags.valueType ? owner + '&' : 'object';
+  }
   indirect(value,name){return numericIndirect(value,name,numericContext(this));}
   resultValue(){const value=this.value(this.returnValue);if(this.returnType==='nuint'){const bits=nativeIntegerBits(this.options),n=BigInt.asUintN(bits,BigInt(value??0));return bits===32?Number(n):n;}return this.returnType==='uint'?Number(value)>>>0:this.returnType==='ulong'?BigInt.asUintN(64,value??0n):this.returnType==='bool'?!!value:value;}
   resultDisplay(){return this.returnType==='string'?this.display(this.returnValue):this.format(this.returnValue,this.returnType);}

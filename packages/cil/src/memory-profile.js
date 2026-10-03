@@ -26,12 +26,18 @@ export function memoryMethodDefinition(descriptor) {
   const {name, signature} = descriptor;
   let owner = descriptor.ownerInstance ?? descriptor.owner;
   const generic = genericTypeParts(owner);
-  const element = generic.arguments[0];
+  let element = generic.arguments[0];
   const arguments_ = descriptor.methodArguments ?? descriptor.genericArguments ?? [];
   const parameter = signature.parameters.map(type => canonical(substituteCallType(type, generic.arguments, arguments_)));
   const result = canonical(substituteCallType(signature.returnType, generic.arguments, arguments_));
   const span = ['System.Span`1', 'System.ReadOnlySpan`1'].includes(generic.definition) && generic.arguments.length === 1;
   let operation = null;
+  if (owner === 'System.Runtime.CompilerServices.RuntimeHelpers' && name === 'CreateSpan' && signature.isStatic &&
+      arguments_.length === 1 && parameter.join(',') === 'System.RuntimeFieldHandle' &&
+      result === 'System.ReadOnlySpan`1<' + arguments_[0] + '>') {
+    operation = 'fieldSpan';
+    element = arguments_[0];
+  }
   if (span) {
     if (name === '.ctor' && !signature.isStatic && result === 'void' && (
       parameter.join(',') === 'void*,int' || parameter.join(',') === element + '[]' ||

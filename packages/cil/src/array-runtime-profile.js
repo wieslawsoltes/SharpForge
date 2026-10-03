@@ -1,6 +1,9 @@
 import {callStorageType, substituteCallType} from './call-profile.js';
 
-const primitiveAlias = new Map([['System.Int32', 'int'], ['System.Int64', 'long'], ['System.Object', 'object'], ['System.Void', 'void']]);
+const primitiveAlias = new Map([
+  ['Array', 'System.Array'], ['System.Int32', 'int'], ['System.Int64', 'long'],
+  ['System.Object', 'object'], ['System.Void', 'void']
+]);
 const typeName = type => primitiveAlias.get(callStorageType(type)) ?? callStorageType(type);
 
 /** System.Array and FieldRVA contracts, including closed generic MethodSpecs. */

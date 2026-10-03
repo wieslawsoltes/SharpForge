@@ -6,6 +6,7 @@ import {reinterpretPointer, rawMemoryView} from './raw-memory.js';
 import {createArray, arrayAddress} from './arrays.js';
 import {valueLayout} from './value-layout.js';
 import {number, storage} from './numeric-ops.js';
+import {fieldRvaSpan} from './field-rva.js';
 
 const bitMethods = new Map([
   ['bool', 'Uint8'], ['byte', 'Uint8'], ['char', 'Uint16'], ['short', 'Int16'], ['ushort', 'Uint16'],
@@ -59,6 +60,7 @@ export function memoryCall(vm, descriptor, args, opcode = 'call') {
   let value;
   if (operation.startsWith('bit')) value = bitCall(vm, definition, parameters);
   else switch (operation) {
+    case 'fieldSpan': value = fieldRvaSpan(vm, parameters[0], element); break;
     case 'spanCtor':
       value = descriptor.signature.parameters[0].includes('*')
         ? spanCreate(vm, element, parameters[0], parameters[1], {readonly})

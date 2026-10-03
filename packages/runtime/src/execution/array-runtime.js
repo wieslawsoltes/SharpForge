@@ -7,6 +7,7 @@ import {copyValue, boxValue, unboxValue} from './value-types.js';
 import {storageDefault} from './storage.js';
 import {checkArrayStore} from './casting.js';
 import {number} from './numeric-ops.js';
+import {fieldRvaData} from './field-rva.js';
 
 function argumentArray(vm, reference) {
   if (reference === null) throw new ManagedFault('ArgumentNullException', 'Array argument is null');
@@ -129,20 +130,12 @@ export function indexOfArray(vm, reference, value, start = null, length = null, 
 
 export function initializeArray(vm, reference, handle) {
   const record = argumentArray(vm, reference);
-  if (!Object.isFrozen(handle) || handle?.runtimeHandle !== 'field' || handle.owner !== vm.snapshotOwner) {
-    throw new ManagedFault('ArgumentException', 'InitializeArray requires an owned field handle');
-  }
-  const field = vm.inspector.resolveToken(handle.token);
-  const row = vm.inspector.metadata.rows[29]?.find(item => item[1] === (handle.token & 0xffffff));
-  if (!field.isStatic || !row || !(field.flags & 0x100)) throw new ManagedFault('ArgumentException', 'Field has no RVA initializer');
+  const data = fieldRvaData(vm, handle);
   let bytes;
   try { bytes = rawArrayBytes(writable(vm, reference)); }
   catch { throw new ManagedFault('ArgumentException', 'InitializeArray requires primitive storage'); }
-  const fieldType = vm.typeSystem.table(field.signature.type);
-  const size = vm.inspector.metadata.rows[15]?.find(item => item[2] === (fieldType.definitionToken & 0xffffff))?.[1];
-  if (size === undefined || bytes.length > size) throw new ManagedFault('ArgumentException', 'Field initializer is smaller than the array');
-  const offset = vm.inspector.pe.offsetOf(row[0], size);
-  bytes.set(vm.inspector.pe.bytes.subarray(offset, offset + bytes.length));
+  if (bytes.length > data.length) throw new ManagedFault('ArgumentException', 'Field initializer is smaller than the array');
+  bytes.set(data.subarray(0, bytes.length));
   return null;
 }
 
