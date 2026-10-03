@@ -79,3 +79,14 @@ test('A02-T62 initializers run in declaration order before the constructor body;
     'class P { static void Main() { var c = new C(); c.P = 5; Console.WriteLine(c.Sum + " " + c.P); } }';
   assert.equal(run(source), 'A\nf\nR\nctor\n19 5\n');
 });
+
+test('A02-T60 CS8094 is reported for a program the execution pipeline compiles; the image stands', () => {
+  const source = 'using System; class P { static void Main() { int x = 1; Console.WriteLine($"{x,40000}".Length); } }';
+  const result = compile(source);
+  assert.equal(result.success, true);
+  const warnings = result.diagnostics.filter(d => d.severity === 'warning').map(d => `${d.code}:${source.slice(d.start, d.start + d.length)}`);
+  assert.deepEqual(warnings, ['CS8094:40000']);
+  // In range, or no alignment at all: the analysis is not consulted and nothing is reported.
+  const fine = 'using System; class P { static void Main() { int x = 1; Console.WriteLine($"{x,32767}|{x}|{12345}"); } }';
+  assert.deepEqual(compile(fine).diagnostics, []);
+});
