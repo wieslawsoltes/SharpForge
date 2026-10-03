@@ -368,7 +368,7 @@ export const OperatorBinding = Base =>
           y = toA?.exists && toA.isImplicit;
         if (x && !y) type = b.type;
         else if (y && !x) type = a.type;
-        else if (x && y) type = a.constantValue && !b.constantValue ? b.type : a.type;
+        else if (x && y) type = b.type.typeKind === TypeKind.Dynamic || (a.constantValue && !b.constantValue) ? b.type : a.type;
       }
       if (!type) return this.targetTypedConditional(syntax, condition, a, b);
       const n = this.node('Conditional', syntax, type, { condition, whenTrue: this.convert(a, type), whenFalse: this.convert(b, type) });

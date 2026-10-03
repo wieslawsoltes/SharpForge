@@ -94,6 +94,10 @@ export const CallBinding = Base =>
     invocation(syntax) {
       const target = this.expression(syntax.expression, { invoked: true });
       const args = this.arguments(syntax.argumentList);
+      return this.invokeBound(target, args, syntax);
+    }
+    /** Invokes an already bound target with bound arguments (binder/dynamic.js takes the late-bound calls from here). */
+    invokeBound(target, args, syntax) {
       // A call that could not be bound still evaluates its arguments: `out` arguments stay assigned for flow analysis.
       const outArguments = () => args.map(a => ({ expression: a, refKind: a.refKind ?? null }));
       if (target.hasErrors) return this.bad(syntax, { args: outArguments() });
@@ -130,6 +134,15 @@ export const CallBinding = Base =>
       this.report(syntax.expression, 'CS0149');
       return this.bad(syntax);
     }
+    /** The extension methods named like the group, innermost namespace first. */
+    extensionScopesOf(group) {
+      if (group.extensionScopes) return group.extensionScopes;
+      const chain = this.typeScope.namespaceChain.map(l => ({
+        namespace: l.namespace,
+        usings: l.scope.usings ? this.d.typeBinder.usingsOf(l.scope) : null,
+      }));
+      return extensionScopes(chain, group.name);
+    }
     call(group, args, syntax) {
       const nameNode = group.nameNode ?? group.syntax,
         anyBad = args.some(a => a.hasErrors);
@@ -139,15 +152,7 @@ export const CallBinding = Base =>
         result = this.d.overloads.resolve(group.methods, args, { typeArguments: group.typeArguments, name: group.name });
       }
       if ((!result || !result.succeeded) && group.receiver && !group.viaType && group.kind === 'MethodGroup') {
-        const scopes =
-          group.extensionScopes ??
-          extensionScopes(
-            this.typeScope.namespaceChain.map(l => ({
-              namespace: l.namespace,
-              usings: l.scope.usings ? this.d.typeBinder.usingsOf(l.scope) : null,
-            })),
-            group.name,
-          );
+        const scopes = this.extensionScopesOf(group);
         if (scopes.length && !anyBad) {
           const ext = resolveExtensionInvocation(group.name, group.receiver, args, scopes, this.d.overloads, {
             typeArguments: group.typeArguments,

@@ -14,7 +14,7 @@ export function emissionPEOptions(image, options, framework) {
     subsystem: options.subsystem ?? (outputKind === 'windows' ? 'windows' : 'console'),
     prefer32Bit: options.prefer32Bit ?? false, nativeEntryStub: framework === 'mscorlib4',
     strongName: strongNameOptions(options), deterministic: options.deterministic ?? true,
-    managedResources: options.managedResources ?? [] };
+    managedResources: options.managedResources ?? [], win32Resources: options.win32Resources };
   peOptions(value);
   return value;
 }

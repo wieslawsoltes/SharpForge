@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-35766d0b0ded27a05750",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void Main()\n    {\n        foreach ((var _, int _, _, var (_, _), int x) in new[] { (1L, 2, 3, (\"hello\", 5), 6) })\n        {\n            System.Console.Write(x);\n        }\n    }\n}\n",
+  "sourceSHA256": "1c2c921edd24943a949bd007ca96a410c1b0fb276b3b9a95448523b445fd7916",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "VariousDiscardsInForeach",
+    "offset": 238690
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-19f157306481e11c1bc1",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Threading.Tasks;\npublic class C\n{\n    public static async Task Main()\n    {\n        await foreach (var i in new C())\n        {\n            Console.Write(i);\n        }\n    }\n    public sealed class Enumerator\n    {\n        public int Current { get; private set; }\n        \n    }\n\n    public C.Enumerator GetAsyncEnumerator() => new C.Enumerator();\n}\npublic static class Extensions\n{\n    public static bool MoveNext(this C.Enumerator e) => false;\n}",
+  "sourceSHA256": "fbdb140ef9ae69f39693226edff11a6e41ad75c99b8397ead41d506321be8b29",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "sha256": "3c72028a71b56ed2c5aef9987e6e3104cd6d4d2bfe0a3ef090960b2314c59cf3",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "license": "MIT",
+    "method": "TestMoveNextAsyncPatternViaExtensions2",
+    "offset": 524612
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0117",
+        "severity": "error"
+      },
+      {
+        "code": "CS8412",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,33): error CS0117: 'C.Enumerator' does not contain a definition for 'MoveNextAsync'\n                //         await foreach (var i in new C())\n                Diagnostic(ErrorCode.ERR_NoSuchMember, \"new C()\").WithArguments(\"C.Enumerator\", \"MoveNextAsync\").WithLocation(8, 33),\n                // (8,33): error CS8412: Asynchronous foreach requires that the return type 'C.Enumerator' of 'C.GetAsyncEnumerator()' must have a suitable public 'MoveNextAsync' method and public 'Current' property\n                //         await foreach (var i in new C())\n                Diagnostic(ErrorCode.ERR_BadGetAsyncEnumerator, \"new C()\").WithArguments(\"C.Enumerator\", \"C.GetAsyncEnumerator()\").WithLocation(8, 33)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-eef8311a6bf4636c835f",
+  "kind": "spec",
+  "sourceText": "class Student\n{\n    public init string FirstName;\n    public init string LastName;\n}\n\nvar s = new Student()\n{\n    FirstName = \"Jarde\",\n    LastName = \"Parsons\",\n}\n\ns.FirstName = \"Jared\"; // Error FirstName is readonly",
+  "sourceSHA256": "79f8a86a568ee1f0e648b10f1de6a10a86a04f34be874fa7553f26e590933839",
+  "target": "library",
+  "featureId": "csharp-9-0-init-only-setters",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/init.md",
+    "sha256": "299746635180451088968dc21830e0e4ef886be903357c63780a90434b5034e5",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/init.md",
+    "license": "NOASSERTION",
+    "offset": 13943
+  }
+}

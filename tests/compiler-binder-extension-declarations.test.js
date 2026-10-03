@@ -40,14 +40,16 @@ test('A02-E05 a delegate over an extension method: reference receivers only (CS1
   assert.deepEqual(codes(main('Func<string> wrong = "s".Len;')), ['CS0407:"s".Len']);
 });
 
-test('A02-E05 a delegate over an extension method binds but is not executable: SF2200, no image', () => {
+test('A02-E05 a delegate over an extension method runs: the receiver is bound once, removal and equality use it', () => {
   const source =
-    'using System; static class A { public static int Len(this string s) { return s.Length; } } ' +
-    'class P { static void Main() { Func<int> g = "s".Len; Console.WriteLine(g()); } }';
+    'using System; class C { public int N; } ' +
+    'static class A { public static int Len(this string s) { return s.Length; } public static void Bump(this C c) { c.N++; } } ' +
+    'class P { static int Use(Func<int> f) { return f(); } static void Main() { Func<int> g = "abc".Len; var c = new C(); ' +
+    'Action a = c.Bump; a += c.Bump; a -= c.Bump; a(); Action b = c.Bump; ' +
+    'Console.WriteLine(g() + " " + Use("hello".Len) + " " + c.N + " " + (a == b)); } }';
   const result = compile(source);
-  assert.equal(result.success, false);
-  assert.equal(result.image, null);
-  assert.match(result.diagnostics.find(d => d.code === 'SF2200').message, /a delegate over an extension method/);
+  assert.equal(result.success, true, result.diagnostics.map(d => d.code + ' ' + d.message).join('; '));
+  assert.equal(new VirtualMachine(result.image, { maxInstructions: 1_000_000 }).run().output, '3 5 1 True\n');
 });
 
 test('A02-E05 an extension method on an array receiver is found and runs on both back ends', () => {

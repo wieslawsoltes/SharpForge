@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-45bb961764a4dab4d86c",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass Program\n{\n    [My(Value = 1 switch { 1 => 1, _ => 2 })]\n    public static void M1() { }\n\n    [My(Value = 1 switch { 1 => new A(), _ => new B() })]\n    public static void M2() { }\n\n    [My(Value = 1 switch { 1 => 1, _ => string.Empty })]\n    public static void M3() { }\n}\npublic class MyAttribute : Attribute\n{\n    public MyAttribute() { }\n}\npublic class A\n{\n    public static implicit operator int(A a) => 4;\n}\npublic class B\n{\n    public static implicit operator int(B b) => 2;\n}\n",
+  "sourceSHA256": "646f1813f12422efc5e92046632a76209f4170c55bccd13581229cf06174510f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "TargetTypedSwitch_Attribute_MissingNamedArgument",
+    "offset": 162383
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,9): error CS0246: The type or namespace name 'Value' could not be found (are you missing a using directive or an assembly reference?)\n                //     [My(Value = 1 switch { 1 => 1, _ => 2 })]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"Value\").WithArguments(\"Value\").WithLocation(5, 9),\n                // (8,9): error CS0246: The type or namespace name 'Value' could not be found (are you missing a using directive or an assembly reference?)\n                //     [My(Value = 1 switch { 1 => new A(), _ => new B() })]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"Value\").WithArguments(\"Value\").WithLocation(8, 9),\n                // (11,9): error CS0246: The type or namespace name 'Value' could not be found (are you missing a using directive or an assembly reference?)\n                //     [My(Value = 1 switch { 1 => 1, _ => string.Empty })]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"Value\").WithArguments(\"Value\").WithLocation(11, 9)\n                ",
+  "unsupported": []
+}

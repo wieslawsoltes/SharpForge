@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0d4d02c41ee5dc134170",
+  "kind": "diagnostics",
+  "sourceText": "namespace N1.N2 { }",
+  "sourceSHA256": "f174eeb129aecd41b8c543b0cd6f0fff79068667507322f5de6515e24a6f89ff",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/DiagnosticAnalyzerTests.cs",
+    "sha256": "44af3a2b3a9902d6a7259ce0c742c45e4a6948fa26f70a2cd52f9e39ce49587c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/DiagnosticAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "TestEnsureNoMergedNamespaceSymbolAnalyzer",
+    "offset": 94736
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, new[] { metadataReference })",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation"
+  ]
+}

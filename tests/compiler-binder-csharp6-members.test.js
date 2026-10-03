@@ -79,3 +79,15 @@ test('A02-T62 initializers run in declaration order before the constructor body;
     'class P { static void Main() { var c = new C(); c.P = 5; Console.WriteLine(c.Sum + " " + c.P); } }';
   assert.equal(run(source), 'A\nf\nR\nctor\n19 5\n');
 });
+
+test('A02-T62 an accessor or a local function with a block body and an expression body is CS8057', () => {
+  const inClass = members => `using System; class P { int n; ${members} static void Main() { } }`;
+  assert.deepEqual(codes(inClass('int A { get { return 1; } => 2; }')), ['CS8057:get { return 1; } => 2;']);
+  assert.deepEqual(codes(inClass('int B { get => 1; set { n = value; } => n = 0; }')), ['CS8057:set { n = value; } => n = 0;']);
+  assert.deepEqual(codes(inClass('int this[int i] { get { return i; } => i + 1; }')), ['CS8057:get { return i; } => i + 1;']);
+  assert.deepEqual(codes(inClass('event EventHandler E { add { } => n = 1; remove { } }')), ['CS8057:add { } => n = 1;']);
+  assert.deepEqual(codes(inMain('int L() { return 1; } => 2; x = L();')), ['CS8057:int L() { return 1; } => 2;']);
+  // One body of either form is fine.
+  assert.deepEqual(codes(inClass('int C { get { return 1; } set => n = value; }')), []);
+  assert.deepEqual(codes(inMain('int L() => 2; int K() { return 3; } x = L() + K();')), []);
+});

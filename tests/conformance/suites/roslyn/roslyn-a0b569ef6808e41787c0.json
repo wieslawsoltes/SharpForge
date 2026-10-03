@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a0b569ef6808e41787c0",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\npublic class Test\n{\n    [IntOnlyAttribute(new int[] { 1 })]\n    [ObjectOnlyAttribute(new int[] { 1 })]\n    [IntOrObjectAttribute(new int[] { 1 })] //int\n    void M1() { }\n\n    [IntOnlyAttribute(null)]\n    [ObjectOnlyAttribute(null)]\n    //[IntOrObjectAttribute(null)] //ambiguous\n    void M2() { }\n\n    //[IntOnlyAttribute(new object[] { 1 })] //overload resolution failure\n    [ObjectOnlyAttribute(new object[] { 1 })]\n    [IntOrObjectAttribute(new object[] { 1 })] //object\n    void M3() { }\n\n    [IntOnlyAttribute(1)]\n    [ObjectOnlyAttribute(1)]\n    [IntOrObjectAttribute(1)] //int\n    void M4() { }\n}\n\npublic class IntOnlyAttribute : Attribute\n{\n    public IntOnlyAttribute(params int[] array) { }\n}\n\npublic class ObjectOnlyAttribute : Attribute\n{\n    public ObjectOnlyAttribute(params object[] array) { }\n}\n\npublic class IntOrObjectAttribute : Attribute\n{\n    public IntOrObjectAttribute(params int[] array) { }\n    public IntOrObjectAttribute(params object[] array) { }\n}\n",
+  "sourceSHA256": "ada4d5da72408143f85655433c7ee4d01f55c6fcc499bdd79a4615e9145108a9",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "IntArrayArgument3",
+    "offset": 386259
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

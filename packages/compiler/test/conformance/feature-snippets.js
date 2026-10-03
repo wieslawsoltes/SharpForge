@@ -359,7 +359,9 @@ const csharp12 = {
   RefReadonlyParameters: type('static void M(ref readonly int x) { }'),
   LambdaOptionalParameters: main('var f = (int x = 1) => x; f();'),
   LambdaParamsArray: main('var f = (params int[] values) => values.Length; f();'),
-  InlineArrays: unit('[System.Runtime.CompilerServices.InlineArray(4)] struct Buffer { private int element; }'),
+  InlineArrays: unit(
+    '[System.Runtime.CompilerServices.InlineArray(4)] struct Buffer { private int element; } class A { static int M(Buffer b) { return b[0]; } }',
+  ),
   ExperimentalAttribute: unit('[System.Diagnostics.CodeAnalysis.Experimental("SF0001")] class A { }'),
   SpreadElement: main('int[] a = [1]; int[] b = [..a, 2];'),
 };

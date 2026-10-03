@@ -10,6 +10,7 @@ import { numericKind } from '../../conversions/numeric.js';
 import { reportAwaitOutsideAsync } from '../async.js';
 import { bindAsyncForEach, isOnlyAsyncEnumerable } from '../async-streams.js';
 import { extensionEnumeratorMethod } from '../foreach-extension.js';
+import { inlineArrayShape } from '../inline-arrays.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 /** `Span<T>` and `ReadOnlySpan<T>` enumerate their elements (their enumerator is a ref struct the registry bridge does not declare). */
@@ -33,7 +34,11 @@ export const FlowStatementBinding = Base =>
         const type = collection.type;
         if (syntax.awaitKeyword) reportAwaitOutsideAsync(this, syntax.awaitKeyword);
         if (!collection.hasErrors && type && !type.isErrorType()) {
-          if (syntax.awaitKeyword) {
+          if (type.typeKind === TypeKind.Dynamic) {
+            // The enumerator is found at run time; an asynchronous one cannot be.
+            if (syntax.awaitKeyword) this.report(syntax.expression, 'CS8416');
+            element = syntax.awaitKeyword ? unknown : type;
+          } else if (syntax.awaitKeyword) {
             enumeration = bindAsyncForEach(this, collection, syntax.expression);
             element = enumeration?.elementType ?? unknown;
           } else if (type instanceof ArrayTypeSymbol) element = type.elementType;
@@ -60,7 +65,11 @@ export const FlowStatementBinding = Base =>
               const generic = findConstruction(type, this.core.ienumerableT, this.core);
               if (generic) element = generic.typeArguments[0].type;
               else if (implementsInterface(type, this.core.ienumerable, this.core)) element = this.core.object;
-              else if ((extension = extensionEnumeratorMethod(this, collection, 'GetEnumerator'))) {
+              else if (inlineArrayShape(type)) {
+                // C# 12: the elements of an inline array.
+                this.d.gate(this.c.uri, syntax.expression, 'InlineArrays');
+                element = inlineArrayShape(type).elementType;
+              } else if ((extension = extensionEnumeratorMethod(this, collection, 'GetEnumerator'))) {
                 // C# 9: the enumerator comes from an extension method; its result supplies MoveNext and Current.
                 this.d.gate(this.c.uri, syntax.expression, 'ExtensionGetEnumerator');
                 const current = lookupMembers(extension.returnType, 'Current', this.core, { within: this.c.containingType }).members.find(
@@ -190,7 +199,14 @@ export const FlowStatementBinding = Base =>
       if (governing.type)
         this.reportSwitchArms(
           governing.type,
-          sections.flatMap(s => s.labels.map((label, i) => ({ pattern: label, when: label.when ?? null, node: s.syntax.labels[i].value ?? s.syntax.labels[i].pattern ?? s.syntax.labels[i], isDefault: label.kind === 'default' }))),
+          sections.flatMap(s =>
+            s.labels.map((label, i) => ({
+              pattern: label,
+              when: label.when ?? null,
+              node: s.syntax.labels[i].value ?? s.syntax.labels[i].pattern ?? s.syntax.labels[i],
+              isDefault: label.kind === 'default',
+            })),
+          ),
           { isExpression: false, node: syntax },
         );
       const exhaustive =

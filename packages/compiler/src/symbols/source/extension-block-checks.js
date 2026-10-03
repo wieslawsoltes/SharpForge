@@ -28,7 +28,7 @@ const typeDeclarations = new Set([
 ]);
 
 /** The token Roslyn names for a member that an extension block cannot contain, or null when the member is allowed. */
-export function disallowedMemberToken(member, { allowIndexers = false } = {}) {
+export function disallowedMemberToken(member) {
   switch (member.kind) {
     case 'MethodDeclaration':
     case 'OperatorDeclaration':
@@ -39,7 +39,8 @@ export function disallowedMemberToken(member, { allowIndexers = false } = {}) {
       return isAuto ? member.identifier : null;
     }
     case 'IndexerDeclaration':
-      return allowIndexers ? null : member.thisKeyword;
+      // Below preview the parser gates extension indexers; at preview binder/preview-features.js reports them as not bound.
+      return null;
     case 'FieldDeclaration':
     case 'EventFieldDeclaration':
       return member.declaration.variables[0]?.identifier ?? member;

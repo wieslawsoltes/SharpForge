@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-eb1d04d0ce2323678fbe",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.CompilerServices;\n\nclass Test {\n    static void LogCallerLineNumber1([CallerLineNumber] string lineNumber = \"\") { }\n    static void LogCallerLineNumber2([CallerLineNumber] char lineNumber = '\\0') { }\n    static void LogCallerLineNumber3([CallerLineNumber] bool lineNumber = false) { }\n    static void LogCallerLineNumber3([CallerLineNumber] short lineNumber = 0) { }\n    static void LogCallerLineNumber3([CallerLineNumber] ushort lineNumber = 0) { }\n\n    static void LogCallerFilePath1([CallerFilePath] int filePath = 0) { }\n    static void LogCallerFilePath2([CallerFilePath] long filePath = 0) { }\n    static void LogCallerFilePath3([CallerFilePath] double filePath = 0) { }\n    static void LogCallerFilePath4([CallerFilePath] float filePath = 0) { }\n    static void LogCallerFilePath5([CallerFilePath] int? filePath = 0) { }\n\n    static void LogCallerMemberName1([CallerMemberName] int memberName = 0) { }\n    static void LogCallerMemberName2([CallerMemberName] long memberName = 0) { }\n    static void LogCallerMemberName3([CallerMemberName] double memberName = 0) { }\n    static void LogCallerMemberName4([CallerMemberName] float memberName = 0) { }\n    static void LogCallerMemberName5([CallerMemberName] int? memberName = 0) { }\n}",
+  "sourceSHA256": "81d43d74b177ba1d62397ceb2a10eae5818d399c9e86f5e9846669b9ec9576aa",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "sha256": "afc3ea7577c9e597760812239c750126e0cb09ea32cb52bdc8e9850a45ebeac9",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "license": "MIT",
+    "method": "TestBadConversionForCallerInfoAttributes",
+    "offset": 99364
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new MetadataReference[] { SystemRef })",
+  "options": "(source, references: new MetadataReference[] { SystemRef })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS4017",
+        "severity": "error"
+      },
+      {
+        "code": "CS4017",
+        "severity": "error"
+      },
+      {
+        "code": "CS4017",
+        "severity": "error"
+      },
+      {
+        "code": "CS4017",
+        "severity": "error"
+      },
+      {
+        "code": "CS4017",
+        "severity": "error"
+      },
+      {
+        "code": "CS4018",
+        "severity": "error"
+      },
+      {
+        "code": "CS4018",
+        "severity": "error"
+      },
+      {
+        "code": "CS4018",
+        "severity": "error"
+      },
+      {
+        "code": "CS4018",
+        "severity": "error"
+      },
+      {
+        "code": "CS4018",
+        "severity": "error"
+      },
+      {
+        "code": "CS4019",
+        "severity": "error"
+      },
+      {
+        "code": "CS4019",
+        "severity": "error"
+      },
+      {
+        "code": "CS4019",
+        "severity": "error"
+      },
+      {
+        "code": "CS4019",
+        "severity": "error"
+      },
+      {
+        "code": "CS4019",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerLineNumberParam, \"CallerLineNumber\").WithLocation(5, 39).WithArguments(\"int\", \"string\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerLineNumberParam, \"CallerLineNumber\").WithLocation(6, 39).WithArguments(\"int\", \"char\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerLineNumberParam, \"CallerLineNumber\").WithLocation(7, 39).WithArguments(\"int\", \"bool\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerLineNumberParam, \"CallerLineNumber\").WithLocation(8, 39).WithArguments(\"int\", \"short\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerLineNumberParam, \"CallerLineNumber\").WithLocation(9, 39).WithArguments(\"int\", \"ushort\"),\n\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerFilePathParam, \"CallerFilePath\").WithLocation(11, 37).WithArguments(\"string\", \"int\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerFilePathParam, \"CallerFilePath\").WithLocation(12, 37).WithArguments(\"string\", \"long\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerFilePathParam, \"CallerFilePath\").WithLocation(13, 37).WithArguments(\"string\", \"double\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerFilePathParam, \"CallerFilePath\").WithLocation(14, 37).WithArguments(\"string\", \"float\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerFilePathParam, \"CallerFilePath\").WithLocation(15, 37).WithArguments(\"string\", \"int?\"),\n\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerMemberNameParam, \"CallerMemberName\").WithLocation(17, 39).WithArguments(\"string\", \"int\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerMemberNameParam, \"CallerMemberName\").WithLocation(18, 39).WithArguments(\"string\", \"long\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerMemberNameParam, \"CallerMemberName\").WithLocation(19, 39).WithArguments(\"string\", \"double\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerMemberNameParam, \"CallerMemberName\").WithLocation(20, 39).WithArguments(\"string\", \"float\"),\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerMemberNameParam, \"CallerMemberName\").WithLocation(21, 39).WithArguments(\"string\", \"int?\")",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

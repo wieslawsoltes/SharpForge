@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-7c2eb741338776d04b31",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Linq;\nclass C\n{\n    static void Main()\n    {\n        object o = null;\n        dynamic d = null;\n        var doc = (new [] { ((a: d, b: o), c: 2) }).ToList();\n        var odc = (new [] { ((a: o, b: d), c: 2) }).ToList();\n\n        var t1 = Test1(ref doc, odc); // exact bound and lower bound\n        var t2 = Test2(doc, ref odc); // lower bound and exact bound\n        var t3 = Test3(ref doc, ref odc); // two exact bounds\n    }\n\n    static T Test1<T>(ref T x, T y) => x;\n    static T Test2<T>(T x, ref T y) => x;\n    static T Test3<T>(ref T x, ref T y) => x;\n}\n",
+  "sourceSHA256": "065cc0469e489092d053876c270b6efd9a453e15288f2a33eaa4cd12d4ee473c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "Inference11OnlyDynamicMismatch",
+    "offset": 389248
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { CSharpRef })",
+  "options": "(source, references: new[] { CSharpRef })",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

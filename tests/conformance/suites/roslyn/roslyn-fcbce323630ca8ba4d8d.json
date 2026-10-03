@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-fcbce323630ca8ba4d8d",
+  "kind": "diagnostics",
+  "sourceText": "var c1 = new C1();\nvar c2 = new C2();\n\npartial class C1\n{\n    public partial C1(int x = 1);\n    public partial C1(int x) { }\n}\npartial class C2\n{\n    public partial C2(int x);\n    public partial C2(int x = 1) { }\n}",
+  "sourceSHA256": "508e9d86f90bd3bd92f50ff1e784ae7ebfb7040bd9c9ac1e8e4415fee5f44fa1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "Difference_OptionalParameters",
+    "offset": 155264
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS7036",
+        "severity": "error"
+      },
+      {
+        "code": "CS1066",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (2,14): error CS7036: There is no argument given that corresponds to the required parameter 'x' of 'C2.C2(int)'\n            // var c2 = new C2();\n            Diagnostic(ErrorCode.ERR_NoCorrespondingArgument, \"C2\").WithArguments(\"x\", \"C2.C2(int)\").WithLocation(2, 14),\n            // (12,27): warning CS1066: The default value specified for parameter 'x' will have no effect because it applies to a member that is used in contexts that do not allow optional arguments\n            //     public partial C2(int x = 1) { }\n            Diagnostic(ErrorCode.WRN_DefaultValueForUnconsumedLocation, \"x\").WithArguments(\"x\").WithLocation(12, 27)",
+  "unsupported": []
+}

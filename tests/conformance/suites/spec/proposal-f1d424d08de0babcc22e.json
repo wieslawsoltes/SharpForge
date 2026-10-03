@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-f1d424d08de0babcc22e",
+  "kind": "spec",
+  "sourceText": "// $this is covariant\n// $a is invariant\nref struct S<out $this, $a> ",
+  "sourceSHA256": "a072e3e5a696adac562627d9fb4401a89aa35a30775ec1033e54dc9578992416",
+  "target": "library",
+  "featureId": "csharp-11-0-ref-fields",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/low-level-struct-improvements.md",
+    "sha256": "48173c4aaa1ffb3cbd8f7602f52fbf0b38a57f1e4fc50a725ba5305f30a5ff54",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/low-level-struct-improvements.md",
+    "license": "NOASSERTION",
+    "offset": 60699
+  }
+}

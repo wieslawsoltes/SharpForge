@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-47baca7c247ed9233c9b",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    static void Test()\n    {\n        ref var y = ref M();\n        ref int a = ref M1.Alice;\n        ref var y1 = ref P;\n        ref int a1 = ref P1.Alice;\n    }\n\n    static ref readonly int M() => throw null;\n    static ref readonly (int Alice, int Bob) M1() => throw null;\n    static ref readonly int P => throw null;\n    static ref readonly (int Alice, int Bob) P1 => throw null;\n}\n",
+  "sourceSHA256": "92c6874eeb2f01339700c259fd94310723b726f42f446ac1135f0bc6548fd435",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefReadonlyReturnTests.cs",
+    "sha256": "87f31f30239082ac067728f573ca1d7b0ba9ae37f73b80e7f9236b308df7d195",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefReadonlyReturnTests.cs",
+    "license": "MIT",
+    "method": "ReadonlyReturnCannotAssignByref",
+    "offset": 17708
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, new[] { ValueTupleRef, SystemRuntimeFacadeRef })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8329",
+        "severity": "error"
+      },
+      {
+        "code": "CS0119",
+        "severity": "error"
+      },
+      {
+        "code": "CS8329",
+        "severity": "error"
+      },
+      {
+        "code": "CS8330",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,25): error CS8329: Cannot use method 'M' as a ref or out value because it is a readonly variable\n                //         ref var y = ref M();\n                Diagnostic(ErrorCode.ERR_RefReadonlyNotField, \"M()\").WithArguments(\"method\", \"M\").WithLocation(6, 25),\n                // (7,25): error CS0119: 'Program.M1()' is a method, which is not valid in the given context\n                //         ref int a = ref M1.Alice;\n                Diagnostic(ErrorCode.ERR_BadSKunknown, \"M1\").WithArguments(\"Program.M1()\", \"method\").WithLocation(7, 25),\n                // (8,26): error CS8329: Cannot use property 'P' as a ref or out value because it is a readonly variable\n                //         ref var y1 = ref P;\n                Diagnostic(ErrorCode.ERR_RefReadonlyNotField, \"P\").WithArguments(\"property\", \"P\").WithLocation(8, 26),\n                // (9,26): error CS8330: Members of property 'P1' cannot be used as a ref or out value because it is a readonly variable\n                //         ref int a1 = ref P1.Alice;\n                Diagnostic(ErrorCode.ERR_RefReadonlyNotField2, \"P1.Alice\").WithArguments(\"property\", \"P1\").WithLocation(9, 26)\n            ",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

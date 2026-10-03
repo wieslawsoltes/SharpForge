@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-55fc85be1df53a055d81",
+  "kind": "diagnostics",
+  "sourceText": "assert(null, \"default\");\nassert(\"\", \"default\");\nassert(\"GreaterThanOrEqual\", \"2\");\nassert(\"other\", \"default\");\nSystem.Console.Write(\"RAN\");\n\nvoid assert(string input, string expected = null)\n{\n    if (C.M(input) != (expected ?? input))\n    {\n        throw new System.Exception($\"{input} produced {C.M(input)}\");\n    }\n}\n\npublic class C\n{\n    public static string M(string value)\n    {\n        switch (value)\n        {\n            case \"UnaryPlus\":\n            case \"UnaryNegation\":\n            case \"LogicalNot\":\n            case \"OnesComplement\":\n            case \"Increment\":\n            case \"Decrement\":\n            case \"True\":\n            case \"False\":\n                return \"1\";\n            case \"Addition\":\n            case \"Subtraction\":\n            case \"Multiply\":\n            case \"Division\":\n            case \"Modulus\":\n            case \"BitwiseAnd\":\n            case \"BitwiseOr\":\n            case \"ExclusiveOr\":\n            case \"LeftShift\":\n            case \"RightShift\":\n            case \"Equality\":\n            case \"Inequality\":\n            case \"LessThan\":\n            case \"GreaterThan\":\n            case \"LessThanOrEqual\":\n            case \"GreaterThanOrEqual\":\n                return \"2\";\n            case \"Implicit\":\n            case \"Explicit\":\n                return \"3\";\n            default:\n                return \"default\";\n        }\n    }\n}",
+  "sourceSHA256": "67f1a820aba63f64020349b8b84bbc01f5a433a4fd229dd2b6da6747342619d9",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "sha256": "f4ddec53df1ec1373a003dd48fa22fbb4d028d7926ae9037faed2b953df6ab4d",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "license": "MIT",
+    "method": "IsOperator",
+    "offset": 382022
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}
