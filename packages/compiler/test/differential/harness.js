@@ -52,7 +52,8 @@ export function runFixture(fixture,pinned,options={}){
   const unsupported=reason=>{row.unsupported=true;row.details.unsupported=reason;return row;};
   if(!pinned)return unsupported('no pinned Roslyn result; run tools/pin.mjs');
   if(pinned.hash!==fixtureHash(fixture)||pinned.kind!==fixture.kind)return unsupported('pinned Roslyn result is stale; run tools/pin.mjs');
-  const compileOptions={...(fixture.langVersion?{langVersion:fixture.langVersion}:{}),...(fixture.allowUnsafe?{allowUnsafe:true}:{})};
+  const compileOptions=fixture.langVersion?{langVersion:fixture.langVersion}:{};
+  if(fixture.allowUnsafe)compileOptions.allowUnsafe=true;
   let result;try{result=(options.compile??compile)(fixture.source,compileOptions);}catch(error){return unsupported('compiler crash: '+brief(error));}
   const actual=result.diagnostics.map(d=>[d.code,d.start,d.length,d.severity]);
   const foreign=actual.filter(d=>!/^CS\d{4}$/.test(String(d[0])));

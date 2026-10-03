@@ -23,7 +23,9 @@ const fixtures=loadFixtures();
 mkdirSync(scratch,{recursive:true});
 for(const name of ['Program.cs','pin.csproj'])copyFileSync(join(root,'tools',name),join(scratch,name));
 const input=join(scratch,'input.json'),output=join(scratch,'output.json');
-writeFileSync(input,JSON.stringify(fixtures.map(f=>({id:f.id,langVersion:f.langVersion??null,allowUnsafe:!!f.allowUnsafe,source:f.source}))));
+// What Roslyn is shown: the source and the options a fixture carries (language version, /unsafe).
+const inputOf=f=>({id:f.id,langVersion:f.langVersion??null,allowUnsafe:!!f.allowUnsafe,source:f.source});
+writeFileSync(input,JSON.stringify(fixtures.map(inputOf)));
 const env={...process.env,DOTNET_CLI_TELEMETRY_OPTOUT:'1',DOTNET_NOLOGO:'1',DOTNET_SKIP_FIRST_TIME_EXPERIENCE:'1'};
 execFileSync(dotnet,['build',join(scratch,'pin.csproj'),'-c','Release','-o',join(scratch,'out'),'--nologo','-v','q'],{stdio:'inherit',env});
 execFileSync(dotnet,[join(scratch,'out','pin.dll'),input,output],{stdio:'inherit',env});
