@@ -1,0 +1,22 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { compile } from '@sharpforge/compiler';
+import { parse } from '@sharpforge/syntax';
+import { SourceText } from '@sharpforge/text';
+
+const source = 'class record {} class P { record value; static void Main() {} }';
+
+test('compiler language versions select grammar before contextual keywords are parsed', () => {
+  const parsed = parse(new SourceText(source), undefined, { languageVersion: '8' });
+  const text = compile(source, { langVersion: '8' });
+  assert.equal(text.success, true, JSON.stringify(text.diagnostics));
+  assert.deepEqual(text.diagnostics, compile([parsed], { langVersion: '8' }).diagnostics);
+  assert.equal(compile(source, { langVersion: '9' }).success, false);
+});
+
+test('per-file language versions and preprocessor symbols reach parsing together', () => {
+  const files = [{ uri: 'Old.cs', text: `#if OLD\n${source}\n#else\n#error Wrong symbols\n#endif` }];
+  const result = compile(files, { langVersion: '14', langVersionByUri: { 'Old.cs': '8' }, preprocessorSymbols: 'OLD;EXTRA' });
+  assert.equal(result.success, true, JSON.stringify(result.diagnostics));
+  assert.equal(compile(files, { langVersion: '8', preprocessorSymbols: [] }).success, false);
+});
