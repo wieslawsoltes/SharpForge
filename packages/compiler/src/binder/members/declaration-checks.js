@@ -7,10 +7,20 @@ import { checkOperatorDeclarations } from './operator-declarations.js';
 import { checkIndexerDeclarations } from './indexer-declarations.js';
 import { checkRequiredDeclarations, chainingProblem } from './required-members.js';
 import { checkInitAccessors } from './init-accessors.js';
+import {
+  checkPropertyDeclarations,
+  checkConstantDeclarations,
+  checkStaticConstructorDeclarations,
+  checkParameterDeclarations,
+} from './basic-declarations.js';
 import { checkPrimaryConstructorChaining, primaryParameterWarnings } from './primary-constructors.js';
 
 /** The member rules, in the order their diagnostics are produced. Add a rule here to have it run for every source type. */
 export const memberChecks = [
+  checkPropertyDeclarations,
+  checkConstantDeclarations,
+  checkStaticConstructorDeclarations,
+  checkParameterDeclarations,
   checkIndexerDeclarations,
   checkOperatorDeclarations,
   checkInitAccessors,

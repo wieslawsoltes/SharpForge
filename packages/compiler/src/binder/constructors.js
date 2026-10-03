@@ -57,7 +57,9 @@ export function checkConstructorCycles(type, targetOf) {
     const seen = new Set([ctor]);
     for (let c = target; c; c = targetOf(c)) {
       if (c === ctor) {
-        results.push({ code: 'CS0768', args: [ctor.toDisplayString()], ctor });
+        // A cycle is reported once, on its last constructor in declaration order (as Roslyn does).
+        const last = [...seen].every(other => (other.locations[0]?.start ?? 0) <= (ctor.locations[0]?.start ?? 0));
+        if (last) results.push({ code: 'CS0768', args: [ctor.toDisplayString()], ctor });
         break;
       }
       if (seen.has(c)) break;

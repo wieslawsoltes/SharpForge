@@ -3,6 +3,7 @@
  * CS0266, CS0031, CS0037, CS0428, CS1660 ...), constant folding of converted constants, value and condition contexts,
  * read/write bookkeeping for unused-symbol warnings and the best common type of a set of expressions.
  */
+import { bestCommonType } from '../implicit-types.js';
 import { TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { ConstantValue, isFoldError } from '../../constants/constant-value.js';
@@ -22,12 +23,20 @@ const keywordOf = type =>
   null;
 
 /** Class mixin (composed into the owning class by its index module). */
+/** True for a type that is, or is an array of, an error type: a conversion to it is not worth a second diagnostic. */
+const hasErrorElement = type => {
+  for (let current = type; current; current = current.elementType) if (current.isErrorType?.()) return true;
+  return false;
+};
+const isFunctionExpression = e => e.form === 'lambda' || e.kind === 'MethodGroup';
+
 export const ConversionBinding = Base =>
   class extends Base {
     // ---- conversions ----
     /** Converts a bound expression to a type implicitly, reporting the Roslyn diagnostic when no conversion exists. */
     convert(e, type, node = e.syntax, { argument = null } = {}) {
-      if (!type || e.hasErrors || type.isErrorType() || e.type?.isErrorType?.()) return e;
+      if (!type || e.hasErrors || hasErrorElement(type) || e.type?.isErrorType?.()) return e;
+      if (isFunctionExpression(e) && this.isFunctionTypeTarget(type)) return this.convertThroughFunctionType(e, type, node);
       if (e.kind === 'TypeExpression' || e.kind === 'NamespaceExpression') {
         this.report(e.syntax, 'CS0119', [
           e.kind === 'TypeExpression' ? this.display(e.referencedType) : e.namespace.toDisplayString(),
@@ -225,22 +234,36 @@ export const ConversionBinding = Base =>
       return this.convert(e, this.core.bool);
     }
     /** The best common type of a set of expressions (spec 12.6.3.15): the candidate type every expression converts to. */
-    bestCommonType(values) {
-      const candidates = [];
-      for (const v of values)
-        if (v.type && v.type.specialType !== 'System_Void' && !candidates.some(c => c.equals(v.type))) candidates.push(v.type);
-      const best = candidates.filter(c =>
-        values.every(v => {
-          const r = this.conversions.classifyFromExpression(v, c);
-          return r.exists && r.isImplicit;
-        }),
-      );
-      if (best.length === 1) return best[0];
-      if (best.length > 1) {
-        const top = best.filter(c => best.every(o => o === c || this.conversions.classifyImplicit(o, c).exists));
-        if (top.length === 1) return top[0];
+    /** C# 10: `object`, `System.Delegate` and `System.MulticastDelegate` accept a lambda or method group through its natural type. */
+    isFunctionTypeTarget(type) {
+      if (this.version.number < 10) return false;
+      return type.specialType === 'System_Object' || type.equals(this.core.delegate) || type.equals(this.core.multicastDelegate);
+    }
+    /** Converts a lambda or method group to its natural delegate type and that to `type`; CS8917 when it has none. */
+    convertThroughFunctionType(e, type, node) {
+      const natural = this.naturalFunctionType(e);
+      if (!natural) {
+        this.report(anonymousFunctionAnchor(e.syntax, node), 'CS8917');
+        return this.bad(node, { operand: e });
       }
-      return null;
+      const delegate = this.convert(e, natural, node);
+      if (e.form === 'lambda' && !delegate.hasErrors) this.finishLambda(e, natural);
+      if (delegate.hasErrors) return delegate;
+      return this.applyConversion(delegate, type, this.conversions.classifyImplicit(natural, type), node);
+    }
+    /** The best common type of bound expressions (implicitly typed arrays, inferred lambda return types), or null. */
+    bestCommonType(values) {
+      const types = [];
+      for (const value of values) {
+        const type = value.type ?? this.functionTypeOf(value);
+        if (type && type.specialType !== 'System_Void') types.push(type);
+      }
+      return bestCommonType(types, (from, to) => this.conversions.classifyImplicit(from, to).exists);
+    }
+    /** C# 10: the natural delegate type a lambda or method group contributes to a best common type, or null. */
+    functionTypeOf(value) {
+      const isFunction = value.form === 'lambda' || value.kind === 'MethodGroup';
+      return isFunction && this.version.number >= 10 ? this.naturalFunctionType(value) : null;
     }
     operandDisplay(e) {
       return e.literal === 'null'
