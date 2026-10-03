@@ -1,11 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync, existsSync } from 'node:fs';
 import { tmpdir, homedir } from 'node:os';
 import { join } from 'node:path';
 import { git } from '../../../scripts/planning/lib/io.js';
-import { captureEvidence } from '../../../scripts/planning/capture-evidence.js';
-import { validateHandoff, artifactDigest } from '../../../scripts/planning/lib/evidence.js';
+import { captureEvidence, evidenceDirectory } from '../../../scripts/planning/capture-evidence.js';
+import { validateHandoff, artifactDigest, tapSummary, runCommand, proofObligations } from '../../../scripts/planning/lib/evidence.js';
 import { handoff } from '../../../scripts/planning/handoff.js';
 import { latestHandoff, parseHandoff, resume } from '../../../scripts/planning/resume.js';
 import { verifyArtifact, commitOnMain } from '../../../scripts/planning/rollup-invalidation.js';
@@ -13,40 +13,95 @@ import { FakeGitHub } from '../../../scripts/planning/testing/fake-github.js';
 import { GitHubProject } from '../../../scripts/planning/lib/github-project.js';
 import { Claims } from '../../../scripts/planning/lib/claims.js';
 
-test('digest binds every TAP byte as well as task and commit; false aggregate handoff summaries rejected',()=>{
-  const meta={task:'SF-A00-T11.3',headCommit:'a'.repeat(40),command:['node','--test'],summary:{tests:1,passed:1,failed:0,cancelled:0,skipped:0,exitCode:0}},files={'tests.tap':'ok 1\n','environment.json':'{}\n'};
-  assert.notEqual(artifactDigest(meta,files),artifactDigest(meta,{...files,'tests.tap':'ok 1\n# changed\n'}));
-  assert.notEqual(artifactDigest(meta,files),artifactDigest({...meta,headCommit:'b'.repeat(40)},files));
+const task='SF-A00-T11.3',command=['node','--test','--test-reporter=tap','sample.test.cjs'];
+const target={capabilityId:'fixture.real',platform:process.platform,engine:'node-fixture',specRevision:'fixture-v1',status:'pass',testName:'real test'};
+const source=(proof=target,body="test('real test',()=>{});")=>"const {test}=require('node:test');\n"+(proof?`console.log('sharpforge-evidence: '+JSON.stringify(${JSON.stringify(proof)}));\n`:'')+body+'\n';
+function repository(t,body=source()) {
+  const root=mkdtempSync(join(tmpdir(),'sf-evidence-'));t.after(()=>rmSync(root,{recursive:true,force:true}));
+  const g=args=>git(args,root);g(['init','-b','main']);g(['config','user.name','Fixture']);g(['config','user.email','fixture@example.test']);
+  writeFileSync(join(root,'.gitignore'),'artifacts/\n');writeFileSync(join(root,'sample.test.cjs'),body);g(['add','.']);g(['commit','-m','fixture']);return {root,g};
+}
+const evidence=record=>({schemaVersion:1,leafId:record.task,commit:record.headCommit,evidenceDigest:record.evidenceDigest,...Object.fromEntries(Object.entries(record.obligations[0]??target).filter(([key])=>key!=='testName'))});
+
+test('digest binds TAP bytes, commit, command and exact target/status proof',()=>{
+ const meta={schemaVersion:2,task,headCommit:'a'.repeat(40),command,summary:tapSummary('',0),obligations:[target]},files={'tests.tap':'ok 1\n','stderr.log':'','environment.json':'{}\n'};
+ assert.notEqual(artifactDigest(meta,files),artifactDigest(meta,{...files,'tests.tap':'ok 1\n# changed\n'}));
+ assert.notEqual(artifactDigest(meta,files),artifactDigest({...meta,headCommit:'b'.repeat(40)},files));
+ for(const key of ['capabilityId','platform','engine','specRevision','status','testName'])assert.notEqual(artifactDigest(meta,files),artifactDigest({...meta,obligations:[{...target,[key]:'different'}]},files));
+});
+test('capture refuses dirty passing changes over a failing committed tree before running any command',t=>{
+ const {root,g}=repository(t,source(null,"test('real test',()=>{throw Error('committed failure')});")),head=g(['rev-parse','HEAD']).trim();
+ writeFileSync(join(root,'sample.test.cjs'),source());
+ assert.throws(()=>captureEvidence({task,root,command}),/clean working tree/);assert.equal(g(['rev-parse','HEAD']).trim(),head);assert.equal(existsSync(join(root,'artifacts/evidence')),false);
+});
+test('capture rejects tracked/untracked mutations and even a clean changed HEAD after execution',t=>{
+ const {root,g}=repository(t);
+ assert.throws(()=>captureEvidence({task,root,command:['node','-e',"require('node:fs').writeFileSync('dirty.txt','changed')"]}),/clean working tree/);rmSync(join(root,'dirty.txt'));
+ assert.throws(()=>captureEvidence({task,root,command:['node','-e',"require('node:fs').appendFileSync('sample.test.cjs','// changed')"]}),/clean working tree/);g(['restore','sample.test.cjs']);
+ assert.throws(()=>captureEvidence({task,root,command:['node','-e',"require('node:child_process').execFileSync('git',['commit','--allow-empty','-m','changed head'])"]}),/HEAD changed/);
+ assert.equal(existsSync(join(root,'artifacts/evidence')),false);
+});
+test('only command-emitted proof for the exact target/status verifies; generic TAP is not parity',t=>{
+ const {root,g}=repository(t),captured=captureEvidence({task,root,command}),record=evidence(captured),directory=evidenceDirectory(root,captured);
+ assert.equal(captured.summary.complete,true);assert.equal(verifyArtifact(record,directory),true);
+ for(const [key,value]of Object.entries({leafId:'SF-A00-T11.4',capabilityId:'unrelated',platform:'another-platform',engine:'native-rust',specRevision:'preview',status:'fail'}))assert.equal(verifyArtifact({...record,[key]:value},directory),false,key);
+ const metadata=JSON.parse(readFileSync(join(directory,'evidence.json'),'utf8'));metadata.obligations[0].engine='native-rust';writeFileSync(join(directory,'evidence.json'),JSON.stringify(metadata));assert.equal(verifyArtifact({...record,engine:'native-rust'},directory),false);
+ writeFileSync(join(root,'sample.test.cjs'),source(null));g(['add','.']);g(['commit','-m','generic test']);const generic=captureEvidence({task,root,command});assert.equal(generic.summary.passed,1);assert.deepEqual(generic.obligations,[]);assert.equal(verifyArtifact(evidence(generic),evidenceDirectory(root,generic)),false);
+});
+test('skipped/TODO/ambiguous or absent TAP results cannot qualify a pass, and stderr cannot spoof TAP',t=>{
+ const {root,g}=repository(t);
+ for(const body of [source(target,"test('real test',{skip:'unsupported'},()=>{});"),source(target,"test('real test',{todo:'pending'},()=>{});"),source({...target,testName:'missing'}),source(target,"test('real test',()=>{});test('real test',()=>{});")]) {
+  writeFileSync(join(root,'sample.test.cjs'),body);g(['add','.']);g(['commit','-m','negative proof']);assert.throws(()=>captureEvidence({task,root,command}),/passing test|unambiguous TAP/);
+ }
+ const result=runCommand(['node','-e',"console.error('TAP version 13\\n1..1\\n# tests 1\\n# pass 1\\n# fail 0\\n# cancelled 0\\n# skipped 0\\n# todo 0')"],root);assert.equal(result.summary.complete,false);assert.equal(result.summary.passed,0);
+});
+test('unknown and unsupported proofs retain their reasons and never verify as pass',t=>{
+ const {root,g}=repository(t);
+ for(const status of ['unknown','unsupported']) {
+  writeFileSync(join(root,'sample.test.cjs'),source({...target,status,reason:'actual provider unavailable'},"test('real test',{skip:'provider unavailable'},()=>{});"));g(['add','.']);g(['commit','-m',status]);
+  const captured=captureEvidence({task,root,command}),record=evidence(captured),directory=evidenceDirectory(root,captured);
+  assert.equal(verifyArtifact(record,directory),true);assert.equal(verifyArtifact({...record,status:'pass'},directory),false);assert.equal(verifyArtifact({...record,reason:'changed'},directory),false);
+ }
+ const incomplete='TAP version 13\n# sharpforge-evidence: '+JSON.stringify({...target,status:'unsupported'})+'\nok 1 - real test # SKIP unavailable\n';assert.throws(()=>proofObligations(incomplete,tapSummary(incomplete,0)),/reason|anyOf/);
+});
+test('fake HTTP handoff plus fresh real clone reproduces results; WIP commands are retested at the new commit',async t=>{
+ const {root,g}=repository(t),directory=mkdtempSync(join(tmpdir(),'sf-handoff-'));t.after(()=>rmSync(directory,{recursive:true,force:true}));const remote=join(directory,'remote.git'),clone=join(directory,'clone'),fake=new FakeGitHub(),server=await fake.listen();
+ const client=new GitHubProject({owner:'test',transport:async request=>{const response=await fetch(`${server.url}/${request.path}`,{method:request.method,headers:{'content-type':'application/json'},body:request.body===undefined?undefined:JSON.stringify(request.body)});if(!response.ok)throw Object.assign(Error(await response.text()),{status:response.status});return response.json();}});
+ try {
+  git(['init','--bare',remote],directory);g(['remote','add','origin',remote]);g(['push','origin','main']);g(['checkout','-b','codex/SF-A00-T07.1']);g(['push','-u','origin','HEAD']);
+  const claims=new Claims(client),claim={issue:1,agent:'replacement-fixture',branch:'codex/SF-A00-T07.1'};await claims.claim(claim);await claims.lock({...claim,key:'studio'});await claims.heartbeat(claim);
+  const captured=captureEvidence({task:'SF-A00-T07.1',root,command}),details={commands:[{argv:command,summary:captured.summary}],testSummary:captured.summary,blockers:[],remainingSteps:['release lease'],openQuestions:[],evidenceDigests:[captured.evidenceDigest]};
+  const posted=await handoff({root,task:captured.task,agent:claim.agent,issue:1,client,details}),record=await latestHandoff(client,1);assert.deepEqual(record,posted.record);
+  const wrongSummary=structuredClone(record);wrongSummary.testSummary.passed++;assert.throws(()=>validateHandoff(wrongSummary),/testSummary/);
+  const wrongHead=structuredClone(record);wrongHead.commands[0].headCommit='f'.repeat(40);assert.throws(()=>validateHandoff(wrongHead),/different commit/);
+  const missing=structuredClone(record);delete missing.environment;assert.throws(()=>validateHandoff(missing),/environment/);delete missing.headCommit;assert.throws(()=>validateHandoff(missing),/headCommit/);
+  assert.throws(()=>parseHandoff('<!-- sharpforge-handoff:v1 -->\nwrong'),/Malformed/);
+  const artifactDirectory=evidenceDirectory(root,captured);assert.equal(verifyArtifact(evidence(captured),artifactDirectory),true);assert.equal(commitOnMain(record.headCommit,{root,main:'main'}),true);
+  const tap=readFileSync(join(artifactDirectory,'tests.tap'),'utf8');assert.equal(tap.includes(homedir()),false);writeFileSync(join(artifactDirectory,'tests.tap'),tap+'# tampered\n');assert.equal(verifyArtifact(evidence(captured),artifactDirectory),false);
+  git(['clone',remote,clone],directory);const replay=resume({record,root:clone});assert.deepEqual(replay.divergences,[]);assert.equal(replay.results[0].summary.passed,1);
+  const otherTarget=structuredClone(record);otherTarget.commands[0].obligations[0].engine='another-engine';assert(resume({record:otherTarget,root:clone}).divergences.some(message=>message.includes('target proofs differ')));
+  writeFileSync(join(root,'sample.test.cjs'),source(null,"test('real test',()=>{throw Error('unfinished WIP')});"));await assert.rejects(handoff({root,task:record.task,agent:claim.agent,issue:1,client,details}),/Uncommitted/);
+  const wip=await handoff({root,task:record.task,agent:claim.agent,issue:1,client,details,wip:true});assert.notEqual(wip.record.headCommit,record.headCommit);assert.equal(wip.record.commands[0].headCommit,wip.record.headCommit);assert.equal(wip.record.testSummary.failed,1);assert.equal(wip.record.testSummary.passed,0);assert.notDeepEqual(wip.record.evidenceDigests,details.evidenceDigests);assert.equal(g(['status','--porcelain']).trim(),'');
+  await claims.lock({...claim,key:'studio',release:true});await claims.release(claim);assert.equal(fake.refs.size,0);
+ } finally {await server.close();}
+});
+test('resume detects command mutations and stops before later commands',async t=>{
+ const {root,g}=repository(t,source(null)),directory=mkdtempSync(join(tmpdir(),'sf-resume-'));t.after(()=>rmSync(directory,{recursive:true,force:true}));const remote=join(directory,'remote.git');git(['init','--bare',remote],directory);g(['remote','add','origin',remote]);g(['push','origin','main']);g(['checkout','-b','codex/resume']);g(['push','-u','origin','HEAD']);
+ const captured=captureEvidence({task,root,command}),details={commands:[{argv:command,summary:captured.summary}],testSummary:captured.summary,blockers:[],remainingSteps:[],openQuestions:[]};
+ const {record}=await handoff({root,task,agent:'fixture',issue:1,client:{comment:async()=>({id:1})},details});
+ record.commands[0].argv=['node','-e',"require('node:fs').writeFileSync('mutation.txt','modified')"];
+ const result=resume({record,root});assert(result.divergences.some(message=>message.includes('clean working tree')));assert(result.errors.length);
 });
 
-test('fake HTTP handoff plus fresh real clone reproduces captured test results; WIP pushed before comment',async()=>{
-  const directory=mkdtempSync(join(tmpdir(),'sf-handoff-')), root=join(directory,'source'), remote=join(directory,'remote.git'), clone=join(directory,'clone');
-  mkdirSync(root); const g=args=>git(args,root), fake=new FakeGitHub(), server=await fake.listen();
-  const client=new GitHubProject({owner:'test',transport:async request=>{
-    const response=await fetch(`${server.url}/${request.path}`,{method:request.method,headers:{'content-type':'application/json'},body:request.body===undefined?undefined:JSON.stringify(request.body)}); if(!response.ok)throw Object.assign(Error(await response.text()),{status:response.status}); return response.json();
-  }});
-  try {
-    git(['init','--bare',remote],directory);g(['init','-b','main']);g(['config','user.name','Fixture']);g(['config','user.email','fixture@example.test']);
-    writeFileSync(join(root,'.gitignore'),'artifacts/\n');writeFileSync(join(root,'sample.test.cjs'),"const {test}=require('node:test'); test('real test',()=>{});\n");
-    g(['add','.']);g(['commit','-m','fixture']);g(['remote','add','origin',remote]);g(['push','origin','main']);g(['checkout','-b','codex/SF-A00-T07.1']);g(['push','-u','origin','HEAD']);
-    const claims=new Claims(client), task={issue:1,agent:'replacement-fixture',branch:'codex/SF-A00-T07.1'};
-    await claims.claim(task);await claims.lock({...task,key:'studio'});await claims.heartbeat(task);
-    const command=['node','--test','--test-reporter=tap','sample.test.cjs'], captured=captureEvidence({task:'SF-A00-T07.1',root,command});
-    const details={commands:[{argv:command,summary:captured.summary}],testSummary:captured.summary,blockers:[],remainingSteps:['release lease'],openQuestions:[],evidenceDigests:[captured.evidenceDigest]};
-    const posted=await handoff({root,task:'SF-A00-T07.1',agent:task.agent,issue:1,client,details});
-    const record=await latestHandoff(client,1);assert.deepEqual(record,posted.record);
-    const wrongSummary=structuredClone(record);wrongSummary.testSummary.passed++;assert.throws(()=>validateHandoff(wrongSummary),/testSummary/);
-    const missing=structuredClone(record);delete missing.environment;assert.throws(()=>validateHandoff(missing),/environment/);
-    delete missing.headCommit;assert.throws(()=>validateHandoff(missing),/headCommit/);
-    assert.throws(()=>parseHandoff('<!-- sharpforge-handoff:v1 -->\nwrong'),/Malformed/);
-    const artifactDirectory=join(root,'artifacts/evidence/SF-A00-T07.1'), evidence={leafId:record.task,commit:record.headCommit,evidenceDigest:captured.evidenceDigest,status:'pass'};
-    assert.equal(verifyArtifact(evidence,artifactDirectory),true);assert.equal(commitOnMain(record.headCommit,{root,main:'main'}),true);
-    const tap=readFileSync(join(artifactDirectory,'tests.tap'),'utf8');assert.equal(tap.includes(homedir()),false);
-    writeFileSync(join(artifactDirectory,'tests.tap'),tap+'# tampered\n');assert.equal(verifyArtifact(evidence,artifactDirectory),false);
-    git(['clone',remote,clone],directory);const replay=resume({record,root:clone});assert.deepEqual(replay.divergences,[]);assert.equal(replay.results[0].summary.passed,1);
-    writeFileSync(join(root,'partial.txt'),'partial');await assert.rejects(handoff({root,task:record.task,agent:task.agent,issue:1,client,details}),/Uncommitted/);
-    const wip=await handoff({root,task:record.task,agent:task.agent,issue:1,client,details,wip:true});assert.notEqual(wip.record.headCommit,record.headCommit);assert.equal(g(['status','--porcelain']).trim(),'');
-    const after=captureEvidence({task:record.task,root,command});assert.notEqual(after.evidenceDigest,captured.evidenceDigest);
-    await claims.lock({...task,key:'studio',release:true});await claims.release(task);assert.equal(fake.refs.size,0);
-  } finally {await server.close();rmSync(directory,{recursive:true,force:true});}
+test('a real failed target remains verified failure and cannot be relabeled pass',t=>{
+ const {root}=repository(t,source({...target,status:'fail'},"test('real test',()=>{throw Error('observed failure')});"));
+ const captured=captureEvidence({task,root,command}),record=evidence(captured),directory=evidenceDirectory(root,captured);
+ assert.equal(captured.summary.failed,1);assert.equal(captured.summary.exitCode,1);assert.equal(verifyArtifact(record,directory),true);assert.equal(verifyArtifact({...record,status:'pass'},directory),false);
+});
+test('incomplete or contradictory TAP statistics never qualify a passing target',()=>{
+ const output='TAP version 13\n# sharpforge-evidence: '+JSON.stringify(target)+'\nok 1 - real test\n1..1\n# tests 1\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n';
+ assert.equal(tapSummary(output,0).complete,true);
+ for(const broken of [output.replace('# todo 0\n',''),output+'# pass 1\n',output.replace('# tests 1','# tests 2')]){
+  const summary=tapSummary(broken,0);assert.equal(summary.complete,false);assert.throws(()=>proofObligations(broken,summary),/not a passing test/);
+ }
 });

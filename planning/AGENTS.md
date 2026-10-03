@@ -34,22 +34,26 @@ only clean, idle branches, and validate the resulting complete integration.
 ```sh
 node scripts/planning/check-ownership.js --area A00 --base origin/main --locks studio
 node scripts/planning/contract-gate.js
-node scripts/planning/capture-evidence.js --task SF-A00-T11.2
 git add scripts/planning planning/contracts tests
 git commit -m 'Implement task handoff writer'
+node scripts/planning/capture-evidence.js --task SF-A00-T11.2
 git push -u origin HEAD
 ```
 
 Evidence must be captured at the final committed revision before handing off;
 capture again if the commit changed. Upload the complete
 `artifacts/evidence/SF-A00-T11.2/` directory as a CI artifact. Handoff details JSON
-contains `commands` (each with `argv` and `summary`), aggregate `testSummary`,
+contains `commands` (each with `argv` and expected `summary`), aggregate `testSummary`,
 `blockers`, `remainingSteps`, `openQuestions`, and optional `evidenceDigests`.
-Each summary has `tests`, `passed`, `failed`, `cancelled`, `skipped`, `exitCode`.
+Each summary has `tests`, `passed`, `failed`, `cancelled`, `skipped`, `todo`,
+`exitCode`, and `complete` (complete TAP statistics). A command without TAP remains
+useful handoff context but cannot qualify parity. Captures are retained in digest
+subdirectories, not overwritten by subsequent commands.
 Use portable argv arrays and repository-relative paths; no shell interpolation.
-The writer collects branch, exact commit and environment itself and refuses an
-unpublished head. `--wip` explicitly stages all changes, commits and pushes before
-posting; inspect the worktree first. A handoff is not a passing parity claim.
+The writer collects branch, exact commit and environment itself, reruns each
+command, attaches its tested commit, target proofs and digest, and refuses an unpublished head.
+`--wip` explicitly stages all changes, commits, recaptures commands at that commit,
+and pushes before posting; inspect the worktree first. A handoff is not a passing parity claim.
 
 ```sh
 node scripts/planning/handoff.js --task SF-A00-T11.2 --issue 1104 --agent codex-session42 --details /tmp/handoff-details.json
@@ -76,3 +80,9 @@ node scripts/planning/release.js --issue 1104 --agent codex-session42 --handoff 
 The reaper only marks expired claims. Explicit reconciliation needs a reason and
 confirmation that the previous process has stopped; it does not delete product
 branches. See [claim-protocol.md](contracts/claim-protocol.md) for recovery.
+
+Parity evidence needs a command-emitted `sharpforge-evidence` TAP comment naming
+its capability, actual platform/engine, registered specification revision,
+status, and unique TAP test name. Unknown/unsupported targets include a reason.
+See `contracts/a00-gates-evidence.md` for the exact proof format. A generic passing
+suite or a skipped availability probe never implies parity for another target.

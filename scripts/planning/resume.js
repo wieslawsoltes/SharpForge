@@ -1,6 +1,6 @@
 import { parseArgs, isDeepStrictEqual } from 'node:util';
 import { git, readJSON, isMain, report } from './lib/io.js';
-import { environment, validateHandoff, runCommand } from './lib/evidence.js';
+import { environment, validateHandoff, runCommand, cleanHead, proofObligations } from './lib/evidence.js';
 import { GitHubProject } from './lib/github-project.js';
 
 export function parseHandoff(body) {
@@ -16,18 +16,21 @@ export async function latestHandoff(client,issue) {
 }
 export function resume({record,root=process.cwd(),remote='origin'}) {
   validateHandoff(record);
-  if(git(['status','--porcelain'],root).trim()) throw new Error('Resume requires a clean working tree');
+  if(git(['status','--porcelain','--untracked-files=all'],root).trim())throw new Error('Resume requires a clean working tree');
   git(['check-ref-format',`refs/heads/${record.branch}`],root);
   git(['fetch',remote,`refs/heads/${record.branch}`],root);
   git(['merge-base','--is-ancestor',record.headCommit,'FETCH_HEAD'],root);
   git(['checkout','--detach',record.headCommit],root);
-  const actualEnvironment=environment(root), divergences=[];
+  cleanHead(root,record.headCommit);
+  const actualEnvironment=environment(root), divergences=[],results=[];
   for(const key of Object.keys(record.environment)) if(record.environment[key]!==actualEnvironment[key]) divergences.push(`environment.${key}: ${record.environment[key]} -> ${actualEnvironment[key]}`);
-  const results=record.commands.map(({argv,summary},index)=>{
-    const actual=runCommand(argv,root);
+  for(const [index,{argv,summary,obligations}] of record.commands.entries()) {
+    try {cleanHead(root,record.headCommit);} catch(error) {divergences.push(`command ${index}: ${error.message}`);break;}
+    const actual=runCommand(argv,root);results.push(actual);
     if(!isDeepStrictEqual(summary,actual.summary)) divergences.push(`command ${index}: test summary differs`);
-    return actual;
-  });
+    try {actual.obligations=proofObligations(actual.output,actual.summary);if(!isDeepStrictEqual(obligations,actual.obligations))divergences.push(`command ${index}: target proofs differ`);} catch(error){divergences.push(`command ${index}: ${error.message}`);}
+    try {cleanHead(root,record.headCommit);} catch(error) {divergences.push(`command ${index}: ${error.message}`);break;}
+  }
   return {task:record.task,headCommit:record.headCommit,results,environment:actualEnvironment,divergences,errors:divergences};
 }
 if(isMain(import.meta.url)) {
