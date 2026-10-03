@@ -38,6 +38,9 @@ const notGated = {
       .split(' ')
       .map(id => [id, noRoslynGate]),
   ),
+  // ---- directives Roslyn does not gate by language version (pinned in packages/syntax/test/gates) ----
+  LineSpanDirective: 'Roslyn accepts the span form of #line at every language version: it reports nothing at C# 9',
+  IgnoredDirectives: "Roslyn reports CS9298 for '#:' outside a file-based program at every version, not a language-version diagnostic",
   // ---- features that need binding the compiler does not do for the gate ----
   Dynamic: 'below C# 4 Roslyn reports CS0246 for the type name `dynamic`, not a language-version diagnostic (pinned)',
   ScopedRef: "Roslyn has no feature of this name: it reports `scoped` as 'ref fields' (CS8936 at the keyword); the walker does the same (pinned)",
@@ -91,7 +94,7 @@ test('A02-B01 every catalog row has exactly one snippet and is either gated or l
     assert(notGated[id].length > 10, `${id} needs a reason`);
   }
   const gated = languageFeatures.filter(row => row.version > 1 && !(row.id in notGated));
-  assert(gated.length >= 174, `only ${gated.length} rows are gated`);
+  assert(gated.length >= 172, `only ${gated.length} rows are gated`);
 });
 
 for (const row of languageFeatures) {
