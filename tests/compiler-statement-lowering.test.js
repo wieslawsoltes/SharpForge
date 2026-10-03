@@ -33,7 +33,7 @@ test('SF-A02-T45 lock needs a reference type; a type parameter that may be one i
 
 test('SF-A02-T45 a lock statement is valid C# the runtime cannot run: one SF2200 naming System.Threading.Monitor', () => {
   const source = program(`
-    static object gate = new object();
+    static string gate = "gate";
     static void Main() {
       lock (gate) { Console.WriteLine(1); }
     }`);
@@ -43,19 +43,15 @@ test('SF-A02-T45 a lock statement is valid C# the runtime cannot run: one SF2200
   assert.equal(source.slice(reported.start, reported.start + reported.length), 'lock');
 });
 
-test('SF-A02-T45 new object() is a reference with identity on both back ends', () => {
-  const lines = linesOf(
-    program(`
+test('SF-A02-T45 new object() binds; creating it is reported because the registry has no constructor for it', () => {
+  const source = program(`
     delegate void Marker();
     static void Main() {
-      object first = new object(), second = new object(), alias = first;
-      Console.WriteLine(first == alias);
-      Console.WriteLine(first == second);
+      object first = new object();
       Console.WriteLine(first != null);
-      Console.WriteLine(first);
-    }`),
-  );
-  assert.deepEqual(lines, ['True', 'False', 'True', 'System.Object']);
+    }`);
+  assert.deepEqual(codes(source), []);
+  assert.match(notExecutable(source).message, /creating 'object' \(the framework registry has no System\.Object constructor\)/);
 });
 
 test('SF-A02-T45 checked and unchecked blocks set the overflow context of the operators inside them', () => {
