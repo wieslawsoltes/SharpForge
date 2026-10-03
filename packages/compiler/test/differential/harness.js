@@ -17,7 +17,16 @@ import {loadFixtures,loadPinned,fixtureHash} from './corpus.js';
 
 /** The comparison axes, in report order. */
 export const AXES=Object.freeze(['diagnostics','warnings','bytecode','cil']);
-const INSTRUCTION_BUDGET=20_000_000;
+const INSTRUCTION_BUDGET=20_000_000,TIME_STEPS=10_000;
+/**
+ * Runs a program to its end. Time is virtual: when every context waits (Task.Delay, Thread.Sleep) the clock jumps to
+ * the next deadline, so asynchronous programs finish deterministically and without real delays.
+ */
+function runToEnd(vm){
+  let result=vm.run();
+  for(let step=0;step<TIME_STEPS&&result.state==='waiting';step++){const delay=vm.scheduler.nextDelay();if(delay===null)break;vm.scheduler.advance(delay);result=vm.run();}
+  return result;
+}
 const key=d=>`${d[0]}@${d[1]}+${d[2]}`;
 const keys=(rows,severity)=>rows.filter(d=>d[3]===severity).map(key).sort();
 const same=(a,b)=>a.length===b.length&&a.every((v,i)=>v===b[i]);
@@ -59,12 +68,12 @@ export function runFixture(fixture,pinned,options={}){
   if(fixture.kind==='output'){
     if(!result.success||!result.image)row.details.bytecode=row.details.cil='compilation failed';
     else{
-      const bytecode=compareRun(()=>new VirtualMachine(result.image,{maxInstructions:INSTRUCTION_BUDGET}).run(),pinned);
+      const bytecode=compareRun(()=>runToEnd(new VirtualMachine(result.image,{maxInstructions:INSTRUCTION_BUDGET,virtualTime:true})),pinned);
       row.bytecode=bytecode.ok;if(!bytecode.ok)row.details.bytecode=bytecode.detail;
       const cil=compareRun(()=>{
         const il=(options.compileToIL??compileToIL)(fixture.source,{...compileOptions,includeDebug:false});
         if(!il.success||!il.assembly)throw new Error('CIL emission failed: '+il.diagnostics.filter(d=>d.severity==='error').map(d=>d.code+' '+d.message).join('; '));
-        return new CilVirtualMachine(il.assembly,{maxInstructions:INSTRUCTION_BUDGET}).run();
+        return runToEnd(new CilVirtualMachine(il.assembly,{maxInstructions:INSTRUCTION_BUDGET,virtualTime:true}));
       },pinned);
       row.cil=cil.ok;if(!cil.ok)row.details.cil=cil.detail;
     }

@@ -102,6 +102,8 @@ export const OperatorBinding = Base =>
     binaryOperation(syntax, operator, left, right) {
       const delegate = this.delegateOperation(syntax, operator, left, right);
       if (delegate) return delegate;
+      const tuple = this.tupleEquality(syntax, operator, left, right);
+      if (tuple) return tuple;
       for (const e of [left, right])
         if (e.kind === 'MethodGroup' || e.form === 'lambda' || e.type?.specialType === 'System_Void') {
           this.report(syntax, 'CS0019', [operator, this.operandDisplay(left), this.operandDisplay(right)]);
@@ -123,6 +125,7 @@ export const OperatorBinding = Base =>
           method: r.method,
           isLifted: r.isLifted,
           isLogical: !!r.isLogical,
+          shortCircuit: r.shortCircuitOperator ?? null,
         });
       }
       const l = this.operand(left, r.leftType),
@@ -148,19 +151,7 @@ export const OperatorBinding = Base =>
     }
     assignment(syntax) {
       const operator = syntax.operatorToken.text;
-      if (syntax.left.kind === 'TupleExpression' || syntax.left.kind === 'DeclarationExpression') {
-        // Deconstruction (bound in full by SF-A02-T08.5): the declared variables enter scope, the parts are bound for their own diagnostics.
-        this.value(syntax.right);
-        if (syntax.left.kind === 'DeclarationExpression')
-          for (const d of this.designationsIn(syntax.left)) this.designation(d, unknown, {});
-        for (const a of syntax.left.arguments ?? []) {
-          if (a.expression.kind === 'DeclarationExpression') {
-            if (a.expression.designation.kind === 'SingleVariableDesignation') this.declarationExpression(a.expression, null);
-            else for (const d of this.designationsIn(a.expression)) this.designation(d, unknown, {});
-          } else this.markWrite(this.expression(a.expression, { allowDiscard: true }), null);
-        }
-        return this.lenient(syntax);
-      }
+      if (operator === '=' && this.isDeconstructionTarget(syntax.left)) return this.deconstruction(syntax);
       const left = this.expression(syntax.left, { allowDiscard: true });
       if (left.kind === 'Discard') {
         const v = this.value(syntax.right);

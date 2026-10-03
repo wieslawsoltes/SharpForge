@@ -41,7 +41,6 @@ export const expressionMethods = {
         const token = this.takeOperator(operator),
           target = left;
         if (text === '??=') this.feature('CoalesceAssignmentExpression', operatorToken);
-        else if (text === '>>>=') this.feature('UnsignedRightShift', operatorToken, this.tokens[this.i - 1]);
         left = this.n(
           assignmentOperators[text],
           left,
@@ -49,6 +48,7 @@ export const expressionMethods = {
           text === '=' && this.at('ref') ? this.expressionOrRef() : this.expression(P.Assignment)
         );
         if (text === '=' && target.kind === 'TupleExpression') this.mixedDeconstruction(target, start);
+        else if (text === '>>>=') this.unsignedRightShiftExpression(start);
         continue;
       }
       if (text === '?') {
@@ -67,7 +67,7 @@ export const expressionMethods = {
       }
       if (text === '..') {
         if (min > P.Range) break;
-        left = this.rangeExpression(left);
+        left = this.rangeExpression(left, start);
         continue;
       }
       if (this.isWithExpression()) {
@@ -86,9 +86,9 @@ export const expressionMethods = {
         left = this.n('AsExpression', left, this.take(), this.type('afterIs'));
         continue;
       }
-      if (text === '>>>') this.feature('UnsignedRightShift', operatorToken, this.tokens[this.i + operator.count - 1]);
       const token = this.takeOperator(operator);
       left = this.n(kind, left, token, text === '??' ? this.coalesceOperand(precedence) : this.expression(precedence + 1));
+      if (text === '>>>') this.unsignedRightShiftExpression(start);
     }
     return left;
   },
@@ -124,11 +124,11 @@ export const expressionMethods = {
     if (info.must) return true;
     const next = this.tokens[Math.min(end + 1, this.tokens.length - 1)],
       kind = next.kind;
+    if (kind === '[') return this.isCollectionCast(info);
     if (
       kind === 'is' ||
       kind === 'as' ||
       kind === 'switch' ||
-      kind === '[' ||
       (kind === 'await' && !this.canStartExpression(this.tokens[Math.min(end + 2, this.tokens.length - 1)]))
     )
       return false;
@@ -236,6 +236,7 @@ export const expressionMethods = {
       const alias = this.n('IdentifierName', this.atWord('global') ? this.takeWord('global') : this.id());
       return this.n('AliasQualifiedName', alias, this.take(), this.simpleName(false));
     }
+    if (this.fieldKeyword && this.isFieldExpression()) return this.fieldExpression();
     return this.simpleName(false);
   }
 };

@@ -1,6 +1,7 @@
 import {scalarMemoryExpression} from './scalars-memory.js';
 import { LegacyTypeAdapter } from './types.js';
-/** Legacy AST adapter for expressions: operators, calls, member access, literals, lambdas and interpolated strings. */
+import { expressionForms } from './expression-forms.js';
+/** Legacy AST adapter for expressions: operators here, every other form through the table in expression-forms.js. */
 const prefixKinds = new Set([
   'UnaryPlusExpression',
   'UnaryMinusExpression',
@@ -31,13 +32,6 @@ const binaryKinds = new Set([
   'GreaterThanOrEqualExpression',
   'CoalesceExpression'
 ]);
-const literalTypes = {
-  TrueLiteralExpression: 'bool',
-  FalseLiteralExpression: 'bool',
-  NullLiteralExpression: 'null',
-  CharacterLiteralExpression: 'char',
-  StringLiteralExpression: 'string'
-};
 export class LegacyExpressionAdapter extends LegacyTypeAdapter {
   // ---- expressions ------------------------------------------------------------------------------------------------
   args(list, what = 'Named and by-reference arguments') {
@@ -115,174 +109,7 @@ export class LegacyExpressionAdapter extends LegacyTypeAdapter {
     }
     if (prefixKinds.has(kind))
       return this.node('Unary', red, { operator: red.operatorToken.text, operand: this.expression(red.operand), postfix: false });
-    switch (kind) {
-      case 'IdentifierName':
-        return red.identifier.isMissing ? this.node('Error', red, {}) : this.name(red.identifier);
-      case 'ThisExpression':
-      case 'BaseExpression':
-        return this.name(red.token);
-      case 'PredefinedType':
-        return this.name(red.keyword);
-      case 'GenericName':
-        return this.node('Name', red, { name: this.type(red), nameSpan: { start: red.spanStart, end: red.span.end } });
-      case 'NumericLiteralExpression': {
-        const literal = red.token.value;
-        return this.node('Literal', red, { value: literal.number, type: ['float', 'double', 'decimal'].includes(literal.type) ? 'double' : 'int' });
-      }
-      case 'TrueLiteralExpression':
-      case 'FalseLiteralExpression':
-        return this.node('Literal', red, { value: kind === 'TrueLiteralExpression', type: 'bool' });
-      case 'NullLiteralExpression':
-        return this.node('Literal', red, { value: null, type: 'null' });
-      case 'StringLiteralExpression':
-      case 'CharacterLiteralExpression':
-        return this.node('Literal', red, { value: red.token.value, type: literalTypes[kind] });
-      case 'ParenthesizedExpression':
-        return this.expression(red.expression);
-      case 'SimpleMemberAccessExpression': {
-        const target = this.expression(red.expression);
-        if (red.name.kind !== 'IdentifierName') break;
-        return this.from('Member', target, red, { target, name: red.name.identifier.valueText, nameSpan: this.nameSpan(red.name.identifier) });
-      }
-      case 'InvocationExpression': {
-        const target = this.expression(red.expression);
-        return this.from('Call', target, red, { target, args: this.args(red.argumentList) });
-      }
-      case 'ElementAccessExpression': {
-        const target = this.expression(red.expression),
-          args = this.args(red.argumentList);
-        if (args.length !== 1) this.fail(red.argumentList, 'SF1018', 'Element access requires exactly one index in this profile');
-        return this.from('Index', target, red, { target, index: args[0] ?? this.node('Error', red.argumentList, {}) });
-      }
-      case 'PostIncrementExpression':
-      case 'PostDecrementExpression': {
-        const operand = this.expression(red.operand);
-        return this.from('Unary', operand, red, { operator: red.operatorToken.text, operand, postfix: true });
-      }
-      case 'ConditionalAccessExpression': {
-        const receiver = this.expression(red.expression);
-        return this.whenNotNull(red.whenNotNull, receiver, receiver);
-      }
-      case 'ConditionalExpression': {
-        const condition = this.expression(red.condition);
-        return this.from('Conditional', condition, red, {
-          condition,
-          whenTrue: this.expression(red.whenTrue),
-          whenFalse: this.expression(red.whenFalse)
-        });
-      }
-      case 'SwitchExpression': {
-        const governing = this.expression(red.governingExpression);
-        return this.from('SwitchExpression', governing, red, {
-          expression: governing,
-          arms: red.arms.map(arm => {
-            if (arm.whenClause) this.fail(arm.whenClause, 'SF1018', 'Switch expression guards are not implemented in this profile');
-            const pattern =
-              arm.pattern.kind === 'DiscardPattern'
-                ? null
-                : arm.pattern.kind === 'ConstantPattern'
-                  ? this.expression(arm.pattern.expression)
-                  : this.unsupported(arm.pattern);
-            return this.node('SwitchArm', arm, { pattern, expression: this.expression(arm.expression) });
-          })
-        });
-      }
-      case 'CheckedExpression':
-      case 'UncheckedExpression':
-        return this.node(kind === 'CheckedExpression' ? 'Checked' : 'Unchecked', red, { expression: this.expression(red.expression) });
-      case 'AwaitExpression':
-        return this.node('Await', red, { expression: this.expression(red.expression) });
-      case 'DefaultExpression':
-        return this.node('Default', red, { type: this.type(red.type) });
-      case 'CastExpression':
-        return this.node('Cast', red, { type: this.type(red.type), expression: this.expression(red.expression) });
-      case 'InterpolatedStringExpression': {
-        if (red.stringStartToken.kind.includes('Raw')) break;
-        const parts = [];
-        for (const content of red.contents) {
-          if (content.kind === 'InterpolatedStringText') {
-            if (content.textToken.value) parts.push({ text: content.textToken.value.replaceAll('{{', '{').replaceAll('}}', '}') });
-            continue;
-          }
-          const alignment = content.alignmentClause,
-            format = content.formatClause,
-            stop = alignment ? alignment.commaToken : format ? format.colonToken : content.closeBraceToken,
-            align = alignment ? Number(alignment.value.toFullString().trim()) : 0;
-          parts.push({
-            expression: this.expression(content.expression),
-            start: content.openBraceToken.span.end,
-            end: stop.spanStart,
-            alignment: Number.isInteger(align) ? align : 0,
-            format: format ? format.formatStringToken.text : ''
-          });
-        }
-        return this.node('InterpolatedString', red, { parts });
-      }
-      case 'CollectionExpression': {
-        const elements = [];
-        let args = null;
-        for (const element of red.elements) {
-          if (element.kind === 'WithElement')
-            args = element.argumentList.arguments.map(a => {
-              if (a.refKindKeyword) this.fail(a, 'SF1017', 'By-reference arguments are not implemented in this profile');
-              return { name: a.nameColon ? a.nameColon.name.identifier.valueText : null, expression: this.expression(a.expression) };
-            });
-          else if (element.kind === 'SpreadElement')
-            elements.push(this.node('SpreadElement', element, { expression: this.expression(element.expression) }));
-          else elements.push(this.expression(element.expression));
-        }
-        return this.node('CollectionExpression', red, { elements, arguments: args });
-      }
-      case 'ImplicitObjectCreationExpression':
-      case 'ObjectCreationExpression': {
-        const type = kind === 'ObjectCreationExpression' ? this.type(red.type) : '<target>',
-          args = red.argumentList ? this.args(red.argumentList) : [],
-          initializers = [],
-          collectionInitializers = [],
-          initializer = red.initializer;
-        for (const item of initializer?.expressions ?? []) {
-          if (initializer.kind === 'ObjectInitializerExpression') {
-            if (item.kind !== 'SimpleAssignmentExpression' || item.left.kind !== 'IdentifierName') {
-              this.fail(item, 'SF1018', 'Indexer and nested object initializers are not implemented in this profile');
-              continue;
-            }
-            initializers.push(
-              this.node('Initializer', item, {
-                name: item.left.identifier.valueText,
-                nameSpan: this.nameSpan(item.left.identifier),
-                expression: this.expression(item.right)
-              })
-            );
-          } else
-            collectionInitializers.push(
-              item.kind === 'ComplexElementInitializerExpression' ? item.expressions.map(e => this.expression(e)) : [this.expression(item)]
-            );
-        }
-        return this.node('New', red, { type, args, initializers, collectionInitializers });
-      }
-      case 'ArrayCreationExpression':
-      case 'ImplicitArrayCreationExpression': {
-        const implicit = kind === 'ImplicitArrayCreationExpression',
-          values = red.initializer ? red.initializer.expressions.map(e => this.expression(e)) : null;
-        let length = null,
-          sized = false,
-          type = 'var[]';
-        if (implicit) {
-          if (red.commas.length) this.fail(red, 'SF1019', 'Multi-dimensional arrays are not implemented in this profile');
-        } else {
-          const ranks = red.type.rankSpecifiers,
-            sizes = ranks[0].sizes;
-          type = this.type(red.type.elementType) + '[]';
-          if (ranks.length !== 1 || sizes.length !== 1)
-            this.fail(red.type, 'SF1019', 'Jagged and multi-dimensional array creation is not implemented in this profile');
-          if (sizes[0].kind !== 'OmittedArraySizeExpression') {
-            length = this.expression(sizes[0]);
-            sized = true;
-          }
-        }
-        return this.node('NewArray', red, { type, length, values: values ?? (sized || implicit ? null : []) });
-      }
-    }
-    return this.unsupported(red);
+    const form = expressionForms[kind];
+    return (form && form.call(this, red)) ?? this.unsupported(red);
   }
 }

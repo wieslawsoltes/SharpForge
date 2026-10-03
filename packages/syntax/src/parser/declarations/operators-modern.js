@@ -7,7 +7,7 @@ const compoundAssignment = /^(?:[-+*\/%&|^]|<<|>>>?)=$/;
 export const modernOperatorMethods = {
   /** Records the features an operator declaration with operator token text `text` needs; `start` anchors the diagnostic. */
   operatorFeatures(text, modifiers, start, end = start) {
-    if (text === '>>>') this.feature('UnsignedRightShift', start, end);
+    if (text === '>>>') this.unsignedRightShiftOperator();
     else if (compoundAssignment.test(text) || ((text === '++' || text === '--') && !modifiers.some(modifier => modifier.kind === 'StaticKeyword')))
       this.feature('UserDefinedCompoundAssignmentOperators', start, end);
   }
