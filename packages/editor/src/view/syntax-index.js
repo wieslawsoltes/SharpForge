@@ -30,7 +30,7 @@ export class SyntaxHighlightIndex {
     return this.cachedRuns;
   }
 
-  update(source, event) {
+  update(source, event = []) {
     const previous = this.source;
     const changes = event.changes ?? event;
     this.source = source;

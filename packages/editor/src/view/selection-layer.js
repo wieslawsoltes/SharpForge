@@ -28,7 +28,8 @@ export class SelectionLayer {
         } else {
           const x = metrics.xAt(row.record.layout, from - base) - row.segment.x + row.segment.indent;
           const right = metrics.xAt(row.record.layout, to - base) - row.segment.x + row.segment.indent;
-          this.rectangle(fragment, 'sf-selection', x + editor.padding, row.top, Math.max(1, right - x), metrics.lineHeight);
+          const prefix = row.record.sliceStart * metrics.charWidth;
+          this.rectangle(fragment, 'sf-selection', x + prefix + editor.padding, row.top, Math.max(1, right - x), metrics.lineHeight);
         }
       }
       if (!editor.folding.hidden(editor.model.positionAt(selection.active).line)) {
@@ -37,7 +38,20 @@ export class SelectionLayer {
         const visible = top + metrics.lineHeight >= this.view.scrollTop;
         if (visible && top <= this.view.scrollTop + this.view.viewport.clientHeight) {
           const width = editor.overtype ? metrics.charWidth : 1.5;
-          this.rectangle(fragment, `sf-caret${editor.overtype ? ' sf-block-caret' : ''}`, position.x + editor.padding, top, width, metrics.lineHeight);
+          const virtual = (selection.activeVirtualSpace ?? 0) * metrics.charWidth;
+          let x = position.x + editor.padding + virtual;
+          let y = top;
+          const row = this.view.lines.elementFor(position.line, position.continuation);
+          if (row && hasBidi(position.record.text)) {
+            const local = selection.active - position.record.start - position.record.sliceStart - position.segment.start;
+            const rect = this.view.bidi.caret(row, local);
+            if (rect) {
+              const surface = this.view.surface.getBoundingClientRect();
+              x = rect.left - surface.left + virtual;
+              y = rect.top - surface.top + this.view.scrollTop - this.view.viewport.scrollTop;
+            }
+          }
+          this.rectangle(fragment, `sf-caret${editor.overtype ? ' sf-block-caret' : ''}`, x, y, width, metrics.lineHeight);
         }
       }
     }

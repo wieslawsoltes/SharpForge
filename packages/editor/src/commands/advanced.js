@@ -1,22 +1,22 @@
-import {graphemeSegments, visualColumnAt} from '@sharpforge/text';
+import {graphemeSegments, graphemeWidth} from '@sharpforge/text';
 
 /** Every edit is prepared against one snapshot and committed as one multi-caret transaction. */
 export function advancedCommands(editor) {
   const transform = (operation, lines = false) => () => transformSelections(editor, operation, lines);
   return {
-    'edit.uppercase': transform(text => text.toUpperCase()),
-    'edit.lowercase': transform(text => text.toLowerCase()),
-    'edit.deleteHorizontalWhitespace': transform(text => text.replace(/[\t ]+/g, '')),
-    'edit.joinLines': transform(text => text.replace(/[\t ]*\r?\n[\t ]*/g, ' '), true),
-    'edit.sortLines': transform(text => text.split('\n').sort().join('\n'), true),
-    'edit.reverseLines': transform(text => text.split('\n').reverse().join('\n'), true),
+    'edit.uppercase': () => transformAtCarets(editor, text => text.toUpperCase(), 'word'),
+    'edit.lowercase': () => transformAtCarets(editor, text => text.toLowerCase(), 'word'),
+    'edit.deleteHorizontalWhitespace': () => transformAtCarets(editor, text => text.replace(/[\t ]+/g, ''), 'whitespace'),
+    'edit.joinLines': () => joinLines(editor),
+    'edit.sortLines': transform(text => reorderLines(text, lines => lines.sort()), true),
+    'edit.reverseLines': transform(text => reorderLines(text, lines => lines.reverse()), true),
     'edit.tabify': transform(text => tabify(text, editor.options.tabSize), true),
     'edit.untabify': transform(text => untabify(text, editor.options.tabSize), true),
     'edit.indent': () => indent(editor, false),
     'edit.outdent': () => indent(editor, true),
     'edit.blockComment': transform(text => text.startsWith('/*') && text.endsWith('*/') ? text.slice(2, -2) : `/*${text}*/`),
     'edit.transposeCharacter': () => transposeCharacter(editor),
-    'edit.transposeWord': transform(transposeWords),
+    'edit.transposeWord': () => transposeWords(editor),
     'edit.transposeLine': () => editor.moveLines(1),
     'edit.selectWord': () => selectWord(editor)
   };
@@ -41,6 +41,7 @@ function transformSelections(editor, operation, wholeLines = false) {
 }
 
 export function indent(editor, unindent = false) {
+  if (editor.input.readOnly) return false;
   const edits = [];
   const lines = new Set();
   for (const selection of editor.getSelections()) {
@@ -61,6 +62,7 @@ export function indent(editor, unindent = false) {
 }
 
 function transposeCharacter(editor) {
+  if (editor.input.readOnly) return false;
   const edits = [];
   for (const selection of editor.getSelections()) {
     const position = editor.model.positionAt(selection.active);
@@ -77,13 +79,23 @@ function transposeCharacter(editor) {
   editor.applyEdits(mergeEdits(edits), {source: 'transpose', undoStop: true});
 }
 
-function transposeWords(text) {
-  const matches = [...text.matchAll(/[\p{L}\p{N}_]+/gu)];
-  if (matches.length < 2) return text;
-  const first = matches[0];
-  const second = matches[1];
-  return text.slice(0, first.index) + second[0] + text.slice(first.index + first[0].length, second.index)
-    + first[0] + text.slice(second.index + second[0].length);
+function transposeWords(editor) {
+  if (editor.input.readOnly) return false;
+  const edits = [];
+  for (const selection of editor.getSelections()) {
+    const position = editor.model.positionAt(selection.active);
+    const text = editor.model.getLine(position.line);
+    const words = [...text.matchAll(/[\p{L}\p{M}\p{N}_]+/gu)];
+    let index = words.findIndex(word => word.index + word[0].length >= position.character);
+    if (index < 0) index = words.length - 1;
+    const first = words[Math.max(0, index - 1)];
+    const second = words[Math.max(1, index)];
+    if (!first || !second) continue;
+    const base = editor.model.getLineStart(position.line);
+    edits.push({start: base + first.index, end: base + second.index + second[0].length,
+      text: second[0] + text.slice(first.index + first[0].length, second.index) + first[0]});
+  }
+  editor.applyEdits(mergeEdits(edits), {source: 'transpose-word', undoStop: true});
 }
 
 export function untabify(text, tabSize) {
@@ -97,7 +109,7 @@ export function untabify(text, tabSize) {
         column += count;
       } else {
         result += segment.segment;
-        column = visualColumnAt(line, segment.end, {tabSize});
+        column += graphemeWidth(segment.segment, column, {tabSize});
       }
     }
     return result;
@@ -128,4 +140,44 @@ function mergeEdits(edits) {
     if (!result.length || edit.start >= result.at(-1).end) result.push(edit);
   }
   return result;
+}
+
+function transformAtCarets(editor, transform, kind) {
+  if (editor.input.readOnly) return false;
+  const edits = editor.getSelections().map(selection => {
+    let start = Math.min(selection.anchor, selection.active);
+    let end = Math.max(selection.anchor, selection.active);
+    if (start === end) {
+      const position = editor.model.positionAt(start);
+      const text = editor.model.getLine(position.line);
+      const expression = kind === 'word' ? /[\p{L}\p{M}\p{N}_]+/gu : /[\t ]+/g;
+      const match = [...text.matchAll(expression)].find(item => item.index <= position.character && item.index + item[0].length >= position.character);
+      if (match) { start += match.index - position.character; end = start + match[0].length; }
+    }
+    return {start, end, text: transform(editor.model.getText(start, end))};
+  });
+  editor.applyEdits(mergeEdits(edits).filter(edit => editor.model.getText(edit.start, edit.end) !== edit.text), {
+    source: 'advanced', undoStop: true
+  });
+}
+
+function reorderLines(text, operation) {
+  const eol = text.match(/\r\n|\r|\n/)?.[0] ?? '\n';
+  return operation(text.split(/\r\n|\r|\n/)).join(eol);
+}
+
+function joinLines(editor) {
+  if (editor.input.readOnly) return false;
+  const edits = [];
+  for (const selection of editor.getSelections()) {
+    const first = editor.model.positionAt(Math.min(selection.anchor, selection.active)).line;
+    const end = Math.max(selection.anchor, selection.active);
+    const last = selection.anchor === selection.active ? Math.min(editor.model.lineCount - 1, first + 1)
+      : editor.model.positionAt(end - 1).line;
+    const start = editor.model.getLineStart(first);
+    const finish = editor.model.getLineEnd(last);
+    const text = editor.model.getText(start, finish).replace(/[\t ]*(?:\r\n|\r|\n)[\t ]*/g, ' ');
+    edits.push({start, end: finish, text});
+  }
+  editor.applyEdits(mergeEdits(edits), {source: 'join-lines', undoStop: true});
 }

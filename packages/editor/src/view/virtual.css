@@ -201,7 +201,16 @@
 .sf-editor:has(> .sf-editor-navigation:not([hidden]):not(.hidden)) { --sf-top-inset: 28px; }
 .sf-has-split > .sf-viewport, .sf-has-split > .sf-gutter, .sf-has-split > .sf-scrollbar-vertical { bottom: calc(100% - var(--sf-split-position, 50%)); }
 .sf-has-split > .sf-overview-ruler { height: calc(var(--sf-split-position, 50%) - var(--sf-top-inset)); }
-.sf-editor-splitter { position: absolute; left: 0; right: 0; top: var(--sf-split-position, 50%); height: 6px; z-index: 15; background: var(--line); cursor: row-resize; }
+.sf-editor-splitter {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--sf-split-position, 50%);
+  height: 6px;
+  z-index: 15;
+  background: var(--line);
+  cursor: row-resize;
+}
 .sf-editor-split-host { position: absolute; left: 0; right: 0; top: calc(var(--sf-split-position, 50%) + 6px); bottom: 0; height: auto; }
 .sf-editor-options { display: grid; gap: 8px; padding: 16px; color: var(--text); background: var(--surface); font: 13px system-ui; }
 .sf-editor-options label { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
