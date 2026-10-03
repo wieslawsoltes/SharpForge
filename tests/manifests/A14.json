@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "area": "A14",
+  "nodeGlobs": [
+    "tests/debugger.test.js",
+    "tests/debugger-advanced.test.js",
+    "tests/edit-continue.test.js",
+    "tests/release05-debugger.test.js",
+    "tests/release06-debugger.test.js",
+    "tests/release08-breakpoints.test.js",
+    "tests/release09-debugger.test.js",
+    "tests/release09-protocol.test.js",
+    "tests/release09-worker.test.js"
+  ],
+  "browserScripts": [
+    "tests/browser_release09_test.py"
+  ],
+  "requiredServices": [
+    "studio-http",
+    "chromium"
+  ],
+  "timeout": 1200000,
+  "tags": [
+    "legacy"
+  ]
+}

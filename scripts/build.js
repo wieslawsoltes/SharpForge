@@ -2,17 +2,21 @@ import { mkdir, rm, cp, readFile, writeFile, readdir } from 'node:fs/promises';
 import { dirname, resolve, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { bundleWorker } from './bundle-worker.js';
+import { loadBuildContributions } from './build-contributions.js';
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..'),dist=resolve(root,'dist');
+const contributions=await loadBuildContributions(root);
 await rm(dist,{recursive:true,force:true});await mkdir(dist,{recursive:true});
-await cp(resolve(root,'apps/studio'),dist,{recursive:true});await cp(resolve(root,'examples'),resolve(dist,'examples'),{recursive:true});await cp(resolve(root,'LICENSE'),resolve(dist,'LICENSE'));await cp(resolve(root,'THIRD_PARTY_NOTICES.md'),resolve(dist,'THIRD_PARTY_NOTICES.md'));await cp(resolve(root,'packages'),resolve(dist,'packages'),{recursive:true});await cp(resolve(root,'docs'),resolve(dist,'docs'),{recursive:true});
+for (const asset of contributions.assets) {
+ const target=resolve(dist,asset.target);await mkdir(dirname(target),{recursive:true});
+ await cp(resolve(root,asset.source),target,{recursive:true});
+}
 async function rewrite(directory){for(const entry of await readdir(directory,{withFileTypes:true})){const path=resolve(directory,entry.name);if(entry.isDirectory())await rewrite(path);else if(entry.name.endsWith('.js')){let text=await readFile(path,'utf8');if(dirname(path)===dist)text=text.replaceAll("'../../packages/","'./packages/");text=text.replace(/(['"])@sharpforge\/([\w-]+)\1/g,(_,quote,name)=>{let target=relative(dirname(path),resolve(dist,'packages',name,'src/index.js')).split(sep).join('/');if(!target.startsWith('.'))target='./'+target;return quote+target+quote;});await writeFile(path,text);}}}
 await rewrite(dist);
-const styles=['apps/studio/studio.css','packages/editor/src/vendor/classic.css','packages/editor/src/editor.css','packages/controls/src/controls.css','apps/studio/release08.css','apps/studio/release09.css','packages/winui/src/style.css','apps/studio/release10.css','apps/studio/release11.css','apps/studio/release12.css','apps/studio/release13.css','apps/studio/release14.css'];
-await writeFile(resolve(dist,'studio.css'),(await Promise.all(styles.map(path=>readFile(resolve(root,path),'utf8')))).join('\n'));
+await writeFile(resolve(dist,'studio.css'),(await Promise.all(contributions.styles.map(({source})=>readFile(resolve(root,source),'utf8')))).join('\n'));
 
-for (const name of ['compiler', 'runtime']) {
- const path = resolve(dist, name + '.worker.js');
- await writeFile(path, await bundleWorker(path));
+for (const worker of contributions.workers) {
+ const path=resolve(dist,worker.entry);
+ await writeFile(path,await bundleWorker(path));
 }
 // Single-file classic workers avoid extra module fetches at startup. Source workers remain ESM.
 const studioPath = resolve(dist, 'studio.js');
