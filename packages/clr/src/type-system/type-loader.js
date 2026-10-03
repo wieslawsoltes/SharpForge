@@ -67,9 +67,14 @@ export class TypeLoader {
 
   async find(module, fullName, options = {}) {
     checkCancellation(options.signal);
-    const token = this.#index(module).names.get(fullName);
-    if (!token) throw fail(`Type ${fullName} was not found`);
-    return this.load(module, token, options);
+    try {
+      const token = this.#index(module).names.get(fullName);
+      if (!token) throw fail(`Type ${fullName} was not found`);
+      return await this.load(module, token, options);
+    } catch (error) {
+      if (error.code?.startsWith('SFCLR')) throw error;
+      throw loadError(LoadErrorCode.InvalidImage, `Invalid type metadata: ${error.message}`);
+    }
   }
 
   /** Complete a canonical descriptor's base/interface graph without reading executable bodies. */
@@ -138,7 +143,8 @@ export class TypeLoader {
       targetName = `${parent.fullName}+${name}`;
     } else if (tag === 2 && rid) {
       const assemblyName = await module.assembly.reference(rid, operation);
-      const external = await this.#resolveExternal?.({ module, assemblyName, namespace, name, signal: operation.signal });
+      const external = await this.#resolveExternal?.({ module, assemblyName, namespace, name, signal: operation.signal,
+        resolveType: (targetModule, targetToken) => this.#load(targetModule, targetToken, nested) });
       checkCancellation(operation.signal);
       if (external != null) {
         if (!(external instanceof TypeDesc) || !external.isLoaded) throw fail('External resolver must return a loaded TypeDesc');

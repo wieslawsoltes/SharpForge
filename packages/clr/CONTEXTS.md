@@ -26,6 +26,10 @@ The context's optional `typeOptions.resolveExternalType({module, assemblyName,
 namespace, name, signal})` hook explicitly maps AssemblyRefs to loaded descriptors;
 a null result falls back to assembly resolution. There is no automatic framework
 facade binding. This host seam does not replace A04's managed framework registry.
+Async host callbacks use `request.resolveType(module, token)` for dependent type
+loads, preserving cycle ancestry across awaits. Direct recursive calls through
+`context.types.load` start an independent operation and are unsupported inside
+a resolver callback when they depend on the same unresolved type.
 
 Inheritance/interface and TypeRef cycles produce TypeLoadException. Type loading
 checks cancellation and configurable `maxDepth` (default 128, maximum 512) and
