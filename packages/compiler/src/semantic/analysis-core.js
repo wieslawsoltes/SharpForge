@@ -23,6 +23,7 @@ import { spanOf, frameworkNames, isSourceSymbol } from './analysis-helpers.js';
 import { definedSymbols } from '../binder/csharp2-misc.js';
 import { isBclNamespace } from '../symbols/bcl-namespaces.js';
 import { bindAllUsings } from '../binder/using-directives.js';
+import { checkGlobalUsingPlacement } from '../binder/global-usings.js';
 
 export class AnalysisCore {
   /**
@@ -50,7 +51,7 @@ export class AnalysisCore {
       core: this.core,
       report: (uri, node, code, args) => this.report(uri, node, code, args),
       constructions: this.constructions,
-      tolerateNamespace: name => this.tolerateNamespace(name),
+      tolerateNamespace: (name, options) => this.tolerateNamespace(name, options),
       isFrameworkGap: (namespaceName, name) => this.isFrameworkGap(namespaceName, name),
       useFeature: (uri, node, feature) => this.gate(uri, node, feature),
       unknownUsing: () => {
@@ -129,9 +130,12 @@ export class AnalysisCore {
    * A namespace of the base class library that the closed registry does not model is accepted in a using directive.
    * Only namespaces that exist in the BCL are: `System.Nope` is as unknown here as it is to Roslyn.
    */
-  tolerateNamespace(name) {
+  tolerateNamespace(name, { isImplicit = false } = {}) {
     if (this.references.hasCoreLibrary || !isBclNamespace(name)) return false;
-    this.incomplete = true;
+    // An implicit using nobody wrote does not make the analysis incomplete by itself: only a name that is then
+    // not found does (isKnownFrameworkName), because it may be a type of that namespace.
+    if (isImplicit) this.hasUnknownImplicitUsings = true;
+    else this.incomplete = true;
     return true;
   }
   /**
@@ -142,13 +146,14 @@ export class AnalysisCore {
   isFrameworkGap(namespaceName, name) {
     if (this.references.hasCoreLibrary) return false;
     const isGap = isBclNamespace(namespaceName + '.' + name) || (isBclNamespace(namespaceName) && frameworkNames.has(name));
-    if (isGap) this.incomplete = true;
+    if (isGap && this.typeBinder.host.bindingImplicitUsing) this.hasUnknownImplicitUsings = true;
+    else if (isGap) this.incomplete = true;
     return isGap;
   }
   /** Names of common BCL types the registry does not model: using one is not an error, it only makes the analysis incomplete. */
   isKnownFrameworkName(name) {
     if (this.references.hasCoreLibrary) return false;
-    if (frameworkNames.has(name)) {
+    if (frameworkNames.has(name) || this.hasUnknownImplicitUsings) {
       this.incomplete = true;
       return true;
     }
@@ -196,8 +201,14 @@ export class AnalysisCore {
    */
   runUsings() {
     this.assembly.declare(this.globalNamespace);
-    for (const scope of this.assembly.usingScopes) bindAllUsings(this.typeBinder, scope);
+    this.bindUsings();
     return { diagnostics: this.diagnostics, incomplete: true, usingsOnly: true, assembly: this.assembly, bound: this.bound, core: this.core };
+  }
+  /** Using and extern alias directives are bound (and checked) whether or not a lookup reaches them. */
+  bindUsings() {
+    for (const file of this.files)
+      for (const row of checkGlobalUsingPlacement(file)) this.report(file.source.uri, row.node, row.code, row.args);
+    for (const scope of this.assembly.usingScopes) bindAllUsings(this.typeBinder, scope);
   }
   /** Runs every phase and returns `{diagnostics,incomplete,assembly,bound,unexecutable}`. */
   run() {
@@ -214,8 +225,7 @@ export class AnalysisCore {
         unexecutable: this.unexecutable,
       };
     const types = this.assembly.types;
-    // Using and extern alias directives are bound (and checked) whether or not a lookup reaches them.
-    for (const scope of this.assembly.usingScopes) bindAllUsings(this.typeBinder, scope);
+    this.bindUsings();
     for (const type of types) type.baseType;
     for (const type of types) type.getMembers();
     for (const type of types) this.bindExplicitInterfaces(type);

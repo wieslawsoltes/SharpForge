@@ -102,7 +102,7 @@ export const DeconstructionTranslation = Base =>
     /** `value.Deconstruct(out p1, .., out pn)`: every `out` parameter gets a fresh cell, read after the call. */
     splitByMethod(plan, bound, read, target, work) {
       const syntax = bound?.syntax ?? plan.method.locations?.[0],
-        method = this.g.methodOf(plan.method.originalDefinition ?? plan.method, syntax),
+        method = this.g.methodOf(plan.method, syntax),
         receiver = read ? read() : this.expression(bound),
         outs = plan.isExtension ? plan.method.parameters.slice(1) : plan.method.parameters;
       const cells = outs.map(parameter => {
