@@ -9,9 +9,37 @@ ownership is linear, with 100,000 relevant rows, 128 nesting levels and 4,096 na
 characters as limits. Malformed tokens use `SFCLR005`, invalid nested ownership
 uses `SFCLR012` / TypeLoadException, and resource limits use `SFCLR007`.
 
-This API is metadata identity only. Base/interface graphs, class/value/enum
-classification, constructed types, layout and dispatch are subsequent batches;
-no reference assembly is loaded and no method body is decoded by identity lookup.
+This API is metadata identity only. Graph loading uses the separate explicit
+context service below; no reference assembly is loaded and no method body is
+decoded by identity lookup. Constructed types, layout and dispatch remain later
+batches.
+
+`context.types.load(module, token, {signal})` explicitly completes a TypeDef or
+TypeRef's inheritance graph on that same canonical descriptor. `find(module,
+fullName)` adds indexed exact-name lookup. Loaded descriptors expose `kind`,
+`baseType`, transitive `interfaces`, enum `underlyingType` and `isLoaded`. Type
+identity remains stable before/after loading and across explicit assembly sharing.
+
+Hosts register BCL identities through `context.types.defineIntrinsic(fullName,
+{kind, baseType, interfaces})` and retrieve them with `intrinsic(fullName)`.
+The context's optional `typeOptions.resolveExternalType({module, assemblyName,
+namespace, name, signal})` hook explicitly maps AssemblyRefs to loaded descriptors;
+a null result falls back to assembly resolution. There is no automatic framework
+facade binding. This host seam does not replace A04's managed framework registry.
+
+Inheritance/interface and TypeRef cycles produce TypeLoadException. Type loading
+checks cancellation and configurable `maxDepth` (default 128, maximum 512) and
+`maxMetadataRows` (default 100,000). Metadata definition identity retains its own
+documented bounds. Relevant metadata rows are indexed in linear time; inherited
+interface output is materialized once per completed definition. Concurrent first
+loads may repeat work but publish the same descriptor.
+
+TypeSpec/constructed inheritance, generic constraints, exported-type forwarding,
+multi-module TypeRefs, layout/dispatch/assignability and full verification remain
+separate batches. Unsupported resolution forms produce explicit TypeLoad errors.
+The independent native graph fixture covers ordinary C# base/interfaces, nested
+ownership, structs, enums and circular metadata rejection. Regenerate with
+`node packages/clr/tools/capture-type-graphs.mjs tests/fixtures/clr-type-graphs`.
 
 `AssemblyLoadSession` owns a Default context and a registry of custom contexts.
 No process-global assembly registry is used. `createContext` accepts a name,
