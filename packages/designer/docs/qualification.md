@@ -7,9 +7,9 @@ The T12 corpus tests the public designer, compiler, syntax, text, and runtime pa
 Run from the repository root after installing the workspace packages:
 
 ```sh
-node --test --test-concurrency=1 tests/a18-qualification-corpus.test.js tests/a18-qualification-fuzz.test.js tests/a18-qualification-report.test.js
-node examples/a18-qualification/report.mjs --evidence > designer-roundtrip-report.json
-node --expose-gc examples/a18-qualification/benchmark.mjs > designer-roundtrip-latency.json
+node scripts/limited.js node --test --test-concurrency=1 tests/a18-qualification-corpus.test.js tests/a18-qualification-fuzz.test.js tests/a18-qualification-report.test.js
+node scripts/limited.js node examples/a18-qualification/report.mjs --evidence > designer-roundtrip-report.json
+node scripts/limited.js node --expose-gc examples/a18-qualification/benchmark.mjs > designer-roundtrip-latency.json
 ```
 
 The report includes the exact Git commit, whether tracked or untracked work was present, Node version, platform, architecture, and reproduction command. `tests/fixtures/a18/api-contract.json` pins the consumed public signatures and protocol semantics. Deterministic fixture data excludes environment fields and timings. The checked-in golden snapshots pin the analyzed source hashes, selected construction method, ownership classification counts, protected statements, diagnostic codes, complete design values, and source-to-design identity. Review a changed golden file as a behavior change; the normal test/report commands never rewrite it.
@@ -41,7 +41,7 @@ It first checks the separate handwritten acceptance expectations in `tests/fixtu
 The first fuzz seed is `0x18c0ffee`; the next 999 unsigned integer seeds complete the batch. Failures print the decimal/hex seed and full operation sequence. Replay a failure directly:
 
 ```sh
-node examples/a18-qualification/replay.mjs 0x18c0ffee
+node scripts/limited.js node examples/a18-qualification/replay.mjs 0x18c0ffee
 ```
 
 Each sequence uses a fresh design document against an immutable source baseline. The independent reread deliberately receives neither a previous document nor identity hints. Child order and every property remain part of the comparison; only the incidental node declaration array order is canonicalized. Source compilation and both runtime executions use the emitted C#, not a fixture simulator or an alternate generator.
