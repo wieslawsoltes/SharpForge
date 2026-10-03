@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { importGraph, parseImports } from '../../../scripts/planning/import-graph.js';
 import { impactedTests } from '../../../scripts/planning/impacted-tests.js';
 import { checkContractChange } from '../../../scripts/planning/check-contract-change.js';
@@ -33,6 +35,13 @@ test('reverse consumer selection covers transitive compiler runtime debugger, do
   assert.equal(impactedTests({graph,manifests,files:['packages/bytecode/src/index.js']}).areas.length,3);
   assert.deepEqual(impactedTests({graph,manifests,files:['docs/a.md']}).areas,[]);
   assert.equal(impactedTests({graph,manifests,files:['packages/deleted.js']}).areas.length,3);
+});
+test('real impacted-test CLI awaits asynchronous manifest discovery and selects actual consumers',()=>{
+  const cwd=fileURLToPath(new URL('../../../',import.meta.url));
+  const run=path=>JSON.parse(execFileSync(process.execPath,['scripts/planning/impacted-tests.js',path],{cwd,encoding:'utf8',maxBuffer:4*1024*1024}));
+  const affected=run('packages/bytecode/src/index.js');
+  for(const area of ['A02','A05','A14'])assert.ok(affected.areas.includes(area),`Missing ${area}: ${affected.areas.join(',')}`);
+  assert.deepEqual(run('docs/README.md').areas,[]);
 });
 test('contract removal needs label and relevant version bump; append passes; duplicate IDs never pass',()=>{
   const path='planning/contracts/framework-ids.lock.json', before={[path]:[{id:1,name:'a'}]};
