@@ -68,3 +68,5 @@ It accepts a `Uint8Array` of at most 128 MiB, preserves the input (including sub
 an independent 32-byte digest. Invalid input types throw `TypeError`; oversized input throws `RangeError`.
 The browser/worker implementation uses no host crypto or asynchronous work. `@sharpforge/symbols` retains
 its existing `sha256` export as a reexport of this function; SHA-1 remains in the symbols package.
+
+Embedded data emission and bounded inspection are documented in [RESOURCES.md](./RESOURCES.md).
