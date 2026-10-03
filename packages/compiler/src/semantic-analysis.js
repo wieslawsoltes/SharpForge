@@ -21,6 +21,7 @@ import { AttributeBinding } from './binder/attributes.js';
 import { ObsoleteUses } from './binder/obsolete.js';
 import { SpecialMemberChecks } from './binder/special-members.js';
 import { ConditionalMethodChecks } from './binder/csharp2-misc.js';
+import { UnsafeDeclarationChecks } from './binder/unsafe-declarations.js';
 
 const phases = [
   DeclarationChecks,
@@ -29,6 +30,7 @@ const phases = [
   AttributeBinding,
   SpecialMemberChecks,
   ConditionalMethodChecks,
+  UnsafeDeclarationChecks,
   BodyBinding,
   TopLevelPrograms,
   MemberBodyChecks,

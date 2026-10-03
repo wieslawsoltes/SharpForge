@@ -60,6 +60,7 @@ export class TypeMapper {
       if (type.rank !== 1) return this.host.arrays.classOf(this.imageType(type.elementType, syntax), type.rank).record.name;
       return this.imageType(type.elementType, syntax) + '[]';
     }
+    if (type.typeKind === TypeKind.Pointer) unsupported('pointer types (the image has no addressable storage)', syntax);
     const special = type.specialType;
     if (special && specialNames[special]) return specialNames[special];
     if (special && unsupportedSpecial[special]) unsupported(unsupportedSpecial[special], syntax);
