@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {DesignerSurfaceController} from '../apps/studio/designer-surface-controller.js';
 import {DesignDocument, createDesign} from '@sharpforge/designer';
+import {DesignerSurfaceGeometry} from '../apps/studio/designer-surface-geometry.js';
 
 class PointerDocument {
   constructor() {
@@ -103,4 +104,36 @@ test('failed move reports an explicit error and cancels rather than committing p
   assert.equal(committed, false);
   assert.equal(errors[0].message, 'Invalid transformed geometry');
   assert.equal(dom.count(), 0);
+});
+
+test('large geometry cache measures selection first and completes bounded background slices with disposal', () => {
+  const dom = new PointerDocument();
+  let reads = 0;
+  dom.defaultView.performance = {now: () => reads * .25};
+  dom.defaultView.getComputedStyle = element => ({width: `${element.width}px`, height: '20px', boxSizing: 'border-box', transform: 'none'});
+  const element = (left, width, parent = null) => ({ownerDocument: dom, parentElement: parent, width, isConnected: true,
+    getBoundingClientRect() { reads++; return {left, top: 0, width, height: 20}; }});
+  const stage = element(0, 800);
+  const nodes = [{id: 'root', type: 'Canvas', properties: {}, children: []}];
+  const elements = new Map([['root', stage]]);
+  for (let index = 1; index < 5000; index++) {
+    nodes.push({id: `n${index}`, type: 'Button', properties: {Left: index * 10, Top: 0}, children: []});
+    nodes[0].children.push(`n${index}`);
+    elements.set(`n${index}`, element(index * 10, 24, stage));
+  }
+  const document = {value: {nodes, root: 'root'}, selection: ['n1'], revision: 0,
+    parent: id => id === 'root' ? null : nodes[0]};
+  const geometry = new DesignerSurfaceGeometry({stage, document, host: {elements}, safe: callback => callback()});
+  geometry.refresh();
+  assert(reads < 10, `Cold selection used ${reads} DOM reads`);
+  assert.equal(geometry.rect('n1').Width, 24);
+  assert.equal(dom.frames.size, 1);
+  const [id, frame] = dom.frames.entries().next().value;
+  dom.frames.delete(id);
+  frame();
+  assert(reads < 40, `One background slice used ${reads} DOM reads`);
+  assert(geometry.pending);
+  geometry.dispose();
+  assert.equal(dom.frames.size, 0);
+  assert.equal(geometry.entries.size, 0);
 });

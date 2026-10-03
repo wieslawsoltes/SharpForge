@@ -15,7 +15,10 @@ export class DesignerLayoutPreview {
   install() {
     const panel = this.view.panel('designer');
     const toolbar = panel.ownerDocument.createElement('div');
-    toolbar.className = 'panel-tools design-toolbar';
+    toolbar.className = 'design-preview-environment-controls';
+    toolbar.setAttribute('role', 'group');
+    toolbar.setAttribute('aria-label', 'Device and accessibility preview');
+    Object.assign(toolbar.style, {display: 'flex', flexWrap: 'wrap', gap: '5px', alignItems: 'center'});
     toolbar.dataset.previewEnvironment = '';
     const fields = [
       ['device', 'Preview device', [['document', 'Document'], ['1440x900', 'Desktop'], ['1024x768', 'Tablet'], ['390x844', 'Phone']]],
@@ -46,7 +49,8 @@ export class DesignerLayoutPreview {
     fit.textContent = 'Fit selection';
     fit.onclick = () => this.controller.fitSelection();
     toolbar.append(fit);
-    panel.insertBefore(toolbar, this.view.scroller);
+    if (this.view.chrome?.commandBar) this.view.chrome.commandBar.add(toolbar);
+    else panel.insertBefore(toolbar, this.view.scroller);
     this.toolbar = toolbar;
   }
 
@@ -64,8 +68,11 @@ export class DesignerLayoutPreview {
   render() {
     const view = this.view;
     const value = this.value;
-    view.host.load(this.scene());
-    view.host.flush();
+    if (view.updatePreview) view.updatePreview();
+    else {
+      view.host.load(this.scene());
+      view.host.flush();
+    }
     this.applyDimensions();
     this.controller.geometry.invalidate();
     this.controller.drawAdorners();

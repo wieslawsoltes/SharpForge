@@ -1,4 +1,4 @@
-import {guideSettings, setUserGuide} from '@sharpforge/designer';
+import {geometryInvariant, guideSettings, setUserGuide} from '@sharpforge/designer';
 
 export class DesignerUserGuides {
   constructor(controller) {
@@ -30,8 +30,9 @@ export class DesignerUserGuides {
       next = axis === 'x' ? point.x : point.y;
       this.render([{id: id ?? '$preview', axis, position: next}]);
     }, () => {
-      if (next !== null && revision === this.view.document.revision) setUserGuide(this.view.document, {id, axis, position: next});
       this.render();
+      geometryInvariant(revision === this.view.document.revision, 'SFD_GUIDE_STALE', 'The document changed while moving this guide.');
+      if (next !== null) setUserGuide(this.view.document, {id, axis, position: next});
     }, () => this.render());
   }
 

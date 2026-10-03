@@ -3,13 +3,14 @@ import {designRectangle, geometryInvariant, localPointerDelta, resizeRectangle} 
 
 /** Gesture previews never touch DesignDocument. Commit performs exactly one optimistic edit. */
 export class DesignGeometrySession {
-  constructor(document, {rectangles, matrices = {}, start = {x: 0, y: 0}, handle = null, constraints = {}, label} = {}) {
+  constructor(document, {rectangles, matrices = {}, baselines = {}, start = {x: 0, y: 0}, handle = null, constraints = {}, label} = {}) {
     geometryInvariant(rectangles && Object.keys(rectangles).length > 0, 'SFD_GESTURE_EMPTY', 'Select a control before editing.');
     this.document = document;
     this.revision = document.revision;
     this.original = Object.fromEntries(Object.entries(rectangles).map(([id, rectangle]) => [id, designRectangle(rectangle)]));
     this.next = structuredClone(this.original);
     this.matrices = matrices;
+    this.baselines = {...baselines};
     this.constraints = constraints;
     this.start = start;
     this.handle = handle;
@@ -29,7 +30,7 @@ export class DesignGeometrySession {
       let next = this.handle ? resizeRectangle(rectangle, this.handle, delta, this.constraints[id])
         : {...rectangle, Left: rectangle.Left + delta.x, Top: rectangle.Top + delta.y};
       if (id === primaryId && snaplines) {
-        const result = snaplines.snap(next, {disabled, handle: this.handle});
+        const result = snaplines.snap(next, {disabled, handle: this.handle, baseline: this.baselines[id]});
         next = result.bounds;
         snapDelta = result.delta;
         this.guides = result.guides;

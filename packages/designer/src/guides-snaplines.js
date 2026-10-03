@@ -26,6 +26,18 @@ function addRectangle(lines, item) {
   }
 }
 
+function compactTargets(items, discriminator = item => item.kind) {
+  const result = [];
+  let previous = null;
+  for (const item of items) {
+    const key = `${item.position}:${discriminator(item)}`;
+    if (key === previous) continue;
+    previous = key;
+    result.push(item);
+  }
+  return result;
+}
+
 function prefer(candidate, best) {
   return !best || Math.abs(candidate.delta) < Math.abs(best.delta) - 1e-9
     || Math.abs(candidate.delta - best.delta) < 1e-9 && rank[candidate.kind] < rank[best.kind];
@@ -52,6 +64,7 @@ export class DesignSnaplines {
     }
     for (const [axis, [position, size]] of Object.entries(axisNames)) {
       this.lines[axis].sort((left, right) => left.position - right.position || rank[left.kind] - rank[right.kind]);
+      this.lines[axis] = compactTargets(this.lines[axis]);
       const sorted = siblings.map(item => ({id: item.id, ...designRectangle(item.bounds ?? item)}));
       sorted.sort((left, right) => left[position] - right[position]);
       for (let index = 1; index < sorted.length; index++) {
@@ -64,7 +77,9 @@ export class DesignSnaplines {
         this.spacing[axis].push({axis, position: previous[position] - gap,
           kind: 'spacing', target: previous.id, other: current.id, gap, trailing: true});
       }
-      this.spacing[axis].sort((left, right) => left.position - right.position);
+      this.spacing[axis].sort((left, right) => left.position - right.position || Number(left.trailing) - Number(right.trailing)
+        || left.gap - right.gap);
+      this.spacing[axis] = compactTargets(this.spacing[axis], item => `${item.trailing}:${item.gap}`);
     }
   }
 
