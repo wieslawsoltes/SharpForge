@@ -753,6 +753,7 @@ export const roslynCodes=Object.freeze({
  CS9191:["WRN_BadArgRef","warning",1,"The 'ref' modifier for argument {0} corresponding to 'in' parameter is equivalent to 'in'. Consider using 'in' instead."],
  CS9192:["WRN_ArgExpectedRefOrIn","warning",1,"Argument {0} should be passed with 'ref' or 'in' keyword"],
  CS9193:["WRN_RefReadonlyNotVariable","warning",1,"Argument {0} should be a variable because it is passed to a 'ref readonly' parameter"],
+ CS9194:["ERR_BadArgExtraRefLangVersion","error",0,"Argument {0} may not be passed with the 'ref' keyword in language version {1}. To pass 'ref' arguments to 'in' parameters, upgrade to language version {2} or greater."],
  CS9200:["WRN_RefReadonlyParameterDefaultValue","warning",1,"A default value is specified for 'ref readonly' parameter '{0}', but 'ref readonly' should be used only for references. Consider declaring the parameter as 'in'."],
  CS9202:["ERR_FeatureNotAvailableInVersion12","error",0,"Feature '{0}' is not available in C# 12.0. Please use language version {1} or greater."],
  CS9204:["WRN_Experimental","warning",1,"'{0}' is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed."],

@@ -8,7 +8,7 @@
  * The type cannot be named in source. It is a delegate like a declared one: an `Invoke` method carries the signature,
  * which is all that conversions, calls and code generation look at.
  */
-import { SymbolKind, TypeKind, RefKind, Accessibility, NamedTypeSymbol } from '../types.js';
+import { TypeKind, RefKind, Accessibility, NamedTypeSymbol } from '../types.js';
 import { MethodKind, MethodSymbol, ParameterSymbol } from '../members.js';
 
 const sameConstant = (left, right) => (left?.isNull || left?.value === null ? right?.isNull || right?.value === null : left?.value === right?.value);
@@ -79,6 +79,3 @@ export function synthesizedDelegateOf(driver, core, parameters, returnType) {
   });
   return symbol;
 }
-
-/** True for a member that is the `Invoke` method of a delegate type. */
-export const isDelegateInvoke = member => member?.kind === SymbolKind.Method && member.methodKind === MethodKind.DelegateInvoke;

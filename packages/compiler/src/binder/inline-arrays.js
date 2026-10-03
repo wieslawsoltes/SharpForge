@@ -40,6 +40,8 @@ export const InlineArrayBinding = Base =>
       if (!shape) return super.elementAccessOn(target, args, syntax);
       if (args.some(argument => argument.hasErrors)) return this.bad(syntax);
       this.d.gate(this.c.uri, syntax, 'InlineArrays');
+      // The elements are the storage of the field that holds the array: it is not "never assigned" (as in Roslyn).
+      if (target.kind === 'FieldAccess') this.markWrite(target, null);
       const conversion = args.length === 1 ? this.conversions.classifyFromExpression(args[0], this.core.int) : null;
       if (!conversion?.exists || !conversion.isImplicit) {
         this.report(syntax, 'CS9172');

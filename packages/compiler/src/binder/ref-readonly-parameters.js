@@ -4,7 +4,7 @@
  *
  *   CS9192  the argument is a variable passed without `ref` or `in`
  *   CS9193  the argument is a value (a temporary is passed)
- *   CS9191  `ref` for an `in` parameter (allowed from C# 12; CS1615 below it)
+ *   CS9191  `ref` for an `in` parameter (allowed from C# 12; the error CS9194 below it)
  *
  * `out` for a `ref readonly` parameter is CS1615 (overload/resolution.js), a default value on the parameter is the
  * warning CS9200 (binder/members/basic-declarations.js).
@@ -26,8 +26,9 @@ export const RefReadonlyParameterBinding = Base =>
           const isVariable = classifyVariable(argument, this.variableContext).isVariable;
           this.report(argument.syntax, isVariable ? 'CS9192' : 'CS9193', [index + 1]);
         } else if (parameter.refKind === RefKind.In && given === RefKind.Ref) {
-          if (this.version.number >= 12) this.report(argument.syntax, 'CS9191', [index + 1]);
-          else this.report(argument.syntax, 'CS1615', [index + 1, 'ref']);
+          const version = this.version.number;
+          if (version >= 12) this.report(argument.syntax, 'CS9191', [index + 1]);
+          else this.report(argument.syntax, 'CS9194', [index + 1, Number.isInteger(version) ? version + '.0' : String(version), '12.0']);
         }
       });
       return call;

@@ -10,7 +10,7 @@
   "language-version/gate-implicit-local-at-2": ["diagnostics", "warnings"],
   "language-version/gate-inferred-delegate-type-at-9": ["diagnostics", "warnings"],
   "language-version/gate-instance-member-in-nameof-at-11": ["diagnostics", "warnings"],
-  "language-version/gate-lambda-optional-parameters-at-11": ["warnings"],
+  "language-version/gate-lambda-optional-parameters-at-11": ["diagnostics", "warnings"],
   "language-version/gate-nameof-at-5": ["diagnostics", "warnings"],
   "language-version/gate-native-int-at-8": ["diagnostics"],
   "language-version/gate-params-collections-at-12": ["diagnostics", "warnings"],

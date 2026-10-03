@@ -195,7 +195,14 @@ export const FlowStatementBinding = Base =>
       if (governing.type)
         this.reportSwitchArms(
           governing.type,
-          sections.flatMap(s => s.labels.map((label, i) => ({ pattern: label, when: label.when ?? null, node: s.syntax.labels[i].value ?? s.syntax.labels[i].pattern ?? s.syntax.labels[i], isDefault: label.kind === 'default' }))),
+          sections.flatMap(s =>
+            s.labels.map((label, i) => ({
+              pattern: label,
+              when: label.when ?? null,
+              node: s.syntax.labels[i].value ?? s.syntax.labels[i].pattern ?? s.syntax.labels[i],
+              isDefault: label.kind === 'default',
+            })),
+          ),
           { isExpression: false, node: syntax },
         );
       const exhaustive =
