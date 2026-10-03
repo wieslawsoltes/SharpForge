@@ -16,6 +16,7 @@ export const LocalFunctionBinding = Base =>
     declareLocalFunction(syntax) {
       const name = syntax.identifier.valueText,
         modifiers = syntax.modifiers.map(m => m.text);
+      if (syntax.body && syntax.expressionBody) this.report(syntax, 'CS8057');
       const method = new MethodSymbol({
         name,
         methodKind: MethodKind.LocalFunction,

@@ -64,6 +64,12 @@ export const QueryBinding = Base =>
     querySource(clause, binder) {
       const expressionSyntax = clause.expression ?? clause.inExpression,
         source = binder.value(expressionSyntax);
+      // The query pattern is looked up on the static type of the source: a dynamic one has none (a later `from` is CS1943).
+      const isLaterFrom = clause.kind === 'FromClause' && clause.parent?.kind !== 'QueryExpression';
+      if (!source.hasErrors && source.type?.typeKind === 'dynamic' && !isLaterFrom) {
+        binder.report(expressionSyntax, 'CS1979');
+        return binder.bad(expressionSyntax);
+      }
       if (!clause.type || source.hasErrors) return source;
       const elementType = binder.bindType(clause.type).type;
       return binder.queryCall(source, 'Cast', [], expressionSyntax, [elementType]);

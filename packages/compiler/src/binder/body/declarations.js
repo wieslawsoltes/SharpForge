@@ -166,7 +166,11 @@ export const DeclarationBinding = Base =>
                 t.isReferenceType === true
               );
           // A type that cannot be const is reported alone: its initializer is not asked to be constant.
+          // A const of a reference type other than string can only be null (the rule fields have in semantic/constants.js).
+          const onlyNull = t?.isReferenceType === true && t.specialType !== 'System_String' && !t.isErrorType(),
+            written = value.constantValue ?? value.operand?.constantValue ?? null;
           if (cannotBeConst) this.report(typeSyntax, 'CS0283', [this.display(t)]);
+          else if (onlyNull && written && !written.isNull) this.report(init, 'CS0134', [name, this.display(t)]);
           else if (!value.constantValue) this.report(init, 'CS0133', [name]);
           if (value.constantValue) {
             local.constantValueObject = value.constantValue;
