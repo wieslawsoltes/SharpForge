@@ -47,6 +47,7 @@ export const basicPatternMethods = {
     if (kind === '(') return this.parenthesizedPattern();
     if (kind === '[') return this.listPattern();
     if (kind === '{') return this.recursivePattern(null);
+    if (kind === '..') return this.slicePattern();
     if (this.isWord(token, 'var') && (next.kind === '(' || this.isDesignationAhead(this.i + 1)))
       return this.n('VarPattern', this.takeWord('var'), this.designation());
     if (this.isWord(token, '_') && !['.', '(', '{', '<', '::'].includes(next.kind) && !this.isDesignationAhead(this.i + 1))
@@ -57,7 +58,9 @@ export const basicPatternMethods = {
       const follower = this.tokens[Math.min(end, this.tokens.length - 1)];
       if (this.isDesignationAhead(end)) return this.n('DeclarationPattern', this.type('afterIs'), this.designation());
       if ((follower.kind === '(' && !info.predefined) || follower.kind === '{') return this.recursivePattern(this.type('afterIs'));
-      if ((info.must || info.generic) && !(info.predefined && this.kindAt(this.i + 1) === '.' && end === this.i + 1)) {
+      // An alias-qualified name alone (`global::A.B`) may be a constant, so it is not taken for a type pattern.
+      const typeOnly = info.generic || info.predefined || info.suffix || (info.must && !info.alias);
+      if (typeOnly && !(info.predefined && this.kindAt(this.i + 1) === '.' && end === this.i + 1)) {
         this.feature('TypePattern', token);
         return this.n('TypePattern', this.type('afterIs'));
       }
