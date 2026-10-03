@@ -263,8 +263,7 @@ export class SemanticGenerator extends Members(AsyncMethods(Initialization(Decla
   generate() {
     try {
       this.declareTypes();
-      this.declareTypeInitializers();
-      this.declareInstanceInitializers();
+      this.declareInitializers();
       const entry = this.entryPoint();
       this.translateMembers();
       const startup = this.startup(entry);
