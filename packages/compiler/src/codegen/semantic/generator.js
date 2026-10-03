@@ -16,6 +16,8 @@ import { MethodKind } from '../../symbols/members.js';
 import { isSourceSymbol } from '../../semantic/analysis-helpers.js';
 import { analyzeCaptures } from '../../lowering/closures.js';
 import { IteratorClasses, stateMachineBody } from '../../lowering/iterators.js';
+import { TupleClasses } from '../../lowering/tuples/tuple-classes.js';
+import { StructuralMembers } from '../../lowering/tuples/structural-members.js';
 import { stateMachineTypeName, stateMachineParameterProxyFieldName, thisProxyFieldName } from '../../lowering/generated-names.js';
 import { JumpIrEmitter } from './jump-emitter.js';
 import { ProgramModel } from './program-model.js';
@@ -41,6 +43,8 @@ class GeneratorCore {
     this.types = new TypeMapper(this);
     this.delegates = new DelegateClasses(this);
     this.iterators = new IteratorClasses(this);
+    this.structural = new StructuralMembers(this);
+    this.tuples = this.structural.register(new TupleClasses(this));
     this.classes = new Map();
     this.fields = new Map();
     this.methods = new Map();
