@@ -50,6 +50,21 @@ test('cyclic modules link, and conflicting star exports are rejected', t => {
   assert.equal(checkImports(options).passed, false);
 });
 
+test('workspace conditions retain declared precedence and explicit blocked targets', t => {
+  const manifest = { name: '@fixture/lib', exports: { node: './node.js', import: './import.js' } };
+  const root = fixture(t, {
+    'packages/lib/package.json': JSON.stringify(manifest),
+    'packages/lib/node.js': 'export const nodeOnly = 1;',
+    'packages/lib/import.js': 'export const importOnly = 2;',
+    'apps/use.js': 'import {nodeOnly} from "@fixture/lib";',
+  });
+  const options = { root, policy: emptyPolicy, directories: ['packages', 'apps'] };
+  assert.equal(checkImports(options).passed, true);
+  manifest.exports.node = null;
+  writeFileSync(join(root, 'packages/lib/package.json'), JSON.stringify(manifest));
+  assert(checkImports(options).errors.some(error => /Missing workspace export/.test(error.message)));
+});
+
 test('lexical policy ignores comments, ordinary strings and regexes, and scans template expressions', () => {
   const source = '// eval("x")\nconst a = "new Function()"; const r = /import\\(eval\\)/; ' +
     'const t = `literal eval() ${import("./a.js")} ${`nested ${new Function("x")}`}`; ' +

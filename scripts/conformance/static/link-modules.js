@@ -14,8 +14,16 @@ export async function linkModules(root, paths) {
     const data = JSON.parse(readFileSync(resolve(base, 'package.json'), 'utf8'));
     packages.set(data.name, { base, data });
   }
-  const condition = value => typeof value === 'string' ? value : value &&
-    condition(value.import ?? value.node ?? value.default);
+  function condition(value) {
+    if (typeof value === 'string' || value === null) return value;
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return undefined;
+    // Node considers matching conditional exports in declaration order.
+    for (const [key, target] of Object.entries(value)) {
+      if (!['import', 'node', 'default'].includes(key)) continue;
+      const selected = condition(target);
+      if (selected !== undefined) return selected;
+    }
+  }
   function local(path) {
     const canonical = realpathSync(path);
     if (!canonical.startsWith(root + sep) || !statSync(canonical).isFile()) throw new Error('Import leaves repository: ' + path);
