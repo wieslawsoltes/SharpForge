@@ -122,3 +122,9 @@ test('SF-A02-T54 a call to an unimplemented partial method cannot be in an expre
     'void Use() { Expression<Action> e = () => None(); } } class Program { static void Main() { } }';
   assert.deepEqual(codesOf(source), ['CS0765:None()']);
 });
+
+test('SF-A02-T54 the parts may differ in dynamic against object: one method, CS8826 at warning level 6', () => {
+  const source = 'partial class C { partial void F(object o); partial void F(dynamic o) { } } class Program { static void Main() { } }';
+  assert.deepEqual(codesOf(source), []);
+  assert.deepEqual(codesOf(source, { warningLevel: 9999 }), ['CS8826:F']);
+});
