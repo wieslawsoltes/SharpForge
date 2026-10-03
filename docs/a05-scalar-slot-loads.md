@@ -7,3 +7,15 @@ Direct CIL arguments and locals are normalized at call entry, initialization and
 PR #2804's method/field caches target different work and are not duplicated. This slice does not introduce a typed evaluation stack, specialized arithmetic, a small-long representation, or field-load normalization elision.
 
 Tests and measurements are prepared but intentionally not executed before E02 assembly. The T08.4 throughput target remains unqualified; no speedup or platform pass is claimed.
+# Field loads
+
+`loadField` applies the same immutable-scalar classification to resolved instance
+and static fields. Its metadata-only cache keys the resolved signature, including
+closed generic substitutions, and invalidates if that signature's type changes.
+`scalarFieldLoads:false` retains the original read adapter for measurement.
+Instance/static writes normalize once through their managed-pointer store; field
+initialization, write observers, static initialization and volatile completion stay
+at the existing boundaries. Reference, enum, managed-pointer and aggregate fields
+retain the generic adapter. Prepared tests cover float identity and boundaries,
+small-field truncation and notification, volatile completion and cache invalidation.
+No field tests or measurements have run before E02 assembly.
