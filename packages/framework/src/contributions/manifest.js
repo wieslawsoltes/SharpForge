@@ -4,7 +4,7 @@ import {registerCoreXaml} from './core-xaml.js';
 import {registerCoreControls} from './core-controls.js';
 import {registerCoreSystem} from './core-system.js';
 import {registerCoreControls12} from './core-controls-12.js';
-import {registerBcl} from '../bcl-contracts.js';
+import {registerBcl, registerBclCollectionExtensions} from '../bcl-contracts.js';
 import {registerWinUI13} from '../winui13-contracts.js';
 import {registerRuntime14} from '../runtime14-contracts.js';
 /** Released ranges are exact; additions belong in an independently reserved area. */
@@ -22,9 +22,12 @@ export const bclExtensionContribution=Object.freeze({
   name:'A07', register:registry=>registerBclModules(registry,{group:'extensions'})
 });
 
+/** Collection additions use A08 independently of the core A07 reservation. */
+export const collectionExtensionContribution=Object.freeze({name:'A08', register:registerBclCollectionExtensions});
+
 /** Compose released and extension contracts through the same transactional registry. */
 export function createFrameworkRegistry() {
   const registry=createRegistry({reservations:idReservations});
-  registry.registerAll([...contributionManifest,bclExtensionContribution]);
+  registry.registerAll([...contributionManifest,bclExtensionContribution,collectionExtensionContribution]);
   return registry;
 }

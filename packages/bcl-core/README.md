@@ -60,3 +60,15 @@ zero arguments through the compiler's existing params lowering. The new
 overload occupies reserved A07 ID `524288`; released IDs remain unchanged.
 Formatting still uses the supported invariant numeric formats and the host's
 1,000,000-unit output budget, rather than claiming the full .NET formatting API.
+
+`StringComparer.Ordinal` is a platform-rooted singleton and implements the
+registered `IComparer<string>` interface. `Compare(string, string)` orders null
+first, then compares exact UTF-16 code units without normalization, case folding
+or locale services. Closed `IComparer<string>` and `IComparer<object>` metadata
+seeds the existing generic bridge, including contravariance and abstract methods.
+`resolveStringComparer(platform, reference)` validates a managed built-in comparer
+once and returns a synchronous `(nullableString, nullableString) => number`
+comparison function. Its sign expresses ordering. It allocates no managed memory;
+null receivers raise `NullReferenceException`, and unsupported implementations
+raise `NotSupportedException`. Collections reuse this helper through the public
+core entry point. Custom managed callbacks remain tracked by #2655.

@@ -40,3 +40,21 @@ is a separate capability; this regression uses direct BCL object arguments.
 `tests/bcl13.test.js` cover both JavaScript execution engines and assembly reload
 paths. Browser and Rust native/Wasm qualification remains a separate gate;
 JavaScript test results must not be reported as those targets passing.
+
+`List<string>.Sort(IComparer<string>)` is appended in reserved A08 slot `589824`.
+The existing module's `extensionContracts(registry)` registers this addition;
+released registration selects `group: 'bcl-collections'`, and appended contracts
+select `group: 'extensions'`. The explicit `StringComparer.Ordinal` path supports
+nulls, empty strings, duplicates, embedded NUL and isolated/supplementary UTF-16
+surrogates. The interface signature allows later comparer implementations without
+changing this ABI. Unsupported custom implementations currently raise
+`NotSupportedException`, including when the list is empty. A null comparer keeps
+the released default behavior. Sort commits one collection version change.
+
+The default string comparator and `Array.BinarySearch` still use the released
+ordinal profile. **#829 remains open** for the invariant-culture default, and
+#2619/#2621/#2655 track culture comparison and general comparer dispatch. This
+increment does not use a host locale heuristic or claim complete culture support.
+The pinned .NET 10.0.5 corpus includes invariant and ordinal results, but only the
+ordinal results qualify this implementation. Both source and direct CIL tests
+consume the capture; browser and Rust native/Wasm qualification is pending.

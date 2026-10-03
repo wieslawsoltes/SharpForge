@@ -1,3 +1,5 @@
+import {registerOrderingExtensions} from './comparers/contracts.js';
+import {sortItems} from './comparers/ordering.js';
 import {fail, integer, bclScalar, array, makeArray} from '@sharpforge/bcl-core';
 import {equal} from './object-equality.js';
 import {registerClosedCollections} from './legacy-contracts.js';
@@ -135,21 +137,6 @@ function peekOrRemove(p, descriptor, context) {
   return value;
 }
 
-function compare(p, left, right) {
-  const first = bclScalar(p, left);
-  const second = bclScalar(p, right);
-  if (first === second) return 0;
-  if (first === null) return -1;
-  if (second === null) return 1;
-  if (typeof first === 'number' && typeof second === 'number') {
-    return Number.isNaN(first) ? -1 : Number.isNaN(second) ? 1 : first - second;
-  }
-  if (typeof first === 'string' && typeof second === 'string' || typeof first === 'boolean' && typeof second === 'boolean') {
-    return first < second ? -1 : 1;
-  }
-  fail(p, 'InvalidOperationException', 'Default comparer is unavailable for this object type');
-}
-
 function setOperation(p, method, items, values) {
   const other = new Set(array(p, values[0]).map(value => keyOf(p, value)));
   const seen = new Set(items.map(value => keyOf(p, value)));
@@ -187,7 +174,7 @@ function mutate(p, descriptor, context) {
       return p.managed(true, 'bool');
     }
     case 'Reverse': items.reverse(); break;
-    case 'Sort': items.sort((left, right) => compare(p, left, right)); break;
+    case 'Sort': sortItems(p, items, values[0] ?? null); break;
     case 'UnionWith': case 'IntersectWith': case 'ExceptWith':
       setOperation(p, descriptor.name, items, values);
       break;
@@ -257,5 +244,6 @@ function invoke(p, descriptor, args, type = p.bclHost.frameworkType(descriptor.o
 
 /** Released closed collections with heap-owned GC/debugger state and unchanged ABI registration order. */
 export const closedCollectionsModule = Object.freeze({
-  name: 'closed-collections', families, group: 'bcl-collections', contracts: registerClosedCollections, invoke
+  name: 'closed-collections', families, group: 'bcl-collections', contracts: registerClosedCollections,
+  extensionContracts: registerOrderingExtensions, invoke
 });

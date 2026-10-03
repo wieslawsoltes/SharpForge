@@ -1245,4 +1245,17 @@ Pinned reference: 9 implemented and 14 missing exact metadata rows.
 | method | <code>System.Random::Shuffle``1(!!0[]):System.Void instance</code> | missing | — |
 | property | <code>System.Random::Shared[]:System.Random get static</code> | implemented | 1713 |
 
+### Module <code>stringComparer</code>
+
+Registered families: <code>stringComparer</code>, <code>orderingComparer</code>.
+
+| ABI ID | Registered signature | Registry status |
+| --- | --- | --- |
+| 524289 | <code>int System.Collections.Generic.IComparer`1&lt;string&gt;::Compare(string, string)</code> | implemented |
+| 524290 | <code>int System.Collections.Generic.IComparer`1&lt;object&gt;::Compare(object, object)</code> | implemented |
+| 524291 | <code>static System.StringComparer System.StringComparer::get_Ordinal()</code> | implemented |
+| 524292 | <code>int System.StringComparer::Compare(string, string)</code> | implemented |
+
+No pinned reference inventory is included for these families; registered rows alone do not establish API coverage.
+
 <!-- bcl-module-inventory:end -->
