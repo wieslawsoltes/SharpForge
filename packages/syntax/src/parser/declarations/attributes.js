@@ -67,7 +67,10 @@ export const attributeMethods = {
     }
     while (!this.at(']') && !this.at('eof')) {
       const before = this.i;
-      attributes.push(this.n('Attribute', this.name(), this.at('(') ? this.attributeArgumentList() : null));
+      const nameStart = this.i,
+        name = this.name();
+      this.genericAttributeName(nameStart);
+      attributes.push(this.n('Attribute', name, this.at('(') ? this.attributeArgumentList() : null));
       if (this.at(',')) attributes.push(this.take());
       else break;
       if (before === this.i) break;

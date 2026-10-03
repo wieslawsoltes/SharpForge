@@ -47,6 +47,8 @@ const pipelineCodes = new Set([
   'SF2140',
   'SF3001',
 ]);
+/** What the pipeline's source-level async rewrite reports when it meets `await` or `async` it cannot rewrite. */
+const asyncRewriteCodes = new Set(['CS4032', 'CS1983']);
 const adapterPseudo = d =>
   (d.code === 'CS1014' && /init is not supported/.test(d.message)) || (d.code === 'CS0528' && /Duplicate IDisposable/.test(d.message));
 const constructNames = {
@@ -165,7 +167,10 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   if (errors.length) {
     // Both binders reject the program: without profile constructs (or references) the pipeline's diagnostics stand,
     // unless the analysis found a namespace or alias error - the string-typed binder does not know those rules.
-    if (!profile.length && !hasReferences && !errors.some(isNamespaceDiagnostic)) return unchanged();
+    // ... or the program has async functions: the pipeline binds those after a source-level rewrite into a kickoff and
+    // a body, which moves and renames what its binder reports.
+    const rewritten = compilation.methods.some(m => m.node?.asyncRole) || legacy.some(d => asyncRewriteCodes.has(d.code));
+    if (!profile.length && !hasReferences && !rewritten && !errors.some(isNamespaceDiagnostic)) return unchanged();
     // Not valid C#: the semantic diagnostics replace the errors the string-typed binder derived from the constructs it does not
     // know. The profile diagnostics stay (the program still names constructs the profile lacks), except a literal-range one
     // that sits on the very literal a C# error is reported for (one diagnostic per literal).

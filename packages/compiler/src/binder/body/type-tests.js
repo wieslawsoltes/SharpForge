@@ -211,8 +211,9 @@ export const TypeTestBinding = Base =>
         const result = lookupMembers(getAwaiter.returnType, 'GetResult', this.core, {}).members.find(m => m.kind === SymbolKind.Method);
         return this.node('Await', syntax, result?.returnType ?? unknown, { operand, getAwaiter });
       }
-      if (!isSource(t)) return this.lenient(syntax);
-      this.report(syntax.expression, 'CS1061', [this.display(t), 'GetAwaiter']);
+      // A registry type may have an awaiter the registry does not list; a predefined type has none.
+      if (!isSource(t) && !t.specialType) return this.lenient(syntax);
+      this.report(syntax, 'CS1061', [this.display(t), 'GetAwaiter']);
       return this.bad(syntax);
     }
     /** A thrown value converts implicitly to System.Exception (CS0029/CS0266 otherwise). */

@@ -1,1 +1,1 @@
-{"roslyn":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","langversion":"11","errors":[["CS9058",54,61],["CS9113",59,60,"warning"]]}
+{"roslyn":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","langversion":"11","errors":[["CS9058",60,67],["CS9113",65,66,"warning"]]}
