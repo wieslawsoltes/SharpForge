@@ -1,0 +1,226 @@
+{
+  "constants": [
+    "first",
+    "inner",
+    "catch",
+    "outer",
+    null
+  ],
+  "entryPoint": 1,
+  "formatVersion": 1,
+  "methods": [
+    {
+      "code": {
+        "$int32": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          16,
+          33,
+          1,
+          23,
+          0,
+          0,
+          12,
+          10,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          16,
+          0,
+          1,
+          9,
+          0,
+          0,
+          27,
+          0,
+          0,
+          12,
+          16,
+          0,
+          0,
+          2,
+          0,
+          1,
+          2,
+          0,
+          16,
+          0,
+          1,
+          9,
+          0,
+          0,
+          12,
+          16,
+          0,
+          12,
+          22,
+          0,
+          0,
+          3,
+          0,
+          1,
+          3,
+          0,
+          16,
+          0,
+          1,
+          9,
+          0,
+          0,
+          27,
+          0,
+          0,
+          1,
+          4,
+          0,
+          17,
+          0,
+          0
+        ]
+      },
+      "handlers": [
+        {
+          "end": 4,
+          "handlerEnd": 10,
+          "kind": "finally",
+          "start": 0,
+          "target": 5
+        },
+        {
+          "end": 10,
+          "slot": 1,
+          "start": 0,
+          "target": 11,
+          "type": "Exception"
+        },
+        {
+          "end": 16,
+          "handlerEnd": 22,
+          "kind": "finally",
+          "start": 0,
+          "target": 17
+        }
+      ],
+      "id": 0,
+      "isStatic": true,
+      "locals": [
+        {
+          "hidden": true,
+          "name": "$t0",
+          "slot": 0,
+          "type": "Exception"
+        },
+        {
+          "declaredAt": 157,
+          "hidden": false,
+          "isConst": false,
+          "isIteration": false,
+          "isUsing": false,
+          "name": "e",
+          "scopeEnd": 188,
+          "scopeEndPc": 16,
+          "scopeStartPc": 11,
+          "slot": 1,
+          "type": "Exception"
+        }
+      ],
+      "name": "Main",
+      "owner": "Program",
+      "parameters": [],
+      "qualifiedName": "Program.Main",
+      "returnType": "void",
+      "sourceRange": {
+        "end": 230,
+        "start": 30,
+        "uri": "Program.cs"
+      }
+    },
+    {
+      "code": {
+        "$int32": [
+          15,
+          0,
+          0,
+          17,
+          0,
+          0
+        ]
+      },
+      "handlers": [],
+      "id": 1,
+      "isStatic": true,
+      "locals": [],
+      "name": "<startup>",
+      "owner": null,
+      "parameters": [],
+      "qualifiedName": "<startup>",
+      "returnType": "void"
+    }
+  ],
+  "name": "Application",
+  "sequencePoints": [
+    {
+      "column": 50,
+      "end": 92,
+      "id": 0,
+      "line": 2,
+      "methodId": 0,
+      "offset": 0,
+      "start": 63,
+      "uri": "Program.cs"
+    },
+    {
+      "column": 92,
+      "end": 132,
+      "id": 1,
+      "line": 2,
+      "methodId": 0,
+      "offset": 5,
+      "start": 105,
+      "uri": "Program.cs"
+    },
+    {
+      "column": 146,
+      "end": 186,
+      "id": 2,
+      "line": 2,
+      "methodId": 0,
+      "offset": 11,
+      "start": 159,
+      "uri": "Program.cs"
+    },
+    {
+      "column": 186,
+      "end": 226,
+      "id": 3,
+      "line": 2,
+      "methodId": 0,
+      "offset": 17,
+      "start": 199,
+      "uri": "Program.cs"
+    }
+  ],
+  "sources": [
+    {
+      "text": "using System;\nclass Program { static void Main() { try { try { throw new Exception(\"first\"); } finally { Console.WriteLine(\"inner\"); } } catch (Exception e) { Console.WriteLine(\"catch\"); } finally { Console.WriteLine(\"outer\"); } } }\n",
+      "uri": "Program.cs",
+      "version": 1
+    }
+  ],
+  "statics": [],
+  "types": [
+    {
+      "fields": [],
+      "id": 0,
+      "name": "Program"
+    }
+  ]
+}

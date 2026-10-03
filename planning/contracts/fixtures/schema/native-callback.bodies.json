@@ -1,0 +1,1287 @@
+[
+  {
+    "encoding": "bytecode",
+    "exceptionRegions": [],
+    "instructions": [
+      {
+        "inputTypes": [],
+        "offset": 0,
+        "opcode": "SEQ",
+        "operands": [
+          0,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 1,
+        "opcode": "CONST",
+        "operands": [
+          0,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 2,
+        "opcode": "NEWARR",
+        "operands": [
+          1,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 3,
+        "opcode": "DUP",
+        "operands": [
+          0,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 4,
+        "opcode": "CONST",
+        "operands": [
+          2,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 5,
+        "opcode": "CONST",
+        "operands": [
+          3,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 6,
+        "opcode": "STELEM",
+        "operands": [
+          0,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 7,
+        "opcode": "POP",
+        "operands": [
+          0,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 8,
+        "opcode": "STLOC",
+        "operands": [
+          0,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 9,
+        "opcode": "POP",
+        "operands": [
+          0,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 10,
+        "opcode": "SEQ",
+        "operands": [
+          1,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 11,
+        "opcode": "CONST",
+        "operands": [
+          2,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 12,
+        "opcode": "STLOC",
+        "operands": [
+          1,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 13,
+        "opcode": "POP",
+        "operands": [
+          0,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 14,
+        "opcode": "SEQ",
+        "operands": [
+          2,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 15,
+        "opcode": "LDLOC",
+        "operands": [
+          1,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 16,
+        "opcode": "CONST",
+        "operands": [
+          4,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 17,
+        "opcode": "BINARY",
+        "operands": [
+          7,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 18,
+        "opcode": "JFALSE",
+        "operands": [
+          32,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 19,
+        "opcode": "SEQ",
+        "operands": [
+          3,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 20,
+        "opcode": "BUILTIN",
+        "operands": [
+          10,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 21,
+        "opcode": "POP",
+        "operands": [
+          0,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 22,
+        "opcode": "SEQ",
+        "operands": [
+          4,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 23,
+        "opcode": "LDLOC",
+        "operands": [
+          1,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 24,
+        "opcode": "STLOC",
+        "operands": [
+          2,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 25,
+        "opcode": "CONST",
+        "operands": [
+          0,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 26,
+        "opcode": "BINARY",
+        "operands": [
+          0,
+          1
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 27,
+        "opcode": "STLOC",
+        "operands": [
+          1,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 28,
+        "opcode": "POP",
+        "operands": [
+          0,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 29,
+        "opcode": "LDLOC",
+        "operands": [
+          2,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 30,
+        "opcode": "POP",
+        "operands": [
+          0,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 31,
+        "opcode": "JUMP",
+        "operands": [
+          14,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 32,
+        "opcode": "SEQ",
+        "operands": [
+          5,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 33,
+        "opcode": "LDLOC",
+        "operands": [
+          0,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 34,
+        "opcode": "CONST",
+        "operands": [
+          2,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 35,
+        "opcode": "LDELEM",
+        "operands": [
+          0,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 36,
+        "opcode": "BUILTIN",
+        "operands": [
+          0,
+          1
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 37,
+        "opcode": "POP",
+        "operands": [
+          0,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 38,
+        "opcode": "CONST",
+        "operands": [
+          5,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 39,
+        "opcode": "STLOC",
+        "operands": [
+          0,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 40,
+        "opcode": "POP",
+        "operands": [
+          0,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 41,
+        "opcode": "CONST",
+        "operands": [
+          5,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 42,
+        "opcode": "RET",
+        "operands": [
+          0,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      }
+    ],
+    "locals": [
+      "string[]",
+      "int",
+      "int"
+    ],
+    "methodId": "0",
+    "offsetUnit": "instruction",
+    "safepoints": [
+      {
+        "kind": 3,
+        "offset": 2
+      },
+      {
+        "kind": 2,
+        "offset": 20
+      },
+      {
+        "kind": 1,
+        "offset": 31
+      },
+      {
+        "kind": 2,
+        "offset": 36
+      }
+    ],
+    "schemaVersion": 1,
+    "typeState": "unresolved"
+  },
+  {
+    "encoding": "bytecode",
+    "exceptionRegions": [],
+    "instructions": [
+      {
+        "inputTypes": [],
+        "offset": 0,
+        "opcode": "CALL",
+        "operands": [
+          0,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      },
+      {
+        "inputTypes": [],
+        "offset": 1,
+        "opcode": "RET",
+        "operands": [
+          0,
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "bytecode"
+      }
+    ],
+    "locals": [],
+    "methodId": "1",
+    "offsetUnit": "instruction",
+    "safepoints": [
+      {
+        "kind": 2,
+        "offset": 0
+      }
+    ],
+    "schemaVersion": 1,
+    "typeState": "unresolved"
+  },
+  {
+    "encoding": "cil",
+    "exceptionRegions": [],
+    "instructions": [
+      {
+        "inputTypes": [],
+        "offset": 0,
+        "opcode": "call",
+        "operands": [
+          100663299
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 1,
+        "opcode": "ldnull",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 2,
+        "opcode": "pop",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 3,
+        "opcode": "ret",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      }
+    ],
+    "locals": [],
+    "methodId": "100663297",
+    "offsetUnit": "instruction",
+    "safepoints": [
+      {
+        "kind": 2,
+        "offset": 0
+      }
+    ],
+    "schemaVersion": 1,
+    "typeState": "unresolved"
+  },
+  {
+    "encoding": "cil",
+    "exceptionRegions": [],
+    "instructions": [
+      {
+        "inputTypes": [],
+        "offset": 0,
+        "opcode": "ldarg",
+        "operands": [
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 1,
+        "opcode": "brtrue",
+        "operands": [
+          19
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 2,
+        "opcode": "ldarg",
+        "operands": [
+          1
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 3,
+        "opcode": "newobj",
+        "operands": [
+          167772162
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 4,
+        "opcode": "throw",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 5,
+        "opcode": "ret",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      }
+    ],
+    "locals": [],
+    "methodId": "100663298",
+    "offsetUnit": "instruction",
+    "safepoints": [
+      {
+        "kind": 3,
+        "offset": 3
+      }
+    ],
+    "schemaVersion": 1,
+    "typeState": "unresolved"
+  },
+  {
+    "encoding": "cil",
+    "exceptionRegions": [],
+    "instructions": [
+      {
+        "inputTypes": [],
+        "offset": 0,
+        "opcode": "nop",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 1,
+        "opcode": "ldc.i4",
+        "operands": [
+          1
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 2,
+        "opcode": "newarr",
+        "operands": [
+          16777219
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 3,
+        "opcode": "dup",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 4,
+        "opcode": "ldc.i4",
+        "operands": [
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 5,
+        "opcode": "ldstr",
+        "operands": [
+          1879048193
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 6,
+        "opcode": "stloc",
+        "operands": [
+          3
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 7,
+        "opcode": "ldloc",
+        "operands": [
+          3
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 8,
+        "opcode": "stelem",
+        "operands": [
+          16777219
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 9,
+        "opcode": "ldloc",
+        "operands": [
+          3
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 10,
+        "opcode": "pop",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 11,
+        "opcode": "dup",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 12,
+        "opcode": "stloc",
+        "operands": [
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 13,
+        "opcode": "pop",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 14,
+        "opcode": "nop",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 15,
+        "opcode": "ldc.i4",
+        "operands": [
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 16,
+        "opcode": "dup",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 17,
+        "opcode": "stloc",
+        "operands": [
+          1
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 18,
+        "opcode": "pop",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 19,
+        "opcode": "nop",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 20,
+        "opcode": "ldloc",
+        "operands": [
+          1
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 21,
+        "opcode": "ldc.i4",
+        "operands": [
+          2
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 22,
+        "opcode": "clt",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 23,
+        "opcode": "brfalse",
+        "operands": [
+          116
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 24,
+        "opcode": "nop",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 25,
+        "opcode": "call",
+        "operands": [
+          167772163
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 26,
+        "opcode": "ldnull",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 27,
+        "opcode": "pop",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 28,
+        "opcode": "nop",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 29,
+        "opcode": "ldloc",
+        "operands": [
+          1
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 30,
+        "opcode": "dup",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 31,
+        "opcode": "stloc",
+        "operands": [
+          2
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 32,
+        "opcode": "ldc.i4",
+        "operands": [
+          1
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 33,
+        "opcode": "add",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 34,
+        "opcode": "conv.i4",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 35,
+        "opcode": "dup",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 36,
+        "opcode": "stloc",
+        "operands": [
+          1
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 37,
+        "opcode": "pop",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 38,
+        "opcode": "ldloc",
+        "operands": [
+          2
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 39,
+        "opcode": "pop",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 40,
+        "opcode": "br",
+        "operands": [
+          58
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 41,
+        "opcode": "nop",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 42,
+        "opcode": "ldloc",
+        "operands": [
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 43,
+        "opcode": "ldc.i4",
+        "operands": [
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 44,
+        "opcode": "ldelem",
+        "operands": [
+          16777219
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 45,
+        "opcode": "call",
+        "operands": [
+          167772164
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 46,
+        "opcode": "ldnull",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 47,
+        "opcode": "pop",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 48,
+        "opcode": "ldnull",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 49,
+        "opcode": "dup",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 50,
+        "opcode": "stloc",
+        "operands": [
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 51,
+        "opcode": "pop",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 52,
+        "opcode": "ldnull",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 53,
+        "opcode": "pop",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 54,
+        "opcode": "ret",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      }
+    ],
+    "locals": [
+      "string[]",
+      "int",
+      "int",
+      "string"
+    ],
+    "methodId": "100663299",
+    "offsetUnit": "instruction",
+    "safepoints": [
+      {
+        "kind": 3,
+        "offset": 2
+      },
+      {
+        "kind": 2,
+        "offset": 25
+      },
+      {
+        "kind": 1,
+        "offset": 40
+      },
+      {
+        "kind": 2,
+        "offset": 45
+      }
+    ],
+    "schemaVersion": 1,
+    "typeState": "unresolved"
+  },
+  {
+    "encoding": "cil",
+    "exceptionRegions": [],
+    "instructions": [
+      {
+        "inputTypes": [],
+        "offset": 0,
+        "opcode": "ldarg",
+        "operands": [
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 1,
+        "opcode": "call",
+        "operands": [
+          167772161
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 2,
+        "opcode": "ret",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      }
+    ],
+    "locals": [],
+    "methodId": "100663300",
+    "offsetUnit": "instruction",
+    "safepoints": [
+      {
+        "kind": 2,
+        "offset": 1
+      }
+    ],
+    "schemaVersion": 1,
+    "typeState": "unresolved"
+  },
+  {
+    "encoding": "cil",
+    "exceptionRegions": [],
+    "instructions": [
+      {
+        "inputTypes": [],
+        "offset": 0,
+        "opcode": "ldarg",
+        "operands": [
+          0
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 1,
+        "opcode": "call",
+        "operands": [
+          167772161
+        ],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      },
+      {
+        "inputTypes": [],
+        "offset": 2,
+        "opcode": "ret",
+        "operands": [],
+        "resultType": null,
+        "sourceEncoding": "cil"
+      }
+    ],
+    "locals": [],
+    "methodId": "100663301",
+    "offsetUnit": "instruction",
+    "safepoints": [
+      {
+        "kind": 2,
+        "offset": 1
+      }
+    ],
+    "schemaVersion": 1,
+    "typeState": "unresolved"
+  }
+]

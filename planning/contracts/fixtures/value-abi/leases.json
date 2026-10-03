@@ -1,0 +1,16 @@
+{
+  "id": "leases",
+  "clauses": [
+    "H6",
+    "H7",
+    "H8"
+  ],
+  "operations": [
+    "allocate",
+    "retain",
+    "collect",
+    "release",
+    "collect",
+    "dispose"
+  ]
+}
