@@ -58,7 +58,10 @@ export class DesignerSession {
     if (!(value instanceof DesignDocument)) throw new TypeError('DesignerSession.document must be a DesignDocument');
     this.documentSubscription?.();
     this._document = value;
-    this.documentSubscription = value.subscribe(event => this.emit({kind: 'document', event}));
+    this.documentSubscription = value.subscribe(event => {
+      if (event.kind === 'selection' && !this.applyingRecoveredSelection) this.pendingSelection = [];
+      this.emit({kind: 'document', event});
+    });
     this.applySelection();
     this.emit({kind: 'replace'});
   }
@@ -104,8 +107,11 @@ export class DesignerSession {
     if (!this.pendingSelection?.length || !this._document) return;
     const known = new Set(this.document.value.nodes.map(node => node.id));
     const selection = this.pendingSelection.filter(id => known.has(id));
-    if (selection.length) this.document.select(selection);
-    if (final || selection.length === this.pendingSelection.length) this.pendingSelection = [];
+    if (selection.length) {
+      this.applyingRecoveredSelection = true;
+      try { this.document.select(selection); } finally { this.applyingRecoveredSelection = false; }
+    }
+    if (final) this.pendingSelection = [];
   }
 
   snapshot() {
