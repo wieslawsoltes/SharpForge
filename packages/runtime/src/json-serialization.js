@@ -1,5 +1,5 @@
 import {frameworkType} from '@sharpforge/framework';
-import {dictionaryEntries} from '@sharpforge/bcl-collections';
+import {dictionaryEntries, hashSetValues} from '@sharpforge/bcl-collections';
 import {ManagedFault, isReference} from './heap.js';
 import {JSON_DEPTH_LIMIT, JSON_NODE_LIMIT} from './json-limits.js';
 import {escapeJsonStrings} from './json-escaping.js';
@@ -28,7 +28,10 @@ export function serializeJson(platform, input) {
       const type = frameworkType(record.type);
       if (record.kind === 'box') return visit(record.data[0], depth + 1);
       if (record.kind === 'array') return record.data.map(item => visit(item, depth + 1));
-      if (type?.kind === 'bcl' && ['List', 'Queue', 'Stack', 'HashSet'].includes(type.family)) {
+      if (type?.kind === 'bcl' && type.family === 'HashSet') {
+        return Array.from(hashSetValues(platform, value), item => visit(item, depth + 1));
+      }
+      if (type?.kind === 'bcl' && ['List', 'Queue', 'Stack'].includes(type.family)) {
         const storage = platform.get(value, '$data');
         const data = storage ? platform.heap.get(storage).data : [];
         const count = platform.get(value, '$count');

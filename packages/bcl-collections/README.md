@@ -16,6 +16,8 @@ point; core does not depend on collections, framework or runtime.
 `dictionaryEntries(platform, reference)` yields managed `[key, value]` pairs in
 Dictionary enumeration order. Upper layers such as JSON serialization use this
 public traversal seam without depending on the collection's backing layout.
+`hashSetValues(platform, reference)` similarly yields managed HashSet values,
+including null, in physical slot order. Neither iterator unwraps managed values.
 
 Hosts supply the same explicit `bclHost`, managed heap, property access,
 allocation and write-notification services as core modules. Collection backing
