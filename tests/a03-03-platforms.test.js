@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { compileToIL } from '@sharpforge/compiler';
+import { VirtualMachine, CilVirtualMachine } from '@sharpforge/runtime';
 import { readPE, loadAssembly, PEMachine, CorFlags } from '@sharpforge/cil';
 
 for (const [platform, machine, magic, flags] of [
@@ -16,6 +17,14 @@ for (const [platform, machine, magic, flags] of [
     assert.equal(pe.flags, flags);
     assert.equal(pe.isLibrary, false);
     assert.equal(loadAssembly(compiled.assembly).entryPoint, compiled.image.entryPoint);
+    for (const Engine of [VirtualMachine, CilVirtualMachine]) {
+      const vm = new Engine(compiled.assembly);
+      try {
+        const result = vm.run();
+        assert.equal(result.state, 'terminated', result.fault?.message);
+        assert.equal(result.output, '42\n');
+      } finally { vm.stop(); }
+    }
   });
 }
 
