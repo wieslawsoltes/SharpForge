@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync, readdirSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {SourceText} from '@sharpforge/text';
 import {lex} from '@sharpforge/syntax';
@@ -10,6 +10,13 @@ import {
 export const corpusManifest = JSON.parse(readFileSync(new URL('./corpus.json', import.meta.url), 'utf8'));
 export const apiContract = JSON.parse(readFileSync(new URL('./api-contract.json', import.meta.url), 'utf8'));
 export const corpusFixtures = Object.freeze(corpusManifest.fixtures);
+
+export function corpusSourceInventory() {
+  return readdirSync(new URL('./corpus/', import.meta.url), {withFileTypes: true})
+    .filter(entry => entry.isDirectory()).flatMap(directory =>
+      readdirSync(new URL('./corpus/' + directory.name + '/', import.meta.url))
+        .filter(name => name.endsWith('.cs')).map(name => directory.name + '/' + name)).sort();
+}
 
 /** Fixture files are immutable input bytes, including CRLF, Unicode, and missing final newlines. */
 export function loadFixture(fixture) {
