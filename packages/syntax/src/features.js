@@ -205,10 +205,11 @@ const dedicatedDiagnostics = {
 };
 /**
  * Features whose syntax has another, older meaning below their version instead of being rejected: `[with(x)]` is a
- * collection holding a call to a method named `with` until C# 15. The parser decides by language version, so there
- * is no "feature not available" diagnostic to report for them.
+ * collection holding a call to a method named `with` until C# 15, and `field` in a property accessor is an ordinary
+ * identifier until C# 14. The parser decides by language version, so there is no "feature not available" diagnostic
+ * to report for them.
  */
-const olderMeanings = new Set(['CollectionExpressionArguments']);
+const olderMeanings = new Set(['CollectionExpressionArguments', 'FieldKeyword']);
 function build() {
   const rows = [];
   for (const [version, list] of table)

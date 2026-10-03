@@ -12,7 +12,9 @@ export const namespaceMethods = {
       members = [];
     this.namespaceBody(externs, usings, members, attributeLists, null, 'CompilationUnit');
     this.topLevelOrder([...externs, ...usings, ...attributeLists], members);
-    return this.n('CompilationUnit', externs, usings, attributeLists, members, this.take());
+    const unit = this.n('CompilationUnit', externs, usings, attributeLists, members, this.take());
+    this.fieldKeywordAmbiguity(unit);
+    return unit;
   },
   isExternAlias() {
     return this.at('extern') && this.isWord(this.peek(), 'alias') && this.isId(this.peek(2));

@@ -115,7 +115,7 @@ export const lambdaMethods = {
   lambdaParameter() {
     const attributeLists = this.at('[') ? this.lambdaAttributeLists() : null,
       firstModifier = this.i,
-      modifiers = this.parameterModifiers(),
+      modifiers = this.isSimpleLambdaScoped() ? [this.takeWord('scoped')] : this.parameterModifiers(),
       afterModifiers = this.i,
       untyped = this.isId() ? untypedParameterFollowers.has(this.peek().kind) : !this.canStartType(),
       type = untyped ? null : this.type(),
@@ -123,6 +123,7 @@ export const lambdaMethods = {
       equals = this.at('=') ? this.current : null,
       defaultValue = equals ? this.n('EqualsValueClause', this.take(), this.expression()) : null;
     this.lambdaParameterFeatures(firstModifier, afterModifiers, equals);
+    if (untyped && afterModifiers > firstModifier && !identifier.isMissing) this.simpleLambdaParameterModifiers(firstModifier);
     return this.n('Parameter', attributeLists, modifiers, type, identifier, defaultValue);
   }
 };

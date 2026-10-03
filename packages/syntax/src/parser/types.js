@@ -263,9 +263,13 @@ export const typeMethods = {
    * type where the list must scan as one) or false (an expression, where the spec lookahead decides).
    */
   simpleName(context) {
-    const identifier = this.id();
-    if (this.at('<') && this.isTypeArgumentListAhead(context)) return this.n('GenericName', identifier, this.typeArgumentList());
-    return this.n('IdentifierName', identifier);
+    const nameToken = this.current,
+      identifier = this.id();
+    if (!this.at('<') || !this.isTypeArgumentListAhead(context)) return this.n('IdentifierName', identifier);
+    const open = this.i,
+      typeArguments = this.typeArgumentList();
+    if (context === false) this.unboundGenericName(nameToken, open);
+    return this.n('GenericName', identifier, typeArguments);
   },
   isTypeArgumentListAhead(context) {
     if (context === 'definite') return true;
