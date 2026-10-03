@@ -668,7 +668,8 @@
       "input": "examples/templates/console-library-solution/ConsoleLibrarySolutionExample/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1501: No overload for method 'Add' takes 2 arguments"
+        "CS0103: The name 'Calculator' does not exist in the current context",
+        "CS0234: The type or namespace name 'Core' does not exist in the namespace 'TemplateExamples.ConsoleLibrarySolution' (are you missing an assembly reference?)"
       ]
     },
     {
@@ -829,9 +830,8 @@
       "input": "examples/templates/winui-library-solution/WinuiLibrarySolutionExample/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0246: The type or namespace name 'CardControl' could not be found (are you missing a using directive or an assembly reference?)",
-        "CS1061: 'CardControl' does not contain a definition for 'View' and no accessible extension method 'View' accepting a first argument of type 'CardControl' could be found (are you missing a using directive or an assembly reference?)",
-        "CS1501: No overload for method 'SetCaption' takes 1 arguments"
+        "CS0234: The type or namespace name 'Controls' does not exist in the namespace 'TemplateExamples.WinuiLibrarySolution' (are you missing an assembly reference?)",
+        "CS0246: The type or namespace name 'CardControl' could not be found (are you missing a using directive or an assembly reference?)"
       ]
     },
     {
