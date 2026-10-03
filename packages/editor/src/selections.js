@@ -43,7 +43,7 @@ export function transformOffset(offset, edits, affinity = 'right') {
     const end = edit.end ?? edit.start + edit.deleteCount;
     const inserted = edit.text.length;
     if (offset < edit.start || offset === edit.start && affinity === 'left') break;
-    if (offset <= end) return edit.start + delta + (affinity === 'right' ? inserted : 0);
+    if (offset < end) return edit.start + delta + (affinity === 'right' ? inserted : 0);
     delta += inserted - (end - edit.start);
   }
   return offset + delta;
