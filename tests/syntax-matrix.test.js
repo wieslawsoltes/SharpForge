@@ -9,7 +9,7 @@ import { fixtureRoot, filesUnder, repoRoot } from './support/syntax-reference.js
 // cleanly at the introducing version) and rejected.cs (the same construct one version too low, with the expected code and
 // span in its first line). Every feature the lexer or parser records must have both fixtures; rows that only the binder
 // can gate are listed in the conformance report as not syntax-gated.
-const matrix = join(fixtureRoot, 'matrix'), directoryOf = row => join(matrix, row.preview ? 'preview' : String(row.version), row.id);
+const matrix = join(fixtureRoot, 'matrix'), directoryOf = row => join(matrix, row.preview ? '15-preview' : String(row.version), row.id);
 const recorded = new Set();
 for (const file of filesUnder(join(repoRoot, 'packages/syntax/src'), name => name.endsWith('.js'))) for (const match of readFileSync(file, 'utf8').matchAll(/feature\('([A-Za-z0-9]+)'|features\.push\('([A-Za-z0-9]+)'|functionBody\('([A-Za-z0-9]+)'|\? '(ObjectInitializer)' : '(CollectionInitializer)'|\? '(StringEscapeCharacter)'/g)) for (const id of match.slice(1)) if (id) recorded.add(id);
 const report = { generated: 'tests/syntax-matrix.test.js', rows: [] };

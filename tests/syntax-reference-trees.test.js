@@ -6,8 +6,8 @@ import { matchesGrammar, isNodeKind, isTokenKind, isTriviaKind } from '@sharpfor
 import { fixtureRoot, filesUnder, loadReferenceFixture, compareWithReference } from './support/syntax-reference.js';
 
 // SF-A01-T01.5 / T05 / T06: every fixture with a pinned Roslyn dump must produce the same tree - node and token kinds,
-// spans, trivia attachment, token values and error codes. Preview-only syntax has no Roslyn counterpart and is skipped.
-const fixtures = filesUnder(fixtureRoot).filter(file => existsSync(file + '.json') && !file.includes('/matrix/preview/'));
+// spans, trivia attachment, token values and error codes. Preview syntax the pinned Roslyn build does not parse has no dump.
+const fixtures = filesUnder(fixtureRoot).filter(file => existsSync(file + '.json'));
 test('reference: fixtures and dumps are present and pinned to one Roslyn build', () => {
   assert(fixtures.length >= 100, `expected at least 100 reference fixtures, found ${fixtures.length}`);
   const versions = new Set(fixtures.map(file => JSON.parse(readFileSync(file + '.json', 'utf8')).roslyn));
