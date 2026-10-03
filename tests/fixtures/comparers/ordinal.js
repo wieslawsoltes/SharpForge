@@ -35,5 +35,5 @@ export function ordinalInterfaceAssembly() {
     writer.op('call', ordinal).op('isinst', context.resolve(interfaceName)).op('ldnull').op('cgt.un').op('call', writeBool);
     writer.op('call', ordinal).op('castclass', context.resolve(interfaceName)).op('ldnull'); text('');
     writer.op('callvirt', compare).op('ldc.i4.0').op('clt').op('call', writeBool).op('ret');
-  }]});
+  }}]});
 }
