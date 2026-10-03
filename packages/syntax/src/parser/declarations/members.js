@@ -7,6 +7,8 @@ export const memberMethods = {
   },
   /** Any member of a class, struct or interface, including nested type declarations. `owner` is the enclosing type name. */
   memberDeclaration(owner) {
+    this.memberStart = this.i;
+    this.memberErrors = this.diagnostics.length;
     const attributeLists = this.attributeLists(),
       modifiers = this.modifiers();
     return this.typeLikeDeclaration(attributeLists, modifiers) ?? this.memberDeclarationAfterModifiers(attributeLists, modifiers, owner);
@@ -42,7 +44,9 @@ export const memberMethods = {
       return this.indexerDeclaration(attributeLists, modifiers, type, explicit);
     }
     if (!this.isId()) {
-      this.error(this.current, 'CS1519', `Invalid token '${this.current.text}' in class, record, struct, or interface member declaration`);
+      // An incomplete member that already carries an error (a missing type, say) reports nothing more, as in Roslyn.
+      if (explicit || this.diagnostics.length === this.memberErrors)
+        this.error(this.current, 'CS1519', `Invalid token '${this.current.text}' in class, record, struct, or interface member declaration`);
       return explicit
         ? this.n('PropertyDeclaration', attributeLists, modifiers, type, explicit, this.cache.missing('IdentifierToken'), null, null, null, null)
         : this.n('IncompleteMember', attributeLists, modifiers, type);
@@ -55,6 +59,7 @@ export const memberMethods = {
     }
     if (this.at('{') || this.at('=>')) {
       this.partialMember(modifiers, 'PropertyDeclaration', nameToken);
+      if (attributeLists.length) this.backingFieldAttributes(this.memberStart);
       return this.propertyDeclaration(attributeLists, modifiers, type, explicit, identifier);
     }
     if (explicit) {
@@ -65,9 +70,17 @@ export const memberMethods = {
       'FieldDeclaration',
       attributeLists,
       modifiers,
-      this.n('VariableDeclaration', type, this.variableDeclarators(identifier)),
+      this.n('VariableDeclaration', type, this.fieldDeclarators(identifier)),
       this.expect(';')
     );
+  },
+  /** The declarators of a field, whose initializers are a restricted scope for expression variables (C# 7.3). */
+  fieldDeclarators(first) {
+    const saved = this.restrictedVariables;
+    this.restrictedVariables = true;
+    const declarators = this.variableDeclarators(first);
+    this.restrictedVariables = saved;
+    return declarators;
   },
   /** Declarators of a field or local: `a = 1, b, c[10]`. `first` is an already consumed identifier. */
   variableDeclarators(first) {
@@ -118,52 +131,5 @@ export const memberMethods = {
     } finally {
       this.inAsync = saved;
     }
-  },
-  /** A block body, an expression body (`=> e;`) or a bare semicolon: returns [body, expressionBody, semicolonToken]. */
-  functionBody(feature) {
-    if (this.at('{')) return [this.block(), null, this.match(';')];
-    if (this.at('=>')) {
-      if (feature) this.feature(feature, this.current);
-      const arrow = this.take();
-      return [null, this.n('ArrowExpressionClause', arrow, this.expressionOrRef()), this.expect(';')];
-    }
-    return [null, null, this.expect(';')];
-  },
-  parameterList() {
-    const open = this.expect('('),
-      parameters = this.parameters(')');
-    return this.n('ParameterList', open, parameters, this.expect(')'));
-  },
-  bracketedParameterList() {
-    const open = this.expect('['),
-      parameters = this.parameters(']');
-    return this.n('BracketedParameterList', open, parameters, this.expect(']'));
-  },
-  parameters(close) {
-    const list = [];
-    while (!this.at(close) && !this.at('eof')) {
-      const before = this.i;
-      list.push(this.parameter());
-      if (this.at(',')) list.push(this.take());
-      else break;
-      if (before === this.i) break;
-    }
-    return list;
-  },
-  parameter() {
-    const attributeLists = this.attributeLists(),
-      modifiers = this.parameterModifiers();
-    if (this.at('__arglist')) return this.n('Parameter', attributeLists, modifiers, null, this.take(), null);
-    const type = this.type(),
-      identifier = this.id();
-    if (this.at('=')) this.feature('OptionalParameter', this.current);
-    return this.n(
-      'Parameter',
-      attributeLists,
-      modifiers,
-      type,
-      identifier,
-      this.at('=') ? this.n('EqualsValueClause', this.take(), this.expression()) : null
-    );
   }
 };

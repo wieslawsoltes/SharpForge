@@ -26,7 +26,7 @@ export function scanScriptDirective(marker, name, rest, context, features = []) 
       parts = /^(\S+)(?:\s+([\s\S]*))?$/.exec(content),
       diagnostics = [];
     if (context.fileBasedProgram === false)
-      diagnostics.push(['CS9298', "'#:' directives can be only used in file-based programs ('-features:FileBasedProgram')"]);
+      diagnostics.push(['CS9298', "'#:' directives can be only used in file-based programs ('-features:FileBasedProgram')", undefined, [1, 1]]);
     if (context.seenToken) diagnostics.push(['CS9297', "'#:' directives cannot be after first token in file"]);
     if (context.afterIf) diagnostics.push(['CS9299', "'#:' directives cannot be after '#if' directive"]);
     return {

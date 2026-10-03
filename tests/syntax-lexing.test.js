@@ -152,7 +152,7 @@ test('directives: shebang, #: and script-only directives', () => {
 });
 // ---- SF-A01-T04.11 / B03: keywords ----------------------------------------------------------------------------------
 test('keywords: reserved and contextual tables match Roslyn SyntaxFacts', () => {
-  const dumps = filesUnder(fixtureRoot, name => name.endsWith('.json') && name !== 'roslyn-features.json'), seen = new Map();
+  const dumps = filesUnder(fixtureRoot, name => name.endsWith('.cs.json')), seen = new Map();
   const visit = node => { if (Array.isArray(node[3])) node[3].forEach(visit); else if (/Keyword$|^UnderscoreToken$/.test(node[0]) && node[3]) seen.set(node[3], node[0]); };
   for (const file of dumps) visit(JSON.parse(readFileSync(file, 'utf8')).tree);
   assert(seen.size > 100, String(seen.size));
@@ -167,7 +167,7 @@ test('B03: goto is a keyword and never a local declaration', () => {
     const result = compile('int i = 0; ' + source); assert(!result.diagnostics.some(d => d.code === 'CS0246'), JSON.stringify(result.diagnostics.map(d => d.code))); assert(result.diagnostics.every(d => d.code !== 'CS1003' && d.code !== 'CS1525'));
   }
   const tree = SyntaxTree.parseText('goto L; goto case 1 + 2; goto default;'); assert.deepEqual(tree.getDiagnostics(), []); assert.deepEqual(tree.root.members.map(m => m.statement.kind), ['GotoStatement', 'GotoCaseStatement', 'GotoDefaultStatement']);
-  assert.deepEqual(parse('L: goto L;').root.statements[0].body.kind, 'GotoStatement'); assert(compile('L: goto L;').diagnostics.some(d => d.code === 'SF2099' && /GotoStatement/.test(d.message)));
+  assert.deepEqual(parse('L: goto L;').root.statements[0].body.kind, 'GotoStatement'); assert.equal(compile('L: goto L;').success, true, 'a goto to a label is compiled as a jump');
 });
 // ---- SF-A01-T04.12 / B01: operators ---------------------------------------------------------------------------------
 test('operators: every punctuation token, split > tokens and the precedence table', () => {

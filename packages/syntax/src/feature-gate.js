@@ -5,7 +5,7 @@ import { previewRevisions } from './preview-revisions.js';
 /** Parser-side feature availability: maps a feature use and a target LangVersion to Roslyn's "feature not available" diagnostics. */
 const resolve = version => (typeof version === 'object' && version ? version : (parseLanguageVersion(version) ?? parseLanguageVersion('default')));
 /**
- * Returns { code, message } when `featureId` is unavailable at `version`, otherwise null.
+ * Returns { code, message, severity? } when `featureId` is unavailable at `version`, otherwise null.
  * Released features report CS8022-CS8026, CS8059, CS8107, CS8302, CS8320, CS8370, CS8400, CS8773, CS8936, CS9058,
  * CS9202 or CS9260 according to the selected version; preview features report CS8652 with their pinned revision.
  */
@@ -23,6 +23,8 @@ export function featureAvailability(featureId, version) {
   if (selected.number >= feature.version) return null;
   const selectedName = displayLanguageVersion(selected.number);
   const requiredName = displayLanguageVersion(feature.version);
+  if (feature.dedicatedMessage)
+    return { code: feature.code, severity: feature.severity, message: feature.dedicatedMessage.replace('{0}', selectedName) };
   return {
     code: featureNotAvailableCode(selected.number),
     message: `Feature '${feature.name}' is not available in C# ${selectedName}. Please use language version ${requiredName} or greater.`
@@ -48,7 +50,7 @@ export function checkFeatures(source, uses, version) {
       key = use.id + ':' + use.start;
     if (!result || seen.has(key)) continue;
     seen.add(key);
-    diagnostics.push(diagnostic(source, use.start, Math.max(1, use.end - use.start), result.code, result.message));
+    diagnostics.push(diagnostic(source, use.start, Math.max(1, use.end - use.start), result.code, result.message, result.severity));
   }
   return diagnostics;
 }
