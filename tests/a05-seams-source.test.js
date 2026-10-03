@@ -29,7 +29,7 @@ test('source builtin seam: numeric overloads and midpoint rounding work without 
     ['Math.Round', [2.5], 2], ['Math.Round', [3.5], 4], ['Math.Round', [-1.5], -2],
     ['Convert.ToInt32', [2.5], 2], ['Convert.ToInt32', [-1.5], -2],
     ['Convert.ToInt32', [2147483647], 2147483647], ['Convert.ToInt32', [-2147483648], -2147483648]
-  ]) assert.equal(invoke(vm, name, ...args), expected, name);
+  ]) assert.equal(vm.value(invoke(vm, name, ...args)), expected, name);
   for (const [name, value] of [['$Math.Abs.Int32', -2147483648], ['Convert.ToInt32', 2147483648], ['Convert.ToInt32', NaN], ['Convert.ToInt32', Infinity]]) {
     assert.throws(() => invoke(vm, name, value), {name: 'OverflowException'});
   }
@@ -245,8 +245,8 @@ test('source EH seam: unhandled allocation failures preserve the original manage
   vm.handleFault(fault);
   assert.equal(vm.state, 'faulted');
   assert.equal(vm.fault, fault);
-  assert.deepEqual(fault.frames, [{method: 'Test.Main', point: null}]);
-  assert.equal(vm.frames.length, 0);
+  assert.deepEqual(fault.frames, [{method: 'Test.Main', methodId: 0, instruction: 5, point: null}]);
+  assert.equal(vm.frames.length, 1); // First-pass failure retains the throwing frame for inspection.
 });
 
 test('source VM dispatch uses extracted operations while return and rethrow cleanup remain ordered', () => {
