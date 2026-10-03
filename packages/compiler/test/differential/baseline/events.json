@@ -1,4 +1,0 @@
-{
-  "events/event-accessors": ["diagnostics", "warnings", "bytecode", "cil"],
-  "events/field-like-events": ["diagnostics", "warnings", "bytecode", "cil"]
-}

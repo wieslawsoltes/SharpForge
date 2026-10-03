@@ -1,9 +1,0 @@
-{
-  "schemaVersion": 1,
-  "area": "A28",
-  "nodeGlobs": [],
-  "browserScripts": [],
-  "requiredServices": [],
-  "timeout": 300000,
-  "tags": []
-}

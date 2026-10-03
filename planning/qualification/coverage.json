@@ -1,7 +1,0 @@
-{
-  "schemaVersion": 1,
-  "status": "not-run",
-  "qualification": "unknown",
-  "areas": [],
-  "reason": "Per-area package coverage has not been measured at this revision. Run scripts/conformance/coverage.js during the planned qualification batch."
-}
