@@ -1,11 +1,23 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {CilVirtualMachine} from '@sharpforge/runtime';
-import {codedIndex, Writer} from '@sharpforge/cil';
+import {codedIndex, Writer, normalizeCallType, substituteCallType} from '@sharpforge/cil';
 import {controlFixture, genericInstance} from './support/control-fixture.js';
 import {
   instantiatedMethod, captureGenericInstantiations, restoreGenericInstantiations, validateGenericInstantiations
 } from '../packages/runtime/src/execution/generics.js';
+
+test('T02.3 signature aliases preserve generated metadata names', () => {
+  for (const name of ['<>Cell(System.Exception)', '<>Cell(System.Int32)', 'User.System.Exception']) {
+    assert.equal(normalizeCallType(name), name);
+    assert.equal(normalizeCallType(name + '[]&'), name + '[]&');
+  }
+  assert.equal(normalizeCallType('Box`2<System.Exception, System.Int32[,][]>'), 'Box`2<Exception,int[,][]>');
+  assert.equal(normalizeCallType('System.Int32& modreq(System.Runtime.InteropServices.InAttribute)'),
+    'int& modreq(System.Runtime.InteropServices.InAttribute)');
+  assert.equal(substituteCallType('Box`2<!0, !!0[]>', ['<>Cell(System.Exception)'], ['System.Int32']),
+    'Box`2<<>Cell(System.Exception),int[]>');
+});
 
 function identityFixture() {
   return controlFixture([{name: 'Program', methods: [
