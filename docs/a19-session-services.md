@@ -46,6 +46,10 @@ root does not prevent a later root from launching. Unknown dependencies and cycl
 produce explicit errors. Cancellation terminates the affected compiler worker,
 which also interrupts synchronous compiler work.
 
+Without a custom snapshot provider, project build snapshots read current document
+text and versions instead of the original descriptor text. Concurrent launch
+operations share the project's build queue while retaining separate app workers.
+
 Document factories receive `{viewId,onChange,onFocus}` and return
 `{editor,element}`. `DocumentService` synchronizes all views of one document while
 retaining independent selection and scroll snapshots. It rejects dirty closes;
@@ -112,9 +116,13 @@ Exports contain neither network grants nor environment values. Browser CSP and
 server CORS still determine whether an otherwise granted request can complete.
 
 The current runtime worker does not implement live policy replacement, native
-process attachment, or operating-system environment injection. Profile arguments
-and environment are passed to the explicit host launch adapter; a host must state
-which launch targets consume them. Detach disables source/data/exception break
+process attachment, or operating-system environment injection. Managed IL supports
+profile arguments. Source VM arguments and per-app environments require an explicit
+`launchCapabilities(projectId, profile, built, launch)` host callback returning the
+supported `arguments` and `environment` flags. Unsupported nonempty options fail
+with `LAUNCH_CAPABILITY` before application launch. `launchOptions` supplies the
+actual target settings; capability flags must match that implementation.
+Detach disables source/data/exception break
 handling and continues the selected managed browser process; it is not OS process
 detachment. Renderer metrics identify the actual backend rather than claiming that
 a fallback rendered through WebGPU.

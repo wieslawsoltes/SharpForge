@@ -115,3 +115,58 @@ test('workbench disposal terminates every owned worker without closing another w
   second.dispose();
   assert.equal(fake.workers.every(worker => worker.terminated), true);
 });
+
+test('default build snapshots use current shared document revisions without changing source descriptors', async () => {
+  const record = { uri: 'A.cs', text: 'before', version: 1 };
+  const fake = fakeWorkers(message => message.method === 'build' ? compileResult() : { ok: true });
+  const workbench = createWorkbenchServices({ workerFactory: fake.factory, records: [record], projects: [{ id: 'A', files: [record] }] });
+  workbench.documents.update('A.cs', 'after');
+  await workbench.builds.get('A').build();
+  assert.equal(fake.workers[0].requests[0].params.files[0].text, 'after');
+  assert.equal(fake.workers[0].requests[0].params.files[0].version, 2);
+  assert.equal(record.text, 'before');
+  workbench.dispose();
+});
+
+test('unsupported launch profile options fail explicitly while managed IL arguments remain supported', async () => {
+  const fake = fakeWorkers((message, worker) => message.method === 'build' ? compileResult() : fakeRuntime(message, worker));
+  const workbench = createWorkbenchServices({ workerFactory: fake.factory, projects: [projects[2]] });
+  workbench.profiles.set('B', { id: 'args', arguments: ['one'] });
+  const unsupported = await workbench.launches.startNewInstance('B', { profile: 'args' });
+  assert.equal(unsupported.failed[0].error.code, 'LAUNCH_CAPABILITY');
+  assert.equal(workbench.sessions.list().length, 0);
+  const supported = await workbench.launches.startNewInstance('B', { profile: 'args', managedIL: true });
+  assert.equal(supported.started.length, 1);
+  assert.deepEqual(workbench.sessions.get(supported.started[0]).lastLaunch.arguments, ['one']);
+  workbench.profiles.set('B', { id: 'env', environment: { TEST_VALUE: 'one' } });
+  const environment = await workbench.launches.startNewInstance('B', { profile: 'env', managedIL: true });
+  assert.equal(environment.failed[0].error.code, 'LAUNCH_CAPABILITY');
+  assert.equal(workbench.sessions.get(supported.started[0]).live, true);
+  workbench.dispose();
+});
+
+test('concurrent starts queue one shared project build and keep independent application instances', async () => {
+  let buildCount = 0;
+  const fake = fakeWorkers((message, worker) => {
+    if (message.method !== 'build') return fakeRuntime(message, worker);
+    buildCount++;
+    return compileResult();
+  });
+  const workbench = createWorkbenchServices({ workerFactory: fake.factory, projects: [projects[2]] });
+  const results = await Promise.all([workbench.launches.startNewInstance('B'), workbench.launches.startNewInstance('B')]);
+  assert.equal(buildCount, 1);
+  assert.equal(results.every(result => result.started.length === 1 && result.failed.length === 0), true);
+  assert.notEqual(results[0].started[0], results[1].started[0]);
+  workbench.dispose();
+});
+
+test('failed startup preference storage leaves the previous configuration intact', () => {
+  let refuse = false;
+  const startup = new StartupConfiguration({ getProjects: () => projects, save: () => { if (refuse) throw new Error('storage failed'); } });
+  startup.select('A');
+  const previous = startup.serialize();
+  refuse = true;
+  assert.throws(() => startup.select('B'), /storage failed/);
+  assert.equal(startup.serialize(), previous);
+  startup.dispose();
+});

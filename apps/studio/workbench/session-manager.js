@@ -1,5 +1,5 @@
 import { AppSession } from './app-session.js';
-import { WorkbenchEvents, workbenchError } from './state-events.js';
+import { WorkbenchEvents, requireIdentifier, workbenchError } from './state-events.js';
 
 /** Selection is explicit; background events never select another application. */
 export class SessionManager {
@@ -34,13 +34,19 @@ export class SessionManager {
 
   create(descriptor, { activate = true } = {}) {
     if (this.disposed) throw workbenchError('SESSIONS_DISPOSED', 'Session manager is disposed');
+    requireIdentifier(descriptor.projectId, 'Project id');
+    let id = descriptor.id;
+    if (id === undefined) {
+      do { id = `app-${++this.nextId}`; } while (this.sessions.has(id));
+    }
+    requireIdentifier(id, 'Application id');
+    if (this.sessions.has(id)) throw new Error(`Duplicate application session '${id}'`);
     if (this.sessions.size >= this.maxSessions) {
-      const retired = this.list().find(session => session.ended && session.id !== this.activeId);
+      const ended = this.list().filter(session => session.ended && !session.live);
+      const retired = ended.find(session => session.id !== this.activeId) ?? ended[0];
       if (retired) this.remove(retired.id);
     }
     if (this.sessions.size >= this.maxSessions) throw workbenchError('SESSION_LIMIT', `The ${this.maxSessions}-application session limit is reached`);
-    const id = descriptor.id ?? `app-${++this.nextId}`;
-    if (this.sessions.has(id)) throw new Error(`Duplicate application session '${id}'`);
     const session = new AppSession({ ...descriptor, id }, this.options);
     this.sessions.set(id, session);
     this.subscriptions.set(id, session.subscribe(event => this.receive(session, event)));
@@ -76,6 +82,7 @@ export class SessionManager {
     this.subscriptions.delete(id);
     session.dispose();
     this.sessions.delete(id);
+    this.options.output?.remove(session.channelId);
     this.recent = this.recent.filter(value => value !== id);
     if (this.activeId === id) this.setActive(this.recent.at(-1) ?? null);
     this.events.emit({ type: 'removed', session, appId: id, projectId: session.projectId });

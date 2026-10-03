@@ -3,8 +3,9 @@ import { projectBuildOrder } from './build-queue.js';
 
 /** Independent startup roots may fail separately; dependencies always build before their roots. */
 export class LaunchOrchestrator {
-  constructor({ builds, sessions, startup, profiles, breakpoints, output, onApplication, launchOptions = () => ({}) }) {
-    Object.assign(this, { builds, sessions, startup, profiles, breakpoints, output, onApplication, launchOptions });
+  constructor({ builds, sessions, startup, profiles, breakpoints, output, queue, onApplication,
+    launchOptions = () => ({}), launchCapabilities = () => ({}) }) {
+    Object.assign(this, { builds, sessions, startup, profiles, breakpoints, output, queue, onApplication, launchOptions, launchCapabilities });
     this.events = new WorkbenchEvents();
     this.operations = new Map();
     this.nextId = 0;
@@ -13,8 +14,11 @@ export class LaunchOrchestrator {
   subscribe(listener, options) { return this.events.subscribe(listener, options); }
 
   async start({ debug = true, currentProjectId, entries, signal, activate = true, ...overrides } = {}) {
+    if (this.operations.size >= 128) throw workbenchError('LAUNCH_QUEUE_LIMIT', 'Launch operation limit reached');
     const targets = entries ?? this.startup.resolve({ debug, currentProjectId });
-    if (!targets.length) throw workbenchError('STARTUP_EMPTY', 'Choose at least one startup project');
+    if (!Array.isArray(targets) || !targets.length || targets.length > 1024) {
+      throw workbenchError('STARTUP_EMPTY', 'Choose between one and 1024 startup projects');
+    }
     const controller = new AbortController();
     const id = `launch:${++this.nextId}`;
     const operation = { id, controller, targets };
@@ -33,11 +37,14 @@ export class LaunchOrchestrator {
             if (controller.signal.aborted) throw abortError(controller.signal.reason);
             if (!buildResults.has(projectId)) {
               try {
-                buildResults.set(projectId, await this.builds.get(projectId).build({ signal: controller.signal, background: !activate }));
+                const build = () => this.builds.get(projectId).build({ signal: controller.signal, background: !activate });
+                const result = this.queue ? await this.queue.runProject(projectId, operation, build) : await build();
+                buildResults.set(projectId, result);
               } catch (error) { buildResults.set(projectId, { success: false, error }); }
             }
             if (!buildResults.get(projectId).success) {
-              throw workbenchError('STARTUP_BUILD_FAILED', `Cannot start '${target.projectId}': build '${projectId}' failed`, buildResults.get(projectId).error);
+              const message = `Cannot start '${target.projectId}': build '${projectId}' failed`;
+              throw workbenchError('STARTUP_BUILD_FAILED', message, buildResults.get(projectId).error);
             }
           }
           if (controller.signal.aborted) throw abortError(controller.signal.reason);
@@ -72,8 +79,7 @@ export class LaunchOrchestrator {
       if (options.signal?.aborted) throw abortError(options.signal.reason);
       const { signal, ...launchOverrides } = options;
       const debugging = options.debug !== false && target.debug !== false && target.action !== 'startWithoutDebugging';
-      await this.onApplication?.(session);
-      await session.launch({
+      const launch = {
         assembly: built.assembly,
         pdb: built.pdb,
         ...this.profiles.launchOptions(target.projectId, target.profile),
@@ -82,7 +88,17 @@ export class LaunchOrchestrator {
         debug: debugging,
         breakpoints: this.breakpoints?.forProject(target.projectId) ?? providerOptions.breakpoints ?? {},
         stopOnEntry: debugging && (options.stopOnEntry ?? profile.stopOnEntry)
-      }, { signal });
+      };
+      const capabilities = await this.launchCapabilities(target.projectId, profile, built, launch);
+      if (launch.arguments?.length && !(capabilities.arguments ?? launch.managedIL)) {
+        throw workbenchError('LAUNCH_CAPABILITY', 'This launch target does not support program arguments');
+      }
+      if (Object.keys(launch.environment ?? {}).length && !capabilities.environment) {
+        throw workbenchError('LAUNCH_CAPABILITY', 'This launch target does not support a per-application environment');
+      }
+      if (signal?.aborted) throw abortError(signal.reason);
+      await this.onApplication?.(session);
+      await session.launch(launch, { signal });
       return session;
     } catch (error) {
       this.sessions.remove(session.id);

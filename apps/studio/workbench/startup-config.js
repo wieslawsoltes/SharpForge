@@ -54,10 +54,11 @@ export class StartupConfiguration {
       return { projectId, action, order, profile: entry.profile ?? 'default' };
     });
     next.sort((left, right) => left.order - right.order || left.projectId.localeCompare(right.projectId));
+    const ordered = next.map((entry, order) => ({ ...entry, order }));
+    const value = { version: 1, mode, entries: ordered.map(entry => ({ ...entry })) };
+    this.save?.(structuredClone(value));
     this.mode = mode;
-    this.entries = next.map((entry, order) => ({ ...entry, order }));
-    const value = this.snapshot();
-    this.save?.(value);
+    this.entries = ordered;
     this.events.emit({ type: 'startup', value });
     return value;
   }
