@@ -3,6 +3,7 @@ import { writePE } from '../pe.js';
 import { CilError } from '../binary.js';
 import { strongNameOptions, reserveStrongName } from '../pe/strong-name.js';
 import { writeManagedResources } from '../pe/managed-resources.js';
+import { linkAssemblyModules } from '../pe/module-linker.js';
 
 /** Canonical source-emitter PE options; method RVAs use the fixed .text address. */
 export function emissionPEOptions(image, options, framework) {
@@ -15,7 +16,8 @@ export function emissionPEOptions(image, options, framework) {
     subsystem: options.subsystem ?? (outputKind === 'windows' ? 'windows' : 'console'),
     prefer32Bit: options.prefer32Bit ?? false, nativeEntryStub: framework === 'mscorlib4' && outputKind !== 'netmodule',
     strongName: strongNameOptions(options), deterministic: options.deterministic ?? true,
-    managedResources: options.managedResources ?? [], win32Resources: options.win32Resources };
+    managedResources: options.managedResources ?? [], win32Resources: options.win32Resources,
+    linkedModules: options.linkedModules === undefined ? [] : options.linkedModules };
   peOptions(value);
   return value;
 }
@@ -33,6 +35,7 @@ export function debugPEOptions(options) {
 
 /** Finish metadata and PE sections after all method RVAs have been assigned. */
 export function finishEmittedPE({ section, metadata, debug, includeDebug, entryToken, options }) {
+  linkAssemblyModules(metadata, options.linkedModules);
   const resourceBytes = writeManagedResources(options.managedResources, metadata);
   let resources;
   if (resourceBytes.length) {
