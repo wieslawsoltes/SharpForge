@@ -1,0 +1,99 @@
+{
+  "roslyn": "5.3.0.0",
+  "informationalVersion": "5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a",
+  "options": "OutputKind.ConsoleApplication, LanguageVersion.Latest, core library MiniStandard.dll only",
+  "assemblies": {
+    "Consumer.Lib1.dll": {
+      "bytes": 2560,
+      "identity": "Consumer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f"
+    },
+    "Consumer.Lib2.dll": {
+      "bytes": 2560,
+      "identity": "Consumer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f"
+    },
+    "Facade.dll": {
+      "bytes": 2560,
+      "identity": "Facade, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f"
+    },
+    "FacadeConsumer.dll": {
+      "bytes": 2560,
+      "identity": "FacadeConsumer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f"
+    },
+    "Lib.1.0.0.0.dll": {
+      "bytes": 2560,
+      "identity": "Lib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f"
+    },
+    "Lib.1.0.0.0.other.dll": {
+      "bytes": 2560,
+      "identity": "Lib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f"
+    },
+    "Lib.1.0.0.5.dll": {
+      "bytes": 2560,
+      "identity": "Lib, Version=1.0.0.5, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f"
+    },
+    "Lib.2.0.0.0.dll": {
+      "bytes": 2560,
+      "identity": "Lib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f"
+    },
+    "Weak.1.0.0.0.dll": {
+      "bytes": 2048,
+      "identity": "Weak, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+    },
+    "Weak.2.0.0.0.dll": {
+      "bytes": 2048,
+      "identity": "Weak, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null"
+    }
+  },
+  "results": {
+    "match/exact-version": [],
+    "unify/higher-major-version": [
+      ["CS1701",-1,0,"warning","Assuming assembly reference 'Lib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f' used by 'Consumer' matches identity 'Lib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f' of 'Lib', you may need to supply runtime policy"]
+    ],
+    "unify/higher-build-version": [
+      ["CS1702",-1,0,"warning","Assuming assembly reference 'Lib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f' used by 'Consumer' matches identity 'Lib, Version=1.0.0.5, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f' of 'Lib', you may need to supply runtime policy"]
+    ],
+    "unify/lower-version": [
+      ["CS1705",-1,0,"error","Assembly 'Consumer' with identity 'Consumer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f' uses 'Lib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f' which has a higher version than referenced assembly 'Lib' with identity 'Lib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f'"]
+    ],
+    "unify/member-signature": [
+      ["CS1701",-1,0,"warning","Assuming assembly reference 'Lib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f' used by 'Consumer' matches identity 'Lib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f' of 'Lib', you may need to supply runtime policy"]
+    ],
+    "unify/unused-dependency": [],
+    "duplicate/same-identity-different-content": [],
+    "duplicate/strong-different-versions": [
+      ["CS0433",47,6,"error","The type 'Widget' exists in both 'Lib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f' and 'Lib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f'"],
+      ["CS0433",71,6,"error","The type 'Widget' exists in both 'Lib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f' and 'Lib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f'"]
+    ],
+    "duplicate/weak-different-versions": [
+      ["CS1704",-1,0,"error","An assembly with the same simple name 'Weak' has already been imported. Try removing one of the references (e.g. 'Weak.1.0.0.0.dll') or sign them to enable side-by-side."]
+    ],
+    "missing/base-type": [
+      ["CS0012",92,4,"error","The type 'Widget' is defined in an assembly that is not referenced. You must add a reference to assembly 'Lib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f'."],
+      ["CS1061",92,4,"error","'Holder' does not contain a definition for 'Size' and no accessible extension method 'Size' accepting a first argument of type 'Holder' could be found (are you missing a using directive or an assembly reference?)"]
+    ],
+    "missing/member-signature": [
+      ["CS0012",88,6,"error","The type 'Widget' is defined in an assembly that is not referenced. You must add a reference to assembly 'Lib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f'."]
+    ],
+    "missing/not-used": [],
+    "alias/two-versions": [],
+    "alias/not-in-global": [
+      ["CS0246",43,3,"error","The type or namespace name 'Lib' could not be found (are you missing a using directive or an assembly reference?)"]
+    ],
+    "alias/unknown": [
+      ["CS0430",13,7,"error","The extern alias 'Missing' was not specified in a /reference option"]
+    ],
+    "alias/global-and-named": [],
+    "alias/different-types-do-not-convert": [
+      ["CS0029",106,24,"error","Cannot implicitly convert type 'Lib.Widget [Lib.2.0.0.0.dll]' to 'Lib.Widget [Lib.1.0.0.0.dll]'"]
+    ],
+    "forward/followed-to-destination": [],
+    "forward/through-the-facade-name": [],
+    "forward/destination-missing": [
+      ["CS0012",94,4,"error","The type 'Widget' is defined in an assembly that is not referenced. You must add a reference to assembly 'Lib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f'."],
+      ["CS1061",94,4,"error","'Shelf' does not contain a definition for 'Size' and no accessible extension method 'Size' accepting a first argument of type 'Shelf' could be found (are you missing a using directive or an assembly reference?)"]
+    ],
+    "forward/destination-missing-by-name": [
+      ["CS1069",47,6,"error","The type name 'Widget' could not be found in the namespace 'Lib'. This type has been forwarded to assembly 'Lib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6fb757bd459e5e1f' Consider adding a reference to that assembly."]
+    ]
+  }
+}

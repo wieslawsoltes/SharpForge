@@ -45,10 +45,10 @@ allocation benchmark and do not claim a performance qualification.
 | Committed example freshness | `examples.js` | Lists exact stale paths and generator-order differences, including generated Studio mirrors | All six generators, forward and reverse |
 | Documentation links | `link-check.js` | Relative targets must exist in Git or in a verified release payload set | Local links; external HEAD requests only on schedule |
 
-Release workflow owner: replace shell `zip` with
+The integrated release workflow calls
 `node scripts/conformance/repro/package-release.js` after downloading the
-qualified dist. Generate and strictly verify the manifest in that build stage.
-An artifact-only publisher uses `--verify-payloads`; omitting dist from the strict
+qualified dist. It generates and strictly verifies the manifest in that build stage.
+The artifact-only publisher uses `--verify-payloads`; omitting dist from the strict
 `--verify` invocation is an error. Existing `files` records and the exported
 payload verifier remain compatible with the supply-chain attestation service.
 

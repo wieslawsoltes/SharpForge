@@ -1,0 +1,9 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "numeric-lattice/promotion-and-widths":{"hash":"e56880d3f60b09f1","kind":"output","langVersion":"14.0","diagnostics":[],"output":"400 4000000999 18000000000000000001 2.5 3.5 98 -5600005000000000\n"},
+  "numeric-lattice/cs0034-ulong-plus-int":{"hash":"7ae34b98df16a7fd","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0034",32,5,"error"]]},
+  "numeric-lattice/cs0031-byte-constant":{"hash":"683caa054a181d26","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0219",5,2,"warning"],["CS0219",20,3,"warning"],["CS0031",26,3,"error"],["CS0219",37,3,"warning"],["CS0031",43,4,"error"],["CS0219",54,5,"warning"],["CS0031",62,2,"error"]]},
+  "numeric-lattice/cs0266-narrowing":{"hash":"61ae0636a2dcfee6","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0266",20,1,"error"],["CS0266",49,1,"error"],["CS0266",81,1,"error"]]},
+  "numeric-lattice/cs0023-negate-ulong":{"hash":"b2a790f94335ef50","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0023",21,2,"error"]]},
+  "numeric-lattice/cs0019-decimal-double":{"hash":"8a0ed211ab10dff7","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0019",37,5,"error"]]},
+  "numeric-lattice/cs0220-checked-constant-overflow":{"hash":"62c57358bb100998","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0220",8,16,"error"],["CS0219",31,1,"warning"],["CS0221",35,9,"error"]]}
+}}
