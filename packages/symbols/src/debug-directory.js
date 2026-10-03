@@ -1,4 +1,5 @@
 import { Reader, Writer, readPE, text, utf8, align } from '@sharpforge/cil';
+import { rejectUnsupportedSymbolFormat } from './symbol-format.js';
 import { fail } from './contracts.js';
 import { sha256 } from './hash.js';
 import { inflateRaw, deflateStored } from './deflate.js';
@@ -26,6 +27,7 @@ export function readDebugDirectory(assembly) {
     const bytes = pe.bytes.subarray(offset, offset + length),
       e = { kind, stamp, major, minor, bytes, offset };
     if (kind === 2) {
+      rejectUnsupportedSymbolFormat(bytes);
       if (bytes.length < 25 || text(bytes.subarray(0, 4)) !== 'RSDS') fail('Invalid CodeView record');
       e.guid = bytes.slice(4, 20);
       e.age = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength).getUint32(20, true);

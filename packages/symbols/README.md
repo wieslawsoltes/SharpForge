@@ -37,3 +37,7 @@ and [SRM document-name encoder](https://github.com/dotnet/runtime/blob/main/src/
 The new import/constant/document writer batch has not yet been validated with
 System.Reflection.Metadata. The independent native readback gate remains work
 for SF-A13-T01.8; it must pass before interoperability is claimed.
+
+Known Windows PDB MSF 7.00/2.00 and legacy CodeView NB09/NB10/NB11 inputs fail
+with `SymbolError.code === 'SF_SYMBOL_UNSUPPORTED_FORMAT'` and a descriptive
+`format`. They are not parsed as corrupt Portable PDB metadata.

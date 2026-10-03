@@ -16,9 +16,11 @@ export const PdbGuids = Object.freeze({
   compilationOptions: 'b5feec05-8cd0-4a83-96da-466284bb4bd8',
 });
 export class SymbolError extends Error {
-  constructor(message) {
+  constructor(message, { code, format } = {}) {
     super(message);
     this.name = 'SymbolError';
+    if (code !== undefined) this.code = code;
+    if (format !== undefined) this.format = format;
   }
 }
 export const fail = (message) => {

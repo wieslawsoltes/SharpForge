@@ -4,10 +4,12 @@ import { hex } from './hash.js';
 import { inflateRaw } from './deflate.js';
 import { readSequencePoints } from './sequence-points.js';
 import { decodeConstant } from './constant-reader.js';
+import { rejectUnsupportedSymbolFormat } from './symbol-format.js';
 import { readImports } from './import-reader.js';
 export function readPortablePdb(input, { maxBytes = 64 * 1024 * 1024, maxSourceBytes = 16 * 1024 * 1024 } = {}) {
   const bytes = input instanceof ArrayBuffer ? new Uint8Array(input) : input;
   if (!(bytes instanceof Uint8Array) || bytes.length > maxBytes) fail('Invalid or oversized Portable PDB');
+  rejectUnsupportedSymbolFormat(bytes);
   const md = readMetadata(bytes),
     pdb = md.streams.get('#Pdb');
   if (!pdb || pdb.length < 32) fail('Not a standalone Portable PDB');
