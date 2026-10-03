@@ -31,15 +31,17 @@ export const Initialization = Base =>
       return list;
     }
     /** Statements that store each initializer into its field; each initializer is its own scope. */
-    initializerBlock(initializers, frame) {
+    initializerBlock(initializers, frame, parameters = []) {
       const statements = [];
       for (const { member, record, bound } of initializers) {
         const captures = analyzeCaptures(bound.expression);
         const own = new Frame({ uri: this.uriOf(member), method: frame.method, thisExpr: frame.thisExpr, captures, root: frame.root });
         const translator = new BodyTranslator(this, own);
+        // The parameters of a primary constructor are in scope in every instance initializer.
+        const entry = translator.declareParameters(parameters);
         const target = record.isStatic ? n.staticField(record) : n.field(frame.thisExpr(), record);
         const store = n.expressionStatement(n.assign(target, translator.expression(bound.expression)), n.spanOf(bound.syntax, own.uri));
-        statements.push(n.block([translator.withPending(store)], translator.scopes[0]));
+        statements.push(n.block([...entry, translator.withPending(store)], translator.scopes[0]));
       }
       return n.block(statements);
     }
@@ -59,7 +61,9 @@ export const Initialization = Base =>
       for (const [type, owner] of this.classes) {
         const initializers = this.initializersOf(type, false);
         if (!initializers.length) continue;
-        const method = this.program.addMethod(owner, '<init>', { isStatic: false, returnType: 'void', parameters: [], node: owner.node });
+        // The initializers of a type with a primary constructor run with its parameters in scope.
+        const parameters = type.primaryConstructor ? this.parametersOf(type.primaryConstructor) : [];
+        const method = this.program.addMethod(owner, '<init>', { isStatic: false, returnType: 'void', parameters, node: owner.node });
         this.instanceInits.set(type, method);
         work.push({ type, method, initializers });
         const constructors = type.getMembers('.ctor').filter(c => c.methodKind === MethodKind.Constructor && !c.isImplicitlyDeclared);
@@ -73,7 +77,7 @@ export const Initialization = Base =>
     buildInstanceInitializers(work) {
       for (const { type, method, initializers } of work) {
         const frame = this.memberFrame(method, { name: '.ctor' }, this.uriOf(type), null);
-        this.bodies.push({ method, body: this.initializerBlock(initializers, frame) });
+        this.bodies.push({ method, body: this.initializerBlock(initializers, frame, type.primaryConstructor?.parameters ?? []) });
         this.drain();
       }
     }

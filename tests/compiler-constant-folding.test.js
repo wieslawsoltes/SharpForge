@@ -200,7 +200,8 @@ test('A02-T32 evaluateConstant keeps the current AST profile behaviour on top of
   fails('1/0',{},'CS0020');fails('1%0',{checked:false},'CS0020');assert.deepEqual(evaluate('1.0/0'),{type:'double',value:Infinity});
   // Profile behaviour that differs from Roslyn (see constants.js) is preserved exactly.
   fails('-2147483648/-1',{checked:false},'CS0220');assert.deepEqual(evaluate('-2147483648%-1'),{type:'int',value:0});
-  fails('(int)1e10',{},'CS0220');assert.deepEqual(evaluate('(int)1e10',{checked:false}),{type:'int',value:2147483647});
+  // Roslyn constant conversion is zero out of range; CoreCLR runtime conversion separately saturates.
+  fails('(int)1e10',{},'CS0220');assert.deepEqual(evaluate('(int)1e10',{checked:false}),{type:'int',value:0});
   fails('(int)(1.0/0)',{},'CS0221',['Infinity','int']);fails('(int)(0.0/0)',{},'CS0221',['NaN','int']);assert.deepEqual(evaluate('(int)(0.0/0)',{checked:false}),{type:'int',value:0});
   assert.deepEqual(evaluate('(int)-1.9'),{type:'int',value:-1});assert.deepEqual(evaluate('(double)3'),{type:'double',value:3});assert.deepEqual(evaluate('~5'),{type:'int',value:-6});
   fails('2147483648+0',{},'CS0220');assert.deepEqual(evaluate('2147483648+0',{checked:false}),{type:'int',value:-2147483648});assert.deepEqual(evaluate('2147483648'),{type:'int',value:2147483648});

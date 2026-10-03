@@ -43,6 +43,27 @@ test('A02-T29 multi-file and language-version programs keep their images',()=>{
   for(const langVersion of ['7','9','12','14','preview'])verify('using System.Collections.Generic;class B{public int V;}B b=new();List<int> l=[1,2];int[] a=[..l,3];b?.V=a.Length;Console.WriteLine(b.V);',{langVersion});
   verify('using System.Threading.Tasks;class P{static int total;static async Task<int> Add(int a){await Task.Delay(1);total+=a;return total;}static async Task Main(){Console.WriteLine(await Add(2)+await Add(3));}}');
 });
+test('integrated type intrinsics and enum conversions preserve both pipelines and execution engines',()=>{
+  const source=`using Microsoft.UI.Xaml;
+    int value=1;
+    Visibility visibility=(Visibility)value;
+    Console.WriteLine(visibility.HasFlag(Visibility.Collapsed));
+    Console.WriteLine((int)visibility);
+    Console.WriteLine((double)visibility);
+    Console.WriteLine((Orientation)visibility);
+    Console.WriteLine(value.GetType().FullName);
+    Console.WriteLine(true.GetType().Name);
+    Console.WriteLine(visibility.GetType().Name);
+    Console.WriteLine(string.Intern("type").GetType().FullName);`;
+  const verified=verify(source);assert(verified.success,JSON.stringify(verified.diagnostics));
+  const expected='True\n1\n1\nHorizontal\nSystem.Int32\nBoolean\nVisibility\nSystem.String\n';
+  for(const pipeline of ['bound','legacy']){
+    const result=compileToIL(source,{pipeline});assert(result.success,JSON.stringify(result.diagnostics));
+    for(const vm of [new VirtualMachine(result.image),new CilVirtualMachine(result.assembly)]){
+      const execution=vm.run();assert.equal(execution.state,'terminated',execution.fault?.stack);assert.equal(execution.output,expected);
+    }
+  }
+});
 test('A02-T29 images from the bound pipeline run on the bytecode VM and, through CIL, on the CIL VM',()=>{
   const source='using System.Collections.Generic;class Acc:IDisposable{public int Total;public void Add(int v){Total+=v;}public void Dispose(){Console.WriteLine($"disposed {Total}");}}var list=new List<int>{3,4};using(var acc=new Acc()){foreach(var v in list)acc.Add(v);int[] extra=[..list,5];foreach(int v in extra){if(v==4)continue;acc.Add(v);}Console.WriteLine(acc.Total switch{15=>"fifteen",_=>"other"});}';
   const image=compile(source);assert.equal(image.success,true,JSON.stringify(image.diagnostics));const run=new VirtualMachine(image.image).run();assert.equal(run.state,'terminated',run.fault?.stack);assert.equal(run.output,'fifteen\ndisposed 15\n');

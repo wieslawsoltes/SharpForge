@@ -93,6 +93,18 @@ test('A02-T19 every registry contract and builtin is reachable as a member symbo
   const custom=new RegistryBridge({types:new Map([['Demo.Widget',{name:'Demo.Widget',base:'object',properties:{},events:{},kind:'object'}]]),contracts:[{id:0,owner:'Demo.Widget',name:'Ping',parameters:['int'],result:'bool',isStatic:false,kind:'method'}],builtins:[]});
   assert.equal(custom.typeFromName('Demo.Widget').getMembers('Ping')[0].toDisplayString(),'Demo.Widget.Ping(int)');
 });
+test('integrated runtime type properties and static identity helpers have correct symbol signatures',()=>{
+  for(const name of ['Type.Name','Type.FullName']){
+    const symbol=bridge.symbolForBuiltin(BuiltinMap.get(name));
+    assert.equal(symbol.kind,SymbolKind.Property);assert.equal(symbol.isStatic,false);
+    assert.equal(symbol.getMethod.parameters.length,0);assert.equal(symbol.type.specialType,'System_String');
+  }
+  assert.equal(bridge.typeFromName('System.Type').isStatic,false);
+  for(const [name,count] of [['string.Intern',1],['string.IsInterned',1],['object.ReferenceEquals',2]]){
+    const symbol=bridge.symbolForBuiltin(BuiltinMap.get(name));assert.equal(symbol.isStatic,true,name);assert.equal(symbol.parameters.length,count,name);
+  }
+  const flag=bridge.symbolForBuiltin(BuiltinMap.get('Enum.HasFlag'));assert.equal(flag.isStatic,false);assert.equal(flag.parameters.length,1);
+});
 test('A02-T14 the legacy adapter keeps string-typed call sites working',()=>{
   const userType=new NamedTypeSymbol({name:'Foo'}),adapter=new LegacyTypeAdapter({bridge,sourceType:name=>name==='Foo'?userType:null});
   for(const name of ['int','double','bool','string','object','void','Exception','int[]','string[][]','Foo','Foo[]',...types.keys(),'System.Threading.Tasks.Task[]']){const symbol=adapter.symbol(name);assert(symbol,name);assert.equal(adapter.symbol(name),symbol,'interned: '+name);assert.equal(adapter.name(symbol)===name||name==='System.String',true,name+' round-trips, got '+adapter.name(symbol));}
