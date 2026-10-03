@@ -86,7 +86,7 @@ export function writeManagedPE(sectionBytes, metadataOffset, metadataLength, ent
   if (!(sectionBytes instanceof Uint8Array) || sectionBytes.length < 72) throw new CilError('Missing CLI header reservation');
   if (!Number.isInteger(metadataOffset) || metadataOffset < 72 || !Number.isInteger(metadataLength) || metadataLength < 1
     || metadataOffset + metadataLength > sectionBytes.length) throw new CilError('Invalid CLI metadata range');
-  let section = sectionBytes.slice();
+  let section = new Uint8Array(sectionBytes);
   let additionalSections = options.sections ?? [];
   if (options.nativeEntryStub) {
     const stub = desktopEntryStub(section, options);

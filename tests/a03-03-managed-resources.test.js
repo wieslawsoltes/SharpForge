@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { compileToIL } from '@sharpforge/compiler';
 import { VirtualMachine, CilVirtualMachine } from '@sharpforge/runtime';
-import { MetadataBuilder, readPE, readManagedResources, writeManagedResources, writePE, inspectAssembly } from '@sharpforge/cil';
+import { MetadataBuilder, readPE, readManagedResources, writeManagedResources, writePE, inspectAssembly, loadAssembly } from '@sharpforge/cil';
 
 const resources = [
   { name: 'visible.bin', bytes: Uint8Array.of(0, 255, 128, 1), visibility: 'public' },
@@ -100,4 +100,32 @@ test('A03 low-level resource ranges cannot overlap metadata or exceed their sect
   for (const resources of [{ offset: 80, size: 4 }, { offset: 71, size: 1 }, { offset: 72, size: 0xffffffff }]) {
     assert.throws(() => writePE(section, 80, metadata.length, 0, { resources }), /resource range/);
   }
+});
+
+
+test('A03 Buffer and offset-subarray resource reads and canonical loads never mutate caller storage', () => {
+  const compiled = compile();
+  const carrier = Buffer.alloc(compiled.assembly.length + 32, 0x7b);
+  const input = carrier.subarray(13, 13 + compiled.assembly.length);
+  input.set(compiled.assembly);
+  const before = Buffer.from(carrier), pe = readPE(input);
+  const resource = readManagedResources(pe, { includeBytes: true })[0];
+  resource.bytes.fill(42);
+  pe.metadata.guid(pe.metadata.rows[0][0][2]).fill(42);
+  assert.deepEqual(carrier, before, 'Payload and GUID copies must own their buffers');
+  assert.equal(loadAssembly(input).entryPoint, compiled.image.entryPoint);
+  assert.deepEqual(carrier, before, 'Canonical header comparison must not mutate Buffer input');
+});
+
+test('A03 low-level PE emission copies Buffer slices before writing the CLI header', () => {
+  const metadata = new MetadataBuilder('BufferSection').finish();
+  const carrier = Buffer.alloc(100 + metadata.length, 0x5a);
+  const section = carrier.subarray(11, 11 + 72 + metadata.length);
+  section.fill(0);
+  section.set(metadata, 72);
+  const before = Buffer.from(carrier);
+  const emitted = writePE(section, 72, metadata.length, 0);
+  assert.deepEqual(emitted, writePE(new Uint8Array(section), 72, metadata.length, 0));
+  assert.deepEqual(carrier, before);
+  assert.equal(readPE(emitted).metadata.string(readPE(emitted).metadata.rows[32][0][7]), 'BufferSection');
 });

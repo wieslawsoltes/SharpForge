@@ -51,7 +51,7 @@ export function readManagedResources(pe, { includeBytes = false, maxResourceByte
     const reader = new Reader(pe.bytes, start + offset, directory.size - offset);
     resource.size = reader.u32();
     reader.need(resource.size);
-    if (includeBytes) resource.bytes = reader.take(resource.size).slice();
+    if (includeBytes) resource.bytes = new Uint8Array(reader.take(resource.size));
     return resource;
   });
 }
