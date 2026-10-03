@@ -128,6 +128,6 @@ test('ordinary PRs have one core job while full qualification and releases remai
   assert.match(workflow, /pull_request:\n    types: \[opened, synchronize, reopened, labeled\]/);
   for (const event of ['workflow_dispatch','merge_group','workflow_call']) assert.match(workflow, new RegExp('^  '+event+':','m'));
   assert.match(workflow, /github.event.pull_request.number \|\| github.ref/);
-  assert.match(release, /qualification:\n    uses: \.\/\.github\/workflows\/ci.yml/);
+  assert.match(release, /qualification:\n    needs: policy\n    uses: \.\/\.github\/workflows\/ci.yml/);
   assert.match(release, /needs: qualification/);
 });
