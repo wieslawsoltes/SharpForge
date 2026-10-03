@@ -1,4 +1,4 @@
-// langversion 14: expect CS8652 at 160 "with"
+// langversion 14: expect an older meaning: a call to a method named with
 // preview: csharplang/proposals/csharp-15.0/collection-expression-arguments.md revision 1 commit 412dc3023500
 class C
 {

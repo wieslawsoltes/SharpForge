@@ -137,13 +137,17 @@ const gateCodes = new Set([...languageFeatures.map(row => row.code).filter(Boole
  * Asserts that the language-version diagnostics SharpForge reports for `relative` (a `*.rejected.cs` file under
  * packages/syntax/test, whose first line names the language version) are the ones Roslyn reports when compiling the
  * file: the same codes over the same spans. Other Roslyn errors (unbound names and so on) are not syntax and are ignored.
+ * `binderOnly` lists the language-version diagnostics in the file that cannot be decided from syntax (they need a
+ * bound symbol); Roslyn must report each of them and SharpForge's parser must not.
  * Returns the agreed list as `code@start..end` strings.
  */
-export function assertGatesMatchRoslyn(relative) {
+export function assertGatesMatchRoslyn(relative, binderOnly = []) {
   const file = join(fixtureRoot, relative), text = readFileSync(file, 'utf8');
   assert(existsSync(file + '.roslyn.json'), 'no Roslyn compile diagnostics for ' + relative);
   const recorded = JSON.parse(readFileSync(file + '.roslyn.json', 'utf8'));
-  const theirs = recorded.errors.filter(entry => gateCodes.has(entry[0])).map(entry => `${entry[0]}@${entry[1]}..${entry[2]}`);
+  const reported = recorded.errors.filter(entry => gateCodes.has(entry[0])).map(entry => `${entry[0]}@${entry[1]}..${entry[2]}`);
+  for (const entry of binderOnly) assert(reported.includes(entry), `${relative}: Roslyn does not report ${entry}`);
+  const theirs = reported.filter(entry => !binderOnly.includes(entry));
   const tree = SyntaxTree.parseText(text, { languageVersion: recorded.langversion });
   const mine = tree.getDiagnostics().filter(d => gateCodes.has(d.code)).map(d => `${d.code}@${d.start}..${d.start + d.length}`);
   assert.deepEqual(mine, theirs, relative);
