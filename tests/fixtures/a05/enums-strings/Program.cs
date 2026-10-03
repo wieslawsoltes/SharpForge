@@ -19,6 +19,8 @@ static class Program
         Console.WriteLine(object.ReferenceEquals(literal, "a"));
         Console.WriteLine(object.ReferenceEquals(literal, runtime));
         Console.WriteLine(object.ReferenceEquals(literal, string.Intern(runtime)));
+        Console.WriteLine(object.ReferenceEquals("", new string((char[])null)));
+        Console.WriteLine(object.ReferenceEquals("", new string(new char[0])));
         string pair = "😀";
         Console.WriteLine((int)pair[0]);
         Console.WriteLine((int)pair[1]);
