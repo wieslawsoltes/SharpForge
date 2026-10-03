@@ -29,6 +29,21 @@ const cases = [
     output: 'DivideByZeroException\n'
   },
   {
+    name: 'catch closures retain a fresh cell after the handler exits',
+    members: '',
+    body: 'Func<string> get=null;try{throw new Exception("captured");}' +
+      'catch(Exception e){get=()=>e.Message;}Console.WriteLine(get());',
+    output: 'captured\n'
+  },
+  {
+    name: 'filter closures and the accepted body share the same catch cell',
+    members: '',
+    body: 'Func<string> get=null;try{throw new Exception("filter capture");}' +
+      'catch(Exception e)when((get=()=>e.Message)!=null){Console.WriteLine(e.Message);}' +
+      'Console.WriteLine(get());',
+    output: 'filter capture\nfilter capture\n'
+  },
+  {
     name: 'filters share captured locals and rethrow preserves exception identity',
     members: '',
     body: 'int count=0;try{try{throw new Exception("same");}' +

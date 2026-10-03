@@ -333,13 +333,20 @@ export const StatementTranslation = Base =>
         let variable = null;
         let filter = null;
         const body = this.scoped(() => {
+          let initializers = [];
           if (clause.local) {
-            if (this.frame.captures.isCaptured(clause.local)) return this.unsupported('a captured catch variable', node.syntax);
             variable = n.newLocal(clause.local.name, type, n.spanOf(clause.local.syntax, this.frame.uri), { hidden: false });
-            this.frame.vars.set(clause.local, () => n.local(variable));
+            if (this.frame.captures.isCaptured(clause.local)) {
+              initializers = this.declareVariable(clause.local, n.local(variable));
+            } else this.frame.vars.set(clause.local, () => n.local(variable));
           }
           filter = clause.filter ? this.expression(clause.filter) : null;
-          return this.statement(clause.block);
+          // The same cell is visible to closures created in the filter and in its accepted body.
+          if (filter && initializers.length) {
+            filter = n.sequence([], initializers, filter);
+            initializers = [];
+          }
+          return [...initializers, this.statement(clause.block)];
         });
         body.syntax = this.span(clause.block.syntax);
         return { kind: 'CatchBlock', exceptionType: type, local: variable, filter, body };

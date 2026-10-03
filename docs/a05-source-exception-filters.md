@@ -19,6 +19,7 @@ execute through shared locals in the runtime filter frame.
 visitation. `tests/a05-source-filters.test.js` in the parent E01 integration supplies runtime parity and
 portable replay cases. These E01 cases have not been executed during assembly.
 
-Captured catch variables and framework exception constructors outside the existing execution catalog
-remain explicit frontend limitations. This change does not convert an unsupported exception constructor
+Captured catch variables reuse closure cells. A filtered catch initializes its cell before the filter,
+then shares it with its body and any escaping delegates. Framework exception constructors outside the
+existing execution catalog remain an explicit frontend limitation. This change does not convert an unsupported exception constructor
 into `System.Exception` or erase a typed catch to a catch-all.
