@@ -55,7 +55,11 @@ test('View Designer and View Code commands use the same URI and exclude incompat
   assert.equal(commands.menuItems({path: 'Other.cs', kind: 'source'}).length, 0);
   active = 'Other.cs';
   assert.equal(commands.canView('design'), false);
-  await assert.rejects(registry.execute('viewDesigner'), /compatible/);
+  assert.equal(registry.canExecute('viewDesigner'), false);
+  // The registry now rejects disabled commands before invoking their handlers.
+  await assert.rejects(registry.execute('viewDesigner'), {message: 'Command is unavailable: View Designer'});
+  assert.throws(() => commands.viewDesigner(), /compatible/);
+  assert.deepEqual(calls, [{uri: 'A.cs', mode: 'design'}, {uri: 'A.cs', mode: 'code'}]);
   commands.dispose();
   assert.equal(registry.list().length, 0);
 });
