@@ -10,6 +10,8 @@ import {BoundMethodPipeline} from './method-pipeline.js';
 import {CompilationSymbols} from './symbols/compilation-symbols.js';
 import {collectUsingDirectives,bindUsings} from './binder/usings.js';
 import {findEntryPoint} from './binder/entry-point.js';
+import {parseCompilationOptions} from './options.js';
+import {applySuppression} from './diagnostics/suppression.js';
 import {BuckStopsHereBinder,InContainerBinder,WithUsingsBinder} from './binder/binder.js';
 export class Compilation {
   constructor(parsedFiles, options={}) {
@@ -77,7 +79,7 @@ export class Compilation {
   selectedVersion(node){try{return languageVersion(this.options.langVersionByUri?.[node?.uri]??this.options.langVersion);}catch{return languageVersion();}}
   /** Source text of the last label of a switch section, as Roslyn prints it in CS0163/CS8070. */
   caseLabel(section){const label=section.labels.at(-1);if(!label)return 'default:';const text=this.sources.get(label.uri)?.text.slice(label.start,label.end);return `case ${text??''}:`;}
-  requireFeature(node,version,name){let selected;try{selected=languageVersion(this.options.langVersionByUri?.[node.uri]??this.options.langVersion);}catch(error){this.report(node,'SF2140',[this.options.langVersionByUri?.[node.uri]??this.options.langVersion]);return false;}if(version===15?!selected.preview:selected.number<version){if(version===15)this.report(node,'CS8652',[name]);else this.report(node,featureNotAvailableCode(selected.number),[name,Number.isInteger(version)?version+'.0':String(version)]);return false;}return true;}
+  requireFeature(node,version,name){let selected;try{selected=languageVersion(this.options.langVersionByUri?.[node.uri]??this.options.langVersion);}catch{return false;/* an invalid /langversion is reported once, with the options */}if(version===15?!selected.preview:selected.number<version){if(version===15)this.report(node,'CS8652',[name]);else this.report(node,featureNotAvailableCode(selected.number),[name,Number.isInteger(version)?version+'.0':String(version)]);return false;}return true;}
   constant(value){const key=JSON.stringify([typeof value,value]);if(this.constantMap.has(key))return this.constantMap.get(key);const id=this.constants.length;this.constants.push(value);this.constantMap.set(key,id);return id;}
   symbol(node,kind,type,extra={}){
     if(node.generated||node.debugHidden)return null;
@@ -89,7 +91,9 @@ export class Compilation {
     type=this.typeName(type,context);const element=type.endsWith('[]')?type.slice(0,-2):type;if(element==='var'&&allowVar)return type;if((!supported.has(element)&&!this.typeMap.has(element)&&!frameworkType(element))||element==='var')this.report(node,'CS0246',[typeText(type)]);return type;}
   build(){
     if(this.pipeline==='verify')return verifyPipelines(this.inputFiles,this.options);
-    const start=performance.now();try{languageVersion(this.options.langVersion);for(const value of Object.values(this.options.langVersionByUri??{}))languageVersion(value);}catch(error){this.report(this.files[0]?.root??{},'SF2140',[error.value]);}if(this.options.checkOverflow!==undefined&&typeof this.options.checkOverflow!=='boolean'||Object.values(this.options.checkOverflowByUri??{}).some(v=>typeof v!=='boolean'))this.report(this.files[0]?.root??{},'SF2009',['checkOverflow']);
+    const start=performance.now();
+    // Options are validated once, up front (options.js): invalid values report the Roslyn codes.
+    const parsed=parseCompilationOptions(this.options);this.typedOptions=parsed.options;for(const d of parsed.diagnostics)this.report(this.files[0]?.root??{},d.code,d.args);
     // Two-pass declarations allow forward calls and references across source files.
     for(const file of this.files)for(const decl of file.root.members.filter(n=>n.kind==='Class')){
       const namespace=decl.namespace??'',fullName=(namespace?namespace+'.':'')+decl.name;
@@ -114,7 +118,7 @@ export class Compilation {
       for(const node of file.root.members.filter(n=>n.kind==='Method'))this.declareMethod(null,{...node,modifiers:[...node.modifiers,'static']});
       if(file.root.statements.length)tops.push({file,statements:file.root.statements});
     }
-    const library=this.options.outputKind==='library';if(!['exe','library'].includes(this.options.outputKind??'exe'))this.report(this.files[0]?.root??{},'SF2008',[this.options.outputKind]);
+    const library=this.options.outputKind==='library';
     // Entry point: top-level statements, else the one suitable static Main (binder/entry-point.js).
     const selection=findEntryPoint({methods:this.methods,topLevel:tops,isLibrary:library,mainTypeName:this.options.mainTypeName??null,types:this.types,root:this.files[0]?.root??{},asyncMainAvailable:node=>this.requireFeature(node,7.1,'async main')});
     for(const d of selection.diagnostics)this.report(d.node,d.code,d.args);
@@ -146,8 +150,9 @@ export class Compilation {
       types:this.types.map(t=>({id:t.id,name:t.name,...(t.interfaces.length?{interfaces:t.interfaces}:{}),fields:t.fields.filter(f=>!f.isStatic).map(f=>({name:f.name,type:f.type,index:f.index,...(f.backing?{backing:true}:{} )})),...(t.properties.length?{properties:t.properties.map(p=>({name:p.name,type:p.type,isStatic:p.isStatic,access:p.access,get:p.get?.id??null,set:p.set?.id??null,backing:p.backing?.name??null}))}:{}),initializer:t.initializer})),
       statics:this.statics.map(f=>({name:`${f.owner.name}.${f.name}`,type:f.type,value:defaultValue(f.type),...(f.backing?{backing:true}:{} )})),
       methods:this.methods.map(m=>({...(m.node?.uri&&m.node.body&&(!m.node.asyncRole||m.node.asyncRole==='body')&&!m.name.startsWith('<startup>')?{sourceRange:{uri:m.node.uri,start:m.node.start,end:m.node.end}}:{}),...(m.node.asyncRole?{asyncRole:m.node.asyncRole,asyncOrigin:m.node.asyncOrigin}:{}),id:m.id,name:m.name,qualifiedName:m.qualifiedName,owner:m.owner?.name??null,isStatic:m.isStatic,returnType:m.returnType,...(m.accessor?{accessor:m.accessor}:{}),...(m.implementsDispose?{implementsDispose:true}:{}),parameters:m.parameters.map(p=>({name:p.name,type:p.type})),locals:m.locals??[],code:m.code??new Int32Array(),handlers:m.handlers??[]}))};
-    const errors=this.diagnostics.filter(d=>d.severity==='error').length;
-    return {success:errors===0,image:errors===0?image:null,diagnostics:this.diagnostics,symbols:this.symbols,references:this.references,
+    // Warning options (#pragma warning, nowarn, warnaserror, warning level) decide the final diagnostic list.
+    const diagnostics=applySuppression(this.diagnostics,{sources:this.sources,options:this.typedOptions}),errors=diagnostics.filter(d=>d.severity==='error').length;
+    return {success:errors===0,image:errors===0?image:null,diagnostics,symbols:this.symbols,references:this.references,
       metrics:{compileMs:performance.now()-start,files:this.files.length,tokens:this.files.reduce((s,f)=>s+f.tokens.length,0),internedTokenHits:this.files.reduce((s,f)=>s+f.internedTokenHits,0),nodes:this.files.reduce((s,f)=>s+f.nodeCount,0),methods:this.methods.length,instructions:this.methods.reduce((s,m)=>s+(m.code?.length??0)/3,0),errors}};
   }
   declareField(owner,node){const type=this.resolveType(node.type,node,false,owner),isStatic=node.modifiers.includes('static')||node.modifiers.includes('const');
