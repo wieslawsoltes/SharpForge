@@ -60,7 +60,8 @@ test('legacy adapter: syntax the back end cannot bind keeps a not-supported diag
     ['var x = 1.2f;', 'SF1005'], ['var x = 1L;', 'SF1003'], ['var x = 5000000000;', 'SF1004'], ['var s = "x"u8;', 'SF2098'], ['int x = 1; var y = x switch { > 0 => 1, _ => 0 };', 'CS0150']
   ];
   for (const [source, code] of cases) {
-    const result = compile(source + ' Console.WriteLine(1);');
+    // The statement comes first: a top-level statement after a type declaration is an error of its own (CS8803).
+    const result = compile('Console.WriteLine(1); ' + source);
     assert.equal(result.success, false, source); assert(result.diagnostics.some(d => d.code === code), `${source}: expected ${code}, got ${result.diagnostics.map(d => d.code).join(' ')}`);
     assert(!result.diagnostics.some(d => d.code === 'CS0246' && /'(?:goto|is|as|int|string)'/.test(d.message)), source);
   }
