@@ -3,6 +3,7 @@ import { readFile,writeFile,mkdir } from 'node:fs/promises';
 import { bundleWorker } from './bundle-worker.js';
 import { resolve,dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { connectOrigins, installCsp } from './conformance/security/csp.js';
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..'),dist=resolve(root,'dist');
 let html=await readFile(resolve(dist,'index.html'),'utf8');
 const css=await readFile(resolve(dist,'studio.css'),'utf8');
@@ -13,6 +14,8 @@ script=script.replaceAll("new URL('./compiler.worker.js',import.meta.url)",'__wo
 if(script.includes('import.meta'))throw new Error('Unresolved module URL in standalone bundle');
 script=`const __workerCompiler=URL.createObjectURL(new Blob([${JSON.stringify(compiler)}],{type:'text/javascript'}));\nconst __workerRuntime=URL.createObjectURL(new Blob([${JSON.stringify(runtime)}],{type:'text/javascript'}));\n`+script;
 html=html.replace('<link rel="stylesheet" href="./studio.css">',()=>'<style>'+css+'</style>').replace('<link rel="icon" href="./favicon.svg" type="image/svg+xml">','');
-html=html.replace('<script type="module" src="./studio.js"></script>',()=>'<script>'+script.replace(/<\/script/gi,'<\\/script')+'</script>');
-html=html.replace('<title>','<!-- Self-contained SharpForge release: inline script/style and Blob workers. Use the normal dist build for a strict self-only CSP. -->\n<title>');
+const inlineScript=script.replace(/<\/script/gi,'<\\/script');
+html=html.replace('<script type="module" src="./studio.js"></script>',()=>'<script>'+inlineScript+'</script>');
+html=installCsp(html,{allowedOrigins:connectOrigins(process.env.SHARPFORGE_CONNECT_ORIGINS),inlineScript});
+html=html.replace('<title>','<!-- Self-contained SharpForge release: inline script/style and Blob workers. The CSP allows only the exact generated entry script hash, trusted workers and configured origins. -->\n<title>');
 const target=resolve(root,process.env.SHARPFORGE_STANDALONE_PATH || 'artifacts/SharpForge-standalone.html');await mkdir(dirname(target),{recursive:true});await writeFile(target,html);console.log(`Built ${target} (${Buffer.byteLength(html).toLocaleString()} bytes)`);
