@@ -100,6 +100,9 @@ export class TypeLoader {
     const nested = { ...operation, path: new Set([...operation.path, type]) };
     const baseType = row[3] ? await this.#load(module, decodeCoded('TypeDefOrRef', row[3]), nested) : null;
     if (baseType?.isInterface || (type.isInterface && baseType)) throw fail('Invalid class/interface base relationship');
+    if (baseType && ((baseType.flags & 0x100) || [TypeKind.ValueType, TypeKind.Enum].includes(baseType.kind))) {
+      throw fail('A type cannot derive from a sealed or value type');
+    }
     const interfaces = new Set(baseType?.interfaces ?? []);
     for (const reference of this.#index(module).interfaces.get(token & 0xffffff) ?? []) {
       const contract = await this.#load(module, reference, nested);

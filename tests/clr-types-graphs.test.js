@@ -43,6 +43,12 @@ test('CLR graph loading retains canonical shared identities and rejects invalid 
   const bounded = graphContext({ typeOptions: { maxMetadataRows: 1 } });
   const boundedModule = (await bounded.loadFromStream(managedFixture())).manifestModule;
   await assert.rejects(bounded.types.load(boundedModule, 0x02000002), error => error.code === LoadErrorCode.LimitExceeded);
+  const sealed = managedFixture({ name: 'SealedBase', decorate({ md }) {
+    md.rows[2][1][0] |= 0x100;
+    md.add(2, [1, md.string('Child'), 0, codedIndex('TypeDefOrRef', 0x02000002), 1, 2]);
+  } });
+  const sealedModule = (await context.loadFromStream(sealed)).manifestModule;
+  await assert.rejects(context.types.load(sealedModule, 0x02000003), /sealed or value type/);
 });
 
 test('CLR unresolved framework references and constructed inheritance stay explicit diagnostics', async () => {
