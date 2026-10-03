@@ -22,10 +22,19 @@ collection versions. Existing GC visibility and snapshot shapes are retained.
 This extraction preserves the released compatibility profile: element types are
 `int`, `double`, `bool`, `string` and `object`; Dictionary keys are `string` or
 `int`. Range and set inputs use arrays. It does not add open generic collections,
-custom comparers or additional members. The maximum collection size, boxed-value
-equality, ordinal sorting and array-rewrite mutation costs remain unchanged.
+custom comparers or additional members. The maximum collection size, ordinal
+sorting and array-rewrite mutation costs remain unchanged.
 Hash indexes are rebuilt after legacy removals; this work does not claim the
 performance or complete API parity tracked by the remaining A08 issues.
+
+Object collection equality and hash keys retain boxed primitive type identity:
+boxed `int` 1 differs from boxed `double` 1.0, while equal boxes of the same type,
+NaN, signed zero, strings and null retain their value semantics. Box identity
+uses the existing managed MethodTable, including its canonical name for keys;
+the collection package does not maintain a second type-alias registry.
+`tests/a08-boxed-object-equality.test.js` runs the pinned .NET 10.0.5 source fixture
+through both VMs. General source-compiler object-local and object-array boxing
+is a separate capability; this regression uses direct BCL object arguments.
 
 `tests/a08-01-closed-collections.test.js` and the unchanged collection cases in
 `tests/bcl13.test.js` cover both JavaScript execution engines and assembly reload

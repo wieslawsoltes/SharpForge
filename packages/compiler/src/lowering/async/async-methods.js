@@ -23,6 +23,7 @@
  */
 import { findContracts, taskResult } from '@sharpforge/framework';
 import { n } from '../../codegen/semantic/node-factory.js';
+import { lowerAwaitable } from './awaitable-pattern.js';
 
 const ASYNC = 'SharpForge.Runtime.Async';
 
@@ -124,9 +125,8 @@ export const AsyncMethods = Base =>
 export const AwaitTranslation = Base =>
   class extends Base {
     exprAwait(node) {
-      // A pattern-based awaiter schedules its continuation through OnCompleted, which needs a delegate the runtime
-      // can call back into a suspended context.
-      if (node.getAwaiter) return this.unsupported('await of a type with a user-defined GetAwaiter', node.syntax);
+      // A pattern-based awaiter runs when it is provably complete (./awaitable-pattern.js).
+      if (node.getAwaiter) return lowerAwaitable(this, node);
       const operand = this.expression(node.operand),
         contract = asyncContract('Await', operand.legacyType);
       if (!contract) return this.unsupported(`await of '${node.operand.type?.toDisplayString()}'`, node.syntax);

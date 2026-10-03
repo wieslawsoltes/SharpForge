@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-a7f5048fd85b5427d6c5",
+  "kind": "spec",
+  "sourceText": "interface IA\n{\n    void M() { WriteLine(\"IA.M\"); }\n}\ninterface IB : IA\n{\n    void IA.M() { WriteLine(\"IB.M\"); } // Explicit implementation\n}\ninterface IC : IA\n{\n    void M() { WriteLine(\"IC.M\"); } // Creates a new M, unrelated to `IA.M`. Warning\n}",
+  "sourceSHA256": "3e8e0e446f8469fecd18bc86ae6798101434f97e3aed29fceaa449a8c60b6b12",
+  "target": "library",
+  "featureId": "csharp-8-0-default-interface-members",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/default-interface-methods.md",
+    "sha256": "feebc11b0983ad0c24c2017ac76706a9f3ff81b9cf1cc2703ec12d4829f24c42",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/default-interface-methods.md",
+    "license": "NOASSERTION",
+    "offset": 6858
+  }
+}

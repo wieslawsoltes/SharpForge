@@ -4,9 +4,16 @@
 
 # Security, resource limits and trust boundaries
 
-SharpForge does not evaluate user programs as host JavaScript. The compiler emits its own instructions, and the runtime dispatches a fixed instruction/intrinsic set. Managed programs have no exposed DOM, network, filesystem, process-launch or raw host-object API. This is a useful architectural boundary, **not an audited sandbox or a promise that hostile source/bytecode cannot exploit an implementation defect**.
+SharpForge does not evaluate user programs as host JavaScript. The compiler emits its own instructions, and the runtime dispatches a fixed instruction/intrinsic set. Managed programs have no general DOM, filesystem, process-launch or raw host-object API. Networking is denied by default,
+but managed `HttpClient` can access exact HTTP(S) origins explicitly granted by the embedding host or CLI `--allow-origin`.
+The transport bounds requests/responses, queues and deadlines; browser CORS, mixed-content rules and administrator CSP
+remain independent checks. A grant permits paths on that origin, not one endpoint, and is not DNS pinning or a native SSRF
+firewall. JavaScript WebSocket support also requires exact WS(S) grants; browser cookies follow browser WebSocket rules.
+See the [network contract](../packages/network/README.md). This is a useful architectural boundary, **not an audited sandbox or a promise that hostile source/bytecode cannot exploit an implementation defect**.
 
 The browser UI is a trusted application. User-provided text is escaped in its HTML presentation. Bytecode images are structurally verified before VM creation, but the verifier is not a formal proof of type or memory safety. Never add a general host callback, eval escape hatch or arbitrary-property bridge without redesigning the trust model.
+
+For the current boundary/test inventory and private disclosure route, see the [threat model](../planning/qualification/threat-model.md) and [security policy](../SECURITY.md).
 
 ## Default limits
 
@@ -35,11 +42,20 @@ Local storage is not durable backup and may be unavailable, full or cleared by t
 
 The development server binds to localhost by default. Its static response headers and the generated `_headers` file are starting points for hosting, not a substitute for deployment review. Serve over HTTPS for a remote deployment; verify CSP, correct JavaScript MIME types, relative-path loading, browser storage policies and source limits on the actual origin.
 
-Tests in the supplied validation environment used an in-memory browser loader because enterprise policy blocked all URL navigation. That loader does not modify policy, access the network, emulate compilation, or emulate the VM. Its localStorage substitute is test-only and not shipped as application storage code. HTTP/CSP and native-storage behavior must still be checked in a normal deployment.
+Earlier validation used an in-memory browser loader when enterprise policy blocked URL navigation. Its storage substitute
+was test-only; those results cannot qualify deployed HTTP/CSP or native storage. Current [browser qualification fixtures](../tests/conformance/browser/)
+include actual navigation and file-origin checks. Their presence does not establish a passing run for a release or host:
+retain the exact commit, artifact, engine/platform and results before claiming deployment coverage.
 
 ## Standalone HTML release
 
-`SharpForge-standalone.html` embeds scripts/styles and starts self-contained Blob workers. It has no external network dependency and can be opened locally in supporting browsers, subject to local-file worker/storage policy. It requires different CSP allowances than the normal relative-module build: a strict `script-src self; worker-src self` deployment will block its inline scripts/Blob workers. Prefer the normal browser distribution for a production static host; do not weaken a site's global CSP merely to embed this convenience artifact. Native file-origin persistence and every browser's file policy were not validated here.
+`SharpForge-standalone.html` embeds scripts/styles and starts self-contained Blob workers. It needs no external download
+to start; explicitly granted network operations remain possible. Local opening depends on browser file-origin worker and
+storage policy. The generated CSP permits the exact emitted inline entry-script hash and Blob workers; this does not grant
+arbitrary inline JavaScript. A stricter hosting policy can block those features. Prefer the normal browser distribution for
+a production static host; do not weaken a site's global CSP merely to embed this convenience artifact. CSP metadata cannot
+enforce `frame-ancestors`; that directive needs an HTTP header. Neither CSP nor an embedded hash authenticates a distributor
+able to replace both the HTML and its policy. No cross-browser file-origin qualification is claimed by this document.
 
 ## PE/CLI loading in 0.2
 

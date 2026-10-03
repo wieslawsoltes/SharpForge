@@ -64,9 +64,9 @@ export const OperatorBinding = Base =>
       }
       const operand = this.value(syntax.operand);
       if (operand.hasErrors) return this.bad(syntax, { operand });
-      const r = this.d.operators.unary(operator, operand, { isChecked: this.checked });
+      const r = this.resolveUnaryOperator(operator, operand);
       if (r.kind === 'error') {
-        if (!r.suppressed) this.report(syntax, r.code, r.args);
+        if (!r.suppressed) this.report(r.atOperator ? syntax.operatorToken : syntax, r.code, r.args);
         return this.bad(syntax);
       }
       if (r.kind === 'user') return this.node('Unary', syntax, r.resultType, { operator, operand, method: r.method, isLifted: r.isLifted });
@@ -80,6 +80,13 @@ export const OperatorBinding = Base =>
         } else if (folded) n.constantValue = folded;
       }
       return n;
+    }
+    /** Operator resolution for bound operands; binder/extension-members.js adds the extension operators in scope. */
+    resolveUnaryOperator(operator, operand) {
+      return this.d.operators.unary(operator, operand, { isChecked: this.checked });
+    }
+    resolveBinaryOperator(operator, left, right) {
+      return this.d.operators.binary(operator, left, right, { isChecked: this.checked });
     }
     binary(syntax, operator) {
       const left = this.value(syntax.left),
@@ -117,9 +124,9 @@ export const OperatorBinding = Base =>
           this.report(syntax, 'CS0019', [operator, this.operandDisplay(left), this.operandDisplay(right)]);
           return this.bad(syntax);
         }
-      const r = this.d.operators.binary(operator, left, right, { isChecked: this.checked });
+      const r = this.resolveBinaryOperator(operator, left, right);
       if (r.kind === 'error') {
-        if (!r.suppressed) this.report(syntax, r.code, r.args);
+        if (!r.suppressed) this.report(r.atOperator ? syntax.operatorToken : syntax, r.code, r.args);
         return this.bad(syntax);
       }
       if (r.kind === 'user') {
@@ -331,9 +338,9 @@ export const OperatorBinding = Base =>
       this.markRead(operand);
       this.markWrite(operand, null);
       if (operand.kind === 'Local') operand.local.nonConstantWrite = true;
-      const r = this.d.operators.unary(operator, operand, { isChecked: this.checked });
+      const r = this.resolveUnaryOperator(operator, operand);
       if (r.kind === 'error') {
-        if (!r.suppressed) this.report(syntax, r.code, r.args);
+        if (!r.suppressed) this.report(r.atOperator ? syntax.operatorToken : syntax, r.code, r.args);
         return this.bad(syntax);
       }
       return this.node('Increment', syntax, operand.type, {
@@ -361,7 +368,7 @@ export const OperatorBinding = Base =>
           y = toA?.exists && toA.isImplicit;
         if (x && !y) type = b.type;
         else if (y && !x) type = a.type;
-        else if (x && y) type = a.constantValue && !b.constantValue ? b.type : a.type;
+        else if (x && y) type = b.type.typeKind === TypeKind.Dynamic || (a.constantValue && !b.constantValue) ? b.type : a.type;
       }
       if (!type) return this.targetTypedConditional(syntax, condition, a, b);
       const n = this.node('Conditional', syntax, type, { condition, whenTrue: this.convert(a, type), whenFalse: this.convert(b, type) });

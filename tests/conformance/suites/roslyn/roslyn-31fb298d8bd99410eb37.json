@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-31fb298d8bd99410eb37",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    struct S\n    {\n        int x;\n        S(dynamic y)\n        {\n            Goo(y, null);\n        }\n    }\n    static void Goo(int y)\n    {\n    }\n}",
+  "sourceSHA256": "960fdec5fe78bf4d0f5e3234af730fb8908f87e6f69b38d18c73e553e3edc7e7",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "sha256": "c8277ea97437cc26511c883985aea205067e653e658a9ad8e0fb3a0be387cf9c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "license": "MIT",
+    "method": "Xyzzy",
+    "offset": 75271
+  },
+  "langVersion": "10",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular10)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1501",
+        "severity": "error"
+      },
+      {
+        "code": "CS0171",
+        "severity": "error"
+      },
+      {
+        "code": "CS0169",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,13): error CS1501: No overload for method 'Goo' takes 2 arguments\n                //             Goo(y, null);\n                Diagnostic(ErrorCode.ERR_BadArgCount, \"Goo\").WithArguments(\"Goo\", \"2\").WithLocation(8, 13),\n                // (6,9): error CS0171: Field 'C.S.x' must be fully assigned before control is returned to the caller. Consider updating to language version '11.0' to auto-default the field.\n                //         S(dynamic y)\n                Diagnostic(ErrorCode.ERR_UnassignedThisUnsupportedVersion, \"S\").WithArguments(\"C.S.x\", \"11.0\").WithLocation(6, 9),\n                // (5,13): warning CS0169: The field 'C.S.x' is never used\n                //         int x;\n                Diagnostic(ErrorCode.WRN_UnreferencedField, \"x\").WithArguments(\"C.S.x\").WithLocation(5, 13)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

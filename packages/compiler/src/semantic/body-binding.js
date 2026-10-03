@@ -30,6 +30,19 @@ export const BodyBinding = Base =>
         ...extra,
       };
     }
+    /**
+     * Binds the default values of a method's optional parameters where they are declared, once. Bodies bind their
+     * own; this is for a method whose defaults are needed earlier (the natural type of a method group, a lambda
+     * compared with its target delegate) and for one without a body (the `Invoke` method of a delegate).
+     */
+    ensureParameterDefaults(method) {
+      const unbound = (method?.parameters ?? []).filter(parameter => parameter.defaultSyntax && !parameter.defaultBound);
+      if (!unbound.length) return;
+      const type = method.containingType,
+        uri = method.uri ?? method.locations?.[0]?.uri ?? this.at(type).uri,
+        binder = new BodyBinder(this, this.context(method, type, { uri, parameters: method.parameters }));
+      for (const parameter of unbound) this.bindParameterDefault(parameter, binder);
+    }
     /** Binds the body of a method-like symbol and runs the flow passes over it. */
     bindMethodBody(method, context) {
       const syntax = method.syntax,
@@ -132,11 +145,10 @@ export const BodyBinding = Base =>
         if (!type) continue;
         if (member.kind === SymbolKind.Method) {
           if (member.isPrimaryConstructor) {
-            this.bindConstructorInitializer(
-              member,
-              type,
-              new BodyBinder(this, this.context(member, type, { parameters: member.parameters })),
-            );
+            const binder = new BodyBinder(this, this.context(member, type, { parameters: member.parameters }));
+            // A primary constructor has no body, so its optional parameters are bound here (`record R(int X = 1)`).
+            for (const p of member.parameters) if (p.defaultSyntax) this.bindParameterDefault(p, binder);
+            if (member.baseArgumentsSyntax) this.bindConstructorInitializer(member, type, binder);
             continue;
           }
           const context = this.context(member, type);
@@ -210,6 +222,7 @@ export const BodyBinding = Base =>
           this.report(this.at(d.ctor).uri, at, d.code, d.args);
         }
       }
+      for (const type of this.assembly.types) if (type.typeKind === TypeKind.Delegate) this.ensureParameterDefaults(type.delegateInvokeMethod);
       this.bindTopLevel();
     }
     bindConstructorInitializer(ctor, type, binder) {

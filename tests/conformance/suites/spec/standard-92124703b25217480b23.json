@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-92124703b25217480b23",
+  "kind": "spec",
+  "sourceText": "class A : B {}\nclass B : C {}\nclass C : A {}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0146",
+        "severity": "error"
+      },
+      {
+        "code": "CS0146",
+        "severity": "error"
+      },
+      {
+        "code": "CS0146",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "4173cf450e1457ae1b955ad35b329b882068142d7699976bd561bed94f610c20",
+  "originalSource": "class A : B {}\nclass B : C {}\nclass C : A {}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "CircularBaseClass1",
+    "expectedErrors": [
+      "CS0146",
+      "CS0146",
+      "CS0146"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "CircularBaseClass1",
+    "offsetInUnquotedMarkdown": 16927
+  }
+}

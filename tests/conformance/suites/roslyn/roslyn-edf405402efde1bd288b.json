@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-edf405402efde1bd288b",
+  "kind": "diagnostics",
+  "sourceText": "\n    using System;\n\n    public class Program\n    {\n        public static void Main()\n        {\n            const int a = 10;\n            const int b = a + 1;\n            const int c = a + b;\n            var f = (int arg = c) => Console.WriteLine(arg);\n            f();\n        }\n    }\n",
+  "sourceSHA256": "ce72c16dfcbd35f0cf8ef7178dbe5498cb212cc08f4c20c10425aa785236a760",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "MultipleDependentLocalConstants_LambdaDefaultParameterValue",
+    "offset": 258524
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

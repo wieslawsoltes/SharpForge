@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-41c369a06195ef8ff2c4",
+  "kind": "spec",
+  "sourceText": "namespace System.Runtime.CompilerServices\n{\n    /// <summary>\n    /// Indicates the type of the async method builder that should be used by a language compiler:\n    /// - to build the return type of an async method that is attributed,\n    /// - to build the attributed type when used as the return type of an async method.\n    /// </summary>\n    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface | AttributeTargets.Delegate | AttributeTargets.Enum, Inherited = false, AllowMultiple = false)]\n    public sealed class AsyncMethodBuilderAttribute : Attribute\n    {\n        /// <summary>Initializes the <see cref=\"AsyncMethodBuilderAttribute\"/>.</summary>\n        /// <param name=\"builderType\">The <see cref=\"Type\"/> of the associated builder.</param>\n        public AsyncMethodBuilderAttribute(Type builderType) => BuilderType = builderType;\n\n        /// <summary>Gets the <see cref=\"Type\"/> of the associated builder.</summary>\n        public Type BuilderType { get; }\n    }\n}",
+  "sourceSHA256": "9448b3918ae5926d21bc664559d2de8edd944d0071d985e8c1238df8225cda84",
+  "target": "library",
+  "featureId": "csharp-10-0-method-level-asyncmethodbuilder",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/async-method-builders.md",
+    "sha256": "3009c96c763c1c09ace540653215bb589b435fe481e6e8a8368c559ae8e5f5d1",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/async-method-builders.md",
+    "license": "NOASSERTION",
+    "offset": 5112
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-33967a4fcb2556e21e14",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Reflection;\n\n[assembly: AssemblyKeyFile(\"MyKey.snk\")]\n[assembly: AssemblyKeyName(\"Key Name\")]\n\npublic class Test\n{\n    public static void Main()\n    {\n        Console.Write(\"Hello World!\");\n    }\n}\n",
+  "sourceSHA256": "2eb9ff7390671b17bff6274cb8ef4852a0d79a5c60377dc9ac5d1534033b8827",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "sha256": "9e10a51f7f673a0e4ecef9e74c9a16fba06fbe3b89f9e5f5374503377b2b2a09",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "license": "MIT",
+    "method": "AssemblyKeyFileAttributeNotExistFile",
+    "offset": 3424
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source,\n                options: TestOptions.ReleaseDll.WithStrongNameProvider(new DesktopStrongNameProvider()),\n                parseOptions: parseOptions)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS7027",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                Diagnostic(ErrorCode.ERR_PublicKeyFileFailure).WithArguments(\"MyKey.snk\", CodeAnalysisResources.FileNotFound)",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

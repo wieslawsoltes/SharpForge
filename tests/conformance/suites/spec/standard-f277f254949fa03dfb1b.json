@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-f277f254949fa03dfb1b",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass C\n{\n    int i = 123;\n    public void F()\n    {\n        Nested n = new Nested(this);\n        n.G();\n    }\n\n    public class Nested\n    {\n        C this_c;\n\n        public Nested(C c)\n        {\n            this_c = c;\n        }\n\n        public void G()\n        {\n            Console.WriteLine(this_c.i);\n        }\n    }\n}\n\nclass Test\n{\n    static void Main()\n    {\n        C c = new C();\n        c.F();\n    }\n}",
+  "unsupported": [],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": [],
+    "stdout": "123\n",
+    "exitCode": 0
+  },
+  "sourceSHA256": "23270f239456512de33d257bfcb8ad9fa5c23e788e84a55806a168be405f33d6",
+  "originalSource": "class C\n{\n    int i = 123;\n    public void F()\n    {\n        Nested n = new Nested(this);\n        n.G();\n    }\n\n    public class Nested\n    {\n        C this_c;\n\n        public Nested(C c)\n        {\n            this_c = c;\n        }\n\n        public void G()\n        {\n            Console.WriteLine(this_c.i);\n        }\n    }\n}\n\nclass Test\n{\n    static void Main()\n    {\n        C c = new C();\n        c.F();\n    }\n}",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "ThisAccess",
+    "expectedOutput": [
+      "123"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "ThisAccess",
+    "offsetInUnquotedMarkdown": 66053
+  }
+}

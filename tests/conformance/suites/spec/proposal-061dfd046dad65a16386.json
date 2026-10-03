@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-061dfd046dad65a16386",
+  "kind": "spec",
+  "sourceText": "#line lineof('@{') \"a.razor\"\n  Console.WriteLine(1);Console.WriteLine(2);\n#line hidden",
+  "sourceSHA256": "4d2cd6ce25f3df6f5a74f65e0da97fd95a84c11b1c9fd8dae148b70eeca93b25",
+  "target": "library",
+  "featureId": "csharp-10-0-line-span-directive",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/enhanced-line-directives.md",
+    "sha256": "7bc14b928ee5e5e920a3b4c7fa01d40aaa74d31f3af8810e3dbf9b8963a9a3fa",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/enhanced-line-directives.md",
+    "license": "NOASSERTION",
+    "offset": 10321
+  }
+}

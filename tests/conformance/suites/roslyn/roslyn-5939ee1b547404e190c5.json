@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5939ee1b547404e190c5",
+  "kind": "diagnostics",
+  "sourceText": "[assembly: System.Resources.SatelliteContractVersionAttribute(null)] public class C {}",
+  "sourceSHA256": "52748ccda66d18f9b98d3e0fe1d8a3056d711a535a40501249cf0d532d5b86a9",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Assembly.cs",
+    "sha256": "5af75c081b993313ae994c6bb25a5aa25038b265d6fc6300e8d89976fd96811a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Assembly.cs",
+    "license": "MIT",
+    "method": "SatelliteContractVersionAttributeErr_Null",
+    "offset": 12668
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(s)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS7058",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (1,63): error CS7058: The specified version string '<null>' does not conform to the required format - major.minor.build.revision (without wildcards)\n                // [assembly: System.Resources.SatelliteContractVersionAttribute(null)] public class C {}\n                Diagnostic(ErrorCode.ERR_InvalidVersionFormat2, \"null\").WithArguments(\"<null>\").WithLocation(1, 63)\n                ",
+  "unsupported": []
+}
