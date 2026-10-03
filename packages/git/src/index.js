@@ -21,5 +21,6 @@ export * from './path-safety.js';
 export * from './protocol/pktline.js';
 export * from './protocol/advertisement.js';
 export * from './pack/reader.js';
+export * from './pack/writer.js';
 export * from './pack/delta.js';
 export * from './refspec.js';
