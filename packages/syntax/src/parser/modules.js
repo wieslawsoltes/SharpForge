@@ -80,6 +80,7 @@ import { csharp12Methods } from './csharp12.js';
 import { csharp13Methods } from './csharp13.js';
 import { csharp14Methods } from './csharp14.js';
 import { fieldKeywordMethods } from './expressions/field-keyword.js';
+import { labeledJumpMethods } from './statements/labeled-jumps.js';
 export const parserModules = Object.freeze([
   typeMethods,
   modifierMethods,
@@ -157,5 +158,6 @@ export const parserModules = Object.freeze([
   csharp12Methods,
   csharp13Methods,
   csharp14Methods,
-  fieldKeywordMethods
+  fieldKeywordMethods,
+  labeledJumpMethods
 ]);

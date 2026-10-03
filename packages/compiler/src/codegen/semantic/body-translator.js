@@ -19,6 +19,7 @@ import { Locations } from '../../lowering/tuples/locations.js';
 import { TupleTranslation } from '../../lowering/tuples/translate-tuples.js';
 import { SynthesizedTextTranslation } from '../../lowering/tuples/translate-text.js';
 import { DeconstructionTranslation } from '../../lowering/tuples/translate-deconstruction.js';
+import { InitializerLowering } from '../../lowering/members/initializers.js';
 import { RecordTranslation } from '../../lowering/records/translate-records.js';
 import { StructuralPatternTranslation } from '../../lowering/patterns/translate-structural-patterns.js';
 
@@ -210,6 +211,7 @@ const families = [
   TupleTranslation,
   SynthesizedTextTranslation,
   DeconstructionTranslation,
+  InitializerLowering,
   RecordTranslation,
   StructuralPatternTranslation,
 ];

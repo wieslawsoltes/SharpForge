@@ -1,6 +1,6 @@
 /**
- * C# 1 jump statements: `goto label`, `goto case`, `goto default`, labels in front of any statement, `break`, `continue`,
- * `return` and `throw`. A label after `break` or `continue` is the C# 15 preview labeled jump and is gated as such.
+ * C# 1 jump statements: `goto label`, `goto case`, `goto default`, labels in front of any statement, `return` and
+ * `throw`. `break` and `continue`, with their C# 15 preview label, are parsed in labeled-jumps.js.
  */
 export const jumpStatementMethods = {
   gotoStatement(attributeLists) {
@@ -12,14 +12,6 @@ export const jumpStatementMethods = {
       return this.n('GotoDefaultStatement', attributeLists, keyword, this.take(), null, this.expect(';'));
     }
     return this.n('GotoStatement', attributeLists, keyword, null, this.n('IdentifierName', this.id()), this.expect(';'));
-  },
-  breakOrContinueStatement(attributeLists) {
-    const kind = this.current.kind === 'break' ? 'BreakStatement' : 'ContinueStatement';
-    const keyword = this.take();
-    const labelToken = this.current;
-    const label = this.isId() ? this.take('IdentifierToken') : null;
-    if (label) this.feature('LabeledBreakContinue', labelToken);
-    return this.n(kind, attributeLists, keyword, label, this.expect(';'));
   },
   /** `label: statement` for any statement; null when the cursor is not at an identifier followed by a colon. */
   labeledStatement(attributeLists) {

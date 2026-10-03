@@ -24,6 +24,7 @@ export const collectionExpressionMethods = {
         if (elements.length && !this.at(',') && !this.canStartCollectionElement()) break;
         const before = this.i;
         elements.push(this.collectionElement(elements.length === 0));
+        if (this.at(':')) this.unsupportedKeyValueElement();
         const comma = this.separator(this.canStartCollectionElement);
         if (!comma || before === this.i) break;
         elements.push(comma);
@@ -34,10 +35,10 @@ export const collectionExpressionMethods = {
   canStartCollectionElement() {
     return this.at('..') || this.canStartExpression();
   },
-  /** A spread (`..e`), the preview `with(...)` element (first position only) or an expression. */
+  /** A spread (`..e`), the preview `with(...)` element or an expression. `first` says whether it is the first element. */
   collectionElement(first) {
     if (this.at('..')) return this.n('SpreadElement', this.take(), this.expression());
-    if (first && this.isCollectionArguments()) return this.collectionArguments();
+    if (this.isCollectionArguments()) return this.collectionArguments(first);
     return this.n('ExpressionElement', this.expression());
   }
 };
