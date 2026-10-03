@@ -24,3 +24,16 @@ scopes remain accepted. Constants accept primitive `type`/`value` pairs, optiona
 `enumType` metadata tokens, or a compiler-provided `signature` Uint8Array. Use
 BigInt for 64-bit integers. Invalid names, ranges, imports and references throw
 `SymbolError`.
+
+Source documents accept `hashAlgorithm` and `language` GUIDs and a `hash`
+Uint8Array. SHA-1 and SHA-256 are computed synchronously when omitted;
+SHA-384/SHA-512 need the compiler's precomputed digest. Hash inputs are exact source
+bytes, including BOMs and line endings. Document path components are deduplicated
+using System.Reflection.Metadata's separator selection. Portable PDB has a
+language column and no vendor column. References: the
+[Portable PDB v1.0 specification](https://github.com/dotnet/runtime/blob/main/docs/design/specs/PortablePdb-Metadata.md)
+and [SRM document-name encoder](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Reflection.Metadata/src/System/Reflection/Metadata/Ecma335/MetadataBuilder.Heaps.cs).
+
+The new import/constant/document writer batch has not yet been validated with
+System.Reflection.Metadata. The independent native readback gate remains work
+for SF-A13-T01.8; it must pass before interoperability is claimed.

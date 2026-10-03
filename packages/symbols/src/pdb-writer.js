@@ -1,6 +1,6 @@
 import { Writer, readPE, utf8, token, codedIndex } from '@sharpforge/cil';
-import { sha256 } from './hash.js';
-import { PdbGuids } from './contracts.js';
+import { writeDocument } from './document-writer.js';
+import { PdbGuids, fail } from './contracts.js';
 import { PortablePdbBuilder } from './pdb-builder.js';
 import { writeSequencePoints } from './sequence-points.js';
 import { writeImportScopes } from './import-writer.js';
@@ -13,14 +13,8 @@ export function emitPortablePdb(assembly, debug, { embedSources = true, sourceLi
     docs = new Map(),
     cdi = [];
   for (const s of debug.sources ?? []) {
-    const raw = s.bytes ?? utf8(s.text ?? ''),
-      name = b.blob(
-        new Writer()
-          .u8(0)
-          .compressed(b.blob(utf8(s.uri)))
-          .finish(),
-      ),
-      id = b.add(48, [name, b.guid(PdbGuids.sha256), b.blob(sha256(raw)), b.guid(PdbGuids.csharp)]);
+    if (docs.has(s.uri)) fail('Duplicate document names');
+    const { id, bytes: raw } = writeDocument(b, s);
     docs.set(s.uri, id);
     if (embedSources && s.text !== undefined)
       cdi.push([
