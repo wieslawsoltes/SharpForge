@@ -46,3 +46,14 @@ export function stringChar(vm,reference,index) {
   if(!Number.isInteger(index)||index<0||index>=text.length)throw new ManagedFault('IndexOutOfRangeException','String index out of range');
   return text.charCodeAt(index);
 }
+
+/** String(char[]) copies UTF-16 code units into a fresh, non-interned string. */
+export function stringFromChars(vm,arrayReference) {
+  if(arrayReference===null)throw new ManagedFault('ArgumentNullException','Character array is null');
+  const record=vm.heap.get(arrayReference);
+  if(record.kind!=='array'||!['char[]','System.Char[]'].includes(record.type))
+    throw new ManagedFault('ArgumentException','Character array required');
+  let value='';
+  for(let offset=0;offset<record.data.length;offset+=4096)value+=String.fromCharCode(...record.data.slice(offset,offset+4096).map(code=>Number(code)&0xffff));
+  return vm.heap.string(value,[arrayReference]);
+}

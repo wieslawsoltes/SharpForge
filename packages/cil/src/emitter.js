@@ -119,6 +119,8 @@ function emitBuiltin(c,w,id,count,types,adapt) {
   else if(name==='int.Parse'||name==='double.Parse'){owner=name.startsWith('int')?'int':'double';member='Parse';result=owner;params=['string'];}
   else if(name.startsWith('Convert.')){owner='System.Convert';member=name.slice(8);result={ToInt32:'int',ToDouble:'double',ToString:'string'}[member];params=[types[0]==='null'?'object':isValue(types[0])||types[0]==='string'?types[0]:'object'];}
   else if(name.startsWith('Array.')){owner='Array';member=name.slice(6);result='void';params=['Array'];}
+  else if(name==='object.GetType'||name.startsWith('$type.')){owner='object';member='GetType';result='System.Type';params=[];instance=true;}
+  else if(name==='Type.Name'||name==='Type.FullName'){owner=name==='Type.Name'?'System.Reflection.MemberInfo':'System.Type';member='get_'+name.slice(5);result='string';params=[];instance=true;}
   else if(name==='object.ReferenceEquals'){owner='System.Object';member='ReferenceEquals';result='bool';params=['object','object'];}
   else if(name==='Enum.HasFlag'){adapt(types,['object','object']);w.op('callvirt',c.external('System.Enum','HasFlag','bool',['System.Enum'],false));return;}
   else if(name==='string.get_Chars'){adapt(types,['string','int']);w.op('callvirt',c.external('string','get_Chars','char',['int'],false)).op('conv.i4');return;}

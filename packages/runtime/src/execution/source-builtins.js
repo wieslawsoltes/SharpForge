@@ -2,6 +2,7 @@ import {Builtins} from '@sharpforge/bytecode';
 import {ManagedFault} from '../heap.js';
 import {internString,isInternedString,referenceEquals,stringChar} from './strings.js';
 import {enumHasFlag,enumInfo,enumValue} from './enums.js';
+import {objectType,typeName,runtimeTypeText} from './tokens.js';
 
 /** Invoke an intrinsic with heap/value/format/output/platform services; no image is required. */
 export function builtin(vm, id, args) {
@@ -13,6 +14,7 @@ export function builtin(vm, id, args) {
   const name = entry.name;
   return vm.heap.withRoots(args, () => {
     const a = vm.value(args[0]), b = vm.value(args[1]), c = vm.value(args[2]);
+    if(name.startsWith('$type.'))return objectType(vm,args[0],name.split('.')[1]);
     if (name.startsWith('Math.')) {
       const fn = {Abs: 'abs', Min: 'min', Max: 'max', Pow: 'pow', Sqrt: 'sqrt', Floor: 'floor', Ceiling: 'ceil', Round: 'round'}[name.slice(5)];
       if (fn === 'round') {
@@ -25,6 +27,8 @@ export function builtin(vm, id, args) {
       case 'string.Intern': return internString(vm,args[0]);
       case 'string.IsInterned': return isInternedString(vm,args[0]);
       case 'string.get_Chars': return stringChar(vm,args[0],args[1]);
+      case 'object.GetType': return objectType(vm,args[0]);
+      case 'Type.Name': case 'Type.FullName': {const text=typeName(vm,args[0],name==='Type.FullName');return text===null?null:vm.heap.string(text);}
       case 'object.ReferenceEquals': return referenceEquals(args[0],args[1]);
       case 'Enum.HasFlag': return enumHasFlag(vm,args[0],args[1]);
       case '$Math.Abs.Int32':
@@ -62,7 +66,7 @@ export function builtin(vm, id, args) {
         if (Number.isNaN(v)) throw new ManagedFault('FormatException', 'Cannot convert value to double');
         return v;
       }
-      case 'Convert.ToString': case 'object.ToString': return vm.heap.string(vm.format(args[0]));
+      case 'Convert.ToString': case 'object.ToString': return vm.heap.string(runtimeTypeText(vm,args[0])??vm.format(args[0]));
       case 'string.Concat': return vm.heap.string(vm.format(args[0]) + vm.format(args[1]));
       case 'string.IsNullOrEmpty': return a === null || a === '';
       case 'Array.Reverse': case 'Array.Sort': {
