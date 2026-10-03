@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "library-89b9fdd2becd476b9a4e",
+  "kind": "library",
+  "namespace": "System.Runtime",
+  "sourceText": "using System;\nusing System.Collections;\nusing System.Collections.Generic;\nusing System.Linq;\nusing Xunit;\nclass SuiteProgram { static int Main() {\n\n            FormatException fe = Assert.Throws<FormatException>(() => int.Parse([0xA0]));\n            Assert.DoesNotContain(\"A0\", fe.Message, StringComparison.Ordinal);\n            Assert.DoesNotContain(\"ReadOnlySpan\", fe.Message, StringComparison.Ordinal);\n            Assert.DoesNotContain(\"\\uFFFD\", fe.Message, StringComparison.Ordinal);\n        \nreturn 0; } }\n// SharpForge's deliberately small test adapter. Assertions fail by throwing.\n\nnamespace Xunit\n{\n    public static class Assert\n    {\n        public static void True(bool value) { if (!value) throw new Exception(\"Assert.True\"); }\n        public static void False(bool value) { if (value) throw new Exception(\"Assert.False\"); }\n        public static void Null(object value) { if (value != null) throw new Exception(\"Assert.Null\"); }\n        public static void NotNull(object value) { if (value == null) throw new Exception(\"Assert.NotNull\"); }\n        public static void Same(object expected, object actual)\n        { if (!object.ReferenceEquals(expected, actual)) throw new Exception(\"Assert.Same\"); }\n        public static void Equal<T>(T expected, T actual)\n        {\n            if (expected is System.Collections.IEnumerable && !(expected is string))\n                throw new NotSupportedException(\"Shim Equal supports scalar values only, not sequence equality\");\n            if (!object.Equals(expected, actual)) throw new Exception(\"Assert.Equal\");\n        }\n        public static T Throws<T>(Action action) where T : Exception\n        {\n            try { action(); }\n            catch (Exception error)\n            {\n                if (error.GetType() != typeof(T)) throw new Exception(\"Assert.Throws: wrong exception type\");\n                return (T)error;\n            }\n            throw new Exception(\"Assert.Throws: no exception\");\n        }\n    }\n}\n",
+  "sourceSHA256": "a368849f1ce8f0652759afc06ecefb3f556561516ac7584520fbe5c0e4b3808a",
+  "originalSource": "public static void Parse_Utf8Span_InvalidUtf8()\n        {\n            FormatException fe = Assert.Throws<FormatException>(() => int.Parse([0xA0]));\n            Assert.DoesNotContain(\"A0\", fe.Message, StringComparison.Ordinal);\n            Assert.DoesNotContain(\"ReadOnlySpan\", fe.Message, StringComparison.Ordinal);\n            Assert.DoesNotContain(\"\\uFFFD\", fe.Message, StringComparison.Ordinal);\n        }",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/libraries/System.Runtime/tests/System.Runtime.Tests/System/Int32Tests.cs",
+    "sha256": "6875bc15b763c0ac334002874d893562da35c3467ef7d5fb63feeb27ac55e8ab",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/libraries/System.Runtime/tests/System.Runtime.Tests/System/Int32Tests.cs",
+    "license": "MIT",
+    "method": "Parse_Utf8Span_InvalidUtf8",
+    "offset": 53636
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack",
+    "local XunitShim.cs"
+  ],
+  "expected": {
+    "exitCode": 0
+  },
+  "unsupported": [
+    "xunit shim does not implement Assert.DoesNotContain"
+  ],
+  "adaptation": "Original method body in standalone Main; no base fixture/helpers imported. Native compilation preflight detects unresolved dependencies; scalar assertions, reference identity and exact exception assertions execute."
+}

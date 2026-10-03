@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ea4727f300e1304892a6",
+  "kind": "diagnostics",
+  "sourceText": "public class Derived : Base\n{\n    public override nint M() => 0;\n}",
+  "sourceSHA256": "c0ae738ad4a2ef68de864b833943482eea185019b4a4b9eb2e5b03da0b7570b5",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "sha256": "a7e54d8ce96a59177276eba5d802097c4cc4b2dee81cb9034e7dd309ad524cb8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "license": "MIT",
+    "method": "RetargetingFromNonNumericToNumericIntPtrCorlib",
+    "offset": 586767
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { libComp.ToMetadataReference() }, targetFramework: TargetFramework.Net70)",
+  "options": "(source, references: new[] { libComp.ToMetadataReference() }, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

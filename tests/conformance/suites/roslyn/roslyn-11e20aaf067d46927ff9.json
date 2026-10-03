@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-11e20aaf067d46927ff9",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public void M0()\n    {\n        object a = new Middle();\n        object b = new Value(10);\n        object c = new Middle();\n        c = new Base();\n        Base d = new Derived();\n        Base e = new Derived();\n        e = new Middle();\n        Base f = new Middle();\n        f = new Base();\n        object g = new Derived();\n        g = new Base();\n        g = new Middle();\n        var h = new Middle();\n        h = new Derived();\n        object i = 3;\n        object j;\n        j = 10;\n        j = 10.1;\n        Middle k = new Derived();\n        Middle l = new Derived();\n        object o = new Middle();\n        M(out l, ref o);\n\n        IBase1 ibase1 = null;\n        IBase2 ibase2 = null;\n        IMiddle imiddle = null;\n        IDerived iderived = null;\n\n        object ia = imiddle;\n        object ic = imiddle;\n        ic = ibase1;\n        IBase1 id = iderived;\n        IBase1 ie = iderived;\n        ie = imiddle;\n        IBase1 iff = imiddle;\n        iff = ibase1;\n        object ig = iderived;\n        ig = ibase1;\n        ig = imiddle;\n        var ih = imiddle;\n        ih = iderived;\n        IMiddle ik = iderived;\n        IMiddle il = iderived;\n        object io = imiddle;\n        IM(out il, ref io);\n        IBase2 im = iderived;\n        object isink = ibase2;\n        isink = 3;\n    }\n\n    object fa = new Middle();\n    object fb = new Value(10);\n    object fc = new Middle();\n    Base fd = new Derived();\n    Base fe = new Derived();\n    Base ff = new Middle();\n    object fg = new Derived();\n    Middle fh = new Middle();\n    object fi = 3;\n    object fj;\n    Middle fk = new Derived();\n    Middle fl = new Derived();\n    object fo = new Middle();\n\n    static IBase1 fibase1 = null;\n    static IBase2 fibase2 = null;\n    static IMiddle fimiddle = null;\n    static IDerived fiderived = null;\n\n    object fia = fimiddle;\n    object fic = fimiddle;\n    IBase1 fid = fiderived;\n    IBase1 fie = fiderived;\n    IBase1 fiff = fimiddle;\n    object fig = fiderived;\n    IMiddle fih = fimiddle;\n    IMiddle fik = fiderived;\n    IMiddle fil = fiderived;\n    object fio = fimiddle;\n    object fisink = fibase2;\n    IBase2 fim = fiderived;\n\n    void M1()\n    {\n        fc = new Base();\n        fe = new Middle();\n        ff = new Base();\n        fg = new Base();\n        fg = new Middle();\n        fh = new Derived();\n        fj = 10;\n        fj = 10.1;\n        M(out fl, ref fo);\n\n        fic = fibase1;\n        fie = fimiddle;\n        fiff = fibase1;\n        fig = fibase1;\n        fig = fimiddle;\n        fih = fiderived;\n        IM(out fil, ref fio);\n        fisink = 3;\n    }\n\n    void M(out Middle p1, ref object p2)\n    {\n        p1 = new Middle();\n        p2 = null;\n    }\n\n    void IM(out IMiddle p1, ref object p2)\n    {\n        p1 = null;\n        p2 = null;\n    }\n}\n\nclass Base\n{\n}\n\nclass Middle : Base\n{\n}\n\nclass Derived : Middle\n{\n}\n\nstruct Value\n{\n    public Value(int a)\n    {\n        X = a;\n    }\n\n    public int X;\n}\n\ninterface IBase1\n{\n}\n\ninterface IBase2\n{\n}\n\ninterface IMiddle : IBase1\n{\n}\n\ninterface IDerived : IMiddle, IBase2\n{\n}\n\n",
+  "sourceSHA256": "43d80db39eac511ee0519cdc87d2f585ea2850e9f10e3080ce83ad7806da0962",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "sha256": "eb33d60956503b30bec29f823f9033347fac98a9029a70b139e6a57a3ad1abef",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "SymbolCouldHaveMoreSpecificTypeCSharp",
+    "offset": 20286
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

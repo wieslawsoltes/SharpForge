@@ -257,7 +257,9 @@ export const BodyBinding = Base =>
           return;
         }
         const e = r.error;
-        binder.report(binder.errorNode(e, args, at), e.code, e.code === 'CS1729' ? [target.toDisplayString(), args.length] : e.args);
+        // Several constructors fit a dynamic argument: the choice would be made at run time, which an initializer cannot do.
+        if (e.code === 'CS0121' && args.some(a => a.type?.typeKind === TypeKind.Dynamic)) binder.report(at, 'CS1975');
+        else binder.report(binder.errorNode(e, args, at), e.code, e.code === 'CS1729' ? [target.toDisplayString(), args.length] : e.args);
         return;
       }
       const call = binder.finishCall(r, null, args, init ?? argList, {});

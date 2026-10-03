@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "library-ace9ae04f3ca583fec97",
+  "kind": "library",
+  "namespace": "System.Runtime",
+  "sourceText": "using System;\nusing System.Collections;\nusing System.Collections.Generic;\nusing System.Linq;\nusing Xunit;\nclass SuiteProgram { static int Main() {\n\n            AssertExtensions.Throws<ArgumentNullException>(\"s\", () => char.ConvertToUtf32(null, 0)); // String is null\n\n            AssertExtensions.Throws<ArgumentException>(\"s\", () => char.ConvertToUtf32(\"\\uD800\\uD800\", 0)); // High, high\n            AssertExtensions.Throws<ArgumentException>(\"s\", () => char.ConvertToUtf32(\"\\uD800\\uD800\", 1)); // High, high\n            AssertExtensions.Throws<ArgumentException>(\"s\", () => char.ConvertToUtf32(\"\\uD800\\uD7FF\", 0)); // High, non-surrogate\n            AssertExtensions.Throws<ArgumentException>(\"s\", () => char.ConvertToUtf32(\"\\uD800\\u0000\", 0)); // High, non-surrogate\n\n            AssertExtensions.Throws<ArgumentException>(\"s\", () => char.ConvertToUtf32(\"\\uDC01\\uD940\", 0)); // Low, high\n            AssertExtensions.Throws<ArgumentException>(\"s\", () => char.ConvertToUtf32(\"\\uDC01\\uD940\", 1)); // Low, high\n            AssertExtensions.Throws<ArgumentException>(\"s\", () => char.ConvertToUtf32(\"\\uDD00\\uDE00\", 0)); // Low, low\n            AssertExtensions.Throws<ArgumentException>(\"s\", () => char.ConvertToUtf32(\"\\uDD00\\uDE00\", 1)); // Low, hig\n            AssertExtensions.Throws<ArgumentException>(\"s\", () => char.ConvertToUtf32(\"\\uDF01\\u0000\", 0)); // Low, non-surrogateh\n\n            AssertExtensions.Throws<ArgumentOutOfRangeException>(\"index\", () => char.ConvertToUtf32(\"abcde\", -1)); // Index < 0\n            AssertExtensions.Throws<ArgumentOutOfRangeException>(\"index\", () => char.ConvertToUtf32(\"abcde\", 5)); // Index >= string.Length\n            AssertExtensions.Throws<ArgumentOutOfRangeException>(\"index\", () => char.ConvertToUtf32(\"\", 0)); // Index >= string.Length\n        \nreturn 0; } }\n// SharpForge's deliberately small test adapter. Assertions fail by throwing.\n\nnamespace Xunit\n{\n    public static class Assert\n    {\n        public static void True(bool value) { if (!value) throw new Exception(\"Assert.True\"); }\n        public static void False(bool value) { if (value) throw new Exception(\"Assert.False\"); }\n        public static void Null(object value) { if (value != null) throw new Exception(\"Assert.Null\"); }\n        public static void NotNull(object value) { if (value == null) throw new Exception(\"Assert.NotNull\"); }\n        public static void Same(object expected, object actual)\n        { if (!object.ReferenceEquals(expected, actual)) throw new Exception(\"Assert.Same\"); }\n        public static void Equal<T>(T expected, T actual)\n        {\n            if (expected is System.Collections.IEnumerable && !(expected is string))\n                throw new NotSupportedException(\"Shim Equal supports scalar values only, not sequence equality\");\n            if (!object.Equals(expected, actual)) throw new Exception(\"Assert.Equal\");\n        }\n        public static T Throws<T>(Action action) where T : Exception\n        {\n            try { action(); }\n            catch (Exception error)\n            {\n                if (error.GetType() != typeof(T)) throw new Exception(\"Assert.Throws: wrong exception type\");\n                return (T)error;\n            }\n            throw new Exception(\"Assert.Throws: no exception\");\n        }\n    }\n}\n",
+  "sourceSHA256": "35eda83e4f178a627d4e2704f7f542c7595f78e0040ff5ae42d6744df36333a1",
+  "originalSource": "public static void ConvertToUtf32_String_Int_Invalid()\n        {\n            AssertExtensions.Throws<ArgumentNullException>(\"s\", () => char.ConvertToUtf32(null, 0)); // String is null\n\n            AssertExtensions.Throws<ArgumentException>(\"s\", () => char.ConvertToUtf32(\"\\uD800\\uD800\", 0)); // High, high\n            AssertExtensions.Throws<ArgumentException>(\"s\", () => char.ConvertToUtf32(\"\\uD800\\uD800\", 1)); // High, high\n            AssertExtensions.Throws<ArgumentException>(\"s\", () => char.ConvertToUtf32(\"\\uD800\\uD7FF\", 0)); // High, non-surrogate\n            AssertExtensions.Throws<ArgumentException>(\"s\", () => char.ConvertToUtf32(\"\\uD800\\u0000\", 0)); // High, non-surrogate\n\n            AssertExtensions.Throws<ArgumentException>(\"s\", () => char.ConvertToUtf32(\"\\uDC01\\uD940\", 0)); // Low, high\n            AssertExtensions.Throws<ArgumentException>(\"s\", () => char.ConvertToUtf32(\"\\uDC01\\uD940\", 1)); // Low, high\n            AssertExtensions.Throws<ArgumentException>(\"s\", () => char.ConvertToUtf32(\"\\uDD00\\uDE00\", 0)); // Low, low\n            AssertExtensions.Throws<ArgumentException>(\"s\", () => char.ConvertToUtf32(\"\\uDD00\\uDE00\", 1)); // Low, hig\n            AssertExtensions.Throws<ArgumentException>(\"s\", () => char.ConvertToUtf32(\"\\uDF01\\u0000\", 0)); // Low, non-surrogateh\n\n            AssertExtensions.Throws<ArgumentOutOfRangeException>(\"index\", () => char.ConvertToUtf32(\"abcde\", -1)); // Index < 0\n            AssertExtensions.Throws<ArgumentOutOfRangeException>(\"index\", () => char.ConvertToUtf32(\"abcde\", 5)); // Index >= string.Length\n            AssertExtensions.Throws<ArgumentOutOfRangeException>(\"index\", () => char.ConvertToUtf32(\"\", 0)); // Index >= string.Length\n        }",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/libraries/System.Runtime/tests/System.Runtime.Tests/System/CharTests.cs",
+    "sha256": "5eb09f3536b5ed7da6538669737a8ffe73d57b6d976bb3c32c8bec3b89bd8e96",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/libraries/System.Runtime/tests/System.Runtime.Tests/System/CharTests.cs",
+    "license": "MIT",
+    "method": "ConvertToUtf32_String_Int_Invalid",
+    "offset": 3857
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack",
+    "local XunitShim.cs"
+  ],
+  "expected": {
+    "exitCode": 0
+  },
+  "unsupported": [
+    "Upstream helper, fixture state, or platform-specific dependency",
+    "No directly supported assertion; helper-based assertions require adaptation"
+  ],
+  "adaptation": "Original method body in standalone Main; no base fixture/helpers imported. Native compilation preflight detects unresolved dependencies; scalar assertions, reference identity and exact exception assertions execute."
+}

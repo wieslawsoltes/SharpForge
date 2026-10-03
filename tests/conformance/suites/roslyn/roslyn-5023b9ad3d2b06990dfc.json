@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5023b9ad3d2b06990dfc",
+  "kind": "diagnostics",
+  "sourceText": "protected private struct Struct\n{\n    private protected int Field1;\n}\n",
+  "sourceSHA256": "612d0a461ac7a3234fd588ec67870f42a63e50ab6abb9b403c488cfb4288bf55",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "sha256": "41afb2c44dc175c901c33c352afc3f75fc22224b4838d00075375c2ad4de40cd",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/PrivateProtected.cs",
+    "license": "MIT",
+    "method": "NotInStructOrNamespace",
+    "offset": 15725
+  },
+  "langVersion": "7.2",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7_2)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1527",
+        "severity": "error"
+      },
+      {
+        "code": "CS0666",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (1,18): error CS1527: Elements defined in a namespace cannot be explicitly declared as private, protected, protected internal, or private protected\n                // protected private struct Struct\n                Diagnostic(ErrorCode.ERR_NoNamespacePrivate, \"Struct\").WithLocation(1, 26),\n                // (3,27): error CS0666: 'Struct.Field1': new protected member declared in struct\n                //     private protected int Field1;\n                Diagnostic(ErrorCode.ERR_ProtectedInStruct, \"Field1\").WithArguments(\"Struct.Field1\").WithLocation(3, 27)\n                ",
+  "unsupported": []
+}

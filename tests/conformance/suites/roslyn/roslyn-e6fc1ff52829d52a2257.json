@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e6fc1ff52829d52a2257",
+  "kind": "diagnostics",
+  "sourceText": "\nstatic class C\n{\n    static void Main()\n    {\n        Test(out var x, x);\n    }\n    \n    static void Test(out Empty x, object y) => throw null;\n}\n\n\nstruct Empty\n{\n}\n",
+  "sourceSHA256": "c7197144d0f24686ec6cf77df404ade3f9fdfb23804b177e425786a286b4ceea",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "sha256": "c8277ea97437cc26511c883985aea205067e653e658a9ad8e0fb3a0be387cf9c",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowDiagnosticTests.cs",
+    "license": "MIT",
+    "method": "WorkItem1243877",
+    "offset": 90010
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(program)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8196",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,25): error CS8196: Reference to an implicitly-typed out variable 'x' is not permitted in this location.\n                //         Test(out var x, x);\n                Diagnostic(ErrorCode.ERR_ImplicitlyTypedVariableUsedInForbiddenZone, \"x\").WithArguments(\"x\").WithLocation(6, 25)\n                ",
+  "unsupported": []
+}

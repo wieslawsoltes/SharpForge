@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e71ec8b30389e6cda194",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C3\n{\n    public static void Main()\n    {\n        \"x\".M1((1, null, 1, null, 1, null, 1, null, 1, null));\n    }\n}\n",
+  "sourceSHA256": "975971217f3cac2769d8ac776e9b81bdae1ee2b7d78636bfbe60ccaecc6503f8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "LongLiteralsAndAmbiguousVT_02",
+    "offset": 750118
+  },
+  "langVersion": "default",
+  "target": "exe",
+  "references": "references: new[] { comp1.ToMetadataReference().WithAliases(ImmutableArray.Create(\"alias\")), comp2.ToMetadataReference() },\n                            parseOptions: TestOptions.Regular,\n                            options: TestOptions.DebugExe)",
+  "options": "(source3,\n                            references: new[] { comp1.ToMetadataReference().WithAliases(ImmutableArray.Create(\"alias\")), comp2.ToMetadataReference() },\n                            parseOptions: TestOptions.Regular,\n                            options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

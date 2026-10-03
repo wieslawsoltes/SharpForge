@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-48af774e5b3ff224f674",
+  "kind": "spec",
+  "sourceText": "unsafe class C // unsafe context\n{\n    System.Collections.Generic.IEnumerable<int> M() // an iterator\n    {\n        yield return 1;\n        local();\n        async void local()\n        {\n            int* p = null; // allowed in C# 12; error in C# 13 (breaking change)\n            await Task.Yield(); // error in C# 12, allowed in C# 13\n        }\n    }\n}",
+  "sourceSHA256": "cb0b39baf78829d16ded32094171a5bd83b21abce9d6cc03677c7dc9002a39b3",
+  "target": "library",
+  "featureId": "csharp-13-0-ref-unsafe-in-iterators-async",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/ref-unsafe-in-iterators-async.md",
+    "sha256": "ed4db38af450526d24d556f7c1424168e3fb20df13a77900399cb9ca82b502fd",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/ref-unsafe-in-iterators-async.md",
+    "license": "NOASSERTION",
+    "offset": 1727
+  }
+}

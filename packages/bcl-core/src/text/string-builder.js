@@ -1,5 +1,5 @@
-import {MAX, bclScalar, bounded, fail, integer, makeArray, string, text} from '../host.js';
-import {compositeFormat} from '../formatting/composite-format.js';
+import {MAX, array, bclScalar, bounded, fail, integer, makeArray, string, text} from '../host.js';
+import {appendCompositeFormat} from '../formatting/composite-format.js';
 
 const owner = 'System.Text.StringBuilder';
 const maximumCapacity = 2147483647;
@@ -26,6 +26,11 @@ export function registerStringBuilder({define, member, ctor, prop}) {
   for (let count = 1; count <= 3; count++) {
     member(owner, 'AppendFormat', ['string', ...Array(count).fill('object')], owner);
   }
+}
+
+/** Add genuine params-array binding in A07's reserved range without moving released contracts. */
+export function registerStringBuilderExtensions({member}) {
+  member(owner, 'AppendFormat', ['string', 'object[]'], owner, {paramsIndex: 1});
 }
 
 function capacity(platform, value, minimum = 0) {
@@ -160,6 +165,17 @@ function mutateBuffer(platform, reference, name, values, scalars) {
   }
 }
 
+function appendFormat(platform, descriptor, reference, values) {
+  const format = string(platform, values[0]);
+  let args = values.slice(1);
+  if (descriptor.paramsIndex === 1) {
+    if (values[1] === null) fail(platform, 'ArgumentNullException', 'Format arguments are required');
+    args = array(platform, values[1]);
+  }
+  appendCompositeFormat(platform, format, args, value => appendText(platform, reference, value));
+  return reference;
+}
+
 function invokeMember(platform, descriptor, reference, values, scalars) {
   switch (descriptor.name) {
     case 'get_Length': return platform.get(reference, '$length', 0);
@@ -171,8 +187,7 @@ function invokeMember(platform, descriptor, reference, values, scalars) {
       return null;
     case 'Append': return appendText(platform, reference, text(platform, values[0], descriptor.parameters[0]));
     case 'AppendLine': return appendText(platform, reference, (values.length ? text(platform, values[0]) : '') + '\n');
-    case 'AppendFormat':
-      return appendText(platform, reference, compositeFormat(platform, string(platform, values[0]), values.slice(1)));
+    case 'AppendFormat': return appendFormat(platform, descriptor, reference, values);
     case 'EnsureCapacity':
       capacity(platform, scalars[0]);
       platform.set(reference, '$capacity', Math.max(scalars[0], platform.get(reference, '$capacity', 16)));
@@ -201,5 +216,6 @@ export const stringBuilderModule = Object.freeze({
   name: 'string-builder',
   families: Object.freeze(['builder']),
   contracts: registerStringBuilder,
+  extensionContracts: registerStringBuilderExtensions,
   invoke: invokeStringBuilder
 });

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0e13cb0be40a88d2e02f",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.CompilerServices;\n\nnamespace System.Runtime.CompilerServices\n{\n    public class IsUnmanagedAttribute : System.Attribute { }\n}\n\npublic class Test\n{\n    [IsUnmanaged]\n    public int x = 0;\n}\n",
+  "sourceSHA256": "4856c8e917788e27b05e937c63e26f5a1c36577cdaaf2d044314de3199e183cc",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_IsUnmanaged.cs",
+    "sha256": "c8792e369226130bbbac808179535c1e1aa84e843c9cb3691e3e7502042372c6",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_IsUnmanaged.cs",
+    "license": "MIT",
+    "method": "IsUnmanagedAttributeIsDisallowedEverywhereInSource_Fields",
+    "offset": 19272
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(code)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8335",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,6): error CS8335: Do not use 'System.Runtime.CompilerServices.IsUnmanagedAttribute'. This is reserved for compiler usage.\n                //     [IsUnmanaged]\n                Diagnostic(ErrorCode.ERR_ExplicitReservedAttr, \"IsUnmanaged\").WithArguments(\"System.Runtime.CompilerServices.IsUnmanagedAttribute\").WithLocation(11, 6)",
+  "unsupported": []
+}

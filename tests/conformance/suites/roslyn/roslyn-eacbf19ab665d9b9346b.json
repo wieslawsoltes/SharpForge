@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-eacbf19ab665d9b9346b",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public static void Main()\n    {\n        int x;\n        bool Local() => x == 0;\n    }\n}",
+  "sourceSHA256": "eae7ac6af4ffe8869210380955796f0e76a4a95ec53b7cd675cd66d11413af65",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "UnusedLocalFunc",
+    "offset": 17707
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nclass C\n{\n    public static void Main()\n    {\n        int x;\n        bool Local() => x == 0;\n    }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8321",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,14): warning CS8321: The local function 'Local' is declared but never used\n                //         bool Local() => x == 0;\n                Diagnostic(ErrorCode.WRN_UnreferencedLocalFunction, \"Local\").WithArguments(\"Local\").WithLocation(7, 14)",
+  "unsupported": []
+}

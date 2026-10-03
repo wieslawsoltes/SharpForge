@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-6207a01349928a67d5a7",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\n// File Class1.cs\nusing System;\nusing System.Diagnostics;\nclass Class1\n{\n    [Conditional(\"DEBUG\")]\n    public virtual void M() => Console.WriteLine(\"Class1.M executed\");\n}\n\n// File Class2.cs\nclass Class2 : Class1\n{\n    public override void M()\n    {\n        Console.WriteLine(\"Class2.M executed\");\n        base.M(); // base.M is not called!\n    }\n}\n\n// File Class3.cs\n#define DEBUG\nclass Class3\n{\n    public static void Main()\n    {\n        Class2 c = new Class2();\n        c.M(); // M is called\n    }\n}",
+  "unsupported": [],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": [],
+    "stdout": "Class2.M executed\n",
+    "exitCode": 0
+  },
+  "sourceSHA256": "7c390042e7940b660d795ed36dd2465c3f62fea9c3ed420bc316af590745ea9f",
+  "originalSource": "// File Class1.cs\nusing System;\nusing System.Diagnostics;\nclass Class1\n{\n    [Conditional(\"DEBUG\")]\n    public virtual void M() => Console.WriteLine(\"Class1.M executed\");\n}\n\n// File Class2.cs\nclass Class2 : Class1\n{\n    public override void M()\n    {\n        Console.WriteLine(\"Class2.M executed\");\n        base.M(); // base.M is not called!\n    }\n}\n\n// File Class3.cs\n#define DEBUG\nclass Class3\n{\n    public static void Main()\n    {\n        Class2 c = new Class2();\n        c.M(); // M is called\n    }\n}",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "ConditionalMethods4",
+    "expectedOutput": [
+      "Class2.M executed"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-attributes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/attributes.md",
+    "sha256": "9ab07c36a912273dd0eb341141ca62153c76e5f32f422e70950477a6b89c5242",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/attributes.md",
+    "license": "MIT",
+    "example": "ConditionalMethods4",
+    "offsetInUnquotedMarkdown": 33503
+  }
+}

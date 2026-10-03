@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ed72d6761dc3536bde69",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Threading.Tasks;\n\nclass A\n{\n    static void Main()\n    {\n        System.Console.WriteLine(\"Non Task Main\");\n    }\n\n    async static Task<float> Main(string[] args)\n    {\n        await Task.Factory.StartNew(() => { });\n        System.Console.WriteLine(\"Task Main\");\n        return 0.0f;\n    }\n}",
+  "sourceSHA256": "7c14beee2656790a1a13af58a167f2c88840d4609027de0be5d5e6247c25c0d2",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncMainTests.cs",
+    "sha256": "a054148624c5e3228e0a73409b001a77e8a758febc8c750adbb6f8a881e42915",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncMainTests.cs",
+    "license": "MIT",
+    "method": "TaskOfFloatMainAndNonTaskMain_WithExplicitMain",
+    "offset": 60378
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe.WithMainTypeName(\"A\"))",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

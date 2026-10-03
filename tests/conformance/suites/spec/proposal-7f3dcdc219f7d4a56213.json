@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-7f3dcdc219f7d4a56213",
+  "kind": "spec",
+  "sourceText": "void RefExample()\n{\n    int x = ...;\n\n    // Today creating a length one Span<int> requires a stackalloc and a new \n    // local\n    Span<int> span1 = stackalloc [] { x };\n    Use(span1);\n    x = span1[0]; \n\n    // Simpler to just allow length one span\n    var span2 = new Span<int>(ref x);\n    Use(span2);\n}",
+  "sourceSHA256": "40f3ede3794162f574718ec97df1ed19322a6666d6364ec9157417a5db250d4d",
+  "target": "library",
+  "featureId": "csharp-7-2-span-and-ref-like-types",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/span-safety.md",
+    "sha256": "73bc8deb74ee9ac75ab2d74292a7014712fd627abe8dcc3f61ad9cfd6c1cdc30",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/span-safety.md",
+    "license": "NOASSERTION",
+    "offset": 20903
+  }
+}

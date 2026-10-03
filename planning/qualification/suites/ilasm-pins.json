@@ -1,0 +1,26 @@
+{
+  "version": "10.0.5",
+  "platforms": [
+    {
+      "rid": "osx-arm64",
+      "url": "https://api.nuget.org/v3-flatcontainer/runtime.osx-arm64.microsoft.netcore.ilasm/10.0.5/runtime.osx-arm64.microsoft.netcore.ilasm.10.0.5.nupkg",
+      "packageSHA256": "dbe5d8ed855732380b551131f96c00756e374a59c08883a914eb0bd101710c94",
+      "entry": "runtimes/osx-arm64/native/ilasm",
+      "sha256": "b7b5215b41d27bfad0fd9bd7d6bb2e64486f98cfd53cbe639127d6ad15817042"
+    },
+    {
+      "rid": "linux-x64",
+      "url": "https://api.nuget.org/v3-flatcontainer/runtime.linux-x64.microsoft.netcore.ilasm/10.0.5/runtime.linux-x64.microsoft.netcore.ilasm.10.0.5.nupkg",
+      "packageSHA256": "9a8fa85d3c7477531806ef84a14f364b74b0ea12e91aaf0c343558a52525c037",
+      "entry": "runtimes/linux-x64/native/ilasm",
+      "sha256": "7547ca6f434f3c0cc2d84adfe4caf93bf460de812d5ec13450c31e9af89d9748"
+    },
+    {
+      "rid": "win-x64",
+      "url": "https://api.nuget.org/v3-flatcontainer/runtime.win-x64.microsoft.netcore.ilasm/10.0.5/runtime.win-x64.microsoft.netcore.ilasm.10.0.5.nupkg",
+      "packageSHA256": "eac9e5ca8663bb55101cab17f18af4a10a2941757fd30b44bd35839e49ec79a8",
+      "entry": "runtimes/win-x64/native/ilasm.exe",
+      "sha256": "4e1078e1554be9863804c11d2406d235e4c2699b4aab7af4e3ecba93574f8c60"
+    }
+  ]
+}

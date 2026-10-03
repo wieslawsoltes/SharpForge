@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-2a21011b1d82c80af3d7",
+  "kind": "diagnostics",
+  "sourceText": "\n[IsReadOnly]\npublic class Test\n{\n\tref struct S1{}\n}",
+  "sourceSHA256": "4f11146e3763c77dcb891bea6b6f6201a4e7a978b2a61d5bd4c0e2555b889b93",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_ReadOnlyStruct.cs",
+    "sha256": "801e0fb4a138c65b6d6993c2d56363bbcc9723b18371ce67b8a06b0238718451",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_ReadOnlyStruct.cs",
+    "license": "MIT",
+    "method": "UserReferencingIsReadOnlyAttributeShouldResultInAnError",
+    "offset": 11988
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(code)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,2): error CS0246: The type or namespace name 'IsReadOnlyAttribute' could not be found (are you missing a using directive or an assembly reference?)\n                // [IsReadOnly]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"IsReadOnly\").WithArguments(\"IsReadOnlyAttribute\").WithLocation(2, 2),\n                // (2,2): error CS0246: The type or namespace name 'IsReadOnly' could not be found (are you missing a using directive or an assembly reference?)\n                // [IsReadOnly]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"IsReadOnly\").WithArguments(\"IsReadOnly\").WithLocation(2, 2)\n                ",
+  "unsupported": []
+}
