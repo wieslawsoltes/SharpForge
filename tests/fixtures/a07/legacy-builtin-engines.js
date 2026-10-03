@@ -45,7 +45,7 @@ export function cilAssembly(fixture) {
     result: fixture.result,
     body(writer, context) {
       for (let index = 0; index < types.length; index++) writer.op('ldarg', index);
-      const parameters = isStatic ? types : types.slice(1);
+      const parameters = fixture.cilParameters ?? (isStatic ? types : types.slice(1));
       const member = context.member(owners[owner], name, fixture.result, parameters, isStatic);
       writer.op(isStatic ? 'call' : 'callvirt', member).op('ret');
     }
