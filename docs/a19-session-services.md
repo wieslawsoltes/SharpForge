@@ -11,11 +11,13 @@ output, runtime grants or application windows.
 ```js
 import { createWorkbenchServices } from './workbench/sessions.js';
 import { ApplicationWindows } from './workbench/application-window.js';
+import { EditorModel } from '@sharpforge/editor';
 
 const services = createWorkbenchServices({
   records: sourceFiles,
   projects: projectDescriptors,
   getProjectSnapshot: projectId => projectSnapshot(projectId),
+  createModel: record => new EditorModel(record.text, { uri: record.uri, version: record.version }),
   createEditor: (record, options) => createSourceView(record, options),
   saveDocument: record => saveCapturedSource(record),
   onError: error => reportError(error),
@@ -50,11 +52,24 @@ Without a custom snapshot provider, project build snapshots read current documen
 text and versions instead of the original descriptor text. Concurrent launch
 operations share the project's build queue while retaining separate app workers.
 
-Document factories receive `{viewId,onChange,onFocus}` and return
-`{editor,element}`. `DocumentService` synchronizes all views of one document while
-retaining independent selection and scroll snapshots. It rejects dirty closes;
-the document-tab host owns Save/Discard/Cancel dialogs. Save captures a source
-revision and never marks an edit made during the write as saved.
+Document factories receive `{viewId,model,onChange,onFocus}` and return
+`{editor,element}`. With `createModel` (also accepted as `modelFactory`),
+`documents.models` is a stable map of authoritative models for all documents.
+Every view receives the same model through `setModel(uri, model)`, sharing its
+buffer and undo history while retaining independent selection and scroll snapshots.
+The factory should pass `model` directly to `CodeEditor` and omit full-text change
+callbacks. The service subscribes once to each model and emits `changed` events
+containing the original `change` with immutable `before`/`after` snapshots and
+incremental `changes`. Compatibility `previous` and `text` fields remain lazy
+through event delivery. Record `text` reads are lazy; assigning text applies an
+undoable model edit. `version` is a read-only getter of the model version.
+
+Without a model factory, the original string record and `onChange` factory
+contract remains available. Dirty closes are rejected; the document-tab host owns
+Save/Discard/Cancel dialogs. Save runs the active view's `prepareSave` before
+capturing text/version, and never marks an edit made during the write as saved.
+Project locks also set `model.readOnly` for unopened documents, so transactional
+workspace edits use the same lock policy as visible source views.
 
 ## Identity and the legacy Studio adapter
 
@@ -115,27 +130,102 @@ retains its launch policy. Revocation stops that worker session immediately.
 Exports contain neither network grants nor environment values. Browser CSP and
 server CORS still determine whether an otherwise granted request can complete.
 
-The current runtime worker does not implement live policy replacement, native
-process attachment, or operating-system environment injection. Managed IL supports
-profile arguments. Source VM arguments and per-app environments require an explicit
-`launchCapabilities(projectId, profile, built, launch)` host callback returning the
-supported `arguments` and `environment` flags. Unsupported nonempty options fail
-with `LAUNCH_CAPABILITY` before application launch. `launchOptions` supplies the
-actual target settings; capability flags must match that implementation.
+Both source and direct CIL launches support profile arguments and isolated,
+read-only application environments. `LaunchProfiles.launchOptions()` emits
+`programArguments` for Main's flat argv; `arguments` remains reserved for raw
+explicit CIL method parameters. The compiler's startup wrapper forwards argv after
+module initializers, including across async Main. Applications read supplied values
+using `System.Environment.GetEnvironmentVariable(string)`; missing names return
+null, empty strings are preserved, and names are case-sensitive. Values are copied
+when the runtime is created and are never inherited from the host OS.
+
+The built-in capability record enables `arguments` and `environment` and disables
+`environmentMutation`. A different target can override
+`launchCapabilities(projectId, profile, built, launch)` with its actual capability
+record. Unsupported nonempty options fail with `LAUNCH_CAPABILITY` before launch.
+Both the profile editor and runtime use the exported runtime validators and bounds;
+malformed replacements preserve an already paused session. `launchOptions` supplies
+the actual target settings; capability flags must match that implementation.
+
+The worker does not implement live policy replacement, native process attachment,
+environment mutation or OS/user/machine environment injection.
 Detach disables source/data/exception break
 handling and continues the selected managed browser process; it is not OS process
 detachment. Renderer metrics identify the actual backend rather than claiming that
 a fallback rendered through WebGPU.
 
+### Dependent active application inspection
+
+The final Studio composition layer supplies the inspector adapter and its test
+described in this section. They are outside the standalone session/runtime
+review branch.
+
+`DebuggerExtensions` accepts `sessions` and
+`getApplicationWindows: () => applicationWindows` from the Studio composition.
+The getter may return `null` before application windows are mounted. With these
+services, renderer selection, metrics and `uiSettled()` use the selected session's
+existing `ApplicationWindows` host; the debugger does not construct another host
+or apply the runtime's command stream twice. Opening the legacy WinUI tool brings
+the selected application's document window forward. Background tool refreshes
+preserve the focused document.
+
+Live Visual Tree requests capture both the application object and its complete
+worker/runtime identity. Selection, restart, stop and disposal invalidate pending
+requests and clear the old snapshot, including selected object IDs that may be
+reused by another application. `DebuggerExtensions.dispose()` releases inspection
+subscriptions and requests without disposing application-owned windows. The
+composition must call it when releasing the debugger. An embedding that supplies
+no SessionManager retains the existing standalone, single-host behavior.
+
+`tests/a19-application-inspector.test.js` exercises the actual debugger automation,
+session manager and worker-client contracts with controlled protocol replies and
+renderer boundaries. It covers late scenes, equal runtime serials, restart,
+disposal, background focus preservation and the standalone host. These focused
+unit boundaries do not claim browser layout, rendering or CSP qualification.
+
 ## Validation
 
 The focused Node files are `a19-worker-client.test.js`,
 `a19-documents-state.test.js`, `a19-build-output.test.js`,
-`a19-app-sessions.test.js` and `a19-startup-orchestration.test.js`. Their fake Worker
+`a19-app-sessions.test.js`, `a19-startup-orchestration.test.js` and
+`a19-document-models.test.js`. The model integration suite uses the actual
+`EditorModel` and checks lazy snapshots across one-megabyte document edits,
+shared undo, save races and locks on unopened documents. Their fake Worker
 is explicitly a protocol/lifetime test, not compiler or native parity evidence.
 
-`tests/browser_multi_session_test.py` builds two actual C# WinUI applications with
-separate real compiler and runtime workers, checks their rendered panels and output,
-closes only one, and verifies diagnostic isolation while the other remains alive.
-It requires the HTTP harness. The in-memory Blob loader must instead receive
-rewritten worker URLs from the host; this script does not claim to qualify it.
+The dependent composition fixture `tests/browser_multi_session_test.py` loads `TwoApps.slnx` and two C# projects
+through the running Studio's `loadDiskRecords` API. It uses Studio's existing
+workbench services and application windows. The fixture selects distinct profiles
+through the startup toolbar, starts both projects with the actual Start button,
+checks their rendered docking panels and exact argv/environment output, switches
+the shared debugger through its Process selector, and stops only that application.
+It then checks a failing background build in the other project, starts another
+instance through the registered command, and stops all sessions. These checks also
+cover selected-project preservation, independent document locks and panel disposal.
+The fixture uses the shared supported browser launcher and production HTTP/CSP;
+the in-memory Blob loader is explicitly rejected. Its result JSON records the
+selected engine and failure or completion, including checks completed before a
+failure. Browser execution remains pending until run on an installed supported
+engine; authoring or syntax-checking this fixture is not browser qualification.
+The fixture requires the final Studio root and is not included in the standalone
+sessions/runtime review branch.
+
+`tests/a19-multi-session-fixture.test.js` uses the same C# window source with real
+compiler output and two real runtime worker modules in each JavaScript engine. It
+checks the combined WinUI scene, argv, environment and stop-isolation behavior.
+Its Node message transport adapter does not qualify Studio DOM, toolbar routing,
+docking or browser CSP; those are the separate browser fixture's responsibilities.
+
+`a19-runtime-arguments.test.js`, `a19-runtime-environment.test.js` and
+`a19-runtime-worker-launch.test.js` execute real compiler output in both JavaScript
+runtimes. Independent CIL fixtures cover the argv and environment ABI without a
+SharpForge debug payload. The production worker is adapted only at the Node message
+transport; tests cover two simultaneous workers, equal local serials, stop isolation
+and malformed replacement launches. Runtime option boundaries and existing builtin
+ID locks are checked separately. Native and Wasm execution are not represented by
+these tests.
+
+The review stack boundary and historical qualification results are recorded in
+`docs/project16-sessions-review.md` and `docs/a19-session-evidence.md`. The service
+layer is intended to be composed by a host; this review does not replace the
+existing Studio root with the final docking, shell and session composition.
