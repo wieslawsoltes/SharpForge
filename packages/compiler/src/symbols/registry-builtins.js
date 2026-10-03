@@ -27,3 +27,13 @@ export function builtinParameterType(builtin, type) {
   if (builtin.name === 'Enum.HasFlag') return 'System.Enum';
   return parameterTypes[type] ?? type;
 }
+
+/** The string catalog and the legacy builtin table can describe the same CLR member. */
+export function existingStringContract(members, symbol) {
+  if (symbol.kind !== 'Method') return null;
+  return members.find(candidate => candidate.kind === 'Method' && candidate.contract &&
+    candidate.name === symbol.name && candidate.isStatic === symbol.isStatic &&
+    candidate.returnType.equals(symbol.returnType) && candidate.parameters.length === symbol.parameters.length &&
+    candidate.parameters.every((parameter, index) => parameter.refKind === symbol.parameters[index].refKind &&
+      parameter.type.equals(symbol.parameters[index].type))) ?? null;
+}
