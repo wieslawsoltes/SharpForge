@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "fixtureId": "hello-unicode",
+  "inputHash": "055052313a062af0505f38b2be6feb047c72a76a6f3d6564019aa3d8a44b58d3",
+  "oracleId": "coreclr",
+  "toolVersion": "10.0.5",
+  "target": "linux-x64",
+  "toolchain": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "roslyn": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "referencePack": "10.0.5",
+    "windowsAppSDK": null
+  },
+  "langVersion": "12.0",
+  "result": {
+    "stdout": "Oracle 42 → café\n",
+    "stderr": "",
+    "exitCode": 0,
+    "signal": null,
+    "unhandledException": null
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "nan-payloads",
+  "clauses": [
+    "V3"
+  ],
+  "mutateFloat32Bits": [
+    2143289345,
+    2141192193,
+    4290772993
+  ],
+  "error": "ABI_CANONICAL"
+}
