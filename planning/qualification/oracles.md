@@ -201,3 +201,12 @@ order [1,2], cancelled work remaining unexecuted, and window closure. The only
 qualification failures were the five missing refreshed baselines; their reviewed
 actual bytes are now committed. The next native run must compare these committed
 records successfully before this scope is marked qualified.
+
+All three native jobs passed in
+[37128733246](https://github.com/wieslawsoltes/SharpForge/actions/runs/37128733246),
+qualifying branch commit `2e9357a469e38fdec920d6efeb2014cd9a30e382` against the
+committed baselines. Linux x64 and macOS arm64 each verified 19 observations;
+Windows x64 verified 20 including real WinUI. Each platform passed the 12-test
+regression batch and clean-checkout check. The expected store now has 58 native
+records across the three pinned platforms. This qualifies the reference harness,
+not SharpForge feature parity.
