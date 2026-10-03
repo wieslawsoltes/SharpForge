@@ -434,6 +434,7 @@
     "member-partial/mismatched-parts",
     "member-partial/missing-parts",
     "member-partial/partial-method-rules",
+    "member-partial/partial-property-errors",
     "member-partial/properties-and-indexers",
     "member-partial/repeated-parts",
     "member-partial/unimplemented-partial-method-uses",
