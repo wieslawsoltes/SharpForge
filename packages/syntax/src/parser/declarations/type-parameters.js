@@ -46,17 +46,7 @@ export const typeParameterMethods = {
       this.feature('DefaultTypeParameterConstraint', this.current);
       return this.n('DefaultConstraint', this.take());
     }
-    if (this.atWord('allows') && this.peek().kind === 'ref') {
-      this.feature('AllowsRefStructConstraint', this.current);
-      const allows = this.takeWord('allows'),
-        list = [];
-      for (;;) {
-        list.push(this.n('RefStructConstraint', this.expect('ref'), this.expect('struct')));
-        if (this.at(',') && this.peek().kind === 'ref') list.push(this.take());
-        else break;
-      }
-      return this.n('AllowsConstraintClause', allows, list);
-    }
+    if (this.atWord('allows') && this.peek().kind === 'ref') return this.allowsConstraint();
     return this.n('TypeConstraint', this.type());
   }
 };

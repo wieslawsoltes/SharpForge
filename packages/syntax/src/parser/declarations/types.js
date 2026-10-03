@@ -44,7 +44,10 @@ export const typeDeclarationMethods = {
         null,
         this.take()
       );
-    if (!this.at('{')) return this.n(kind, attributeLists, modifiers, keyword, identifier, typeParameters, parameterList, baseList, constraints, ...this.missingBody());
+    if (!this.at('{')) {
+      const header = [attributeLists, modifiers, keyword, identifier, typeParameters, parameterList, baseList, constraints];
+      return this.n(kind, ...header, ...this.missingBody());
+    }
     const open = this.take(),
       members = this.typeBody(nameToken.value, false, kind);
     return this.n(
