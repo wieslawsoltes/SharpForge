@@ -40,7 +40,7 @@ partial and unsupported outcomes. When both real collectors support finalization
 ordered finalizer IDs are compared directly, with no reordering or suppression.
 
 `artifacts/gc-trace/report.json` retains JS observations, supplied Rust input,
-classified differences, unsupported axes and failures. The manual/`full-ci`
+classified differences, unsupported axes and failures. The manually dispatched serial
 workflow records seeds 0, 1 and 4294967295, and always uploads its report. Current
 cross-platform qualification is unknown; a successful tooling process with
 unsupported Rust is never a parity pass. Synthetic comparator inputs are confined
