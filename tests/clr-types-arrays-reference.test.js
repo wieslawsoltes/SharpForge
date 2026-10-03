@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { decodeTypeSignature } from '@sharpforge/cil';
 import { arrayContext } from './clr-types-array-fixtures.js';
 
 const native = JSON.parse(readFileSync(new URL('./fixtures/clr-constructed-types/native-arrays.json', import.meta.url)));
@@ -35,6 +36,8 @@ test('CLR resolves a multidimensional constructor MemberRef emitted by the nativ
     const token = 0x0a000000 + rid;
     const [parent, name] = module.row(token);
     if ((parent & 7) !== 4 || module.string(name) !== '.ctor') continue;
+    const specification = module.row(0x1b000000 + (parent >>> 3));
+    if (!['array', 'szarray'].includes(decodeTypeSignature(module.blob(specification[0])).kind)) continue;
     matches.push(await context.types.resolveArrayMember(module, token));
   }
   assert.ok(matches.some(method => method.declaringType.fullName === 'System.Int32[,]' && method.parameters.length === 2));
