@@ -147,14 +147,12 @@ export class Parser {
     this.error(this.errorAnchor(), code, message);
     return this.missing(kind);
   }
-  /**
-   * Where an error about a missing token or node is reported, by Roslyn's rule: at the end of the previous token
-   * (zero width) when that token ends its line, otherwise at the current token.
-   */
+  /** Roslyn: a missing-token error sits at the end of the previous token when a line break (or the end) follows it, else on the current token. */
   errorAnchor() {
     const previous = this.tokens[this.i - 1];
-    if (previous && previous.trailingTrivia.some(piece => piece.kind === 'EndOfLineTrivia')) return { start: previous.end, end: previous.end };
-    return this.current;
+    if (!previous || this.current.start <= previous.end) return this.current;
+    const lineBreak = this.current.kind === 'eof' || /[\r\n\u0085\u2028\u2029]/.test(this.source.text.slice(previous.end, this.current.start));
+    return lineBreak ? { start: previous.end, end: previous.end } : this.current;
   }
   id() {
     if (this.isId()) return this.take('IdentifierToken');

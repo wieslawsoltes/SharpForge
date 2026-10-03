@@ -3,8 +3,9 @@ import { diagnostic } from '@sharpforge/text';
  * C# 9 top-level statements. A member of the compilation unit that is neither a namespace nor a type is a statement,
  * kept as a GlobalStatement in source order; `int F() => 1;` at the top level is therefore a local function and
  * `await` is an operator. Statements must come before namespace and type declarations: the first one that does not
- * reports CS8803, as Roslyn's parser does. The `backEndProfile` parser option turns that error off for the SharpForge
- * back end, which has always accepted statements after type declarations.
+ * reports CS8803, as Roslyn's parser does. The `backEndProfile` parser option turns that error and the C# 9 feature
+ * use off for the SharpForge back end, which has always run top-level statements at every language version and
+ * wherever they stand.
  * The order checks run once over the finished member list rather than while parsing, so an incremental parse that
  * reuses members gives the same result as a full parse.
  */
@@ -40,6 +41,7 @@ export const topLevelMethods = {
       declared = false,
       statements = 0,
       reported = false;
+    const backEnd = !!this.options.backEndProfile;
     // A reused statement carries the use it had in the previous tree, where it may have been the first statement.
     if (this.blend) this.features = this.features.filter(use => use.id !== 'TopLevelStatements');
     for (const member of members) {
@@ -50,8 +52,8 @@ export const topLevelMethods = {
         declared ||= typeOrNamespace.has(member.kind);
         continue;
       }
-      if (!statements++) this.features.push({ id: 'TopLevelStatements', start, end });
-      if (declared && !reported && !this.options.backEndProfile) {
+      if (!statements++ && !backEnd) this.features.push({ id: 'TopLevelStatements', start, end });
+      if (declared && !reported && !backEnd) {
         reported = true;
         this.diagnostics.push(
           diagnostic(this.source, start, Math.max(1, end - start), 'CS8803', 'Top-level statements must precede namespace and type declarations.')

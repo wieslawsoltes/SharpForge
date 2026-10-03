@@ -10,8 +10,10 @@ export const tupleMethods = {
       this.tupleContext = true;
       for (;;) {
         const before = this.i;
+        // Roslyn: the first element is a declaration only when a comma follows, so `(a * b)` stays a multiplication.
         this.tupleFirst = args.length === 0;
         args.push(this.argument());
+        this.tupleFirst = false;
         if (this.at(',')) args.push(this.take());
         else break;
         if (before === this.i) break;

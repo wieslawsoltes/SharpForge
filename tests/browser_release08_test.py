@@ -1,17 +1,18 @@
 """Release 0.8: real Studio/worker tree, menu, editor keymap and breakpoint acceptance.
-Uses documented in-memory browser harness unless SHARPFORGE_BROWSER_URL is set.
+Uses production HTTP/CSP by default; SHARPFORGE_IN_MEMORY=1 opts into the restricted loader.
 """
 import json,os,time,traceback
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-from browser_harness import load_in_memory
+from conformance.browser.launch import launch_browser, results_dir
+RESULTS = results_dir()
+from browser_harness import load_application
 ROOT=Path(__file__).resolve().parents[1];checks=[];errors=[]
 def truth(x,why='assertion failed'):
  if not x:raise AssertionError(why)
 def check(name,fn):
  start=time.perf_counter();fn();checks.append({'name':name,'passed':True,'milliseconds':round((time.perf_counter()-start)*1000,2)});print('PASS',name,flush=True)
-with sync_playwright() as p:
- browser=p.chromium.launch(headless=True,args=['--no-sandbox'],**({'executable_path':os.environ['CHROMIUM_EXECUTABLE']} if os.getenv('CHROMIUM_EXECUTABLE') else {}))
+with sync_playwright() as p, launch_browser(p, __file__) as browser:
  page=browser.new_page(viewport={'width':1600,'height':1080});page.set_default_timeout(10000);page.on('pageerror',lambda e:errors.append(e.stack or str(e)));workers=[];page.on('worker',lambda w:workers.append(w.url))
  def cmd(c):return page.evaluate('(c)=>sharpforge.execute(c)',c)
  def wait(s,arg=None):page.wait_for_function(s,arg=arg)
@@ -32,8 +33,7 @@ with sync_playwright() as p:
    page.locator('#wizard-next').click();page.locator('#wizard-item-name').fill(path.split('/')[-1]);page.locator('#wizard-location').fill(path.rsplit('/',1)[0] if '/' in path else '');page.locator('#wizard-next').click()
   else:page.locator('#item-path').fill(path);page.get_by_role('button',name='Apply',exact=True).click()
  try:
-  if os.getenv('SHARPFORGE_BROWSER_URL'):page.goto(os.getenv('SHARPFORGE_BROWSER_URL'));wait('window.sharpforge&&sharpforge.getState().metrics')
-  else:load_in_memory(page)
+  load_application(page)
   check('two production workers and Visual Studio default profile',lambda:truth(len(workers)==2 and page.evaluate('sharpforge.getKeymap().id')=='visual-studio'))
   def defaulttree():
    truth(page.locator('#file-tree').get_attribute('role')=='tree');truth(any(r['kind']=='source' for r in page.evaluate('sharpforge.getExplorer().rows')));truth(page.locator('[data-dock-tab="solution"]').is_visible());truth(page.locator('[data-tool="properties"]').inner_text().strip()!='')
@@ -96,13 +96,13 @@ with sync_playwright() as p:
    text('Console.WriteLine(42);\n');mode('vim');vimkeys(':w');page.keyboard.press('Enter');wait('document.querySelectorAll(".sf-tree-dirty").length===0');truth('Console.WriteLine(42)' in value());truth(not errors,str(errors))
   check('Vim :w invokes host Save All rather than an external file command',vim_write)
   def emacs():
-   text('alpha beta\nnext line\n');mode('emacs');classic().click();page.keyboard.press('Control+Home');page.keyboard.press('Control+e');truth(at()==10,str(at()));page.keyboard.press('Control+a');page.keyboard.press('Control+k');truth(value().startswith('\nnext'));page.keyboard.press('Control+y');truth(value().startswith('alpha beta'));page.keyboard.press('Control+s');page.keyboard.type('next');page.keyboard.press('Enter');truth(at()>=11,str(at()))
+   text('alpha beta\nnext line\n');mode('emacs');classic().evaluate('(e)=>{e.CodeMirror.focus();e.CodeMirror.setCursor({line:0,ch:0});}');page.keyboard.press('Control+e');truth(at()==10,str(at()));page.keyboard.press('Control+a');page.keyboard.press('Control+k');truth(value().startswith('\nnext'));page.keyboard.press('Control+y');truth(value().startswith('alpha beta'));page.keyboard.press('Control+s');page.keyboard.type('next');page.keyboard.press('Enter');truth(at()>=11,str(at()))
   check('Emacs line movement, kill/yank and incremental search',emacs)
   def sublime():
-   text('alpha beta\nalpha beta\n');mode('sublime');classic().click();page.keyboard.press('Control+Home');page.keyboard.press('Control+d');truth(page.evaluate('sharpforge.getEditorState("Program.cs").end-sharpforge.getEditorState("Program.cs").start')==5);page.keyboard.press('Control+d');page.keyboard.type('changed');truth(value().count('changed')==2,value())
+   text('alpha beta\nalpha beta\n');mode('sublime');classic().evaluate('(e)=>{e.CodeMirror.focus();e.CodeMirror.setCursor({line:0,ch:0});}');page.keyboard.press('ControlOrMeta+d');truth(page.evaluate('sharpforge.getEditorState("Program.cs").end-sharpforge.getEditorState("Program.cs").start')==5);page.keyboard.press('ControlOrMeta+d');page.keyboard.type('changed');truth(value().count('changed')==2,value())
   check('Sublime next-occurrence multi-selection edits both occurrences',sublime)
   def alternate_find():
-   page.keyboard.press('Control+f');page.keyboard.type('beta');page.keyboard.press('Enter');truth(at()>0);page.keyboard.press('Escape');mode('vscode');truth(page.evaluate('sharpforge.getKeymap().id')=='vscode');truth('changed' in value())
+   page.keyboard.press('ControlOrMeta+f');page.keyboard.type('beta');page.keyboard.press('Enter');truth(at()>0);page.keyboard.press('Escape');mode('vscode');truth(page.evaluate('sharpforge.getKeymap().id')=='vscode');truth('changed' in value())
   check('alternative keymap search works and switching preserves the same source',alternate_find)
   def disk_project():
    mode('visual-studio');page.locator('#directory-input').set_input_files(str(ROOT/'examples/projects/Workshop'));wait('sharpforge.getState().project?.projects.length===2');wait('sharpforge.getState().metrics?.errors===0');truth(any(r['kind']=='dependencies' for r in page.evaluate('sharpforge.getExplorer().rows')))
@@ -116,7 +116,7 @@ with sync_playwright() as p:
   def bundle_roundtrip():
    mode('visual-studio');page.locator('#directory-input').set_input_files(str(ROOT/'examples/projects/ExplorerWorkshop'));wait('sharpforge.getState().project?.projects.length===2');page.evaluate('sharpforge.configureExtensions({buildInfo:true,version:"bundle-08"})');path=next(f['uri'] for f in state()['files'] if f['uri'].endswith('App/Program.cs'));page.evaluate('([p])=>sharpforge.setBreakpoints(p,[{line:2,condition:"true",hitCondition:"2"}])',[path])
    with page.expect_download() as info:cmd('exportLegacyProject')
-   payload=Path(info.value.path()).read_bytes();bundle=json.loads(payload);truth(any(f.get('base64') for f in bundle['diskRecords']));truth(any(f['path'].endswith('App.csproj') for f in bundle['diskRecords']));page.evaluate('sharpforge.loadSample("particles",true)');page.locator('#file-input').set_input_files({'name':'Roundtrip.sharpforge.json','mimeType':'application/json','buffer':payload});wait('sharpforge.getState().project?.projects.length===2');wait('sharpforge.getGeneratedSources().length===1');truth(page.evaluate('(p)=>sharpforge.getBreakpoints()[p][0].hitCondition',path)=='2');page.evaluate('(p)=>sharpforge.openFile(p)',path);mode('vim');wait('document.querySelectorAll("#toasts .toast").length===0');page.locator('[data-node-kind="project"]').first.click(button='right');menu('Add');page.screenshot(path=str(ROOT/'docs/screenshots/release08-explorer-vim.png'),full_page=True);page.keyboard.press('Escape');page.keyboard.press('Escape');mode('visual-studio');cmd('run');wait('sharpforge.getState().debug?.state==="terminated" && sharpforge.getState().debug.output==="42\\n42\\n"');cmd('stop')
+   payload=Path(info.value.path()).read_bytes();bundle=json.loads(payload);truth(any(f.get('base64') for f in bundle['diskRecords']));truth(any(f['path'].endswith('App.csproj') for f in bundle['diskRecords']));page.evaluate('sharpforge.loadSample("particles",true)');page.locator('#file-input').set_input_files({'name':'Roundtrip.sharpforge.json','mimeType':'application/json','buffer':payload});wait('sharpforge.getState().project?.projects.length===2');wait('sharpforge.getGeneratedSources().length===1');truth(page.evaluate('(p)=>sharpforge.getBreakpoints()[p][0].hitCondition',path)=='2');page.evaluate('(p)=>sharpforge.openFile(p)',path);mode('vim');wait('document.querySelectorAll("#toasts .toast").length===0');page.locator('[data-node-kind="project"]').first.click(button='right');menu('Add');page.screenshot(path=str(RESULTS/'screenshots/release08-explorer-vim.png'),full_page=True);page.keyboard.press('Escape');page.keyboard.press('Escape');mode('visual-studio');cmd('run');wait('sharpforge.getState().debug?.state==="terminated" && sharpforge.getState().debug.output==="42\\n42\\n"');cmd('stop')
   check('workspace export/reopen preserves project XML, DLL bytes, generators and breakpoints',bundle_roundtrip)
   def dirty_undo():
    operation('new-file');apply_path('NewBuffer.cs');wait('sharpforge.getState().files.some(f=>f.uri==="NewBuffer.cs")');page.locator('[data-source-uri="NewBuffer.cs"] .sf-input').fill('class NewBuffer { public int Value=42; }');operation('undo');wait('document.querySelector("#toasts")?.innerText.includes("newer edits")');truth(any(f['uri']=='NewBuffer.cs' and '42' in f['text'] for f in state()['files']))
@@ -140,20 +140,21 @@ with sync_playwright() as p:
    cmd('stop');mode('visual-studio');page.evaluate('sharpforge.setBreakpoints("Program.cs",[{line:3}])');before=value();active().fill('// inserted\n'+before);truth(page.evaluate('sharpforge.getBreakpoints()["Program.cs"][0].line')==4);page.evaluate('sharpforge.debug()');wait('sharpforge.getState().debug?.state==="paused"');truth(state()['debug']['breakpoints'][0]['line']==4);cmd('stop')
   check('source insert remaps breakpoint anchors and binds the rebuilt revision',remap)
   def popout():
+   wait("!document.querySelector('[data-source-uri=\"Program.cs\"] .sf-input').readOnly")
    mode('vim')
    with page.expect_popup() as opened:page.evaluate('sharpforge.popoutPanel("source:Program.cs")')
-   popup=opened.value;popup.on('pageerror',lambda e:errors.append(e.stack or str(e)));popup.locator('.CodeMirror').wait_for();popup.locator('.CodeMirror').click();popup.keyboard.press('Escape');popup.keyboard.type('ggI// popup ');popup.keyboard.press('Escape');truth(value().startswith('// popup '));popup.locator('.CodeMirror').click(button='right');truth(popup.locator('.sf-menu:visible').count()==1);popup.keyboard.press('Escape');popup.close();wait("document.querySelector('.sf-keymap-host .CodeMirror')!==null");truth(value().startswith('// popup '));mode('visual-studio')
+   popup=opened.value;popup.on('pageerror',lambda e:errors.append(e.stack or str(e)));popup.locator('.CodeMirror').wait_for();popup.wait_for_function("Array.from(document.querySelectorAll('link[rel=stylesheet]')).every(link=>link.sheet)");popup.locator('.CodeMirror').click();popup.keyboard.press('Escape');popup.keyboard.type('ggI// popup ');popup.keyboard.press('Escape');wait('sharpforge.getEditorState("Program.cs").value.startsWith("// popup ")');popup.locator('.CodeMirror').click(button='right');truth(popup.locator('.sf-menu:visible').count()==1);popup.keyboard.press('Escape');popup.close();wait("document.querySelector('.sf-keymap-host .CodeMirror')!==null");truth(value().startswith('// popup '));mode('visual-studio')
   check('Vim document popout edits shared buffer, hosts menu and reattaches intact',popout)
   def large_tree():
    records=[{'path':'Large.csproj','text':'<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Library</OutputType><EnableDefaultCompileItems>false</EnableDefaultCompileItems></PropertyGroup></Project>'}]+[{'path':f'Assets/Item{i:05d}.txt','text':'item '+str(i)} for i in range(4999)];page.evaluate('(r)=>sharpforge.loadDiskRecords(r)',records);wait('sharpforge.getState().project?.projects[0]?.path==="Large.csproj"');page.locator('#file-filter').fill('Item04998');truth(any(r.get('path')=='Assets/Item04998.txt' for r in page.evaluate('sharpforge.getExplorer().rows')));truth(page.locator('.sf-tree-row').count()<100);page.locator('#file-filter').fill('');page.locator('#file-tree').focus();page.locator('#file-tree').press('End');truth(page.locator('.sf-tree-row').count()<100)
   check('5,000 item hierarchy search and keyboard scrolling retain bounded tree DOM',large_tree)
   def finalshot():
-   page.evaluate('sharpforge.loadSample("particles",true)');cmd('resetLayout');page.evaluate('sharpforge.openFile("Program.cs")');page.evaluate('sharpforge.setBreakpoints("Program.cs",[{line:27,hitCondition:"2"}])');page.evaluate('sharpforge.debug()');wait('sharpforge.getState().debug?.reason?.reason==="breakpoint"');cmd('tool:breakpoints');wait('document.querySelectorAll("#toasts .toast").length===0');truth(page.locator('[data-source-uri="Program.cs"] .sf-line.breakpoint').get_attribute('data-line')=='27');page.mouse.move(850,45);page.screenshot(path=str(ROOT/'docs/screenshots/release08-explorer-debugger.png'),full_page=True)
+   page.evaluate('sharpforge.loadSample("particles",true)');cmd('resetLayout');page.evaluate('sharpforge.openFile("Program.cs")');page.evaluate('sharpforge.setBreakpoints("Program.cs",[{line:27,hitCondition:"2"}])');page.evaluate('sharpforge.debug()');wait('sharpforge.getState().debug?.reason?.reason==="breakpoint"');cmd('tool:breakpoints');wait('document.querySelectorAll("#toasts .toast").length===0');truth(page.locator('[data-source-uri="Program.cs"] .sf-line.breakpoint').get_attribute('data-line')=='27');page.mouse.move(850,45);page.screenshot(path=str(RESULTS/'screenshots/release08-explorer-debugger.png'),full_page=True)
   check('Visual Studio-style workspace screenshot with bound sample breakpoint',finalshot)
   check('no JavaScript errors in primary or popup documents',lambda:truth(not errors,str(errors)))
-  result={'passed':True,'browser':browser.version,'mode':'http' if os.getenv('SHARPFORGE_BROWSER_URL') else 'in-memory-production-workers','checks':checks,'errors':errors}
+  result={'passed':True,'browser':browser.version,'mode':'http' if os.getenv('SHARPFORGE_IN_MEMORY') != '1' else 'in-memory-production-workers','checks':checks,'errors':errors}
  except Exception as e:
-  traceback.print_exc();result={'passed':False,'checks':checks,'errors':errors,'failure':str(e)};page.screenshot(path=str(ROOT/'docs/screenshots/release08-failure.png'),full_page=True,timeout=5000)
+  traceback.print_exc();result={'passed':False,'checks':checks,'errors':errors,'failure':str(e)};page.screenshot(path=str(RESULTS/'screenshots/release08-failure.png'),full_page=True,timeout=5000)
  finally:
-  (ROOT/'docs/browser-release08-results.json').write_text(json.dumps(result,indent=2)+'\n');browser.close()
+  (RESULTS/'browser-release08-results.json').write_text(json.dumps(result,indent=2)+'\n', encoding='utf-8')
  if not result['passed']:raise SystemExit(1)

@@ -1,15 +1,16 @@
-import {readFile,writeFile,readdir,mkdir,lstat} from 'node:fs/promises';
-import {resolve,dirname,relative,isAbsolute} from 'node:path';
+import {readFile,writeFile,readdir,mkdir,lstat,realpath} from 'node:fs/promises';
+import {resolve,dirname,basename,relative,isAbsolute} from 'node:path';
 import {createProjectPlan,projectTemplates,itemTemplates,searchTemplates,validateFilePlan} from '../../packages/templates/src/index.js';
 import {exportWorkspaceZip,importWorkspaceZip,importWorkspaceRecords,workspaceManifestRecord} from '../../packages/project-system/src/index.js';
 import {decodeWorkspaceFile,encodeWorkspaceFile} from '../../packages/archive/src/index.js';
 /** Explicit, create-only CLI IO. ZIPs are validated completely before extraction begins. */
 export async function writePlan(directory,{records,folders=[]}){
  validateFilePlan({records,folders});records=records.map(r=>({...r,bytes:encodeWorkspaceFile(r)}));
- const root=resolve(directory),paths=[...records.map(r=>r.path),...folders];
+ let root=resolve(directory);const paths=[...records.map(r=>r.path),...folders];
  async function absent(path){try{await lstat(path);throw new Error('Destination already exists: '+path);}catch(e){if(e.code!=='ENOENT')throw e;}}
- // Existing root allowed only when entirely empty; reject symlink roots and ancestors.
- let current=root;while(current!==dirname(current)){try{if((await lstat(current)).isSymbolicLink())throw new Error('Destination contains a symbolic link');}catch(e){if(e.code!=='ENOENT')throw e;}current=dirname(current);}
+ // Canonicalize pre-existing parents (macOS /var -> /private/var is normal).
+ // The output root itself must not be a symlink; nothing inside it is followed.
+ let current=root;const missing=[];for(;;){try{const entry=await lstat(current);if(current===root&&entry.isSymbolicLink())throw new Error('Destination contains a symbolic link');root=resolve(await realpath(current),...missing.reverse());break;}catch(e){if(e.code!=='ENOENT')throw e;missing.push(basename(current));current=dirname(current);}}
  try{if((await readdir(root)).length)throw new Error('Choose a new or empty output directory');}catch(e){if(e.code!=='ENOENT')throw e;}
  for(const path of paths){const target=resolve(root,path);const rel=relative(root,target);if(!rel||isAbsolute(rel)||rel==='..'||rel.startsWith('../')||rel.startsWith('..\\'))throw new Error('Escaping output path');await absent(target);}
  await mkdir(root,{recursive:true});const written=[];try{for(const path of folders)await mkdir(resolve(root,path),{recursive:true});for(const record of records){const target=resolve(root,record.path);await mkdir(dirname(target),{recursive:true});await writeFile(target,encodeWorkspaceFile(record),{flag:'wx'});written.push(record.path);}}catch(e){e.message+='; completed files: '+written.join(', ');e.written=written;throw e;}return written;

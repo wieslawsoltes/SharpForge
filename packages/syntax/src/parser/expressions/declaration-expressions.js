@@ -11,6 +11,8 @@ export const declarationExpressionMethods = {
   isDeclarationExpressionAhead(i = this.i) {
     const end = this.scanDeclaredType(i);
     if (end <= i) return false;
+    // No pointer types in tuple declarations: `(a * b, c)` multiplies.
+    if (this.tupleContext && this.kindAt(end - 1) === '*') return false;
     const nested = this.kindAt(end) === '(' && end === i + 1 && (this.isWord(this.tokens[i], 'var') || this.isPredefined(this.tokens[i])),
       after = nested ? this.scanDesignation(end) : this.isId(this.tokens[end]) ? end + 1 : -1;
     if (after < 0) return false;

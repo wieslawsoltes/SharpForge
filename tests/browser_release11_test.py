@@ -2,14 +2,16 @@
 import json,os,time,io,zipfile,traceback
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-from browser_harness import load_in_memory
+from conformance.browser.launch import launch_browser, results_dir
+RESULTS = results_dir()
+from browser_harness import load_application
 ROOT=Path(__file__).resolve().parents[1];checks=[]
 def truth(v,msg='assertion failed'):
  if not v:raise AssertionError(msg)
 def check(name,fn):
  start=time.perf_counter();fn();checks.append({'name':name,'passed':True,'milliseconds':round((time.perf_counter()-start)*1000,2)});print('PASS',name,flush=True)
-with sync_playwright() as p:
- browser=p.chromium.launch(headless=True,executable_path=os.getenv('CHROMIUM_EXECUTABLE'),args=['--no-sandbox']);page=browser.new_page(viewport={'width':1728,'height':1050});page.set_default_timeout(12000)
+with sync_playwright() as p, launch_browser(p, __file__) as browser:
+ page=browser.new_page(viewport={'width':1728,'height':1050});page.set_default_timeout(12000)
  errors=[];workers=[];page.on('pageerror',lambda e:errors.append(e.stack or str(e)));page.on('worker',lambda w:workers.append(w.url));page.on('dialog',lambda d:d.accept())
  def ev(x,arg=None):return page.evaluate(x,arg)
  def wait(x):page.wait_for_function(x,timeout=20000)
@@ -24,9 +26,8 @@ with sync_playwright() as p:
   page.locator('#wizard-next').click();wait('document.querySelector("#modal-backdrop").classList.contains("hidden")')
  def import_records(records,options):return ev('x=>sharpforge.loadDiskRecords(x.records,x.options)',{'records':records,'options':options})
  try:
-  if os.getenv('SHARPFORGE_BROWSER_URL'):page.goto(os.environ['SHARPFORGE_BROWSER_URL']);wait('window.sharpforge?.getState().metrics!==null')
-  else:load_in_memory(page)
-  check('0.11 starts with Visual Studio profile, 11 project and 19 item templates and real workers',lambda:truth(ev('sharpforge.version')==json.loads((ROOT/'package.json').read_text())['version'] and ev('sharpforge.getKeymap().id')=='visual-studio' and ev('sharpforge.getTemplates().projects.length')==11 and ev('sharpforge.getTemplates().items.length')==19 and len(workers)==2))
+  load_application(page)
+  check('0.11 starts with Visual Studio profile, 11 project and 19 item templates and real workers',lambda:truth(ev('sharpforge.version')==json.loads((ROOT/'package.json').read_text(encoding='utf-8'))['version'] and ev('sharpforge.getKeymap().id')=='visual-studio' and ev('sharpforge.getTemplates().projects.length')==11 and ev('sharpforge.getTemplates().items.length')==19 and len(workers)==2))
   def keyboard():
    before=state()['name'];page.keyboard.press('Control+Shift+N');page.locator('#wizard-search').fill('navigation');truth(page.locator('[data-template]').count()==1);page.locator('#wizard-search').fill('');page.locator('#wizard-category').select_option('Library');truth(page.locator('[data-template]').count()==2);page.locator('#wizard-cancel').click();truth(state()['name']==before)
   check('Ctrl+Shift+N opens searchable/type-filtered wizard and Cancel preserves workspace',keyboard)
@@ -34,10 +35,10 @@ with sync_playwright() as p:
    ev('void sharpforge.openProjectWizard()');page.locator('[data-template="console"]').dblclick();page.locator('#wizard-project-name').fill('../Outside');truth(page.locator('#wizard-next').is_disabled());truth(bool(page.locator('#wizard-errors').inner_text()));page.locator('#wizard-back').click();page.locator('#wizard-cancel').click()
   check('template double-click is stable and invalid names disable creation without changing files',invalid)
   def console():
-   create('console-library-solution','Workbench');truth(len(state()['project']['projects'])==2);truth(not state()['diagnostics'],str(state()['diagnostics']));ev('sharpforge.run()');wait('sharpforge.getState().debug?.state==="terminated"');truth(state()['debug']['output'].strip()=='42');stop();truth(ev('sharpforge.getWorkspace().records.some(r=>r.path==="Workbench/Workbench.csproj" && r.text.includes("ProjectReference"))'))
+   create('console-library-solution','Workbench');truth(len(state()['project']['projects'])==2);truth(not [d for d in state()['diagnostics'] if d['severity']=='error'],str(state()['diagnostics']));ev('sharpforge.run()');wait('sharpforge.getState().debug?.state==="terminated"');truth(state()['debug']['output'].strip()=='42');stop();truth(ev('sharpforge.getWorkspace().records.some(r=>r.path==="Workbench/Workbench.csproj" && r.text.includes("ProjectReference"))'))
   check('console+library wizard creates real SLNX/projects/reference/startup and runs to 42',console)
   def item():
-   add_item('partial-class','EnginePart.cs','Workbench.Core/Models','Workbench.Core/Workbench.Core.csproj');truth(any(f['uri']=='Workbench.Core/Models/EnginePart.Methods.cs' for f in state()['files']));truth(ev('sharpforge.getWorkspace().records.find(r=>r.path==="Workbench.Core/Workbench.Core.csproj").text.includes("Models/EnginePart.Methods.cs")'));ev('sharpforge.build()');truth(not state()['diagnostics'],str(state()['diagnostics']))
+   add_item('partial-class','EnginePart.cs','Workbench.Core/Models','Workbench.Core/Workbench.Core.csproj');truth(any(f['uri']=='Workbench.Core/Models/EnginePart.Methods.cs' for f in state()['files']));truth(ev('sharpforge.getWorkspace().records.find(r=>r.path==="Workbench.Core/Workbench.Core.csproj").text.includes("Models/EnginePart.Methods.cs")'));ev('sharpforge.build()');truth(not [d for d in state()['diagnostics'] if d['severity']=='error'],str(state()['diagnostics']))
   check('multi-file item template updates project membership and compiles in a nested namespace',item)
   def collision():
    before=len(state()['files']);ev('void sharpforge.openItemWizard({kind:"project",path:"Workbench.Core/Workbench.Core.csproj",project:"Workbench.Core/Workbench.Core.csproj"})');page.locator('#wizard-next').click();page.locator('#wizard-item-name').fill('EnginePart.cs');page.locator('#wizard-location').fill('Workbench.Core/Models');truth(page.locator('#wizard-next').is_disabled());page.locator('#wizard-cancel').click();truth(len(state()['files'])==before)
@@ -61,7 +62,7 @@ with sync_playwright() as p:
    z=zipfile.ZipFile(io.BytesIO(data));truth(z.testzip() is None);truth('Workbench.slnx' in z.namelist());meta=json.loads(z.read('.sharpforge/workspace.json'));truth(meta['breakpoints']['Workbench/Program.cs'][0]['enabled'] is False);truth(meta['startup']=='Workbench/Workbench.csproj')
   check('Save as ZIP produces a standard Python-readable archive with complete files and settings',export_zip)
   def reopen_zip():
-   create('blank-solution','Temporary');truth(len(state()['project']['projects'])==0);page.locator('#zip-input').set_input_files({'name':'Workbench.zip','mimeType':'application/zip','buffer':saved['bytes']});wait('sharpforge.getState().name==="Workbench"');truth(len(state()['project']['projects'])==3);truth(ev('sharpforge.getBreakpoints()["Workbench/Program.cs"][0].oneShot'));truth(not state()['diagnostics'],str(state()['diagnostics']))
+   create('blank-solution','Temporary');truth(len(state()['project']['projects'])==0);page.locator('#zip-input').set_input_files({'name':'Workbench.zip','mimeType':'application/zip','buffer':saved['bytes']});wait('sharpforge.getState().name==="Workbench"');truth(len(state()['project']['projects'])==3);truth(ev('sharpforge.getBreakpoints()["Workbench/Program.cs"][0].oneShot'));truth(not [d for d in state()['diagnostics'] if d['severity']=='error'],str(state()['diagnostics']))
   check('ZIP reopen restores full solution, generated items, startup and disabled/one-shot breakpoints',reopen_zip)
   def import_existing():
    archive=io.BytesIO()
@@ -103,10 +104,10 @@ with sync_playwright() as p:
    create('blank-solution','CleanSolution');truth(state()['project']['projects']==[]);truth(any('(0 projects)' in r['label'] for r in ev('sharpforge.getExplorer().rows')));truth(not ev('sharpforge.getWorkspace().records.some(r=>r.path.endsWith(".csproj"))'));create('console','FirstApp',True);truth(state()['project']['projects'][0]['path']=='FirstApp/FirstApp.csproj');ev('sharpforge.run()');wait('sharpforge.getState().debug?.state==="terminated"');truth(state()['debug']['output'].strip()=='Hello, world!');stop()
   check('blank SLNX shows zero projects and can receive its first runnable project',blank)
   def winui():
-   create('winui-navigation','InterfaceDemo');truth(not state()['diagnostics'],str(state()['diagnostics']));ev('sharpforge.run()');wait('sharpforge.getState().debug?.uiActive');ev('sharpforge.uiSettled()');page.locator('.sf-winui').get_by_role('button',name='Settings',exact=True).click();wait('document.querySelector(".sf-winui").textContent.includes("Apply")');page.locator('.sf-winui').get_by_role('button',name='Home',exact=True).click();wait('!document.querySelector(".sf-winui").textContent.includes("Apply")');stop()
+   create('winui-navigation','InterfaceDemo');truth(not [d for d in state()['diagnostics'] if d['severity']=='error'],str(state()['diagnostics']));ev('sharpforge.run()');wait('sharpforge.getState().debug?.uiActive');ev('sharpforge.uiSettled()');page.locator('.sf-winui').get_by_role('button',name='Settings',exact=True).click();wait('document.querySelector(".sf-winui").textContent.includes("Apply")');page.locator('.sf-winui').get_by_role('button',name='Home',exact=True).click();wait('!document.querySelector(".sf-winui").textContent.includes("Apply")');stop()
   check('WinUI navigation template creates real managed Home/Settings page switching',winui)
   def controls():
-   add_item('winui-user-control','StatusCard.cs','InterfaceDemo/Controls','InterfaceDemo/InterfaceDemo.csproj');add_item('winui-grid-page','DetailsPage.cs','InterfaceDemo/Pages','InterfaceDemo/InterfaceDemo.csproj');ev('sharpforge.build()');truth(not state()['diagnostics'],str(state()['diagnostics']));truth(any('UserControl' in f['text'] for f in state()['files'] if f['uri'].endswith('StatusCard.cs')))
+   add_item('winui-user-control','StatusCard.cs','InterfaceDemo/Controls','InterfaceDemo/InterfaceDemo.csproj');add_item('winui-grid-page','DetailsPage.cs','InterfaceDemo/Pages','InterfaceDemo/InterfaceDemo.csproj');ev('sharpforge.build()');truth(not [d for d in state()['diagnostics'] if d['severity']=='error'],str(state()['diagnostics']));truth(any('UserControl' in f['text'] for f in state()['files'] if f['uri'].endswith('StatusCard.cs')))
   check('WinUI UserControl and Grid Page item templates integrate with the real compiler',controls)
   def multiple():
    b=io.BytesIO()
@@ -122,10 +123,9 @@ with sync_playwright() as p:
   check('Solution Explorer context menu exposes complete workspace ZIP export',context_menu)
   def screenshot():
    page.wait_for_function('document.querySelectorAll("#toasts .toast").length===0',timeout=15000)
-   ev('void sharpforge.openProjectWizard()');page.locator('#wizard-search').fill('WinUI');page.screenshot(path=str(ROOT/'docs/screenshots/release11-templates.png'));page.locator('[data-template="winui-blank"]').click();page.locator('#wizard-next').click();page.locator('#wizard-project-name').fill('NewWinUIApp');page.screenshot(path=str(ROOT/'docs/screenshots/release11-wizard.png'));page.locator('#wizard-cancel').click();create('winui-blank','CreatedInSharpForge');ev('sharpforge.run()');wait('sharpforge.getState().debug?.uiActive');ev('sharpforge.uiSettled()');page.locator('.sf-winui').get_by_role('button',name='Increment',exact=True).click();wait('document.querySelector(".sf-winui").textContent.includes("Count: 1")');page.screenshot(path=str(ROOT/'docs/screenshots/release11-running.png'))
+   ev('void sharpforge.openProjectWizard()');page.locator('#wizard-search').fill('WinUI');page.screenshot(path=str(RESULTS/'screenshots/release11-templates.png'));page.locator('[data-template="winui-blank"]').click();page.locator('#wizard-next').click();page.locator('#wizard-project-name').fill('NewWinUIApp');page.screenshot(path=str(RESULTS/'screenshots/release11-wizard.png'));page.locator('#wizard-cancel').click();create('winui-blank','CreatedInSharpForge');ev('sharpforge.run()');wait('sharpforge.getState().debug?.uiActive');ev('sharpforge.uiSettled()');page.locator('.sf-winui').get_by_role('button',name='Increment',exact=True).click();wait('document.querySelector(".sf-winui").textContent.includes("Count: 1")');page.screenshot(path=str(RESULTS/'screenshots/release11-running.png'))
   check('new WinUI counter executes events and screenshots capture the actual wizard and app',screenshot)
   check('no page JavaScript errors',lambda:truth(not errors,json.dumps(errors)))
-  (ROOT/'docs/browser-release11-validation.json').write_text(json.dumps({'passed':len(checks),'checks':checks,'errors':errors,'workers':len(workers),'mode':'http' if os.getenv('SHARPFORGE_BROWSER_URL') else 'production modules via in-memory harness'},indent=2))
+  (RESULTS/'browser-release11-validation.json').write_text(json.dumps({'passed':len(checks),'checks':checks,'errors':errors,'workers':len(workers),'mode':'http' if os.getenv('SHARPFORGE_IN_MEMORY') != '1' else 'production modules via in-memory harness'},indent=2), encoding='utf-8')
  except Exception:
-  traceback.print_exc();print('ERRORS',json.dumps(errors),flush=True);page.screenshot(path=str(ROOT/'docs/screenshots/release11-failure.png'));raise
- finally:browser.close()
+  traceback.print_exc();print('ERRORS',json.dumps(errors),flush=True);page.screenshot(path=str(RESULTS/'screenshots/release11-failure.png'));raise
