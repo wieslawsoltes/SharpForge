@@ -1,4 +1,5 @@
-import {decodeCoded,resolveExecutionField,genericTypeParts} from '@sharpforge/cil';
+import {decodeCoded,genericTypeParts} from '@sharpforge/cil';
+import {cachedField} from './token-cache.js';
 import {ManagedFault} from '../heap.js';
 import {storageDefault} from './storage.js';
 
@@ -22,8 +23,7 @@ function threadStaticFields(inspector) {
  */
 export function staticSlot(vm, token, frame = vm.top) {
   const contextIdentity = frame?.genericIdentity ?? null;
-  const contextArguments = contextIdentity ? genericTypeParts(contextIdentity).arguments : [];
-  const field = resolveExecutionField(vm.inspector, token, contextArguments);
+  const {field} = cachedField(vm, token, null, frame);
   if (!field.isStatic) throw new ManagedFault('InvalidProgramException', 'Expected a static field');
   const contextType = contextIdentity && genericTypeParts(contextIdentity).definition;
   const instance = field.ownerInstance ?? (contextType === field.owner ? contextIdentity : null);

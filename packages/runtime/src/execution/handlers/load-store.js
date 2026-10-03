@@ -1,11 +1,12 @@
 import {ManagedFault} from '../../heap.js';
 import {storePinnedLocal} from '../pinned.js';
 import {float} from '../numeric-ops.js';
+import {cachedUserString} from '../token-cache.js';
 
 const handlers=new Map([
   ['nop',()=>{}],['break',()=>{}],
   ['ldnull',vm=>vm.push(null)],
-  ['ldstr',(vm,frame,instruction)=>vm.push(vm.string(vm.inspector.metadata.userString(instruction.operand)))],
+  ['ldstr',(vm,frame,instruction)=>vm.push(vm.string(cachedUserString(vm,instruction.operand)))],
   ['dup',vm=>{const value=vm.pop();vm.push(value);vm.push(value);}],
   ['pop',vm=>{vm.pop();}]
 ]);

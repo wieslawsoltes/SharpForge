@@ -1,10 +1,11 @@
 import {genericTypeParts,substituteCallType,callStorageType} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
+import {cachedTypeName} from './token-cache.js';
 import {validatePointer,asReadonly,pointerType} from './managed-pointers.js';
 export {instantiatedMethod} from './generics.js';
 
 export function resolveCallType(vm,typeOrToken,frame=vm.top) {
-  const name=typeof typeOrToken==='number'?vm.inspector.metadata.typeName(typeOrToken):typeOrToken;
+  const name=typeof typeOrToken==='number'?cachedTypeName(vm,typeOrToken):typeOrToken;
   if(typeof name!=='string')return name;
   return substituteCallType(name,frame?.method.typeArguments??genericTypeParts(frame?.genericIdentity??'').arguments,frame?.methodArguments??[]);
 }

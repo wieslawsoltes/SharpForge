@@ -6,7 +6,8 @@ import {arrayCall} from './array-calls.js';
 import {invokeNumericIntrinsic} from './numeric-intrinsics.js';
 import {stringFromChars} from './strings.js';
 import {methodOffsets} from './method-offsets.js';
-import {systemType,intrinsicDefinition,resolveExecutionMethod,supportedIntrinsic,supportedDelegateCall} from '@sharpforge/cil';
+import {systemType,intrinsicDefinition,supportedIntrinsic,supportedDelegateCall} from '@sharpforge/cil';
+import {cachedMethod,verifiedMethod} from './token-cache.js';
 import {ManagedFault,isReference} from '../heap.js';
 import {SUSPENDED} from './suspension.js';
 import {storageDefault} from './storage.js';
@@ -60,9 +61,8 @@ export function prepareCall(vm) {
   if(vm.ensureInitialized(method.ownerToken,trigger,frame.genericIdentity??null))return false;
   frame.needsInitialization=false;return true;
 }
-const context=frame=>({ownerToken:frame?.method.ownerToken,genericIdentity:frame?.genericIdentity??null,typeArguments:frame?.method.typeArguments,methodArguments:frame?.methodArguments??[]});
 export function methodPointer(vm,token,receiver=undefined) {
-  let descriptor=resolveExecutionMethod(vm.inspector,token,context(vm.top));
+  let descriptor=cachedMethod(vm,token);
   if(receiver!==undefined) {
     if(receiver===null)throw new ManagedFault('NullReferenceException','Null virtual function receiver');
     if(descriptor.signature.isStatic)throw new ManagedFault('InvalidProgramException','ldvirtftn requires an instance method');
@@ -77,7 +77,7 @@ export function methodPointer(vm,token,receiver=undefined) {
       descriptor.ownerInstance=receiverIdentity(vm,descriptor,receiver);
     }
   }
-  if(descriptor.resolvedToken?!vm.report.methods.includes(descriptor.resolvedToken):!supportedIntrinsic(descriptor)&&!supportedDelegateCall(vm.inspector,descriptor))throw new ManagedFault('InvalidProgramException','Unverified managed function target');
+  if(descriptor.resolvedToken?!verifiedMethod(vm,descriptor.resolvedToken):!supportedIntrinsic(descriptor)&&!supportedDelegateCall(vm.inspector,descriptor))throw new ManagedFault('InvalidProgramException','Unverified managed function target');
   return Object.freeze({methodPointer:true,vmOwner:vm.snapshotOwner,token,descriptor,signature:descriptor.signature,identity:Object.freeze([descriptor.resolvedToken??token,descriptor.ownerInstance,descriptor.methodArguments])});
 }
 
@@ -90,7 +90,7 @@ function receiverIdentity(vm,descriptor,receiver) {
 
 function startManagedCall(vm,descriptor,args,extra={}) {
   const token=descriptor.resolvedToken;
-  if(!vm.report.methods.includes(token))throw new ManagedFault('InvalidProgramException','Unverified managed call target');
+  if(!verifiedMethod(vm,token))throw new ManagedFault('InvalidProgramException','Unverified managed call target');
   const genericIdentity=extra.genericIdentity??receiverIdentity(vm,descriptor,args[0]);
   const owner=vm.typeSystem.table(genericIdentity??descriptor.ownerToken);
   if(!descriptor.signature.isStatic&&owner.flags.valueType&&isReference(args[0])) {
@@ -114,7 +114,7 @@ export function invokeFunctionPointer(vm,pointer,args,extra={}) {
 export function invoke(vm,instruction) {
   const caller=vm.top;
 
-  let descriptor=resolveExecutionMethod(vm.inspector,instruction.operand,context(caller)),target=descriptor.resolvedToken;
+  let descriptor=cachedMethod(vm,instruction.operand,caller),target=descriptor.resolvedToken;
   const count=descriptor.signature.parameters.length+(instruction.name!=='newobj'&&!descriptor.signature.isStatic?1:0);
   const instance=descriptor.ownerInstance??(caller.method.ownerToken===descriptor.ownerToken?caller.genericIdentity:null)??null;
   const genericIdentity=instance===null?null:vm.typeSystem.table(instance).name;
@@ -154,7 +154,7 @@ export function invoke(vm,instruction) {
     const receiverType=args[0]?.byref?pointerType(vm,args[0]).name:isReference(args[0])?vm.heap.get(args[0]).methodTable.name:null;
     const dispatch=target&&instruction.name==='callvirt'&&(vm.inspector.methods.get(target)?.flags&0x40)?vm.typeSystem.dispatch.resolve(receiverType,target,descriptor.ownerInstance):target??(instruction.name==='callvirt'?vm.typeSystem.dispatch.externalTarget(receiverType,descriptor):null);
     if(dispatch) {
-      if(!vm.report.methods.includes(dispatch))throw new ManagedFault('NotSupportedException','Unverified virtual override; select its method directly');
+      if(!verifiedMethod(vm,dispatch))throw new ManagedFault('NotSupportedException','Unverified virtual override; select its method directly');
       startManagedCall(vm,{...descriptor,...vm.inspector.methods.get(dispatch),resolvedToken:dispatch},args,{tail});
     } else {
       const value=vm.intrinsic(descriptor,args);

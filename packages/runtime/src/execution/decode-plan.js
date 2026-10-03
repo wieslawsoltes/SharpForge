@@ -71,13 +71,16 @@ export function getDecodePlan(vm, method) {
   const cache = state.decode ??= {methods: new Map(), lastMethod: null, lastEntry: null};
   const specialized = vm.options.specializeNumericHandlers !== false;
   const typed = vm.options.typedNumericStack === true;
+  const smallLong = vm.options.smallLongFastPath === true;
   if (cache.lastMethod === method && cache.lastEntry.instructions === method.instructions &&
-      cache.lastEntry.specialized === specialized && cache.lastEntry.typed === typed) return cache.lastEntry.plan;
+      cache.lastEntry.specialized === specialized && cache.lastEntry.typed === typed &&
+      cache.lastEntry.smallLong === smallLong) return cache.lastEntry.plan;
   let methods = cache.methods.get(method.token);
   if (!methods) cache.methods.set(method.token, methods = new WeakMap());
   let entry = methods.get(method);
-  if (!entry || entry.instructions !== method.instructions || entry.specialized !== specialized || entry.typed !== typed) {
-    entry = {instructions: method.instructions, specialized, typed, plan: createPlan(vm, method, state)};
+  if (!entry || entry.instructions !== method.instructions || entry.specialized !== specialized || entry.typed !== typed ||
+      entry.smallLong !== smallLong) {
+    entry = {instructions: method.instructions, specialized, typed, smallLong, plan: createPlan(vm, method, state)};
     methods.set(method, entry);
   }
   cache.lastMethod = method;
