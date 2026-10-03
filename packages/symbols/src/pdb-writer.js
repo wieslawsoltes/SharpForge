@@ -3,6 +3,8 @@ import { sha256 } from './hash.js';
 import { PdbGuids } from './contracts.js';
 import { PortablePdbBuilder } from './pdb-builder.js';
 import { writeSequencePoints } from './sequence-points.js';
+import { writeImportScopes } from './import-writer.js';
+import { writeMethodScopes } from './scope-writer.js';
 import { lineIndex, sourceSpan } from './source-span.js';
 /** Emit independent standard symbols for the exact emitted PE's tokens/offsets. */
 export function emitPortablePdb(assembly, debug, { embedSources = true, sourceLink = null } = {}) {
@@ -36,6 +38,7 @@ export function emitPortablePdb(assembly, debug, { embedSources = true, sourceLi
     if (!pointsByMethod.has(p.methodToken)) pointsByMethod.set(p.methodToken, []);
     pointsByMethod.get(p.methodToken).push(p);
   }
+  writeImportScopes(b, debug.importScopes ?? [], pe.metadata.counts);
   const methods = new Map((debug.methods ?? []).map((m) => [m.token, m]));
   for (let i = 1; i <= (pe.metadata.counts[6] ?? 0); i++) {
     const methodToken = token(6, i),
@@ -61,23 +64,7 @@ export function emitPortablePdb(assembly, debug, { embedSources = true, sourceLi
         .filter((p, j, a) => !j || p.offset !== a[j - 1].offset),
       doc = points.length && points.every((p) => p.document === points[0].document) ? points[0].document : 0;
     b.add(49, [doc, b.blob(writeSequencePoints(points, doc, body?.localSignature & 0xffffff))]);
-    if (m && body?.code.length) {
-      const ranges = [{ start: 0, end: body.code.length, locals: (m.locals ?? []).filter((l) => l.hidden) }];
-      for (const local of (m.locals ?? []).filter((l) => !l.hidden)) {
-        const start = m.spans[local.scopeStartPc ?? 0]?.[0] ?? 0,
-          end =
-            local.scopeEndPc === m.spans.length
-              ? body.code.length
-              : (m.spans[local.scopeEndPc]?.[0] ?? body.code.length);
-        if (end > start) ranges.push({ start, end, locals: [local] });
-      }
-      ranges.sort((a, z) => a.start - z.start || z.end - a.end);
-      for (const scope of ranges) {
-        const start = (b.rows[51]?.length ?? 0) + 1;
-        for (const local of scope.locals) b.add(51, [local.hidden ? 1 : 0, local.slot, b.string(local.name)]);
-        b.add(50, [i, 0, start, (b.rows[52]?.length ?? 0) + 1, scope.start, scope.end - scope.start]);
-      }
-    }
+    writeMethodScopes(b, m, body, pe.metadata.counts);
   }
   if (sourceLink)
     cdi.push([
