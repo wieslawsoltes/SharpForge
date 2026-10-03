@@ -1,4 +1,5 @@
 export function stickyHeaders(regions, firstLine, {maximum = 3, caretLine = -1} = {}) {
+  if (maximum <= 0) return [];
   return regions.filter(region => region.startLine < firstLine && region.endLine >= firstLine && region.startLine !== caretLine)
     .sort((left, right) => left.startLine - right.startLine).slice(-maximum);
 }

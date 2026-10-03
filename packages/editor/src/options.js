@@ -17,6 +17,11 @@ export function editorOptions(overrides = {}, base = defaultEditorOptions) {
   ]) {
     if (!Number.isFinite(result[name]) || result[name] < minimum || result[name] > maximum) throw new RangeError(`Invalid editor option ${name}`);
   }
+  for (const name of ['tabSize', 'indentSize', 'stickyScrollMaxLines', 'maxRenderedLineCharacters', 'screenReaderWindowLines']) {
+    if (!Number.isInteger(result[name]) || result[name] < 0) throw new RangeError(`Editor option ${name} must be an integer`);
+  }
+  if (!Number.isSafeInteger(result.largeFileThreshold) || result.largeFileThreshold < 1) throw new RangeError('Invalid large file threshold');
+  if (!['view', 'global'].includes(result.zoomScope)) throw new RangeError('Invalid editor zoom scope');
   if (!['off', 'narrow', 'medium', 'wide'].includes(result.mapMode)) throw new RangeError('Invalid scrollbar map mode');
   if (!['\n', '\r\n', '\r'].includes(result.endOfLine)) throw new RangeError('Invalid editor line ending');
   if (!Array.isArray(result.columnGuides) || result.columnGuides.some(column => !Number.isInteger(column) || column < 1 || column > 1000)) {

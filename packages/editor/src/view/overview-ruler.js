@@ -57,7 +57,8 @@ export class OverviewRuler {
     if (!context) return;
     context.clearRect(0, 0, width, height);
     if (map !== 'off') this.paintMap(context, width, height);
-    const colors = {error: '#ef7184', warning: '#e8cc75', breakpoint: '#ef7184', bookmark: '#61b6ef', unsaved: '#e8cc75', saved: '#65ae71', find: '#dfae48', caret: '#dedede'};
+    const colors = {error: '#ef7184', warning: '#e8cc75', breakpoint: '#ef7184', bookmark: '#61b6ef',
+      unsaved: '#e8cc75', saved: '#65ae71', find: '#dfae48', caret: '#dedede'};
     for (const mark of overviewMarks(editor.model.lineCount, height, this.marks())) {
       context.fillStyle = colors[mark.kind] ?? '#aaa';
       context.fillRect(mark.kind === 'caret' ? 0 : Math.max(0, width - 7), mark.y, mark.kind === 'caret' ? width : 6, 2);

@@ -17,6 +17,8 @@ export class DocumentLayout {
   reset() {
     this.generation++;
     this.map.reset(this.editor.model.lineCount);
+    this.zoneRows.clear();
+    this.leadingRows = 0;
     this.hiddenRanges = [];
     this.cache.clear();
     this.applyFolding();
@@ -91,7 +93,8 @@ export class DocumentLayout {
     const model = editor.model;
     const info = lineInfo(model, line);
     const maximum = editor.options.maxRenderedLineCharacters;
-    const sliceStart = info.length > maximum ? Math.max(0, Math.floor(editor.view.viewport.scrollLeft / metrics.charWidth) - 100) : 0;
+    const horizontal = Math.floor(editor.view.viewport.scrollLeft / metrics.charWidth) - 100;
+    const sliceStart = info.length > maximum ? Math.max(0, Math.min(info.length - maximum, horizontal)) : 0;
     const cached = this.cache.get(line);
     if (cached && cached.start === info.start && cached.length === info.length && cached.sliceStart === sliceStart) return cached;
     const text = model.getText(info.start + sliceStart, Math.min(info.end, info.start + sliceStart + maximum));

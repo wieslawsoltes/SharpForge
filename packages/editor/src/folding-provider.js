@@ -3,25 +3,36 @@ export class FoldingProvider {
   constructor(editor) { this.editor = editor; this.generation = 0; this.disposed = false; }
 
   async refresh() {
+    this.controller?.abort();
+    this.controller = new AbortController();
     const generation = ++this.generation;
     const {editor} = this;
+    const model = editor.model;
     const version = editor.model.version;
     const uri = editor.uri;
     if (editor.largeFile.active) return;
     let ranges;
     try {
-      const result = await editor.request('foldingRanges', {uri, version});
+      const parameters = {uri, version, signal: this.controller.signal};
+      const result = editor.services?.supports('folding') ? await editor.services.invoke('folding', parameters)
+        : await editor.request('foldingRanges', parameters);
       ranges = Array.isArray(result) ? result : result?.ranges;
     } catch (error) {
-      editor.reportError?.('SFEDITOR_FOLDING_PROVIDER', error);
+      if (error.name !== 'AbortError') editor.reportError?.('SFEDITOR_FOLDING_PROVIDER', error);
     }
-    const current = () => !this.disposed && generation === this.generation && version === editor.model.version && uri === editor.uri;
+    const current = () => !this.disposed && generation === this.generation && model === editor.model && version === model.version && uri === editor.uri;
     if (!current()) return;
     ranges ??= await scanFoldingRanges(editor.model.snapshot(), editor.highlightIndex.tokens, current);
-    if (ranges && current()) editor.folding.setRanges(ranges, editor.model.lineCount);
+    if (ranges && current()) {
+      editor.folding.setRanges(ranges, editor.model.lineCount);
+      if (editor.pendingFoldingRestore) {
+        editor.session?.foldingState?.restore(uri, editor.folding);
+        editor.pendingFoldingRestore = false;
+      }
+    }
   }
 
-  dispose() { this.disposed = true; this.generation++; }
+  dispose() { this.disposed = true; this.generation++; this.controller?.abort(); }
 }
 
 export function fallbackFolding(model, highlightIndex = null) {
