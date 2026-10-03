@@ -1,0 +1,61 @@
+{
+  "id": "PVT_kwHOACMOYs4Bljvf",
+  "title": "SharpForge \u00b7 Program, Contracts & Conformance",
+  "fields": [
+    {
+      "id": "PVTSSF_lAHOACMOYs4BljvfzhkQJi4",
+      "name": "Status",
+      "dataType": "SINGLE_SELECT",
+      "options": [
+        {
+          "id": "97ac6027",
+          "name": "Backlog"
+        },
+        {
+          "id": "9cfd207c",
+          "name": "Ready"
+        },
+        {
+          "id": "5c1c9b3d",
+          "name": "Claimed"
+        },
+        {
+          "id": "80f54f20",
+          "name": "In progress"
+        },
+        {
+          "id": "074c288b",
+          "name": "In review"
+        },
+        {
+          "id": "95d45f1b",
+          "name": "Blocked"
+        },
+        {
+          "id": "309cfc37",
+          "name": "Done"
+        }
+      ]
+    },
+    {
+      "id": "PVTF_lAHOACMOYs4BljvfzhkQJlE",
+      "name": "Agent",
+      "dataType": "TEXT"
+    },
+    {
+      "id": "PVTF_lAHOACMOYs4BljvfzhkQJlI",
+      "name": "Lease expires",
+      "dataType": "DATE"
+    },
+    {
+      "id": "PVTF_lAHOACMOYs4BljvfzhkQJlM",
+      "name": "Branch",
+      "dataType": "TEXT"
+    },
+    {
+      "id": "PVTF_lAHOACMOYs4BljvfzhkQJlk",
+      "name": "Lock keys",
+      "dataType": "TEXT"
+    }
+  ]
+}
