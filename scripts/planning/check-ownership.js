@@ -17,5 +17,5 @@ export function checkOwnership({ files, area, ownership, exceptions, lockRegistr
 }
 if (isMain(import.meta.url)) {
   const { values } = parseArgs({ options: { area: { type: 'string' }, base: { type: 'string', default: 'origin/main' }, locks: { type: 'string', default: '' } } });
-  report(checkOwnership({ area: values.area, files: git(['diff', '--name-only', '-z', `${values.base}...HEAD`]).split('\0').filter(Boolean), ownership: readJSON('planning/contracts/ownership.json'), exceptions: readJSON('planning/contracts/ownership-exceptions.json'), lockRegistry: readJSON('planning/contracts/locks.json'), heldLocks: values.locks.split(',').filter(Boolean) }));
+  report(checkOwnership({ area: values.area, files: git(['diff', '--no-renames', '--name-only', '-z', `${values.base}...HEAD`]).split('\0').filter(Boolean), ownership: readJSON('planning/contracts/ownership.json'), exceptions: readJSON('planning/contracts/ownership-exceptions.json'), lockRegistry: readJSON('planning/contracts/locks.json'), heldLocks: values.locks.split(',').filter(Boolean) }));
 }

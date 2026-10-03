@@ -6,6 +6,7 @@ export const REQUIRED_FIELDS = [
   { name: 'Area', dataType: 'TEXT' }, { name: 'Parity percent', dataType: 'NUMBER' }
 ];
 export const REQUIRED_LABELS = [
+  { name: 'status:ready', color: '0e8a16', description: 'Dependency gate confirms a ready open leaf' },
   { name: 'agent:claimed', color: '1d76db', description: 'Leaf work reserved by an agent' },
   { name: 'lease:expired', color: 'd93f0b', description: 'Ownership retained; explicit reconciliation required' },
   { name: 'status:blocked', color: 'b60205', description: 'Blocked by a named prerequisite' },

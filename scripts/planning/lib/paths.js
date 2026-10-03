@@ -18,6 +18,7 @@ export function globPattern(glob) {
 export const matches = (path, globs) => globs.some(glob => globPattern(glob).test(safePath(path)));
 export function overlaps(a, b) {
   a = safePath(a); b = safePath(b);
+  if (a.endsWith('/')) a += '**'; if (b.endsWith('/')) b += '**';
   if (!/[?*]/.test(a)) return matches(a, [b]);
   if (!/[?*]/.test(b)) return matches(b, [a]);
   const ap = a.split(/[?*]/)[0], bp = b.split(/[?*]/)[0];
