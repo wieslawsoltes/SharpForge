@@ -26,7 +26,7 @@ export const expressionMethods = {
       }
       if (text === 'switch') { if (min > P.Switch) break; left = this.switchExpression(left); continue; }
       if (text === '..') { if (min > P.Range) break; this.feature('RangeOperator', start); const token = this.take(); left = this.n('RangeExpression', left, token, this.canStartExpression() ? this.expression(P.Unary) : null); continue; }
-      if (this.atWord('with') && this.peek().kind === '{') { if (min > P.Switch) break; this.feature('Records', start); left = this.n('WithExpression', left, this.takeWord('with'), this.initializerExpression('WithInitializerExpression')); continue; }
+      if (this.isWithExpression()) { if (min > P.Switch) break; left = this.withExpression(left); continue; }
       const entry = binaryOperators[text]; if (!entry || entry[0] < min) break;
       const [precedence, kind] = entry;
       if (text === 'is') { left = this.isExpression(left, this.take()); continue; }
@@ -107,6 +107,7 @@ export const expressionMethods = {
       case 'base': return this.n('BaseExpression', this.take());
       case 'new': return this.newExpression();
       case 'stackalloc': return this.stackAllocExpression();
+      case 'unsafe': if (this.isUnsafeExpression()) return this.unsafeExpression(); break;
       case '(': return this.parenthesizedOrTuple();
       case '[': return this.collectionExpression();
     }
@@ -151,6 +152,7 @@ export const expressionMethods = {
   /** `{ a, b }` initializers. Array initializers nest; `with` and object initializers hold assignments. */
   initializerExpression(kind) {
     const open = this.expect('{'), list = [];
+    if (!this.enter('Initializer nesting limit exceeded')) { this.leave(); return this.n(kind, open, list, this.expect('}')); }
     this.nested(() => { while (!this.at('}') && !this.at('eof')) {
       const before = this.i;
       if (kind === 'ArrayInitializerExpression') list.push(this.variableInitializer());
@@ -158,7 +160,7 @@ export const expressionMethods = {
       else list.push(this.at('{') ? this.initializerExpression('ComplexElementInitializerExpression') : this.expression());
       if (this.at(',')) list.push(this.take()); else break; if (before === this.i) break;
     } });
-    return this.n(kind, open, list, this.expect('}'));
+    this.leave(); return this.n(kind, open, list, this.expect('}'));
   },
   memberInitializer() {
     const start = this.current; let target;
@@ -201,7 +203,7 @@ export const expressionMethods = {
     const start = cache.token(startKind, slice(s.start, s.startEnd), undefined, this.leadingWithSkipped(token.leadingTrivia)), contents = [];
     const sub = (tokens, tail, end) => {
       const eof = Object.freeze({ kind: 'eof', syntaxKind: 'EndOfFileToken', text: '', value: undefined, start: end, end, fullStart: end, leadingTrivia: tail, trailingTrivia: Object.freeze([]) });
-      const child = new this.constructor({ source: this.source, tokens: [...tokens, eof], diagnostics: [], features: [] }, { greenCache: cache, inAsync: this.inAsync }); child.depth = this.depth;
+      const child = new this.constructor({ source: this.source, tokens: [...tokens, eof], diagnostics: [], features: [] }, { greenCache: cache, inAsync: this.inAsync, languageVersion: this.languageVersion === 15 ? undefined : this.languageVersion }); child.depth = this.depth;
       const expression = child.expression(); if (!child.at('eof')) { child.error(child.current, 'CS1003', 'Unexpected trailing interpolation input'); child.skipRest(); }
       for (const d of child.diagnostics) if (this.diagnostics.length < 200) this.diagnostics.push(d);
       this.features.push(...child.features); this.nodeCount += child.nodeCount;

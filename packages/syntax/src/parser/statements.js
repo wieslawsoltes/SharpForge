@@ -29,7 +29,7 @@ export const statementMethods = {
     const kind = this.kindAt(i);
     if (kind === 'const' || kind === 'extern' || kind === 'readonly' || kind === 'volatile') return true;
     if (kind === 'static') return this.isLocalModifier(i + 1) || this.isLocalDeclaration(i + 1);
-    if (kind === 'unsafe') return this.kindAt(i + 1) !== '{';
+    if (kind === 'unsafe') return this.kindAt(i + 1) !== '{' && !this.isUnsafeExpression(i);
     if (kind === 'async' && !this.tokens[i].flags) return this.isLocalModifier(i + 1) || this.isLocalDeclaration(i + 1) && ['(', '<'].includes(this.kindAt(this.scanType(i + 1) + 1));
     return false;
   },

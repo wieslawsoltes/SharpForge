@@ -11,7 +11,7 @@ export const operatorMethods = {
   operatorDeclaration(attributeLists, modifiers, returnType, explicit) {
     const keyword = this.take(), checkedKeyword = this.at('checked') ? this.take() : null, operator = this.operatorAt(), start = this.current; let token;
     if (checkedKeyword) this.feature('CheckedUserDefinedOperators', this.tokens[this.i - 1]);
-    if (overloadableOperators.has(operator.text)) { token = this.takeOperator(operator); if (operator.text === '>>>') this.feature('UnsignedRightShift', start); else if (/^(?:[-+*\/%&|^]|<<|>>>?)=$/.test(operator.text)) this.feature('UserDefinedCompoundAssignmentOperators', start); }
+    if (overloadableOperators.has(operator.text)) { token = this.takeOperator(operator); this.operatorFeatures(operator.text, modifiers, start); }
     else {
       this.error(start, 'CS1019', 'Overloadable unary operator expected');
       token = this.at('(') || this.at('eof') ? this.cache.missing('PlusToken') : this.take();

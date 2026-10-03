@@ -98,6 +98,7 @@ export function relexTokens(old, source, change, cache = new BoundedCache(), opt
   const raws = []; let pending = scanTrivia(scanner, false).leading, oldEnd = count, endPosition = source.length + 1, syncing = -1;
   for (;;) {
     const raw = scanner.token(); raw.leading = pending; raws.push(raw); if (raw.kind === 'eof') break;
+    if ((raws.length & 255) === 0 && options.cancellationToken) options.cancellationToken.throwIfCancellationRequested();
     scanner.state.seenToken = true; const trivia = scanTrivia(scanner, true); raw.trailing = trivia.trailing; pending = trivia.leading;
     const lead = pending.length ? pending[0].start : scanner.i;
     // One more token is rescanned after the streams meet, so the token after the window keeps its old distance to its predecessor.

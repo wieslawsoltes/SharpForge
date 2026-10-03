@@ -37,7 +37,7 @@ export const namespaceMethods = {
       return this.n('FileScopedNamespaceDeclaration', attributeLists, modifiers, keyword, name, semicolon, externs, usings, members);
     }
     const open = this.expect('{'), externs = [], usings = [], members = [];
-    this.namespaceBody(externs, usings, members, null, '}');
+    if (this.enter('Namespace nesting limit exceeded')) this.namespaceBody(externs, usings, members, null, '}'); this.leave();
     return this.n('NamespaceDeclaration', attributeLists, modifiers, keyword, name, open, externs, usings, members, this.expect('}'), this.match(';'));
   },
   /** Parses extern aliases, usings and members until `close` (or end of file). `unitAttributes` collects assembly/module attribute lists. */

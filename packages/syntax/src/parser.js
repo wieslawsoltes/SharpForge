@@ -29,9 +29,26 @@ import { basicPatternMethods } from './parser/patterns/basic.js';
 import { recursivePatternMethods } from './parser/patterns/recursive.js';
 import { combinatorPatternMethods } from './parser/patterns/combinators.js';
 import { listPatternMethods } from './parser/patterns/lists.js';
+import { recordMethods } from './parser/declarations/records.js';
+import { recordStructMethods } from './parser/declarations/record-structs.js';
+import { withMethods } from './parser/expressions/with.js';
+import { accessorMethods } from './parser/declarations/accessors.js';
+import { propertyMethods } from './parser/declarations/properties.js';
+import { primaryConstructorMethods } from './parser/declarations/primary-constructors.js';
+import { partialMemberMethods } from './parser/declarations/partial-members.js';
+import { typeModifierMethods } from './parser/declarations/type-modifiers.js';
+import { extensionMethods } from './parser/declarations/extensions.js';
+import { modernOperatorMethods } from './parser/declarations/operators-modern.js';
+import { extensionIndexerMethods } from './parser/declarations/extension-indexers.js';
+import { unionMethods } from './parser/declarations/unions.js';
+import { closedMethods } from './parser/declarations/closed.js';
+import { safetyModifierMethods } from './parser/declarations/safety-modifiers.js';
 Object.assign(Parser.prototype, typeMethods, modifierMethods, statementMethods, expressionMethods, namespaceMethods, typeDeclarationMethods, enumMethods, delegateMethods, memberMethods, attributeMethods, eventMethods,
-  operatorMethods, constructorMethods, typeParameterMethods, anonymousFunctionMethods, lambdaMethods, queryMethods, tupleMethods, nullabilityMethods, genericNameMethods, basicPatternMethods, recursivePatternMethods, combinatorPatternMethods, listPatternMethods);
+  operatorMethods, constructorMethods, typeParameterMethods, anonymousFunctionMethods, lambdaMethods, queryMethods, tupleMethods, nullabilityMethods, genericNameMethods, basicPatternMethods, recursivePatternMethods, combinatorPatternMethods, listPatternMethods,
+  recordMethods, recordStructMethods, withMethods, accessorMethods, propertyMethods, primaryConstructorMethods, partialMemberMethods, typeModifierMethods, extensionMethods, modernOperatorMethods, extensionIndexerMethods, unionMethods,
+  closedMethods, safetyModifierMethods);
 export { Parser };
+export { nestingBudget } from './parser/budget.js';
 const asSource = source => typeof source === 'string' ? new SourceText(source) : source;
 const byPosition = (a, b) => a.start - b.start;
 /**
@@ -46,7 +63,7 @@ export function parseCompilationUnit(lexed, options = {}) {
  * Parses C# source. The result keeps the shape existing consumers rely on - { source, tokens, root, diagnostics,
  * internedTokenHits, nodeCount } with `root` the plain AST produced by the legacy adapter - and adds the lossless
  * tree: `green` (GreenNode), `syntax` (red CompilationUnit) and `features` (language-feature uses).
- * Options: `languageVersion` gates features at parse time, `preprocessorSymbols`, `script`.
+ * Options: `languageVersion` gates features at parse time, `preprocessorSymbols`, `script`, `cancellationToken`.
  */
 export function parse(source, cache, options = {}) {
   source = asSource(source);

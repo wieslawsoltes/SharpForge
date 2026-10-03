@@ -1,9 +1,11 @@
 import { diagnostic } from '@sharpforge/text';
 import { GreenCache, ownText } from '../green.js';
-import { legacyContextual, contextualKeywordKinds, reservedKeywordKinds, predefinedTypes } from '../lexer/keywords.js';
+import { legacyContextual, contextualKeywordKinds, previewContextualKeywordKinds, reservedKeywordKinds, predefinedTypes } from '../lexer/keywords.js';
+import { parseLanguageVersion, previewLanguageVersion } from '../langversion.js';
 import { punctuationKinds, greaterThanMerges } from '../lexer/operators.js';
 import { recoveryMethods } from './recovery.js';
 import { blenderMethods } from '../incremental/blender.js';
+import { budgetMethods } from './budget.js';
 const expected = { ';': ['CS1002', '; expected'], '}': ['CS1513', '} expected'], '{': ['CS1514', '{ expected'], ')': ['CS1026', ') expected'] };
 const empty = Object.freeze([]);
 /**
@@ -20,6 +22,11 @@ export class Parser {
     this.inAsync = options.inAsync ?? true;
     // Incremental parsing: a Blender over the previous tree (see incremental/blender.js), or null for a full parse.
     this.blend = options.blend ?? null;
+    // The language version steers the few places where a contextual keyword changed meaning by version (record, extension)
+    // and enables preview grammar; without one the parser accepts everything, as LangVersion preview does.
+    const version = options.languageVersion; this.languageVersion = version === undefined || version === null ? previewLanguageVersion : parseLanguageVersion(version)?.number ?? previewLanguageVersion;
+    this.inExtension = false; this.closedAt = null; this.owner = null; this.budgetExhausted = false;
+    this.cancellation = options.cancellationToken ?? null; this.ticks = 0;
   }
   get current() { return this.tokens[this.i]; }
   at(kind) { return this.tokens[this.i].kind === kind; }
@@ -54,7 +61,7 @@ export class Parser {
   }
   take(kind) { const token = this.tokens[this.i]; if (token.kind !== 'eof') this.i++; return this.green(token, kind); }
   /** Consumes the current identifier-like token as the given contextual keyword. */
-  takeWord(word) { return this.take(contextualKeywordKinds[word]); }
+  takeWord(word) { return this.take(contextualKeywordKinds[word] ?? previewContextualKeywordKinds[word]); }
   match(kind) { return this.at(kind) ? this.take() : null; }
   matchWord(word) { return this.atWord(word) ? this.takeWord(word) : null; }
   missing(kind) { return this.cache.missing(punctuationKinds[kind] ?? reservedKeywordKinds[kind] ?? kind); }
@@ -90,10 +97,9 @@ export class Parser {
     return this.cache.node(kind, children);
   }
   /** Checkpoint for speculative parsing; reset() discards tokens, diagnostics and feature uses recorded since. */
-  mark() { return [this.i, this.diagnostics.length, this.features.length, this.skippedTokens.slice(), this.depth]; }
-  reset(mark) { this.i = mark[0]; this.diagnostics.length = mark[1]; this.features.length = mark[2]; this.skippedTokens = mark[3].slice(); this.depth = mark[4]; }
+  mark() { return [this.i, this.diagnostics.length, this.features.length, this.skippedTokens, this.depth, this.skippedTokens.length, this.budgetExhausted]; }
+  // The pending skipped-token list only grows or is replaced, so restoring it is the old array cut back to its old length.
+  reset(mark) { this.i = mark[0]; this.diagnostics.length = mark[1]; this.features.length = mark[2]; this.skippedTokens = mark[3]; this.skippedTokens.length = mark[5]; this.depth = mark[4]; this.budgetExhausted = mark[6]; }
   guardProgress(before) { if (before === this.i && !this.at('eof')) { this.error(this.current, 'CS1525', `Unexpected token '${this.current.text}'`); this.skip(); } }
-  enter(message = 'Syntax nesting limit exceeded') { if (++this.depth <= 200) return true; this.error(this.current, 'SF1099', message); return false; }
-  leave() { this.depth--; }
 }
-Object.assign(Parser.prototype, recoveryMethods, blenderMethods);
+Object.assign(Parser.prototype, recoveryMethods, blenderMethods, budgetMethods);

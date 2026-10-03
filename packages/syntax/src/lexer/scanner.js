@@ -68,6 +68,7 @@ export class Scanner {
       if (stop && stop()) return { raws, tail: pending, head };
       const raw = this.token(); raw.leading = pending; raws.push(raw);
       if (raw.kind === 'eof') return { raws, tail: empty, head };
+      if ((raws.length & 255) === 0 && this.options.cancellationToken) this.options.cancellationToken.throwIfCancellationRequested();
       if (!stop) this.state.seenToken = true;
       const trivia = scanTrivia(this, true); raw.trailing = trivia.trailing; pending = trivia.leading;
     }
@@ -106,6 +107,7 @@ export class Scanner {
       if (raw.bytes) token.bytes = raw.bytes;
       if (flags) token.flags = Object.freeze(flags);
       tokens.push(Object.freeze(token)); fullStart = end;
+      if ((tokens.length & 255) === 0 && this.options.cancellationToken) this.options.cancellationToken.throwIfCancellationRequested();
     }
     return Object.freeze(tokens);
   }
@@ -117,6 +119,7 @@ export class Scanner {
 }
 /**
  * Tokenises a SourceText. Options: `preprocessorSymbols` (defined symbols for #if), `script` (allow #r/#load),
+ * `cancellationToken` (polled every 256 tokens; see cancellation.js),
  * `directives: false` (treat `#` as an unexpected character) and `profile: false` (omit the SharpForge back-end
  * profile diagnostics SF1003-SF1005 for literal types the current compiler cannot consume).
  * Returns { source, tokens, diagnostics, internedTokenHits, directives, features, lexicalDiagnostics, profileDiagnostics, symbols,

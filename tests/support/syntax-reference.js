@@ -2,7 +2,8 @@
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { SyntaxTree, decimalToString } from '@sharpforge/syntax';
+import assert from 'node:assert/strict';
+import { SyntaxTree, decimalToString, matchesGrammar } from '@sharpforge/syntax';
 export const repoRoot = fileURLToPath(new URL('../../', import.meta.url));
 export const fixtureRoot = join(repoRoot, 'packages/syntax/test');
 /** Every file under `directory` (absolute) whose name passes `filter`, sorted. */
@@ -82,3 +83,21 @@ export function loadReferenceFixture(file) {
 export function repositorySources() {
   return [...filesUnder(join(repoRoot, 'examples')), ...filesUnder(join(repoRoot, 'packages/templates')), ...filesUnder(join(repoRoot, 'apps')), ...filesUnder(fixtureRoot)].map(file => ({ name: file.slice(repoRoot.length), text: readFileSync(file, 'utf8') }));
 }
+/**
+ * Asserts that the fixture at `relative` (under packages/syntax/test) has a pinned Roslyn dump and that SharpForge
+ * produces the same tree. Returns { text, tree, kinds } where `kinds` is the set of node kinds in the tree.
+ */
+export function assertMatchesRoslyn(relative) {
+  const file = join(fixtureRoot, relative); assert(existsSync(file + '.json'), 'no Roslyn dump for ' + relative);
+  const { text, tree, reference } = loadReferenceFixture(file);
+  assert.equal(reference.length, text.length, relative + ': dump is current'); assert.equal(tree.toFullString(), text); assert(matchesGrammar(tree.green), relative);
+  assert.deepEqual(compareWithReference(tree, reference, text), [], relative);
+  return { text, tree, kinds: new Set([...tree.root.descendantNodes(true)].map(node => node.kind)) };
+}
+/** `code@offset text` for every diagnostic of a parse of `text` at `languageVersion` (undefined parses without gating). */
+export function diagnosticsOf(text, languageVersion, options = {}) {
+  const tree = SyntaxTree.parseText(text, { ...options, languageVersion }); assert.equal(tree.toFullString(), text);
+  return tree.getDiagnostics().map(d => `${d.code}@${d.start} ${JSON.stringify(text.slice(d.start, d.start + d.length))}`);
+}
+/** One line per node: the shape of a red node as `Kind(children)` with token text. */
+export function shapeOf(node) { return node.isToken ? (node.isMissing ? '<' + node.kind + '>' : node.text) : `${node.kind}(${node.childNodesAndTokens().map(shapeOf).join(' ')})`; }

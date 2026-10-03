@@ -3,11 +3,12 @@ import { contextualKeywordKinds } from '../../lexer/keywords.js';
 /** Attribute sections on every declaration kind, with targets (assembly, module, field, event, method, param, property, return, type, typevar) and named arguments. */
 const targets = new Set(['assembly', 'module', 'field', 'method', 'param', 'property', 'type', 'typevar']), typeKeywords = ['class', 'struct', 'interface', 'enum', 'delegate', 'event', 'namespace', 'const', 'implicit', 'explicit', 'void'];
 export const attributeMethods = {
-  /** Index of the bracket closing the one at `i`, or -1. */
+  /** Index of the bracket closing the one at `i`, or -1 (also when it is more than 4096 tokens away). Results are memoised: speculative parses ask repeatedly. */
   matchingBracket(i) {
-    let depth = 0;
-    for (let guard = 0; guard < 4096; guard++, i++) { const kind = this.kindAt(i); if (kind === 'eof') return -1; if ('([{'.includes(kind) && kind.length === 1) depth++; else if (')]}'.includes(kind) && kind.length === 1 && --depth === 0) return i; }
-    return -1;
+    const cache = this.brackets ??= new Map(), known = cache.get(i); if (known !== undefined) return known;
+    let depth = 0, result = -1;
+    for (let guard = 0, j = i; guard < 4096; guard++, j++) { const kind = this.kindAt(j); if (kind === 'eof') break; if ('([{'.includes(kind) && kind.length === 1) depth++; else if (')]}'.includes(kind) && kind.length === 1 && --depth === 0) { result = j; break; } }
+    cache.set(i, result); return result;
   },
   /** At statement level `[` starts attribute lists only when a declaration follows the closing bracket (otherwise it is a collection expression). */
   isAttributeListAhead(i = this.i) {

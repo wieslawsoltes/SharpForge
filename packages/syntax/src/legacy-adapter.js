@@ -222,7 +222,12 @@ export class LegacyAdapter {
     if (red.kind.endsWith('AssignmentExpression')) { const left = this.whenNotNull(red.left, receiver, start); return this.from('Assignment', start, red, { operator: red.operatorToken.text, left, right: this.expression(red.right) }); }
     return this.unsupported(red);
   }
+  /** Converts an expression. Left-deep chains (long concatenations, fluent calls) nest without a parser limit, so the conversion has its own depth budget. */
   expression(red) {
+    if ((this.depth = (this.depth ?? 0) + 1) > 800) { this.depth--; if (!this.tooDeep) { this.tooDeep = true; this.fail(red, 'SF1099', 'Expression is too long or complex to compile'); } return this.unsupported(red); }
+    const result = this.expressionCore(red); this.depth--; return result;
+  }
+  expressionCore(red) {
     const kind = red.kind;
     if (binaryKinds.has(kind)) { const left = this.expression(red.left); return this.from('Binary', left, red, { operator: red.operatorToken.text, left, right: this.expression(red.right) }); }
     if (kind.endsWith('AssignmentExpression')) { const left = this.expression(red.left); return this.from('Assignment', left, red, { operator: red.operatorToken.text, left, right: this.expression(red.right) }); }

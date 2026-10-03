@@ -562,4 +562,10 @@
 "XmlCDataStartToken":8429,
 "XmlCDataEndToken":8430,
 "XmlProcessingInstructionStartToken":8431,
-"XmlProcessingInstructionEndToken":8432}
+"XmlProcessingInstructionEndToken":8432,
+"UnionKeyword":8433,
+"ClosedKeyword":8434,
+"SafeKeyword":8435,
+"UnionDeclaration":8909,
+"UnionCaseTypeList":8910,
+"UnsafeExpression":8911}

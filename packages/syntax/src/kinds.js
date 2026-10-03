@@ -32,7 +32,8 @@ export const tokenKindNames = Object.freeze([
   'EndOfDirectiveToken', 'EndOfDocumentationCommentToken', 'EndOfFileToken', 'BadToken', 'IdentifierToken', 'NumericLiteralToken', 'CharacterLiteralToken', 'StringLiteralToken',
   'XmlEntityLiteralToken', 'XmlTextLiteralToken', 'XmlTextLiteralNewLineToken', 'InterpolatedStringToken', 'InterpolatedStringTextToken', 'SingleLineRawStringLiteralToken', 'MultiLineRawStringLiteralToken', 'Utf8StringLiteralToken',
   'Utf8SingleLineRawStringLiteralToken', 'Utf8MultiLineRawStringLiteralToken', 'InterpolatedStringStartToken', 'InterpolatedStringEndToken', 'InterpolatedVerbatimStringStartToken', 'InterpolatedSingleLineRawStringStartToken', 'InterpolatedMultiLineRawStringStartToken', 'InterpolatedRawStringEndToken',
-  'LessThanSlashToken', 'SlashGreaterThanToken', 'XmlCommentStartToken', 'XmlCommentEndToken', 'XmlCDataStartToken', 'XmlCDataEndToken', 'XmlProcessingInstructionStartToken', 'XmlProcessingInstructionEndToken'
+  'LessThanSlashToken', 'SlashGreaterThanToken', 'XmlCommentStartToken', 'XmlCommentEndToken', 'XmlCDataStartToken', 'XmlCDataEndToken', 'XmlProcessingInstructionStartToken', 'XmlProcessingInstructionEndToken',
+  'UnionKeyword', 'ClosedKeyword', 'SafeKeyword'
 ]);
 export const triviaKindNames = Object.freeze([
   'EndOfLineTrivia', 'WhitespaceTrivia', 'SingleLineCommentTrivia', 'MultiLineCommentTrivia', 'DocumentationCommentExteriorTrivia', 'SingleLineDocumentationCommentTrivia', 'MultiLineDocumentationCommentTrivia', 'DisabledTextTrivia',
@@ -77,7 +78,8 @@ export const nodeKindNames = Object.freeze([
   'DefaultSwitchLabel', 'TryStatement', 'CatchClause', 'CatchDeclaration', 'CatchFilterClause', 'FinallyClause', 'XmlElement', 'XmlElementStartTag',
   'XmlElementEndTag', 'XmlEmptyElement', 'XmlName', 'XmlPrefix', 'XmlTextAttribute', 'XmlCrefAttribute', 'XmlNameAttribute', 'XmlText',
   'XmlCDataSection', 'XmlComment', 'XmlProcessingInstruction', 'TypeCref', 'QualifiedCref', 'NameMemberCref', 'IndexerMemberCref', 'OperatorMemberCref',
-  'ConversionOperatorMemberCref', 'CrefParameterList', 'CrefBracketedParameterList', 'CrefParameter', 'ExtensionBlockDeclaration'
+  'ConversionOperatorMemberCref', 'CrefParameterList', 'CrefBracketedParameterList', 'CrefParameter', 'ExtensionBlockDeclaration',
+  'UnionDeclaration', 'UnionCaseTypeList', 'UnsafeExpression'
 ]);
 const bases = [[tokenKindNames, 8193], [triviaKindNames, 8539], [nodeKindNames, 8616]], ids = { None: 0 }, names = new Map([[0, 'None']]);
 for (const [list, base] of bases) list.forEach((name, index) => { ids[name] = base + index; names.set(base + index, name); });

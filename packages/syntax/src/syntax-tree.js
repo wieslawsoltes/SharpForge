@@ -18,7 +18,8 @@ export function documentationDiagnostics(source, tokens) {
 }
 /**
  * An immutable parsed document: source text, parse options, the lossless tree and its diagnostics.
- * Options: languageVersion, preprocessorSymbols, script, fileBasedProgram, documentationMode ('parse' by default;
+ * Options: languageVersion, preprocessorSymbols, script, fileBasedProgram, cancellationToken (for this parse only; a
+ * cancelled parse throws OperationCanceledError), documentationMode ('parse' by default;
  * 'diagnose' also reports malformed XML documentation comments as CS1570 / CS1584 warnings) and `cache` (a BoundedCache shared across trees
  * so green tokens and nodes are interned between versions of a document).
  */
@@ -27,18 +28,19 @@ export class SyntaxTree {
   constructor(source, options, green, diagnostics, features, directives, state = null) { this.source = source; this.options = options; this.green = green; this.diagnostics = diagnostics; this.features = features; this.directives = directives; this.#state = state; Object.freeze(this); }
   /** Parses text (a string or SourceText) into a new tree. */
   static parseText(text, options = {}) {
-    const source = typeof text === 'string' ? new SourceText(text, options.uri ?? 'Program.cs') : text;
-    return SyntaxTree.#build(source, Object.isFrozen(options) && options.cache ? options : Object.freeze({ ...options, cache: options.cache ?? new BoundedCache(65536) }), null, null);
+    const source = typeof text === 'string' ? new SourceText(text, options.uri ?? 'Program.cs') : text, { cancellationToken, ...kept } = options;
+    return SyntaxTree.#build(source, Object.isFrozen(options) && options.cache && !cancellationToken ? options : Object.freeze({ ...kept, cache: options.cache ?? new BoundedCache(65536) }), null, null, cancellationToken);
   }
   /** Lexes and parses `source`; with `previous` (a tree and the change leading to `source`) only the changed window is rescanned and old nodes are blended in. */
-  static #build(source, options, previous, change) {
-    const cache = options.cache, lexOptions = { ...options, profile: false }; let lexed, blend = null;
+  static #build(source, options, previous, change, cancellationToken) {
+    cancellationToken?.throwIfCancellationRequested();
+    const cache = options.cache, lexOptions = { ...options, profile: false, cancellationToken }; let lexed, blend = null;
     if (previous) {
       lexed = relexTokens(previous.lexed, source, change, cache, lexOptions);
       blend = new Blender({ root: previous.tree.root, diagnostics: previous.parserDiagnostics, features: previous.parserFeatures, tokens: lexed.tokens, start: lexed.window.start, end: lexed.window.resynced ? lexed.window.endPosition : source.length + 1, delta: lexed.window.delta });
     } else lexed = lex(source, cache, lexOptions);
     // Small documents get a real token array (shifting every token is cheap); large ones a lazy view that shifts only the tokens the parser reads.
-    const parsed = parseCompilationUnit(previous ? { ...lexed, tokens: lexed.tokens.length < 16384 && !options.lazyTokens ? lexed.tokens.toArray() : lexed.tokens.asArray() } : lexed, { cache, blend }), diagnostics = [...parsed.diagnostics];
+    const parsed = parseCompilationUnit(previous ? { ...lexed, tokens: lexed.tokens.length < 16384 && !options.lazyTokens ? lexed.tokens.toArray() : lexed.tokens.asArray() } : lexed, { cache, blend, languageVersion: options.languageVersion, cancellationToken }), diagnostics = [...parsed.diagnostics];
     const byStart = (a, b) => a.start - b.start, state = { lexed, parserDiagnostics: parsed.diagnostics.slice(lexed.lexicalDiagnostics.length).sort(byStart), parserFeatures: parsed.features.slice(lexed.features.length).sort(byStart), reusedNodes: parsed.reusedNodes };
     if (options.languageVersion !== undefined) {
       const version = parseLanguageVersion(options.languageVersion);
@@ -64,7 +66,7 @@ export class SyntaxTree {
    * reused from this tree by identity. An empty change list returns a tree sharing this tree's green root.
    * `options.incremental: false` forces a full parse.
    */
-  withChangedText(changes = []) {
+  withChangedText(changes = [], { cancellationToken } = {}) {
     const edits = [...changes].filter(c => c.length || c.text).sort((a, b) => a.start - b.start); let text = this.source.text;
     if (!edits.length) return new SyntaxTree(this.source, this.options, this.green, this.diagnostics, this.features, this.directives, this.#state);
     let inserted = '', cursor = edits[0].start;
@@ -75,8 +77,8 @@ export class SyntaxTree {
     // The changes are merged into one replacement spanning from the first to the last of them.
     for (const edit of edits) { inserted += text.slice(cursor, edit.start) + (edit.text ?? ''); cursor = edit.start + (edit.length ?? 0); }
     const start = edits[0].start, source = this.source.withChange(start, cursor - start, inserted), state = this.#state;
-    if (!state || this.options.incremental === false || state.lexed.lexicalDiagnostics.length + state.parserDiagnostics.length >= 150) return SyntaxTree.#build(source, this.options, null, null);
-    return SyntaxTree.#build(source, this.options, { tree: this, ...state }, { start, length: cursor - start, newLength: inserted.length });
+    if (!state || this.options.incremental === false || state.lexed.lexicalDiagnostics.length + state.parserDiagnostics.length >= 150) return SyntaxTree.#build(source, this.options, null, null, cancellationToken);
+    return SyntaxTree.#build(source, this.options, { tree: this, ...state }, { start, length: cursor - start, newLength: inserted.length }, cancellationToken);
   }
   /** The minimal single text change that turns `oldTree`'s text into this tree's text (empty when the texts are equal). */
   getChanges(oldTree) {
