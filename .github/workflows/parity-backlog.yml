@@ -1,0 +1,34 @@
+name: Provision parity issue backlog
+on:
+  workflow_dispatch:
+  push:
+    branches: [planning/full-parity-agent-backlog]
+    paths: ['planning/catalog.txt', 'scripts/planning/backlog.py', 'scripts/planning/seed.py', '.github/workflows/parity-backlog.yml']
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: sharpforge-backlog-provisioning
+  cancel-in-progress: false
+jobs:
+  provision:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate and export backlog
+        run: python scripts/planning/backlog.py
+      - name: Create missing epics and native subtasks
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/planning/seed.py --apply
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: parity-backlog-state
+          path: planning/generated/
