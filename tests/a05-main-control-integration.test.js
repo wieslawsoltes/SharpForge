@@ -16,7 +16,18 @@ const cases = [
   class Program {
     static int Line([CallerLineNumber] int line = 0) { return line; }
     static void Main() { int Read() => Line(); Console.WriteLine(Read() > 0); }
-  }`, 'True\n']
+  }`, 'True\n'],
+  ['constructor initializer out variable', `using System; class Program {
+    Program(int ignored) { }
+    Program() : this(Initialize(out var value)) {
+      Func<int> read = () => value;
+      Update(ref value);
+      Console.WriteLine(read());
+    }
+    static int Initialize(out int value) { value = 7; return 0; }
+    static void Update(ref int value) { value = 9; }
+    static void Main() { new Program(); }
+  }`, '9\n']
 ];
 
 for (const [name, source, expected] of cases) for (const engine of ['source', 'reload', 'cil']) {
