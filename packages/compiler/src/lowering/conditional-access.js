@@ -15,14 +15,13 @@
  *   a?.Count == x, != x      !absent && value == x      absent || value != x        (x evaluated after the access)
  *   a?.Count < x  (> <= >=)  !absent && value < x
  *   a?.Count == null         absent                     (the access still runs when the receiver is not null)
- *   (object)a?.Count, "s" + a?.Count, $"{a?.Count}"      absent ? null : box(value)
+ *   (object)a?.Count, "s" + a?.Count                     absent ? null : box(value)
+ *   $"{a?.Count,4:D3}"                                   absent ? format(null) : format(value)
  *
  * Anywhere else a value-typed result is reported as unsupported ("nullable value types"), never miscompiled.
  */
-import { findContracts } from '@sharpforge/framework';
 import { n } from '../codegen/semantic/node-factory.js';
 
-const boxValue = () => findContracts('SharpForge.Runtime.Formatting', 'BoxValue', true)[0];
 const boxedTypes = new Set(['int', 'double', 'bool']);
 const comparisons = new Set(['==', '!=', '<', '>', '<=', '>=']);
 
@@ -138,15 +137,25 @@ export const ConditionalAccessLowering = Base =>
       if (node.conversion?.kind === 'Boxing' && isLiftedAccess(node.operand)) return this.boxedOrNull(node.operand);
       return super.exprConversion(node);
     }
-    /** The value of an interpolation hole: a value-typed access formats as its value, or as nothing when absent. */
-    interpolationValue(node) {
-      return isLiftedAccess(node) ? this.boxedOrNull(node) : super.interpolationValue(node);
+    /** An interpolation hole: a value-typed access is formatted with its own type, or as null when absent. */
+    interpolationHole(node, format, alignment) {
+      if (!isLiftedAccess(node)) return super.interpolationHole(node, format, alignment);
+      const access = this.liftedAccess(node),
+        present = this.formattedValue(access.value(), format, alignment),
+        absent = this.formattedValue(n.nullLiteral('object'), format, alignment);
+      return n.sequence(access.locals, access.effects, n.conditional(access.absent(), absent, present, 'string'));
     }
     boxedOrNull(node) {
-      const access = this.liftedAccess(node),
-        type = access.value().legacyType;
-      if (!boxedTypes.has(type)) return this.unsupported('nullable value types', node.syntax);
-      const boxed = n.frameworkCall({ contract: boxValue() }, null, [access.value(), n.literal(type, 'string')], 'object');
-      return n.sequence(access.locals, access.effects, n.conditional(access.absent(), n.nullLiteral('object'), boxed, 'object'));
+      // A primitive in an `object` slot is its own box on both back ends (see `box` in translate-expressions.js).
+      const access = this.liftedAccess(node);
+      if (!boxedTypes.has(access.value().legacyType)) return this.unsupported('nullable value types', node.syntax);
+      // The box is stored by a statement: the CIL back end types both arms of a conditional alike and would box the null.
+      const boxed = this.temp('object', 'boxed'),
+        store = n.ifStatement(n.not(access.absent()), n.expressionStatement(n.assign(n.local(boxed), access.value())));
+      return n.sequence(
+        [...access.locals, boxed],
+        [...access.effects, n.assign(n.local(boxed), n.nullLiteral('object')), store],
+        n.local(boxed),
+      );
     }
   };

@@ -61,7 +61,7 @@ export function constantFilterWarning(value, isOnlyHandler) {
   return isOnlyHandler ? 'CS8360' : 'CS8359';
 }
 
-/** Class mixin for the body binder: the `nameof` operator and constant exception filters. */
+/** Class mixin for the body binder: the `nameof` operator, null-conditional statements and constant exception filters. */
 export const CSharp6Binding = Base =>
   class extends Base {
     invocation(syntax) {
@@ -113,6 +113,11 @@ export const CSharp6Binding = Base =>
       if (!operand.hasErrors) return { operand, errors: [] };
       for (const row of collected) this.report(row.node, row.code, row.args);
       return { operand, errors: collected.filter(row => this.d.isError(row.code)) };
+    }
+    /** `a?.M();` is a statement; `a?.Name;` is not (CS0201): what follows the last `?.` decides. */
+    isStatementExpression(syntax) {
+      if (syntax.kind === 'ConditionalAccessExpression') return this.isStatementExpression(syntax.whenNotNull);
+      return super.isStatementExpression(syntax);
     }
     catchClause(clause, order) {
       const bound = super.catchClause(clause, order),
