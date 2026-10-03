@@ -38,7 +38,7 @@ function render(ids, edges) {
 }
 
 function areaDiagram(snapshot, requirements, area) {
-  if (area != null && (!/^A\d{2}$/.test(area) || !snapshot.issues.some(task => task.area === area))) {
+  if (area != null && (!/^(?:A\d{2}|R\d{3})$/.test(area) || !snapshot.issues.some(task => task.area === area))) {
     throw new Error(`Unknown area: ${area}`);
   }
   const selected = snapshot.issues.filter(task => area == null || task.area === area);

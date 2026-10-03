@@ -119,3 +119,10 @@ test('unknown or unsafe areas do not create output files', t => {
     assert.equal(existsSync(output), false);
   }
 });
+
+test('release-overlay areas retain their own diagram pair', t => {
+  const input = { issues: [{ ...task('SF-R015-T01'), area: 'R015' }] };
+  const result = invoke(temporary(t), input, ['--area', 'R015']);
+  assert.equal(result.status, 0, result.stderr);
+  assert.deepEqual(readdirSync(result.output).sort(), ['R015.dot', 'R015.mmd', 'critical-path.dot', 'critical-path.mmd']);
+});
