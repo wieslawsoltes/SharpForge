@@ -1,3 +1,4 @@
+import {invokeDecimal} from './decimal-intrinsics.js';
 import {stringFromChars} from './strings.js';
 import {cilCallFrame} from './call-frames.js';
 import {framePool} from './frame-pool.js';
@@ -40,7 +41,7 @@ export function invoke(vm,instruction) {
   const trigger=instruction.name==='newobj'||descriptor.name==='.ctor'?'constructor':descriptor.signature.isStatic?'static-method':'instance-method';
   if(target&&vm.ensureInitialized(descriptor.ownerToken,trigger,genericIdentity)){caller.pc--;return;}
   const delegate = supportedDelegateCall(vm.inspector, descriptor);
-  const contract = intrinsicDefinition(descriptor)?.contract;
+  const intrinsic = intrinsicDefinition(descriptor), contract = intrinsic?.contract;
   const pool = target && !delegate && !contract ? framePool(vm) : null;
   const args = pool ? pool.arguments(caller.stack, count) : caller.stack.splice(caller.stack.length - count, count);
   try {
@@ -49,6 +50,9 @@ export function invoke(vm,instruction) {
       const value=invokeBoundDelegate(vm,descriptor,args,instruction.name==='newobj');
       if((instruction.name==='newobj'||descriptor.signature.returnType!=='void')&&value!==SUSPENDED)caller.stack.push(value);
       return;
+    }
+    if(instruction.name==='newobj'&&intrinsic?.implementation==='decimal') {
+      caller.stack.push(invokeDecimal(vm,descriptor,args).value);return;
     }
     if(instruction.name==='newobj'&&descriptor.owner==='System.String'&&descriptor.signature.parameters.join(',')==='char[]'){caller.stack.push(stringFromChars(vm,args[0]));return;}
     if(instruction.name==='newobj'&&contract){caller.stack.push(vm.platform.invoke(contract,args));return;}
