@@ -28,11 +28,13 @@ export class TupleClasses {
   classOf(type, syntax = null) {
     const elementTypes = type.typeArguments.map(argument => argument.type),
       imageTypes = elementTypes.map(element => this.host.types.imageType(element, syntax)),
-      key = imageTypes.join(',');
+      // No comma in the name: the runtime reads commas in a type name as generic argument separators.
+      key = imageTypes.join(';');
     let info = this.byKey.get(key);
     if (info) return info;
     const program = this.host.program,
-      record = program.addClass(`ValueTuple(${key})`);
+      // No comma in the name: the runtime reads `IList<element>` of an array's element type by splitting at commas.
+      record = program.addClass(`ValueTuple(${imageTypes.join(';')})`);
     info = { record, imageTypes, elementTypes, fields: [], create: null, methods: new Map() };
     info.fields = imageTypes.map((imageType, index) => program.addField(record, 'Item' + (index + 1), imageType));
     this.byKey.set(key, info);

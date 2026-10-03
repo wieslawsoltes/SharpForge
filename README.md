@@ -102,76 +102,24 @@ SharpForge lets you write, build, run, debug and design C# applications entirely
 
 SharpForge is a set of small, independent packages composed into three hosts: the Studio IDE, a command-line tool, and standalone HTML output.
 
-```mermaid
-flowchart TB
-    subgraph Hosts["Hosts"]
-        direction LR
-        Studio["<b>SharpForge Studio</b><br/>browser IDE"]
-        CLI["<b>CLI</b><br/>Node.js"]
-        Standalone["<b>Standalone HTML</b><br/>single-file app"]
-    end
+![SharpForge architecture: every layer and the language it is written in](docs/architecture.svg)
 
-    subgraph Tooling["IDE services"]
-        direction LR
-        Editor["Editor<br/>keymaps, text engine"]
-        Lang["Language services<br/>IntelliSense, refactoring"]
-        Debugger["Debugger<br/>breakpoints, Hot Reload"]
-        Designer["Visual designer<br/>two-way C# sync"]
-        Projects["Project system<br/>MSBuild, templates, archives"]
-        Protocols["LSP / DAP"]
-    end
+**What makes it unusual: the whole .NET-style stack is written in JavaScript.** There is no C++ runtime, no Roslyn and no server behind it.
 
-    subgraph Compiler["Compiler"]
-        direction LR
-        Source["C# source"] --> Syntax["Syntax<br/>lexer, lossless parser"]
-        Syntax --> Binder["Binder<br/>symbols, types, flow analysis"]
-        Binder --> Lowering["Lowering<br/>closures, iterators, async, patterns"]
-        Lowering --> Emit["Emit"]
-    end
+| Part | Written in | Notes |
+|---|---|---|
+| C# compiler (parser, binder, lowering, emit) | JavaScript | A from-scratch C# front end, not a port of Roslyn |
+| ECMA-335 assembly and Portable PDB writer, reader, IL assembler, decompiler | JavaScript | Produces real `.dll` files that the .NET runtime loads |
+| Managed runtime: bytecode VM, CIL interpreter, garbage collector, task scheduler | JavaScript | Runs in a Web Worker or Node.js |
+| Base class library, networking | JavaScript | Implemented over browser and Node.js APIs |
+| WinUI controls, layout, styles, animation | JavaScript, with HTML and CSS | WinUI-shaped API over the web platform |
+| Rendering | JavaScript, with WGSL shaders | WebGPU, with Canvas 2D and DOM fallbacks |
+| SIMD numeric kernels | C compiled to WebAssembly | Called from the JavaScript runtime; scalar JavaScript fallback |
+| IDE: editor, docking, debugger UI, designer, project system, LSP/DAP | JavaScript, with HTML and CSS | No UI framework; a vendored CodeMirror engine backs the Vim, Emacs and Sublime editing modes |
+| Rust runtime and garbage collector | Rust compiled to WebAssembly | **Planned** — a second, faster execution engine |
+| Programs, templates and examples | C# | What you write |
 
-    subgraph Output["Compiled output"]
-        direction LR
-        IR["Managed bytecode"]
-        PE["ECMA-335 assembly<br/>.dll + Portable PDB"]
-    end
-
-    subgraph Runtime["Managed runtime"]
-        direction LR
-        VM["Bytecode VM"]
-        CILVM["CIL interpreter"]
-        GC["Garbage collector"]
-        Scheduler["Tasks and threads"]
-        Compute["SIMD kernels<br/>compute workers"]
-        Rust["Rust / Wasm runtime<br/><i>planned</i>"]
-    end
-
-    subgraph Framework["Framework"]
-        direction LR
-        BCL["Base class library"]
-        Net["Networking<br/>origin grants"]
-        WinUI["WinUI controls<br/>layout, styles, animation"]
-        Render["Rendering<br/>WebGPU · Canvas · DOM"]
-    end
-
-    DotNet[".NET runtime<br/>loads the same assemblies"]
-
-    Hosts --> Tooling
-    Hosts --> Compiler
-    Tooling --> Compiler
-    Emit --> IR
-    Emit --> PE
-    IR --> VM
-    PE --> CILVM
-    PE -.-> DotNet
-    Runtime --> Framework
-    WinUI --> Render
-    Debugger --> Runtime
-    Designer --> WinUI
-    Hosts --> Runtime
-
-    classDef planned stroke-dasharray: 5 5;
-    class Rust planned;
-```
+The product has no npm runtime dependencies. Python is used only for the browser test suites. Dashed boxes in the diagram are planned (Rust runtime) or external (.NET runtime, shown because it loads the same assemblies SharpForge emits).
 
 **How a program flows through it.** Source text is parsed into a lossless syntax tree, bound into a typed semantic model, lowered (closures, iterators, async and patterns become plain classes and control flow) and emitted twice: as compact managed bytecode for the debugging VM, and as a standard ECMA-335 assembly that the CIL interpreter — or a real .NET runtime — can load. The runtime executes it inside a Web Worker with its own heap, garbage collector and scheduler; framework calls reach the base class library, the network layer (denied unless an origin is explicitly granted) and the WinUI layer, which renders through WebGPU, Canvas or the DOM.
 
