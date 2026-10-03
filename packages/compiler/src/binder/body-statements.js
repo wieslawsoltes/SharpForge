@@ -160,7 +160,7 @@ export const statementMethods={
     if(declaredType&&!declaredType.isErrorType()){const bad=checkAsyncOrIteratorUse(declaredType,'local',{isAsync:this.c.isAsync,isIterator:this.c.isIterator},this.version.number);if(bad)this.report(typeSyntax,bad.code,bad.args);if(declaredType instanceof ArrayTypeSymbol){const e=checkArrayElementType(declaredType.elementType);if(e)this.report(typeSyntax,e.code,e.args);}}
     for(const v of syntax.variables){
       const name=v.identifier.valueText,init=v.initializer?.value??null,kind=isConst?LocalDeclarationKind.Constant:isUsing?LocalDeclarationKind.Using:isFixed?LocalDeclarationKind.Fixed:LocalDeclarationKind.Regular;
-      const local=this.newLocal(name,declaredType??unknown,v.identifier,kind,{refKind:isRef?(isRefReadonly?RefKind.RefReadOnly:RefKind.Ref):RefKind.None});local.isScoped=isScoped;
+      const local=this.newLocal(name,declaredType??unknown,v.identifier,kind,{refKind:isRef?(isRefReadonly?RefKind.RefReadOnly:RefKind.Ref):RefKind.None});local.isScoped=isScoped;local.declaredAnnotation=isVar?null:bound.nullableAnnotation;
       let value=null;
       if(isVar){
         // `var x = x;` cannot see x: the initializer is bound before the local enters scope.

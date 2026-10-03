@@ -37,6 +37,7 @@ import {BodyBinder} from './binder/body-binder.js';
 import {isAccessible} from './binder/accessibility.js';
 import {formatMessage,defaultSeverity,hasDiagnosticCode} from './diagnostics/codes.js';
 import {NullableContextMap} from './nullable/annotations.js';
+import {bindCompilationReferences} from './metadata-import/compilation-references.js';
 import {analyzeDefiniteAssignment} from './flow/semantic-assignment.js';
 import {NullableWalker} from './nullable/walker.js';
 import {checkNullableSignatures} from './nullable/signature-checks.js';
@@ -50,23 +51,24 @@ export class SemanticAnalysis{
    * @param {object} [options] compilation options: langVersion, langVersionByUri, nullableContext, name, references (imported global namespaces)
    */
   constructor(files,options={}){
-    this.files=files.filter(f=>f.syntax);this.options=options;this.diagnostics=[];this.incomplete=false;this.core=new CoreTypes(options.bridge??frameworkBridge());this.sources=new Map(this.files.map(f=>[f.source.uri,f.source]));
+    this.files=files.filter(f=>f.syntax);this.options=options;this.diagnostics=[];this.incomplete=false;this.references=bindCompilationReferences(options.references,options.bridge??frameworkBridge());this.core=new CoreTypes(this.references.coreLibrary);this.sources=new Map(this.files.map(f=>[f.source.uri,f.source]));
     const latest=this.versionOf(this.files[0]?.source.uri).number;
     this.conversions=new Conversions(this.core,{numericIntPtr:latest>=11,firstClassSpans:latest>=14});this.overloads=new OverloadResolver(this.conversions,this.core);this.operators=new OperatorResolver(this.conversions,this.core,this.overloads);
     this.constructions=[];this.nullableMaps=new Map();this.bound=new Map();this.constantState=new Map();this.unexecutable=new Map();
-    this.typeBinder=new TypeBinder({core:this.core,report:(uri,node,code,args)=>this.report(uri,node,code,args),constructions:this.constructions,tolerateNamespace:name=>this.tolerateNamespace(name),isKnownFrameworkName:name=>this.isKnownFrameworkName(name),get module(){return self.assembly.module;},nullableAnnotationsAt:(uri,position)=>this.nullableAt(uri,position).annotations,get globalNamespace(){return self.globalNamespace;}});
+    this.typeBinder=new TypeBinder({core:this.core,report:(uri,node,code,args)=>this.report(uri,node,code,args),constructions:this.constructions,tolerateNamespace:name=>this.tolerateNamespace(name),useSite:(symbol,uri,node)=>{for(const d of this.references.useSiteDiagnostics(symbol))this.report(uri,node,d.code,d.args);},isKnownFrameworkName:name=>this.isKnownFrameworkName(name),get module(){return self.assembly.module;},nullableAnnotationsAt:(uri,position)=>this.nullableAt(uri,position).annotations,get globalNamespace(){return self.globalNamespace;}});
     const self=this;
     this.gate=createFeatureGate(uri=>this.versionOf(uri),(uri,node,code,message)=>this.push(uri,node,code,message,'error'));
     this.assembly=new SourceAssembly(this.files,{core:this.core,typeBinder:this.typeBinder,name:options.name,report:(uri,node,code,args)=>this.report(uri,node,code,args),
       resolveBases:type=>resolveBases(type,{typeBinder:this.typeBinder,core:this.core,report:(uri,node,code,args)=>this.report(uri,node,code,args)})});
-    this.globalNamespace=mergeGlobalNamespaces(this.assembly.globalNamespace,this.core.bridge.globalNamespace,...(options.references??[]));
+    this.globalNamespace=mergeGlobalNamespaces(this.assembly.globalNamespace,...this.references.globalNamespaces);
+    for(const d of this.references.diagnostics)this.report(this.files[0]?.source.uri,{start:0,end:0},d.code,d.args);
   }
   versionOf(uri){try{return parseVersion(this.options.langVersionByUri?.[uri]??this.options.langVersion??'default');}catch{return parseVersion('default');}}
   nullableAt(uri,position){let map=this.nullableMaps.get(uri);if(!map){map=new NullableContextMap(this.files.find(f=>f.source.uri===uri)?.directives??[],this.options.nullableContext??this.options.nullable??'disable');this.nullableMaps.set(uri,map);}return map.stateAt(position);}
   /** Namespaces of the BCL the closed registry does not model are accepted in using directives and qualified names. */
-  tolerateNamespace(name){if(knownNamespaces.test(name)){this.incomplete=true;this.hasUnknownUsings=true;return true;}return false;}
+  tolerateNamespace(name){if(this.references.hasCoreLibrary)return false;if(knownNamespaces.test(name)){this.incomplete=true;this.hasUnknownUsings=true;return true;}return false;}
   /** Names of common BCL types the registry does not model: using one is not an error, it only makes the analysis incomplete. */
-  isKnownFrameworkName(name){if(frameworkNames.has(name)){this.incomplete=true;return true;}return false;}
+  isKnownFrameworkName(name){if(this.references.hasCoreLibrary)return false;if(frameworkNames.has(name)){this.incomplete=true;return true;}return false;}
   /** True when every base class of `type` is declared in source (or is one of the fully modelled roots), so a missing member really is missing. */
   closedHierarchy(type){
     if(this.hasUnknownUsings)return false;if(type.typeKind===TypeKind.TypeParameter)return !type.hasUnknownConstraint&&[...type.constraintTypes].every(c=>this.closedHierarchy(c));
@@ -138,7 +140,7 @@ export class SemanticAnalysis{
     if(type.isReadOnly&&type.typeKind===TypeKind.Struct)this.gate(this.at(type).uri,this.at(type),'readonlyStructs',{name:'readonly structs',version:7.2});
     if(type.isRefLikeType)this.gate(this.at(type).uri,this.at(type),'refStructs',{name:'ref structs',version:7.2});
     // Nullable reference type signature agreement between overrides/implementations and their bases.
-    for(const d of checkNullableSignatures(type,this))this.reportAt(d.member,d.code,d.args,'warning');
+    if(this.nullableAt(this.at(type).uri,this.at(type).start).warnings)for(const d of checkNullableSignatures(type))this.reportAt(d.member,d.code,d.args,'warning');
   }
   /** CS0050-CS0059: a member may not expose a type less accessible than itself. */
   checkMemberAccessibility(m,type){
