@@ -2,6 +2,23 @@
   "schemaVersion": 1,
   "area": "A19",
   "nodeGlobs": [
+    "tests/a19-app-sessions.test.js",
+    "tests/a19-build-output.test.js",
+    "tests/a19-builtin-extensions.test.js",
+    "tests/a19-document-models.test.js",
+    "tests/a19-documents-state.test.js",
+    "tests/a19-multi-session-fixture.test.js",
+    "tests/a19-profile-selection.test.js",
+    "tests/a19-runtime-arguments.test.js",
+    "tests/a19-runtime-environment.test.js",
+    "tests/a19-runtime-launch-options.test.js",
+    "tests/a19-runtime-settings-bridge.test.js",
+    "tests/a19-runtime-worker-launch.test.js",
+    "tests/a19-session-recovery.test.js",
+    "tests/a19-session-state-ownership.test.js",
+    "tests/a19-session-tools.test.js",
+    "tests/a19-startup-orchestration.test.js",
+    "tests/a19-worker-client.test.js",
     "tests/docking.test.js",
     "tests/release08-commands.test.js"
   ],
@@ -14,6 +31,9 @@
   ],
   "timeout": 1200000,
   "tags": [
-    "legacy"
+    "sessions",
+    "runtime",
+    "completed-scope",
+    "staged-validation"
   ]
 }

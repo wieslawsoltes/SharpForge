@@ -216,12 +216,12 @@ test('array comparer: reference pins capture source and exact released non-gener
   const source = await readFile(captureURL);
   assert.equal(reference.sourceSha256, createHash('sha256').update(source).digest('hex'));
   const descriptor = contract('System.Array', 'BinarySearch', ['System.Array', 'object', comparerType]);
-  assert.equal(contract(comparerType, 'Compare', ['object', 'object']).id, 524293);
-  assert.equal(contract('System.StringComparer', 'Compare', ['object', 'object']).id, 524294);
-  assert.equal(descriptor.id, 524295);
+  assert.equal(contract(comparerType, 'Compare', ['object', 'object']).id, 524294);
+  assert.equal(contract('System.StringComparer', 'Compare', ['object', 'object']).id, 524295);
+  assert.equal(descriptor.id, 524296);
   assert.equal(descriptor.result, 'int');
   assert.equal(descriptor.isStatic, true);
-  assert.equal(contract('System.StringComparer', 'get_Ordinal').id, 524291);
+  assert.equal(contract('System.StringComparer', 'get_Ordinal').id, 524292);
   assert.equal(contract('System.Collections.Generic.List`1<string>', 'Sort',
     ['System.Collections.Generic.IComparer`1<string>']).id, 589824);
 });

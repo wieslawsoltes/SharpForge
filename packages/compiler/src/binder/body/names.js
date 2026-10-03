@@ -346,6 +346,8 @@ export const NameBinding = Base =>
         // A named tuple element is the field at its position; a name the literal inferred needs C# 7.1 (CS8306).
         if (element.isInferred && this.version.number < 7.1) this.report(nameSyntax, DiagnosticId.CS8306, [name, '7.1']);
         name = element.field;
+        // An element a long tuple holds in `Rest` is a field of the tuple type itself.
+        if (element.symbol) return this.memberResult([element.symbol], syntax, left, type, name, typeArguments, options) ?? this.bad(syntax);
       }
       const lookupType = type instanceof ArrayTypeSymbol ? this.core.array : type;
       const found = lookupMembers(lookupType, name, this.core, {
