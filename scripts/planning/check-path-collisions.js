@@ -2,13 +2,14 @@ import { parseArgs } from 'node:util';
 import { overlaps } from './lib/paths.js';
 import { readJSON, isMain, report } from './lib/io.js';
 export function primaryPaths(issue) { return [...(issue.body ?? '').matchAll(/\*\*Owns:\*\*([^\n]+)/g)].flatMap(m => [...m[1].matchAll(/`([^`]+)`/g)].map(x => x[1])); }
+export function declaredLocks(issue) { return issue.lockKeys ?? (issue.project?.['Lock keys'] ?? '').split(/[,;\n]+/).map(s => s.trim()).filter(Boolean); }
 export function pathCollisions(issues, locks = {}) {
   const parents = new Set(issues.map(i => i.parent).filter(Boolean)), leaves = issues.filter(i => i.state === 'OPEN' && i.kind !== 'Epic' && !parents.has(i.id));
   const errors = [], serialized = [];
   for (let i = 0; i < leaves.length; i++) for (const b of leaves.slice(i + 1)) {
     const a = leaves[i];
     for (const p of a.paths ?? primaryPaths(a)) for (const q of b.paths ?? primaryPaths(b)) if (overlaps(p, q)) {
-      const common = (a.lockKeys ?? []).filter(key => (b.lockKeys ?? []).includes(key) && locks[key]?.some(path => overlaps(p, path) && overlaps(q, path)));
+      const common = declaredLocks(a).filter(key => declaredLocks(b).includes(key) && locks[key]?.some(path => overlaps(p, path) && overlaps(q, path)));
       const message = `${a.id} (${p}) overlaps ${b.id} (${q})`;
       if (common.length) serialized.push({ tasks: [a.id, b.id], locks: common, paths: [p, q] }); else errors.push(message);
     }
