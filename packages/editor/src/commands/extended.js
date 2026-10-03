@@ -10,7 +10,10 @@ export function registerExtendedCommands(add, commands, context, feature, viewCo
     'Edit.ScrollLineDown': 'View.ScrollLineDown', 'Edit.ScrollLineUp': 'View.ScrollLineUp',
     'Edit.ToggleWordWrap': 'Edit.WordWrap'
   };
-  for (const [id, target] of Object.entries(aliases)) add(id, args => commands.get(target).handler(args));
+  for (const [id, target] of Object.entries(aliases)) add(id, args => {
+    const command = commands.get(target);
+    return command.enabled() ? command.handler(args) : false;
+  });
   add('Edit.NextHighlightedReference', () => feature(context, 'nextReference', [1]));
   add('Edit.PreviousHighlightedReference', () => feature(context, 'nextReference', [-1]));
   add('Edit.GotoNextIssueinFile', () => feature(context, 'nextDiagnostic', [1]));
@@ -21,8 +24,8 @@ export function registerExtendedCommands(add, commands, context, feature, viewCo
     'Edit.PeekBackward': 'peekBackward', 'Edit.PeekForward': 'peekForward',
     'Edit.ShowCodeLensMenu': 'showCodeLensMenu', 'Edit.ShowNavigateMenu': 'focusNavigation'
   })) add(id, () => feature(context, method));
-  add('Edit.DecreaseFilterLevel', () => feature(context, 'changeCompletionFilter', [-1]));
-  add('Edit.IncreaseFilterLevel', () => feature(context, 'changeCompletionFilter', [1]));
+  add('Edit.DecreaseFilterLevel', () => feature(context, 'changeCompletionFilterLevel', [-1]));
+  add('Edit.IncreaseFilterLevel', () => feature(context, 'changeCompletionFilterLevel', [1]));
   for (const id of [
     'Edit.LineStartExtendColumn', 'Edit.LineEndExtendColumn', 'Edit.WordPreviousExtendColumn', 'Edit.WordNextExtendColumn',
     'Edit.ViewTop', 'Edit.ViewTopExtend', 'Edit.ViewBottom', 'Edit.ViewBottomExtend', 'Edit.HideSelection',

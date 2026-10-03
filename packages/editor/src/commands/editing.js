@@ -1,4 +1,6 @@
 import { adjacentCharacter, adjacentWord } from './movement.js';
+import { addAllOccurrences, addNextOccurrence } from './multi-caret.js';
+import { copySelections, pasteSelections } from './multi-clipboard.js';
 
 function ranges(context) {
   return context.selections.map(selection => ({
@@ -56,44 +58,54 @@ export function indent(context, outdent = false) {
   return transformLines(context, line => outdent ? line.replace(new RegExp(`^(?: {1,${size}}|\\t)`), '') : text + line);
 }
 
-export function deleteLines(context) {
-  const lines = selectedLines(context);
-  const edits = [];
-  for (const line of lines) {
-    const start = context.lineStart(line);
-    const end = context.lineEnd(line, true);
-    const previous = edits.at(-1);
-    if (previous && previous.start + previous.deleteCount === start) previous.deleteCount += end - start;
-    else edits.push({ start, deleteCount: end - start, text: '' });
+function lineGroups(context) {
+  const groups = [];
+  for (const line of selectedLines(context)) {
+    const last = groups.at(-1);
+    if (last && last.last + 1 === line) last.last = line;
+    else groups.push({ first: line, last: line });
   }
-  return context.apply(edits, [{ anchor: edits[0]?.start ?? 0, head: edits[0]?.start ?? 0 }]);
+  return groups;
 }
 
-export function duplicate(context, direction = 1) {
+export function deleteLines(context) {
+  const edits = lineGroups(context).map(({ first, last }) => {
+    const start = last === context.lineCount - 1 && first > 0 ? context.lineEnd(first - 1) : context.lineStart(first);
+    return { start, deleteCount: context.lineEnd(last, true) - start, text: '' };
+  });
+  const head = edits[0]?.start ?? 0;
+  return context.apply(edits, [{ anchor: head, head }]);
+}
+
+export function duplicate(context, direction = 1, wholeLines = false) {
   const edits = [];
-  for (const range of ranges(context)) {
-    const line = context.position(range.start).line;
-    if (range.start !== range.end) edits.push({ start: range.end, deleteCount: 0, text: context.slice(range.start, range.end) });
-    else {
-      const start = context.lineStart(line);
-      const end = context.lineEnd(line, true);
-      const newline = context.editor.options?.eol ?? '\n';
-      const content = context.slice(start, end);
-      edits.push({ start: direction < 0 ? start : end, deleteCount: 0,
-        text: line + 1 < context.lineCount ? content : direction < 0 ? content + newline : newline + content });
+  if (!wholeLines && context.selections.some(selection => selection.anchor !== selection.head)) {
+    for (const range of ranges(context)) {
+      if (range.end > range.start) edits.push({ start: range.end, deleteCount: 0, text: context.slice(range.start, range.end) });
     }
+  } else for (const { first, last } of lineGroups(context)) {
+    const start = context.lineStart(first);
+    const end = context.lineEnd(last, true);
+    const content = context.slice(start, end);
+    edits.push({ start: direction < 0 ? start : end, deleteCount: 0,
+      text: last + 1 < context.lineCount ? content : direction < 0 ? content + context.eol : context.eol + content });
   }
   return context.apply(edits);
 }
 
 export function openLine(context, above = false) {
-  const position = context.position(context.selection.head);
-  const start = above ? context.lineStart(position.line) : context.lineEnd(position.line);
-  const indentation = context.line(position.line).match(/^\s*/u)[0];
-  const newline = context.editor.options?.eol ?? '\n';
-  const text = above ? indentation + newline : newline + indentation;
-  const head = start + (above ? indentation.length : text.length);
-  return context.apply([{ start, deleteCount: 0, text }], [{ anchor: head, head }]);
+  let delta = 0;
+  const selections = [];
+  const edits = selectedLines(context).map(line => {
+    const start = above ? context.lineStart(line) : context.lineEnd(line);
+    const indentation = context.line(line).match(/^[\t ]*/u)[0];
+    const text = above ? indentation + context.eol : context.eol + indentation;
+    const head = start + delta + (above ? indentation.length : text.length);
+    selections.push({ anchor: head, head });
+    delta += text.length;
+    return { start, deleteCount: 0, text };
+  });
+  return context.apply(edits, selections);
 }
 
 export function changeCase(context, kind) {
@@ -105,62 +117,25 @@ export function changeCase(context, kind) {
 }
 
 export function selectNextOccurrence(context, all = false) {
-  const selections = context.selections;
-  const primary = selections[0];
-  let start = Math.min(primary.anchor, primary.head);
-  let end = Math.max(primary.anchor, primary.head);
-  if (start === end) {
-    const position = context.position(start);
-    const lineStart = context.lineStart(position.line);
-    const text = context.line(position.line);
-    let left = position.character;
-    let right = left;
-    while (left && /[\p{L}\p{N}_]/u.test(text[left - 1])) left--;
-    while (right < text.length && /[\p{L}\p{N}_]/u.test(text[right])) right++;
-    context.select([{ anchor: lineStart + left, head: lineStart + right }]);
-    return;
-  }
-  const query = context.slice(start, end);
-  const text = context.slice();
-  const used = new Set(selections.map(selection => `${Math.min(selection.anchor, selection.head)}:${Math.max(selection.anchor, selection.head)}`));
-  let offset = all ? 0 : Math.max(...selections.map(selection => Math.max(selection.head, selection.anchor)));
-  const added = [];
-  for (let scan = 0; scan < 2 && added.length < 1000; scan++) {
-    let match;
-    while ((match = text.indexOf(query, offset)) !== -1) {
-      offset = match + query.length;
-      if (used.has(`${match}:${offset}`)) continue;
-      added.push({ anchor: match, head: offset });
-      if (!all) break;
-      if (added.length >= 1000) break;
-    }
-    if (added.length || all) break;
-    offset = 0;
-  }
-  if (added.length) context.select([...selections, ...added]);
+  return (all ? addAllOccurrences : addNextOccurrence)(context.selectionModel);
 }
 
 export async function clipboardCommand(context, operation) {
+  const capture = context.capture();
   if (operation === 'paste') {
-    const uri = context.uri;
-    const version = context.buffer?.version;
     const text = await context.readClipboard();
-    if (uri !== context.uri || version !== context.buffer?.version) throw new Error('Document changed while reading clipboard');
-    return context.insert(text);
+    context.assertCurrent(capture, 'reading clipboard');
+    if (context.readOnly) return false;
+    return pasteSelections(context.selectionModel, text, {
+      metadata: context.clipboardPayload?.text === text ? context.clipboardPayload.metadata : undefined,
+      tabSize: context.editor.options?.tabSize ?? 4, source: 'paste'
+    });
   }
-  const selected = ranges(context);
-  const empty = selected.every(range => range.start === range.end);
-  const text = empty ? selectedLines(context).map(line => context.slice(context.lineStart(line), context.lineEnd(line, true))).join('')
-    : selected.map(range => context.slice(range.start, range.end)).join('\n');
-  const uri = context.uri;
-  const version = context.buffer?.version;
-  const selection = JSON.stringify(context.selections);
-  await context.writeClipboard(text);
-  if (operation === 'cut') {
-    if (uri !== context.uri || version !== context.buffer?.version || selection !== JSON.stringify(context.selections)) {
-      throw new Error('Document or selection changed while writing clipboard');
-    }
-    return empty ? deleteLines(context) : context.insert('');
-  }
-  return text;
+  const payload = copySelections(context.selectionModel, { eol: context.eol });
+  const empty = context.selections.every(selection => selection.anchor === selection.head);
+  await context.writeClipboard(payload.text);
+  context.assertCurrent(capture, 'writing clipboard');
+  context.clipboardPayload = payload;
+  if (operation === 'cut') return empty ? deleteLines(context) : context.insert('');
+  return payload.text;
 }

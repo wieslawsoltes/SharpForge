@@ -4,6 +4,12 @@ import { compileWhen } from './when.js';
 const samePrefix = (left, right) => left.every((key, index) => right[index] === key);
 const overlap = (left, right) => left === right || left === 'Global' || right === 'Global';
 
+function preferredExact(entries, length) {
+  const exact = entries.findIndex(binding => binding.keys.length === length);
+  const prefix = entries.findIndex(binding => binding.keys.length > length);
+  return exact >= 0 && (prefix < 0 || exact < prefix) ? entries[exact] : null;
+}
+
 /** Per-workbench keybinding resolver. Registration preindexes prefixes; key handling scans only matching candidates. */
 export class KeybindingService {
   constructor({ execute, context = () => ({}), onStatus = () => {}, onError, platform = 'windows', clock, timeout = 1500 } = {}) {
@@ -84,7 +90,7 @@ export class KeybindingService {
   resolve(keys, options = {}) {
     const sequence = normalizeSequence(keys, this.platform);
     const entries = this.candidates(sequence, options);
-    const exact = entries.find(binding => binding.keys.length === sequence.length);
+    const exact = preferredExact(entries, sequence.length);
     return { binding: exact ?? null, isPrefix: entries.some(binding => binding.keys.length > sequence.length), candidates: entries };
   }
 
@@ -100,7 +106,7 @@ export class KeybindingService {
     }
     const keys = [...(this.pending?.keys ?? []), stroke];
     const entries = this.candidates(keys, options);
-    const exact = entries.find(binding => binding.keys.length === keys.length);
+    const exact = preferredExact(entries, keys.length);
     const isPrefix = entries.some(binding => binding.keys.length > keys.length);
     const hadPending = !!this.pending;
     this.cancel();
