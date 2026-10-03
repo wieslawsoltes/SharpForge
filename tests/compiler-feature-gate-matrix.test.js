@@ -68,7 +68,6 @@ const notGated = {
   AutoDefaultStructs: 'needs definite assignment of struct fields in constructors',
   CacheStaticMethodGroupConversion: 'only changes code generation in Roslyn; there is no diagnostic',
   SpanCharConstantPattern: needsOperandTypes,
-  FileTypes: 'the parser does not accept the `file` modifier on a type (syntax package defect)',
   InstanceMemberInNameof: needsOperandTypes,
   InlineArrays: needsOperandTypes,
   LockObject: needsOperandTypes,
