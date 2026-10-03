@@ -1,0 +1,9 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "lambdas/func-and-action":{"hash":"3e42fe6d763572c1","kind":"output","langVersion":"14.0","diagnostics":[],"output":"10\nsay hi\nTrue\n"},
+  "lambdas/closures":{"hash":"73a76e66567f6c94","kind":"output","langVersion":"14.0","diagnostics":[],"output":"2\n0\n10\n20\n7\n"},
+  "lambdas/delegates":{"hash":"29a9ce98a122e4af","kind":"output","langVersion":"14.0","diagnostics":[],"output":"5\n6\n20\n"},
+  "lambdas/events":{"hash":"da88ba031ab7bd9c","kind":"output","langVersion":"14.0","diagnostics":[],"output":"first\nsecond\n"},
+  "lambdas/cs1593-wrong-parameter-count":{"hash":"abf9f73174d40f06","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1593",40,2,"error"]]},
+  "lambdas/cs0029-lambda-return-type":{"hash":"88e378d19d7de2c5","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0029",38,6,"error"],["CS1662",38,6,"error"]]},
+  "lambdas/cs1593-delegate-invocation":{"hash":"07ae8db63c510bc4","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1593",59,1,"error"]]}
+}}
