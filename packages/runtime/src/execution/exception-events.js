@@ -96,7 +96,7 @@ export function beginExceptionEvent(vm, fault, phase) {
     const args = phase === 'firstChance'
       ? vm.platform.make(firstArgs, {Exception: fault.reference})
       : vm.platform.make(unhandledArgs, {ExceptionObject: fault.reference, IsTerminating: vm.inspector ? 1 : true});
-    return startHandler(vm, {phase, fault, handlers, args: [domain, args], index: 0});
+    return startHandler(vm, {phase, fault, handlers, args: [phase === 'unhandled' ? null : domain, args], index: 0});
   });
 }
 

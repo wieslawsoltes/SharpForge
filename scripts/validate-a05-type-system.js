@@ -15,6 +15,7 @@ const root=fileURLToPath(new URL('../',import.meta.url));
 const usage=`Usage: node scripts/validate-a05-type-system.js [options]
   --fixture directory|Program.cs  Add a same-DLL .NET/CIL case (repeatable).
   --expected expected.txt        Expected stdout for the preceding fixture.
+  --fault System.Exception       Expected unhandled managed type for the preceding fixture.
   --casts                        Include native Type.IsAssignableFrom/CastCache parity.
   --unsafe                       Allow managed function-pointer C# fixtures.
   --async                        Run scheduler-backed fixtures with virtual time.
@@ -35,12 +36,16 @@ for(let i=0;i<arguments_.length;i++) {
   if(argument==='--async'){options.async=true;continue;}
   if(argument==='--snapshot-await'){options.async=true;options.snapshotAwait=true;continue;}
   if(argument==='--casts'){options.casts=true;continue;}
-  if(!['--fixture','--expected','--output','--framework','--dotnet','--task'].includes(argument)||!arguments_[i+1]||arguments_[i+1].startsWith('--'))throw new Error(usage);
+  if(!['--fixture','--expected','--fault','--output','--framework','--dotnet','--task'].includes(argument)||!arguments_[i+1]||arguments_[i+1].startsWith('--'))throw new Error(usage);
   const value=arguments_[++i];
   if(argument==='--fixture')options.fixtures.push({path:resolve(value)});
   else if(argument==='--expected') {
     assert(options.fixtures.length,'--expected must follow --fixture');
     options.fixtures.at(-1).expected=resolve(value);
+  } else if(argument==='--fault') {
+    assert(options.fixtures.length,'--fault must follow --fixture');
+    assert(/^System\.(?:[A-Za-z][A-Za-z0-9.]*)?Exception$/.test(value),'Expected fault must be a qualified managed exception type');
+    options.fixtures.at(-1).fault=value;
   } else options[argument.slice(2)]=argument==='--output'?resolve(value):value;
 }
 if(!options.fixtures.length&&!options.casts) {
@@ -54,8 +59,8 @@ const commands=[];
 function execute(command,args,{cwd=root,allowFailure=false}={}) {
   const result=spawnSync(command,args,{cwd,encoding:'utf8',timeout:120000,maxBuffer:8*1024*1024,env:environment});
   commands.push({command,arguments:args,cwd,status:result.status});
-  if(result.error||result.signal||!allowFailure&&result.status!==0)throw new Error(`${command} ${args.join(' ')} failed: ${result.error?.message||result.stderr||result.stdout||result.signal}`);
-  return {exitCode:result.status,output:normalize(result.stdout),stderr:normalize(result.stderr)};
+  if(result.error||!allowFailure&&(result.signal||result.status!==0))throw new Error(`${command} ${args.join(' ')} failed: ${result.error?.message||result.stderr||result.stdout||result.signal}`);
+  return {exitCode:result.status,...(result.signal?{signal:result.signal}:{}),output:normalize(result.stdout),stderr:normalize(result.stderr)};
 }
 const sdk=execute(options.dotnet,['--version']).output.trim(),runtimes=execute(options.dotnet,['--list-runtimes']).output.trim();
 const framework=options.framework??`net${sdk.split('.')[0]}.0`;
@@ -116,8 +121,18 @@ async function qualify(id,load) {
       };
       const result=options.async?await vm.runAsync({onSlice}):vm.run();
       report.cil={state:result.state,exitCode:result.exitCode,output:normalize(result.output),instructions:result.stats.instructions,...(result.fault?{fault:{name:result.fault.name,message:result.fault.message}}:{})};
-      assert.equal(result.state,'terminated',result.fault?.stack);
-      assert.equal(result.exitCode,report.native.exitCode,'CIL/native exit code');
+      if(fixture.expectedFault) {
+        report.expectedFault=fixture.expectedFault;
+        report.native.fault=report.native.stderr.match(/Unhandled exception\. ([A-Za-z0-9_.]+)/)?.[1]??null;
+        assert.equal(report.native.fault,fixture.expectedFault,'Native unhandled exception type');
+        assert(report.native.signal||report.native.exitCode!==0,'Native process must report failure');
+        assert.equal(result.state,'faulted','CIL unhandled state');
+        assert.equal(result.fault?.name.replace(/^System\./,''),fixture.expectedFault.replace(/^System\./,''),'CIL/native fault type');
+        assert.notEqual(result.exitCode,0,'CIL unhandled exit code');
+      } else {
+        assert.equal(result.state,'terminated',result.fault?.stack);
+        assert.equal(result.exitCode,report.native.exitCode,'CIL/native exit code');
+      }
       assert.equal(report.cil.output,report.native.output,'CIL/native stdout');
       if(options.snapshotAwait) {
         const stateMachines=vm.inspector.types.filter(type=>type.interfaces.some(token=>vm.inspector.metadata.typeName(token)==='System.Runtime.CompilerServices.IAsyncStateMachine'));
@@ -130,7 +145,7 @@ async function qualify(id,load) {
         }
       }
     }
-    assert.equal(report.native.exitCode,0,'Native exit code');
+    if(!fixture.expectedFault)assert.equal(report.native.exitCode,0,'Native exit code');
     assert.equal(report.native.output,fixture.expectedOutput,'Native/expected stdout');
     if(report.castCache)assert.equal(report.castCache.output,report.native.output,'CastCache/native matrix');
     report.passed=true;
@@ -153,7 +168,7 @@ for(const fixture of options.fixtures) {
   const stem=id;while(names.has(id))id=stem+'-'+suffix++;names.add(id);
   reports.push(await qualify(id,async()=>{
     const sources=await sourceFiles(fixture.path),expected=fixture.expected??join(extname(fixture.path)==='.cs'?dirname(fixture.path):fixture.path,'expected.txt');
-    return {sources,expectedOutput:normalize(await readFile(expected,'utf8'))};
+    return {sources,expectedOutput:normalize(await readFile(expected,'utf8')),expectedFault:fixture.fault};
   }));
 }
 if(options.casts)reports.push(await qualify('assignability',async()=>{

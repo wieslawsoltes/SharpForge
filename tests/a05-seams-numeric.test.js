@@ -73,6 +73,8 @@ test('CIL numeric seam: integer division faults and invalid operands remain expl
   }
   throwsFault(() => binary('div', -2147483648, -1), 'OverflowException', 'Integer division overflow');
   throwsFault(() => binary('div', -9223372036854775808n, -1n), 'OverflowException', 'Integer division overflow');
+  throwsFault(() => binary('rem', -2147483648, -1), 'OverflowException', 'Integer division overflow');
+  throwsFault(() => binary('rem', -9223372036854775808n, -1n), 'OverflowException', 'Integer division overflow');
   for (const value of [null, false, '3', {h: 0, g: 1}]) throwsFault(() => binary('add', value, 1), 'InvalidProgramException');
   throwsFault(() => binary('add', 1, 1n), 'InvalidProgramException', 'Mismatched integer widths');
   throwsFault(() => binary('add', 1n, 1), 'InvalidProgramException', 'Mismatched integer widths');

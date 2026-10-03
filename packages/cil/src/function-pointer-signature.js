@@ -26,7 +26,15 @@ export function parseFunctionPointerType(type) {
   if (convention) text = text.slice(convention[0].length);
   const instance = text.startsWith('instance ');
   if (instance) text = text.slice(9);
-  const separator = text.indexOf(' *(');
+  // The result or parameters may themselves be function pointers. The outer parameter list
+  // is the last separator outside balanced type arguments and nested parameter lists.
+  let separator = -1, depth = 0;
+  for (let index = 0; index < text.length; index++) {
+    if (depth === 0 && text.startsWith(' *(', index)) separator = index;
+    if ('<(['.includes(text[index])) depth++;
+    else if ('>)]'.includes(text[index])) depth--;
+  }
+  if (depth !== 0) return null;
   if (separator < 0 || !text.endsWith(')')) return null;
   return {kind: 'method', isStatic: !instance, callingConvention: convention ? Number(convention[1]) : 0,
     returnType: text.slice(0, separator), parameters: splitTypes(text.slice(separator + 3, -1))};

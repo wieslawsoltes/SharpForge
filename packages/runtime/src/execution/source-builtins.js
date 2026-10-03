@@ -1,3 +1,4 @@
+import {sourceVarargsBuiltin} from './source-varargs.js';
 import {sourceExceptionBuiltin} from './source-exception-builtins.js';
 import {createException, exceptionField} from './exception-object.js';
 import {sourceArrayBuiltin} from './source-array-builtins.js';
@@ -12,6 +13,7 @@ import {objectType,typeName,runtimeTypeText} from './tokens.js';
 /** Invoke an intrinsic with heap/value/format/output/platform services; no image is required. */
 export function builtin(vm, id, args,types=[]) {
   const entry = Builtins[id];
+  if(entry.varargsRuntime)return sourceVarargsBuiltin(vm,entry.varargsRuntime,args);
   if (entry.exceptionRuntime) return sourceExceptionBuiltin(vm, entry.exceptionRuntime, args);
   if(entry.arrayRuntime)return vm.heap.withRoots(args,()=>sourceArrayBuiltin(vm,entry,args,types));
   if(entry.numeric)return vm.heap.withRoots(args,()=>invokeNumericIntrinsic(vm,entry.numeric,args).value);

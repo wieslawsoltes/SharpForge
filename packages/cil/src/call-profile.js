@@ -5,7 +5,7 @@ import {genericTypeParts} from './field-profile.js';
 import {frameworkType} from '@sharpforge/framework';
 
 const aliases=new Map(Object.entries({'System.Void':'void','System.Boolean':'bool','System.Char':'char','System.SByte':'sbyte','System.Byte':'byte','System.Int16':'short','System.UInt16':'ushort','System.Int32':'int','System.UInt32':'uint','System.Int64':'long','System.UInt64':'ulong','System.Single':'float','System.Double':'double','System.Decimal':'decimal','System.String':'string','System.Object':'object','System.IntPtr':'nint','System.UIntPtr':'nuint'}));
-export const normalizeCallType=type=>type.replace(/[A-Za-z_][\w.+`]+/g,name=>aliases.get(name)??name).replace(/,\s+/g,',');
+export const normalizeCallType=type=>type.replace(/[A-Za-z_][\w.+`]+/g,name=>name==='System.Exception'?'Exception':aliases.get(name)??name).replace(/,\s+/g,',');
 
 export function substituteCallType(type,typeArguments=[],methodArguments=[]) {
   return normalizeCallType(type.replace(/!!\d+|!\d+/g,variable=>variable.startsWith('!!')?methodArguments[Number(variable.slice(2))]??variable:typeArguments[Number(variable.slice(1))]??variable));

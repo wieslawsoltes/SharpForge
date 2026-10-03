@@ -17,7 +17,7 @@ export function scalarType(type) {
   if (type?.endsWith('&')) return scalarType(type.slice(0, -1)) + '&';
   return type === 'System.Object' ? 'object' : type === 'System.String' ? 'string' : numericTypeName(type);
 }
-export const scalarBuiltinFor = descriptor => Builtins.find(builtin => builtin.numeric === descriptor);
+export const scalarBuiltinFor = descriptor => descriptor && Builtins.find(builtin => builtin?.numeric === descriptor);
 
 export function scalarStringBuiltin(type) {
   const native = ['nint', 'nuint'].includes(type);

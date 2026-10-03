@@ -37,7 +37,7 @@ function profileCall(translator, node, method, creation = false) {
   // Console/Convert object overloads preserve native signedness through the declared format profile.
   const argumentType = args[0]?.legacyType;
   const formatted = builtin.numeric && ['nint', 'nuint'].includes(argumentType) && args.length === 1 &&
-    ['System.Console', 'System.Convert'].includes(descriptor.owner) ? Builtins.find(entry => entry.numeric?.owner === descriptor.owner &&
+    ['System.Console', 'System.Convert'].includes(descriptor.owner) ? Builtins.find(entry => entry?.numeric?.owner === descriptor.owner &&
       entry.numeric.name === descriptor.name && entry.numeric.formatType === argumentType) : null;
   return n.frameworkCall({builtin: formatted ?? builtin}, receiver, args, type);
 }

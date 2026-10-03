@@ -2,6 +2,7 @@ import {canonicalType, frameworkType} from '@sharpforge/framework';
 import {arrayType, memoryTypeName, spanType} from '@sharpforge/bytecode';
 import {CilError} from './binary.js';
 import {varargsTypeDefinition} from './varargs-profile.js';
+import {parseFunctionPointerType} from './function-pointer-signature.js';
 
 const elements = {
   void: 1, bool: 2, char: 3, sbyte: 4, byte: 5, short: 6, ushort: 7, int: 8, uint: 9,
@@ -46,6 +47,13 @@ export function signatureType(writer, type, resolveToken) {
   if (type.endsWith('&') || type.endsWith('*')) {
     writer.u8(type.endsWith('&') ? 0x10 : 0x0f);
     return signatureType(writer, type.slice(0, -1), resolveToken);
+  }
+  const pointer = parseFunctionPointerType(type);
+  if (pointer) {
+    writer.u8(0x1b).u8((pointer.isStatic ? 0 : 0x20) | pointer.callingConvention).compressed(pointer.parameters.length);
+    signatureType(writer, pointer.returnType, resolveToken);
+    for (const parameter of pointer.parameters) signatureType(writer, parameter, resolveToken);
+    return writer;
   }
   if (/^!!?\d+$/.test(type)) {
     writer.u8(type.startsWith('!!') ? 0x1e : 0x13).compressed(Number(type.replace(/!/g, '')));

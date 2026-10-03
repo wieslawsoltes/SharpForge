@@ -45,7 +45,7 @@ export function emitArrayBuiltin(compiler, binding) {
     else if (expected === 'System.Array' || expected === 'object') compiler.expr(argument);
     else compiler.checkAssign(expected, compiler.typedExpr(argument, expected), argument);
   });
-  const builtin = Builtins.find(entry => entry.arrayRuntime === binding.descriptor);
+  const builtin = Builtins.find(entry => entry?.arrayRuntime === binding.descriptor);
   compiler.emit(Op.BUILTIN, builtin.id, binding.arguments.length + Number(!!binding.receiver));
   return binding.result;
 }

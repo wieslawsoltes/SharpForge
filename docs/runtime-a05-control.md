@@ -12,14 +12,16 @@ Filter state, multicast continuations and generic frame identity are snapshot st
 
 Native examples are in `tests/fixtures/a05-calls` and `tests/fixtures/a05-exceptions`. After the complete E01 scope is assembled, run `node scripts/validate-a05-control.js --dotnet /path/to/dotnet`. The runner compiles each program once, executes the same DLL with native .NET and CIL, compares stdout and exit status, and writes hashes and toolchain evidence under `artifacts/a05-control`. Independent metadata fixtures in `tests/a05-02-calls.test.js` and `tests/a05-04-exceptions.test.js` cover tail calls, fault clauses, malformed prefixes/regions, pointer ownership/lifetime, filter snapshots and readonly boundaries that C# cannot emit directly.
 
-Native pointers, unmanaged calli, varargs, typed references, and pinned locals remain outside this managed profile. These features are rejected explicitly; accepted managed pointers never expose host memory addresses. The source C# parser's surface remains a separate capability from direct CIL execution.
+Managed varargs, typed references and pinned local lifetimes are implemented by the E01 varargs and memory modules. Native-memory operations use VM-owned regions. Unmanaged calli and vararg P/Invoke remain explicitly unavailable; managed pointers and runtime handles never expose host addresses. Source and direct CIL surfaces are listed separately below.
 
 | API / instruction surface | Direct CIL target | Source target |
 | --- | --- | --- |
 | MethodSpec, virtual/interface slots, constrained value receivers | Implemented; native fixture supplied, E01 qualification pending | Source parser support remains separately inventoried |
 | ldftn, ldvirtftn, multicast Delegate operations, managed calli | Implemented; opaque VM-owned targets | Existing source/platform delegates retain their adapter |
-| ref/out/in, tail., byref returns | Implemented with readonly and lifetime checks | General source syntax remains outside this change |
-| Filters, fault/finally, rethrow, cross-frame search | Implemented; native cleanup/filter traces supplied | Existing catch/finally IR unchanged |
-| Native pointers / unmanaged calli / varargs | Explicitly rejected | Unsupported |
+| ref/out/in, tail., byref returns | Implemented with readonly and lifetime checks | Managed arguments, ref returns/locals and writable fields/elements |
+| Filters, fault/finally, rethrow, cross-frame search | Implemented; native cleanup/filter traces supplied | Typed catches, `when` filters, rethrow and two-pass search/cleanup |
+| Managed varargs / typed references | Managed call-site sentinels, ArgIterator and typed-reference instructions | `__arglist`, `__makeref`, `__refvalue`, `__reftype` |
+| Native-memory regions / pinned locals | VM-owned memory and scoped leases | Memory frontend capabilities tracked in `a05-memory-frontend.md` |
+| Unmanaged calli / vararg P/Invoke | Explicitly rejected | Unsupported |
 
 Run `node scripts/benchmark-a05-control.js` after correctness qualification to record cold/warm execution latency, p95/p99, managed allocations and allocated bytes for direct calls, tail calls and exceptional search/unwind. The script asserts each result before including a sample. Native/browser evidence and exact integration commits are recorded by the epic qualification; this implementation document is not a test result.

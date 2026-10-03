@@ -14,6 +14,7 @@ export function enterFilter(vm, owner, handler, search) {
     id: ++vm.frameId,
     method: owner.method,
     args: owner.args,
+    ...(owner.varargs?{varargs:owner.varargs}:{}),
     locals: owner.locals,
     stack: [search.error.reference],
     pc: owner.offsets.get(handler.catchType),

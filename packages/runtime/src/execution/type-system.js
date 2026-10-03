@@ -1,7 +1,8 @@
 import {resolveCallType} from './generic-calls.js';
 import {exceptionMatches} from './exception-types.js';
-import {CilError,decodeCoded} from '@sharpforge/cil';
+import {CilError,decodeCoded,callStorageType} from '@sharpforge/cil';
 import {cachedField,cachedTypeName} from './token-cache.js';
+import {ManagedFault} from '../heap.js';
 import {VirtualDispatch} from './vtable.js';
 import {MethodTableRegistry} from './method-table.js';
 import {castCacheFor} from './casting.js';
@@ -39,7 +40,10 @@ export class CilTypeSystem {
     for(const record of vm.heap.records)if(record)record.methodTable=this.methodTables.get(record.methodTable?.name??record.type);
     this.castCache=castCacheFor(this.methodTables);
   }
-  table(type){return this.methodTables.get(typeof type==='number'||typeof type==='string'?resolveCallType(this.vm,type):type);}
+  table(type) {
+    const resolved = typeof type === 'number' || typeof type === 'string' ? resolveCallType(this.vm, type) : type;
+    return this.methodTables.get(typeof resolved === 'string' ? callStorageType(resolved) : resolved);
+  }
   layout(typeToken,depth=0) {
     if(this.layouts.has(typeToken))return this.layouts.get(typeToken);
     if(depth>64)throw new CilError('Inheritance depth exceeded');

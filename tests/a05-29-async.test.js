@@ -117,8 +117,8 @@ test('A05 T29 malformed async snapshots reject before live execution changes',()
     (s,t,c)=>{c.frames[0].asyncBuilderTask=foreignTask.ref;},
     (s,t,c)=>{c.frames[0].args[0]=Object.freeze({...c.frames[0].args[0],vmOwner:foreign.snapshotOwner});},
     (s,t,c)=>{c.frames[0].args[0]=Object.freeze({...c.frames[0].args[0],owner:t.ref});},
-    (s,t)=>{const data=s.heap.records[t.ref.h].data;data[data.indexOf('Id')+1]++;},
-    (s,t)=>{const data=s.heap.records[t.ref.h].data;data[data.indexOf('$status')+1]='completed';}
+    (s,t)=>{const record=s.heap.records[t.ref.h],data=[...record.data];data[data.indexOf('Id')+1]++;s.heap.records[t.ref.h]={...record,data};},
+    (s,t)=>{const record=s.heap.records[t.ref.h],data=[...record.data];data[data.indexOf('$status')+1]='completed';s.heap.records[t.ref.h]={...record,data};}
   ];
   for(const corrupt of corruptions) {
     const snapshot=vm.snapshot(),task=snapshot.scheduler.tasks.find(([,task])=>task.asyncState)[1],context=snapshot.scheduler.contexts.find(([id])=>id===task.asyncState.contextId)[1];

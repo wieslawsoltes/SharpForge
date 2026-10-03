@@ -1,3 +1,4 @@
+import {declareVarargsTypes} from './varargs-types.js';
 import {types as frameworkTypes,contracts as frameworkContracts,canonicalType} from '@sharpforge/framework';
 import {Builtins} from '@sharpforge/bytecode';
 import {sourceBuiltinCatalog, runtimeBuiltinOwner, runtimeProfileSymbols, scalarConstantFields} from './runtime-profiles.js';
@@ -40,6 +41,7 @@ export class RegistryBridge {
     for(const id of coreIds){const d=coreTypeDescriptor(id),type=this.typeProvider.getCoreType(id),full=d.metadataName;this.remember(full,type);this.attach(type,full);}
     for(const [keyword] of Object.entries({object:1,void:1,bool:1,char:1,sbyte:1,byte:1,short:1,ushort:1,int:1,uint:1,long:1,ulong:1,decimal:1,float:1,double:1,string:1,nint:1,nuint:1}))this.byName.set(keyword,this.typeProvider.getCoreType(specialTypeFromKeyword(keyword)));
     this.byName.set('Exception',this.typeProvider.getCoreType('System_Exception'));this.keywords=new Map([...this.byName].filter(([k])=>!k.includes('.')).map(([k,v])=>[v,k]));
+    declareVarargsTypes(this);
     for(const name of this.types.keys())this.declare(name);
     for(const owner of this.builtinsByOwner.keys())if(!this.byName.has(owner)){const dot=owner.lastIndexOf('.'),type=this.globalNamespace.ensureNamespace(owner.slice(0,dot)).addType(new NamedTypeSymbol({name:owner.slice(dot+1),isStatic:true,baseType:()=>this.objectType}));this.remember(owner,type);this.attach(type,owner);}
   }

@@ -1,4 +1,5 @@
 import {createExecutionProfiler} from './execution/profiler.js';
+import {executeSourceVarargs} from './execution/source-varargs.js';
 import {executeSourceReference, sourceReturnReference} from './execution/source-references.js';
 import {isFatalFault,markUnhandled} from './execution/unhandled.js';
 import {stopVM} from './execution/vm-lifecycle.js';
@@ -67,7 +68,7 @@ export class VirtualMachine {
       this.sourcePause=false;if(!continuing){frame.pc++;count++;this.instructions++;if(this.profiler)this.profiler.instruction(frame);}
       try{
         if(this.instructions>this.options.maxInstructions||continuing&&this.instructions>=this.options.maxInstructions)throw new ManagedFault('InstructionLimitException','Program exceeded its instruction budget');
-        if(continuing){const result=resumeArrayOperation(this,frame,{deadline:started+timeBudgetMs,workBudget:1});count+=result.work;this.instructions+=result.work;if(this.profiler)this.profiler.instruction(frame,result.work);if(result.done&&result.returns)this.stack.push(result.value);if(!result.work)break;}else if(!executeSourceReference(this,frame,op,a,b))switch(op){
+        if(continuing){const result=resumeArrayOperation(this,frame,{deadline:started+timeBudgetMs,workBudget:1});count+=result.work;this.instructions+=result.work;if(this.profiler)this.profiler.instruction(frame,result.work);if(result.done&&result.returns)this.stack.push(result.value);if(!result.work)break;}else if(!executeSourceVarargs(this,frame,op,a)&&!executeSourceReference(this,frame,op,a,b))switch(op){
           case Op.ENUM:this.stack.push(sourceEnum(this,a,b));break;case Op.DELEGATE:{const receiver=this.stack.pop();this.stack.push(this.heap.withRoots([receiver],()=>this.platform.delegate(this.image.constants[b],a,receiver)));break;}case Op.SEQ:case Op.NOP:break;case Op.ENDFINALLY:this.resumeUnwind(frame);break;case Op.ENDFILTER:endSourceFilter(this,this.stack.pop());break;
           case Op.CONST:this.stack.push(this.constant(a));break;
           case Op.LDLOC:if(frame.locals[a]===undefined)throw new ManagedFault('InvalidProgramException','Read of uninitialized local');this.stack.push(sourceCopy(this,frame.locals[a]));break;
