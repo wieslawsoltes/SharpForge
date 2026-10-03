@@ -1,6 +1,7 @@
 name: Pinned reference oracles
 on:
   pull_request:
+    types: [opened, synchronize, reopened, labeled]
     paths:
       - '.github/workflows/oracles.yml'
       - 'scripts/conformance/oracle/**'
@@ -27,6 +28,7 @@ env:
   SHARPFORGE_RESULTS_DIR: artifacts/results
 jobs:
   linux:
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     container:
@@ -55,6 +57,7 @@ jobs:
           path: artifacts/results/oracles/
           if-no-files-found: error
   desktop:
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     name: native oracle (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
