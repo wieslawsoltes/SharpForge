@@ -8,5 +8,5 @@ export function storageDefault(vm,type) {
 }
 export function storageValue(vm,value,type,numericContext) {
   const info=enumInfo(vm,type);
-  return info?enumUnderlying(value,info.underlyingType):numericStorage(value,type,numericContext);
+  return info?numericStorage(enumUnderlying(value,info.underlyingType),info.underlyingType,numericContext):numericStorage(value,type,numericContext);
 }

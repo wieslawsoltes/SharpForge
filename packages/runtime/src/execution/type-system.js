@@ -1,5 +1,5 @@
 import {exceptionMatches} from './exception-types.js';
-import {CilError,CilDispatchTable,decodeCoded} from '@sharpforge/cil';
+import {CilError,CilDispatchTable,decodeCoded,resolveExecutionField} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {MethodTableRegistry} from './method-table.js';
 import {castCacheFor} from './casting.js';
@@ -57,10 +57,11 @@ export class CilTypeSystem {
     return this.castCache.isAssignableFrom(target,record.methodTable);
   }
   field(token,ref) {
-    const field=this.vm.inspector.resolveToken(token),resolved=field.resolvedToken??token;
+    const record=ref===undefined?null:this.vm.heap.get(ref),arguments_=record?.methodTable.typeArguments.map(type=>type.name)??[];
+    const field=resolveExecutionField(this.vm.inspector,token,arguments_),resolved=field.resolvedToken;
     if(field.kind!=='field')throw new CilError('Invalid field token');
     if(ref===undefined)return {field,token:resolved};
-    const record=this.vm.heap.get(ref),layout=this.layout(record.methodTable),index=layout.index.get(resolved);
+    const layout=this.layout(record.methodTable),index=layout.index.get(resolved);
     if(index===undefined)throw new ManagedFault('InvalidProgramException','Field is not part of this object');
     return {field,token:resolved,record,index};
   }
