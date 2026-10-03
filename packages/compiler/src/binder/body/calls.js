@@ -343,6 +343,7 @@ export const CallBinding = Base =>
           if (a.type && ['Index', 'Range'].includes(a.type.name)) return a;
           return this.convert(a, this.core.int);
         });
+        if (indices.some(i => i.hasErrors)) return this.bad(syntax);
         if (indices.some(i => i.type?.name === 'Range')) return this.node('ArrayAccess', syntax, type, { array: target, indices });
         return this.node('ArrayAccess', syntax, type.elementType, { array: target, indices });
       }

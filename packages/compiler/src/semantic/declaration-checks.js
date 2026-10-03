@@ -18,7 +18,6 @@ import { checkTypeModifierFeatures } from './type-modifier-features.js';
 import { checkVarianceSafety } from '../conversions/variance.js';
 import { checkNullableSignatures } from '../nullable/signature-checks.js';
 import { checkTypeModifiers } from '../binder/type-modifiers.js';
-import { checkConditionalMethods } from '../binder/csharp2-misc.js';
 import { accessRank, baseOrSelf } from './analysis-helpers.js';
 
 /** Class mixin: Declaration-level checks of every source type: hiding, overrides, abstract members, interface */
@@ -35,8 +34,6 @@ export const DeclarationChecks = Base =>
       const core = this.core,
         version = this.versionOf(type.locations[0].uri).number;
       for (const d of checkTypeModifiers(type)) this.report(d.uri, d.node, d.code, d.args);
-      if (type.typeKind !== TypeKind.Enum && type.typeKind !== TypeKind.Delegate)
-        for (const d of checkConditionalMethods(type)) this.report(d.uri, d.node, d.code, d.args);
       if (type.typeKind === TypeKind.Enum) {
         bindEnumMembers(
           type,

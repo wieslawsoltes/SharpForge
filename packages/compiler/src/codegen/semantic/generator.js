@@ -8,6 +8,7 @@
  *   patterns, switches -> sequential tests over shared evaluations   (lowering/decision-dag.js, translate-patterns.js)
  *   initialization     -> initializer methods run where .NET runs them (initialization.js)
  *   async functions    -> a kickoff and a body on the runtime's continuation ABI (lowering/async/async-methods.js)
+ *   rank-n arrays      -> a class over one flat array with computed indexing (lowering/arrays.js)
  *
  * A construct that needs an instruction the runtime does not have raises `UnsupportedConstruct`; the generator then
  * produces no image and names the construct, which `compile()` reports as SF2200.
@@ -37,6 +38,7 @@ import { Frame } from './frame.js';
 import { UnsupportedConstruct } from './unsupported.js';
 import { n } from './node-factory.js';
 import { memberGenerators } from '../../lowering/members/index.js';
+import { MultiDimensionalArrays } from '../../lowering/arrays.js';
 
 class GeneratorCore {
   /**
@@ -51,6 +53,7 @@ class GeneratorCore {
     this.types = new TypeMapper(this);
     this.delegates = new DelegateClasses(this);
     this.iterators = new IteratorClasses(this);
+    this.arrays = new MultiDimensionalArrays(this);
     this.structural = new StructuralMembers(this);
     this.tuples = this.structural.register(new TupleClasses(this));
     this.records = this.structural.register(new RecordMembers(this));
