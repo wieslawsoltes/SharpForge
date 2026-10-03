@@ -1,0 +1,42 @@
+## `System.String`
+
+- `static string get_Empty()`
+- `static bool IsNullOrEmpty(string)`
+- `static bool IsNullOrWhiteSpace(string)`
+- `static string Concat(string, string)`
+- `static string Concat(string[])`
+- `static string Join(string, string[])`
+- `static string Join(string, int[])`
+- `static bool Equals(string, string)`
+- `static int CompareOrdinal(string, string)`
+- `string ToString()`
+- `string Substring(int)`
+- `string Substring(int, int)`
+- `bool Contains(string)`
+- `int IndexOf(string)`
+- `int IndexOf(string, int)`
+- `int LastIndexOf(string)`
+- `bool StartsWith(string)`
+- `bool EndsWith(string)`
+- `string Trim()`
+- `string TrimStart()`
+- `string TrimEnd()`
+- `string ToUpperInvariant()`
+- `string ToLowerInvariant()`
+- `string ToUpper()`
+- `string ToLower()`
+- `string Replace(string, string)`
+- `string[] Split(string)`
+- `string[] Split(string, int)`
+- `string PadLeft(int)`
+- `string PadRight(int)`
+- `string Remove(int)`
+- `string Remove(int, int)`
+- `string Insert(int, string)`
+- `int get_Length()`
+- `static string Format(string, object)`
+- `static string Format(string, object, object)`
+- `static string Format(string, object, object, object)`
+- `static string Format(string, object, object, object, object)`
+- `static string Format(string, object[])`
+

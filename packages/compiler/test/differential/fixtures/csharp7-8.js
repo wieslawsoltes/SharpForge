@@ -8,5 +8,6 @@ import { fixtures as indexRange } from './index-range.js';
 import { fixtures as csharp7 } from './csharp7.js';
 import { fixtures as csharp8Members } from './csharp8-members.js';
 import { fixtures as stackalloc } from './stackalloc.js';
+import { fixtures as nullableReferences } from './nullable-references.js';
 
-export const fixtures = [...csharp8Statements, ...expressionVariables, ...indexRange, ...csharp7, ...csharp8Members, ...stackalloc];
+export const fixtures = [...csharp8Statements, ...expressionVariables, ...indexRange, ...csharp7, ...csharp8Members, ...stackalloc, ...nullableReferences];
