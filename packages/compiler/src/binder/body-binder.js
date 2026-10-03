@@ -39,6 +39,7 @@ import { ExceptionBinding } from './exceptions.js';
 import { AnonymousMethodBinding } from './anonymous-methods.js';
 import { ArrayBinding } from './arrays.js';
 import { UnsafeBinding } from './unsafe.js';
+import { ProtectedAccessBinding } from './protected-access.js';
 import { languageRules } from './language-rules.js';
 import { CSharp6Binding } from './csharp6.js';
 
@@ -72,6 +73,7 @@ const statementFamilies = [
   ArrayBinding,
   CSharp6Binding,
   UnsafeBinding,
+  ProtectedAccessBinding,
 ];
 const compose = (base, mixins) => mixins.reduce((composed, mixin) => mixin(composed), base);
 
