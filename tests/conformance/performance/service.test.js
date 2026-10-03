@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {mkdtempSync,mkdirSync,writeFileSync,rmSync} from 'node:fs';
+import {mkdtempSync,mkdirSync,writeFileSync,readFileSync,rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {execFileSync} from 'node:child_process';
@@ -12,7 +12,7 @@ import {beginAllocation,finishAllocation,allocationSummary} from '../../../scrip
 import {ab} from '../../../scripts/conformance/perf/ab.js';
 import {checkSizes,size} from '../../../scripts/conformance/perf/size-budget.js';
 import {updateBaseline,readBaseline} from '../../../scripts/conformance/perf/update-baseline.js';
-import {normalizeBrowser} from '../../../scripts/conformance/perf/normalize-browser.js';
+import {normalizeBrowser,verifyTraces} from '../../../scripts/conformance/perf/normalize-browser.js';
 const env={node:process.version,platform:process.platform,arch:process.arch,cpu:'test-cpu',logicalCpus:1,osRelease:'test',runnerName:'isolated-control-fixture',commit:'a'.repeat(40)};
 const row=values=>benchmark({id:'A05/control',area:'A05',engine:'fixture-statistics-only',samples:values,coldSamples:[12],checksum:'42'});
 const record=values=>report([row(values)],env);
@@ -104,4 +104,16 @@ test('A/B executes both real Git revisions independently and disposes its worktr
   setTimeout(()=>controller.abort(),150);await assert.rejects(pending);
   assert.equal(g('worktree','list','--porcelain').split('worktree ').length-1,1);
  }finally{rmSync(dir,{recursive:true,force:true});}
+});
+
+test('cancelling a parent also reaps children which ignore SIGTERM',{skip:process.platform==='win32'?'POSIX process-group semantics; Windows uses taskkill /T':false},async()=>{
+ const dir=mkdtempSync(join(tmpdir(),'perf-descendant-')),file=join(dir,'pid');let child;
+ try{
+  const script="const {spawn}=require('node:child_process');const fs=require('node:fs');const child=spawn(process.execPath,['-e','process.on(\"SIGTERM\",()=>{});setInterval(()=>{},1000)'],{stdio:'ignore'});fs.writeFileSync(process.argv[1],String(child.pid));setInterval(()=>{},1000)";
+  await assert.rejects(execute(process.execPath,['-e',script,file],{timeoutMs:400}),{code:'TIMEOUT'});child=Number(readFileSync(file,'utf8'));
+  await new Promise(r=>setTimeout(r,100));assert.throws(()=>process.kill(child,0),{code:'ESRCH'});
+ }finally{if(child)try{process.kill(child,'SIGKILL');}catch{}rmSync(dir,{recursive:true,force:true});}
+});
+test('browser evidence verifies actual retained trace bytes',()=>{
+ const dir=mkdtempSync(join(tmpdir(),'perf-trace-'));try{writeFileSync(join(dir,'chromium-0.zip'),'trace-byte-fixture');const raw={traces:[{path:'chromium-0.zip',sha256:sha('trace-byte-fixture')}]};assert.doesNotThrow(()=>verifyTraces(raw,dir));writeFileSync(join(dir,'chromium-0.zip'),'changed');assert.throws(()=>verifyTraces(raw,dir),/digest/);assert.throws(()=>verifyTraces({traces:[{path:'../escape',sha256:'a'.repeat(64)}]},dir),/digest/);}finally{rmSync(dir,{recursive:true,force:true});}
 });

@@ -36,6 +36,8 @@ jobs:
       - run: npm ci
       - name: Performance service correctness
         run: node --test tests/conformance/performance/*.test.js
+      - name: Timed A/A and injected-slowdown calibration
+        run: node scripts/conformance/perf/controls.js
       - name: Resolve reviewed policy
         shell: bash
         run: |

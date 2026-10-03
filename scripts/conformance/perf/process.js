@@ -13,6 +13,6 @@ export function execute(command,argv,{cwd,env=process.env,timeoutMs=120000,signa
   const cleanup=()=>{clearTimeout(timer);clearTimeout(killTimer);signal?.removeEventListener('abort',abort);};
   for(const [stream,name] of [[child.stdout,'stdout'],[child.stderr,'stderr']])stream.on('data',chunk=>{size+=chunk.length;if(size>maxOutputBytes)stop(new Error('Performance output limit exceeded'));else if(name==='stdout')stdout+=chunk;else stderr+=chunk;});
   child.on('error',error=>{cleanup();reject(error);});
-  child.on('close',(code,killed)=>{cleanup();if(stopError)reject(stopError);else if(code!==0)reject(Object.assign(new Error(command+' failed ('+code+'): '+stderr),{code:'PROCESS_FAILED',stdout,stderr,exitCode:code,signal:killed}));else resolve({stdout,stderr});});
+  child.on('close',(code,killed)=>{if(stopError)kill();cleanup();if(stopError)reject(stopError);else if(code!==0)reject(Object.assign(new Error(command+' failed ('+code+'): '+stderr),{code:'PROCESS_FAILED',stdout,stderr,exitCode:code,signal:killed}));else resolve({stdout,stderr});});
  });
 }

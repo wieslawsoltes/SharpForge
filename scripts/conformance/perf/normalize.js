@@ -13,6 +13,10 @@ export function normalize(producer,input,env=environment()){
   const name=(row.name??[row.type,row.elements,row.operation,row.backend].join('-')).replaceAll(' ','-').replaceAll(/[^a-zA-Z0-9_.:/-]/g,'_');
   add(String(i)+'-'+name,area,row.engine??row.backend??'node',row.rawSamples,row.coldSamples,row.output??row.checksum??row.correctness??{name},row.allocatedBytes===undefined?null:{managedAllocatedBytes:row.allocatedBytes});
  }
+ if(producer==='benchmark-compute14.js'&&input.worker){
+  add('worker-startup','A10','worker-wasm-simd',input.worker.startupRawSamples,input.worker.startupRawSamples,input.worker.values,{phase:'single cold worker startup; descriptive only'});
+  add('worker-eight-jobs','A10','worker-wasm-simd',input.worker.eightJobsRawSamples,[],input.worker.values,{phase:'one batch of eight concurrent actual worker jobs; descriptive only'});
+ }
  return report(rows,env,{producer,unsupported:[{target:'historical summary-only reports',reason:'Discarded samples cannot be reconstructed from medians'}]});
 }
 if(isMain(import.meta.url)){const a=args();const result=normalize(a.producer,json(a.input),a.env?json(a.env):environment(a.root??repository));if(a.output)writeJson(a.output,result);else console.log(JSON.stringify(result));}

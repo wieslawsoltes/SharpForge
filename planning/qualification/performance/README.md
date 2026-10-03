@@ -5,6 +5,7 @@ Run Node 24.21.0 and npm ci in a clean checkout.
     node scripts/conformance/perf/measure.js --samples 20 --output artifacts/results/performance/current.json
     node scripts/conformance/perf/ab.js --base HEAD^ --head HEAD --pairs 20
     node scripts/conformance/perf/legacy.js
+    node scripts/conformance/perf/controls.js
     npm run build
     npm run standalone
     npm run test:packages
@@ -33,9 +34,11 @@ and returns {ms,checksum,metrics}. Registry modules are trusted executable bench
 A/B also accepts --registry to execute the same owner adapter independently against both checkouts. Use --baseline ID to select the base commit from a committed reviewed baseline; --policy-ref selects its Git revision. Core defaults use the reviewed adapter list. process.js provides cancellable,
 bounded subprocess execution for external adapters.
 
+The timed calibration executes 20 actual A/A trials and injected 2.0ms/2.3ms delays, retaining raw timings. It measures the statistical service, not a product or a native runtime.
+
 Managed metrics come from actual VM heap counters: allocations/bytes per logical
 operation, collections, total/max pause. Stability uses every sample and 5% relative
-spread tolerance. Node heapUsed deltas describe retained JS heap, not total/native
+spread tolerance. VM execution timing/counters exclude compilation and VM construction. Node heapUsed deltas describe retained JS heap, not total/native
 allocation bytes. No CLR/Rust native timing or allocation capability is claimed.
 
 Browser probes use fresh real browser processes, production CSP, real PE/CLI output,

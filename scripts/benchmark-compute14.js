@@ -11,5 +11,5 @@ for(const C of [Int32Array,Float64Array])for(const n of [4,1024,100000,1000000])
  }
 }
 const pool=new ComputePool({workers:2,backend:'wasm'});let worker;
-try{const start=performance.now();await pool.init();const startupMs=performance.now()-start,a=new Float64Array(100000).fill(.5),begin=performance.now();const values=await Promise.all(Array.from({length:8},()=>pool.execute('sum',a)));assert(values.every(value=>value===50000));worker={startupMs,totalEightJobsMs:performance.now()-begin,values,capabilities:await pool.capabilities()};}finally{pool.dispose();}
+try{const start=performance.now();await pool.init();const startupMs=performance.now()-start,a=new Float64Array(100000).fill(.5),begin=performance.now();const values=await Promise.all(Array.from({length:8},()=>pool.execute('sum',a)));assert(values.every(value=>value===50000));const totalEightJobsMs=performance.now()-begin;worker={startupMs,totalEightJobsMs,startupRawSamples:[startupMs],eightJobsRawSamples:[totalEightJobsMs],values,capabilities:await pool.capabilities()};}finally{pool.dispose();}
 console.log(JSON.stringify({correctness:{passed:true},node:process.version,results,worker,scope:'Synthetic same-host microbenchmark; copies and result allocation included; not a browser or CLR benchmark. Fixed-width SIMD reduction order is shared with scalar fallback.'},null,2));
