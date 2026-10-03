@@ -13,3 +13,4 @@ export { readCustomDebugInformation, writeCustomDebugInformation } from './custo
 export { decodeSource } from './source-encoding.js';
 export { createSourceFetcher } from './source-fetch.js';
 export { SourceStatus } from './source-status.js';
+export { resolveSources } from './source-resolver.js';
