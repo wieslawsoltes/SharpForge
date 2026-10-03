@@ -9,5 +9,6 @@ export * from './memory-odb.js';
 export * from './refs.js';
 export * from './config.js';
 export * from './index-file.js';
+export * from './worktree.js';
 export * from './path-safety.js';
 export * from './refspec.js';
