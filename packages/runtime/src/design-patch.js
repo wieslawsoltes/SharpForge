@@ -1,8 +1,9 @@
-import {frameworkType,propertiesFor,XAML,CONTROLS,MEDIA,frameworkAssignable} from '@sharpforge/framework';
-import {childSlot,propertySchema,normalizeProperty,track,designControls} from '@sharpforge/designer';
-import {clearProperty,applyTemplate} from './styling.js';
+import {propertiesFor,XAML,CONTROLS,frameworkAssignable} from '@sharpforge/framework';
+import {childSlot,propertySchema,track,designControls} from '@sharpforge/designer';
+import {clearProperty} from './styling.js';
 import {assignDesignValue as assign,designManagedValue as valueFromData} from './design-values.js';
-const extendedDesignCommands = new Map();
+import {applyDesignCollection} from './design-collections.js';
+const extendedDesignCommands = new Map([['collection', applyDesignCollection]]);
 const key=r=>`${r.h}:${r.g}`;
 const fail=m=>{throw new Error(m);};
 function collection(p,ref,property){return p.getProperty(ref,{property,result:propertiesFor(p.record(ref).type)[property].type,owner:p.record(ref).type});}
