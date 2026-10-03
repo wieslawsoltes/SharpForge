@@ -20,7 +20,9 @@ const definitions = [
  ['object.ToString',1,1,'string',['any']],['Exception.Message',1,1,'string',['exception']],['Exception.new',1,1,'Exception',['string']],
  ['Debug.Assert',1,2,'void',['bool','string']],['Environment.TickCount',0,0,'int',[]],['$Math.Abs.Int32',1,1,'int',['int']]
 ];
-export const Builtins = Object.freeze([...definitions.map(([name,min,max,result,params],id)=>Object.freeze({id,name,min,max,result,params})),...contracts.map(contract=>{const id=definitions.length+contract.id,count=contract.parameters.length+(!contract.isStatic&&contract.kind!=='constructor'?1:0);return Object.freeze({id,name:'$framework:'+contract.id,min:count,max:count,result:contract.result,params:[...(!contract.isStatic&&contract.kind!=='constructor'?[contract.owner]:[]),...contract.parameters],contract});})]);
+// Append new intrinsics after framework entries so released builtin IDs do not move.
+const additions=[['string.Intern',1,1,'string',['string']],['string.IsInterned',1,1,'string',['string']],['string.get_Chars',2,2,'int',['string','int']],['object.ReferenceEquals',2,2,'bool',['object','object']],['Enum.HasFlag',2,2,'bool',['any','any']]];
+export const Builtins = Object.freeze([...definitions.map(([name,min,max,result,params],id)=>Object.freeze({id,name,min,max,result,params})),...contracts.map(contract=>{const id=definitions.length+contract.id,count=contract.parameters.length+(!contract.isStatic&&contract.kind!=='constructor'?1:0);return Object.freeze({id,name:'$framework:'+contract.id,min:count,max:count,result:contract.result,params:[...(!contract.isStatic&&contract.kind!=='constructor'?[contract.owner]:[]),...contract.parameters],contract});}),...additions.map(([name,min,max,result,params],index)=>Object.freeze({id:definitions.length+contracts.length+index,name,min,max,result,params}))]);
 export const frameworkBuiltin = contract=>contract?Builtins[definitions.length+contract.id]:null;
 export const BuiltinMap = new Map(Builtins.map(b=>[b.name,b]));
 export function disassemble(image, methodId) {
