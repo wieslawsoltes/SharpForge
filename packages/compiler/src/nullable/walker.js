@@ -93,7 +93,8 @@ export class NullableWalker {
     if (expression.kind === 'Local') return expression.local;
     if (expression.kind === 'Parameter') return expression.parameter;
     const viaThis = !expression.receiver || expression.receiver.kind === 'This';
-    if (expression.kind === 'FieldAccess' && viaThis && !expression.field.isStatic) return expression.field.originalDefinition ?? expression.field;
+    if (expression.kind === 'FieldAccess' && viaThis && !expression.field.isStatic)
+      return expression.field.originalDefinition ?? expression.field;
     if (expression.kind === 'PropertyAccess' && viaThis && expression.property.isAutoProperty) return expression.property;
     return null;
   }

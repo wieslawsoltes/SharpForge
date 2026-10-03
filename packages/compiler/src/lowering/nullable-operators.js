@@ -132,13 +132,17 @@ export function lowerNullableConversion(node, core) {
   const steps = node.conversion?.steps;
   if (!steps) return node;
   const { operand, type } = node;
-  if (steps[0] === 'wrap') return wrap(lowered('Conversion', stripNullable(type), { operand, conversion: node.conversion.underlying }), type);
+  if (steps[0] === 'wrap')
+    return wrap(lowered('Conversion', stripNullable(type), { operand, conversion: node.conversion.underlying }), type);
   if (steps[0] === 'unwrap') {
     // An explicit unwrap reads `.Value`, which throws InvalidOperationException when there is no value.
     const value = lowered('NullableValue', stripNullable(operand.type), { operand, throwsWhenNull: true });
     return lowered('Conversion', type, { operand: value, conversion: node.conversion.underlying });
   }
-  const converted = lowered('Conversion', stripNullable(type), { operand: valueOrDefault(operand), conversion: node.conversion.underlying });
+  const converted = lowered('Conversion', stripNullable(type), {
+    operand: valueOrDefault(operand),
+    conversion: node.conversion.underlying,
+  });
   return conditional(hasValue(operand, core), wrap(converted, type), noValue(type), type);
 }
 

@@ -7,7 +7,7 @@
  * temporaries when named arguments are out of parameter order - defaults are inserted for omitted optional
  * parameters and the trailing arguments of an expanded call are collected into one array.
  */
-import {RefKind} from '../symbols/types.js';
+import { RefKind } from '../symbols/types.js';
 
 /**
  * @param {ParameterSymbol[]} parameters
@@ -17,38 +17,64 @@ import {RefKind} from '../symbols/types.js';
  *   error kinds: 'tooMany' (CS1501), 'noSuchName' (CS1739), 'nameUsedTwice' (CS1740), 'namedAlreadyPositional' (CS1744),
  *   'badNonTrailingName' (CS8323), 'missing' (CS7036), 'notExpandable'
  */
-export function mapArguments(parameters,args,{expanded=false}={}){
-  const last=parameters.length-1,hasParams=last>=0&&parameters[last].isParams;
-  if(expanded&&!hasParams)return {ok:false,error:{code:'CS1501',kind:'notExpandable'}};
-  const parameterOf=new Array(args.length).fill(-1),taken=new Array(parameters.length).fill(false);let paramsCount=0,positional=true;
-  for(let i=0;i<args.length;i++){
-    const name=args[i].name??null;
-    if(name===null){
-      if(!positional)return {ok:false,error:{code:'CS8323',kind:'badNonTrailingName',argument:i}};
-      if(expanded&&i>=last){parameterOf[i]=last;paramsCount++;taken[last]=true;continue;}
-      if(i>last)return {ok:false,error:{code:'CS1501',kind:'tooMany',argument:i}};
-      parameterOf[i]=i;taken[i]=true;continue;
+export function mapArguments(parameters, args, { expanded = false } = {}) {
+  const last = parameters.length - 1,
+    hasParams = last >= 0 && parameters[last].isParams;
+  if (expanded && !hasParams) return { ok: false, error: { code: 'CS1501', kind: 'notExpandable' } };
+  const parameterOf = new Array(args.length).fill(-1),
+    taken = new Array(parameters.length).fill(false);
+  let paramsCount = 0,
+    positional = true;
+  for (let i = 0; i < args.length; i++) {
+    const name = args[i].name ?? null;
+    if (name === null) {
+      if (!positional) return { ok: false, error: { code: 'CS8323', kind: 'badNonTrailingName', argument: i } };
+      if (expanded && i >= last) {
+        parameterOf[i] = last;
+        paramsCount++;
+        taken[last] = true;
+        continue;
+      }
+      if (i > last) return { ok: false, error: { code: 'CS1501', kind: 'tooMany', argument: i } };
+      parameterOf[i] = i;
+      taken[i] = true;
+      continue;
     }
-    const index=parameters.findIndex(p=>p.name===name);
-    if(index<0)return {ok:false,error:{code:'CS1739',kind:'noSuchName',argument:i,name}};
-    if(taken[index])return {ok:false,error:{code:args.slice(0,i).some(a=>a.name===name)?'CS1740':'CS1744',kind:args.slice(0,i).some(a=>a.name===name)?'nameUsedTwice':'namedAlreadyPositional',argument:i,name,parameter:parameters[index]}};
+    const index = parameters.findIndex(p => p.name === name);
+    if (index < 0) return { ok: false, error: { code: 'CS1739', kind: 'noSuchName', argument: i, name } };
+    if (taken[index])
+      return {
+        ok: false,
+        error: {
+          code: args.slice(0, i).some(a => a.name === name) ? 'CS1740' : 'CS1744',
+          kind: args.slice(0, i).some(a => a.name === name) ? 'nameUsedTwice' : 'namedAlreadyPositional',
+          argument: i,
+          name,
+          parameter: parameters[index],
+        },
+      };
     // A named argument out of position ends the positional part (C# 7.2 allows named arguments in position to be followed by positional ones).
-    if(index!==i)positional=false;
-    parameterOf[i]=index;taken[index]=true;if(expanded&&index===last)paramsCount++;
+    if (index !== i) positional = false;
+    parameterOf[i] = index;
+    taken[index] = true;
+    if (expanded && index === last) paramsCount++;
   }
-  const defaults=[];
-  for(let p=0;p<parameters.length;p++){
-    if(taken[p])continue;
-    if(expanded&&p===last)continue;
-    if(parameters[p].isOptional||parameters[p].hasExplicitDefaultValue){defaults.push(p);continue;}
-    return {ok:false,error:{code:'CS7036',kind:'missing',parameter:parameters[p]}};
+  const defaults = [];
+  for (let p = 0; p < parameters.length; p++) {
+    if (taken[p]) continue;
+    if (expanded && p === last) continue;
+    if (parameters[p].isOptional || parameters[p].hasExplicitDefaultValue) {
+      defaults.push(p);
+      continue;
+    }
+    return { ok: false, error: { code: 'CS7036', kind: 'missing', parameter: parameters[p] } };
   }
-  return {ok:true,parameterOf,expanded,paramsCount,defaults};
+  return { ok: true, parameterOf, expanded, paramsCount, defaults };
 }
 /** True when the candidate could be called with this many positional arguments in either form (used to pick the best error). */
-export function acceptsArgumentCount(parameters,count){
-  const required=parameters.filter(p=>!p.isOptional&&!p.hasExplicitDefaultValue&&!p.isParams).length;
-  return count>=required&&(count<=parameters.length||parameters.at(-1)?.isParams===true);
+export function acceptsArgumentCount(parameters, count) {
+  const required = parameters.filter(p => !p.isOptional && !p.hasExplicitDefaultValue && !p.isParams).length;
+  return count >= required && (count <= parameters.length || parameters.at(-1)?.isParams === true);
 }
 /**
  * Lays out a resolved call for lowering.
@@ -58,18 +84,31 @@ export function acceptsArgumentCount(parameters,count){
  *   `{kind:'paramsArray',arguments:[...],elementType}`; `evaluation` lists the source arguments in evaluation order
  *   with `temp:true` for those that must be captured before the call because they are out of parameter order.
  */
-export function buildCallPlan(mapping,parameters,args=[]){
-  const last=parameters.length-1,slots=parameters.map((p,i)=>mapping.expanded&&i===last?{kind:'paramsArray',arguments:[],elementType:p.type?.elementType??null}:null);
-  mapping.parameterOf.forEach((p,a)=>{if(mapping.expanded&&p===last)slots[p].arguments.push(a);else slots[p]={kind:'argument',argument:a};});
-  for(const p of mapping.defaults)slots[p]={kind:'default',hasValue:parameters[p].hasExplicitDefaultValue,value:parameters[p].explicitDefaultValue??null};
+export function buildCallPlan(mapping, parameters, args = []) {
+  const last = parameters.length - 1,
+    slots = parameters.map((p, i) =>
+      mapping.expanded && i === last ? { kind: 'paramsArray', arguments: [], elementType: p.type?.elementType ?? null } : null,
+    );
+  mapping.parameterOf.forEach((p, a) => {
+    if (mapping.expanded && p === last) slots[p].arguments.push(a);
+    else slots[p] = { kind: 'argument', argument: a };
+  });
+  for (const p of mapping.defaults)
+    slots[p] = { kind: 'default', hasValue: parameters[p].hasExplicitDefaultValue, value: parameters[p].explicitDefaultValue ?? null };
   // Arguments are evaluated in source order. When that differs from parameter order, every argument evaluated before
   // a later-positioned one is spilled to a temporary - except constants and by-ref arguments, which have no side effects to order.
-  let needsTemps=false;const evaluation=[];let highest=-1;const order=mapping.parameterOf.map((p,a)=>({argument:a,parameter:p}));
-  const outOfOrder=order.some((o,i)=>order.slice(0,i).some(prev=>prev.parameter>o.parameter));
-  for(const o of order){
-    const arg=args[o.argument],pure=!!arg?.constantValue||arg?.refKind&&arg.refKind!==RefKind.None&&arg.refKind!=='none';
-    const temp=outOfOrder&&!pure;if(temp)needsTemps=true;highest=Math.max(highest,o.parameter);
-    evaluation.push({argument:o.argument,parameter:o.parameter,temp});
+  let needsTemps = false;
+  const evaluation = [];
+  let highest = -1;
+  const order = mapping.parameterOf.map((p, a) => ({ argument: a, parameter: p }));
+  const outOfOrder = order.some((o, i) => order.slice(0, i).some(prev => prev.parameter > o.parameter));
+  for (const o of order) {
+    const arg = args[o.argument],
+      pure = !!arg?.constantValue || (arg?.refKind && arg.refKind !== RefKind.None && arg.refKind !== 'none');
+    const temp = outOfOrder && !pure;
+    if (temp) needsTemps = true;
+    highest = Math.max(highest, o.parameter);
+    evaluation.push({ argument: o.argument, parameter: o.parameter, temp });
   }
-  return {slots,evaluation,needsTemps};
+  return { slots, evaluation, needsTemps };
 }

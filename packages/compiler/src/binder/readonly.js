@@ -10,36 +10,50 @@
  * readonly no copy is needed; otherwise the compiler calls it on a defensive copy - and warns CS8656 when the
  * receiver is `this` in a readonly member.
  */
-import {TypeKind,SymbolKind} from '../symbols/types.js';
-import {MethodKind} from '../symbols/members.js';
-import {classifyVariable} from './ref-kinds.js';
+import { TypeKind, SymbolKind } from '../symbols/types.js';
+import { MethodKind } from '../symbols/members.js';
+import { classifyVariable } from './ref-kinds.js';
 
-export const readonlyStructFeature=Object.freeze({name:'readonly structs',version:7.2});
-export const readonlyMembersFeature=Object.freeze({name:'readonly members',version:8});
+export const readonlyStructFeature = Object.freeze({ name: 'readonly structs', version: 7.2 });
+export const readonlyMembersFeature = Object.freeze({ name: 'readonly members', version: 8 });
 /** True when a method cannot mutate `this`: explicitly readonly, declared in a readonly struct, or an auto-property getter. */
-export function isEffectivelyReadOnly(method){
-  const type=method.containingType;if(!type||type.typeKind!==TypeKind.Struct||method.isStatic)return false;
-  if(method.methodKind===MethodKind.Constructor)return false;
-  return type.isReadOnly||method.isReadOnly||method.associatedSymbol?.isReadOnlyMember===true||method.methodKind===MethodKind.PropertyGet&&method.isAutoAccessor===true;
+export function isEffectivelyReadOnly(method) {
+  const type = method.containingType;
+  if (!type || type.typeKind !== TypeKind.Struct || method.isStatic) return false;
+  if (method.methodKind === MethodKind.Constructor) return false;
+  return (
+    type.isReadOnly ||
+    method.isReadOnly ||
+    method.associatedSymbol?.isReadOnlyMember === true ||
+    (method.methodKind === MethodKind.PropertyGet && method.isAutoAccessor === true)
+  );
 }
 /** Declaration diagnostics of a readonly struct and of readonly members. @returns [{code,args,member}] */
-export function checkReadOnlyDeclarations(type){
-  const results=[];if(type.typeKind!==TypeKind.Struct){for(const m of type.getMembers())if(m.kind===SymbolKind.Method&&m.isReadOnly&&!m.isAccessor&&m.methodKind===MethodKind.Ordinary)results.push({code:'CS0106',args:['readonly'],member:m});return results;}
-  for(const m of type.getMembers()){
-    if(m.isImplicitlyDeclared&&!m.isPositional)continue;
-    if(type.isReadOnly&&!m.isStatic){
-      if(m.kind===SymbolKind.Field&&!m.isReadOnly)results.push({code:'CS8340',args:[],member:m});
-      else if(m.kind===SymbolKind.Property&&m.isAutoProperty&&m.setMethod&&!m.setMethod.isInitOnly)results.push({code:'CS8341',args:[],member:m});
-      else if(m.kind===SymbolKind.Event&&m.isFieldLike)results.push({code:'CS8342',args:[],member:m});
+export function checkReadOnlyDeclarations(type) {
+  const results = [];
+  if (type.typeKind !== TypeKind.Struct) {
+    for (const m of type.getMembers())
+      if (m.kind === SymbolKind.Method && m.isReadOnly && !m.isAccessor && m.methodKind === MethodKind.Ordinary)
+        results.push({ code: 'CS0106', args: ['readonly'], member: m });
+    return results;
+  }
+  for (const m of type.getMembers()) {
+    if (m.isImplicitlyDeclared && !m.isPositional) continue;
+    if (type.isReadOnly && !m.isStatic) {
+      if (m.kind === SymbolKind.Field && !m.isReadOnly) results.push({ code: 'CS8340', args: [], member: m });
+      else if (m.kind === SymbolKind.Property && m.isAutoProperty && m.setMethod && !m.setMethod.isInitOnly)
+        results.push({ code: 'CS8341', args: [], member: m });
+      else if (m.kind === SymbolKind.Event && m.isFieldLike) results.push({ code: 'CS8342', args: [], member: m });
     }
-    if(m.kind===SymbolKind.Method&&m.isReadOnly&&!m.isAccessor){
-      if(m.isStatic)results.push({code:'CS8657',args:[m.toDisplayString()],member:m});
-      else if(m.methodKind===MethodKind.Constructor)results.push({code:'CS0106',args:['readonly'],member:m});
+    if (m.kind === SymbolKind.Method && m.isReadOnly && !m.isAccessor) {
+      if (m.isStatic) results.push({ code: 'CS8657', args: [m.toDisplayString()], member: m });
+      else if (m.methodKind === MethodKind.Constructor) results.push({ code: 'CS0106', args: ['readonly'], member: m });
     }
-    if(m.kind===SymbolKind.Property&&(m.modifierWords??m.syntax?.modifiers?.map(t=>t.text)??[]).includes('readonly')){
-      m.isReadOnlyMember=true;
-      if(m.isStatic)results.push({code:'CS8657',args:[m.toDisplayString()],member:m});
-      else if(m.isAutoProperty&&m.setMethod&&!m.setMethod.isInitOnly)results.push({code:'CS8659',args:[m.toDisplayString()],member:m});
+    if (m.kind === SymbolKind.Property && (m.modifierWords ?? m.syntax?.modifiers?.map(t => t.text) ?? []).includes('readonly')) {
+      m.isReadOnlyMember = true;
+      if (m.isStatic) results.push({ code: 'CS8657', args: [m.toDisplayString()], member: m });
+      else if (m.isAutoProperty && m.setMethod && !m.setMethod.isInitOnly)
+        results.push({ code: 'CS8659', args: [m.toDisplayString()], member: m });
     }
   }
   return results;
@@ -49,18 +63,37 @@ export function checkReadOnlyDeclarations(type){
  * @returns {{mode:'address'|'copy'|'value',warning?:{code:'CS8656',args}}}
  *   'address' - call on the variable itself; 'copy' - defensive copy first; 'value' - an rvalue receiver (spilled to a temp)
  */
-export function receiverPassing(receiver,member,context={}){
-  const type=receiver.type;if(!type||type.isValueType!==true||type.typeKind===TypeKind.Enum||type.specialType&&type.specialType!=='System_Nullable_T')return {mode:receiver.type?.isValueType?'value':'address'};
-  const method=member.kind===SymbolKind.Property?(context.isWrite?member.setMethod:member.getMethod):member;
-  const c=classifyVariable(receiver,context);
-  if(!c.isVariable)return {mode:'value'};
-  if(c.isWritable)return {mode:'address'};
+export function receiverPassing(receiver, member, context = {}) {
+  const type = receiver.type;
+  if (
+    !type ||
+    type.isValueType !== true ||
+    type.typeKind === TypeKind.Enum ||
+    (type.specialType && type.specialType !== 'System_Nullable_T')
+  )
+    return { mode: receiver.type?.isValueType ? 'value' : 'address' };
+  const method = member.kind === SymbolKind.Property ? (context.isWrite ? member.setMethod : member.getMethod) : member;
+  const c = classifyVariable(receiver, context);
+  if (!c.isVariable) return { mode: 'value' };
+  if (c.isWritable) return { mode: 'address' };
   // Read-only variable: no copy when the member promises not to mutate.
-  if(method&&isEffectivelyReadOnly(method))return {mode:'address'};
-  if(member.kind===SymbolKind.Field)return {mode:'address'};
-  const result={mode:'copy'};
-  if(receiver.kind==='This'&&context.method&&isEffectivelyReadOnly(context.method)&&method&&!method.isStatic)result.warning={code:'CS8656',args:[method.methodKind===MethodKind.PropertyGet||method.methodKind===MethodKind.PropertySet?member.toDisplayString()+(method.methodKind===MethodKind.PropertyGet?'.get':'.set'):member.toDisplayString(),'this']};
+  if (method && isEffectivelyReadOnly(method)) return { mode: 'address' };
+  if (member.kind === SymbolKind.Field) return { mode: 'address' };
+  const result = { mode: 'copy' };
+  if (receiver.kind === 'This' && context.method && isEffectivelyReadOnly(context.method) && method && !method.isStatic)
+    result.warning = {
+      code: 'CS8656',
+      args: [
+        method.methodKind === MethodKind.PropertyGet || method.methodKind === MethodKind.PropertySet
+          ? member.toDisplayString() + (method.methodKind === MethodKind.PropertyGet ? '.get' : '.set')
+          : member.toDisplayString(),
+        'this',
+      ],
+    };
   return result;
 }
 /** Writing a member of `this` inside a readonly member or readonly struct (CS1604 through `checkWritable`); true when the context forbids it. */
-export function thisIsReadOnly(context){const t=context.containingType;return !!t&&t.typeKind===TypeKind.Struct&&(t.isReadOnly||!!context.method&&isEffectivelyReadOnly(context.method));}
+export function thisIsReadOnly(context) {
+  const t = context.containingType;
+  return !!t && t.typeKind === TypeKind.Struct && (t.isReadOnly || (!!context.method && isEffectivelyReadOnly(context.method)));
+}
