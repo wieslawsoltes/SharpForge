@@ -2,6 +2,7 @@ import {toLegacyExpression} from '@sharpforge/syntax';
 
 /** Projects nested collection initializers from the lossless parser into designer-owned expression records. */
 export function mapDesignInitializers(parsed) {
+  if (!parsed.features.some(feature => feature.id === 'CollectionInitializer')) return [];
   const constructions = new Map();
   const pending = [parsed.root];
   while (pending.length) {
