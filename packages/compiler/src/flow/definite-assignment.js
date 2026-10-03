@@ -13,7 +13,6 @@ import {computeReachableBlocks} from './reachability.js';
  * Struct field tracking (CS0170, CS0171) needs struct declarations and is not part of this profile yet.
  */
 const isOut=v=>v.kind==='Parameter'&&v.refKind==='out';
-const tracked=v=>v.kind==='Local'||isOut(v);
 const intersect=(a,b)=>{if(a===null)return b;if(b===null)return a;const result=new Set();for(const v of a)if(b.has(v))result.add(v);return result;};
 /** False for an edge a constant operand of && or || never takes (see cfg.js). */
 const flows=(from,to)=>{const t=from.terminator;if(t?.kind!=='branch'||!t.dead)return true;const live=t.dead==='whenTrue'?t.whenFalse:t.whenTrue;return live===to;};
@@ -36,13 +35,15 @@ export function writeConsideredUse(type,value){
 const nameNode=local=>{const s=local.syntax;return s?.nameSpan?{uri:s.uri,start:s.nameSpan.start,end:s.nameSpan.end}:s;};
 /**
  * @param graph the control-flow graph.
- * @param {object} options `reachable` (from analyzeReachability; computed when omitted), `parameters` (the method's
+ * @param {object} options `reachable` (from analyzeReachability; computed when omitted), `trackParameters`, `parameters` (the method's
  *   ParameterSymbols; out parameters start unassigned), `exitNode` (where CS0177 is reported for the method end).
  * @returns {{diagnostics:Array<{code,args,node}>, entryStates:Map, exitStates:Map, unassignedReads:Array}}
  *   `entryStates`/`exitStates` map each reachable block to its set of definitely assigned variables.
  */
 export function analyzeDefiniteAssignment(graph,options={}){
   const reachable=options.reachable??computeReachableBlocks(graph),outParameters=(options.parameters??[]).filter(isOut),entryStates=new Map(),exitStates=new Map();
+  // Locals and out parameters are tracked; region analysis also tracks ordinary parameters.
+  const tracked=v=>v.kind==='Local'||isOut(v)||!!options.trackParameters&&v.kind==='Parameter'&&!v.isThis;
   const transfer=(block,state,onRead)=>{
     const s=new Set(state);
     for(const op of block.ops){
