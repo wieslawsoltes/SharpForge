@@ -14,25 +14,17 @@ function branchIndex(offsets, offset) {
   return target;
 }
 
-function createPlan(method, state) {
-  const started = performance.now();
-  const instructions = method.instructions;
+function operandMetadata(instructions, offsets) {
   const count = instructions.length;
   const opcodeIds = new Int32Array(count);
   const operands = new Int32Array(count).fill(-1);
   const branchTargets = new Int32Array(count).fill(-1);
   const operandValues = [];
   const switchTargets = Array(count).fill(null);
-  const allocations = methodOffsetAllocations(method);
-  const offsets = methodOffsets(method);
-  const handlers = Array(count);
   for (let index = 0; index < count; index++) {
     const instruction = instructions[index];
     const opcode = CilOpcodes[instruction.name];
-    const handler = cilHandlers.get(instruction.name);
-    if (!opcode || !handler) invalid(`Opcode '${instruction.name}' is not executable`);
     opcodeIds[index] = opcode.value;
-    handlers[index] = handler;
     if (instruction.operand !== undefined) {
       operands[index] = operandValues.length;
       operandValues.push(Array.isArray(instruction.operand) ? Object.freeze([...instruction.operand]) : instruction.operand);
@@ -43,21 +35,42 @@ function createPlan(method, state) {
       branchTargets[index] = branchIndex(offsets, instruction.operand);
     }
   }
-  // Nonempty native typed arrays cannot be frozen. Only private canonical buffers
-  // are retained; diagnostic/optimizer readers receive independent numeric copies.
-  // Execution reads the frozen handler array, without invoking these accessors.
+  return {opcodeIds, operands, branchTargets, switchTargets, operandValues: Object.freeze(operandValues)};
+}
+
+function createPlan(method, state) {
+  const started = performance.now();
+  const instructions = Object.freeze([...method.instructions]);
+  const allocations = methodOffsetAllocations(method);
+  const offsets = methodOffsets(method);
+  const handlers = Array(instructions.length);
+  for (let index = 0; index < instructions.length; index++) {
+    const instruction = instructions[index];
+    const opcode = CilOpcodes[instruction.name];
+    const handler = cilHandlers.get(instruction.name);
+    if (!opcode || !handler) invalid(`Opcode '${instruction.name}' is not executable`);
+    handlers[index] = handler;
+    if (opcode.operand === 'switch') {
+      for (const target of instruction.operand) branchIndex(offsets, target);
+    } else if (opcode.operand === 'br8' || opcode.operand === 'br32') {
+      branchIndex(offsets, instruction.operand);
+    }
+  }
+  // Dispatch only needs handlers and original instructions. Allocate optional
+  // numeric diagnostics on their first read; these buffers never enter snapshots.
+  let metadata;
+  const readMetadata = () => metadata ??= operandMetadata(instructions, offsets);
   const plan = {
-    instructions: Object.freeze([...instructions]), offsets, handlers,
-    operandValues: Object.freeze(operandValues),
-    get opcodeIds() { return opcodeIds.slice(); },
-    get operands() { return operands.slice(); },
-    get branchTargets() { return branchTargets.slice(); },
-    get switchTargets() { return Object.freeze(switchTargets.map(targets => targets?.slice() ?? null)); }
+    instructions, offsets, handlers: Object.freeze(handlers),
+    get operandValues() { return readMetadata().operandValues; },
+    get opcodeIds() { return readMetadata().opcodeIds.slice(); },
+    get operands() { return readMetadata().operands.slice(); },
+    get branchTargets() { return readMetadata().branchTargets.slice(); },
+    get switchTargets() { return Object.freeze(readMetadata().switchTargets.map(targets => targets?.slice() ?? null)); }
   };
-  Object.freeze(handlers);
   Object.freeze(plan);
   state.statistics.decodePlans++;
-  state.statistics.decodedInstructions += count;
+  state.statistics.decodedInstructions += instructions.length;
   state.statistics.offsetMapAllocations += methodOffsetAllocations(method) - allocations;
   state.statistics.decodeMilliseconds += performance.now() - started;
   return plan;

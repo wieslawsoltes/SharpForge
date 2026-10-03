@@ -11,9 +11,10 @@ Decode plans are enabled by default. Set `decodePlans: false` in
 `CilVirtualMachine` options to retain the original per-instruction handler lookup.
 That path does not construct decode plans. The source interpreter is unchanged.
 
-The internal plan contains numeric opcode IDs, operand indexes, branch PCs and
-switch PCs. Operand values remain separate so Int64 values and floating-point
-signed zero are preserved. Plan and handler arrays are frozen; diagnostic reads
+Ordinary dispatch allocates only the handler array and a frozen array of original
+instruction references. Optional numeric opcode IDs, operand indexes, branch PCs
+and switch PCs are allocated lazily on their first diagnostic read. Operand values
+remain separate so Int64 values and floating-point signed zero are preserved. Plan and handler arrays are frozen; diagnostic reads
 of numeric buffers return copies. Instructions and the shared offset map retain
 their existing metadata identity. Branch handlers still consume their original
 operands through that shared offset map; branch-PC execution and specialized
