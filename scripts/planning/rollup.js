@@ -6,7 +6,7 @@ import { readJSON, isMain, report } from './lib/io.js';
 import { commitOnMain, verifyArtifact, invalidateEvidence } from './rollup-invalidation.js';
 
 const evidenceSchema=JSON.parse(readFileSync(new URL('../../planning/contracts/evidence.schema.json',import.meta.url),'utf8'));
-const key=record=>[record.capabilityId,record.leafId,record.platform,record.engine,record.specRevision].join('\0');
+const key=record=>JSON.stringify([record.capabilityId,record.leafId,record.platform,record.engine,record.specRevision]);
 export function rollup({inventory,evidence,snapshot,revisions,ancestor,verified}) {
   if(inventory.schemaVersion!==1||!Array.isArray(inventory.rows)||!inventory.rows.length) throw new Error('A29 gap inventory denominator is required');
   const issues=new Map(), registry=new Set(), records=new Map(), seenRows=new Set();
@@ -27,7 +27,9 @@ export function rollup({inventory,evidence,snapshot,revisions,ancestor,verified}
     for(const name of ['platforms','engines','specRevisions']) if(!Array.isArray(row[name])||!row[name].length||row[name].some(v=>typeof v!=='string'||!v)||new Set(row[name]).size!==row[name].length) throw new Error(`Invalid ${name} for ${row.id}`);
     const parents=[], visited=new Set(); let cursor=issue;
     while(cursor) {
-      if(visited.has(cursor.id)) throw new Error(`Parent cycle at ${cursor.id}`); visited.add(cursor.id); parents.push(cursor.id);
+      if(visited.has(cursor.id)) throw new Error(`Parent cycle at ${cursor.id}`); visited.add(cursor.id);
+      if(cursor.area!==row.area) throw new Error(`Parent area mismatch ${cursor.id}`);
+      parents.push(cursor.id);
       if(cursor.parent&&!issues.has(cursor.parent)) throw new Error(`Missing parent ${cursor.parent}`);
       cursor=issues.get(cursor.parent);
     }
@@ -38,14 +40,14 @@ export function rollup({inventory,evidence,snapshot,revisions,ancestor,verified}
       const obligation=record?invalidateEvidence(record,{issue,ancestor,verified}):{...identity,status:'unknown',invalidated:['no evidence']};
       if(record) consumed.add(key(record)); obligations.push(obligation);
       for(const id of parents) {
-        const groupKey=[id,platform,engine,specRevision].join('\0');
+        const groupKey=JSON.stringify([id,platform,engine,specRevision]);
         if(!groups.has(groupKey)) groups.set(groupKey,{id,kind:id===row.area?'Area':issues.get(id)?.kind??'Task',platform,engine,specRevision,total:0,pass:0,fail:0,unknown:0,unsupported:0});
         const group=groups.get(groupKey); group.total++; group[obligation.status]++;
       }
     }
   }
   const unconsumed=[...records.keys()].filter(k=>!consumed.has(k));
-  if(unconsumed.length) throw new Error('Evidence does not match current inventory obligations: '+unconsumed.map(k=>k.split('\0').join('/')).join(', '));
+  if(unconsumed.length) throw new Error('Evidence does not match current inventory obligations: '+unconsumed.map(k=>JSON.parse(k).join('/')).join(', '));
   const sorted=[...groups].sort(([a],[b])=>a.localeCompare(b,'en')).map(([,group])=>({...group,fraction:{numerator:group.pass,denominator:group.total},percent:Math.round(group.pass/group.total*10000)/100,complete:group.pass===group.total}));
   const completeByScope=new Map();
   for(const group of sorted) completeByScope.set(group.id,(completeByScope.get(group.id)??true)&&group.complete);
@@ -53,8 +55,11 @@ export function rollup({inventory,evidence,snapshot,revisions,ancestor,verified}
   return {schemaVersion:1,denominator:'inventory capability × platform × engine × spec revision',groups:sorted,obligations,errors:[]};
 }
 export function rollupInputs(values) {
-  const root=resolve(values.root??'.'), artifactIndex=readJSON(values.artifacts);
-  return {inventory:readJSON(values.inventory),evidence:readJSON(values.evidence),snapshot:readJSON(values.snapshot??'planning/backlog.snapshot.json'),revisions:readJSON(values.revisions??'planning/contracts/spec-revisions.json'),ancestor:commit=>commitOnMain(commit,{root,main:values.main??'origin/main'}),verified:record=>artifactIndex[record.evidenceDigest]&&verifyArtifact(record,resolve(root,artifactIndex[record.evidenceDigest]))};
+  const root=resolve(values.root??'.');
+  const read=(name,fallback)=>{const path=values[name]??fallback;if(!path)throw new Error(`Missing --${name}`);return readJSON(resolve(root,path));};
+  const artifactIndex=read('artifacts');
+  if(!artifactIndex||typeof artifactIndex!=='object'||Array.isArray(artifactIndex))throw new Error('Artifact index must map digests to directories');
+  return {inventory:read('inventory'),evidence:read('evidence'),snapshot:read('snapshot','planning/backlog.snapshot.json'),revisions:read('revisions','planning/contracts/spec-revisions.json'),ancestor:commit=>commitOnMain(commit,{root,main:values.main??'origin/main'}),verified:record=>typeof artifactIndex[record.evidenceDigest]==='string'&&verifyArtifact(record,resolve(root,artifactIndex[record.evidenceDigest]))};
 }
 export const rollupOptions={root:{type:'string',default:'.'},inventory:{type:'string'},evidence:{type:'string'},artifacts:{type:'string'},snapshot:{type:'string'},revisions:{type:'string'},main:{type:'string',default:'origin/main'}};
 if(isMain(import.meta.url)) { const {values}=parseArgs({options:rollupOptions}); report(rollup(rollupInputs(values))); }

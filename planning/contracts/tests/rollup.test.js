@@ -1,16 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { rollup } from '../../../scripts/planning/rollup.js';
+import { rollup, rollupInputs } from '../../../scripts/planning/rollup.js';
 import { publishRollup } from '../../../scripts/planning/rollup-publish.js';
 
 function inputs(){
   const revisions={revisions:[{id:'csharp-14'}]},leafId='SF-A00-T12.1';
   const snapshot={issues:[{id:'SF-A00-E02',kind:'Epic',area:'A00',state:'CLOSED',parent:null},{id:'SF-A00-T12',kind:'Task',area:'A00',state:'CLOSED',parent:'SF-A00-E02'},{id:leafId,kind:'Task',area:'A00',state:'CLOSED',parent:'SF-A00-T12'}]};
   const inventory={schemaVersion:1,rows:[{id:'feature.one',leafId,area:'A00',platforms:['linux','windows'],engines:['source','cil'],specRevisions:['csharp-14']}]};
-  const evidence=[['linux','source','pass'],['linux','cil','fail'],['windows','source','unsupported']].map(([platform,engine,status])=>({schemaVersion:1,leafId,capabilityId:'feature.one',platform,engine,specRevision:'csharp-14',status,commit:'a'.repeat(40),evidenceDigest:'b'.repeat(64)}));
+  const evidence=[['linux','source','pass'],['linux','cil','fail'],['windows','source','unsupported']].map(([platform,engine,status])=>({schemaVersion:1,leafId,capabilityId:'feature.one',platform,engine,specRevision:'csharp-14',status,...(status==='unsupported'?{reason:'provider unavailable'}:{}),commit:'a'.repeat(40),evidenceDigest:'b'.repeat(64)}));
   return {revisions,snapshot,inventory,evidence,ancestor:()=>true,verified:()=>true};
 }
 test('inventory obligations produce distinct fractions and unknown prevents parent complete',()=>{
@@ -41,5 +41,25 @@ test('report bytes are deterministic, numeric parity updates are changed-only an
     await publishRollup({result,directory,client});assert.equal(updates.length,1);assert.equal(readFileSync(join(directory,'parity.json'),'utf8'),bytes);
     const md=readFileSync(join(directory,'parity.md'),'utf8');assert.match(md,/Unknown \| Unsupported/);
     const zero=inputs();zero.verified=()=>false;await publishRollup({result:rollup(zero),directory,client});assert.equal(updates.at(-1)['Parity percent'],0);
+  }finally{rmSync(directory,{recursive:true,force:true});}
+});
+
+
+test('rollup reads relative inputs from the requested root and invalid artifact paths remain unknown',()=>{
+  const root=mkdtempSync(join(tmpdir(),'sf-rollup-inputs-')),input=inputs();
+  try{
+    for(const [name,value]of Object.entries({inventory:input.inventory,evidence:input.evidence,snapshot:input.snapshot,revisions:input.revisions,artifacts:{['b'.repeat(64)]:true}}))writeFileSync(join(root,name+'.json'),JSON.stringify(value));
+    const loaded=rollupInputs({root,inventory:'inventory.json',evidence:'evidence.json',snapshot:'snapshot.json',revisions:'revisions.json',artifacts:'artifacts.json'});
+    assert.deepEqual(loaded.inventory,input.inventory);assert.equal(loaded.verified(input.evidence[0]),false);assert(rollup(loaded).obligations.every(record=>record.status==='unknown'));
+  }finally{rmSync(root,{recursive:true,force:true});}
+});
+test('publishing rejects impossible percentages and ambiguous epic targets before project writes',async()=>{
+  const directory=mkdtempSync(join(tmpdir(),'sf-rollup-invalid-')),result=rollup(inputs()),writes=[];
+  try{
+    const invalid=structuredClone(result);invalid.groups[0].percent=200;await assert.rejects(publishRollup({result:invalid,directory}),/percentage/);
+    const duplicate=structuredClone(result);duplicate.groups.push(duplicate.groups[0]);await assert.rejects(publishRollup({result:duplicate,directory}),/Duplicate/);
+    const item={content:{title:'[SF-A00-E02] Epic'},fields:{}},client={items:async()=>[item,item],setFields:async(...args)=>writes.push(args)};
+    await assert.rejects(publishRollup({result,directory,client}),/exactly one project item/);assert.equal(writes.length,0);
+    const cross=inputs();cross.snapshot.issues[0].area='A01';assert.throws(()=>rollup(cross),/Parent area mismatch/);
   }finally{rmSync(directory,{recursive:true,force:true});}
 });

@@ -72,7 +72,10 @@
         "additionalProperties": false,
         "required": [
           "argv",
-          "summary"
+          "summary",
+          "headCommit",
+          "evidenceDigest",
+          "obligations"
         ],
         "properties": {
           "argv": {
@@ -92,7 +95,9 @@
               "failed",
               "cancelled",
               "skipped",
-              "exitCode"
+              "todo",
+              "exitCode",
+              "complete"
             ],
             "properties": {
               "tests": {
@@ -115,10 +120,101 @@
                 "type": "integer",
                 "minimum": 0
               },
+              "todo": {
+                "type": "integer",
+                "minimum": 0
+              },
               "exitCode": {
                 "type": "integer",
                 "minimum": 0
+              },
+              "complete": {
+                "type": "boolean"
               }
+            }
+          },
+          "headCommit": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{40}$"
+          },
+          "evidenceDigest": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "obligations": {
+            "type": "array",
+            "items": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "title": "Command-emitted target proof bound to one TAP result",
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "capabilityId",
+                "platform",
+                "engine",
+                "specRevision",
+                "status",
+                "testName"
+              ],
+              "properties": {
+                "capabilityId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "platform": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "engine": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "specRevision": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "testName": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "status": {
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "unknown",
+                    "unsupported"
+                  ]
+                }
+              },
+              "anyOf": [
+                {
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "pass",
+                        "fail"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "unknown",
+                        "unsupported"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "reason"
+                  ]
+                }
+              ]
             }
           }
         }
@@ -133,7 +229,9 @@
         "failed",
         "cancelled",
         "skipped",
-        "exitCode"
+        "todo",
+        "exitCode",
+        "complete"
       ],
       "properties": {
         "tests": {
@@ -156,9 +254,16 @@
           "type": "integer",
           "minimum": 0
         },
+        "todo": {
+          "type": "integer",
+          "minimum": 0
+        },
         "exitCode": {
           "type": "integer",
           "minimum": 0
+        },
+        "complete": {
+          "type": "boolean"
         }
       }
     },

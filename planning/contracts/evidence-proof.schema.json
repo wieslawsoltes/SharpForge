@@ -1,27 +1,17 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Command-emitted target proof bound to one TAP result",
   "type": "object",
   "additionalProperties": false,
-  "title": "One capability obligation evidence",
   "required": [
-    "schemaVersion",
-    "leafId",
     "capabilityId",
     "platform",
     "engine",
     "specRevision",
     "status",
-    "commit",
-    "evidenceDigest"
+    "testName"
   ],
   "properties": {
-    "schemaVersion": {
-      "const": 1
-    },
-    "leafId": {
-      "type": "string",
-      "pattern": "^SF-A\\d{2}-[TB]\\d+(?:\\.\\d+)?$"
-    },
     "capabilityId": {
       "type": "string",
       "minLength": 1
@@ -38,6 +28,14 @@
       "type": "string",
       "minLength": 1
     },
+    "testName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1
+    },
     "status": {
       "enum": [
         "pass",
@@ -45,18 +43,6 @@
         "unknown",
         "unsupported"
       ]
-    },
-    "commit": {
-      "type": "string",
-      "pattern": "^[a-f0-9]{40}$"
-    },
-    "evidenceDigest": {
-      "type": "string",
-      "pattern": "^[a-f0-9]{64}$"
-    },
-    "reason": {
-      "type": "string",
-      "minLength": 1
     }
   },
   "anyOf": [
