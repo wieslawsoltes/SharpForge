@@ -18,7 +18,7 @@ import { ConversionBinding } from './body/conversions.js';
 import { NameBinding } from './body/names.js';
 import { CallBinding } from './body/calls.js';
 import { CreationBinding } from './body/creation.js';
-import { InitializerBinding } from './members/initializers.js';
+import { memberBindings } from './members/index.js';
 import { OperatorBinding } from './body/operators.js';
 import { TypeTestBinding } from './body/type-tests.js';
 import { TupleBinding } from './body/tuples.js';
@@ -35,13 +35,14 @@ import { FlowStatementBinding } from './body/flow-statements.js';
 import { LocalFunctionBinding } from './body/local-functions.js';
 import { JumpBinding } from './jumps.js';
 import { ExceptionBinding } from './exceptions.js';
+import { AnonymousMethodBinding } from './anonymous-methods.js';
 
 const expressionFamilies = [
   ConversionBinding,
   NameBinding,
   CallBinding,
   CreationBinding,
-  InitializerBinding,
+  ...memberBindings,
   OperatorBinding,
   TypeTestBinding,
   TupleBinding,
@@ -53,7 +54,15 @@ const expressionFamilies = [
   StackAllocBinding,
   QueryBinding,
 ];
-const statementFamilies = [StatementBinding, DeclarationBinding, FlowStatementBinding, LocalFunctionBinding, JumpBinding, ExceptionBinding];
+const statementFamilies = [
+  StatementBinding,
+  DeclarationBinding,
+  FlowStatementBinding,
+  LocalFunctionBinding,
+  JumpBinding,
+  ExceptionBinding,
+  AnonymousMethodBinding,
+];
 const compose = (base, mixins) => mixins.reduce((composed, mixin) => mixin(composed), base);
 
 /**

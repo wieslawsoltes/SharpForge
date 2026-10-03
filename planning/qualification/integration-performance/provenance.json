@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "capturedDate": "2026-10-03",
+  "files": {
+    "README.md": {
+      "bytes": 5491,
+      "sha256": "331e00b0e6e7d90aeae6f5c1b12c795692978128b362eb718bdd6bf80cb5004b"
+    },
+    "binder-types-ab/base.json": {
+      "bytes": 74156,
+      "sha256": "7fe66a80a7431050b60d25a45437a17573c29c529ac72af4391d1e4274e753cb"
+    },
+    "binder-types-ab/comparison.json": {
+      "bytes": 5026,
+      "sha256": "80f12e430cc47f83d3792cf0cb6884ec4904c307dc52dcad1133203ad7407c1f"
+    },
+    "binder-types-ab/head.json": {
+      "bytes": 74050,
+      "sha256": "ed23132ea0fffcf5d37a3e8a3b4506963004bb4d658cd6393ba5299dfdec2409"
+    },
+    "binder-types-ab/run.json": {
+      "bytes": 168754,
+      "sha256": "f218851aa7ef908d3e060f1a34239d4a50aa19c414c3c37b9bfa71c17c3bf388"
+    },
+    "binder-types-ab/samples.json": {
+      "bytes": 675284,
+      "sha256": "a3ed25711aa2a92294b75723d8b1d1ab10200b31f56781457383499875001375"
+    },
+    "binder-types-ab/summary.md": {
+      "bytes": 705,
+      "sha256": "7fb88db2f93cdcc2f6699e34ff9f58cc1e0c8ee48a8ccee431b410e300d5c74c"
+    },
+    "compiler-adapters/compiler.mjs": {
+      "bytes": 2944,
+      "sha256": "769d2f2dc7f2fe3984c2446278d84ef9beba29ad9125811b0bfc3cf63e40e2d7"
+    },
+    "compiler-adapters/registry.json": {
+      "bytes": 287,
+      "sha256": "d1bd81203e11cdd027086f7700d2e3968f4ef88b084afd6762bffa1a6fd881bd"
+    },
+    "compiler-binder-types-ab/base.json": {
+      "bytes": 25035,
+      "sha256": "3f1c4c90588433755ad121f83e553b6dbbdc0c008b27681efb3de7899f1b749d"
+    },
+    "compiler-binder-types-ab/comparison.json": {
+      "bytes": 2384,
+      "sha256": "d7f608c21d4cee0de5c50718fd41d0738131ccaca6e4ed78941ba3e22e0e40fd"
+    },
+    "compiler-binder-types-ab/head.json": {
+      "bytes": 24967,
+      "sha256": "74718c04ec1c2abf7d97599ad3d5d5dc4334119a4caa1d96401c3b586c58a1a4"
+    },
+    "compiler-binder-types-ab/run.json": {
+      "bytes": 82754,
+      "sha256": "25da41f1c79f46bae9a92306b5e4cab2506a49593e51f2bbaeef19ccfde23dc7"
+    },
+    "compiler-binder-types-ab/samples.json": {
+      "bytes": 339088,
+      "sha256": "8d7ecc826f4333dcf55bde605d4a419571d618ef7231c1ff0b8d331723c43acd"
+    },
+    "compiler-binder-types-ab/summary.md": {
+      "bytes": 395,
+      "sha256": "a0227cc7e468da14d26cbe24a492652d82dc8dba628d504823167787644204f2"
+    },
+    "size/base.json": {
+      "bytes": 3848,
+      "sha256": "787446c728a4d0729a5a0d3f29ceb190b18e465bf5522a48aecf12b78d24db48"
+    },
+    "size/head.json": {
+      "bytes": 3850,
+      "sha256": "4cefc47186f7b98c5fe7fdf6a0810fcd9ce5a5579a1c30b5f42410fc8083767d"
+    },
+    "size/measure.mjs": {
+      "bytes": 1588,
+      "sha256": "26851a5b20595deb28624b0f6888ed0f4bd271caf9ac6d389ab770d19dfb6681"
+    },
+    "size/run.json": {
+      "bytes": 1317,
+      "sha256": "405ff893519ee04d470fbba8d2d280c3f89484227bcbe5d7f8ae21cfd0c0fa2b"
+    },
+    "structure.log": {
+      "bytes": 20461,
+      "sha256": "ebc984c4ea01dc21ac32c5c9ea1dee3c2148fa24d2e83192c66d08d67c390cbf"
+    }
+  }
+}

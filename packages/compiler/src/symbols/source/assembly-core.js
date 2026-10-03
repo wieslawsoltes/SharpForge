@@ -2,6 +2,7 @@
  * The source assembly: declares every type of every file (names, arity, containers, partial merging) and
  * builds the member list of a type on first use.
  */
+import { mergePartialMembers } from './partial-members.js';
 import { synthesizeRecordMembers } from '../synthesized/records.js';
 import { TypeKind, Accessibility } from '../types.js';
 import { FieldSymbol, DeclarationModifiers, accessibilityFromSyntax } from '../members.js';
@@ -228,6 +229,11 @@ export class SourceAssemblyCore {
     }
     this.implicitConstructors(type, members);
     if (type.isRecord) synthesizeRecordMembers(type, members, this.core);
+    // Partial members become one symbol each before duplicates are looked for.
+    for (const row of mergePartialMembers(type, members)) {
+      const at = row.member.locations?.[0];
+      if (at) this.report(at.uri, at, row.code, row.args);
+    }
     this.reportConflicts(type, members);
     return members;
   }

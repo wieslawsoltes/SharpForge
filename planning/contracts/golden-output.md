@@ -23,3 +23,8 @@ Node/Git host tooling only: these hashes prove reproducibility and detect change
 not semantic correctness or native qualification. The original corpus's compiler
 diagnostics remain recorded limitations; complete project builds are independently
 qualified by their own integration tests.
+
+Lossless syntax snapshots retain the legacy AST, green nodes/tokens/trivia,
+features, directives and diagnostics. Parent-linked red facades are derived from
+the green tree and excluded to avoid cycles. Process-local green allocation IDs
+are omitted; separate parses and red-tree navigation must not change the hash.

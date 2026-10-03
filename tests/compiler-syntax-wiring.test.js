@@ -19,6 +19,7 @@ import { frameworkBridge } from '../packages/compiler/src/symbols/registry-bridg
 import { ArrayTypeSymbol, NullableAnnotation, TypeWithAnnotations } from '../packages/compiler/src/symbols/types.js';
 
 const slice = (source, d) => source.slice(d.start, d.start + d.length);
+const inMain = body => `class Program { static void Main() { ${body} } }`;
 
 test('A02-B01 parser-level feature gating is active in Compilation.build', () => {
   // The four gaps the bug names: var at 2, interpolated strings at 5, switch expressions and ??= at 7.
@@ -28,7 +29,8 @@ test('A02-B01 parser-level feature gating is active in Compilation.build', () =>
     ['int a = 1; Console.WriteLine(a switch { _ => 2 });', '7', 'CS8107', 'switch'],
     ['string s = null; s ??= "x"; Console.WriteLine(s);', '7', 'CS8107', '??='],
   ];
-  for (const [source, langVersion, code, text] of rows) {
+  for (const [body, langVersion, code, text] of rows) {
+    const source = inMain(body);
     const d = compile(source, { langVersion }).diagnostics.filter(x => x.code === code);
     assert.equal(d.length, 1, source);
     assert.equal(slice(source, d[0]), text);
@@ -41,7 +43,7 @@ test('A02-B01 parser-level feature gating is active in Compilation.build', () =>
   }
   // A feature the binder gates itself is reported once.
   assert.equal(
-    compile('object o = 1; Exception e = new("x"); Console.WriteLine(e.Message);', { langVersion: '8' }).diagnostics.filter(
+    compile(inMain('object o = 1; Exception e = new("x"); Console.WriteLine(e.Message);'), { langVersion: '8' }).diagnostics.filter(
       d => d.code === 'CS8400',
     ).length,
     1,
@@ -55,7 +57,9 @@ test('A02-B01 parser-level feature gating is active in Compilation.build', () =>
     compile(files, { langVersionByUri: { 'a.cs': '5' } }).diagnostics.map(d => d.code + ':' + d.uri),
     ['CS8026:a.cs'],
   );
-  assert.equal(compile(files, { langVersionByUri: { 'b.cs': '5' } }).success, true);
+  const topLevel = compile(files, { langVersionByUri: { 'b.cs': '5' } });
+  assert.equal(topLevel.success, false);
+  assert.deepEqual(topLevel.diagnostics.map(d => d.code + ':' + d.uri), ['CS8026:b.cs']);
 });
 test('A02-B01 parser-detectable features report the Roslyn code of the selected version and nothing at their own version', () => {
   // [source, introduced in, a version below it, the code Roslyn reports at that lower version]
@@ -78,7 +82,8 @@ test('A02-B01 parser-detectable features report the Roslyn code of the selected 
     ['int[] a=[1];', 12, '9', 'CS8773'],
   ];
   const gate = /^CS(?:802[2-6]|8059|8107|8302|8320|8370|8400|8773|8936|9058|9202|9260|9327)$/;
-  for (const [source, version, below, code] of rows) {
+  for (const [body, version, below, code] of rows) {
+    const source = body.startsWith('class ') ? body : inMain(body);
     assert(
       compile(source, { langVersion: below, outputKind: 'library' }).diagnostics.some(d => d.code === code && d.severity === 'error'),
       `${source} at ${below} reports ${code}`,

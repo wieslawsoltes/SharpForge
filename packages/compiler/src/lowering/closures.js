@@ -71,7 +71,9 @@ function scan(node, current, analysis) {
         current?.capture(n.local);
         break;
       case 'Parameter':
-        current?.capture(n.parameter);
+        // A primary constructor parameter captured by its type is state of `this`, not a variable of the method.
+        if (n.isPrimaryCapture && current) current.usesThis = true;
+        else current?.capture(n.parameter);
         break;
       case 'This':
       case 'Base':

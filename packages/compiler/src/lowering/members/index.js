@@ -5,5 +5,10 @@
 import { EvaluateOnce } from './evaluate-once.js';
 import { InitializerLowering } from './initializers.js';
 import { OperatorLowering } from './operators.js';
+import { PrimaryConstructorLowering, PrimaryConstructorGeneration } from './primary-constructors.js';
+import { PartialMemberLowering, PartialMemberGeneration } from './partial-members.js';
 
-export const memberLowerings = Object.freeze([EvaluateOnce, InitializerLowering, OperatorLowering]);
+export const memberLowerings = Object.freeze([EvaluateOnce, InitializerLowering, OperatorLowering, PrimaryConstructorLowering, PartialMemberLowering]);
+
+/** Generator mixins of the member lowerings, composed over the generator's own declaration and initialization passes. */
+export const memberGenerators = Object.freeze([PrimaryConstructorGeneration, PartialMemberGeneration]);

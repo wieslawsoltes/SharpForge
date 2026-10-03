@@ -9,7 +9,7 @@
     5
   ],
   "entryPoint": 3,
-  "formatVersion": 1,
+  "formatVersion": 2,
   "methods": [
     {
       "asyncOrigin": "Program.Main",
