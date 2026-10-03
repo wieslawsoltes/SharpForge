@@ -18,10 +18,15 @@ export class DesignerOutline {
     this.dropTarget = null;
   }
 
-  isVisible(id) { return this.state.isVisible(id); }
-  isLocked(id) { return this.state.isLocked(id); }
-  filterSelection(ids) { return this.state.filterSelection(ids); }
-  assertEditable(ids = this.view.document.selection) { this.state.assertEditable(ids); }
+  bind() {
+    if (this.state.document !== this.view.document) this.state.bind(this.view.document);
+    return this.state;
+  }
+
+  isVisible(id) { return this.bind().isVisible(id); }
+  isLocked(id) { return this.bind().isLocked(id); }
+  filterSelection(ids) { return this.bind().filterSelection(ids); }
+  assertEditable(ids = this.view.document.selection) { this.bind().assertEditable(ids); }
 
   install() {
     if (this.root || this.disposed) return;
@@ -166,8 +171,13 @@ export class DesignerOutline {
 
   dragOver(event) {
     if (!event.dataTransfer.types.includes('application/x-sharpforge-tree')) return;
+    event.stopImmediatePropagation();
     const row = event.target.closest('[data-tree-id]');
-    if (!row || this.isLocked(row.dataset.treeId)) return;
+    if (!row || this.isLocked(row.dataset.treeId)) {
+      this.clearDrop();
+      event.dataTransfer.dropEffect = 'none';
+      return;
+    }
     const bounds = row.getBoundingClientRect();
     const ratio = (event.clientY - bounds.top) / bounds.height;
     const position = ratio < .25 ? 'before' : ratio > .75 ? 'after' : 'inside';
@@ -175,16 +185,17 @@ export class DesignerOutline {
     this.dropTarget = {id: row.dataset.treeId, position, row};
     row.dataset.designDrop = position;
     event.preventDefault();
-    event.stopImmediatePropagation();
     event.dataTransfer.dropEffect = 'move';
   }
 
   drop(event) {
+    if (!event.dataTransfer.types.includes('application/x-sharpforge-tree')) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
     const target = this.dropTarget;
     this.clearDrop();
     if (!target) return;
-    event.preventDefault();
-    event.stopImmediatePropagation();
+    this.bind();
     this.view.safe(() => {
       const text = event.dataTransfer.getData('application/x-sharpforge-tree');
       if (text.length > 100_000) throw new RangeError('Outline drag payload exceeds limit');

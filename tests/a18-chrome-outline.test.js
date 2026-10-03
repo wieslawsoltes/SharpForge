@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {DesignDocument, createDesign, generateDesignCode} from '@sharpforge/designer';
 import {DesignerOutlineState, moveOutlineNodes} from '../apps/studio/designer-outline-state.js';
+import {DesignerOutline} from '../apps/studio/designer-outline.js';
 
 const fixture = () => new DesignDocument(createDesign('Outline'));
 
@@ -77,4 +78,40 @@ test('dragging parent and descendant moves only the root of that selection', () 
   assert.equal(document.parent('title').id, panel);
   assert.equal(document.undoStack.length, before + 1);
   assert.deepEqual(document.selection, [panel]);
+});
+
+test('outline visibility binds a replaced document before any surface selection query', () => {
+  const view = {document: fixture()};
+  const outline = new DesignerOutline(view);
+  outline.state.toggle('action', 'locked');
+  const replacement = fixture();
+  replacement.remove(['action']);
+  const added = replacement.add('Button', 'canvas');
+  view.document = replacement;
+  assert.equal(outline.isVisible(added), true);
+  assert.equal(outline.isLocked('action'), false);
+  assert.deepEqual(outline.filterSelection(['action', added]), [added]);
+});
+
+test('invalid or locked outline drops cannot fall through to the base tree reparenting handler', () => {
+  const document = fixture();
+  let callbacks = 0;
+  const outline = new DesignerOutline({document, safe: action => { callbacks++; return action(); }});
+  outline.state.toggle('action', 'locked');
+  let stopped = 0;
+  let prevented = 0;
+  const event = {
+    target: {closest: () => ({dataset: {treeId: 'action'}})},
+    dataTransfer: {types: ['application/x-sharpforge-tree'], dropEffect: 'move'},
+    stopImmediatePropagation: () => stopped++, preventDefault: () => prevented++
+  };
+  outline.dragOver(event);
+  assert.equal(stopped, 1);
+  assert.equal(event.dataTransfer.dropEffect, 'none');
+  assert.equal(outline.dropTarget, null);
+  outline.drop(event);
+  assert.equal(stopped, 2);
+  assert.equal(prevented, 1);
+  assert.equal(callbacks, 0);
+  assert.equal(document.undoStack.length, 0);
 });
