@@ -1,0 +1,11 @@
+{
+  "name": "@sharpforge/clr",
+  "version": "0.14.0",
+  "description": "Explicit managed assembly identity and offline resolution services",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": { ".": "./src/index.js" },
+  "files": ["src", "README.md", "LICENSE"],
+  "license": "MIT",
+  "engines": { "node": ">=22" }
+}
