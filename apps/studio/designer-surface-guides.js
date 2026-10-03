@@ -74,6 +74,6 @@ export class DesignerUserGuides {
 
   dispose() {
     for (const dispose of this.listeners.splice(0)) dispose();
-    this.view.overlay.querySelector('[data-user-guides]')?.remove();
+    this.view.overlay?.querySelector('[data-user-guides]')?.remove();
   }
 }

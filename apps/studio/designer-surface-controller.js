@@ -38,7 +38,7 @@ export class DesignerSurfaceController {
   }
 
   install() {
-    if (this.installed) return;
+    if (this.installed || this.disposed) return;
     this.installed = true;
     const view = this.view;
     const listen = (element, type, handler, options) => {
