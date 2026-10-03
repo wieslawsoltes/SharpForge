@@ -175,6 +175,8 @@ export class OverloadResolver {
     if (applicable.length > 1) {
       const best = applicable.filter(c => applicable.every(o => o === c || this.better(c, o, args)));
       if (best.length === 1) return success(best[0]);
+      // The framework registry lists some members twice (one contract per runtime implementation): they are one member.
+      if (applicable.every(c => this.isSameImportedMember(c, applicable[0]))) return success(applicable[0]);
       const pair = best.length > 1 ? best : applicable;
       return {
         succeeded: false,
@@ -189,6 +191,16 @@ export class OverloadResolver {
       candidates: analysed,
       best: this.bestFailure(analysed, args),
     };
+  }
+  /** True for two candidates that are the same member of a type that is not declared in source. */
+  isSameImportedMember(a, b) {
+    const x = a.definition,
+      y = b.definition;
+    if (x === y) return true;
+    if (x.locations?.length || y.locations?.length || x.containingType !== y.containingType) return false;
+    if (x.name !== y.name || !!x.isStatic !== !!y.isStatic || x.parameters.length !== y.parameters.length) return false;
+    const sameParameter = (p, q) => (p.refKind ?? RefKind.None) === (q.refKind ?? RefKind.None) && this.conversions.isIdentity(p.type, q.type);
+    return x.parameters.every((p, i) => sameParameter(p, y.parameters[i]));
   }
   /** The inapplicable candidate the error is reported against: fewest problems, declaration order on ties. */
   bestFailure(analysed, args) {

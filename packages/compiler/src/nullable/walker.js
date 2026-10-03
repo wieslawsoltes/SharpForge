@@ -15,6 +15,7 @@
  */
 import { NullableConditions } from './walker-conditions.js';
 import { NullableLoops } from './walker-loops.js';
+import { NullableRules } from './walker-rules.js';
 import { NOT_NULL, MAYBE_NULL, joinStates, FlowState, joinFlow } from './flow-state.js';
 import { NullableAnnotation, RefKind, SymbolKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
@@ -51,7 +52,8 @@ class NullableWalkerCore {
   warn(node, code, args = []) {
     const position = node?.span?.start ?? node?.start ?? 0;
     if (!this.host.nullableAt(this.uri, position).warnings) return;
-    if (this.diagnostics.some(d => d.node === node && d.code === code)) return;
+    // One warning per place and subject: a constructor may leave several members uninitialised (CS8618 each).
+    if (this.diagnostics.some(d => d.node === node && d.code === code && String(d.args) === String(args))) return;
     this.diagnostics.push({ node, code, args });
   }
 
@@ -384,4 +386,4 @@ class NullableWalkerCore {
 }
 
 /** The nullable flow walker: statements and expressions (above) composed with the condition and loop rules. */
-export class NullableWalker extends NullableLoops(NullableConditions(NullableWalkerCore)) {}
+export class NullableWalker extends NullableRules(NullableLoops(NullableConditions(NullableWalkerCore))) {}
