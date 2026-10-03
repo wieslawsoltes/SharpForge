@@ -24,7 +24,7 @@ does not claim completion of that issue or of broader source numeric modes.
 
 | Surface | Status |
 | --- | --- |
-| Direct CIL small storage and UInt32 round trips | Implemented; focused tests prepared |
+| Direct CIL small storage and UInt32 round trips | Implemented; focused local tests passed |
 | Shared pure small-integer helpers | Exported from `@sharpforge/bytecode` |
 | Source/reloaded numeric frontend | Separate T01.8 integration |
 | Browser, native CLR, Rust/Wasm and performance evidence | Not qualified by this increment |
@@ -34,12 +34,18 @@ For example, `smallInteger(300, 'byte')` returns `44`, and
 store raw out-of-range values without source casts so destination normalization
 is exercised independently of the compiler.
 
-The root validation queue will run this command alone after integration:
+The serial validation slot passed 113 tests at `0578b6ef`, covering small storage,
+managed addresses, numeric seams, managed IL and the value ABI. The command was:
 
 ```sh
-node --max-old-space-size=512 --test --test-concurrency=1 tests/a05-t01-small-storage.test.js tests/a05-seams-numeric.test.js
+SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_TEST_CONCURRENCY=1 SHARPFORGE_MAX_OLD_SPACE_MB=512 \
+  node scripts/limited.js node --test --test-concurrency=1 \
+  tests/a05-t01-small-storage.test.js tests/a05-managed-address.test.js \
+  tests/a05-seams-numeric.test.js tests/managed-il.test.js tests/a00-01-value-abi.test.js
 ```
 
-No execution, native comparison or performance measurement was performed in
-this implementation slice. Full T01 qualification retains its original native
-oracle, engine/platform matrix, cold/warm latency and allocation requirements.
+`npm run check` passed with 1,730 syntax-checked modules and no import-gate
+errors. The non-strict structure report completed with 264 repository warnings.
+Native comparison and performance measurement remain staged. Full T01
+qualification retains its original native oracle, engine/platform matrix,
+cold/warm latency and allocation requirements.
