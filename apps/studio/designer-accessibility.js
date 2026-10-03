@@ -34,7 +34,7 @@ export class DesignerAccessibility {
     this.view.scroller.setAttribute('role', 'group');
     this.view.scroller.setAttribute('aria-label', 'WinUI design surface');
     this.view.scroller.setAttribute('aria-description',
-      'Tab selects controls. Enter selects a child. Escape selects its parent. Arrows move. Shift with arrows resizes. Insert opens the toolbox.');
+      'Tab selects controls. Enter selects a child. Escape selects its parent. Arrows move. Control with arrows resizes. Insert opens the toolbox.');
     const holder = panel.ownerDocument.createElement('div');
     holder.innerHTML = designerButton('check', 'Check accessibility', 'accessibility');
     const button = holder.firstElementChild;
@@ -75,7 +75,7 @@ export class DesignerAccessibility {
     for (const handle of this.view.overlay?.querySelectorAll('[data-resize]') ?? []) {
       handle.setAttribute('role', 'button');
       handle.setAttribute('aria-label', 'Resize selected control from ' + (handleNames[handle.dataset.resize] ?? handle.dataset.resize));
-      handle.setAttribute('aria-description', 'Use Shift and arrow keys to resize the selected control from the keyboard.');
+      handle.setAttribute('aria-description', 'Use Control and arrow keys to resize the selected control from the keyboard.');
     }
     for (const row of this.view.panel('designer-properties')?.querySelectorAll('[data-property]') ?? []) {
       if (!row.getAttribute('aria-label')) row.setAttribute('aria-label', row.dataset.property);
@@ -86,7 +86,7 @@ export class DesignerAccessibility {
     if (this.disposed) return;
     this.announce('Synchronization: ' + state.state.replaceAll('-', ' ') + '. ' + state.message);
     const analysis = this.view.sourceSync.session?.analysis;
-    this.sourceDiagnostics = analysis ? designSourceDiagnostics(analysis) : [];
+    this.sourceDiagnostics = [...(state.diagnostics ?? analysis?.diagnostics ?? (analysis ? designSourceDiagnostics(analysis) : []))];
     if (state.error) this.sourceDiagnostics.push(designSourceDiagnostic(state.error, {uri: state.uri}));
     this.publish();
   }
@@ -156,6 +156,8 @@ export class DesignerAccessibility {
 
   handleKey(event) {
     if (this.view.preview || event.target?.closest?.('input,select,textarea,[contenteditable="true"]')) return false;
+    // Surface gestures own geometry modifiers and coalesce repeated keys into one undo entry.
+    if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key) && !event.altKey) return false;
     const intent = designerKeyboardIntent(this.view.document, event, {isVisible: id => this.view.outline?.isVisible(id) !== false});
     if (!intent) return false;
     event.preventDefault();
