@@ -1,0 +1,7 @@
+{
+  "diagnostic-spans/cs0246-dynamic-at-3": ["diagnostics", "warnings"],
+  "diagnostic-spans/cs1501-library-method-name": ["diagnostics", "warnings"],
+  "diagnostic-spans/cs1593-cs7036-delegate-invocation": ["diagnostics", "warnings"],
+  "diagnostic-spans/cs8025-async-forms-at-4": ["diagnostics", "warnings"],
+  "diagnostic-spans/cs8370-discard-pattern-at-7-3": ["diagnostics", "warnings"]
+}

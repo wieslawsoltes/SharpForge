@@ -150,10 +150,11 @@ test('ordinal: interface metadata and reserved contracts retain the released ABI
   assert.equal(frameworkAssignable(interfaceName, comparerName), true);
   assert.equal(frameworkAssignable(comparerName, interfaceName), false);
   assert.equal(contract('System.Text.StringBuilder', 'AppendFormat', ['string', 'object[]']).id, 524288);
-  assert.equal(contract(interfaceName, 'Compare', ['string', 'string']).id, 524289);
-  assert.equal(contract('System.Collections.Generic.IComparer`1<object>', 'Compare', ['object', 'object']).id, 524290);
-  assert.equal(contract(comparerName, 'get_Ordinal').id, 524291);
-  assert.equal(contract(comparerName, 'Compare', ['string', 'string']).id, 524292);
+  assert.equal(contract('System.Environment', 'GetEnvironmentVariable', ['string']).id, 524289);
+  assert.equal(contract(interfaceName, 'Compare', ['string', 'string']).id, 524290);
+  assert.equal(contract('System.Collections.Generic.IComparer`1<object>', 'Compare', ['object', 'object']).id, 524291);
+  assert.equal(contract(comparerName, 'get_Ordinal').id, 524292);
+  assert.equal(contract(comparerName, 'Compare', ['string', 'string']).id, 524293);
   assert.equal(contract(listName, 'Sort', [interfaceName]).id, 589824);
   assert.equal(contracts.filter(member => member.id < 65536).length, 1744);
 });
