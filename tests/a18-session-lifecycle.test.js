@@ -152,3 +152,15 @@ test('registry enforces capacity, exact case-sensitive identities, and no activa
   registry.dispose();
   assert.throws(() => registry.open('View.cs'), /disposed/);
 });
+
+test('recovery survives a placeholder with the same node ID before source initialization', () => {
+  const session = new DesignerSession('View.cs', {viewState: {selection: ['action']}});
+  const realDocument = new DesignDocument(createDesign('Source-backed view'));
+  assert.deepEqual(realDocument.selection, ['window']);
+  session.document = realDocument;
+  session.applySelection({final: true});
+  assert.deepEqual(session.document.selection, ['action']);
+  session.document.select('caption');
+  assert.deepEqual(session.snapshot().selection, ['caption']);
+  session.dispose();
+});

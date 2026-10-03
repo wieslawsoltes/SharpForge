@@ -179,7 +179,13 @@ export class DesignerDocuments {
   }
 
   snapshot() { return this.registry.snapshot(); }
-  restore(snapshot) { return this.registry.restore(snapshot, {files: [...this.state.files, ...this.records()]}); }
+  restore(snapshot) {
+    const restored = this.registry.restore(snapshot, {files: [...this.state.files, ...this.records()]});
+    for (const session of this.registry.sessions.values()) {
+      if (!session.operations.has('initialize-source')) session.applySelection({final: true});
+    }
+    return restored;
+  }
 
   reset() {
     for (const uri of [...this.sources.keys()]) this.close(uri);
