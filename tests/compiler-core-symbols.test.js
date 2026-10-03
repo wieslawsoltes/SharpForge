@@ -75,7 +75,7 @@ test('A02-T19 every registry type is reachable as a symbol',()=>{
   assert.equal(bridge.typeFromName('Microsoft.UI.Xaml.Controls.Button').baseType,bridge.typeFromName('Microsoft.UI.Xaml.Controls.ContentControl'));assert.equal(bridge.typeFromName('Microsoft.UI.Xaml.Visibility').baseType.specialType,'System_Enum');
   same(bridge.typeFromName('Button'),bridge.typeFromName('Microsoft.UI.Xaml.Controls.Button'),'registry aliases resolve');same(bridge.typeFromName('List<int>'),bridge.typeFromName('System.Collections.Generic.List`1<int>'));same(bridge.typeFromName('NoSuchType'),null);
   const list=bridge.typeFromName('List<int>');assert.equal(list.toDisplayString(),'System.Collections.Generic.List<int>');same(list.originalDefinition.construct(bridge.typeFromName('int')),list,'constructing the definition finds the registry instantiation');
-  assert.equal(list.originalDefinition.construct(bridge.typeFromName('long')).getMembers().length,0,'an instantiation outside the closed registry has no members');
+  const unlisted=list.originalDefinition.construct(bridge.typeFromName('long')).getMembers();assert(unlisted.length>0&&unlisted.every(m=>!m.contract),'an instantiation outside the closed registry has the open members, none of them a contract');
   assert(bridge.typeFromName('int[]') instanceof ArrayTypeSymbol);same(bridge.typeFromName('int[]'),bridge.typeFromName('int[]'));assert.equal(bridge.registryName(bridge.typeFromName('double[]')),'double[]');
 });
 test('A02-T19 every registry contract and builtin is reachable as a member symbol',()=>{

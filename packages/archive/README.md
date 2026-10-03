@@ -21,3 +21,13 @@ Rejects absolute/traversing/reserved paths, links/special files, ambiguous case 
 `decodeWorkspaceFile(path, bytes)` preserves original bytes, detects supported text extensions and UTF-8/UTF-16 BOMs, and otherwise leaves binary data untouched. `encodeWorkspaceFile(record)` retains unedited bytes and re-encodes edited text in the original supported encoding. No newline normalization occurs. Invalid text, including a binary `.cs` file, remains binary rather than being silently discarded.
 
 `inflateRaw` / `deflateStored` are also exported for Portable PDB embedding. Portable PDBs and workspace ZIPs share the same bounded internal codec.
+
+`deflateRaw(bytes, { maxBytes, maxChain, signal })` emits deterministic raw RFC 1951
+fixed-Huffman DEFLATE with a 32 KiB LZ77 window. The default input cap is 64 MiB
+and the default search cap is 16 candidates per position (allowed range 1–64).
+Scratch tables use 384 KiB; output capacity is at most `ceil(input.length * 9 / 8) + 6`
+bytes, plus the returned output copy. Invalid input/budgets fail before those
+allocations. AbortSignal cancellation is checked before starting and every 4 KiB.
+This synchronous codec is intended for bounded payloads or worker use; it does
+not implement streaming ZIP, dynamic Huffman blocks, or a CompressionStream path.
+Those remain tracked by SF-A24-T06.3. `writeZip` continues using stored entries.

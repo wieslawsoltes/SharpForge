@@ -153,6 +153,7 @@ export const BodyBinding = Base =>
             scope: member.scope,
             containingType: type,
             method: null,
+            initializerOf: member,
             isStatic: member.isStatic,
             isFieldInitializer: true,
             isStaticInitializer: member.isStatic,
