@@ -17,6 +17,20 @@ const sameSignature = (a, b) =>
   a.kind === b.kind &&
   a.parameters?.length === b.parameters?.length &&
   (a.parameters ?? []).every((p, i) => p.type.equals(b.parameters[i].type) && p.refKind === b.parameters[i].refKind);
+/**
+ * Members an interface cannot declare even with default implementations: instance state and instance constructors.
+ * @returns {{code:string,args:string[],member:object}[]}
+ */
+export function checkInterfaceMemberKinds(iface) {
+  const results = [];
+  if (iface.typeKind !== TypeKind.Interface) return results;
+  for (const member of iface.getMembers()) {
+    if (member.isImplicitlyDeclared) continue;
+    if (member.kind === SymbolKind.Field && !member.isStatic && !member.isConst) results.push({ code: 'CS0525', args: [], member });
+    else if (member.kind === SymbolKind.Method && member.methodKind === MethodKind.Constructor) results.push({ code: 'CS0526', args: [], member });
+  }
+  return results;
+}
 /** Interface members with bodies (C# 8 default implementations), accessors excluded. */
 export function defaultImplementations(iface) {
   return iface

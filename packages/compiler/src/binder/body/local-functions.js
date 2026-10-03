@@ -75,7 +75,7 @@ export const LocalFunctionBinding = Base =>
           syntax.constraintClauses,
           t => this.d.typeBinder.bindType(t, scope).type,
           (n, c, a) => this.report(n, c, a),
-          { ownerDisplay: name },
+          { ownerDisplay: name, useFeature: (node, feature) => this.d.gate(this.c.uri, node, feature) },
         );
       this.declare(name, method, syntax.identifier);
       this.localFunctions.push(method);

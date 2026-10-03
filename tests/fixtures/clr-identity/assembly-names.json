@@ -1,0 +1,1512 @@
+{
+  "sdk": "10.0.201",
+  "runtime": ".NET 10.0.5",
+  "cases": [
+    {
+      "input": "Simple",
+      "name": "Simple",
+      "version": null,
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Simple"
+    },
+    {
+      "input": "Simple, Version=1.2",
+      "name": "Simple",
+      "version": "1.2",
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Simple, Version=1.2"
+    },
+    {
+      "input": "Simple, Version=1",
+      "error": "FileLoadException"
+    },
+    {
+      "input": "Simple, Version=1.2.3",
+      "name": "Simple",
+      "version": "1.2.3",
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Simple, Version=1.2.3"
+    },
+    {
+      "input": "Simple, Version=1.2.3.4",
+      "name": "Simple",
+      "version": "1.2.3.4",
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Simple, Version=1.2.3.4"
+    },
+    {
+      "input": " Simple ",
+      "name": "Simple",
+      "version": null,
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Simple"
+    },
+    {
+      "input": "\" A, B \"",
+      "name": " A, B ",
+      "version": null,
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\" A\\, B \""
+    },
+    {
+      "input": "A\\,B",
+      "name": "A,B",
+      "version": null,
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\,B"
+    },
+    {
+      "input": "A\\=B",
+      "name": "A=B",
+      "version": null,
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\=B"
+    },
+    {
+      "input": "A\\\\B",
+      "name": "A\\B",
+      "version": null,
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\\\B"
+    },
+    {
+      "input": "'A,B'",
+      "name": "A,B",
+      "version": null,
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\,B"
+    },
+    {
+      "input": "Simple, Culture=neutral",
+      "name": "Simple",
+      "version": null,
+      "culture": "",
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Simple, Culture=neutral"
+    },
+    {
+      "input": "Simple, Culture=en-US",
+      "name": "Simple",
+      "version": null,
+      "culture": "en-US",
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Simple, Culture=en-US"
+    },
+    {
+      "input": "Simple, PublicKeyToken=null",
+      "name": "Simple",
+      "version": null,
+      "culture": null,
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Simple, PublicKeyToken=null"
+    },
+    {
+      "input": "Simple, PublicKeyToken=0123456789ABCDEF",
+      "name": "Simple",
+      "version": null,
+      "culture": null,
+      "token": "0123456789abcdef",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Simple, PublicKeyToken=0123456789abcdef"
+    },
+    {
+      "input": "Simple, Retargetable=Yes",
+      "name": "Simple",
+      "version": null,
+      "culture": null,
+      "token": null,
+      "flags": 256,
+      "contentType": "Default",
+      "fullName": "Simple, Retargetable=Yes"
+    },
+    {
+      "input": "Simple, Retargetable=No",
+      "name": "Simple",
+      "version": null,
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Simple"
+    },
+    {
+      "input": "Simple, ContentType=WindowsRuntime",
+      "name": "Simple",
+      "version": null,
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "WindowsRuntime",
+      "fullName": "Simple, ContentType=WindowsRuntime"
+    },
+    {
+      "input": "Simple, ContentType=Default",
+      "error": "FileLoadException"
+    },
+    {
+      "input": "Simple, ProcessorArchitecture=MSIL",
+      "name": "Simple",
+      "version": null,
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Simple"
+    },
+    {
+      "input": "Simple, Unknown=x",
+      "name": "Simple",
+      "version": null,
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Simple"
+    },
+    {
+      "input": "Simple, Version=1.2, Version=2.3",
+      "error": "FileLoadException"
+    },
+    {
+      "input": "",
+      "error": "ArgumentException"
+    },
+    {
+      "input": "A,",
+      "error": "FileLoadException"
+    },
+    {
+      "input": "A,,",
+      "error": "FileLoadException"
+    },
+    {
+      "input": "A=B",
+      "error": "FileLoadException"
+    },
+    {
+      "input": "A,Version=65535.2",
+      "error": "FileLoadException"
+    },
+    {
+      "input": "A,Version=65536.1",
+      "error": "FileLoadException"
+    },
+    {
+      "input": "A,Version=-1.1",
+      "error": "FileLoadException"
+    },
+    {
+      "input": "A,Version=1.2.3.4.5",
+      "error": "FileLoadException"
+    },
+    {
+      "input": "A, PublicKeyToken=1234",
+      "error": "FileLoadException"
+    },
+    {
+      "input": "A, Culture=BAD!",
+      "error": "CultureNotFoundException"
+    },
+    {
+      "input": "A, Retargetable=banana",
+      "error": "FileLoadException"
+    },
+    {
+      "input": "A\\x",
+      "error": "FileLoadException"
+    },
+    {
+      "input": "A\\tB",
+      "name": "A\tB",
+      "version": null,
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\tB"
+    },
+    {
+      "input": "A\\nB",
+      "name": "A\nB",
+      "version": null,
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\nB"
+    },
+    {
+      "input": "A\u0000B",
+      "error": "FileLoadException"
+    },
+    {
+      "input": "A/B",
+      "name": "A/B",
+      "version": null,
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A/B"
+    },
+    {
+      "input": "A:B",
+      "name": "A:B",
+      "version": null,
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A:B"
+    },
+    {
+      "input": "A, PublicKey=00000000000000000400000000000000",
+      "name": "A",
+      "version": null,
+      "culture": null,
+      "token": "b77a5c561934e089",
+      "flags": 1,
+      "contentType": "Default",
+      "fullName": "A, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "Contoso.Library, Version=0.0, Culture=neutral, PublicKeyToken=null",
+      "name": "Contoso.Library",
+      "version": "0.0",
+      "culture": "",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Contoso.Library, Version=0.0, Culture=neutral, PublicKeyToken=null"
+    },
+    {
+      "input": "Contoso.Library, Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "Contoso.Library",
+      "version": "0.0",
+      "culture": "",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Contoso.Library, Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "Contoso.Library, Version=0.0, Culture=en-US, PublicKeyToken=null",
+      "name": "Contoso.Library",
+      "version": "0.0",
+      "culture": "en-US",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Contoso.Library, Version=0.0, Culture=en-US, PublicKeyToken=null"
+    },
+    {
+      "input": "Contoso.Library, Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "Contoso.Library",
+      "version": "0.0",
+      "culture": "en-US",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Contoso.Library, Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "Contoso.Library, Version=0.0, Culture=pl-PL, PublicKeyToken=null",
+      "name": "Contoso.Library",
+      "version": "0.0",
+      "culture": "pl-PL",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Contoso.Library, Version=0.0, Culture=pl-PL, PublicKeyToken=null"
+    },
+    {
+      "input": "Contoso.Library, Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "Contoso.Library",
+      "version": "0.0",
+      "culture": "pl-PL",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Contoso.Library, Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "Contoso.Library, Version=1.2.3.4, Culture=neutral, PublicKeyToken=null",
+      "name": "Contoso.Library",
+      "version": "1.2.3.4",
+      "culture": "",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Contoso.Library, Version=1.2.3.4, Culture=neutral, PublicKeyToken=null"
+    },
+    {
+      "input": "Contoso.Library, Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "Contoso.Library",
+      "version": "1.2.3.4",
+      "culture": "",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Contoso.Library, Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "Contoso.Library, Version=1.2.3.4, Culture=en-US, PublicKeyToken=null",
+      "name": "Contoso.Library",
+      "version": "1.2.3.4",
+      "culture": "en-US",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Contoso.Library, Version=1.2.3.4, Culture=en-US, PublicKeyToken=null"
+    },
+    {
+      "input": "Contoso.Library, Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "Contoso.Library",
+      "version": "1.2.3.4",
+      "culture": "en-US",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Contoso.Library, Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "Contoso.Library, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null",
+      "name": "Contoso.Library",
+      "version": "1.2.3.4",
+      "culture": "pl-PL",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Contoso.Library, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null"
+    },
+    {
+      "input": "Contoso.Library, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "Contoso.Library",
+      "version": "1.2.3.4",
+      "culture": "pl-PL",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Contoso.Library, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "Contoso.Library, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null",
+      "name": "Contoso.Library",
+      "version": "65534.65534.65534.65534",
+      "culture": "",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Contoso.Library, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null"
+    },
+    {
+      "input": "Contoso.Library, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "Contoso.Library",
+      "version": "65534.65534.65534.65534",
+      "culture": "",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Contoso.Library, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "Contoso.Library, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null",
+      "name": "Contoso.Library",
+      "version": "65534.65534.65534.65534",
+      "culture": "en-US",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Contoso.Library, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null"
+    },
+    {
+      "input": "Contoso.Library, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "Contoso.Library",
+      "version": "65534.65534.65534.65534",
+      "culture": "en-US",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Contoso.Library, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "Contoso.Library, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null",
+      "name": "Contoso.Library",
+      "version": "65534.65534.65534.65534",
+      "culture": "pl-PL",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Contoso.Library, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null"
+    },
+    {
+      "input": "Contoso.Library, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "Contoso.Library",
+      "version": "65534.65534.65534.65534",
+      "culture": "pl-PL",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "Contoso.Library, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "A\\,B, Version=0.0, Culture=neutral, PublicKeyToken=null",
+      "name": "A,B",
+      "version": "0.0",
+      "culture": "",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\,B, Version=0.0, Culture=neutral, PublicKeyToken=null"
+    },
+    {
+      "input": "A\\,B, Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "A,B",
+      "version": "0.0",
+      "culture": "",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\,B, Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "A\\,B, Version=0.0, Culture=en-US, PublicKeyToken=null",
+      "name": "A,B",
+      "version": "0.0",
+      "culture": "en-US",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\,B, Version=0.0, Culture=en-US, PublicKeyToken=null"
+    },
+    {
+      "input": "A\\,B, Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "A,B",
+      "version": "0.0",
+      "culture": "en-US",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\,B, Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "A\\,B, Version=0.0, Culture=pl-PL, PublicKeyToken=null",
+      "name": "A,B",
+      "version": "0.0",
+      "culture": "pl-PL",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\,B, Version=0.0, Culture=pl-PL, PublicKeyToken=null"
+    },
+    {
+      "input": "A\\,B, Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "A,B",
+      "version": "0.0",
+      "culture": "pl-PL",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\,B, Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "A\\,B, Version=1.2.3.4, Culture=neutral, PublicKeyToken=null",
+      "name": "A,B",
+      "version": "1.2.3.4",
+      "culture": "",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\,B, Version=1.2.3.4, Culture=neutral, PublicKeyToken=null"
+    },
+    {
+      "input": "A\\,B, Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "A,B",
+      "version": "1.2.3.4",
+      "culture": "",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\,B, Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "A\\,B, Version=1.2.3.4, Culture=en-US, PublicKeyToken=null",
+      "name": "A,B",
+      "version": "1.2.3.4",
+      "culture": "en-US",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\,B, Version=1.2.3.4, Culture=en-US, PublicKeyToken=null"
+    },
+    {
+      "input": "A\\,B, Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "A,B",
+      "version": "1.2.3.4",
+      "culture": "en-US",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\,B, Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "A\\,B, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null",
+      "name": "A,B",
+      "version": "1.2.3.4",
+      "culture": "pl-PL",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\,B, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null"
+    },
+    {
+      "input": "A\\,B, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "A,B",
+      "version": "1.2.3.4",
+      "culture": "pl-PL",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\,B, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "A\\,B, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null",
+      "name": "A,B",
+      "version": "65534.65534.65534.65534",
+      "culture": "",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\,B, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null"
+    },
+    {
+      "input": "A\\,B, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "A,B",
+      "version": "65534.65534.65534.65534",
+      "culture": "",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\,B, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "A\\,B, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null",
+      "name": "A,B",
+      "version": "65534.65534.65534.65534",
+      "culture": "en-US",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\,B, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null"
+    },
+    {
+      "input": "A\\,B, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "A,B",
+      "version": "65534.65534.65534.65534",
+      "culture": "en-US",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\,B, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "A\\,B, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null",
+      "name": "A,B",
+      "version": "65534.65534.65534.65534",
+      "culture": "pl-PL",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\,B, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null"
+    },
+    {
+      "input": "A\\,B, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "A,B",
+      "version": "65534.65534.65534.65534",
+      "culture": "pl-PL",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\,B, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "\" leading \", Version=0.0, Culture=neutral, PublicKeyToken=null",
+      "name": " leading ",
+      "version": "0.0",
+      "culture": "",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\" leading \", Version=0.0, Culture=neutral, PublicKeyToken=null"
+    },
+    {
+      "input": "\" leading \", Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": " leading ",
+      "version": "0.0",
+      "culture": "",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\" leading \", Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "\" leading \", Version=0.0, Culture=en-US, PublicKeyToken=null",
+      "name": " leading ",
+      "version": "0.0",
+      "culture": "en-US",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\" leading \", Version=0.0, Culture=en-US, PublicKeyToken=null"
+    },
+    {
+      "input": "\" leading \", Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": " leading ",
+      "version": "0.0",
+      "culture": "en-US",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\" leading \", Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "\" leading \", Version=0.0, Culture=pl-PL, PublicKeyToken=null",
+      "name": " leading ",
+      "version": "0.0",
+      "culture": "pl-PL",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\" leading \", Version=0.0, Culture=pl-PL, PublicKeyToken=null"
+    },
+    {
+      "input": "\" leading \", Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": " leading ",
+      "version": "0.0",
+      "culture": "pl-PL",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\" leading \", Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "\" leading \", Version=1.2.3.4, Culture=neutral, PublicKeyToken=null",
+      "name": " leading ",
+      "version": "1.2.3.4",
+      "culture": "",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\" leading \", Version=1.2.3.4, Culture=neutral, PublicKeyToken=null"
+    },
+    {
+      "input": "\" leading \", Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": " leading ",
+      "version": "1.2.3.4",
+      "culture": "",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\" leading \", Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "\" leading \", Version=1.2.3.4, Culture=en-US, PublicKeyToken=null",
+      "name": " leading ",
+      "version": "1.2.3.4",
+      "culture": "en-US",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\" leading \", Version=1.2.3.4, Culture=en-US, PublicKeyToken=null"
+    },
+    {
+      "input": "\" leading \", Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": " leading ",
+      "version": "1.2.3.4",
+      "culture": "en-US",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\" leading \", Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "\" leading \", Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null",
+      "name": " leading ",
+      "version": "1.2.3.4",
+      "culture": "pl-PL",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\" leading \", Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null"
+    },
+    {
+      "input": "\" leading \", Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": " leading ",
+      "version": "1.2.3.4",
+      "culture": "pl-PL",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\" leading \", Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "\" leading \", Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null",
+      "name": " leading ",
+      "version": "65534.65534.65534.65534",
+      "culture": "",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\" leading \", Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null"
+    },
+    {
+      "input": "\" leading \", Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": " leading ",
+      "version": "65534.65534.65534.65534",
+      "culture": "",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\" leading \", Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "\" leading \", Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null",
+      "name": " leading ",
+      "version": "65534.65534.65534.65534",
+      "culture": "en-US",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\" leading \", Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null"
+    },
+    {
+      "input": "\" leading \", Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": " leading ",
+      "version": "65534.65534.65534.65534",
+      "culture": "en-US",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\" leading \", Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "\" leading \", Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null",
+      "name": " leading ",
+      "version": "65534.65534.65534.65534",
+      "culture": "pl-PL",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\" leading \", Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null"
+    },
+    {
+      "input": "\" leading \", Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": " leading ",
+      "version": "65534.65534.65534.65534",
+      "culture": "pl-PL",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\" leading \", Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "A\\=B, Version=0.0, Culture=neutral, PublicKeyToken=null",
+      "name": "A=B",
+      "version": "0.0",
+      "culture": "",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\=B, Version=0.0, Culture=neutral, PublicKeyToken=null"
+    },
+    {
+      "input": "A\\=B, Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "A=B",
+      "version": "0.0",
+      "culture": "",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\=B, Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "A\\=B, Version=0.0, Culture=en-US, PublicKeyToken=null",
+      "name": "A=B",
+      "version": "0.0",
+      "culture": "en-US",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\=B, Version=0.0, Culture=en-US, PublicKeyToken=null"
+    },
+    {
+      "input": "A\\=B, Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "A=B",
+      "version": "0.0",
+      "culture": "en-US",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\=B, Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "A\\=B, Version=0.0, Culture=pl-PL, PublicKeyToken=null",
+      "name": "A=B",
+      "version": "0.0",
+      "culture": "pl-PL",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\=B, Version=0.0, Culture=pl-PL, PublicKeyToken=null"
+    },
+    {
+      "input": "A\\=B, Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "A=B",
+      "version": "0.0",
+      "culture": "pl-PL",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\=B, Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "A\\=B, Version=1.2.3.4, Culture=neutral, PublicKeyToken=null",
+      "name": "A=B",
+      "version": "1.2.3.4",
+      "culture": "",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\=B, Version=1.2.3.4, Culture=neutral, PublicKeyToken=null"
+    },
+    {
+      "input": "A\\=B, Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "A=B",
+      "version": "1.2.3.4",
+      "culture": "",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\=B, Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "A\\=B, Version=1.2.3.4, Culture=en-US, PublicKeyToken=null",
+      "name": "A=B",
+      "version": "1.2.3.4",
+      "culture": "en-US",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\=B, Version=1.2.3.4, Culture=en-US, PublicKeyToken=null"
+    },
+    {
+      "input": "A\\=B, Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "A=B",
+      "version": "1.2.3.4",
+      "culture": "en-US",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\=B, Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "A\\=B, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null",
+      "name": "A=B",
+      "version": "1.2.3.4",
+      "culture": "pl-PL",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\=B, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null"
+    },
+    {
+      "input": "A\\=B, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "A=B",
+      "version": "1.2.3.4",
+      "culture": "pl-PL",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\=B, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "A\\=B, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null",
+      "name": "A=B",
+      "version": "65534.65534.65534.65534",
+      "culture": "",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\=B, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null"
+    },
+    {
+      "input": "A\\=B, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "A=B",
+      "version": "65534.65534.65534.65534",
+      "culture": "",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\=B, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "A\\=B, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null",
+      "name": "A=B",
+      "version": "65534.65534.65534.65534",
+      "culture": "en-US",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\=B, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null"
+    },
+    {
+      "input": "A\\=B, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "A=B",
+      "version": "65534.65534.65534.65534",
+      "culture": "en-US",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\=B, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "A\\=B, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null",
+      "name": "A=B",
+      "version": "65534.65534.65534.65534",
+      "culture": "pl-PL",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\=B, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null"
+    },
+    {
+      "input": "A\\=B, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "A=B",
+      "version": "65534.65534.65534.65534",
+      "culture": "pl-PL",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A\\=B, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "'quote\\'name', Version=0.0, Culture=neutral, PublicKeyToken=null",
+      "name": "quote'name",
+      "version": "0.0",
+      "culture": "",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\"quote\\'name\", Version=0.0, Culture=neutral, PublicKeyToken=null"
+    },
+    {
+      "input": "'quote\\'name', Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "quote'name",
+      "version": "0.0",
+      "culture": "",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\"quote\\'name\", Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "'quote\\'name', Version=0.0, Culture=en-US, PublicKeyToken=null",
+      "name": "quote'name",
+      "version": "0.0",
+      "culture": "en-US",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\"quote\\'name\", Version=0.0, Culture=en-US, PublicKeyToken=null"
+    },
+    {
+      "input": "'quote\\'name', Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "quote'name",
+      "version": "0.0",
+      "culture": "en-US",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\"quote\\'name\", Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "'quote\\'name', Version=0.0, Culture=pl-PL, PublicKeyToken=null",
+      "name": "quote'name",
+      "version": "0.0",
+      "culture": "pl-PL",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\"quote\\'name\", Version=0.0, Culture=pl-PL, PublicKeyToken=null"
+    },
+    {
+      "input": "'quote\\'name', Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "quote'name",
+      "version": "0.0",
+      "culture": "pl-PL",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\"quote\\'name\", Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "'quote\\'name', Version=1.2.3.4, Culture=neutral, PublicKeyToken=null",
+      "name": "quote'name",
+      "version": "1.2.3.4",
+      "culture": "",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\"quote\\'name\", Version=1.2.3.4, Culture=neutral, PublicKeyToken=null"
+    },
+    {
+      "input": "'quote\\'name', Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "quote'name",
+      "version": "1.2.3.4",
+      "culture": "",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\"quote\\'name\", Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "'quote\\'name', Version=1.2.3.4, Culture=en-US, PublicKeyToken=null",
+      "name": "quote'name",
+      "version": "1.2.3.4",
+      "culture": "en-US",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\"quote\\'name\", Version=1.2.3.4, Culture=en-US, PublicKeyToken=null"
+    },
+    {
+      "input": "'quote\\'name', Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "quote'name",
+      "version": "1.2.3.4",
+      "culture": "en-US",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\"quote\\'name\", Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "'quote\\'name', Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null",
+      "name": "quote'name",
+      "version": "1.2.3.4",
+      "culture": "pl-PL",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\"quote\\'name\", Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null"
+    },
+    {
+      "input": "'quote\\'name', Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "quote'name",
+      "version": "1.2.3.4",
+      "culture": "pl-PL",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\"quote\\'name\", Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "'quote\\'name', Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null",
+      "name": "quote'name",
+      "version": "65534.65534.65534.65534",
+      "culture": "",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\"quote\\'name\", Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null"
+    },
+    {
+      "input": "'quote\\'name', Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "quote'name",
+      "version": "65534.65534.65534.65534",
+      "culture": "",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\"quote\\'name\", Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "'quote\\'name', Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null",
+      "name": "quote'name",
+      "version": "65534.65534.65534.65534",
+      "culture": "en-US",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\"quote\\'name\", Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null"
+    },
+    {
+      "input": "'quote\\'name', Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "quote'name",
+      "version": "65534.65534.65534.65534",
+      "culture": "en-US",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\"quote\\'name\", Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "'quote\\'name', Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null",
+      "name": "quote'name",
+      "version": "65534.65534.65534.65534",
+      "culture": "pl-PL",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\"quote\\'name\", Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null"
+    },
+    {
+      "input": "'quote\\'name', Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "quote'name",
+      "version": "65534.65534.65534.65534",
+      "culture": "pl-PL",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "\"quote\\'name\", Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "日本語, Version=0.0, Culture=neutral, PublicKeyToken=null",
+      "name": "日本語",
+      "version": "0.0",
+      "culture": "",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "日本語, Version=0.0, Culture=neutral, PublicKeyToken=null"
+    },
+    {
+      "input": "日本語, Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "日本語",
+      "version": "0.0",
+      "culture": "",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "日本語, Version=0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "日本語, Version=0.0, Culture=en-US, PublicKeyToken=null",
+      "name": "日本語",
+      "version": "0.0",
+      "culture": "en-US",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "日本語, Version=0.0, Culture=en-US, PublicKeyToken=null"
+    },
+    {
+      "input": "日本語, Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "日本語",
+      "version": "0.0",
+      "culture": "en-US",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "日本語, Version=0.0, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "日本語, Version=0.0, Culture=pl-PL, PublicKeyToken=null",
+      "name": "日本語",
+      "version": "0.0",
+      "culture": "pl-PL",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "日本語, Version=0.0, Culture=pl-PL, PublicKeyToken=null"
+    },
+    {
+      "input": "日本語, Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "日本語",
+      "version": "0.0",
+      "culture": "pl-PL",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "日本語, Version=0.0, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "日本語, Version=1.2.3.4, Culture=neutral, PublicKeyToken=null",
+      "name": "日本語",
+      "version": "1.2.3.4",
+      "culture": "",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "日本語, Version=1.2.3.4, Culture=neutral, PublicKeyToken=null"
+    },
+    {
+      "input": "日本語, Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "日本語",
+      "version": "1.2.3.4",
+      "culture": "",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "日本語, Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "日本語, Version=1.2.3.4, Culture=en-US, PublicKeyToken=null",
+      "name": "日本語",
+      "version": "1.2.3.4",
+      "culture": "en-US",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "日本語, Version=1.2.3.4, Culture=en-US, PublicKeyToken=null"
+    },
+    {
+      "input": "日本語, Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "日本語",
+      "version": "1.2.3.4",
+      "culture": "en-US",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "日本語, Version=1.2.3.4, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "日本語, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null",
+      "name": "日本語",
+      "version": "1.2.3.4",
+      "culture": "pl-PL",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "日本語, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=null"
+    },
+    {
+      "input": "日本語, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "日本語",
+      "version": "1.2.3.4",
+      "culture": "pl-PL",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "日本語, Version=1.2.3.4, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "日本語, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null",
+      "name": "日本語",
+      "version": "65534.65534.65534.65534",
+      "culture": "",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "日本語, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=null"
+    },
+    {
+      "input": "日本語, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+      "name": "日本語",
+      "version": "65534.65534.65534.65534",
+      "culture": "",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "日本語, Version=65534.65534.65534.65534, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "日本語, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null",
+      "name": "日本語",
+      "version": "65534.65534.65534.65534",
+      "culture": "en-US",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "日本語, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=null"
+    },
+    {
+      "input": "日本語, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089",
+      "name": "日本語",
+      "version": "65534.65534.65534.65534",
+      "culture": "en-US",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "日本語, Version=65534.65534.65534.65534, Culture=en-US, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "日本語, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null",
+      "name": "日本語",
+      "version": "65534.65534.65534.65534",
+      "culture": "pl-PL",
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "日本語, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=null"
+    },
+    {
+      "input": "日本語, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089",
+      "name": "日本語",
+      "version": "65534.65534.65534.65534",
+      "culture": "pl-PL",
+      "token": "b77a5c561934e089",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "日本語, Version=65534.65534.65534.65534, Culture=pl-PL, PublicKeyToken=b77a5c561934e089"
+    },
+    {
+      "input": "A, Version=1.2.65535.4",
+      "name": "A",
+      "version": "1.2",
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A, Version=1.2"
+    },
+    {
+      "input": "A,Version=1.2.3.65535",
+      "name": "A",
+      "version": "1.2.3",
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A, Version=1.2.3"
+    },
+    {
+      "input": "A, PublicKeyToken=\"\"",
+      "name": "A",
+      "version": null,
+      "culture": null,
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A, PublicKeyToken=null"
+    },
+    {
+      "input": "A, Culture=\"\"",
+      "name": "A",
+      "version": null,
+      "culture": "",
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A, Culture=neutral"
+    },
+    {
+      "input": "A, Unknown=x,Unknown=y",
+      "name": "A",
+      "version": null,
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A"
+    },
+    {
+      "input": "A,processorarchitecture=arm64",
+      "error": "FileLoadException"
+    },
+    {
+      "input": "A,VERSION=1.2,version=1.2",
+      "error": "FileLoadException"
+    },
+    {
+      "input": "A, PublicKey=null,PublicKeyToken=null",
+      "error": "FileLoadException"
+    },
+    {
+      "input": "A, Version=01.002.3",
+      "name": "A",
+      "version": "1.2.3",
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A, Version=1.2.3"
+    },
+    {
+      "input": "A, Version=\"1.2\"",
+      "name": "A",
+      "version": "1.2",
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A, Version=1.2"
+    },
+    {
+      "input": "A, PublicKeyToken=Null",
+      "name": "A",
+      "version": null,
+      "culture": null,
+      "token": "",
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A, PublicKeyToken=null"
+    },
+    {
+      "input": "A, Retargetable=YES",
+      "name": "A",
+      "version": null,
+      "culture": null,
+      "token": null,
+      "flags": 256,
+      "contentType": "Default",
+      "fullName": "A, Retargetable=Yes"
+    },
+    {
+      "input": "A, ContentType=windowsruntime",
+      "name": "A",
+      "version": null,
+      "culture": null,
+      "token": null,
+      "flags": 0,
+      "contentType": "WindowsRuntime",
+      "fullName": "A, ContentType=WindowsRuntime"
+    },
+    {
+      "input": "A, Culture=EN-us",
+      "name": "A",
+      "version": null,
+      "culture": "en-US",
+      "token": null,
+      "flags": 0,
+      "contentType": "Default",
+      "fullName": "A, Culture=en-US"
+    }
+  ]
+}

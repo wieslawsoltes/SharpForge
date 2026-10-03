@@ -1,5 +1,5 @@
 /**
- * SF-A02-T52: conditional methods. The Roslyn-pinned cases are in
+ * SF-A02-T51 (formerly tracked as T52): conditional methods. The Roslyn-pinned cases are in
  * packages/compiler/test/differential/fixtures/conditional-methods.js; these tests cover the symbol sources (option,
  * #define, #undef). A method with an attribute is outside the execution profile, so these programs are generated from
  * the semantic bound trees, where the omission is implemented.
@@ -7,6 +7,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { compile } from '@sharpforge/compiler';
+import { parse } from '@sharpforge/syntax';
+import { SourceText } from '@sharpforge/text';
+import { analyze } from '../packages/compiler/src/semantic-analysis.js';
+import { walk } from '../packages/compiler/src/bound/semantic-walker.js';
 import { linesOf } from './support/semantic-codegen.js';
 
 const program = (prefix = '') => `${prefix}using System;
@@ -60,4 +64,27 @@ class C : B {
     .diagnostics.filter(d => /^CS/.test(d.code))
     .map(d => `${d.code} ${source.slice(d.start, d.start + d.length)}`);
   assert.deepEqual(codes, ['CS0582 Conditional("A")', 'CS0578 Conditional("A")', 'CS0243 Conditional("A")', 'CS0633 "1A"']);
+});
+
+test('SF-A02-T51 the attribute is resolved to a symbol: an alias counts, a user class of the same name does not', () => {
+  const calls = (attribute, prefix = '') => {
+    const source = `${prefix}using System;
+namespace Mine { class ConditionalAttribute : Attribute { public ConditionalAttribute(string text) { } } }
+class Program {
+  ${attribute} static void Note() { }
+  static void Main() { Note(); }
+}`;
+    const analysis = analyze([parse(new SourceText(source, 'a.cs'))]);
+    assert.deepEqual(analysis.diagnostics.filter(d => d.severity === 'error').map(d => d.code), []);
+    const found = [];
+    for (const body of analysis.bound.values())
+      walk(body, node => {
+        if (node.kind === 'Call') found.push(!!node.isOmitted);
+      });
+    return found;
+  };
+  assert.deepEqual(calls('[System.Diagnostics.Conditional("DEBUG")]'), [true]);
+  assert.deepEqual(calls('[Cond("DEBUG")]', 'using Cond = System.Diagnostics.ConditionalAttribute;\n'), [true]);
+  assert.deepEqual(calls('[Cond("DEBUG")]', '#define DEBUG\nusing Cond = System.Diagnostics.ConditionalAttribute;\n'), [false]);
+  assert.deepEqual(calls('[Mine.Conditional("DEBUG")]'), [false]);
 });
