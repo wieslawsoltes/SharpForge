@@ -106,7 +106,7 @@ export class PEAssemblySymbol extends SymbolBase {
   _resolveTopLevel(metadataName,visited){
     const own=this._topLevel.get(metadataName);if(own)return {type:own};const index=this._forwarders.get(metadataName);if(index===undefined)return null;
     if(visited.includes(this))return {error:{code:'CS0731',args:[displayName(metadataName),this.identity.getDisplayName()]}};
-    const target=this._bound[index];if(!target)return {error:{code:'CS0012',args:[displayName(metadataName),this.referencedAssemblyIdentities[index].getDisplayName()]}};
+    const target=this._bound[index];if(!target)return {error:{code:'CS0012',args:[missingTypeName(metadataName),this.referencedAssemblyIdentities[index].getDisplayName()]}};
     return target._resolveTopLevel(metadataName,[...visited,this])??{error:{code:'CS7069',args:[displayName(metadataName),target.name]}};
   }
   _missing(metadataName,reason,nestedName){const dot=metadataName.lastIndexOf('.'),{name,arity}=unmangle(nestedName??metadataName.slice(dot+1)),error=new ErrorTypeSymbol(name,arity,{reason});error.metadataFullName=nestedName?metadataName+'+'+nestedName:metadataName;return error;}
@@ -263,7 +263,7 @@ export class PEAssemblySymbol extends SymbolBase {
     const cached=this._typeRefs.get(rid);if(cached)return cached;const md=this.metadata,row=md.row(Table.TypeRef,rid),metadataName=md.string(row[1]),full=qualified(md.string(row[2]),metadataName),scope=row[0]?decodeScope(row[0]):0;let result;
     if(tableOf(scope)===Table.TypeRef&&scope){const outer=this._typeRef(ridOf(scope));result=outer instanceof ErrorTypeSymbol?this._missing(outer.metadataFullName??outer.name,outer.reason,metadataName):outer.containingAssembly._nested.get(outer)?.get(metadataName)??this._missing(outer.metadataFullName,{code:'CS7069',args:[displayName(outer.metadataFullName+'+'+metadataName),outer.containingAssembly.name]},metadataName);}
     else if(tableOf(scope)===Table.AssemblyRef&&scope){const index=ridOf(scope)-1,target=this._bound[index];
-      if(!target)result=this._missing(full,{code:'CS0012',args:[displayName(full),this.referencedAssemblyIdentities[index].getDisplayName()]});
+      if(!target)result=this._missing(full,{code:'CS0012',args:[missingTypeName(full),this.referencedAssemblyIdentities[index].getDisplayName()]});
       else{const found=target._resolveTopLevel(full,[]);result=found?found.type??this._missing(full,found.error):this._missing(full,{code:'CS7069',args:[displayName(full),target.name]});}}
     else if(tableOf(scope)===Table.ModuleRef&&scope)result=this._missing(full,{code:'CS7069',args:[displayName(full),this.name]});
     else{const found=this._resolveTopLevel(full,[]);result=found?found.type??this._missing(full,found.error):this._missing(full,{code:'CS7069',args:[displayName(full),this.name]});}
@@ -299,6 +299,8 @@ export class PEAssemblySymbol extends SymbolBase {
 const decodeBase=coded=>{const tables=[Table.TypeDef,Table.TypeRef,Table.TypeSpec];return tokenOf(tables[coded&3],coded>>>2);};
 const decodeScope=coded=>{const tables=[Table.Module,Table.ModuleRef,Table.AssemblyRef,Table.TypeRef];return tokenOf(tables[coded&3],coded>>>2);};
 /** `Ns.List`1` -> `Ns.List<>` for diagnostics about types that have no symbol. */
+/** How Roslyn names a type of an unreferenced assembly in CS0012: without its namespace (pinned in test/references). */
+const missingTypeName=metadataName=>{const outer=metadataName.split('+')[0],dot=outer.lastIndexOf('.');return displayName(metadataName.slice(dot+1));};
 const displayName=metadataName=>metadataName.replace(/\+/g,'.').replace(/`(\d+)/g,(_,n)=>'<'+','.repeat(Number(n)-1)+'>');
 /** Applies the flattened type arguments of a GENERICINST to a definition and its containing types. */
 function constructGeneric(definition,args){

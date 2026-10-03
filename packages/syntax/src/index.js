@@ -8,6 +8,7 @@ export * from './legacy-adapter.js';
 export * from './features.js';
 export * from './langversion.js';
 export * from './feature-gate.js';
+export * from './bound-phase-codes.js';
 export * from './preview-revisions.js';
 export * from './syntax-tree.js';
 export * from './visitor.js';
