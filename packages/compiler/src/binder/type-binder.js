@@ -21,6 +21,7 @@ import { isAccessible } from './accessibility.js';
 import { assemblyConflict, dottedName } from './reference-lookup.js';
 import { bindUsingDirectives, bindAliasTarget } from './using-directives.js';
 import { constructType } from '../symbols/substitution.js';
+import { maxTupleElements, tupleNameProblems, tupleTypeOf } from './tuples.js';
 
 export class Scope {
   /** @param {'unit'|'namespace'|'type'|'typeParameters'} kind */
@@ -385,10 +386,10 @@ export class TypeBinder {
       case 'TupleType': {
         const elements = syntax.elements.map(e => this.bindType(e.type, scope, options)),
           names = syntax.elements.map(e => e.identifier?.valueText ?? null);
-        if (elements.length < 2 || elements.length > 7) return twa(error('ValueTuple', elements.length));
-        const definition = this.core.bridge.coreType('System_ValueTuple_T' + elements.length),
-          tuple = definition.construct(elements);
-        return twa(names.some(Boolean) ? tuple.withTupleElementNames(names) : tuple);
+        if (elements.length < 2 || elements.length > maxTupleElements) return twa(error('ValueTuple', elements.length));
+        if (!options.quiet)
+          for (const problem of tupleNameProblems(names)) this.report(scope, syntax.elements[problem.index].identifier, problem.code, problem.args);
+        return twa(tupleTypeOf(this.core.bridge, elements, names));
       }
       case 'PointerType':
         return twa(new PointerTypeSymbol(this.bindType(syntax.elementType, scope, options)));
