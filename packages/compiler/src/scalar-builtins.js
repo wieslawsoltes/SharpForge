@@ -1,3 +1,4 @@
+import {nativeProperty} from './native-properties.js';
 import {Op,Builtins,NumericType,numericMode,numericIntrinsicDefinitions,numericTypeName,integerType,float as scalarFloat,decimalParse} from '@sharpforge/bytecode';
 import {numeric,implicitNumeric,constantFits} from './numeric.js';
 
@@ -39,6 +40,8 @@ export function installScalarCompiler(C) {
     },
     scalarString(type){const parameter=['nint','nuint'].includes(type)?'object':type;const descriptor=numericIntrinsicDefinitions.find(d=>d.owner==='System.Convert'&&d.name==='ToString'&&short(d.parameters[0])===parameter&&(d.formatType??null)===(['nint','nuint'].includes(type)?type:null));this.emit(Op.BUILTIN,builtinFor(descriptor).id,1);return 'string';},
     scalarBinding(node,report=false) {
+      const property = nativeProperty(this, node);
+      if (property) return property;
       const ctor=node?.kind==='New';if(!ctor&&node?.kind!=='Call')return null;
       let owner=ctor?(this.c.typeMap.has(node.type)?null:owners[node.type]??(Object.values(owners).includes(node.type)?node.type:null)):this.scalarStaticOwner(node.target?.target),receiver=null;
       if(!owner&&!ctor&&node.target?.kind==='Member'&&short(this.infer(node.target.target))==='decimal'){owner='System.Decimal';receiver=node.target.target;}
@@ -65,13 +68,13 @@ export function installScalarCompiler(C) {
     emitScalarCall(node,binding) {
       if(binding.error){this.emitConstant(null);return 'error';}
       if(binding.receiver)this.expr(binding.receiver);
-      const assigned=[];
-      node.args.forEach((argument,index)=>{
+      const assigned=[], args=node.args??[];
+      args.forEach((argument,index)=>{
         const target=short(binding.descriptor.parameters[index]);
         if(target.endsWith('&')){this.synchronizationAddress(argument.expression,{out:true});if(argument.expression.kind==='Name'){const local=this.lookup(argument.expression.name);if(local)assigned.push(local.slot);}}
         else this.checkAssign(target,this.typedExpr(argument,target),argument);
       });
-      this.emit(Op.BUILTIN,builtinFor(binding.descriptor).id,node.args.length+Number(!!binding.receiver));
+      this.emit(Op.BUILTIN,builtinFor(binding.descriptor).id,args.length+Number(!!binding.receiver));
       for(const slot of assigned)this.assigned.add(slot);
       return binding.result;
     },

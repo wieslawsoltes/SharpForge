@@ -1,3 +1,5 @@
+import {nativeInteger, isNativeInteger, nativeBinary} from './native-int.js';
+export {nativeInteger, isNativeInteger} from './native-int.js';
 import {uint32Binary} from './uint32.js';
 import {smallIntegerIndirect} from './small-int.js';
 import {int64Binary, int64Unary} from './int64.js';
@@ -16,11 +18,6 @@ const error = message => Object.assign(new Error(message), {name: 'CilError'});
 const reference = value => value !== null && typeof value === 'object' && Number.isInteger(value.h) && Number.isInteger(value.g);
 
 export const float = (value, kind = 'r8') => {if(kind!=='r4'&&kind!=='r8')throw new TypeError('Invalid floating-point kind');return Object.freeze({float: kind, value: kind === 'r4' ? Math.fround(value) : Number(value)});};
-export const isNativeInteger=value=>value?.nativeInt===32||value?.nativeInt===64;
-export function nativeInteger(value,bits=32) {
-  nativeIntegerBits({nativeIntBits:bits});const n=BigInt.asIntN(bits,BigInt(value));
-  return Object.freeze({nativeInt:bits,value:bits===64?n:Number(n)});
-}
 export const number = value => value?.float||isNativeInteger(value) ? value.value : value;
 export const isNumber = value => typeof value === 'number' || typeof value === 'bigint' || !!value?.float || isNativeInteger(value);
 export const defaults = (input,context) => { const type=numericAliases[input]??input; return type==='decimal'?decimalZero:type==='nint'||type==='nuint'?nativeInteger(0,nativeIntegerBits(context)):type === 'long' || type === 'ulong' ? 0n : type === 'double' ? float(0) : type === 'float' ? float(0, 'r4') : ['int', 'uint', 'short', 'ushort', 'byte', 'sbyte', 'char', 'bool'].includes(type) ? 0 : null; };
@@ -63,18 +60,7 @@ export function binary(name, a, b, {fault: createFault = fault, error: createErr
   const wide = typeof a === 'bigint';
   if (!nativeBits&&typeof b === 'bigint' !== wide && !['shl', 'shr'].includes(op)) throw createFault('InvalidProgramException', 'Mismatched integer widths');
   if (wide && !nativeBits) return int64Binary(name, a, b, {fault: createFault, error: createError});
-  if (nativeBits) {
-    let x = BigInt(a), y = BigInt(b), bits = nativeBits || (wide ? 64 : 32);
-    if (unsigned) { x = BigInt.asUintN(bits, x); y = BigInt.asUintN(bits, y); }
-    if (['div', 'rem'].includes(op) && y === 0n) throw createFault('DivideByZeroException', 'Attempted to divide by zero');
-    if (op === 'div' && !unsigned && x === -(1n << BigInt(bits - 1)) && y === -1n) throw createFault('OverflowException', 'Integer division overflow');
-    const shift = y & BigInt(bits - 1);
-    const operation={add: () => x + y, sub: () => x - y, mul: () => x * y, div: () => x / y, rem: () => x % y, and: () => x & y, or: () => x | y, xor: () => x ^ y, shl: () => x << shift, shr: () => x >> shift}[op];
-    if(!operation)throw createError('Unknown arithmetic opcode');
-    const value=operation();
-    if (checked && (value < (unsigned ? 0n : -(1n << BigInt(bits - 1))) || value > (unsigned ? (1n << BigInt(bits)) - 1n : (1n << BigInt(bits - 1)) - 1n))) throw createFault('OverflowException', 'Checked arithmetic overflow');
-    return nativeBits?nativeInteger(value,nativeBits):wide ? BigInt.asIntN(64, value) : Number(BigInt.asIntN(32, value));
-  }
+  if (nativeBits) return nativeBinary(name, a, b, {nativeIntBits: nativeBits, fault: createFault, error: createError});
   return uint32Binary(name, a, b, {fault: createFault, error: createError});
 }
 

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {binary, compare, convert, defaults, float, indirect, isNumber, number, storage, unary} from '../packages/runtime/src/execution/numeric-ops.js';
+import {binary, compare, convert, defaults, float, indirect, isNumber, number, storage, unary, nativeInteger} from '../packages/runtime/src/execution/numeric-ops.js';
 
 const throwsFault = (action, name, message) => assert.throws(action, {name, ...(message ? {message} : {})});
 
@@ -20,7 +20,8 @@ test('CIL numeric seam: tagged floats retain precision, special values and immut
 });
 
 test('CIL numeric seam: initialized locals receive the declared primitive defaults', () => {
-  for (const type of ['int', 'uint', 'short', 'ushort', 'byte', 'sbyte', 'char', 'bool', 'nint', 'nuint']) assert.equal(defaults(type), 0, type);
+  for (const type of ['int', 'uint', 'short', 'ushort', 'byte', 'sbyte', 'char', 'bool']) assert.equal(defaults(type), 0, type);
+  for (const type of ['nint', 'nuint']) assert.deepEqual(defaults(type), nativeInteger(0));
   for (const type of ['long', 'ulong']) assert.equal(defaults(type), 0n, type);
   assert.deepEqual(defaults('double'), float(0));
   assert.deepEqual(defaults('float'), float(0, 'r4'));
@@ -139,7 +140,7 @@ test('CIL numeric seam: unordered floating comparisons and reference identity us
 test('CIL numeric seam: conversions truncate and preserve signed stack representations', () => {
   for (const [target, input, expected] of [
     ['i1', 255, -1], ['u1', -1, 255], ['i2', 65535, -1], ['u2', -1, 65535],
-    ['i4', 4294967295n, -1], ['u4', -1, -1], ['i', 4294967295n, -1], ['u', -1, -1],
+    ['i4', 4294967295n, -1], ['u4', -1, -1], ['i', 4294967295n, nativeInteger(-1)], ['u', -1, -1],
     ['i8', 18446744073709551615n, -1n], ['u8', -1n, -1n],
     ['i4', float(-3.9), -3], ['i8', float(3.9), 3n],
   ]) assert.equal(convert('conv.' + target, input), expected, target);
@@ -202,7 +203,7 @@ test('CIL numeric seam: storage narrows declared primitive aliases without chang
 
 test('CIL numeric seam: indirect opcode suffixes narrow loads and stores', () => {
   for (const prefix of ['ldind', 'stind', 'ldelem', 'stelem']) {
-    for (const [suffix, input, expected] of [['i1', 255, -1], ['u1', -1, 255], ['i2', 65535, -1], ['u2', -1, 65535], ['i4', 4294967295n, -1], ['u4', -1, -1], ['i8', -1, -1n], ['i', 4294967295n, -1], ['r4', 16777217, float(16777216, 'r4')], ['r8', 16777217, float(16777217)]]) assert.deepEqual(indirect(input, prefix + '.' + suffix), expected);
+    for (const [suffix, input, expected] of [['i1', 255, -1], ['u1', -1, 255], ['i2', 65535, -1], ['u2', -1, 65535], ['i4', 4294967295n, -1], ['u4', -1, -1], ['i8', -1, -1n], ['i', 4294967295n, nativeInteger(-1)], ['r4', 16777217, float(16777216, 'r4')], ['r8', 16777217, float(16777217)]]) assert.deepEqual(indirect(input, prefix + '.' + suffix), expected);
   }
   const ref = Object.freeze({h: 1, g: 1});
   assert.equal(indirect(ref, 'ldind.ref'), ref);
