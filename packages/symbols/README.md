@@ -189,3 +189,6 @@ allocation is separately bounded by the source client's own limit before the
 resolution verification budget is applied. `fallbackEncoding` controls decoding;
 `mapping` passes options to `sourceLinkUrl`. Cancellation and timeout leave pending
 documents unverified. The caller owns the supplied fetch client's lifetime.
+Local projection builds one method-token index per binding call. Scope processing
+is linear in methods, scopes and variables, preserves scope/variable order, and
+does not retain stale results between bindings.
