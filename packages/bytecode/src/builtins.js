@@ -19,11 +19,11 @@ export const Builtins=createBuiltinTable(definitions,contracts,contributionManif
 export const frameworkBuiltin = contract=>contract?Builtins[CONTRACT_BUILTIN_OFFSET+contract.id]:null;
 export const BuiltinMap = new Map(Builtins.filter(Boolean).map(b=>[b.name,b]));
 
-/** Contributions append after the released table; its contract offset never moves. */
+/** Append-only registration preserves sparse ABI gaps. */
 export function createBuiltinRegistry(base=Builtins){
-  const entries=[...base],byName=new Map(entries.filter(Boolean).map(entry=>[entry.name,entry]));
+  const entries=base.slice(),byName=new Map(entries.filter(Boolean).map(entry=>[entry.name,entry]));
   return {
-    get entries(){return Object.freeze([...entries]);},
+    get entries(){return Object.freeze(entries.slice());},
     get(name){return byName.get(name)??null;},
     register(contribution,{signal}={}){
       signal?.throwIfAborted();
