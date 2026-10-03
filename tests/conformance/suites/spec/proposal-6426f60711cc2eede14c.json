@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-6426f60711cc2eede14c",
+  "kind": "spec",
+  "sourceText": "private bool PrintMembers(System.Text.StringBuilder builder);",
+  "sourceSHA256": "6ed2bb3bc5b76183903f1dc94b682401fba1e10240ff5b4ccd8bfbed492008a9",
+  "target": "library",
+  "featureId": "csharp-10-0-record-structs",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/record-structs.md",
+    "sha256": "6648b21cf551cda46a37801f487f82de1b87eb9ee39f08904ad5b5707ee0ae58",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/record-structs.md",
+    "license": "NOASSERTION",
+    "offset": 5760
+  }
+}

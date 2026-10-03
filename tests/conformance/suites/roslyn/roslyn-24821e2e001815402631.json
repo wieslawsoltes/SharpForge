@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-24821e2e001815402631",
+  "kind": "diagnostics",
+  "sourceText": "\n[assembly: RefersToLib]\n[assembly: System.Runtime.CompilerServices.TypeForwardedTo(1)]\n",
+  "sourceSHA256": "391bb29cc7280d72f41a480f19a111aef0af8cfeae2d0e1608c6c8f66a531f8d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "AttributeWithTypeReferenceToCurrentCompilation_WithDiagnostic",
+    "offset": 7227
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { compWithReferenceToLib.EmitToImageReference() }, assemblyName: \"lib\")",
+  "options": "(newLib_cs, references: new[] { compWithReferenceToLib.EmitToImageReference() }, assemblyName: \"lib\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1503",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (3,60): error CS1503: Argument 1: cannot convert from 'int' to 'System.Type'\n                // [assembly: System.Runtime.CompilerServices.TypeForwardedTo(1)]\n                Diagnostic(ErrorCode.ERR_BadArgType, \"1\").WithArguments(\"1\", \"int\", \"System.Type\").WithLocation(3, 60)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

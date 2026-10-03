@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d0207d7cdc426f8da03b",
+  "kind": "diagnostics",
+  "sourceText": "class C<T> { }\nclass D\n{\n    public static void M1()\n    {\n        var lam1 = (int* ptr) => ptr; // 1\n    }\n    public static void M2()\n    {\n        var lam2 = (int*[] a) => a; // 2\n    }\n    public static void M3()\n    {\n        var lam3 = (delegate*<void> ptr) => ptr; // 3\n    }\n    public static void M4()\n    {\n        var lam4 = (C<delegate*<void>[]> a) => a; // 4\n    }\n}",
+  "sourceSHA256": "b292cf721629ab9234a0ce25a9125b09ea3de146e804a159303457b115e9812a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/UnsafeTests.cs",
+    "sha256": "424f034ea20a9add3b40a8a1c0094fffc5ef30885511f2c90ae10bd80b976073",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/UnsafeTests.cs",
+    "license": "MIT",
+    "method": "ParameterContainsPointer",
+    "offset": 284400
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.UnsafeDebugDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      },
+      {
+        "code": "CS0214",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,21): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         var lam1 = (int* ptr) => ptr; // 1\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"int*\").WithLocation(6, 21),\n                // (6,26): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         var lam1 = (int* ptr) => ptr; // 1\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"ptr\").WithLocation(6, 26),\n                // (6,34): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         var lam1 = (int* ptr) => ptr; // 1\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"ptr\").WithLocation(6, 34),\n                // (10,21): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         var lam2 = (int*[] a) => a; // 2\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"int*\").WithLocation(10, 21),\n                // (10,28): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         var lam2 = (int*[] a) => a; // 2\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"a\").WithLocation(10, 28),\n                // (10,34): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         var lam2 = (int*[] a) => a; // 2\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"a\").WithLocation(10, 34),\n                // (14,21): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         var lam3 = (delegate*<void> ptr) => ptr; // 3\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"delegate*\").WithLocation(14, 21),\n                // (14,37): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         var lam3 = (delegate*<void> ptr) => ptr; // 3\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"ptr\").WithLocation(14, 37),\n                // (14,45): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         var lam3 = (delegate*<void> ptr) => ptr; // 3\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"ptr\").WithLocation(14, 45),\n                // (18,23): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         var lam4 = (C<delegate*<void>[]> a) => a; // 4\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"delegate*\").WithLocation(18, 23),\n                // (18,42): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         var lam4 = (C<delegate*<void>[]> a) => a; // 4\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"a\").WithLocation(18, 42),\n                // (18,48): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context\n                //         var lam4 = (C<delegate*<void>[]> a) => a; // 4\n                Diagnostic(ErrorCode.ERR_UnsafeNeeded, \"a\").WithLocation(18, 48)\n                ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

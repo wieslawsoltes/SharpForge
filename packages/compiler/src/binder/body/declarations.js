@@ -151,7 +151,7 @@ export const DeclarationBinding = Base =>
         if (init) {
           local.writes++;
           local.hasInitializer = true;
-          if (value && !(value.constantValue || value.literal || value.kind === 'Default')) local.nonConstantWrite = true;
+          if (value && !(value.constantValue || value.literal || value.kind === 'Default' || value.isCompileTimeValue)) local.nonConstantWrite = true;
           if (isUsing || isFixed) local.nonConstantWrite = true;
         }
         if (isConst && value && !value.hasErrors) {
@@ -166,7 +166,11 @@ export const DeclarationBinding = Base =>
                 t.isReferenceType === true
               );
           // A type that cannot be const is reported alone: its initializer is not asked to be constant.
+          // A const of a reference type other than string can only be null (the rule fields have in semantic/constants.js).
+          const onlyNull = t?.isReferenceType === true && t.specialType !== 'System_String' && !t.isErrorType(),
+            written = value.constantValue ?? value.operand?.constantValue ?? null;
           if (cannotBeConst) this.report(typeSyntax, 'CS0283', [this.display(t)]);
+          else if (onlyNull && written && !written.isNull) this.report(init, 'CS0134', [name, this.display(t)]);
           else if (!value.constantValue) this.report(init, 'CS0133', [name]);
           if (value.constantValue) {
             local.constantValueObject = value.constantValue;
@@ -219,18 +223,6 @@ export const DeclarationBinding = Base =>
     naturalFunctionType(value) {
       if (value.form === 'lambda') return value.naturalType();
       return value.methods.length === 1 && !value.methods[0].arity ? this.naturalGroupType(value) : null;
-    }
-    naturalGroupType(group) {
-      const m = group.methods[0];
-      if (m.parameters.some(p => p.refKind !== RefKind.None) || m.parameters.length > 4) return null;
-      const types = m.parameters.map(p => p.type);
-      return m.returnsVoid
-        ? types.length
-          ? this.core.action(types.length).construct(types)
-          : this.core.action(0)
-        : types.length > 4
-          ? null
-          : this.core.func(types.length + 1).construct([...types, m.returnType]);
     }
     /** A `using` resource must convert to IDisposable (IAsyncDisposable for await using); ../csharp8.js adds pattern-based disposal. */
     checkDisposable(type, node, isAwait, value) {

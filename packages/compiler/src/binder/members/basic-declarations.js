@@ -73,8 +73,11 @@ function paramsTypeProblem(type) {
     : null;
 }
 
-/** The rules of one parameter list; `list` is its syntax (the closing token carries CS1737). */
-function parameterListRows(member, parameters, list) {
+/**
+ * The rules of one parameter list; `list` is its syntax (the closing token carries CS1737). The parameters need
+ * `{type, refKind, isParams, defaultSyntax, syntax}`: symbols of a member, or the parameters of a lambda.
+ */
+export function parameterListRows(member, parameters, list) {
   const rows = [];
   let optionalSeen = false,
     orderReported = false;
@@ -91,6 +94,9 @@ function parameterListRows(member, parameters, list) {
       rows.push({ member, code: 'CS1741', args: [], at: keywordOf(parameter, 'ref') ?? keywordOf(parameter, 'out') });
       return;
     }
+    // `ref readonly` is for references: a default value makes every call without the argument pass a temporary.
+    if (hasDefault && parameter.refKind === RefKind.RefReadOnlyParameter)
+      rows.push({ member, code: 'CS9200', args: [parameter.name], at: parameter.defaultSyntax });
     if (hasDefault) optionalSeen = true;
     else if (optionalSeen && !orderReported && list) {
       orderReported = true;

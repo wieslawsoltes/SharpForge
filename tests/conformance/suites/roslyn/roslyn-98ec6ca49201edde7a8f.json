@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-98ec6ca49201edde7a8f",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass C\n{\n    static int M1(char c)\n    {\n        if (c is >= 'A' and <= 'Z' or >= 'a' and <= 'z')\n            return 1;\n        else\n            return 0;\n    }\n    static int M2(char c)\n    {\n        if (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z')\n            return 1;\n        else\n            return 0;\n    }\n    public static void Main()\n    {\n        Console.Write(M1('A'));\n        Console.Write(M1('0'));\n        Console.Write(M1('q'));\n        Console.Write(M1(' '));\n    }\n}",
+  "sourceSHA256": "725dc22094b5719db2b08464efe3e824e74cb48e7ad5b3ea68a5ca634335f616",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "IsPatternDisjunct_05",
+    "offset": 191004
+  },
+  "langVersion": "default",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe, parseOptions: TestOptions.RegularWithPatternCombinators)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-69ab9dcb4edaef742a66",
+  "kind": "diagnostics",
+  "sourceText": "using System.Threading.Tasks;\nclass C\n{\n    async Task M()\n    {\n        using (new R())\n        {\n            await Task.Yield();\n        }\n    }\n}\nref struct R\n{\n    public void Dispose() { }\n}",
+  "sourceSHA256": "1ae946501f7847cc9dd9edd0879cdc3fa7c6f01c12f2744946430587e1cc1431",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitUsingTests.cs",
+    "sha256": "4e6b75160ef89d81e60fbdd4f3f100ca8dfd99bb1a206757b0953f3d1cc01fcd",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitUsingTests.cs",
+    "license": "MIT",
+    "method": "RefStruct_AwaitInside",
+    "offset": 204989
+  },
+  "langVersion": "12",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular12)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS9202",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,16): error CS9202: Feature 'ref and unsafe in async and iterator methods' is not available in C# 12.0. Please use language version 13.0 or greater.\n                //         using (new R())\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion12, \"new R()\").WithArguments(\"ref and unsafe in async and iterator methods\", \"13.0\").WithLocation(6, 16)",
+  "unsupported": []
+}

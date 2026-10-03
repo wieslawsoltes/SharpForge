@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-5cc8383fa5f1d359ebfc",
+  "kind": "spec",
+  "sourceText": "{\n    using var f1 = new FileStream(\"...\");\n  target:\n    using var f2 = new FileStream(\"...\");\n    if (someCondition) \n    {\n        // Causes f2 to be disposed but has no effect on f1\n        goto target;\n    }\n}",
+  "sourceSHA256": "6450fcfc16d89f0630d9578d4327737aea4e57be532e0797728cfa633c5dca7e",
+  "target": "library",
+  "featureId": "csharp-8-0-enhanced-using",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/using.md",
+    "sha256": "85be627f42d371f521b9fa56fbd08b4a324964adbe6895318428deaaf4a2c355",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/using.md",
+    "license": "NOASSERTION",
+    "offset": 2354
+  }
+}

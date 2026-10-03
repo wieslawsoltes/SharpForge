@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d3b2c7cb0591fc03d5b6",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n\npublic interface IGoo {    void Method();    }\npublic class CT : IGoo {    public void Method() { }    }\n\npublic class GenC<T>  where T : IGoo\n{\n    public T valueT;\n    public static explicit operator T(GenC<T> val)\n    {\n        Console.Write(\"ExpConv\");\n        return val.valueT;\n    }\n}\n\npublic class Test\n{\n    public static void Main()\n    {\n        var _class = new GenC<IGoo>();\n        var ret = (CT)_class;\n    }\n}\n",
+  "sourceSHA256": "350908c294cdd4ab5c858f4deedb994d36da1d039a64714689dc59f9c42d5085",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "sha256": "15bbd12edb525c2764339fc84bc1d7201034c05a5703e07d2fafeee8c74638ab",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/BreakingChanges.cs",
+    "license": "MIT",
+    "method": "ExplicitUDCWithGenericConstraints",
+    "offset": 24846
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

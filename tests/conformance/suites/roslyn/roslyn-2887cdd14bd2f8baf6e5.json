@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-2887cdd14bd2f8baf6e5",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\n[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\npublic class BaseAtt : Attribute\n{\n    public virtual int Prop\n    {\n        get { return 1; }\n        [Obsolete(\"setter\", true)] set { }\n    }\n\n    public virtual int Prop1\n    {\n        get { return 1; }\n        [Obsolete(\"setter\", true)] set { }\n    }\n\n    public virtual int Prop2\n    {\n        get { return 1; }\n        [Obsolete(\"base setter\", true)] set { }\n    }\n\n    public virtual int Prop3\n    {\n        get { return 1; }\n        set { }\n    }\n}\n\n[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\npublic class DerivedAtt : BaseAtt\n{\n    public override int Prop\n    {\n        get { return 1; }\n    }\n\n    public override int Prop1\n    {\n        get { return 1; }\n        set { }\n    }\n\n    public override int Prop2\n    {\n        get { return 1; }\n        [Obsolete(\"derived setter\", true)] set { }\n    }\n\n    public override int Prop3\n    {\n        get { return 1; }\n        [Obsolete(\"setter\", true)] set { }\n    }\n}\n\n[DerivedAtt(Prop = 1)]\n[DerivedAtt(Prop1 = 1)]\n[DerivedAtt(Prop2 = 1)]\n[DerivedAtt(Prop3 = 1)]\npublic class Test\n{\n    public static void Main() { }\n}\n",
+  "sourceSHA256": "869f3fb9aadf7db11d4c241b265f6d233d4a76e2ccba83bba88fed9dc46693e4",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestOverriddenObsoleteSetterOnAttributes",
+    "offset": 273252
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0672",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0809",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (43,9): warning CS0672: Member 'DerivedAtt.Prop1.set' overrides obsolete member 'BaseAtt.Prop1.set'. Add the Obsolete attribute to 'DerivedAtt.Prop1.set'.\n                //         set { }\n                Diagnostic(ErrorCode.WRN_NonObsoleteOverridingObsolete, \"set\").WithArguments(\"DerivedAtt.Prop1.set\", \"BaseAtt.Prop1.set\").WithLocation(43, 9),\n                // (55,36): warning CS0809: Obsolete member 'DerivedAtt.Prop3.set' overrides non-obsolete member 'BaseAtt.Prop3.set'\n                //         [Obsolete(\"setter\", true)] set { }\n                Diagnostic(ErrorCode.WRN_ObsoleteOverridingNonObsolete, \"set\").WithArguments(\"DerivedAtt.Prop3.set\", \"BaseAtt.Prop3.set\").WithLocation(55, 36),\n                // (59,13): error CS0619: 'BaseAtt.Prop.set' is obsolete: 'setter'\n                // [DerivedAtt(Prop = 1)]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Prop = 1\").WithArguments(\"BaseAtt.Prop.set\", \"setter\").WithLocation(59, 13),\n                // (60,13): error CS0619: 'BaseAtt.Prop1.set' is obsolete: 'setter'\n                // [DerivedAtt(Prop1 = 1)]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Prop1 = 1\").WithArguments(\"BaseAtt.Prop1.set\", \"setter\").WithLocation(60, 13),\n                // (61,13): error CS0619: 'BaseAtt.Prop2.set' is obsolete: 'base setter'\n                // [DerivedAtt(Prop2 = 1)]\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"Prop2 = 1\").WithArguments(\"BaseAtt.Prop2.set\", \"base setter\").WithLocation(61, 13)",
+  "unsupported": []
+}
