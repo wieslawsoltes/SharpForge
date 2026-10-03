@@ -327,7 +327,7 @@ export const NameBinding = Base =>
       const type = left.type;
       if (!type) return this.bad(syntax);
       if (type.specialType === 'System_Void') {
-        this.report(syntax, 'CS0023', ['.', 'void']);
+        this.report(syntax.operatorToken ?? syntax, 'CS0023', ['.', 'void']);
         return this.bad(syntax);
       }
       return this.instanceMember(left, type, name, nameSyntax, syntax, typeArguments, options);

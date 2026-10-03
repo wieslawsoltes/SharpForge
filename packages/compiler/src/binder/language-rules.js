@@ -3,6 +3,7 @@
  * They are class mixins like the families of ./body-binder.js and are applied after them, in this order, so each
  * rule sees every family and the rules before it.
  */
+import { ExpressionVariableBinding } from './expression-variables.js';
 import { CSharp8Binding } from './csharp8.js';
 
-export const languageRules = [CSharp8Binding];
+export const languageRules = [ExpressionVariableBinding, CSharp8Binding];
