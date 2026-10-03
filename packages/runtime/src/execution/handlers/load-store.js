@@ -1,4 +1,4 @@
-import {ManagedFault} from '../../heap.js';
+import {loadSlot} from '../slot-storage.js';
 import {storePinnedLocal} from '../pinned.js';
 import {float} from '../numeric-ops.js';
 
@@ -21,17 +21,14 @@ for(const arg of [false,true]) {
       // Compact load/store forms are registered only where ECMA-335 defines them.
       if(suffix!==''&&suffix!=='.s'&&(operation==='lda'||arg&&operation==='st'))continue;
       handlers.set(stem+suffix,(vm,frame,instruction)=>{
-        const index=instruction.operand??Number(suffix.slice(1)),slots=arg?frame.args:frame.locals;
+        const index=instruction.operand??Number(suffix.slice(1));
         if(operation==='st') {
           let value=vm.pop();
           if(!arg&&/\bpinned$/.test(frame.method.locals[index]))value=storePinnedLocal(vm,frame,index,value);
-          vm.dereference(vm.address(kind,index),true,vm.storage(value,vm.slotType(frame,arg,index)));
+          vm.dereference(vm.address(kind,index),true,value);
         }
         else if(operation==='lda')vm.push(vm.address(kind,index));
-        else {
-          if(slots[index]===undefined)throw new ManagedFault('InvalidProgramException','Read of uninitialized local');
-          vm.push(vm.storage(slots[index],vm.slotType(frame,arg,index)));
-        }
+        else vm.push(loadSlot(vm,frame,arg,index));
       });
     }
   }
