@@ -1,4 +1,4 @@
-import {int64Binary, int64Compare, int64Unary} from '@sharpforge/bytecode';
+import {int64Binary, int64Compare, int64Unary, uint32Binary, uint32Compare} from '@sharpforge/bytecode';
 
 /** Pure operations on CIL evaluation-stack values.
  *
@@ -33,6 +33,10 @@ export function compare(a, b, op, unsigned = false, {fault: createFault = fault,
     a = int64Compare(a, b, unsigned);
     b = 0;
     unsigned = false;
+  } else if (unsigned && !floating && typeof a === 'number' && typeof b === 'number') {
+    a = uint32Compare(a, b);
+    b = 0;
+    unsigned = false;
   }
   if (unsigned && !floating) {
     a = typeof a === 'bigint' ? BigInt.asUintN(64, a) : a >>> 0;
@@ -53,9 +57,11 @@ export function binary(name, a, b, context = {}) {
   const wide = typeof a === 'bigint';
   if (typeof b === 'bigint' !== wide && !['shl', 'shr'].includes(op)) throw createFault('InvalidProgramException', 'Mismatched integer widths');
   if (wide) return int64Binary(name, a, b, context);
+  if (unsigned || !checked && (op === 'add' || op === 'sub' || op === 'mul')) {
+    return uint32Binary(name, a, b, context);
+  }
   if (checked) {
     let x = BigInt(a), y = BigInt(b), bits = 32;
-    if (unsigned) { x = BigInt.asUintN(bits, x); y = BigInt.asUintN(bits, y); }
     if (['div', 'rem'].includes(op) && y === 0n) throw createFault('DivideByZeroException', 'Attempted to divide by zero');
     if (op === 'div' && !unsigned && x === -(1n << BigInt(bits - 1)) && y === -1n) throw createFault('OverflowException', 'Integer division overflow');
     const shift = y & BigInt(bits - 1);
@@ -63,13 +69,9 @@ export function binary(name, a, b, context = {}) {
     if (checked && (value < (unsigned ? 0n : -(1n << BigInt(bits - 1))) || value > (unsigned ? (1n << BigInt(bits)) - 1n : (1n << BigInt(bits - 1)) - 1n))) throw createFault('OverflowException', 'Checked arithmetic overflow');
     return Number(BigInt.asIntN(32, value));
   }
-  if (unsigned) { a >>>= 0; b >>>= 0; }
   if (['div', 'rem'].includes(op) && b === 0) throw createFault('DivideByZeroException', 'Attempted to divide by zero');
   if (op === 'div' && !unsigned && a === -2147483648 && b === -1) throw createFault('OverflowException', 'Integer division overflow');
   switch (op) {
-    case 'add': return (a + b) | 0;
-    case 'sub': return (a - b) | 0;
-    case 'mul': return Math.imul(a, b);
     case 'div': return (a / b) | 0;
     case 'rem': return (a % b) | 0;
     case 'and': return a & b;
