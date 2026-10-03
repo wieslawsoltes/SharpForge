@@ -1,0 +1,17 @@
+using System;
+class Holder{public sbyte Field0;public static sbyte Static0;
+public byte Field1;public static byte Static1;
+public short Field2;public static short Static2;
+public ushort Field3;public static ushort Static3;
+public char Field4;public static char Static4;
+public bool Field5;public static bool Static5;}class Program{static sbyte Argument0(sbyte value){return value;}static void Store0(ref sbyte value,int input){value=unchecked((sbyte)input);}
+static byte Argument1(byte value){return value;}static void Store1(ref byte value,int input){value=unchecked((byte)input);}
+static short Argument2(short value){return value;}static void Store2(ref short value,int input){value=unchecked((short)input);}
+static ushort Argument3(ushort value){return value;}static void Store3(ref ushort value,int input){value=unchecked((ushort)input);}
+static char Argument4(char value){return value;}static void Store4(ref char value,int input){value=unchecked((char)input);}
+static bool Argument5(bool value){return value;}static void Store5(ref bool value,int input){value=input!=0;}static void Main(){int input=131071;Holder holder=new Holder();{sbyte value=unchecked((sbyte)input);Console.WriteLine(value);Console.WriteLine(Argument0(value));holder.Field0=unchecked((sbyte)input);Console.WriteLine(holder.Field0);Holder.Static0=unchecked((sbyte)input);Console.WriteLine(Holder.Static0);sbyte[] items=new sbyte[1];items[0]=unchecked((sbyte)input);Console.WriteLine(items[0]);Store0(ref value,input);Console.WriteLine(value);}
+{byte value=unchecked((byte)input);Console.WriteLine(value);Console.WriteLine(Argument1(value));holder.Field1=unchecked((byte)input);Console.WriteLine(holder.Field1);Holder.Static1=unchecked((byte)input);Console.WriteLine(Holder.Static1);byte[] items=new byte[1];items[0]=unchecked((byte)input);Console.WriteLine(items[0]);Store1(ref value,input);Console.WriteLine(value);}
+{short value=unchecked((short)input);Console.WriteLine(value);Console.WriteLine(Argument2(value));holder.Field2=unchecked((short)input);Console.WriteLine(holder.Field2);Holder.Static2=unchecked((short)input);Console.WriteLine(Holder.Static2);short[] items=new short[1];items[0]=unchecked((short)input);Console.WriteLine(items[0]);Store2(ref value,input);Console.WriteLine(value);}
+{ushort value=unchecked((ushort)input);Console.WriteLine(value);Console.WriteLine(Argument3(value));holder.Field3=unchecked((ushort)input);Console.WriteLine(holder.Field3);Holder.Static3=unchecked((ushort)input);Console.WriteLine(Holder.Static3);ushort[] items=new ushort[1];items[0]=unchecked((ushort)input);Console.WriteLine(items[0]);Store3(ref value,input);Console.WriteLine(value);}
+{char value=unchecked((char)input);Console.WriteLine((int)value);Console.WriteLine((int)Argument4(value));holder.Field4=unchecked((char)input);Console.WriteLine((int)holder.Field4);Holder.Static4=unchecked((char)input);Console.WriteLine((int)Holder.Static4);char[] items=new char[1];items[0]=unchecked((char)input);Console.WriteLine((int)items[0]);Store4(ref value,input);Console.WriteLine((int)value);}
+{bool value=input!=0;Console.WriteLine(value);Console.WriteLine(Argument5(value));holder.Field5=input!=0;Console.WriteLine(holder.Field5);Holder.Static5=input!=0;Console.WriteLine(Holder.Static5);bool[] items=new bool[1];items[0]=input!=0;Console.WriteLine(items[0]);Store5(ref value,input);Console.WriteLine(value);}}}
