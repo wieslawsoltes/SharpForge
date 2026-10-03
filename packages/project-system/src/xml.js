@@ -1,5 +1,10 @@
-/** Bounded XML data parser. No DOM, DTD, entities, XInclude, or executable extensions. */
-export function parseXml(source, {maxLength=2_000_000,maxNodes=20000,maxDepth=64}={}) {
+import {parseXmlCst} from './xml-cst.js';
+export {parseXmlCst,serializeXmlCst,applyXmlEdits,decodeXmlText} from './xml-cst.js';
+
+/** Bounded XML data parser; cst mode retains exact concrete source spans without changing the default data tree. */
+export function parseXml(source, {maxLength=2_000_000,maxNodes=20000,maxDepth=64,cst=false,signal}={}) {
+  if (cst) return parseXmlCst(source, {maxLength,maxNodes,maxDepth,signal});
+  signal?.throwIfAborted();
   if (typeof source !== 'string' || source.length > maxLength) throw new Error('XML exceeds the text limit');
   source=source.replace(/^\uFEFF/,'');
   const root={name:'#document',attributes:Object.create(null),children:[],text:'',start:0},stack=[root];
