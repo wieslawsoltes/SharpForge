@@ -35,7 +35,8 @@ for(const [engine,create] of Object.entries(engines)) {
     vm.stop();
     for(let i=0;i<2;i++) {
       vm.restore(saved);if(vm.state==='paused')vm.state='running';
-      const result=await vm.runAsync();assert.equal(result.state,'terminated',result.fault?.stack);assert.equal(result.output,'start\nmiddle\nend\n');
+      let slices=0;
+      const result=await vm.runAsync({onSlice(){assert(++slices<100,'Parked replay must make progress');}});assert.equal(result.state,'terminated',result.fault?.stack);assert.equal(result.output,'start\nmiddle\nend\n');
     }
   });
   test(`a05-06 ${engine}: active resume faults remain GC roots and retain aliases across components`,()=>{

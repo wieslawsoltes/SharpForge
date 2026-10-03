@@ -180,7 +180,29 @@ export class CooperativeScheduler {
     for(let i=1;i<=ids.length;i++){const c=this.contexts.get(ids[(at+i)%ids.length]);if(c.status==='ready'&&!c.frozen)return c;}
     return null;
   }
-  beforeSlice(){if(this.flushAsyncFault())return;if(!this.enabled||this.suppressed)return;if(['running','ready'].includes(this.vm.state)&&this.current?.frozen){this.save();this.current.status='ready';const next=this.choose();if(next){this.load(next);return;}this.parked=true;this.vm.state='waiting';this.vm.frames=[];if(!this.vm.inspector)this.vm.stack=[];}if(this.vm.state!=='waiting')return;this.turn++;this.poll();const next=this.choose();if(next)this.load(next);}
+  beforeSlice() {
+    if (this.flushAsyncFault() || !this.enabled || this.suppressed) return;
+    // Source restore pauses at a host boundary. Resuming a parked snapshot must
+    // reenter the wait path even when the host changes that pause to running.
+    if (this.parked && ['ready', 'running'].includes(this.vm.state) && !this.vm.frames.length) {
+      this.vm.state = 'waiting';
+    }
+    if (['running', 'ready'].includes(this.vm.state) && this.current?.frozen) {
+      this.save();
+      this.current.status = 'ready';
+      const next = this.choose();
+      if (next) { this.load(next); return; }
+      this.parked = true;
+      this.vm.state = 'waiting';
+      this.vm.frames = [];
+      if (!this.vm.inspector) this.vm.stack = [];
+    }
+    if (this.vm.state !== 'waiting') return;
+    this.turn++;
+    this.poll();
+    const next = this.choose();
+    if (next) this.load(next);
+  }
   beforeInstruction(){if(!this.enabled||this.suppressed)return;const c=this.current;if(c?.resumeFault){const error=c.resumeFault;c.resumeFault=null;if(this.vm.inspector)this.vm.raise(error);else this.vm.handleFault(error);}}
   afterInstruction(){if(!this.enabled||this.suppressed)return;this.turn++;this.steps++;this.save();if(this.flushAsyncFault())return;if(this.vm.state==='paused')return;
     const c=this.current;if(!c)return;
