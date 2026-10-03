@@ -76,6 +76,8 @@ function decodeSpan(span,c) {
     else if(target.owner==='System.Console')name='Console.'+target.name;
     else if(target.owner==='System.GC'){name='GC.'+target.name;if(target.name==='GetTotalMemory'&&span.some(i=>i.name.startsWith('ldc.i4')))argc=0;}
     else if(target.owner==='System.Convert'){name='Convert.'+target.name;if(target.name==='ToString'&&sig.parameters[0]==='object')name='object.ToString';}
+    else if(target.owner==='System.Object'&&target.name==='ReferenceEquals')name='object.ReferenceEquals';
+    else if(target.owner==='System.Enum'&&target.name==='HasFlag')name='Enum.HasFlag';
     else if(target.owner==='System.Environment'&&target.name==='get_TickCount')name='Environment.TickCount';
     else if(owner==='int'||owner==='double'||owner==='string'||owner==='Array')name=owner+'.'+target.name;
     const builtin=BuiltinMap.get(name);if(!builtin)throw new CilError(`External method is not in the browser runtime profile: ${target.owner}.${target.name}`);return emit(Op.BUILTIN,builtin.id,argc);

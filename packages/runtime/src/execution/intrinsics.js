@@ -1,6 +1,8 @@
 import {intrinsicDefinition,intrinsicDefinitions} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {float} from './numeric-ops.js';
+import {internString,isInternedString,referenceEquals,stringChar} from './strings.js';
+import {enumToString,enumHasFlag} from './enums.js';
 
 function stringReceiver(context) {
   const value=context.vm.value(context.self);
@@ -11,18 +13,19 @@ const implementations={
   console:({vm,descriptor,parameters})=>{vm.emitOutput((parameters.length?vm.format(parameters[0],descriptor.signature.parameters[0]):'')+(descriptor.name==='WriteLine'?'\n':''));return null;},
   objectCtor:()=>null,
   objectToString:({vm,self})=>vm.heap.string(vm.format(self)),
+  objectReferenceEquals:({parameters})=>referenceEquals(parameters[0],parameters[1])?1:0,
+  enumToString:({vm,self})=>{const text=enumToString(vm,self);if(text===null)throw new ManagedFault('ArgumentException','Enum receiver required');return vm.heap.string(text);},
+  enumHasFlag:({vm,self,parameters})=>enumHasFlag(vm,self,parameters[0])?1:0,
   exceptionCtor:({vm,self,parameters})=>{vm.heap.get(self).data[0]=parameters[0]??vm.heap.string('Exception');return null;},
   exceptionMessage:({vm,self})=>vm.heap.get(self).data[0],
   exceptionInner:({vm,self})=>vm.heap.get(self).data[1]??null,
   stringConcat:({vm,parameters})=>vm.heap.string(parameters.map(value=>vm.format(value)).join('')),
   stringCompare:({descriptor,values})=>(values[0]===values[1])!==(descriptor.name==='op_Inequality')?1:0,
   stringNullOrEmpty:({values})=>values[0]===null||values[0]===''?1:0,
+  stringIntern:({vm,parameters})=>internString(vm,parameters[0]),
+  stringIsInterned:({vm,parameters})=>isInternedString(vm,parameters[0]),
   stringLength:context=>stringReceiver(context).length,
-  stringChars:context=>{
-    const string=stringReceiver(context),index=context.values[0];
-    if(!Number.isInteger(index)||index<0||index>=string.length)throw new ManagedFault('IndexOutOfRangeException','String index out of range');
-    return string.charCodeAt(index);
-  },
+  stringChars:({vm,self,values})=>stringChar(vm,self,values[0]),
   stringTransform:context=>{
     const string=stringReceiver(context),{vm,descriptor,self}=context;
     if(descriptor.name==='ToString')return self;

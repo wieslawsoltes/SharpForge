@@ -1,7 +1,12 @@
 import {convert as cilConvert,float} from './numeric-ops.js';
 import {ManagedFault, isReference} from '../heap.js';
+import {enumInfo,enumValue} from './enums.js';
+export {sourceEnum,enumToString} from './enums.js';
 
-export const defaultValue = type => type === 'int' || type === 'double' ? 0 : type === 'bool' ? false : null;
+export function defaultValue(type,vm={}) {
+  if(enumInfo(vm,type))return enumValue(vm,type,0);
+  return type === 'int' || type === 'double' ? 0 : type === 'bool' ? false : null;
+}
 
 /** Source numeric modes: 0 floating, 1 Int32, 2 string, 3 Boolean, 5 checked Int32. */
 export function binary(vm, operator, a, b, mode = 0) {
@@ -43,6 +48,7 @@ export function binary(vm, operator, a, b, mode = 0) {
 }
 
 export function convert(value, type, checked = 0) {
+  if(value?.enumType)value=value.value;
   if (type !== 0) return Number(value);
   return cilConvert(checked === 1 ? 'conv.ovf.i4' : 'conv.i4', float(value), {
     fault: (name, message) => new ManagedFault(name, message)
@@ -50,6 +56,7 @@ export function convert(value, type, checked = 0) {
 }
 
 export function unary(operator, value, mode = 0) {
+  if(value?.enumType)value=value.value;
   if (mode === 5 && value === -2147483648) throw new ManagedFault('OverflowException', 'Checked Int32 negation overflow');
   switch (operator) {
     case '!': return !value;
