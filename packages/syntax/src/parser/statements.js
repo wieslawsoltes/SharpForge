@@ -121,34 +121,15 @@ export const statementMethods = {
     const condition = this.expression();
     return this.n('DoStatement', attributeLists, keyword, body, whileKeyword, open, condition, this.expect(')'), this.expect(';'));
   },
-  /** `await using` and `await foreach` (C# 8); null when `await` starts an expression. */
-  awaitStatement(attributeLists) {
-    const token = this.current;
-    const next = this.peek().kind;
-    if (next !== 'using' && next !== 'foreach') return null;
-    this.feature('AsyncStreams', token);
-    const awaitKeyword = this.takeWord('await');
-    return next === 'using' ? this.usingStatement(attributeLists, awaitKeyword) : this.forEachStatement(attributeLists, awaitKeyword);
-  },
-  usingStatement(attrs, awaitKeyword) {
-    const keyword = this.take();
-    if (!this.at('(')) {
-      this.feature('UsingDeclarations', this.tokens[this.i - 1]);
-      return this.localDeclaration(attrs, awaitKeyword, keyword);
-    }
-    const open = this.take(),
-      declaration = this.isLocalDeclaration() ? this.variableDeclaration() : null,
-      expression = declaration ? null : this.expression();
-    return this.n('UsingStatement', attrs, awaitKeyword, keyword, open, declaration, expression, this.expect(')'), this.embedded());
-  },
+  /** `foreach (T x in e)`, or the deconstructing form `foreach (var (a, b) in e)` when no `type identifier` pair starts the header. */
   forEachStatement(attrs, awaitKeyword) {
     const keyword = this.take(),
       open = this.expect('('),
       end = this.scanType(this.i);
-    if (end > this.i && this.isId(this.tokens[end]) && this.kindAt(end + 1) === 'in') {
+    if (end > this.i && this.isId(this.tokens[end]) && this.kindAt(end) !== 'in') {
       const type = this.type(),
         identifier = this.id(),
-        inKeyword = this.take();
+        inKeyword = this.expectIn();
       return this.n(
         'ForEachStatement',
         attrs,
@@ -173,10 +154,15 @@ export const statementMethods = {
       keyword,
       open,
       variable,
-      this.expect('in'),
+      this.expectIn(),
       this.expression(),
       this.expect(')'),
       this.embedded()
     );
+  },
+  expectIn() {
+    if (this.at('in')) return this.take();
+    this.error(this.errorAnchor(), 'CS1515', "'in' expected");
+    return this.missing('in');
   }
 };

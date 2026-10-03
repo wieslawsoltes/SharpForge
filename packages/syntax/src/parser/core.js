@@ -46,6 +46,12 @@ export class Parser {
     this.memberStart = 0;
     this.memberErrors = 0;
     this.statementStart = 0;
+    // The member being parsed: its modifier tokens [memberModifiers, memberModifiersEnd), its name token, and the kind of its type.
+    this.memberModifiers = 0;
+    this.memberModifiersEnd = 0;
+    this.memberName = null;
+    this.containerKind = null;
+    this.accessorBodies = 0;
   }
   get current() {
     return this.tokens[this.i];
@@ -82,8 +88,14 @@ export class Parser {
       length = Math.max(1, token.end - token.start);
     this.diagnostics.push(diagnostic(this.source, start, length, code, message, severity));
   }
-  feature(id, token, end = token) {
-    this.features.push({ id, start: token.start, end: end.end ?? end });
+  /**
+   * Records a use of catalog feature `id` over the tokens `token` to `end`. `modifier` names the modifier that needs
+   * the feature when the diagnostic is "the modifier is not valid for this item" rather than the generic one.
+   */
+  feature(id, token, end = token, modifier) {
+    const use = { id, start: token.start, end: end.end ?? end };
+    if (modifier) use.modifier = modifier;
+    this.features.push(use);
   }
   trivia(pieces) {
     if (!pieces.length) return empty;
