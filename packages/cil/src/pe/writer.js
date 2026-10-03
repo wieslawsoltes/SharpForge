@@ -1,3 +1,5 @@
+import { appendWin32ResourceSection } from './win32-section.js';
+import { patchManagedResourceDirectory } from './managed-resources.js';
 import { desktopEntryStub } from './entry-stub.js';
 import { Writer, CilError, align, utf8 } from '../binary.js';
 import { peOptions, writeOptionalHeader, PEDirectoryNames } from './headers.js';
@@ -84,7 +86,7 @@ export function writeManagedPE(sectionBytes, metadataOffset, metadataLength, ent
   if (!(sectionBytes instanceof Uint8Array) || sectionBytes.length < 72) throw new CilError('Missing CLI header reservation');
   if (!Number.isInteger(metadataOffset) || metadataOffset < 72 || !Number.isInteger(metadataLength) || metadataLength < 1
     || metadataOffset + metadataLength > sectionBytes.length) throw new CilError('Invalid CLI metadata range');
-  let section = sectionBytes.slice();
+  let section = new Uint8Array(sectionBytes);
   let additionalSections = options.sections ?? [];
   if (options.nativeEntryStub) {
     const stub = desktopEntryStub(section, options);
@@ -93,6 +95,7 @@ export function writeManagedPE(sectionBytes, metadataOffset, metadataLength, ent
     options.directories = { ...options.directories, ...stub.directories };
     additionalSections = [...additionalSections, { name: '.reloc', data: stub.relocation }];
   }
+  additionalSections = appendWin32ResourceSection(section, additionalSections, options);
   const cli = new DataView(section.buffer);
   cli.setUint32(0, 72, true);
   cli.setUint16(4, 2, true);
@@ -101,6 +104,7 @@ export function writeManagedPE(sectionBytes, metadataOffset, metadataLength, ent
   cli.setUint32(12, metadataLength, true);
   cli.setUint32(16, options.corFlags, true);
   cli.setUint32(20, entryToken, true);
+  patchManagedResourceDirectory(cli, options, sectionBytes.length, metadataOffset, metadataLength);
   return writePortableExecutable([{ name: '.text', data: section }, ...additionalSections], {
     ...options, directories: { ...options.directories, cliHeader: { section: '.text', offset: 0, size: 72 } },
   });

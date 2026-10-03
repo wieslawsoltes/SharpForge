@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-54494db2dab8dd557a07",
+  "kind": "diagnostics",
+  "sourceText": "interface I1 { }\ninterface I2 { }\nclass C\n{\n    static string M1(I1 o, in int i) => \" 1\" + i;\n    static string M1(I2 o, ref readonly int i) => \" 2\" + i;\n    static void Main()\n    {\n        int i = 5;\n        System.Console.Write(M1(null, ref i));\n        System.Console.Write(M1(null, in i));\n        System.Console.Write(M1(null, i));\n    }\n}",
+  "sourceSHA256": "e37e72fe27ac6285d59bac8001162ceedc974e31e5be208b4c9dc35a9dd7501a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "OverloadResolution_01",
+    "offset": 157860
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0121",
+        "severity": "error"
+      },
+      {
+        "code": "CS0121",
+        "severity": "error"
+      },
+      {
+        "code": "CS0121",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (10,30): error CS0121: The call is ambiguous between the following methods or properties: 'C.M1(I1, in int)' and 'C.M1(I2, ref readonly int)'\n            //         System.Console.Write(M1(null, ref i));\n            Diagnostic(ErrorCode.ERR_AmbigCall, \"M1\").WithArguments(\"C.M1(I1, in int)\", \"C.M1(I2, ref readonly int)\").WithLocation(10, 30),\n            // (11,30): error CS0121: The call is ambiguous between the following methods or properties: 'C.M1(I1, in int)' and 'C.M1(I2, ref readonly int)'\n            //         System.Console.Write(M1(null, in i));\n            Diagnostic(ErrorCode.ERR_AmbigCall, \"M1\").WithArguments(\"C.M1(I1, in int)\", \"C.M1(I2, ref readonly int)\").WithLocation(11, 30),\n            // (12,30): error CS0121: The call is ambiguous between the following methods or properties: 'C.M1(I1, in int)' and 'C.M1(I2, ref readonly int)'\n            //         System.Console.Write(M1(null, i));\n            Diagnostic(ErrorCode.ERR_AmbigCall, \"M1\").WithArguments(\"C.M1(I1, in int)\", \"C.M1(I2, ref readonly int)\").WithLocation(12, 30)",
+  "unsupported": []
+}

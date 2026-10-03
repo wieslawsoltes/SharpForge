@@ -39,13 +39,13 @@ export const CallTranslation = Base =>
         fixed = mapping.expanded ? last : parameters.length,
         slots = new Array(fixed).fill(null),
         rest = [];
+      const elementType = mapping.expanded ? this.imageType(parameters[last].type.elementType, node.syntax) : null;
       values.forEach((value, i) => {
-        if (mapping.expanded && positions[i] === last) rest.push(value);
+        if (mapping.expanded && positions[i] === last) rest.push(this.objectArgument(value, elementType));
         else slots[positions[i]] = value;
       });
       const lowered = slots.map((value, i) => value ?? this.defaultArgument(parameters[i], node, i));
       if (mapping.expanded) {
-        const elementType = this.imageType(parameters[last].type.elementType, node.syntax);
         lowered.push(n.newArray(elementType, n.literal(rest.length, 'int'), rest));
       }
       if (prefix && lowered.length) lowered[0] = n.sequence(prefix.locals, prefix.effects, lowered[0]);

@@ -10,6 +10,7 @@
  * CS0114 (hides a virtual member, `override` or `new` missing) and CS0109 (`new` hides nothing).
  * `lookupMembers` is member lookup with hiding applied: the members a simple name or `e.Name` denotes.
  */
+import { isDynamicType, containsDynamic } from '../symbols/dynamic-types.js';
 import { TypeKind, SymbolKind, Accessibility } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { baseTypeChain, allInterfacesOf, membersInHierarchy } from '../symbols/substitution.js';
@@ -85,6 +86,15 @@ export function resolveBases(type, { typeBinder, core, report }) {
       if (kind === TypeKind.Enum) {
         if (!integralEnumBases.has(bound.specialType)) rep(entry.type, 'CS1008');
         else enumUnderlyingType = bound;
+        return;
+      }
+      // `dynamic` is `object` in metadata: it cannot be a base, and an interface cannot be implemented over it.
+      if (isDynamicType(bound)) {
+        rep(entry.type, 'CS1965', [type.toDisplayString()]);
+        return;
+      }
+      if (bound.typeKind === TypeKind.Interface && containsDynamic(bound)) {
+        rep(entry.type, 'CS1966', [type.toDisplayString(), bound.toDisplayString()]);
         return;
       }
       if (bound.typeKind === TypeKind.Interface) {
@@ -243,7 +253,8 @@ export function sameParameters(a, b, conversions = null) {
   });
 }
 const typeText = (m, t) => {
-  let text = t.toDisplayString();
+  // `dynamic` is `object` in a signature.
+  let text = t.toDisplayString().replace(/\bdynamic\b/g, 'object');
   (m.typeParameters ?? []).forEach((p, i) => {
     text = text.replace(new RegExp('\\b' + p.name + '\\b', 'g'), '!!' + i);
   });

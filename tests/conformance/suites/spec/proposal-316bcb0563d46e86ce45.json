@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-316bcb0563d46e86ce45",
+  "kind": "spec",
+  "sourceText": "using static E;\n\nM();\nSystem.Console.Write(get_P());\nset_P(43);\n_ = op_Addition(0, 0);\n_ = new object() + new object();\n\nstatic class E\n{\n    extension(object)\n    {\n        public static void M() { }\n        public static int P { get => 42; set { } }\n        public static object operator +(object o1, object o2) { return o1; }\n    }\n}",
+  "sourceSHA256": "1b9d7a095a665acd31846de02c67d94deb0521d15c9712b628bd6b42287027f6",
+  "target": "library",
+  "featureId": "csharp-14-0-extension-methods-and-properties",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/extensions.md",
+    "sha256": "3fdd337fb3fb0c08967571801abae3b932a4928fba8d916303d296ef90bdf7d5",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/extensions.md",
+    "license": "NOASSERTION",
+    "offset": 14291
+  }
+}

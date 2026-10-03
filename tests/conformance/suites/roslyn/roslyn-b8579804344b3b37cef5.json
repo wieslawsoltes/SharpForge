@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b8579804344b3b37cef5",
+  "kind": "diagnostics",
+  "sourceText": "\nnamespace System.Web.UI.Design\n{\n    public class ReadWriteControlDesignerBase\n    {\n        [Obsolete(\"A\")]\n        protected virtual void OnBehaviorAttached()\n        {\n        }\n    }\n\n    public class ReadWriteControlDesigner : ReadWriteControlDesignerBase\n    {\n        [Obsolete(\"B\")]\n        protected override void OnBehaviorAttached()\n        {\n        }\n    }\n}\n",
+  "sourceSHA256": "c6cf09af2e03c02d12aaceb09373d93a67b9e1adcf512ff8d546fc1ca77fd8cd",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "ConditionalLazyObsoleteDiagnosticInLazyObsoleteContext",
+    "offset": 367258
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source1)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

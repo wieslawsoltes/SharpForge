@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-47b49f581aa7e23871e0",
+  "kind": "spec",
+  "sourceText": "var app = WebApplication.Create(args);\n\napp.MapPost(\"/todos/{id}\", (TodoService todoService, int id, string task = \"foo\") => {\n  var todo = todoService.Create(id, task);\n  return Results.Created(todo);\n});",
+  "sourceSHA256": "9db867a1208c6d2ca6303d4c105328cce2e38c868af173b5a385c8dfdeec8841",
+  "target": "library",
+  "featureId": "csharp-12-0-lambda-optional-parameters",
+  "langVersion": "12.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "sha256": "663ca72db438d27be03c24504ddcfa11032e0e1acc2a7f996cff23c10f67dc6e",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "license": "NOASSERTION",
+    "offset": 2078
+  }
+}

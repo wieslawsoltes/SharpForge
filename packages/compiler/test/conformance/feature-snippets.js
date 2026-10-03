@@ -205,7 +205,7 @@ const csharp7x = {
   AsyncMain: 'class Program { static async System.Threading.Tasks.Task Main() { await System.Threading.Tasks.Task.CompletedTask; } }\n',
   DefaultLiteral: main('int a = default;'),
   InferredTupleNames: main('int x = 1; var t = (x, 2); int y = t.x;'),
-  GenericPatternMatching: type('static bool M<T>(T value) { return value is int; }'),
+  GenericPatternMatching: type('static bool M<T>(T value) { return value is int i; }'),
   LeadingDigitSeparator: main('int a = 0x_1F;'),
   NonTrailingNamedArguments: type('static void M(int x, int y) { } static void N() { M(x: 1, 2); }'),
   PrivateProtected: unit('class A { private protected int x; }'),
@@ -296,7 +296,7 @@ const csharp9 = {
   DefaultTypeParameterConstraint: unit('class A { public virtual void M<T>(T? x) { } } class B : A { public override void M<T>(T? x) where T : default { } }'),
   ExtendedPartialMethods: unit('partial class A { public partial int M(); public partial int M() { return 1; } }'),
   MemberNotNull: type('static string field; [System.Diagnostics.CodeAnalysis.MemberNotNull("field")] static void Init() { field = ""; }'),
-  VarianceSafetyForStaticInterfaceMembers: unit('interface I<out T> { static T Make() { throw null; } }'),
+  VarianceSafetyForStaticInterfaceMembers: unit('interface I<out T> { static void M(T value) { } }'),
   WithExpressions: unit('record R(int X); class A { static R M(R r) { return r with { X = 1 }; } }'),
   UnmanagedCallingConventions: type('static unsafe void M(delegate* unmanaged[Cdecl]<int, void> p) { }'),
 };
@@ -359,7 +359,9 @@ const csharp12 = {
   RefReadonlyParameters: type('static void M(ref readonly int x) { }'),
   LambdaOptionalParameters: main('var f = (int x = 1) => x; f();'),
   LambdaParamsArray: main('var f = (params int[] values) => values.Length; f();'),
-  InlineArrays: unit('[System.Runtime.CompilerServices.InlineArray(4)] struct Buffer { private int element; }'),
+  InlineArrays: unit(
+    '[System.Runtime.CompilerServices.InlineArray(4)] struct Buffer { private int element; } class A { static int M(Buffer b) { return b[0]; } }',
+  ),
   ExperimentalAttribute: unit('[System.Diagnostics.CodeAnalysis.Experimental("SF0001")] class A { }'),
   SpreadElement: main('int[] a = [1]; int[] b = [..a, 2];'),
 };

@@ -38,3 +38,21 @@ regressions for binding, equality, null/error boundaries, scheduled arguments an
 snapshot replay. Validation is queued with the integration owner; this slice has
 not executed tests, builds, native programs, browser gates or benchmarks. No new
 performance or platform qualification is claimed.
+
+The draft now includes the small-integer storage prerequisite at `0578b6ef`.
+Delegate binding still prepares the receiver and argument order first; the shared
+call gate then normalizes each argument against the resolved target signature
+before creating its frame. Immediate and scheduled delegate invocations use that
+same gate. This integration merged without textual conflicts; its combined
+behavior has not yet been executed or validated.
+
+The integration owner will run these focused regressions in the sole serial slot:
+
+```sh
+node --max-old-space-size=512 --test --test-concurrency=1 \
+  tests/a05-delegate-targets.test.js tests/a05-t01-small-storage.test.js \
+  tests/a05-seams-numeric.test.js tests/managed-il.test.js
+```
+
+They cover delegate binding/equality and snapshot scheduling, destination and
+argument normalization, numeric helpers, and ordinary independently assembled IL.

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-325469e7d409bcfad02e",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public void M()\n    {\n        int x, y;\n        var nested = ((x, y) = (1, 2));\n        System.Console.Write(nested.x);\n    }\n}\n",
+  "sourceSHA256": "82020be83b3354a580660075c7afd67f4ca1080c4d0a55d72effb7c29a316a05",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "ValueTupleReturnMissingMemberWithCSharp7",
+    "offset": 49054
+  },
+  "langVersion": "7",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source,\n                parseOptions: TestOptions.Regular.WithLanguageVersion(LanguageVersion.CSharp7))",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8306",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,37): error CS8305: Tuple element name 'x' is inferred. Please use language version 7.1 or greater to access an element by its inferred name.\n                //         System.Console.Write(nested.x);\n                Diagnostic(ErrorCode.ERR_TupleInferredNamesNotAvailable, \"x\").WithArguments(\"x\", \"7.1\").WithLocation(8, 37)\n                ",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

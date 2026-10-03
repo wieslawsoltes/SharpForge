@@ -14,3 +14,4 @@ export {CilDispatchTable} from './dispatch-profile.js';
 export {managedDelegateSignature, supportedDelegateCall} from './delegate-profile.js';
 
 export {resolveExecutionField,genericTypeParts,substituteTypeArguments} from './field-profile.js';
+export { sha256 } from './binary/hash.js';

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6cb01f732f0eb3d4eab9",
+  "kind": "diagnostics",
+  "sourceText": "assert(\"1.2.840.113549.2.5\");\nassert(\"1.2.840.113549.1.1.4\");\nassert(\"1.3.14.3.2.26\");\nassert(\"1.2.840.10040.4.3\");\nassert(\"1.2.840.10045.4.1\");\nassert(\"1.2.840.113549.1.1.5\");\nassert(\"2.16.840.1.101.3.4.2.1\");\nassert(\"1.2.840.10045.4.3.2\");\nassert(\"1.2.840.113549.1.1.11\");\nassert(\"2.16.840.1.101.3.4.2.2\");\nassert(\"1.2.840.10045.4.3.3\");\nassert(\"1.2.840.113549.1.1.12\");\nassert(\"2.16.840.1.101.3.4.2.3\");\nassert(\"1.2.840.10045.4.3.4\");\nassert(\"1.2.840.113549.1.1.13\");\n\nassert(null, \"default\");\nassert(\"\", \"default\");\nassert(\"other\", \"default\");\nSystem.Console.Write(\"RAN\");\n\nvoid assert(string input, string expected = null)\n{\n    if (C.M(input) != (expected ?? input))\n    {\n        throw new System.Exception($\"{input} produced {C.M(input)}\");\n    }\n}\n\npublic class C\n{\n    public static string M(string value)\n    {\n        return value switch\n        {\n            \"1.2.840.113549.2.5\" => \"1.2.840.113549.2.5\",\n            \"1.2.840.113549.1.1.4\" => \"1.2.840.113549.1.1.4\",\n            \"1.3.14.3.2.26\" => \"1.3.14.3.2.26\",\n            \"1.2.840.10040.4.3\" => \"1.2.840.10040.4.3\",\n            \"1.2.840.10045.4.1\" => \"1.2.840.10045.4.1\",\n            \"1.2.840.113549.1.1.5\" => \"1.2.840.113549.1.1.5\",\n            \"2.16.840.1.101.3.4.2.1\" => \"2.16.840.1.101.3.4.2.1\",\n            \"1.2.840.10045.4.3.2\" => \"1.2.840.10045.4.3.2\",\n            \"1.2.840.113549.1.1.11\" => \"1.2.840.113549.1.1.11\",\n            \"2.16.840.1.101.3.4.2.2\" => \"2.16.840.1.101.3.4.2.2\",\n            \"1.2.840.10045.4.3.3\" => \"1.2.840.10045.4.3.3\",\n            \"1.2.840.113549.1.1.12\" => \"1.2.840.113549.1.1.12\",\n            \"2.16.840.1.101.3.4.2.3\" => \"2.16.840.1.101.3.4.2.3\",\n            \"1.2.840.10045.4.3.4\" => \"1.2.840.10045.4.3.4\",\n            \"1.2.840.113549.1.1.13\" => \"1.2.840.113549.1.1.13\",\n            _ => \"default\"\n        };\n    }\n}",
+  "sourceSHA256": "8a0bcb1aee75a82131cb0328796baa2ee6bdcb040a72d40e4d3a92ce505fdb6c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "sha256": "f4ddec53df1ec1373a003dd48fa22fbb4d028d7926ae9037faed2b953df6ab4d",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "license": "MIT",
+    "method": "GetHashForChannelBinding",
+    "offset": 303628
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

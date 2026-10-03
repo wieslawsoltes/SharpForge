@@ -12,13 +12,13 @@
  *   CS9334 an explicit implementation whose type differs from the member's
  * The resulting map (`type.interfaceImplementations`) is what a back end emits as MethodImpl rows / interface vtables.
  */
-import { TypeKind, SymbolKind, Accessibility } from '../symbols/types.js';
+import { TypeKind, SymbolKind, Accessibility, TypeCompareKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { baseTypeChain, allInterfacesOf } from '../symbols/substitution.js';
 
 const sameType = (a, b, ma, mb) => {
   if (!a || !b) return a === b;
-  if (a.equals(b)) return true;
+  if (a.equals(b, TypeCompareKind.IgnoreDynamic)) return true;
   const ia = (ma.typeParameters ?? []).indexOf(a),
     ib = (mb.typeParameters ?? []).indexOf(b);
   if (ia >= 0 && ia === ib) return true;
@@ -164,6 +164,23 @@ export function bindInterfaceImplementations(type, core) {
     }
   }
   return { map, diagnostics };
+}
+/**
+ * Implicit implementations of non-public interface methods and accessors (C# 10; CS8704 below it, reported at the
+ * implementing method).
+ * @param {Map<object,object>} map interface member -> implementation, as `bindInterfaceImplementations` returns it
+ * @returns {{implementation:object, args:string[]}[]} the type, the interface member and the implementation as displayed
+ */
+export function nonPublicImplicitImplementations(type, map) {
+  const rows = [];
+  for (const [member, implementation] of map) {
+    if (member.kind !== SymbolKind.Method || implementation === member || implementation.explicitInterfaceType) continue;
+    if (implementation.containingType !== type || implementation.associatedSymbol?.explicitInterfaceType) continue;
+    const accessibility = member.declaredAccessibility ?? member.associatedSymbol?.declaredAccessibility;
+    if (accessibility === Accessibility.Public) continue;
+    rows.push({ implementation, args: [type.toDisplayString(), member.toDisplayString(), implementation.toDisplayString()] });
+  }
+  return rows;
 }
 /** The MethodImpl rows a type needs: explicit implementations, and implicit ones whose name or declaring type differs from the interface method. */
 export function methodImplRows(type, map) {

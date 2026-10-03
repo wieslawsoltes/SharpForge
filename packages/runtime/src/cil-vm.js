@@ -1,7 +1,7 @@
-import {runtimeTypeRoots,clearRuntimeTypes,runtimeTypeText} from './execution/tokens.js';
-import {checkArrayStore} from './execution/casting.js';
+import {formatCilValue} from './value-formatting.js';
+import {runtimeTypeRoots,clearRuntimeTypes} from './execution/tokens.js';
+import {dereferenceManagedAddress} from './execution/managed-address.js';
 import {storageDefault,storageValue} from './execution/storage.js';
-import {enumToString} from './execution/enums.js';
 import {literalString,stringRoots,clearStrings} from './execution/strings.js';
 import {ManagedPlatform} from './platform.js';
 import {CooperativeScheduler} from './scheduler.js';
@@ -60,7 +60,7 @@ export class CilVirtualMachine {
   resultValue(){const value=this.value(this.returnValue);return this.returnType==='uint'?Number(value)>>>0:this.returnType==='ulong'?BigInt.asUintN(64,value??0n):this.returnType==='bool'?!!value:value;}
   resultDisplay(){return this.returnType==='string'?this.display(this.returnValue):this.format(this.returnValue,this.returnType);}
   value(v){if(v?.float)return v.value;if(isReference(v)){const r=this.heap.get(v);if(r.kind==='string')return r.data;if(r.kind==='box')return this.value(r.data[0]);}return v;}
-  format(v,type){const name=runtimeTypeText(this,v)??enumToString(this,v,type);if(name!==null)return name;if(v===null)return '';if(isReference(v)&&this.heap.get(v).kind==='box'){const r=this.heap.get(v);return this.format(r.data[0],{'System.Boolean':'bool','System.Char':'char','System.UInt32':'uint','System.UInt64':'ulong'}[r.type]);}const n=this.value(v);if(type==='bool')return n?'True':'False';if(type==='char')return String.fromCharCode(Number(n));if(type==='uint')return String(Number(n)>>>0);if(type==='ulong')return String(BigInt.asUintN(64,n));if(isReference(n)){const r=this.heap.get(n);return r.kind==='exception'?r.type+': '+this.format(r.data[0]):r.type;}return String(n);}
+  format(v,type){return formatCilValue(this,v,type);}
   display(v){return v===null?'null':isReference(v)&&this.heap.get(v).kind==='string'?JSON.stringify(this.value(v)):this.format(v);}
   string(s){return literalString(this,s);}
   push(v){if(this.top.stack.length>=this.options.maxStackValues)throw new ManagedFault('ExecutionLimitException','Evaluation stack budget exceeded');this.top.stack.push(v);}
@@ -73,34 +73,7 @@ export class CilVirtualMachine {
   field(token,ref){return this.typeSystem.field(token,ref);}
   notifyWrite(write){this.writeRevision++;if(write.handle!==undefined)this.heap.mutationRevision++;this.onWrite?.({...write,frameId:write.frameId??this.top?.id});}
   address(kind,index,owner){return Object.freeze({byref:true,kind,index,owner,frameId:this.top.id});}
-  dereference(address,write=false,value){
-    if(!address?.byref)throw new ManagedFault('InvalidProgramException','A managed address is required');
-    let slots, old;
-    if(['box','field','array'].includes(address.kind)){
-      const r=address.kind==='array'?this.indexed(address.owner,address.index):this.heap.get(address.owner);
-      if(address.kind==='box'&&r.kind!=='box')throw new ManagedFault('InvalidProgramException','A boxed value address is required');
-      slots=r.data;
-    } else if(address.kind==='static') {
-      if(!this.statics.has(address.index))throw new ManagedFault('InvalidProgramException','Unknown static slot');
-    } else {
-      if(!['arg','local'].includes(address.kind))throw new ManagedFault('InvalidProgramException','Unknown managed address');
-      const frame=this.frames.find(f=>f.id===address.frameId);
-      if(!frame)throw new ManagedFault('InvalidProgramException','Managed address outlived its frame');
-      slots=address.kind==='arg'?frame.args:frame.locals;
-    }
-    if(slots&&(!Number.isInteger(address.index)||address.index<0||address.index>=slots.length))throw new ManagedFault('InvalidProgramException','Invalid managed address slot');
-    old=slots?slots[address.index]:this.statics.get(address.index);
-    if(write){
-      if(address.kind==='array')checkArrayStore(this.heap,this.heap.get(address.owner),value);
-      if(slots)slots[address.index]=value;else this.statics.set(address.index,value);
-      this.writeRevision++;
-      if(address.owner)this.heap.mutationRevision++;
-      this.onWrite?.({kind:address.kind,index:address.index,frameId:address.frameId,
-        ...(address.owner?{handle:address.owner.h,generation:address.owner.g}:{}),oldValue:old,value});
-      return value;
-    }
-    if(old===undefined)throw new ManagedFault('InvalidProgramException','Uninitialized address');return old;
-  }
+  dereference(address,write=false,value){return dereferenceManagedAddress(this,address,write,value);}
   snapshot(){return snapshotVM(this,'cil');}
   restore(snapshot){return restoreVM(this,snapshot,'cil');}
   indexed(ref,index){const r=this.heap.get(ref),n=number(index);if(r.kind!=='array'||!Number.isInteger(n)||n<0||n>=r.data.length)throw new ManagedFault('IndexOutOfRangeException','Array index out of range');return r;}

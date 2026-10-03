@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-41fc31abd9ac819dcb56",
+  "kind": "spec",
+  "sourceText": "record struct R3();                // primary .ctor: public R3() { }\nrecord struct R4() { int F = 42; } // primary .ctor: public R4() { F = 42; }",
+  "sourceSHA256": "40a1e6f7200d589d0793ef7dd6359a1c5eb1254f92599061018707e80b3e60cc",
+  "target": "library",
+  "featureId": "csharp-10-0-parameterless-struct-constructors",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/parameterless-struct-constructors.md",
+    "sha256": "8449fc73d19ead4997183738e4fb6162c4155a1325207005bfd3751aeb9eadc0",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/parameterless-struct-constructors.md",
+    "license": "NOASSERTION",
+    "offset": 5802
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e9a73aebf7c9e35e1b0a",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Runtime.InteropServices;\n\nclass CoClassType : InterfaceType\n{\n}\n\nclass AAttribute: Attribute\n{\n  public AAttribute(object o) {}\n}\n\n[ComImport, Guid(\"00020810-0000-0000-C000-000000000046\")]\n[CoClass(typeof(CoClassType))]\n[AAttribute(new InterfaceType())]\ninterface InterfaceType\n{\n}\n\npublic class MainClass\n{\n    public static int Main ()\n    {\n        return 0;\n    }\n}",
+  "sourceSHA256": "3ae9b178713faa20390e4de618e31d34545a7041457894291adb8f98796d3961",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestCoClassAttribute_NewOnInterface_Within_AttributeArgument",
+    "offset": 173704
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0144",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (16,13): error CS0144: Cannot create an instance of the abstract type or interface 'InterfaceType'\n                // [AAttribute(new InterfaceType())]\n                Diagnostic(ErrorCode.ERR_NoNewAbstract, \"new InterfaceType()\").WithArguments(\"InterfaceType\").WithLocation(16, 13)",
+  "unsupported": []
+}

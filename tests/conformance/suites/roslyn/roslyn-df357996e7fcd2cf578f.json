@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-df357996e7fcd2cf578f",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class Base\n{\n    public virtual int M0() { return 0; }\n    public virtual (int a, int b) M1() { return (1, 2); }\n    public virtual (int a, int b)[] M2() { return new[] { (1, 2) }; }\n    public virtual System.Nullable<(int a, int b)> M3() { return null; }\n    public virtual ((int a, int b) c, int d) M4() { return ((1, 2), 3); }\n}\npublic class Derived : Base\n{\n    public string M0() { return null; }\n    public (int a, int b) M1() { return (1, 2); }\n    public (int notA, int notB)[] M2() { return new[] { (1, 2) }; }\n    public System.Nullable<(int notA, int notB)> M3() { return null; }\n    public ((int notA, int notB) c, int d) M4() { return ((1, 2), 3); }\n}\n",
+  "sourceSHA256": "7f689f2b5d252de8d8e83033edd499a9f45e47d2cac54c9085e419e79faca9b9",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "HiddenMethodsWithDifferentTupleNames",
+    "offset": 879305
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0114",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0114",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0114",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0114",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0114",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (13,27): warning CS0114: 'Derived.M1()' hides inherited member 'Base.M1()'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword.\n                //     public (int a, int b) M1() { return (1, 2); }\n                Diagnostic(ErrorCode.WRN_NewOrOverrideExpected, \"M1\").WithArguments(\"Derived.M1()\", \"Base.M1()\").WithLocation(13, 27),\n                // (14,35): warning CS0114: 'Derived.M2()' hides inherited member 'Base.M2()'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword.\n                //     public (int notA, int notB)[] M2() { return new[] { (1, 2) }; }\n                Diagnostic(ErrorCode.WRN_NewOrOverrideExpected, \"M2\").WithArguments(\"Derived.M2()\", \"Base.M2()\").WithLocation(14, 35),\n                // (15,50): warning CS0114: 'Derived.M3()' hides inherited member 'Base.M3()'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword.\n                //     public System.Nullable<(int notA, int notB)> M3() { return null; }\n                Diagnostic(ErrorCode.WRN_NewOrOverrideExpected, \"M3\").WithArguments(\"Derived.M3()\", \"Base.M3()\").WithLocation(15, 50),\n                // (16,44): warning CS0114: 'Derived.M4()' hides inherited member 'Base.M4()'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword.\n                //     public ((int notA, int notB) c, int d) M4() { return ((1, 2), 3); }\n                Diagnostic(ErrorCode.WRN_NewOrOverrideExpected, \"M4\").WithArguments(\"Derived.M4()\", \"Base.M4()\").WithLocation(16, 44),\n                // (12,19): warning CS0114: 'Derived.M0()' hides inherited member 'Base.M0()'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword.\n                //     public string M0() { return null; }\n                Diagnostic(ErrorCode.WRN_NewOrOverrideExpected, \"M0\").WithArguments(\"Derived.M0()\", \"Base.M0()\").WithLocation(12, 19)\n                ",
+  "unsupported": []
+}
