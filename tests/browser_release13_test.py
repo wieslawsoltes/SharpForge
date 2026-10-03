@@ -41,7 +41,7 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
  def text():return ev('sharpforge.getState().files.find(f=>f.uri==="Program.cs").text')
  def node(id):return next(n for n in ds()['document']['nodes'] if n['id']==id)
  def edit(s):ev('sharpforge.openFile("Program.cs")');page.locator('[data-source-uri="Program.cs"] .sf-input').fill(s)
- def load(s):cmd('stop');ev('sharpforge.designer.disconnect()');ev('text=>sharpforge.loadDiskRecords([{path:"Program.cs",text}],{name:"SourceSyncWorkshop"})',s);ev('sharpforge.build()');truth(not ev('sharpforge.getState().diagnostics'));ev('sharpforge.designer.open()')
+ def load(s):cmd('stop');ev('sharpforge.designer.disconnect()');ev('text=>sharpforge.loadDiskRecords([{path:"Program.cs",text}],{name:"SourceSyncWorkshop"})',s);ev('sharpforge.build()');truth(not ev('sharpforge.getState().diagnostics.filter(d=>d.severity==="error")'),str(ev('sharpforge.getState().diagnostics')));ev('sharpforge.designer.open()')
  try:
   load_application(page)
   def connect():
@@ -51,7 +51,7 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
    truth(page.locator('[data-design-view="split"]').get_attribute('aria-selected')=='true');ev('sharpforge.openTool("designer-properties");sharpforge.designer.select("button")');truth(page.locator('.design-property-category summary').count()>=4);truth(page.locator('.design-breadcrumbs').inner_text().find('Action')>=0);truth(page.locator('[data-property="Width"]').get_attribute('aria-label')=='Width');truth(page.locator('[data-property=ColumnSpan]').count()==0);truth(page.locator('[data-property=Left]').count()==1);truth(page.locator('[data-design-goto-source]').count()==1);truth(page.locator('.design-mode-tabs').is_visible());truth(page.locator('.design-mode-bar').evaluate('e=>getComputedStyle(e).display')=='flex');truth(page.locator('.design-toolbox-category svg').first.evaluate('e=>getComputedStyle(e).fill')=='none')
   check('designer modes, grouped property grid, breadcrumb selection and compact chrome initialize',chrome)
   def property_write():
-   before=text();ev('sharpforge.designer.set("Width",248,["button"])');wait('sharpforge.designer.get().sourceSync.state==="synced"');after=text();truth('Width = 248' in after,after);truth(after==before.replace('Width = 180','Width = 248.0'),'write was not a minimal source span edit');truth(not ev('sharpforge.getState().diagnostics'))
+   before=text();ev('sharpforge.designer.set("Width",248,["button"])');wait('sharpforge.designer.get().sourceSync.state==="synced"');after=text();truth('Width = 248' in after,after);truth(after==before.replace('Width = 180','Width = 248.0'),'write was not a minimal source span edit');truth(not ev('sharpforge.getState().diagnostics.filter(d=>d.severity==="error")'),str(ev('sharpforge.getState().diagnostics')))
   check('designer property changes compile-check a minimal C# edit and preserve every other byte',property_write)
   def editor_read():
    edit(text().replace('"Keep my code"','"Edited in C#"'));wait('sharpforge.designer.get().document.nodes.some(n=>n.id==="label"&&n.properties.Text==="Edited in C#")');truth(page.locator('.design-preview [data-sf-id="label"]').inner_text()=='Edited in C#');truth(ds()['sourceSync']['state']=='synced')
@@ -63,7 +63,7 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
    before=text();edit(before.replace('Width = 248.0','Width ='));wait('sharpforge.designer.get().sourceSync.state==="blocked"');truth(node('button')['properties']['Width']==248);edit(before);wait('sharpforge.designer.get().sourceSync.state==="synced"')
   check('incomplete C# keeps the last valid preview and recovers when corrected',incomplete)
   def structural():
-   ev('sharpforge.designer.setAutoSync(false)');id_=ev('sharpforge.designer.add("TextBox","root")');ev('id=>sharpforge.designer.set("Text","New input",[id])',id_);ev('sharpforge.designer.writeSource()');truth('New input' in text());truth('// Keep this hand-written handler exactly, including Unicode: λ.' in text());truth('clicks++; label.Text = $"Clicks: {clicks:D2}";' in text());truth(not ev('sharpforge.getState().diagnostics'))
+   ev('sharpforge.designer.setAutoSync(false)');id_=ev('sharpforge.designer.add("TextBox","root")');ev('id=>sharpforge.designer.set("Text","New input",[id])',id_);ev('sharpforge.designer.writeSource()');truth('New input' in text());truth('// Keep this hand-written handler exactly, including Unicode: λ.' in text());truth('clicks++; label.Text = $"Clicks: {clicks:D2}";' in text());truth(not ev('sharpforge.getState().diagnostics.filter(d=>d.severity==="error")'),str(ev('sharpforge.getState().diagnostics')))
   check('structural insertion rewrites only the proven construction method and preserves the hand-written handler',structural)
   def conflict():
    ev('sharpforge.designer.set("Width",260,["button"])');staged=text();edit(staged.replace('"Click"','"From source"'));wait('sharpforge.designer.get().sourceSync.state==="conflict"');message=ev('async()=>{try{await sharpforge.designer.writeSource();return ""}catch(e){return e.message}}');truth(message);truth(text()==staged.replace('"Click"','"From source"'));ev('sharpforge.designer.readSource({discardDesign:true})');truth(node('button')['properties']['Content']=='From source');truth(node('button')['properties']['Width']==248)
