@@ -1,3 +1,4 @@
+import {appendSourceVarargs} from './source-varargs.js';
 import {validatePointer, pointerType, asReadonly} from './managed-pointers.js';
 import {ManagedFault} from '../heap.js';
 import {sourceStore} from './source-storage.js';
@@ -15,7 +16,8 @@ export function callSource(vm, methodId, args, types = []) {
   const method = vm.image.methods[methodId];
   const locals = Array(method.locals.length).fill(undefined);
   vm.heap.withRoots(args, () => {
-    for (let index = 0; index < args.length; index++) {
+    const fixed = method.parameters.length + (method.isStatic ? 0 : 1);
+    for (let index = 0; index < Math.min(args.length, fixed); index++) {
       let argument = args[index];
       const type = method.locals[index].type;
       if(type.endsWith('&')) {
@@ -33,12 +35,14 @@ export function callSource(vm, methodId, args, types = []) {
     if (!method.isStatic && args[0] === null) {
       throw new ManagedFault('NullReferenceException', 'Cannot call an instance method on null');
     }
+    const varargs = appendSourceVarargs(vm, method, locals, args, types, fixed);
     pushFrame(vm, {
       id: ++vm.frameId,
       methodId,
       pc: 0,
       base: vm.stack.length,
       locals,
+      ...(varargs?{varargs}:{}),
       point: null,
       ...frameState()
     });

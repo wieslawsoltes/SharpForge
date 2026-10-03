@@ -1,3 +1,4 @@
+import {typedReferenceExpression} from './expressions/typed-references.js';
 import { Precedence, binaryOperators, assignmentOperators, prefixOperators } from '../lexer/operators.js';
 /** Expression parsing by precedence climbing: assignment, conditional, binary, unary, postfix and primary forms. */
 const P = Precedence;
@@ -183,6 +184,7 @@ export const expressionMethods = {
     }
   },
   primary(min) {
+    const typedReference=typedReferenceExpression(this);if(typedReference)return typedReference;
     const token = this.current,
       kind = token.kind;
     if (kind === 'interpolated') return this.interpolatedString();

@@ -1,3 +1,4 @@
+import {bindVarargsInvocation} from './varargs.js';
 /**
  * Arguments and invocations: overload resolution, extension methods, delegate invocation, element access
  * and `out` declarations. A call that cannot be bound keeps its arguments so flow analysis still sees `out` writes.
@@ -90,6 +91,7 @@ export const CallBinding = Base =>
       return nameNode;
     }
     invocation(syntax) {
+      const variable=bindVarargsInvocation(this,syntax);if(variable!==undefined)return variable;
       const target = this.expression(syntax.expression, { invoked: true });
       if (target.kind === 'NameOfMarker') {
         this.d.gate(this.c.uri, syntax.expression, 'Nameof');
