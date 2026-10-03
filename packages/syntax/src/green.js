@@ -6,6 +6,11 @@ import { BoundedCache } from '@sharpforge/text';
 export const GreenFlags = Object.freeze({ None: 0, Missing: 1, ContainsDiagnostics: 2, ContainsSkippedText: 4, ContainsDirectives: 8, ContainsMissing: 16 });
 const inherited = GreenFlags.ContainsDiagnostics | GreenFlags.ContainsSkippedText | GreenFlags.ContainsDirectives | GreenFlags.ContainsMissing, empty = Object.freeze([]);
 let nextId = 1;
+/**
+ * A copy of a substring that does not keep the source text alive. Engines represent longer substrings as views of
+ * their parent string, so a token kept across edits would otherwise retain every version of the document it was cut from.
+ */
+export const ownText = text => text.length < 13 ? text : (' ' + text).slice(1);
 export class GreenTrivia {
   constructor(kind, text, structure = null) {
     this.kind = kind; this.text = text; this.structure = structure; this.fullWidth = text.length; this.id = nextId++; this.asList = Object.freeze([this]);

@@ -1,8 +1,9 @@
 import { diagnostic } from '@sharpforge/text';
-import { GreenCache } from '../green.js';
+import { GreenCache, ownText } from '../green.js';
 import { legacyContextual, contextualKeywordKinds, reservedKeywordKinds, predefinedTypes } from '../lexer/keywords.js';
 import { punctuationKinds, greaterThanMerges } from '../lexer/operators.js';
 import { recoveryMethods } from './recovery.js';
+import { blenderMethods } from '../incremental/blender.js';
 const expected = { ';': ['CS1002', '; expected'], '}': ['CS1513', '} expected'], '{': ['CS1514', '{ expected'], ')': ['CS1026', ') expected'] };
 const empty = Object.freeze([]);
 /**
@@ -17,6 +18,8 @@ export class Parser {
     this.cache = options.greenCache ?? GreenCache.for(options.cache); this.i = 0; this.depth = 0; this.nodeCount = 0; this.skippedTokens = [];
     // `await` is a keyword at statement level only inside async functions and top-level statements, as in Roslyn.
     this.inAsync = options.inAsync ?? true;
+    // Incremental parsing: a Blender over the previous tree (see incremental/blender.js), or null for a full parse.
+    this.blend = options.blend ?? null;
   }
   get current() { return this.tokens[this.i]; }
   at(kind) { return this.tokens[this.i].kind === kind; }
@@ -37,9 +40,9 @@ export class Parser {
   feature(id, token, end = token) { this.features.push({ id, start: token.start, end: end.end ?? end }); }
   trivia(pieces) {
     if (!pieces.length) return empty; const text = this.source.text;
-    if (pieces.length === 1) { const piece = pieces[0]; return this.cache.trivia(piece.kind, text.slice(piece.start, piece.end), piece.structure ?? null).asList; }
+    if (pieces.length === 1) { const piece = pieces[0]; return this.cache.trivia(piece.kind, ownText(text.slice(piece.start, piece.end)), piece.structure ?? null).asList; }
     const out = [];
-    for (const piece of pieces) out.push(this.cache.trivia(piece.kind, text.slice(piece.start, piece.end), piece.structure ?? null));
+    for (const piece of pieces) out.push(this.cache.trivia(piece.kind, ownText(text.slice(piece.start, piece.end)), piece.structure ?? null));
     return this.cache.triviaList(out);
   }
   /** Builds the green token for a lexer token, prepending any tokens skipped during recovery as SkippedTokensTrivia. */
@@ -93,4 +96,4 @@ export class Parser {
   enter(message = 'Syntax nesting limit exceeded') { if (++this.depth <= 200) return true; this.error(this.current, 'SF1099', message); return false; }
   leave() { this.depth--; }
 }
-Object.assign(Parser.prototype, recoveryMethods);
+Object.assign(Parser.prototype, recoveryMethods, blenderMethods);

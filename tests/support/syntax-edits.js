@@ -1,3 +1,4 @@
+import assert from 'node:assert/strict';
 /** Seeded random text edits shared by the incremental lexing and parsing suites. */
 export const editSeedDocument = `#define TRACE
 using System;
@@ -51,6 +52,29 @@ namespace Sample.App
     interface IShape { double Area(); }
 }
 `;
+/** A compact document for long fuzz runs. */
+export const editSmallDocument = `using System;
+namespace N
+{
+    class C<T> : B where T : class
+    {
+        int a = 1, b;
+        public string Name => $"n {a:D2}";
+#if X
+        const int K = 2;
+#endif
+        async Task<int> M(int p)
+        {
+            for (int i = 0; i < p; i++) { if (i > 2 && p is > 3 and not 7) a += i; else b--; }
+            await Task.Delay(1); /* c */
+            Func<int, int> f = x => x * 2; // t
+            return f(a) + (b > 0 ? 'a' : 1.5e3);
+        }
+        public int P { get; set; }
+    }
+    enum E { A = 1, B }
+}
+`;
 const snippets = [' ', '\n', ';', '{', '}', '(', ')', '[', ']', '<', '>', '=', '+', '-', '*', '/', '.', ',', ':', '?', '!', '"', "'", '$"', '@"', '"""', '//', '/*', '*/', '///', '#if X\n', '#else\n', '#endif\n', '#define Q\n', '#region R\n', '#endregion\n',
   'x', 'int', 'var', 'class C { }', 'void M() { }', 'int y = 1;', 'return;', 'if (a) b();', 'else', 'async', 'await', 'static', 'public', 'new', '=>', '..', '>>', '0x', '1.5', 'e3', 'u8', '\\u0041', '{x}', '\r\n', '\t', 'namespace N', 'using', 'catch', 'case 1:', 'where T : struct', '@', '#'];
 /** A deterministic generator: `next(text)` returns { start, length, text } for the next edit of `text`. */
@@ -66,3 +90,26 @@ export function editGenerator(seed) {
   } };
 }
 export const applyEdit = (text, edit) => text.slice(0, edit.start) + edit.text + text.slice(edit.start + edit.length);
+const triviaEquals = (a, b) => { if (a.length !== b.length) return false; for (let i = 0; i < a.length; i++) if (a[i] !== b[i] && (a[i].kind !== b[i].kind || a[i].text !== b[i].text)) return false; return true; };
+/** Structural green comparison: kinds, child shape, token text, value flags and trivia. Returns a description of the first difference or null. */
+export function greenDifference(a, b) {
+  const stack = [[a, b]];
+  while (stack.length) {
+    const [x, y] = stack.pop(); if (x === y) continue;
+    if (!x || !y) return `child presence differs (${x?.kind} vs ${y?.kind})`;
+    if (x.kind !== y.kind) return `kind ${x.kind} != ${y.kind}`;
+    if (x.fullWidth !== y.fullWidth || x.flags !== y.flags) return `${x.kind}: width or flags differ (${x.fullWidth}/${x.flags} vs ${y.fullWidth}/${y.flags})`;
+    if (x.isNode) { if (x.children.length !== y.children.length) return `${x.kind}: child count ${x.children.length} != ${y.children.length}`; for (let i = 0; i < x.children.length; i++) stack.push([x.children[i], y.children[i]]); }
+    else if (x.text !== y.text || !triviaEquals(x.leading, y.leading) || !triviaEquals(x.trailing, y.trailing)) return `token ${x.kind} ${JSON.stringify(x.text)} != ${JSON.stringify(y.text)} or its trivia`;
+  }
+  return null;
+}
+const diagnosticKey = d => `${d.code}@${d.start}+${d.length} ${d.severity} ${d.message} v${d.version} ${d.range.start.line}:${d.range.start.character}`;
+const featureKey = f => `${f.id}@${f.start}-${f.end}`, directiveKey = d => `${d.kind}@${d.start}-${d.end}`;
+export function assertSameTree(incremental, full, label) {
+  assert.equal(incremental.toFullString(), full.source.text, label + ': text');
+  const difference = greenDifference(incremental.green, full.green); if (difference) assert.fail(`${label}: ${difference}`);
+  assert.deepEqual(incremental.getDiagnostics().map(diagnosticKey).sort(), full.getDiagnostics().map(diagnosticKey).sort(), label + ': diagnostics');
+  assert.deepEqual(incremental.features.map(featureKey).sort(), full.features.map(featureKey).sort(), label + ': features');
+  assert.deepEqual(incremental.directives.map(directiveKey), full.directives.map(directiveKey), label + ': directives');
+}

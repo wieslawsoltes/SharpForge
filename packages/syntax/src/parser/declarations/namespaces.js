@@ -1,4 +1,5 @@
 import { accessibilityModifiers } from '../modifiers.js';
+import { reusableNamespaceMembers } from '../../incremental/blender.js';
 /** Compilation units, extern aliases, using directives (namespace, static and alias forms) and namespace declarations, kept in source order. */
 const memberOnly = new Set([...accessibilityModifiers, 'virtual', 'override', 'abstract', 'sealed', 'volatile', 'new']);
 const directiveFollowers = new Set([';', 'eof', 'using', 'namespace', 'class', 'struct', 'interface', 'enum', 'public', 'internal', '[']);
@@ -43,7 +44,7 @@ export const namespaceMethods = {
   namespaceBody(externs, usings, members, unitAttributes, close) {
     const inNamespace = !unitAttributes;
     while (!this.at('eof') && !(close && this.at(close))) {
-      const before = this.i;
+      const before = this.i, reused = this.blend ? this.reuse(reusableNamespaceMembers, 'namespace', inNamespace) : null; if (reused) { members.push(reused); continue; }
       if (!members.length && !usings.length && this.isExternAlias()) externs.push(this.externAlias());
       else if (this.isUsingDirective()) {
         if (!members.length) usings.push(this.usingDirective());

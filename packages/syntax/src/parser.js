@@ -40,7 +40,7 @@ const byPosition = (a, b) => a.start - b.start;
  */
 export function parseCompilationUnit(lexed, options = {}) {
   const parser = new Parser(lexed, options), green = parser.compilationUnit();
-  return { green, diagnostics: parser.diagnostics, features: parser.features, nodeCount: parser.nodeCount };
+  return { green, diagnostics: parser.diagnostics, features: parser.features, nodeCount: parser.nodeCount, reusedNodes: parser.blend?.reused ?? 0 };
 }
 /**
  * Parses C# source. The result keeps the shape existing consumers rely on - { source, tokens, root, diagnostics,

@@ -1,3 +1,4 @@
+import { ownText } from '../green.js';
 /**
  * Error recovery that never drops source text: unexpected tokens are skipped into SkippedTokensTrivia attached to the
  * next token the parser consumes, and absent tokens are represented by zero-width missing tokens (see Parser.expect).
@@ -13,7 +14,7 @@ export const recoveryMethods = {
   takeSkipped() {
     const first = this.skippedTokens[0], last = this.skippedTokens.at(-1); this.skippedTokens = [];
     const start = first.leadingTrivia[0]?.start ?? first.start, end = last.trailingTrivia.at(-1)?.end ?? last.end;
-    return this.cache.trivia('SkippedTokensTrivia', this.source.text.slice(start, end));
+    return this.cache.trivia('SkippedTokensTrivia', ownText(this.source.text.slice(start, end)));
   },
   /** Trivia list holding any pending skipped tokens followed by `pieces` (lexer trivia pieces). Used for synthesized tokens. */
   leadingWithSkipped(pieces = []) {
