@@ -18,4 +18,5 @@ export * from './diff/patch.js';
 export * from './diff/tree.js';
 export * from './patch-apply.js';
 export * from './path-safety.js';
+export * from './protocol/pktline.js';
 export * from './refspec.js';
