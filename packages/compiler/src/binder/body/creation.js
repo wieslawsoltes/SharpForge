@@ -83,12 +83,14 @@ export const CreationBinding = Base =>
         }
         return this.withInitializer(this.node('ObjectCreation', syntax, type, { constructor: null, args: [] }), initializer);
       }
+      const all = type.getMembers('.ctor').filter(m => m.kind === SymbolKind.Method && m.methodKind === MethodKind.Constructor);
       if (type.typeKind === TypeKind.Enum || (keywordOf(type) && type.isValueType) || isNullableType(type)) {
         if (!args.length)
           return this.withInitializer(this.node('ObjectCreation', syntax, type, { constructor: null, args: [] }), initializer);
-        if (!isSource(type)) return this.lenient(syntax);
+        // Scalar runtime profiles expose real constructors (for example Decimal's
+        // five-part payload constructor). Resolve them before declaring a registry gap.
+        if (!isSource(type) && !all.length) return this.lenient(syntax);
       }
-      const all = type.getMembers('.ctor').filter(m => m.kind === SymbolKind.Method && m.methodKind === MethodKind.Constructor);
       if (!all.length) {
         if (type.isValueType === true && !args.length)
           return this.withInitializer(this.node('ObjectCreation', syntax, type, { constructor: null, args: [] }), initializer);
