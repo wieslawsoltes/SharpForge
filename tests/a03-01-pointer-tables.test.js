@@ -43,7 +43,9 @@ test('A03 #- pointer lists and ExtraData preserve physical rows and resolved own
 
 test('A03 inspector applies #- indirection for all declaration lists', () => {
   const metadata = shuffled().finish();
-  const image = writePE(new Uint8Array(), metadata, 0);
+  const section = new Uint8Array(72 + metadata.length);
+  section.set(metadata, 72);
+  const image = writePE(section, 72, metadata.length, 0);
   const inspector = new AssemblyInspector(image);
   assert.deepEqual(inspector.types[1].fields.map(field => field.name), ['First']);
   assert.deepEqual(inspector.types[1].methods.map(method => method.name), ['First']);

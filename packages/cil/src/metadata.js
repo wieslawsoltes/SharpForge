@@ -1,4 +1,5 @@
-import { metadataColumnKind, metadataList } from './metadata/pointer-tables.js';
+import { readMetadataTables, writeMetadataTables } from './metadata/table-stream.js';
+import { metadataList } from './metadata/pointer-tables.js';
 import { sortMetadataRows } from './metadata/sorting.js';
 export { metadataSortedMask } from './metadata/sorting.js';
 import { interopRowWriters } from './metadata/rows-interop.js';
@@ -10,8 +11,7 @@ import { writeMetadataRow } from './metadata/row-writer.js';
 import { definitionRowWriters } from './metadata/rows-definitions.js';
 export * from './metadata/rows-definitions.js';
 import { MetadataHeaps } from './metadata/heaps.js';
-import { metadataSchemas as schemas } from './metadata/tables.js';
-import { codedIndex, decodeCoded, token, metadataIndexWidth } from './metadata/indices.js';
+import { codedIndex, decodeCoded, token } from './metadata/indices.js';
 export { Tables, TableId, tableDefinitions, metadataSchemas } from './metadata/tables.js';
 export { metadataCodedIndices, codedIndex, decodeCoded, token, metadataIndexWidth } from './metadata/indices.js';
 export class MetadataBuilder {
@@ -30,9 +30,9 @@ export class MetadataBuilder {
   member(owner,name,signature) { const key=`${owner}:${name}:${Array.from(signature)}`;if(this.members.has(key))return this.members.get(key);const t=this.add(10,[codedIndex('MemberRefParent',owner),this.string(name),this.blob(signature)]);this.members.set(key,t);return t; }
   finish(debug,identityBytes) {
     const {rows,sortedMask,tokenMap}=sortMetadataRows(this.rows);this.tokenMap=tokenMap;
-    const counts=Object.fromEntries(Object.entries(rows).map(([t,r])=>[t,r.length]));const heapFlags=this.heaps.flags|(this.extraData===undefined?0:0x40);const tables=new Writer().u32(0).u8(2).u8(0).u8(heapFlags).u8(1);let low=0,high=0;for(const id of Object.keys(rows).map(Number)){if(id<32)low|=1<<id;else high|=1<<(id-32);}tables.u32(low).u32(high).u32(Number(sortedMask&0xffffffffn)).u32(Number(sortedMask>>32n));
-    for(let i=0;i<64;i++)if(counts[i])tables.u32(counts[i]);if(this.extraData!==undefined)tables.u32(this.extraData);for(let i=0;i<64;i++)for(const row of rows[i]??[]){const schema=schemas[i];if(!schema||schema.length!==row.length)throw new CilError('Invalid metadata table row');row.forEach((value,j)=>metadataIndexWidth(metadataColumnKind(i,j,counts,this.uncompressed),counts,heapFlags)===2?tables.u16(value):tables.u32(value));}
-    const streams=[[this.uncompressed?'#-':'#~',tables.finish()],...this.heaps.finish(buildId(identityBytes??new Uint8Array()))];if(debug)streams.push(['#SF',utf8(JSON.stringify(debug))]);
+    const heapFlags=this.heaps.flags|(this.extraData===undefined?0:0x40);
+    const tables=writeMetadataTables(rows,{heapFlags,sortedMask,uncompressed:this.uncompressed,extraData:this.extraData});
+    const streams=[[this.uncompressed?'#-':'#~',tables],...this.heaps.finish(buildId(identityBytes??new Uint8Array()))];if(debug)streams.push(['#SF',utf8(JSON.stringify(debug))]);
     const version=utf8('v4.0.30319\0'),root=new Writer().u32(0x424a5342).u16(1).u16(1).u32(0).u32(align(version.length)).bytes(version).pad().u16(0).u16(streams.length);const headers=[];
     for(const [name,data]of streams){headers.push(root.length);root.u32(0).u32(data.length).bytes(utf8(name)).u8(0).pad();}
     streams.forEach(([name,data],i)=>{root.pad();root.patch32(headers[i],root.length);root.bytes(data);});return root.finish();
@@ -42,14 +42,9 @@ export function readMetadata(bytes) {
   const r=new Reader(bytes);if(r.u32()!==0x424a5342)throw new CilError('Invalid CLI metadata signature');r.u16();r.u16();r.u32();const versionLength=r.u32();if(versionLength>256)throw new CilError('Metadata version string is too long');const version=text(r.take(versionLength)).replace(/\0+$/,'');r.u16();const count=r.u16();if(count>32)throw new CilError('Too many metadata streams');const streams=new Map(),ranges=[];
   for(let i=0;i<count;i++){const offset=r.u32(),size=r.u32();let name='';for(let j=0;j<32;j++){const b=r.u8();if(!b)break;name+=String.fromCharCode(b);if(j===31)throw new CilError('Invalid stream name');}r.position=align(r.position);if(offset+size>bytes.length||streams.has(name))throw new CilError('Invalid or duplicate metadata stream');streams.set(name,bytes.subarray(offset,offset+size));ranges.push([offset,offset+size]);}
   for(let i=0;i<ranges.length;i++){if(ranges[i][0]<r.position)throw new CilError('Metadata stream overlaps its header');for(let j=0;j<i;j++)if(ranges[i][0]<ranges[j][1]&&ranges[j][0]<ranges[i][1])throw new CilError('Overlapping metadata streams');}
-  const uncompressed=!streams.has('#~')&&streams.has('#-');const tableBytes=streams.get('#~')??streams.get('#-');if(!tableBytes)throw new CilError('Missing metadata tables');const tr=new Reader(tableBytes);tr.u32();const major=tr.u8();tr.u8();const heaps=tr.u8();tr.u8();if(major!==2)throw new CilError('Unsupported metadata table version');const low=tr.u32(),high=tr.u32();const sortedLow=tr.u32(),sortedHigh=tr.u32();const counts={},rows={},rowOffsets={};let total=0;
-  for(let i=0;i<64;i++)if((i<32?low>>>(i):high>>>(i-32))&1){if(!schemas[i])throw new CilError(`Unsupported metadata table ${i}`);counts[i]=tr.u32();total+=counts[i];if(total>1_000_000)throw new CilError('Metadata row limit exceeded');}
-  const extraData=heaps&0x40?tr.u32():undefined;
-  const externalCounts={};const pdbStream=streams.get('#Pdb');if(pdbStream){const pr=new Reader(pdbStream);pr.take(24);const lo=pr.u32(),hi=pr.u32();for(let t=0;t<64;t++)if((t<32?lo>>>t:hi>>>(t-32))&1){externalCounts[t]=pr.u32();if(externalCounts[t]>0xffffff)throw new CilError('Invalid external PDB row count');}if(pr.position!==pr.end)throw new CilError('Trailing #Pdb bytes');}
-  const indexCounts={...externalCounts,...counts};
-  for(let i=0;i<64;i++){if(!counts[i])continue;rows[i]=[];rowOffsets[i]=[];for(let n=0;n<counts[i];n++){rowOffsets[i].push(tr.position);rows[i].push(schemas[i].map((kind,column)=>metadataIndexWidth(metadataColumnKind(i,column,indexCounts,uncompressed),indexCounts,heaps)===2?tr.u16():tr.u32()));}}
+  const tableData=readMetadataTables(streams,bytes),{rows}=tableData;
   const strings=streams.get('#Strings')??new Uint8Array([0]),blobs=streams.get('#Blob')??new Uint8Array([0]),us=streams.get('#US')??new Uint8Array([0]);const stringCache=new Map();
-  const result={version,streams,counts,externalCounts,rows,rowOffsets,uncompressed,extraData,sortedMask:BigInt(sortedLow)|(BigInt(sortedHigh)<<32n),heapFlags:heaps,tableOffset:tableBytes.byteOffset-bytes.byteOffset,
+  const result={version,streams,...tableData,
     list(owner,column){return metadataList(this,owner,column);},
     guid(index){const data=streams.get('#GUID')??new Uint8Array();if(index===0)return new Uint8Array(16);if(!Number.isInteger(index)||index<1||index*16>data.length)throw new CilError('Invalid GUID heap index');return data.slice((index-1)*16,index*16);},
     row(t){const value=rows[t>>>24]?.[(t&0xffffff)-1];if(!value)throw new CilError(`Invalid metadata token 0x${t.toString(16)}`);return value;},
