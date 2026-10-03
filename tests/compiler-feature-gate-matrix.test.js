@@ -53,7 +53,6 @@ const notGated = {
   UnmanagedConstructedTypes: needsOperandTypes,
   ObsoleteOnPropertyAccessor: needsAttributeBinding,
   NullPointerConstantPattern: needsOperandTypes,
-  AsyncUsing: 'the parser records `await using` as AsyncStreams, so it is reported with that feature name',
   TargetTypedConditional: needsOperandTypes,
   ModuleInitializers: needsAttributeBinding,
   ExtensionGetEnumerator: needsOperandTypes,

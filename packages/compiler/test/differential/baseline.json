@@ -800,7 +800,6 @@
     "namespaces/cs1529-using-after-declaration",
     "namespaces/cs1537-duplicate-alias",
     "namespaces/cs7007-using-static-a-namespace",
-    "namespaces/file-scoped",
     "namespaces/nested-and-qualified",
     "namespaces/same-name-different-namespaces",
     "namespaces/using-bcl-namespaces-outside-the-registry",
