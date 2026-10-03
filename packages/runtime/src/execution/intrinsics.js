@@ -116,6 +116,8 @@ const implementations={
 
 };
 
+const sharedConversions = new Set(['convertInt32', 'convertDouble', 'convertString']);
+
 /** Closed owner::name(signature) registry shared with verifier acceptance. */
 export const intrinsicHandlers=new Map(intrinsicDefinitions.map(definition=>{
   if(!definition.contract&&!implementations[definition.implementation])throw new Error(`Missing intrinsic implementation '${definition.implementation}'`);
@@ -123,7 +125,9 @@ export const intrinsicHandlers=new Map(intrinsicDefinitions.map(definition=>{
     if(selected.contract)return vm.platform.invoke(selected.contract,args);
     const self=descriptor.signature.isStatic?null:args[0],parameters=descriptor.signature.isStatic?args:args.slice(1);
     if(!descriptor.signature.isStatic&&self===null)throw new ManagedFault('NullReferenceException','Null instance receiver');
-    return implementations[selected.implementation]({vm,descriptor,self,parameters,values:parameters.map(value=>vm.value(value))});
+    // Shared conversions decode their own arguments through the host adapter.
+    const values = sharedConversions.has(selected.implementation) ? null : parameters.map(value => vm.value(value));
+    return implementations[selected.implementation]({vm,descriptor,self,parameters,values});
   }];
 }));
 export function invokeIntrinsic(vm,descriptor,args) {
