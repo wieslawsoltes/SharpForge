@@ -332,8 +332,9 @@
       "input": "examples/msbuild/SdkWorkspace/App/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1061: 'error' does not contain a definition for 'Answer' and no accessible extension method 'Answer' accepting a first argument of type 'error' could be found (are you missing a using directive or an assembly reference?)",
-        "CS1501: No overload for method 'Sum' takes 2 arguments",
+        "CS0103: The name 'BuildTag' does not exist in the current context",
+        "CS0103: The name 'Numbers' does not exist in the current context",
+        "CS0246: The type or namespace name 'NativeExample' could not be found (are you missing a using directive or an assembly reference?)",
         "SF2098: Expression 'SimpleLambdaExpression' is not implemented by this profile"
       ]
     },
@@ -364,7 +365,6 @@
         "CS0019: Operator '+' cannot be applied to operands of type 'error' and 'int'",
         "CS0131: The left-hand side of an assignment must be a variable, property or indexer",
         "CS0246: The type or namespace name 'Particle' could not be found (are you missing a using directive or an assembly reference?)",
-        "CS0246: The type or namespace name 'Particle[]' could not be found (are you missing a using directive or an assembly reference?)",
         "CS1061: 'Particle' does not contain a definition for 'Position' and no accessible extension method 'Position' accepting a first argument of type 'Particle' could be found (are you missing a using directive or an assembly reference?)",
         "CS1061: 'Particle' does not contain a definition for 'Velocity' and no accessible extension method 'Velocity' accepting a first argument of type 'Particle' could be found (are you missing a using directive or an assembly reference?)"
       ]
@@ -426,8 +426,10 @@
       "input": "examples/projects/ExplorerWorkshop/App/Scratch.cs",
       "status": "not-emitted",
       "diagnostics": [
+        "CS0103: The name 'This' does not exist in the current context",
         "CS0103: The name 'not' does not exist in the current context",
         "CS0201: Only assignment, call, increment, decrement, await, and new object expressions can be used as a statement",
+        "CS0246: The type or namespace name 'a' could not be found (are you missing a using directive or an assembly reference?)",
         "CS0246: The type or namespace name 'valid' could not be found (are you missing a using directive or an assembly reference?)",
         "CS1002: ; expected",
         "CS1040: Preprocessor directives must appear as the first non-whitespace character on a line",
@@ -621,8 +623,8 @@
       "input": "examples/release14/CsharpPreviewCollections/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS8652: The feature 'collection expression arguments' is currently in Preview and *unsupported*. To use Preview features, use the 'preview' language version. (pinned to csharplang/proposals/collection-expression-arguments.md revision 1, .NET SDK 10.0.201 (Roslyn 5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a))",
-        "CS8652: The feature 'labeled break and continue' is currently in Preview and *unsupported*. To use Preview features, use the 'preview' language version. (pinned to csharplang/proposals/labeled-break-continue.md revision 1, .NET SDK 10.0.201 (Roslyn 5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a))"
+        "CS8652: The feature 'collection expression arguments' is currently in Preview and *unsupported*. To use Preview features, use the 'preview' language version. (pinned to csharplang/proposals/csharp-15.0/collection-expression-arguments.md revision 1, .NET SDK 10.0.201 (Roslyn 5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a))",
+        "CS8652: The feature 'labeled break and continue' is currently in Preview and *unsupported*. To use Preview features, use the 'preview' language version. (pinned to csharplang/proposals/csharp-15.0/labeled-break-continue.md revision 1, .NET SDK 10.0.201 (Roslyn 5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a))"
       ]
     },
     {
@@ -666,7 +668,8 @@
       "input": "examples/templates/console-library-solution/ConsoleLibrarySolutionExample/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1501: No overload for method 'Add' takes 2 arguments"
+        "CS0103: The name 'Calculator' does not exist in the current context",
+        "CS0234: The type or namespace name 'Core' does not exist in the namespace 'TemplateExamples.ConsoleLibrarySolution' (are you missing an assembly reference?)"
       ]
     },
     {
@@ -827,9 +830,8 @@
       "input": "examples/templates/winui-library-solution/WinuiLibrarySolutionExample/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0246: The type or namespace name 'CardControl' could not be found (are you missing a using directive or an assembly reference?)",
-        "CS1061: 'CardControl' does not contain a definition for 'View' and no accessible extension method 'View' accepting a first argument of type 'CardControl' could be found (are you missing a using directive or an assembly reference?)",
-        "CS1501: No overload for method 'SetCaption' takes 1 arguments"
+        "CS0234: The type or namespace name 'Controls' does not exist in the namespace 'TemplateExamples.WinuiLibrarySolution' (are you missing an assembly reference?)",
+        "CS0246: The type or namespace name 'CardControl' could not be found (are you missing a using directive or an assembly reference?)"
       ]
     },
     {

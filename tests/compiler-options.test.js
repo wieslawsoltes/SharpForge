@@ -39,7 +39,7 @@ test('A02-T38 accepts everything the compiler accepts today',()=>{
   assert.equal(options.langVersionFor('a.cs'),'12');assert.equal(options.langVersionFor('b.cs'),'latest');assert.equal(options.langVersionFor('c.cs'),'14');assert.equal(options.langVersionFor('z.cs'),'preview');
   assert.equal(options.somethingElse,undefined);
   // Every language version the profile's own languageVersion() accepts is accepted here with the same number, and vice versa.
-  for(const value of ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','14.0','7.0','7.1','7.2','7.3','iso-1','iso-2','default','latest','latestmajor','preview','PREVIEW',12]){
+  for(const value of ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','14.0','7.0','7.1','7.2','7.3','iso-1','iso-2','ISO-2','default','latest','latestmajor','preview','PREVIEW',12]){
     const r=parse({langVersion:value});assert.deepEqual(r.diagnostics,[],String(value));
     const mine=parseLanguageVersion(value),theirs=languageVersion(r.options.langVersion);
     assert.equal(mine.number,theirs.number,String(value));assert.equal(mine.preview,theirs.preview,String(value));

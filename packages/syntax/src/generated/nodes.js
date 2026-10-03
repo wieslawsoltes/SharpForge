@@ -271,7 +271,35 @@ export const slotNames = Object.freeze({
   CatchClause: ['catchKeyword', 'declaration', 'filter', 'block'],
   CatchDeclaration: ['openParenToken', 'type', 'identifier', 'closeParenToken'],
   CatchFilterClause: ['whenKeyword', 'openParenToken', 'filterExpression', 'closeParenToken'],
-  FinallyClause: ['finallyKeyword', 'block']
+  FinallyClause: ['finallyKeyword', 'block'],
+  SingleLineDocumentationCommentTrivia: ['content', 'endOfComment'],
+  MultiLineDocumentationCommentTrivia: ['content', 'endOfComment'],
+  XmlElement: ['startTag', 'content', 'endTag'],
+  XmlElementStartTag: ['lessThanToken', 'name', 'attributes', 'greaterThanToken'],
+  XmlElementEndTag: ['lessThanSlashToken', 'name', 'greaterThanToken'],
+  XmlEmptyElement: ['lessThanToken', 'name', 'attributes', 'slashGreaterThanToken'],
+  XmlName: ['prefix', 'localName'],
+  XmlPrefix: ['prefix', 'colonToken'],
+  XmlTextAttribute: ['name', 'equalsToken', 'startQuoteToken', 'textTokens', 'endQuoteToken'],
+  XmlCrefAttribute: ['name', 'equalsToken', 'startQuoteToken', 'cref', 'endQuoteToken'],
+  XmlNameAttribute: ['name', 'equalsToken', 'startQuoteToken', 'identifier', 'endQuoteToken'],
+  XmlText: ['textTokens'],
+  XmlCDataSection: ['startCDataToken', 'textTokens', 'endCDataToken'],
+  XmlProcessingInstruction: ['startProcessingInstructionToken', 'name', 'textTokens', 'endProcessingInstructionToken'],
+  XmlComment: ['lessThanExclamationMinusMinusToken', 'textTokens', 'minusMinusGreaterThanToken'],
+  TypeCref: ['type'],
+  QualifiedCref: ['container', 'dotToken', 'member'],
+  NameMemberCref: ['name', 'parameters'],
+  IndexerMemberCref: ['thisKeyword', 'parameters'],
+  OperatorMemberCref: ['operatorKeyword', 'checkedKeyword', 'operatorToken', 'parameters'],
+  ConversionOperatorMemberCref: ['implicitOrExplicitKeyword', 'operatorKeyword', 'checkedKeyword', 'type', 'parameters'],
+  CrefParameterList: ['openToken', 'parameters', 'closeToken'],
+  CrefBracketedParameterList: ['openToken', 'parameters', 'closeToken'],
+  CrefParameter: ['refKindKeyword', 'readOnlyKeyword', 'type'],
+  ExtensionBlockDeclaration: ['attributeLists', 'modifiers', 'keyword', 'typeParameterList', 'parameterList', 'constraintClauses', 'openBraceToken', 'members', 'closeBraceToken', 'semicolonToken'],
+  UnionDeclaration: ['attributeLists', 'modifiers', 'keyword', 'identifier', 'typeParameterList', 'caseTypes', 'baseList', 'constraintClauses', 'openBraceToken', 'members', 'closeBraceToken', 'semicolonToken'],
+  UnionCaseTypeList: ['openParenToken', 'types', 'closeParenToken'],
+  UnsafeExpression: ['unsafeKeyword', 'openParenToken', 'expression', 'closeParenToken']
 });
 /** Slot shapes per node kind, one digit per slot: 0 required child, 1 list, 2 separated list, 3 optional child. */
 export const slotTypes = Object.freeze({
@@ -331,7 +359,7 @@ export const slotTypes = Object.freeze({
   UnknownAccessorDeclaration: '110333',
   ParameterList: '020',
   BracketedParameterList: '020',
-  Parameter: '11303',
+  Parameter: '11333',
   IncompleteMember: '113',
   IdentifierName: '0',
   QualifiedName: '000',
@@ -543,9 +571,40 @@ export const slotTypes = Object.freeze({
   CatchClause: '0330',
   CatchDeclaration: '0030',
   CatchFilterClause: '0000',
-  FinallyClause: '00'
+  FinallyClause: '00',
+  SingleLineDocumentationCommentTrivia: '10',
+  MultiLineDocumentationCommentTrivia: '10',
+  XmlElement: '010',
+  XmlElementStartTag: '0010',
+  XmlElementEndTag: '000',
+  XmlEmptyElement: '0010',
+  XmlName: '30',
+  XmlPrefix: '00',
+  XmlTextAttribute: '00010',
+  XmlCrefAttribute: '00000',
+  XmlNameAttribute: '00000',
+  XmlText: '1',
+  XmlCDataSection: '010',
+  XmlProcessingInstruction: '0010',
+  XmlComment: '010',
+  TypeCref: '0',
+  QualifiedCref: '000',
+  NameMemberCref: '03',
+  IndexerMemberCref: '03',
+  OperatorMemberCref: '0303',
+  ConversionOperatorMemberCref: '00303',
+  CrefParameterList: '020',
+  CrefBracketedParameterList: '020',
+  CrefParameter: '330',
+  ExtensionBlockDeclaration: '1103013133',
+  UnionDeclaration: '110030313133',
+  UnionCaseTypeList: '020',
+  UnsafeExpression: '0000'
 });
-const unwrap = value => Array.isArray(value) ? (value.length ? new GreenNode('SyntaxList', value.map(unwrap)) : null) : value && value.green ? value.green : value ?? null;
+const unwrap = value => {
+  if (Array.isArray(value)) return value.length ? new GreenNode('SyntaxList', value.map(unwrap)) : null;
+  return value && value.green ? value.green : value ?? null;
+};
 const make = (kind, children) => createNode(new GreenNode(kind, children.map(unwrap)), null, 0);
 export class CompilationUnitSyntax extends SyntaxNode {
   get externs() { return this.list(0); }
@@ -2575,6 +2634,280 @@ export class FinallyClauseSyntax extends SyntaxNode {
   withBlock(value) { return this.withSlot(1, value); }
 }
 registerNodeClass(['FinallyClause'], FinallyClauseSyntax);
+export class DocumentationCommentTriviaSyntax extends SyntaxNode {
+  get content() { return this.list(0); }
+  withContent(value) { return this.withSlot(0, value); }
+  get endOfComment() { return this.slot(1); }
+  withEndOfComment(value) { return this.withSlot(1, value); }
+}
+registerNodeClass(['SingleLineDocumentationCommentTrivia', 'MultiLineDocumentationCommentTrivia'], DocumentationCommentTriviaSyntax);
+export class XmlElementSyntax extends SyntaxNode {
+  get startTag() { return this.slot(0); }
+  withStartTag(value) { return this.withSlot(0, value); }
+  get content() { return this.list(1); }
+  withContent(value) { return this.withSlot(1, value); }
+  get endTag() { return this.slot(2); }
+  withEndTag(value) { return this.withSlot(2, value); }
+}
+registerNodeClass(['XmlElement'], XmlElementSyntax);
+export class XmlElementStartTagSyntax extends SyntaxNode {
+  get lessThanToken() { return this.slot(0); }
+  withLessThanToken(value) { return this.withSlot(0, value); }
+  get name() { return this.slot(1); }
+  withName(value) { return this.withSlot(1, value); }
+  get attributes() { return this.list(2); }
+  withAttributes(value) { return this.withSlot(2, value); }
+  get greaterThanToken() { return this.slot(3); }
+  withGreaterThanToken(value) { return this.withSlot(3, value); }
+}
+registerNodeClass(['XmlElementStartTag'], XmlElementStartTagSyntax);
+export class XmlElementEndTagSyntax extends SyntaxNode {
+  get lessThanSlashToken() { return this.slot(0); }
+  withLessThanSlashToken(value) { return this.withSlot(0, value); }
+  get name() { return this.slot(1); }
+  withName(value) { return this.withSlot(1, value); }
+  get greaterThanToken() { return this.slot(2); }
+  withGreaterThanToken(value) { return this.withSlot(2, value); }
+}
+registerNodeClass(['XmlElementEndTag'], XmlElementEndTagSyntax);
+export class XmlEmptyElementSyntax extends SyntaxNode {
+  get lessThanToken() { return this.slot(0); }
+  withLessThanToken(value) { return this.withSlot(0, value); }
+  get name() { return this.slot(1); }
+  withName(value) { return this.withSlot(1, value); }
+  get attributes() { return this.list(2); }
+  withAttributes(value) { return this.withSlot(2, value); }
+  get slashGreaterThanToken() { return this.slot(3); }
+  withSlashGreaterThanToken(value) { return this.withSlot(3, value); }
+}
+registerNodeClass(['XmlEmptyElement'], XmlEmptyElementSyntax);
+export class XmlNameSyntax extends SyntaxNode {
+  get prefix() { return this.slot(0); }
+  withPrefix(value) { return this.withSlot(0, value); }
+  get localName() { return this.slot(1); }
+  withLocalName(value) { return this.withSlot(1, value); }
+}
+registerNodeClass(['XmlName'], XmlNameSyntax);
+export class XmlPrefixSyntax extends SyntaxNode {
+  get prefix() { return this.slot(0); }
+  withPrefix(value) { return this.withSlot(0, value); }
+  get colonToken() { return this.slot(1); }
+  withColonToken(value) { return this.withSlot(1, value); }
+}
+registerNodeClass(['XmlPrefix'], XmlPrefixSyntax);
+export class XmlTextAttributeSyntax extends SyntaxNode {
+  get name() { return this.slot(0); }
+  withName(value) { return this.withSlot(0, value); }
+  get equalsToken() { return this.slot(1); }
+  withEqualsToken(value) { return this.withSlot(1, value); }
+  get startQuoteToken() { return this.slot(2); }
+  withStartQuoteToken(value) { return this.withSlot(2, value); }
+  get textTokens() { return this.list(3); }
+  withTextTokens(value) { return this.withSlot(3, value); }
+  get endQuoteToken() { return this.slot(4); }
+  withEndQuoteToken(value) { return this.withSlot(4, value); }
+}
+registerNodeClass(['XmlTextAttribute'], XmlTextAttributeSyntax);
+export class XmlCrefAttributeSyntax extends SyntaxNode {
+  get name() { return this.slot(0); }
+  withName(value) { return this.withSlot(0, value); }
+  get equalsToken() { return this.slot(1); }
+  withEqualsToken(value) { return this.withSlot(1, value); }
+  get startQuoteToken() { return this.slot(2); }
+  withStartQuoteToken(value) { return this.withSlot(2, value); }
+  get cref() { return this.slot(3); }
+  withCref(value) { return this.withSlot(3, value); }
+  get endQuoteToken() { return this.slot(4); }
+  withEndQuoteToken(value) { return this.withSlot(4, value); }
+}
+registerNodeClass(['XmlCrefAttribute'], XmlCrefAttributeSyntax);
+export class XmlNameAttributeSyntax extends SyntaxNode {
+  get name() { return this.slot(0); }
+  withName(value) { return this.withSlot(0, value); }
+  get equalsToken() { return this.slot(1); }
+  withEqualsToken(value) { return this.withSlot(1, value); }
+  get startQuoteToken() { return this.slot(2); }
+  withStartQuoteToken(value) { return this.withSlot(2, value); }
+  get identifier() { return this.slot(3); }
+  withIdentifier(value) { return this.withSlot(3, value); }
+  get endQuoteToken() { return this.slot(4); }
+  withEndQuoteToken(value) { return this.withSlot(4, value); }
+}
+registerNodeClass(['XmlNameAttribute'], XmlNameAttributeSyntax);
+export class XmlTextSyntax extends SyntaxNode {
+  get textTokens() { return this.list(0); }
+  withTextTokens(value) { return this.withSlot(0, value); }
+}
+registerNodeClass(['XmlText'], XmlTextSyntax);
+export class XmlCDataSectionSyntax extends SyntaxNode {
+  get startCDataToken() { return this.slot(0); }
+  withStartCDataToken(value) { return this.withSlot(0, value); }
+  get textTokens() { return this.list(1); }
+  withTextTokens(value) { return this.withSlot(1, value); }
+  get endCDataToken() { return this.slot(2); }
+  withEndCDataToken(value) { return this.withSlot(2, value); }
+}
+registerNodeClass(['XmlCDataSection'], XmlCDataSectionSyntax);
+export class XmlProcessingInstructionSyntax extends SyntaxNode {
+  get startProcessingInstructionToken() { return this.slot(0); }
+  withStartProcessingInstructionToken(value) { return this.withSlot(0, value); }
+  get name() { return this.slot(1); }
+  withName(value) { return this.withSlot(1, value); }
+  get textTokens() { return this.list(2); }
+  withTextTokens(value) { return this.withSlot(2, value); }
+  get endProcessingInstructionToken() { return this.slot(3); }
+  withEndProcessingInstructionToken(value) { return this.withSlot(3, value); }
+}
+registerNodeClass(['XmlProcessingInstruction'], XmlProcessingInstructionSyntax);
+export class XmlCommentSyntax extends SyntaxNode {
+  get lessThanExclamationMinusMinusToken() { return this.slot(0); }
+  withLessThanExclamationMinusMinusToken(value) { return this.withSlot(0, value); }
+  get textTokens() { return this.list(1); }
+  withTextTokens(value) { return this.withSlot(1, value); }
+  get minusMinusGreaterThanToken() { return this.slot(2); }
+  withMinusMinusGreaterThanToken(value) { return this.withSlot(2, value); }
+}
+registerNodeClass(['XmlComment'], XmlCommentSyntax);
+export class TypeCrefSyntax extends SyntaxNode {
+  get type() { return this.slot(0); }
+  withType(value) { return this.withSlot(0, value); }
+}
+registerNodeClass(['TypeCref'], TypeCrefSyntax);
+export class QualifiedCrefSyntax extends SyntaxNode {
+  get container() { return this.slot(0); }
+  withContainer(value) { return this.withSlot(0, value); }
+  get dotToken() { return this.slot(1); }
+  withDotToken(value) { return this.withSlot(1, value); }
+  get member() { return this.slot(2); }
+  withMember(value) { return this.withSlot(2, value); }
+}
+registerNodeClass(['QualifiedCref'], QualifiedCrefSyntax);
+export class NameMemberCrefSyntax extends SyntaxNode {
+  get name() { return this.slot(0); }
+  withName(value) { return this.withSlot(0, value); }
+  get parameters() { return this.slot(1); }
+  withParameters(value) { return this.withSlot(1, value); }
+}
+registerNodeClass(['NameMemberCref'], NameMemberCrefSyntax);
+export class IndexerMemberCrefSyntax extends SyntaxNode {
+  get thisKeyword() { return this.slot(0); }
+  withThisKeyword(value) { return this.withSlot(0, value); }
+  get parameters() { return this.slot(1); }
+  withParameters(value) { return this.withSlot(1, value); }
+}
+registerNodeClass(['IndexerMemberCref'], IndexerMemberCrefSyntax);
+export class OperatorMemberCrefSyntax extends SyntaxNode {
+  get operatorKeyword() { return this.slot(0); }
+  withOperatorKeyword(value) { return this.withSlot(0, value); }
+  get checkedKeyword() { return this.slot(1); }
+  withCheckedKeyword(value) { return this.withSlot(1, value); }
+  get operatorToken() { return this.slot(2); }
+  withOperatorToken(value) { return this.withSlot(2, value); }
+  get parameters() { return this.slot(3); }
+  withParameters(value) { return this.withSlot(3, value); }
+}
+registerNodeClass(['OperatorMemberCref'], OperatorMemberCrefSyntax);
+export class ConversionOperatorMemberCrefSyntax extends SyntaxNode {
+  get implicitOrExplicitKeyword() { return this.slot(0); }
+  withImplicitOrExplicitKeyword(value) { return this.withSlot(0, value); }
+  get operatorKeyword() { return this.slot(1); }
+  withOperatorKeyword(value) { return this.withSlot(1, value); }
+  get checkedKeyword() { return this.slot(2); }
+  withCheckedKeyword(value) { return this.withSlot(2, value); }
+  get type() { return this.slot(3); }
+  withType(value) { return this.withSlot(3, value); }
+  get parameters() { return this.slot(4); }
+  withParameters(value) { return this.withSlot(4, value); }
+}
+registerNodeClass(['ConversionOperatorMemberCref'], ConversionOperatorMemberCrefSyntax);
+export class CrefParameterListSyntax extends SyntaxNode {
+  get openToken() { return this.slot(0); }
+  withOpenToken(value) { return this.withSlot(0, value); }
+  get parameters() { return this.list(1, true); }
+  withParameters(value) { return this.withSlot(1, value); }
+  get closeToken() { return this.slot(2); }
+  withCloseToken(value) { return this.withSlot(2, value); }
+}
+registerNodeClass(['CrefParameterList', 'CrefBracketedParameterList'], CrefParameterListSyntax);
+export class CrefParameterSyntax extends SyntaxNode {
+  get refKindKeyword() { return this.slot(0); }
+  withRefKindKeyword(value) { return this.withSlot(0, value); }
+  get readOnlyKeyword() { return this.slot(1); }
+  withReadOnlyKeyword(value) { return this.withSlot(1, value); }
+  get type() { return this.slot(2); }
+  withType(value) { return this.withSlot(2, value); }
+}
+registerNodeClass(['CrefParameter'], CrefParameterSyntax);
+export class ExtensionBlockDeclarationSyntax extends SyntaxNode {
+  get attributeLists() { return this.list(0); }
+  withAttributeLists(value) { return this.withSlot(0, value); }
+  get modifiers() { return this.list(1); }
+  withModifiers(value) { return this.withSlot(1, value); }
+  get keyword() { return this.slot(2); }
+  withKeyword(value) { return this.withSlot(2, value); }
+  get typeParameterList() { return this.slot(3); }
+  withTypeParameterList(value) { return this.withSlot(3, value); }
+  get parameterList() { return this.slot(4); }
+  withParameterList(value) { return this.withSlot(4, value); }
+  get constraintClauses() { return this.list(5); }
+  withConstraintClauses(value) { return this.withSlot(5, value); }
+  get openBraceToken() { return this.slot(6); }
+  withOpenBraceToken(value) { return this.withSlot(6, value); }
+  get members() { return this.list(7); }
+  withMembers(value) { return this.withSlot(7, value); }
+  get closeBraceToken() { return this.slot(8); }
+  withCloseBraceToken(value) { return this.withSlot(8, value); }
+  get semicolonToken() { return this.slot(9); }
+  withSemicolonToken(value) { return this.withSlot(9, value); }
+}
+registerNodeClass(['ExtensionBlockDeclaration'], ExtensionBlockDeclarationSyntax);
+export class UnionDeclarationSyntax extends SyntaxNode {
+  get attributeLists() { return this.list(0); }
+  withAttributeLists(value) { return this.withSlot(0, value); }
+  get modifiers() { return this.list(1); }
+  withModifiers(value) { return this.withSlot(1, value); }
+  get keyword() { return this.slot(2); }
+  withKeyword(value) { return this.withSlot(2, value); }
+  get identifier() { return this.slot(3); }
+  withIdentifier(value) { return this.withSlot(3, value); }
+  get typeParameterList() { return this.slot(4); }
+  withTypeParameterList(value) { return this.withSlot(4, value); }
+  get caseTypes() { return this.slot(5); }
+  withCaseTypes(value) { return this.withSlot(5, value); }
+  get baseList() { return this.slot(6); }
+  withBaseList(value) { return this.withSlot(6, value); }
+  get constraintClauses() { return this.list(7); }
+  withConstraintClauses(value) { return this.withSlot(7, value); }
+  get openBraceToken() { return this.slot(8); }
+  withOpenBraceToken(value) { return this.withSlot(8, value); }
+  get members() { return this.list(9); }
+  withMembers(value) { return this.withSlot(9, value); }
+  get closeBraceToken() { return this.slot(10); }
+  withCloseBraceToken(value) { return this.withSlot(10, value); }
+  get semicolonToken() { return this.slot(11); }
+  withSemicolonToken(value) { return this.withSlot(11, value); }
+}
+registerNodeClass(['UnionDeclaration'], UnionDeclarationSyntax);
+export class UnionCaseTypeListSyntax extends SyntaxNode {
+  get openParenToken() { return this.slot(0); }
+  withOpenParenToken(value) { return this.withSlot(0, value); }
+  get types() { return this.list(1, true); }
+  withTypes(value) { return this.withSlot(1, value); }
+  get closeParenToken() { return this.slot(2); }
+  withCloseParenToken(value) { return this.withSlot(2, value); }
+}
+registerNodeClass(['UnionCaseTypeList'], UnionCaseTypeListSyntax);
+export class UnsafeExpressionSyntax extends SyntaxNode {
+  get unsafeKeyword() { return this.slot(0); }
+  withUnsafeKeyword(value) { return this.withSlot(0, value); }
+  get openParenToken() { return this.slot(1); }
+  withOpenParenToken(value) { return this.withSlot(1, value); }
+  get expression() { return this.slot(2); }
+  withExpression(value) { return this.withSlot(2, value); }
+  get closeParenToken() { return this.slot(3); }
+  withCloseParenToken(value) { return this.withSlot(3, value); }
+}
+registerNodeClass(['UnsafeExpression'], UnsafeExpressionSyntax);
 /** Factories returning detached nodes; children may be red or green elements, arrays for lists, or null. */
 export const SyntaxFactory = Object.freeze({
   compilationUnit(externs, usings, attributeLists, members, endOfFileToken) { return make('CompilationUnit', [externs, usings, attributeLists, members, endOfFileToken]); },
@@ -2772,5 +3105,31 @@ export const SyntaxFactory = Object.freeze({
   catchClause(catchKeyword, declaration, filter, block) { return make('CatchClause', [catchKeyword, declaration, filter, block]); },
   catchDeclaration(openParenToken, type, identifier, closeParenToken) { return make('CatchDeclaration', [openParenToken, type, identifier, closeParenToken]); },
   catchFilterClause(whenKeyword, openParenToken, filterExpression, closeParenToken) { return make('CatchFilterClause', [whenKeyword, openParenToken, filterExpression, closeParenToken]); },
-  finallyClause(finallyKeyword, block) { return make('FinallyClause', [finallyKeyword, block]); }
+  finallyClause(finallyKeyword, block) { return make('FinallyClause', [finallyKeyword, block]); },
+  documentationCommentTrivia(kind, content, endOfComment) { return make(kind, [content, endOfComment]); },
+  xmlElement(startTag, content, endTag) { return make('XmlElement', [startTag, content, endTag]); },
+  xmlElementStartTag(lessThanToken, name, attributes, greaterThanToken) { return make('XmlElementStartTag', [lessThanToken, name, attributes, greaterThanToken]); },
+  xmlElementEndTag(lessThanSlashToken, name, greaterThanToken) { return make('XmlElementEndTag', [lessThanSlashToken, name, greaterThanToken]); },
+  xmlEmptyElement(lessThanToken, name, attributes, slashGreaterThanToken) { return make('XmlEmptyElement', [lessThanToken, name, attributes, slashGreaterThanToken]); },
+  xmlName(prefix, localName) { return make('XmlName', [prefix, localName]); },
+  xmlPrefix(prefix, colonToken) { return make('XmlPrefix', [prefix, colonToken]); },
+  xmlTextAttribute(name, equalsToken, startQuoteToken, textTokens, endQuoteToken) { return make('XmlTextAttribute', [name, equalsToken, startQuoteToken, textTokens, endQuoteToken]); },
+  xmlCrefAttribute(name, equalsToken, startQuoteToken, cref, endQuoteToken) { return make('XmlCrefAttribute', [name, equalsToken, startQuoteToken, cref, endQuoteToken]); },
+  xmlNameAttribute(name, equalsToken, startQuoteToken, identifier, endQuoteToken) { return make('XmlNameAttribute', [name, equalsToken, startQuoteToken, identifier, endQuoteToken]); },
+  xmlText(textTokens) { return make('XmlText', [textTokens]); },
+  xmlCDataSection(startCDataToken, textTokens, endCDataToken) { return make('XmlCDataSection', [startCDataToken, textTokens, endCDataToken]); },
+  xmlProcessingInstruction(startProcessingInstructionToken, name, textTokens, endProcessingInstructionToken) { return make('XmlProcessingInstruction', [startProcessingInstructionToken, name, textTokens, endProcessingInstructionToken]); },
+  xmlComment(lessThanExclamationMinusMinusToken, textTokens, minusMinusGreaterThanToken) { return make('XmlComment', [lessThanExclamationMinusMinusToken, textTokens, minusMinusGreaterThanToken]); },
+  typeCref(type) { return make('TypeCref', [type]); },
+  qualifiedCref(container, dotToken, member) { return make('QualifiedCref', [container, dotToken, member]); },
+  nameMemberCref(name, parameters) { return make('NameMemberCref', [name, parameters]); },
+  indexerMemberCref(thisKeyword, parameters) { return make('IndexerMemberCref', [thisKeyword, parameters]); },
+  operatorMemberCref(operatorKeyword, checkedKeyword, operatorToken, parameters) { return make('OperatorMemberCref', [operatorKeyword, checkedKeyword, operatorToken, parameters]); },
+  conversionOperatorMemberCref(implicitOrExplicitKeyword, operatorKeyword, checkedKeyword, type, parameters) { return make('ConversionOperatorMemberCref', [implicitOrExplicitKeyword, operatorKeyword, checkedKeyword, type, parameters]); },
+  crefParameterList(kind, openToken, parameters, closeToken) { return make(kind, [openToken, parameters, closeToken]); },
+  crefParameter(refKindKeyword, readOnlyKeyword, type) { return make('CrefParameter', [refKindKeyword, readOnlyKeyword, type]); },
+  extensionBlockDeclaration(attributeLists, modifiers, keyword, typeParameterList, parameterList, constraintClauses, openBraceToken, members, closeBraceToken, semicolonToken) { return make('ExtensionBlockDeclaration', [attributeLists, modifiers, keyword, typeParameterList, parameterList, constraintClauses, openBraceToken, members, closeBraceToken, semicolonToken]); },
+  unionDeclaration(attributeLists, modifiers, keyword, identifier, typeParameterList, caseTypes, baseList, constraintClauses, openBraceToken, members, closeBraceToken, semicolonToken) { return make('UnionDeclaration', [attributeLists, modifiers, keyword, identifier, typeParameterList, caseTypes, baseList, constraintClauses, openBraceToken, members, closeBraceToken, semicolonToken]); },
+  unionCaseTypeList(openParenToken, types, closeParenToken) { return make('UnionCaseTypeList', [openParenToken, types, closeParenToken]); },
+  unsafeExpression(unsafeKeyword, openParenToken, expression, closeParenToken) { return make('UnsafeExpression', [unsafeKeyword, openParenToken, expression, closeParenToken]); }
 });

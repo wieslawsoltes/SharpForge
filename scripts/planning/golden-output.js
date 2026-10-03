@@ -13,6 +13,8 @@ export function syntaxSnapshot(syntax) {
   const {syntax: redFacade, ...snapshot} = syntax;
   return JSON.stringify(snapshot, function(key, value) {
     if (key === 'id' && (this.isNode || this.isToken || this.isTrivia)) return undefined;
+    // Interned trivia caches its own singleton list; it is a derived facade, not syntax content.
+    if (key === 'asList' && this.isTrivia) return undefined;
     return typeof value === 'bigint' ? {$bigint: String(value)} : value;
   });
 }

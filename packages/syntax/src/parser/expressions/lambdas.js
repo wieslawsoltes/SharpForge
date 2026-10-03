@@ -1,45 +1,123 @@
 import { Precedence } from '../../lexer/operators.js';
-/** Lambda expressions: implicit and explicit parameter lists, expression and block bodies, static/async modifiers and C# 10 return types. */
+/**
+ * C# 3 lambda expressions: `x => e`, `(a, b) => e`, `(int a, ref int b) => { }`, with `async` and `static`
+ * modifiers, C# 10 attributes and explicit return types (see csharp10.js). A lambda is recognised by looking ahead
+ * for its `=>`, which also separates `(a) => a` from a cast or a parenthesised expression.
+ */
+const untypedParameterFollowers = new Set([',', ')', '=']);
 export const lambdaMethods = {
-  /**
-   * Parses a lambda or anonymous method when one starts at the cursor, otherwise returns null without consuming.
-   * `(...) =>` is recognised by scanning to the matching parenthesis, which also separates lambdas from casts and parenthesised expressions.
-   */
+  /** Parses a lambda or anonymous method when one starts at the cursor, otherwise returns null without consuming. */
   anonymousFunction(min) {
-    let j = this.i;
-    for (;;) {
-      const token = this.tokens[j], next = this.tokens[Math.min(j + 1, this.tokens.length - 1)];
-      if (token.kind === 'static' || token.kind === 'async' && !token.flags && (next.kind === '(' || next.kind === 'static' || next.kind === 'async' || next.kind === 'delegate' || this.isId(next) || this.isPredefined(next))) j++; else break;
-    }
-    const token = this.tokens[j];
-    if (token.kind === 'delegate' && this.kindAt(j + 1) !== '*') return this.anonymousMethod(this.lambdaModifiers(j));
+    const attributed = this.at('['),
+      afterAttributes = attributed ? this.afterAttributeLists(this.i) : this.i;
+    if (afterAttributes < 0) return null;
+    const afterModifiers = this.scanLambdaModifiers(afterAttributes),
+      token = this.tokens[afterModifiers];
+    if (token.kind === 'delegate' && this.kindAt(afterModifiers + 1) !== '*')
+      return attributed ? null : this.anonymousMethod(this.lambdaModifiers(afterModifiers));
     if (min > Precedence.Lambda) return null;
-    let returnTypeEnd = -1;
-    if (this.isId(token) && this.kindAt(j + 1) === '=>') { /* simple lambda */ }
-    else if (token.kind === '(' && this.kindAt(this.matchingBracket(j) + 1) === '=>' && this.matchingBracket(j) > 0) { /* parenthesised lambda */ }
-    else {
-      returnTypeEnd = this.scanType(j);
-      if (returnTypeEnd <= j || this.kindAt(returnTypeEnd) !== '(' || this.matchingBracket(returnTypeEnd) < 0 || this.kindAt(this.matchingBracket(returnTypeEnd) + 1) !== '=>') return null;
-    }
-    const start = this.current, modifiers = this.lambdaModifiers(j); this.feature('Lambda', start);
-    if (modifiers.some(m => m.kind === 'StaticKeyword')) this.feature('StaticAnonymousFunction', start);
-    if (returnTypeEnd < 0 && this.isId()) {
-      const parameter = this.n('Parameter', null, null, null, this.id(), null), arrow = this.take(), [body, expression] = this.asyncBody(modifiers, () => this.at('{') ? [this.block(), null] : [null, this.expressionOrRef()]);
-      return this.n('SimpleLambdaExpression', null, modifiers, parameter, arrow, body, expression);
-    }
-    const returnType = returnTypeEnd >= 0 ? this.type() : null; if (returnType) this.feature('LambdaReturnType', start);
-    const parameters = this.lambdaParameterList(), arrow = this.expect('=>'), [body, expression] = this.asyncBody(modifiers, () => this.at('{') ? [this.block(), null] : [null, this.expressionOrRef()]);
-    return this.n('ParenthesizedLambdaExpression', null, modifiers, returnType, parameters, arrow, body, expression);
+    const shape = this.lambdaShape(afterModifiers);
+    if (!shape) return null;
+    // Roslyn does not check the language version of attributes on a simple lambda (`[A] x => x`), so neither does this.
+    const attributeLists = !attributed ? null : shape === 'simple' ? this.attributeLists() : this.lambdaAttributeLists(),
+      modifiers = this.lambdaModifiers(afterModifiers);
+    if (shape === 'simple') return this.simpleLambda(attributeLists, modifiers);
+    return this.parenthesizedLambda(attributeLists, modifiers, shape === 'typed');
   },
-  lambdaModifiers(end) { const list = []; while (this.i < end) list.push(this.at('async') ? this.takeWord('async') : this.take()); if (list.some(m => m.kind === 'AsyncKeyword')) this.feature('Async', this.tokens[end]); return list; },
+  /** The index after the `static` and `async` modifiers at `j`; `async` counts only when a lambda or anonymous method can follow it. */
+  scanLambdaModifiers(j) {
+    for (;;) {
+      const token = this.tokens[j],
+        next = this.tokens[Math.min(j + 1, this.tokens.length - 1)];
+      if (token.kind === 'static') j++;
+      else if (token.kind === 'async' && !token.flags && this.canFollowLambdaAsync(next)) j++;
+      else return j;
+    }
+  },
+  canFollowLambdaAsync(next) {
+    const kind = next.kind;
+    return kind === '(' || kind === 'static' || kind === 'async' || kind === 'delegate' || this.isId(next) || this.isPredefined(next);
+  },
+  /** What starts at `j`: 'simple' (`x =>`), 'parenthesized' (`(...) =>`), 'typed' (`T (...) =>`) or null for no lambda. */
+  lambdaShape(j) {
+    const token = this.tokens[j];
+    if (this.isId(token) && this.kindAt(j + 1) === '=>') return 'simple';
+    if (token.kind === '(') {
+      const close = this.matchingBracket(j);
+      if (close > 0 && this.kindAt(close + 1) === '=>') return 'parenthesized';
+    }
+    const open = this.scanType(j);
+    if (open <= j || this.kindAt(open) !== '(') return null;
+    const close = this.matchingBracket(open);
+    return close > 0 && this.kindAt(close + 1) === '=>' ? 'typed' : null;
+  },
+  simpleLambda(attributeLists, modifiers) {
+    const parameter = this.n('Parameter', null, null, null, this.id(), null),
+      arrow = this.lambdaArrow(),
+      [body, expression] = this.lambdaBody(modifiers);
+    return this.n('SimpleLambdaExpression', attributeLists, modifiers, parameter, arrow, body, expression);
+  },
+  parenthesizedLambda(attributeLists, modifiers, typed) {
+    const returnType = typed ? this.lambdaReturnType() : null,
+      open = this.i,
+      parameters = this.lambdaParameterList();
+    this.discardParameters(open, this.i - 1);
+    const arrow = this.lambdaArrow(),
+      [body, expression] = this.lambdaBody(modifiers);
+    return this.n('ParenthesizedLambdaExpression', attributeLists, modifiers, returnType, parameters, arrow, body, expression);
+  },
+  /** The `=>` of a lambda, which is where Roslyn reports the lambda feature. */
+  lambdaArrow() {
+    if (this.at('=>')) this.feature('Lambda', this.current);
+    return this.expect('=>');
+  },
+  /** A block or expression body: returns [block, expression]. The body is its own scope for async and expression variables. */
+  lambdaBody(modifiers) {
+    const restricted = this.restrictedVariables;
+    this.restrictedVariables = false;
+    const body = this.asyncBody(modifiers, () => (this.at('{') ? [this.block(), null] : [null, this.expressionOrThrow()]));
+    this.restrictedVariables = restricted;
+    return body;
+  },
+  /** Consumes the modifiers up to token index `end`, recording `static` (C# 9) and `async` (C# 5). */
+  lambdaModifiers(end) {
+    const list = [];
+    let isAsync = false;
+    while (this.i < end) {
+      const token = this.current;
+      if (token.kind === 'async') {
+        isAsync = true;
+        list.push(this.takeWord('async'));
+        continue;
+      }
+      if (token.kind === 'static') this.feature('StaticAnonymousFunction', token);
+      list.push(this.take());
+    }
+    if (isAsync) this.feature('Async', this.tokens[end]);
+    return list;
+  },
   lambdaParameterList() {
-    const open = this.take(), parameters = [];
-    this.nested(() => { while (!this.at(')') && !this.at('eof')) {
-      const before = this.i, attributeLists = this.at('[') ? this.attributeLists() : null, modifiers = this.parameterModifiers();
-      if (this.isId() && [',', ')', '='].includes(this.peek().kind)) parameters.push(this.n('Parameter', attributeLists, modifiers, null, this.id(), this.at('=') ? this.n('EqualsValueClause', this.take(), this.expression()) : null));
-      else { const type = this.type(), identifier = this.id(); parameters.push(this.n('Parameter', attributeLists, modifiers, type, identifier, this.at('=') ? this.n('EqualsValueClause', this.take(), this.expression()) : null)); }
-      if (this.at(',')) parameters.push(this.take()); else break; if (before === this.i) break;
-    } });
+    const open = this.take(),
+      parameters = [];
+    this.nested(() => {
+      while (!this.at(')') && !this.at('eof')) {
+        const before = this.i;
+        parameters.push(this.lambdaParameter());
+        if (this.at(',')) parameters.push(this.take());
+        else break;
+        if (before === this.i) break;
+      }
+    });
     return this.n('ParameterList', open, parameters, this.expect(')'));
+  },
+  /** A lambda parameter: a bare name (implicitly typed) or `type name`, with optional attributes, modifiers and default value. */
+  lambdaParameter() {
+    const attributeLists = this.at('[') ? this.lambdaAttributeLists() : null,
+      modifiers = this.parameterModifiers(),
+      untyped = this.isId() && untypedParameterFollowers.has(this.peek().kind),
+      type = untyped ? null : this.type(),
+      identifier = this.id(),
+      defaultValue = this.at('=') ? this.n('EqualsValueClause', this.take(), this.expression()) : null;
+    return this.n('Parameter', attributeLists, modifiers, type, identifier, defaultValue);
   }
 };

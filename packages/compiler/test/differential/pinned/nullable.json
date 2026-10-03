@@ -4,5 +4,7 @@
   "nullable/cs0037-null-to-int":{"hash":"fecdf9e04a102a0f","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0037",22,4,"error"]]},
   "nullable/cs0266-nullable-to-int":{"hash":"2c7208667ae92745","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0266",34,1,"error"]]},
   "nullable/cs0019-int-equals-string":{"hash":"0a22a6840f9d0db4","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0019",43,8,"error"]]},
-  "nullable/cs8602-nullable-reference-warning":{"hash":"01de93bb87415e71","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS8602",111,1,"warning"]]}
+  "nullable/cs8602-nullable-reference-warning":{"hash":"01de93bb87415e71","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS8602",111,1,"warning"]]},
+  "nullable/cs0037-cs0266-nullable-values":{"hash":"b12bef1ca710ef65","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0219",17,4,"warning"],["CS0266",38,1,"error"],["CS0037",83,4,"error"]]},
+  "nullable/cs8600-cs8602-flow":{"hash":"498520543fe41fe8","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS5001",-1,0,"error"],["CS8602",66,1,"warning"],["CS8600",202,1,"warning"]]}
 }}
