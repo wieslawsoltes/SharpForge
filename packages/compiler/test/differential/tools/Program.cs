@@ -45,7 +45,8 @@ internal static class Program
             var id = fixture.GetProperty("id").GetString();
             var source = fixture.GetProperty("source").GetString();
             var requested = fixture.TryGetProperty("langVersion", out var lv) && lv.ValueKind == JsonValueKind.String ? lv.GetString() : null;
-            results[id] = Pin(id, source, requested, references, index++);
+            var allowUnsafe = fixture.TryGetProperty("allowUnsafe", out var au) && au.ValueKind == JsonValueKind.True;
+            results[id] = Pin(id, source, requested, allowUnsafe, references, index++);
             Console.SetOut(realOut);
         }
         var document = new SortedDictionary<string, object>(StringComparer.Ordinal)
@@ -82,13 +83,13 @@ internal static class Program
         return trusted.Where(f => f.StartsWith(runtimeDirectory, StringComparison.Ordinal)).Select(f => (MetadataReference)MetadataReference.CreateFromFile(f)).ToList();
     }
 
-    private static object Pin(string id, string source, string requested, List<MetadataReference> references, int index)
+    private static object Pin(string id, string source, string requested, bool allowUnsafe, List<MetadataReference> references, int index)
     {
         var version = LanguageVersion.Default;
         if (requested != null && !LanguageVersionFacts.TryParse(requested, out version)) throw new InvalidOperationException(id + ": unknown language version " + requested);
         var parseOptions = new CSharpParseOptions(version);
         var tree = CSharpSyntaxTree.ParseText(source, parseOptions, path: "Program.cs", encoding: Encoding.UTF8);
-        var options = new CSharpCompilationOptions(OutputKind.ConsoleApplication, optimizationLevel: OptimizationLevel.Debug, deterministic: true, concurrentBuild: false);
+        var options = new CSharpCompilationOptions(OutputKind.ConsoleApplication, optimizationLevel: OptimizationLevel.Debug, deterministic: true, concurrentBuild: false, allowUnsafe: allowUnsafe);
         var compilation = CSharpCompilation.Create("Fixture" + index, new[] { tree }, references, options);
 
         var diagnostics = new List<Diagnostic>(compilation.GetDiagnostics());

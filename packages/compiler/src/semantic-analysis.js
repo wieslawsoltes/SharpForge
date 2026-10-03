@@ -22,6 +22,7 @@ import { CallerInfoChecks } from './binder/caller-info.js';
 import { ObsoleteUses } from './binder/obsolete.js';
 import { SpecialMemberChecks } from './binder/special-members.js';
 import { ConditionalMethodChecks } from './binder/csharp2-misc.js';
+import { UnsafeDeclarationChecks } from './binder/unsafe-declarations.js';
 import { modernRules } from './binder/modern-rules.js';
 
 const phases = [
@@ -32,6 +33,7 @@ const phases = [
   CallerInfoChecks,
   SpecialMemberChecks,
   ConditionalMethodChecks,
+  UnsafeDeclarationChecks,
   ...modernRules,
   BodyBinding,
   TopLevelPrograms,
