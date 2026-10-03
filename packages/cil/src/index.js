@@ -15,3 +15,5 @@ export {managedDelegateSignature, supportedDelegateCall} from './delegate-profil
 
 export {resolveExecutionField,genericTypeParts,substituteTypeArguments} from './field-profile.js';
 export { sha256 } from './binary/hash.js';
+export { linkAssemblyModules } from './pe/module-linker.js';
+export { readAssemblyModules } from './pe/module-reader.js';

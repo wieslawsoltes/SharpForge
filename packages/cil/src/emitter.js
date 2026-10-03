@@ -1,4 +1,5 @@
 import { prepareEmission } from './emit/emission-context.js';
+import { emissionTypeDescriptors } from './emit/type-descriptors.js';
 import { debugPEOptions, finishEmittedPE } from './emit/pe-options.js';
 import { EmitterSignatures } from './emitter-signatures.js';
 import { emitPropertyMetadata } from './emitter-properties.js';
@@ -19,7 +20,7 @@ export function emitAssemblyDetailed(image,options={}) {
   const context={image,metadata,framework,typeTokens:new Map(),methodTokens:new Map(),fieldTokens:new Map(),staticTokens:[],allocTokens:new Map(),descriptors:[],helperToken:0};
   context.resolveType=t=>context.typeTokens.get(t)??metadata.typeRef(cliSystemName(t));
   const objectToken=context.resolveType('object');
-  const typeDescriptors=[{name:'<Module>',namespace:'',flags:0,original:null},{name:'<>Program',namespace:'SharpForge',flags:0x100181,original:null,program:true},{name:'<>AllocationToken',namespace:'SharpForge',flags:0x100101,original:null,marker:true},...image.types.map(t=>({name:t.name,namespace:'',flags:image.outputKind==='library'?0x000001:0x100001,original:t}))];
+  const typeDescriptors=emissionTypeDescriptors(image,peOptions);
   typeDescriptors.forEach((t,index)=>{t.token=token(2,index+1);if(t.original)context.typeTokens.set(t.original.name,t.token);if(t.marker)context.typeTokens.set(markerName,t.token);});
   context.signatures=new EmitterSignatures(context.typeTokens,context.resolveType);
   // Preallocate all definition tokens before signatures or bodies can reference them.
