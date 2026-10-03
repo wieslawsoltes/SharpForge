@@ -57,6 +57,8 @@ export function writePortableExecutable(input, inputOptions = {}) {
   const sections = sectionLayout(input, options, sizeOfHeaders);
   const directories = dataDirectories(sections, options.directories ?? {});
   const sizeOfImage = align(sections.at(-1).rva + sections.at(-1).virtualSize, options.sectionAlignment);
+  const addressLimit = options.pe32Plus ? 0x10000000000000000n : 0x100000000n;
+  if (options.imageBase + BigInt(sizeOfImage) > addressLimit) throw new CilError('PE image exceeds platform address space');
   const library = ['library', 'netmodule'].includes(options.outputKind);
   const characteristics = 2 | (options.platform === 'x86' ? 0x100 : 0x20) | (library ? 0x2000 : 0);
   const writer = new Writer(sizeOfHeaders + sections.reduce((size, section) => size + section.size, 0));

@@ -32,7 +32,7 @@ test('A03 ordered sections use computed directory RVAs and requested alignment',
 test('A03 PE layout rejects invalid sections, directories and alignment combinations', () => {
   const { data, metadata } = section();
   for (const options of [{ fileAlignment: 513 }, { sectionAlignment: 256 }, { imageBase: 3n },
-    { platform: 'unknown' }, { firstSectionRva: 1 }, { prefer32Bit: 'false' }, { imageBase: Number.MAX_VALUE }, { timestamp: -1 }]) {
+    { platform: 'unknown' }, { firstSectionRva: 1 }, { prefer32Bit: 'false' }, { imageBase: Number.MAX_VALUE }, { timestamp: -1 }, { imageBase: 0xffff0000, sectionAlignment: 0x10000 }]) {
     assert.throws(() => writePE(data, 72, metadata.length, 0, options));
   }
   assert.throws(() => writePortableExecutable([]), /section count/);
