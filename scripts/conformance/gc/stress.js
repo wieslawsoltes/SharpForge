@@ -12,6 +12,7 @@ export const cases = [
   {id: 'exception-root', output: 'retained-fault\n'},
 ];
 export const unsupported = [
+  {feature: 'byte-array-execution', reason: 'The selected compiler profile rejects small integer arrays with SF2200; the large allocation fixture uses Int32 elements.'},
   {feature: 'rust-collector', reason: 'No Rust collector adapter exists.'},
   {feature: 'managed-weak-reference', reason: 'No qualified System.WeakReference implementation; host weak handles are tested separately.'},
   {feature: 'resurrection', reason: 'No GC finalizer queue or resurrection API exists.'},

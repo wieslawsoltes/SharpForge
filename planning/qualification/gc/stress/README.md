@@ -23,7 +23,8 @@ The runner executes both engines serially and writes the exact outputs, faults,
 allocation/collection counts and unsupported features to
 `artifacts/gc-stress/report.json`. Heap and instruction budgets bound fixtures.
 An intentionally excessive array must fault; it cannot count as a pass merely
-because execution stopped. The positive large-array case checks contents after
+because execution stopped. The positive large-array case uses Int32 elements (the selected compiler profile
+rejects byte arrays with SF2200) and checks contents after
 further allocations, but does not qualify a generational or large-object heap.
 
 Host weak handles use the real JS heap API in a separate boundary test. Managed

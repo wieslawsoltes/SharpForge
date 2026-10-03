@@ -4,6 +4,8 @@ import {parseArgs} from 'node:util';
 import {LanguageServer, DebugAdapter} from '@sharpforge/protocol';
 import {loadModels} from './schema.js';
 import {validator} from './messages.js';
+import {fileURLToPath} from 'node:url';
+import {git} from '../../planning/lib/io.js';
 import {isMain} from '../../planning/test-manifests.js';
 /** A production-message probe, explicitly distinct from recorded VS Code replay. */
 export async function probeUnsupported() {
@@ -15,7 +17,9 @@ export async function probeUnsupported() {
     try { validate(request,'clientToServer'); validate(actual,'serverToClient'); results.push({protocol, status:'passed', request, actual}); }
     catch (error) { results.push({protocol, status:'failed', request, actual, error:error.message}); }
   }
-  return {schemaVersion:1, sourceKind:'synthetic-production-probe', qualification:'unknown',
+  const root=fileURLToPath(new URL('../../../',import.meta.url));
+  return {schemaVersion:1, testedCommit:git(['rev-parse','HEAD'],root).trim(), dirty:git(['status','--porcelain'],root).trim().length>0,
+    platform:`${process.platform}-${process.arch}`, node:process.versions.node, sourceKind:'synthetic-production-probe', qualification:'unknown',
     status:results.some(row=>row.status==='failed')?'failed':'passed', results};
 }
 if (isMain(import.meta.url)) {
