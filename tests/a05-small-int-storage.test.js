@@ -14,7 +14,7 @@ for (const {type, suffix, minimum, maximum} of smallStorageTypes) {
       assert.equal(storage(input, type), expected);
       for (const location of smallStorageLocations) {
         const assembly = smallStorageFixture(type, suffix, location, input);
-        const vm = new CilVirtualMachine(assembly, {arguments: location === 'arg' ? [0] : []});
+        const vm = new CilVirtualMachine(assembly, {arguments: location === 'arg' ? [type === 'bool' ? false : 0] : []});
         const result = vm.run();
         assert.equal(result.state, 'terminated', location + ': ' + result.fault?.stack);
         assert.equal(Number(result.returnValue), expected, location);

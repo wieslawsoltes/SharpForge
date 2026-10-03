@@ -14,7 +14,7 @@ export function integerArithmetic(name, left, right, bits, context = {}) {
   if ((operation === 'div' || operation === 'rem') && second === 0n) {
     numericFault(context, 'DivideByZeroException', 'Attempted to divide by zero');
   }
-  if (operation === 'div' && !unsigned && first === -(1n << BigInt(bits - 1)) && second === -1n) {
+  if ((operation === 'div' || operation === 'rem') && !unsigned && first === -(1n << BigInt(bits - 1)) && second === -1n) {
     numericFault(context, 'OverflowException', 'Integer division overflow');
   }
   const shift = second & BigInt(bits - 1);
