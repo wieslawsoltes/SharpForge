@@ -17,6 +17,12 @@ const rules = [
     applies: node => node.kind === 'TryStatement' && node.catches.length > 1,
     codes: ['CS0160', 'CS1017', 'CS1058'],
   },
+  {
+    // The `field` keyword next to a member named `field` (binder/field-keyword.js): the warning CS9258.
+    text: /\bfield\b[^]*\bfield\b/,
+    applies: node => node.kind === 'FieldExpression',
+    codes: ['CS9258'],
+  },
 ];
 
 /** Rules decided from the compilation unit alone: `{ applies(file), codes }`. */
