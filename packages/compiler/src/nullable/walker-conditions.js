@@ -100,8 +100,8 @@ export const NullableConditions = Base =>
         this.applyPostcondition(argument, true, whenTrue);
         this.applyPostcondition(argument, false, whenFalse);
       }
-      this.applyMemberPostconditions(method, true, whenTrue);
-      this.applyMemberPostconditions(method, false, whenFalse);
+      this.applyMemberPostconditions(method, true, whenTrue, node.receiver);
+      this.applyMemberPostconditions(method, false, whenFalse, node.receiver);
       // string.IsNullOrEmpty / IsNullOrWhiteSpace carry [NotNullWhen(false)] in the BCL.
       const isStringNullTest = nullTestMethods.has(method.name) && method.containingType?.specialType === 'System_String';
       const variable = isStringNullTest ? this.variableOf(node.args[0]?.expression ?? {}) : null;

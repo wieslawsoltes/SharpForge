@@ -11,8 +11,6 @@
  */
 import {DiagnosticId} from '../diagnostics/codes.js';
 import { NOT_NULL, MAYBE_NULL, joinFlow } from './flow-state.js';
-import { NullableAnnotation } from '../symbols/types.js';
-import { allowsNull } from './attributes.js';
 
 const transparentConversions = new Set(['Identity', 'ImplicitReference']);
 const isReferenceLike = type => !!type && type.isReferenceType === true;
@@ -103,14 +101,13 @@ export const NullableRules = Base =>
       return NOT_NULL;
     }
     argument(argument, method, flow) {
-      super.argument(argument, method, flow);
+      const state = super.argument(argument, method, flow);
       const parameter = argument.parameter,
         value = argument.expression ?? argument;
-      if (!parameter || (argument.refKind && argument.refKind !== 'none')) return;
+      if (!parameter || (argument.refKind && argument.refKind !== 'none')) return state;
       // A non-nullable parameter either got a non-null argument or the call was reported: the variable is not null now.
-      const annotation = parameter.typeWithAnnotations?.nullableAnnotation,
-        isNonNullable = annotation === NullableAnnotation.NotAnnotated && isReferenceLike(parameter.type);
-      const variable = isNonNullable && !allowsNull(parameter) ? this.variableOf(value) : null;
+      const variable = isReferenceLike(parameter.type) && this.rejectsNull(parameter) ? this.variableOf(value) : null;
       if (variable) flow.set(variable, NOT_NULL);
+      return state;
     }
   };

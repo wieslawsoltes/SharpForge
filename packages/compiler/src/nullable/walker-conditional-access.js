@@ -63,7 +63,8 @@ export const NullableConditionalAccess = Base =>
         if (access.whenNotNull?.kind !== 'ConditionalAccess') {
           const state = this.expression(access.whenNotNull, flow);
           const isMissable = access.whenNotNull?.type?.isNullableValueType === true;
-          return { evaluated: flow, skipped, state: isMissable ? MAYBE_NULL : state, value: this.variableOf(access.whenNotNull) };
+          const leaf = access.whenNotNull;
+          return { evaluated: flow, skipped, state: isMissable ? MAYBE_NULL : state, value: this.variableOf(leaf), leaf, receiver };
         }
         const nested = this.accessPaths(access.whenNotNull, flow);
         return { ...nested, skipped: joinFlow(skipped, nested.skipped) };
@@ -74,6 +75,17 @@ export const NullableConditionalAccess = Base =>
     withValue(flow, paths) {
       if (paths.value) flow.set(paths.value, NOT_NULL);
       return flow;
+    }
+
+    /** `a?.Has == true`: where the comparison succeeds, the member tested returned that value and its postconditions hold. */
+    applyLeafPostconditions(paths, returned, flow) {
+      const leaf = paths.leaf,
+        member = leaf?.kind === 'PropertyAccess' ? leaf.property : leaf?.kind === 'Call' ? leaf.method : null;
+      if (!member || returned === null) return;
+      this.withConditionalReceiver(paths.receiver, () => {
+        for (const argument of leaf.args ?? []) this.applyPostcondition(argument, returned, flow);
+        this.applyMemberPostconditions(member, returned, flow, leaf.receiver);
+      });
     }
 
     /** An operand of a comparison: the paths of a conditional access, or a value that is always evaluated. */
@@ -111,6 +123,7 @@ export const NullableConditionalAccess = Base =>
       } else if (leftIsAccess !== rightIsAccess && otherPaths.state === NOT_NULL) {
         whenDifferent = either();
         whenEqual = this.withValue(allEvaluated, access);
+        this.applyLeafPostconditions(access, boolConstant(other), whenEqual);
       } else {
         // Two accesses, or a value that may be null itself: equality proves nothing about either.
         whenEqual = either();
