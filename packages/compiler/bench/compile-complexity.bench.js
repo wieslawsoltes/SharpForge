@@ -1,5 +1,6 @@
 // Compile time and inference work for chained and nested expressions, by depth.
 // Usage: node packages/compiler/bench/compile-complexity.bench.js [--pipeline bound|legacy] [--depths 4,8,12] [--budget-ms 5000]
+//        [--only shapeName,...] [--iterations 9]
 // Prints JSON: per shape and depth the median compile time and the number of `infer` evaluations that were not
 // answered from the memo. A shape stops at the first depth whose compile exceeds the budget (reported as `stopped`).
 import { performance } from 'node:perf_hooks';
@@ -8,6 +9,7 @@ import { Compilation } from '@sharpforge/compiler';
 import { parse } from '@sharpforge/syntax';
 import { SourceText } from '@sharpforge/text';
 import { nestingShapes, reportedDepths } from './nesting-shapes.js';
+import { lambdaShapes } from './lambda-shapes.js';
 
 const option = (name, fallback) => {
   const at = process.argv.indexOf('--' + name);
@@ -17,6 +19,7 @@ const pipeline = option('pipeline', 'bound');
 const depths = String(option('depths', reportedDepths.join(','))).split(',').map(Number);
 const budgetMs = Number(option('budget-ms', 5000));
 const iterations = Number(option('iterations', 9));
+const only = option('only', null)?.split(',') ?? null;
 
 /** Compiles `source` once; returns the wall time and the `infer` evaluations of every method binder. */
 export function compileOnce(source, pipelineName = 'bound') {
@@ -48,7 +51,8 @@ function round(value) {
 }
 
 const shapes = {};
-for (const [name, source] of Object.entries(nestingShapes)) {
+for (const [name, source] of Object.entries({ ...nestingShapes, ...lambdaShapes })) {
+  if (only && !only.includes(name)) continue;
   shapes[name] = {};
   for (const depth of depths) {
     const entry = measure(source(depth));
