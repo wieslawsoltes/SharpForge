@@ -127,3 +127,16 @@ options throw `SymbolError`. `fallbackEncoding` is opt-in and is used only after
 raw checksums pass. Browser CORS restrictions still apply; opaque redirects cannot
 be approved and are rejected. Network requests are never initiated by the reader
 or by source mapping alone.
+
+`sourceLinkUrl(symbols, documentName, { ignoreCase: true, maxMappings: 10000 })`
+resolves the [Source Link mapping specification](https://github.com/dotnet/designs/blob/main/accepted/2020/diagnostics/source-link.md)
+without network access. Both path separators are normalized; exact matches win,
+then the longest wildcard prefix. Case-sensitive matching remains the default for
+backward compatibility; `ignoreCase` enables simple Unicode uppercase comparison
+without multi-character expansions. Captured path segments preserve casing and
+use percent-encoding, including literal percent signs and URI-reserved punctuation.
+Wildcards must terminate the document pattern and occur exactly once in its URL.
+Ambiguous normalized patterns, invalid Unicode, dot segments and selected URLs
+outside credential-free HTTPS raise `SymbolError`. Paths/URLs are limited to
+32,768 UTF-16 code units; `maxMappings` bounds a linear scan of the mapping table.
+This mapping capability does not fetch or grant access to an origin.
