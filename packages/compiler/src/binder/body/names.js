@@ -5,7 +5,7 @@
 import { SymbolKind, TypeKind, ErrorTypeSymbol, ArrayTypeSymbol } from '../../symbols/types.js';
 import { isKnownMissingMember } from '../../symbols/predefined-member-names.js';
 import { ConstantValue } from '../../constants/constant-value.js';
-import { extensionScopes } from '../../overload/extension-methods.js';
+import { extensionScopes, isValidReceiverConversion } from '../../overload/extension-methods.js';
 import { lookupMembers } from '../inheritance.js';
 import { tupleElement, tupleElementProblem } from '../tuples.js';
 import { checkConstructedType } from '../constraints.js';
@@ -368,7 +368,10 @@ export const NameBinding = Base =>
       }
       // A predefined type whose member names are all known cannot have the member: extension methods are next.
       const isKnownGap = isKnownMissingMember(type, name) && !this.importsUnknownNamespaces();
-      if (!isKnownGap && (type.hasUnknownConstraint || !this.d.closedHierarchy(type))) return this.lenient(syntax);
+      // On a type that is not fully known a missing member proves nothing. An array is the exception when an
+      // extension method in scope takes it as its receiver: an array has no instance method that could be meant.
+      const isOpen = !isKnownGap && (type.hasUnknownConstraint || !this.d.closedHierarchy(type));
+      if (isOpen && !(type instanceof ArrayTypeSymbol)) return this.lenient(syntax);
       // Extension methods (only meaningful when the name is invoked, but a method group conversion may also use them).
       const scopes = extensionScopes(
         this.typeScope.namespaceChain.map(l => ({
@@ -377,6 +380,8 @@ export const NameBinding = Base =>
         })),
         name,
       );
+      const takesReceiver = method => method.name === name && isValidReceiverConversion(this.conversions, left, method.parameters[0].type);
+      if (isOpen && !scopes.some(scope => scope.methods.some(takesReceiver))) return this.lenient(syntax);
       if (scopes.length)
         return this.node('MethodGroup', syntax, null, {
           methods: [],
