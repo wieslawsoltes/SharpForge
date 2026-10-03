@@ -27,7 +27,7 @@ export class ManagedPlatform {
     const r=this.record(ref),at=this.propertyIndex(r).get(key),index=at===undefined?r.data.length:at,old=at===undefined?null:r.data[index+1];
     // Existing slots have fixed size; mutate once, retaining GC/write-barrier bookkeeping.
     // Snapshots own copies, and restore replaces records, invalidating the WeakMap naturally.
-    if(at===undefined)this.heap.replaceData(ref,[...r.data,key,value]);else{r.data[index+1]=value;this.heap.mutationRevision++;}
+    if(at===undefined)this.heap.replaceData(ref,[...r.data,key,value]);else{this.heap.writeData(r,index+1,value);}
     this.vm.notifyWrite?.({kind:'field',handle:ref.h,generation:ref.g,index:index+1,value,oldValue:old,property:key});return value;
   }
   native(v){if(v?.byref)return this.native(this.vm.dereference(v));return this.vm.value(v);}

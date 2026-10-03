@@ -32,7 +32,7 @@ const implementations={
   objectReferenceEquals:({parameters})=>referenceEquals(parameters[0],parameters[1])?1:0,
   enumToString:({vm,self})=>{const text=enumToString(vm,self);if(text===null)throw new ManagedFault('ArgumentException','Enum receiver required');return vm.heap.string(text);},
   enumHasFlag:({vm,self,parameters})=>enumHasFlag(vm,self,parameters[0])?1:0,
-  exceptionCtor:({vm,self,parameters})=>{vm.heap.get(self).data[0]=parameters[0]??vm.heap.string('Exception');return null;},
+  exceptionCtor:({vm,self,parameters})=>{vm.heap.writeData(self,0,parameters[0]??vm.heap.string('Exception'));return null;},
   exceptionMessage:({vm,self})=>vm.heap.get(self).data[0],
   exceptionInner:({vm,self})=>vm.heap.get(self).data[1]??null,
   stringCtor:({vm,parameters})=>stringFromChars(vm,parameters[0]),

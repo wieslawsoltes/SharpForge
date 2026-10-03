@@ -1,6 +1,7 @@
 import {ManagedFault,isReference} from './heap.js';
 import {validateSynchronizationSnapshot} from './execution/sync-snapshot-validation.js';
 import {validateAsyncSnapshot} from './execution/async-snapshot-validation.js';
+import {isSnapshotSequence} from './execution/snapshot-buffers.js';
 import {validateArrayContinuation} from './execution/array-ops.js';
 import {validateArrayShape} from './execution/arrays.js';
 import {validatePointer,pointerType} from './execution/managed-pointers.js';
@@ -53,7 +54,9 @@ export function validateSnapshotState(vm,s,engine) {
   for(const [index,record] of heap.records.entries()) {
     if(record===null)continue;
     if(!record||typeof record.kind!=='string'||typeof record.type!=='string'||!integer(record.size)||!integer(heap.generations[index])||heap.generations[index]===0||heap.generations[index]>heap.generationCounter)fail('heap record');
-    if(record.kind==='string'?typeof record.data!=='string':!Array.isArray(record.data))fail('heap data');
+    const validData=record.kind==='string'?typeof record.data==='string'
+      :record.kind==='array'?isSnapshotSequence(record.data):Array.isArray(record.data);
+    if(!validData)fail('heap data');
     if(record.methodTable?.registry!==vm.heap.methodTables)fail('heap type identity');
     if(record.kind==='array')validateArrayShape(record);
   }

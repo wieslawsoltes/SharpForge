@@ -9,7 +9,7 @@ export function invokeNumeric(p,d,args){
   if(type.family==='parallel'){
     const a=new Float64Array(array(p,values[0]).map(v=>p.native(v))),b=values.length>1?new Float64Array(array(p,values[1]).map(v=>p.native(v))):null;
     p.computePool??=new ComputePool(p.options.compute??{});const target=taskResult(d.result);
-    return result(p.hostOperations.start(target,signal=>p.computePool.execute(d.operation,a,b,{signal}),v=>{if(typeof v==='number')return p.managed(v,'double');const out=p.heap.array('double',v.length);p.heap.withRoots([out],()=>{const r=p.heap.get(out);for(let i=0;i<v.length;i++)r.data[i]=p.managed(v[i],'double');});return out;},values,'compute'));
+    return result(p.hostOperations.start(target,signal=>p.computePool.execute(d.operation,a,b,{signal}),v=>{if(typeof v==='number')return p.managed(v,'double');const out=p.heap.array('double',v.length);p.heap.withRoots([out],()=>{const r=p.heap.get(out);for(let i=0;i<v.length;i++)p.heap.writeData(r,i,p.managed(v[i],'double'));});return out;},values,'compute'));
   }
   const vector=(name,data)=>{const info=frameworkType(name),values={};for(let i=0;i<info.lanes;i++)values['$'+i]=p.managed(data[i],info.element);return p.make(name,values);};
   const read=ref=>{const info=frameworkType(p.record(ref).type),C=info.element==='int'?Int32Array:Float64Array;return C.from({length:info.lanes},(_,i)=>p.native(p.get(ref,'$'+i)));};

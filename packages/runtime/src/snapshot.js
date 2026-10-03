@@ -1,64 +1,9 @@
-import {ManagedFault,isReference} from './heap.js';
 import {validateSnapshotState} from './snapshot-validation.js';
+import {copyExecution, copyFrames} from './execution/execution-copy.js';
+import {snapshotSchemaVersion, SnapshotVersionError} from './execution/snapshot-version.js';
+export {copyExecution, copyFrames} from './execution/execution-copy.js';
+export {snapshotSchemaVersion, SnapshotVersionError} from './execution/snapshot-version.js';
 
-// These frozen records are owned runtime identities or immutable CLI values.
-// An arbitrary frozen wrapper can still contain mutable arrays, Maps or faults.
-const immutableRecord=value=>Object.isFrozen(value)&&(
-  Object.keys(value).length===0||isReference(value)||value.registry&&value.flags||
-  value.byref||value.runtimeHandle||value.methodPointer||value.valueType||
-  value.enumType||value.float||value.nativeInt||value.decimal
-);
-
-/** Clone execution graphs, preserving aliases, immutable handles and fault identity. */
-export function copyExecution(value, memo = new Map()) {
-  if (value === null || typeof value !== 'object') return value;
-  if (memo.has(value)) return memo.get(value);
-  // Freezing a Map or Set does not freeze its contents.
-  if (value instanceof Map) {
-    const copy = new Map(); memo.set(value, copy);
-    for (const [key, item] of value) copy.set(copyExecution(key, memo), copyExecution(item, memo));
-    return copy;
-  }
-  if (value instanceof Set) {
-    const copy = new Set(); memo.set(value, copy);
-    for (const item of value) copy.add(copyExecution(item, memo));
-    return copy;
-  }
-  if (value instanceof ArrayBuffer) {
-    const copy = value.slice(0); memo.set(value, copy); return copy;
-  }
-  if (ArrayBuffer.isView(value)) {
-    const buffer = copyExecution(value.buffer, memo);
-    const copy = value instanceof DataView
-      ? new DataView(buffer, value.byteOffset, value.byteLength)
-      : new value.constructor(buffer, value.byteOffset, value.length);
-    memo.set(value, copy); return copy;
-  }
-  if (immutableRecord(value)) return value;
-  if (value instanceof ManagedFault) {
-    const copy = new ManagedFault(value.name, value.message, value.reference); memo.set(value, copy);
-    for (const key of Object.keys(value)) copy[key] = copyExecution(value[key], memo);
-    return copy;
-  }
-  const copy = Array.isArray(value) ? [] : {}; memo.set(value, copy);
-  for (const [key, item] of Object.entries(value)) copy[key] = copyExecution(item, memo);
-  return Object.isFrozen(value)?Object.freeze(copy):copy;
-}
-
-/** Method bodies and decode maps belong to the code generation, not execution state. */
-export function copyFrames(frames, memo = new Map()) {
-  if(memo.has(frames))return memo.get(frames);
-  const copied=[];memo.set(frames,copied);
-  for(const frame of frames) {
-    if(memo.has(frame)){copied.push(memo.get(frame));continue;}
-    const copy={};memo.set(frame,copy);copied.push(copy);
-    const {method, offsets, ...execution} = frame;
-    Object.assign(copy,copyExecution(execution,memo),method?{method,offsets}:{});
-  }
-  return copied;
-}
-
-export const snapshotSchemaVersion = 3;
 const field = (name, copier = copyExecution, options = {}) => Object.freeze({name, copier, ...options});
 const component = name => field(name, null, {component: true});
 const retain = value => value;
@@ -68,6 +13,7 @@ const common = [
   field('typeObjects', copyExecution, {optional: true}),
   field('statics'), field('fault'), field('pendingFault'), field('state', retain),
   field('instructions', retain), field('elapsedMs', retain), field('frameId', retain, {monotonic: true}),
+  field('memorySequence', retain, {optional: true, monotonic: true}),
   field('output'), field('outputCharacters', retain), field('returnValue'), field('exitCode', retain),
   field('writeRevision', retain), field('pendingWrite', copyExecution, {optional: true})
 ];
@@ -78,6 +24,9 @@ const exclusions = {
   onException: 'Debugger callback, retained across restore.',
   onWrite: 'Debugger callback, retained across restore.',
   notifyWrite: 'Designer transaction callback override, retained across restore.',
+  frameIndex: 'Derived index of active and parked frames, rebuilt after restore.',
+  valueLayouts: 'Derived physical value layouts for immutable metadata.',
+  stackBudget: 'Derived stack accounting, rebuilt from active and parked frames.',
   symbols: 'Debug metadata belongs to the current code generation.'
 };
 const schema = (engine, fields, excluded) => Object.freeze({
@@ -127,7 +76,7 @@ export function snapshotVM(vm, engine) {
   for (const item of selected.fields) {
     if (item.optional && !Object.hasOwn(vm, item.name)) continue;
     snapshot[item.name] = item.component
-      ? ['scheduler','sync'].includes(item.name)?vm[item.name].snapshot(memo):copyExecution(vm[item.name].snapshot(),memo)
+      ? item.name==='heap'?vm.heap.snapshot({memo}):['scheduler','sync'].includes(item.name)?vm[item.name].snapshot(memo):copyExecution(vm[item.name].snapshot(),memo)
       : item.copier(vm[item.name], memo);
   }
   if (engine === 'cil') snapshot.heapRevision = vm.heap.mutationRevision;
@@ -138,7 +87,7 @@ export function restoreVM(vm, snapshot, engine) {
   const selected = assertSnapshotFields(vm, engine);
   if (snapshot?.owner !== vm.snapshotOwner) throw new TypeError(`Snapshot belongs to another ${engine === 'cil' ? 'CIL' : 'source'} VM`);
   if (snapshot.schemaVersion !== selected.schemaVersion || snapshot.engine !== engine)
-    throw new TypeError(`Unsupported ${engine} VM snapshot schema version`);
+    throw new SnapshotVersionError(engine);
   if(snapshot.codeOwner!==(vm.inspector??vm.image))throw new TypeError('Snapshot belongs to another code generation');
   for (const item of selected.fields) {
     if (!item.optional && !Object.hasOwn(snapshot, item.name))
@@ -155,7 +104,7 @@ export function restoreVM(vm, snapshot, engine) {
       : item.copier(snapshot[item.name], memo);
     values.set(item.name, item.restore ? item.restore(value) : item.monotonic ? Math.max(vm[item.name], value) : value);
   }
-  vm.heap.restore(values.get('heap'));
+  vm.heap.restore(values.get('heap'),{memo,prepared:true});
   for (const item of selected.fields) {
     if(item.component)continue;
     if (values.has(item.name)) vm[item.name] = values.get(item.name);
