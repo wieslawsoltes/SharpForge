@@ -70,6 +70,7 @@ export class ProgramModel {
   /**
    * Declares a method. `owner` is an image class or null (program-level code).
    * @param {{isStatic:boolean, returnType:string, parameters:{name:string,type:string}[], node?:object, accessor?:object}} signature
+   *   optionally `asyncRole` ('kickoff', 'body' or 'capture') and `asyncOrigin` (the source function), which debuggers show
    */
   addMethod(owner, name, signature) {
     const node = signature.node ?? noSpan;
@@ -84,6 +85,8 @@ export class ProgramModel {
       node,
       hasSource: !!signature.hasSource,
       accessor: signature.accessor ?? null,
+      asyncRole: signature.asyncRole ?? null,
+      asyncOrigin: signature.asyncOrigin ?? null,
       locals: [],
       code: new Int32Array(),
       handlers: [],
@@ -110,6 +113,7 @@ export class ProgramModel {
       statics: this.statics.map(f => ({ name: `${f.owner.name}.${f.name}`, type: f.type, value: defaultValue(f.type) })),
       methods: this.methods.map(m => ({
         ...(m.hasSource && m.node.uri ? { sourceRange: { uri: m.node.uri, start: m.node.start, end: m.node.end } } : {}),
+        ...(m.asyncRole ? { asyncRole: m.asyncRole, asyncOrigin: m.asyncOrigin } : {}),
         id: m.id,
         name: m.name,
         qualifiedName: m.qualifiedName,

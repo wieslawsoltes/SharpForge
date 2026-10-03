@@ -23,11 +23,12 @@ export async function loadBuildContributions(root = buildRoot) {
     for (const kind of Object.keys(result)) {
       if (!Array.isArray(contribution[kind])) throw new Error(`${path}: ${kind} must be an array`);
       for (const item of contribution[kind]) {
-        keys(item, kind === 'styles' ? ['source', 'order'] : kind === 'workers' ? ['entry', 'order'] : ['source', 'target', 'order'], path);
+        keys(item, kind === 'styles' ? ['source', 'order', 'separator'] : kind === 'workers' ? ['entry', 'order'] : ['source', 'target', 'order'], path);
         if (!Number.isSafeInteger(item.order) || item.order < 0) throw new Error(`${path}: invalid ${kind} order`);
         for (const field of kind === 'workers' ? ['entry'] : kind === 'assets' ? ['source', 'target'] : ['source']) {
           if (typeof item[field] !== 'string' || safePath(item[field]) !== item[field]) throw new Error(`${path}: invalid ${field}`);
         }
+        if (kind === 'styles' && item.separator !== undefined && !['', '\n'].includes(item.separator)) throw new Error(`${path}: invalid stylesheet separator`);
         if (kind === 'workers' && !item.entry.endsWith('.js')) throw new Error(`${path}: worker must be JavaScript`);
         if (kind !== 'workers') {
           const source = await stat(resolve(root, item.source)).catch(error => {throw new Error(`${path}: missing source ${item.source}: ${error.message}`);});
@@ -47,4 +48,11 @@ export async function loadBuildContributions(root = buildRoot) {
     }
   }
   return result;
+}
+
+/** Default newlines retain the historical build. Empty separators preserve
+ * contiguous fragments of an extracted stylesheet byte for byte. */
+export async function concatenateStyles(styles, root = buildRoot) {
+  const parts=await Promise.all(styles.map(({source})=>readFile(resolve(root,source),'utf8')));
+  return parts.map((text,index)=>(index ? styles[index].separator??'\n' : '')+text).join('');
 }

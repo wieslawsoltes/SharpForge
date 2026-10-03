@@ -73,6 +73,13 @@ import { csharp9Methods } from './csharp9.js';
 import { csharp10Methods } from './csharp10.js';
 import { topLevelMethods } from './top-level.js';
 import { fileScopedMethods } from './declarations/file-scoped.js';
+import { csharp11Methods } from './csharp11.js';
+import { shiftMethods } from './expressions/shift.js';
+import { collectionArgumentMethods } from './expressions/collection-arguments.js';
+import { csharp12Methods } from './csharp12.js';
+import { csharp13Methods } from './csharp13.js';
+import { csharp14Methods } from './csharp14.js';
+import { fieldKeywordMethods } from './expressions/field-keyword.js';
 export const parserModules = Object.freeze([
   typeMethods,
   modifierMethods,
@@ -143,5 +150,12 @@ export const parserModules = Object.freeze([
   csharp9Methods,
   csharp10Methods,
   topLevelMethods,
-  fileScopedMethods
+  fileScopedMethods,
+  csharp11Methods,
+  shiftMethods,
+  collectionArgumentMethods,
+  csharp12Methods,
+  csharp13Methods,
+  csharp14Methods,
+  fieldKeywordMethods
 ]);

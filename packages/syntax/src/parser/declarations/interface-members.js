@@ -23,6 +23,7 @@ export const interfaceMemberMethods = {
   memberForm(nameToken, implemented) {
     this.readonlyModifiers(this.memberModifiers, this.memberModifiersEnd);
     if (!this.inInterface()) return;
+    this.staticAbstractMember(nameToken);
     if (implemented) this.feature('DefaultInterfaceImplementation', nameToken);
     else this.interfaceModifiers(nameToken);
   },
@@ -47,6 +48,7 @@ export const interfaceMemberMethods = {
   accessorMemberForm(nameToken, bodies, expression) {
     this.readonlyModifiers(this.memberModifiers, this.memberModifiersEnd);
     if (!this.inInterface()) return;
+    this.staticAbstractMember(nameToken);
     if (expression >= 0) {
       const semicolon = this.tokens[this.i - 1].kind === ';' ? 1 : 0;
       this.feature('DefaultInterfaceImplementation', this.tokens[expression], this.tokens[Math.max(expression, this.i - 1 - semicolon)]);

@@ -71,6 +71,8 @@ export class CoreTypes {
     Object.assign(this, declareSpanTypes(this), declareCoreTypeRelations(this));
     this.task = bridge.coreType('System_Threading_Tasks_Task');
     this.taskT = bridge.coreType('System_Threading_Tasks_Task_T');
+    this.valueTask = bridge.coreType('System_Threading_Tasks_ValueTask');
+    this.valueTaskT = bridge.coreType('System_Threading_Tasks_ValueTask_T');
     this.type = bridge.coreType('System_Type');
     this.attribute = bridge.coreType('System_Attribute');
   }
