@@ -10,6 +10,7 @@ import { specialTypeFromKeyword } from './special-types.js';
 import { MethodSymbol, PropertySymbol, ParameterSymbol, MethodKind, DeclarationModifiers } from './members.js';
 import { Accessibility } from './types.js';
 import { declareSpanTypes } from './span-types.js';
+import { declareIndexRangeTypes } from './index-range-types.js';
 import { declareAsyncEnumeration } from './async-enumeration.js';
 import { declareExpressionTreeTypes } from './expression-tree-types.js';
 import { declareCoreTypeRelations } from './core-type-relations.js';
@@ -73,7 +74,7 @@ export class CoreTypes {
     this.ireadOnlyCollectionT = bridge.coreType('System_Collections_Generic_IReadOnlyCollection_T');
     this.augment();
     declareExceptionTypes(this);
-    Object.assign(this, declareSpanTypes(this), declareCoreTypeRelations(this));
+    Object.assign(this, declareSpanTypes(this), declareIndexRangeTypes(this), declareCoreTypeRelations(this));
     this.task = bridge.coreType('System_Threading_Tasks_Task');
     this.taskT = bridge.coreType('System_Threading_Tasks_Task_T');
     this.valueTask = bridge.coreType('System_Threading_Tasks_ValueTask');
