@@ -70,8 +70,11 @@ export function compareWithReference(tree, reference, text, limit = 8) {
     path.pop();
   };
   visit(tree.root, reference.tree);
-  const errors = list => list.sort().join(' '), mine = errors(tree.getDiagnostics().filter(d => d.severity === 'error').map(d => d.code)), theirs = errors(reference.diagnostics.filter(d => d[3] === 'error').map(d => d[0]));
-  if (mine !== theirs) problems.push(`error codes [${mine}] != [${theirs}]`);
+  // Error codes and the offsets they are reported at; several errors at one offset are compared as a set.
+  const errors = list => list.sort().join(' ');
+  const mine = errors(tree.getDiagnostics().filter(d => d.severity === 'error').map(d => `${d.code}@${d.start}`));
+  const theirs = errors(reference.diagnostics.filter(d => d[3] === 'error').map(d => `${d[0]}@${d[1]}`));
+  if (mine !== theirs) problems.push(`errors [${mine}] != [${theirs}]`);
   return problems;
 }
 /** Parses a fixture with the options Roslyn used for its reference dump and returns { text, tree, reference }. */

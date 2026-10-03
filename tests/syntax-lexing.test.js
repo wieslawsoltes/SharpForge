@@ -152,7 +152,7 @@ test('directives: shebang, #: and script-only directives', () => {
 });
 // ---- SF-A01-T04.11 / B03: keywords ----------------------------------------------------------------------------------
 test('keywords: reserved and contextual tables match Roslyn SyntaxFacts', () => {
-  const dumps = filesUnder(fixtureRoot, name => name.endsWith('.json') && name !== 'roslyn-features.json'), seen = new Map();
+  const dumps = filesUnder(fixtureRoot, name => name.endsWith('.cs.json')), seen = new Map();
   const visit = node => { if (Array.isArray(node[3])) node[3].forEach(visit); else if (/Keyword$|^UnderscoreToken$/.test(node[0]) && node[3]) seen.set(node[3], node[0]); };
   for (const file of dumps) visit(JSON.parse(readFileSync(file, 'utf8')).tree);
   assert(seen.size > 100, String(seen.size));

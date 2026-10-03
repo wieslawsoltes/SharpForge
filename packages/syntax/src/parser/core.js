@@ -122,14 +122,18 @@ export class Parser {
     this.error(this.errorAnchor(), code, message);
     return this.missing(kind);
   }
-  /** Missing-token errors point at the end of the previous token, where the token should have been. */
+  /**
+   * Where an error about a missing token or node is reported, by Roslyn's rule: at the end of the previous token
+   * (zero width) when that token ends its line, otherwise at the current token.
+   */
   errorAnchor() {
     const previous = this.tokens[this.i - 1];
-    return previous && this.current.start > previous.end ? { start: previous.end, end: previous.end } : this.current;
+    if (previous && previous.trailingTrivia.some(piece => piece.kind === 'EndOfLineTrivia')) return { start: previous.end, end: previous.end };
+    return this.current;
   }
   id() {
     if (this.isId()) return this.take('IdentifierToken');
-    this.error(this.current, 'CS1001', 'Identifier expected');
+    this.error(this.errorAnchor(), 'CS1001', 'Identifier expected');
     return this.cache.missing('IdentifierToken');
   }
   /** True when the tokens at `index` and `index + 1` touch (no trivia between), as required to merge `>` `>` into `>>`. */
