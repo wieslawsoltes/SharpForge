@@ -3,7 +3,7 @@ import {Builtins} from '@sharpforge/bytecode';
 import {NamedTypeSymbol,ConstructedNamedTypeSymbol,ArrayTypeSymbol,TypeWithAnnotations,TypeKind,Accessibility} from './types.js';
 import {MethodSymbol,FieldSymbol,PropertySymbol,EventSymbol,ParameterSymbol,MethodKind,DeclarationModifiers} from './members.js';
 import {NamespaceSymbol,NamespaceExtent} from './namespaces.js';
-import {declareCoreTypes,TypeProvider,specialTypeFromKeyword,coreTypeDescriptor} from './special-types.js';
+import {declareCoreTypes,TypeProvider,specialTypeFromKeyword,coreTypeDescriptor,specialTypeIds} from './special-types.js';
 /**
  * Bridges the closed framework registry (packages/framework) and the bytecode builtin table to read-only,
  * metadata-like symbols, so the binder can run before real assembly references exist.
@@ -45,7 +45,7 @@ export class RegistryBridge {
   }
   get objectType(){return this.typeProvider.getCoreType('System_Object');}
   /** A special or well-known type by id, declared in the bridge's core library on first use (Nullable<T>, IEnumerable<T>, Func<...>, ...). */
-  coreType(id){let type=this.typeProvider.getCoreTypeQuiet(id);if(!type.isErrorType())return type;declareCoreTypes(this.globalNamespace,[id]);this.typeProvider.cache.delete(id);type=this.typeProvider.getCoreType(id);const d=coreTypeDescriptor(id);if(!this.byName.has(d.metadataName)){this.remember(d.metadataName,type);}return type;}
+  coreType(id){let type=this.typeProvider.getCoreTypeQuiet(id);if(!type.isErrorType()){if(type._specialType==null&&specialTypeIds().includes(id)){type._specialType=id;if(/IEnumerable_T|IEnumerator_T|IReadOnly/.test(id))for(const p of type.typeParameters)p.variance='out';}return type;}declareCoreTypes(this.globalNamespace,[id]);this.typeProvider.cache.delete(id);type=this.typeProvider.getCoreType(id);const d=coreTypeDescriptor(id);if(!this.byName.has(d.metadataName)){this.remember(d.metadataName,type);}return type;}
   remember(name,type){this.byName.set(name,type);if(!this.names.has(type))this.names.set(type,name);}
   attach(type,registryName){type._members=()=>this.membersOf(registryName,type);}
   /** Declares the symbol for one registry type name (idempotent). */
