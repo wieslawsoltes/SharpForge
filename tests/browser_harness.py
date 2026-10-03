@@ -7,8 +7,30 @@ Normal CI/browser tests use HTTP instead, by leaving SHARPFORGE_IN_MEMORY unset.
 """
 import json
 from pathlib import Path
+from playwright.sync_api import Page
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def _wait_for_function(page, expression, *, arg=None, timeout=None, polling=None):
+    """CSP-safe Page.wait_for_function.
+
+    Playwright re-evaluates string predicates with eval() inside the page, which the
+    served Content-Security-Policy (no 'unsafe-eval') rejects. Polling page.evaluate
+    from Python keeps the production policy intact instead of bypassing it.
+    """
+    import time
+    interval = polling if isinstance(polling, (int, float)) else 20
+    deadline = time.monotonic() + (30000 if timeout is None else timeout) / 1000
+    while True:
+        value = page.evaluate(expression, arg)
+        if value:
+            return value
+        if timeout != 0 and time.monotonic() >= deadline:
+            raise TimeoutError('Browser predicate remained false: ' + expression)
+        page.wait_for_timeout(interval)
+
+Page.wait_for_function = _wait_for_function
 
 def load_in_memory(page):
     dist = ROOT / 'dist'

@@ -9,7 +9,7 @@ def truth(v,msg='assertion failed'):
 def check(name,fn):
  start=time.perf_counter();fn();checks.append({'name':name,'passed':True,'milliseconds':round((time.perf_counter()-start)*1000,2)});print('PASS',name,flush=True)
 with sync_playwright() as p:
- browser=p.chromium.launch(headless=True,executable_path=os.getenv('CHROMIUM_EXECUTABLE','/usr/bin/chromium'),args=['--no-sandbox']);page=browser.new_page(viewport={'width':1728,'height':1050});page.set_default_timeout(12000)
+ browser=p.chromium.launch(headless=True,executable_path=os.getenv('CHROMIUM_EXECUTABLE'),args=['--no-sandbox']);page=browser.new_page(viewport={'width':1728,'height':1050});page.set_default_timeout(12000)
  errors=[];workers=[];page.on('pageerror',lambda e:errors.append(e.stack or str(e)));page.on('worker',lambda w:workers.append(w.url));page.on('dialog',lambda d:d.accept())
  def ev(x,arg=None):return page.evaluate(x,arg)
  def wait(x):page.wait_for_function(x,timeout=20000)
@@ -112,7 +112,7 @@ with sync_playwright() as p:
    b=io.BytesIO()
    with zipfile.ZipFile(b,'w') as z:
     z.writestr('One/One.csproj','<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType></PropertyGroup></Project>');z.writestr('One/Program.cs','Console.WriteLine(1);');z.writestr('Two/Two.csproj','<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType></PropertyGroup></Project>');z.writestr('Two/Program.cs','Console.WriteLine(2);')
-   page.locator('#zip-input').set_input_files({'name':'Choose.zip','mimeType':'application/zip','buffer':b.getvalue()});page.wait_for_selector('#workspace-entry');page.locator('#workspace-entry').select_option('Two/Two.csproj');page.locator('#ask-confirm').click();wait('sharpforge.getState().startupProject==="Two/Two.csproj"');truth(len(ev('sharpforge.getWorkspace().records'))==4);ev('sharpforge.run()');wait('sharpforge.getState().debug?.state==="terminated"');truth(state()['debug']['output'].strip()=='2');stop()
+   page.locator('#zip-input').set_input_files({'name':'Choose.zip','mimeType':'application/zip','buffer':b.getvalue()});page.wait_for_selector('#workspace-entry');page.locator('#workspace-entry').select_option('Two/Two.csproj');page.locator('#ask-confirm').click();wait('sharpforge.getState().startupProject==="Two/Two.csproj"&&sharpforge.getState().artifact!==null');truth(len(ev('sharpforge.getWorkspace().records'))==4);ev('sharpforge.run()');wait('sharpforge.getState().debug?.state==="terminated"');truth(state()['debug']['output'].strip()=='2');stop()
   check('multiple-project ZIP asks for the entry and retains files outside the selected project',multiple)
   def read_only():
    cmd('stop');ev('sharpforge.debug({stopOnEntry:true})');wait('sharpforge.getState().debug?.state==="paused"');r=ev('async()=>{try{await sharpforge.openProjectWizard();return false}catch(e){return e.message}}');truth('Stop' in r,str(r));stop()

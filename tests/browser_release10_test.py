@@ -9,7 +9,7 @@ def truth(v,message='assertion failed'):
 def check(name,fn):
  start=time.perf_counter();fn();checks.append({'name':name,'passed':True,'milliseconds':round((time.perf_counter()-start)*1000,2)});print('PASS',name,flush=True)
 with sync_playwright() as p:
- browser=p.chromium.launch(headless=True,executable_path=os.getenv('CHROMIUM_EXECUTABLE','/usr/bin/chromium'),args=['--no-sandbox']);page=browser.new_page(viewport={'width':1728,'height':1050});page.set_default_timeout(12000)
+ browser=p.chromium.launch(headless=True,executable_path=os.getenv('CHROMIUM_EXECUTABLE'),args=['--no-sandbox']);page=browser.new_page(viewport={'width':1728,'height':1050});page.set_default_timeout(12000)
  errors=[];workers=[];page.on('pageerror',lambda e:errors.append(e.stack or str(e)));page.on('worker',lambda w:workers.append(w.url))
  def ev(x,arg=None):return page.evaluate(x,arg)
  def wait(x):return wait_condition(page,x,timeout=15000)

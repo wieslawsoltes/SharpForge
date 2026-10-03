@@ -14,7 +14,7 @@ def truth(value,message='assertion failed'):
  if not value:raise AssertionError(message)
 try:
  with sync_playwright() as p:
-  browser=p.chromium.launch(executable_path=os.getenv('CHROMIUM_EXECUTABLE') or '/usr/bin/chromium',headless=True,args=['--no-sandbox'])
+  browser=p.chromium.launch(executable_path=os.getenv('CHROMIUM_EXECUTABLE'),headless=True,args=['--no-sandbox'])
   page=browser.new_page(viewport={'width':1600,'height':1050});page.set_default_timeout(10000);page.on('pageerror',lambda e:errors.append(str(e)))
   mode='in-memory' if os.getenv('SHARPFORGE_IN_MEMORY')=='1' else 'http'
   if mode=='in-memory':load_in_memory(page)

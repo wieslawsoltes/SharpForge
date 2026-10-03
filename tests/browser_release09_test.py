@@ -10,7 +10,7 @@ def truth(value,message='assertion failed'):
 def check(name,fn):
  start=time.perf_counter();fn();checks.append({'name':name,'passed':True,'milliseconds':round((time.perf_counter()-start)*1000,2)});print('PASS',name,flush=True)
 with sync_playwright() as p:
- browser=p.chromium.launch(headless=True,executable_path=os.getenv('CHROMIUM_EXECUTABLE','/usr/bin/chromium'),args=['--no-sandbox'])
+ browser=p.chromium.launch(headless=True,executable_path=os.getenv('CHROMIUM_EXECUTABLE'),args=['--no-sandbox'])
  page=browser.new_page(viewport={'width':1728,'height':1050},device_scale_factor=1);page.set_default_timeout(15000)
  errors=[];workers=[];page.on('pageerror',lambda e:errors.append(e.stack or str(e)));page.on('worker',lambda w:workers.append(w.url))
  def state():return page.evaluate('sharpforge.getState()')
