@@ -41,7 +41,6 @@ const expressionFamilies = [
   NameBinding,
   CallBinding,
   CreationBinding,
-  ...memberBindings,
   OperatorBinding,
   TypeTestBinding,
   TupleBinding,
@@ -52,6 +51,8 @@ const expressionFamilies = [
   StructuralPatternBinding,
   StackAllocBinding,
   QueryBinding,
+  // Last: the member binders refine the creation, name, conversion and lambda families above.
+  ...memberBindings,
 ];
 const statementFamilies = [StatementBinding, DeclarationBinding, FlowStatementBinding, LocalFunctionBinding, JumpBinding, ExceptionBinding];
 const compose = (base, mixins) => mixins.reduce((composed, mixin) => mixin(composed), base);
