@@ -1,3 +1,5 @@
+import {createSourceMethodTables} from './execution/method-table.js';
+import {checkArrayStore} from './execution/casting.js';
 import {ManagedPlatform,SUSPENDED} from './platform.js';
 import {CooperativeScheduler} from './scheduler.js';
 import {snapshotVM,restoreVM} from './snapshot.js';
@@ -14,7 +16,7 @@ export class VirtualMachine {
     if(image?.outputKind==='library')throw new Error('Library has no entry point. Invoke a static method with CilVirtualMachine instead.');
     const errors=verifyImage(image);if(errors.length)throw new Error('Bytecode verification failed: '+errors.join('; '));
     this.image=image;this.options={maxInstructions:20_000_000,maxFrames:512,maxOutputCharacters:1_000_000,...options};
-    this.heap=new ManagedHeap(options);this.heap.rootProvider=()=>this.roots();this.stack=[];this.frames=[];this.statics=image.statics.map(s=>s.value);this.constantValues=new Map();this.strings=new Map();this.output=[];this.outputCharacters=0;
+    this.heap=new ManagedHeap({...options,methodTables:createSourceMethodTables(image)});this.heap.rootProvider=()=>this.roots();this.stack=[];this.frames=[];this.statics=image.statics.map(s=>s.value===null?defaultValue(s.type,this):s.value);this.constantValues=new Map();this.strings=new Map();this.output=[];this.outputCharacters=0;
     this.snapshotOwner=Object.freeze({});this.state='ready';this.instructions=0;this.writeRevision=0;this.sourcePause=false;this.elapsedMs=0;this.frameId=0;this.currentPoint=null;this.fault=null;this.pendingFault=null;this.exitCode=0;this.returnValue=null;this.onOutput=options.onOutput??(()=>{});this.onException=null;this.onWrite=null;
     this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);this.call(image.entryPoint,[]);
   }
@@ -68,7 +70,7 @@ export class VirtualMachine {
           case Op.NEWOBJ:{const type=this.image.types[a];this.stack.push(this.heap.object(type.name,type.fields.map(f=>defaultValue(f.type,this))));break;}
           case Op.NEWARR:{const length=this.stack.pop(),type=this.image.constants[a],ref=this.heap.array(type,length);this.heap.get(ref).data.fill(defaultValue(type,this));this.stack.push(ref);break;}
           case Op.LDELEM:{const index=this.stack.pop(),ref=this.stack.pop();this.stack.push(this.indexed(ref,index).data[index]);break;}
-          case Op.STELEM:{const value=this.stack.pop(),index=this.stack.pop(),ref=this.stack.pop();const r=this.indexed(ref,index),oldValue=r.data[index];r.data[index]=value;this.stack.push(value);this.notifyWrite({kind:'array',handle:ref.h,generation:ref.g,index,value,oldValue});break;}
+          case Op.STELEM:{const value=this.stack.pop(),index=this.stack.pop(),ref=this.stack.pop();const r=this.indexed(ref,index),oldValue=r.data[index];checkArrayStore(this.heap,r,value);r.data[index]=value;this.stack.push(value);this.notifyWrite({kind:'array',handle:ref.h,generation:ref.g,index,value,oldValue});break;}
           case Op.LENGTH:{const r=this.heap.get(this.stack.pop());if(r.kind!=='array'&&r.kind!=='string')throw new ManagedFault('InvalidProgramException','Length requires an array or string');this.stack.push(r.data.length);break;}
           case Op.THROW:{const ref=this.stack.pop();if(ref===null)throw new ManagedFault('NullReferenceException','A null exception was thrown');const r=this.heap.get(ref);throw new ManagedFault(r.type,this.format(r.data[0]),ref);}
           case Op.RETHROW:rethrow(frame);break;
