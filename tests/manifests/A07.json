@@ -2,7 +2,10 @@
   "schemaVersion": 1,
   "area": "A07",
   "nodeGlobs": [
-    "tests/bcl13.test.js"
+    "tests/bcl13.test.js",
+    "tests/runtime14.test.js",
+    "tests/a07-*.test.js",
+    "tests/bcl-core-*.test.js"
   ],
   "browserScripts": [],
   "requiredServices": [],
