@@ -84,7 +84,7 @@ function builtin(name) {
   if(name==='System.Collections.ICollection')return {flags:{interface:true},interfaces:['System.Collections.IEnumerable']};
   if(['System.IComparable','System.IFormattable','System.IConvertible','System.ICloneable','System.IDisposable','System.Collections.IEnumerable','System.Collections.IEnumerator','System.Collections.IStructuralComparable','System.Collections.IStructuralEquatable','System.Runtime.Serialization.ISerializable'].includes(name))return {flags:{interface:true}};
   const framework=frameworkType(name);
-  if(framework)return {base:framework.base??'System.Object',flags:{valueType:['value','enum'].includes(framework.kind),enum:framework.kind==='enum',delegate:framework.kind==='delegate',dynamic:true},enumUnderlyingType:framework.kind==='enum'?'int':null,fields:[]};
+  if(framework)return {base:framework.base??(framework.kind==='enum'?'System.Enum':framework.kind==='value'?'System.ValueType':framework.kind==='delegate'?'System.MulticastDelegate':'System.Object'),flags:{valueType:['value','enum'].includes(framework.kind),enum:framework.kind==='enum',delegate:framework.kind==='delegate',dynamic:true},enumUnderlyingType:framework.kind==='enum'?'int':null,fields:[]};
   return {base:'System.Object',flags:{external:true,dynamic:true}};
 }
 
