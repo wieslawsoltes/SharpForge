@@ -102,76 +102,9 @@ SharpForge lets you write, build, run, debug and design C# applications entirely
 
 SharpForge is a set of small, independent packages composed into three hosts: the Studio IDE, a command-line tool, and standalone HTML output.
 
-```mermaid
-flowchart TB
-    subgraph Hosts["Hosts"]
-        direction LR
-        Studio["<b>SharpForge Studio</b><br/>browser IDE"]
-        CLI["<b>CLI</b><br/>Node.js"]
-        Standalone["<b>Standalone HTML</b><br/>single-file app"]
-    end
+![SharpForge architecture: hosts and IDE services over the compiler pipeline, compiled output, managed runtime, framework and platform](docs/architecture.svg)
 
-    subgraph Tooling["IDE services"]
-        direction LR
-        Editor["Editor<br/>keymaps, text engine"]
-        Lang["Language services<br/>IntelliSense, refactoring"]
-        Debugger["Debugger<br/>breakpoints, Hot Reload"]
-        Designer["Visual designer<br/>two-way C# sync"]
-        Projects["Project system<br/>MSBuild, templates, archives"]
-        Protocols["LSP / DAP"]
-    end
-
-    subgraph Compiler["Compiler"]
-        direction LR
-        Source["C# source"] --> Syntax["Syntax<br/>lexer, lossless parser"]
-        Syntax --> Binder["Binder<br/>symbols, types, flow analysis"]
-        Binder --> Lowering["Lowering<br/>closures, iterators, async, patterns"]
-        Lowering --> Emit["Emit"]
-    end
-
-    subgraph Output["Compiled output"]
-        direction LR
-        IR["Managed bytecode"]
-        PE["ECMA-335 assembly<br/>.dll + Portable PDB"]
-    end
-
-    subgraph Runtime["Managed runtime"]
-        direction LR
-        VM["Bytecode VM"]
-        CILVM["CIL interpreter"]
-        GC["Garbage collector"]
-        Scheduler["Tasks and threads"]
-        Compute["SIMD kernels<br/>compute workers"]
-        Rust["Rust / Wasm runtime<br/><i>planned</i>"]
-    end
-
-    subgraph Framework["Framework"]
-        direction LR
-        BCL["Base class library"]
-        Net["Networking<br/>origin grants"]
-        WinUI["WinUI controls<br/>layout, styles, animation"]
-        Render["Rendering<br/>WebGPU · Canvas · DOM"]
-    end
-
-    DotNet[".NET runtime<br/>loads the same assemblies"]
-
-    Hosts --> Tooling
-    Hosts --> Compiler
-    Tooling --> Compiler
-    Emit --> IR
-    Emit --> PE
-    IR --> VM
-    PE --> CILVM
-    PE -.-> DotNet
-    Runtime --> Framework
-    WinUI --> Render
-    Debugger --> Runtime
-    Designer --> WinUI
-    Hosts --> Runtime
-
-    classDef planned stroke-dasharray: 5 5;
-    class Rust planned;
-```
+Dashed boxes are planned or external: the Rust/WebAssembly runtime is planned, and the .NET runtime is shown because it loads the same assemblies SharpForge emits.
 
 **How a program flows through it.** Source text is parsed into a lossless syntax tree, bound into a typed semantic model, lowered (closures, iterators, async and patterns become plain classes and control flow) and emitted twice: as compact managed bytecode for the debugging VM, and as a standard ECMA-335 assembly that the CIL interpreter — or a real .NET runtime — can load. The runtime executes it inside a Web Worker with its own heap, garbage collector and scheduler; framework calls reach the base class library, the network layer (denied unless an origin is explicitly granted) and the WinUI layer, which renders through WebGPU, Canvas or the DOM.
 
