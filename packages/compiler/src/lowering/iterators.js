@@ -81,7 +81,18 @@ export class IteratorClasses {
     });
     return n.sequence([temp], effects, n.local(temp));
   }
-  /** Bodies of the three dispatchers of every iterator class: `[{method, body}]`. */
+  /**
+   * Instance methods `MoveNextAsync()` and `DisposeAsync()` of an iterator class, declared on first use: they forward
+   * to the dispatchers, so that the members of `IAsyncEnumerator<T>` can be started as tasks.
+   */
+  asyncThunks(info) {
+    if (!info.asyncThunks) {
+      const declare = (name, returnType) => this.program.addMethod(info.record, name, { isStatic: false, returnType, parameters: [] });
+      info.asyncThunks = { moveNext: declare('MoveNextAsync', 'bool'), dispose: declare('DisposeAsync', 'void') };
+    }
+    return info.asyncThunks;
+  }
+  /** Bodies of the dispatchers (and async thunks) of every iterator class: `[{method, body}]`. */
   finish() {
     const bodies = [];
     for (const info of this.byElement.values()) {
@@ -105,6 +116,11 @@ export class IteratorClasses {
       statements.push(n.returnStatement(n.local(copy)));
       bodies.push({ method: info.getEnumerator, body: n.block(statements, [copy]) });
       bodies.push({ method: info.dispose, body: disposeBody(info, self) });
+      if (info.asyncThunks) {
+        const receiver = () => n.thisReference(type);
+        bodies.push({ method: info.asyncThunks.moveNext, body: n.block([n.returnStatement(n.call(info.moveNext, null, [receiver()]))]) });
+        bodies.push({ method: info.asyncThunks.dispose, body: n.block([n.expressionStatement(n.call(info.dispose, null, [receiver()]))]) });
+      }
     }
     return bodies;
   }

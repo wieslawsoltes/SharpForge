@@ -5,7 +5,7 @@
 import { SymbolKind, TypeKind, RefKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { structInstanceFields } from '../../binder/structs.js';
-import { isUserStruct, AssignmentState, fieldKey, nestedFieldKey } from './state.js';
+import { isUserStruct, isTupleStruct, AssignmentState, fieldKey, nestedFieldKey } from './state.js';
 
 /** The language version from which struct constructors auto-default their fields (named in CS0171, CS0843, CS0188). */
 export const autoDefaultVersion = '11.0';
@@ -28,6 +28,7 @@ export class AssignmentAnalyzerCore {
     this.diagnostics.push({ node, code, args });
   }
   fieldsOf(type) {
+    if (isTupleStruct(type)) return type.getMembers().filter(member => member.kind === SymbolKind.Field);
     return isUserStruct(type) ? structInstanceFields(type.originalDefinition ?? type) : [];
   }
   isAssigned(variable, state) {

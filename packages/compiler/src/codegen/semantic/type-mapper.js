@@ -60,13 +60,15 @@ export class TypeMapper {
     if (type.isErrorType?.()) unsupported('a type the framework registry does not list', syntax);
     const core = this.host.analysis.core,
       definition = type.originalDefinition;
-    if ((definition === core.ienumerableT || definition === core.ienumeratorT) && type.typeArguments?.length === 1)
+    const sequences = [core.ienumerableT, core.ienumeratorT, core.iasyncEnumerableT, core.iasyncEnumeratorT];
+    if (sequences.includes(definition) && type.typeArguments?.length === 1)
       return this.host.iterators.classOf(this.imageType(type.typeArguments[0].type, syntax)).record.name;
     // A ValueTask is the runtime's task object: the image has no struct to wrap it in.
     if (type === core.valueTask) return this.imageType(core.task, syntax);
     if (definition === core.valueTaskT) return this.imageType(core.taskT.construct(type.typeArguments[0].type), syntax);
     // The non-generic forms enumerate objects.
     if (type === core.ienumerable || type === core.ienumerator) return this.host.iterators.classOf('object').record.name;
+    if (this.host.tuples.handles(type)) return this.host.tuples.classOf(type, syntax).record.name;
     switch (type.typeKind) {
       case TypeKind.Enum:
         if (this.host.isSource(type)) return 'int';

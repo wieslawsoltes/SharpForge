@@ -10,8 +10,8 @@ a complete epic scope has been integrated, followed by targeted reruns only for 
 | Epic | Scope | Delivery |
 | --- | --- | --- |
 | SF-A05-E03 (#461) | T13–T20: interpreter modules, dispatch registry, shared intrinsic signatures, snapshot schema | [PR #1330](https://github.com/wieslawsoltes/SharpForge/pull/1330), CI passed |
-| SF-A05-E04 (#462) | T21–T27: static initialization, runtime types, casts, tokens, enums, statics, strings | In progress |
-| SF-A05-E01 (#72) | T01–T06, T28–T31 and B01–B04/B06: execution correctness, parity, async, synchronization, preemption | Pending |
+| SF-A05-E04 (#462) | T21–T28: static initialization, runtime types, casts, tokens, enums, statics, strings, engine parity | Implemented and validated; see `runtime-a05-e04-validation.json` |
+| SF-A05-E01 (#72) | T01–T06, T29–T31 and B01–B04/B06: execution correctness, async, synchronization, preemption | In progress; B01–B06 delivered in [PR #1448](https://github.com/wieslawsoltes/SharpForge/pull/1448) |
 | SF-A05-E02 (#73) | T07–T12 and B05: decode caches, numeric specialization, frames, profiling, Wasm tier, performance gates | Pending |
 
 The initial branch starts at `7f0ca223d1b9a07725078260020019cfb276c241`.
@@ -19,6 +19,56 @@ Before implementation, origin had no open PRs and the checkout had only `main`;
 the portfolio had no active agent claims. The E03 leaf tasks have disjoint project
 file locks. The verifier intrinsic adapter is included in T17's explicit integration
 lock, and the scheduler exception-root adapter is included in T20's lock.
+
+## Engine parity gate (T28, E04)
+
+[T28](https://github.com/wieslawsoltes/SharpForge/issues/724) belongs to E04
+(parent #462). `tests/engine-parity.test.js` runs in the existing `npm test` CI
+command. It automatically discovers shared `tests/fixtures/language/*.js`
+catalogs, exported `*ExecutionCases` from test fixture modules, studio sample
+catalogs, and source-bearing example manifests. The original compiler and
+language regression tests consume the same extracted catalog arrays, so added
+rows enter both suites. Generated examples use `sampleSources`, preserving the
+actual generated source and compilation options.
+
+Each executable fixture runs through source compilation and `VirtualMachine`,
+emitted assembly reloading and `VirtualMachine`, and direct `CilVirtualMachine`.
+The gate compares output, known exception type identity, signed exit code and
+terminal state, with fresh heaps, virtual scheduling time and finite instruction
+budgets. Negative compilation fixtures must reject in both compiler entry paths;
+they cannot provide executable images. Runtime fault and budget-boundary fixtures
+exercise the exception comparator. This gate qualifies the repository compiler's
+language profile; independent Roslyn DLL/native .NET qualification remains a
+separate E04 runner.
+
+`tests/support/engine-parity-allowlist.js` records two observed differences in
+managed heap byte totals for the `gc` and `particles` samples. Each allowance
+names the exact fixture, owner, reason and tracking issue, and permits only the
+observed values. Cases always compile and execute; exception types, state and
+exit codes cannot be exempted. Unknown values and obsolete allowances fail.
+
+E04 passes 3,282 Node tests with zero skips, 303 syntax checks, worker bundling,
+all 25 package installation checks, and 51 Chromium checks. Four independent
+Roslyn DLLs produce identical output under native .NET 10 and CIL. Another
+86-pair fixture compares native Type.IsAssignableFrom with CastCache directly;
+this does not claim that the interpreter executes the reflection oracle DLL.
+Exact revisions, commands, reports and unsupported targets are recorded in
+`runtime-a05-e04-validation.json`. Run `node scripts/validate-a05-type-system.js`
+with `--dotnet <executable>` to repeat native qualification.
+
+| E04 capability | Source VM | CIL VM |
+| --- | --- | --- |
+| Enum names, boxing, flags, numeric casts | Registered framework enums | Framework and metadata-defined enums, all integral widths |
+| String interning and reference identity | Shared managed intern pool | Shared managed intern pool |
+| Runtime types and cached casts | Source MethodTables and GetType | Metadata MethodTables, handles, GetType, variance and array casts |
+| Generic and thread statics | Source language profile | Closed generic ownership, scheduler-local ThreadStatic storage |
+| Type initialization | Source lowering | Precise/beforefieldinit triggers, failure caching and re-entrancy |
+| Volatile access | Cooperative instruction ordering | Verified volatile prefixes and cooperative instruction ordering |
+
+The source frontend does not yet accept arbitrary user enum declarations,
+`typeof`, or user generic type declarations. Runtime support beyond that syntax
+profile is exercised through independent IL and Roslyn DLLs. Native results are
+qualified on macOS arm64 and .NET 10.0.5; no host-thread memory model is claimed.
 
 ## Snapshot schema
 

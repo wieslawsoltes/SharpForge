@@ -1,3 +1,4 @@
+import {MethodTableRegistry} from './execution/method-table.js';
 /** A precise, non-moving tracing heap. Managed references are generation-checked handles, never raw JS object references. */
 export class ManagedFault extends Error {
   constructor(type,message,reference=null){super(message);this.name=type;this.reference=reference;}
@@ -5,7 +6,8 @@ export class ManagedFault extends Error {
 export function isReference(value){return value!==null&&typeof value==='object'&&Number.isInteger(value.h)&&Number.isInteger(value.g);}
 const sizeOf=(kind,data)=>kind==='string'?24+data.length*2:32+data.length*8;
 export class ManagedHeap {
-  constructor({maxBytes=32*1024*1024,initialThreshold=64*1024}={}){
+  constructor({maxBytes=32*1024*1024,initialThreshold=64*1024,methodTables=new MethodTableRegistry()}={}){
+    this.methodTables=methodTables;
     this.maxBytes=maxBytes;this.threshold=Math.min(initialThreshold,maxBytes);if(!Number.isSafeInteger(maxBytes)||maxBytes<1||!Number.isSafeInteger(initialThreshold)||initialThreshold<1)throw new RangeError('Heap sizes must be positive safe integers');this.mutationRevision=0;this.generationCounter=0;this.records=[];this.generations=[];this.free=[];this.rootProvider=()=>[];this.pins=[];this.handles=new Map();this.handleOwner=Object.freeze({});this.nextHandleId=1;this.marks=new Uint32Array(0);this.markEpoch=0;this.markWork=[];
     this.stats={allocatedBytes:0,hostStrongHandles:0,hostWeakHandles:0,rootsScanned:0,edgesScanned:0,markedObjects:0,maxPauseMs:0,markMs:0,sweepMs:0,liveBytes:0,liveObjects:0,allocations:0,collections:0,freedObjects:0,freedBytes:0,lastPauseMs:0,totalPauseMs:0,peakBytes:0};
   }
@@ -20,12 +22,12 @@ export class ManagedHeap {
     if(this.stats.liveBytes+bytes>this.maxBytes)throw new ManagedFault('OutOfMemoryException','Managed heap budget exhausted');
   }
   allocate(kind,type,data,roots=[]){
-    const size=sizeOf(kind,data);
+    const size=sizeOf(kind,data),methodTable=this.methodTables.get(type),typeName=typeof type==='string'?type:methodTable.name;
     // Input references must survive a collection before their new owner exists.
     const allocationRoots=(function*(){yield* roots;if(kind!=='string')yield* data;})();
     this.reserve(size,allocationRoots);
     const g=this.generationCounter+1;if(!Number.isSafeInteger(g))throw new ManagedFault('OutOfMemoryException','Managed reference identity exhausted');this.generationCounter=g;const h=this.free.length?this.free.pop():this.records.length;
-    this.generations[h]=g;this.records[h]={kind,type,data,size};
+    this.generations[h]=g;this.records[h]={kind,type:typeName,methodTable,data,size};
     this.mutationRevision++;this.stats.allocatedBytes+=size;this.stats.liveBytes+=size;this.stats.liveObjects++;this.stats.allocations++;this.stats.peakBytes=Math.max(this.stats.peakBytes,this.stats.liveBytes);
     return Object.freeze({h,g});
   }
@@ -35,7 +37,9 @@ export class ManagedHeap {
   array(type,length){
     if(!Number.isInteger(length)||length<0)throw new ManagedFault('OverflowException','Array length must be a non-negative Int32');
     if(length>1_000_000)throw new ManagedFault('OutOfMemoryException','Array length exceeds the configured one-million-element limit');
-    this.reserve(32+length*8);return this.allocate('array',type+'[]',Array(length).fill(type==='int'||type==='double'?0:type==='bool'?false:null));
+    const element=this.methodTables.get(type),name=typeof type==='string'?type:element.name;
+    const value=element.name==='System.Boolean'?false:['System.Int64','System.UInt64'].includes(element.name)?0n:element.flags.primitive?0:null;
+    this.reserve(32+length*8);return this.allocate('array',name+'[]',Array(length).fill(value));
   }
   get(ref){
     if(ref===null||ref===undefined)throw new ManagedFault('NullReferenceException','Object reference not set to an instance of an object');
@@ -57,7 +61,7 @@ export class ManagedHeap {
     return {...this.stats,freedThisCollection:objects,bytesThisCollection:bytes};
   }
   snapshot(){return {generationCounter:this.generationCounter,handles:[...this.handles].map(([id,h])=>[id,{...h}]),nextHandleId:this.nextHandleId,records:this.records.map(r=>r?{...r,data:Array.isArray(r.data)?[...r.data]:r.data}:null),generations:[...this.generations],free:[...this.free],stats:{...this.stats},threshold:this.threshold};}
-  restore(snapshot){this.mutationRevision++;this.generationCounter=Math.max(this.generationCounter,snapshot.generationCounter??snapshot.generations.reduce((n,g)=>Math.max(n,g??0),0));this.handles=new Map((snapshot.handles??[]).map(([id,h])=>[id,{...h}]));this.nextHandleId=Math.max(this.nextHandleId,snapshot.nextHandleId??1);this.records=snapshot.records.map(r=>r?{...r,data:Array.isArray(r.data)?[...r.data]:r.data}:null);this.generations=[...snapshot.generations];this.free=[...snapshot.free];this.stats={...snapshot.stats};this.threshold=snapshot.threshold;}
+  restore(snapshot){this.mutationRevision++;this.generationCounter=Math.max(this.generationCounter,snapshot.generationCounter??snapshot.generations.reduce((n,g)=>Math.max(n,g??0),0));this.handles=new Map((snapshot.handles??[]).map(([id,h])=>[id,{...h}]));this.nextHandleId=Math.max(this.nextHandleId,snapshot.nextHandleId??1);this.records=snapshot.records.map(r=>r?{...r,methodTable:r.methodTable?.registry===this.methodTables?r.methodTable:this.methodTables.get(r.methodTable?.name??r.type),data:Array.isArray(r.data)?[...r.data]:r.data}:null);this.generations=[...snapshot.generations];this.free=[...snapshot.free];this.stats={...snapshot.stats};this.threshold=snapshot.threshold;}
   census(){const counts=new Map();for(const record of this.records)if(record){const key=record.kind+':'+record.type;let item=counts.get(key);if(!item)counts.set(key,item={kind:record.kind,type:record.type,objects:0,bytes:0});item.objects++;item.bytes+=record.size;}return {stamp:this.stamp(),objects:this.stats.liveObjects,bytes:this.stats.liveBytes,types:[...counts.values()].sort((a,b)=>b.bytes-a.bytes||a.type.localeCompare(b.type))};}
   stamp(){return `${this.mutationRevision}:${this.generationCounter}:${this.stats.collections}:${this.stats.liveObjects}`;}
   inspectPage({afterHandle=-1,limit=200,kind=null,type=null,stamp=null}={}){if(!Number.isInteger(limit)||limit<1||limit>1000||!Number.isInteger(afterHandle)||afterHandle< -1)throw new RangeError('Invalid heap page request');if(stamp!==null&&stamp!==this.stamp())throw new Error('Heap changed; restart inspection from the first page');const items=[];let more=false;for(let h=afterHandle+1;h<this.records.length;h++){const r=this.records[h];if(!r||kind&&r.kind!==kind||type&&r.type!==type)continue;if(items.length===limit){more=true;break;}items.push(this.inspectRecord(h,r));}return {items,stamp:this.stamp(),next:more?items.at(-1).handle:null,totalLiveObjects:this.stats.liveObjects};}

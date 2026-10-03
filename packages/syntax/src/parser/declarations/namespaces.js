@@ -101,15 +101,17 @@ export const namespaceMethods = {
       else if (this.isUsingDirective(inNamespace)) {
         if (!members.length && !attributed) usings.push(this.usingDirective());
         else {
-          this.error(
-            this.current,
-            'CS1529',
-            'A using clause must precede all other elements defined in the namespace except extern alias declarations'
-          );
-          const mark = this.mark();
+          // The misplaced directive is parsed only to find its end; Roslyn reports the error over all of it.
+          const first = this.current,
+            mark = this.mark();
           this.usingDirective();
           const end = this.i;
           this.reset(mark);
+          this.error(
+            { start: first.start, end: this.tokens[Math.max(end - 1, this.i)].end },
+            'CS1529',
+            'A using clause must precede all other elements defined in the namespace except extern alias declarations'
+          );
           while (this.i < end) this.skip();
         }
       } else if (
