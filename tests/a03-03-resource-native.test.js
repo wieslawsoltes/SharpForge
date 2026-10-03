@@ -18,7 +18,7 @@ test('A03 resource fixture records native GetManifestResourceStream observations
   for (const observation of evidence.observations) {
     const result = compileToIL('public class ResourceContainer {}', {
       name: `ResourceFixture_${observation.platform}`, outputKind: 'library',
-      platform: observation.platform, debugFormat: 'none', managedResources,
+      platform: observation.platform, portablePdb: false, managedResources,
     });
     assert(result.success, JSON.stringify(result.diagnostics));
     const resources = readManagedResources(readPE(result.assembly), { includeBytes: true });

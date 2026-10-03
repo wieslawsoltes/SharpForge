@@ -12,3 +12,8 @@ dotnet build tests/fixtures/a03-managed-resources/oracle/ResourcesOracle.csproj 
 dotnet /tmp/a03-resource-bin/ResourcesOracle.dll /tmp/a03-resource-fixtures/*.dll > tests/fixtures/a03-managed-resources/native.json
 node --test --test-concurrency=1 tests/a03-03-managed-resources.test.js tests/a03-03-resource-native.test.js
 ```
+
+Captured on macOS ARM64 with .NET SDK 10.0.201/runtime 10.0.5. AnyCPU and ARM64 fixtures loaded and returned the expected
+256-byte binary, private UTF-8/NUL payload and empty resource. x86/x64 rows were independently read by SRM; execution
+is explicitly unsupported on this ARM64 .NET host. All ten focused tests passed, including source and direct CIL
+JavaScript engines with all four platform headers. Resource reading is data-only and adds no native/Wasm reflection API.
