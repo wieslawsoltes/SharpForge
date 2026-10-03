@@ -1,10 +1,20 @@
 import {ManagedFault} from '../heap.js';
 
 const align = (size, alignment) => Math.ceil(size / alignment) * alignment;
+const unboundParameter = /^!!?\d+$/;
 
 /** ECMA sequential/explicit value layout, in bytes, for the configured native ABI. */
 export function valueLayout(vm, type, active = new Set()) {
   const table = vm.inspector ? vm.typeSystem.table(type) : vm.heap.methodTables.get(type);
+  if (table.containsGenericParameters || unboundParameter.test(table.name)) {
+    throw new ManagedFault('TypeLoadException', 'Value layout requires a closed type');
+  }
+  if (table.flags.byRef || table.flags.refStruct || table.name === 'System.Void') {
+    throw new ManagedFault('TypeLoadException', 'Unsupported managed value layout: ' + table.name);
+  }
+  if (table.flags.nullable && (!table.nullableType?.flags.valueType || table.nullableType.flags.nullable)) {
+    throw new ManagedFault('TypeLoadException', 'Nullable layout requires a non-nullable value type');
+  }
   vm.valueLayouts ??= new Map();
   if (vm.valueLayouts.has(table)) return vm.valueLayouts.get(table);
   if (active.has(table)) throw new ManagedFault('TypeLoadException', 'Recursive value layout');
@@ -44,4 +54,17 @@ export function valueLayout(vm, type, active = new Set()) {
   const layout = Object.freeze({size, alignment, containsReferences, offsets: Object.freeze(offsets)});
   vm.valueLayouts.set(table, layout);
   return layout;
+}
+
+/** CLI sizeof measures a value's storage; references use the configured native width. */
+export function sizeOfType(vm, type) {
+  const table = vm.inspector ? vm.typeSystem.table(type) : vm.heap.methodTables.get(type);
+  const layout = valueLayout(vm, table);
+  if (table.flags.pointer || table.name === 'System.TypedReference') {
+    throw new ManagedFault('InvalidProgramException', 'sizeof operand is outside the supported managed type profile');
+  }
+  if (table.flags.external || table.flags.dynamic && table.flags.valueType && !table.flags.enum) {
+    throw new ManagedFault('NotSupportedException', 'sizeof external type layout is not implemented: ' + table.name);
+  }
+  return layout.size;
 }
