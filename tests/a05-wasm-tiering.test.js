@@ -133,3 +133,18 @@ test('T11.4 asynchronous cancellation drops all native code on the VM stop bound
   assert.equal(vm.frames.length, 0);
   assert.equal(wasmTierStatistics(vm).compilations, 0);
 });
+
+test('T11.4 restoring a snapshot cancels stale compilation before publication', async () => {
+  const vm = new CilVirtualMachine(loopFixture(), {wasmTiering: true});
+  const snapshot = vm.snapshot();
+  const epoch = wasmTierStatistics(vm).epoch;
+  const pending = prepareWasmTier(vm);
+  vm.restore(snapshot);
+  const report = await pending;
+  assert.equal(report.status, 'fallback');
+  assert.equal(report.reason.code, 'WASM_CANCELLED');
+  assert.ok(wasmTierStatistics(vm).epoch > epoch);
+  assert.equal(wasmTierStatistics(vm).compilations, 0);
+  assert.equal((await prepareWasmTier(vm)).status, 'ready');
+  assert.equal(vm.run().returnValue, 100);
+});

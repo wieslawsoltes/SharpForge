@@ -1,4 +1,5 @@
 import {captureGenericInstantiations, prepareGenericInstantiations} from './execution/generics.js';
+import {invalidateExecutionCode} from './execution/code-version.js';
 import {releaseAllFrames, rebuildFrameIndex} from './execution/frame-lifetimes.js';
 import {rebuildStackBudget} from './execution/stack-budget.js';
 import {validateSnapshotState} from './snapshot-validation.js';
@@ -127,4 +128,5 @@ export function restoreVM(vm, snapshot, engine) {
   vm.platform.restore(values.get('platform'));
   rebuildFrameIndex(vm);
   rebuildStackBudget(vm);
+  invalidateExecutionCode(vm, 'restore');
 }
