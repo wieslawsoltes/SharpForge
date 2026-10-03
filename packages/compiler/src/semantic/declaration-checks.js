@@ -12,6 +12,7 @@ import { checkConstructedType } from '../binder/constraints.js';
 import { bindEnumMembers } from '../binder/enums.js';
 import { checkStructLayout, checkStructDeclaration } from '../binder/structs.js';
 import { checkReadOnlyDeclarations } from '../binder/readonly.js';
+import { checkInterfaceMemberKinds } from '../binder/interface-members.js';
 import { checkRefStructDeclarations, checkAsyncOrIteratorUse } from '../binder/ref-struct.js';
 import { checkTypeModifierFeatures } from './type-modifier-features.js';
 import { checkVarianceSafety } from '../conversions/variance.js';
@@ -100,6 +101,7 @@ export const DeclarationChecks = Base =>
         else this.reportAt(d.member, d.code, d.args);
       }
       for (const d of checkReadOnlyDeclarations(type)) this.reportAt(d.member, d.code, d.args);
+      for (const d of checkInterfaceMemberKinds(type)) this.reportAt(d.member, d.code, d.args);
       for (const d of checkRefStructDeclarations(type, version)) {
         if (d.feature) this.gate(this.at(type).uri, this.at(type), d.feature.name, d.feature);
         else if (d.onType && d.member.typeSyntax) this.report(this.at(d.member).uri, d.member.typeSyntax, d.code, d.args);

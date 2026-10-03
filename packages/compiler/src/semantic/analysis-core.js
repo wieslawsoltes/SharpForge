@@ -80,6 +80,7 @@ export class AnalysisCore {
       typeBinder: this.typeBinder,
       name: options.name,
       report: (uri, node, code, args) => this.report(uri, node, code, args),
+      useFeature: (uri, node, feature) => this.gate(uri, node, feature),
       resolveBases: type =>
         resolveBases(type, {
           typeBinder: this.typeBinder,
@@ -233,6 +234,7 @@ export class AnalysisCore {
     this.checkConstructions();
     for (const type of types) this.bindConstants(type);
     this.bindAttributes();
+    this.checkSpecialMembers();
     this.bindBodies();
     // Constructed types written inside bodies (`new Box<int>()`) are checked once the bodies are bound.
     this.checkConstructions();

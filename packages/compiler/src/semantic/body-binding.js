@@ -3,7 +3,7 @@
  * initializers, followed by the flow passes over each bound body. Top-level statements are bound in
  * ../binder/top-level.js.
  */
-import { SymbolKind, TypeKind, RefKind } from '../symbols/types.js';
+import { SymbolKind, TypeKind, RefKind, ErrorTypeSymbol } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { checkImplicitBaseCall, checkConstructorCycles, constructorInitializerKind } from '../binder/constructors.js';
 import { BodyBinder } from '../binder/body-binder.js';
@@ -13,6 +13,7 @@ import { analyzeRefSafety } from '../flow/ref-safety.js';
 import { NullableWalker } from '../nullable/walker.js';
 import { checkIteratorBody } from '../binder/iterators.js';
 import { checkAsyncBody } from '../binder/async.js';
+import { asyncResultType } from '../binder/csharp70.js';
 import { isSourceSymbol, isClosedType } from './analysis-helpers.js';
 
 /** Class mixin: Binding of bodies: methods, accessors, constructors with their initializers, field and property */
@@ -36,16 +37,18 @@ export const BodyBinding = Base =>
         declared = method.returnType;
       let returnType = declared;
       if (isAsync && declared) {
-        if (declared.originalDefinition === this.core.taskT || (declared.name === 'ValueTask' && declared.typeArguments?.length === 1))
-          returnType = declared.typeArguments[0].type;
-        else if (declared.equals(this.core.task) || declared.name === 'ValueTask') returnType = this.core.void;
+        const taskResult = asyncResultType(declared, this.core);
+        if (taskResult) returnType = taskResult;
         else if (
           declared.specialType !== 'System_Void' &&
           !declared.isErrorType() &&
           !['IAsyncEnumerable', 'IAsyncEnumerator'].includes(declared.name) &&
           isClosedType(declared)
-        )
+        ) {
           this.report(context.uri, method.locations[0], 'CS1983');
+          // What the body returns is not checked against a type that cannot be the result of an async method.
+          returnType = ErrorTypeSymbol.unknown;
+        }
       }
       const binder = new BodyBinder(this, {
         ...context,
