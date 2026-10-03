@@ -31,6 +31,16 @@ method names and `unit: "none"` instruction weights. `exportRuntimeTrace(vm.prof
 These counters describe host observations. Restoring a VM snapshot retains the profiler and adds subsequent
 execution to its totals rather than rewinding it. No profiler callbacks or managed references enter snapshots.
 
+Run `node examples/runtime/profile.mjs cil > profile.json` to produce a Speedscope file. The example also
+accepts `source` and `reload`; program output goes to stderr so stdout contains only the JSON profile.
+
+| API/capability | Source VM | Reloaded source | Direct CIL | Status |
+| --- | --- | --- | --- | --- |
+| Instruction, call, allocation and suspension counters | Implemented | Implemented | Implemented | E02 qualification pending |
+| Bounded runtime event subscriptions | Implemented | Implemented | Implemented | E02 qualification pending |
+| Speedscope and runtime trace JSON exports | Implemented | Implemented | Implemented | E02 qualification pending |
+| Binary EventPipe / `.nettrace` output | Unsupported | Unsupported | Unsupported | JSON trace only |
+
 `tests/a05-profiler.test.js` prepares on/off parity, three-engine counts, bounded overflow, event order,
 subscriber lifecycle and snapshot observation cases. None has run during scope assembly. Disabled/on
 overhead, cold/warm latency and p95/p99 remain part of the complete E02 qualification batch.
