@@ -1,5 +1,6 @@
 import { registerDesignerWorker } from './designer-worker.js';
-import {createWorkerProtocol,readWorkerRequest} from './workers/protocol.js';
+import {createWorkerProtocol} from './workers/protocol.js';
+import {createCompilerWorkerDispatcher} from './designer-worker-dispatcher.js';
 import {emitPortablePdb,attachPortablePdb} from '../../packages/symbols/src/index.js';
 import { ExtensionDriver, BuildInfoGenerator, JsonSchemaGenerator, EmptyCatchAnalyzer, UnreferencedLocalAnalyzer, ConstantConditionAnalyzer, TodoCommentAnalyzer, UnreachableStatementAnalyzer } from '../../packages/extensions/src/index.js';
 import { RefactoringEngine, formatDocument, selectionRanges } from '../../packages/refactoring/src/index.js';
@@ -14,7 +15,6 @@ let cachedArtifact=null;
 let extensionKey='null';
 function configureExtensions(params){const driver=new ExtensionDriver();if(params?.buildInfo)driver.registerGenerator(BuildInfoGenerator);if(params?.schema)driver.registerGenerator(JsonSchemaGenerator);if(params?.analyzers)driver.registerAnalyzer(EmptyCatchAnalyzer).registerAnalyzer(UnreferencedLocalAnalyzer).registerAnalyzer(ConstantConditionAnalyzer).registerAnalyzer(TodoCommentAnalyzer).registerAnalyzer(UnreachableStatementAnalyzer);workspace.extensions=driver;workspace.extensionOptions={version:params?.version??'0.14.0',schemaProperties:!!params?.schemaProperties,severities:params?.severities??{}};workspace.additionalFiles=params?.additionalFiles??[];workspace.result=null;extensionKey=JSON.stringify(params??null);return {generators:[...driver.generators.keys()],analyzers:[...driver.analyzers.keys()]};}
 
-function sync(files){if(!files)return;const names=new Set(files.map(f=>f.uri));for(const uri of workspace.documents.keys())if(!names.has(uri))workspace.remove(uri);for(const file of files)workspace.update(file.uri,file.text,file.version);}
 const handlers=createWorkerProtocol('compiler');
 registerDesignerWorker(handlers, { workspace });
 for(const method of ["analyze","build"])handlers.registerHandler(method,(params,method)=>{let result;{
@@ -54,7 +54,7 @@ for(const method of ["definition"])handlers.registerHandler(method,(params,metho
 for(const method of ["references"])handlers.registerHandler(method,(params,method)=>{let result;result=language.references(params.uri,params.offset);return result;});
 for(const method of ["rename"])handlers.registerHandler(method,(params,method)=>{let result;result=refactoring.rename(params.uri,params.offset,params.newName).edits;return result;});
 for(const method of ["symbols"])handlers.registerHandler(method,(params,method)=>{let result;result=language.documentSymbols(params.uri);return result;});
-self.onmessage=event=>{const id=event.data?.id;try{const {method,params}=readWorkerRequest(event.data);handlers.assertMethod(method);sync(params.files);const options=params.compilationOptions??(params.outputKind?{outputKind:params.outputKind}:null);if(options&&JSON.stringify(options)!==JSON.stringify(workspace.compilationOptions)){workspace.compilationOptions=options;workspace.result=null;}if(Object.hasOwn(params,'extensions')&&JSON.stringify(params.extensions??null)!==extensionKey)configureExtensions(params.extensions);let result;
-  result=handlers.dispatch(method,params);
-  self.postMessage({id,result,revision:params.revision});
-}catch(error){self.postMessage({id,error:{message:error.message,name:error.name,code:error.code}});}};
+const dispatcher = createCompilerWorkerDispatcher(handlers, {
+  workspace, configureExtensions, extensionKey: () => extensionKey, postMessage: message => self.postMessage(message)
+});
+self.onmessage = event => dispatcher.receive(event.data);
