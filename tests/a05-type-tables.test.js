@@ -6,6 +6,11 @@ import {CilTypeSystem} from '../packages/runtime/src/execution/type-system.js';
 import {copyExecution} from '../packages/runtime/src/snapshot.js';
 import {namespaceAssembly} from './a05-type-fixtures.js';
 
+test('A05 a generic interface first lookup retains identity through recursive primitive materialization',()=>{
+  const registry=new MethodTableRegistry(),first=registry.get('System.IComparable`1<int>');
+  assert.equal(first,registry.get('int').interfaces.find(table=>table.name==='System.IComparable`1<System.Int32>'));
+});
+
 test('A05 method tables retain canonical primitive, token and generic identities',()=>{
   const registry=new MethodTableRegistry({tokenResolver:token=>token===0x1b000001?'Box`1<int>':null});
   registry.define({name:'Box`1',token:0x02000001,fields:[{name:'Value',type:'!0',storageType:'!0'}]});

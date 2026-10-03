@@ -1,3 +1,4 @@
+import {checkArrayStore} from './casting.js';
 import {convert as cilConvert,float} from './numeric-ops.js';
 import {ManagedFault, isReference} from '../heap.js';
 import {enumInfo,enumValue} from './enums.js';
@@ -64,4 +65,11 @@ export function unary(operator, value, mode = 0) {
     case '-': return mode === 1 || mode === 5 ? (-value) | 0 : -value;
     default: return +value;
   }
+}
+
+/** Source bytecode keeps scalar object values unboxed until CIL emission. */
+export function checkSourceArrayStore(vm,record,value) {
+  if(record.methodTable.elementType===vm.heap.methodTables.get('object')&&!isReference(value)&&
+      (value?.enumType||['number','boolean','bigint'].includes(typeof value)))return value;
+  return checkArrayStore(vm.heap,record,value);
 }
