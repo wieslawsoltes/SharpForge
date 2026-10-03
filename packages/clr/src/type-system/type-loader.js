@@ -132,6 +132,9 @@ export class TypeLoader {
     if (baseType && [TypeKind.Array, TypeKind.SZArray, TypeKind.Pointer, TypeKind.ByRef, TypeKind.FunctionPointer].includes(baseType.kind)) {
       throw fail('Invalid constructed base type');
     }
+    if (baseType && ((baseType.flags & 0x100) || [TypeKind.ValueType, TypeKind.Enum].includes(baseType.kind))) {
+      throw fail('A type cannot derive from a sealed or value type');
+    }
     const interfaces = new Set(baseType?.interfaces ?? []);
     for (const reference of this.#index(module).interfaces.get(token & 0xffffff) ?? []) {
       const contract = await this.#load(module, reference, nested);
@@ -171,6 +174,7 @@ export class TypeLoader {
       checkCancellation(operation.signal);
       if (external != null) {
         if (!(external instanceof TypeDesc) || !external.isLoaded) throw fail('External resolver must return a loaded TypeDesc');
+        if (external.fullName !== fullName) throw fail(`External type resolver returned ${external.fullName} for ${fullName}`);
         return external;
       }
       target = (await module.assembly.resolveReference(rid, operation)).manifestModule;
