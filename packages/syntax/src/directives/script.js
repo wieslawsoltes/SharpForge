@@ -3,7 +3,7 @@
  * `marker` is '!' or ':' for `#!`/`#:` lines, otherwise null with `name` set to 'r' or 'load'.
  * `context` is { offset, seenToken, afterIf, script }. Returns { kind, structure, diagnostics } or null.
  */
-export function scanScriptDirective(marker, name, rest, context, features = []) {
+export function scanScriptDirective(marker, name, rest, context) {
   if (marker === '!') {
     if (context.offset !== 0)
       return {
@@ -21,7 +21,7 @@ export function scanScriptDirective(marker, name, rest, context, features = []) 
     };
   }
   if (marker === ':') {
-    features.push('IgnoredDirectives');
+    // Roslyn does not gate `#:` by language version: outside a file-based program it reports CS9298 at every version.
     const content = rest.trim(),
       parts = /^(\S+)(?:\s+([\s\S]*))?$/.exec(content),
       diagnostics = [];
