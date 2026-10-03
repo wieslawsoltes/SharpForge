@@ -11,6 +11,7 @@ import { MethodKind } from '../../symbols/members.js';
 import { displayClassName, lambdaMethodName, localFunctionName, thisProxyFieldName } from '../../lowering/generated-names.js';
 import { n } from './node-factory.js';
 import { Frame } from './frame.js';
+import {isByReference} from '../../lowering/by-reference.js';
 
 /** Class mixin: lambdas, local functions, delegate creation and combination. */
 export const FunctionTranslation = Base =>
@@ -109,7 +110,7 @@ export const FunctionTranslation = Base =>
       const declared = this.g.parametersOf(symbol);
       const method = this.g.program.addMethod(this.frame.method.owner, localFunctionName(root.name, symbol.name, root.ordinal, root.locals++), {
         isStatic: true,
-        returnType: this.imageType(symbol.returnType, at),
+        returnType: this.imageType(symbol.returnType, at) + (isByReference(symbol) ? '&' : ''),
         parameters: [...declared, ...extra.map(e => ({ name: e.name, type: e.type }))],
         node: n.spanOf(symbol.syntax, this.frame.uri),
         hasSource: true,
