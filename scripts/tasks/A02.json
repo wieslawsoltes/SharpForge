@@ -11,6 +11,18 @@
           ]
         }
       ]
+    },
+    "a02:bench:compile": {
+      "description": "Compile time of compile() on the bench corpus and on 5,000-line synthetic programs",
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "--expose-gc",
+            "packages/compiler/bench/compile-time.bench.js"
+          ]
+        }
+      ]
     }
   }
 }
