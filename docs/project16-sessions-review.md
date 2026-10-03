@@ -91,6 +91,17 @@ are the source VM and direct managed CIL interpreter. Fake-worker service tests
 qualify service identity/cancellation behavior; they do not establish compiler,
 WinUI browser, native CLR/Wasm or Visual Studio visual parity.
 
+The required static check found an unreviewed dynamic import in that fixture.
+Its loader now statically imports a Node transport initializer before the
+unchanged production runtime worker, then connects incoming messages only after
+the production handler exists. The ready event and request/event transport keep
+their existing shape. No dynamic-code audit exception was added.
+After this complete correction, `node scripts/limited.js npm run check` passed:
+30 manifest areas, 447 Node files, 25 browser scripts, zero unassigned or duplicate
+tests; 1,882 JavaScript modules with zero syntax errors; and all 1,878 inspected
+modules passed the import/dynamic-code audit. No tests or build were rerun for
+this static correction.
+
 The actual Studio multi-session browser fixture and the repository-wide
 `state.debug` ownership assertion require the final composition. They remain in
 the next layer. This branch retains the three independent ownership-checker
