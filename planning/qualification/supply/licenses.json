@@ -1,0 +1,902 @@
+{
+  "schemaVersion": 1,
+  "allowed": [
+    "MIT",
+    "Apache-2.0",
+    "PSF-2.0",
+    "MIT AND PSF-2.0"
+  ],
+  "scope": "Every tracked vendor file and asset has explicit origin/license evidence. Original source remains repository MIT; declarations need human review.",
+  "files": [
+    {
+      "path": "apps/studio/favicon.svg",
+      "sha256": "1c25173d8c4a9e3bddd76882f214b3e6294129b555a257ff1bd5b5a0c63ab132",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/apps/studio/favicon.svg",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/browser-export.dll",
+      "sha256": "5a3e89caf6b419a6a57be35368dc4ae5da4e2c57b0e7b991074bafd9051cf6dc",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/browser-export.dll",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/assembly-workbench-mobile.png",
+      "sha256": "d5275aa36bbcdcea529898772b751e717542f0cc928c063befe944d3770a26f3",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/assembly-workbench-mobile.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/assembly-workbench.png",
+      "sha256": "b3ba2b5b1ce41902d252f425bb08d4fd8a6afdf739c6e41f9f7b68f880150699",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/assembly-workbench.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/docking-split-editors.png",
+      "sha256": "afda916fa29da88fef089433364cb4af9358cfca4ccc1294cb1ceade7177a2b0",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/docking-split-editors.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/docking-workspace-light.png",
+      "sha256": "2bd8dccc86a1a5ce3b8ad044cd5a431a5e7360f20560b9bdc8b6a938c3f26788",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/docking-workspace-light.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/docking-workspace-mobile.png",
+      "sha256": "bc1ef32b49684991281516e05a5ea5d8f58d364fd1236c0535da95ea8594b93f",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/docking-workspace-mobile.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/docking-workspace.png",
+      "sha256": "852403dd43b292beeefa0ab83b04a4e0076e56eb856d2e949ba5b5781145695d",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/docking-workspace.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release05-il-debugger.png",
+      "sha256": "f345b31c156213157ed6d065939345758c27929ec154bd44a4230cf42def30ae",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release05-il-debugger.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release06-reversible-il.png",
+      "sha256": "2e3a27e24cba9dd09f9b6f8f053b1a978b5fc2b741ec8713c1e14cf174a60c47",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release06-reversible-il.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release07-msbuild.png",
+      "sha256": "1632e86593872e43938066de50a33f7fa9ab5b36ec453f336e006c6de7f4b85d",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release07-msbuild.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release08-explorer-debugger.png",
+      "sha256": "cc8769ecc39ba3515f41a883ed548d6e94e0833ec9798407a0192532eff58305",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release08-explorer-debugger.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release08-explorer-vim.png",
+      "sha256": "743433bc8b9149aa25ca81613fe27315b334659da7ab77f804bad7303ad3bd15",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release08-explorer-vim.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release08-native-explorer.png",
+      "sha256": "fc0febef4ddaef85cc8f5d2e1c07508014bffc6f017c17cbe132fe89c0286e01",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release08-native-explorer.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release09-breakpoint.png",
+      "sha256": "a3d4ef26325859ce1c8ad6995f865ed05989bb16869168fb8e37940c25c65207",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release09-breakpoint.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release09-callstack.png",
+      "sha256": "f5c34fa61ba53138564c451414652a4bf2aa3eb9e528ae99e18741f5e77ad720",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release09-callstack.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release09-failure.png",
+      "sha256": "8ddd0ed5b57d4409c88f8fc3f73a8ce4d142e6b647f93d28f50f3f574e0824cb",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release09-failure.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release09-settings.png",
+      "sha256": "41178100193989085affbb468daab50f899ad3a18ecbb156efce51667b555d23",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release09-settings.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release10-debugger.png",
+      "sha256": "2e6c798a88220c27c85e2770b040eb26314246afc0b610d97b5c0f8354c413ac",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release10-debugger.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release10-failure.png",
+      "sha256": "a4fcfd3516bf0137be43a660c1db67d905967c52d056beb1dcbe53f1fea8721e",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release10-failure.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release10-graphics.png",
+      "sha256": "d9ffa817590f1f0110ce7023d63d83fa120be6e8300269f9f4cf7448f957c700",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release10-graphics.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release10-winui.png",
+      "sha256": "a5513b96b719947191c42b616b48063c4e912fe9a86df8c863d31c6d7be679f6",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release10-winui.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release11-running.png",
+      "sha256": "4fe882a0d8941aeb08cb3f828e567fe65a3a0d690d4a4a69214bb26c78b2c254",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release11-running.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release11-templates.png",
+      "sha256": "a411ea32d6384669f257eaa7a84145933c71dc63745909fdc6c14a6a817b2d7d",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release11-templates.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release11-wizard.png",
+      "sha256": "9b95186125d44e1cef3a334f292b542225a3773694009f4c87312821716377d1",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release11-wizard.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release12-controls.png",
+      "sha256": "09537b20f5db077fbc8aa419e548b7d56c84032d25a83cd7052c600efd431762",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release12-controls.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release12-designer.png",
+      "sha256": "0291f130e6f1db2daa3bc21786a7efcdbd28af2d9b6f266e53e02b1bb2284785",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release12-designer.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release12-live-designer.png",
+      "sha256": "ec888d5627c46d8a237d8950aeda656720b48f3130fd76dc3adc1546b7c036a8",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release12-live-designer.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release13-designer-light.png",
+      "sha256": "74e9dbe31979c2a01cbfd0be44b0b3216f4a92ab9b37781cdcbdbdfaeef75bd7",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release13-designer-light.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release13-designer-sync.png",
+      "sha256": "286bef06f749b5f8ba600538c34623e17a4ed71080e80f732e1b4b35ce9e46eb",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release13-designer-sync.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release13-wrap-panels.png",
+      "sha256": "0129bcf61101c90622f2d8814ec1631d8f216e02940fd076ad08b0e51a9eea51",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release13-wrap-panels.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release14-compute-ui.png",
+      "sha256": "dc45e46a18b7d5e6be062f2fb71b95e8eb99d698becb57c0d6a2934bf8a4cb2f",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release14-compute-ui.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/release14-runtime.png",
+      "sha256": "0c1c4df85f00843f59928a8e06cdae2a1a5b9f9385a29e0b88dec92f531c904b",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/release14-runtime.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/studio-debug.png",
+      "sha256": "fc00581502cbc200c6c1f76378dbb1e9c87f7bf3220bd92db4a01a57975cbf07",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/studio-debug.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/studio-il.png",
+      "sha256": "9fc2ccf6a19d8a184636f2712bd3343ea0e73b8080551318c9287663e7783fc0",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/studio-il.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/studio-light.png",
+      "sha256": "05ca10e01608f3225b4d3d22f86e099a714b483ec11192c810008c844c7b84f5",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/studio-light.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "docs/screenshots/studio-mobile.png",
+      "sha256": "d3edd85fe48bb2e2068a07859456ee3c0691f157ebc4db7c6c5e713e914c3fae",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/docs/screenshots/studio-mobile.png",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/designer/CanvasCounter.zip",
+      "sha256": "949d66fc8f3d28c9d406520a9863b72ce1e7ec2709eca5ea2453aa91847bb070",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/971c3e2f72bf4c26b4c06495d3a4d272070a6a2c/examples/designer/CanvasCounter.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/designer/ControlGallery.zip",
+      "sha256": "f7dc99fa2c4f823dab3bbbee8234bb2f818ec04b6b3c3127c829779925580a14",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/designer/ControlGallery.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/designer/EditContinue.zip",
+      "sha256": "80abdc1f33fb070bdde3b080c8c6884de4ca8353b49ba81af2a1a0e45c3649d6",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/designer/EditContinue.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/designer/GridWorkspace.zip",
+      "sha256": "78d6b0f6dd802c8a6ec08369407adca5709aab0bce9b806e7f25f2b580a28530",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/971c3e2f72bf4c26b4c06495d3a4d272070a6a2c/examples/designer/GridWorkspace.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/designer/SharedStyles.zip",
+      "sha256": "f25804835b50cb56873dbec8b6436737e38b0bf95a517700a7fb82daed80e18e",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/designer/SharedStyles.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/managed/Arithmetic.dll",
+      "sha256": "dac6db26335ff0dc07e5b76dec15c390f552e8cef9ec36167bf04466551d853c",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/managed/Arithmetic.dll",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/managed/Finally.exe",
+      "sha256": "f39abbdcf0c4aeec33b9d1da12ff588af62c18601300b5d439b7921f65556c26",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/971c3e2f72bf4c26b4c06495d3a4d272070a6a2c/examples/managed/Finally.exe",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/managed/Hello.exe",
+      "sha256": "7228786c6208376099e5b47cf8510429768c15cb4996009f6070cce7d440199a",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/971c3e2f72bf4c26b4c06495d3a4d272070a6a2c/examples/managed/Hello.exe",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/managed/PortableSymbols.dll",
+      "sha256": "28fe2d0e5f17b8c95581f2e9cc65c137c629721574c13c6b9ced0860c14e1b2e",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/managed/PortableSymbols.dll",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/managed/PortableSymbols.pdb",
+      "sha256": "3d57a503aa457bfe8378aec4a91c2999902a88ecc2964e4e774bb344785f69c8",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/managed/PortableSymbols.pdb",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/managed/PrimitiveAddresses.exe",
+      "sha256": "018ab7c92f3de9ac7d3a6a80410e1307b6b044c672b08e6063e545ae3d8e3270",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/971c3e2f72bf4c26b4c06495d3a4d272070a6a2c/examples/managed/PrimitiveAddresses.exe",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/managed/StorageWrites.exe",
+      "sha256": "08b9d7bf2b402928ed15a1825fb124fc58993b35227b11796518281dde7cee64",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/971c3e2f72bf4c26b4c06495d3a4d272070a6a2c/examples/managed/StorageWrites.exe",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/managed/UsingResources.exe",
+      "sha256": "9e6eebdaf5535754120689bfd7b0b87672569b16c6b2ed7f22e9a3e38ff2a0a7",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/971c3e2f72bf4c26b4c06495d3a4d272070a6a2c/examples/managed/UsingResources.exe",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/projects/ExplorerWorkshop/Tools/Arithmetic.dll",
+      "sha256": "dac6db26335ff0dc07e5b76dec15c390f552e8cef9ec36167bf04466551d853c",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/projects/ExplorerWorkshop/Tools/Arithmetic.dll",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/release13/AnimationStylePrecedence.zip",
+      "sha256": "f1babf495ef389a83d44850363a36ae0495de4a6d304535aaee90bee235f960b",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/release13/AnimationStylePrecedence.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/release13/BclCollections.zip",
+      "sha256": "955d97f3478a1edd104866b7d345b5a49dff35c5ff7888093bd5b0596c09dead",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/release13/BclCollections.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/release13/BclDictionary.zip",
+      "sha256": "7613f9755d9620248fac9af1cef637dbf15fdb44ad26b4b1ce5b1f31b7f4e3d5",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/release13/BclDictionary.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/release13/BclStringbuilder.zip",
+      "sha256": "e71788fb89cc78af41f28c27997404c28d4b7a2734dd1f801b2961a6a8d0677d",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/release13/BclStringbuilder.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/release13/CsharpInterpolation.zip",
+      "sha256": "f9080896cd6a34e01f0ccf214ad99b3f05b9454b830e078814a83300af6f69d3",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/release13/CsharpInterpolation.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/release13/DesignerCsharpSync.zip",
+      "sha256": "102eed91f2bd7555ca8c625bde47a4ec255f7fc6f95fec9de11f5f9cab7b1bac",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/release13/DesignerCsharpSync.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/release13/WinuiStoryboards.zip",
+      "sha256": "fc1f96eb3eb86491954f223a19dfe8bec1e20e18ad1fc87c9dae8f039b4e7efc",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/release13/WinuiStoryboards.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/release13/WinuiWrapPanels.zip",
+      "sha256": "2c7c9367514bee0985c25f6cca1118865150c2f03759ca9bd2a2d0d194e6025f",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/release13/WinuiWrapPanels.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/release14/BclArrayRandom.zip",
+      "sha256": "e69268859e12699f7630292b677afffc8430aaf70ffd3482768661a32d55cc48",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/release14/BclArrayRandom.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/release14/BclJsonDocument.zip",
+      "sha256": "684d6601f2b426a8add5ac9144409cdd06232ad2396c56f4405a39ba20529a60",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/release14/BclJsonDocument.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/release14/CsharpModernProperties.zip",
+      "sha256": "589098751e24184511a723710ffe9b2e15392f11dfd5734e6a7c10a2dc562b78",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/release14/CsharpModernProperties.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/release14/CsharpPreviewCollections.zip",
+      "sha256": "cbdbb5e6edf285b1222c30608d4b9cc8df952a9618241af477218e01cbae26ed",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/release14/CsharpPreviewCollections.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/release14/NetworkHttpClient.zip",
+      "sha256": "321be27428fd6c88b0d760091ab97a42dbf144fbec2b425e38c047b63619ba76",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/release14/NetworkHttpClient.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/release14/ParallelCompute.zip",
+      "sha256": "85254bb63b4fee32176aa10cf261d7783c24c28c7ad87f041b41d47643fa758a",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/release14/ParallelCompute.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/release14/SimdVectorMath.zip",
+      "sha256": "2e22dd07576dccd17fe01a769f97be8db58cb94456208c6afb6c9c50599867a3",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/release14/SimdVectorMath.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/release14/WinuiComputeMonitor.zip",
+      "sha256": "1d7b9b30b0534253223bb9c2726943deab5d110c2fc6a1f06d0a363f050c84d9",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/release14/WinuiComputeMonitor.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/templates/blank-solution.zip",
+      "sha256": "23107d4edc237100fea09c9f108a2995ae671c017be6997d15cf25b09b6687b2",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/templates/blank-solution.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/templates/class-library.zip",
+      "sha256": "dbf1f24bdf11028bce000bae51ba40411290ba977ee8175d6409b886d29bdff7",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/templates/class-library.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/templates/console-async.zip",
+      "sha256": "53988d54863e1273832bcf12ac1642b8d1fdd8f7cba6dc698f983dcf7d8f5eab",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/templates/console-async.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/templates/console-library-solution.zip",
+      "sha256": "5665002f04a4a108f9d2fb4a71e2ee19515d8c7abfeb13ac1d7056dec4695f25",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/templates/console-library-solution.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/templates/console.zip",
+      "sha256": "d0e9eb8c35362a1e9c97a601c83af549d376c7a73a00cf54affe846a801040ef",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/templates/console.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/templates/empty-project.zip",
+      "sha256": "4c04a82daf1739e10eb9ed15ef81fd11a1528fc0786ee41c8239393fa75bd285",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/templates/empty-project.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/templates/item-gallery.zip",
+      "sha256": "f51e5659c594428db9ae8a744537c0518e605cb0c26127460d703a8b2f835a31",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/templates/item-gallery.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/templates/test-console.zip",
+      "sha256": "a0f015df6da70a470295a515a20617432cef07c109729bc5222263b74993b362",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/templates/test-console.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/templates/winui-blank.zip",
+      "sha256": "d1e94046aa6cd1ead597d23af12c1a35853dbf2864984a9d8e5cbb9cf3c4f9a3",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/templates/winui-blank.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/templates/winui-controls-library.zip",
+      "sha256": "d4f1a4a55f2f65999182ac626b1a164e19c2be35e4604676da208cf698300069",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/templates/winui-controls-library.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/templates/winui-library-solution.zip",
+      "sha256": "a7abed7fad206bf8bc3476ca39e186a1ae1550f479a7efa3eaab90b866e64b82",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/templates/winui-library-solution.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "examples/templates/winui-navigation.zip",
+      "sha256": "9897d1e0f645a168b05463a89e6fef60e858243edd26317af3938c2af0a7cf94",
+      "kind": "repository-declared",
+      "origin": "https://github.com/wieslawsoltes/SharpForge/blob/067c7a2fc6c6cfd912caaa3664c50fd6602b5452/examples/templates/winui-navigation.zip",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Reviewed repository assets"
+    },
+    {
+      "path": "packages/editor/src/vendor/CODEMIRROR-LICENSE.txt",
+      "sha256": "168a4becc968f5001e2ee2e0291b6e4daabafc1894a11ade1e11d56e96096e07",
+      "kind": "third-party adapted source and metadata",
+      "origin": "https://registry.npmjs.org/codemirror/-/codemirror-5.58.3.tgz",
+      "license": "MIT",
+      "licenseFile": "packages/editor/src/vendor/CODEMIRROR-LICENSE.txt",
+      "licenseSHA256": "168a4becc968f5001e2ee2e0291b6e4daabafc1894a11ade1e11d56e96096e07",
+      "notice": "CodeMirror 5.58.3"
+    },
+    {
+      "path": "packages/editor/src/vendor/classic-engine.js",
+      "sha256": "02643610043f29509285db3c4a443ce93e67a09ba1cac8daadf8341f2aad45f3",
+      "kind": "third-party adapted source and metadata",
+      "origin": "https://registry.npmjs.org/codemirror/-/codemirror-5.58.3.tgz",
+      "license": "MIT",
+      "licenseFile": "packages/editor/src/vendor/CODEMIRROR-LICENSE.txt",
+      "licenseSHA256": "168a4becc968f5001e2ee2e0291b6e4daabafc1894a11ade1e11d56e96096e07",
+      "notice": "CodeMirror 5.58.3"
+    },
+    {
+      "path": "packages/editor/src/vendor/classic.css",
+      "sha256": "761c0c53e457a722008459c1b030e7efb02f4117f6acdbf66fab3f29226eb351",
+      "kind": "third-party adapted source and metadata",
+      "origin": "https://registry.npmjs.org/codemirror/-/codemirror-5.58.3.tgz",
+      "license": "MIT",
+      "licenseFile": "packages/editor/src/vendor/CODEMIRROR-LICENSE.txt",
+      "licenseSHA256": "168a4becc968f5001e2ee2e0291b6e4daabafc1894a11ade1e11d56e96096e07",
+      "notice": "CodeMirror 5.58.3"
+    },
+    {
+      "path": "packages/editor/src/vendor/manifest.json",
+      "sha256": "89be968cb67df6486009ceef0bd4fd2d75df2dd30c5781b6fe9d70abf145399d",
+      "kind": "third-party adapted source and metadata",
+      "origin": "https://registry.npmjs.org/codemirror/-/codemirror-5.58.3.tgz",
+      "license": "MIT",
+      "licenseFile": "packages/editor/src/vendor/CODEMIRROR-LICENSE.txt",
+      "licenseSHA256": "168a4becc968f5001e2ee2e0291b6e4daabafc1894a11ade1e11d56e96096e07",
+      "notice": "CodeMirror 5.58.3"
+    },
+    {
+      "path": "planning/qualification/supply/cyclonedx/LICENSE",
+      "sha256": "6c29f22a4a7385285c6f579ec9f33c5e989f00739d6b257243a0b082ec9447ae",
+      "kind": "third-party validation schema",
+      "origin": "https://raw.githubusercontent.com/CycloneDX/specification/1ce97b2a7b8cf2429da248560d2aa671c6bce74a/LICENSE",
+      "license": "Apache-2.0",
+      "licenseFile": "planning/qualification/supply/cyclonedx/LICENSE",
+      "licenseSHA256": "6c29f22a4a7385285c6f579ec9f33c5e989f00739d6b257243a0b082ec9447ae",
+      "notice": "Supply-chain validation schemas"
+    },
+    {
+      "path": "planning/qualification/supply/cyclonedx/bom-1.6.schema.json",
+      "sha256": "18f57f7482593bad9f21b4feed09084640cbeff419d62ad5090c5ceccca5b37d",
+      "kind": "third-party validation schema",
+      "origin": "https://raw.githubusercontent.com/CycloneDX/specification/1ce97b2a7b8cf2429da248560d2aa671c6bce74a/schema/bom-1.6.schema.json",
+      "license": "Apache-2.0",
+      "licenseFile": "planning/qualification/supply/cyclonedx/LICENSE",
+      "licenseSHA256": "6c29f22a4a7385285c6f579ec9f33c5e989f00739d6b257243a0b082ec9447ae",
+      "notice": "Supply-chain validation schemas"
+    },
+    {
+      "path": "planning/qualification/supply/cyclonedx/jsf-0.82.schema.json",
+      "sha256": "8bae002c25e723db7ee1f26afde680ae1a2b1a8f6b4b4b0fd65dc3becb090aae",
+      "kind": "third-party validation schema",
+      "origin": "https://raw.githubusercontent.com/CycloneDX/specification/1ce97b2a7b8cf2429da248560d2aa671c6bce74a/schema/jsf-0.82.schema.json",
+      "license": "Apache-2.0",
+      "licenseFile": "planning/qualification/supply/cyclonedx/LICENSE",
+      "licenseSHA256": "6c29f22a4a7385285c6f579ec9f33c5e989f00739d6b257243a0b082ec9447ae",
+      "notice": "Supply-chain validation schemas"
+    },
+    {
+      "path": "planning/qualification/supply/cyclonedx/origin.json",
+      "sha256": "34f55fac4240fe72853c9e6362d6806fac693777c60f88dc0a63c2bca451e88c",
+      "kind": "repository-declared provenance metadata",
+      "origin": "Locally recorded exact CycloneDX upstream URLs and hashes",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSHA256": "b3c9c846d037e90c387f55f8945298f79e11e89c6fdcf90d9837a9cbb43d5ca6",
+      "notice": "Supply-chain validation schemas"
+    },
+    {
+      "path": "planning/qualification/supply/cyclonedx/spdx.schema.json",
+      "sha256": "4b345e2329f209f34e960ae2a8e7cb46a166907e6a45e94978565925dc47b359",
+      "kind": "third-party validation schema",
+      "origin": "https://raw.githubusercontent.com/CycloneDX/specification/1ce97b2a7b8cf2429da248560d2aa671c6bce74a/schema/spdx.schema.json",
+      "license": "Apache-2.0",
+      "licenseFile": "planning/qualification/supply/cyclonedx/LICENSE",
+      "licenseSHA256": "6c29f22a4a7385285c6f579ec9f33c5e989f00739d6b257243a0b082ec9447ae",
+      "notice": "Supply-chain validation schemas"
+    },
+    {
+      "path": "tests/fixtures/portable-pdb/Documents.pdb",
+      "sha256": "fc1f588948504f3ad379af668dbddeab21e0a27f117c66ded6fba61b85d9f701",
+      "kind": "third-party fixture",
+      "origin": "https://github.com/dotnet/runtime/blob/ee0a1421085feeebf829e4f3b0ad972cc2e9c22c",
+      "license": "MIT",
+      "licenseFile": "tests/fixtures/portable-pdb/LICENSE",
+      "licenseSHA256": "3139c517c09e23a2839e85318f59d6c3a0d196b98d9dbcc67809de98bfd3831d",
+      "notice": "Portable PDB interoperability fixture"
+    }
+  ]
+}
