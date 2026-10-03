@@ -21,7 +21,12 @@ function encoder(writer, options) {
     primitive(node) { writer.u8(signaturePrimitives[node.name]); },
     class(node) { writer.u8(0x12); reference(node.token); },
     valuetype(node) { writer.u8(0x11); reference(node.token); },
+    pointer(node, depth) { writer.u8(0x0f); type(node.element, depth + 1, 'pointer'); },
+    byref(node, depth) { writer.u8(0x10); type(node.element, depth + 1); },
     szarray(node, depth) { writer.u8(0x1d); type(node.element, depth + 1); },
+    pinned(node, depth) { writer.u8(0x45); type(node.element, depth + 1, 'localUnpinned'); },
+    modreq(node, depth, context) { writer.u8(0x1f); reference(node.token); type(node.element, depth + 1, context); },
+    modopt(node, depth, context) { writer.u8(0x20); reference(node.token); type(node.element, depth + 1, context); },
     genericParameter(node) {
       if (!['type', 'method'].includes(node.scope)) throw new CilError('Invalid generic parameter scope');
       writer.u8(node.scope === 'type' ? 0x13 : 0x1e).compressed(signatureCount(node.index, 'Generic parameter index'));
