@@ -5,11 +5,28 @@
 import { RefKind, ErrorTypeSymbol } from '../../symbols/types.js';
 import { ParameterSymbol } from '../../symbols/members.js';
 import { Conversion, ConversionKind } from '../../conversions/classify.js';
-import { naturalDelegateType } from '../../conversions/method-group.js';
 import { delegateInvoke } from '../../overload/type-inference.js';
 import { anonymousFunctionAnchor, anonymousMethodSignatureErrors } from '../anonymous-methods.js';
 
 const unknown = ErrorTypeSymbol.unknown;
+
+/** The cache key of a lambda binding: its parameter types and return type (`?` while the return type is inferred). */
+const signatureKey = (parameterTypes, returnType) =>
+  parameterTypes.map(type => type.toDisplayString()).join(',') + '=>' + (returnType ? returnType.toDisplayString() : '?');
+
+/**
+ * True when an expression body bound for return type inference is also its binding for `returnType`: `convert`
+ * returns such a value unchanged and reports nothing, so binding the body again would produce the same result.
+ */
+const returnsUnconverted = (body, returnType) =>
+  !!body.type &&
+  !body.hasErrors &&
+  !body.literal &&
+  !body.form &&
+  !body.constantValue &&
+  returnType.specialType !== 'System_Void' &&
+  !returnType.isErrorType?.() &&
+  body.type.equals(returnType);
 
 /** Class mixin: Lambdas and anonymous methods (bound per candidate delegate type, cached, diagnostics reported once), */
 export const LambdaBinding = Base =>
@@ -30,10 +47,28 @@ export const LambdaBinding = Base =>
       const isAsync = (syntax.modifiers ?? []).some(m => m.text === 'async'),
         isStaticFunction = (syntax.modifiers ?? []).some(m => m.text === 'static'),
         cache = new Map();
-      const node = this.node('Lambda', syntax, null, { form: 'lambda', isAnonymousMethod, parameterSyntax, isAsync });
+      // What the list declares beyond the types: reference kinds, default values and `params` (../lambda-signatures.js).
+      const signature = explicit && !isAnonymousMethod ? this.lambdaSignature(parameterSyntax, explicit, syntax.parameterList ?? null) : null;
+      const node = this.node('Lambda', syntax, null, { form: 'lambda', isAnonymousMethod, parameterSyntax, isAsync, signature });
       const bindWith = (parameterTypes, returnType, quiet, refKinds = null) => {
-        const key = parameterTypes.map(t => t.toDisplayString()).join(',') + '=>' + (returnType ? returnType.toDisplayString() : '?');
-        if (quiet && cache.has(key)) return cache.get(key);
+        const key = signatureKey(parameterTypes, returnType);
+        const known = cache.get(key);
+        if (known && quiet) return known;
+        // Inside a speculative binding the final pass reports into the enclosing list and records no uses, which is
+        // what the cached speculative result did: replay its diagnostics instead of binding the body again.
+        if (known && this.quiet) {
+          for (const diagnostic of known.diagnostics) this.quiet.push(diagnostic);
+          return known;
+        }
+        const reusableForInference = quiet && returnType && !syntax.block && !isAsync && !syntax.isQueryLambda;
+        if (reusableForInference) {
+          const forInference = cache.get(signatureKey(parameterTypes, null));
+          if (forInference && returnsUnconverted(forInference.body, returnType)) {
+            cache.set(key, forInference);
+            return forInference;
+          }
+        }
+        this.d.lambdaBodyBindings = (this.d.lambdaBodyBindings ?? 0) + 1;
         // C# 9: when more than one parameter is named `_` they are discards, and `_` names none of them.
         const hasDiscards = (parameterSyntax ?? []).filter(p => p.identifier.valueText === '_').length > 1;
         const parameters = (parameterSyntax ?? []).map((p, i) => {
@@ -73,7 +108,8 @@ export const LambdaBinding = Base =>
             isStaticInitializer: this.c.isStaticInitializer,
           });
         child.checked = this.checked;
-        let body;
+        let body,
+          returnedUnconverted = false;
         if (syntax.block) body = child.block(syntax.block);
         else {
           // The body of a lambda is the expression itself; only member declarations wrap it in an arrow clause.
@@ -84,6 +120,7 @@ export const LambdaBinding = Base =>
             // A lambda the compiler builds for a query clause is not an anonymous function of the program (no CS1662).
             body = syntax.isQueryLambda ? child.convert(v, child.c.returnType) : child.convertReturned(v, child.c.returnType, bodySyntax);
             if (v.form === 'lambda' && !body.hasErrors) child.finishLambda(v, child.c.returnType);
+            returnedUnconverted = body === v;
             child.returns.push(v);
           } else if (
             (child.c.returnType && child.c.returnType.specialType === 'System_Void') ||
@@ -117,7 +154,13 @@ export const LambdaBinding = Base =>
               : inferred,
           child,
         };
-        if (quiet) cache.set(key, result);
+        if (quiet) {
+          cache.set(key, result);
+          // The same body, bound again to infer the return type, would be this one and would infer `returnType`.
+          const inferenceKey = signatureKey(parameterTypes, null);
+          if (reusableForInference && returnedUnconverted && !cache.has(inferenceKey) && returnsUnconverted(body, returnType))
+            cache.set(inferenceKey, { ...result, inferred: body.type });
+        }
         return result;
       };
       node.lambda = {
@@ -151,9 +194,10 @@ export const LambdaBinding = Base =>
           node.lastConversionError = [
             { node: anchor, code: 'CS1661', args: [isAnonymousMethod ? 'anonymous method' : 'lambda expression', this.display(to)] },
             {
-              node: isAnonymousMethod ? (parameterSyntax[i].identifier ?? parameterSyntax[i]) : parameterSyntax[i],
+              node: parameterSyntax[i].identifier ?? parameterSyntax[i],
               code: 'CS1678',
-              args: [i + 1, this.display(explicit[i]), this.display(invoke.parameters[i].type)],
+              // Roslyn's format has a reference-kind prefix in front of each of the two types.
+              args: [i + 1, '', this.display(explicit[i]), '', this.display(invoke.parameters[i].type)],
             },
           ];
           return null;
@@ -198,9 +242,10 @@ export const LambdaBinding = Base =>
       // Natural type (C# 10): explicitly typed parameters and an inferable return type.
       node.naturalType = () => {
         if (!explicit) return null;
-        if (declaredReturn) return declaredReturn.isErrorType() ? null : naturalDelegateType(this.core, explicit, declaredReturn);
+        const parameters = signature ?? explicit.map(type => ({ type, refKind: RefKind.None }));
+        if (declaredReturn) return declaredReturn.isErrorType() ? null : this.functionType(parameters, declaredReturn);
         const r = bindWith(explicit, null, true);
-        return r.inferred ? naturalDelegateType(this.core, explicit, r.inferred) : null;
+        return r.inferred ? this.functionType(parameters, r.inferred) : null;
       };
       return node;
     }

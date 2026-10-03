@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-70fb7b3daebbad88eb4f",
+  "kind": "diagnostics",
+  "sourceText": "\n\npublic class Test\n{\n\tstatic void Main ()\n\t{\n\t\tFriendClass.MyMethod ();\n\t}\n}",
+  "sourceSHA256": "050a1c6576f53cb6482b11b3e46c7a064d45cc4c7e8c94e7fe30692504d46d76",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "sha256": "9e10a51f7f673a0e4ecef9e74c9a16fba06fbe3b89f9e5f5374503377b2b2a09",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "license": "MIT",
+    "method": "CS0281Class",
+    "offset": 49476
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "references: new[] { friendClass.EmitToImageReference() }, assemblyName: \"cs0281\", options: TestOptions.SigningReleaseDll, parseOptions: parseOptions)",
+  "options": "(cs0281, references: new[] { friendClass.EmitToImageReference() }, assemblyName: \"cs0281\", options: TestOptions.SigningReleaseDll, parseOptions: parseOptions)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0281",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                Diagnostic(ErrorCode.ERR_FriendRefNotEqualToThis, \"FriendClass\").WithArguments(\"Paul, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\", \"\").WithLocation(7, 3)\n            ",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

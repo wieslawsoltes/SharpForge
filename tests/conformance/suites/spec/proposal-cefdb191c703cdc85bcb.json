@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-cefdb191c703cdc85bcb",
+  "kind": "spec",
+  "sourceText": "// public struct PublicConstructor { public PublicConstructor() { } }\n// public struct PrivateConstructor { private PrivateConstructor() { } }\n\nstatic void F1(PublicConstructor s1 = new()) { }  // error: default value must be constant\nstatic void F2(PrivateConstructor s2 = new()) { } // ok: initobj",
+  "sourceSHA256": "be76af0183757f8ab32d155e444ee35ef46ea8851cb9fb3001304c1468b92794",
+  "target": "library",
+  "featureId": "csharp-10-0-parameterless-struct-constructors",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/parameterless-struct-constructors.md",
+    "sha256": "8449fc73d19ead4997183738e4fb6162c4155a1325207005bfd3751aeb9eadc0",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/parameterless-struct-constructors.md",
+    "license": "NOASSERTION",
+    "offset": 8704
+  }
+}

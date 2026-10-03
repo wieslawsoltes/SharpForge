@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c89002486c09f451bb0f",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public static void Main()\n    {\n        var b1 = (1, 2) == ((_, _) = new C());\n        var b2 = (1, 42) != ((_, _) = new C());\n        var b3 = (1, 42) == ((_, _) = new C()); // false\n        var b4 = ((_, _) = new C()) == (1, 2);\n        var b5 = ((_, _) = new C()) != (1, 42);\n        var b6 = ((_, _) = new C()) == (1, 42); // false\n        System.Console.Write($\"{b1} {b2} {b3} {b4} {b5} {b6}\");\n    }\n    public void Deconstruct(out int x, out int y)\n    {\n        x = 1;\n        y = 2;\n    }\n}\n",
+  "sourceSHA256": "621199e2056f60b20272caf500ab3d352aebd2414d32dd85746f60e8748a9f53",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestComparisonWithDeconstructionResult",
+    "offset": 91130
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

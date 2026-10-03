@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-bdd1b218addfb2ca26be",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Runtime.CompilerServices;\n\nclass Program\n{\n    public static void Main()\n    {\n        Log(default(int));\n    }\n    const string p = nameof(p);\n    static void Log(int p, [CallerArgumentExpression(p)] [CallerLineNumber] string arg = \"<default>\")\n    {\n        Console.WriteLine(arg);\n    }\n}\n",
+  "sourceSHA256": "9aa7b30e16de64191f9a8bb49be8d6d6245d7551a369c427a7c7bc0c4276eec8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "sha256": "afc3ea7577c9e597760812239c750126e0cb09ea32cb52bdc8e9850a45ebeac9",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "license": "MIT",
+    "method": "TestCallerArgumentWithLineNumberAttributes2",
+    "offset": 30228
+  },
+  "langVersion": "10",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, targetFramework: TargetFramework.NetCoreApp, options: TestOptions.ReleaseExe, parseOptions: TestOptions.Regular10)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0029",
+        "severity": "error"
+      },
+      {
+        "code": "CS8960",
+        "severity": "warning"
+      },
+      {
+        "code": "CS4017",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,9): error CS0029: Cannot implicitly convert type 'int' to 'string'\n                //         Log(default(int));\n                Diagnostic(ErrorCode.ERR_NoImplicitConv, \"Log(default(int))\").WithArguments(\"int\", \"string\").WithLocation(9, 9),\n                // (12,29): warning CS8960: The CallerArgumentExpressionAttribute applied to parameter 'arg' will have no effect. It is overridden by the CallerLineNumberAttribute.\n                //     static void Log(int p, [CallerArgumentExpression(p)] [CallerLineNumber] string arg = \"<default>\")\n                Diagnostic(ErrorCode.WRN_CallerLineNumberPreferredOverCallerArgumentExpression, \"CallerArgumentExpression\").WithArguments(\"arg\").WithLocation(12, 29),\n                // (12,59): error CS4017: CallerLineNumberAttribute cannot be applied because there are no standard conversions from type 'int' to type 'string'\n                //     static void Log(int p, [CallerArgumentExpression(p)] [CallerLineNumber] string arg = \"<default>\")\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerLineNumberParam, \"CallerLineNumber\").WithArguments(\"int\", \"string\").WithLocation(12, 59)\n                ",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

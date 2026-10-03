@@ -1,11 +1,8 @@
 import { Writer, utf8 } from '../binary.js';
+import { writePrimitiveValue } from './primitive-values.js';
 import { AttributeContext, AttributeError } from './custom-attribute-types.js';
 
-const ranges = new Map([
-  [4, [-128, 127, 'u8']], [5, [0, 255, 'u8']], [6, [-32768, 32767, 'u16']], [7, [0, 65535, 'u16']],
-  [8, [-2147483648, 2147483647, 'u32']], [9, [0, 4294967295, 'u32']],
-]);
-
+const invalidAttributeValue = message => new AttributeError('MD0110', message);
 class AttributeWriter {
   constructor(context) {
     this.context = context;
@@ -25,32 +22,8 @@ class AttributeWriter {
   }
 
   primitive(code, value) {
-    const writer = this.writer;
     if (code === 14) return this.string(value);
-    if (code === 2) {
-      if (typeof value !== 'boolean') throw new AttributeError('MD0110', 'Expected a Boolean');
-      return writer.u8(value ? 1 : 0);
-    }
-    if (code === 3) {
-      if (typeof value !== 'string' || value.length !== 1) throw new AttributeError('MD0110', 'Expected one UTF-16 character');
-      return writer.u16(value.charCodeAt(0));
-    }
-    if (code === 10 || code === 11) {
-      if (typeof value !== 'bigint' && !Number.isSafeInteger(value)) throw new AttributeError('MD0110', 'Expected an exact 64-bit integer');
-      const integer = BigInt(value);
-      const signed = code === 10;
-      if (integer < (signed ? -(1n << 63n) : 0n) || integer > (1n << (signed ? 63n : 64n)) - 1n) {
-        throw new AttributeError('MD0110', 'Integer is outside its attribute type range');
-      }
-      return writer.i64(BigInt.asIntN(64, integer));
-    }
-    if (code === 12 || code === 13) {
-      if (typeof value !== 'number') throw new AttributeError('MD0110', 'Expected a floating-point number');
-      return code === 12 ? writer.f32(value) : writer.f64(value);
-    }
-    const range = ranges.get(code);
-    if (!range || !Number.isInteger(value) || value < range[0] || value > range[1]) throw new AttributeError('MD0110');
-    return writer[range[2]](value);
+    return writePrimitiveValue(this.writer, code, value, invalidAttributeValue);
   }
 
   type(type, depth = 0) {

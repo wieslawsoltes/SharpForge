@@ -10,3 +10,7 @@ export { readDebugDirectory, attachPortablePdb } from './debug-directory.js';
 export { loadSymbols } from './symbol-loader.js';
 export { verifySource, verifySourceAsync, sourceLinkUrl, bindSources } from './source-binding.js';
 export { readCustomDebugInformation, writeCustomDebugInformation } from './custom-debug.js';
+export { decodeSource } from './source-encoding.js';
+export { createSourceFetcher } from './source-fetch.js';
+export { SourceStatus } from './source-status.js';
+export { resolveSources } from './source-resolver.js';

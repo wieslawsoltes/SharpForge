@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-f459627a9c5a921f5669",
+  "kind": "spec",
+  "sourceText": "class C\n{\n    public C() { } // no need to warn about initializing C.Prop, as the backing field is marked nullable using attributes.\n\n    [field: AllowNull, MaybeNull]\n    public string Prop => field ??= GetPropValue();\n}",
+  "sourceSHA256": "be3d2379b1fa637ed2a24825aae6c0248c25c494020db6b411cfcb3799c7b22c",
+  "target": "library",
+  "featureId": "csharp-14-0-field-keyword-in-properties",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/field-keyword.md",
+    "sha256": "3d56c4e42e738ff347e793381ff018b88c01edbd419585475b1a22048516100c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/field-keyword.md",
+    "license": "NOASSERTION",
+    "offset": 26951
+  }
+}

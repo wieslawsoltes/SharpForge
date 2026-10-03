@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-359cae24df7371a289de",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass Program\n{\n    public static void Main(string[] args)\n    {\n        int u;\n        M();\n    https://github.com/dotnet/roslyn/issues/13739\n        Console.WriteLine(u); // error: use of unassigned local variable 'u'\n        return;\n\n        void M()\n        {\n            goto La;\n        Lb: return;\n        La: u = 3;\n            goto Lb;\n        }\n    }\n}",
+  "sourceSHA256": "dead5efa03856314114cd2b57e2cb8d04887b4bf89a5254f2c1022dec3dd6f0e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "AssignedInDeadBranch",
+    "offset": 8851
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System;\n\nclass Program\n{\n    public static void Main(string[] args)\n    {\n        int u;\n        M();\n    https://github.com/dotnet/roslyn/issues/13739\n        Console.WriteLine(u); // error: use of unassigned local variable 'u'\n        return;\n\n        void M()\n        {\n            goto La;\n        Lb: return;\n        La: u = 3;\n            goto Lb;\n        }\n    }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0164",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,5): warning CS0164: This label has not been referenced\n                //     https://github.com/dotnet/roslyn/issues/13739\n                Diagnostic(ErrorCode.WRN_UnreferencedLabel, \"https\").WithLocation(10, 5)",
+  "unsupported": []
+}

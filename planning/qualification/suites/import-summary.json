@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "activity": "Pinned source extraction only; no compiler/VM/CLR tests executed",
+  "qualification": "deferred",
+  "suites": {
+    "roslyn": {
+      "imported": 2400,
+      "distinctSourceHashes": 2151,
+      "extractionRejected": 3865,
+      "status": {
+        "explicitlyUnsupported": 1281,
+        "adapterCandidateUnmeasured": 1119
+      },
+      "languages": {
+        "preview": 1891,
+        "default": 146,
+        "7.1": 27,
+        "7": 28,
+        "8": 12,
+        "12": 13,
+        "9": 158,
+        "6": 10,
+        "10": 33,
+        "7.3": 8,
+        "7.2": 34,
+        "11": 30,
+        "13": 9,
+        "14": 1
+      },
+      "namespaces": {}
+    },
+    "runtime-il": {
+      "imported": 52,
+      "distinctSourceHashes": 52,
+      "extractionRejected": 0,
+      "status": {
+        "explicitlyUnsupported": 35,
+        "adapterCandidateUnmeasured": 17
+      },
+      "languages": {
+        "preview": 52
+      },
+      "namespaces": {
+        "JIT": 52
+      }
+    },
+    "libraries": {
+      "imported": 183,
+      "distinctSourceHashes": 182,
+      "extractionRejected": 0,
+      "status": {
+        "adapterCandidateUnmeasured": 75,
+        "explicitlyUnsupported": 108
+      },
+      "languages": {
+        "preview": 183
+      },
+      "namespaces": {
+        "System.Runtime": 107,
+        "System.Collections": 41,
+        "System.Linq": 35
+      }
+    },
+    "spec": {
+      "imported": 943,
+      "distinctSourceHashes": 937,
+      "extractionRejected": 0,
+      "status": {
+        "adapterCandidateUnmeasured": 716,
+        "explicitlyUnsupported": 227
+      },
+      "languages": {
+        "8.0": 377,
+        "preview": 72,
+        "14.0": 99,
+        "13.0": 58,
+        "12.0": 29,
+        "11.0": 51,
+        "10.0": 98,
+        "9.0": 69,
+        "7.3": 17,
+        "7.2": 43,
+        "7.1": 9,
+        "7.0": 21
+      },
+      "namespaces": {}
+    }
+  }
+}

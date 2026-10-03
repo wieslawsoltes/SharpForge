@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-b0bb77f64413310dae4a",
+  "kind": "spec",
+  "sourceText": "// Non-boxing access members\npublic bool HasValue { get { ... } }\npublic bool TryGetValue(out Dog value) { ... }",
+  "sourceSHA256": "69775a8ff16c93799b3f3a17cb2e44660b42bddcc4265518c63b8a4b71694c65",
+  "target": "library",
+  "featureId": "csharp-15-0-unions",
+  "langVersion": "preview",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-15.0/unions.md",
+    "sha256": "eb6de7e24e702567a909286e0b4b6d5b409ae3e7016fadd87ab4fc8c16c9fa4a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/unions.md",
+    "license": "NOASSERTION",
+    "offset": 7398
+  }
+}

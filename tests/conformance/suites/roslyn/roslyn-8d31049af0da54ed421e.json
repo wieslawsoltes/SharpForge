@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8d31049af0da54ed421e",
+  "kind": "diagnostics",
+  "sourceText": "\nunsafe class C\n{\n    public static void Main()\n    {\n        fixed (int* p = new Fixable())\n        {\n            System.Console.WriteLine(p[1]);\n        }\n    }\n\n    class Fixable\n    {\n        public ref int GetPinnableReference()\n        {\n            return ref (new int[]{1,2,3})[0];\n        }\n    }\n\n}\n",
+  "sourceSHA256": "12101110157e6f3eb366014a562f4411f731706c3bc62458a91c7c6a856613d4",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/UnsafeTests.cs",
+    "sha256": "424f034ea20a9add3b40a8a1c0094fffc5ef30885511f2c90ae10bd80b976073",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/UnsafeTests.cs",
+    "license": "MIT",
+    "method": "SimpleCaseOfCustomFixed_oldVersion",
+    "offset": 108754
+  },
+  "langVersion": "7.2",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, options: TestOptions.UnsafeReleaseExe, parseOptions: TestOptions.Regular7_2)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8320",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,25): error CS8320: Feature 'extensible fixed statement' is not available in C# 7.2. Please use language version 7.3 or greater.\n                //         fixed (int* p = new Fixable())\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion7_2, \"new Fixable()\").WithArguments(\"extensible fixed statement\", \"7.3\").WithLocation(6, 25)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

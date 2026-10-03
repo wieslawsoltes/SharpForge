@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5f23fd5bb1987291f6f5",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Test\n{\n    extern void Goo();\n    static void Main()\n    {\n        (new Test()).Goo();\n    }\n}",
+  "sourceSHA256": "f74f89f6e2023da5a3151c85c8cca8245988df4739bf5088ce647d3ff646d431",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTests.cs",
+    "sha256": "dae53259abfabce8d6076c19e32fbeece50934d98a2aa892d9416a8e94b054d4",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTests.cs",
+    "license": "MIT",
+    "method": "TestExternWithoutDLLImport",
+    "offset": 253376
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0626",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,17): warning CS0626: Method, operator, or accessor 'Test.Goo()' is marked external and has no attributes on it. Consider adding a DllImport attribute to specify the external implementation.\n                Diagnostic(ErrorCode.WRN_ExternMethodNoImplementation, \"Goo\").WithArguments(\"Test.Goo()\")",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

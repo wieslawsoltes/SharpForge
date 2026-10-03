@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-2417c9aaf95fbd07e944",
+  "kind": "spec",
+  "sourceText": "public interface I1\n{\n    event T e1;\n}\npublic interface I2 : I1\n{\n    override event T\n    {\n        add { }\n        // error: \"remove\" accessor missing\n    }\n}",
+  "sourceSHA256": "87a706b8b0ccf4c13efde41fa2d9c495bacfd88a3a27c8908895123b0ddcaafa",
+  "target": "library",
+  "featureId": "csharp-8-0-default-interface-members",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/default-interface-methods.md",
+    "sha256": "feebc11b0983ad0c24c2017ac76706a9f3ff81b9cf1cc2703ec12d4829f24c42",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/default-interface-methods.md",
+    "license": "NOASSERTION",
+    "offset": 22519
+  }
+}

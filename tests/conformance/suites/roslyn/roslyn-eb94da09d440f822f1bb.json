@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-eb94da09d440f822f1bb",
+  "kind": "diagnostics",
+  "sourceText": "\nclass A : System.Attribute { }\nclass B : System.Attribute { }\n\npartial class C\n{\n    [return: B]\n    [A]\n    static partial void Goo();\n    \n    [return: B]\n    [A]\n    static partial void Goo() { }\n}\n",
+  "sourceSHA256": "2c103a687dbefc0b2593c0a7393766f453d552b48b0794d24f665ec0c2fbc0cc",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "DuplicateAttributeOnPartialMethod",
+    "offset": 298807
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, null, options: opt)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS0579",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // error CS0579: Duplicate 'A' attribute\n                Diagnostic(ErrorCode.ERR_DuplicateAttribute, @\"A\").WithArguments(\"A\"),\n                // error CS0579: Duplicate 'B' attribute\n                Diagnostic(ErrorCode.ERR_DuplicateAttribute, @\"B\").WithArguments(\"B\")",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

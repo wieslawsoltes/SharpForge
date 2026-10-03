@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c7770893efa9daca3c96",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n\npublic class Door\n{\n    public DoorState State;\n\n    public enum DoorState { Opened, Closed, Locked }\n\n    public enum Action { Open, Close, Lock, Unlock }\n\n    public void Act0(Action action, bool haveKey = false)\n    {\n        Console.Write($\"{State} {action}{(haveKey ? \" withKey\" : null)}\");\n        State = ChangeState0(State, action, haveKey);\n        Console.WriteLine($\" -> {State}\");\n    }\n\n    public void Act1(Action action, bool haveKey = false)\n    {\n        Console.Write($\"{State} {action}{(haveKey ? \" withKey\" : null)}\");\n        State = ChangeState1(State, action, haveKey);\n        Console.WriteLine($\" -> {State}\");\n    }\n\n    public static DoorState ChangeState0(DoorState state, Action action, bool haveKey = false)\n    {\n        switch (state, action)\n        {\n            case (DoorState.Opened, Action.Close):\n                return DoorState.Closed;\n            case (DoorState.Closed, Action.Open):\n                return DoorState.Opened;\n            case (DoorState.Closed, Action.Lock) when haveKey:\n                return DoorState.Locked;\n            case (DoorState.Locked, Action.Unlock) when haveKey:\n                return DoorState.Closed;\n            case var (oldState, _):\n                return oldState;\n        }\n    }\n\n    public static DoorState ChangeState1(DoorState state, Action action, bool haveKey = false) =>\n        (state, action) switch {\n            (DoorState.Opened, Action.Close) => DoorState.Closed,\n            (DoorState.Closed, Action.Open) => DoorState.Opened,\n            (DoorState.Closed, Action.Lock) when haveKey => DoorState.Locked,\n            (DoorState.Locked, Action.Unlock) when haveKey => DoorState.Closed,\n            _ => state };\n}\n\nclass Program\n{\n    static void Main(string[] args)\n    {\n        var door = new Door();\n        door.Act0(Door.Action.Close);\n        door.Act0(Door.Action.Lock);\n        door.Act0(Door.Action.Lock, true);\n        door.Act0(Door.Action.Open);\n        door.Act0(Door.Action.Unlock);\n        door.Act0(Door.Action.Unlock, true);\n        door.Act0(Door.Action.Open);\n        Console.WriteLine();\n\n        door = new Door();\n        door.Act1(Door.Action.Close);\n        door.Act1(Door.Action.Lock);\n        door.Act1(Door.Action.Lock, true);\n        door.Act1(Door.Action.Open);\n        door.Act1(Door.Action.Unlock);\n        door.Act1(Door.Action.Unlock, true);\n        door.Act1(Door.Action.Open);\n    }\n}",
+  "sourceSHA256": "94a48bbaf8794f66be83968699fbd863c7df29b813c3a46ce219bcbefdfd4e6e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "TupleSwitch01",
+    "offset": 71826
+  },
+  "langVersion": "default",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe, parseOptions: TestOptions.RegularWithRecursivePatterns)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-713c3e7282ccd77d77e2",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    object x = 1;\n    static C y = null;\n    void M()\n    {\n        (x, y) = (x, (C)(D)y);\n    }\n    public static implicit operator C(D d) => null;\n}\nclass D\n{\n    public static implicit operator D(C c) => null;\n}\n",
+  "sourceSHA256": "cf9d58cf332bde3c6133c0b2a49d789f8ab379bfa317a124214adb42267ff1f3",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "DeconstructionWarnsForSelfAssignment_WithUserDefinedConversionOnElement",
+    "offset": 282134
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: s_valueTupleRefs, options: TestOptions.DebugDll)",
+  "options": "(source, references: s_valueTupleRefs, options: TestOptions.DebugDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1717",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,10): warning CS1717: Assignment made to same variable; did you mean to assign something else?\n                //         (x, y) = (x, (C)(D)y);\n                Diagnostic(ErrorCode.WRN_AssignmentToSelf, \"x\").WithLocation(8, 10)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

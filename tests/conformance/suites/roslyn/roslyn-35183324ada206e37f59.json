@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-35183324ada206e37f59",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\npublic class ArrayAttribute : Attribute\n{\n    public int[] field;\n\n    public ArrayAttribute(int[] param) { }\n}\n\npublic class Test\n{\n    [Array(null)]\n    void M0() { }\n\n    [Array(new int[] { })]\n    void M1() { }\n\n    [Array(null, field=null)]\n    void M2() { }\n\n    [Array(new int[] { }, field = null)]\n    void M3() { }\n\n    [Array(null, field = new int[] { })]\n    void M4() { }\n\n    [Array(new int[] { }, field = new int[] { })]\n    void M5() { }\n\n    static void Main() { }\n}\n",
+  "sourceSHA256": "4dc24d0d439af5341bc6b48cc2fdcd82ad0887194d1fde745224af80bdb7e20d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "NullVersusEmptyArray",
+    "offset": 388480
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}
