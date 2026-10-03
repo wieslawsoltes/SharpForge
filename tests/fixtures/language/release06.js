@@ -1,0 +1,51 @@
+/** Shared language cases: original regression suite and automatic engine parity discovery. */
+export const resource='class R : IDisposable {public int X;public R(int x){X=x;}public void Dispose(){Console.WriteLine(X);}}';
+export const cases=[
+ ['checked add catch','int x=2147483647;try{Console.WriteLine(checked(x+1));}catch(Exception e){Console.WriteLine("overflow");}','overflow\n'],
+ ['checked multiply','int x=50000;try{checked{Console.WriteLine(x*x);}}catch(Exception e){Console.WriteLine("overflow");}','overflow\n'],
+ ['checked subtract','int x=-2147483648;try{checked{Console.WriteLine(x-1);}}catch(Exception e){Console.WriteLine("overflow");}','overflow\n'],
+ ['checked negate','int x=-2147483648;try{Console.WriteLine(checked(-x));}catch(Exception e){Console.WriteLine("overflow");}','overflow\n'],
+ ['checked conversion','double x=2147483648.0;try{Console.WriteLine(checked((int)x));}catch(Exception e){Console.WriteLine("overflow");}','overflow\n'],
+ ['checked conversion truncation','double x=-2147483648.9;Console.WriteLine(checked((int)x));','-2147483648\n'],
+ ['unchecked nested','int x=2147483647;checked{unchecked{Console.WriteLine(x+1);}Console.WriteLine(unchecked(x+1));}','-2147483648\n-2147483648\n'],
+ ['checked nested','int x=2147483647;unchecked{try{Console.WriteLine(checked(x+1));}catch(Exception e){Console.WriteLine(7);}}','7\n'],
+ ['checked nonoverflow','int x=12;Console.WriteLine(checked((x+3)*2-1));','29\n'],
+ ['checked compound array','int[] a=new int[]{2147483647};try{checked{a[0]++;}}catch(Exception e){}Console.WriteLine(a[0]);','2147483647\n'],
+ ['checked setter not invoked on overflow','class C{public int X{get;set;}=2147483647;}var c=new C();try{checked{c.X+=1;}}catch(Exception e){}Console.WriteLine(c.X);','2147483647\n'],
+ ['unchecked constant','const int x=unchecked(2147483647+1);Console.WriteLine(x);','-2147483648\n'],
+ ['const expression patterns','const int n=2;int x=3;switch(x){case n+1:Console.WriteLine(7);break;default:break;}Console.WriteLine(x switch {n+1=>8,_=>0});','7\n8\n'],
+ ['const string patterns','const string s="a"+"b";string x="ab";Console.WriteLine(x switch {s=>9,_=>0});','9\n'],
+ ['int boundary literal','Console.WriteLine(checked(-2147483648));','-2147483648\n'],
+ ['using statement',resource+'using(R r=new R(1)){Console.WriteLine(0);}','0\n1\n'],
+ ['using declaration',resource+'{using var r=new R(1);Console.WriteLine(0);}Console.WriteLine(2);','0\n1\n2\n'],
+ ['using multiple resources',resource+'using(R a=new R(1),b=new R(2)){Console.WriteLine(0);}','0\n2\n1\n'],
+ ['using declaration lifetimes',resource+'using var a=new R(1);using var b=new R(2);Console.WriteLine(0);','0\n2\n1\n'],
+ ['using null',resource+'using(R r=null){Console.WriteLine(0);}','0\n'],
+ ['using return',resource+'int F(){using var r=new R(1);return 42;}Console.WriteLine(F());','1\n42\n'],
+ ['using exception',resource+'try{using var r=new R(1);throw new Exception("x");}catch(Exception e){Console.WriteLine(e.Message);}','1\nx\n'],
+ ['using break continue',resource+'for(int i=0;i<3;i++){using var r=new R(i);if(i<1)continue;break;}','0\n1\n'],
+ ['using expression captures once',resource+'R r=new R(1);using(r){r=new R(2);}Console.WriteLine(r.X);','1\n2\n'],
+ ['using partial initializer failure',resource+'R Fail(){throw new Exception("fail");}try{using(R a=new R(1),b=Fail()){Console.WriteLine(0);}}catch(Exception e){Console.WriteLine(e.Message);}','1\nfail\n'],
+ ['using dispose throws','class R:IDisposable{public void Dispose(){throw new Exception("dispose");}}int F(){using var r=new R();return 42;}try{Console.WriteLine(F());}catch(Exception e){Console.WriteLine(e.Message);}','dispose\n'],
+ ['outer resource disposed after inner dispose throws','class R:IDisposable{public int X;public R(int x){X=x;}public void Dispose(){Console.WriteLine(X);if(X==2)throw new Exception("dispose");}}try{using(R a=new R(1),b=new R(2)){} }catch(Exception e){Console.WriteLine(e.Message);}','2\n1\ndispose\n'],
+ ['using GC protects captured resource',resource+'R r=new R(7);using(r){r=null;GC.Collect();}','7\n'],
+ ['using return reference survives cleanup GC','class R:IDisposable{public void Dispose(){GC.Collect();}}class C{public int X=42;}C F(){using var r=new R();return new C();}Console.WriteLine(F().X);','42\n'],
+ ['fully qualified disposable','class R:System.IDisposable{public void Dispose(){Console.WriteLine(1);}}using var r=new R();','1\n'],
+];
+export const diagnosticCases=[
+ ['default const overflow','Console.WriteLine(2147483647+1);','CS0220'],
+ ['checked constant in unchecked','unchecked{Console.WriteLine(checked(2147483647+1));}','CS0220'],
+ ['nonconstant const','int F(){return 1;}const int x=F();Console.WriteLine(x);','CS0133'],
+ ['constant divide zero','int x=1/0;','CS0020'],
+ ['missing Dispose','class R:IDisposable{}using var r=new R();','CS0535'],
+ ['private Dispose','class R:IDisposable{void Dispose(){}}using var r=new R();','CS0535'],
+ ['not IDisposable','class R{public void Dispose(){}}using var r=new R();','CS1674'],
+ ['using reassignment',resource+'using var r=new R(1);r=new R(2);','CS1656'],
+ ['missing using initializer',resource+'using(R r){}','CS0210'],
+ ['multiple var',resource+'using(var r=new R(1),s=new R(2)){}','CS0819'],
+ ['duplicate constant switch','const int x=2;switch(3){case x+1:break;case 3:break;}','CS0152'],
+];
+export const languageFixtures=[
+ ...cases.map(([name,source,output])=>({id:'release06/'+name,source,expected:{output}})),
+ ...diagnosticCases.map(([name,source,code])=>({id:'release06/diagnostic/'+name,source,compileFailure:true,diagnosticCodes:[code]}))
+];

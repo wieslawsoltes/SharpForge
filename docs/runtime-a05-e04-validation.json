@@ -1,0 +1,813 @@
+{
+  "scope": "SF-A05-E04: T21\u2013T28 (#717\u2013#724)",
+  "status": "passed",
+  "codeCommit": "7e76ed11bb72825f0325041ae86aba1a333212d3",
+  "validatedAt": "2026-10-03T14:03:23.133561+00:00",
+  "platform": {
+    "os": "macOS",
+    "architecture": "arm64",
+    "node": "v24.21.0",
+    "python": "3.14",
+    "playwright": "1.57.0",
+    "dotnetSdk": "10.0.201",
+    "dotnetRuntime": "10.0.5"
+  },
+  "environment": {
+    "PATHPrefix": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin:/tmp/sharpforge-a05/venv/bin",
+    "TMPDIR": "/private/tmp/sharpforge-a05/tmp"
+  },
+  "checks": [
+    {
+      "command": "node --test tests/*.test.js",
+      "passed": 3282,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 6843.373916
+    },
+    {
+      "command": "node scripts/check.js",
+      "modules": 303,
+      "errors": 0
+    },
+    {
+      "command": "node scripts/build.js",
+      "passed": true
+    },
+    {
+      "command": "node scripts/verify-packages.js",
+      "result": {
+        "passed": true,
+        "node": "v24.21.0",
+        "mode": "All twenty-five 0.14.0 tarballs installed offline in an isolated project, without source workspace links",
+        "packages": {
+          "text": 4,
+          "syntax": 6,
+          "bytecode": 15,
+          "cil": 59,
+          "compiler": 7,
+          "runtime": 6,
+          "debugger": 7,
+          "workspace": 1,
+          "language": 1,
+          "protocol": 4,
+          "editor": 9,
+          "refactoring": 5,
+          "extensions": 9,
+          "project-system": 39,
+          "docking": 5,
+          "msbuild": 13,
+          "controls": 4,
+          "symbols": 22,
+          "framework": 24,
+          "winui": 5,
+          "archive": 9,
+          "templates": 10,
+          "designer": 19,
+          "compute": 3,
+          "network": 5
+        },
+        "execution": {
+          "source": "Console.WriteLine(6 * 7);",
+          "output": "42\n",
+          "fault": null,
+          "assemblyBytes": 2560,
+          "format": "ECMA-335",
+          "methodTokens": [
+            100663297,
+            100663298
+          ]
+        },
+        "timestamp": "2026-10-03T14:00:32.804Z",
+        "tarballs": [
+          "sharpforge-archive-0.14.0.tgz",
+          "sharpforge-bytecode-0.14.0.tgz",
+          "sharpforge-cil-0.14.0.tgz",
+          "sharpforge-compiler-0.14.0.tgz",
+          "sharpforge-compute-0.14.0.tgz",
+          "sharpforge-controls-0.14.0.tgz",
+          "sharpforge-debugger-0.14.0.tgz",
+          "sharpforge-designer-0.14.0.tgz",
+          "sharpforge-docking-0.14.0.tgz",
+          "sharpforge-editor-0.14.0.tgz",
+          "sharpforge-extensions-0.14.0.tgz",
+          "sharpforge-framework-0.14.0.tgz",
+          "sharpforge-language-0.14.0.tgz",
+          "sharpforge-msbuild-0.14.0.tgz",
+          "sharpforge-network-0.14.0.tgz",
+          "sharpforge-project-system-0.14.0.tgz",
+          "sharpforge-protocol-0.14.0.tgz",
+          "sharpforge-refactoring-0.14.0.tgz",
+          "sharpforge-runtime-0.14.0.tgz",
+          "sharpforge-symbols-0.14.0.tgz",
+          "sharpforge-syntax-0.14.0.tgz",
+          "sharpforge-templates-0.14.0.tgz",
+          "sharpforge-text-0.14.0.tgz",
+          "sharpforge-winui-0.14.0.tgz",
+          "sharpforge-workspace-0.14.0.tgz"
+        ]
+      }
+    },
+    {
+      "command": "node examples/runtime/types-and-statics.mjs",
+      "passed": true,
+      "revision": "f23c1bd",
+      "output": "source\nTrue\nWidget\nVisible\nCollapsed\nFalse\nTrue\nreloaded source\nTrue\nWidget\nVisible\nCollapsed\nFalse\nTrue\nCIL\nTrue\nWidget\nVisible\nCollapsed\nFalse\nTrue\n"
+    }
+  ],
+  "browser": {
+    "managed": {
+      "command": "python tests/browser_managed_test.py",
+      "revision": "f23c1bd",
+      "result": {
+        "version": "0.4.0",
+        "mode": "http",
+        "checks": [
+          {
+            "name": "ordinary DLL opens in Assembly Explorer without replacing source",
+            "passed": true,
+            "milliseconds": 63.44
+          },
+          {
+            "name": "selected static method runs in bounded direct-CIL worker",
+            "passed": true,
+            "milliseconds": 189.67
+          },
+          {
+            "name": "method C# reconstruction is displayed",
+            "passed": true,
+            "milliseconds": 57.68
+          },
+          {
+            "name": "editable IL is rebuilt and changed arithmetic actually runs",
+            "passed": true,
+            "milliseconds": 140.97
+          },
+          {
+            "name": "all method IL includes resolved signatures and metadata operands",
+            "passed": true,
+            "milliseconds": 85.69
+          },
+          {
+            "name": "unsupported external calls remain inspectable and fail verification",
+            "passed": true,
+            "milliseconds": 73.35
+          },
+          {
+            "name": "malformed uploaded assembly is rejected",
+            "passed": true,
+            "milliseconds": 2.84
+          },
+          {
+            "name": "source generator binds, executes and appears in read-only generated view",
+            "passed": true,
+            "milliseconds": 123.33
+          },
+          {
+            "name": "Ctrl+. refactoring validates, applies and supports editor undo",
+            "passed": true,
+            "milliseconds": 119.7
+          },
+          {
+            "name": "Shift+Alt+F formats indentation through a versioned action",
+            "passed": true,
+            "milliseconds": 46.98
+          },
+          {
+            "name": "assembly workspace renders at desktop and 390px widths",
+            "passed": true,
+            "milliseconds": 5616.61
+          },
+          {
+            "name": "no browser JavaScript errors",
+            "passed": true,
+            "milliseconds": 0.0
+          }
+        ],
+        "passed": 12,
+        "failed": 0,
+        "errors": []
+      }
+    },
+    "debugger": {
+      "command": "python tests/browser_release10_test.py",
+      "revision": "f23c1bd",
+      "result": {
+        "checks": 22,
+        "workers": 2,
+        "errors": [],
+        "results": [
+          {
+            "name": "0.10 starts with two real workers and 44 independent docking tools",
+            "passed": true,
+            "milliseconds": 11.38
+          },
+          {
+            "name": "compiler emits persistent PDB bytes and verifies multi-file embedded source in the symbol editor",
+            "passed": true,
+            "milliseconds": 496.11
+          },
+          {
+            "name": "Set Next Statement skips assignments without resetting live locals and resumes correctly",
+            "passed": true,
+            "milliseconds": 144.73
+          },
+          {
+            "name": "explicit managed function evaluation requires consent, rolls back previews, invokes getters and commits effects",
+            "passed": true,
+            "milliseconds": 175.95
+          },
+          {
+            "name": "Hot Reload replaces a method through the compiler worker while retaining the caller local",
+            "passed": true,
+            "milliseconds": 165.95
+          },
+          {
+            "name": "rude Hot Reload edits reject without mutating running code and Cancel restores source",
+            "passed": true,
+            "milliseconds": 95.91
+          },
+          {
+            "name": "async contexts expose suspended caller frames and task relationships without moving execution on inspection",
+            "passed": true,
+            "milliseconds": 862.02
+          },
+          {
+            "name": "logical Thread Start/Join shares state and debugger freeze/thaw uses real context identities",
+            "passed": true,
+            "milliseconds": 606.71
+          },
+          {
+            "name": "ordinary DLL without #SF uses embedded PDB source/locals, source-level stepping and Set Next Statement outside the open workspace",
+            "passed": true,
+            "milliseconds": 79.41
+          },
+          {
+            "name": "mismatched Portable PDB is rejected transactionally without losing a valid paused DLL session",
+            "passed": true,
+            "milliseconds": 301.91
+          },
+          {
+            "name": "code-first C# WinUI renders real controls and managed event callbacks survive explicit GC",
+            "passed": true,
+            "milliseconds": 174.39
+          },
+          {
+            "name": "Hot Reload updates an idle managed UI callback without recreating the window or resetting its count",
+            "passed": true,
+            "milliseconds": 75.63
+          },
+          {
+            "name": "Live Visual Tree inspects actual managed control properties in an independent tool",
+            "passed": true,
+            "milliseconds": 87.52
+          },
+          {
+            "name": "unsubscribed native text/slider/selection input synchronizes managed properties before a C# form handler",
+            "passed": true,
+            "milliseconds": 192.9
+          },
+          {
+            "name": "async void WinUI callbacks suspend during Task.Delay, retain controls and resume to update the live application",
+            "passed": true,
+            "milliseconds": 815.45
+          },
+          {
+            "name": "a native button click stops at the C# handler breakpoint; step and continue update the same live window",
+            "passed": true,
+            "milliseconds": 292.47
+          },
+          {
+            "name": "Canvas2D renderer produces actual nontransparent shape/chart pixels from managed drawing calls",
+            "passed": true,
+            "milliseconds": 184.19
+          },
+          {
+            "name": "explicit DOM rendering fallback displays the retained drawing scene",
+            "passed": true,
+            "milliseconds": 10.2
+          },
+          {
+            "name": "WebGPU request negotiates an available backend and reports fallback rather than claiming GPU execution",
+            "passed": true,
+            "milliseconds": 9.43
+          },
+          {
+            "name": "independent JavaScript WinUI package handles nested button content, unsubscription, mutable brushes and disposal",
+            "passed": true,
+            "milliseconds": 7.3
+          },
+          {
+            "name": "all seven new tools retain shared keyboard/context menu and docking functionality",
+            "passed": true,
+            "milliseconds": 246.76
+          },
+          {
+            "name": "Stop removes the application and stale visuals; acceptance has no uncaught JavaScript errors",
+            "passed": true,
+            "milliseconds": 30.55
+          }
+        ]
+      }
+    },
+    "runtime": {
+      "command": "python tests/browser_release14_test.py",
+      "revision": "7e76ed11bb72825f0325041ae86aba1a333212d3",
+      "result": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "stable default language, Visual Studio keys, and explicit-deny runtime panel",
+            "passed": true,
+            "milliseconds": 32.47
+          },
+          {
+            "name": "preview language selection gates capacity expressions and labeled loops in compiler worker",
+            "passed": true,
+            "milliseconds": 101.48
+          },
+          {
+            "name": "field-backed properties, conditional assignment, JSON, array helpers and seeded Random execute",
+            "passed": true,
+            "milliseconds": 117.7
+          },
+          {
+            "name": "managed Vector operations execute actual WebAssembly SIMD in the runtime worker",
+            "passed": true,
+            "milliseconds": 58.64
+          },
+          {
+            "name": "explicit scalar fallback preserves vector results and reports actual backend",
+            "passed": true,
+            "milliseconds": 24.19
+          },
+          {
+            "name": "independent compute package uses two real browser workers with owned transferable inputs",
+            "passed": true,
+            "milliseconds": 11.94
+          },
+          {
+            "name": "compute cancellation rejects a queued job and leaves following work usable",
+            "passed": true,
+            "milliseconds": 4.55
+          },
+          {
+            "name": "managed Task continuations await nested compute workers and establish external history epochs",
+            "passed": true,
+            "milliseconds": 65.6
+          },
+          {
+            "name": "ungranted managed HttpClient makes zero actual requests",
+            "passed": true,
+            "milliseconds": 76.11
+          },
+          {
+            "name": "managed HttpClient fetches a real CORS-enabled loopback endpoint and parses its response",
+            "passed": true,
+            "milliseconds": 81.33
+          },
+          {
+            "name": "relative BaseAddress, POST content, explicit headers and buffered response cross actual HTTP",
+            "passed": true,
+            "milliseconds": 104.42
+          },
+          {
+            "name": "managed CancellationTokenSource aborts a real pending browser HTTP request",
+            "passed": true,
+            "milliseconds": 129.1
+          },
+          {
+            "name": "workspace archives and newly loaded samples cannot restore networking grants",
+            "passed": true,
+            "milliseconds": 28.14
+          },
+          {
+            "name": "runtime panel rejects path grants; explicit apply and revoke update real launch settings",
+            "passed": true,
+            "milliseconds": 515.12
+          },
+          {
+            "name": "code-first WinUI async handler awaits real compute worker and updates the existing controls",
+            "passed": true,
+            "milliseconds": 6842.6
+          },
+          {
+            "name": "pre-external managed snapshots cannot be restored after a completed host operation",
+            "passed": true,
+            "milliseconds": 88.48
+          },
+          {
+            "name": "runtime inspector shows actual backend and job metrics without page errors",
+            "passed": true,
+            "milliseconds": 6657.96
+          }
+        ],
+        "pageErrors": [],
+        "workerEvents": 13,
+        "httpRequests": [
+          {
+            "path": "/data",
+            "cookie": null,
+            "method": "GET"
+          },
+          {
+            "path": "/echo",
+            "body": "hello",
+            "method": "POST",
+            "header": "explicit"
+          },
+          {
+            "path": "/slow",
+            "cookie": null,
+            "method": "GET"
+          }
+        ],
+        "mode": "Production modules + real workers via in-memory HTML; actual browser Fetch to CORS-enabled local HTTP server; no fetch or compute test doubles"
+      }
+    }
+  },
+  "native": {
+    "command": "node scripts/validate-a05-type-system.js --dotnet /Users/wieslawsoltes/.dotnet/dotnet --output /tmp/sharpforge-a05/e04-native-release",
+    "reports": [
+      {
+        "task": "SF-A05-E04",
+        "fixture": "a05-static-init",
+        "timestamp": "2026-10-03T14:01:00.281Z",
+        "revision": "7e76ed11bb72825f0325041ae86aba1a333212d3",
+        "platform": "darwin",
+        "architecture": "arm64",
+        "node": "v24.21.0",
+        "dotnetSdk": "10.0.201",
+        "dotnetRuntimes": "Microsoft.AspNetCore.App 10.0.5 [/Users/wieslawsoltes/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 10.0.5 [/Users/wieslawsoltes/.dotnet/shared/Microsoft.NETCore.App]",
+        "targetFramework": "net10.0",
+        "passed": true,
+        "qualification": "same Roslyn DLL executed by native .NET and CilVirtualMachine",
+        "sources": [
+          {
+            "path": "tests/fixtures/a05-static-init/Program.cs",
+            "sha256": "4a7e663a5e3d17e393bab087e3287028cc31a9d1ae182058b9396df35ad17327"
+          }
+        ],
+        "expectedOutput": "A\nB\nC\n3\n2\n1\nBroken\ncause\ncause\nPing\nbefore field\nLazy\n9\n",
+        "assemblySha256": "4f21db8619147cbd463d12e907cf7549dd7a14f86e0578616396030b0e1ec156",
+        "native": {
+          "exitCode": 0,
+          "output": "A\nB\nC\n3\n2\n1\nBroken\ncause\ncause\nPing\nbefore field\nLazy\n9\n",
+          "stderr": ""
+        },
+        "cil": {
+          "state": "terminated",
+          "exitCode": 0,
+          "output": "A\nB\nC\n3\n2\n1\nBroken\ncause\ncause\nPing\nbefore field\nLazy\n9\n",
+          "instructions": 84
+        },
+        "commands": [
+          {
+            "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+            "arguments": [
+              "restore",
+              "Qualification.csproj",
+              "--configfile",
+              "NuGet.Config",
+              "--verbosity",
+              "quiet"
+            ],
+            "cwd": "<temporary-project>",
+            "status": 0
+          },
+          {
+            "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+            "arguments": [
+              "build",
+              "Qualification.csproj",
+              "--configuration",
+              "Release",
+              "--no-restore",
+              "--verbosity",
+              "quiet"
+            ],
+            "cwd": "<temporary-project>",
+            "status": 0
+          },
+          {
+            "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+            "arguments": [
+              "<temporary-project>/bin/Release/net10.0/Qualification.dll"
+            ],
+            "cwd": "<temporary-project>",
+            "status": 0
+          }
+        ]
+      },
+      {
+        "task": "SF-A05-E04",
+        "fixture": "a05-statics",
+        "timestamp": "2026-10-03T14:01:01.470Z",
+        "revision": "7e76ed11bb72825f0325041ae86aba1a333212d3",
+        "platform": "darwin",
+        "architecture": "arm64",
+        "node": "v24.21.0",
+        "dotnetSdk": "10.0.201",
+        "dotnetRuntimes": "Microsoft.AspNetCore.App 10.0.5 [/Users/wieslawsoltes/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 10.0.5 [/Users/wieslawsoltes/.dotnet/shared/Microsoft.NETCore.App]",
+        "targetFramework": "net10.0",
+        "passed": true,
+        "qualification": "same Roslyn DLL executed by native .NET and CilVirtualMachine",
+        "sources": [
+          {
+            "path": "tests/fixtures/a05-statics/Program.cs",
+            "sha256": "2a5b9a994a9a80e115b5f11b66a6fef991ae83c17ecdffe63d5cef821a6b069d"
+          }
+        ],
+        "expectedOutput": "7\n42\n17\ngeneric\n31\n0\n23\n11\n",
+        "assemblySha256": "0cc7d5623a9f7d615ff7b8adc4007129f573c49480b3910c286bb7e38d2bc9d9",
+        "native": {
+          "exitCode": 0,
+          "output": "7\n42\n17\ngeneric\n31\n0\n23\n11\n",
+          "stderr": ""
+        },
+        "cil": {
+          "state": "terminated",
+          "exitCode": 0,
+          "output": "7\n42\n17\ngeneric\n31\n0\n23\n11\n",
+          "instructions": 40
+        },
+        "commands": [
+          {
+            "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+            "arguments": [
+              "restore",
+              "Qualification.csproj",
+              "--configfile",
+              "NuGet.Config",
+              "--verbosity",
+              "quiet"
+            ],
+            "cwd": "<temporary-project>",
+            "status": 0
+          },
+          {
+            "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+            "arguments": [
+              "build",
+              "Qualification.csproj",
+              "--configuration",
+              "Release",
+              "--no-restore",
+              "--verbosity",
+              "quiet"
+            ],
+            "cwd": "<temporary-project>",
+            "status": 0
+          },
+          {
+            "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+            "arguments": [
+              "<temporary-project>/bin/Release/net10.0/Qualification.dll"
+            ],
+            "cwd": "<temporary-project>",
+            "status": 0
+          }
+        ]
+      },
+      {
+        "task": "SF-A05-E04",
+        "fixture": "assignability",
+        "timestamp": "2026-10-03T14:01:04.149Z",
+        "revision": "7e76ed11bb72825f0325041ae86aba1a333212d3",
+        "platform": "darwin",
+        "architecture": "arm64",
+        "node": "v24.21.0",
+        "dotnetSdk": "10.0.201",
+        "dotnetRuntimes": "Microsoft.AspNetCore.App 10.0.5 [/Users/wieslawsoltes/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 10.0.5 [/Users/wieslawsoltes/.dotnet/shared/Microsoft.NETCore.App]",
+        "targetFramework": "net10.0",
+        "passed": true,
+        "qualification": "native .NET reflection compared with CastCache",
+        "sources": [
+          {
+            "path": "Program.cs",
+            "sha256": "4d9af23d29d1ba60b1643214f7c6e6987c0e8f4ad606d1ccffa04d9571058eb9",
+            "generatedFrom": "tests/a05-type-fixtures.js"
+          }
+        ],
+        "expectedOutput": "True\nFalse\nTrue\nTrue\nFalse\nTrue\nFalse\nFalse\nTrue\nTrue\nTrue\nTrue\nFalse\nTrue\nFalse\nTrue\nFalse\nTrue\nTrue\nFalse\nFalse\nTrue\nTrue\nFalse\nFalse\nTrue\nTrue\nTrue\nFalse\nFalse\nTrue\nTrue\nFalse\nTrue\nFalse\nTrue\nTrue\nTrue\nTrue\nFalse\nFalse\nFalse\nTrue\nTrue\nTrue\nFalse\nFalse\nTrue\nTrue\nFalse\nFalse\nTrue\nFalse\nFalse\nTrue\nTrue\nTrue\nFalse\nFalse\nFalse\nTrue\nTrue\nFalse\nTrue\nFalse\nTrue\nTrue\nFalse\nTrue\nTrue\nFalse\nFalse\nTrue\nTrue\nTrue\nFalse\nFalse\nFalse\nTrue\nTrue\nFalse\nFalse\nTrue\nTrue\nTrue\nTrue\n",
+        "assemblySha256": "a354b1b60b428560616ae904042548043e63506450d0a1f476c4f63b026ffd78",
+        "native": {
+          "exitCode": 0,
+          "output": "True\nFalse\nTrue\nTrue\nFalse\nTrue\nFalse\nFalse\nTrue\nTrue\nTrue\nTrue\nFalse\nTrue\nFalse\nTrue\nFalse\nTrue\nTrue\nFalse\nFalse\nTrue\nTrue\nFalse\nFalse\nTrue\nTrue\nTrue\nFalse\nFalse\nTrue\nTrue\nFalse\nTrue\nFalse\nTrue\nTrue\nTrue\nTrue\nFalse\nFalse\nFalse\nTrue\nTrue\nTrue\nFalse\nFalse\nTrue\nTrue\nFalse\nFalse\nTrue\nFalse\nFalse\nTrue\nTrue\nTrue\nFalse\nFalse\nFalse\nTrue\nTrue\nFalse\nTrue\nFalse\nTrue\nTrue\nFalse\nTrue\nTrue\nFalse\nFalse\nTrue\nTrue\nTrue\nFalse\nFalse\nFalse\nTrue\nTrue\nFalse\nFalse\nTrue\nTrue\nTrue\nTrue\n",
+          "stderr": ""
+        },
+        "castCache": {
+          "pairs": 86,
+          "output": "True\nFalse\nTrue\nTrue\nFalse\nTrue\nFalse\nFalse\nTrue\nTrue\nTrue\nTrue\nFalse\nTrue\nFalse\nTrue\nFalse\nTrue\nTrue\nFalse\nFalse\nTrue\nTrue\nFalse\nFalse\nTrue\nTrue\nTrue\nFalse\nFalse\nTrue\nTrue\nFalse\nTrue\nFalse\nTrue\nTrue\nTrue\nTrue\nFalse\nFalse\nFalse\nTrue\nTrue\nTrue\nFalse\nFalse\nTrue\nTrue\nFalse\nFalse\nTrue\nFalse\nFalse\nTrue\nTrue\nTrue\nFalse\nFalse\nFalse\nTrue\nTrue\nFalse\nTrue\nFalse\nTrue\nTrue\nFalse\nTrue\nTrue\nFalse\nFalse\nTrue\nTrue\nTrue\nFalse\nFalse\nFalse\nTrue\nTrue\nFalse\nFalse\nTrue\nTrue\nTrue\nTrue\n"
+        },
+        "commands": [
+          {
+            "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+            "arguments": [
+              "restore",
+              "Qualification.csproj",
+              "--configfile",
+              "NuGet.Config",
+              "--verbosity",
+              "quiet"
+            ],
+            "cwd": "<temporary-project>",
+            "status": 0
+          },
+          {
+            "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+            "arguments": [
+              "build",
+              "Qualification.csproj",
+              "--configuration",
+              "Release",
+              "--no-restore",
+              "--verbosity",
+              "quiet"
+            ],
+            "cwd": "<temporary-project>",
+            "status": 0
+          },
+          {
+            "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+            "arguments": [
+              "<temporary-project>/bin/Release/net10.0/Qualification.dll"
+            ],
+            "cwd": "<temporary-project>",
+            "status": 0
+          }
+        ]
+      },
+      {
+        "task": "SF-A05-E04",
+        "fixture": "enums-strings",
+        "timestamp": "2026-10-03T14:01:02.390Z",
+        "revision": "7e76ed11bb72825f0325041ae86aba1a333212d3",
+        "platform": "darwin",
+        "architecture": "arm64",
+        "node": "v24.21.0",
+        "dotnetSdk": "10.0.201",
+        "dotnetRuntimes": "Microsoft.AspNetCore.App 10.0.5 [/Users/wieslawsoltes/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 10.0.5 [/Users/wieslawsoltes/.dotnet/shared/Microsoft.NETCore.App]",
+        "targetFramework": "net10.0",
+        "passed": true,
+        "qualification": "same Roslyn DLL executed by native .NET and CilVirtualMachine",
+        "sources": [
+          {
+            "path": "tests/fixtures/a05/enums-strings/Program.cs",
+            "sha256": "93ad3612b5f5aeeeef1bb8a0892631495b414a374f100f6f57688f6d7ee9941f"
+          }
+        ],
+        "expectedOutput": "A\nTrue\nTrue\nFalse\nTrue\nA, High\nTrue\nFalse\nTrue\nTrue\nTrue\n55357\n56832\n",
+        "assemblySha256": "93d059c29507c915b17245531f0b780d5db4969e2f82225a2e7ad7b6b917e376",
+        "native": {
+          "exitCode": 0,
+          "output": "A\nTrue\nTrue\nFalse\nTrue\nA, High\nTrue\nFalse\nTrue\nTrue\nTrue\n55357\n56832\n",
+          "stderr": ""
+        },
+        "cil": {
+          "state": "terminated",
+          "exitCode": 0,
+          "output": "A\nTrue\nTrue\nFalse\nTrue\nA, High\nTrue\nFalse\nTrue\nTrue\nTrue\n55357\n56832\n",
+          "instructions": 71
+        },
+        "commands": [
+          {
+            "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+            "arguments": [
+              "restore",
+              "Qualification.csproj",
+              "--configfile",
+              "NuGet.Config",
+              "--verbosity",
+              "quiet"
+            ],
+            "cwd": "<temporary-project>",
+            "status": 0
+          },
+          {
+            "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+            "arguments": [
+              "build",
+              "Qualification.csproj",
+              "--configuration",
+              "Release",
+              "--no-restore",
+              "--verbosity",
+              "quiet"
+            ],
+            "cwd": "<temporary-project>",
+            "status": 0
+          },
+          {
+            "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+            "arguments": [
+              "<temporary-project>/bin/Release/net10.0/Qualification.dll"
+            ],
+            "cwd": "<temporary-project>",
+            "status": 0
+          }
+        ]
+      },
+      {
+        "task": "SF-A05-E04",
+        "fixture": "tokens",
+        "timestamp": "2026-10-03T14:01:03.263Z",
+        "revision": "7e76ed11bb72825f0325041ae86aba1a333212d3",
+        "platform": "darwin",
+        "architecture": "arm64",
+        "node": "v24.21.0",
+        "dotnetSdk": "10.0.201",
+        "dotnetRuntimes": "Microsoft.AspNetCore.App 10.0.5 [/Users/wieslawsoltes/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 10.0.5 [/Users/wieslawsoltes/.dotnet/shared/Microsoft.NETCore.App]",
+        "targetFramework": "net10.0",
+        "passed": true,
+        "qualification": "same Roslyn DLL executed by native .NET and CilVirtualMachine",
+        "sources": [
+          {
+            "path": "tests/fixtures/a05/tokens/Program.cs",
+            "sha256": "dee658e5e4ad108650bc0afa1ab12f6aa7b160e8f861053e3f82d025ca13f3bf"
+          }
+        ],
+        "expectedOutput": "True\nFalse\nTrue\nDerived\nTokenFixture.Derived\nTrue\nTrue\nTrue\nTrue\nTrue\nList`1\nTrue\nFalse\nTrue\nTrue\nString[]\nSystem.String[]\n",
+        "assemblySha256": "847eb829fb2032acba12a0754f0f03531c714a70f248f1ebcc18bf046d0531fb",
+        "native": {
+          "exitCode": 0,
+          "output": "True\nFalse\nTrue\nDerived\nTokenFixture.Derived\nTrue\nTrue\nTrue\nTrue\nTrue\nList`1\nTrue\nFalse\nTrue\nTrue\nString[]\nSystem.String[]\n",
+          "stderr": ""
+        },
+        "cil": {
+          "state": "terminated",
+          "exitCode": 0,
+          "output": "True\nFalse\nTrue\nDerived\nTokenFixture.Derived\nTrue\nTrue\nTrue\nTrue\nTrue\nList`1\nTrue\nFalse\nTrue\nTrue\nString[]\nSystem.String[]\n",
+          "instructions": 99
+        },
+        "commands": [
+          {
+            "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+            "arguments": [
+              "restore",
+              "Qualification.csproj",
+              "--configfile",
+              "NuGet.Config",
+              "--verbosity",
+              "quiet"
+            ],
+            "cwd": "<temporary-project>",
+            "status": 0
+          },
+          {
+            "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+            "arguments": [
+              "build",
+              "Qualification.csproj",
+              "--configuration",
+              "Release",
+              "--no-restore",
+              "--verbosity",
+              "quiet"
+            ],
+            "cwd": "<temporary-project>",
+            "status": 0
+          },
+          {
+            "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+            "arguments": [
+              "<temporary-project>/bin/Release/net10.0/Qualification.dll"
+            ],
+            "cwd": "<temporary-project>",
+            "status": 0
+          }
+        ]
+      }
+    ]
+  },
+  "parity": {
+    "engines": [
+      "source VirtualMachine",
+      "assembly-reloaded VirtualMachine",
+      "CilVirtualMachine"
+    ],
+    "discovery": "Language catalogs, exported *ExecutionCases, Studio samples and source-bearing examples",
+    "allowances": [
+      {
+        "fixture": "sample/gc",
+        "reason": "Observed representation-dependent heap bytes only",
+        "source": "After: 216 bytes",
+        "cil": "After: 352 bytes"
+      },
+      {
+        "fixture": "sample/particles",
+        "reason": "Observed representation-dependent heap bytes only",
+        "source": "Managed memory: 1178 bytes",
+        "cil": "Managed memory: 1498 bytes"
+      }
+    ],
+    "rules": "Exact observed values only; state, exception identity and exit code cannot be exempted; every entry has owner and issue; stale entries fail."
+  },
+  "limitations": [
+    "Native qualification is macOS arm64 with .NET 10.0.5; no other native OS or architecture is claimed.",
+    "Four Roslyn DLL fixtures execute in both native .NET and CilVirtualMachine. The 86 assignability pairs compare native reflection with CastCache; that reflection DLL is not executed by the CIL interpreter.",
+    "Source language does not yet parse user-defined enum declarations, arbitrary generic type declarations, or typeof. Framework enum casts and GetType are covered in all three engines; independent CIL/Roslyn fixtures qualify the broader runtime metadata paths.",
+    "ThreadStatic uses cooperative scheduler contexts and volatile guarantees instruction-level ordering; host-thread shared-memory execution is not implemented.",
+    "Snapshots are owned by their original VM and held in memory. T06 broader replay qualification remains part of E01.",
+    "Browser managed/debugger suites passed on f23c1bd; the subsequent enum conversion change passed all Node checks and the full runtime browser suite."
+  ]
+}

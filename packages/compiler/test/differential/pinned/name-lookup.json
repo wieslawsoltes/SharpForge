@@ -1,0 +1,12 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "name-lookup/shadowing-field-with-local":{"hash":"19694fa47a67c68f","kind":"output","langVersion":"14.0","diagnostics":[],"output":"5\n1\n5\n"},
+  "name-lookup/cs0103-unknown-name":{"hash":"2b2d5a275135c46b","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0103",32,1,"error"]]},
+  "name-lookup/cs0103-unknown-method":{"hash":"ffd3015b324f2a31","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0103",14,7,"error"]]},
+  "name-lookup/cs0103-typo-in-assignment":{"hash":"85ccea06544efbe1","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0103",29,5,"error"]]},
+  "name-lookup/cs0246-unknown-type":{"hash":"afe53eeeeb2b17da","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0246",14,6,"error"]]},
+  "name-lookup/cs0246-unknown-type-in-new":{"hash":"9f6b6432cee9362e","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0246",26,6,"error"]]},
+  "name-lookup/cs0246-unknown-type-in-signature":{"hash":"c771a0c3b362a76e","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0246",35,6,"error"],["CS0246",47,6,"error"]]},
+  "name-lookup/cs0246-unknown-base-type":{"hash":"8a80dd8762171531","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0246",46,7,"error"]]},
+  "name-lookup/cs0119-type-used-as-variable":{"hash":"01d2a17ac468471f","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0119",67,1,"error"]]},
+  "name-lookup/cs0103-console-without-using":{"hash":"b58e998d7e7c4e23","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0103",0,7,"error"]]}
+}}
