@@ -65,7 +65,7 @@ export const StatementBinder=Base=>class StatementBinder extends Base {
       case 'Break':case 'Continue':{
         if(node.label)this.c.requireFeature(node,15,'Labeled break and continue');
         const loop=node.label?[...this.loops].reverse().find(l=>l.labels?.includes(node.label)&&(node.kind!=='Continue'||!l.switch)):node.kind==='Continue'?[...this.loops].reverse().find(l=>!l.switch):this.loops.at(-1);
-        if(loop&&this.finallyScopes.length&&!this.loops.slice(this.finallyScopes.at(-1)).includes(loop))this.c.report(node,'CS0157');if(!loop)this.c.report(node,'CS0139');
+        if(loop&&this.finallyScopes.length&&!this.loops.slice(this.finallyScopes.at(-1)).includes(loop))this.c.report(this.c.firstToken(node),'CS0157');if(!loop)this.c.report(node,'CS0139');
         return this.statement(node.kind==='Break'?BoundBreakStatement:BoundContinueStatement,node,{label:node.label??null},!loop);
       }
       case 'Switch':return this.bindSwitchStatement(node);

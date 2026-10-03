@@ -182,6 +182,7 @@ export const roslynCodes=Object.freeze({
  CS0458:["WRN_AlwaysNull","warning",2,"The result of the expression is always 'null' of type '{0}'"],
  CS0463:["ERR_DecConstError","error",0,"Evaluation of the decimal constant expression failed"],
  CS0464:["WRN_CmpAlwaysFalse","warning",2,"Comparing with null of type '{0}' always produces 'false'"],
+ CS0469:["WRN_GotoCaseShouldConvert","warning",2,"The 'goto case' value is not implicitly convertible to type '{0}'"],
  CS0472:["WRN_NubExprIsConstBool","warning",2,"The result of the expression is always '{0}' since a value of type '{1}' is never equal to 'null' of type '{2}'"],
  CS0500:["ERR_AbstractHasBody","error",0,"'{0}' cannot declare a body because it is marked abstract"],
  CS0501:["ERR_ConcreteMissingBody","error",0,"'{0}' must declare a body because it is not marked abstract, extern, or partial"],

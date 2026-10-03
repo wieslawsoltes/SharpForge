@@ -12,6 +12,7 @@ import { CallTranslation } from './translate-calls.js';
 import { FunctionTranslation } from './translate-functions.js';
 import { PatternTranslation } from './translate-patterns.js';
 import { StatementTranslation } from './translate-statements.js';
+import { JumpTranslation } from './translate-jumps.js';
 
 export { Frame } from './frame.js';
 
@@ -188,7 +189,14 @@ class TranslatorCore {
 }
 
 /** The body translator: the core composed with one mixin per construct family. */
-export class BodyTranslator extends [ExpressionTranslation, CallTranslation, FunctionTranslation, PatternTranslation, StatementTranslation].reduce(
+export class BodyTranslator extends [
+  ExpressionTranslation,
+  CallTranslation,
+  FunctionTranslation,
+  PatternTranslation,
+  StatementTranslation,
+  JumpTranslation,
+].reduce(
   (composed, mixin) => mixin(composed),
   TranslatorCore,
 ) {}

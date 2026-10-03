@@ -3,7 +3,6 @@
  * CS0162 (unreachable code), CS0161 (not all paths return), CS0163 and CS8070 (switch fall-through).
  */
 import { ErrorTypeSymbol } from '../../symbols/types.js';
-import { LabelSymbol } from '../../symbols/members.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 const statementExpressionKinds = new Set([
@@ -33,9 +32,9 @@ export const StatementBinding = Base =>
         if (s.kind === 'LocalDeclarationStatement') for (const v of s.declaration.variables) pending.push(v.identifier.valueText);
       if (scoped) this.pushScope(pending);
       else for (const n of pending) this.pending.at(-1).add(n);
+      this.enterLabels(statements, scoped);
       try {
         for (const s of statements) if (s.kind === 'LocalFunctionStatement') this.declareLocalFunction(s);
-        for (const s of statements) for (let l = s; l.kind === 'LabeledStatement'; l = l.statement) this.declareLabel(l);
         const bound = [];
         let reachable = true,
           warned = false;
@@ -58,6 +57,7 @@ export const StatementBinding = Base =>
         }
         return stmt('Block', syntax, reachable, { statements: bound });
       } finally {
+        this.leaveLabels(scoped);
         if (scoped) this.popScope();
       }
     }
@@ -204,48 +204,34 @@ export const StatementBinding = Base =>
           return stmt('Throw', syntax, false, { expression: e });
         }
         case 'BreakStatement': {
+          // A jump without a target is an error statement: what follows it stays reachable.
           if (!this.loops?.length) {
             this.report(syntax, 'CS0139');
-            return stmt('Break', syntax, false, {});
+            return stmt('Break', syntax, true, {});
           }
           const target = this.loops.at(-1);
           target.hasBreak = true;
-          if (this.finallyDepth > target.finallyDepth) this.report(syntax, 'CS0157');
+          if (this.finallyDepth > target.finallyDepth) this.report(syntax.breakKeyword, 'CS0157');
           return stmt('Break', syntax, false, {});
         }
         case 'ContinueStatement': {
           const target = [...(this.loops ?? [])].reverse().find(l => l.isLoop);
           if (!target) {
             this.report(syntax, 'CS0139');
-            return stmt('Continue', syntax, false, {});
+            return stmt('Continue', syntax, true, {});
           }
           target.hasContinue = true;
-          if (this.finallyDepth > target.finallyDepth) this.report(syntax, 'CS0157');
+          if (this.finallyDepth > target.finallyDepth) this.report(syntax.continueKeyword, 'CS0157');
           return stmt('Continue', syntax, false, {});
         }
         case 'GotoStatement':
         case 'GotoCaseStatement':
-        case 'GotoDefaultStatement': {
-          this.usesGoto = true;
-          this.rootBinder.usesGoto = true;
-          if (syntax.kind === 'GotoStatement' && syntax.expression?.kind === 'IdentifierName') {
-            const name = syntax.expression.identifier.valueText,
-              label = this.findLabel(name);
-            if (!label) this.report(syntax.expression, 'CS0159', [name]);
-            else label.uses++;
-          } else if (syntax.kind !== 'GotoStatement') {
-            if (!this.switchDepth) this.report(syntax, 'CS0153');
-            else {
-              const sw = [...this.loops].reverse().find(l => !l.isLoop);
-              if (sw) sw.hasGotoCase = true;
-              if (syntax.expression) this.value(syntax.expression);
-            }
-          }
-          return stmt('Goto', syntax, false, {});
-        }
+        case 'GotoDefaultStatement':
+          return this.gotoStatement(syntax);
         case 'LabeledStatement': {
-          const inner = this.statement(syntax.statement);
-          return stmt('Labeled', syntax, inner.completes, { label: syntax.identifier.valueText, statement: inner });
+          const symbol = this.declaredLabel(syntax),
+            inner = this.statement(syntax.statement);
+          return stmt('Labeled', syntax, inner.completes, { label: syntax.identifier.valueText, symbol, statement: inner });
         }
         case 'CheckedStatement':
         case 'UncheckedStatement': {
@@ -337,29 +323,5 @@ export const StatementBinding = Base =>
       if (e.kind === 'TypeExpression') return this.asValue(e);
       if (!e.hasErrors && !this.isStatementExpression(syntax)) this.report(syntax, 'CS0201');
       return e;
-    }
-    declareLabel(syntax) {
-      const name = syntax.identifier.valueText,
-        root = this;
-      root.labels ??= [];
-      if (root.labels.some(l => l.name === name)) {
-        this.report(syntax.identifier, 'CS0140', [name]);
-        return;
-      }
-      const label = new LabelSymbol({ name, syntax });
-      label.uses = 0;
-      label.binder = this;
-      label.depth = this.scopes.length;
-      root.labels.push(label);
-      this.hasLabels = true;
-      this.rootBinder.hasLabelsAnywhere = true;
-      (this.rootBinder.allLabels ??= []).push({ label, node: syntax.identifier, uri: this.c.uri });
-    }
-    findLabel(name) {
-      for (let b = this; b; b = b.c.isLambda || b.c.isLocalFunction ? null : b.c.parent) {
-        const l = (b.labels ?? []).find(x => x.name === name && x.depth <= b.scopes.length);
-        if (l) return l;
-      }
-      return null;
     }
   };

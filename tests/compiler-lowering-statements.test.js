@@ -134,7 +134,7 @@ test('a program inside the execution profile is still compiled by the profile pi
   assert.equal(result.semantic, undefined, 'the semantic generator is not involved');
 });
 
-test('SF-A02-T43 goto and labels are jumps; goto case is reported', () => {
+test('SF-A02-T43 goto and labels are jumps', () => {
   const lines = linesOf(
     program(`
       static void Main() {
@@ -152,7 +152,6 @@ test('SF-A02-T43 goto and labels are jumps; goto case is reported', () => {
       }`),
   );
   assert.deepEqual(lines, ['134.....']);
-  const result = compile(program(`static void Main() { int n = 1; switch (n) { case 1: goto case 2; case 2: Console.WriteLine(n); break; } }`));
-  assert.equal(result.image, null);
-  assert.ok(result.diagnostics.some(d => d.code === 'SF2200' && /goto case/.test(d.message)));
+  // goto case used to be reported as SF2200; it is lowered now (tests/compiler-jumps.test.js).
+  assert.deepEqual(linesOf(program(`static void Main() { int n = 1; switch (n) { case 1: goto case 2; case 2: Console.WriteLine(n); break; } }`)), ['1']);
 });
