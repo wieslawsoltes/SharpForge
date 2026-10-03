@@ -23,7 +23,7 @@ import { isAccessible } from './accessibility.js';
 import { assemblyConflict, dottedName } from './reference-lookup.js';
 import { bindUsingDirectives, bindAliasTarget } from './using-directives.js';
 import { constructType } from '../symbols/substitution.js';
-import { maxTupleElements, tupleNameProblems, tupleTypeOf } from './tuples.js';
+import { tupleNameProblems, tupleTypeOf } from './tuples.js';
 import { bindFunctionPointerType } from './function-pointers.js';
 
 export class Scope {
@@ -407,7 +407,7 @@ export class TypeBinder {
       case 'TupleType': {
         const elements = syntax.elements.map(e => this.bindType(e.type, scope, options)),
           names = syntax.elements.map(e => e.identifier?.valueText ?? null);
-        if (elements.length < 2 || elements.length > maxTupleElements) return twa(error('ValueTuple', elements.length));
+        if (elements.length < 2) return twa(error('ValueTuple', elements.length));
         if (!options.quiet)
           for (const problem of tupleNameProblems(names)) this.report(scope, syntax.elements[problem.index].identifier, problem.code, problem.args);
         return twa(tupleTypeOf(this.core.bridge, elements, names));

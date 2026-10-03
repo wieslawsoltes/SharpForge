@@ -3,9 +3,9 @@
  * and the default value. Tuples are objects of synthesized classes that are never changed after creation
  * (lowering/tuples/tuple-classes.js); a store into an element replaces the tuple in its variable (locations.js).
  */
-import { tupleElementIndex } from '../../binder/tuples.js';
+import { tupleElementIndex, tupleElements, maxTupleElements } from '../../binder/tuples.js';
 import { n } from '../../codegen/semantic/node-factory.js';
-import { isTupleElement } from './locations.js';
+import { isTupleElement, isTupleRest } from './locations.js';
 
 const tupleConversions = new Set(['ImplicitTuple', 'ExplicitTuple', 'ImplicitTupleLiteral', 'ExplicitTupleLiteral']);
 
@@ -44,11 +44,11 @@ export const TupleTranslation = Base =>
       return super.arguments({ ...node, args }, method);
     }
     tupleLiteralAs(literal, type) {
-      if (!this.g.tuples.handles(type) || type.typeArguments.length !== literal.elements.length)
+      if (!this.g.tuples.handles(type) || tupleElements(type).length !== literal.elements.length)
         return this.unsupported('a tuple literal without a type', literal.syntax);
       const info = this.g.tuples.classOf(type, literal.syntax);
       const elements = literal.elements.map((element, index) => {
-        const elementType = type.typeArguments[index].type;
+        const elementType = tupleElements(type)[index].type;
         if (element.kind === 'Tuple' && !element.type) return this.tupleLiteralAs(element, elementType);
         if (!element.type) return this.defaultValue(info.imageTypes[index]);
         const value = this.expression(element);
@@ -76,7 +76,16 @@ export const TupleTranslation = Base =>
       const info = this.g.tuples.classOf(node.receiver.type, node.syntax);
       return n.field(this.expression(node.receiver), info.fields[index]);
     }
+    /** `tuple.Rest` of a long tuple: a new tuple of the elements from the eighth on. */
+    restOf(node) {
+      const info = this.g.tuples.classOf(node.receiver.type, node.syntax),
+        rest = this.g.tuples.classOf(node.type, node.syntax),
+        value = this.once(this.expression(node.receiver), 'tuple'),
+        elements = info.fields.slice(maxTupleElements).map(field => n.field(value.read(), field));
+      return n.sequence(value.locals, value.effects, this.g.tuples.create(rest, elements));
+    }
     exprFieldAccess(node) {
+      if (isTupleRest(node)) return this.restOf(node);
       const value = super.exprFieldAccess(node);
       return isTupleElement(node) ? value : this.storedTuple(value);
     }
@@ -182,7 +191,7 @@ export const TupleTranslation = Base =>
           this.expression({
             kind: 'Conversion',
             syntax: element.syntax ?? node.syntax,
-            type: target.typeArguments[index].type,
+            type: tupleElements(target)[index].type,
             constantValue: null,
             operand: element,
             conversion: parts[index],
@@ -193,7 +202,7 @@ export const TupleTranslation = Base =>
       const source = this.g.tuples.classOf(node.operand.type, node.syntax),
         value = this.once(this.expression(node.operand), 'tuple'),
         elements = source.fields.map((field, index) =>
-          elementOf(lowered(n.field(value.read(), field), node.operand.type.typeArguments[index].type, node.syntax), index),
+          elementOf(lowered(n.field(value.read(), field), tupleElements(node.operand.type)[index].type, node.syntax), index),
         );
       return n.sequence(value.locals, value.effects, this.g.tuples.create(info, elements));
     }

@@ -2,11 +2,11 @@
  * Tuple expressions (SF-A02-T08.4): tuple literals and the element-wise `==` / `!=` of tuples (C# 7.3).
  */
 import {DiagnosticId} from '../../diagnostics/codes.js';
-import { maxTupleElements, tupleLiteralNames, tupleNameProblems, tupleTypeOf } from '../tuples.js';
+import { tupleElements, tupleLiteralNames, tupleNameProblems, tupleTypeOf } from '../tuples.js';
 
 const isTupleType = type => !!type?.isTupleType && !type.isDefinition;
 const isTupleOperand = e => e.kind === 'Tuple' || isTupleType(e.type);
-const cardinalityOf = e => (e.kind === 'Tuple' ? e.elements.length : e.type.typeArguments.length);
+const cardinalityOf = e => (e.kind === 'Tuple' ? e.elements.length : tupleElements(e.type).length);
 
 /** Class mixin: tuple literals and tuple equality. */
 export const TupleBinding = Base =>
@@ -18,7 +18,6 @@ export const TupleBinding = Base =>
       for (const problem of tupleNameProblems(names.map((name, i) => (inferred[i] ? null : name))))
         this.report(syntax.arguments[problem.index].nameColon.name, problem.code, problem.args);
       if (elements.some(e => e.hasErrors)) return this.bad(syntax);
-      if (elements.length > maxTupleElements) return this.lenient(syntax);
       const typed = elements.every(e => e.type && e.type.specialType !== 'System_Void'),
         types = elements.map(e => e.type);
       const type = typed && elements.length >= 2 ? tupleTypeOf(this.core.bridge, types, names, inferred) : null;
@@ -42,7 +41,7 @@ export const TupleBinding = Base =>
       const partsOf = e =>
         e.kind === 'Tuple'
           ? e.elements
-          : e.type.typeArguments.map((argument, index) => this.node('TupleElementPlaceholder', e.syntax, argument.type, { index }));
+          : tupleElements(e.type).map((argument, index) => this.node('TupleElementPlaceholder', e.syntax, argument.type, { index }));
       const leftParts = partsOf(left),
         rightParts = partsOf(right);
       const elements = leftParts.map((part, index) => {
