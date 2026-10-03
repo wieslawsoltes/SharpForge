@@ -9,7 +9,7 @@ test('T01.1 Int64 wrapping, unsigned division and mixed shift counts share the C
   const cases = [
     ['add', maximum, 1n, minimum], ['sub', minimum, 1n, maximum],
     ['mul', maximum, maximum, 1n], ['div.un', -1n, 3n, 6148914691236517205n],
-    ['rem', minimum, -1n, 0n], ['shr.un', -1n, 65, maximum],
+    ['rem', minimum, 1n, 0n], ['shr.un', -1n, 65, maximum],
     ['shl', 1n, -1, minimum], ['shl', 7n, 128n, 7n],
   ];
   for (const [name, left, right, expected] of cases) {
@@ -25,7 +25,7 @@ test('T01.1 Int64 checked boundaries and arithmetic faults remain managed faults
   for (const [name, left, right] of [
     ['add.ovf', maximum, 1n], ['sub.ovf', minimum, 1n], ['mul.ovf', maximum, 2n],
     ['add.ovf.un', -1n, 1n], ['sub.ovf.un', 0n, 1n], ['mul.ovf.un', -1n, 2n],
-    ['div', minimum, -1n],
+    ['div', minimum, -1n], ['rem', minimum, -1n],
   ]) assert.throws(() => int64Binary(name, left, right), {name: 'OverflowException'});
   for (const name of ['div', 'div.un', 'rem', 'rem.un']) {
     assert.throws(() => int64Binary(name, 1n, 0n), {name: 'DivideByZeroException'});
