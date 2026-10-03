@@ -1,3 +1,4 @@
+import { patchStrongNameDirectory } from './strong-name.js';
 import { finalizeDeterministicPE } from './determinism.js';
 import { patchManagedResourceDirectory } from './managed-resources.js';
 import { desktopEntryStub } from './entry-stub.js';
@@ -105,6 +106,7 @@ export function writeManagedPE(sectionBytes, metadataOffset, metadataLength, ent
   cli.setUint32(16, options.corFlags, true);
   cli.setUint32(20, entryToken, true);
   patchManagedResourceDirectory(cli, options, sectionBytes.length, metadataOffset, metadataLength);
+  patchStrongNameDirectory(cli, options, sectionBytes.length, metadataOffset, metadataLength);
   const bytes = writePortableExecutable([{ name: '.text', data: section }, ...additionalSections], {
     ...options, deterministic: false, directories: { ...options.directories, cliHeader: { section: '.text', offset: 0, size: 72 } },
   });
