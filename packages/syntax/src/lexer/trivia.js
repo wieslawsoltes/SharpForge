@@ -1,4 +1,4 @@
-import { scanConditionalDirective, scanDisabledText } from '../directives/conditional.js';
+import { scanConditionalDirective, scanDisabledText, snapshotDirectiveState } from '../directives/conditional.js';
 import { scanMiscDirective } from '../directives/misc.js';
 import { scanScriptDirective } from '../directives/script.js';
 /** Trivia scanning: whitespace, end-of-line, comments, documentation comments, directives and disabled text. */
@@ -27,7 +27,7 @@ function directive(s, hash) {
   const structure = Object.freeze({ isActive: active, ...result.structure }), piece = Object.freeze({ kind: result.kind ?? 'BadDirectiveTrivia', start: hash, end, structure });
   if (active || structural.has(word) || result.unknown) for (const [code, message, severity] of result.diagnostics) s.error(hash, stop - hash, code, message, severity);
   if (active) for (const id of features) s.feature(id, hash, stop);
-  s.directives.push(piece); s.i = end; return piece;
+  s.directives.push(piece); s.checkpoints.push({ start: hash, end, state: s.lastSnapshot = snapshotDirectiveState(s.state, s.lastSnapshot) }); s.i = end; return piece;
 }
 /**
  * Scans the trivia at `s.i`. In trailing mode (directly after a token) pieces up to and including the first
