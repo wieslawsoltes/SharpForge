@@ -135,4 +135,40 @@ for (const engine of ['source', 'cil']) {
       vm.stop();
     }
   });
+
+  for (const field of ['$used', '$free', '$slots']) {
+    test(`SF-A08-B03 ${engine}: failed legacy snapshot ${field} attachment preserves entries`, () => {
+      const {vm, platform, reference, call} = createClosedCollection(engine, 'Dictionary', 'int, int');
+      const replaceData = platform.heap.replaceData;
+      try {
+        call('Add', 0, 10); call('Add', 1, 11); call('Add', 2, 12);
+        const current = platform.record(reference).data;
+        const legacy = [];
+        for (let index = 0; index < current.length; index += 2) {
+          if (['$count', '$version', '$data'].includes(current[index])) legacy.push(current[index], current[index + 1]);
+        }
+        platform.heap.replaceData(reference, legacy);
+        platform.heap.restore(platform.heap.snapshot());
+        let reject = true;
+        platform.heap.replaceData = function(target, items) {
+          if (reject && target.h === reference.h && items.at(-2) === field) {
+            reject = false;
+            throw new ManagedFault('OutOfMemoryException', 'Injected legacy metadata attachment failure');
+          }
+          return replaceData.call(this, target, items);
+        };
+        const mutate = field === '$slots' ? () => call('Clear') : () => call('Remove', 1);
+        assert.throws(mutate, {name: 'OutOfMemoryException'});
+        assert.equal(call('get_Count'), 3);
+        assert.deepEqual([...dictionaryEntries(platform, reference)], [[0, 10], [1, 11], [2, 12]]);
+        assert.equal(call('get_Item', 1), 11);
+        assert.equal(Boolean(platform.native(call('Remove', 1))), true);
+        assert.equal(call('get_Count'), 2);
+        assert.deepEqual([...dictionaryEntries(platform, reference)], [[0, 10], [2, 12]]);
+      } finally {
+        platform.heap.replaceData = replaceData;
+        vm.stop();
+      }
+    });
+  }
 }
