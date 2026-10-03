@@ -13,3 +13,5 @@ export { readCustomDebugInformation, writeCustomDebugInformation } from './custo
 export { decodeSource } from './source-encoding.js';
 export { createSourceFetcher } from './source-fetch.js';
 export { SourceStatus } from './source-status.js';
+export { portablePdbKey, peSymbolKey } from './symbol-server-key.js';
+export { createSymbolServer } from './symbol-server.js';
