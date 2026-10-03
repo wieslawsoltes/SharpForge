@@ -1,3 +1,4 @@
+import {mutateArray} from './array-ops.js';
 import {Builtins} from '@sharpforge/bytecode';
 import {ManagedFault} from '../heap.js';
 import {internString,isInternedString,referenceEquals,stringChar} from './strings.js';
@@ -69,16 +70,7 @@ export function builtin(vm, id, args) {
       case 'Convert.ToString': case 'object.ToString': return vm.heap.string(runtimeTypeText(vm,args[0])??vm.format(args[0]));
       case 'string.Concat': return vm.heap.string(vm.format(args[0]) + vm.format(args[1]));
       case 'string.IsNullOrEmpty': return a === null || a === '';
-      case 'Array.Reverse': case 'Array.Sort': {
-        const record = vm.heap.get(args[0]);
-        if (record.kind !== 'array') throw new ManagedFault('ArgumentException', 'Array required');
-        if (name === 'Array.Reverse') record.data.reverse();
-        else record.data.sort((a, b) => {
-          a = vm.value(a); b = vm.value(b);
-          return typeof a === 'number' && typeof b === 'number' ? a - b : String(a).localeCompare(String(b), 'en');
-        });
-        return null;
-      }
+      case 'Array.Reverse': case 'Array.Sort': return mutateArray(vm,name.slice(6),args[0]);
       case 'string.Substring':
         if (typeof a !== 'string') throw new ManagedFault('NullReferenceException', 'String is null');
         if (!Number.isInteger(b) || b < 0 || b > a.length || args.length === 3 && (!Number.isInteger(c) || c < 0 || b + c > a.length)) {
