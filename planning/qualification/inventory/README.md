@@ -115,9 +115,9 @@ the sealed baseline and shared structure while retaining their own observations;
 they do not relabel another platform's results. Native diagnostics retain their
 complete text and are sorted because Roslyn can reorder independent warnings.
 
-Ordinary PRs do not launch native or browser inventory jobs. Main pushes matching
-the inventory paths, manual dispatch, and matching PRs carrying `full-ci` retain the
-full six-job native/Chromium qualification. Adding the label is an explicit trigger;
+Ordinary PRs and main pushes do not launch native or browser inventory jobs.
+Manual dispatch and matching PRs carrying `full-ci` retain the full six-job
+native/Chromium qualification. Adding the label is an explicit trigger;
 PR-number concurrency cancels superseded runs. No successful core-only PR check
 claims native or browser inventory qualification.
 
@@ -128,3 +128,12 @@ The planning owner must reconcile those identities before full rollup integratio
 
 A successful inventory job means the complete
 catalog was processed; missing, unknown and unsupported capabilities remain gaps.
+
+The workflow actions use the reviewed SHA pins from the A29 supply policy.
+The recorded catalogs and seals remain evidence for their original source inputs.
+In particular, the capture at `b8b2eab7203317b42b7fc92976d5d582c18b3c62`
+does not qualify compiler/runtime changes merged afterward. Integration must retain
+the stale-input failure until a complete native capture and status review can be
+performed; changing input digests alone would not establish new observations.
+Workflow readiness changes have not run local tests, builds or new native/browser
+captures. Qualification is deferred to the larger integrated scope.
