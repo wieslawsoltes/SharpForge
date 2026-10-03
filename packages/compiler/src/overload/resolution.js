@@ -107,10 +107,11 @@ export class OverloadResolver {
       const parameter = constructed.parameters[mapping.parameterOf[i]],
         wanted = expanded && mapping.parameterOf[i] === constructed.parameters.length - 1 ? RefKind.None : parameter.refKind,
         given = refOf(args[i]);
-      // `in` parameters take an argument with or without `in`; ref readonly parameters take ref, in or nothing.
+      // `in` parameters take an argument with or without `in`, and with `ref` (C# 12; the binder reports the version
+      // and the warning); ref readonly parameters take ref, in or nothing.
       const refOk =
         wanted === given ||
-        (wanted === RefKind.In && given === RefKind.None) ||
+        (wanted === RefKind.In && (given === RefKind.None || given === RefKind.Ref)) ||
         (wanted === RefKind.RefReadOnlyParameter && [RefKind.None, RefKind.In, RefKind.Ref].includes(given));
       if (!refOk) {
         c.failure ??= { kind: 'refKind', argument: i, expected: wanted, given };
@@ -234,7 +235,8 @@ export class OverloadResolver {
         argument: f.argument,
       };
     if (f.kind === 'refKind') {
-      if (f.expected === RefKind.None || (f.expected === RefKind.In && f.given !== RefKind.None))
+      const takesNoKeyword = f.expected === RefKind.In || f.expected === RefKind.RefReadOnlyParameter;
+      if (f.expected === RefKind.None || (takesNoKeyword && f.given !== RefKind.None))
         return { code: 'CS1615', args: [f.argument + 1, f.given], argument: f.argument };
       return { code: 'CS1620', args: [f.argument + 1, f.expected], argument: f.argument };
     }
