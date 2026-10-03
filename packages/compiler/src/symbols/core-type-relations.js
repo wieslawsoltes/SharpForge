@@ -18,6 +18,7 @@ function setInterfaces(definition, interfaces) {
 function declareCollectionInterfaces(core) {
   const of = (definition, owner) => definition.construct(owner.typeParameters[0]);
   setInterfaces(core.ienumerableT, [core.ienumerable]);
+  setInterfaces(core.ienumeratorT, [core.idisposable, core.ienumerator]);
   setInterfaces(core.icollectionT, [of(core.ienumerableT, core.icollectionT), core.ienumerable]);
   setInterfaces(core.ilistT, [of(core.icollectionT, core.ilistT), of(core.ienumerableT, core.ilistT), core.ienumerable]);
   setInterfaces(core.ireadOnlyCollectionT, [of(core.ienumerableT, core.ireadOnlyCollectionT), core.ienumerable]);

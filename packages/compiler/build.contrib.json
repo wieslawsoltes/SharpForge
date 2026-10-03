@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "styles": [],
+  "workers": [],
+  "assets": [
+    {
+      "source": "packages/compiler",
+      "target": "packages/compiler",
+      "order": 100
+    }
+  ]
+}

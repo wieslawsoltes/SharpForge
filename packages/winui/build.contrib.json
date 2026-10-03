@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "styles": [
+    {
+      "source": "packages/winui/src/style.css",
+      "order": 6
+    }
+  ],
+  "workers": [],
+  "assets": [
+    {
+      "source": "packages/winui",
+      "target": "packages/winui",
+      "order": 100
+    }
+  ]
+}
