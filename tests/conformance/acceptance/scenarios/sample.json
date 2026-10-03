@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "sample",
+  "targets": [
+    "cli",
+    "studio"
+  ],
+  "timeoutMs": 30000,
+  "steps": [
+    {
+      "id": "open",
+      "action": "open",
+      "fixture": "solution",
+      "entry": "Acceptance.slnx",
+      "startup": "App/App.csproj"
+    },
+    {
+      "id": "build",
+      "action": "build"
+    }
+  ]
+}
