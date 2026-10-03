@@ -35,6 +35,9 @@ function treeShape(document) {
 export function planDesignSourceUpdate(base, design, current = base.text, options = {}) {
   checkSourceCancellation(options.signal);
   assertSourceBaseline(base, current);
+  if (design.previewOnly || base.document.previewOnly) {
+    failSource('A synthetic preview document is read-only and cannot produce C# source edits.', null, 'SFSYNC_OWNERSHIP');
+  }
   const next = validateDesign(design);
   const structural = !sameSourceValue(treeShape(base.document), treeShape(next))
     || !sameSourceValue(base.document.styles, next.styles) || !sameSourceValue(base.document.templates, next.templates);
