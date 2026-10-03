@@ -75,3 +75,11 @@ increment does not use a host locale heuristic or claim complete culture support
 The pinned .NET 10.0.5 corpus includes invariant and ordinal results, but only the
 ordinal results qualify this implementation. Both source and direct CIL tests
 consume the capture; browser and Rust native/Wasm qualification is pending.
+
+Run `node --expose-gc scripts/benchmarks/a08-default-string-sort.mjs` serially in
+the candidate and metadata baseline `85917302`, copying the identical runner to
+the baseline first. The bounded control uses 8,192 deterministic nullable strings
+by default, one warmup and five samples for each VM platform. It times only the
+default Sort dispatch and reports median/p95 plus managed allocation counts and
+bytes; compilation, input setup and output checks are excluded. This measures
+the existing default path, not explicit-comparer overhead or culture collation.
