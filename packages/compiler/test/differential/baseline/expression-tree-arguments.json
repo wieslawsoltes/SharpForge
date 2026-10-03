@@ -1,0 +1,4 @@
+{
+  "expression-tree-arguments/cs0854-cs0853-below-csharp-14": ["diagnostics", "warnings"],
+  "expression-tree-arguments/cs9307-only-from-csharp-14": ["diagnostics", "warnings"]
+}

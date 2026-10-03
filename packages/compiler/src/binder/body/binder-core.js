@@ -291,8 +291,8 @@ export class BinderCore {
         return n;
       }
       case 'TypeOfExpression': {
-        this.bindType(syntax.type, { allowUnbound: true });
-        return this.node('TypeOf', syntax, this.core.type);
+        const operandType = this.bindType(syntax.type, { allowUnbound: true })?.type ?? null;
+        return this.node('TypeOf', syntax, this.core.type, { operandType });
       }
       case 'SizeOfExpression': {
         const type = this.bindType(syntax.type).type;
@@ -327,15 +327,8 @@ export class BinderCore {
           [this.checked, this.uncheckedContext] = saved;
         }
       }
-      case 'InterpolatedStringExpression': {
-        const parts = [];
-        for (const content of syntax.contents)
-          if (content.kind === 'Interpolation') {
-            parts.push(this.value(content.expression));
-            if (content.alignmentClause) this.convert(this.value(content.alignmentClause.value), this.core.int);
-          }
-        return this.node('InterpolatedString', syntax, this.core.string, { parts, form: 'interpolatedString' });
-      }
+      case 'InterpolatedStringExpression':
+        return this.interpolatedString(syntax);
       case 'AwaitExpression':
         return this.await(syntax);
       case 'ThrowExpression': {

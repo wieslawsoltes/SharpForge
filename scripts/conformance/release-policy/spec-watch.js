@@ -3,12 +3,43 @@ import { isMain } from '../supply/files.js';
 import { github, repositoryPath, pages } from './github.js';
 import { policyJSON, sha256 } from './data.js';
 
+const releaseTag = /^v?(\d+)\.(\d+)\.(\d+)(?:[-.]([\w.-]+))?$/;
+
+function compareText(left, right) {
+  return left === right ? 0 : left < right ? -1 : 1;
+}
+
+function compareNumeric(left, right) {
+  // Tags can contain identifiers beyond Number's exact integer range.
+  const a = left.replace(/^0+(?=\d)/, '');
+  const b = right.replace(/^0+(?=\d)/, '');
+  return a.length - b.length || compareText(a, b);
+}
+
+function compareIdentifier(left, right) {
+  const leftNumeric = /^\d+$/.test(left);
+  const rightNumeric = /^\d+$/.test(right);
+  if (leftNumeric && rightNumeric) return compareNumeric(left, right);
+  if (leftNumeric !== rightNumeric) return leftNumeric ? -1 : 1;
+  return compareText(left, right);
+}
+
 function versionOrder(left, right) {
-  const parts = (tag) => tag.replace(/^v/, '').split(/[.-]/).slice(0, 3).map(Number);
-  const a = parts(left.tag_name);
-  const b = parts(right.tag_name);
-  for (let index = 0; index < 3; index++) if (a[index] !== b[index]) return b[index] - a[index];
-  return Date.parse(right.published_at) - Date.parse(left.published_at);
+  const a = releaseTag.exec(left.tag_name).slice(1);
+  const b = releaseTag.exec(right.tag_name).slice(1);
+  for (let index = 0; index < 3; index++) {
+    const order = compareNumeric(b[index], a[index]);
+    if (order) return order;
+  }
+  if ((a[3] === undefined) !== (b[3] === undefined)) return a[3] === undefined ? -1 : 1;
+  const leftPreview = a[3]?.split('.') ?? [];
+  const rightPreview = b[3]?.split('.') ?? [];
+  for (let index = 0; index < Math.min(leftPreview.length, rightPreview.length); index++) {
+    const order = compareIdentifier(rightPreview[index], leftPreview[index]);
+    if (order) return order;
+  }
+  return rightPreview.length - leftPreview.length
+    || Date.parse(right.published_at) - Date.parse(left.published_at);
 }
 
 export function observedRevisions(feed, payload) {
@@ -21,7 +52,7 @@ export function observedRevisions(feed, payload) {
   }
   const releases = payload.filter((row) => !row.draft);
   for (const row of releases) {
-    if (!/^v?\d+\.\d+\.\d+(?:[-.][\w.-]+)?$/.test(row.tag_name ?? '')
+    if (!releaseTag.test(row.tag_name ?? '')
         || row.tag_name.length > 128 || typeof row.prerelease !== 'boolean'
         || !Number.isFinite(Date.parse(row.published_at))) throw new Error('Malformed release identity');
   }
