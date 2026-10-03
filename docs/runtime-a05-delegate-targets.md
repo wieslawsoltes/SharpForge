@@ -23,6 +23,8 @@ The CIL package exports `managedDelegateSignature` and `supportedDelegateCall` f
 its package entry. They define the shared constructor/Invoke/Equals profile for
 registered framework delegates, closed Action/Func forms and declared delegate
 Invoke signatures. This metadata seam is separate from generic method execution.
+Standard arities are nongeneric Action, Action with 1–16 type arguments, and Func
+with 1–17 type arguments. Malformed arities are rejected before registry alias lookup.
 
 This PR is a partial T02.5 increment. Multicast Combine/Remove, invocation-list return
 semantics, `ldvirtftn`, generic method pointers, value-type instance binding and

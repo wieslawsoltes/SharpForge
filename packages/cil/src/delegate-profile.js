@@ -6,15 +6,19 @@ const key = value => JSON.stringify([!!value.isStatic, canonicalType(value.retur
 
 /** Resolve the Invoke contract without requiring executable runtime delegate methods. */
 export function managedDelegateSignature(inspector, name) {
+  const parts = genericTypeParts(name);
+  const standard = /^System\.(Action|Func)(?:`(.*))?$/.exec(parts.definition);
+  if (standard) {
+    if (standard[1] === 'Action' && standard[2] === undefined && !parts.arguments.length) return signature([]);
+    const arity = Number(standard[2]);
+    const maximum = standard[1] === 'Action' ? 16 : 17;
+    if (!/^[1-9]\d*$/.test(standard[2] ?? '') || arity > maximum || arity !== parts.arguments.length ||
+        parts.arguments.some(argument => !argument)) return null;
+    return standard[1] === 'Action' ? signature(parts.arguments) : signature(parts.arguments.slice(0, -1), parts.arguments.at(-1));
+  }
+  // Validate standard names before lookup: registry aliases may otherwise repair a malformed arity.
   const framework = frameworkType(name);
   if (framework?.kind === 'delegate') return signature(framework.parameters, framework.result ?? 'void');
-  const parts = genericTypeParts(name);
-  const arity = Number(parts.definition.split('`')[1]);
-  if (parts.definition === 'System.Action' && !parts.arguments.length) return signature([]);
-  if (/^System.Action`\d+$/.test(parts.definition) && arity === parts.arguments.length) return signature(parts.arguments);
-  if (/^System.Func`\d+$/.test(parts.definition) && arity === parts.arguments.length && arity > 0) {
-    return signature(parts.arguments.slice(0, -1), parts.arguments.at(-1));
-  }
   const type = inspector?.types.find(type => type.name === parts.definition);
   if (!type?.baseToken || inspector.metadata.typeName(type.baseToken) !== 'System.MulticastDelegate') return null;
   const invoke = type.methods.find(method => method.name === 'Invoke');

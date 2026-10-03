@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {CilVirtualMachine} from '@sharpforge/runtime';
-import {parseSignatureType, methodSignature, supportedDelegateCall} from '@sharpforge/cil';
+import {parseSignatureType, methodSignature, managedDelegateSignature, supportedDelegateCall} from '@sharpforge/cil';
+import {frameworkType} from '@sharpforge/framework';
 import {managedFixture} from './managed-fixtures.js';
 import {
   delegateMethodPointer, constructBoundDelegate, boundDelegatesEqual, boundDelegateCall
@@ -121,4 +122,41 @@ test('guest Equals uses the same identity and verifier rejects malformed Invoke 
     signature: {isStatic: true, parameters: [], returnType: 'int'}}), false);
   assert.equal(supportedDelegateCall(vm.inspector, {owner: 'System.Func`1<int>', name: '.ctor',
     signature: {isStatic: false, parameters: ['object', 'int'], returnType: 'void'}}), false);
+});
+
+const standardDelegate = (family, arity, count = arity) => `System.${family}\`${arity}<${Array(count).fill('int').join(',')}>`;
+
+for (const [owner, parameters, returnType] of [
+  ['System.Action', [], 'void'],
+  [standardDelegate('Action', 1), ['int'], 'void'],
+  [standardDelegate('Action', 16), Array(16).fill('int'), 'void'],
+  [standardDelegate('Func', 1), [], 'int'],
+  [standardDelegate('Func', 17), Array(16).fill('int'), 'int']
+]) {
+  test('public delegate profile accepts CLR arity boundary: ' + owner, () => {
+    const signature = {isStatic: false, parameters, returnType};
+    assert.deepEqual(managedDelegateSignature(null, owner), signature);
+    assert.equal(supportedDelegateCall(null, {owner, name: 'Invoke', signature}), true);
+  });
+}
+
+for (const owner of [
+  'System.Action`0', 'System.Action`0<>', standardDelegate('Action', 17), standardDelegate('Func', 18),
+  'System.Func', 'System.Func`0', 'System.Func`0<>', 'System.Func`01<int>', 'System.Action`x<int>',
+  'System.Action`-1<int>', 'System.Action`1<>', 'System.Func`1', 'System.Action<int>',
+  standardDelegate('Func', 2, 1), standardDelegate('Func', 1, 2), standardDelegate('Action', 2, 1)
+]) {
+  test('public delegate profile rejects malformed or out-of-range arity: ' + owner, () => {
+    assert.equal(managedDelegateSignature(null, owner), null);
+    assert.equal(supportedDelegateCall(null, {owner, name: '.ctor',
+      signature: {isStatic: false, parameters: ['object', 'nint'], returnType: 'void'}}), false);
+  });
+}
+
+test('registered framework canonicalization cannot bypass the standard delegate arity guard', () => {
+  const malformed = 'System.Func`2<int>';
+  assert.equal(frameworkType(malformed)?.name, 'System.Func`1<int>');
+  assert.equal(managedDelegateSignature(null, malformed), null);
+  assert.deepEqual(managedDelegateSignature(null, 'System.Func`1<int>'),
+    {isStatic: false, parameters: [], returnType: 'int'});
 });
