@@ -70,8 +70,11 @@ export function compareWithReference(tree, reference, text, limit = 8) {
     path.pop();
   };
   visit(tree.root, reference.tree);
-  const errors = list => list.sort().join(' '), mine = errors(tree.getDiagnostics().filter(d => d.severity === 'error').map(d => d.code)), theirs = errors(reference.diagnostics.filter(d => d[3] === 'error').map(d => d[0]));
-  if (mine !== theirs) problems.push(`error codes [${mine}] != [${theirs}]`);
+  // Error codes and the offsets they are reported at; several errors at one offset are compared as a set.
+  const errors = list => list.sort().join(' ');
+  const mine = errors(tree.getDiagnostics().filter(d => d.severity === 'error').map(d => `${d.code}@${d.start}`));
+  const theirs = errors(reference.diagnostics.filter(d => d[3] === 'error').map(d => `${d[0]}@${d[1]}`));
+  if (mine !== theirs) problems.push(`errors [${mine}] != [${theirs}]`);
   return problems;
 }
 /** Parses a fixture with the options Roslyn used for its reference dump and returns { text, tree, reference }. */
@@ -101,3 +104,28 @@ export function diagnosticsOf(text, languageVersion, options = {}) {
 }
 /** One line per node: the shape of a red node as `Kind(children)` with token text. */
 export function shapeOf(node) { return node.isToken ? (node.isMissing ? '<' + node.kind + '>' : node.text) : `${node.kind}(${node.childNodesAndTokens().map(shapeOf).join(' ')})`; }
+/** The statements of `body` parsed inside a method of a class. */
+export function statementsOf(body, options) {
+  return SyntaxTree.parseText(`class C { void M() { ${body} } }`, options).root.members[0].members[0].body.statements;
+}
+/** The red node of expression `text`, parsed as the initializer of a local. */
+export function expressionOf(text, options) {
+  return statementsOf(`var _ = ${text};`, options)[0].declaration.variables[0].initializer.value;
+}
+/** The members of `class C { text }`. */
+export function classMembersOf(text, options) {
+  return SyntaxTree.parseText(`class C { ${text} }`, options).root.members[0].members;
+}
+/** The diagnostic codes of a parse of `text` at `languageVersion`. */
+export function codesOf(text, languageVersion, options) {
+  return diagnosticsOf(text, languageVersion, options).map(entry => entry.split('@')[0]);
+}
+/**
+ * Asserts that a malformed fixture recovers exactly as Roslyn does (same tree, missing tokens and error codes) and
+ * that it reports at least one error. Returns what assertMatchesRoslyn returns.
+ */
+export function assertRecoversLikeRoslyn(relative) {
+  const result = assertMatchesRoslyn(relative);
+  assert(result.tree.getDiagnostics().length > 0, relative + ' reports errors');
+  return result;
+}

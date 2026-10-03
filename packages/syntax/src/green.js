@@ -226,10 +226,12 @@ export class GreenCache {
     map.set(h, token);
     return token;
   }
+  /** A zero-width missing token. A missing identifier has the empty string as its value, as in Roslyn. */
   missing(kind, leading = empty) {
-    if (leading.length) return new GreenToken(kind, '', undefined, leading, empty, GreenFlags.Missing);
+    const value = kind === 'IdentifierToken' ? '' : undefined;
+    if (leading.length) return new GreenToken(kind, '', value, leading, empty, GreenFlags.Missing);
     let token = this.missings.get(kind);
-    if (token === undefined) this.missings.set(kind, (token = new GreenToken(kind, '', undefined, empty, empty, GreenFlags.Missing)));
+    if (token === undefined) this.missings.set(kind, (token = new GreenToken(kind, '', value, empty, empty, GreenFlags.Missing)));
     else this.hits++;
     return token;
   }
