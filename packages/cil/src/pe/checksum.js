@@ -23,10 +23,13 @@ export function peChecksumOffset(bytes) {
 /** Compute the PE one's-complement checksum, ignoring its current four-byte field. */
 export function peChecksum(bytes) {
   const checksumOffset = peChecksumOffset(bytes);
+  const checksumEnd = checksumOffset + 4;
   let sum = 0;
   for (let offset = 0; offset < bytes.length; offset += 2) {
-    if (offset === checksumOffset || offset === checksumOffset + 2) continue;
-    sum += bytes[offset] | ((bytes[offset + 1] ?? 0) << 8);
+    const low = offset >= checksumOffset && offset < checksumEnd ? 0 : bytes[offset];
+    const highOffset = offset + 1;
+    const high = highOffset >= checksumOffset && highOffset < checksumEnd ? 0 : bytes[highOffset] ?? 0;
+    sum += low | (high << 8);
     sum = (sum & 65535) + (sum >>> 16);
   }
   return ((sum & 65535) + (sum >>> 16) + bytes.length) >>> 0;

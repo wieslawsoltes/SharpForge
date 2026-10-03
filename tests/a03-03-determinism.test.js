@@ -93,3 +93,15 @@ test('A03 deterministic finalization owns its Buffer copy without mutating an of
   finalized.fill(0);
   assert.deepEqual(carrier, before);
 });
+
+
+test('A03 checksum excludes its four bytes even with an odd PE header offset', () => {
+  const original = compile(undefined, { portablePdb: false }).assembly;
+  const pe = readPE(original), bytes = new Uint8Array(original.length + 1);
+  const peOffset = pe.optionalStart - 24;
+  bytes.set(original.subarray(0, peOffset));
+  bytes.set(original.subarray(peOffset), peOffset + 1);
+  new DataView(bytes.buffer).setUint32(0x3c, peOffset + 1, true);
+  const checksumOffset = pe.optionalStart + 65;
+  assert.equal(peChecksum(bytes), checksumReference(bytes, checksumOffset));
+});

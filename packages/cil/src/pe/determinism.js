@@ -6,7 +6,7 @@ import { peChecksum } from './checksum.js';
 
 /** Finalize a managed PE copy from its complete zero-identity content, then compute its checksum. */
 export function finalizeDeterministicPE(input) {
-  if (!(input instanceof Uint8Array)) throw new CilError('Deterministic PE input must be Uint8Array');
+  if (!(input instanceof Uint8Array) || input.length > 128 * 1024 * 1024) throw new CilError('Invalid deterministic PE input or size limit');
   const bytes = new Uint8Array(input);
   const pe = readPortableExecutable(bytes, { inspection: true, maxBytes: 128 * 1024 * 1024 });
   const mvid = pe.metadata.rows[0]?.[0]?.[2], guids = pe.metadata.streams.get('#GUID');
