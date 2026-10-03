@@ -9,6 +9,7 @@ import {createExceptionState} from './eh.js';
 import {ensureTypeInitialized} from './static-init.js';
 import {enterCilMethod} from './cil-method-events.js';
 import {cachedMetadataToken,verifiedMethod} from './token-cache.js';
+import {resolveVirtualTarget} from './inline-cache.js';
 
 export function call(vm,token,args,extra={}) {
   if(vm.frames.length>=vm.options.maxFrames)throw new ManagedFault('StackOverflowException','Managed call depth exceeded');
@@ -63,7 +64,7 @@ export function invoke(vm,instruction) {
       return;
     }
     if(instruction.name==='callvirt'&&args[0]===null)throw new ManagedFault('NullReferenceException','Null virtual receiver');
-    const dispatch=target&&instruction.name==='callvirt'&&(vm.inspector.methods.get(target)?.flags&0x40)?vm.typeSystem.virtualTarget(args[0],descriptor,target):target;
+    const dispatch=target&&instruction.name==='callvirt'&&(vm.inspector.methods.get(target)?.flags&0x40)?resolveVirtualTarget(vm,caller,instruction,descriptor,args[0]):target;
     if(dispatch) {
       if(!verifiedMethod(vm,dispatch))throw new ManagedFault('NotSupportedException','Unverified virtual override; select its method directly');
       vm.call(dispatch,args,{genericIdentity});

@@ -1,6 +1,6 @@
 {
   "lambdas/cs0029-lambda-return-type": ["diagnostics", "warnings"],
-  "lambdas/cs1593-delegate-invocation": ["warnings"],
+  "lambdas/cs1593-delegate-invocation": ["diagnostics", "warnings"],
   "lambdas/cs1593-wrong-parameter-count": ["diagnostics", "warnings"],
   "lambdas/delegates": ["diagnostics", "warnings", "bytecode", "cil"],
   "lambdas/func-and-action": ["diagnostics", "warnings", "bytecode", "cil"]

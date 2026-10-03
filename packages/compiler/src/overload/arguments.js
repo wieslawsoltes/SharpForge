@@ -7,6 +7,7 @@
  * temporaries when named arguments are out of parameter order - defaults are inserted for omitted optional
  * parameters and the trailing arguments of an expanded call are collected into one array.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { RefKind } from '../symbols/types.js';
 
 /**
@@ -22,7 +23,7 @@ import { RefKind } from '../symbols/types.js';
 export function mapArguments(parameters, args, { expanded = false } = {}) {
   const last = parameters.length - 1,
     hasParams = last >= 0 && parameters[last].isParams;
-  if (expanded && !hasParams) return { ok: false, error: { code: 'CS1501', kind: 'notExpandable' } };
+  if (expanded && !hasParams) return { ok: false, error: { code: DiagnosticId.CS1501, kind: 'notExpandable' } };
   const parameterOf = new Array(args.length).fill(-1),
     taken = new Array(parameters.length).fill(false);
   let paramsCount = 0;
@@ -36,21 +37,21 @@ export function mapArguments(parameters, args, { expanded = false } = {}) {
         taken[last] = true;
         continue;
       }
-      if (i > last) return { ok: false, error: { code: 'CS1501', kind: 'tooMany', argument: i } };
+      if (i > last) return { ok: false, error: { code: DiagnosticId.CS1501, kind: 'tooMany', argument: i } };
       parameterOf[i] = i;
       taken[i] = true;
       continue;
     }
     // The parameters of a partial method are named by its defining declaration (symbols/source/partial-members.js).
     const index = parameters.findIndex(p => ((p.originalDefinition ?? p).callerName ?? p.name) === name);
-    if (index < 0) return { ok: false, error: { code: 'CS1739', kind: 'noSuchName', argument: i, name } };
+    if (index < 0) return { ok: false, error: { code: DiagnosticId.CS1739, kind: 'noSuchName', argument: i, name } };
     // A named argument may be followed by positional ones only when it stands in its parameter's position (C# 7.2).
-    if (index !== i && positionalAfter(i)) return { ok: false, error: { code: 'CS8323', kind: 'badNonTrailingName', argument: i, name } };
+    if (index !== i && positionalAfter(i)) return { ok: false, error: { code: DiagnosticId.CS8323, kind: 'badNonTrailingName', argument: i, name } };
     if (taken[index])
       return {
         ok: false,
         error: {
-          code: args.slice(0, i).some(a => a.name === name) ? 'CS1740' : 'CS1744',
+          code: args.slice(0, i).some(a => a.name === name) ? DiagnosticId.CS1740 : DiagnosticId.CS1744,
           kind: args.slice(0, i).some(a => a.name === name) ? 'nameUsedTwice' : 'namedAlreadyPositional',
           argument: i,
           name,
@@ -69,7 +70,7 @@ export function mapArguments(parameters, args, { expanded = false } = {}) {
       defaults.push(p);
       continue;
     }
-    return { ok: false, error: { code: 'CS7036', kind: 'missing', parameter: parameters[p] } };
+    return { ok: false, error: { code: DiagnosticId.CS7036, kind: 'missing', parameter: parameters[p] } };
   }
   return { ok: true, parameterOf, expanded, paramsCount, defaults };
 }

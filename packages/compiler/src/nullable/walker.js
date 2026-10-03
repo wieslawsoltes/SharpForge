@@ -13,6 +13,7 @@
  * `x?.M()`, `x ?? y` and the analysis attributes (nullable/attributes.js) split or refine states. Loops iterate to a
  * fixed point of the state at the loop head, as Roslyn does (nullable/walker-loops.js).
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { NullableConditions } from './walker-conditions.js';
 import { NullableLoops } from './walker-loops.js';
 import { NullableRules } from './walker-rules.js';
@@ -176,7 +177,7 @@ class NullableWalkerCore {
     if (!receiver || receiver.kind === 'This' || receiver.kind === 'Base' || receiver.kind === 'ConditionalReceiver') return;
     const state = this.expression(receiver, flow);
     if (state !== MAYBE_NULL || !isReferenceLike(receiver.type)) return;
-    this.warn(receiver.syntax, 'CS8602');
+    this.warn(receiver.syntax, DiagnosticId.CS8602);
     const variable = this.variableOf(receiver);
     if (variable) flow.set(variable, NOT_NULL);
   }
@@ -214,8 +215,8 @@ class NullableWalkerCore {
     if (state !== MAYBE_NULL || !parameter || value.suppressed) return;
     const acceptsNull = !isNotAnnotated(parameter.typeWithAnnotations) || !isReferenceLike(parameter.type) || allowsNull(parameter);
     if (acceptsNull) return;
-    if (this.isNullLiteral(value)) this.warn(value.syntax, 'CS8625');
-    else this.warn(value.syntax, 'CS8604', [parameter.name, (method.originalDefinition ?? method).toDisplayString()]);
+    if (this.isNullLiteral(value)) this.warn(value.syntax, DiagnosticId.CS8625);
+    else this.warn(value.syntax, DiagnosticId.CS8604, [parameter.name, (method.originalDefinition ?? method).toDisplayString()]);
   }
 
   isNullLiteral(node) {
@@ -254,14 +255,14 @@ class NullableWalkerCore {
     if (this.declaredAnnotation(target) !== NullableAnnotation.NotAnnotated) return;
     const member = target.field ?? target.property ?? target.parameter;
     if (member && allowsNull(member)) return;
-    if (this.isNullLiteral(value)) this.warn(value.syntax, target.kind === 'Local' ? 'CS8600' : 'CS8625');
-    else this.warn(value.syntax, target.kind === 'Local' ? 'CS8600' : 'CS8601');
+    if (this.isNullLiteral(value)) this.warn(value.syntax, target.kind === 'Local' ? DiagnosticId.CS8600 : DiagnosticId.CS8625);
+    else this.warn(value.syntax, target.kind === 'Local' ? DiagnosticId.CS8600 : DiagnosticId.CS8601);
   }
 
   conversion(node, flow) {
     const state = this.expression(node.operand, flow);
     const isUnboxing = node.conversion?.kind === 'Unboxing' && node.type?.isValueType === true && !node.type.isNullableValueType;
-    if (isUnboxing && state === MAYBE_NULL) this.warn(node.syntax, 'CS8605');
+    if (isUnboxing && state === MAYBE_NULL) this.warn(node.syntax, DiagnosticId.CS8605);
     if (node.type?.isValueType === true && !node.type.isNullableValueType) return NOT_NULL;
     return state;
   }
@@ -364,7 +365,7 @@ class NullableWalkerCore {
     const returnType = method.returnTypeWithAnnotations;
     if (!isNotAnnotated(returnType) || !isReferenceLike(method.returnType)) return;
     if (resultState(method, { returnValue: true }) === MAYBE_NULL) return;
-    this.warn(value.syntax, 'CS8603');
+    this.warn(value.syntax, DiagnosticId.CS8603);
   }
 
   /** When a constructor exits, every non-nullable reference field and auto-property must hold a non-null value. */
@@ -380,7 +381,7 @@ class NullableWalkerCore {
       if (!isNotAnnotated(member.typeWithAnnotations) || !isReferenceLike(member.type)) continue;
       const key = isField ? (member.originalDefinition ?? member) : member;
       if (flow.get(key) === NOT_NULL) continue;
-      this.warn(method.locations[0], 'CS8618', [isField ? 'field' : 'property', member.name]);
+      this.warn(method.locations[0], DiagnosticId.CS8618, [isField ? 'field' : 'property', member.name]);
     }
   }
 }

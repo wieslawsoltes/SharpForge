@@ -1,5 +1,5 @@
 // node --expose-gc scripts/benchmarks/a08-array-search.mjs [count=2048] [queries=512]
-// Copy this identical runner to Ordinal baseline 67344915; execute the two checkouts serially.
+// Copy this identical runner to Ordinal baseline 640b96d3; execute the two checkouts serially.
 import assert from 'node:assert/strict';
 import {cpus} from 'node:os';
 import {compileToIL} from '@sharpforge/compiler';

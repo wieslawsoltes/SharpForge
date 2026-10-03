@@ -79,7 +79,8 @@ ordering, compares strings ordinally, and uses the existing managed primitive
 identity for compatible boxed values. Different primitive types and objects
 without IComparable raise `ArgumentException`; arbitrary managed IComparable
 callbacks remain explicitly unsupported under #2655. NaN sorts first and
-compares equal to NaN. The new contracts occupy A07 slots `524293`–`524295`.
+compares equal to NaN. The new contracts occupy A07 slots `524294`–`524296`,
+after the released Environment slot `524289` and Ordinal slots `524290`–`524293`.
 
 `Array.BinarySearch(Array, object, IComparer)` uses that comparer without
 allocating managed boxes for value-array elements. It returns a matching index
@@ -106,7 +107,7 @@ are not silently treated as successful execution by the reference harness.
 
 `scripts/benchmarks/a08-array-search.mjs` measures the released typed/default
 BinarySearch and reports the new explicit ordinal path separately. Copy the same
-runner to Ordinal baseline `67344915` and run both checkouts serially. Setup is
+runner to Ordinal baseline `640b96d3` and run both checkouts serially. Setup is
 excluded; one warmup and five samples use deterministic nullable strings, hits
 and complemented misses through each real VM platform. The typed/default path
 still scans the full input for comparability, so its total cost remains O(n)

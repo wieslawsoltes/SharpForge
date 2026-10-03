@@ -1,31 +1,41 @@
-import {NetworkPolicy} from '../../packages/network/src/index.js';
-const E=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-export const defaultRuntimeSettings=()=>({enabled:false,allowedOrigins:[],timeoutMs:10000,maxRequestBytes:1048576,maxResponseBytes:1048576,maxConcurrent:4,maxQueue:32,compute:{backend:'auto',workers:2,maxElements:1000000}});
-/** User grants are session-only: never imported from a project, ZIP, or recovery record. */
-export class RuntimeTools{
- constructor({state,request,build,save,toast}){Object.assign(this,{state,request,build,save,toast});state.runtimeSettings=defaultRuntimeSettings();this.el=null;}
- configure(patch={}){
-  const next={...this.state.runtimeSettings,...patch,compute:{...this.state.runtimeSettings.compute,...patch.compute}};
-  if(typeof next.enabled!=='boolean')throw new Error('Enable networking explicitly with a Boolean setting');
-  const policy=new NetworkPolicy(next);if(!['auto','wasm','scalar'].includes(next.compute.backend)||!Number.isInteger(next.compute.workers)||next.compute.workers<1||next.compute.workers>8||next.compute.maxElements!==1000000)throw new Error('Invalid numerical worker configuration');
-  const language=patch.langVersion??this.state.langVersion??'14';if(!/^(?:[1-9]|1[0-4]|preview)$/.test(language))throw new Error('Choose a supported language version or preview');
-  this.state.runtimeSettings={...next,allowedOrigins:[...policy.origins]};delete this.state.runtimeSettings.langVersion;
-  this.state.langVersion=language;this.state.buildDirty=true;this.state.revision++;this.save();return this.settings();
- }
- settings(){return {...structuredClone(this.state.runtimeSettings),langVersion:this.state.langVersion??'14'};}
- launchOptions(){const s=this.state.runtimeSettings;return {network:{allowedOrigins:s.enabled?[...s.allowedOrigins]:[],timeoutMs:s.timeoutMs,maxRequestBytes:s.maxRequestBytes,maxResponseBytes:s.maxResponseBytes,maxConcurrent:s.maxConcurrent,maxQueue:s.maxQueue},compute:{...s.compute}};}
- revoke(){this.state.runtimeSettings={...this.state.runtimeSettings,enabled:false,allowedOrigins:[]};}
- renderTool(panel,el){if(panel!=='runtime-settings')return false;this.el=el;const s=this.settings(),project=!!this.state.projectSystem;
-  el.innerHTML=`<div class="tool-page runtime-page"><header class="runtime-header"><div><h2>Language & runtime</h2><p>Managed browser execution · explicit host capabilities</p></div><button class="button" id="runtime-refresh">Refresh metrics</button></header>
-  <section><h3>C# language features</h3><label class="tool-field">Loose-source language version<select id="runtime-language" ${project?'disabled':''}>${['8','9','10','11','12','13','14','preview'].map(v=>`<option value="${v}" ${s.langVersion===v?'selected':''}>${v==='preview'?'Preview — selected C# 15 features':'C# '+v}</option>`).join('')}</select></label><p>${project?'This workspace reads LangVersion from each csproj. Edit the project XML to change it.':'Feature gates select the syntax additions; they do not imply complete compatibility with that language version.'}</p></section>
-  <section><h3>SIMD & numerical workers</h3><div class="runtime-grid"><label class="tool-field">Numerical backend<select id="runtime-backend">${[['auto','Automatic SIMD / scalar fallback'],['wasm','Require WebAssembly SIMD128'],['scalar','Scalar JavaScript']].map(([v,n])=>`<option value="${v}" ${s.compute.backend===v?'selected':''}>${n}</option>`).join('')}</select></label><label class="tool-field">Isolated compute workers<input id="runtime-workers" type="number" min="1" max="8" value="${s.compute.workers}"></label></div><p>Vector&lt;int&gt; and Vector&lt;double&gt; use the selected backend. ParallelMath jobs use real workers with copied input buffers. Managed Task/Thread contexts remain cooperative; no shared managed heap is exposed to workers.</p></section>
-  <section><h3>Networking permissions</h3><label class="runtime-grant"><input id="runtime-network" type="checkbox" ${s.enabled?'checked':''}> Enable networking for this launch profile</label><label class="tool-field">Allowed origins — one exact origin per line<textarea id="runtime-origins" rows="4" spellcheck="false" placeholder="https://api.example.com\nhttp://localhost:8080">${E(s.allowedOrigins.join('\n'))}</textarea></label><div class="runtime-grid"><label class="tool-field">Request deadline (ms)<input id="runtime-timeout" type="number" min="1" max="600000" value="${s.timeoutMs}"></label><label class="tool-field">Maximum response bytes<input id="runtime-response" type="number" min="1" max="67108864" value="${s.maxResponseBytes}"></label></div><p>Denied by default. Grants are not saved in ZIPs, projects, or local recovery. Cookies and automatic redirects are disabled. Browser CORS, HTTPS/mixed-content and server CSP rules still apply. Stop/relaunch to use changed settings.</p><button class="button" id="runtime-revoke">Revoke grants and stop execution</button></section>
-  <div class="tool-actions"><button class="button primary" id="runtime-apply">Apply to next launch</button><span id="runtime-status" role="status"></span></div>
-  <section><h3>Observed runtime capabilities</h3><pre id="runtime-metrics">${E(JSON.stringify(this.state.debug?.runtime??{status:'Run a program to see actual backend and transport metrics.'},null,2))}</pre><p>Reverse debugging starts a new history segment after external I/O or worker jobs. An external request cannot be undone or replayed by restoring a managed snapshot.</p></section></div>`;
-  el.querySelector('#runtime-refresh').onclick=()=>this.refresh();
-  el.querySelector('#runtime-apply').onclick=async()=>{try{this.configure({enabled:el.querySelector('#runtime-network').checked,allowedOrigins:el.querySelector('#runtime-origins').value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean),timeoutMs:Number(el.querySelector('#runtime-timeout').value),maxResponseBytes:Number(el.querySelector('#runtime-response').value),compute:{backend:el.querySelector('#runtime-backend').value,workers:Number(el.querySelector('#runtime-workers').value)},langVersion:project?this.state.langVersion:el.querySelector('#runtime-language').value});el.querySelector('#runtime-status').textContent='Applied. Existing sessions retain their original grants.';if(!this.state.readOnly)await this.build();}catch(e){el.querySelector('#runtime-status').textContent=e.message;this.toast(e.message,'error');}};
-  el.querySelector('#runtime-revoke').onclick=async()=>{this.revoke();await this.request('stop');this.renderTool(panel,el);};return true;
- }
- update(){const target=this.el?.querySelector('#runtime-metrics');if(target)target.textContent=JSON.stringify(this.state.debug?.runtime??{},null,2);}
- async refresh(){try{const value=await this.request('runtimeInfo');const target=this.el?.querySelector('#runtime-metrics');if(target)target.textContent=JSON.stringify(value,null,2);}catch(e){this.toast(e.message,'error');}}
+import { defaultSessionSettings } from './workbench/session-settings.js';
+import { createLegacyRuntimeSettings } from './workbench/session-runtime-bridge.js';
+import { renderRuntimeSettings } from './workbench/session-runtime-view.js';
+
+export const defaultRuntimeSettings = defaultSessionSettings;
+
+/** User grants are memory-only and owned by the injected profile/application settings provider. */
+export class RuntimeTools {
+  constructor({ state, request, build, save, toast, settings }) {
+    Object.assign(this, { state, request, build, save, toast });
+    this.settingsProvider = settings ?? createLegacyRuntimeSettings({ state, save, request });
+    this.el = null;
+  }
+
+  configure(patch = {}) { return this.settingsProvider.configure(patch); }
+  settings() { return this.settingsProvider.settings(); }
+  launchOptions(...args) { return this.settingsProvider.launchOptions(...args); }
+  revoke() { return this.settingsProvider.revoke(); }
+
+  renderTool(panel, element) {
+    if (panel !== 'runtime-settings') return false;
+    this.el = element;
+    renderRuntimeSettings(this, element);
+    return true;
+  }
+
+  update() {
+    const target = this.el?.querySelector('#runtime-metrics');
+    if (target) target.textContent = JSON.stringify(this.state.debug?.runtime ?? {}, null, 2);
+  }
+
+  async refresh() {
+    const selected = this.settingsProvider.context?.().id;
+    try {
+      const value = await this.request('runtimeInfo');
+      if (selected !== this.settingsProvider.context?.().id) return;
+      const target = this.el?.querySelector('#runtime-metrics');
+      if (target) target.textContent = JSON.stringify(value, null, 2);
+    } catch (error) { this.toast(error.message, 'error'); }
+  }
 }

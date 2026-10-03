@@ -2,6 +2,7 @@
  * Constant evaluation in declaration contexts: const fields (with circularity detection), enum members
  * and parameter default values.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind } from '../symbols/types.js';
 import { bindEnumMembers } from '../binder/enums.js';
 import { BodyBinder } from '../binder/body-binder.js';
@@ -44,7 +45,7 @@ export const ConstantBinding = Base =>
       const state = this.constantState.get(field);
       if (state === 'done') return field.constantValueObject ?? null;
       if (state === 'active') {
-        this.reportAt(field, 'CS0110', [field.toDisplayString()]);
+        this.reportAt(field, DiagnosticId.CS0110, [field.toDisplayString()]);
         this.constantState.set(field, 'done');
         field.constantValueObject = null;
         return null;
@@ -60,11 +61,11 @@ export const ConstantBinding = Base =>
             onlyNull = type?.isReferenceType === true && type.specialType !== 'System_String' && !type.isErrorType();
           // A const of a reference type other than string can only be null: a non-null constant initializer is CS0134.
           const written = r.constant ?? r.bound?.operand?.constantValue;
-          if (onlyNull && written && !isNull) this.report(field.uri, field.initializerSyntax, 'CS0134', [field.toDisplayString(), type.toDisplayString()]);
+          if (onlyNull && written && !isNull) this.report(field.uri, field.initializerSyntax, DiagnosticId.CS0134, [field.toDisplayString(), type.toDisplayString()]);
           else if (r.constant) value = r.constant;
-          else if (!isNull) this.report(field.uri, field.initializerSyntax, 'CS0133', [field.toDisplayString()]);
+          else if (!isNull) this.report(field.uri, field.initializerSyntax, DiagnosticId.CS0133, [field.toDisplayString()]);
         }
-      } else this.reportAt(field, 'CS0145');
+      } else this.reportAt(field, DiagnosticId.CS0145);
       field.constantValueObject = value;
       this.constantState.set(field, 'done');
       return value;
@@ -76,7 +77,7 @@ export const ConstantBinding = Base =>
           this.constantOf(m);
           const t = m.type;
           if (t && !t.isErrorType() && t.isValueType === true && t.typeKind === TypeKind.Struct && !t.specialType && m.typeSyntax)
-            this.report(m.uri, m.typeSyntax, 'CS0283', [t.toDisplayString()]);
+            this.report(m.uri, m.typeSyntax, DiagnosticId.CS0283, [t.toDisplayString()]);
         }
     }
     /** The default value converted to the parameter type; a value of the wrong type is CS1750 on the parameter. */
@@ -90,8 +91,8 @@ export const ConstantBinding = Base =>
         raised = binder.quiet;
         binder.quiet = saved;
       }
-      const mismatch = raised.find(d => d.code === 'CS0029' || d.code === 'CS0266');
-      if (mismatch && p.locations?.[0]) binder.report(p.locations[0], 'CS1750', mismatch.args);
+      const mismatch = raised.find(d => d.code === DiagnosticId.CS0029 || d.code === DiagnosticId.CS0266);
+      if (mismatch && p.locations?.[0]) binder.report(p.locations[0], DiagnosticId.CS1750, mismatch.args);
       else for (const d of raised) binder.report(d.node, d.code, d.args);
       return result;
     }
@@ -113,7 +114,7 @@ export const ConstantBinding = Base =>
             (r.bound.conversion?.kind === 'ImplicitNullable' && r.bound.operand?.constantValue)
           )
         )
-          binder.report(p.defaultSyntax, 'CS1736', [p.name]);
+          binder.report(p.defaultSyntax, DiagnosticId.CS1736, [p.name]);
       }
     }
   };
