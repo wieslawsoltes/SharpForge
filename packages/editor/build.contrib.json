@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "styles": [
+    {
+      "source": "packages/editor/src/vendor/classic.css",
+      "order": 1000
+    },
+    {
+      "source": "packages/editor/src/editor.css",
+      "order": 2000
+    }
+  ],
+  "workers": [],
+  "assets": [
+    {
+      "source": "packages/editor",
+      "target": "packages/editor",
+      "order": 100
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "tasks": {
+    "a21:cli": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "apps/cli/main.js"
+          ]
+        }
+      ]
+    },
+    "a21:lsp": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "packages/protocol/bin/sharpforge-lsp.js"
+          ]
+        }
+      ]
+    },
+    "a21:dap": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "packages/protocol/bin/sharpforge-dap.js"
+          ]
+        }
+      ]
+    }
+  }
+}

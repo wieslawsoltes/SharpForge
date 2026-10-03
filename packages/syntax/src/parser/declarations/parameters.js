@@ -36,10 +36,16 @@ export const parameterMethods = {
   },
   parameter() {
     const attributeLists = this.attributeLists(),
-      modifiers = this.parameterModifiers();
+      firstModifier = this.i,
+      modifiers = this.parameterModifiers(),
+      afterModifiers = this.i;
     if (this.at('__arglist')) return this.n('Parameter', attributeLists, modifiers, null, this.take(), null);
-    const type = this.type(),
+    const typeToken = this.current,
+      type = this.type(),
+      nameToken = this.current,
       identifier = this.id();
+    if (modifiers.length) this.paramsCollection(firstModifier, afterModifiers, type);
+    if (this.fieldKeyword) this.fieldNamedVariable(nameToken, typeToken, nameToken);
     return this.n('Parameter', attributeLists, modifiers, type, identifier, this.parameterDefault());
   },
   /** The `= value` default of an optional parameter, or null. */

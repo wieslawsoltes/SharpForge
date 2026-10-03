@@ -120,9 +120,9 @@ test('T07.4 primary constructors match Roslyn and LangVersion 11 reports the fea
     ['InterfaceDeclaration', true, true],
     ['ClassDeclaration', true, true]
   ]);
-  assert.deepEqual(diagnosticsOf('class Point(int x, int y) : Base(x) { }', '11'), ['CS9058@11 "("']);
+  assert.deepEqual(diagnosticsOf('class Point(int x, int y) : Base(x) { }', '11'), ['CS9058@11 "(int x, int y)"']);
   assert.deepEqual(diagnosticsOf('class Point(int x, int y) : Base(x) { }', '12'), []);
-  assert.deepEqual(diagnosticsOf('struct S(int a);', '11'), ['CS9058@8 "("']);
+  assert.deepEqual(diagnosticsOf('struct S(int a);', '11'), ['CS9058@8 "(int a)"']);
   assert.deepEqual(diagnosticsOf('record R(int a);', '9'), [], 'positional records are C# 9, not primary constructors');
 });
 test('T07.5 partial members match Roslyn and are gated per version', () => {
@@ -143,8 +143,9 @@ test('T07.5 partial members match Roslyn and are gated per version', () => {
   assert.deepEqual(gate('public partial int M();', '8'), ['CS8400']);
   assert.deepEqual(gate('partial int M();', '8'), ['CS8400']);
   assert.deepEqual(gate('public partial int M();', '9'), []);
-  assert.deepEqual(gate('public partial int P { get; }', '12'), ['CS9202']);
-  assert.deepEqual(gate('public partial int this[int i] { get; }', '12'), ['CS9202']);
+  // Roslyn reports a partial property below C# 13 as "the modifier 'partial' is not valid for this item" (CS8703).
+  assert.deepEqual(gate('public partial int P { get; }', '12'), ['CS8703']);
+  assert.deepEqual(gate('public partial int this[int i] { get; }', '12'), ['CS8703']);
   assert.deepEqual(gate('public partial int P { get; }', '13'), []);
   assert.deepEqual(gate('public partial C();', '13'), ['CS9260']);
   assert.deepEqual(gate('public partial event System.Action E;', '13'), ['CS9260']);
@@ -152,7 +153,7 @@ test('T07.5 partial members match Roslyn and are gated per version', () => {
   assert.deepEqual(gate('public partial C(); public partial event System.Action E;', '14'), []);
   assert.deepEqual(
     diagnosticsOf('partial class C { public partial int P { get; } }', '12'),
-    ['CS9202@37 "P"'],
+    ['CS8703@37 "P"'],
     'the diagnostic is on the member name'
   );
 });

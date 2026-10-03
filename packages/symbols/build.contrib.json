@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "styles": [],
+  "workers": [],
+  "assets": [
+    {
+      "source": "packages/symbols",
+      "target": "packages/symbols",
+      "order": 100
+    }
+  ]
+}

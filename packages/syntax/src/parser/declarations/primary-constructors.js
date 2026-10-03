@@ -6,8 +6,10 @@ export const primaryConstructorMethods = {
   /** The parameter list of a type header, or null. `gated` is false for records, whose positional parameters are C# 9. */
   primaryConstructorParameters(gated = true) {
     if (!this.at('(')) return null;
-    if (gated) this.feature('PrimaryConstructors', this.current);
-    return this.parameterList();
+    const open = this.current,
+      parameters = this.parameterList();
+    if (gated) this.feature('PrimaryConstructors', open, this.tokens[this.i - 1]);
+    return parameters;
   },
   /** `: Base(args), IOther` - a base type followed by an argument list is a PrimaryConstructorBaseType. */
   baseList() {

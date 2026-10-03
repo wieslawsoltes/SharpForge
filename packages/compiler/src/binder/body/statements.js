@@ -2,6 +2,7 @@
  * Statement dispatch: blocks and scopes, control flow, labels and reachability (`completes`), which drives
  * CS0162 (unreachable code), CS0161 (not all paths return), CS0163 and CS8070 (switch fall-through).
  */
+import { reportYieldInLambda } from '../iterators.js';
 import { ErrorTypeSymbol } from '../../symbols/types.js';
 
 const unknown = ErrorTypeSymbol.unknown;
@@ -276,8 +277,12 @@ export const StatementBinding = Base =>
           return this.tryStatement(syntax);
         case 'YieldReturnStatement':
         case 'YieldBreakStatement': {
-          this.c.isIterator = true;
-          this.rootBinder.isIterator = true;
+          // A yield in a lambda is an error (CS1621, binder/iterators.js) and does not make the method an iterator.
+          if (this.c.isLambda) reportYieldInLambda(this, syntax);
+          else {
+            this.c.isIterator = true;
+            this.rootBinder.isIterator = true;
+          }
           if (syntax.kind === 'YieldBreakStatement') return stmt('YieldBreak', syntax, false, {});
           const element = this.iteratorElementType(),
             e = this.value(syntax.expression);
