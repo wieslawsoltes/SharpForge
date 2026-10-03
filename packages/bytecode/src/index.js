@@ -91,3 +91,6 @@ export {decimalMaxCoefficient,isDecimal,decimal,decimalZero,decimalFromBits,deci
 export {scalarConvert,scalarBinary,scalarUnary,encodeScalar,decodeScalar,scalarFormat} from './numeric/scalar-ops.js';
 
 export {numericFormat} from './numeric/numeric-format.js';
+
+export {int64Binary, int64Compare, int64Unary} from './numeric/int64.js';
+export {checkedInteger, numericFault} from './numeric/checked.js';
