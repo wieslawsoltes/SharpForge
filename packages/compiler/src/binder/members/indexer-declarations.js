@@ -6,6 +6,7 @@
  *
  * Returns `{ member, code, args, at? }` rows: `at` is the syntax to report at when it is not the `this` keyword.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { SymbolKind, RefKind } from '../../symbols/types.js';
 
 // An indexer declared without parameters is still an indexer declaration (its symbol has no parameters).
@@ -20,15 +21,15 @@ export function checkIndexerDeclarations(type) {
   for (const indexer of type.getMembers().filter(isIndexer)) {
     const syntax = indexer.syntax,
       list = syntax?.parameterList;
-    if (indexer.isStatic) rows.push({ member: indexer, code: 'CS0106', args: ['static'] });
-    if (list && !indexer.parameters.length) rows.push({ member: indexer, code: 'CS1551', args: [], at: list.closeBracketToken });
+    if (indexer.isStatic) rows.push({ member: indexer, code: DiagnosticId.CS0106, args: ['static'] });
+    if (list && !indexer.parameters.length) rows.push({ member: indexer, code: DiagnosticId.CS1551, args: [], at: list.closeBracketToken });
     for (const parameter of indexer.parameters) {
       if (parameter.refKind !== RefKind.Ref && parameter.refKind !== RefKind.Out) continue;
       const keyword = parameter.syntax?.modifiers?.find(token => byRefKeywords.has(token.text));
-      rows.push({ member: indexer, code: 'CS0631', args: [], at: keyword ?? parameter.syntax });
+      rows.push({ member: indexer, code: DiagnosticId.CS0631, args: [], at: keyword ?? parameter.syntax });
     }
     const key = (indexer.explicitInterfaceSyntax ? indexer.name : 'this') + '[' + signatureOf(indexer) + ']';
-    if (signatures.has(key) && indexer.parameters.length) rows.push({ member: indexer, code: 'CS0111', args: ['this', type.toDisplayString()] });
+    if (signatures.has(key) && indexer.parameters.length) rows.push({ member: indexer, code: DiagnosticId.CS0111, args: ['this', type.toDisplayString()] });
     signatures.add(key);
   }
   return rows;

@@ -25,9 +25,10 @@ enclosing parameters. No base graph or executable method body is loaded.
 Generic metadata indexing is linear, limited to 100,000 parameter/constraint
 rows, 1,024 parameters per owner and 4,096 name characters. Duplicate positions,
 gaps, invalid owners and invalid/duplicate constraint references fail explicitly.
-Constraints remain unresolved tokens: their semantic resolution/enforcement,
-generic instantiation and method-owned generic parameter identities are separate
-batches. Metadata generic parameters report `isLoaded: false`; constructing
+Constraints remain unresolved tokens: their semantic resolution/enforcement and
+generic instantiation remain separate batches. [Method-owned parameters](METHODS.md)
+reuse the same metadata index and expose a canonical declaring method.
+Metadata generic parameters report `isLoaded: false`; constructing
 arrays/pointers/function pointers from them reports a TypeLoad diagnostic until
 generic type services are available.
 The independent SDK 10.0.201 / CoreCLR 10.0.5 fixture compares six definitions

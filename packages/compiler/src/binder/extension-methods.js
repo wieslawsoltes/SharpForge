@@ -11,6 +11,7 @@
  *
  * Lookup and invocation are in overload/extension-methods.js; CS1929 and CS1061 are reported there.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind, RefKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { isValidReceiverConversion } from '../overload/extension-methods.js';
@@ -26,13 +27,13 @@ function receiverRows(method, parameter) {
     type = parameter.type,
     thisToken = modifierOf(parameter, 'this'),
     paramsToken = modifierOf(parameter, 'params');
-  if (paramsToken) row('CS1104', paramsToken);
-  if (parameter.refKind === RefKind.Out) row('CS8328', thisToken, ['this', 'out']);
+  if (paramsToken) row(DiagnosticId.CS1104, paramsToken);
+  if (parameter.refKind === RefKind.Out) row(DiagnosticId.CS8328, thisToken, ['this', 'out']);
   const isValueReceiver = type?.isValueType === true || type?.typeKind === TypeKind.TypeParameter;
-  if (parameter.refKind === RefKind.Ref && !isValueReceiver) row('CS8337', null, [method.name]);
-  if (parameter.refKind === RefKind.In && !isValueReceiver) row('CS8338', null, [method.name]);
+  if (parameter.refKind === RefKind.Ref && !isValueReceiver) row(DiagnosticId.CS8337, null, [method.name]);
+  if (parameter.refKind === RefKind.In && !isValueReceiver) row(DiagnosticId.CS8338, null, [method.name]);
   if (type?.typeKind === TypeKind.Pointer || type?.typeKind === TypeKind.Dynamic) {
-    row('CS1103', parameter.syntax.type, [type.toDisplayString()]);
+    row(DiagnosticId.CS1103, parameter.syntax.type, [type.toDisplayString()]);
   }
   return rows;
 }
@@ -50,15 +51,15 @@ export function checkExtensionDeclarations(type) {
     const first = method.parameters[0];
     for (const parameter of method.parameters.slice(1)) {
       const token = modifierOf(parameter, 'this');
-      if (token) rows.push({ member: method, code: 'CS1100', args: [], at: token });
+      if (token) rows.push({ member: method, code: DiagnosticId.CS1100, args: [], at: token });
     }
     if (!first || !modifierOf(first, 'this')) continue;
     if (!type.isStatic || type.arity > 0) {
       // One diagnostic per class, at its name, however many extension methods it declares.
-      if (!reportedContainer) rows.push({ member: type, code: 'CS1106', args: [] });
+      if (!reportedContainer) rows.push({ member: type, code: DiagnosticId.CS1106, args: [] });
       reportedContainer = true;
-    } else if (type.containingType) rows.push({ member: method, code: 'CS1109', args: [type.name] });
-    else if (!method.isStatic) rows.push({ member: method, code: 'CS1105', args: [] });
+    } else if (type.containingType) rows.push({ member: method, code: DiagnosticId.CS1109, args: [type.name] });
+    else if (!method.isStatic) rows.push({ member: method, code: DiagnosticId.CS1105, args: [] });
     rows.push(...receiverRows(method, first));
   }
   return rows;
@@ -93,7 +94,7 @@ export const ExtensionMethodBinding = Base =>
         const method = result.method.reducedFrom ?? result.method;
         method.uses = (method.uses ?? 0) + 1;
         if (group.receiver.type?.isValueType === true) {
-          group.lastConversionError = { code: 'CS1113', args: [method.toDisplayString(), this.display(group.receiver.type)] };
+          group.lastConversionError = { code: DiagnosticId.CS1113, args: [method.toDisplayString(), this.display(group.receiver.type)] };
           return null;
         }
         group.selected = method;

@@ -20,6 +20,7 @@
  * The proposals do not say what an explicit conversion to a nullable closed enum is, nor how the interface rule
  * applies to generic hierarchies: the first is reported as not bound (SF2202), the second is not applied.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { previewStampText } from '@sharpforge/syntax';
 import { TypeKind } from '../symbols/types.js';
 import { allInterfacesOf } from '../symbols/substitution.js';
@@ -56,7 +57,7 @@ function sealedHierarchy(definition, seen = new Set()) {
 export const ClosedTypeBinding = Base =>
   class extends Base {
     closedRule(node, feature, text) {
-      this.report(node, 'SF2203', [text, previewStampText(feature)]);
+      this.report(node, DiagnosticId.SF2203, [text, previewStampText(feature)]);
     }
     reportSwitchArms(type, arms, site) {
       const context = { core: this.core, within: this.c.containingType?.originalDefinition ?? null, withinModule: this.d.assembly.module };
@@ -74,11 +75,11 @@ export const ClosedTypeBinding = Base =>
       } else if (isNullableType(result.type) && isClosedEnum(stripNullable(result.type)) && result.conversion?.isImplicit === false) {
         const source = from && isNullableType(from) ? stripNullable(from) : from;
         if (!source?.equals(stripNullable(result.type)))
-          this.report(syntax, 'SF2202', ['explicit conversions to a nullable closed enum', previewStampText('ClosedEnums')]);
+          this.report(syntax, DiagnosticId.SF2202, ['explicit conversions to a nullable closed enum', previewStampText('ClosedEnums')]);
       } else if (kind === ConversionKind.ExplicitReference && result.type.typeKind === TypeKind.Interface && from?.originalDefinition?.isClosedClass) {
         const hierarchy = sealedHierarchy(from.originalDefinition);
         if (hierarchy && !result.type.arity && !hierarchy.some(type => allInterfacesOf(type, this.core).some(i => i.equals(result.type)))) {
-          this.report(syntax, 'CS0030', [this.display(from), this.display(result.type)]);
+          this.report(syntax, DiagnosticId.CS0030, [this.display(from), this.display(result.type)]);
           return this.bad(syntax);
         }
       }
