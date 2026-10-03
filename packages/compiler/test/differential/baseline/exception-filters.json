@@ -1,4 +1,0 @@
-{
-  "exception-filters/cs0029-cs0103-filter-conditions": ["diagnostics", "warnings"],
-  "exception-filters/cs7095-cs8359-cs8360-constant-filters": ["diagnostics", "warnings"]
-}

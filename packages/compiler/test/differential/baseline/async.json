@@ -1,9 +1,0 @@
-{
-  "async/async-main-and-delay": ["diagnostics", "warnings", "bytecode", "cil"],
-  "async/await-completed-tasks": ["diagnostics", "warnings", "bytecode", "cil"],
-  "async/cs0029-task-result-type": ["diagnostics", "warnings"],
-  "async/cs1983-async-bad-return-type": ["diagnostics", "warnings"],
-  "async/cs4014-unawaited-call": ["diagnostics"],
-  "async/cs4033-await-in-non-async": ["diagnostics", "warnings"],
-  "async/when-all": ["warnings"]
-}

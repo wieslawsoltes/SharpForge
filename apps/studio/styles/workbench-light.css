@@ -1,2 +1,0 @@
-/* Match the workbench's explicit light setting without recoloring the application preview. */
-html[data-theme=light]{--sf-accent:#176ca4;--sf-subtle:#506376;--sf-line:#c6d0dc;--sf-surface:#f3f6fa}

@@ -1,7 +1,0 @@
-{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
-  "conditional-methods/calls-are-omitted-with-their-arguments":{"hash":"861c71889f506517","kind":"output","langVersion":"14.0","diagnostics":[],"output":"trace one\neither three\n2\n"},
-  "conditional-methods/undef-removes-a-symbol":{"hash":"21b4d69258315ca2","kind":"output","langVersion":"14.0","diagnostics":[],"output":"second\ndone\n"},
-  "conditional-methods/declaration-rules":{"hash":"b3876b20716a2d98","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0582",50,20,"error"],["CS0578",164,20,"error"],["CS0685",224,20,"error"],["CS0243",298,20,"error"],["CS0592",356,11,"error"],["CS0633",409,19,"error"]]},
-  "conditional-methods/attribute-found-through-an-alias":{"hash":"acf3a736fcb42e87","kind":"output","langVersion":"14.0","diagnostics":[],"output":"shown\ndone\n"},
-  "conditional-methods/attribute-resolved-by-symbol":{"hash":"fa0760c8924a45c0","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1689",196,13,"error"],["CS0633",295,19,"error"],["CS0578",379,13,"error"],["CS0592",519,4,"error"]]}
-}}

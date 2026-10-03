@@ -1,4 +1,0 @@
-{
-  "interface-members/default-interface-members-in-7-3": ["diagnostics", "warnings"],
-  "interface-members/what-an-interface-may-declare": ["diagnostics", "warnings"]
-}
