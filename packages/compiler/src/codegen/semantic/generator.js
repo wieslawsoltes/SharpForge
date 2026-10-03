@@ -25,6 +25,7 @@ import { AsyncMethods, asyncResultType } from '../../lowering/async/async-method
 import { TupleClasses } from '../../lowering/tuples/tuple-classes.js';
 import { StructuralMembers } from '../../lowering/tuples/structural-members.js';
 import { RecordMembers } from '../../lowering/records/record-members.js';
+import { GenericInstantiations, InstantiationTable, GenericDeclarations, FrameworkConstructions } from '../../lowering/generics/index.js';
 import { stateMachineTypeName, stateMachineParameterProxyFieldName, thisProxyFieldName } from '../../lowering/generated-names.js';
 import { JumpIrEmitter } from './jump-emitter.js';
 import { ProgramModel } from './program-model.js';
@@ -56,15 +57,19 @@ class GeneratorCore {
     this.structural = new StructuralMembers(this);
     this.tuples = this.structural.register(new TupleClasses(this));
     this.records = this.structural.register(new RecordMembers(this));
+    // Records are kept per construction: a table resolves a symbol to its key first (lowering/generics).
+    this.generics = new GenericInstantiations(this);
+    this.frameworkConstructions = new FrameworkConstructions(this);
+    const table = () => new InstantiationTable(this.generics);
     this.classes = new Map();
-    this.fields = new Map();
-    this.methods = new Map();
-    this.autoProperties = new Map();
-    this.eventFields = new Map();
+    this.fields = table();
+    this.methods = table();
+    this.autoProperties = table();
+    this.eventFields = table();
     this.paramsParameters = new Set();
-    this.instanceInits = new Map();
-    this.implicitConstructors = new Map();
-    this.typeInits = new Map();
+    this.instanceInits = table();
+    this.implicitConstructors = table();
+    this.typeInits = table();
     this.typeInitializing = null;
     this.cells = new Map();
     this.queue = [];
@@ -96,12 +101,11 @@ class GeneratorCore {
     return cell;
   }
   fieldOf(symbol, syntax) {
-    const definition = symbol.originalDefinition ?? symbol;
-    const record = this.fields.get(definition);
+    const record = this.fields.get(symbol);
     return record ?? this.unsupported(`field '${symbol.toDisplayString()}' (not in the framework registry)`, syntax);
   }
   eventFieldOf(symbol, syntax) {
-    const record = this.eventFields.get(symbol.originalDefinition ?? symbol);
+    const record = this.eventFields.get(symbol);
     return record ?? this.unsupported(`event '${symbol.toDisplayString()}' in this position`, syntax);
   }
   /** The accessors of a source property in the shape the IR emitter reads and writes properties through. */
@@ -114,7 +118,9 @@ class GeneratorCore {
       set: symbol.setMethod ? this.methodOf(symbol.setMethod, syntax) : null,
     };
   }
+  /** Queues a body; it is lowered under the substitution that is active now (the construction being lowered). */
   queueBody(work) {
+    work.typeMap = this.generics.active;
     this.queue.push(work);
   }
   addSynthesizedBody(method, body) {
@@ -131,7 +137,10 @@ class GeneratorCore {
     return frame;
   }
   /** Lowers one queued body and records it for emission; a queued `run` thunk lowers its body itself. */
-  translate({ frame, bound, parameters = [], returnsValue = true, prologue = null, run = null }) {
+  translate(work) {
+    return this.generics.withMap(work.typeMap, () => this.translateBody(work));
+  }
+  translateBody({ frame, bound, parameters = [], returnsValue = true, prologue = null, run = null }) {
     if (run) return run();
     const translator = new BodyTranslator(this, frame);
     const entry = translator.declareParameters(parameters);
@@ -153,27 +162,33 @@ const Members = Base =>
   class extends Base {
     translateMembers() {
       const bound = this.analysis.bound;
-      for (const [symbol, record] of this.methods) {
-        const body = bound.get(symbol);
-        if (body) {
-          // The context of the body itself decides: a yield in a local function makes that function the iterator.
-          if (body.binder?.c?.isIterator) {
-            this.translateIterator(symbol, record, body);
-            this.drain();
-            continue;
-          }
-          const frame = this.memberFrame(record, symbol, this.uriOf(symbol), body);
-          if (symbol.isAsync) frame.method = this.asyncBody(record, this.asyncOrigin(symbol, frame));
-          this.queueBody({
-            frame,
-            bound: body,
-            parameters: symbol.parameters,
-            returnsValue: frame.method.returnType !== 'void',
-            prologue: this.prologueOf(symbol, frame),
-          });
-        } else if (!this.records.buildConstructor(symbol, record)) this.synthesizeAccessor(symbol, record);
+      // Constructions declared while a body is lowered add their methods to the table; the loop reaches them too.
+      for (const [key, record] of this.methods) {
+        const { definition, map } = this.generics.describe(key);
+        this.generics.withMap(map, () => this.translateMember(definition, record, bound.get(definition)));
         this.drain();
       }
+    }
+    /** Lowers the body of one declared method (or synthesizes it) under the active substitution. */
+    translateMember(symbol, record, body) {
+      if (!body) {
+        if (!this.records.buildConstructor(symbol, record)) this.synthesizeAccessor(symbol, record);
+        return;
+      }
+      // The context of the body itself decides: a yield in a local function makes that function the iterator.
+      if (body.binder?.c?.isIterator) {
+        this.translateIterator(symbol, record, body);
+        return;
+      }
+      const frame = this.memberFrame(record, symbol, this.uriOf(symbol), body);
+      if (symbol.isAsync) frame.method = this.asyncBody(record, this.asyncOrigin(symbol, frame));
+      this.queueBody({
+        frame,
+        bound: body,
+        parameters: symbol.parameters,
+        returnsValue: frame.method.returnType !== 'void',
+        prologue: this.prologueOf(symbol, frame),
+      });
     }
     /**
      * An iterator method becomes a kickoff (the method itself: it creates the iterator object and stores the
@@ -281,7 +296,10 @@ const Members = Base =>
     }
   };
 
-const GeneratorBase = memberGenerators.reduce((composed, mixin) => mixin(composed), Members(AsyncMethods(Initialization(Declarations(GeneratorCore)))));
+const GeneratorBase = [GenericDeclarations, AsyncMethods, Members, ...memberGenerators].reduce(
+  (composed, mixin) => mixin(composed),
+  Initialization(Declarations(GeneratorCore)),
+);
 
 export class SemanticGenerator extends GeneratorBase {
   /**

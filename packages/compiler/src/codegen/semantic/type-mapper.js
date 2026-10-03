@@ -43,6 +43,10 @@ export class TypeMapper {
   /** The image type name of a type symbol; raises `UnsupportedConstruct` for types the runtime cannot represent. */
   imageType(type, syntax = null) {
     if (!type) return 'object';
+    // In a generic body the type is closed through the substitution of the construction being lowered; the result
+    // of an open type depends on that substitution, so it is not cached under the open symbol.
+    const closed = this.host.generics.close(type);
+    if (closed !== type) return this.compute(closed, syntax);
     let name = this.cache.get(type);
     if (name === undefined) {
       name = this.compute(type, syntax);
@@ -93,7 +97,8 @@ export class TypeMapper {
         break;
     }
     if (type.originalDefinition?.specialType === 'System_Nullable_T') unsupported('nullable value types', syntax);
-    const registry = this.host.bridge.registryName(type);
+    // A framework generic over a type the registry does not list shares the construction over `object` (lowering/generics).
+    const registry = this.host.bridge.registryName(type) ?? this.host.frameworkConstructions.imageTypeOf(type);
     if (registry) return registry;
     return unsupported(`type '${type.toDisplayString()}' (not in the framework registry)`, syntax);
   }
