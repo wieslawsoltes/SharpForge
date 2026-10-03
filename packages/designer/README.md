@@ -1,6 +1,53 @@
 # @sharpforge/designer
 
-Transactional, data-only code-first WinUI design documents, validated editing, scene projection, C# generation and live-delta planning. MIT. No DOM or native SDK dependency.
+Source-first WinUI design analysis, transactional authoring, document sessions, scene projection, source generation and live-delta
+planning. MIT. The package has no DOM or native SDK dependency; Studio supplies the editor, surface, compiler worker and app hosts.
+
+Ordinary C# is the authoritative source for supported declarative views. The design model is their editable projection, with explicit
+ownership and compilation checks before source changes. Standalone `.sfdesign.json` documents remain available for portable model
+authoring and generation, including staged features that require another execution target.
+
+## Supported C# source editing
+
+`probeDesignSource(text, uri)` recognizes a block-bodied `Create`, `InitializeComponent`, or `Main` that directly constructs supported
+controls. It is a syntax-only compatibility gate; the full reader must still prove the construction and its editable statements.
+Console-only programs, expression-bodied factories, and entry points that only call another view's factory do not qualify through
+that gate. Open the file containing the actual construction.
+
+`readDesignSource`, `analyzeDesignSources`, `planDesignSourceUpdate` and `CSharpDesignSession` read supported declarations, literal
+assignments, object initializers, child/Items additions, attached setters, styles/templates and event subscriptions without executing
+application code. Bound fields and symbols can span partial C# files. Scalar updates retain original UTF-16 source spans and literal
+forms; structural edits require a proven owned region. Dynamic expressions, custom statements, lambdas and multiple event
+subscriptions remain protected or navigation-only. Anonymous inline controls have narrower structural capabilities.
+
+```js
+import {CSharpDesignSession, DesignDocument} from '@sharpforge/designer';
+
+// source is the current View.cs buffer, with a mapped control whose design ID is "button".
+const session = new CSharpDesignSession(source, {uri: 'View.cs'});
+const design = new DesignDocument(session.document);
+design.setProperty('Width', 240, ['button']);
+const plan = session.plan(design.value, source);
+// Compile the candidate, verify every affected editor version, then apply its edits atomically.
+session.commit(plan);
+```
+
+Studio performs candidate compilation, workspace/source version checks and atomic multi-file edits through its source service.
+Source and design changes retain separate staged states; stale candidates are refused, and parse/compiler errors retain the last
+valid preview with a blocking diagnostic. A successful syntax probe or visual preview does not authorize a source write.
+
+## Sessions and authoring capabilities
+
+| Area | Public capability and boundary |
+| --- | --- |
+| Per-document lifetime | `DesignerSession` and `DesignerSessionRegistry` own independent models, history, selection, async operations and resources by exact URI. Studio hosts Design, Split and Code within the same source document. Switching tabs retains the session; removal/reset disposes it. |
+| View recovery | Mode, splitter orientation/ratio, zoom, scroll, selection, snap and bounded guide metadata recover per document. Live attachments and executable objects are excluded. Guide recovery does not change C# text or create undo entries. |
+| Transactional editing | `DesignDocument` supports add/remove/move/duplicate/paste/group/ungroup, property changes, multi-selection geometry, Grid tracks, styles/templates and undo/redo. Validation rejects invalid types, values, references, hierarchy and oversized input before publishing a transaction. |
+| Visual authoring | Studio supplies transformed drag/resize, snapping, guides, alignment/distribution, keyboard transforms, inline text, property/event editors and resource tooling. Sample data and preview settings remain designer metadata. |
+| Staged rich authoring | Gradients, bindings, resource/theme dictionaries, visual states, adaptive layouts and project-control metadata can be authored and previewed within their validated model contracts. Their source and execution support is narrower; unsupported writes remain staged with diagnostics. |
+| Resource-class documents | The dedicated resource reader opens its supported generated `ResourceDictionary` factory/constant-markup profile. Studio offers preview, staged changes and candidate export. Applying those changes to C# requires native WinUI compilation, which this host does not provide. |
+
+Standalone model APIs remain supported:
 
 ```js
 import {DesignDocument, createDesign, generateDesignProject} from '@sharpforge/designer';
@@ -11,23 +58,41 @@ design.undo();
 const files = generateDesignProject(design.value); // .sfdesign.json, .g.cs, Program.cs, csproj, slnx
 ```
 
-`validateDesign` rejects unsupported types/properties, non-data input, cycles, duplicate identities, incompatible resource targets and bindings, oversized trees, and invalid hierarchy. `DesignDocument` exposes transactional change, add/remove/move/duplicate/paste/group/ungroup, multi-selection geometry, Grid tracks, styles/templates and undo/redo. A rejected transaction leaves the document unchanged.
+## Preview and execution targets
 
-`designScene` produces a WinUIHost scene. `designFromScene` captures a running managed scene without executing user methods. `designPatch(before, after)` plans explicit property/tree/template changes without resetting untouched inputs. `applyDesignPatch` from `@sharpforge/runtime` applies a delta with a session/revision check and managed-state rollback. Source and direct-CIL sessions are supported. Event-code changes require a separate compiler Hot Reload operation.
+**Inherited components are read-only previews.** A closed construction body with a source-proven direct framework base and instance
+`Content`/`Child` assignment can be wrapped for inspection when the compiler reports only the recognized inheritance-profile errors.
+The synthetic wrapper cannot generate source edits, create event handlers or establish successful compilation. Arbitrary base-class
+execution and nested project-control composition are not supplied by this preview capability.
 
-Limits: 1,000 design controls, 100 levels, 64 tracks per axis, 500 parts per template, 100 undo entries. The design document—not arbitrary C# or XAML—is the authoring source. This package does not implement native WinUI, XAML, unrestricted dependency-property registration, native CLR updates or a general C# round-trip designer. See the application's Edit and Continue / Designer guide for the supported profile.
+**The SharpForge target covers the registered runtime subset.** Default `generateDesignCode()` and `generateDesignProject()` emit
+supported scalar/layout properties, solid brushes, styles, portable templates, ordered Items and Grid definitions. Rich features
+outside that contract produce explicit generation diagnostics, including `SFD1872`. Explicit `target: 'winui'`,
+`generateDesignXaml()` and resource-class export produce Microsoft WinUI source; they require a consumer-supplied platform project
+and native compiler. Export is not native execution or a general bidirectional XAML designer.
 
-## 0.13 C# source synchronization
+**Live changes are scoped to one running app generation.** `designScene` projects a WinUIHost scene; `designFromScene` reads a managed
+snapshot without executing user methods. `designPatch` and runtime `applyDesignPatch` preserve untouched values and enforce
+session/revision checks with managed rollback. Source VM and direct CIL have supported live paths; each attachment still checks its
+actual capabilities. Event/code changes use compiler Hot Reload. Studio can host up to eight independent app workers. Source edits
+and code updates require a matching workspace receipt and exact captured compilation inputs; changed input membership requires
+restart. An idle UI pause gates animation/input and is reported separately from a debugger-paused managed thread.
 
-`readDesignSource(text, options)`, `planDesignSourceUpdate(analysis, document)` and `CSharpDesignSession` map supported declarative C# to the design model without executing it. Scalar updates use original UTF-16 spans; structural edits require a proven construction region. Dynamic expressions and custom statements are preserved/protected. Host applications must compile candidates and compare document versions before applying edits. Studio performs those checks and preserves its original editor.
+## Model limits and qualification
 
-```js
-const session = new CSharpDesignSession(source, {uri: 'View.cs'});
-const design = new DesignDocument(session.document);
-design.setProperty('Width', 240, ['button']);
-const plan = session.plan(design.value, source);
-// Compile plan.text, verify editor version, then apply plan.edits.
-session.commit(plan);
-```
+| Limit | Bound |
+| --- | --- |
+| Design graph | 5,000 nodes, including the root; visual-tree depth is bounded to 100. |
+| Grid definitions | 64 tracks per axis. |
+| Undo history | Defaults to 100 entries and a 32 MiB retained-snapshot budget; configurable within the document contract. |
+| View state | Zoom 10–800%; guide/grid spacing 0.25–1,024 design pixels; up to 256 named guides. |
+| Compatibility input | At most 2,000,000 UTF-16 code units per source file. |
 
-This is not a general C# decompiler or bidirectional XAML engine. Source edits to handlers outside the construction region remain user-owned.
+The 5,000-node bound is a model capacity, not a browser frame-rate guarantee. Final integrated browser correctness, accessibility,
+responsive-layout and interaction-performance qualification is pending. Recorded Node source/model/geometry measurements do not
+establish the browser's 16 ms interaction budget. Source VM, direct CIL, Rust native/Wasm and native WinUI results must be reported
+separately; an unavailable or skipped target is not a passing target.
+
+See [document sessions](DOCUMENT-SESSIONS.md), [authoring and target boundaries](A18-AUTHORING.md),
+[visual editing](visual-authoring.md), [running-app source ownership](APP-SOURCE-OWNERSHIP.md) and
+[qualification evidence](docs/qualification.md) for the detailed contracts and recorded measurement scope.
