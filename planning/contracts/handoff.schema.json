@@ -1,0 +1,299 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "title": "Reproducible task handoff",
+  "required": [
+    "schemaVersion",
+    "task",
+    "agent",
+    "branch",
+    "headCommit",
+    "environment",
+    "commands",
+    "testSummary",
+    "blockers",
+    "remainingSteps",
+    "openQuestions"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "task": {
+      "type": "string",
+      "pattern": "^SF-A\\d{2}-[TB]\\d+(?:\\.\\d+)?$"
+    },
+    "agent": {
+      "type": "string",
+      "minLength": 1
+    },
+    "branch": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9/._-]*$"
+    },
+    "headCommit": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "os",
+        "node",
+        "chromium",
+        "dotnet"
+      ],
+      "properties": {
+        "os": {
+          "type": "string",
+          "minLength": 1
+        },
+        "node": {
+          "type": "string",
+          "minLength": 1
+        },
+        "chromium": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dotnet": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "commands": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "argv",
+          "summary",
+          "headCommit",
+          "evidenceDigest",
+          "obligations"
+        ],
+        "properties": {
+          "argv": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "summary": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "tests",
+              "passed",
+              "failed",
+              "cancelled",
+              "skipped",
+              "todo",
+              "exitCode",
+              "complete"
+            ],
+            "properties": {
+              "tests": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "passed": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "failed": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "cancelled": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "skipped": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "todo": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "exitCode": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "complete": {
+                "type": "boolean"
+              }
+            }
+          },
+          "headCommit": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{40}$"
+          },
+          "evidenceDigest": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "obligations": {
+            "type": "array",
+            "items": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "title": "Command-emitted target proof bound to one TAP result",
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "capabilityId",
+                "platform",
+                "engine",
+                "specRevision",
+                "status",
+                "testName"
+              ],
+              "properties": {
+                "capabilityId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "platform": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "engine": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "specRevision": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "testName": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "status": {
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "unknown",
+                    "unsupported"
+                  ]
+                }
+              },
+              "anyOf": [
+                {
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "pass",
+                        "fail"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "unknown",
+                        "unsupported"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "reason"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "testSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tests",
+        "passed",
+        "failed",
+        "cancelled",
+        "skipped",
+        "todo",
+        "exitCode",
+        "complete"
+      ],
+      "properties": {
+        "tests": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "passed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "failed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cancelled": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "skipped": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "todo": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "exitCode": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "complete": {
+          "type": "boolean"
+        }
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "remainingSteps": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "openQuestions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "evidenceDigests": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-f0-9]{64}$"
+      }
+    }
+  }
+}

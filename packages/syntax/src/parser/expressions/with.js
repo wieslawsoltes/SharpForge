@@ -6,6 +6,7 @@ export const withMethods = {
   withExpression(receiver) {
     const start = this.current;
     this.feature('Records', start);
+    this.precedenceInversion(receiver, start);
     return this.n('WithExpression', receiver, this.takeWord('with'), this.initializerExpression('WithInitializerExpression'));
   }
 };

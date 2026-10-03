@@ -1,0 +1,1 @@
+using System; class Program { static void Main() { _ = new byte[1]; long before = GC.GetAllocatedBytesForCurrentThread(); long sum = 0; for (int i = 0; i < 1000; i++) { var bytes = new byte[128]; bytes[0] = (byte)i; sum += bytes[0]; GC.KeepAlive(bytes); } long allocated = GC.GetAllocatedBytesForCurrentThread() - before; Console.WriteLine($"{sum}|{allocated}"); } }

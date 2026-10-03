@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "tasks": {
+    "a23:msbuild": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "packages/msbuild/bin/sharpforge-msbuild.js"
+          ]
+        }
+      ]
+    }
+  }
+}
