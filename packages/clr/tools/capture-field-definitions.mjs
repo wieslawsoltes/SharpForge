@@ -22,8 +22,11 @@ try {
   run(['build', '--configuration', 'Release', '--nologo', '--verbosity', 'quiet', '--disable-build-servers', '-m:1']);
   const image = join(temporary, 'bin/Release/net10.0/oracle.dll');
   const expected = JSON.parse(run([image]));
-  writeFileSync(join(output, 'native-fields.json'), JSON.stringify({ sdk, ...expected,
-    image: readFileSync(image).toString('base64') }, null, 2) + '\n');
+  // One record per line keeps the independent metadata comparison easy to scan.
+  const fields = expected.fields.map(field => `    ${JSON.stringify(field)}`).join(',\n');
+  const header = JSON.stringify({ sdk, runtime: expected.runtime }, null, 2).slice(0, -2);
+  writeFileSync(join(output, 'native-fields.json'), `${header},\n  "fields": [\n${fields}\n  ],\n` +
+    `  "image": ${JSON.stringify(readFileSync(image).toString('base64'))}\n}\n`);
   console.log(`Captured ${expected.fields.length} native field fixtures in ${output}`);
 } finally {
   rmSync(temporary, { recursive: true, force: true });
