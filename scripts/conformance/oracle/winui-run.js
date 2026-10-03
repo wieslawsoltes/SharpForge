@@ -1,7 +1,7 @@
-import { mkdtemp, cp, readFile, readdir, rm } from 'node:fs/promises';
+import { mkdtemp, cp, readFile, readdir, rm, mkdir, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { oracleRoot, pin, platform, requireTarget, sha256 } from './toolchain.js';
+import { root, oracleRoot, pin, platform, requireTarget, sha256 } from './toolchain.js';
 import { runProcess } from './process.js';
 import { assertDeterministic } from './roslyn-compile.js';
 
@@ -48,5 +48,11 @@ export async function runWinUI(toolchain, options = {}) {
     }
     assertDeterministic(results[0], results[1], 'native WinUI control/dispatcher host');
     return { supported: true, target: platform, result: results[0], measurements, commands: commands.map(args => [toolchain.dotnet, ...args.map(arg => arg.replaceAll(directory, '<temporary>'))]).concat([[executable.replace(directory, '<temporary>'), '<temporary>/result.json']]) };
+  } catch(error) {
+    const retained=path.resolve(root,process.env.SHARPFORGE_RESULTS_DIR||'artifacts/results','oracles',platform,'winui-failure');
+    await mkdir(retained,{recursive:true});
+    await writeFile(path.join(retained,'error.json'),JSON.stringify({message:error.message,code:error.code,errno:error.errno,syscall:error.syscall,path:error.path,result:error.result},null,2)+'\n');
+    try {await cp(path.join(directory,'out'),path.join(retained,'out'),{recursive:true});}catch(copyError){await writeFile(path.join(retained,'copy-error.txt'),copyError.message);}
+    throw error;
   } finally { await rm(directory, { recursive: true, force: true }); }
 }

@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fixtureId": "hello-unicode",
-  "inputHash": "0055d5ea253326396005b7eb96d69f77ec21e1e78218fcaa63faf1d2c448145f",
+  "fixtureId": "collection-expression-12",
+  "inputHash": "1f69756117e3e558f5f8bdbafa04abcc3b1a6a299460ec8b96de7164f71f1cdf",
   "oracleId": "roslyn",
   "toolVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
-  "target": "any",
+  "target": "win32-x64",
   "toolchain": {
     "sdk": "10.0.201",
     "runtime": "10.0.5",
@@ -16,6 +16,6 @@
   "result": {
     "exitCode": 0,
     "diagnostics": [],
-    "assemblySHA256": "febaeeda85157a7e583b2a698535c6afb25f60631af977f4182b60f9b23c2ca4"
+    "assemblySHA256": "050068e2aaecb94547132c1120beaf19298a7a7e6e7784df7f777cff32154ab0"
   }
 }

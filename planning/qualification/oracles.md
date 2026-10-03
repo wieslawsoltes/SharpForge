@@ -27,7 +27,7 @@ are explicitly unsupported by this harness version, even where .NET itself runs.
 Install the pinned .NET SDK, then use Node 22 or newer from the repository root:
 
 ```sh
-node --test tests/conformance/oracle/*.test.js
+node --test tests/conformance/oracle/*.test.js tests/conformance/oracle/*.native.js
 node scripts/conformance/oracle/qualify.js --verify
 node scripts/conformance/oracle/verify-expected.js
 ```
@@ -55,9 +55,10 @@ hide mutations. Build/restore happens in disposable temporary directories.
 
 The store format is [expected.schema.json](expected.schema.json), under
 `tests/conformance/expected/<oracle>/<encoded-tool-version>/<target>/<input-hash>.json`.
-Roslyn's deterministic IL and diagnostic spans are platform independent (`any`);
-native process results retain OS-specific stdout line endings, exit statuses and
-signals under their actual platform. A Windows negative return value is captured
+Every observation retains its actual platform. Roslyn's deterministic PE bytes
+are stable on each pinned host but differ between Windows and Unix SDK builds;
+they are never normalized into a shared binary baseline. Native process results
+retain OS-specific stdout line endings, exit statuses and signals. A Windows negative return value is captured
 as the actual unsigned DWORD, while POSIX exposes its low byte. Unhandled CLR
 exceptions retain raw stderr plus the independently parsed exception type.
 
@@ -174,3 +175,17 @@ the pinned SDK are in `oracle.native.js` and run explicitly in every oracle
 workflow job, with no fallback to another SDK and no passing skip. The complete
 12-test batch passes locally after these portability fixes; hosted execution and
 platform expected-store review remain required.
+
+The next hosted run (37127555102, clean merge commit
+`413d89b7da493a1657c634c60ab840ad4bbf3360`) verified all three platform pins.
+Linux passed all 12 regression tests and produced 19 observations; Windows
+produced 17 accepted non-Unicode observations, while the Unicode fixture
+revealed its dependence on the console code page. Reviewed non-Unicode native
+results are now committed separately for Linux and Windows. The Unicode source
+has an explicit UTF-8 BOM and sets UTF-8 output encoding, so its new source hash
+requires fresh observations on both hosts. Windows Roslyn PE hashes are kept
+exactly as observed. The WinUI compatibility manifest now places
+`maxversiontested` in the compatibility namespace with its required `Id`
+attribute. A failed native launch retains the built host and structured process
+error for diagnosis. Windows WinUI execution and the refreshed Unicode baselines
+remain pending; no failed observation was promoted.
