@@ -1,9 +1,12 @@
-import {CSharpDesignSession, DesignSyncProtocol, designSourceSnapshot, designPreviewCapability} from '@sharpforge/designer';
+import {
+  CSharpDesignSession, DesignSyncProtocol, designSourceSnapshot, designPreviewCapability, designProtectedEventPreviewCapability
+} from '@sharpforge/designer';
 import { renderSourceSyncControls, bindSourceSyncControls } from './designer-source-controls.js';
 import {createDesignerSourceEvent} from './designer-source-events.js';
 import {designerSourceDocument, retainDesignerRuntimeBindings} from './designer-source-projection.js';
 import {
-  setSourceAuthoringCapability, publishSourceCatalog, navigateReadOnlySourceEvent, markSourcePreviewBaseline, isDesignerCancellation
+  setSourceAuthoringCapability, publishSourceCatalog, navigateReadOnlySourceEvent, markSourcePreviewBaseline,
+  isDesignerCancellation, firstSourceError
 } from './designer-source-preview.js';
 
 const ignoredChanges = new Set(['selection', 'initialize', 'saved', 'source sync', 'live apply', 'live attach', 'capability']);
@@ -33,8 +36,8 @@ export class DesignerSourceSync {
   handlerCandidates() { return this.session?.analysis.handlers ?? []; }
   createEventHandler(request) { this.assertCanApply(); return createDesignerSourceEvent(this, request); }
   navigateEvent(nodeId, event) {
-    return this.session?.analysis.readOnly ? navigateReadOnlySourceEvent(this, nodeId, event)
-      : createDesignerSourceEvent(this, {nodeId, event}, {navigateOnly: true});
+    return this.view.analyzeDesign ? createDesignerSourceEvent(this, {nodeId, event}, {navigateOnly: true})
+      : navigateReadOnlySourceEvent(this, nodeId, event);
   }
 
   assertCanApply() {
@@ -88,7 +91,8 @@ export class DesignerSourceSync {
     });
     const session = new CSharpDesignSession(file.text, {uri: file.uri, sources: this.view.sourceFiles?.(), previous, signal});
     const analysis = designSourceSnapshot(session.analysis);
-    const capability = designPreviewCapability(session.analysis);
+    let capability = designPreviewCapability(session.analysis);
+    if (!capability.previewAvailable) capability = designProtectedEventPreviewCapability(session.analysis);
     analysis.canApply = analysis.compilationSucceeded;
     analysis.readOnly = !analysis.compilationSucceeded && capability.previewAvailable;
     analysis.previewCapability = capability;
@@ -119,7 +123,7 @@ export class DesignerSourceSync {
     }
     if (candidate.success === false && !candidate.previewAvailable || !candidate.analysis?.document) {
       const diagnostics = candidate.diagnostics ?? [];
-      this.report('blocked', diagnostics[0]?.message ?? 'The document has no valid design preview yet', diagnostics);
+      this.report('blocked', firstSourceError(diagnostics)?.message ?? 'The document has no valid design preview yet', diagnostics);
       throw Object.assign(new Error(this.message), {diagnostics});
     }
     const primary = files.find(item => item.uri === candidate.analysis.uri);
@@ -140,7 +144,8 @@ export class DesignerSourceSync {
       designRevision: this.view.document.revision, generation
     });
     markSourcePreviewBaseline(this, candidate.analysis, candidate.diagnostics ?? []);
-    if (candidate.success === false) this.report('blocked', candidate.diagnostics?.[0]?.message ?? 'Preview requires another compilation target',
+    if (candidate.success === false) this.report('blocked', firstSourceError(candidate.diagnostics ?? [])?.message ??
+      'Preview requires another compilation target',
       candidate.diagnostics ?? []);
     else this.report('synced', 'Linked ' + uri + ' · ' + (candidate.analysis.method?.name ?? 'construction method'), []);
     publishSourceCatalog(this, candidate, candidate.revision ?? candidate.workspaceRevision ?? version);
@@ -174,7 +179,8 @@ export class DesignerSourceSync {
       return;
     }
     if (this.session.analysis.canApply === false) {
-      this.report('blocked', this.session.analysis.diagnostics?.[0]?.message ?? 'This preview cannot apply source in the current compiler target',
+      this.report('blocked', firstSourceError(this.session.analysis.diagnostics ?? [])?.message ??
+        'This preview cannot apply source in the current compiler target',
         this.session.analysis.diagnostics ?? []);
       return;
     }
@@ -230,8 +236,9 @@ export class DesignerSourceSync {
     if (candidate.workspaceRevision !== undefined && candidate.workspaceRevision !== this.view.state.revision) return this.snapshot();
     if (candidate.success === false && !candidate.previewAvailable) {
       const diagnostics = candidate.diagnostics ?? [];
-      protocol.reject(token, diagnostics[0] ?? { message: 'Source analysis did not produce a valid design' });
-      this.report('blocked', diagnostics[0]?.message ?? 'Retaining the last valid preview', diagnostics);
+      const diagnostic = firstSourceError(diagnostics);
+      protocol.reject(token, diagnostic ?? {message: 'Source analysis did not produce a valid design'});
+      this.report('blocked', diagnostic?.message ?? 'Retaining the last valid preview', diagnostics);
       return this.snapshot();
     }
     const document = candidate.analysis.document;
@@ -250,7 +257,8 @@ export class DesignerSourceSync {
       setSourceAuthoringCapability(this, candidate.analysis);
     }
     finally { this.loading = false; }
-    if (candidate.success === false) this.report('blocked', candidate.diagnostics?.[0]?.message ?? 'Preview requires another compilation target',
+    if (candidate.success === false) this.report('blocked', firstSourceError(candidate.diagnostics ?? [])?.message ??
+      'Preview requires another compilation target',
       candidate.diagnostics ?? []);
     else this.report('synced', 'Read ' + file.uri + ' · last valid preview updated', []);
     publishSourceCatalog(this, candidate, candidate.revision ?? candidate.workspaceRevision ?? this.view.state.revision);

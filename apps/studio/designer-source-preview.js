@@ -21,7 +21,11 @@ export function markSourcePreviewBaseline(sync, analysis, diagnostics = analysis
 }
 
 export function isDesignerCancellation(error) {
-  return error?.name === 'AbortError' || ['ABORT_ERR', 'SFSYNC_CANCELLED', 'SFD0009'].includes(error?.code);
+  return error?.name === 'AbortError' || ['ABORT_ERR', 'OperationCanceled', 'SFSYNC_CANCELLED', 'SFD0009'].includes(error?.code);
+}
+
+export function firstSourceError(diagnostics) {
+  return diagnostics.find(diagnostic => diagnostic.severity === 'error') ?? diagnostics[0];
 }
 
 /** Protected handlers remain navigable from an exact retained source snapshot without authorizing a source write. */
@@ -41,5 +45,6 @@ export async function navigateReadOnlySourceEvent(sync, nodeId, event) {
   }
   await sync.view.openSource(navigation.uri, navigation.start, navigation.end);
   sync.view.documentHost?.setMode('code');
-  return {ok: true, success: false, compilationSucceeded: false, readOnly: true, navigation, changes: []};
+  return {ok: true, success: analysis.compilationSucceeded === true, compilationSucceeded: analysis.compilationSucceeded,
+    existing: true, readOnly: true, navigation, changes: []};
 }

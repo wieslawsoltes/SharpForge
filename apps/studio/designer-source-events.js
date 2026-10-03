@@ -1,4 +1,5 @@
 import {designerSourceDocument, retainDesignerRuntimeBindings} from './designer-source-projection.js';
+import {sameDesignerSources} from './designer-source-snapshots.js';
 
 /** Handler creation uses the same worker, complete-source checks, and editor transaction as visual edits. */
 export async function createDesignerSourceEvent(sync, request, {navigateOnly = false} = {}) {
@@ -29,6 +30,14 @@ export async function createDesignerSourceEvent(sync, request, {navigateOnly = f
       baselineSources: baseline.sources, previous: {...baseline.analysis, document: sync.view.document.snapshot()}, generation,
       signal: operation.signal, workspaceId: sync.view.workspaceId?.()
     });
+    if (navigateOnly && plan.navigationAvailable === true) {
+      assertCurrent();
+      assertNavigationCurrent(sync, plan);
+      protocol.cancel(token);
+      await sync.view.openSource(plan.navigation.uri, plan.navigation.start, plan.navigation.end);
+      sync.view.documentHost?.setMode('code');
+      return {...plan, ok: true};
+    }
     if (plan.success === false) throw Object.assign(new Error(plan.diagnostics?.[0]?.message ?? 'Cannot edit this handler'), {
       diagnostics: plan.diagnostics ?? []
     });
@@ -52,6 +61,20 @@ export async function createDesignerSourceEvent(sync, request, {navigateOnly = f
     sync.writing = false;
     sync.pending = null;
     sync.view.chrome?.refreshSource();
+  }
+}
+
+function assertNavigationCurrent(sync, plan) {
+  if (plan.changes?.some(change => change.edits.length) || plan.edits?.length || !plan.existing
+    || !sameDesignerSources(plan.expectedSources, sync.view.sourceFiles?.())
+    || plan.workspaceRevision !== undefined && plan.workspaceRevision !== sync.view.state.revision) {
+    throw new Error('Source changed before navigating the existing handler.');
+  }
+  const location = plan.navigation;
+  const file = plan.expectedSources.find(source => source.uri === location?.uri);
+  if (!file || !Number.isSafeInteger(location.start) || !Number.isSafeInteger(location.end)
+    || location.start < 0 || location.end < location.start || location.end > file.text.length) {
+    throw new Error('The existing handler source location is unavailable.');
   }
 }
 

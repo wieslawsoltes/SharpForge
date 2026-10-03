@@ -259,10 +259,10 @@ export class DesignSyncProtocol {
    */
   accept(token, candidate = {}) { return this.#acceptCandidate(token, candidate); }
 
-  /** Qualified component or resource previews may advance while compiler errors keep source writes blocked. */
+  /** Qualified previews may advance while compiler errors keep source writes blocked. */
   acceptPreview(token, candidate = {}) {
     const capability = candidate.capability;
-    const permitsPreview = ['component', 'composition'].includes(capability?.kind) && capability.readOnly === true
+    const permitsPreview = ['component', 'composition', 'events'].includes(capability?.kind) && capability.readOnly === true
       || capability?.kind === 'resources'
       && capability.readOnly === false && capability.stageDesign === true;
     if (token?.kind !== 'source' || candidate.success !== false || capability?.previewAvailable !== true

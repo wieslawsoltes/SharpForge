@@ -1,6 +1,6 @@
 import {
   analyzeDesignSources, designSourceSnapshot, designPreviewCapability,
-  designComposedPreviewCapability, designInheritancePreviewProfile
+  designComposedPreviewCapability, designInheritancePreviewProfile, designProtectedEventPreviewCapability
 } from '@sharpforge/designer';
 import {designerAnalysisOptions} from './designer-worker-cache.js';
 import {analyzeDesignerProjectCatalog, assertDesignerProjectTypes} from './designer-worker-catalog.js';
@@ -20,6 +20,7 @@ export function analyzeDesignerWorkerSources(params) {
     if (!preview.previewAvailable) preview = designComposedPreviewCapability(analysis, [...catalog.analyses.values()]);
   } else {
     projectTypes = assertDesignerProjectTypes(analysis, analysis.document, params.revision ?? 0) ?? [];
+    if (!preview.previewAvailable) preview = designProtectedEventPreviewCapability(analysis);
   }
   const snapshot = designSourceSnapshot(analysis);
   const diagnostics = snapshot.diagnostics;
