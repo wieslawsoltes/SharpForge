@@ -1,7 +1,8 @@
 /**
  * Differential fixtures for anonymous types (SF-A02-T53): creation with named and inferred members, structural
- * identity (same names, types and order), ToString, Equals, reference equality, nesting, arrays; CS0746, CS0828,
- * CS0833, CS0200, CS0029 between different shapes, CS0826.
+ * identity (same names, types and order), ToString, Equals, reference equality, nesting, arrays; the transparent
+ * identifiers of a query (`let`, a second `from`), which are anonymous types; CS0746, CS0828, CS0833, CS0200, CS0029
+ * between different shapes, CS0826.
  */
 import { cs, out, diag, feature } from './kit.js';
 
@@ -46,6 +47,35 @@ export const fixtures = feature('anonymous-types', [
               Console.WriteLine(x + " " + y);
               Func<int, int> twice = v => new { V = v * 2 }.V;
               Console.WriteLine(twice(4));
+          }
+      }
+    `,
+  ),
+  out(
+    'transparent-identifiers-of-a-query',
+    cs`
+      using System;
+      class One<T>
+      {
+          public T Value;
+          public One(T value) { Value = value; }
+          public One<R> Select<R>(Func<T, R> selector) { return new One<R>(selector(Value)); }
+          public One<T> Where(Func<T, bool> predicate) { Console.WriteLine("where " + predicate(Value)); return this; }
+          public One<R> SelectMany<C, R>(Func<T, One<C>> collection, Func<T, C, R> result) { return new One<R>(result(Value, collection(Value).Value)); }
+      }
+      class Program
+      {
+          static void Main()
+          {
+              var a = new One<int>(3);
+              var b = new One<string>("s");
+              var q1 = from x in a let y = x * 2 where y > x select "v" + (x + y);
+              Console.WriteLine(q1.Value);
+              var q2 = from x in a from s in b let z = s + x where z.Length > 1 select z + x;
+              Console.WriteLine(q2.Value);
+              var q3 = from x in a select new { x, Twice = x * 2 };
+              Console.WriteLine(q3.Value);
+              Console.WriteLine(q3.Value.Twice);
           }
       }
     `,
