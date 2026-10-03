@@ -1,5 +1,11 @@
 /** C# 11 list patterns `[p1, .., pn]`, slice patterns with an optional sub-pattern (`.. var rest`) and a trailing designation. */
 export const listPatternMethods = {
+  /** `..` with an optional sub-pattern; the cursor is at `..`. */
+  slicePattern() {
+    const dots = this.take(),
+      hasPattern = !this.at(',') && !this.at(']') && this.canStartPattern(this.current);
+    return this.n('SlicePattern', dots, hasPattern ? this.pattern(false) : null);
+  },
   listPattern() {
     const start = this.current,
       open = this.take(),
@@ -9,10 +15,7 @@ export const listPatternMethods = {
     this.nested(() => {
       while (!this.at(']') && !this.at('eof')) {
         const before = this.i;
-        if (this.at('..')) {
-          const dots = this.take();
-          list.push(this.n('SlicePattern', dots, !this.at(',') && !this.at(']') && this.canStartPattern(this.current) ? this.pattern(false) : null));
-        } else list.push(this.pattern(false));
+        list.push(this.at('..') ? this.slicePattern() : this.pattern(false));
         if (this.at(',')) list.push(this.take());
         else break;
         if (before === this.i) break;

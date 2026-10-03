@@ -149,7 +149,7 @@ export class Blender {
     const list = this.features;
     for (let i = lowerBound(list, from); i < list.length && list[i].start < to; i++) {
       const use = list[i];
-      out.push(shift ? { id: use.id, start: use.start + shift, end: use.end + shift } : use);
+      out.push(shift ? { ...use, start: use.start + shift, end: use.end + shift } : use);
     }
   }
   /** Whether `await` was a keyword where the old node was parsed: inside an async function, or at the top level. */
@@ -196,6 +196,8 @@ export const blenderMethods = {
       const parent = node.parent;
       if (!containers.has(parent.kind) || parent.kind === 'EnumDeclaration' || (parent.identifier?.valueText ?? null) !== (owner ?? null))
         return null;
+      // Interface members record features a class member does not, so a member is only reused in a type of the same kind.
+      if ((parent.kind === 'InterfaceDeclaration') !== (this.containerKind === 'InterfaceDeclaration')) return null;
     } else if (context === 'statement') {
       if (blend.asyncOf(node) !== this.inAsync) return null;
     } else {
