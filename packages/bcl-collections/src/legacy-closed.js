@@ -4,6 +4,7 @@ import {registerClosedCollections} from './legacy-contracts.js';
 import {dictionary} from './dictionary.js';
 import {hashSet, initializeHashSet} from './hash-set.js';
 import {collectionEnumerator} from './collection-enumerator.js';
+import {listRemoval} from './list-removal.js';
 import {reserveIndexed} from './indexed-storage.js';
 import {
   count, data, version, change, reserve, commitItems, write, queueItems, queueEnqueue, append
@@ -68,6 +69,7 @@ function compare(p, left, right) {
 }
 
 function mutate(p, descriptor, context) {
+  if (descriptor.name === 'RemoveAt' || descriptor.name === 'RemoveRange') return listRemoval(p, descriptor, context);
   const {reference, values, native, size} = context;
   const items = data(p, reference).slice(0, size);
   switch (descriptor.name) {
@@ -78,8 +80,6 @@ function mutate(p, descriptor, context) {
       break;
     }
     case 'Insert': items.splice(integer(p, native[0], 0, size), 0, values[1]); break;
-    case 'RemoveAt': items.splice(integer(p, native[0], 0, size - 1), 1); break;
-    case 'RemoveRange': items.splice(integer(p, native[0], 0, size), integer(p, native[1], 0, size - native[0])); break;
     case 'Remove': {
       const index = items.findIndex(value => equal(p, value, values[0]));
       if (index < 0) return p.managed(false, 'bool');
