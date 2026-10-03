@@ -36,7 +36,9 @@ export class Parser {
   }
   feature(id, token, end = token) { this.features.push({ id, start: token.start, end: end.end ?? end }); }
   trivia(pieces) {
-    if (!pieces.length) return empty; const text = this.source.text, out = [];
+    if (!pieces.length) return empty; const text = this.source.text;
+    if (pieces.length === 1) { const piece = pieces[0]; return this.cache.trivia(piece.kind, text.slice(piece.start, piece.end), piece.structure ?? null).asList; }
+    const out = [];
     for (const piece of pieces) out.push(this.cache.trivia(piece.kind, text.slice(piece.start, piece.end), piece.structure ?? null));
     return this.cache.triviaList(out);
   }

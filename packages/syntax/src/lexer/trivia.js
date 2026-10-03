@@ -3,7 +3,8 @@ import { scanMiscDirective } from '../directives/misc.js';
 import { scanScriptDirective } from '../directives/script.js';
 /** Trivia scanning: whitespace, end-of-line, comments, documentation comments, directives and disabled text. */
 const whitespace = /[\t\v\f\x1A\xA0\p{Zs}]/u, BOM = String.fromCharCode(0xFEFF);
-export function isWhitespace(ch) { return ch !== undefined && (ch === BOM || whitespace.test(ch)); }
+export function isWhitespace(ch) { return ch === ' ' || ch === '\t' || ch !== undefined && (ch === BOM || whitespace.test(ch)); }
+const none = Object.freeze([]);
 const NEL = String.fromCharCode(0x85), LS = String.fromCharCode(0x2028), PS = String.fromCharCode(0x2029);
 /** Length of the line break at `i` (2 for CRLF, 1 for CR, LF, U+0085, U+2028, U+2029), or 0. */
 export function endOfLineLength(text, i) {
@@ -34,13 +35,16 @@ function directive(s, hash) {
  * trivia early. Returns { trailing, leading } lists of frozen { kind, start, end, structure? } pieces.
  */
 export function scanTrivia(s, trailingMode) {
-  const text = s.text, trailing = [], leading = []; let out = trailingMode ? trailing : leading, lineStart = !trailingMode && (s.i === 0 || !!endOfLineLength(text, s.i - 1));
+  const text = s.text, first = text.charCodeAt(s.i);
+  if (first > 32 && first < 127 && first !== 47 && first !== 35) return { trailing: none, leading: none };
+  const trailing = [], leading = []; let out = trailingMode ? trailing : leading, lineStart = !trailingMode && (s.i === 0 || !!endOfLineLength(text, s.i - 1));
   const push = (kind, start, end) => out.push(Object.freeze({ kind, start, end }));
   for (;;) {
-    const i = s.i, ch = text[i]; if (i >= text.length) break;
-    const eol = endOfLineLength(text, i);
+    const i = s.i, code = text.charCodeAt(i); if (i >= text.length) break;
+    if (code > 32 && code < 127 && code !== 47 && code !== 35) break;
+    const ch = text[i], eol = code === 32 || code === 9 ? 0 : endOfLineLength(text, i);
     if (eol) { s.i += eol; push('EndOfLineTrivia', i, s.i); out = leading; lineStart = true; continue; }
-    if (isWhitespace(ch)) { while (isWhitespace(text[s.i])) s.i++; push('WhitespaceTrivia', i, s.i); continue; }
+    if (code === 32 || code === 9 || isWhitespace(ch)) { let j = i + 1; for (;;) { const d = text.charCodeAt(j); if (d === 32 || d === 9 || (d > 126 || d < 32) && isWhitespace(text[j])) j++; else break; } s.i = j; push('WhitespaceTrivia', i, j); continue; }
     if (ch === '/' && text[i + 1] === '/') {
       if (text[i + 2] === '/' && text[i + 3] !== '/') {
         out = leading;
