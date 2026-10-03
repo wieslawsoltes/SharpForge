@@ -11,6 +11,7 @@
  * Binding a member declared here says nothing about whether the runtime profile can execute it: code generation
  * reports what it cannot lower.
  */
+import {attachExceptionBuiltins} from './exception-builtins.js';
 import { NamedTypeSymbol, Accessibility } from './types.js';
 import { MethodSymbol, PropertySymbol, ParameterSymbol, MethodKind, DeclarationModifiers } from './members.js';
 
@@ -93,6 +94,7 @@ function completeException(core) {
     exception.addMember(
       new MethodSymbol({ ...publicMember, name: 'GetBaseException', returnType: exception, parameters: [], modifiers: DeclarationModifiers.Virtual }),
     );
+  attachExceptionBuiltins(exception);
   return typeOf;
 }
 
@@ -117,5 +119,6 @@ export function declareExceptionTypes(core) {
     byName.set(name, type);
     addConstructors(type, constructors, typeOf, core.void);
     for (const property of properties) addGetter(type, property, core.string, DeclarationModifiers.Virtual);
+    attachExceptionBuiltins(type);
   }
 }
