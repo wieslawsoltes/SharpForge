@@ -1,0 +1,515 @@
+{
+  "project": "https://github.com/users/wieslawsoltes/projects/7",
+  "captured": "2026-10-03",
+  "baseCommit": "7f0ca223d1b9a07725078260020019cfb276c241",
+  "items": [
+    {
+      "id": "SF-A05-E01",
+      "issue": 72,
+      "title": "[SF-A05-E01] Execution correctness",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/72",
+      "kind": "Epic",
+      "deliverable": "- [SF-A05-T01](https://github.com/wieslawsoltes/SharpForge/issues?q=SF-A05-T01): Complete scalar numeric execution\n\n- [SF-A05-T02](https://github.com/wieslawsoltes/SharpForge/issues?q=SF-A05-T02): Implement complete call semantics\n\n- [SF-A05-T03](https://github.com/wieslawsoltes/SharpForge/issues?q=SF-A05-T03): Implement managed pointer lifetimes\n\n- [SF-A05-T04](https://github.com/wieslawsoltes/SharpForge/issues?q=SF-A05-T04): Complete exception dispatch\n\n- [SF-A05-T05](https://github.com/wieslawsoltes/SharpForge/issues?q=SF-A05-T05): Implement multidimensional arrays\n\n- [SF-A05-T06](https://github.com/wieslawsoltes/SharpForge/issues?q=SF-A05-T06): Preserve state across suspension and snapshots\n\nClose only after every child has merged evidence. The project board must not count an epic and its children as independent delivered capabilities.",
+      "acceptance": "",
+      "dependencies": "No implementation prerequisite. Claim still requires an ownership lease.",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-E02",
+      "issue": 73,
+      "title": "[SF-A05-E02] Optimized dispatch and observability",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/73",
+      "kind": "Epic",
+      "deliverable": "- [SF-A05-T07](https://github.com/wieslawsoltes/SharpForge/issues?q=SF-A05-T07): Predecode instructions and cache callsites\n\n- [SF-A05-T08](https://github.com/wieslawsoltes/SharpForge/issues?q=SF-A05-T08): Specialize numeric fast paths\n\n- [SF-A05-T09](https://github.com/wieslawsoltes/SharpForge/issues?q=SF-A05-T09): Optimize managed frames and root scans\n\n- [SF-A05-T10](https://github.com/wieslawsoltes/SharpForge/issues?q=SF-A05-T10): Add deterministic profiling hooks\n\n- [SF-A05-T11](https://github.com/wieslawsoltes/SharpForge/issues?q=SF-A05-T11): Prototype validated Wasm code generation\n\n- [SF-A05-T12](https://github.com/wieslawsoltes/SharpForge/issues?q=SF-A05-T12): Gate VM performance regressions\n\nClose only after every child has merged evidence. The project board must not count an epic and its children as independent delivered capabilities.",
+      "acceptance": "",
+      "dependencies": "No implementation prerequisite. Claim still requires an ownership lease.",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T01",
+      "issue": 74,
+      "title": "[SF-A05-T01] Complete scalar numeric execution",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/74",
+      "kind": "Task",
+      "deliverable": "Implement exact integer widths (i1..u8, native int), IEEE r4/r8 and System.Decimal semantics through shared helpers in packages/runtime/src/execution/ used by BOTH engines; the source VM today models only Int32 and double.",
+      "acceptance": "- [ ] Differential overflow, division, NaN, signed-zero and conversion tests in both engines.\n\n- [ ] Add positive, malformed/negative, cancellation/disposal and boundary tests where applicable.\n\n- [ ] Verify every affected execution/platform target independently; explicitly record unsupported targets.\n\n- [ ] Add or update a runnable example, API capability row and regression test.\n\n- [ ] Measure cold/warm latency, p95/p99 and allocations for performance-sensitive paths; keep correctness gates.\n\n- [ ] Record exact commits, tool versions and commands; no fixture simulator is reported as native qualification.",
+      "dependencies": "- [SF-A00-T01](https://github.com/wieslawsoltes/SharpForge/issues/4)\n\n- [SF-A00-T04](https://github.com/wieslawsoltes/SharpForge/issues/7)",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T02",
+      "issue": 75,
+      "title": "[SF-A05-T02] Implement complete call semantics",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/75",
+      "kind": "Task",
+      "deliverable": "Execute virtual/interface/generic calls, delegates (ldftn/ldvirtftn/multicast), tail calls, constrained calls, calli and ref/out/in passing; the verifier in packages/cil/src/execution-profile.js currently rejects generics, filters, interface targets and most prefixes so each feature needs a paired allowlist change owned by A03.",
+      "acceptance": "- [ ] Deep recursion, value receivers and invalid call targets agree with verified metadata.\n\n- [ ] Add positive, malformed/negative, cancellation/disposal and boundary tests where applicable.\n\n- [ ] Verify every affected execution/platform target independently; explicitly record unsupported targets.\n\n- [ ] Add or update a runnable example, API capability row and regression test.\n\n- [ ] Measure cold/warm latency, p95/p99 and allocations for performance-sensitive paths; keep correctness gates.\n\n- [ ] Record exact commits, tool versions and commands; no fixture simulator is reported as native qualification.",
+      "dependencies": "- [SF-A00-T01](https://github.com/wieslawsoltes/SharpForge/issues/4)\n\n- [SF-A00-T04](https://github.com/wieslawsoltes/SharpForge/issues/7)\n\n- [SF-A04-T03](https://github.com/wieslawsoltes/SharpForge/issues/62)",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T03",
+      "issue": 76,
+      "title": "[SF-A05-T03] Implement managed pointer lifetimes",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/76",
+      "kind": "Task",
+      "deliverable": "Represent interior refs, byrefs, boxing and value copies without JS alias leaks.",
+      "acceptance": "- [ ] GC during nested byref calls preserves valid refs and rejects expired stack refs.\n\n- [ ] Add positive, malformed/negative, cancellation/disposal and boundary tests where applicable.\n\n- [ ] Verify every affected execution/platform target independently; explicitly record unsupported targets.\n\n- [ ] Add or update a runnable example, API capability row and regression test.\n\n- [ ] Measure cold/warm latency, p95/p99 and allocations for performance-sensitive paths; keep correctness gates.\n\n- [ ] Record exact commits, tool versions and commands; no fixture simulator is reported as native qualification.",
+      "dependencies": "- [SF-A00-T01](https://github.com/wieslawsoltes/SharpForge/issues/4)\n\n- [SF-A00-T04](https://github.com/wieslawsoltes/SharpForge/issues/7)",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T04",
+      "issue": 77,
+      "title": "[SF-A05-T04] Complete exception dispatch",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/77",
+      "kind": "Task",
+      "deliverable": "Implement filters, fault/finally, rethrow and cross-frame unwind at every instruction boundary.",
+      "acceptance": "- [ ] Compare nested cleanup order and filter faults against native execution traces.\n\n- [ ] Add positive, malformed/negative, cancellation/disposal and boundary tests where applicable.\n\n- [ ] Verify every affected execution/platform target independently; explicitly record unsupported targets.\n\n- [ ] Add or update a runnable example, API capability row and regression test.\n\n- [ ] Measure cold/warm latency, p95/p99 and allocations for performance-sensitive paths; keep correctness gates.\n\n- [ ] Record exact commits, tool versions and commands; no fixture simulator is reported as native qualification.",
+      "dependencies": "- [SF-A00-T01](https://github.com/wieslawsoltes/SharpForge/issues/4)\n\n- [SF-A00-T04](https://github.com/wieslawsoltes/SharpForge/issues/7)",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T05",
+      "issue": 78,
+      "title": "[SF-A05-T05] Implement multidimensional arrays",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/78",
+      "kind": "Task",
+      "deliverable": "Execute rank/bounds/lower-bound semantics and typed array covariance checks.",
+      "acceptance": "- [ ] Boundary and store-type failures match native exception types.\n\n- [ ] Add positive, malformed/negative, cancellation/disposal and boundary tests where applicable.\n\n- [ ] Verify every affected execution/platform target independently; explicitly record unsupported targets.\n\n- [ ] Add or update a runnable example, API capability row and regression test.\n\n- [ ] Measure cold/warm latency, p95/p99 and allocations for performance-sensitive paths; keep correctness gates.\n\n- [ ] Record exact commits, tool versions and commands; no fixture simulator is reported as native qualification.",
+      "dependencies": "- [SF-A00-T01](https://github.com/wieslawsoltes/SharpForge/issues/4)\n\n- [SF-A00-T04](https://github.com/wieslawsoltes/SharpForge/issues/7)",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T06",
+      "issue": 79,
+      "title": "[SF-A05-T06] Preserve state across suspension and snapshots",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/79",
+      "kind": "Task",
+      "deliverable": "Version complete VM state across source/CIL pauses and restores.",
+      "acceptance": "- [ ] Replay nested calls, faults and parked contexts without stale object/frame identities.\n\n- [ ] Add positive, malformed/negative, cancellation/disposal and boundary tests where applicable.\n\n- [ ] Verify every affected execution/platform target independently; explicitly record unsupported targets.\n\n- [ ] Add or update a runnable example, API capability row and regression test.\n\n- [ ] Measure cold/warm latency, p95/p99 and allocations for performance-sensitive paths; keep correctness gates.\n\n- [ ] Record exact commits, tool versions and commands; no fixture simulator is reported as native qualification.",
+      "dependencies": "- [SF-A00-T01](https://github.com/wieslawsoltes/SharpForge/issues/4)\n\n- [SF-A00-T04](https://github.com/wieslawsoltes/SharpForge/issues/7)",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T07",
+      "issue": 80,
+      "title": "[SF-A05-T07] Predecode instructions and cache callsites",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/80",
+      "kind": "Task",
+      "deliverable": "Add verified immutable decode plans and invalidated polymorphic dispatch caches.",
+      "acceptance": "- [ ] Measure cold and warm costs; hot reload and unloading never reuse stale targets.\n\n- [ ] Add positive, malformed/negative, cancellation/disposal and boundary tests where applicable.\n\n- [ ] Verify every affected execution/platform target independently; explicitly record unsupported targets.\n\n- [ ] Add or update a runnable example, API capability row and regression test.\n\n- [ ] Measure cold/warm latency, p95/p99 and allocations for performance-sensitive paths; keep correctness gates.\n\n- [ ] Record exact commits, tool versions and commands; no fixture simulator is reported as native qualification.",
+      "dependencies": "- [SF-A00-T01](https://github.com/wieslawsoltes/SharpForge/issues/4)\n\n- [SF-A00-T04](https://github.com/wieslawsoltes/SharpForge/issues/7)\n\n- [SF-A05-T01](https://github.com/wieslawsoltes/SharpForge/issues/74)",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T08",
+      "issue": 81,
+      "title": "[SF-A05-T08] Specialize numeric fast paths",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/81",
+      "kind": "Task",
+      "deliverable": "Reduce boxed intermediates only when type proofs permit exact semantics.",
+      "acceptance": "- [ ] Fast and reference paths match randomized inputs and allocation measurements.\n\n- [ ] Add positive, malformed/negative, cancellation/disposal and boundary tests where applicable.\n\n- [ ] Verify every affected execution/platform target independently; explicitly record unsupported targets.\n\n- [ ] Add or update a runnable example, API capability row and regression test.\n\n- [ ] Measure cold/warm latency, p95/p99 and allocations for performance-sensitive paths; keep correctness gates.\n\n- [ ] Record exact commits, tool versions and commands; no fixture simulator is reported as native qualification.",
+      "dependencies": "- [SF-A00-T01](https://github.com/wieslawsoltes/SharpForge/issues/4)\n\n- [SF-A00-T04](https://github.com/wieslawsoltes/SharpForge/issues/7)\n\n- [SF-A05-T01](https://github.com/wieslawsoltes/SharpForge/issues/74)",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T09",
+      "issue": 82,
+      "title": "[SF-A05-T09] Optimize managed frames and root scans",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/82",
+      "kind": "Task",
+      "deliverable": "Use reusable frame storage with explicit root slots and capacity bounds.",
+      "acceptance": "- [ ] Stress recursion, suspension and collection; report retained memory after unwind.\n\n- [ ] Add positive, malformed/negative, cancellation/disposal and boundary tests where applicable.\n\n- [ ] Verify every affected execution/platform target independently; explicitly record unsupported targets.\n\n- [ ] Add or update a runnable example, API capability row and regression test.\n\n- [ ] Measure cold/warm latency, p95/p99 and allocations for performance-sensitive paths; keep correctness gates.\n\n- [ ] Record exact commits, tool versions and commands; no fixture simulator is reported as native qualification.",
+      "dependencies": "- [SF-A00-T01](https://github.com/wieslawsoltes/SharpForge/issues/4)\n\n- [SF-A00-T04](https://github.com/wieslawsoltes/SharpForge/issues/7)\n\n- [SF-A05-T01](https://github.com/wieslawsoltes/SharpForge/issues/74)",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T10",
+      "issue": 83,
+      "title": "[SF-A05-T10] Add deterministic profiling hooks",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/83",
+      "kind": "Task",
+      "deliverable": "Expose instruction, call, allocation and suspension counters with bounded overhead.",
+      "acceptance": "- [ ] Profiler on/off preserves outputs; overhead is measured on identical workloads.\n\n- [ ] Add positive, malformed/negative, cancellation/disposal and boundary tests where applicable.\n\n- [ ] Verify every affected execution/platform target independently; explicitly record unsupported targets.\n\n- [ ] Add or update a runnable example, API capability row and regression test.\n\n- [ ] Measure cold/warm latency, p95/p99 and allocations for performance-sensitive paths; keep correctness gates.\n\n- [ ] Record exact commits, tool versions and commands; no fixture simulator is reported as native qualification.",
+      "dependencies": "- [SF-A00-T01](https://github.com/wieslawsoltes/SharpForge/issues/4)\n\n- [SF-A00-T04](https://github.com/wieslawsoltes/SharpForge/issues/7)\n\n- [SF-A05-T01](https://github.com/wieslawsoltes/SharpForge/issues/74)",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T11",
+      "issue": 84,
+      "title": "[SF-A05-T11] Build validated Wasm tier-1 code generation with tiering and deopt",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/84",
+      "kind": "Task",
+      "deliverable": "Compile eligible verified methods to Wasm with fallback and deoptimization points.",
+      "acceptance": "- [ ] Differential tests include debugger safepoints and unsupported-op fallback.\n\n- [ ] Add positive, malformed/negative, cancellation/disposal and boundary tests where applicable.\n\n- [ ] Verify every affected execution/platform target independently; explicitly record unsupported targets.\n\n- [ ] Add or update a runnable example, API capability row and regression test.\n\n- [ ] Measure cold/warm latency, p95/p99 and allocations for performance-sensitive paths; keep correctness gates.\n\n- [ ] Record exact commits, tool versions and commands; no fixture simulator is reported as native qualification.",
+      "dependencies": "- [SF-A00-T01](https://github.com/wieslawsoltes/SharpForge/issues/4)\n\n- [SF-A00-T04](https://github.com/wieslawsoltes/SharpForge/issues/7)\n\n- [SF-A05-T01](https://github.com/wieslawsoltes/SharpForge/issues/74)",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T12",
+      "issue": 85,
+      "title": "[SF-A05-T12] Gate VM performance regressions",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/85",
+      "kind": "Task",
+      "deliverable": "Maintain same-runner median/tail/allocations baselines for realistic apps and microbenchmarks.",
+      "acceptance": "- [ ] Fail statistically significant regressions without hiding cold startup or copy cost.\n\n- [ ] Add positive, malformed/negative, cancellation/disposal and boundary tests where applicable.\n\n- [ ] Verify every affected execution/platform target independently; explicitly record unsupported targets.\n\n- [ ] Add or update a runnable example, API capability row and regression test.\n\n- [ ] Measure cold/warm latency, p95/p99 and allocations for performance-sensitive paths; keep correctness gates.\n\n- [ ] Record exact commits, tool versions and commands; no fixture simulator is reported as native qualification.",
+      "dependencies": "- [SF-A00-T01](https://github.com/wieslawsoltes/SharpForge/issues/4)\n\n- [SF-A00-T04](https://github.com/wieslawsoltes/SharpForge/issues/7)\n\n- [SF-A05-T01](https://github.com/wieslawsoltes/SharpForge/issues/74)",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-E03",
+      "issue": 461,
+      "title": "[SF-A05-E03] Interpreter modularization seams",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/461",
+      "kind": "Epic",
+      "deliverable": "Split the two monolithic interpreters (vm.js 145 lines/23 KB, cil-vm.js 306 lines/40 KB, both single-class with one giant switch or if-chain) into packages/runtime/src/execution/** modules so parallel agents stop colliding on vm.js and cil-vm.js.\n\nParent tracker only \u2014 agents claim its child tasks/sub-tasks, never the epic. Close only when every child is merged with evidence.",
+      "acceptance": "",
+      "dependencies": "",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-E04",
+      "issue": 462,
+      "title": "[SF-A05-E04] Type system runtime and static initialization",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/462",
+      "kind": "Epic",
+      "deliverable": "Runtime type handles, static constructor semantics, type identity and reflection hooks needed by execution but not covered by existing tasks.\n\nParent tracker only \u2014 agents claim its child tasks/sub-tasks, never the epic. Close only when every child is merged with evidence.",
+      "acceptance": "",
+      "dependencies": "",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T13",
+      "issue": 709,
+      "title": "[SF-A05-T13] Extract CIL numeric core (binary, compare, convert, storage, indirect) into execution/numeric-ops.js",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/709",
+      "kind": "Task",
+      "deliverable": "Move CilVirtualMachine.binary/compare/convert/storage/indirect and the float()/number()/isNumber()/defaults() helpers from cil-vm.js into packages/runtime/src/execution/numeric-ops.js as pure functions; cil-vm.js keeps one-line delegations.",
+      "acceptance": "- [ ] All tests in tests/cil.test.js and tests/managed-il.test.js pass unchanged; numeric-ops.js has no import of heap or VM and is unit-testable in isolation.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
+      "dependencies": "",
+      "status": "implemented and validated; pull request pending",
+      "evidence": [
+        "runtime-a05-e03-validation.json"
+      ]
+    },
+    {
+      "id": "SF-A05-T14",
+      "issue": 710,
+      "title": "[SF-A05-T14] Extract CilVirtualMachine.step into a per-opcode-group handler table",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/710",
+      "kind": "Task",
+      "deliverable": "Replace the string if-chain in cil-vm.js step() (startsWith/regex per instruction) with a handler registry packages/runtime/src/execution/handlers/index.js plus group files load-store.js, branch.js, arith.js, object-model.js, array.js, indirect.js, call.js; cil-vm.js only looks up handler by opcode.",
+      "acceptance": "- [ ] Each handler file is registered through one line in handlers/index.js; existing CIL suites pass; adding an opcode touches only one group file.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
+      "dependencies": "",
+      "status": "implemented and validated; pull request pending",
+      "evidence": [
+        "runtime-a05-e03-validation.json"
+      ]
+    },
+    {
+      "id": "SF-A05-T15",
+      "issue": 711,
+      "title": "[SF-A05-T15] Extract CIL call/dispatch (invoke, call, ensureInitialized, layout, typeOf, matches) into execution/calls.js and execution/type-system.js",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/711",
+      "kind": "Task",
+      "deliverable": "Move invoke()/call()/ensureInitialized() to execution/calls.js and layout()/typeOf()/matches()/field() to execution/type-system.js with a token-keyed type index replacing inspector.types.find linear scans.",
+      "acceptance": "- [ ] typeOf and matches are O(1) map lookups; existing CIL tests pass; cil-vm.js no longer contains metadata walks.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
+      "dependencies": "",
+      "status": "implemented and validated; pull request pending",
+      "evidence": [
+        "runtime-a05-e03-validation.json"
+      ]
+    },
+    {
+      "id": "SF-A05-T17",
+      "issue": 713,
+      "title": "[SF-A05-T17] Extract CIL intrinsic table (System.String/Math/Convert/GC/Console) into execution/intrinsics.js",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/713",
+      "kind": "Task",
+      "deliverable": "Move CilVirtualMachine.intrinsic() into packages/runtime/src/execution/intrinsics.js as a Map keyed by owner::name(signature) aligned with supportedIntrinsic() in packages/cil/src/execution-profile.js.",
+      "acceptance": "- [ ] A test asserts every member accepted by supportedIntrinsic has a table entry and vice versa; lookups are O(1).\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
+      "dependencies": "",
+      "status": "implemented and validated; pull request pending",
+      "evidence": [
+        "runtime-a05-e03-validation.json"
+      ]
+    },
+    {
+      "id": "SF-A05-T18",
+      "issue": 714,
+      "title": "[SF-A05-T18] Extract source-VM builtin switch and binary() into execution/source-builtins.js and execution/source-ops.js",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/714",
+      "kind": "Task",
+      "deliverable": "Move VirtualMachine.builtin() name switch (Math.*, Console.*, GC.*, string.*, Convert.*) and binary()/CONVERT/UNARY logic from vm.js into two new modules; vm.js runSlice keeps only dispatch.",
+      "acceptance": "- [ ] tests/runtime.test.js and tests/compiler.test.js pass; vm.js shrinks below 90 lines; builtins are testable without constructing a VM image.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
+      "dependencies": "",
+      "status": "implemented and validated; pull request pending",
+      "evidence": [
+        "runtime-a05-e03-validation.json"
+      ]
+    },
+    {
+      "id": "SF-A05-T16",
+      "issue": 712,
+      "title": "[SF-A05-T16] Extract CIL exception unwinding (raise, resumeUnwind, leave handling) into execution/eh.js",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/712",
+      "kind": "Task",
+      "deliverable": "Move raise()/resumeUnwind() and the leave branch logic out of cil-vm.js into packages/runtime/src/execution/eh.js behind a two-function interface (throwFault, continueUnwind).",
+      "acceptance": "- [ ] tests/cil.test.js protected-region cases pass; eh.js is the only file referencing frame.unwinds/frame.pending/frame.caught.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
+      "dependencies": "",
+      "status": "implemented and validated; pull request pending",
+      "evidence": [
+        "runtime-a05-e03-validation.json"
+      ]
+    },
+    {
+      "id": "SF-A05-T19",
+      "issue": 715,
+      "title": "[SF-A05-T19] Extract source-VM finally/catch unwinding (transfer, resumeUnwind, handleFault, enterCatch, finalizers) into execution/source-eh.js",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/715",
+      "kind": "Task",
+      "deliverable": "Move the five unwinding methods of VirtualMachine into packages/runtime/src/execution/source-eh.js with the VM passed as context.",
+      "acceptance": "- [ ] Existing try/finally tests in tests/runtime.test.js and tests/language.test.js pass; vm.js has no reference to frame.unwinds.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
+      "dependencies": "",
+      "status": "implemented and validated; pull request pending",
+      "evidence": [
+        "runtime-a05-e03-validation.json"
+      ]
+    },
+    {
+      "id": "SF-A05-T20",
+      "issue": 716,
+      "title": "[SF-A05-T20] Extract VM snapshot/restore field lists into a versioned schema in snapshot.js",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/716",
+      "kind": "Task",
+      "deliverable": "Replace the hand-written field copies in VirtualMachine.snapshot/restore and CilVirtualMachine.snapshot/restore with a declarative schema (schemaVersion, field list, copier) exported from packages/runtime/src/snapshot.js.",
+      "acceptance": "- [ ] Adding a VM field without registering it in the schema fails a test that diffs Object.keys(vm) against the schema; snapshot objects carry schemaVersion.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
+      "dependencies": "",
+      "status": "implemented and validated; pull request pending",
+      "evidence": [
+        "runtime-a05-e03-validation.json"
+      ]
+    },
+    {
+      "id": "SF-A05-T21",
+      "issue": 717,
+      "title": "[SF-A05-T21] Implement exact static constructor semantics (beforefieldinit, precise init, recursion, TypeInitializationException)",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/717",
+      "kind": "Task",
+      "deliverable": "Add execution/static-init.js: trigger rules for precise vs BeforeFieldInit types, reentrancy on the same context returning partially initialized state, failed cctor caching and TypeInitializationException wrapping with InnerException; today a failed cctor is marked 'failed' but later accesses do not rethrow.",
+      "acceptance": "- [ ] Fixtures for cctor ordering across three mutually referencing types, throwing cctor accessed twice, and beforefieldinit laziness match .NET output.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
+      "dependencies": "",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T22",
+      "issue": 718,
+      "title": "[SF-A05-T22] Introduce runtime type handles and object headers carrying a method table reference",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/718",
+      "kind": "Task",
+      "deliverable": "Add execution/method-table.js so heap records reference a MethodTable object (token, base, interface map, vtable, element type, flags, instance size, GC reference bitmap) instead of a type-name string; typeOf() by name and name collisions across namespaces disappear.",
+      "acceptance": "- [ ] Two types with the same simple name in different namespaces dispatch correctly; GetType() identity is reference-equal per type.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
+      "dependencies": "",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T24",
+      "issue": 720,
+      "title": "[SF-A05-T24] Implement ldtoken, typeof, RuntimeTypeHandle and Object.GetType runtime support",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/720",
+      "kind": "Task",
+      "deliverable": "Add execution/handlers/tokens.js for ldtoken (type, method, field), Type.GetTypeFromHandle and GetType() returning stable runtime Type objects (reflection surface itself is owned by A04).",
+      "acceptance": "- [ ] typeof(T)==x.GetType() comparisons and typeof(List<>) open generic tokens behave as in .NET.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
+      "dependencies": "",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T23",
+      "issue": 719,
+      "title": "[SF-A05-T23] Implement castclass/isinst for the full assignability lattice",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/719",
+      "kind": "Task",
+      "deliverable": "Add execution/casting.js: classes, interfaces, arrays (covariance), generic variance (in/out), Nullable<T>, enums vs underlying, with a cast cache.",
+      "acceptance": "- [ ] A table-driven test of 60 source/target pairs matches Type.IsAssignableFrom results from .NET.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
+      "dependencies": "",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T25",
+      "issue": 721,
+      "title": "[SF-A05-T25] Implement enums as distinct value types with underlying storage",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/721",
+      "kind": "Task",
+      "deliverable": "Add execution/enums.js: enum boxing keeps enum type, ToString/HasFlag hooks, conversions and arithmetic on underlying type; source VM Op.ENUM currently pushes a bare number.",
+      "acceptance": "- [ ] Boxed enum prints its member name; (object)MyEnum.A is MyEnum is true and is int is false.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
+      "dependencies": "",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T26",
+      "issue": 722,
+      "title": "[SF-A05-T26] Implement thread-static, volatile and static field storage per instantiation",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/722",
+      "kind": "Task",
+      "deliverable": "Add execution/statics.js keyed by (field token, generic instantiation, scheduler context for [ThreadStatic]) replacing the flat statics Map; volatile. prefix accepted.",
+      "acceptance": "- [ ] Generic<int>.Counter and Generic<string>.Counter are independent; [ThreadStatic] values differ per scheduler context.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
+      "dependencies": "",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T27",
+      "issue": 723,
+      "title": "[SF-A05-T27] Implement string runtime representation (UTF-16 semantics, interning, ldstr identity, string.Empty)",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/723",
+      "kind": "Task",
+      "deliverable": "Add execution/strings.js: ldstr interning table as weak-capable intern pool, String.Intern/IsInterned, reference equality rules, char indexing with surrogate correctness; ensure the strings Map root set does not leak across assembly unload.",
+      "acceptance": "- [ ] ReferenceEquals(\"a\",\"a\") is true for literals and false for runtime-built strings; interned pool is released on VM stop.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
+      "dependencies": "",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T28",
+      "issue": 724,
+      "title": "[SF-A05-T28] Unify the two engines on one object model or publish a parity gate",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/724",
+      "kind": "Task",
+      "deliverable": "Add tests/engine-parity.test.js running every language fixture through VirtualMachine and CilVirtualMachine and failing on differing output, exception type or exit code; list permitted divergences explicitly in tests/support/engine-parity-allowlist.js.",
+      "acceptance": "- [ ] Parity suite runs in CI; allowlist has an owner and reason per entry; new fixtures are included automatically.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
+      "dependencies": "",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T29",
+      "issue": 725,
+      "title": "[SF-A05-T29] Implement async state machine and iterator execution support in the CIL engine",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/725",
+      "kind": "Task",
+      "deliverable": "Add execution/async-runtime.js providing AsyncTaskMethodBuilder/AsyncVoidMethodBuilder/TaskAwaiter runtime hooks and IEnumerator state-machine support that integrate with CooperativeScheduler suspension (SUSPENDED) so Roslyn-shaped state machines run; BCL Task surface remains with A11.",
+      "acceptance": "- [ ] A Roslyn-compiled async method with two awaits and try/finally runs to completion in CilVirtualMachine and can be paused/snapshotted mid-await.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
+      "dependencies": "",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T30",
+      "issue": 726,
+      "title": "[SF-A05-T30] Implement lock/Monitor, Interlocked and Volatile runtime primitives under cooperative scheduling",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/726",
+      "kind": "Task",
+      "deliverable": "Add execution/sync-primitives.js for Monitor.Enter/Exit/Wait/Pulse with sync-block ownership per scheduler context, Interlocked.* atomicity at instruction granularity, and deadlock detection reporting; API surface coordination with A11.",
+      "acceptance": "- [ ] lock re-entrancy, Monitor.Wait/Pulse ping-pong and SynchronizationLockException on unowned exit match .NET.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
+      "dependencies": "",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-T31",
+      "issue": 727,
+      "title": "[SF-A05-T31] Implement instruction-boundary preemption fairness and time-slice accounting tests",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/727",
+      "kind": "Task",
+      "deliverable": "Add tests/preemption.test.js verifying runSlice budget behaviour (instructionBudget, timeBudgetMs checked every 256 instructions) with long-running intrinsics and tiered code so UI responsiveness guarantees hold.",
+      "acceptance": "- [ ] No slice exceeds 2x timeBudgetMs in the test workloads including a 1M-element Array.Sort.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.",
+      "dependencies": "",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-B01",
+      "issue": 728,
+      "title": "[SF-A05-B01] conv.u8 sign-extends an int32 stack value instead of zero-extending",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/728",
+      "kind": "Bug",
+      "deliverable": "CilVirtualMachine.prototype.convert('conv.u8', -1) returns -1n (0xFFFFFFFFFFFFFFFF); ECMA-335 III.3.27 requires zero extension so (ulong)uint.MaxValue and (long)uintValue are wrong. Cause: cil-vm.js:173-177 takes BigInt(raw) of the signed number then asUintN(64) without first masking a 32-bit source when target is u8/u.",
+      "acceptance": "- [ ] uint x = 0xFFFFFFFF; Console.WriteLine((ulong)x) prints 4294967295 in the CIL engine; regression test added.\n\n- [ ] Regression test reproduces the defect before the fix and passes after.",
+      "dependencies": "",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-B02",
+      "issue": 729,
+      "title": "[SF-A05-B02] Unchecked double-to-Int64/UInt64 conversion wraps modulo 2^64 instead of saturating",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/729",
+      "kind": "Bug",
+      "deliverable": "convert('conv.i8', 1e30) returns 5076964154930102272n because cil-vm.js:177 applies BigInt.asIntN to the truncated value; only the i4 path has a deterministic out-of-range result (line 176). .NET saturates (long.MaxValue) on .NET 9+ and returned 0x8000000000000000 before; conv.u4 of 3e9 also returns -1294967296 inconsistent with documented policy.",
+      "acceptance": "- [ ] Out-of-range float to i8/u8/u4/i2/i1 conversions follow one documented .NET-compatible table and are covered by fixtures.\n\n- [ ] Regression test reproduces the defect before the fix and passes after.",
+      "dependencies": "",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-B04",
+      "issue": 731,
+      "title": "[SF-A05-B04] Runtime-raised faults are not caught by typed catch clauses other than System.Exception",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/731",
+      "kind": "Bug",
+      "deliverable": "matches() (cil-vm.js:90-94) treats records of kind 'exception' as matching only when systemType(r.type)===target or target is System.Exception; runtime faults are allocated with unqualified names like 'DivideByZeroException' (raise(), cil-vm.js:240) so catch(DivideByZeroException) [System.DivideByZeroException] and catch(ArithmeticException) never match. Found by code reading; reachable only with externally compiled (Roslyn) assemblies because the in-repo compiler rejects exception types other than Exception (CS0246).",
+      "acceptance": "- [ ] try{int z=0;int y=1/z;}catch(DivideByZeroException){Console.WriteLine(\"ok\");} from a Roslyn-compiled fixture DLL prints ok in the CIL engine.\n\n- [ ] Regression test reproduces the defect before the fix and passes after.",
+      "dependencies": "",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-B03",
+      "issue": 730,
+      "title": "[SF-A05-B03] callvirt override lookup ignores newslot/hiding and explicit MethodImpl",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/730",
+      "kind": "Bug",
+      "deliverable": "cil-vm.js:226 walks from the runtime type up the base chain picking the first method with the same name and signature, so a 'new virtual' method in a derived class is called through a base-typed reference where .NET calls the base slot. Cause: no vtable slots, name matching only. Found by code reading; not reproduced at runtime.",
+      "acceptance": "- [ ] class A{public virtual int F()=>1;} class B:A{public new virtual int F()=>2;} A a=new B(); a.F() returns 1.\n\n- [ ] Regression test reproduces the defect before the fix and passes after.",
+      "dependencies": "",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-B06",
+      "issue": 733,
+      "title": "[SF-A05-B06] Source VM GC.GetTotalMemory truncates to Int32 and GC.CollectionCount rejects generations 1 and 2",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/733",
+      "kind": "Bug",
+      "deliverable": "vm.js:51 returns this.heap.stats.liveBytes with a 32-bit truncation (bitwise or with zero) although the API returns Int64 and the CIL engine returns BigInt; heaps above 2 GiB wrap negative and the two engines disagree on type. vm.js:52 throws ArgumentOutOfRangeException for generation != 0 where .NET returns a count for 0..MaxGeneration.",
+      "acceptance": "- [ ] GC.GetTotalMemory returns an Int64 value in both engines; GC.CollectionCount(1) and (2) return counts without throwing.\n\n- [ ] Regression test reproduces the defect before the fix and passes after.",
+      "dependencies": "",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "SF-A05-B05",
+      "issue": 732,
+      "title": "[SF-A05-B05] Every CIL call allocates a new offset-to-index Map for the callee",
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/732",
+      "kind": "Bug",
+      "deliverable": "CilVirtualMachine.call() builds offsets:new Map(m.instructions.map(...)) per frame at cil-vm.js:74, making call cost O(method length) and dominating recursion benchmarks. Should be cached once on the method object.",
+      "acceptance": "- [ ] Offsets map is computed once per method; a call-heavy benchmark (fib 25) improves measurably and allocation count per call drops.\n\n- [ ] Regression test reproduces the defect before the fix and passes after.",
+      "dependencies": "",
+      "status": "pending",
+      "evidence": []
+    }
+  ]
+}

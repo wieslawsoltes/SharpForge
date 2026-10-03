@@ -1,4 +1,4 @@
-import {contractForMember,frameworkType} from '@sharpforge/framework';
+import {frameworkType} from '@sharpforge/framework';
 import { AssemblyInspector } from './inspector.js';
 import { CilError } from './binary.js';
 // Broad decoding is deliberately separate from this managed execution allowlist.
@@ -10,37 +10,9 @@ const branches = /^(br|brtrue|brfalse|leave)(\.s)?$|^(beq|bge|bgt|ble|blt|bne)(\
 const conversions = /^conv\.(ovf\.)?(i1|u1|i2|u2|i4|u4|i8|u8|i|u|r4|r8|r)(\.un)?$/;
 export function isExecutableOpcode(name){return simple.has(name)||arithmetic.test(name)||indexed.test(name)||numeric.test(name)||branches.test(name)||conversions.test(name)||/^(ldelem|stelem|ldind|stind)\.(i1|u1|i2|u2|i4|u4|i8|i|r4|r8|ref)$/.test(name);}
 export const primitiveSizes=Object.freeze({'System.Boolean':1,'System.SByte':1,'System.Byte':1,'System.Char':2,'System.Int16':2,'System.UInt16':2,'System.Int32':4,'System.UInt32':4,'System.Int64':8,'System.UInt64':8,'System.Single':4,'System.Double':8});
-const aliases={object:'System.Object',string:'System.String',Exception:'System.Exception',int:'System.Int32',double:'System.Double',long:'System.Int64',bool:'System.Boolean'};
-export const systemType=name=>aliases[name]??name;
-export function supportedIntrinsic(d){
-  if(d.kind==='method'&&contractForMember(d))return true;
-  if(d.kind!=='method'||d.genericArguments||d.signature.genericArity||d.signature.callingConvention)return false;
-  const owner=systemType(d.owner),{parameters:p,returnType:r,isStatic:s}=d.signature,name=d.name;
-  const primitives=new Set(['int','uint','long','ulong','double','float','bool','char','string','object']);
-  if(owner==='System.Console'&&s&&r==='void'&&['Write','WriteLine'].includes(name))return p.length===0&&name==='WriteLine'||p.length===1&&primitives.has(p[0]);
-  if(owner==='System.Object')return name==='.ctor'&&!s&&p.length===0&&r==='void'||name==='ToString'&&!s&&p.length===0&&r==='string';
-  if(owner==='System.Exception')return name==='.ctor'&&!s&&r==='void'&&(p.length===0||p.length===1&&p[0]==='string')||name==='get_Message'&&!s&&p.length===0&&r==='string';
-  if(owner==='System.String'){
-    if(s&&name==='Concat'&&r==='string')return p.length>=2&&p.length<=4&&p.every(t=>t==='string')||p.length===2&&p.every(t=>t==='object');
-    if(s&&['op_Equality','op_Inequality','Equals'].includes(name))return p.join(',')==='string,string'&&r==='bool';
-    if(s&&name==='IsNullOrEmpty')return p.join(',')==='string'&&r==='bool';
-    if(!s&&name==='get_Length')return !p.length&&r==='int';
-    if(!s&&name==='get_Chars')return p.join(',')==='int'&&r==='char';
-    if(!s&&['ToUpperInvariant','ToLowerInvariant','ToUpper','ToLower','Trim','ToString'].includes(name))return !p.length&&r==='string';
-    if(!s&&['Contains','StartsWith','EndsWith'].includes(name))return p.join(',')==='string'&&r==='bool';
-    if(!s&&name==='IndexOf')return p.join(',')==='string'&&r==='int';
-    if(!s&&name==='Replace')return p.join(',')==='string,string'&&r==='string';
-    if(!s&&name==='Substring')return ['int','int,int'].includes(p.join(','))&&r==='string';
-  }
-  if(owner==='System.Math'&&s){
-    if(['Abs','Min','Max'].includes(name))return p.length===(name==='Abs'?1:2)&&['int','double','long','float'].includes(r)&&p.every(t=>t===r);
-    if(['Sqrt','Floor','Ceiling','Round','Sin','Cos','Tan','Log','Exp','Pow'].includes(name))return r==='double'&&p.length===(name==='Pow'?2:1)&&p.every(t=>t==='double');
-  }
-  if(owner==='System.GC'&&s)return name==='Collect'&&r==='void'&&!p.length||name==='GetTotalMemory'&&r==='long'&&p.join(',')==='bool'||name==='CollectionCount'&&r==='int'&&p.join(',')==='int';
-  if(owner==='System.Convert'&&s&&p.length===1)return name==='ToInt32'&&r==='int'&&['int','double','bool','string','object'].includes(p[0])||name==='ToDouble'&&r==='double'&&['int','double','string'].includes(p[0])||name==='ToString'&&r==='string'&&primitives.has(p[0]);
-  if(s&&name==='Parse'&&p.join(',')==='string')return owner==='System.Int32'&&r==='int'||owner==='System.Double'&&r==='double'||owner==='System.Int64'&&r==='long';
-  return false;
-}
+export {systemType} from './intrinsic-profile.js';
+import {intrinsicDefinition} from './intrinsic-profile.js';
+export function supportedIntrinsic(descriptor){return intrinsicDefinition(descriptor)!==null;}
 export function selectMethod(inspector,selection,args){
   if(selection===undefined||selection===null){if(!inspector.pe.entryPoint)throw new CilError('This DLL has no entry point. Select a static method to invoke.');return inspector.pe.entryPoint;}
   if(typeof selection==='number')return selection;
