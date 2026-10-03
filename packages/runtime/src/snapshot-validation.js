@@ -152,5 +152,5 @@ export function validateSnapshotState(vm,s,engine) {
   validateAsyncSnapshot(vm,s);
   validateMemorySnapshot(vm,s);
   validateStackSnapshot(vm,s);
-  if(engine==='cil')validateVarargsSnapshot(vm,s);
+  validateVarargsSnapshot(vm,s);
 }

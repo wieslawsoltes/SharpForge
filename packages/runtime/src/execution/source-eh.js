@@ -110,6 +110,7 @@ function enterFilter(vm, owner, handler, search) {
   pushFrame(vm, {
     id: ++vm.frameId, methodId: owner.methodId, pc: handler.filter, base: vm.stack.length,
     locals: owner.locals, point: owner.point, ...frameState(),
+    ...(owner.varargs ? {varargs: owner.varargs} : {}),
     filterSearch: search, filterOwnerId: owner.id, filterHandler: handler
   });
 }
