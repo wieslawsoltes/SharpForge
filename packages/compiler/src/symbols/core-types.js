@@ -71,6 +71,8 @@ export class CoreTypes {
     Object.assign(this, declareSpanTypes(this), declareCoreTypeRelations(this));
     this.task = bridge.coreType('System_Threading_Tasks_Task');
     this.taskT = bridge.coreType('System_Threading_Tasks_Task_T');
+    this.valueTask = bridge.coreType('System_Threading_Tasks_ValueTask');
+    this.valueTaskT = bridge.coreType('System_Threading_Tasks_ValueTask_T');
     this.type = bridge.coreType('System_Type');
     this.attribute = bridge.coreType('System_Attribute');
   }
@@ -198,28 +200,35 @@ export class CoreTypes {
       );
     }
   }
-  /** The members of `IEnumerable<T>` and `IEnumerator<T>` that iterators and hand-written enumeration loops use. */
+  /**
+   * The members of `IEnumerable<T>`, `IEnumerator<T>` and their non-generic forms that iterators and hand-written
+   * enumeration loops use.
+   */
   augmentEnumeration(method) {
-    const enumerable = this.ienumerableT,
-      enumerator = this.ienumeratorT,
-      element = enumerator.typeParameters[0],
-      abstract = DeclarationModifiers.Abstract;
-    method(enumerable, 'GetEnumerator', enumerator.construct(new TypeWithAnnotations(enumerable.typeParameters[0])), [], abstract);
-    method(enumerator, 'MoveNext', this.bool, [], abstract);
-    method(enumerator, 'Dispose', this.void, [], abstract);
-    if (enumerator.getMembers('Current').length) return;
-    const get = new MethodSymbol({
-      name: 'get_Current',
-      methodKind: MethodKind.PropertyGet,
-      returnType: element,
-      declaredAccessibility: Accessibility.Public,
-      modifiers: abstract,
-      isImplicitlyDeclared: true,
-    });
-    enumerator.addMember(get);
-    enumerator.addMember(
-      new PropertySymbol({ name: 'Current', type: element, getMethod: get, declaredAccessibility: Accessibility.Public, isImplicitlyDeclared: true }),
-    );
+    const abstract = DeclarationModifiers.Abstract,
+      generic = this.ienumeratorT.construct(new TypeWithAnnotations(this.ienumerableT.typeParameters[0]));
+    const forms = [
+      { enumerable: this.ienumerableT, enumerator: this.ienumeratorT, element: this.ienumeratorT.typeParameters[0], returned: generic },
+      { enumerable: this.ienumerable, enumerator: this.ienumerator, element: this.object, returned: this.ienumerator },
+    ];
+    for (const { enumerable, enumerator, element, returned } of forms) {
+      method(enumerable, 'GetEnumerator', returned, [], abstract);
+      method(enumerator, 'MoveNext', this.bool, [], abstract);
+      if (enumerator === this.ienumeratorT) method(enumerator, 'Dispose', this.void, [], abstract);
+      if (enumerator.getMembers('Current').length) continue;
+      const get = new MethodSymbol({
+        name: 'get_Current',
+        methodKind: MethodKind.PropertyGet,
+        returnType: element,
+        declaredAccessibility: Accessibility.Public,
+        modifiers: abstract,
+        isImplicitlyDeclared: true,
+      });
+      enumerator.addMember(get);
+      enumerator.addMember(
+        new PropertySymbol({ name: 'Current', type: element, getMethod: get, declaredAccessibility: Accessibility.Public, isImplicitlyDeclared: true }),
+      );
+    }
   }
   /** The type a C# type keyword denotes (including nint/nuint), or null. */
   keyword(word) {

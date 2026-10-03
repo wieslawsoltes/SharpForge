@@ -62,6 +62,11 @@ export class TypeMapper {
       definition = type.originalDefinition;
     if ((definition === core.ienumerableT || definition === core.ienumeratorT) && type.typeArguments?.length === 1)
       return this.host.iterators.classOf(this.imageType(type.typeArguments[0].type, syntax)).record.name;
+    // A ValueTask is the runtime's task object: the image has no struct to wrap it in.
+    if (type === core.valueTask) return this.imageType(core.task, syntax);
+    if (definition === core.valueTaskT) return this.imageType(core.taskT.construct(type.typeArguments[0].type), syntax);
+    // The non-generic forms enumerate objects.
+    if (type === core.ienumerable || type === core.ienumerator) return this.host.iterators.classOf('object').record.name;
     switch (type.typeKind) {
       case TypeKind.Enum:
         if (this.host.isSource(type)) return 'int';
