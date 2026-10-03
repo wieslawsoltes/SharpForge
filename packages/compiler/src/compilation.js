@@ -9,6 +9,7 @@ import {MethodCompiler} from './method-compiler.js';
 import {BoundMethodPipeline} from './method-pipeline.js';
 import {CompilationSymbols} from './symbols/compilation-symbols.js';
 import {collectUsingDirectives,bindUsings} from './binder/usings.js';
+import {findEntryPoint} from './binder/entry-point.js';
 import {BuckStopsHereBinder,InContainerBinder,WithUsingsBinder} from './binder/binder.js';
 export class Compilation {
   constructor(parsedFiles, options={}) {
@@ -113,13 +114,12 @@ export class Compilation {
       for(const node of file.root.members.filter(n=>n.kind==='Method'))this.declareMethod(null,{...node,modifiers:[...node.modifiers,'static']});
       if(file.root.statements.length)tops.push({file,statements:file.root.statements});
     }
-    if(tops.length>1)this.report(tops[1].file.root,'CS8802');
     const library=this.options.outputKind==='library';if(!['exe','library'].includes(this.options.outputKind??'exe'))this.report(this.files[0]?.root??{},'SF2008',[this.options.outputKind]);
-    if(library&&tops.length)this.report(tops[0].file.root,'CS8805');
-    let entry;
-    if(!library&&tops.length){const {file,statements}=tops[0];entry=this.declareMethod(null,{kind:'Method',name:'<Main>',returnType:'void',parameters:[],modifiers:['static'],body:{kind:'Block',statements,start:0,end:file.source.length,uri:file.source.uri},uri:file.source.uri,start:0,end:file.source.length});}
-    else if(!library){const candidates=this.methods.filter(m=>m.name==='Main'&&m.isStatic);entry=candidates[0];if(candidates.length>1)this.report(candidates[1].node,'CS0017');}
-    if(!library&&!entry)this.report(this.files[0]?.root??{},'CS5001');
+    // Entry point: top-level statements, else the one suitable static Main (binder/entry-point.js).
+    const selection=findEntryPoint({methods:this.methods,topLevel:tops,isLibrary:library,mainTypeName:this.options.mainTypeName??null,types:this.types,root:this.files[0]?.root??{},asyncMainAvailable:node=>this.requireFeature(node,7.1,'async main')});
+    for(const d of selection.diagnostics)this.report(d.node,d.code,d.args);
+    let entry=selection.method;
+    if(selection.kind==='topLevel'){const {file,statements}=selection.topLevel;entry=this.declareMethod(null,{kind:'Method',name:'<Main>',returnType:'void',parameters:[],modifiers:['static'],body:{kind:'Block',statements,start:0,end:file.source.length,uri:file.source.uri},uri:file.source.uri,start:0,end:file.source.length});}
     // Per-type instance initializer routines execute before constructors.
     for(const type of this.types){
       const statements=type.fields.filter(f=>f.node.initializer&&!f.isStatic).map(f=>({kind:'ExpressionStatement',uri:f.node.uri,start:f.node.start,end:f.node.end,expression:{kind:'Assignment',operator:'=',left:{kind:'Member',target:{kind:'Name',name:'this',uri:f.node.uri,start:f.node.start,end:f.node.start},name:f.name,nameSpan:f.node.nameSpan,uri:f.node.uri,start:f.node.start,end:f.node.end},right:f.node.initializer,uri:f.node.uri,start:f.node.start,end:f.node.end}}));
@@ -132,8 +132,6 @@ export class Compilation {
     let entryId=library?null:entry?.id??0;
     if(entry){
       if(entry.node.asyncRole==='kickoff'&&entry.returnType==='void')this.report(entry.node,'CS4009');
-      if(!['void','int'].includes(entry.returnType)&&!['void','int'].includes(taskResult(entry.returnType)))this.report(entry.node,'CS0028',[entry.qualifiedName],'error');
-      if(entry.parameters.length>1||entry.parameters.length===1&&entry.parameters[0].type!=='string[]')this.report(entry.node,'CS0028',[entry.qualifiedName],'error');
       const node={...entry.node,name:'<startup>',parameters:[],returnType:taskResult(entry.returnType)??entry.returnType,modifiers:['static'],body:{kind:'Block',statements:[],start:0,end:0,uri:entry.node.uri}};
       const startup=this.declareMethod(null,node,true),awaited=taskResult(entry.returnType)!==null,awaitContract=awaited?findContracts('SharpForge.Runtime.Async','Await',true).find(x=>x.parameters[0]===entry.returnType):null,awaitBuiltin=awaitContract?frameworkBuiltin(awaitContract):null;
       // The startup method runs the static initializers, calls the entry point and awaits a Task-returning Main.
