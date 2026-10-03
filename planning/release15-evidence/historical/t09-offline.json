@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 1,
+  "commit": "b07a931a29dd2fc23a800282a8a6d14bfd11c5cf",
+  "harnessCommit": "b07a931a29dd2fc23a800282a8a6d14bfd11c5cf",
+  "platform": "darwin-arm64",
+  "toolchain": {
+    "node": "v24.21.0",
+    "npm": "11.19.0"
+  },
+  "network": {
+    "kind": "npm-offline",
+    "kernelIsolation": "not qualified on this invocation"
+  },
+  "sourceArchive": {
+    "sha256": "b0323ce17bd5849111f64e79759b829cabc6e30b77c26f85f3ceda2f104d0d95",
+    "files": 1321
+  },
+  "policy": {
+    "path": "planning/qualification/repro/explained-differences.json",
+    "sha256": "453e8e7d9c6c0ec9da9eaf41749a4d2ffeb0d29ab1e38df6f1694b3c89b9cb21",
+    "content": {
+      "schemaVersion": 1,
+      "differences": []
+    }
+  },
+  "passed": false,
+  "explained": [],
+  "unexplained": [],
+  "examples": {
+    "schemaVersion": 1,
+    "commit": "b07a931a29dd2fc23a800282a8a6d14bfd11c5cf",
+    "harnessCommit": "b07a931a29dd2fc23a800282a8a6d14bfd11c5cf",
+    "harnessDirty": false,
+    "platform": "darwin-arm64",
+    "node": "v24.21.0",
+    "generators": [
+      "scripts/build-managed-examples.js",
+      "scripts/build-release10-examples.js",
+      "scripts/build-template-examples.js",
+      "scripts/build-designer-examples.js",
+      "scripts/build-release13-examples.js",
+      "scripts/build-release14-examples.js"
+    ],
+    "passed": false,
+    "stale": [
+      {
+        "path": "designer/CanvasCounter.zip",
+        "expected": {
+          "path": "designer/CanvasCounter.zip",
+          "bytes": 11093,
+          "sha256": "a95c6f50eb6d97aa3b1e8c2208350e4a6a9997ddacba33d94363f48e094760fc"
+        },
+        "actual": {
+          "path": "designer/CanvasCounter.zip",
+          "bytes": 11157,
+          "sha256": "949d66fc8f3d28c9d406520a9863b72ce1e7ec2709eca5ea2453aa91847bb070"
+        }
+      },
+      {
+        "path": "designer/CanvasCounter/DesignedView.g.cs",
+        "expected": {
+          "path": "designer/CanvasCounter/DesignedView.g.cs",
+          "bytes": 4752,
+          "sha256": "a9a70b334c20d0b709d283aee7f6901a8dc33ec71f0af4df2ae8b19f7661245b"
+        },
+        "actual": {
+          "path": "designer/CanvasCounter/DesignedView.g.cs",
+          "bytes": 4816,
+          "sha256": "7ebc04584042e1c5038490883d5b8671924d6da110633a577af80aca24b4839e"
+        }
+      },
+      {
+        "path": "designer/GridWorkspace.zip",
+        "expected": {
+          "path": "designer/GridWorkspace.zip",
+          "bytes": 11232,
+          "sha256": "9e01be8d71053cecb35168b05e2f6bfa49b13ed7f8c837560cd0fb9b564c6880"
+        },
+        "actual": {
+          "path": "designer/GridWorkspace.zip",
+          "bytes": 11296,
+          "sha256": "78d6b0f6dd802c8a6ec08369407adca5709aab0bce9b806e7f25f2b580a28530"
+        }
+      },
+      {
+        "path": "designer/GridWorkspace/DesignedView.g.cs",
+        "expected": {
+          "path": "designer/GridWorkspace/DesignedView.g.cs",
+          "bytes": 5001,
+          "sha256": "573cfefc4cf9350cb95846cb3b9c8254fa87813abb700a817fb367fffbf8fbea"
+        },
+        "actual": {
+          "path": "designer/GridWorkspace/DesignedView.g.cs",
+          "bytes": 5065,
+          "sha256": "4f89b85d8a05abfc11014e91af526780a37c4cae5bf2dad9b7de0ac804874e65"
+        }
+      },
+      {
+        "path": "managed/Finally.exe",
+        "expected": {
+          "path": "managed/Finally.exe",
+          "bytes": 2048,
+          "sha256": "bc4d66b0a32c04cc9422cb232bae64dc6e97636cea94265223ac31e2de4a9b33"
+        },
+        "actual": {
+          "path": "managed/Finally.exe",
+          "bytes": 2560,
+          "sha256": "f39abbdcf0c4aeec33b9d1da12ff588af62c18601300b5d439b7921f65556c26"
+        }
+      },
+      {
+        "path": "managed/Finally.sf.il",
+        "expected": {
+          "path": "managed/Finally.sf.il",
+          "bytes": 5416,
+          "sha256": "ead8fb6094506a2aa0e01732f7b2064fc08f70272036a41e774b14e138b8fbd8"
+        },
+        "actual": {
+          "path": "managed/Finally.sf.il",
+          "bytes": 6100,
+          "sha256": "ff1fa120351a64b671c3c7506bd19a3d2bc0530427c334ba6b8a140a1fce81c6"
+        }
+      },
+      {
+        "path": "managed/Hello.exe",
+        "expected": {
+          "path": "managed/Hello.exe",
+          "bytes": 1536,
+          "sha256": "29e9dee802ebba65c89aa3ea48cfd4bbdfbfefa42a9b5548f0ee676c1002ef0c"
+        },
+        "actual": {
+          "path": "managed/Hello.exe",
+          "bytes": 2048,
+          "sha256": "7228786c6208376099e5b47cf8510429768c15cb4996009f6070cce7d440199a"
+        }
+      },
+      {
+        "path": "managed/Hello.sf.il",
+        "expected": {
+          "path": "managed/Hello.sf.il",
+          "bytes": 3190,
+          "sha256": "d8c41609a41b410631fc3a6f563e095867a63530109a1cd83533136ee13ec9a4"
+        },
+        "actual": {
+          "path": "managed/Hello.sf.il",
+          "bytes": 3874,
+          "sha256": "18e6166f8acbb6f5cf829a2314a197ecf782cefe18e087f166bb83abaea1b3e7"
+        }
+      },
+      {
+        "path": "managed/UsingResources.exe",
+        "expected": {
+          "path": "managed/UsingResources.exe",
+          "bytes": 2560,
+          "sha256": "1ae95cad80816c7c6c17f8feb839409b0bc827940e3d0793dbf8887b75e094d2"
+        },
+        "actual": {
+          "path": "managed/UsingResources.exe",
+          "bytes": 3072,
+          "sha256": "9e6eebdaf5535754120689bfd7b0b87672569b16c6b2ed7f22e9a3e38ff2a0a7"
+        }
+      },
+      {
+        "path": "managed/UsingResources.sf.il",
+        "expected": {
+          "path": "managed/UsingResources.sf.il",
+          "bytes": 9103,
+          "sha256": "363da649c2c1fef001eed873fa66bf6d3bd4daeecb2c32fb3f537124e781edbd"
+        },
+        "actual": {
+          "path": "managed/UsingResources.sf.il",
+          "bytes": 9723,
+          "sha256": "f7c9ca119fa099b644ec43dbbd042175581a94a3f0128196f2e70d48d637be34"
+        }
+      }
+    ],
+    "orderDependent": [],
+    "files": 361,
+    "scope": "Exact committed examples regenerated in independent temporary trees in both generator orders."
+  },
+  "milliseconds": 3037.779625,
+  "scope": "Exact source archive verified against Git blobs, npm ci --offline from a lock-bound vendored cache, standalone and all workspace package builds, regenerated examples and exact release asset comparison."
+}

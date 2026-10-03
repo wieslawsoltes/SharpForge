@@ -40,7 +40,9 @@ export const NameBinding = Base =>
         }
         if (!arity && this.isPending(name)) {
           this.report(syntax, 'CS0841', [name]);
-          (this.rootBinder.usedBeforeDeclaration ??= new Set()).add(name);
+          // The use still counts for the unused-variable warnings: an assignment as a write, anything else as a read.
+          const isWrite = syntax.parent?.kind === 'SimpleAssignmentExpression' && syntax.parent.left === syntax;
+          (this.rootBinder.usedBeforeDeclaration ??= new Map()).set(name, isWrite && !this.rootBinder.usedBeforeDeclaration.has(name));
           return this.bad(syntax);
         }
         if (!arity && name === '_' && options.allowDiscard) return this.node('Discard', syntax, null, { isOutVarOrDiscard: true });
@@ -60,6 +62,7 @@ export const NameBinding = Base =>
       if (symbol && !symbol.ambiguous && !symbol.wrongArity) {
         if (symbol.kind === SymbolKind.Namespace) return this.node('NamespaceExpression', syntax, null, { namespace: symbol });
         const type = arity ? this.bindType(syntax).type : symbol;
+        if (!arity && !this.quiet) this.d.noteUse?.(symbol, this.c.uri, syntax);
         return this.node('TypeExpression', syntax, null, { referencedType: type });
       }
       if (symbol?.ambiguous) {
@@ -95,7 +98,8 @@ export const NameBinding = Base =>
     }
     /** `alias::Name` in an expression: a namespace or type reached through a using alias, an extern alias or `global`. */
     aliasQualifiedName(syntax) {
-      const symbol = this.d.typeBinder.bindNamespaceOrType(syntax, this.typeScope);
+      // Roslyn reports no obsolete use for a type named through `alias::` in an expression.
+      const symbol = this.d.typeBinder.bindNamespaceOrType(syntax, this.typeScope, { isAliasQualifiedExpression: true });
       if (symbol.kind === SymbolKind.Namespace) return this.node('NamespaceExpression', syntax, null, { namespace: symbol });
       if (symbol.isErrorType()) return symbol.isFrameworkGap ? this.lenient(syntax) : this.bad(syntax);
       return this.node('TypeExpression', syntax, null, { referencedType: symbol });
@@ -119,6 +123,7 @@ export const NameBinding = Base =>
         nameNode = syntax.kind === 'SimpleMemberAccessExpression' ? syntax.name : syntax;
       if (first.kind === SymbolKind.NamedType) {
         const t = typeArguments ? this.construct(first, typeArguments, nameNode) : first;
+        if (!this.quiet) this.d.noteUse?.(first, this.c.uri, nameNode);
         return this.node('TypeExpression', syntax, null, { referencedType: t });
       }
       const viaType = receiver?.kind === 'TypeExpression',
@@ -164,6 +169,9 @@ export const NameBinding = Base =>
         return this.bad(syntax);
       }
       if (first.containingType?.containingAssembly) this.d.reportUseSite(first, this.c.uri, nameNode);
+      // Inside its class a field-like event names its backing field, which is not the obsolete symbol.
+      const ownEvent = first.kind === SymbolKind.Event && first.containingType?.originalDefinition === this.c.containingType?.originalDefinition;
+      if (!this.quiet && !ownEvent) this.d.noteUse?.(first, this.c.uri, syntax);
       const isStatic = first.isStatic;
       let r = null;
       if (isStatic) {

@@ -9,3 +9,35 @@ All optional engine code is local. No runtime CDN or remote keymap dependency is
 ## Portable PDB interoperability fixture
 
 `tests/fixtures/portable-pdb/Documents.pdb` originates from the .NET runtime repository (MIT, .NET Foundation and Contributors), exact Git blob `ee0a1421085feeebf829e4f3b0ad972cc2e9c22c`. The upstream license and provenance are retained in that directory. This independent reader fixture is not a claim that all emitted symbols have been validated by native Microsoft tools.
+
+## Supply-chain validation schemas
+
+The official CycloneDX 1.6 JSON Schema, its SPDX license identifier schema and the
+JSON Signature Format 0.82 schema are retained under
+`planning/qualification/supply/cyclonedx/`, from CycloneDX/specification commit
+`1ce97b2a7b8cf2429da248560d2aa671c6bce74a`. CycloneDX contributors license these
+schema files under Apache-2.0; the retained LICENSE and origin.json identify the
+exact source URLs and SHA-256 values. JSF credits Anders Rundgren/OpenKeyStore in
+its retained schema comment. These files are validation tooling, not product code.
+
+## Reviewed repository assets
+
+The exact repository icons, example archives, generated managed assemblies/symbols
+and documentation screenshots are enumerated in
+`planning/qualification/supply/licenses.json`, with their source revision, hashes
+and repository MIT license. This records the repository's existing license
+declaration; it does not independently establish third-party authorship. New assets
+require an explicit origin/license record. The separate Microsoft Documents.pdb
+fixture and CodeMirror files retain their third-party notices above.
+
+## Python qualification tooling
+
+Playwright 1.57.0 (Microsoft, Apache-2.0), jsonschema and its attrs,
+jsonschema-specifications, referencing and rpds-py dependencies (MIT), PyYAML (MIT),
+pyee (MIT), greenlet (MIT AND PSF-2.0) and typing_extensions (PSF-2.0) are installed
+only for tests and gates. They are not embedded in SharpForge's runtime or published
+workspace packages. Exact selected versions, official PyPI origins and all wheel
+hashes are in `planning/qualification/supply/python-lock.json`. Their installed
+wheel distributions retain their own license notices. jsonschema validates the full
+official schema; PyYAML parses actual workflow semantics instead of approximating
+YAML with a regular expression.

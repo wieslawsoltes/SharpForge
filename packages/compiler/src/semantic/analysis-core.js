@@ -57,6 +57,7 @@ export class AnalysisCore {
         this.hasUnknownUsings = true;
       },
       useSite: (symbol, uri, node, options) => this.reportUseSite(symbol, uri, node, options),
+      noteUse: (symbol, uri, node) => this.noteUse(symbol, uri, node),
       externAlias: name => this.references.externAlias(name),
       forwardedToMissingAssembly: metadataName => this.references.forwardedToMissingAssembly(metadataName),
       isKnownFrameworkName: name => this.isKnownFrameworkName(name),
@@ -220,9 +221,11 @@ export class AnalysisCore {
     for (const type of types) this.checkType(type);
     this.checkConstructions();
     for (const type of types) this.bindConstants(type);
+    this.bindAttributes();
     this.bindBodies();
     // Constructed types written inside bodies (`new Box<int>()`) are checked once the bodies are bound.
     this.checkConstructions();
+    this.reportObsoleteUses();
     this.reportUnused();
     return {
       diagnostics: this.diagnostics,
