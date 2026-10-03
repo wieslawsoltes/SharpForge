@@ -104,6 +104,15 @@ Compiled source covers eleven direct StringComparer operations. Source interface
 conversions, custom implementations, object construction and NaN field access
 are not silently treated as successful execution by the reference harness.
 
+`scripts/benchmarks/a08-array-search.mjs` measures the released typed/default
+BinarySearch and reports the new explicit ordinal path separately. Copy the same
+runner to Ordinal baseline `67344915` and run both checkouts serially. Setup is
+excluded; one warmup and five samples use deterministic nullable strings, hits
+and complemented misses through each real VM platform. The typed/default path
+still scans the full input for comparability, so its total cost remains O(n)
+despite the shared logarithmic search loop. Managed allocation counts and bytes
+are reported; this benchmark does not measure all host allocations.
+
 The host `fault(type, message, reference = null)` service and public
 `fail(platform, type, message, reference = null)` helper can carry an existing
 managed exception reference. Callers root that reference during fault creation;
