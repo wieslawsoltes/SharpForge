@@ -1,3 +1,4 @@
+import {memoryMethodDefinition} from './memory-profile.js';
 import {asyncMethodDefinition} from './async-profile.js';
 import {numericAliases} from '@sharpforge/bytecode';
 import {arrayMethodDefinition} from './array-profile.js';
@@ -103,6 +104,7 @@ export const intrinsicDefinitions=Object.freeze([...definitions.values()]);
 export function intrinsicDefinition(descriptor) {
   if(descriptor?.kind!=='method'||!descriptor.signature||!Array.isArray(descriptor.signature.parameters))return null;
   const signature=descriptor.signature;
+  const memory=memoryMethodDefinition(descriptor);if(memory)return memory;
   const array=arrayMethodDefinition(descriptor);if(array)return array;
   const async=asyncMethodDefinition(descriptor);if(async)return async;
   if(isSynchronizationIntrinsic(descriptor))return {key:intrinsicKey(descriptor),descriptor,implementation:'synchronization',contract:null};

@@ -1,4 +1,5 @@
 import {ManagedFault} from '../../heap.js';
+import {storePinnedLocal} from '../pinned.js';
 import {float} from '../numeric-ops.js';
 
 const handlers=new Map([
@@ -21,7 +22,11 @@ for(const arg of [false,true]) {
       if(suffix!==''&&suffix!=='.s'&&(operation==='lda'||arg&&operation==='st'))continue;
       handlers.set(stem+suffix,(vm,frame,instruction)=>{
         const index=instruction.operand??Number(suffix.slice(1)),slots=arg?frame.args:frame.locals;
-        if(operation==='st')vm.dereference(vm.address(kind,index),true,vm.storage(vm.pop(),vm.slotType(frame,arg,index)));
+        if(operation==='st') {
+          let value=vm.pop();
+          if(!arg&&/\bpinned$/.test(frame.method.locals[index]))value=storePinnedLocal(vm,frame,index,value);
+          vm.dereference(vm.address(kind,index),true,vm.storage(value,vm.slotType(frame,arg,index)));
+        }
         else if(operation==='lda')vm.push(vm.address(kind,index));
         else {
           if(slots[index]===undefined)throw new ManagedFault('InvalidProgramException','Read of uninitialized local');

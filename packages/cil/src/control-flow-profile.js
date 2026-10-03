@@ -20,8 +20,9 @@ export function verifyControlRegions(inspector,method,issue) {
       if(next.name!=='callvirt')fail(prefix,'constrained. requires callvirt','IL_PREFIX');
       try{if(inspector.resolveToken(prefix.operand).kind!=='type')throw Error('constrained. requires a type token');}catch(error){fail(prefix,error.message,'IL_TOKEN');}
     }
+    if(prefix.name==='unaligned.'&&(![1,2,4].includes(prefix.operand)||!['ldfld','stfld','ldobj','stobj','cpblk','initblk'].includes(next.name)&&!next.name.startsWith('ldind.')&&!next.name.startsWith('stind.')))fail(prefix,'Invalid unaligned memory prefix','IL_PREFIX');
     if(prefix.name==='readonly.'&&next.name!=='ldelema')fail(prefix,'readonly. requires ldelema','IL_PREFIX');
-    if(prefix.name==='volatile.'&&!['ldfld','stfld','ldsfld','stsfld','ldobj','stobj'].includes(next.name)&&!next.name.startsWith('ldind.')&&!next.name.startsWith('stind.'))fail(prefix,'volatile. must precede a supported memory instruction','IL_PREFIX');
+    if(prefix.name==='volatile.'&&!['ldfld','stfld','ldsfld','stsfld','ldobj','stobj','cpblk','initblk'].includes(next.name)&&!next.name.startsWith('ldind.')&&!next.name.startsWith('stind.'))fail(prefix,'volatile. must precede a supported memory instruction','IL_PREFIX');
   }
   for(const [index,handler] of method.handlers.entries()) {
     const filter=handler.flags===1;
