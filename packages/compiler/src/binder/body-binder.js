@@ -40,6 +40,7 @@ import { AnonymousMethodBinding } from './anonymous-methods.js';
 import { ArrayBinding } from './arrays.js';
 import { languageRules } from './language-rules.js';
 import { CSharp6Binding } from './csharp6.js';
+import { CallerInfoBinding } from './caller-info.js';
 
 const expressionFamilies = [
   ConversionBinding,
@@ -70,6 +71,7 @@ const statementFamilies = [
   AnonymousMethodBinding,
   ArrayBinding,
   CSharp6Binding,
+  CallerInfoBinding,
 ];
 const compose = (base, mixins) => mixins.reduce((composed, mixin) => mixin(composed), base);
 
