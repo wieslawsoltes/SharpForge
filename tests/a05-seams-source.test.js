@@ -147,8 +147,8 @@ test('source operation seam: strings compare by value and object handles include
 test('source operation seam: conversion and unary boundaries preserve checked behavior', () => {
   assert.equal(convert(7.9, 0), 7);
   assert.equal(convert(-7.9, 0), -7);
-  for (const value of [NaN, Infinity, -Infinity, 2147483648, -2147483649]) {
-    assert.equal(convert(value, 0), -2147483648);
+  for (const [value, expected] of [[NaN, 0], [Infinity, 2147483647], [-Infinity, -2147483648], [2147483648, 2147483647], [-2147483649, -2147483648]]) {
+    assert.equal(convert(value, 0), expected);
     assert.throws(() => convert(value, 0, 1), {name: 'OverflowException'});
   }
   assert.equal(convert(2147483647.9, 0, 1), 2147483647);
