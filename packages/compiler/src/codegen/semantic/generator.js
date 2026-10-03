@@ -264,7 +264,11 @@ const Members = Base =>
       const call = n.call(entry, null, args),
         invocation = result === entry.returnType ? call : this.awaitTask(call);
       const statement = result === 'void' ? n.expressionStatement(invocation) : n.returnStatement(invocation);
-      this.bodies.push({ method, body: n.block([statement]) });
+      // C# 9 module initializers run once, in declaration order, before anything else of the program.
+      const initializers = (this.analysis.assembly.moduleInitializers ?? []).map(symbol =>
+        n.expressionStatement(n.call(this.methodOf(symbol, symbol.locations?.[0]), null, [])),
+      );
+      this.bodies.push({ method, body: n.block([...initializers, statement]) });
       return method;
     }
     /** The entry point: top-level statements, else the single static Main. */

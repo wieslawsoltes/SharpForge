@@ -18,17 +18,19 @@ import { BodyBinding } from './semantic/body-binding.js';
 import { TopLevelPrograms } from './binder/top-level.js';
 import { UnusedSymbolWarnings } from './semantic/unused-symbols.js';
 import { AttributeBinding } from './binder/attributes.js';
+import { CallerInfoChecks } from './binder/caller-info.js';
 import { ObsoleteUses } from './binder/obsolete.js';
 import { SpecialMemberChecks } from './binder/special-members.js';
-import { CallerInfoChecks } from './binder/caller-info.js';
+import { modernRules } from './binder/modern-rules.js';
 
 const phases = [
   DeclarationChecks,
   MemberDeclarationChecks,
   ConstantBinding,
   AttributeBinding,
-  SpecialMemberChecks,
   CallerInfoChecks,
+  SpecialMemberChecks,
+  ...modernRules,
   BodyBinding,
   TopLevelPrograms,
   MemberBodyChecks,

@@ -2,6 +2,7 @@
  * Arguments and invocations: overload resolution, extension methods, delegate invocation, element access
  * and `out` declarations. A call that cannot be bound keeps its arguments so flow analysis still sees `out` writes.
  */
+import { covariantReturnType } from '../csharp9.js';
 import { SymbolKind, TypeKind, RefKind, ErrorTypeSymbol, ArrayTypeSymbol, TypeParameterSymbol } from '../../symbols/types.js';
 import { MethodKind, LocalDeclarationKind } from '../../symbols/members.js';
 import { ConstantValue } from '../../constants/constant-value.js';
@@ -272,7 +273,9 @@ export const CallBinding = Base =>
         if (a.form === 'lambda' && !a.hasErrors) this.finishLambda(a, result.parameterTypes[i]);
         return { expression: value, parameter: p, refKind: a.refKind ?? null };
       });
-      const type = method.returnType ?? this.core.void;
+      // C# 9: a call through a receiver whose type overrides the method covariantly has the override's return type.
+      const receiverType = receiver?.kind === 'Base' ? null : (receiver?.type ?? this.c.containingType),
+        type = (isDelegateInvoke || isExtension ? method.returnType : covariantReturnType(method, receiverType)) ?? this.core.void;
       const n = this.node('Call', syntax, type, {
         method,
         receiver,

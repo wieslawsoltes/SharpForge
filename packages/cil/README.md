@@ -20,3 +20,7 @@ The browser loader supports the exact emitted `SharpForge.CIL/1` profile. It che
 The root source release includes the complete backend contract, public API examples, measurements, regression suite, independent .NET execution test harness and compatibility boundaries. The packages are local tarballs, not registry-published.
 
 0.6 emits actual checked arithmetic/conversion instructions and InterfaceImpl metadata for concrete IDisposable resources, alongside finally cleanup. The canonical loader reconstructs and verifies these supported forms.
+
+The [metadata API](METADATA.md) exposes all 53 named table schemas, typed row writers,
+deduplicated heaps, required sorting, uncompressed pointer lists and bounded II.22
+structural diagnostics. See `examples/metadata/table-builder.mjs` for a runnable example.
