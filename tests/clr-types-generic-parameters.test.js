@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { readPE } from '@sharpforge/cil';
 import { AssemblyLoadSession, TypeKind, LoadErrorCode } from '../packages/clr/src/index.js';
 import { managedFixture } from './managed-fixtures.js';
 import { arrayContext } from './clr-types-array-fixtures.js';
@@ -78,11 +79,23 @@ test('CLR generic parameter metadata rejects invalid ownership, numbering, token
   }
 });
 
-test('CLR generic parameter positions are ordered independently of physical row order and preserve empty owners', async () => {
-  const module = await load(managedFixture({ decorate({ md }) {
+test('CLR generic parameter positions are ordered independently of #- physical row order and preserve empty owners', async () => {
+  const image = managedFixture({ decorate({ md }) {
+    md.uncompressed = true;
     md.add(42, [1, 0, 4, md.string('Second')]);
     md.add(42, [0, 0, 4, md.string('First')]);
-  } }));
+  } });
+  // The public builder canonicalizes rows. Reverse the physical #- rows after writing to exercise the reader boundary.
+  const metadata = readPE(image, { inspection: true }).metadata;
+  const tables = metadata.streams.get('#-');
+  const [first, second] = metadata.rowOffsets[42];
+  const row = tables.slice(first, second);
+  tables.copyWithin(first, second, second + row.length);
+  tables.set(row, second);
+  const view = new DataView(tables.buffer, tables.byteOffset, tables.byteLength);
+  view.setUint32(20, view.getUint32(20, true) & ~(1 << 10), true);
+  const module = await load(image);
+  assert.equal(module.row(0x2a000001)[0], 1);
   assert.deepEqual(module.genericParameters(0x02000002).map(type => type.name), ['First', 'Second']);
   assert.equal(module.genericParameter(0x2a000001), module.genericParameters(0x02000002)[1]);
   assert.deepEqual(module.genericParameters(0x02000001), []);

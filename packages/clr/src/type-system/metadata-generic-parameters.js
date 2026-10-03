@@ -3,6 +3,7 @@ import { createTypeDesc, TypeKind } from './type-desc.js';
 import { loadError, LoadErrorCode } from '../load-errors.js';
 
 const fail = message => loadError(LoadErrorCode.TypeLoad, message);
+const empty = Object.freeze([]);
 
 /** Canonical TypeDef-owned GenericParam metadata identities; constraints remain unresolved tokens. */
 export class MetadataGenericParameters {
@@ -64,8 +65,9 @@ export class MetadataGenericParameters {
     const owner = this.#module.typeDefinition(token);
     if (this.#owners.has(token)) return this.#owners.get(token);
     const group = this.#readIndex().owners.get(token);
+    if (!group) return empty;
     const result = [];
-    for (let position = 0; position < (group?.size ?? 0); position++) {
+    for (let position = 0; position < group.size; position++) {
       const parameter = group.get(position);
       const descriptor = createTypeDesc({ name: parameter.name, namespace: owner.namespace, fullName: null,
         kind: TypeKind.GenericParameter, module: this.#module, token: parameter.token, declaringType: owner,
