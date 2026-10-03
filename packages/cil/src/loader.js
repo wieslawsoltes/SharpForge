@@ -1,5 +1,5 @@
 import {contractForMember,frameworkType,enumTypes} from '@sharpforge/framework';
-import { Op, Binary, Unary, BuiltinMap, frameworkBuiltin, FORMAT_VERSION, verifyImage } from '@sharpforge/bytecode';
+import { Op, Binary, Unary, BuiltinMap, frameworkBuiltin, EnumConvertBase, FORMAT_VERSION, verifyImage } from '@sharpforge/bytecode';
 import { CilError, text, equalBytes } from './binary.js';
 import { token, decodeCoded, readSignature, cliSystemName } from './metadata.js';
 import { readPE } from './pe.js';
@@ -84,7 +84,7 @@ function decodeSpan(span,c) {
     else if(owner==='int'||owner==='double'||owner==='string'||owner==='Array')name=owner+'.'+target.name;
     const builtin=BuiltinMap.get(name);if(!builtin)throw new CilError(`External method is not in the browser runtime profile: ${target.owner}.${target.name}`);return emit(Op.BUILTIN,builtin.id,argc);
   }
-  if(names.includes('box')&&names.includes('unbox.any')){const t=c.metadata.typeName(span.find(i=>i.name==='box').operand),id=enumTypes.indexOf(t);if(id>=0)return emit(Op.ENUM,id,constant(span[0],c.metadata));}
+  if(names.includes('box')&&names.includes('unbox.any')){const t=c.metadata.typeName(span.find(i=>i.name==='box').operand),id=enumTypes.indexOf(t);if(id>=0){if(['conv.i4','conv.ovf.i4'].includes(span[0].name))return emit(Op.CONVERT,EnumConvertBase+id,span[0].name==='conv.ovf.i4'?1:0);return emit(Op.ENUM,id,constant(span[0],c.metadata));}}
   const field=span.find(i=>['ldfld','stfld','ldsfld','stsfld'].includes(i.name));if(field){if(field.name.endsWith('sfld')){const index=c.staticByToken.get(field.operand);if(index===undefined)throw new CilError('Unknown static field token');return emit(field.name==='ldsfld'?Op.LDSTATIC:Op.STSTATIC,index);}const f=c.fieldByToken.get(field.operand);if(!f)throw new CilError('Unknown field token');return emit(field.name==='ldfld'?Op.LDFLD:Op.STFLD,f.index);}
   const array=span.find(i=>['newarr','ldelem','stelem','ldlen'].includes(i.name));if(array){if(array.name==='newarr')return emit(Op.NEWARR,c.intern(shortTypes[c.metadata.typeName(array.operand)]??c.metadata.typeName(array.operand)));return emit({ldelem:Op.LDELEM,stelem:Op.STELEM,ldlen:Op.LENGTH}[array.name]);}
   if(names.includes('ret'))return emit(Op.RET);if(names.includes('endfinally'))return emit(Op.ENDFINALLY);
