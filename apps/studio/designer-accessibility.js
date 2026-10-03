@@ -20,8 +20,12 @@ export class DesignerAccessibility {
   }
 
   install() {
-    if (this.region || this.disposed) return;
+    if (this.disposed || this.view.disposed || this.view.session?.disposed) return false;
+    if (this.region) return true;
+    // Source synchronization can report during construction or cleanup, before a surface has mounted.
+    if (!this.view.scroller || !this.view.chrome?.commandBar) return false;
     const panel = this.view.panel('designer');
+    if (!panel) return false;
     this.region = panel.ownerDocument.createElement('div');
     this.region.className = 'design-visually-hidden';
     this.region.setAttribute('aria-live', 'polite');
@@ -40,16 +44,15 @@ export class DesignerAccessibility {
     const button = holder.firstElementChild;
     button.onclick = () => this.view.safe(() => this.check());
     this.view.chrome.commandBar.add(button);
+    return true;
   }
 
   announce(message) {
-    this.install();
-    this.announcements?.push(message);
+    if (this.install()) this.announcements.push(message);
   }
 
   update(event = {}) {
-    this.install();
-    if (this.disposed) return;
+    if (!this.install()) return;
     const selection = this.view.document.selection.join(',');
     if (selection !== this.lastSelection) {
       this.lastSelection = selection;
