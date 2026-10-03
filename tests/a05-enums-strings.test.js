@@ -13,6 +13,26 @@ const paths={source:c=>new VirtualMachine(c.image),reload:c=>new VirtualMachine(
 const compile=source=>{const result=compileToIL(source);assert(result.success,JSON.stringify(result.diagnostics));return result;};
 
 for(const [engine,make] of Object.entries(paths)) {
+  test(`enums ${engine}: explicit numeric and enum casts preserve identity and checked boundaries`,()=>{
+    const result=make(compile(`using Microsoft.UI.Xaml;
+      int one=1; double unknown=9.9;
+      Visibility value=(Visibility)one;
+      Console.WriteLine(value);
+      Console.WriteLine((Visibility)1);
+      Console.WriteLine((Microsoft.UI.Xaml.Visibility)0);
+      Console.WriteLine((one) + 1);
+      Console.WriteLine((int)value);
+      Console.WriteLine((double)value);
+      Console.WriteLine((Orientation)value);
+      Console.WriteLine((Visibility)unknown);
+      Console.WriteLine((int)(Visibility)(-2147483647-1));
+      Console.WriteLine((int)checked((Visibility)one));
+      double huge=1e30;
+      try { Console.WriteLine(checked((Visibility)huge)); }
+      catch(Exception e) { Console.WriteLine("overflow"); }`)).run();
+    assert.equal(result.state,'terminated',result.fault?.stack);
+    assert.equal(result.output,'Collapsed\nCollapsed\nVisible\n2\n1\n1\nHorizontal\n9\n-2147483648\n1\noverflow\n');
+  });
   test(`strings ${engine}: literal identity, runtime allocation, and explicit interning`,()=>{
     const compiled=compile(`string a="a"; string b="ab".Substring(0,1);
       Console.WriteLine(object.ReferenceEquals(a,"a"));
