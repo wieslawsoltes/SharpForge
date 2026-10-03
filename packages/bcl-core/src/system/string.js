@@ -1,6 +1,7 @@
 import {MAX, array, bclScalar, bounded, fail, integer, makeArray, string, text} from '../host.js';
 import {compositeFormat} from '../formatting/composite-format.js';
 import {isNullOrWhiteSpace, trimWhiteSpace} from './whitespace.js';
+import {invariantCase} from './casing.js';
 
 const owner = 'System.String';
 
@@ -119,9 +120,9 @@ function instanceString(platform, name, receiver, values, scalars) {
     case 'TrimStart': return trimWhiteSpace(receiver, true, false);
     case 'TrimEnd': return trimWhiteSpace(receiver, false, true);
     case 'ToUpper':
-    case 'ToUpperInvariant': return receiver.toUpperCase();
+    case 'ToUpperInvariant': return invariantCase(receiver, true);
     case 'ToLower':
-    case 'ToLowerInvariant': return receiver.toLowerCase();
+    case 'ToLowerInvariant': return invariantCase(receiver, false);
     case 'Replace': {
       const previous = string(platform, values[0]);
       if (!previous) fail(platform, 'ArgumentException', 'Old value cannot be empty');
