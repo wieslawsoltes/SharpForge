@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "area": "A18",
+  "nodeGlobs": [
+    "tests/designer.test.js",
+    "tests/designer-examples.test.js",
+    "tests/designer-sync13.test.js"
+  ],
+  "browserScripts": [
+    "tests/browser_release12_test.py",
+    "tests/browser_release13_test.py"
+  ],
+  "requiredServices": [
+    "studio-http",
+    "chromium"
+  ],
+  "timeout": 1200000,
+  "tags": [
+    "legacy"
+  ]
+}

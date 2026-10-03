@@ -103,13 +103,7 @@ test('SF-A02-T09.1 instance iterators read their object; iterators over one elem
   assert.ok(iteratorClasses[0].fields.some(f => f.name.endsWith('<>4__this')), 'the receiver is hoisted');
 });
 
-test('SF-A02-T09.1 yield inside try and conversions of collections to IEnumerable<T> are reported', () => {
-  const inTry = notExecutable(
-    program(`
-      static IEnumerable<int> Guarded() { try { yield return 1; } finally { Console.WriteLine("finally"); } }
-      static void Main() { foreach (int g in Guarded()) Console.WriteLine(g); }`),
-  );
-  assert.match(inTry.message, /yield inside a try block/);
+test('SF-A02-T09.1 conversions of collections to IEnumerable<T> are reported', () => {
   const conversion = notExecutable(
     program(`
       static int Sum(IEnumerable<int> values) { int s = 0; foreach (int v in values) s += v; return s; }

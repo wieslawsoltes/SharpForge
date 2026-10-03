@@ -1,0 +1,78 @@
+[
+  {
+    "id": "parked-frame",
+    "kinds": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "output": "parked-root\n",
+    "liveAtPark": [
+      "parked-root"
+    ]
+  },
+  {
+    "id": "native-callback",
+    "kinds": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "output": "callback-root\n",
+    "liveAtPark": []
+  },
+  {
+    "id": "cancellation",
+    "kinds": [
+      2,
+      3,
+      4
+    ],
+    "output": "cancel-root\n",
+    "liveAtPark": []
+  },
+  {
+    "id": "nested-finally",
+    "kinds": [
+      2,
+      3,
+      4
+    ],
+    "output": "inner\ncatch\nouter\n",
+    "liveAtPark": []
+  },
+  {
+    "id": "rethrow",
+    "kinds": [
+      2,
+      3,
+      4
+    ],
+    "output": "rethrow\nfirst\n",
+    "liveAtPark": []
+  },
+  {
+    "id": "await-fault",
+    "kinds": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "output": "await-catch\nawait-finally\n",
+    "liveAtPark": []
+  },
+  {
+    "id": "nested-fault",
+    "kinds": [
+      2,
+      3,
+      4
+    ],
+    "output": "",
+    "fault": "second",
+    "liveAtPark": []
+  }
+]
