@@ -60,7 +60,11 @@ export function typedFloatHandler(name, state) {
   if ((name === 'conv.r4' || name === 'conv.r8') &&
       (category === StackCategory.i4 || category === StackCategory.i8)) {
     const tag = name === 'conv.r4' ? NumericSlotTag.r4 : NumericSlotTag.r8;
-    return (vm, frame) => numericSlots(frame.stack).pushFloat(Number(vm.pop()), tag);
+    return (vm, frame) => {
+      const slots = numericSlots(frame.stack);
+      const value = category === StackCategory.i8 ? slots.popLong() : vm.pop();
+      slots.pushFloat(Number(value), tag);
+    };
   }
   if (floating.has(category)) {
     if (name === 'pop') return (vm, frame) => numericSlots(frame.stack).discard();

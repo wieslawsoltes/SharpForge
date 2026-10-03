@@ -7,13 +7,14 @@ const frames = new WeakMap();
  * snapshots. Filters sharing locals receive the same proxy and storage plane.
  */
 export function ensureTypedNumericFrame(vm, frame, plan) {
-  if (!plan.typedNumericSlots || vm.options.typedNumericStack !== true) return;
+  const smallLongs = vm.options.smallLongFastPath === true;
+  if (!plan.typedNumericSlots || vm.options.typedNumericStack !== true && !smallLongs) return;
   const cached = frames.get(frame);
   if (cached?.method === frame.method && cached.stack === frame.stack &&
       cached.locals === frame.locals && cached.args === frame.args) return;
-  const stack = typedNumericSlots(frame.stack, frame.method.maxStack ?? 8, vm.options.maxStackValues);
-  const locals = typedNumericSlots(frame.locals);
-  const args = typedNumericSlots(frame.args);
+  const stack = typedNumericSlots(frame.stack, frame.method.maxStack ?? 8, vm.options.maxStackValues, smallLongs);
+  const locals = typedNumericSlots(frame.locals, undefined, undefined, smallLongs);
+  const args = typedNumericSlots(frame.args, undefined, undefined, smallLongs);
   frame.stack = stack.array;
   frame.locals = locals.array;
   frame.args = args.array;
