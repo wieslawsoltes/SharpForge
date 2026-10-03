@@ -22,6 +22,18 @@ function encoder(writer, options) {
     class(node) { writer.u8(0x12); reference(node.token); },
     valuetype(node) { writer.u8(0x11); reference(node.token); },
     szarray(node, depth) { writer.u8(0x1d); type(node.element, depth + 1); },
+    genericParameter(node) {
+      if (!['type', 'method'].includes(node.scope)) throw new CilError('Invalid generic parameter scope');
+      writer.u8(node.scope === 'type' ? 0x13 : 0x1e).compressed(signatureCount(node.index, 'Generic parameter index'));
+    },
+    genericInstance(node, depth) {
+      if (!['class', 'valuetype'].includes(node.type?.kind)) throw new CilError('Generic instance requires a class or valuetype');
+      if (!node.arguments?.length) throw new CilError('Generic instance requires arguments');
+      writer.u8(0x15);
+      type(node.type, depth + 1);
+      values(node.arguments, 'Generic arguments');
+      for (const argument of node.arguments) type(argument, depth + 1);
+    },
   };
   function type(node, depth = 0, context = 'type') {
     budget(depth);
