@@ -3,6 +3,7 @@ import { crc32 } from './zip-crc.js';
 import { zipLimits, zipError, verifyZipRanges } from './zip-budgets.js';
 import { findZipEnd, needsZip64, readZip64Locator, readZip64End, zipView } from './zip64.js';
 import { parseZipDirectory, parseZipLocal, zipDescriptorLength } from './zip-directory.js';
+import { sameZipBytes, checkNestedZip, rejectZipQuine } from './zip-content-policy.js';
 
 function directoryEnd(bytes) {
   let end = findZipEnd(bytes);
@@ -35,6 +36,8 @@ export function readZip(input, options = {}) {
     const data = bytes.subarray(entry.data, entry.data + entry.compressed);
     const output = entry.method === 0 ? data.slice() : inflateRaw(data, entry.length, limits.maxFileBytes);
     if (output.length !== entry.length || crc32(output) !== entry.crc) zipError('SFZIP011', 'ZIP data CRC/length mismatch: ' + entry.path);
+    rejectZipQuine(output.length === bytes.length && sameZipBytes(output, bytes), entry.path);
+    checkNestedZip(output, entry.path, limits.nestedArchives);
     const result = { path: entry.path, directory: entry.directory, bytes: output };
     if (options.preserveMetadata) Object.assign(result, { mtime: entry.mtime, mode: entry.mode });
     return result;

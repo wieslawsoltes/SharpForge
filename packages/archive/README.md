@@ -39,7 +39,13 @@ await writeZipTo([{ path: 'large.bin', stream: sourceReadableStream }], destinat
 | Metadata | `preserveMetadata: true` retains UTC `mtime` in milliseconds (whole seconds), regular Unix permission bits | Default timestamps/modes are deterministic; links/special files and multi-disk archives are rejected |
 | File codecs | BOM/encoding/line-ending and binary preservation, explicit `PathPolicy` identity | See public encoding diagnostics; paths are root-relative and portable |
 
-`ZIP_LIMITS` defaults to 20,000 entries, 64 MiB per file, 128 MiB decoded total, 160 MiB archive, 32 MiB central directory, depth 48, path length 1024, and per-file/total compression ratios of 1000. Limits accept positive safe integers; streaming callers can raise byte/count limits deliberately. The 64 KiB default chunk can be configured up to 4 MiB. All decoded-size, directory, count, ratio and overlap budgets are checked before large output allocations. CRC failure, mismatched headers, encrypted entries, unsupported methods, traversal, case/Unicode aliases, overlapping ranges and malformed ZIP64 records produce explicit errors (`SFZIP001`–`SFZIP013`). Archives embedded as ordinary file bytes are never recursively extracted.
+`ZIP_LIMITS` defaults to 20,000 entries, 64 MiB per file, 128 MiB decoded total, 160 MiB archive, 32 MiB central directory, depth 48, path length 1024, and per-file/total compression ratios of 1000. Limits accept positive safe integers; streaming callers can raise byte/count limits deliberately. The 64 KiB default chunk can be configured up to 4 MiB. All decoded-size, directory, count, ratio and overlap budgets are checked before large output allocations. CRC failure, mismatched headers, encrypted entries, unsupported methods, traversal, case/Unicode aliases, overlapping ranges and malformed ZIP64 records produce explicit errors (`SFZIP001`–`SFZIP014`). Archives embedded as ordinary file bytes are never recursively extracted.
+
+An entry reproducing the exact enclosing ZIP bytes is rejected as a direct quine (`SFZIP014`). Streaming comparison
+uses one bounded chunk only when declared sizes match; normal entries need no extra payload reads. By default, ordinary
+nested archive bytes are preserved. `{nestedArchives:'reject'}` also rejects embedded ZIP local/empty/ZIP64 signatures
+before returning their contents; it never opens or inflates the nested archive. This signature policy is deliberately
+not a general polyglot detector. Size/ratio budgets remain the protection for every outer payload, regardless of its name.
 
 `openZip` lists even sparse multi-gigabyte archives without reading the payload. `read(path)` deliberately materializes one entry; use `stream` or `chunks` for large entries. `close()` cancels active readers. Writer cancellation aborts its sink; rollback of external destinations belongs to the destination transaction API.
 

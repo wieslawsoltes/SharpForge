@@ -3,6 +3,7 @@ import { zipLimits, zipError, verifyZipRanges } from './zip-budgets.js';
 import { findZipEnd, needsZip64, readZip64Locator, readZip64End, zipView } from './zip64.js';
 import { parseZipDirectory, parseZipLocal, zipDescriptorLength } from './zip-directory.js';
 import { inflateRawChunks } from './deflate-stream.js';
+import { sameZipBytes, checkNestedZip, rejectZipQuine } from './zip-content-policy.js';
 
 async function slice(blob, start, length, signal) {
   signal?.throwIfAborted();
@@ -81,14 +82,22 @@ export class ZipArchive {
       const chunks = local.method === 0 ? source : inflateRawChunks(source, { ...local, ...limits });
       const crc = new Crc32();
       let count = 0;
+      let matchesArchive = local.length === this.blob.size;
+      const signature = limits.nestedArchives === 'reject' ? new Uint8Array(4) : null;
       for await (const bytes of chunks) {
         limits.signal.throwIfAborted();
+        if (signature && count < 4) {
+          signature.set(bytes.subarray(0, 4 - count), count);
+          if (count + bytes.length >= 4) checkNestedZip(signature, local.path, limits.nestedArchives);
+        }
+        if (matchesArchive) matchesArchive = sameZipBytes(bytes, await slice(this.blob, count, bytes.length, limits.signal));
         count += bytes.length;
         if (count > local.length || count > limits.maxFileBytes) zipError('SFZIP004', 'ZIP streaming byte budget exceeded');
         crc.update(bytes);
         yield bytes;
       }
       if (count !== local.length || crc.value !== local.crc) zipError('SFZIP011', 'ZIP data CRC/length mismatch: ' + local.path);
+      rejectZipQuine(matchesArchive, local.path);
     } finally {
       external?.removeEventListener('abort', cancel);
       this.streams.delete(controller);
