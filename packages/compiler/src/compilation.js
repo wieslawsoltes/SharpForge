@@ -8,13 +8,14 @@ import {formatMessage,defaultSeverity,featureNotAvailableCode} from './diagnosti
 import {MethodCompiler} from './method-compiler.js';
 import {BoundMethodPipeline} from './method-pipeline.js';
 import {CompilationSymbols} from './symbols/compilation-symbols.js';
-import {collectUsingDirectives} from './binder/usings.js';
+import {collectUsingDirectives,bindUsings} from './binder/usings.js';
+import {BuckStopsHereBinder,InContainerBinder,WithUsingsBinder} from './binder/binder.js';
 export class Compilation {
   constructor(parsedFiles, options={}) {
     this.inputFiles=parsedFiles;parsedFiles=lowerAsyncFiles(parsedFiles);this.files=parsedFiles;this.options=options;this.sources=new Map(parsedFiles.map(p=>[p.source.uri,p.source]));
     this.diagnostics=parsedFiles.flatMap(p=>p.diagnostics);this.symbols=[];this.references=[];this.types=[];this.typeMap=new Map();this.methods=[];this.statics=[];this.constants=[];this.constantMap=new Map();this.sequencePoints=[];
     // 'bound' binds to a bound tree, analyses flow, lowers and then emits; 'legacy' is the fused string-typed method compiler.
-    this.fullNames=new Map();this.simpleNames=new Map();this.fileUsings=new Map();this.pipeline=options.pipeline??globalThis.process?.env?.SHARPFORGE_PIPELINE??Compilation.defaultPipeline;this.semantic=new CompilationSymbols(this);this.boundPipeline=null;
+    this.fullNames=new Map();this.simpleNames=new Map();this.fileUsings=new Map();this.binderChains=new Map();this.pipeline=options.pipeline??globalThis.process?.env?.SHARPFORGE_PIPELINE??Compilation.defaultPipeline;this.semantic=new CompilationSymbols(this);this.boundPipeline=null;
   }
   static defaultPipeline='bound';
   /** Where code lives: `context` is a type record, a method record or null (the first file's global scope). */
@@ -24,6 +25,22 @@ export class Compilation {
     let usings=this.fileUsings.get(uri);if(usings)return usings;usings={namespaces:[],aliases:new Map()};const file=this.files.find(f=>f.source.uri===uri);
     if(file)for(const d of collectUsingDirectives(file)){if(d.kind==='namespace')usings.namespaces.push(d.name);else if(d.kind==='alias')usings.aliases.set(d.alias,d.name);}
     this.fileUsings.set(uri,usings);return usings;
+  }
+  /**
+   * The binder chain outside a method body: usings of the file, the global namespace, the enclosing namespaces and
+   * the containing type (BuckStopsHere <- WithUsings <- InContainer(global) <- InContainer(namespace)* <- InContainer(type)).
+   * Unknown using namespaces are tolerated: the closed framework registry does not list every namespace.
+   */
+  containerBinder(context){
+    const scope=this.scopeOf(context),key=scope.uri+'|'+scope.namespace;let chain=this.binderChains.get(key);
+    if(!chain){
+      const file=this.files.find(f=>f.source.uri===scope.uri),global=this.semantic.globalNamespace;
+      const usings=bindUsings(file?collectUsingDirectives(file):[],{globalNamespace:global,reportMissing:false,bindType:name=>{const type=this.semantic.typeOf(this.typeName(name,context));return type&&!type.isErrorType()?type:null;}});
+      chain=new InContainerBinder(global,new WithUsingsBinder(usings,new BuckStopsHereBinder(this)));let namespace=global;
+      for(const part of scope.namespace?scope.namespace.split('.'):[]){namespace=namespace?.getNamespace(part);if(!namespace)break;chain=new InContainerBinder(namespace,chain);}
+      this.binderChains.set(key,chain);
+    }
+    const owner=context?.declarations?context:context?.owner;return owner?new InContainerBinder(this.semantic.type(owner),chain):chain;
   }
   /**
    * Looks a user type up by simple or dotted name from `context`, in C# order: the enclosing namespaces innermost
