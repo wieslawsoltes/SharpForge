@@ -116,12 +116,13 @@ export const FlowStatementBinding = Base =>
     }
     switchStatement(syntax) {
       const governing = this.value(syntax.expression),
-        sw = this.enterLoop(false),
+        sw = Object.assign(this.enterLoop(false), { syntax, governing }),
         sections = [],
         seen = new Map();
       let hasDefault = false,
         anyCompletes = false;
       this.pushScope();
+      this.enterLabels([]);
       try {
         const type = governing.hasErrors ? null : governing.type,
           pendingNames = [];
@@ -176,12 +177,19 @@ export const FlowStatementBinding = Base =>
           sections.push({ labels, body, syntax: section });
         });
       } finally {
+        this.leaveLabels();
         this.popScope();
         this.exitLoop();
       }
+      if (governing.type)
+        this.reportSwitchArms(
+          governing.type,
+          sections.flatMap(s => s.labels.map((label, i) => ({ pattern: label, when: label.when ?? null, node: s.syntax.labels[i].value ?? s.syntax.labels[i].pattern ?? s.syntax.labels[i], isDefault: label.kind === 'default' }))),
+          { isExpression: false, node: syntax },
+        );
       const exhaustive =
         hasDefault || sections.some(s => s.labels.some(l => l.kind === 'DiscardPattern' || (l.kind === 'VarPattern' && !l.when)));
-      return stmt('Switch', syntax, sw.hasBreak || !exhaustive || anyCompletes, { governing, sections });
+      return stmt('Switch', syntax, sw.hasBreak || !exhaustive || anyCompletes, { governing, sections, gotoTargets: sw.gotoTargets ?? null });
     }
     iteratorElementType() {
       const t = this.c.declaredReturnType ?? this.c.returnType;

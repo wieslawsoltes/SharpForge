@@ -1,5 +1,5 @@
 import {frameworkType} from '@sharpforge/framework';
-import {typeText} from '../type-utils.js';
+import {typeText,usingSpan} from '../type-utils.js';
 import {isExceptionType} from '../symbols/exception-identity.js';
 import {LocalDeclarationKind} from '../symbols/members.js';
 import {BoundBadStatement,BoundNoOpStatement,BoundBlock,BoundLocalDeclaration,BoundMultipleLocalDeclarations,BoundExpressionStatement,BoundIfStatement,BoundWhileStatement,BoundDoStatement,BoundForStatement,BoundForEachStatement,BoundForEachEnumerator,BoundSwitchStatement,BoundSwitchSection,BoundSwitchLabel,BoundTryStatement,BoundCatchBlock,BoundUsingStatement,BoundUsingResource,BoundReturnStatement,BoundThrowStatement,BoundBreakStatement,BoundContinueStatement,BoundCheckedStatement,BoundConditionalAccessAssignment} from '../bound/nodes.js';
@@ -66,7 +66,7 @@ export const StatementBinder=Base=>class StatementBinder extends Base {
       case 'Break':case 'Continue':{
         if(node.label)this.c.requireFeature(node,15,'Labeled break and continue');
         const loop=node.label?[...this.loops].reverse().find(l=>l.labels?.includes(node.label)&&(node.kind!=='Continue'||!l.switch)):node.kind==='Continue'?[...this.loops].reverse().find(l=>!l.switch):this.loops.at(-1);
-        if(loop&&this.finallyScopes.length&&!this.loops.slice(this.finallyScopes.at(-1)).includes(loop))this.c.report(node,'CS0157');if(!loop)this.c.report(node,'CS0139');
+        if(loop&&this.finallyScopes.length&&!this.loops.slice(this.finallyScopes.at(-1)).includes(loop))this.c.report(this.c.firstToken(node),'CS0157');if(!loop)this.c.report(node,'CS0139');
         return this.statement(node.kind==='Break'?BoundBreakStatement:BoundContinueStatement,node,{label:node.label??null},!loop);
       }
       case 'Switch':return this.bindSwitchStatement(node);
@@ -127,7 +127,7 @@ export const StatementBinder=Base=>class StatementBinder extends Base {
     const declarations=node.resources.kind==='Local'?node.resources.declarations:[{...node.resources,kind:'Variable',name:this.syntheticName('$using'),type:'var',initializer:node.resources,hidden:true,synthesizedKind:'using'}];
     for(const d of declarations){
       const type=d.type==='var'?this.infer(d.initializer):this.c.typeName(d.type,this.m),owner=this.c.findType(type,this.m);if(!d.initializer)this.c.report(d,'CS0210');
-      if(!owner?.interfaces.includes('System.IDisposable')&&!(['network','bcl','bcl14'].includes(frameworkType(type)?.kind)&&this.framework.methods(type,'Dispose',false).some(m=>!m.parameters.length)))this.c.report(d,'CS1674',[typeText(type)]);
+      if(!owner?.interfaces.includes('System.IDisposable')&&!(['network','bcl','bcl14'].includes(frameworkType(type)?.kind)&&this.framework.methods(type,'Dispose',false).some(m=>!m.parameters.length)))this.c.report(usingSpan(node,d),'CS1674',[typeText(type)]);
     }
     const resources=[],bindLevel=index=>{
       if(index>=declarations.length)return this.bindStatement(node.body)??this.statement(BoundNoOpStatement,null,{});

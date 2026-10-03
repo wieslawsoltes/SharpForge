@@ -10,6 +10,7 @@
  *
  * Operators are static methods of the image, so every one of these is a call the IR already has.
  */
+import {scalarStep} from '../../codegen/semantic/scalar-step.js';
 import { TypeKind } from '../../symbols/types.js';
 import { n } from '../../codegen/semantic/node-factory.js';
 
@@ -69,6 +70,8 @@ export const OperatorLowering = Base =>
     }
     /** The incremented or decremented value: the user-defined operator, or `value + 1` / `value - 1`. */
     stepped(node, value, type) {
+      const scalar = scalarStep(node, value, type);
+      if (scalar) return scalar;
       if (node.method) {
         const result = n.call(this.g.methodOf(node.method, node.syntax), null, [value]);
         return result.legacyType === type ? result : this.unsupported('an increment whose operator result needs a conversion', node.syntax);

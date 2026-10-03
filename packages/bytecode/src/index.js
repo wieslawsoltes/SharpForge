@@ -89,3 +89,5 @@ export {arrayIntrinsicDefinitions} from './array-intrinsic-profile.js';
 export {arrayType, spanType, memoryTypeName, memoryOpcodes} from './memory-types.js';
 
 export {memoryStackEffect} from './memory-verification.js';
+
+export {exceptionIntrinsicDefinitions} from './exception-intrinsic-profile.js';

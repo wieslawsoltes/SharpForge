@@ -3,6 +3,8 @@
  * and the default value. Tuples are objects of synthesized classes that are never changed after creation
  * (lowering/tuples/tuple-classes.js); a store into an element replaces the tuple in its variable (locations.js).
  */
+import {scalarStep} from '../../codegen/semantic/scalar-step.js';
+import {numeric} from '../../numeric.js';
 import { tupleElementIndex } from '../../binder/tuples.js';
 import { n } from '../../codegen/semantic/node-factory.js';
 import { isTupleElement } from './locations.js';
@@ -25,6 +27,38 @@ export const TupleTranslation = Base =>
         info,
         node.elements.map(element => this.expression(element)),
       );
+    }
+    /**
+     * An argument that is a tuple literal without a type of its own (`M((0, null))`) reaches code generation without
+     * the conversion to its parameter: it is built directly as the parameter's tuple type.
+     */
+    arguments(node, method) {
+      const parameters = method?.parameters ?? [],
+        positions = node.mapping?.parameterOf;
+      const untyped = argument => argument.expression?.kind === 'Tuple' && !argument.expression.type;
+      if (!(node.args ?? []).some(untyped)) return super.arguments(node, method);
+      const args = node.args.map((argument, index) => {
+        const parameter = parameters[positions ? positions[index] : index];
+        if (!untyped(argument) || !parameter) return argument;
+        const value = this.tupleLiteralAs(argument.expression, parameter.type);
+        return { ...argument, expression: lowered(value, parameter.type, argument.expression.syntax) };
+      });
+      return super.arguments({ ...node, args }, method);
+    }
+    tupleLiteralAs(literal, type) {
+      if (!this.g.tuples.handles(type) || type.typeArguments.length !== literal.elements.length)
+        return this.unsupported('a tuple literal without a type', literal.syntax);
+      const info = this.g.tuples.classOf(type, literal.syntax);
+      const elements = literal.elements.map((element, index) => {
+        const elementType = type.typeArguments[index].type;
+        if (element.kind === 'Tuple' && !element.type) return this.tupleLiteralAs(element, elementType);
+        if (!element.type) return this.defaultValue(info.imageTypes[index]);
+        const value = this.expression(element);
+        if (value.legacyType === info.imageTypes[index]) return value;
+        if (value.legacyType === 'int' && info.imageTypes[index] === 'double') return n.convert(value, 'double');
+        return this.unsupported('a tuple literal whose elements need a conversion in this position', element.syntax);
+      });
+      return this.g.tuples.create(info, elements);
     }
     defaultValue(type) {
       const info = this.g.tuples.infoOf(type);
@@ -65,18 +99,23 @@ export const TupleTranslation = Base =>
     }
     exprCompoundAssignment(node) {
       if (!isTupleElement(node.left)) return super.exprCompoundAssignment(node);
-      if (node.method) return this.unsupported('compound assignment through a user-defined operator', node.syntax);
+      if (node.method && !numeric(this.imageType(node.left.type, node.syntax))) {
+        return this.unsupported('compound assignment through a user-defined operator', node.syntax);
+      }
       const location = this.location(node.left),
         type = this.imageType(node.left.type, node.syntax);
       return this.storeInto(location, n.binary(node.operator, location.read(), this.expression(node.right), type, !!node.isChecked));
     }
     exprIncrement(node) {
       if (!isTupleElement(node.operand)) return super.exprIncrement(node);
-      if (node.method) return this.unsupported('increment through a user-defined operator', node.syntax);
+      if (node.method && !numeric(this.imageType(node.operand.type, node.syntax))) {
+        return this.unsupported('increment through a user-defined operator', node.syntax);
+      }
       const location = this.location(node.operand),
         type = this.imageType(node.operand.type, node.syntax),
         before = this.temp(type, 'before'),
-        after = n.binary(node.operator[0], n.local(before), n.literal(1, type), type, !!node.isChecked),
+        after = scalarStep(node, n.local(before), type) ??
+          n.binary(node.operator[0], n.local(before), n.literal(1, type), type, !!node.isChecked),
         stored = this.storeInto({ ...location, locals: [], effects: [] }, after);
       return n.sequence(
         [...location.locals, before],

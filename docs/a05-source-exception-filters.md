@@ -20,6 +20,13 @@ visitation. `tests/a05-source-filters.test.js` in the parent E01 integration sup
 portable replay cases. These E01 cases have not been executed during assembly.
 
 Captured catch variables reuse closure cells. A filtered catch initializes its cell before the filter,
-then shares it with its body and any escaping delegates. Framework exception constructors outside the
-existing execution catalog remain an explicit frontend limitation. This change does not convert an unsupported exception constructor
-into `System.Exception` or erase a typed catch to a catch-all.
+then shares it with its body and any escaping delegates. Existing BCL exception symbols now attach exact
+constructor/member signatures from the shared exception execution catalog. Source construction preserves
+the derived type, message and inner chain; `StackTrace`, `HResult` and `GetBaseException` use the CIL runtime's
+existing implementation. The source emitter and reload adapter use those same signatures.
+
+`tests/a05-source-exception-objects.test.js` prepares matching-catch, inner-chain, trace and captured-derived
+exception cases for the three execution paths. These cases remain unexecuted until the E01 qualification gate.
+Constructors outside the finite catalog, including parameter-name/object-name overloads whose semantics
+differ from the message constructor, still report a profile diagnostic. Unsupported constructors are never
+converted to `System.Exception`, and typed catches are never erased to catch-all handlers.

@@ -1,19 +1,4 @@
-/**
- * Argument conversions of the execution profile (SF-A02-T19).
- *
- * The execution binder passes arguments to framework members without conversion instructions except the widening
- * of `int` to `double`, so overload resolution over the framework symbols may only use the conversions that back
- * end can perform. `ExecutionProfileConversions` classifies with `Conversions` and keeps a result only when it is
- * one of those: identity, `int` to `double`, the null literal, a reference conversion to a base class, and any
- * conversion to `object`.
- *
- * Two rules of the string-typed profile are wider than C# and are kept so that programs it accepted keep
- * compiling to the same image:
- *  - the null literal converts to every framework type that is not `int`, `double`, `bool` or `void` (the
- *    registry does not separate framework value types from classes at the ABI);
- *  - an argument whose type is an error type converts to `object`, so the error already reported for the
- *    argument is not followed by an overload diagnostic.
- */
+/** Execution-profile conversions supported by typed scalar and memory bytecode. */
 import { Conversions, Conversion, ConversionKind } from './classify.js';
 import { ErrorTypeSymbol, ArrayTypeSymbol } from '../symbols/types.js';
 
@@ -36,8 +21,8 @@ export function hasNaturalType(argument) {
 export class ExecutionProfileConversions extends Conversions {
   /** @param core CoreTypes over the registry bridge */
   constructor(core) {
-    super(core, { numericIntPtr: false, firstClassSpans: false });
-    this.nonNullable = new Set([core.int, core.double, core.bool, core.void]);
+    super(core, { numericIntPtr: true, firstClassSpans: true });
+    this.nonNullable = new Set([core.void]);
   }
 
   /** True when `type` is `to` or derives from it through base classes. */
@@ -54,9 +39,11 @@ export class ExecutionProfileConversions extends Conversions {
       case ConversionKind.Identity:
         return true;
       case ConversionKind.ImplicitNumeric:
-        return from === this.core.int && to === this.core.double;
+      case ConversionKind.ImplicitConstant:
+      case ConversionKind.ImplicitSpan:
+        return true;
       case ConversionKind.Boxing:
-        return to === this.core.object;
+        return !from.isRefLikeType && to === this.core.object;
       case ConversionKind.ImplicitReference:
         return to === this.core.object || this.derivesFrom(from, to);
       default:
@@ -66,12 +53,12 @@ export class ExecutionProfileConversions extends Conversions {
 
   classifyFromExpression(expression, to) {
     if (!to) return none;
-    if (expression.literal === 'null') return this.nonNullable.has(to) ? none : nullLiteral;
+    if (expression.literal === 'null') return to.isValueType || this.nonNullable.has(to) ? none : nullLiteral;
     if (targetTypedForms.has(expression.form)) return expression.convert?.(to) ?? none;
     const from = expression.type;
     if (!from || from === this.core.void) return none;
     if (isErroneous(from)) return to === this.core.object ? boxing : none;
-    const conversion = this.classifyStandardImplicit(from, to);
+    const conversion = super.classifyFromExpression(expression, to);
     return conversion.exists && this.isEmittable(from, to, conversion) ? conversion : none;
   }
 }
