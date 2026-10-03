@@ -62,6 +62,8 @@ export const CallTranslation = Base =>
       return n.literal(typeof raw === 'bigint' ? Number(raw) : raw, type);
     }
     exprCall(node) {
+      // An omitted call to a [Conditional] method evaluates nothing, not even its arguments.
+      if (node.isOmitted) return n.nullLiteral('object');
       const method = node.method,
         definition = method.originalDefinition ?? method;
       if (method.methodKind === MethodKind.DelegateInvoke || node.isDelegateInvoke) {

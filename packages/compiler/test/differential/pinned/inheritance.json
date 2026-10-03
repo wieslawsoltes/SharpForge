@@ -1,4 +1,9 @@
 {"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "inheritance/cs0239-cs0507-overrides":{"hash":"4b34fb3630e4effa","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS5001",-1,0,"error"],["CS0507",185,1,"error"],["CS0239",230,1,"error"],["CS1715",259,1,"error"]]},
+  "inheritance/cs0108-cs0109-hiding":{"hash":"6d7a91796f3bff1b","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS5001",-1,0,"error"],["CS0649",21,1,"warning"],["CS0108",99,1,"warning"],["CS0649",99,1,"warning"],["CS0108",114,1,"warning"],["CS0114",134,1,"warning"],["CS0109",157,1,"warning"],["CS0649",157,1,"warning"]]},
+  "inheritance/cs0513-cs0500-abstract":{"hash":"abdb9117398d4eba","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS5001",-1,0,"error"],["CS0513",31,1,"error"],["CS0500",78,1,"error"],["CS0501",98,1,"error"]]},
+  "inheritance/cs0540-cs0539-explicit-implementation":{"hash":"1a70426da45827fb","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS5001",-1,0,"error"],["CS0540",86,1,"error"],["CS0539",103,7,"error"]]},
+  "inheritance/cs0029-cs0030-reference-conversions":{"hash":"987ede1e83aa15a9","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0266",30,1,"error"],["CS0030",41,14,"error"]]},
   "inheritance/virtual-override":{"hash":"7d852438eb2cefc3","kind":"output","langVersion":"14.0","diagnostics":[],"output":"circle 3\nsquare 4\nshape 0\n"},
   "inheritance/base-calls":{"hash":"eb625e3393d063a7","kind":"output","langVersion":"14.0","diagnostics":[],"output":"base ctor\nderived ctor\nderived>base:x!\n"},
   "inheritance/abstract-class":{"hash":"91e72d64ae8ada26","kind":"output","langVersion":"14.0","diagnostics":[],"output":"woof\nI say woof\n"},
@@ -12,10 +17,5 @@
   "inheritance/cs0509-derive-from-sealed":{"hash":"837edbf9eefeb77f","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0509",65,1,"error"]]},
   "inheritance/cs0146-circular-base":{"hash":"424ad60a451a52c0","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0146",42,1,"error"],["CS0146",58,1,"error"]]},
   "inheritance/cs0266-base-to-derived":{"hash":"d0bb099670fde588","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0266",35,1,"error"]]},
-  "inheritance/cs7036-base-constructor":{"hash":"4225bb773dee5e1b","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS7036",89,1,"error"]]},
-  "inheritance/cs0239-cs0507-overrides":{"hash":"4b34fb3630e4effa","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS5001",-1,0,"error"],["CS0507",185,1,"error"],["CS0239",230,1,"error"],["CS1715",259,1,"error"]]},
-  "inheritance/cs0108-cs0109-hiding":{"hash":"6d7a91796f3bff1b","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS5001",-1,0,"error"],["CS0649",21,1,"warning"],["CS0108",99,1,"warning"],["CS0649",99,1,"warning"],["CS0108",114,1,"warning"],["CS0114",134,1,"warning"],["CS0109",157,1,"warning"],["CS0649",157,1,"warning"]]},
-  "inheritance/cs0513-cs0500-abstract":{"hash":"abdb9117398d4eba","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS5001",-1,0,"error"],["CS0513",31,1,"error"],["CS0500",78,1,"error"],["CS0501",98,1,"error"]]},
-  "inheritance/cs0540-cs0539-explicit-implementation":{"hash":"1a70426da45827fb","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS5001",-1,0,"error"],["CS0540",86,1,"error"],["CS0539",103,7,"error"]]},
-  "inheritance/cs0029-cs0030-reference-conversions":{"hash":"987ede1e83aa15a9","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0266",30,1,"error"],["CS0030",41,14,"error"]]}
+  "inheritance/cs7036-base-constructor":{"hash":"4225bb773dee5e1b","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS7036",89,1,"error"]]}
 }}

@@ -1,12 +1,12 @@
 {
   "name-lookup/cs0103-console-without-using": ["warnings"],
-  "name-lookup/cs0103-typo-in-assignment": ["warnings"],
-  "name-lookup/cs0103-unknown-method": ["warnings"],
+  "name-lookup/cs0103-typo-in-assignment": ["diagnostics", "warnings"],
+  "name-lookup/cs0103-unknown-method": ["diagnostics", "warnings"],
   "name-lookup/cs0103-unknown-name": ["diagnostics", "warnings"],
-  "name-lookup/cs0119-type-used-as-variable": ["warnings"],
+  "name-lookup/cs0119-type-used-as-variable": ["diagnostics", "warnings"],
   "name-lookup/cs0246-unknown-base-type": ["diagnostics", "warnings"],
   "name-lookup/cs0246-unknown-type": ["diagnostics", "warnings"],
-  "name-lookup/cs0246-unknown-type-in-new": ["warnings"],
+  "name-lookup/cs0246-unknown-type-in-new": ["diagnostics", "warnings"],
   "name-lookup/cs0246-unknown-type-in-signature": ["diagnostics", "warnings"],
   "name-lookup/shadowing-field-with-local": ["diagnostics", "warnings", "bytecode", "cil"]
 }

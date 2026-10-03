@@ -186,7 +186,9 @@ export class RecordMembers {
       statements.push(n.expressionStatement(n.assign(n.field(self(), backing), value)));
     });
     const initializer = this.host.instanceInits.get(type);
-    if (initializer) statements.push(n.expressionStatement(n.call(initializer, self(), [])));
+    // The instance initializer of a type with a primary constructor takes its parameters (they are in scope there).
+    const forwarded = method.parameters.map((parameter, index) => n.parameter(n.newParameter(parameter.name, parameter.type, index)));
+    if (initializer) statements.push(n.expressionStatement(n.call(initializer, self(), forwarded)));
     this.host.addSynthesizedBody(method, n.block(statements));
     return true;
   }

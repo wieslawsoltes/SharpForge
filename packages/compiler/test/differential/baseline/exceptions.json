@@ -1,8 +1,8 @@
 {
-  "exceptions/cs0029-throw-non-exception": ["warnings"],
+  "exceptions/cs0029-throw-non-exception": ["diagnostics", "warnings"],
   "exceptions/cs0155-catch-non-exception": ["diagnostics", "warnings"],
-  "exceptions/cs0156-rethrow-outside-catch": ["warnings"],
-  "exceptions/cs0157-return-in-finally": ["warnings"],
+  "exceptions/cs0156-rethrow-outside-catch": ["diagnostics", "warnings"],
+  "exceptions/cs0157-return-in-finally": ["diagnostics", "warnings"],
   "exceptions/cs0160-catch-order": ["diagnostics", "warnings"],
   "exceptions/cs1524-try-without-catch": ["warnings"],
   "exceptions/finally-on-return": ["diagnostics", "warnings", "bytecode", "cil"],
