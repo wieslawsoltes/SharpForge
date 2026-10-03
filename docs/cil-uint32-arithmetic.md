@@ -34,5 +34,7 @@ existing uint host argument/return/Console formatting contract.
 This slice depends on the Int64 helper extraction for checked integer arithmetic.
 It preserves the runtime's signed Int32 division/remainder, floating-point,
 conversion and storage paths. Source-language lowering and full numeric
-qualification are separate work. Validation and performance measurements remain
-queued; this implementation makes no speedup or whole-task completion claim.
+qualification are separate work. The serial queue passed 150 focused UInt32,
+Int64, float, numeric seam, managed IL and ABI tests on Node 24.21.0. Performance
+measurements remain staged; this implementation makes no speedup or whole-task
+completion claim.
