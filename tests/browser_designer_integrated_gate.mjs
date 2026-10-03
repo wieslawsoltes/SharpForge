@@ -5,9 +5,11 @@ import {authoredPreviews} from './browser_designer_gate_previews.mjs';
 import {largeScenePerformance, layoutReferences} from './browser_designer_gate_performance.mjs';
 import {defaultEventAndInline, layoutGestures} from './browser_designer_gate_editing.mjs';
 import {sourceAnalysisLatency} from './browser_designer_gate_source_latency.mjs';
+import {keyboardOnlyPage} from './browser_designer_gate_keyboard.mjs';
 
 const cases = [
   ['property', 'Actual property commit updates C# and repeated geometry keys form one undo transaction', gate => propertyAndKeyboard(gate.page)],
+  ['keyboard-page', 'An empty Page becomes a Grid with two TextBoxes and a Button through trusted keyboard input only', keyboardOnlyPage],
   ['chrome', 'One document command bar stays accessible at narrow and wide light/dark dimensions', gate => singleCommandBar(gate.page)],
   ['events', 'Default-event double-click creates or navigates C# while F2 and slow-click retain inline editing',
     gate => defaultEventAndInline(gate.page)],
