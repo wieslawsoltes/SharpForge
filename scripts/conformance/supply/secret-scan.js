@@ -65,13 +65,13 @@ export async function secretScan({root = repository, built = [], signal, maxTota
   const inputs = (await walkFiles(root, {signal, exclude: sourceExclusions})).map(path => ({root, path}));
   for (const directory of built) {
     const absolute = localPath(root, directory);
-    for (const path of await walkFiles(absolute, {signal})) inputs.push({root: absolute, path, prefix: directory});
+    for (const path of await walkFiles(absolute, {boundary: root, signal})) inputs.push({root: absolute, path, prefix: directory});
   }
   let totalBytes = 0;
   const findings = [];
   for (const [index, input] of inputs.entries()) {
     signal?.throwIfAborted();
-    const bytes = await boundedRead(localPath(input.root, input.path), {signal});
+    const bytes = await boundedRead(localPath(input.root, input.path), {root, signal});
     totalBytes += bytes.length;
     if (totalBytes > maxTotalBytes) throw new Error('SECRET_LIMIT: total scan size exceeded');
     const path = input.prefix ? input.prefix + '/' + input.path : input.path;

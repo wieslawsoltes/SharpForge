@@ -14,8 +14,8 @@ export function applyPins(text, pins) {
 }
 
 export async function pinActions({root = repository, write = false} = {}) {
-  const pins = await readJSON(resolve(root, 'planning/qualification/supply/action-pins.json'));
-  const files = await walkFiles(resolve(root, '.github'));
+  const pins = await readJSON(resolve(root, 'planning/qualification/supply/action-pins.json'), {root});
+  const files = await walkFiles(resolve(root, '.github'), {boundary: root});
   let changed = 0;
   for (const name of files.filter(name => /\.ya?ml$/.test(name))) {
     const path = resolve(root, '.github', name);

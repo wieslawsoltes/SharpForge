@@ -17,12 +17,12 @@ function packageComponent(manifest) {
 
 /** Build deterministic CycloneDX 1.6 from actual packages, vendor reconstruction and release payload bytes. */
 export async function sbom({root = repository, signal} = {}) {
-  const manifest = await readJSON(join(root, 'package.json'), {signal});
+  const manifest = await readJSON(join(root, 'package.json'), {root, signal});
   const packages = await workspacePackages(root, signal);
   const vendor = await verifyVendor({root, signal});
   const payloads = [...await payloadFiles(root, 'browser', signal), ...await payloadFiles(root, 'packages', signal)];
   const archive = 'artifacts/SharpForge-browser.zip';
-  const archiveBytes = await boundedRead(localPath(root, archive), {signal});
+  const archiveBytes = await boundedRead(localPath(root, archive), {root, signal});
   payloads.push({path: archive, bytes: archiveBytes.length, sha256: sha256(archiveBytes)});
   const rootRef = 'sharpforge:' + manifest.version;
   const components = packages.map(item => packageComponent(item.manifest));
@@ -34,7 +34,7 @@ export async function sbom({root = repository, signal} = {}) {
     properties: [{name: 'sharpforge:scope', value: 'Selected upstream bodies with declared owner-document wrapper adaptations'}]});
   for (const file of vendor.distributed) {
     const path = 'packages/editor/src/vendor/' + file.path;
-    const bytes = await boundedRead(localPath(root, path), {signal});
+    const bytes = await boundedRead(localPath(root, path), {root, signal});
     components.push(fileComponent({path, bytes: bytes.length, sha256: file.sha256}));
   }
   components.push(...payloads.map(fileComponent));

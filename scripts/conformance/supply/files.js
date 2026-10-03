@@ -1,7 +1,7 @@
 import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import {lstat, readFile, readdir, mkdir, writeFile} from 'node:fs/promises';
-import {dirname, isAbsolute, relative, resolve} from 'node:path';
+import {dirname, isAbsolute, relative, resolve, sep} from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 export const repository = fileURLToPath(new URL('../../../', import.meta.url));
@@ -15,15 +15,37 @@ export function localPath(root, name) {
   }
   const result = resolve(root, name);
   const rel = relative(resolve(root), result);
-  if (!rel || rel === '..' || rel.startsWith('../') || isAbsolute(rel)) throw new Error('SUPPLY_PATH: path escapes root');
+  if (!rel || rel === '..' || rel.startsWith('..' + sep) || isAbsolute(rel)) throw new Error('SUPPLY_PATH: path escapes root');
   return result;
 }
 
-/** Read a regular file with a size limit, rejecting symlinks and cancellation. */
-export async function boundedRead(path, {signal, maxBytes = 64 * 1024 * 1024} = {}) {
+/** Inspect every component inside the trusted checkout boundary without following links. */
+async function containedInfo(path, root, signal) {
+  const boundary = resolve(root);
+  const target = resolve(path);
+  const name = relative(boundary, target);
+  if (name === '..' || name.startsWith('..' + sep) || isAbsolute(name)) {
+    throw new Error('SUPPLY_PATH: path escapes checkout boundary');
+  }
+  let current = boundary;
+  let info = await lstat(current);
+  if (info.isSymbolicLink() || !info.isDirectory()) throw new Error('SUPPLY_SYMLINK: invalid checkout boundary');
+  const parts = name ? name.split(sep) : [];
+  for (const [index, part] of parts.entries()) {
+    signal?.throwIfAborted();
+    current = resolve(current, part);
+    info = await lstat(current);
+    if (info.isSymbolicLink()) throw new Error('SUPPLY_SYMLINK: linked path component');
+    if (index < parts.length - 1 && !info.isDirectory()) throw new Error('SUPPLY_FILE: invalid parent directory');
+  }
+  return info;
+}
+
+/** Read a bounded regular file; links in its checkout-relative ancestors fail closed. */
+export async function boundedRead(path, {root = repository, signal, maxBytes = 64 * 1024 * 1024} = {}) {
   signal?.throwIfAborted();
-  const info = await lstat(path);
-  if (!info.isFile() || info.isSymbolicLink() || info.size > maxBytes) throw new Error('SUPPLY_FILE: invalid or oversized file');
+  const info = await containedInfo(path, root, signal);
+  if (!info.isFile() || info.size > maxBytes) throw new Error('SUPPLY_FILE: invalid or oversized file');
   return readFile(path, {signal});
 }
 
@@ -41,7 +63,10 @@ export function commit(root = repository) {
 }
 
 /** Deterministic bounded traversal. Ignore administrative/build roots only when requested. */
-export async function walkFiles(root, {signal, exclude = [], maxFiles = 30000} = {}) {
+export async function walkFiles(root, {signal, exclude = [], maxFiles = 30000, boundary = root} = {}) {
+  signal?.throwIfAborted();
+  const info = await containedInfo(root, boundary, signal);
+  if (!info.isDirectory()) throw new Error('SUPPLY_FILE: traversal root must be a directory');
   const files = [];
   const ignored = new Set(exclude);
   async function visit(directory, prefix) {

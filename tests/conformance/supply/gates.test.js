@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {mkdtemp, mkdir, writeFile, readFile, rm} from 'node:fs/promises';
+import {mkdtemp, mkdir, writeFile, readFile, rm, symlink} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
@@ -116,7 +116,7 @@ test('tree scans and reads enforce path, count, byte and cancellation boundaries
   await file(root, 'a', '12345');
   assert.throws(() => localPath(root, '../escape'), /SUPPLY_PATH/);
   assert.throws(() => localPath(root, '/absolute'), /SUPPLY_PATH/);
-  await assert.rejects(boundedRead(join(root, 'a'), {maxBytes: 4}), /SUPPLY_FILE/);
+  await assert.rejects(boundedRead(join(root, 'a'), {root, maxBytes: 4}), /SUPPLY_FILE/);
   await assert.rejects(walkFiles(root, {maxFiles: 0}), /SUPPLY_LIMIT/);
   await assert.rejects(secretScan({root, maxTotalBytes: 4}), /SECRET_LIMIT/);
   const controller = new AbortController();
@@ -216,4 +216,24 @@ test('attestation subjects bind exact payload bytes and reject changed commits b
   await assert.rejects(releaseSubjects({root}), /payload inventory/);
   await file(root, 'artifacts/SOURCE-MANIFEST.json', JSON.stringify({...manifest, commit: 'a'.repeat(40)}));
   await assert.rejects(releaseSubjects({root}), /ATTESTATION_COMMIT/);
+}));
+
+
+test('payload and vendor boundaries reject linked directory roots and ancestors', async () => fixture(async root => {
+  await fixture(async external => {
+    await file(external, 'payload.js', 'owned external fixture');
+    await file(external, 'SOURCE-MANIFEST.json', '{}');
+    const type = process.platform === 'win32' ? 'junction' : 'dir';
+    await symlink(external, join(root, 'dist'), type);
+    await assert.rejects(payloadFiles(root, 'browser'), /SUPPLY_SYMLINK/);
+    await assert.rejects(walkFiles(join(root, 'dist')), /SUPPLY_SYMLINK/);
+    await symlink(external, join(root, 'artifacts'), type);
+    await assert.rejects(boundedRead(join(root, 'artifacts/payload.js'), {root}), /SUPPLY_SYMLINK/);
+    await assert.rejects(releaseSubjects({root}), /SUPPLY_SYMLINK/);
+    await mkdir(join(root, 'packages/editor'), {recursive: true});
+    await symlink(external, join(root, 'packages/editor/src'), type);
+    await assert.rejects(verifyVendor({root}), /SUPPLY_SYMLINK/);
+    await assert.rejects(boundedRead(join(external, 'payload.js'), {root}), /SUPPLY_PATH/);
+    await assert.rejects(secretScan({root, built: ['dist']}), /SUPPLY_SYMLINK/);
+  });
 }));

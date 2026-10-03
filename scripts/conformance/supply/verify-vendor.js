@@ -4,17 +4,17 @@ import {boundedRead, isMain, localPath, readJSON, repository, sha256, walkFiles}
 /** Verify shipped bytes and reconstruct each published upstream file without network access. */
 export async function verifyVendor({root = repository, signal} = {}) {
   const relative = 'packages/editor/src/vendor/manifest.json';
-  const manifest = await readJSON(localPath(root, relative), {signal});
+  const manifest = await readJSON(localPath(root, relative), {root, signal});
   const directory = dirname(localPath(root, relative));
   if (manifest.reconstruction?.format !== 1 || !manifest.reconstruction.segments.length) {
     throw new Error('VENDOR_MANIFEST: missing reconstruction');
   }
   const shipped = new Map();
   const expectedNames = ['manifest.json', ...Object.keys(manifest.distributedFiles)].sort();
-  const actualNames = (await walkFiles(directory, {signal})).sort();
+  const actualNames = (await walkFiles(directory, {boundary: root, signal})).sort();
   if (JSON.stringify(expectedNames) !== JSON.stringify(actualNames)) throw new Error('VENDOR_FILES: undeclared vendor file');
   for (const [name, expected] of Object.entries(manifest.distributedFiles)) {
-    const bytes = await boundedRead(localPath(directory, name), {signal});
+    const bytes = await boundedRead(localPath(directory, name), {root, signal});
     if (!/^[a-f0-9]{64}$/.test(expected) || sha256(bytes) !== expected) throw new Error('VENDOR_HASH: ' + name);
     shipped.set(name, bytes);
   }

@@ -22,6 +22,7 @@ def load(name, filename):
 workflows = load('supply_workflows', 'workflow-lint.py')
 sbom = load('supply_sbom', 'validate-sbom.py')
 lock = load('supply_lock', 'lock-python.py')
+archive = load('supply_archive', 'browser-archive.py')
 
 
 class SupplyToolingTests(unittest.TestCase):
@@ -105,6 +106,23 @@ class SupplyToolingTests(unittest.TestCase):
                              "contains(github.event.pull_request.labels.*.name, 'full-ci')")
         languages = security['jobs']['codeql']['strategy']['matrix']['language']
         self.assertEqual(set(languages), {'javascript-typescript', 'python'})
+
+    def test_browser_archive_requires_real_bounded_inputs(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'dist').mkdir()
+            (root / 'artifacts').mkdir()
+            with self.assertRaises(ValueError):
+                archive.create(root)
+            (root / 'dist/owned.js').write_text('owned fixture')
+            archive.create(root)
+            with ZipFile(root / 'artifacts/SharpForge-browser.zip') as payload:
+                self.assertEqual(payload.namelist(), ['owned.js'])
+                self.assertEqual(payload.read('owned.js'), b'owned fixture')
+            with (root / 'dist/large').open('wb') as payload:
+                payload.truncate(64 * 1024 * 1024 + 1)
+            with self.assertRaises(ValueError):
+                archive.create(root)
 
     def test_real_pip_rejects_tampered_hash_without_network(self):
         with tempfile.TemporaryDirectory() as directory:

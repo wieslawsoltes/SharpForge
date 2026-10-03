@@ -8,7 +8,7 @@ export async function workspacePackages(root, signal) {
   for (const entry of (await readdir(join(root, 'packages'), {withFileTypes: true})).sort((a, b) => a.name.localeCompare(b.name))) {
     if (!entry.isDirectory()) throw new Error('SUPPLY_PACKAGE: unexpected package entry');
     const path = 'packages/' + entry.name + '/package.json';
-    const manifest = await readJSON(localPath(root, path), {signal});
+    const manifest = await readJSON(localPath(root, path), {root, signal});
     if (!manifest.name || !manifest.version || !manifest.license) throw new Error('SUPPLY_PACKAGE: missing package metadata');
     packages.push({path, manifest, tarball: 'artifacts/' + manifest.name.replace(/^@/, '').replaceAll('/', '-') + '-' + manifest.version + '.tgz'});
   }
@@ -22,7 +22,7 @@ export async function workspacePackages(root, signal) {
 export async function payloadFiles(root, kind, signal) {
   let names;
   if (kind === 'browser') {
-    names = (await walkFiles(join(root, 'dist'), {signal})).map(name => 'dist/' + name);
+    names = (await walkFiles(join(root, 'dist'), {boundary: root, signal})).map(name => 'dist/' + name);
     if (!names.length) throw new Error('SUPPLY_PAYLOAD: empty browser distribution');
     names.push('artifacts/SharpForge-standalone.html');
   } else if (kind === 'packages') {
@@ -32,7 +32,7 @@ export async function payloadFiles(root, kind, signal) {
   } else throw new Error('SUPPLY_PAYLOAD: unknown kind');
   const files = [];
   for (const path of names.sort()) {
-    const bytes = await boundedRead(localPath(root, path), {signal});
+    const bytes = await boundedRead(localPath(root, path), {root, signal});
     files.push({path, bytes: bytes.length, sha256: sha256(bytes)});
   }
   return files;

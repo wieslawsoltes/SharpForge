@@ -6,14 +6,14 @@ import {boundedRead, commit, isMain, localPath, readJSON, repository, sha256, wr
 /** Exact release subject list, after verifying the original payload manifest. */
 export async function releaseSubjects({root = repository} = {}) {
   const directory = resolve(root, 'artifacts');
-  const manifest = await readJSON(resolve(directory, 'SOURCE-MANIFEST.json'));
+  const manifest = await readJSON(resolve(directory, 'SOURCE-MANIFEST.json'), {root});
   if (manifest.commit !== commit(root)) throw new Error('ATTESTATION_COMMIT: source manifest differs from checkout');
   await verifyManifest(directory, manifest);
   const names = [...manifest.files.map(file => file.path), 'SOURCE-MANIFEST.json', 'SHA256SUMS', 'SBOM.cdx.json'];
   if (new Set(names).size !== names.length) throw new Error('ATTESTATION_SUBJECT: duplicate release asset');
   const subjects = [];
   for (const name of names.sort()) {
-    const bytes = await boundedRead(localPath(directory, name));
+    const bytes = await boundedRead(localPath(directory, name), {root});
     subjects.push({path: 'artifacts/' + name, bytes: bytes.length, sha256: sha256(bytes)});
   }
   return subjects;

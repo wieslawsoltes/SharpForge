@@ -20,7 +20,7 @@ if (isMain(import.meta.url)) {
   const root = resolve(checkout);
   if (mode === 'create') await writeJSON(file, await seal({root, kind}));
   else if (mode === 'verify') {
-    const manifest = await readJSON(file);
+    const manifest = await readJSON(file, {root});
     if (manifest.kind !== kind) throw new Error('SUPPLY_SEAL: unexpected artifact kind');
     await verifySeal({root, manifest});
   } else throw new Error('Usage: seal.js create|verify browser|packages manifest.json [checkout]');

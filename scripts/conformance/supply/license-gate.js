@@ -11,24 +11,24 @@ export function needsOrigin(path) {
 
 /** Enforce exact asset coverage, allowed licenses, retained notices and immutable asset bytes. */
 export async function licenseGate({root = repository, policy, signal} = {}) {
-  policy ??= await readJSON(localPath(root, 'planning/qualification/supply/licenses.json'), {signal});
+  policy ??= await readJSON(localPath(root, 'planning/qualification/supply/licenses.json'), {root, signal});
   if (policy.schemaVersion !== 1 || !Array.isArray(policy.allowed) || !Array.isArray(policy.files)) {
     throw new Error('LICENSE_POLICY: invalid policy');
   }
   const files = await walkFiles(root, {signal, exclude: sourceExclusions});
   const covered = new Map();
   const licenseTexts = new Map();
-  const notices = (await boundedRead(localPath(root, 'THIRD_PARTY_NOTICES.md'), {signal})).toString('utf8');
+  const notices = (await boundedRead(localPath(root, 'THIRD_PARTY_NOTICES.md'), {root, signal})).toString('utf8');
   for (const entry of policy.files) {
     if (covered.has(entry.path) || !entry.origin || !entry.notice || !policy.allowed.includes(entry.license)) {
       throw new Error('LICENSE_POLICY: duplicate, missing origin or disallowed license for ' + entry.path);
     }
     covered.set(entry.path, entry);
-    const bytes = await boundedRead(localPath(root, entry.path), {signal});
+    const bytes = await boundedRead(localPath(root, entry.path), {root, signal});
     if (sha256(bytes) !== entry.sha256) throw new Error('LICENSE_HASH: changed asset ' + entry.path);
     if (!notices.includes(entry.notice)) throw new Error('LICENSE_NOTICE: missing notice for ' + entry.path);
     if (!licenseTexts.has(entry.licenseFile)) {
-      licenseTexts.set(entry.licenseFile, await boundedRead(localPath(root, entry.licenseFile), {signal}));
+      licenseTexts.set(entry.licenseFile, await boundedRead(localPath(root, entry.licenseFile), {root, signal}));
     }
     const license = licenseTexts.get(entry.licenseFile);
     if (!license.length || (entry.licenseSHA256 && sha256(license) !== entry.licenseSHA256)) {
