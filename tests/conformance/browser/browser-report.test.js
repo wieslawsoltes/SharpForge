@@ -5,7 +5,7 @@ import {mergeCells,validateCell} from '../../../scripts/conformance/browser-repo
 const cell=(extra={})=>({schemaVersion:1,engine:'chromium',mode:'http',category:'served',suite:'smoke',device:null,platform:'linux',browserVersion:'145.0',playwright:'1.57.0',source:{commit:'a'.repeat(40),dirty:false},checks:[{id:'run',status:'passed'}],passed:true,parityPassed:true,emulated:false,hardwareQualified:false,...extra});
 test('browser report preserves served, file, harness and deployed categories',()=>{
  const rows=[cell(),cell({mode:'file'}),cell({mode:'in-memory',category:'harness'}),cell({mode:'deployed',category:'deployed',navigation:{url:'https://example.test/',status:200,policy:{value:"script-src 'self'"}}})];
- assert.equal(mergeCells(rows).summary.hardware,0);assert.equal(mergeCells(rows).rows.length,4);
+ assert.equal(mergeCells(rows).summary.hardware,0);assert.ok(mergeCells(rows).unmeasured.some(x=>x.platform==='windows'&&x.engine==='webkit'));assert.equal(mergeCells(rows).unmeasured.some(x=>x.platform==='linux'&&x.engine==='chromium'&&x.mode==='http'&&x.suite==='smoke'),false);assert.equal(mergeCells(rows).rows.length,4);
 });
 test('emulation and relabelled harnesses cannot acquire hardware/deployment qualification',()=>{
  for(const row of [cell({hardwareQualified:true}),cell({category:'deployed'}),cell({mode:'hardware',category:'hardware',emulated:true}),cell({mode:'hardware',category:'hardware',emulated:false})])assert.throws(()=>validateCell(row));

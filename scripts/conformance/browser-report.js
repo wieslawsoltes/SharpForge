@@ -39,7 +39,14 @@ export function mergeCells(cells,options={}) {
     assert(!seen.has(key),'Duplicate qualification cell: '+key);seen.add(key);
     return {...cell,hardwareQualified:cell.category==='hardware',evidenceScope:cell.source.dirty?'development checkout':'committed checkout'};
   });
-  return {schemaVersion:1,categories:['harness','served','deployed','hardware'],rows,
+  const planned=[];
+  for(const platform of ['linux','windows','darwin'])for(const engine of ENGINES)for(const mode of ['http','https','isolated','file'])planned.push({platform,engine,mode,suite:'smoke',device:null});
+  for(const engine of ENGINES){
+    for(const device of ['iPhone 13','Pixel 5','iPad (gen 7)'])planned.push({platform:'linux',engine,mode:'http',suite:'mobile',device});
+    for(const [mode,suite] of [['http','a11y'],['in-memory','smoke'],['deployed','smoke']])planned.push({platform:'linux',engine,mode,suite,device:null});
+  }
+  const unmeasured=planned.filter(target=>!rows.some(row=>Object.entries(target).every(([key,value])=>(row[key]??null)===value))).map(target=>({...target,status:'unmeasured',reason:'No observation for this planned target in the supplied artifacts.'}));
+  return {schemaVersion:1,scope:'Only supplied measured cells; missing targets remain unmeasured',unmeasured,categories:['harness','served','deployed','hardware'],rows,
     summary:{cells:rows.length,passed:rows.filter(r=>r.passed).length,parityPassed:rows.filter(r=>r.parityPassed).length,hardware:rows.filter(r=>r.hardwareQualified).length},
     limitations:['Desktop device emulation is served-browser evidence, not physical mobile qualification.','HTTP/HTTPS/file modes remain separate cells.','Known failures and unsupported checks never count as parity passes.']};
 }

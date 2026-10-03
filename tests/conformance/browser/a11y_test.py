@@ -1,4 +1,9 @@
 """Browser ARIA snapshots plus actual keyboard input; selectors retained for violations."""
+from pathlib import Path
+import sys
+_ROOT=Path(__file__).resolve().parents[3]
+sys.path.insert(0,str(_ROOT/'tests'))
+
 import re
 from conformance.browser.matrix_common import truth
 INTERACTIVE='button, a[href], input:not([type=hidden]), textarea, select, [role=button], [role=tab], [role=menuitem], [role=treeitem], [role=separator], [tabindex]'
@@ -61,3 +66,7 @@ def qualify(checks, **options):
             tab_to(page,'[data-menu="file"]');page.keyboard.press('Enter');truth(page.locator('#menu-popup').is_visible());page.keyboard.press('Escape')
             page.screenshot(path=str(checks.directory/(feature+'.png')))
         checks.check(feature,media)
+
+if __name__=='__main__':
+    import os, subprocess
+    sys.exit(subprocess.call([sys.executable,str(_ROOT/'tests/conformance/browser/run_matrix.py'),'--engine',os.getenv('SHARPFORGE_BROWSER_ENGINE','chromium'),'--suite','a11y'],cwd=_ROOT))

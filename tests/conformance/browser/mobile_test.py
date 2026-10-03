@@ -1,4 +1,9 @@
 """Desktop-engine device emulation; no physical keyboard or mobile OS claims."""
+from pathlib import Path
+import sys
+_ROOT=Path(__file__).resolve().parents[3]
+sys.path.insert(0,str(_ROOT/'tests'))
+
 from conformance.browser.matrix_common import compile_run, truth, wait
 DEVICES = ('iPhone 13', 'Pixel 5', 'iPad (gen 7)')
 
@@ -50,3 +55,7 @@ def qualify(checks, *, device, **options):
     checks.unsupported('physical-device-and-virtual-keyboard', 'Playwright desktop '+options['engine']+' device descriptor emulation does not qualify '+device+' hardware, mobile OS, IME, or the OS virtual keyboard.')
     if options['engine']=='firefox':
         checks.unsupported('mobile-viewport-meta', 'Playwright Firefox does not implement is_mobile; viewport and has_touch are tested, mobile viewport-meta behavior is unsupported.')
+
+if __name__=='__main__':
+    import os, subprocess
+    sys.exit(subprocess.call([sys.executable,str(_ROOT/'tests/conformance/browser/run_matrix.py'),'--engine',os.getenv('SHARPFORGE_BROWSER_ENGINE','chromium'),'--suite','mobile'],cwd=_ROOT))
