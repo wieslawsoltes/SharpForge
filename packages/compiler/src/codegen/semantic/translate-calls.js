@@ -44,14 +44,14 @@ export const CallTranslation = Base =>
         if (mapping.expanded && positions[i] === last) rest.push(this.objectArgument(value, elementType));
         else slots[positions[i]] = value;
       });
-      const lowered = slots.map((value, i) => value ?? this.defaultArgument(parameters[i], node));
+      const lowered = slots.map((value, i) => value ?? this.defaultArgument(parameters[i], node, i));
       if (mapping.expanded) {
         lowered.push(n.newArray(elementType, n.literal(rest.length, 'int'), rest));
       }
       if (prefix && lowered.length) lowered[0] = n.sequence(prefix.locals, prefix.effects, lowered[0]);
       return lowered;
     }
-    defaultArgument(parameter, node) {
+    defaultArgument(parameter, node, index) {
       const type = this.imageType(parameter.type, node.syntax),
         value = parameter.explicitDefaultValue ?? parameter.defaultValue;
       // Caller info replaces the declared default (binder/caller-info.js).

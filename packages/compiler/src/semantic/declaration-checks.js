@@ -18,7 +18,7 @@ import { checkTypeModifierFeatures } from './type-modifier-features.js';
 import { checkVarianceSafety } from '../conversions/variance.js';
 import { checkNullableSignatures } from '../nullable/signature-checks.js';
 import { uninitializedMembersWithoutConstructor } from '../nullable/uninitialized-members.js';
-import { checkTypeModifiers } from '../binder/type-modifiers.js';
+import { checkTypeModifiers, signatureNameOf } from '../binder/type-modifiers.js';
 import { accessRank, baseOrSelf } from './analysis-helpers.js';
 
 /** Class mixin: Declaration-level checks of every source type: hiding, overrides, abstract members, interface */
@@ -101,7 +101,11 @@ export const DeclarationChecks = Base =>
       for (const d of checkReadOnlyDeclarations(type)) this.reportAt(d.member, d.code, d.args);
       for (const d of checkInterfaceMemberKinds(type)) this.reportAt(d.member, d.code, d.args);
       for (const d of checkRefStructDeclarations(type, version)) {
-        if (d.feature) this.gate(this.at(type).uri, this.at(type), d.feature.name, d.feature);
+        if (d.feature) {
+          // Roslyn names the first interface of the base list for the ref struct interfaces gate.
+          const base = d.onInterfaces ? type.declarations.find(part => part.syntax.baseList)?.syntax.baseList.types[0] : null;
+          this.gate(this.at(type).uri, base ? (base.type ?? base) : this.at(type), d.feature.name, d.feature);
+        }
         else if (d.onType && d.member.typeSyntax) this.report(this.at(d.member).uri, d.member.typeSyntax, d.code, d.args);
         else this.reportAt(d.member, d.code, d.args);
       }
@@ -162,7 +166,9 @@ export const DeclarationChecks = Base =>
         if (!type || type.isErrorType?.()) continue;
         for (const v of checkConstructedType(type, this.core)) {
           const index = v.type === type ? v.index : null,
-            node = index !== null && c.argSyntax[index] ? c.argSyntax[index] : c.syntax;
+            written = index !== null && c.argSyntax[index] ? c.argSyntax[index] : c.syntax,
+            // A static type argument in a member's signature is reported on the member's name, once.
+            node = v.code === 'CS0718' ? (signatureNameOf(c.syntax) ?? written) : written;
           this.report(c.scope.uri, node, v.code, v.args, v.severity);
         }
       }
