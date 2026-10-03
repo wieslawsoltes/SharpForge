@@ -95,4 +95,59 @@ export const fixtures = feature('extension-declarations', [
       }
     `,
   ),
+  out(
+    'delegates-over-extension-methods-close-over-the-receiver',
+    cs`
+      using System;
+      delegate string Describe(int times);
+      class Counter
+      {
+          public int Count;
+          public Counter(int start) { Count = start; }
+      }
+      static class Extensions
+      {
+          public static int Len(this string s) { return s.Length; }
+          public static string Repeat(this string s, int times) { string r = ""; for (int i = 0; i < times; i++) r += s; return r; }
+          public static void Bump(this Counter c) { c.Count++; }
+          public static int Add(this Counter c, int a, int b) { return c.Count + a + b; }
+          public static string Tag(this object o) { return "object"; }
+          public static string Tag(this string s) { return "string:" + s; }
+      }
+      class Program
+      {
+          static string Next(ref int calls) { calls++; return "r" + calls; }
+          static void Main()
+          {
+              Func<int> len = "hello".Len;
+              Console.WriteLine(len());
+              Describe repeat = "ab".Repeat;
+              Console.WriteLine(repeat(3));
+              var counter = new Counter(10);
+              Action bump = counter.Bump;
+              bump(); bump();
+              Console.WriteLine(counter.Count);
+              Func<int, int, int> add = counter.Add;
+              Console.WriteLine(add(1, 2));
+              Func<string> tag = "x".Tag;
+              Console.WriteLine(tag());
+              // The receiver is evaluated once, when the delegate is created.
+              int calls = 0;
+              Func<int> once = Next(ref calls).Len;
+              Console.WriteLine(calls + " " + once() + " " + once() + " " + calls);
+              // The receiver is captured by value: a later assignment does not change the delegate.
+              string text = "one";
+              Func<int> captured = text.Len;
+              text = "three";
+              Console.WriteLine(captured());
+              Action both = counter.Bump;
+              both += counter.Bump;
+              both();
+              Console.WriteLine(counter.Count);
+              Console.WriteLine(Use("abcd".Len));
+          }
+          static int Use(Func<int> f) { return f() * 2; }
+      }
+    `,
+  ),
 ]);
