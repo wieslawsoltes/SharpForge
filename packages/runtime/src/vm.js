@@ -8,7 +8,8 @@ import {executeSourceMemory} from './execution/source-memory.js';
 import {collectAtInstruction} from './execution/gc-stress.js';
 import {faultFromException} from './execution/exception-object.js';
 import {callSource,callSourceFromStack} from './execution/source-calls.js';
-import {flushFramePool} from './execution/frame-pool.js';
+import {beginFrameInstruction,flushFramePool} from './execution/frame-pool.js';
+import {installRootProvider} from './execution/frame-roots.js';
 import {createArray,arrayAddress,arrayGet} from './execution/arrays.js';
 import {SyncPrimitives} from './execution/sync-primitives.js';
 import {resumeArrayOperation,arrayContinuationRoots} from './execution/array-ops.js';
@@ -33,7 +34,7 @@ export class VirtualMachine {
     if(image?.outputKind==='library')throw new Error('Library has no entry point. Invoke a static method with CilVirtualMachine instead.');
     const errors=verifyImage(image);if(errors.length)throw new Error('Bytecode verification failed: '+errors.join('; '));
     this.image=image;this.options={maxInstructions:20_000_000,maxOutputCharacters:1_000_000,...options};
-    this.heap=new ManagedHeap({...options,methodTables:createSourceMethodTables(image,options)});this.heap.rootProvider=()=>this.roots();this.stack=[];this.frames=[];this.statics=image.statics.map(s=>s.value===null?defaultValue(s.type,this):s.value?.scalar?decodeScalar(s.value,this.options):s.value);this.constantValues=new Map();this.strings=new Map();this.output=[];this.outputCharacters=0;
+    this.heap=new ManagedHeap({...options,methodTables:createSourceMethodTables(image,options)});installRootProvider(this);this.stack=[];this.frames=[];this.statics=image.statics.map(s=>s.value===null?defaultValue(s.type,this):s.value?.scalar?decodeScalar(s.value,this.options):s.value);this.constantValues=new Map();this.strings=new Map();this.output=[];this.outputCharacters=0;
     this.snapshotOwner=Object.freeze({});this.state='ready';this.instructions=0;this.writeRevision=0;this.sourcePause=false;this.elapsedMs=0;this.frameId=0;this.currentPoint=null;this.fault=null;this.pendingFault=null;this.exitCode=0;this.returnValue=null;this.onOutput=options.onOutput??(()=>{});this.onException=null;this.onWrite=null;
     this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);this.sync=new SyncPrimitives(this);this.profiler=createExecutionProfiler(this,options.profile);this.heap.observer=this.profiler;this.call(image.entryPoint,[]);
   }
@@ -69,6 +70,7 @@ export class VirtualMachine {
       if(!continuing&&op===Op.SEQ){frame.point=this.image.sequencePoints[a];this.currentPoint=frame.point;if(onSequence?.(frame.point,frame)){this.sourcePause=true;this.state='paused';break;}}
       const fusion=selectSourceFusion(this,frame,method,Math.min(instructionBudget-count,256-(count&255)),onSequence),before=this.instructions;
       this.sourcePause=false;if(!continuing){frame.pc++;count++;this.instructions++;if(this.profiler)this.profiler.instruction(frame);}
+      beginFrameInstruction(this,frame);
       try{
         if(this.instructions>this.options.maxInstructions||continuing&&this.instructions>=this.options.maxInstructions)throw new ManagedFault('InstructionLimitException','Program exceeded its instruction budget');
         if(fusion)fusion.execute(this,frame);else if(continuing){const result=resumeArrayOperation(this,frame,{deadline:started+timeBudgetMs,workBudget:1});count+=result.work;this.instructions+=result.work;if(this.profiler)this.profiler.instruction(frame,result.work);if(result.done&&result.returns)this.stack.push(result.value);if(!result.work)break;}else if(!executeSourceVarargs(this,frame,op,a)&&!executeSourceReference(this,frame,op,a,b))switch(op){
@@ -97,8 +99,8 @@ export class VirtualMachine {
           case Op.RETHROW:rethrow(frame);break;
           default:if(!executeSourceMemory(this,op,a,b))throw new ManagedFault('InvalidProgramException','Unknown instruction');
         }
-      }catch(error){const fault=this.makeFault(error);if(isFatalFault(fault)){markUnhandled(this,fault);this.scheduler.cancelAll({preserveCurrent:true});break;}this.handleFault(fault);}finally{if(fusion)count+=this.instructions-before-1;}
-      flushFramePool(this);collectAtInstruction(this);
+      }catch(error){const fault=this.makeFault(error);if(isFatalFault(fault)){markUnhandled(this,fault);this.scheduler.cancelAll({preserveCurrent:true});break;}this.handleFault(fault);}finally{if(fusion)count+=this.instructions-before-1;flushFramePool(this);}
+      collectAtInstruction(this);
       if(this.scheduler.enabled)this.scheduler.afterInstruction();
     }
     this.currentPoint=this.top?.point??null;this.elapsedMs+=performance.now()-started;if(this.profiler)this.profiler.boundary();return this.state;

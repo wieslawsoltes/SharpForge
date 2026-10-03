@@ -26,7 +26,11 @@ export function collectHeap(heap, extraRoots = []) {
     work.push(value.h);
   };
   const add = value => forEachValueReference(value, mark);
-  for (const roots of [heap.rootProvider(), heap.pins, extraRoots]) {
+  const root = value => { metrics.rootsScanned++; add(value); };
+  // Providers may visit roots directly. Existing iterable providers still work,
+  // including standalone ManagedHeap users and diagnostic tooling.
+  const provided = heap.rootProvider(root);
+  for (const roots of [provided ?? [], heap.pins, extraRoots]) {
     for (const value of roots) {
       metrics.rootsScanned++;
       add(value);
