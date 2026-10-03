@@ -1,3 +1,5 @@
+import {npmCli} from './conformance/node-tools.js';
+import {resultPath} from './conformance/results.js';
 /** Pack every workspace, install the tarballs in an isolated offline project,
  * import every public entry point, then compile/load/execute a real DLL there.
  */
@@ -7,7 +9,7 @@ import { resolve,join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 const root=fileURLToPath(new URL('../',import.meta.url));
-function run(command,args,cwd=root){const result=spawnSync(command,args,{cwd,encoding:'utf8',timeout:120000});if(result.error||result.status!==0)throw new Error(`${command} failed: ${result.error?.message??result.stderr}\n${result.stdout}`);return result.stdout;}
+function run(command,args,cwd=root){const result=spawnSync(command==='npm'?process.execPath:command,command==='npm'?[npmCli(),...args]:args,{cwd,encoding:'utf8',timeout:120000});if(result.error||result.status!==0)throw new Error(`${command} failed: ${result.error?.message??result.stderr}\n${result.stdout}`);return result.stdout;}
 const artifacts=join(root,'artifacts');await mkdir(artifacts,{recursive:true});
 for(const name of await readdir(artifacts))if(name.endsWith('.tgz'))await rm(join(artifacts,name));
 run('npm',['pack','--workspaces','--ignore-scripts','--pack-destination',artifacts,'--json']);
@@ -35,7 +37,7 @@ const {findTextMatches}=await import('@sharpforge/text');assert.equal(findTextMa
 const library=compileToIL('class Library {public static int Bias=40;public static int Add(int a,int b){return a+b+Bias;}}',{outputKind:'library'});assert(library.success);assert.equal(new CilVirtualMachine(library.assembly,{methodToken:'Library::Add',arguments:[1,1]}).run().returnValue,42);
 const {CilDebugSession}=await import('@sharpforge/debugger');const ds=new CilDebugSession(ordinary);ds.start();ds.runUntilStop();assert.equal(ds.reason.reason,'entry');assert(ds.disassemble(ds.stackTrace()[0].instructionPointerReference).length);ds.resume();ds.runUntilStop();assert.equal(ds.vm.output.join(''),'42\\n');
 const {ProtocolMessageReader,encodeProtocolMessage}=await import('@sharpforge/protocol');const reader=new ProtocolMessageReader();assert.deepEqual(reader.feed(encodeProtocolMessage({id:1,result:'😀'})),[{id:1,result:'😀'}]);
-const {readFileSync}=await import('node:fs');assert(readFileSync(import.meta.resolve('@sharpforge/editor/editor.css').replace('file://',''),'utf8').includes('.sf-editor'));
+const {readFileSync}=await import('node:fs');assert(readFileSync(new URL(import.meta.resolve('@sharpforge/editor/editor.css')),'utf8').includes('.sf-editor'));
 const props=compileToIL('class P { public int X{get;set;}=7; } int F(){try{return new P().X;}finally{Console.WriteLine(1);}} Console.WriteLine(F());');assert(props.success);assert.equal(new CilVirtualMachine(props.assembly).run().output,'1\\n7\\n');
 
 const checkedSource='class Lease:IDisposable{public void Dispose(){Console.WriteLine("disposed");}} using var lease=new Lease();int x=2147483647;try{Console.WriteLine(checked(x+1));}catch(Exception e){Console.WriteLine(42);}';
@@ -45,7 +47,7 @@ const {SyntaxHighlightIndex,NavigationHistory}=await import('@sharpforge/editor'
 const {JsonSchemaGenerator,UnreachableStatementAnalyzer}=await import('@sharpforge/extensions');const immutable=new Workspace({extensions:new ExtensionDriver().registerGenerator(JsonSchemaGenerator).registerAnalyzer(UnreachableStatementAnalyzer),additionalFiles:[{uri:'row.schema.json',text:JSON.stringify({name:'Row',immutable:true,fields:[{name:'Value',type:'int'}]})}]});immutable.update('Program.cs','var row=new Row(42);Console.WriteLine(row.Value);',1);const model=immutable.compile();assert(model.success,JSON.stringify(model.diagnostics));assert.equal(new CilVirtualMachine(compileToIL([...immutable.documents.values()].map(d=>d.source).concat(model.generatedSources.map(d=>({uri:d.uri,text:d.text})))).assembly).run().output,'42\\n');
 assert.equal(typeof project.compilationOptions('Demo.csproj').checkOverflow,'boolean');
 const {TreeModel,CommandRegistry}=await import('@sharpforge/controls');const tree=new TreeModel([{id:'root',defaultExpanded:true,children:[{id:'a',label:'A.cs'}]}]);assert.equal(tree.rows().length,2);tree.select('a');assert(tree.selected.has('a'));const commands=new CommandRegistry();commands.register({id:'answer',label:'Answer',execute:()=>42});assert.equal(await commands.execute('answer'),42);
-const {EDITOR_KEYMAPS}=await import('@sharpforge/editor');assert.equal(EDITOR_KEYMAPS.length,5);assert.equal(EDITOR_KEYMAPS[0].id,'visual-studio');assert(readFileSync(import.meta.resolve('@sharpforge/editor/classic.css').replace('file://',''),'utf8').includes('.CodeMirror'));assert(readFileSync(import.meta.resolve('@sharpforge/controls/controls.css').replace('file://',''),'utf8').includes('.sf-tree'));
+const {EDITOR_KEYMAPS}=await import('@sharpforge/editor');assert.equal(EDITOR_KEYMAPS.length,5);assert.equal(EDITOR_KEYMAPS[0].id,'visual-studio');assert(readFileSync(new URL(import.meta.resolve('@sharpforge/editor/classic.css')),'utf8').includes('.CodeMirror'));assert(readFileSync(new URL(import.meta.resolve('@sharpforge/controls/controls.css')),'utf8').includes('.sf-tree'));
 const {addSolutionProject,parseXml,editProjectMembership,buildSolutionTree}=await import('@sharpforge/project-system');const added=addSolutionProject('<Solution><Folder Name="/src/" /></Solution>',{solutionPath:'A.slnx',projectPath:'App/App.csproj',folder:'src'});assert.equal(parseXml(added).children.length,1);assert.equal(buildSolutionTree({files:[{path:'A.cs'}]}).length,1);
 const {remapSourceBreakpoints}=await import('@sharpforge/debugger');assert.equal(remapSourceBreakpoints('int x=1;','// comment\\nint x=1;',[{line:1}])[0].line,2);
 const {normalizeBuildRequest}=await import('@sharpforge/msbuild');const {NativeWorkspace,NativeMSBuild}=await import('@sharpforge/msbuild/node');assert.equal(normalizeBuildRequest({project:'Demo.csproj'}).trusted,false);assert.equal(typeof NativeWorkspace.open,'function');assert.equal(typeof NativeMSBuild.prototype.start,'function');
@@ -94,9 +96,10 @@ try{assert.equal((await transport14.request(origin14)).text,'packed HTTP');const
 console.log(JSON.stringify({passed:true,node:process.version,mode:'All twenty-five 0.14.0 tarballs installed offline in an isolated project, without source workspace links',packages,execution:{source,output:execution.output,fault:execution.fault,assemblyBytes:result.assembly.length,format:'ECMA-335',methodTokens:executable.il.methodTokens}},null,2));`;
  await writeFile(join(directory,'verify.mjs'),script);
  const output=run(process.execPath,['verify.mjs'],directory);
+ const protocolRoot=join(directory,'node_modules','@sharpforge','protocol'),protocolBins=JSON.parse(await readFile(join(protocolRoot,'package.json'),'utf8')).bin;
  const {encodeProtocolMessage,ProtocolMessageReader}=await import('../packages/protocol/src/framing.js');
- for(const [bin,message]of [['sharpforge-lsp',{jsonrpc:'2.0',id:1,method:'initialize',params:{}}],['sharpforge-dap',{seq:1,type:'request',command:'initialize',arguments:{}}]]){const result=spawnSync(join(directory,'node_modules','.bin',bin),[],{cwd:directory,input:encodeProtocolMessage(message),timeout:10000});if(result.status!==0)throw new Error('Packaged '+bin+' failed: '+result.stderr);const messages=new ProtocolMessageReader().feed(result.stdout);if(!messages.some(m=>m.id===1||m.request_seq===1&&m.success))throw new Error('Missing packaged protocol response');}
+ for(const [bin,message]of [['sharpforge-lsp',{jsonrpc:'2.0',id:1,method:'initialize',params:{}}],['sharpforge-dap',{seq:1,type:'request',command:'initialize',arguments:{}}]]){const result=spawnSync(process.execPath,[join(protocolRoot,protocolBins[bin])],{cwd:directory,input:encodeProtocolMessage(message),timeout:10000});if(result.status!==0)throw new Error('Packaged '+bin+' failed: '+result.stderr);const messages=new ProtocolMessageReader().feed(result.stdout);if(!messages.some(m=>m.id===1||m.request_seq===1&&m.success))throw new Error('Missing packaged protocol response');}
  const nativeHelp=run(process.execPath,[join(directory,'node_modules','@sharpforge','msbuild','bin','sharpforge-msbuild.js'),'--help'],directory);if(!nativeHelp.includes('--trust-projects'))throw new Error('Installed MSBuild host help missing');
  const report={...JSON.parse(output),timestamp:new Date().toISOString(),tarballs};
- await writeFile(join(root,'docs/package-results.json'),JSON.stringify(report,null,2)+'\n');console.log(output);
+ await writeFile(await resultPath('package-results.json'),JSON.stringify(report,null,2)+'\n');console.log(output);
 }finally{await rm(directory,{recursive:true,force:true});}

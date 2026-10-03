@@ -1,0 +1,175 @@
+/**
+ * Patterns: constant, type, declaration, var, discard, relational, not/and/or and property patterns;
+ * other forms are bound leniently so their variables enter scope.
+ */
+import { SymbolKind, TypeKind, ErrorTypeSymbol } from '../../symbols/types.js';
+import { LocalDeclarationKind } from '../../symbols/members.js';
+import { ConversionKind } from '../../conversions/classify.js';
+import { typeTestOutcome } from '../../conversions/reference.js';
+import { lookupMembers } from '../inheritance.js';
+
+const unknown = ErrorTypeSymbol.unknown;
+const isSource = symbol => {
+  for (let s = symbol?.originalDefinition ?? symbol; s; s = s.containingSymbol) if (s.isSource || s.containingAssembly) return true;
+  return false;
+};
+
+/** Class mixin: Patterns: constant, type, declaration, var, discard, relational, not/and/or and property patterns; */
+export const PatternBinding = Base =>
+  class extends Base {
+    /** Patterns: constant, type, declaration, var, discard, relational, not/and/or, parenthesized; others are bound leniently. */
+    pattern(syntax, inputType, input) {
+      switch (syntax.kind) {
+        case 'DiscardPattern':
+          return { kind: 'DiscardPattern', syntax };
+        case 'ParenthesizedPattern':
+          return this.pattern(syntax.pattern, inputType, input);
+        case 'ConstantPattern': {
+          // An identifier or member access may be a type (a type pattern).
+          if (
+            [
+              'IdentifierName',
+              'QualifiedName',
+              'GenericName',
+              'PredefinedType',
+              'SimpleMemberAccessExpression',
+              'ArrayType',
+              'NullableType',
+            ].includes(syntax.expression.kind)
+          ) {
+            const saved = this.quiet;
+            this.quiet = [];
+            let e;
+            try {
+              e = this.expression(syntax.expression);
+            } finally {
+              this.quiet = saved;
+            }
+            if (e.kind === 'TypeExpression') return this.typePattern(syntax, e.referencedType, inputType);
+          }
+          const e = this.value(syntax.expression);
+          if (e.hasErrors) return { kind: 'ConstantPattern', syntax, hasErrors: true };
+          if (!e.constantValue && e.literal !== 'null') {
+            this.report(syntax.expression, 'CS9135', [inputType ? this.display(inputType) : '?']);
+            return { kind: 'ConstantPattern', syntax, hasErrors: true };
+          }
+          if (inputType && !inputType.isErrorType()) {
+            const c = this.conversions.classifyFromExpression(e, inputType);
+            if (c.exists && c.isImplicit) return { kind: 'ConstantPattern', syntax, value: this.applyConversion(e, inputType, c) };
+            const explicit = e.type ? this.conversions.classifyExplicit(inputType, e.type) : null;
+            if (
+              explicit?.exists &&
+              (explicit.isUnboxing ||
+                explicit.isReference ||
+                explicit.isBoxing ||
+                explicit.isNullable ||
+                inputType.typeKind === TypeKind.TypeParameter)
+            )
+              return { kind: 'ConstantPattern', syntax, value: e };
+            this.reportConversionFailure(e, inputType, syntax.expression, c);
+            return { kind: 'ConstantPattern', syntax, hasErrors: true };
+          }
+          return { kind: 'ConstantPattern', syntax, value: e };
+        }
+        case 'TypePattern':
+          return this.typePattern(syntax, this.bindType(syntax.type).type, inputType);
+        case 'DeclarationPattern': {
+          const type = this.bindType(syntax.type).type,
+            p = this.typePattern(syntax, type, inputType);
+          this.designation(syntax.designation, type, p);
+          return { ...p, kind: 'DeclarationPattern' };
+        }
+        case 'VarPattern': {
+          const p = { kind: 'VarPattern', syntax };
+          this.designation(syntax.designation, inputType ?? unknown, p);
+          return p;
+        }
+        case 'RelationalPattern': {
+          const e = this.value(syntax.expression);
+          if (!e.hasErrors && !e.constantValue) this.report(syntax.expression, 'CS0150');
+          return {
+            kind: 'RelationalPattern',
+            syntax,
+            operator: syntax.operatorToken.text,
+            value: inputType && !e.hasErrors ? this.convertQuiet(e, inputType) : e,
+          };
+        }
+        case 'NotPattern':
+          return { kind: 'NotPattern', syntax, pattern: this.pattern(syntax.pattern, inputType, input) };
+        case 'OrPattern':
+        case 'AndPattern':
+          return {
+            kind: syntax.kind,
+            syntax,
+            left: this.pattern(syntax.left, inputType, input),
+            right: this.pattern(syntax.right, inputType, input),
+          };
+        case 'RecursivePattern': {
+          const type = syntax.type ? this.bindType(syntax.type).type : inputType,
+            p = syntax.type ? this.typePattern(syntax, type, inputType) : { kind: 'RecursivePattern', syntax };
+          for (const sub of syntax.propertyPatternClause?.subpatterns ?? []) {
+            const nameNode = sub.expressionColon?.expression ?? sub.nameColon?.name;
+            let memberType = unknown;
+            if (nameNode?.kind === 'IdentifierName' && type && !type.isErrorType()) {
+              const found = lookupMembers(type, nameNode.identifier.valueText, this.core, { within: this.c.containingType }).members.find(
+                m => m.kind === SymbolKind.Field || m.kind === SymbolKind.Property,
+              );
+              if (found) {
+                memberType = found.type;
+                if (found.kind === SymbolKind.Field)
+                  (found.originalDefinition ?? found).reads = ((found.originalDefinition ?? found).reads ?? 0) + 1;
+              } else if (isSource(type)) this.report(nameNode, 'CS0117', [this.display(type), nameNode.identifier.valueText]);
+              else this.incomplete = this.d.incomplete = true;
+            }
+            this.pattern(sub.pattern, memberType, null);
+          }
+          if (syntax.positionalPatternClause) {
+            this.incomplete = this.d.incomplete = true;
+            for (const sub of syntax.positionalPatternClause.subpatterns) this.pattern(sub.pattern, unknown, null);
+          }
+          if (syntax.designation) this.designation(syntax.designation, type ?? unknown, p);
+          return { ...p, kind: 'RecursivePattern' };
+        }
+        default:
+          this.incomplete = this.d.incomplete = true;
+          for (const d of this.designationsIn(syntax)) this.designation(d, unknown, {});
+          return { kind: syntax.kind, syntax, lenient: true };
+      }
+    }
+    designationsIn(syntax) {
+      const out = [],
+        walk = n => {
+          for (const c of n.childNodes()) {
+            if (c.kind === 'SingleVariableDesignation') out.push(c);
+            else walk(c);
+          }
+        };
+      walk(syntax);
+      return out;
+    }
+    typePattern(syntax, type, inputType) {
+      if (type.isErrorType() || !inputType || inputType.isErrorType()) return { kind: 'TypePattern', syntax, testedType: type };
+      const outcome = typeTestOutcome(inputType, type, this.core);
+      if (outcome === 'never' && !(inputType.typeKind === TypeKind.TypeParameter || type.typeKind === TypeKind.TypeParameter)) {
+        const c = this.conversions.classifyExplicit(inputType, type);
+        if (!c.exists || c.isNumeric || c.isUserDefined || c.kind === ConversionKind.ExplicitEnumeration)
+          this.report(syntax.type ?? syntax, 'CS8121', [this.display(inputType), this.display(type)]);
+      }
+      return { kind: 'TypePattern', syntax, testedType: type, outcome };
+    }
+    designation(designation, type, pattern) {
+      if (!designation) return;
+      if (designation.kind === 'SingleVariableDesignation') {
+        const name = designation.identifier.valueText,
+          local = this.newLocal(name, type, designation.identifier, LocalDeclarationKind.Pattern);
+        local.writes++;
+        local.isPatternLocal = true;
+        local.nonConstantWrite = true;
+        this.declare(name, local, designation.identifier);
+        pattern.local = local;
+      } else if (designation.kind === 'ParenthesizedVariableDesignation') {
+        this.incomplete = this.d.incomplete = true;
+        for (const v of designation.variables) this.designation(v, unknown, {});
+      }
+    }
+  };

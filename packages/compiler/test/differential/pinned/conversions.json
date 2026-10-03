@@ -1,0 +1,16 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "conversions/numeric-implicit-explicit":{"hash":"a6592cd38e8e36c4","kind":"output","langVersion":"14.0","diagnostics":[],"output":"3.5\n7000000000\n3\n-3\n3.5\n44\n"},
+  "conversions/char-conversions":{"hash":"f22246f97c1a4dce","kind":"output","langVersion":"14.0","diagnostics":[],"output":"65\nC\n66\nab\n"},
+  "conversions/boxing-unboxing":{"hash":"bf269ebe5f05ffb0","kind":"output","langVersion":"14.0","diagnostics":[],"output":"43\nTrue\nFalse\n4\ninvalid cast\n"},
+  "conversions/parse-and-convert":{"hash":"99ddb8a4b9ec1ba8","kind":"output","langVersion":"14.0","diagnostics":[],"output":"42\n3\n42\n12!\nFalse\n0\n12\nformat\n"},
+  "conversions/as-and-is":{"hash":"4edef531458a71f2","kind":"output","langVersion":"14.0","diagnostics":[],"output":"5\nTrue\n10\n"},
+  "conversions/cs0029-string-to-int":{"hash":"deaceb8be6001350","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0029",22,3,"error"]]},
+  "conversions/cs0029-int-to-string":{"hash":"6808ebd3d1e8f3cc","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0029",25,1,"error"]]},
+  "conversions/cs0029-int-to-bool":{"hash":"5422110640a9e782","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0029",29,1,"error"]]},
+  "conversions/cs0266-double-to-int":{"hash":"5ea23e3f3d57c62b","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0266",38,1,"error"]]},
+  "conversions/cs0266-long-to-int":{"hash":"25969a467ed3df2c","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0266",34,1,"error"]]},
+  "conversions/cs0030-string-cast-to-int":{"hash":"010f45ed16af192e","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0030",38,6,"error"]]},
+  "conversions/cs0031-constant-out-of-range":{"hash":"e0ef29fa7e6a3d1a","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0031",23,3,"error"]]},
+  "conversions/cs0664-double-literal-to-float":{"hash":"4a4822fdbcb4028f","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0664",24,3,"error"]]},
+  "conversions/cs0029-return-type":{"hash":"a7c5956ce2245d21","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0029",52,4,"error"]]}
+}}

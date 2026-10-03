@@ -1,0 +1,8 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "using-dispose/using-statement":{"hash":"599fc6d06a9d2452","kind":"output","langVersion":"14.0","diagnostics":[],"output":"open a\nusing a\ndispose a\nafter\n"},
+  "using-dispose/using-declaration":{"hash":"8bbab48e60cc45ff","kind":"output","langVersion":"14.0","diagnostics":[],"output":"work\ndispose b\ndispose a\nafter\n"},
+  "using-dispose/dispose-on-exception":{"hash":"d016ce67077b1e15","kind":"output","langVersion":"14.0","diagnostics":[],"output":"disposed\ncaught fail\n"},
+  "using-dispose/nested-and-null":{"hash":"871a9950c7102988","kind":"output","langVersion":"14.0","diagnostics":[],"output":"body\ndispose b\ndispose a\n"},
+  "using-dispose/cs1674-not-disposable":{"hash":"1d81106acd916ad0","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1674",21,14,"error"]]},
+  "using-dispose/cs1656-assign-using-variable":{"hash":"f141074f6a49733d","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1656",71,1,"error"]]}
+}}

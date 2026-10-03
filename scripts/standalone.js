@@ -1,5 +1,5 @@
 /** Package the built IDE, its two real workers, and dependencies into one HTML file. */
-import { readFile,writeFile } from 'node:fs/promises';
+import { readFile,writeFile,mkdir } from 'node:fs/promises';
 import { bundleWorker } from './bundle-worker.js';
 import { resolve,dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -15,4 +15,4 @@ script=`const __workerCompiler=URL.createObjectURL(new Blob([${JSON.stringify(co
 html=html.replace('<link rel="stylesheet" href="./studio.css">',()=>'<style>'+css+'</style>').replace('<link rel="icon" href="./favicon.svg" type="image/svg+xml">','');
 html=html.replace('<script type="module" src="./studio.js"></script>',()=>'<script>'+script.replace(/<\/script/gi,'<\\/script')+'</script>');
 html=html.replace('<title>','<!-- Self-contained SharpForge release: inline script/style and Blob workers. Use the normal dist build for a strict self-only CSP. -->\n<title>');
-const target=resolve(root,'SharpForge-standalone.html');await writeFile(target,html);console.log(`Built ${target} (${Buffer.byteLength(html).toLocaleString()} bytes)`);
+const target=resolve(root,process.env.SHARPFORGE_STANDALONE_PATH || 'artifacts/SharpForge-standalone.html');await mkdir(dirname(target),{recursive:true});await writeFile(target,html);console.log(`Built ${target} (${Buffer.byteLength(html).toLocaleString()} bytes)`);

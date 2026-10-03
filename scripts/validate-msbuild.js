@@ -1,3 +1,4 @@
+import {resultPath} from './conformance/results.js';
 /** Real SDK qualification only. No simulator is used; a missing SDK is a failed/unavailable gate. */
 import assert from 'node:assert/strict';
 import {mkdtemp,cp,rm,mkdir,writeFile,readFile,stat} from 'node:fs/promises';
@@ -21,4 +22,4 @@ try{
  await run('MultiTarget/MultiTarget.csproj','build',{restore:true});
  report.passed=true;
 }catch(error){report.error=error.stack??error.message;process.exitCode=1;}
-finally{await engine?.close();await rm(root,{recursive:true,force:true});await mkdir(join(repository,'docs'),{recursive:true});await writeFile(join(repository,'docs/msbuild-native-results.json'),JSON.stringify({...report,timestamp:new Date().toISOString()},null,2)+'\n');console.log(JSON.stringify(report,null,2));}
+finally{await engine?.close();await rm(root,{recursive:true,force:true});await writeFile(await resultPath('msbuild-native-results.json'),JSON.stringify({...report,timestamp:new Date().toISOString()},null,2)+'\n');console.log(JSON.stringify(report,null,2));}
