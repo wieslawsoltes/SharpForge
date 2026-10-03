@@ -32,11 +32,16 @@ for (const engine of ['source', 'cil']) {
       const items = platform.heap.get(storage).data;
       const allocations = platform.heap.stats.allocations;
       const writes = [];
-      vm.onWrite = event => { if (event.kind === 'array') writes.push([event.index, event.oldValue, event.value]); };
+      const fields = [];
+      vm.onWrite = event => {
+        if (event.kind === 'array') writes.push([event.index, event.oldValue, event.value]);
+        else if (event.kind === 'field') fields.push([event.property, event.oldValue, event.value]);
+      };
       call('Reverse');
       assert.strictEqual(platform.heap.get(storage).data, items);
       assert.deepEqual(items, [5, 4, 3, 2, 1, null, null, null]);
       assert.deepEqual(writes, [[0, 1, 5], [4, 5, 1], [1, 2, 4], [3, 4, 2]]);
+      assert.deepEqual(fields, [['$count', 5, 5], ['$version', 5, 6]]);
       assert.equal(call('get_Count'), 5);
       assert.equal(call('get_Capacity'), 8);
       assert.equal(platform.heap.stats.allocations, allocations);
