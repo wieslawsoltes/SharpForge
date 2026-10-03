@@ -112,8 +112,10 @@ ordinal profile. **#829 remains open** for the invariant-culture default, and
 increment does not use a host locale heuristic or claim complete culture support.
 The pinned .NET 10.0.5 corpus includes invariant and ordinal results, but only the
 ordinal results qualify this implementation. Both VM platforms consume the full
-capture. Compiled source exercises direct StringComparer calls; source interface
-locals/conversions and custom implementations remain explicitly diagnosed.
+capture. Compiled source supports direct StringComparer calls and registered
+interface upcasts, including `values.Sort(StringComparer.Ordinal)` and comparer
+locals/parameters/returns. Custom implementations, interface type tests and casts
+needing runtime checks remain explicitly diagnosed.
 Independently assembled CIL exercises interface Compare/List.Sort and runtime
 casts. Unsupported custom comparer objects are checked through both platforms,
 including an empty List. Browser and Rust native/Wasm qualification is pending.

@@ -73,9 +73,11 @@ null receivers raise `NullReferenceException`, and unsupported implementations
 raise `NotSupportedException`. Collections reuse this helper through the public
 core entry point. Custom managed callbacks remain tracked by #2655.
 
-Compiled source supports direct `StringComparer.Ordinal.Compare` calls. Interface
-locals/conversions, interface `is` expressions and custom comparer implementations
-remain guarded by the current source profile; registered interface metadata does
-not imply that those source constructs execute. Independently assembled CIL
-exercises interface Compare, List.Sort, castclass and isinst without bypassing the
-runtime call or cast paths. The source-negative tests retain the existing guards.
+Compiled source supports direct `StringComparer.Ordinal.Compare` calls and
+registry-proven implicit interface conversions, including `IComparer<string>`
+locals, parameters and returns. These conversions keep the same managed reference
+and dispatch through existing contracts. Interface `is` expressions, casts needing
+runtime checks and custom comparer implementations remain guarded. Independently
+assembled CIL exercises interface Compare, List.Sort, castclass and isinst without
+bypassing runtime call or cast paths. Source-negative tests retain the remaining
+guards; this does not enable arbitrary source interface implementations.

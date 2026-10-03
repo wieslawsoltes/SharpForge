@@ -103,3 +103,14 @@ test('registered comparer: semantic fallback leaves the legacy generic-syntax di
   assert.equal(result.success, true, JSON.stringify(result.diagnostics));
   assert.equal(result.semantic?.generated, true);
 });
+
+test('registered comparer: object downcasts still require unsupported runtime type checks', () => {
+  const result = compileToIL(prefix + `
+    object value = StringComparer.Ordinal;
+    IComparer<string> comparer = (IComparer<string>)value;
+    Console.WriteLine(comparer.Compare("a", "b"));
+  `);
+  assert.equal(result.success, false);
+  assert.equal(result.image, null);
+  assert(result.diagnostics.some(diagnostic => diagnostic.code === 'SF2200'), JSON.stringify(result.diagnostics));
+});
