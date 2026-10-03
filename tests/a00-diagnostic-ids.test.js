@@ -5,6 +5,7 @@ import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import * as catalog from '../packages/compiler/src/diagnostics/codes.js';
 import * as diagnostics from '../packages/compiler/src/diagnostics.js';
+import {codeTokens} from '../scripts/conformance/static/code-tokens.js';
 
 const {DiagnosticId, diagnosticCodes, diagnosticDescriptor, formatMessage} = diagnostics;
 const parserIds = ['SF1003', 'SF1004', 'SF1005', 'SF1010', 'SF1011', 'SF1012',
@@ -13,6 +14,16 @@ const sourceRoot = fileURLToPath(new URL('../packages/compiler/src/', import.met
 const sourceFiles = directory => readdirSync(directory, {withFileTypes: true}).flatMap(entry =>
   entry.isDirectory() ? sourceFiles(join(directory, entry.name)) :
     entry.name.endsWith('.js') ? [join(directory, entry.name)] : []);
+const diagnosticLiterals = source => codeTokens(source).filter((token, index, tokens) =>
+  token.value === '<string>' && /^(['"])(?:CS|SF)\d{4}\1$/.test(source.slice(token.start, token.end)) ||
+  token.value === '<template>' && /^`(?:CS|SF)\d{4}`/.test(source.slice(token.start)) ||
+  /^(?:CS|SF)\d{4}$/.test(token.value) && ['{', ','].includes(tokens[index - 1]?.value) && tokens[index + 1]?.value === ':');
+
+test('A00-T14 literal scanning inspects code without interpreting documentation or regular expressions', () => {
+  assert.equal(diagnosticLiterals("report('CS0122'); report(\"SF2200\"); report(`CS1540`); const ids = {CS0029: 1};").length, 4);
+  assert.equal(diagnosticLiterals("// report('CS0122')\n/* {code:'CS1540'} */\nconst pattern = /'SF2200'/; report(ok ? DiagnosticId.CS0122 : DiagnosticId.CS1540);").length, 0);
+  assert.equal(diagnosticLiterals("const text = `diagnostic 'CS0122'`; const value = `${report('SF2200')}`;").length, 1);
+});
 
 test('A00-T14 the diagnostic seam shares the existing catalog and every descriptor id', () => {
   assert.deepEqual(Object.keys(diagnostics), Object.keys(catalog));
@@ -80,8 +91,7 @@ test('A00-T14 compiler diagnostic id literals are confined to the existing catal
   for (const file of sourceFiles(sourceRoot)) {
     if (catalogs.has(file)) continue;
     const source = readFileSync(file, 'utf8');
-    assert.doesNotMatch(source, /(['"`])(?:CS|SF)\d{4}\1/, file);
-    assert.doesNotMatch(source, /^\s*(?:CS|SF)\d{4}\s*:/m, file);
+    assert.deepEqual(diagnosticLiterals(source).map(token => source.slice(token.start, token.end)), [], file);
     if (/\bDiagnosticId\./.test(source)) callers++;
   }
   assert(callers > 100, `expected coverage across compiler layers, saw ${callers}`);
