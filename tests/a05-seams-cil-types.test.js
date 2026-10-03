@@ -31,7 +31,7 @@ test('A05 CIL layouts preserve inherited field offsets and reject foreign fields
   assert.throws(()=>system.layout(0x01000001),/External type allocation/);
 });
 test('A05 CIL metadata replacement rebuilds the derived indexes',()=>{
-  const compile=value=>{const result=compileToIL(`class C{public int X;public C(){X=${value};}}var c=new C();Console.WriteLine(c.X);`);assert(result.success,JSON.stringify(result.diagnostics));return result.assembly;};
+  const compile=value=>{const result=compileToIL(`var c=new C();Console.WriteLine(c.X);class C{public int X;public C(){X=${value};}}`);assert(result.success,JSON.stringify(result.diagnostics));return result.assembly;};
   const vm=new CilVirtualMachine(compile(1)),before=vm.typeSystem;
   vm.inspector=new AssemblyInspector(compile(2));
   assert.notEqual(vm.typeSystem,before);assert.equal(vm.layoutCache,vm.typeSystem.layouts);assert.equal(vm.typeSystem.inspector,vm.inspector);

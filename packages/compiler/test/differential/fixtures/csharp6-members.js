@@ -48,8 +48,7 @@ const interpolation = feature('interpolation-binding', [
       }
     `,
   ),
-  // The parser's interpolation scanner rejects every alignment that is not an integer literal with a diagnostic of
-  // its own (CS8076), so these three do not match Roslyn through compile(); the binder reports them as Roslyn does.
+  // The parser accepts any expression as an alignment; the binder reports the ones that are not int constants.
   diag(
     'cs0150-cs0266-cs0029-alignments-that-are-not-int-constants',
     cs`

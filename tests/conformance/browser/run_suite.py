@@ -11,6 +11,7 @@ import uuid
 
 ROOT = Path(__file__).resolve().parents[3]
 SUITES = {
+    'security': 'conformance/browser/xss_test.py',
     'browser': 'browser_test.py', 'managed': 'browser_managed_test.py',
     'workspace': 'browser_workspace_test.py', 'msbuild': 'browser_msbuild_test.py',
     'native-explorer': 'browser_native_explorer_test.py', 'standalone': 'standalone_test.py',
