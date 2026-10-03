@@ -17,7 +17,8 @@ function nextVersion(vm, owner, reason) {
     previous.decode = previous.tokens = previous.inline = previous.source = null;
   }
   const state = {owner, registry: vm.heap?.methodTables, epoch, reason, decode: null, tokens: null, inline: null, source: null,
-    statistics: {decodePlans: 0, decodedInstructions: 0, decodeMilliseconds: 0, offsetMapAllocations: 0}};
+    statistics: {decodePlans: 0, decodedInstructions: 0, decodeMilliseconds: 0, offsetMapAllocations: 0,
+      sourcePlans: 0, sourcePlanMilliseconds: 0, sourceFusionGroups: 0}};
   versions.set(vm, state);
   return state;
 }
