@@ -124,6 +124,8 @@ export const namespaceMethods = {
   },
   /** A namespace, type, delegate, member declaration or (at compilation-unit level) a global statement. */
   namespaceMember(inNamespace) {
+    this.memberStart = this.i;
+    this.memberErrors = this.diagnostics.length;
     const attributeLists = this.isAttributeListAhead() ? this.attributeLists() : [],
       mark = this.mark(),
       modifiers = this.modifiers();
@@ -137,6 +139,7 @@ export const namespaceMethods = {
       (inNamespace || modifiers.some(m => memberOnly.has(m.text)) || this.at('event') || this.at('~') || this.atAny(['implicit', 'explicit']));
     if (memberish) return this.memberDeclarationAfterModifiers(attributeLists, modifiers, null);
     this.reset(mark);
+    this.statementStart = this.memberStart;
     return this.n('GlobalStatement', null, null, this.statement(attributeLists));
   }
 };
