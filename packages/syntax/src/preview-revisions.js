@@ -20,9 +20,14 @@ export const previewRevisions = Object.freeze({
   UnsafeExpressions: stamp('unsafe-evolution.md', 1, false)
 });
 /** `proposal revision N` text for diagnostics about feature `id`. */
-export function previewStampText(id) { const entry = previewRevisions[id]; return entry ? `${entry.proposal} revision ${entry.revision}` : 'no pinned proposal'; }
+export function previewStampText(id) {
+  const entry = previewRevisions[id];
+  return entry ? `${entry.proposal} revision ${entry.revision}` : 'no pinned proposal';
+}
 /**
  * The explicit diagnostic for preview syntax that the pinned proposal revision does not define: [code, message].
  * SF1098 is SharpForge's; Roslyn has no counterpart because it would report plain syntax errors.
  */
-export function unsupportedPreview(id, detail) { return ['SF1098', `${detail} in the pinned preview grammar (${previewStampText(id)}); this form is not supported`]; }
+export function unsupportedPreview(id, detail) {
+  return ['SF1098', `${detail} in the pinned preview grammar (${previewStampText(id)}); this form is not supported`];
+}

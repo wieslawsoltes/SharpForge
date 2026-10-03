@@ -6,9 +6,10 @@
 const followers = new Set(['(', ')', ']', '}', ':', ';', ',', '.', '?', '==', '!=', '|', '^', '&&', '||', '&', '[', 'eof']);
 export const genericNameMethods = {
   isGenericNameInExpression(i = this.i) {
-    const end = this.scanTypeArguments(i); if (end < 0) return false;
+    const end = this.scanTypeArguments(i);
+    if (end < 0) return false;
     const next = this.tokens[Math.min(end, this.tokens.length - 1)];
-    if (next.kind === '>' ) return false;
+    if (next.kind === '>') return false;
     return followers.has(next.kind);
   }
 };

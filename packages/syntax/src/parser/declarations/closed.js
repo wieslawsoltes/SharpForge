@@ -7,7 +7,25 @@ import { unsupportedPreview } from '../../preview-revisions.js';
  * Forms the pinned revisions do not define - `closed` on structs, interfaces, delegates or members - parse and
  * report the explicit unsupported-preview diagnostic SF1098.
  */
-const followers = new Set(['class', 'enum', 'struct', 'interface', 'delegate', 'public', 'private', 'protected', 'internal', 'static', 'abstract', 'sealed', 'partial', 'unsafe', 'new', 'readonly', 'ref']);
+const followers = new Set([
+  'class',
+  'enum',
+  'struct',
+  'interface',
+  'delegate',
+  'public',
+  'private',
+  'protected',
+  'internal',
+  'static',
+  'abstract',
+  'sealed',
+  'partial',
+  'unsafe',
+  'new',
+  'readonly',
+  'ref'
+]);
 export const closedMethods = {
   isClosedModifier(index) {
     if (!this.isWord(this.tokens[index], 'closed')) return false;
@@ -16,9 +34,14 @@ export const closedMethods = {
   },
   /** Called with the modifiers of every declaration: gates `closed` on classes and enums and rejects it elsewhere. */
   closedModifier(modifiers, kind) {
-    const token = this.closedAt; if (!token || !modifiers.some(modifier => modifier.kind === 'ClosedKeyword')) return; this.closedAt = null;
+    const token = this.closedAt;
+    if (!token || !modifiers.some(modifier => modifier.kind === 'ClosedKeyword')) return;
+    this.closedAt = null;
     if (kind === 'ClassDeclaration' || kind === 'RecordDeclaration') this.feature('ClosedClasses', token);
     else if (kind === 'EnumDeclaration') this.feature('ClosedEnums', token);
-    else { const [code, message] = unsupportedPreview('ClosedClasses', "'closed' applies only to classes and enums"); this.error(token, code, message); }
+    else {
+      const [code, message] = unsupportedPreview('ClosedClasses', "'closed' applies only to classes and enums");
+      this.error(token, code, message);
+    }
   }
 };

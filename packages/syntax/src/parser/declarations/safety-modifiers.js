@@ -16,10 +16,18 @@ export const safetyModifierMethods = {
     if (!this.isWord(this.tokens[index], 'safe')) return false;
     return this.canFollowContextualModifier(this.tokens[Math.min(index + 1, this.tokens.length - 1)], index + 1);
   },
-  safeModifier(token) { this.feature('SafeModifier', token); },
-  isUnsafeExpression(i = this.i) { return this.kindAt(i) === 'unsafe' && this.kindAt(i + 1) === '('; },
+  safeModifier(token) {
+    this.feature('SafeModifier', token);
+  },
+  isUnsafeExpression(i = this.i) {
+    return this.kindAt(i) === 'unsafe' && this.kindAt(i + 1) === '(';
+  },
   unsafeExpression() {
-    const start = this.current, keyword = this.take(), open = this.take(), expression = this.nested(() => this.expression()); this.feature('UnsafeExpressions', start);
+    const start = this.current,
+      keyword = this.take(),
+      open = this.take(),
+      expression = this.nested(() => this.expression());
+    this.feature('UnsafeExpressions', start);
     return this.n('UnsafeExpression', keyword, open, expression, this.expect(')'));
   }
 };

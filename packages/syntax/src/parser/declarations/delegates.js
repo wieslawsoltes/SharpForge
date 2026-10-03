@@ -2,8 +2,23 @@
 export const delegateMethods = {
   delegateDeclaration(attributeLists, modifiers) {
     this.closedModifier(modifiers, 'DelegateDeclaration');
-    const keyword = this.take(), returnType = this.type(), identifier = this.id(), typeParameters = this.at('<') ? this.typeParameterList() : null;
-    const parameters = this.parameterList(), constraints = this.constraintClauses();
-    return this.n('DelegateDeclaration', attributeLists, modifiers, keyword, returnType, identifier, typeParameters, parameters, constraints, this.expect(';'));
+    const keyword = this.take(),
+      returnType = this.type(),
+      identifier = this.id(),
+      typeParameters = this.at('<') ? this.typeParameterList() : null;
+    const parameters = this.parameterList(),
+      constraints = this.constraintClauses();
+    return this.n(
+      'DelegateDeclaration',
+      attributeLists,
+      modifiers,
+      keyword,
+      returnType,
+      identifier,
+      typeParameters,
+      parameters,
+      constraints,
+      this.expect(';')
+    );
   }
 };

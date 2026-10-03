@@ -9,12 +9,25 @@ import { measure, benchmarkDocument } from '../packages/syntax/bench/incremental
 // reparses in well under 5 percent of a full parse.
 test('incremental bench: the committed baseline covers a million characters and meets the 5 percent bound', () => {
   const baseline = JSON.parse(readFileSync(join(repoRoot, 'packages/syntax/bench/incremental.baseline.json'), 'utf8'));
-  assert(baseline.characters >= 1_000_000); assert(baseline.keystrokePercentOfFull < 5 && baseline.scatteredPercentOfFull < 5, JSON.stringify(baseline));
-  for (const key of ['fullParseMs', 'keystrokeMs', 'scatteredKeystrokeMs', 'reusedNodesPerKeystroke', 'retainedHeapFullParseMB', 'retainedHeapPerKeystrokeKB', 'node', 'platform']) assert(baseline[key] !== undefined && baseline[key] !== null, key);
+  assert(baseline.characters >= 1_000_000);
+  assert(baseline.keystrokePercentOfFull < 5 && baseline.scatteredPercentOfFull < 5, JSON.stringify(baseline));
+  for (const key of [
+    'fullParseMs',
+    'keystrokeMs',
+    'scatteredKeystrokeMs',
+    'reusedNodesPerKeystroke',
+    'retainedHeapFullParseMB',
+    'retainedHeapPerKeystrokeKB',
+    'node',
+    'platform'
+  ])
+    assert(baseline[key] !== undefined && baseline[key] !== null, key);
   assert(benchmarkDocument().length >= 1_000_000);
 });
 test('incremental bench: a keystroke in a 250,000-character document costs under 5 percent of a full parse', () => {
   const result = measure({ size: 250_000, keystrokes: 30 });
-  assert(result.characters >= 250_000); assert(result.reusedNodesPerKeystroke > 50, JSON.stringify(result));
-  assert(result.keystrokePercentOfFull < 5, JSON.stringify(result)); assert(result.scatteredPercentOfFull < 5, JSON.stringify(result));
+  assert(result.characters >= 250_000);
+  assert(result.reusedNodesPerKeystroke > 50, JSON.stringify(result));
+  assert(result.keystrokePercentOfFull < 5, JSON.stringify(result));
+  assert(result.scatteredPercentOfFull < 5, JSON.stringify(result));
 });
