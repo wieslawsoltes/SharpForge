@@ -19,7 +19,7 @@ function cilContext() {
       returnType: name === 'GetTotalMemory' ? 'long' : name === 'Collect' ? 'void' : 'int',
       parameters: name === 'GetTotalMemory' ? ['bool'] : name === 'Collect' ? [] : ['int']
     };
-    return vm.intrinsic({owner: 'System.GC', name, signature}, args);
+    return vm.intrinsic({kind: 'method', owner: 'System.GC', name, signature}, args);
   }};
 }
 
