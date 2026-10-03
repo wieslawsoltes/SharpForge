@@ -1,4 +1,5 @@
 import {invokeBitConverter} from './bit-converter.js';
+import {nativeSize} from './native-int.js';
 import {invokeLegacyBclBuiltin} from '@sharpforge/bcl-core';
 import {mutateArray} from './array-ops.js';
 import {intrinsicDefinition,intrinsicDefinitions} from '@sharpforge/cil';
@@ -39,6 +40,7 @@ function stringReceiver(context) {
 }
 const implementations={
   bitConverter:({descriptor,parameters})=>invokeBitConverter(descriptor,parameters),
+  nativeSize:({vm})=>nativeSize(vm.options),
   arrayMutate:({vm,descriptor,parameters})=>mutateArray(vm,descriptor.name,parameters[0]),
   console:({vm,descriptor,parameters})=>{vm.emitOutput((parameters.length?vm.format(parameters[0],descriptor.signature.parameters[0]):'')+(descriptor.name==='WriteLine'?'\n':''));return null;},
   objectCtor:()=>null,

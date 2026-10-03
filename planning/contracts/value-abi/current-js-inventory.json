@@ -3,9 +3,9 @@
   "sources": {
     "packages/runtime/src/heap.js": "28b86fe51a4a4cd93b7701b682fa2363a07d8a9c6370fd734e96690b16fe853c",
     "packages/runtime/src/vm.js": "f12912ee9f65f9e3e1d71c732d43e4f85c13e021bf5ad19a1e044e9a40db8b7a",
-    "packages/runtime/src/cil-vm.js": "b1dee881f5aa7908052bded39f7e491017a582cee49d36febb9f600d2a109cc9",
-    "packages/bytecode/src/index.js": "a3ccc601dc36c189c6c1527f8c9b1aed472d41af42fcda10043620ff828927ff",
-    "packages/bytecode/src/builtins.js": "7bcda26c34a67c2becc3462c0ad5012f6eacf26920010da3df0cbf7e98e228f0"
+    "packages/runtime/src/cil-vm.js": "27cd86227c0f81846b23a14a16b086e742445848f9043e29fc06c6a1ae1e5fd9",
+    "packages/bytecode/src/index.js": "a14dc38176546f01930b1f1fca71ba071d819cb475dbda2f23aac5e8b5c2c6f6",
+    "packages/bytecode/src/builtins.js": "52bdae4e1dc6b2e0c418d6fa38cbb980e616891a03415143a656e6def8060d2b"
   },
   "resultKinds": {
     "int": {
@@ -26,7 +26,7 @@
     },
     "numeric": {
       "source": "number",
-      "cil": "number | bigint | frozen {float: r4|r8, value: number}"
+      "cil": "number | bigint | frozen {float: r4|r8, value: number} | frozen {nativeInt: 32|64, value: number|bigint}"
     },
     "bool": {
       "source": "boolean",
@@ -46,10 +46,14 @@
     },
     "any": {
       "source": "number | bigint | boolean | null | undefined | {h,g} | enum carrier",
-      "cil": "number | bigint | null | undefined | {h,g} | float | byref | methodPointer"
+      "cil": "number | bigint | null | undefined | {h,g} | float | nativeInt | byref | methodPointer"
     }
   },
   "additionalShapes": [
+    {
+      "shape": "{nativeInt: 32|64, value: number|bigint}",
+      "meaning": "immutable CIL native-integer stack category; signed payload at the explicitly configured ABI width; not a portable pointer"
+    },
     {
       "shape": "{enumType, underlyingType, value}",
       "meaning": "source enum identity with signed or unsigned integer storage; not a heap reference"

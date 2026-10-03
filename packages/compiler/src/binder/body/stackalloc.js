@@ -10,6 +10,7 @@
  * constant size is not negative (CS0247) and equals the number of initializer elements (CS0847). The expression
  * converts to `Span<T>` and `ReadOnlySpan<T>` of its own element type only (CS8346).
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { ArrayTypeSymbol } from '../../symbols/types.js';
 import { isUnmanagedType } from '../constraints.js';
 
@@ -40,7 +41,7 @@ export const StackAllocBinding = Base =>
         this.bindStackAllocOperands(syntax);
         // The pointer form needs an unsafe context; inside one, pointers are bound by the unsafe-code epic.
         if (initializesPointerLocal(syntax) && !inUnsafeContext(syntax)) {
-          this.report(syntax, 'CS0214');
+          this.report(syntax, DiagnosticId.CS0214);
           return this.bad(syntax);
         }
         return this.lenient(syntax);
@@ -53,7 +54,7 @@ export const StackAllocBinding = Base =>
         if (values.some(value => value.hasErrors)) return this.bad(syntax);
         elementType = this.bestCommonType(values);
         if (!elementType) {
-          this.report(syntax, 'CS0826');
+          this.report(syntax, DiagnosticId.CS0826);
           return this.bad(syntax);
         }
       } else {
@@ -82,20 +83,20 @@ export const StackAllocBinding = Base =>
      */
     checkStackAllocShape(syntax, { elementType, rank, sizeSyntax, size, values }) {
       if (!elementType.isErrorType() && !isUnmanagedType(elementType)) {
-        this.report(syntax.type.elementType ?? syntax.type, 'CS0208', [this.display(elementType)]);
+        this.report(syntax.type.elementType ?? syntax.type, DiagnosticId.CS0208, [this.display(elementType)]);
         return false;
       }
       if (!sizeSyntax && !values) {
-        this.report(rank ?? syntax, 'CS1586');
+        this.report(rank ?? syntax, DiagnosticId.CS1586);
         return false;
       }
       const constant = size && !size.hasErrors && size.constantValue ? Number(size.constantValue.value) : null;
       if (constant !== null && constant < 0) {
-        this.report(sizeSyntax, 'CS0247');
+        this.report(sizeSyntax, DiagnosticId.CS0247);
         return false;
       }
       if (constant !== null && values && values.length !== constant) {
-        this.report(syntax, 'CS0847', [constant]);
+        this.report(syntax, DiagnosticId.CS0847, [constant]);
         return false;
       }
       return true;
@@ -103,7 +104,7 @@ export const StackAllocBinding = Base =>
     /** A stackalloc converts to a span of its element type only; any other target is CS8346, not a conversion between types. */
     reportConversionFailure(e, type, node, c) {
       if (e.kind !== 'StackAlloc') return super.reportConversionFailure(e, type, node, c);
-      this.report(node, 'CS8346', [this.display(e.elementType), this.display(type)]);
+      this.report(node, DiagnosticId.CS8346, [this.display(e.elementType), this.display(type)]);
     }
     /** Binds the size and initializer expressions of a stackalloc that is not typed here, for their own diagnostics. */
     bindStackAllocOperands(syntax) {

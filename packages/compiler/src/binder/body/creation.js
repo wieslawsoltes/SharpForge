@@ -2,6 +2,7 @@
  * Object, delegate and array creation; initializers are bound in ../members/initializers.js and target-typed `new()`
  * in ../target-typing.js.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { SymbolKind, TypeKind, ArrayTypeSymbol } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { numericKind } from '../../conversions/numeric.js';
@@ -33,11 +34,11 @@ export const CreationBinding = Base =>
       const anyBad = args.some(a => a.hasErrors);
       if (type.typeKind === TypeKind.Delegate) {
         if (!args.length) {
-          this.report(syntax, 'CS1729', [this.display(type), 0]);
+          this.report(syntax, DiagnosticId.CS1729, [this.display(type), 0]);
           return this.bad(syntax);
         }
         if (args.length > 1) {
-          this.report({ span: { start: args[0].syntax.span.start, end: args.at(-1).syntax.span.end } }, 'CS0149');
+          this.report({ span: { start: args[0].syntax.span.start, end: args.at(-1).syntax.span.end } }, DiagnosticId.CS0149);
           return this.bad(syntax);
         }
         const a = args[0];
@@ -48,25 +49,25 @@ export const CreationBinding = Base =>
           return converted.hasErrors ? converted : this.node('DelegateCreation', syntax, type, { operand: converted });
         }
         if (a.type?.typeKind === TypeKind.Delegate) return this.node('DelegateCreation', syntax, type, { operand: a });
-        this.report(a.syntax, 'CS0149');
+        this.report(a.syntax, DiagnosticId.CS0149);
         return this.bad(syntax);
       }
       if (type.typeKind === TypeKind.Interface || (type.isAbstract && type.typeKind === TypeKind.Class)) {
-        this.report(syntax, 'CS0144', [this.display(type)]);
+        this.report(syntax, DiagnosticId.CS0144, [this.display(type)]);
         if (initializer) this.initializerSilently(initializer);
         return this.bad(syntax);
       }
       if (type.isStatic) {
-        this.report(typeNode === syntax ? syntax.newKeyword : syntax, 'CS0712', [this.display(type)]);
+        this.report(typeNode === syntax ? syntax.newKeyword : syntax, DiagnosticId.CS0712, [this.display(type)]);
         return this.bad(syntax);
       }
       if (type.typeKind === TypeKind.TypeParameter) {
         if (!type.hasConstructorConstraint && !type.hasValueTypeConstraint) {
-          this.report(syntax, 'CS0304', [type.name]);
+          this.report(syntax, DiagnosticId.CS0304, [type.name]);
           return this.bad(syntax);
         }
         if (args.length) {
-          this.report(syntax, 'CS0417', [type.name]);
+          this.report(syntax, DiagnosticId.CS0417, [type.name]);
           return this.bad(syntax);
         }
         return this.withInitializer(this.node('ObjectCreation', syntax, type, { constructor: null, args: [] }), initializer);
@@ -77,7 +78,7 @@ export const CreationBinding = Base =>
         if (!isSource(type)) return this.lenient(syntax);
       }
       if (type.specialType === 'System_String' && !args.length) {
-        this.report(typeNode, 'CS1729', [this.display(type), 0]);
+        this.report(typeNode, DiagnosticId.CS1729, [this.display(type), 0]);
         return this.bad(syntax);
       }
       const all = type.getMembers('.ctor').filter(m => m.kind === SymbolKind.Method && m.methodKind === MethodKind.Constructor);
@@ -98,7 +99,7 @@ export const CreationBinding = Base =>
         if (
           isAccessible(type.originalDefinition, this.c.containingType?.originalDefinition ?? null, { withinModule: this.d.assembly.module })
         )
-          this.report(typeNode, 'CS0122', [all[0].toDisplayString()]);
+          this.report(typeNode, DiagnosticId.CS0122, [all[0].toDisplayString()]);
         return this.bad(syntax);
       }
       const r = this.d.overloads.resolve(accessible, args, { isConstructor: true });
@@ -114,11 +115,11 @@ export const CreationBinding = Base =>
         // A less accessible constructor that would have matched is reported as inaccessible.
         const hidden = all.length > accessible.length ? this.d.overloads.resolve(all, args, { isConstructor: true }) : null;
         if (hidden?.succeeded) {
-          this.report(typeNode, 'CS0122', [hidden.method.toDisplayString()]);
+          this.report(typeNode, DiagnosticId.CS0122, [hidden.method.toDisplayString()]);
           return this.bad(syntax);
         }
         const e = r.error;
-        this.report(this.errorNode(e, args, typeNode), e.code, e.code === 'CS1729' ? [this.display(type), args.length] : e.args);
+        this.report(this.errorNode(e, args, typeNode), e.code, e.code === DiagnosticId.CS1729 ? [this.display(type), args.length] : e.args);
         if (initializer) this.initializerSilently(initializer, type);
         return this.bad(syntax);
       }
@@ -155,7 +156,7 @@ export const CreationBinding = Base =>
         if (values.some(v => v.hasErrors)) return this.bad(syntax);
         elementType = this.bestCommonType(values);
         if (!elementType) {
-          this.report(syntax, 'CS0826');
+          this.report(syntax, DiagnosticId.CS0826);
           return this.bad(syntax);
         }
         return this.node('ArrayCreation', syntax, this.core.arrayOf(elementType, rank), {
@@ -186,10 +187,10 @@ export const CreationBinding = Base =>
           }
           if (!done) sizes.push(this.convert(s, this.core.int));
         }
-        if (s.constantValue?.isIntegral && s.constantValue.bigint < 0n) this.report(size, 'CS0248');
+        if (s.constantValue?.isIntegral && s.constantValue.bigint < 0n) this.report(size, DiagnosticId.CS0248);
       }
       if (!init && !sizes.length && ranks[0].sizes.every(s => s.kind === 'OmittedArraySizeExpression')) {
-        this.report(typeSyntax.rankSpecifiers[0], 'CS1586');
+        this.report(typeSyntax.rankSpecifiers[0], DiagnosticId.CS1586);
       }
       if (init && sizes.length) this.checkArrayInitializer(init, rank, sizes);
       const elements = init ? this.arrayInitializer(init, elementType, rank) : null;
@@ -204,11 +205,11 @@ export const CreationBinding = Base =>
             return this.node('ArrayCreation', e, elementType, {
               elements: this.arrayInitializer(e, elementType.elementType, elementType.rank),
             });
-          this.report(e, 'CS0623');
+          this.report(e, DiagnosticId.CS0623);
           return this.bad(e);
         }
         if (rank > 1) {
-          this.report(e, 'CS0846');
+          this.report(e, DiagnosticId.CS0846);
           return this.bad(e);
         }
         // A lambda element is bound against the element type (`Func<int, int>[] a = { x => x + 1 }`).

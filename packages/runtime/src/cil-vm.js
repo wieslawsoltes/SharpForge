@@ -1,3 +1,4 @@
+import {bindNativeAbi,cilNumericContext,marshalCilValue,cilValue,cilResultValue,cilArrayIndex} from './execution/cil-values.js';
 import {formatCilValue} from './value-formatting.js';
 import {runtimeTypeRoots,clearRuntimeTypes} from './execution/tokens.js';
 import {dereferenceManagedAddress} from './execution/managed-address.js';
@@ -8,7 +9,7 @@ import {CooperativeScheduler} from './scheduler.js';
 import {snapshotVM,restoreVM} from './snapshot.js';
 import { AssemblyInspector, verifyCilAssembly, resolveExecutionField, CilError } from '@sharpforge/cil';
 import { ManagedHeap, ManagedFault, isReference } from './heap.js';
-import {float,number,compare as numericCompare,binary as numericBinary,convert as numericConvert,unary as numericUnary,indirect as numericIndirect} from './execution/numeric-ops.js';
+import {compare as numericCompare,binary as numericBinary,convert as numericConvert,unary as numericUnary,indirect as numericIndirect} from './execution/numeric-ops.js';
 import {executeCilStep} from './execution/cil-step.js';
 import {invalidateExecutionCode} from './execution/code-version.js';
 import {call,ensureInitialized,invoke} from './execution/calls.js';
@@ -18,12 +19,12 @@ import {runCilSlice} from './execution/cil-slice.js';
 import {initializeCilMethodEvents,cilRuntimeEvents,restoreCilMethodEvents,stopCilMethodEvents} from './execution/cil-method-events.js';
 import {invokeIntrinsic} from './execution/intrinsics.js';
 import {initializationRoots} from './execution/static-init.js';
-const numericContext=Object.freeze({fault:(name,message)=>new ManagedFault(name,message),error:message=>new CilError(message),isReference});
 /** Direct, cooperative CIL interpreter for a verified managed subset, independent of #SF.
  * No eval, native imports, network, files, threads, dynamic JS plugins or CLR loading. */
 export class CilVirtualMachine {
   constructor(bytes,options={}){
     const started=performance.now();this.options={maxInstructions:20_000_000,maxFrames:512,maxStackValues:65536,maxOutputCharacters:1_000_000,...options};
+    bindNativeAbi(this.options);
     initializeCilMethodEvents(this, options.runtimeEvents);
     this.inspector=bytes instanceof AssemblyInspector?bytes:new AssemblyInspector(bytes,options);this.report=verifyCilAssembly(this.inspector,options);
     if(!this.report.success){const error=new CilError('Managed IL verification failed: '+this.report.issues.map(i=>`${i.method??''}${i.offset===undefined?'':` IL_${i.offset.toString(16)}`}: ${i.message}`).join('; '));error.issues=this.report.issues;throw error;}
@@ -49,22 +50,14 @@ export class CilVirtualMachine {
     if(this._typeSystem?.inspector!==this.inspector){clearRuntimeTypes(this);this._typeSystem=new CilTypeSystem(this);this.layoutCache=this._typeSystem.layouts;}
     return this._typeSystem;
   }
-  marshal(value,type){
-    if(type.endsWith('[]')){if(!Array.isArray(value))throw new CilError(`Expected JSON array for ${type}`);const ref=this.heap.array(type.slice(0,-2),value.length);return this.heap.withRoots([ref],()=>{const r=this.heap.get(ref);for(let i=0;i<value.length;i++)r.data[i]=this.marshal(value[i],type.slice(0,-2));return ref;});}
-    if(type==='string'){if(value===null)return null;if(typeof value!=='string')throw new CilError('Expected string argument');return this.heap.string(value);}
-    if(type==='bool'){if(typeof value!=='boolean')throw new CilError('Expected boolean argument');return value?1:0;}
-    if(type==='long'||type==='ulong'){let n;try{if(typeof value==='number'&&!Number.isSafeInteger(value))throw new Error();n=BigInt(value);}catch{throw new CilError('Int64 arguments require an exact integer or decimal string');}if(type==='long'&&(n<-(1n<<63n)||n>=(1n<<63n))||type==='ulong'&&(n<0||n>=(1n<<64n)))throw new CilError('Int64 argument out of range');return BigInt.asIntN(64,n);}
-    if(type==='double'||type==='float'){if(typeof value!=='number')throw new CilError('Expected numeric argument');return float(value,type==='float'?'r4':'r8');}
-    if(['int','uint','short','ushort','byte','sbyte','char'].includes(type)){if(typeof value!=='number'||!Number.isInteger(value))throw new CilError('Expected integer argument');const ranges={int:[-2147483648,2147483647],uint:[0,4294967295],short:[-32768,32767],ushort:[0,65535],byte:[0,255],sbyte:[-128,127],char:[0,65535]};if(value<ranges[type][0]||value>ranges[type][1])throw new CilError(`${type} argument out of range`);return value|0;}
-    if(type==='object'&&value===null)return null;throw new CilError(`Host argument type '${type}' is not supported`);
-  }
+  marshal(value,type){return marshalCilValue(this,value,type);}
   // CLI storage locations narrow integers and round single precision on write/load.
-  storage(value,type){return storageValue(this,value,type,numericContext);}
+  storage(value,type){return storageValue(this,value,type,cilNumericContext(this));}
   slotType(frame,arg,index){return arg?(frame.method.signature.isStatic?frame.method.signature.parameters[index]:index===0?'object':frame.method.signature.parameters[index-1]):frame.method.locals[index];}
-  indirect(value,name){return numericIndirect(value,name,numericContext);}
-  resultValue(){const value=this.value(this.returnValue);return this.returnType==='uint'?Number(value)>>>0:this.returnType==='ulong'?BigInt.asUintN(64,value??0n):this.returnType==='bool'?!!value:value;}
+  indirect(value,name){return numericIndirect(value,name,cilNumericContext(this));}
+  resultValue(){return cilResultValue(this);}
   resultDisplay(){return this.returnType==='string'?this.display(this.returnValue):this.format(this.returnValue,this.returnType);}
-  value(v){if(v?.float)return v.value;if(isReference(v)){const r=this.heap.get(v);if(r.kind==='string')return r.data;if(r.kind==='box')return this.value(r.data[0]);}return v;}
+  value(v){return cilValue(this,v);}
   format(v,type){return formatCilValue(this,v,type);}
   display(v){return v===null?'null':isReference(v)&&this.heap.get(v).kind==='string'?JSON.stringify(this.value(v)):this.format(v);}
   string(s){return literalString(this,s);}
@@ -81,12 +74,12 @@ export class CilVirtualMachine {
   dereference(address,write=false,value){return dereferenceManagedAddress(this,address,write,value);}
   snapshot(){return snapshotVM(this,'cil');}
   restore(snapshot){const result=restoreVM(this,snapshot,'cil');restoreCilMethodEvents(this);return result;}
-  indexed(ref,index){const r=this.heap.get(ref),n=number(index);if(r.kind!=='array'||!Number.isInteger(n)||n<0||n>=r.data.length)throw new ManagedFault('IndexOutOfRangeException','Array index out of range');return r;}
+  indexed(ref,index){const r=this.heap.get(ref),n=cilArrayIndex(index);if(r.kind!=='array'||!Number.isInteger(n)||n<0||n>=r.data.length)throw new ManagedFault('IndexOutOfRangeException','Array index out of range');return r;}
   emitOutput(s){if(this.outputCharacters+s.length>this.options.maxOutputCharacters)throw new ManagedFault('OutputLimitException','Program output limit exceeded');this.outputCharacters+=s.length;this.output.push(s);this.onOutput(s);}
-  compare(a,b,op,unsigned=false){return numericCompare(a,b,op,unsigned,numericContext);}
-  binary(name,a,b){return numericBinary(name,a,b,numericContext);}
-  convert(name,value){return numericConvert(name,value,numericContext);}
-  unary(name,value){return numericUnary(name,value,numericContext);}
+  compare(a,b,op,unsigned=false,branch=false){return numericCompare(a,b,op,unsigned,cilNumericContext(this),branch);}
+  binary(name,a,b){return numericBinary(name,a,b,cilNumericContext(this));}
+  convert(name,value){return numericConvert(name,value,cilNumericContext(this));}
+  unary(name,value){return numericUnary(name,value,cilNumericContext(this));}
   intrinsic(descriptor,args){return invokeIntrinsic(this,descriptor,args);}
   invoke(instruction){return invoke(this,instruction);}
   resumeUnwind(frame){return continueUnwind(this,frame);}

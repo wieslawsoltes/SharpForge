@@ -27,7 +27,11 @@ export function ensureInitialized(vm,typeToken,trigger='field',genericIdentity=n
 /** Direct scheduler/delegate entries also pass the type-initialization gate. */
 export function prepareCall(vm,frame=vm.top) {
   if(!frame?.needsInitialization)return true;
-  const method=frame.method,trigger=method.name==='.ctor'?'constructor':method.signature.isStatic?'static-method':'instance-method';
+  const method=frame.method;
+  let trigger='instance-method';
+  if(method.name==='.ctor')trigger='constructor';
+  else if(method.signature.isStatic)trigger='static-method';
+  else if(vm.typeSystem.types.get(method.ownerToken)?.flags&0x20)trigger='interface-method';
   if(vm.ensureInitialized(method.ownerToken,trigger,frame.genericIdentity??null))return false;
   frame.needsInitialization=false;return true;
 }
