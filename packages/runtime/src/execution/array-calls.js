@@ -1,3 +1,4 @@
+import {arrayRuntimeCall} from './array-runtime.js';
 import {arrayMethodDefinition} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {typeHandle} from './tokens.js';
@@ -12,6 +13,7 @@ function vector(vm,reference,type) {
 }
 /** Shared direct-call/newobj hook; args includes the receiver for instance calls. */
 export function arrayCall(vm,descriptor,args,instruction='call') {
+  const runtime=arrayRuntimeCall(vm,descriptor,args);if(runtime.handled)return runtime;
   const definition=arrayMethodDefinition(descriptor);
   if(!definition)return {handled:false};
   const {operation,rank,elementType}=definition;
@@ -37,7 +39,7 @@ export function arrayCall(vm,descriptor,args,instruction='call') {
     case 'set':arraySet(vm,receiver,args.slice(1,-1),args.at(-1));break;
     case 'address':value=arrayAddress(vm,receiver,args.slice(1),{type:owner.elementType});break;
     case 'rank':value=shape.rank;break;
-    case 'length':value=record.data.length;break;
+    case 'length':value=record.data.length;if(value>2147483647)throw new ManagedFault('OverflowException','Array length exceeds Int32');break;
     case 'longLength':value=BigInt(record.data.length);break;
     case 'GetLength':case 'GetLongLength':value=arrayDimension(vm,receiver,args[1]);if(operation==='GetLongLength')value=BigInt(value);break;
     case 'GetLowerBound':value=arrayDimension(vm,receiver,args[1],'lower');break;

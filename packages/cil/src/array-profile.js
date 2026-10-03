@@ -1,3 +1,4 @@
+import {arrayRuntimeDefinition} from './array-runtime-profile.js';
 import {canonicalType} from '@sharpforge/framework';
 
 const aliases={Array:'System.Array','System.Int32':'int','System.UInt32':'uint','System.Int64':'long','System.UInt64':'ulong','System.Int16':'short','System.UInt16':'ushort','System.SByte':'sbyte','System.Byte':'byte','System.Char':'char','System.Boolean':'bool','System.Single':'float','System.Double':'double','System.Object':'object','System.String':'string','System.Void':'void'};
@@ -10,6 +11,7 @@ function canonical(name) {
 const indices=(parameters,count,type='int')=>parameters.length===count&&parameters.every(item=>canonical(item)===type);
 /** Array pseudo-methods are CLR-provided methods on ARRAY TypeSpecs, not MethodDefs. */
 export function arrayMethodDefinition(descriptor) {
+  const runtime=arrayRuntimeDefinition(descriptor);if(runtime)return runtime;
   if(descriptor?.kind!=='method'||!descriptor.signature||!Array.isArray(descriptor.signature.parameters))return null;
   const {name,owner,signature}=descriptor,{parameters,isStatic}=signature,result=canonical(signature.returnType);
   if(signature.genericArity||signature.callingConvention||descriptor.genericArguments)return null;
