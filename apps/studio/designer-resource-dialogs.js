@@ -3,8 +3,34 @@ import {
 } from '../../packages/designer/src/index.js';
 import {MEDIA} from '../../packages/framework/src/index.js';
 import {propertyButton, propertyDialog, propertyElement, propertyField, propertyInput, propertySelect} from './designer-property-dom.js';
+import {isDesignerResourceDocument} from './designer-resource-context.js';
+
+function resourceTargetTypes(property) {
+  return designerMetadata.filter(item => designerPropertySchema(item.type)[property]);
+}
+
+function openDictionaryStyle(controller) {
+  const document = controller.panel.ownerDocument;
+  const modal = propertyDialog(document, 'Create style resource');
+  const types = resourceTargetTypes('Style');
+  const key = propertyInput(document, {value: 'ControlStyle', label: 'Style key'});
+  const target = propertySelect(document, types.map(type => ({value: type.type, label: type.name})), types[0].type, 'Style target');
+  modal.body.append(propertyField(document, 'Key', key), propertyField(document, 'Target', target));
+  modal.footer.append(propertyButton(document, 'Create style', () => modal.run(() => {
+    const model = controller.view.document;
+    if (model.value.resources?.[key.value] || model.value.styles[key.value] || model.value.templates[key.value]) {
+      throw new Error('Resource key already exists.');
+    }
+    model.setStyle(key.value, {targetType: target.value, setters: {}});
+    controller.selectedKey = key.value;
+    controller.render();
+    modal.close();
+  })));
+  return modal;
+}
 
 export function openCreateDesignerStyle(controller) {
+  if (isDesignerResourceDocument(controller.view)) return openDictionaryStyle(controller);
   const model = controller.view.document;
   const node = model.node();
   if (!node) throw new Error('Select a control before creating a style.');
@@ -59,9 +85,10 @@ export function openCreateDesignerTemplate(controller) {
   const document = controller.panel.ownerDocument;
   const modal = propertyDialog(document, 'Create control template');
   const key = propertyInput(document, {value: 'ControlTemplate', label: 'Template key'});
-  const types = designerMetadata.filter(item => designerPropertySchema(item.type).Template);
+  const types = resourceTargetTypes('Template');
+  const selectedType = controller.view.document.node()?.type;
   const type = propertySelect(document, types.map(item => ({value: item.type, label: item.name})),
-    controller.view.document.node()?.type ?? types[0].type, 'Template target');
+    types.some(item => item.type === selectedType) ? selectedType : types[0].type, 'Template target');
   modal.body.append(propertyField(document, 'Key', key), propertyField(document, 'Target', type));
   modal.footer.append(propertyButton(document, 'Create template', () => modal.run(() => {
     const schema = designerPropertySchema(type.value);

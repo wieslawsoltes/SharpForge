@@ -1,15 +1,22 @@
 import {CONTROLS} from '@sharpforge/framework';
-import {designScene, propertySchema, validateDesign} from './model.js';
+import {designScene, propertySchema, resolvedProperties, validateDesign} from './model.js';
 import {authoringError} from './property-diagnostics.js';
 import {projectDesignerState} from './resource-states.js';
 import {projectDesignerAuthoringScene} from './resource-preview.js';
 
-/** Ten independent scenes share immutable authoring input: five state presets × two themes. */
+const previewThemes = ['light', 'dark', 'highContrast'];
+const previewStates = ['Normal', 'PointerOver', 'Pressed', 'Disabled', 'Focused'];
+
+function validChoices(values, choices) {
+  return Array.isArray(values) && values.length > 0 && values.length <= choices.length &&
+    new Set(values).size === values.length && values.every(value => choices.includes(value));
+}
+
+/** Defaults produce ten scenes; explicit distinct theme/state subsets bound gallery work and preserve caller order. */
 export function designerInstancePreviews(input, {nodeId, resourceKey, kind = 'style', themes = ['light', 'dark'],
   states = ['Normal', 'PointerOver', 'Pressed', 'Disabled', 'Focused'], resolveAsset} = {}) {
-  if (!Array.isArray(themes) || !themes.length || themes.length > 2 || themes.some(theme => !['light', 'dark'].includes(theme)) ||
-    !Array.isArray(states) || !states.length || states.length > 5 || states.some(state =>
-      !['Normal', 'PointerOver', 'Pressed', 'Disabled', 'Focused'].includes(state))) {
+  if (!validChoices(themes, previewThemes) || !validChoices(states, previewStates) || !['style', 'template'].includes(kind) ||
+    resolveAsset !== undefined && typeof resolveAsset !== 'function') {
     authoringError('SFD1854', 'Choose bounded preview themes and states.');
   }
   const design = validateDesign(input);
@@ -18,16 +25,15 @@ export function designerInstancePreviews(input, {nodeId, resourceKey, kind = 'st
     const resource = kind === 'template' ? design.templates[resourceKey] : design.styles[resourceKey];
     if (!resource) authoringError('SFD1854', 'Preview resource was not found.');
     const schema = propertySchema(resource.targetType);
-    const properties = {};
-    if (schema.Width) properties.Width = 160;
-    if (schema.Height) properties.Height = 48;
-    if (schema.Content) properties.Content = 'Preview';
-    else if (schema.Text) properties.Text = 'Preview';
-    root = {id: 'preview', type: resource.targetType, properties,
+    root = {id: 'preview', type: resource.targetType, properties: {},
       children: [], events: {}, [kind]: resourceKey};
+    const sources = resolvedProperties(design, root).sources;
+    for (const [property, value] of [['Width', 160], ['Height', 48], [schema.Content ? 'Content' : 'Text', 'Preview']]) {
+      if (schema[property] && !sources[property]?.startsWith('style:')) root.properties[property] = value;
+    }
     if (resource.targetType === CONTROLS + 'TextBox') {
       delete root.properties.Content;
-      root.properties.Text = 'Preview';
+      if (!sources.Text?.startsWith('style:')) root.properties.Text = 'Preview';
     }
   }
   if (!root) authoringError('SFD1854', 'Select an instance or a resource to preview.');
@@ -54,9 +60,14 @@ export function designerInstancePreviews(input, {nodeId, resourceKey, kind = 'st
       const schema = propertySchema(instance.type);
       if (schema.RequestedTheme) instance.properties.RequestedTheme = theme === 'light' ? 1 : 2;
       if (state === 'Disabled' && schema.IsEnabled) instance.properties.IsEnabled = false;
-      let scene = projectDesignerAuthoringScene(document, designScene(document), {theme, samples: false, resolveAsset});
+      let scene = projectDesignerAuthoringScene(document, designScene(document), {theme, samples: false});
       scene = projectDesignerState(scene, root.states, {'*': state});
       if (root.template) scene = projectDesignerState(scene, design.templates[root.template].states, {'*': state}, {prefix: root.id + '::'});
+      if (resolveAsset) {
+        for (const node of scene.nodes) {
+          if (node.properties.Source) node.properties.Source = resolveAsset(node.properties.Source) ?? node.properties.Source;
+        }
+      }
       result.push({theme, state, scene});
     }
   }

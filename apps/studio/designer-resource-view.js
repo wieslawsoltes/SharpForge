@@ -6,7 +6,8 @@ import {
 import {
   parseDesignerPropertyText, propertyButton, propertyElement, propertyField, propertyInput, propertySelect, runPropertyAction
 } from './designer-property-dom.js';
-import {brushPropertyEditor} from './designer-property-brush.js';
+import {designerResourceLabel, renderDesignerResourceValue} from './designer-resource-values.js';
+import {isDesignerResourceDocument} from './designer-resource-context.js';
 import {DesignerInstancePreviewController} from './designer-resource-preview.js';
 import {
   openCreateDesignerBrush, openCreateDesignerStyle, openCreateDesignerTemplate, openDesignerResourceName
@@ -24,6 +25,8 @@ export class DesignerResourceController {
     this.search = '';
     this.scope = null;
     this.previewOpen = false;
+    this.previewContext = null;
+    this.resourceThemes = new Map();
     this.createScene = createScene;
     this.playback = new DesignerStatePlayback(view);
     this.previews = new DesignerInstancePreviewController({onError: error => view.error(error)});
@@ -36,6 +39,7 @@ export class DesignerResourceController {
     this.panel = panel;
     this.playback.stop();
     this.previews.dispose();
+    this.previewContext = null;
     panel.replaceChildren();
     const document = panel.ownerDocument;
     const header = propertyElement(document, 'div', '', 'panel-tools');
@@ -61,15 +65,16 @@ export class DesignerResourceController {
     });
     panel.append(search);
     const entries = designerResourceEntries(this.view.document.value)
-      .filter(item => (item.key + ' ' + item.kind).toLowerCase().includes(this.search.toLowerCase()));
-    const picker = propertySelect(document, entries.map(item => ({value: item.key, label: `${item.key} · ${item.kind}`})),
+      .filter(item => (item.key + ' ' + designerResourceLabel(item)).toLowerCase().includes(this.search.toLowerCase()));
+    for (const key of this.resourceThemes.keys()) if (!this.view.document.value.resources?.[key]) this.resourceThemes.delete(key);
+    const picker = propertySelect(document, entries.map(item => ({value: item.key, label: `${item.key} · ${designerResourceLabel(item)}`})),
       entries.some(item => item.key === this.selectedKey) ? this.selectedKey : entries[0]?.key, 'Resource');
     this.selectedKey = picker.value;
     picker.addEventListener('change', () => { this.selectedKey = picker.value; this.render(); });
     panel.append(picker);
     const selected = entries.find(item => item.key === this.selectedKey);
     if (selected) this.renderResource(panel, selected);
-    this.renderSampleData(panel);
+    if (!isDesignerResourceDocument(this.view)) this.renderSampleData(panel);
   }
 
   renderResource(parent, selected) {
@@ -81,12 +86,12 @@ export class DesignerResourceController {
       this.selectedKey = key;
       this.render();
     })));
-    if (['style', 'template'].includes(selected.kind)) {
+    if (['style', 'template'].includes(selected.kind) && !isDesignerResourceDocument(this.view)) {
       actions.append(propertyButton(document, 'Apply to selection', () => this.view.safe(() => model.setReference(selected.kind, selected.key))));
     }
     if (selected.kind === 'style') {
       actions.append(propertyButton(document, 'Edit a copy…', () => openDesignerResourceName(this, 'Copy style', selected.key + 'Copy', key => {
-        new DesignerStyleCommands(model).editCopy(selected.key, key);
+        new DesignerStyleCommands(model).editCopy(selected.key, key, {ids: isDesignerResourceDocument(this.view) ? [] : model.selection});
         this.selectedKey = key;
         this.render();
       })));
@@ -95,7 +100,7 @@ export class DesignerResourceController {
     parent.append(actions);
     if (selected.kind === 'style') this.renderSetters(parent, selected);
     else if (selected.kind === 'template') renderDesignerStates(this, parent, {template: selected.key});
-    else this.renderBrush(parent, selected);
+    else renderDesignerResourceValue(this, parent, selected);
     if (['style', 'template'].includes(selected.kind)) {
       const previews = propertyElement(document, 'details', '', 'design-preview-strip');
       previews.open = this.previewOpen;
@@ -106,7 +111,8 @@ export class DesignerResourceController {
       const render = () => {
         if (previews.open && !rendered) {
           rendered = true;
-          this.view.safe(() => this.previews.render(body, model.value, {resourceKey: selected.key, kind: selected.kind}));
+          this.previewContext = {body, model, resourceKey: selected.key, kind: selected.kind};
+          this.view.safe(() => this.refreshPreviews());
         }
         this.previewOpen = previews.open;
       };
@@ -115,7 +121,7 @@ export class DesignerResourceController {
       render();
     }
     const node = model.node();
-    if (node && selected.kind !== 'template') renderDesignerStates(this, parent, {nodeId: node.id});
+    if (node && selected.kind !== 'template' && !isDesignerResourceDocument(this.view)) renderDesignerStates(this, parent, {nodeId: node.id});
   }
 
   renderSetters(parent, selected) {
@@ -142,27 +148,11 @@ export class DesignerResourceController {
       property.value, parseDesignerPropertyText(value.value, schema[property.value].type)))));
   }
 
-  renderBrush(parent, selected) {
-    const document = parent.ownerDocument;
-    const theme = propertySelect(document, ['default', 'light', 'dark', 'highContrast'], 'default', 'Resource theme');
-    const editor = propertyElement(document, 'div');
-    const error = propertyElement(document, 'p', '', 'design-editor-error');
-    error.hidden = true;
-    const render = () => {
-      const resource = this.view.document.value.resources[selected.key];
-      const value = resource.kind === 'theme' ? resource.variants[theme.value] ?? resource.variants.default : resource.value;
-      editor.replaceChildren(brushPropertyEditor({document, name: selected.key, value, mixed: false,
-        run: action => runPropertyAction(action, error), openReference: () => { throw new Error('Edit references on a property row.'); },
-        commit: value => this.view.document.change('Edit brush ' + selected.key, design => {
-          const resource = design.resources[selected.key];
-          if (resource.kind === 'theme') resource.variants[theme.value] = value;
-          else resource.value = value;
-        })}));
-    };
-    if (selected.kind === 'theme') parent.append(theme);
-    theme.addEventListener('change', render);
-    parent.append(editor, error);
-    render();
+  refreshPreviews() {
+    const context = this.previewContext;
+    if (!context?.body.isConnected) return;
+    this.previews.render(context.body, context.model.value, {resourceKey: context.resourceKey, kind: context.kind,
+      resolveAsset: uri => this.view.assetPreviews?.resolve(uri)});
   }
 
   renderSampleData(parent) {
@@ -184,6 +174,7 @@ export class DesignerResourceController {
 
   enterTemplate(key) {
     if (this.scope) throw new Error('Apply or cancel the current template scope first.');
+    this.view.cancelSurfaceEdits?.();
     this.scope = new DesignerTemplateScope(this.view.document, key);
     this.view.enterTemplateScope?.(this.scope);
     this.render();
@@ -194,11 +185,13 @@ export class DesignerResourceController {
 
   leaveTemplate(commit = true) {
     if (!this.scope) return;
+    this.view.cancelSurfaceEdits?.();
     const scope = this.scope;
     if (commit) scope.commit();
     else scope.cancel();
     this.scope = null;
     this.view.leaveTemplateScope?.(scope);
+    scope.document.dispose();
     this.view.update({kind: 'template-scope'});
   }
 
@@ -231,5 +224,13 @@ export class DesignerResourceController {
     this.playback.play(base, this.stateScene(base, target, {[group]: from}), this.stateScene(base, target, {[group]: to}), {duration});
   }
 
-  dispose() { this.playback.dispose(); this.previews.dispose(); this.scope?.cancel(); this.scope = null; }
+  dispose() {
+    this.playback.dispose();
+    this.previews.dispose();
+    this.scope?.cancel();
+    this.scope?.document.dispose();
+    this.scope = null;
+    this.previewContext = null;
+    this.resourceThemes.clear();
+  }
 }

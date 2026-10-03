@@ -143,3 +143,29 @@ performs the same action; double-click within a handler editor keeps that editor
 and the chosen snap grid size only when guide metadata is absent. Callers must use it at new-document creation, never as a generic
 load or recovery normalization step. Existing serialized guide settings take precedence. Applying saved options to an active document
 updates its actual guide metadata and calls `DesignerSourceSync.setAuto`; these guide changes remain outside the C# projection.
+
+## Resource dictionary gallery and controller lifetime
+
+Resource dictionary documents show a paginated gallery with at most eight instance hosts. The gallery owns each host, waits for its
+card to be connected before construction and flushing, and releases hosts on page changes, document changes, template entry and
+disposal. Its theme/state controls refresh actual preview scenes without editing source or running application event handlers.
+Returning from template scope rebuilds the gallery, including any newly loaded assets. The dictionary scaffold is hidden from the
+Toolbox, Properties, Layout and tree, and visual/application commands reject with `SFD1854`; opening a template restores visual editing.
+The Resources controller exposes dictionary style targets explicitly and never applies styles to the serialization scaffold.
+
+`designerInstancePreviews(input, options)` keeps the existing ten-scene default: light/dark themes and five state presets. Callers may
+choose nonempty distinct subsets of `light`, `dark`, `highContrast` and `Normal`, `PointerOver`, `Pressed`, `Disabled`, `Focused`, preserving
+their requested order. All three themes and all five states produce at most fifteen scenes. Empty, duplicate or unknown choices fail
+with `SFD1854`. The optional `resolveAsset(uri)` runs after state projection so state-specific images also use authorized preview URLs.
+Fallback preview dimensions/content do not override authored style setters.
+
+Resource entry kinds retain their existing public shape; Studio dispatches editors and gallery cards using the declared resource type.
+Strings, booleans, numbers and supported compound values never enter brush parsing. Unknown typed values show a read-only `SFD1822`
+diagnostic. Every editable scalar/theme change uses document validation and one undoable transaction. Template/resource image discovery
+walks image-bearing declarations and theme/state variants, with limits of 10,000 distinct references and 20,000 inspected declarations;
+unused arbitrary string resources are not treated as image paths.
+
+Tools cancels pointer, keyboard and inline-text drafts while their original model is still active, before replacement or template
+entry/exit. The Resources controller captures a template's owner revision after cancellation, commits or cancels the isolated model,
+switches subscriptions, and then disposes that isolated model. These transitions preserve the existing normal preview resize path and
+do not change resource-source compilation diagnostics or claim unsupported runtime materialization succeeded.
