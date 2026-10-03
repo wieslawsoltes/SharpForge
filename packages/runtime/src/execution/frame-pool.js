@@ -80,7 +80,10 @@ export class FramePool {
     for (const frame of this.pending) {
       const entry = this.entries.get(frame);
       releaseTypedNumericFrame(frame);
-      for (const key of Object.keys(frame)) {
+      // Keep late-added call/continuation fields covered without allocating a
+      // keys array on every return. Inherited properties are not frame state.
+      for (const key in frame) {
+        if (!Object.hasOwn(frame, key)) continue;
         if (emptyArrays.has(key)) frame[key].length = 0;
         else frame[key] = undefined;
       }

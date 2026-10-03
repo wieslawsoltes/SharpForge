@@ -11,6 +11,13 @@ cleared after its return/EH callback completes. Parked contexts keep their live
 frames. Cancellation, stop and restore discard reusable storage; snapshots
 contain execution values and never the pool or liveness plans.
 
+Reset walks own enumerable fields without materializing an `Object.keys` array
+for each returned frame. The five reusable arrays (`args`, `locals`, `stack`,
+`caught`, `unwinds`) are truncated; other fields are cleared, including extension
+and continuation fields first added after an earlier reuse. Inherited properties
+are ignored. This removes the explicit reset keys-array allocation; total host
+allocations and throughput still require the serial benchmark qualification.
+
 The heap accepts either `rootProvider(visitor)` or a provider returning an
 iterable. Both existing `vm.roots()` diagnostic iterators remain available.
 Production scans visit only reference-capable slots and continuations, without
