@@ -119,6 +119,10 @@ export const ConversionBinding = Base =>
         return;
       }
       if (this.reportTargetTypedFailure(e, type)) return;
+      if (e.form === 'collection' && e.elements) {
+        this.reportCollectionFailure(e, type);
+        return;
+      }
       if (e.form === 'implicitNew') {
         this.report(node, 'CS8752', [to]);
         return;
