@@ -22,7 +22,7 @@ test('V8 validates named imports, export-star ambiguity and workspace export map
   const root = fixture(t, {
     'packages/lib/package.json': JSON.stringify({ name: '@fixture/lib', exports: { '.': './api.js' } }),
     'packages/lib/api.js': 'export const answer = 42;',
-    'apps/good.js': 'import {answer} from "@fixture/lib"; import {writeFileSync} from "node:fs"; ' +
+    'apps/good.js': 'import {answer} from "@fixture/lib"; import {writeFileSync} from "node:fs"; import test from "node:test"; ' +
       'writeFileSync("SHOULD_NOT_EXIST", answer); throw Error("NEVER_EXECUTED");',
   });
   const options = { root, policy: emptyPolicy, directories: ['packages', 'apps'] };

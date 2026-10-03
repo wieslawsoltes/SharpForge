@@ -1,12 +1,11 @@
 import { SourceTextModule, SyntheticModule } from 'node:vm';
-import { builtinModules } from 'node:module';
+import { isBuiltin } from 'node:module';
 import { readFileSync, readdirSync, realpathSync, statSync } from 'node:fs';
 import { dirname, resolve, relative, sep, extname } from 'node:path';
 
 /** Link without evaluate(): missing named exports and ambiguous re-exports fail, with no application execution. */
 export async function linkModules(root, paths) {
   root = realpathSync(root);
-  const builtins = new Set(builtinModules.flatMap(name => [name, 'node:' + name.replace(/^node:/, '')]));
   const packages = new Map(), modules = new Map(), errors = [];
   for (const entry of readdirSync(resolve(root, 'packages'), { withFileTypes: true })) {
     if (!entry.isDirectory()) continue;
@@ -30,7 +29,7 @@ export async function linkModules(root, paths) {
     return canonical;
   }
   function target(specifier, importer) {
-    if (builtins.has(specifier)) return specifier.startsWith('node:') ? specifier : 'node:' + specifier;
+    if (isBuiltin(specifier)) return specifier.startsWith('node:') ? specifier : 'node:' + specifier;
     if (specifier.startsWith('.')) return local(resolve(dirname(importer), specifier));
     const name = specifier.split('/').slice(0, specifier.startsWith('@') ? 2 : 1).join('/');
     const workspace = packages.get(name);
