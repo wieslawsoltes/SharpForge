@@ -60,6 +60,12 @@ import { awaitMethods } from './expressions/await.js';
 import { conditionalAccessMethods } from './expressions/conditional-access.js';
 import { expressionBodyMethods } from './declarations/expression-bodies.js';
 import { csharp6Methods } from './csharp6.js';
+import { declarationExpressionMethods } from './expressions/declaration-expressions.js';
+import { throwMethods } from './expressions/throw.js';
+import { literalMethods } from './expressions/literals.js';
+import { localFunctionMethods } from './statements/local-functions.js';
+import { structModifierMethods } from './declarations/struct-modifiers.js';
+import { csharp73Methods } from './csharp73.js';
 export const parserModules = Object.freeze([
   typeMethods,
   modifierMethods,
@@ -117,5 +123,11 @@ export const parserModules = Object.freeze([
   awaitMethods,
   conditionalAccessMethods,
   expressionBodyMethods,
-  csharp6Methods
+  csharp6Methods,
+  declarationExpressionMethods,
+  throwMethods,
+  literalMethods,
+  localFunctionMethods,
+  structModifierMethods,
+  csharp73Methods
 ]);
