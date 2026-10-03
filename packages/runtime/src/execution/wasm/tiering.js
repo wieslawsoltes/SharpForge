@@ -52,8 +52,13 @@ export async function prepareWasmTier(vm, method = vm.top?.method) {
   if (!vm.inspector) return Object.freeze({status: 'fallback', reason: 'Wasm tiering requires the direct CIL backend.'});
   if (!wasmTierEnabled(vm)) return Object.freeze({status: 'disabled', reason: 'Wasm tiering is not enabled.'});
   if (!method) return Object.freeze({status: 'fallback', reason: 'No method was selected.'});
-  method = instantiatedMethod(vm, typeof method === 'number' ? method : method.token,
-    method.genericIdentity ?? null, method.methodArguments ?? []);
+  // Restored frames retain immutable method identities while the generic cache
+  // is rebuilt. Prewarm the actual suspended frame, not an equivalent new clone.
+  const liveMethod = typeof method === 'object' && vm.allFrames().some(frame => frame.method === method);
+  if (!liveMethod) {
+    method = instantiatedMethod(vm, typeof method === 'number' ? method : method.token,
+      method.genericIdentity ?? null, method.methodArguments ?? []);
+  }
   const state = wasmTierState(vm);
   if (state.disposed) return Object.freeze({status: 'fallback', reason: 'Wasm tier has been disposed for this code epoch.'});
   const record = wasmMethodRecord(state, method);

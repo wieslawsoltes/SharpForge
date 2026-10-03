@@ -147,4 +147,5 @@ test('T11.4 restoring a snapshot cancels stale compilation before publication', 
   assert.equal(wasmTierStatistics(vm).compilations, 0);
   assert.equal((await prepareWasmTier(vm)).status, 'ready');
   assert.equal(vm.run().returnValue, 100);
+  assert.equal(wasmTierStatistics(vm).entryTransitions, 1);
 });

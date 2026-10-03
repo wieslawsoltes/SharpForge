@@ -50,6 +50,18 @@ test('T11.2 native shifts mask mixed-width counts and preserve UInt64 bit patter
   }
 });
 
+test('T11.2 i64 imports preserve every bit above the Number exact range', async () => {
+  const values = [9007199254740993n, 9223372036854775807n, -9223372036854775808n, -9007199254740993n];
+  for (const name of ['add', 'mul', 'xor']) {
+    const compiled = await kernel('i64', name);
+    for (const left of values) for (const right of [-1n, 0n, 1n, 9007199254740993n]) {
+      compiled.vm.top.stack.push(left, right);
+      compiled.run();
+      assert.equal(compiled.vm.pop(), binary(name, left, right));
+    }
+  }
+});
+
 test('T11.2 floating negation preserves signed zero, NaN and infinities', async () => {
   for (const type of ['f32', 'f64']) {
     const compiled = await kernel(type, 'neg');
