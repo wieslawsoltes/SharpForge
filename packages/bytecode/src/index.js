@@ -1,3 +1,4 @@
+import {arrayIntrinsicDefinitions} from './array-intrinsic-profile.js';
 import {numericIntrinsicDefinitions} from './numeric-intrinsic-profile.js';
 import {syncIntrinsicDefinitions} from './sync-intrinsic-profile.js';
 import {numericTypeNames,decodeNumericMode} from './numeric/numeric-types.js';
@@ -31,7 +32,7 @@ const additions=[['string.Intern',1,1,'string',['string']],['string.IsInterned',
 const originalBuiltins = [...definitions.map(([name,min,max,result,params],id)=>Object.freeze({id,name,min,max,result,params})),...contracts.map(contract=>{const id=definitions.length+contract.id,count=contract.parameters.length+(!contract.isStatic&&contract.kind!=='constructor'?1:0);return Object.freeze({id,name:'$framework:'+contract.id,min:count,max:count,result:contract.result,params:[...(!contract.isStatic&&contract.kind!=='constructor'?[contract.owner]:[]),...contract.parameters],contract});}),...additions.map(([name,min,max,result,params],index)=>Object.freeze({id:definitions.length+contracts.length+index,name,min,max,result,params}))];
 
 const profileBuiltin=(descriptor,kind,id)=>{const constructor=descriptor.name==='.ctor',count=descriptor.parameters.length+(!descriptor.isStatic&&!constructor?1:0);return Object.freeze({id,name:'$'+kind+':'+descriptor.owner+'::'+descriptor.name+'('+descriptor.parameters.join(',')+'):'+descriptor.returnType,min:count,max:count,result:constructor?descriptor.owner:descriptor.returnType,params:Object.freeze([...(!descriptor.isStatic&&!constructor?[descriptor.owner]:[]),...descriptor.parameters]),[kind]:descriptor});};
-export const Builtins=Object.freeze([...originalBuiltins,...numericIntrinsicDefinitions.map((descriptor,index)=>profileBuiltin(descriptor,'numeric',originalBuiltins.length+index)),...syncIntrinsicDefinitions.map((descriptor,index)=>profileBuiltin(descriptor,'synchronization',originalBuiltins.length+numericIntrinsicDefinitions.length+index))]);
+export const Builtins=Object.freeze([...originalBuiltins,...numericIntrinsicDefinitions.map((descriptor,index)=>profileBuiltin(descriptor,'numeric',originalBuiltins.length+index)),...syncIntrinsicDefinitions.map((descriptor,index)=>profileBuiltin(descriptor,'synchronization',originalBuiltins.length+numericIntrinsicDefinitions.length+index)),...arrayIntrinsicDefinitions.map((descriptor,index)=>profileBuiltin(descriptor,'arrayRuntime',originalBuiltins.length+numericIntrinsicDefinitions.length+syncIntrinsicDefinitions.length+index))]);
 export {numericIntrinsicDefinitions} from './numeric-intrinsic-profile.js';
 export {syncIntrinsicDefinitions,isSynchronizationIntrinsic} from './sync-intrinsic-profile.js';
 export const frameworkBuiltin = contract=>contract?Builtins[definitions.length+contract.id]:null;
@@ -91,3 +92,5 @@ export {decimalMaxCoefficient,isDecimal,decimal,decimalZero,decimalFromBits,deci
 export {scalarConvert,scalarBinary,scalarUnary,encodeScalar,decodeScalar,scalarFormat} from './numeric/scalar-ops.js';
 
 export {numericFormat} from './numeric/numeric-format.js';
+
+export {arrayIntrinsicDefinitions} from './array-intrinsic-profile.js';

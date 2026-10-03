@@ -1,3 +1,4 @@
+import {bindArrayBuiltin,emitArrayBuiltin} from './array-builtins.js';
 import {installSynchronizationCompiler} from './synchronization.js';
 import {installScalarCompiler} from './scalar-builtins.js';
 import {numeric,normalizeNumeric,implicitNumeric,integral,unaryPromotion,binaryPromotion,scalarLiteral,constantValue,numericDefault,constantFits} from './numeric.js';
@@ -284,6 +285,7 @@ class MethodCompiler {
     if(bind&&symbol)this.c.reference(argument,symbol);return argument.name;
   }
   infer(node){
+    const array=bindArrayBuiltin(this,node);if(array)return array.result;
     if(!node)return 'error';const external=this.frameworkInfer(node);if(external!==undefined)return external;switch(node.kind){
       case 'Await':return taskResult(this.infer(node.expression))??'error';case 'Checked':case 'Unchecked':return this.infer(node.expression);case 'Cast':case 'Default':return normalize(node.type);case 'SwitchExpression':return this.switchType(node);
       case 'InterpolatedString':return 'string';case 'Literal':return node.type;case 'Name':return this.lookup(node.name)?.type??this.property(node)?.type??this.m.owner?.fields.find(f=>f.name===node.name)?.type??'error';
@@ -321,6 +323,7 @@ class MethodCompiler {
   }
   constant(node){try{return evaluateConstant(node,{checked:this.checkedContext!==false,resolve:n=>n.kind==='Name'?this.lookup(n.name)?.constantValue??null:this.scalarConstant?.(n)??null});}catch(error){if(!(error instanceof ConstantError))throw error;const key=error.node.start+':'+error.code;if(!this.constantDiagnostics.has(key)){this.constantDiagnostics.add(key);this.c.report(error.node,error.code,error.message);}return null;}}
   expr(node){
+    const array=bindArrayBuiltin(this,node,true);if(array)return emitArrayBuiltin(this,array);
     if(!node){this.emitConstant(null);return 'error';}const external=this.frameworkExpression(node);if(external!==undefined)return external;
     if(['Binary','Unary','Cast'].includes(node.kind))this.constant(node);
     switch(node.kind){

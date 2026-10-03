@@ -26,6 +26,7 @@ export function sourceNewObject(vm,type) {
 export function sourceStore(vm,value,target,from=null) {
   target=typeof target==='string'?target:target.name;
   if(value?.scalar)value=decodeScalar(value,vm.options);
+  if(value?.span||value?.nullableType)return copyValue(vm,value,target);
   if(target.endsWith('&'))return storageValue(vm,value,target);
   if(value?.byref)throw new ManagedFault('InvalidProgramException','A managed pointer requires byref storage');
   if(isValueTypeValue(value))return vm.heap.methodTables.get(target).flags.valueType?copyValue(vm,value,target):boxValue(vm,value,value.valueType);

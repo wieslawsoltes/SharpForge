@@ -1,3 +1,4 @@
+import {sourceArrayBuiltin} from './source-array-builtins.js';
 import {invokeNumericIntrinsic} from './numeric-intrinsics.js';
 import {mutateArray} from './array-ops.js';
 import {Builtins} from '@sharpforge/bytecode';
@@ -9,6 +10,7 @@ import {objectType,typeName,runtimeTypeText} from './tokens.js';
 /** Invoke an intrinsic with heap/value/format/output/platform services; no image is required. */
 export function builtin(vm, id, args,types=[]) {
   const entry = Builtins[id];
+  if(entry.arrayRuntime)return vm.heap.withRoots(args,()=>sourceArrayBuiltin(vm,entry,args,types));
   if(entry.numeric)return vm.heap.withRoots(args,()=>invokeNumericIntrinsic(vm,entry.numeric,args).value);
   if(entry.synchronization)return vm.heap.withRoots(args,()=>vm.sync.invoke(entry.synchronization,args).value);
   if (entry.contract) {
