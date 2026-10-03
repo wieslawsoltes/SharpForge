@@ -1,0 +1,13 @@
+{
+  "node": "v24.21.0",
+  "cpu": "Apple M3 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "operation": "cached metadata TypeDesc lookup",
+  "unit": "microseconds/operation",
+  "median": 0.04115839999999764,
+  "p95": 0.09910409999999956,
+  "p99": 0.1326625000000007,
+  "allocationCount": "not measured",
+  "previousEquivalentImplementation": false
+}
