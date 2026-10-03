@@ -139,6 +139,7 @@ export const BodyBinding = Base =>
           if (member.methodKind === MethodKind.Constructor && member.initializerSyntax) {
             const binder = new BodyBinder(this, { ...context, parameters: member.parameters, isConstructorInitializer: true });
             this.bindConstructorInitializer(member, type, binder);
+            context.outerLocals = binder.scopes[0];
           }
           this.bindMethodBody(member, context);
         } else {

@@ -113,8 +113,8 @@ export class OverloadResolver {
         continue;
       }
       if (wanted === RefKind.Ref || wanted === RefKind.Out) {
-        // By-reference arguments need an identical type; `out var x` / `out _` take the parameter's type.
-        const ok = !args[i].type || args[i].isOutVarOrDiscard || this.conversions.isIdentity(args[i].type, c.parameterTypes[i]);
+        // By-reference arguments need an identical type; `out var x` / `out _` have none and take the parameter's type.
+        const ok = !args[i].type || this.conversions.isIdentity(args[i].type, c.parameterTypes[i]);
         if (!ok) c.failure ??= { kind: 'conversion', argument: i, to: c.parameterTypes[i] };
         c.conversions.push(ok ? this.conversions.constructor.identity : null);
         continue;
