@@ -1,0 +1,39 @@
+{
+  "command": "node packages/cil/tools/benchmark-attribute-reader.mjs [baseline compiler metadata-import/attributes.js path]",
+  "baselineCommit": "9faab708774c5e51847c4c727f10102421d90f67",
+  "before": {
+    "node": "v24.21.0",
+    "os": "darwin 25.6.0 arm64",
+    "cpu": "Apple M3 Pro",
+    "iterations": 2000,
+    "samples": 31,
+    "allocationMetric": "V8 sampled allocations, including collected objects; estimate, not exact bytes",
+    "results": {
+      "decode": {
+        "coldMicroseconds": 35.54099999999494,
+        "medianMicroseconds": 0.8529375000000029,
+        "p95Microseconds": 1.3198545000000055,
+        "p99Microseconds": 1.8330209999999951,
+        "sampledAllocationBytesPerOperation": 2154.188
+      }
+    }
+  },
+  "after": {
+    "node": "v24.21.0",
+    "os": "darwin 25.6.0 arm64",
+    "cpu": "Apple M3 Pro",
+    "iterations": 2000,
+    "samples": 31,
+    "allocationMetric": "V8 sampled allocations, including collected objects; estimate, not exact bytes",
+    "results": {
+      "decode": {
+        "coldMicroseconds": 102.91699999999082,
+        "medianMicroseconds": 1.8512084999999983,
+        "p95Microseconds": 3.7876045000000005,
+        "p99Microseconds": 5.076332999999998,
+        "sampledAllocationBytesPerOperation": 2509.452
+      }
+    }
+  },
+  "review": "Integration review accepts the measured correctness cost: explicit input/type/UTF-8 checks, mandatory named count, no trailing bytes, traversal/size/cancellation budgets and stable diagnostics replace the permissive compiler-only reader. This is not a speedup claim."
+}
