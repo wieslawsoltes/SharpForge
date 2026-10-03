@@ -3,6 +3,8 @@ import {eventsFor} from '@sharpforge/framework';
 const eventProfileMessage = 'The program is valid C# but is not executable on this runtime profile: '
   + 'it uses framework events with lowered delegates';
 const unavailable = reason => ({previewAvailable: false, readOnly: true, sourceWrites: false, reason});
+// The legacy syntax adapter retains lambda syntax kinds; it does not expose the compiler's bound Lambda kind.
+const handlerKinds = new Set(['SimpleLambdaExpression', 'ParenthesizedLambdaExpression', 'Name', 'Member']);
 
 function eventSpans(analysis) {
   const nodes = new Map(analysis.document.nodes.map(node => [node.id, node]));
@@ -16,7 +18,7 @@ function eventSpans(analysis) {
     for (const [event, owned] of Object.entries(binding.events)) {
       if (!Object.hasOwn(eventsFor(node.type), event)) return null;
       for (const subscription of owned.subscriptions) {
-        if (!['Lambda', 'Name', 'Member'].includes(subscription.expression.kind) || spans.length === 4096) return null;
+        if (!handlerKinds.has(subscription.expression.kind) || spans.length === 4096) return null;
         if (subscription.protected) protectedCount++;
         const statement = subscription.statement;
         spans.push({nodeId: node.id, event, uri: statement.uri, start: statement.start, end: statement.end});

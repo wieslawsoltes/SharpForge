@@ -11,6 +11,9 @@ test('only owned lowered-event profile errors grant a read-only preview without 
   const source = files();
   const analysis = analyze(source);
   const diagnostics = structuredClone(analysis.compilerDiagnostics);
+  const owned = analysis.bindings.action.events.Click.subscriptions[0];
+  assert.equal(owned.expression.kind, 'ParenthesizedLambdaExpression');
+  assert.equal(owned.protected, true);
   const capability = designProtectedEventPreviewCapability(analysis);
   assert.equal(analysis.compilationSucceeded, false);
   assert.equal(capability.previewAvailable, true, capability.reason);
