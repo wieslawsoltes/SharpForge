@@ -1,10 +1,10 @@
-import { AssemblyName } from './assembly-name.js';
+import { asAssemblyName } from './assembly-name.js';
 import { compareAssemblyIdentity, compareAssemblyVersions } from './identity.js';
 import { checkCancellation, loadError, LoadErrorCode } from './load-errors.js';
 
 function normalizedEntry(entry) {
   if (!entry || !entry.identity) throw loadError(LoadErrorCode.InvalidConfiguration, 'Provider entry requires an identity');
-  const identity = typeof entry.identity === 'string' ? AssemblyName.parse(entry.identity) : new AssemblyName(entry.identity);
+  const identity = asAssemblyName(entry.identity);
   if (identity.publicKey !== null && identity.publicKeyToken === null) {
     throw loadError(LoadErrorCode.InvalidConfiguration, 'Provider full public keys must be normalized');
   }
@@ -53,7 +53,7 @@ export class AssemblyResolver {
   resolve(reference, { requester = null, signal } = {}) {
     if (this.#disposed) throw loadError(LoadErrorCode.Disposed, 'Assembly resolver has been disposed');
     checkCancellation(signal);
-    const identity = typeof reference === 'string' ? AssemblyName.parse(reference) : new AssemblyName(reference);
+    const identity = asAssemblyName(reference);
     const key = identity.fullName;
     if (this.#cache.has(key)) return this.#cache.get(key);
     const attempts = [];
