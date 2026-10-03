@@ -23,7 +23,7 @@ import { ObsoleteUses } from './binder/obsolete.js';
 import { SpecialMemberChecks } from './binder/special-members.js';
 import { ConditionalMethodChecks } from './binder/csharp2-misc.js';
 import { UnsafeDeclarationChecks } from './binder/unsafe-declarations.js';
-import { modernRules } from './binder/modern-rules.js';
+import { modernRules, modernUseRules } from './binder/modern-rules.js';
 
 const phases = [
   DeclarationChecks,
@@ -39,6 +39,7 @@ const phases = [
   TopLevelPrograms,
   MemberBodyChecks,
   ObsoleteUses,
+  ...modernUseRules,
   UnusedSymbolWarnings,
 ];
 
