@@ -19,3 +19,8 @@ Console.WriteLine(JsonSerializer.Serialize(new {
     arrays = new[] { typeof(int[]), typeof(int).MakeArrayType(1), typeof(int[,]), typeof(string[,,]), typeof(int[][]) }.Select(Describe),
     pointerName = Name(typeof(int).MakePointerType()), byrefName = Name(typeof(int).MakeByRefType()),
 }));
+
+public static class ArrayFactory
+{
+    public static int[,] Create() => new int[2, 3];
+}

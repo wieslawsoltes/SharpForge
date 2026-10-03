@@ -26,3 +26,16 @@ test('CLR array interfaces, accessor signatures and constructor arities match in
   assert.equal(types.pointer(types.intrinsic('System.Int32')).fullName, native.pointerName);
   assert.equal(types.byRef(types.intrinsic('System.Int32')).fullName, native.byrefName);
 });
+
+test('CLR resolves a multidimensional constructor MemberRef emitted by the native C# compiler', async () => {
+  const context = arrayContext();
+  const module = (await context.loadFromStream(Buffer.from(native.image, 'base64'))).manifestModule;
+  const matches = [];
+  for (let rid = 1; rid <= module.rowCount(10); rid++) {
+    const token = 0x0a000000 + rid;
+    const [parent, name] = module.row(token);
+    if ((parent & 7) !== 4 || module.string(name) !== '.ctor') continue;
+    matches.push(await context.types.resolveArrayMember(module, token));
+  }
+  assert.ok(matches.some(method => method.declaringType.fullName === 'System.Int32[,]' && method.parameters.length === 2));
+});

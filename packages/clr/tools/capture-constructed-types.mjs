@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, writeFileSync, mkdirSync, copyFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, readFileSync, writeFileSync, mkdirSync, copyFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -20,8 +20,10 @@ try {
   copyFileSync(join(root, 'tests/fixtures/clr-constructed-types/Program.cs'), join(temporary, 'Program.cs'));
   const sdk = run(['--version']).trim();
   run(['build', '--configuration', 'Release', '--nologo', '--verbosity', 'quiet', '--disable-build-servers', '-m:1']);
-  const expected = JSON.parse(run([join(temporary, 'bin/Release/net10.0/oracle.dll')]));
-  writeFileSync(join(output, 'native-arrays.json'), JSON.stringify({ sdk, ...expected }, null, 2) + '\n');
+  const image = join(temporary, 'bin/Release/net10.0/oracle.dll');
+  const expected = JSON.parse(run([image]));
+  writeFileSync(join(output, 'native-arrays.json'), JSON.stringify({ sdk, ...expected,
+    image: readFileSync(image).toString('base64') }, null, 2) + '\n');
   console.log(`Captured native constructed types in ${output}`);
 } finally {
   rmSync(temporary, { recursive: true, force: true });
