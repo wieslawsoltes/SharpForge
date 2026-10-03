@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 /**
  * Array rules the creation and element-access binders share (SF-A02-T45, C# spec 17.7 and 12.8.17.5).
  *
@@ -23,7 +24,7 @@ export function initializerShapeProblems(init, rank, lengths = []) {
   const visit = (node, dimension) => {
     const count = node.expressions.length;
     if (expected[dimension] === null) expected[dimension] = count;
-    else if (expected[dimension] !== count) problems.push({ node, code: 'CS0847', args: [expected[dimension]] });
+    else if (expected[dimension] !== count) problems.push({ node, code: DiagnosticId.CS0847, args: [expected[dimension]] });
     if (dimension + 1 >= rank) return;
     for (const nested of node.expressions) if (nested.kind === 'ArrayInitializerExpression') visit(nested, dimension + 1);
   };
@@ -43,7 +44,7 @@ export const ArrayBinding = Base =>
         if (size.hasErrors) return null;
         const constant = size.constantValue;
         if (constant?.isIntegral) return Number(constant.bigint);
-        this.report(size.syntax, 'CS0150');
+        this.report(size.syntax, DiagnosticId.CS0150);
         return null;
       });
       for (const problem of initializerShapeProblems(init, rank, lengths)) this.report(problem.node, problem.code, problem.args);
@@ -61,7 +62,7 @@ export const ArrayBinding = Base =>
             leaves.push(this.value(expression));
             return leaves.at(-1);
           }
-          this.report(expression, isNested ? 'CS0623' : 'CS0846');
+          this.report(expression, isNested ? DiagnosticId.CS0623 : DiagnosticId.CS0846);
           malformed = true;
           return null;
         });
@@ -70,7 +71,7 @@ export const ArrayBinding = Base =>
       if (malformed || leaves.some(leaf => leaf.hasErrors)) return this.bad(syntax);
       const elementType = this.bestCommonType(leaves);
       if (!elementType) {
-        this.report(syntax, 'CS0826');
+        this.report(syntax, DiagnosticId.CS0826);
         return this.bad(syntax);
       }
       const convert = level => level.map(entry => (Array.isArray(entry) ? convert(entry) : this.implicitArrayElement(entry, elementType)));

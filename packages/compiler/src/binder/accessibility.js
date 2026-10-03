@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import {SymbolKind,TypeKind,Accessibility} from '../symbols/types.js';
 /**
  * Accessibility checking (C# spec "Accessibility domains", following Roslyn's AccessCheck).
@@ -115,14 +116,14 @@ function protectedAccessible(originalContainingType,state,throughType){
 export function isAccessible(symbol,within=null,options={}){return check(symbol,within,options).ok;}
 /**
  * The diagnostic an access to `symbol` from `within` deserves: null when accessible, otherwise
- * `{code:'CS0122',args:[symbol]}` or `{code:'CS1540',args:[member,qualifierType,accessingType]}` (display strings).
+ * `{code:DiagnosticId.CS0122,args:[symbol]}` or `{code:DiagnosticId.CS1540,args:[member,qualifierType,accessingType]}` (display strings).
  * Constructors never yield CS1540: Roslyn reports CS0122 for a protected constructor called on the wrong type.
  */
 export function checkAccess(symbol,within=null,options={}){
   const result=check(symbol,within,options);if(result.ok)return null;
   const through=options.throughType?.type??options.throughType??null,withinType=withinTypeOf(within);
-  if(result.failedThroughTypeCheck&&through&&withinType&&!(symbol.kind===SymbolKind.Method&&symbol.isConstructor))return {code:'CS1540',args:[symbol.toDisplayString(),through.toDisplayString(),withinType.toDisplayString()]};
-  return {code:'CS0122',args:[symbol.toDisplayString()]};
+  if(result.failedThroughTypeCheck&&through&&withinType&&!(symbol.kind===SymbolKind.Method&&symbol.isConstructor))return {code:DiagnosticId.CS1540,args:[symbol.toDisplayString(),through.toDisplayString(),withinType.toDisplayString()]};
+  return {code:DiagnosticId.CS0122,args:[symbol.toDisplayString()]};
 }
 /**
  * Accessibility of an instance constructor for `new T(...)` written in `within`. Roslyn checks a protected constructor

@@ -9,6 +9,7 @@
  * Constraint types are substituted with the full argument list first, so `where T : IComparable<T>` is checked as
  * `IComparable<int>` for T = int.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { TypeKind, SymbolKind, TypeMap, Accessibility, typeOf } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { isNullableType } from '../conversions/nullable.js';
@@ -55,41 +56,41 @@ export function checkConstraints(parameters, typeArguments, { core, display, out
     const name = argument.toDisplayString(),
       push = (code, args, extra = {}) => results.push({ code, args, index, ...extra });
     if (argument.isRefLikeType || (argument.typeKind === TypeKind.TypeParameter && argument.allowsRefLikeType)) {
-      if (!parameter.allowsRefLikeType) push('CS9244', [display, parameter.name, name]);
+      if (!parameter.allowsRefLikeType) push(DiagnosticId.CS9244, [display, parameter.name, name]);
     }
     if (argument.isStatic) {
-      push('CS0718', [name]);
+      push(DiagnosticId.CS0718, [name]);
       return;
     }
     if (argument.typeKind === TypeKind.Pointer || argument.specialType === 'System_Void') {
-      push('CS0306', [name]);
+      push(DiagnosticId.CS0306, [name]);
       return;
     }
-    if (parameter.hasReferenceTypeConstraint && argument.isReferenceType !== true) push('CS0452', [display, parameter.name, name]);
+    if (parameter.hasReferenceTypeConstraint && argument.isReferenceType !== true) push(DiagnosticId.CS0452, [display, parameter.name, name]);
     if (parameter.hasUnmanagedTypeConstraint) {
       // A nullable value type is a struct of unmanaged fields, but the constraint also demands a non-nullable type.
-      if (!isUnmanagedType(argument) || isNullableType(argument)) push('CS8377', [display, parameter.name, name]);
+      if (!isUnmanagedType(argument) || isNullableType(argument)) push(DiagnosticId.CS8377, [display, parameter.name, name]);
     } else if (parameter.hasValueTypeConstraint && (argument.isValueType !== true || isNullableType(argument)))
-      push('CS0453', [display, parameter.name, name]);
+      push(DiagnosticId.CS0453, [display, parameter.name, name]);
     if (parameter.hasNotNullConstraint && (isNullableType(argument) || argument.isAnnotatedReference))
-      push('CS8714', [display, parameter.name, name], { severity: 'warning' });
+      push(DiagnosticId.CS8714, [display, parameter.name, name], { severity: 'warning' });
     for (const constraint of parameter.constraintTypes) {
       const wanted = typeOf(map.substituteType(constraint));
       if (!wanted || wanted.isErrorType()) continue;
       if (argument.equals(wanted)) continue;
       const args = [display, wanted.toDisplayString(), parameter.name, name];
       if (argument.typeKind === TypeKind.TypeParameter) {
-        if (!(hasIdentityOrImplicitReference(argument, wanted, core) || hasBoxingConversion(argument, wanted, core))) push('CS0314', args);
+        if (!(hasIdentityOrImplicitReference(argument, wanted, core) || hasBoxingConversion(argument, wanted, core))) push(DiagnosticId.CS0314, args);
       } else if (isNullableType(argument)) {
         // A nullable value type satisfies only object/ValueType-like constraints through boxing of the underlying type.
         if (!(wanted.specialType === 'System_Object' || wanted.specialType === 'System_ValueType'))
-          push(wanted.typeKind === TypeKind.Interface ? 'CS0313' : 'CS0312', args);
+          push(wanted.typeKind === TypeKind.Interface ? DiagnosticId.CS0313 : DiagnosticId.CS0312, args);
       } else if (argument.isValueType === true) {
-        if (!hasBoxingConversion(argument, wanted, core)) push('CS0315', args);
-      } else if (!hasIdentityOrImplicitReference(argument, wanted, core)) push('CS0311', args);
+        if (!hasBoxingConversion(argument, wanted, core)) push(DiagnosticId.CS0315, args);
+      } else if (!hasIdentityOrImplicitReference(argument, wanted, core)) push(DiagnosticId.CS0311, args);
     }
-    if (parameter.hasConstructorConstraint && !hasPublicParameterlessConstructor(argument)) push('CS0310', [display, parameter.name, name]);
-    else if (parameter.hasConstructorConstraint && requiredMembersOf(argument, core).length) push('CS9040', [name, parameter.name, display]);
+    if (parameter.hasConstructorConstraint && !hasPublicParameterlessConstructor(argument)) push(DiagnosticId.CS0310, [display, parameter.name, name]);
+    else if (parameter.hasConstructorConstraint && requiredMembersOf(argument, core).length) push(DiagnosticId.CS9040, [name, parameter.name, display]);
   });
   return results;
 }
