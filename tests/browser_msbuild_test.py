@@ -1,21 +1,23 @@
 """Production Studio integration with an explicit in-memory native-client test double.
-No MSBuild evaluation/build or native HTTP browser navigation is claimed by this suite.
+No MSBuild evaluation/build is claimed by this suite.
 Real HTTP/process contracts are tested in msbuild-native.test.js; real SDK gate is separate.
 """
 import json,os,time,traceback
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-from browser_harness import load_in_memory
+from conformance.browser.launch import launch_browser, results_dir
+RESULTS = results_dir()
+from browser_harness import load_application
 ROOT=Path(__file__).resolve().parents[1];checks=[];errors=[]
 def truth(value,message='assertion failed'):
  if not value: raise AssertionError(message)
 def checked(name,fn):
  start=time.perf_counter();fn();checks.append({'name':name,'passed':True,'milliseconds':round((time.perf_counter()-start)*1000,2)});print('PASS',name,flush=True)
-with sync_playwright() as p:
- browser=p.chromium.launch(executable_path=os.getenv('CHROMIUM_EXECUTABLE'),headless=True,args=['--no-sandbox']);page=browser.new_page(viewport={'width':1700,'height':1120});page.on('pageerror',lambda e:errors.append(e.stack or str(e)));page.on('dialog',lambda d:d.accept());workers=[];page.on('worker',lambda w:workers.append(w.url))
+with sync_playwright() as p, launch_browser(p, __file__) as browser:
+ page=browser.new_page(viewport={'width':1700,'height':1120});page.on('pageerror',lambda e:errors.append(e.stack or str(e)));page.on('dialog',lambda d:d.accept());workers=[];page.on('worker',lambda w:workers.append(w.url))
  try:
-  load_in_memory(page)
-  fixture={'App/App.csproj':(ROOT/'examples/msbuild/SdkWorkspace/App/App.csproj').read_text(),'App/Program.cs':'// Native disk example\nint answer = 42;\nConsole.WriteLine(answer);\n','Workspace.slnx':'<Solution><Configurations><BuildType Name="Debug"/><BuildType Name="Release"/></Configurations><Folder Name="/src/"><Project Path="App/App.csproj"/></Folder></Solution>','Directory.Build.props':(ROOT/'examples/msbuild/SdkWorkspace/Directory.Build.props').read_text()}
+  load_application(page)
+  fixture={'App/App.csproj':(ROOT/'examples/msbuild/SdkWorkspace/App/App.csproj').read_text(encoding='utf-8'),'App/Program.cs':'// Native disk example\nint answer = 42;\nConsole.WriteLine(answer);\n','Workspace.slnx':'<Solution><Configurations><BuildType Name="Debug"/><BuildType Name="Release"/></Configurations><Folder Name="/src/"><Project Path="App/App.csproj"/></Folder></Solution>','Directory.Build.props':(ROOT/'examples/msbuild/SdkWorkspace/Directory.Build.props').read_text(encoding='utf-8')}
   page.evaluate(r'''({files,assembly})=>{
    const source=new Map(Object.entries(files).map(([path,text])=>[path,{path,text,hash:'h1'}]));let count=0,serial=0;const jobs=new Map();window.__nativeFixture={source,requests:[],slow:false,forceConflict:false};
    const copy=x=>JSON.parse(JSON.stringify(x));const workspace=()=>({root:'/test-double/native-workspace',name:'Native Workspace — transport test double',projects:['App/App.csproj'],solutions:['Workspace.slnx'],files:[...source.keys()].map(path=>({path,size:100,kind:path.endsWith('.cs')?'source':path.endsWith('.csproj')?'project':path.endsWith('.slnx')?'solution':'build'}))});
@@ -94,9 +96,9 @@ with sync_playwright() as p:
   checked('returning to native workspace and opening a DLL through File preserves disk source',return_native)
   checked('two real compiler/runtime workers remain initialized',lambda:truth(len(workers)==2))
   checked('no browser JavaScript errors',lambda:truth(not errors,str(errors)))
-  page.evaluate('sharpforge.execute("stop");sharpforge.execute("nativeBuildLayout");sharpforge.native.open("App/App.csproj")');page.wait_for_timeout(300);(ROOT/'docs/screenshots').mkdir(exist_ok=True);page.screenshot(path=str(ROOT/'docs/screenshots/release07-msbuild.png'))
+  page.evaluate('sharpforge.execute("stop");sharpforge.execute("nativeBuildLayout");sharpforge.native.open("App/App.csproj")');page.wait_for_timeout(300);(RESULTS/'screenshots').mkdir(exist_ok=True);page.screenshot(path=str(RESULTS/'screenshots/release07-msbuild.png'))
  except Exception:
   traceback.print_exc();raise
  finally:
-  (ROOT/'docs/browser-msbuild-results.json').write_text(json.dumps({'passed':not errors and len(checks)>=32,'checks':checks,'errors':errors,'mode':'in-memory production UI with explicit native-client test double; no native engine execution'},indent=2)+'\n');browser.close()
+  (RESULTS/'browser-msbuild-results.json').write_text(json.dumps({'passed':not errors and len(checks)>=32,'checks':checks,'errors':errors,'mode':('in-memory' if os.getenv('SHARPFORGE_IN_MEMORY') == '1' else 'CSP HTTP') + ' production UI with explicit native-client test double; no native engine execution'},indent=2)+'\n', encoding='utf-8')
 print('Browser MSBuild checks:',len(checks))

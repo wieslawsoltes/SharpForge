@@ -62,8 +62,10 @@ export function evaluateConstant(node, {resolve=()=>null, checked=true, maxNodes
       if(n.type==='double')return plain(n,foldConversion(x.type==='int'?long(x):double(x),'double'));
       if(x.type==='int')return int(n,BigInt(Math.trunc(x.value)),check);
       const value=Math.trunc(x.value);
-      if(!Number.isFinite(value))return check?plain(n,foldConversion(double(x),'int',{checked:true})):{type:'int',value:-2147483648};
-      if(value<-2147483648||value>2147483647){if(check)throw new ConstantError(n,'CS0220',[]);return {type:'int',value:-2147483648};}
+      // Unchecked double-to-int saturates and maps NaN to 0, matching the runtime conversion (so constants agree with execution).
+      if(!check)return {type:'int',value:Number.isNaN(value)?0:Math.max(-2147483648,Math.min(2147483647,value))|0};
+      if(!Number.isFinite(value))return plain(n,foldConversion(double(x),'int',{checked:true}));
+      if(value<-2147483648||value>2147483647)throw new ConstantError(n,'CS0220',[]);
       return plain(n,foldConversion(double(x),'int',{checked:check}));
     }
     if(n.kind==='Conditional'){
