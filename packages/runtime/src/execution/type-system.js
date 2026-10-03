@@ -1,3 +1,4 @@
+import {exceptionMatches} from './exception-types.js';
 import {CilError,systemType} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 
@@ -42,7 +43,7 @@ export class CilTypeSystem {
     if(ref===null)return false;
     const record=this.vm.heap.get(ref),target=systemType(typeName);
     if(target==='System.Object')return true;
-    if(record.kind==='exception')return target==='System.Exception'||systemType(record.type)===target;
+    if(record.kind==='exception')return exceptionMatches(record.type,target);
     return systemType(record.type)===target||!!this.assignable.get(record.type)?.has(target);
   }
   field(token,ref) {
