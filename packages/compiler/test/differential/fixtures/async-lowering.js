@@ -151,7 +151,7 @@ export const fixtures = [
             };
             fire("x");
             Console.WriteLine("between");
-            await Task.Delay(20);
+            await Task.Delay(300);
             Console.WriteLine("done");
         }
     }
@@ -231,7 +231,7 @@ export const fixtures = [
             Done += () => Console.WriteLine("handler ran");
             Fire("a");
             Console.WriteLine("returned");
-            await Task.Delay(5);
+            await Task.Delay(300);
             Task<int> early = Fails(false);
             Console.WriteLine("early is faulted: " + early.IsFaulted);
             try { await early; } catch (Exception e) { Console.WriteLine(e.Message); }
