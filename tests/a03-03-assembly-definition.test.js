@@ -63,3 +63,17 @@ test('A03 AssemblyName reads the same emitted definition identities as the metad
     assert.deepEqual(identity(readPE(result.assembly).metadata), value);
   }
 });
+
+test('A03 definition identity composes with public signing and both resource directories', () => {
+  const keys = JSON.parse(readFileSync(new URL('./fixtures/clr-identity/public-keys.json', import.meta.url), 'utf8'));
+  const result = compile({ assemblyVersion: '2.3.4.5', assemblyCulture: 'fr-FR', publicSign: true,
+    publicKey: new Uint8Array(Buffer.from(keys.cases[1].key, 'hex')),
+    managedResources: [{ name: 'data', bytes: Uint8Array.of(1, 2) }], win32Resources: { manifest: '<assembly/>' } });
+  const pe = readPE(result.assembly);
+  assert.equal(identity(pe.metadata).version, '2.3.4.5');
+  assert.equal(identity(pe.metadata).culture, 'fr-FR');
+  assert.equal(pe.corFlags & 8, 8);
+  assert(pe.resources.size > 0);
+  assert(pe.directories.resource.size > 0);
+  assert.equal(loadAssembly(result.assembly).entryPoint, result.image.entryPoint);
+});
