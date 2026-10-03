@@ -10,7 +10,10 @@ import {roslynCodes,ROSLYN_VERSION} from '../packages/compiler/src/diagnostics/r
 const pkg=fileURLToPath(new URL('../packages/compiler/',import.meta.url)),root=join(pkg,'src');
 const pinned=JSON.parse(readFileSync(join(pkg,'test/roslyn/diagnostic-messages.json'),'utf8'));
 const sources=dir=>readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?sources(join(dir,e.name)):e.name.endsWith('.js')?[join(dir,e.name)]:[]);
-const files=sources(root).filter(f=>!f.endsWith('roslyn-codes.js')).map(f=>[f,readFileSync(f,'utf8')]);
+// Keep the existing message/arity assertions effective while callers move from literal ids to catalog constants.
+const files=sources(root).filter(f=>!f.endsWith('roslyn-codes.js')).map(f=>[
+  f,readFileSync(f,'utf8').replace(/\bDiagnosticId\.((?:CS|SF)\d{4})\b/g,"'$1'")
+]);
 test('A02-T36 every catalog message format matches the pinned Roslyn resource dump',()=>{
   assert.equal(ROSLYN_VERSION,pinned.roslyn);assert(Object.keys(roslynCodes).length>300);
   for(const [code,row] of Object.entries(roslynCodes)){assert.deepEqual(row,pinned.codes[code],code);const d=diagnosticDescriptor(code);
