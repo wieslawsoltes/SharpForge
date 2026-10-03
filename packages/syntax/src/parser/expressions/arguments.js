@@ -39,9 +39,10 @@ export const argumentMethods = {
     let nameColon = null,
       refKind = null;
     if (this.isId() && this.peek().kind === ':') {
-      this.feature('NamedArgument', this.current);
+      this.feature('NamedArgument', this.current, this.peek());
       nameColon = this.n('NameColon', this.n('IdentifierName', this.id()), this.take());
     }
+    const refToken = this.current;
     if (this.atAny(['ref', 'out', 'in'])) refKind = this.take();
     if (indexer && (this.at(',') || this.at(']'))) {
       this.error(this.errorAnchor(), 'CS0443', 'Syntax error; value expected');
@@ -51,7 +52,7 @@ export const argumentMethods = {
       this.error(this.errorAnchor(), 'CS0839', 'Argument missing');
       return this.n('Argument', nameColon, refKind, this.missingName());
     }
-    if (refKind?.kind === 'OutKeyword') return this.n('Argument', nameColon, refKind, this.outArgumentExpression());
+    if (refKind?.kind === 'OutKeyword') return this.n('Argument', nameColon, refKind, this.outArgumentExpression(refToken));
     const declares = ((this.declarationContext ?? 0) > 0 || this.tupleContext) && this.isDeclarationExpressionAhead();
     return this.n('Argument', nameColon, refKind, declares ? this.declarationExpression() : this.expression());
   }

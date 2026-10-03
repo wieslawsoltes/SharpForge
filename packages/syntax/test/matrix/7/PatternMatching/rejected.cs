@@ -1,4 +1,4 @@
-// langversion 6: expect CS8059 at 51 "int"
+// langversion 6: expect CS8059 at 48 "is"
 class C
 {
     void M()

@@ -136,8 +136,10 @@ export const namespaceMethods = {
     this.memberStart = this.i;
     this.memberErrors = this.diagnostics.length;
     const attributeLists = this.isAttributeListAhead() ? this.attributeLists() : [],
-      mark = this.mark(),
-      modifiers = this.modifiers();
+      mark = this.mark();
+    this.memberModifiers = this.i;
+    const modifiers = this.modifiers();
+    this.memberModifiersEnd = this.i;
     if (this.at('namespace')) return this.namespaceDeclaration(attributeLists, modifiers, membersBefore);
     const type = this.typeLikeDeclaration(attributeLists, modifiers);
     if (type) return type;

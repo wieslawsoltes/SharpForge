@@ -11,10 +11,10 @@ export const localFunctionMethods = {
   },
   /**
    * The rest of a local function after its return type and name. `head` describes what was already consumed:
-   * { attributeLists, modifiers, firstModifier (token index), type, identifier, start (first token) }.
+   * { attributeLists, modifiers, firstModifier (token index), type, identifier, nameToken }.
    */
   localFunctionStatement(head) {
-    this.feature('LocalFunctions', head.start);
+    this.feature('LocalFunctions', head.nameToken);
     this.localFunctionFeatures(head);
     const typeParameters = this.at('<') ? this.typeParameterList() : null,
       parameters = this.parameterList(),

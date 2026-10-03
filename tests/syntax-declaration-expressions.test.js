@@ -43,7 +43,7 @@ test('T32 discards in assignments and deconstructions', () => {
 });
 
 test('T32 out variables are rejected below C# 7', () => {
-  assert.deepEqual(diagnosticsOf('class C { void M() { F(out var x); } }', '6'), ['CS8059@27 "var"']);
+  assert.deepEqual(diagnosticsOf('class C { void M() { F(out var x); } }', '6'), ['CS8059@23 "out"']);
   assert.deepEqual(diagnosticsOf('class C { void M() { F(out var x); } }', '7'), []);
   assert.deepEqual(diagnosticsOf('class C { void M() { F(out x); F(out _); } }', '6'), [], 'a plain out argument is C# 1');
 });

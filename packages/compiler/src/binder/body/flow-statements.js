@@ -9,6 +9,7 @@ import { checkRefReturn } from '../ref-locals.js';
 import { numericKind } from '../../conversions/numeric.js';
 import { reportAwaitOutsideAsync } from '../async.js';
 import { bindAsyncForEach, isOnlyAsyncEnumerable } from '../async-streams.js';
+import { extensionEnumeratorMethod } from '../foreach-extension.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 const isSourceType = t => {
@@ -25,7 +26,8 @@ export const FlowStatementBinding = Base =>
       this.pushScope();
       try {
         let element = null,
-          enumeration = null;
+          enumeration = null,
+          extension = null;
         const type = collection.type;
         if (syntax.awaitKeyword) reportAwaitOutsideAsync(this, syntax.awaitKeyword);
         if (!collection.hasErrors && type && !type.isErrorType()) {
@@ -55,7 +57,14 @@ export const FlowStatementBinding = Base =>
               const generic = findConstruction(type, this.core.ienumerableT, this.core);
               if (generic) element = generic.typeArguments[0].type;
               else if (implementsInterface(type, this.core.ienumerable, this.core)) element = this.core.object;
-              else if (isOnlyAsyncEnumerable(type, this.core, this.c.containingType)) {
+              else if ((extension = extensionEnumeratorMethod(this, collection, 'GetEnumerator'))) {
+                // C# 9: the enumerator comes from an extension method; its result supplies MoveNext and Current.
+                this.d.gate(this.c.uri, syntax.expression, 'ExtensionGetEnumerator');
+                const current = lookupMembers(extension.returnType, 'Current', this.core, { within: this.c.containingType }).members.find(
+                  m => m.kind === SymbolKind.Property,
+                );
+                element = current?.type ?? unknown;
+              } else if (isOnlyAsyncEnumerable(type, this.core, this.c.containingType)) {
                 this.report(syntax.expression, 'CS8414', [this.display(type), 'GetEnumerator']);
                 element = unknown;
               } else if (
@@ -92,7 +101,15 @@ export const FlowStatementBinding = Base =>
         const loop = this.enterLoop(),
           body = this.embedded(syntax.statement);
         this.exitLoop();
-        return stmt('ForEach', syntax, true, { collection, local, elementType: element, body, isAwait: !!syntax.awaitKeyword, enumeration });
+        return stmt('ForEach', syntax, true, {
+          collection,
+          local,
+          elementType: element,
+          body,
+          isAwait: !!syntax.awaitKeyword,
+          enumeration,
+          extensionGetEnumerator: extension,
+        });
       } finally {
         this.popScope();
       }
