@@ -12,7 +12,7 @@
  */
 import { SymbolKind, ErrorTypeSymbol } from '../symbols/types.js';
 import { ConstantValue } from '../constants/constant-value.js';
-import { attributesNamed } from './attributes.js';
+import { attributesNamed } from './bound-attributes.js';
 import { lookupMembers } from './inheritance.js';
 import { isSourceSymbol } from '../semantic/analysis-helpers.js';
 

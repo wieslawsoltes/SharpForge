@@ -44,8 +44,13 @@ const forbiddenClasses = new Set(['System_Object', 'System_ValueType', 'System_A
  * Binds `where` clauses onto already declared type parameters.
  * @param {TypeParameterSymbol[]} parameters  @param clauses TypeParameterConstraintClause nodes
  * @param {(typeSyntax)=>TypeSymbol} bindType  @param report (node,code,args)
- * @param {{ownerDisplay?:string}} [options]
+ * @param {{ownerDisplay?:string, useFeature?:(node,featureId:string)=>void}} [options] `useFeature` gates a constraint by language version
  */
+const constraintFeatures = Object.freeze({
+  System_Enum: 'EnumGenericTypeConstraint',
+  System_Delegate: 'DelegateGenericTypeConstraint',
+  System_MulticastDelegate: 'DelegateGenericTypeConstraint',
+});
 export function bindConstraintClauses(parameters, clauses, bindType, report, options = {}) {
   const done = new Set();
   for (const clause of clauses ?? []) {
@@ -82,7 +87,8 @@ export function bindConstraintClauses(parameters, clauses, bindType, report, opt
           break;
         case 'ConstructorConstraint':
           if (!last && constraints[index + 1]?.kind !== 'AllowsConstraintClause') report(c, 'CS0401');
-          if (parameter.hasValueTypeConstraint || parameter.hasUnmanagedTypeConstraint) report(c, 'CS0451');
+          if (parameter.hasUnmanagedTypeConstraint) report(c.newKeyword ?? c, 'CS8375');
+          else if (parameter.hasValueTypeConstraint) report(c, 'CS0451');
           else parameter.hasConstructorConstraint = true;
           break;
         case 'AllowsConstraintClause':
@@ -141,12 +147,21 @@ export function bindConstraintClauses(parameters, clauses, bindType, report, opt
             report(c.type, 'CS0450', [type.toDisplayString()]);
             break;
           }
+          // `Enum`, `Delegate` and `MulticastDelegate` are constraints from C# 7.3 (the name may come from a using directive).
+          if (constraintFeatures[type.specialType]) options.useFeature?.(c.type, constraintFeatures[type.specialType]);
           types.push(type);
           break;
         }
       }
     });
     parameter._constraintTypes = types;
+  }
+  // A type parameter that must be a value type cannot be the constraint of another one: nothing derives from it.
+  for (const p of parameters) {
+    for (const constraint of p.constraintTypes) {
+      if (constraint.typeKind !== TypeKind.TypeParameter || !constraint.hasValueTypeConstraint) continue;
+      report(p.syntax?.identifier ?? p.syntax, constraint.hasUnmanagedTypeConstraint ? 'CS8379' : 'CS0456', [p.name, constraint.name]);
+    }
   }
   // Circular dependencies: T : U, U : T.
   for (const p of parameters) {
