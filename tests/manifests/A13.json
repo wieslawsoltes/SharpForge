@@ -8,6 +8,7 @@
     "tests/a13-02-fetch.test.js",
     "tests/a13-02-source-link.test.js",
     "tests/a13-02-symbol-server.test.js",
+    "tests/a13-02-symbol-copy.test.js",
 
     "tests/a13-02-resolution.test.js"
   ],

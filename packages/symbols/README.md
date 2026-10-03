@@ -157,7 +157,9 @@ timeout, cancellation and disposal. It never performs implicit lookup. Methods
 `lookupPortablePdb(name, id, { signal, assembly })`, `lookupForAssembly(assembly,
 { signal })`, and `lookupPE(name, identity, { signal })` return `SourceStatus`
 results with artifact bytes only after identity checks. URLs preserve the server
-prefix and escape filenames. The default artifact limit is 64 MiB.
+prefix and escape filenames. The default artifact limit is 64 MiB. Both public
+assembly inputs are copied before permission or transport callbacks run. Assembly-derived
+lookup reuses that owned snapshot internally, avoiding a second full assembly copy.
 
 `identityVerified` describes the requested identity match; it is not a digital
 signature. `checksumVerified` is true only when an assembly-bound PDB lookup also

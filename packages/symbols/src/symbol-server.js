@@ -26,11 +26,8 @@ export function createSymbolServer(options = {}) {
   const maxBytes = options.maxBytes ?? 64 * 1024 * 1024;
   const transport = createPermissionedFetcher({ ...options, maxBytes });
 
-  async function lookupPortablePdb(name, inputId, { signal, assembly } = {}) {
+  async function lookupOwnedPortablePdb(key, id, { signal, assembly: boundAssembly }) {
     try {
-      const key = portablePdbKey(name, inputId);
-      const id = new Uint8Array(inputId);
-      const boundAssembly = assembly == null ? null : copyAssembly(assembly, maxBytes);
       return await transport.read(keyUrl(server, key), {
         signal,
         purpose: 'symbol-server',
@@ -58,6 +55,17 @@ export function createSymbolServer(options = {}) {
     }
   }
 
+  async function lookupPortablePdb(name, inputId, { signal, assembly } = {}) {
+    try {
+      const key = portablePdbKey(name, inputId);
+      const id = new Uint8Array(inputId);
+      const owned = assembly == null ? null : copyAssembly(assembly, maxBytes);
+      return await lookupOwnedPortablePdb(key, id, { signal, assembly: owned });
+    } catch (error) {
+      return sourceResult(SourceStatus.invalidIdentity, { reason: String(error?.message ?? error) });
+    }
+  }
+
   return {
     lookupPortablePdb,
     async lookupForAssembly(input, { signal } = {}) {
@@ -67,7 +75,8 @@ export function createSymbolServer(options = {}) {
           (item) => item.kind === 2 && item.minor === 0x504d && item.age === 1,
         );
         if (!entry) fail('Assembly has no Portable PDB lookup identity');
-        return await lookupPortablePdb(entry.path, entry.id, { signal, assembly });
+        const key = portablePdbKey(entry.path, entry.id);
+        return await lookupOwnedPortablePdb(key, entry.id, { signal, assembly });
       } catch (error) {
         return sourceResult(SourceStatus.invalidIdentity, { reason: String(error?.message ?? error) });
       }
