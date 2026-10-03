@@ -4,5 +4,6 @@
  * ../semantic-analysis.js lists these epics once.
  */
 import { CSharp9Rules } from './csharp9.js';
+import { CSharp13Rules } from './csharp13.js';
 
-export const modernRules = Object.freeze([CSharp9Rules]);
+export const modernRules = Object.freeze([CSharp9Rules, CSharp13Rules]);
