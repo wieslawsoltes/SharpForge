@@ -29,6 +29,12 @@ const rules = [
     applies: node => !!node.identifier && typeDeclarationKinds.has(node.kind) && reservedNames.has(node.identifier.valueText),
     codes: ['CS8860', 'CS9029', 'CS9062', 'CS9056', 'CS9306'],
   },
+  {
+    // C# 15 preview `closed` types (binder/preview-features.js): the provisional rules of the pinned proposals.
+    text: /\bclosed\s+(?:class|enum)\b/,
+    applies: node => (node.kind === 'ClassDeclaration' || node.kind === 'EnumDeclaration') && (node.modifiers ?? []).some(token => token.text === 'closed'),
+    codes: ['SF2203'],
+  },
 ];
 const typeDeclarationKinds = new Set(['ClassDeclaration', 'StructDeclaration', 'InterfaceDeclaration', 'EnumDeclaration', 'DelegateDeclaration']);
 const reservedNames = new Set(['record', 'required', 'scoped', 'file', 'extension']);
