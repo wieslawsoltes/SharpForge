@@ -11,12 +11,12 @@ const positiveInteger = value => (/^[1-9]\d*$/.test(String(value ?? '')) ? Numbe
 /** Limits in effect for this process; every value can be overridden through the environment. */
 export function resourceLimits(env = process.env, memoryBytes = totalmem()) {
   const local = !env.CI;
-  const memoryGiB = memoryBytes / GIB;
+  const perEightGiB = Math.max(1, Math.min(4, Math.floor(memoryBytes / GIB / 8)));
   return {
     // Test files run in parallel processes of 300-500 MB each: allow one per 8 GiB of RAM, at most 4.
-    testConcurrency: positiveInteger(env.SHARPFORGE_TEST_CONCURRENCY) ?? (local ? Math.max(1, Math.min(4, Math.floor(memoryGiB / 8))) : null),
+    testConcurrency: positiveInteger(env.SHARPFORGE_TEST_CONCURRENCY) ?? (local ? perEightGiB : null),
     // Heavy runs (full test suites, builds, benchmarks) allowed at once on this machine, across all checkouts.
-    parallelRuns: positiveInteger(env.SHARPFORGE_MAX_PARALLEL_RUNS) ?? (local ? Math.max(1, Math.min(4, Math.floor(memoryGiB / 8))) : null),
+    parallelRuns: positiveInteger(env.SHARPFORGE_MAX_PARALLEL_RUNS) ?? (local ? perEightGiB : null),
     // V8 old-space cap per Node process, in MiB; stops a runaway test from taking the machine into swap.
     maxOldSpaceMb: positiveInteger(env.SHARPFORGE_MAX_OLD_SPACE_MB) ?? (local ? 2048 : null),
   };
@@ -43,7 +43,8 @@ const isAlive = pid => {
  * Machine-wide counting semaphore backed by one lock file per slot in the temp directory.
  * Returns a release function. A slot whose owner process has exited is reclaimed.
  */
-export async function acquireRunSlot({limits = resourceLimits(), directory = join(tmpdir(), 'sharpforge-run-slots'), log = console.error, pollMs = 2000} = {}) {
+export async function acquireRunSlot(options = {}) {
+  const {limits = resourceLimits(), directory = join(tmpdir(), 'sharpforge-run-slots'), log = console.error, pollMs = 2000} = options;
   if (limits.parallelRuns === null) return () => {};
   mkdirSync(directory, {recursive: true});
   let announced = false;
@@ -63,7 +64,10 @@ export async function acquireRunSlot({limits = resourceLimits(), directory = joi
         if (error.code !== 'EEXIST') throw error;
       }
     }
-    if (!announced) { log(`Waiting for a free run slot (${limits.parallelRuns} heavy runs allowed at once on this machine; set SHARPFORGE_MAX_PARALLEL_RUNS to change).`); announced = true; }
+    if (!announced) {
+      log(`Waiting for a free run slot: ${limits.parallelRuns} heavy runs are allowed at once (SHARPFORGE_MAX_PARALLEL_RUNS).`);
+      announced = true;
+    }
     await new Promise(resolve => setTimeout(resolve, pollMs));
   }
 }
