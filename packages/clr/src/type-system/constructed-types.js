@@ -4,6 +4,9 @@ import { checkCancellation, loadError, LoadErrorCode } from '../load-errors.js';
 
 const fail = message => loadError(LoadErrorCode.TypeLoad, message);
 const requireType = type => { if (!(type instanceof TypeDesc)) throw new TypeError('Expected TypeDesc'); };
+const requireResolvedParameter = type => {
+  if (type.kind === TypeKind.GenericParameter && !type.isLoaded) throw fail('Metadata generic parameter construction requires generic type services');
+};
 const method = (name, returnType, parameters) => Object.freeze({ name, returnType, parameters: Object.freeze(parameters), hasThis: true });
 
 /** Canonical constructed identities owned by one explicit context's type service. */
@@ -40,16 +43,18 @@ export class ConstructedTypes {
 
   element(kind, element, rank = 0) {
     requireType(element);
+    const elementKind = element.kind;
     const array = kind === TypeKind.Array || kind === TypeKind.SZArray;
-    if (element.kind === TypeKind.ByRef || (array && ['System.Void', 'System.TypedReference']
+    if (elementKind === TypeKind.ByRef || (array && ['System.Void', 'System.TypedReference']
       .some(name => this.#loader.isIntrinsic(element, name)))) throw fail(`Invalid ${kind} element ${element.fullName}`);
     if (array && (!Number.isInteger(rank) || rank < 1 || rank > 32)) throw fail('Array rank must be between 1 and 32');
     const suffix = kind === TypeKind.SZArray ? '[]' : kind === TypeKind.Array ? `[${rank === 1 ? '*' : ','.repeat(rank - 1)}]`
       : kind === TypeKind.Pointer ? '*' : '&';
     return this.#canonical(`${kind}:${this.#identity(element)}:${rank}`, () => {
+      requireResolvedParameter(element);
       const baseType = array ? this.#loader.intrinsic('System.Array') : null;
       const interfaces = array ? [...baseType.interfaces] : [];
-      if (kind === TypeKind.SZArray && ![TypeKind.Pointer, TypeKind.FunctionPointer].includes(element.kind)) {
+      if (kind === TypeKind.SZArray && ![TypeKind.Pointer, TypeKind.FunctionPointer].includes(elementKind)) {
         for (const name of ['IEnumerable', 'ICollection', 'IList', 'IReadOnlyCollection', 'IReadOnlyList']) {
           const definition = this.#loader.intrinsic(`System.Collections.Generic.${name}\`1`);
           interfaces.push(this.#intrinsicInstance(definition, [element]));
@@ -99,9 +104,13 @@ export class ConstructedTypes {
         sentinel >= parameters.length || (sentinel >= 0 && ![5, 11].includes(callingConvention))) throw fail('Invalid function pointer signature');
     const key = `fn:${callingConvention}:${Boolean(hasThis)}:${Boolean(explicitThis)}:${genericArity}:${sentinel}:` +
       `${this.#identity(returnType)}:${parameters.map(parameter => this.#identity(parameter)).join(',')}`;
-    return this.#canonical(key, () => ({ kind: TypeKind.FunctionPointer, name: 'method', namespace: '', fullName: 'method',
-      signature: Object.freeze({ returnType, parameters: Object.freeze([...parameters]), callingConvention,
-        hasThis: Boolean(hasThis), explicitThis: Boolean(explicitThis), genericArity, sentinel }) }));
+    return this.#canonical(key, () => {
+      requireResolvedParameter(returnType);
+      for (const parameter of parameters) requireResolvedParameter(parameter);
+      return { kind: TypeKind.FunctionPointer, name: 'method', namespace: '', fullName: 'method',
+        signature: Object.freeze({ returnType, parameters: Object.freeze([...parameters]), callingConvention,
+          hasThis: Boolean(hasThis), explicitThis: Boolean(explicitThis), genericArity, sentinel }) };
+    });
   }
 
   async signature(signature, resolveType, signal) {

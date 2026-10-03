@@ -119,12 +119,16 @@ test('decoded and original dispatch preserve one-instruction budgets, calls, bra
 });
 
 test('instruction-limit faults retain the same stopped frame with either dispatch mode', () => {
+  // Stay below the verifier's static instruction cap while exceeding the runtime budget.
+  const bytes = managedFixture({methods: [{name: 'Main',
+    body: writer => writer.mark('again').op('br.s', 'again')}]});
   const frames = [];
   for (const decodePlans of [false, true]) {
-    const vm = new CilVirtualMachine(loopFixture(), {decodePlans, maxInstructions: 5});
+    const vm = new CilVirtualMachine(bytes, {decodePlans, maxInstructions: 5});
     const result = vm.run();
     assert.equal(result.state, 'faulted');
     assert.equal(result.fault.name, 'InstructionLimitException');
+    assert.equal(vm.instructions, 6);
     frames.push({method: vm.top.method.name, pc: vm.top.pc, stack: [...vm.top.stack], instructions: vm.instructions});
   }
   assert.deepEqual(frames[0], frames[1]);
