@@ -128,6 +128,8 @@ test('sanitizer and Miri plans reuse E03 pin and lock each real crate and target
       assert(last.argv.includes(expected), expected);
     }
     assert.equal(last.requiresTests, true);
+    assert.equal(last.env.CARGO_BUILD_JOBS, '1');
+    assert.equal(last.env.RUST_TEST_THREADS, '1');
     if (lane !== 'miri') {
       assert(last.argv.includes('-Zbuild-std'));
       assert.match(last.env.RUSTFLAGS, new RegExp(`-Zsanitizer=${lane}`));

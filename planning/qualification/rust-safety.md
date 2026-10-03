@@ -10,11 +10,12 @@ Rust qualification. The issue must remain open while the deliverable is incomple
 ## Implemented scope
 
 `.github/workflows/rust-safety.yml` defines one serial matrix over the two actual
-crate paths and `inventory`, `address`, `thread`, `miri`, `loom`. It follows E03's
-core-only ordinary PR policy: full-ci PRs, merge groups and manual dispatch can run
-these additional jobs. Tokens are read-only, action SHAs reuse the existing Rust
-workflow, and artifacts are unique per crate, lane and workflow attempt. A focused
-Node regression scans the actual product source without invoking Rust during the
+crate paths and `inventory`, `address`, `thread`, `miri`, `loom`. It follows the
+[serial validation policy](serial-validation.md): this specialized workflow runs
+only by manual dispatch in its scheduled slot. Tokens are read-only, action SHAs
+reuse the existing Rust workflow, and artifacts are unique per crate, lane and
+workflow attempt. A focused Node regression scans the actual product source
+without invoking Rust during the
 scheduled Node validation. Ordinary core does not execute Node regressions; the
 safety matrix also applies this inventory before any native execution.
 
@@ -30,8 +31,9 @@ All executable lanes first apply the inventory gate and reuse E03's `qualify.py`
 workspace/toolchain policy. The workspace must have its committed lockfile, exact
 toolchain and explicit deny policy. No toolchain install or Rust process occurs
 for an unsupported lane or `--plan`. Runtime commands use argv arrays, separate
-target directories and no shell expansion. Ambient sanitizer/Miri/loom overrides,
-encoded Rust flags and compiler wrappers are removed before applying recorded flags.
+target directories, one Cargo build job, one test thread and no shell expansion.
+Ambient sanitizer/Miri/loom overrides, encoded Rust flags and compiler wrappers
+are removed before applying recorded flags.
 
 Every command has a 1–3600 second timeout (default 900) and 4 MiB output limit;
 timeout, cancellation, output overflow, missing executable and nonzero exit fail.

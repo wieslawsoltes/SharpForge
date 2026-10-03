@@ -42,6 +42,7 @@ def commands(root, crate, lane, workspace):
     cargo = ['cargo', '+' + selected]
     common = ['--locked', '--manifest-path', manifest, '--target', TARGET]
     environment = {'CARGO_TARGET_DIR': str(root / 'artifacts' / 'rust-safety-target' / crate / lane),
+                   'CARGO_BUILD_JOBS': '1', 'RUST_TEST_THREADS': '1',
                    'RUSTFLAGS': '', 'RUSTDOCFLAGS': '', 'RUST_BACKTRACE': '1'}
     if lane == 'miri':
         return [step(install), step(cargo + ['miri', 'setup', '--target', TARGET], environment),
