@@ -23,15 +23,15 @@
     "samples": 31,
     "note": "Shared host; sequential local validation. Typed-row cost includes 1000 Field rows and one builder; allocations unmeasured.",
     "construction": {
-      "medianUs": 3.3706660000000004,
-      "p95Us": 3.9012500000000045,
-      "p99Us": 4.209791999999993
+      "medianUs": 3.317666000000003,
+      "p95Us": 3.718999999999994,
+      "p99Us": 3.8202500000000015
     },
     "typedRows": {
-      "medianUs": 1255.625000000009,
-      "p95Us": 2322.2920000000045,
-      "p99Us": 7287.458000000015
+      "medianUs": 1257.000000000005,
+      "p95Us": 3288.375000000002,
+      "p99Us": 4585.207999999994
     },
-    "implementationSha256": "a4102e6231283c71f15f22095954df0344150f84f01988a66985742630d852d4"
+    "implementationSha256": "daea3012da07e7a89f50cdad3731e231c2af8e1a7fc44c2b68514456454873e4"
   }
 }

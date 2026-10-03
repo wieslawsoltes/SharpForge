@@ -18,11 +18,12 @@ function parentRow(builder, parent) {
 
 function indexRows(builder, state, maximum, signal) {
   const rows = builder.rows[11];
-  if (!rows) {
+  if (rows === undefined) {
     if (state.rows) throw constantError('MD0127');
     return;
   }
-  if (!Array.isArray(rows) || rows.length >= maximum) throw constantError('MD0123', 'Constant row count limit exceeded');
+  if (!Array.isArray(rows)) throw constantError('MD0127');
+  if (rows.length >= maximum) throw constantError('MD0123', 'Constant row count limit exceeded');
   if (state.rows && (state.rows !== rows || rows.length < state.count)) throw constantError('MD0127');
   state.rows = rows;
   while (state.count < rows.length) {

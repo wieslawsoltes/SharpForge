@@ -99,6 +99,19 @@ test('malformed raw Constant rows reject explicitly before adding another defaul
   }
 });
 
+test('invalid raw Constant tables reject before allocating a blob or changing owner flags', () => {
+  for (const rows of [null, false, 0, '', {}, 'rows']) {
+    const builder = new MetadataBuilder();
+    const [Parent] = parents(builder);
+    builder.rows[11] = rows;
+    const blobLength = builder.heaps.blobs.length;
+    assert.throws(() => builder.definitions.constantValue({ Parent, Type: 'int', Value: 42 }), error => error.code === 'MD0127');
+    assert.equal(builder.heaps.blobs.length, blobLength);
+    assert.equal(builder.rows[4][0][0], 0x56);
+    assert.equal(builder.rows[11], rows);
+  }
+});
+
 test('appended Constant rows are indexed once across many typed writes', () => {
   const builder = new MetadataBuilder();
   let reads = 0;
