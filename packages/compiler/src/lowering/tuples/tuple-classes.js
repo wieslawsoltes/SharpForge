@@ -28,7 +28,8 @@ export class TupleClasses {
   classOf(type, syntax = null) {
     const elementTypes = type.typeArguments.map(argument => argument.type),
       imageTypes = elementTypes.map(element => this.host.types.imageType(element, syntax)),
-      key = imageTypes.join(',');
+      // No comma in the name: the runtime reads commas in a type name as generic argument separators.
+      key = imageTypes.join(';');
     let info = this.byKey.get(key);
     if (info) return info;
     const program = this.host.program,

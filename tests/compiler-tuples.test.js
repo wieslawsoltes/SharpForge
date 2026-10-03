@@ -69,8 +69,8 @@ test('SF-A02-T08.4 tuples are objects of one synthesized class per shape; names 
     program('(int a, int b) x = (1, 2); (int, int) y = x; var z = (c: 3, d: "s"); Console.WriteLine(x.a + y.Item2 + z.d);'),
   );
   const tuples = image.types.filter(t => t.name.startsWith('ValueTuple(')).map(t => t.name);
-  assert.deepEqual(tuples.sort(), ['ValueTuple(int,int)', 'ValueTuple(int,string)']);
-  const pair = image.types.find(t => t.name === 'ValueTuple(int,int)');
+  assert.deepEqual(tuples.sort(), ['ValueTuple(int;int)', 'ValueTuple(int;string)']);
+  const pair = image.types.find(t => t.name === 'ValueTuple(int;int)');
   assert.deepEqual(
     pair.fields.map(f => f.name + ':' + f.type),
     ['Item1:int', 'Item2:int'],
