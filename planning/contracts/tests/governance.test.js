@@ -34,8 +34,8 @@ test('leaf readiness inherits parent requirements; explicit contracts require qu
   const base=task(1),parent=task(2,[base.id]),leaf={...task(3),id:'SF-A00-T02.1',parent:parent.id};
   const s=snapshot([base,parent,leaf]);assert.equal(readiness(s,leaf.id).ready,false);assert.equal(readiness(s,parent.id).ready,false);
   base.state='CLOSED';base.pullRequests=[{merged:true,mergeCommit:sha,baseRefName:'main'}];leaf.contracts=[{name:'abi',version:'1'}];
-  assert.equal(readiness(s,leaf.id,{abi:{version:1,qualified:true,commit:sha}}).ready,true);
-  assert.equal(readiness(s,leaf.id,{abi:{version:1,qualified:false,commit:sha}}).ready,false);
+  assert.equal(readiness(s,leaf.id,{abi:{version:1,qualified:true,commit:sha,fileExistsOnMain:true,commitOnMain:true}}).ready,true);
+  assert.equal(readiness(s,leaf.id,{abi:{version:1,qualified:false,commit:sha,fileExistsOnMain:true,commitOnMain:true}}).ready,false);
   assert.throws(()=>requireReady(s,leaf.id,{now:new Date('2026-10-05')}),/stale/);
 });
 test('task identity cross-checks branch, body, and project field; missing identity fails',()=>{
@@ -96,4 +96,51 @@ test('snapshot preserves merged evidence and deterministic order; graph yields c
   const a=normalizeSnapshot(config),b=normalizeSnapshot({...config,issues:[...issues].reverse()});assert.deepEqual(a,b);
   const graph=exportDag(a);assert.equal(graph.length,2);assert.deepEqual(graph.criticalPath,['SF-A00-T01','SF-A00-T02']);assert.match(graph.mermaid,/SF_A00_T01 --> SF_A00_T02/);
   assert.equal(readiness(a,'SF-A00-T02').ready,true);
+});
+
+test('dependency ancestors cannot bypass readiness; absent or cyclic parents fail closed',()=>{
+  const prerequisite=task(1),parent=task(2,[prerequisite.id]),dependency={...task(3,[],'CLOSED'),parent:parent.id},target=task(4,[dependency.id]);
+  assert.equal(readiness(snapshot([prerequisite,parent,dependency,target]),target.id).ready,false);
+  target.parent='SF-A00-T99';assert.match(validateDag(snapshot([target])).errors.join(),/unresolved parent/);
+  target.parent=target.id;assert.match(validateDag(snapshot([target])).errors.join(),/Parent cycle/);
+});
+test('ready-label sync changes only mismatched current labels and second run is a no-op',async()=>{
+  const { syncReady }=await import('../../../scripts/planning/sync-ready.js');
+  const a=task(1),b=task(2,[a.id]),labels=new Map([[1,[]],[2,['status:ready']]]),writes=[];
+  const client={pages:async(path)=>labels.get(Number(path.split('/')[1])),label:async(n,label)=>{writes.push(['add',n]);labels.get(n).push(label);},removeLabel:async(n,label)=>{writes.push(['remove',n]);labels.set(n,labels.get(n).filter(l=>l!==label));}};
+  const s=snapshot([a,b]);assert.equal((await syncReady(client,s,{dryRun:true})).changes.length,2);assert.deepEqual(writes,[]);
+  await syncReady(client,s);assert.deepEqual(writes,[['add',1],['remove',2]]);assert.deepEqual((await syncReady(client,s)).changes,[]);
+});
+
+test('directory ownership intersects children and live project lock fields serialize overlaps',()=>{
+  const a={...task(1),paths:['packages/framework/src/contributions/']},b={...task(2),paths:['packages/framework/src/contributions/manifest.js']};
+  assert.equal(pathCollisions([a,b]).errors.length,1);
+  a.project=b.project={'Lock keys':'framework-contributions'};
+  assert.equal(pathCollisions([a,b],{'framework-contributions':['packages/framework/src/contributions/**']}).errors.length,0);
+});
+test('project item snapshot preserves numeric parity including zero',async()=>{
+  const { GitHubProject }=await import('../../../scripts/planning/lib/github-project.js');
+  for(const number of [0,75]){
+    const client=new GitHubProject({owner:'test',transport:async r=>{
+      if(r.body.query.includes('query Items'))return {data:{node:{items:{nodes:[{id:'item',content:{number:1,repository:{nameWithOwner:'test/SharpForge'}},fieldValues:{nodes:[{number,field:{name:'Parity percent'}}]}}],pageInfo:{hasNextPage:false}}}}};
+      throw new Error('unexpected request');
+    }});client.cachedProject={id:'p',fields:[]};assert.equal((await client.items())[0].fields['Parity percent'],number);
+  }
+});
+test('ownership CLI checks deleted rename source and contracts must exist in default-branch tree',async()=>{
+  const {mkdtempSync,writeFileSync,rmSync,mkdirSync,renameSync}=await import('node:fs');const {tmpdir}=await import('node:os');const {join}=await import('node:path');const {spawnSync}=await import('node:child_process');
+  const {contractsOnMain}=await import('../../../scripts/planning/ready.js');
+  const dir=mkdtempSync(join(tmpdir(),'sf-governance-'));
+  const run=(args)=>{const r=spawnSync('git',args,{cwd:dir,encoding:'utf8'});assert.equal(r.status,0,r.stderr);return r.stdout.trim();};
+  try{
+    run(['init','-b','main']);run(['config','user.name','Fixture']);run(['config','user.email','fixture@example.test']);
+    mkdirSync(join(dir,'planning/contracts'),{recursive:true});writeFileSync(join(dir,'external.js'),'export const x=42;\n');
+    for(const name of ['ownership.json','ownership-exceptions.json','locks.json'])writeFileSync(join(dir,'planning/contracts',name),JSON.stringify(readJSON(new URL('planning/contracts/'+name,root))));
+    run(['add','.']);run(['commit','-m','base']);const commit=run(['rev-parse','HEAD']);run(['branch','-M','main']);
+    const evidence=contractsOnMain({abi:{version:1,path:'external.js',commit,qualified:true}},{ref:'main',cwd:dir});assert.equal(evidence.abi.fileExistsOnMain,true);assert.equal(evidence.abi.commitOnMain,true);
+    assert.equal(contractsOnMain({abi:{path:'missing.js',commit}},{ref:'main',cwd:dir}).abi.fileExistsOnMain,false);
+    run(['checkout','-b','feature']);renameSync(join(dir,'external.js'),join(dir,'planning/contracts/owned.js'));run(['add','.']);run(['commit','-m','rename']);
+    const cli=spawnSync(process.execPath,[(await import('node:url')).fileURLToPath(new URL('../../../scripts/planning/check-ownership.js',import.meta.url)),'--area','A00','--base','main'],{cwd:dir,encoding:'utf8'});
+    assert.equal(cli.status,1,cli.stderr);assert.match(cli.stdout,/external.js: outside A00 ownership/);
+  }finally{rmSync(dir,{recursive:true,force:true});}
 });

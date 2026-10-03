@@ -1,5 +1,7 @@
 import { parseArgs } from 'node:util';
 import { readJSON, isMain, report } from './lib/io.js';
+import { safePath } from './lib/paths.js';
+import { git } from './lib/io.js';
 import { validateDag } from './validate-dag.js';
 export function readiness(snapshot, id, contracts = {}) {
   const validation = validateDag(snapshot); if (validation.errors.length) return { id, ready: false, errors: validation.errors, blockers: [] };
@@ -18,13 +20,23 @@ export function readiness(snapshot, id, contracts = {}) {
     }
     for (const contract of t.contracts ?? []) {
       const actual = contracts[contract.name];
-      if (!actual || String(actual.version) !== contract.version || actual.qualified !== true || !/^[0-9a-f]{40}$/.test(actual.commit ?? '')) blockers.add(`${contract.name}@${contract.version}: not qualified at a recorded commit`);
+      if (!actual || actual.fileExistsOnMain !== true || actual.commitOnMain !== true || String(actual.version) !== contract.version || actual.qualified !== true || !/^[0-9a-f]{40}$/.test(actual.commit ?? '')) blockers.add(`${contract.name}@${contract.version}: not qualified at a recorded commit`);
     }
+    if (t.parent) requirement(tasks.get(t.parent));
   }
   requirement(task);
-  let parent = task.parent; const parents = new Set();
-  while (parent && tasks.has(parent)) { if (parents.has(parent)) { blockers.add(`Parent cycle at ${parent}`); break; } parents.add(parent); requirement(tasks.get(parent)); parent = tasks.get(parent).parent; }
   return { id, ready: blockers.size === 0, errors: [], blockers: [...blockers].sort() };
+}
+export function contractsOnMain(registry, { ref = 'origin/main', cwd = process.cwd() } = {}) {
+  const commit = git(['rev-parse', '--verify', ref + '^{commit}'], cwd).trim();
+  const result = {};
+  for (const [name, record] of Object.entries(registry)) {
+    let fileExistsOnMain = false, commitOnMain = false;
+    if (record.path) { const path = safePath(record.path); try { git(['cat-file', '-e', `${commit}:${path}`], cwd); fileExistsOnMain = true; } catch {} }
+    if (/^[0-9a-f]{40}$/.test(record.commit ?? '')) { try { git(['merge-base', '--is-ancestor', record.commit, commit], cwd); commitOnMain = true; } catch {} }
+    result[name] = { ...record, fileExistsOnMain, commitOnMain };
+  }
+  return result;
 }
 export function requireReady(snapshot, id, { contracts = {}, now = new Date(), maxAgeHours = 24 } = {}) {
   const age = now.getTime() - Date.parse(snapshot.updatedAt);
@@ -35,6 +47,6 @@ export function requireReady(snapshot, id, { contracts = {}, now = new Date(), m
 }
 if (isMain(import.meta.url)) {
   const { values } = parseArgs({ options: { snapshot: { type: 'string', default: 'planning/backlog.snapshot.json' }, task: { type: 'string' }, contracts: { type: 'string' } } });
-  const result = readiness(readJSON(values.snapshot), values.task, values.contracts ? readJSON(values.contracts) : {});
+  const result = readiness(readJSON(values.snapshot), values.task, values.contracts ? contractsOnMain(readJSON(values.contracts)) : {});
   report(result); if (!result.ready) process.exitCode = 1;
 }

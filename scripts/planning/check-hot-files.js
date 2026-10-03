@@ -12,7 +12,7 @@ export function checkHotFiles(changes, locks, held = []) {
 if (isMain(import.meta.url)) {
   const { values } = parseArgs({ options: { base: { type: 'string', default: 'origin/main' }, locks: { type: 'string', default: '' } } });
   const locks = readJSON('planning/contracts/locks.json'), changes = {};
-  for (const path of git(['diff', '--name-only', '-z', `${values.base}...HEAD`]).split('\0').filter(Boolean)) {
+  for (const path of git(['diff', '--no-renames', '--name-only', '-z', `${values.base}...HEAD`]).split('\0').filter(Boolean)) {
     const read = ref => { try { return git(['show', `${ref}:${path}`]); } catch { return ''; } };
     changes[path] = { before: read(values.base), after: read('HEAD') };
   }

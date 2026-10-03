@@ -1,7 +1,7 @@
 import { parseArgs } from 'node:util';
 import { GitHubProject } from './github-project.js';
 import { Claims } from './claims.js';
-import { requireReady } from '../ready.js';
+import { requireReady, contractsOnMain } from '../ready.js';
 import { readJSON } from './io.js';
 export async function main(command, argv = process.argv.slice(2)) {
   const { values } = parseArgs({ args: argv, options: {
@@ -13,7 +13,7 @@ export async function main(command, argv = process.argv.slice(2)) {
   if (command !== 'reap-leases' && (!/^\d+$/.test(values.issue ?? '') || !values.agent)) throw new Error('--issue and --agent are required');
   const client = new GitHubProject({ owner: values.owner, repo: values.repo, number: values.project });
   const claims = new Claims(client), options = { ...values, issue: Number(values.issue), ttlHours: Number(values['ttl-hours']) };
-  if (command === 'claim') options.ready = item => requireReady(readJSON(values.snapshot), item.content.title.match(/^\[([^\]]+)\]/)?.[1], { contracts: values.contracts ? readJSON(values.contracts) : {} });
+  if (command === 'claim') options.ready = item => requireReady(readJSON(values.snapshot), item.content.title.match(/^\[([^\]]+)\]/)?.[1], { contracts: values.contracts ? contractsOnMain(readJSON(values.contracts)) : {} });
   const result = command === 'reap-leases' ? await claims.reap() : await claims[command](options);
   console.log(JSON.stringify(result, null, 2));
 }
