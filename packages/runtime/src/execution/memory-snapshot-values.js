@@ -2,6 +2,7 @@ import {validatePointer, pointerType} from './managed-pointers.js';
 import {valueLayout} from './value-layout.js';
 import {castCacheFor} from './casting.js';
 import {primitiveArrayConstructor} from './array-storage.js';
+import {validateExplicitValue} from './explicit-values.js';
 
 const fail = message => { throw new TypeError('Invalid memory snapshot: ' + message); };
 const sameReference = (left, right) => left?.h === right?.h && left?.g === right?.g;
@@ -107,6 +108,8 @@ export function snapshotMemoryValue(context, value, {heapStorage = false} = {}) 
     const type = ownedTable(context, value.valueType);
     if (!type.flags.valueType || !Object.isFrozen(value) || !Array.isArray(value.fields) ||
         !Object.isFrozen(value.fields) || value.fields.length !== type.fields.length) fail('struct value shape');
+    try { validateExplicitValue(context, value); }
+    catch (error) { fail('explicit storage: ' + error.message); }
   }
   if (value.nullableType) {
     const type = ownedTable(context, value.nullableType);

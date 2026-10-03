@@ -6,22 +6,8 @@ import {rawArrayBytes, arrayElementBytes} from './array-storage.js';
 import {valueLayout} from './value-layout.js';
 import {createValue} from './value-types.js';
 import {number, storage} from './numeric-ops.js';
-
-const getters = new Map([
-  ['System.Boolean', 'Uint8'], ['System.SByte', 'Int8'], ['System.Byte', 'Uint8'],
-  ['System.Char', 'Uint16'], ['System.Int16', 'Int16'], ['System.UInt16', 'Uint16'],
-  ['System.Int32', 'Int32'], ['System.UInt32', 'Uint32'], ['System.Int64', 'BigInt64'],
-  ['System.UInt64', 'BigUint64'], ['System.Single', 'Float32'], ['System.Double', 'Float64']
-]);
-
-function scalarAccess(table) {
-  if (table.enumUnderlyingType) return scalarAccess(table.enumUnderlyingType);
-  if (table.name === 'System.IntPtr' || table.name === 'System.UIntPtr') {
-    return (table.registry.nativeIntBits === 64 ? 'Big' : '') +
-      (table.name === 'System.UIntPtr' ? 'Uint' : 'Int') + table.registry.nativeIntBits;
-  }
-  return getters.get(table.name);
-}
+import {scalarAccess, readScalarBytes, writeScalarBytes} from './scalar-bytes.js';
+import {readExplicitBytes, writeExplicitBytes} from './explicit-values.js';
 
 function checkedBytes(pointer, bytes) {
   if (pointer.index > bytes.length) throw new ManagedFault('IndexOutOfRangeException', 'Memory address exceeds its allocation');
@@ -134,8 +120,7 @@ export function pointerBinary(vm, operation, left, right) {
 function readValue(vm, view, offset, table) {
   const access = scalarAccess(table);
   if (access) {
-    const value=storage(view['get' + access](offset, true), table.enumUnderlyingType?.name ?? table.name, vm.options);
-    return table.name==='System.Boolean'&&vm.image&&!vm.inspector?!!value:value;
+    return readScalarBytes(vm, view, offset, table);
   }
   if (table.name === 'System.Decimal') {
     const flags = view.getUint32(offset, true);
@@ -145,6 +130,8 @@ function readValue(vm, view, offset, table) {
     if (scale > 28 || flags & 0x7f00ffff) throw new ManagedFault('ArgumentException', 'Invalid Decimal bit layout');
     return Object.freeze({decimal: true, coefficient, scale, negative: !!(flags & 0x80000000)});
   }
+  const explicit = readExplicitBytes(vm, table, view, offset);
+  if (explicit) return explicit;
   const layout = valueLayout(vm, table);
   return createValue(vm, table, table.fields.map((field, index) => readValue(vm, view, offset + layout.offsets[index], field.type)));
 }
@@ -152,9 +139,7 @@ function readValue(vm, view, offset, table) {
 function writeValue(vm, view, offset, value, table) {
   const access = scalarAccess(table);
   if (access) {
-    let raw = number(value?.enumType ? value.value : value);
-    if (access.startsWith('Big')) raw = BigInt(raw);
-    view['set' + access](offset, typeof raw === 'boolean' ? Number(raw) : raw, true);
+    writeScalarBytes(view, offset, value, table);
     return;
   }
   if (table.name === 'System.Decimal') {
@@ -164,6 +149,7 @@ function writeValue(vm, view, offset, value, table) {
     view.setUint32(offset + 12, Number(value.coefficient >> 32n & 0xffffffffn), true);
     return;
   }
+  if (writeExplicitBytes(vm, table, value, view, offset)) return;
   const layout = valueLayout(vm, table);
   table.fields.forEach((field, index) => writeValue(vm, view, offset + layout.offsets[index], value.fields[index], field.type));
 }
