@@ -13,6 +13,7 @@ import { CSharp12Rules, ExperimentalUses } from './csharp12.js';
 import { CollectionExpressionBinding } from './collection-expressions.js';
 import { CSharp13Rules, CSharp13BodyRules } from './csharp13.js';
 import { CSharp14Rules } from './csharp14.js';
+import { PreviewFeatureRules } from './preview-features.js';
 import { ReservedTypeNames } from './reserved-type-names.js';
 
 export const modernRules = Object.freeze([
@@ -22,6 +23,7 @@ export const modernRules = Object.freeze([
   CSharp13Rules,
   ReservedTypeNames,
   CSharp14Rules,
+  PreviewFeatureRules,
 ]);
 export const modernUseRules = Object.freeze([ExperimentalUses, CSharp13BodyRules]);
 export const modernBindings = Object.freeze([CSharp10Binding, CSharp11Binding, CollectionExpressionBinding]);
