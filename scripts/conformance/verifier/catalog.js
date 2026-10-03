@@ -15,6 +15,7 @@ export function validateCases(cases) {
   for (const row of cases) {
     if (!/^[a-z0-9-]+$/.test(row.id) || ids.has(row.id)) throw new Error('Duplicate or invalid case identity');
     ids.add(row.id);
+    if (!/^[a-z0-9-]+$/.test(row.rule ?? '')) throw new Error('Invalid rule identity');
     if (!/^fixtures\/[a-z0-9-]+\.il$/.test(row.source) || !/^[a-f0-9]{64}$/.test(row.sha256)) {
       throw new Error('Invalid IL identity');
     }
@@ -60,6 +61,7 @@ export function parseILVerify(result) {
 
 export function checkOracle(row, observation) {
   return observation.accepted === (row.polarity === 'accept') &&
+    (!observation.accepted || observation.errors.length === 0) &&
     row.expectedErrors.every(code => observation.errors.includes(code));
 }
 
@@ -76,7 +78,10 @@ export function validateCapture(capture, catalog, toolPin) {
     if (!fixture || ids.has(row.id) || fixture.inputHash !== row.inputHash) throw new Error('Stale or duplicate verifier capture');
     ids.add(row.id);
     if (!/^[a-f0-9]{64}$/.test(row.assemblySHA256) || typeof row.oracle?.accepted !== 'boolean' ||
-        !Array.isArray(row.oracle?.errors)) throw new Error('Invalid verifier observation');
+        !Array.isArray(row.oracle?.errors) ||
+        row.oracle.errors.some(code => typeof code !== 'string' || !/^[A-Za-z0-9]+$/.test(code))) {
+      throw new Error('Invalid verifier observation');
+    }
     if (!checkOracle(fixture, row.oracle)) throw new Error(`Oracle disagrees with declared rule: ${row.id}`);
   }
   return capture;

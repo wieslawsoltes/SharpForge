@@ -60,6 +60,8 @@ test('Verifier evidence rejects stale, duplicate, unpinned or incorrectly reject
     capture => { capture.cases[0] = capture.cases[1]; },
     capture => { capture.cases[0].inputHash = 'b'.repeat(64); },
     capture => { capture.cases[0].oracle.accepted = false; },
+    capture => { capture.cases[0].oracle.errors = ['ReturnVoid']; },
+    capture => { capture.target = 'unknown'; },
     capture => { capture.cases[1].oracle.errors = []; },
   ]) {
     const capture = structuredClone(syntheticCapture());
