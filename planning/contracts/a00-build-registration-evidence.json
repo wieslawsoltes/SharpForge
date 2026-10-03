@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "platform": "darwin",
+  "architecture": "arm64",
+  "node": "v24.21.0",
+  "scope": [
+    "SF-A00-T06.1",
+    "SF-A00-T06.2",
+    "SF-A00-T06.3",
+    "SF-A00-T06.4",
+    "SF-A00-T06.5",
+    "SF-A00-T06.6",
+    "SF-A00-T06.7",
+    "SF-A00-T06.8"
+  ],
+  "manifests": {
+    "areas": 30,
+    "nodeFiles": 74,
+    "pythonSuites": 16,
+    "unassigned": 0,
+    "duplicate": 0
+  },
+  "focused": {
+    "passed": 12,
+    "failed": 0
+  },
+  "fullNode": {
+    "tests": 2743,
+    "passed": 2741,
+    "failed": 2,
+    "failures": [
+      "Inherited A00 inventory bytecode index hash drift after services extraction",
+      "Inherited A00 framework version constant lookup after services extraction"
+    ],
+    "resolution": "ABI owner has fixes pending stack integration; no tests skipped or weakened"
+  },
+  "packages": {
+    "count": 25,
+    "orderedIntegrationSteps": 45,
+    "installedProtocolAndMsbuildCli": true,
+    "addedPackageFixture": {
+      "count": 26,
+      "packed": true,
+      "installedOffline": true,
+      "ownerSmokeExecuted": true
+    },
+    "originalAssertionExpressionsPreserved": 103
+  },
+  "build": {
+    "studio.css": {
+      "bytes": 111841,
+      "sha256": "61e8f836530dc95c61fabba5b6476d821ed76a526d629e8dadc1f55b46f05155",
+      "byteIdentical": true
+    },
+    "compiler.worker.js": {
+      "bytes": 437605,
+      "sha256": "04eb6750e5bd98df6bf6db4b4cf7bd1a506fa2b83ceff251937b7035a99da974",
+      "byteIdentical": true
+    },
+    "runtime.worker.js": {
+      "bytes": 727971,
+      "sha256": "a843dfe5e2b321a04e6fa5324b8d7c388e5951c1b17b79d9328f481e2104208c",
+      "byteIdentical": true
+    }
+  },
+  "browser": {
+    "core": {
+      "suite": "browser",
+      "command": [
+        "/private/tmp/sharpforge-a05/venv/bin/python",
+        "tests/browser_test.py"
+      ],
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 4.6102165000047535
+    },
+    "standalone": {
+      "suite": "standalone",
+      "command": [
+        "/private/tmp/sharpforge-a05/venv/bin/python",
+        "tests/standalone_test.py"
+      ],
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 12.138721999945119
+    },
+    "standaloneBoundary": "Offline about:blank HTML injection; native file URL storage was not exercised"
+  },
+  "startupDiscovery": {
+    "manifests": {
+      "iterations": 20,
+      "medianMs": 11.509040999999996,
+      "p95Ms": 13.30012499999998
+    },
+    "buildContributions": {
+      "iterations": 20,
+      "medianMs": 2.1984170000000063,
+      "p95Ms": 3.3127920000000017
+    },
+    "packages": {
+      "iterations": 20,
+      "medianMs": 9.688250000000039,
+      "p95Ms": 10.218541999999957
+    },
+    "taskPlan": {
+      "iterations": 20,
+      "medianMs": 7.829457999999931,
+      "p95Ms": 8.070249999999987
+    }
+  },
+  "platformBoundaries": [
+    "macOS arm64 executed locally with Node24 and Python3.14",
+    "Windows and Linux are covered by existing CI job definitions; not executed locally for this scope",
+    "Minimum Node22 is configured in CI; only Node24 is installed locally"
+  ]
+}
