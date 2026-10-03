@@ -1,0 +1,8 @@
+{
+  "sdk": "10.0.201",
+  "node": "v24.21.0",
+  "assemblySha256": "82e58cbf47f6a4f34f1a92e8b92acaf99e2b8d3e133ca28fdc40ce763680be73",
+  "command": "node scripts/validate-a05-faults.mjs",
+  "nativeOutput": "ok\narithmetic\nsystem\nexception\n",
+  "cilOutput": "ok\narithmetic\nsystem\nexception\n"
+}
