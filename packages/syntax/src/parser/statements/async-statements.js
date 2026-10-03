@@ -9,7 +9,8 @@ export const asyncStatementMethods = {
     const token = this.current,
       next = this.peek().kind;
     if (next !== 'using' && next !== 'foreach') return null;
-    this.feature('AsyncStreams', token);
+    // `await foreach` is the async-streams feature; `await using` is asynchronous using (async disposables).
+    this.feature(next === 'using' ? 'AsyncUsing' : 'AsyncStreams', token);
     const awaitKeyword = this.takeWord('await');
     return next === 'using' ? this.usingStatement(attributeLists, awaitKeyword) : this.forEachStatement(attributeLists, awaitKeyword);
   },

@@ -12,7 +12,8 @@ const reference = value => value !== null && typeof value === 'object' && Number
 export const float = (value, kind = 'r8') => Object.freeze({float: kind, value: kind === 'r4' ? Math.fround(value) : Number(value)});
 export const number = value => value?.float ? value.value : value;
 export const isNumber = value => typeof value === 'number' || typeof value === 'bigint' || !!value?.float;
-export const defaults = type => type === 'long' || type === 'ulong' ? 0n : type === 'double' ? float(0) : type === 'float' ? float(0, 'r4') : ['int', 'uint', 'short', 'ushort', 'byte', 'sbyte', 'char', 'bool', 'nint', 'nuint'].includes(type) ? 0 : null;
+const numericAliases = {'System.SByte': 'sbyte', 'System.Byte': 'byte', 'System.Int16': 'short', 'System.UInt16': 'ushort', 'System.Char': 'char', 'System.Boolean': 'bool', 'System.Int32': 'int', 'System.UInt32': 'uint', 'System.Int64': 'long', 'System.UInt64': 'ulong', 'System.Single': 'float', 'System.Double': 'double', 'System.IntPtr':'nint', 'System.UIntPtr':'nuint'};
+export const defaults = input => { const type=numericAliases[input]??input; return type === 'long' || type === 'ulong' ? 0n : type === 'double' ? float(0) : type === 'float' ? float(0, 'r4') : ['int', 'uint', 'short', 'ushort', 'byte', 'sbyte', 'char', 'bool', 'nint', 'nuint'].includes(type) ? 0 : null; };
 
 export function compare(a, b, op, unsigned = false, {fault: createFault = fault, isReference = reference} = {}) {
   if (isReference(a) || isReference(b) || a === null || b === null) {
@@ -46,7 +47,7 @@ export function binary(name, a, b, {fault: createFault = fault, error: createErr
   if (wide || checked) {
     let x = BigInt(a), y = BigInt(b), bits = wide ? 64 : 32;
     if (unsigned) { x = BigInt.asUintN(bits, x); y = BigInt.asUintN(bits, y); }
-    if (['div', 'rem'].includes(op) && y === 0n) throw createFault('DivideByZeroException', 'Integer division by zero');
+    if (['div', 'rem'].includes(op) && y === 0n) throw createFault('DivideByZeroException', 'Attempted to divide by zero');
     if (op === 'div' && !unsigned && x === -(1n << BigInt(bits - 1)) && y === -1n) throw createFault('OverflowException', 'Integer division overflow');
     const shift = y & BigInt(bits - 1);
     const value = {add: () => x + y, sub: () => x - y, mul: () => x * y, div: () => x / y, rem: () => x % y, and: () => x & y, or: () => x | y, xor: () => x ^ y, shl: () => x << shift, shr: () => x >> shift}[op]();
@@ -54,7 +55,7 @@ export function binary(name, a, b, {fault: createFault = fault, error: createErr
     return wide ? BigInt.asIntN(64, value) : Number(BigInt.asIntN(32, value));
   }
   if (unsigned) { a >>>= 0; b >>>= 0; }
-  if (['div', 'rem'].includes(op) && b === 0) throw createFault('DivideByZeroException', 'Integer division by zero');
+  if (['div', 'rem'].includes(op) && b === 0) throw createFault('DivideByZeroException', 'Attempted to divide by zero');
   if (op === 'div' && !unsigned && a === -2147483648 && b === -1) throw createFault('OverflowException', 'Integer division overflow');
   switch (op) {
     case 'add': return (a + b) | 0;
@@ -121,8 +122,7 @@ export function convert(name, value, {fault: createFault = fault, error: createE
 
 /** CLI storage locations narrow integers and round single precision on write/load. */
 export function storage(value, type, context) {
-  const alias = {'System.SByte': 'sbyte', 'System.Byte': 'byte', 'System.Int16': 'short', 'System.UInt16': 'ushort', 'System.Char': 'char', 'System.Boolean': 'bool', 'System.Int32': 'int', 'System.UInt32': 'uint', 'System.Int64': 'long', 'System.UInt64': 'ulong', 'System.Single': 'float', 'System.Double': 'double'};
-  type = alias[type] ?? type;
+  type = numericAliases[type] ?? type;
   const conversion = {sbyte: 'i1', byte: 'u1', short: 'i2', ushort: 'u2', char: 'u2', bool: 'u1', int: 'i4', uint: 'u4', long: 'i8', ulong: 'u8', float: 'r4', double: 'r8'}[type];
   return conversion ? convert('conv.' + conversion, value, context) : value;
 }

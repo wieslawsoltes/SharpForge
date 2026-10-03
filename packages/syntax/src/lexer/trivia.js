@@ -43,7 +43,7 @@ function directive(s, hash) {
   };
   const result = (marker || word === 'r' || word === 'load' ? scanScriptDirective(marker, word, rest, context, features) : null) ??
     scanConditionalDirective(word, rest, s.state) ??
-    scanMiscDirective(word, rest, features) ?? {
+    scanMiscDirective(word, rest, features, 1 + body.length - rest.length) ?? {
       kind: 'BadDirectiveTrivia',
       structure: { directive: word || null },
       diagnostics: [['CS1024', 'Preprocessor directive expected']],

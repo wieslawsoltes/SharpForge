@@ -42,7 +42,7 @@ export const InitializerLowering = Base =>
       // Index arguments are evaluated once, before the value; the object itself is already in a temporary.
       const target = indexKinds.has(entry.target.kind) ? this.spillOperands(entry.target, sink, { receiver: false }) : entry.target;
       if (entry.value.kind === 'ObjectInitializer') return this.initializerEffects(entry.value, this.rereadIn(target), sink);
-      sink.effects.push(this.storeInto(target, this.expression(entry.value)));
+      sink.effects.push(this.storeIntoTarget(target, this.expression(entry.value)));
       return undefined;
     }
     /** A reader that evaluates `target` afresh on the object of the enclosing initializer. */

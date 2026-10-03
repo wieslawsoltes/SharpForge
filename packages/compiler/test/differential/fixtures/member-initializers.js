@@ -110,7 +110,7 @@ const outputs = [
         public int this[int r, int c] { get { return cells[r * 3 + c]; } set { cells[r * 3 + c] = value; } }
         public string this[string key] { get { return key + "!"; } }
     }
-    class Holder { public Grid Grid = new Grid(); public Grid[] Grids = new Grid[2]; }
+    class Holder { public Grid Grid = new Grid(); public string[] Names = new string[2]; }
     class Program
     {
         static int calls;
@@ -119,8 +119,8 @@ const outputs = [
         {
             var g = new Grid { [0] = 4, [1, 1] = 6, Row = { [0] = 7, [2] = 9 } };
             Console.WriteLine(g[0] + " " + g[4] + " " + g[1, 1] + " " + g.Row[0] + g.Row[1] + g.Row[2] + " " + g["k"]);
-            var h = new Holder { Grid = { [Next()] = 10, [Next()] = 11 }, Grids = { [0] = new Grid { [8] = 5 } } };
-            Console.WriteLine(h.Grid[0] + " " + h.Grid[1] + " " + calls + " " + h.Grids[0][8]);
+            var h = new Holder { Grid = { [Next()] = 10, [Next()] = 11 }, Names = { [1] = "one" } };
+            Console.WriteLine(h.Grid[0] + " " + h.Grid[1] + " " + calls + " " + h.Names[1]);
         }
     }
   `,

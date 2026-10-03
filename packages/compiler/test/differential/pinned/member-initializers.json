@@ -3,7 +3,7 @@
   "member-initializers/evaluation-order":{"hash":"1fb731bb8e7c0264","kind":"output","langVersion":"14.0","diagnostics":[],"output":"argument\nctor 1\nvalue A\nset A 2\nindex\nvalue index\nset [3] 4\nvalue B\n9\n"},
   "member-initializers/nested-object-initializer-reads-the-member-each-time":{"hash":"02003efe953ddb80","kind":"output","langVersion":"14.0","diagnostics":[],"output":"2\n1 2 3 0\n0\n"},
   "member-initializers/nested-collection-initializer":{"hash":"d733921bf627333d","kind":"output","langVersion":"14.0","diagnostics":[],"output":"3\n3plum\n7\n"},
-  "member-initializers/index-initializers-on-arrays-and-indexers":{"hash":"ff8795661304f91b","kind":"output","langVersion":"14.0","diagnostics":[],"output":"4 6 6 709 k!\n10 11 2 5\n"},
+  "member-initializers/index-initializers-on-arrays-and-indexers":{"hash":"e07b27f9c704687f","kind":"output","langVersion":"14.0","diagnostics":[],"output":"4 6 6 709 k!\n10 11 2 one\n"},
   "member-initializers/index-initializer-with-nested-initializer":{"hash":"42fdfa17a6b09d54","kind":"output","langVersion":"14.0","diagnostics":[],"output":"index 1\nindex 2\n3\n5five7\n"},
   "member-initializers/user-collection-add-overloads":{"hash":"3ea2680f5686c205","kind":"output","langVersion":"14.0","diagnostics":[],"output":"123\nispti\n"},
   "member-initializers/extension-add":{"hash":"ab1910ac47aced8e","kind":"output","langVersion":"14.0","diagnostics":[],"output":"8\n3bc\n"},

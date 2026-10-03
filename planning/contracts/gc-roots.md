@@ -8,6 +8,8 @@ The non-moving collector calls ManagedHeap.rootProvider, pins, extra allocation 
 | CIL active frames | cil-vm.js CilVirtualMachine.roots | args, locals, stack, constructor return object, byref owners, exceptions |
 | Source exception continuations | execution/source-eh.js roots | unwind return values/faults, current/caught frame exceptions, VM current/pending faults |
 | Static/cache | both VM roots | statics and cached string/constant references |
+| Runtime type objects | execution/tokens.js runtimeTypeRoots | canonical System.Type objects, scoped to the VM and cleared on stop |
+| Interned strings | execution/strings.js stringRoots | strong intern pools retain entries; weak pools retain only live handles |
 | Parked contexts | scheduler.js CooperativeScheduler.roots | task/thread/delegate, wait task, frame state, resume fault; terminal contexts excluded |
 | Pending tasks | scheduler.js CooperativeScheduler.roots | waiting task, dependencies, error reference |
 | Platform | platform.js ManagedPlatform.roots | app, windows, singletons, pending objects, host and animation providers |
@@ -18,6 +20,8 @@ The non-moving collector calls ManagedHeap.rootProvider, pins, extra allocation 
 Snapshot heap copies retain old contents without making them current live objects. Restoring preserves monotonically increasing generation and frame identities. Native/Rust stacks must publish roots explicitly before yielding; no conservative native stack scan is specified.
 
 ## Reviewed sites
+- `execution/strings.js:roots:1` — StringInternPool.roots yields strong pool entries and omits weak entries.
+- `execution/strings.js:roots:2` — stringRoots delegates to the VM-owned pool; both VM root providers call it.
 - `cil-vm.js:roots:1` — packages/runtime/src/cil-vm.js:21; ptions);this.heap.rootProvider=()=>this.roots();this.frames=[];this.statics=new
 - `cil-vm.js:roots:2` — packages/runtime/src/cil-vm.js:29; reInitialized(entry.ownerToken); } *roots(){yield* this.platform?.roots()??[
 - `cil-vm.js:roots:3` — packages/runtime/src/cil-vm.js:29; ); } *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots

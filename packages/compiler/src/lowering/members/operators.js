@@ -33,7 +33,7 @@ export const OperatorLowering = Base =>
       if (left.kind !== 'IndexerAccess' || !this.g.isSource(left.property)) return super.exprAssignment(node);
       const sink = { locals: [], effects: [] },
         target = this.spillOperands(left, sink);
-      return n.sequence(sink.locals, sink.effects, this.storeInto(target, this.expression(node.right)));
+      return n.sequence(sink.locals, sink.effects, this.storeIntoTarget(target, this.expression(node.right)));
     }
     exprCompoundAssignment(node) {
       const left = node.left;
@@ -45,7 +45,7 @@ export const OperatorLowering = Base =>
       if (!operation) return this.unsupported('this compound assignment', node.syntax);
       const computed = this.expression({ ...operation, left: substitute(operation.left, left, current) }),
         value = this.convertBack(computed, left, node);
-      return n.sequence(sink.locals, sink.effects, this.storeInto(target, value));
+      return n.sequence(sink.locals, sink.effects, this.storeIntoTarget(target, value));
     }
     /** The result of the operator converted to the type of the target (`double d; d += 1` computes in double). */
     convertBack(value, target, node) {
@@ -61,10 +61,10 @@ export const OperatorLowering = Base =>
         target = this.spillOperands(operand, sink),
         type = this.imageType(operand.type, node.syntax),
         step = value => this.stepped(node, value, type);
-      if (!node.isPostfix) return n.sequence(sink.locals, sink.effects, this.storeInto(target, step(this.expression(target))));
+      if (!node.isPostfix) return n.sequence(sink.locals, sink.effects, this.storeIntoTarget(target, step(this.expression(target))));
       const old = this.temp(type, 'old');
       sink.locals.push(old);
-      sink.effects.push(n.assign(n.local(old), this.expression(target)), this.storeInto(target, step(n.local(old))));
+      sink.effects.push(n.assign(n.local(old), this.expression(target)), this.storeIntoTarget(target, step(n.local(old))));
       return n.sequence(sink.locals, sink.effects, n.local(old));
     }
     /** The incremented or decremented value: the user-defined operator, or `value + 1` / `value - 1`. */

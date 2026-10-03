@@ -10,6 +10,7 @@ import { specialTypeFromKeyword } from './special-types.js';
 import { MethodSymbol, PropertySymbol, ParameterSymbol, MethodKind, DeclarationModifiers } from './members.js';
 import { Accessibility } from './types.js';
 import { declareSpanTypes } from './span-types.js';
+import { declareAsyncEnumeration } from './async-enumeration.js';
 import { declareCoreTypeRelations } from './core-type-relations.js';
 
 const keywordNames = [
@@ -71,6 +72,9 @@ export class CoreTypes {
     Object.assign(this, declareSpanTypes(this), declareCoreTypeRelations(this));
     this.task = bridge.coreType('System_Threading_Tasks_Task');
     this.taskT = bridge.coreType('System_Threading_Tasks_Task_T');
+    this.valueTask = bridge.coreType('System_Threading_Tasks_ValueTask');
+    this.valueTaskT = bridge.coreType('System_Threading_Tasks_ValueTask_T');
+    declareAsyncEnumeration(this);
     this.type = bridge.coreType('System_Type');
     this.attribute = bridge.coreType('System_Attribute');
   }

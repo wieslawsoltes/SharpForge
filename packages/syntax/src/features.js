@@ -131,7 +131,7 @@ const table = [
       'StaticAnonymousFunction|static anonymous function;ExternLocalFunctions|extern local functions;ModuleInitializers|module initializers;' +
       'FunctionPointers|function pointers;NativeInt|native-sized integers;LocalFunctionAttributes|local function attributes;' +
       'LambdaDiscardParameters|lambda discard parameters;ExtensionGetEnumerator|extension GetEnumerator;ExtensionGetAsyncEnumerator|extension ' +
-      'GetAsyncEnumerator;-PragmaWarningEnable|pragma warning enable;AndPattern|and pattern;OrPattern|or pattern;NotPattern|not pattern;' +
+      'GetAsyncEnumerator;AndPattern|and pattern;OrPattern|or pattern;NotPattern|not pattern;' +
       'TypePattern|type pattern;ParenthesizedPattern|parenthesized pattern;RelationalPattern|relational pattern;' +
       'DefaultTypeParameterConstraint|default type parameter constraints;ExtendedPartialMethods|extended partial methods;' +
       'MemberNotNull|MemberNotNull attribute;VarianceSafetyForStaticInterfaceMembers|variance safety for static interface members;' +

@@ -7,6 +7,8 @@ import { lookupMembers } from '../inheritance.js';
 import { findConstruction, implementsInterface } from '../../symbols/substitution.js';
 import { checkRefReturn } from '../ref-locals.js';
 import { numericKind } from '../../conversions/numeric.js';
+import { reportAwaitOutsideAsync } from '../async.js';
+import { bindAsyncForEach, isOnlyAsyncEnumerable } from '../async-streams.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 const isSourceType = t => {
@@ -22,10 +24,15 @@ export const FlowStatementBinding = Base =>
       const collection = this.value(syntax.expression);
       this.pushScope();
       try {
-        let element = null;
+        let element = null,
+          enumeration = null;
         const type = collection.type;
+        if (syntax.awaitKeyword) reportAwaitOutsideAsync(this, syntax.awaitKeyword);
         if (!collection.hasErrors && type && !type.isErrorType()) {
-          if (type instanceof ArrayTypeSymbol) element = type.elementType;
+          if (syntax.awaitKeyword) {
+            enumeration = bindAsyncForEach(this, collection, syntax.expression);
+            element = enumeration?.elementType ?? unknown;
+          } else if (type instanceof ArrayTypeSymbol) element = type.elementType;
           else if (type.specialType === 'System_String') element = this.core.char;
           else {
             const getEnumerator = lookupMembers(type, 'GetEnumerator', this.core, { within: this.c.containingType }).members.find(
@@ -48,7 +55,10 @@ export const FlowStatementBinding = Base =>
               const generic = findConstruction(type, this.core.ienumerableT, this.core);
               if (generic) element = generic.typeArguments[0].type;
               else if (implementsInterface(type, this.core.ienumerable, this.core)) element = this.core.object;
-              else if (
+              else if (isOnlyAsyncEnumerable(type, this.core, this.c.containingType)) {
+                this.report(syntax.expression, 'CS8414', [this.display(type), 'GetEnumerator']);
+                element = unknown;
+              } else if (
                 !isSourceType(type) &&
                 type.typeKind !== TypeKind.TypeParameter &&
                 !numericKind(type) &&
@@ -82,7 +92,7 @@ export const FlowStatementBinding = Base =>
         const loop = this.enterLoop(),
           body = this.embedded(syntax.statement);
         this.exitLoop();
-        return stmt('ForEach', syntax, true, { collection, local, elementType: element, body });
+        return stmt('ForEach', syntax, true, { collection, local, elementType: element, body, isAwait: !!syntax.awaitKeyword, enumeration });
       } finally {
         this.popScope();
       }
@@ -263,7 +273,7 @@ export const FlowStatementBinding = Base =>
             syntax.returnKeyword,
             this.c.isAsync && this.c.declaredReturnType && this.c.declaredReturnType.equals(this.core.task) ? 'CS1997' : 'CS0127',
             this.c.isAsync && this.c.declaredReturnType?.equals(this.core.task)
-              ? []
+              ? [this.c.method?.toDisplayString() ?? 'lambda expression', 'Task']
               : [
                   this.c.isLambda
                     ? this.c.isAnonymousMethod
