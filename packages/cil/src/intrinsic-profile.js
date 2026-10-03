@@ -1,4 +1,5 @@
 import {memoryMethodDefinition} from './memory-profile.js';
+import {varargsIntrinsicDefinitions} from './varargs-profile.js';
 import {exceptionIntrinsicDefinitions} from './exception-profile.js';
 import {asyncMethodDefinition} from './async-profile.js';
 import {numericAliases} from '@sharpforge/bytecode';
@@ -71,6 +72,8 @@ for(const [owner,result] of [['System.Int32','int'],['System.Double','double'],[
 for(const d of numericIntrinsicDefinitions)add(d.owner,d.name,d.parameters,d.returnType,d.isStatic,d.implementation==='object'?'objectCtor':d.implementation);
 
 for(const d of syncIntrinsicDefinitions)add(d.owner,d.name,d.parameters,d.returnType,d.isStatic,d.implementation==='object'?'objectCtor':d.implementation);
+
+for(const d of varargsIntrinsicDefinitions)add(d.owner,d.name,d.parameters,d.returnType,d.isStatic,d.implementation);
 
 const builtinDefinitions=new Map(definitions),frameworkDefinitions=new Map();
 
