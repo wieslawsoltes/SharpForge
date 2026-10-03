@@ -57,12 +57,40 @@ per-method call/backedge counts and fallback reasons. It exposes no executable
 objects. Options also bound `maxMethods` (64), `maxMethodInstructions` (4096) and
 `maxConcurrentCompilations` (2). Capacity exhaustion retains interpreter execution.
 
+`backedgeThreshold` applies to one executed source/target edge, including separate
+destinations of a `switch`; untaken backward branches do not count. Unrelated loops
+do not combine their counts to meet it. `methods[].backedges` remains the aggregate
+number for compatibility. New `backedgeSites` rows contain `fromOffset`, `toOffset`
+and `count`, sorted by source then target IL byte offset. Both the rows and returned
+array are immutable copies. A self-edge at the same offset counts as a backedge.
+
+`maxBackedgesPerMethod` defaults to 1024 and accepts integers from 1 through 65536.
+Only executed edges allocate counters; warm hits use numeric nested-map lookups.
+When the cap is reached, existing sites continue counting. Executions of omitted
+sites increment `backedgeOverflow` and the aggregate, without allocating more
+site records. Such omitted edges cannot independently trigger compilation, while
+the method call threshold remains available. Thus the sum of retained site counts
+plus overflow equals the aggregate. All these derived counters reset with the code
+epoch on restore, edit or stop; none enter snapshots.
+
 Encoding is bounded and scheduled through a promise; actual module compilation
 uses asynchronous `WebAssembly.instantiate`. Synchronous `run()` cannot service
 promise completions during a long loop. Use `runAsync()` for background OSR or
 await preparation before synchronous execution. CSP that blocks Wasm compilation
 produces `WASM_COMPILE` fallback. There is no `eval`, generated JavaScript, Worker
 process, linear-memory heap copy or new host capability.
+
+Crossing a hot threshold requests compilation at that instruction. A free
+compilation slot is required; a busy slot is retried while the method executes.
+The threshold does not guarantee completion within that many guest instructions
+or a host time limit.
+`runAsync()` yields through host timers between running slices, allowing queued
+encoding and native asynchronous compilation to progress while later slices
+continue interpreting. The first executed backward target after code becomes
+ready can enter the tier. A short method or synchronous `run()` can finish before
+compilation completes, producing no OSR. This is JavaScript event-loop scheduling,
+not a dedicated compiler thread managed by this runtime. Native engine scheduling
+and CSP availability determine when or whether the code becomes ready.
 
 ## Heap and deoptimization contract
 
@@ -129,3 +157,12 @@ median/p95/p99, JS allocations and Wasm binary bytes, and compare the same verif
 workloads with tiering disabled. Actual OS/browser/engine versions and fallback
 reasons must accompany measurements. A prewarmed entry run cannot substitute for
 the independent live-loop OSR regression.
+
+`tests/a05-wasm-backedges.test.js` adds per-edge threshold isolation, distinct
+switch destinations, capacity/invalid bounds, untaken and self-edge boundaries,
+restore/cancellation, opt-out, and an automatic `runAsync()` long-loop regression.
+That regression never calls `prepareWasmTier`: it checks real pending compilation,
+OSR while the method is still running, TierUp delivery, and interpreter-equivalent
+stdout, result and instruction count. It is prepared, not executed. The root's
+serial queue must qualify it on each affected host; no latency or speedup is
+inferred from a successful functional transition.

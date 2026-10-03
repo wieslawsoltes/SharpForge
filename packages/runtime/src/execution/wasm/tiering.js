@@ -3,9 +3,10 @@ import {instantiatedMethod} from '../generics.js';
 import {invokeWasmEntry, leaveWasmFrame} from './deopt.js';
 import {wasmTierState, wasmTierEnabled, wasmMethodRecord, wasmFrameState} from './tiering-state.js';
 import {RuntimeEventName} from '../runtime-events.js';
+import {countWasmBackedge, wasmBackedgeStatistics} from './backedge-counters.js';
 
 function considerCompilation(vm, state, record) {
-  if (record.status === 'cold' && (record.calls >= state.options.callThreshold || record.backedges >= state.options.backedgeThreshold)) {
+  if (record.status === 'cold' && (record.calls >= state.options.callThreshold || record.hottestBackedge >= state.options.backedgeThreshold)) {
     compileWasmMethod(vm, state, record);
   }
 }
@@ -15,7 +16,7 @@ function recordBackedge(vm, state, record, current, frame, index) {
   const instruction = frame.method.instructions[index];
   if (instruction.name !== 'switch' && !instruction.operandKind.startsWith('br')) return;
   if (!frame.method.instructions[frame.pc]) return;
-  record.backedges++;
+  countWasmBackedge(state, record, index, frame.pc);
   current.nextEntry = frame.pc;
   considerCompilation(vm, state, record);
 }
@@ -109,5 +110,6 @@ export function wasmTierStatistics(vm) {
   const state = wasmTierState(vm);
   return Object.freeze({enabled: wasmTierEnabled(vm) && !state.disposed, epoch: state.epoch, ...state.statistics,
     methods: Object.freeze([...state.records].map(record => Object.freeze({token: record.method.token,
-      status: record.status, calls: record.calls, backedges: record.backedges, reason: record.reason})))});
+      status: record.status, calls: record.calls, backedges: record.backedges,
+      backedgeSites: wasmBackedgeStatistics(record), backedgeOverflow: record.backedgeOverflow, reason: record.reason})))});
 }
