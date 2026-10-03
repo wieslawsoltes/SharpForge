@@ -14,8 +14,9 @@ crate paths and `inventory`, `address`, `thread`, `miri`, `loom`. It follows E03
 core-only ordinary PR policy: full-ci PRs, merge groups and manual dispatch can run
 these additional jobs. Tokens are read-only, action SHAs reuse the existing Rust
 workflow, and artifacts are unique per crate, lane and workflow attempt. A focused
-Node regression in ordinary core scans the actual product source without invoking
-Rust, so a newly undocumented unsafe block fails before deferred native execution.
+Node regression scans the actual product source without invoking Rust during the
+scheduled Node validation. Ordinary core does not execute Node regressions; the
+safety matrix also applies this inventory before any native execution.
 
 | Lane | Command policy | Qualification boundary |
 | --- | --- | --- |
@@ -99,7 +100,7 @@ does not satisfy that blocked portion of #505. No fuzzing pass or coverage is cl
 Run these only in the shared serial validation slot:
 
 ```sh
-node --test-concurrency=1 --test tests/conformance/rust/*.test.js
+node scripts/limited.js node --test tests/conformance/rust/safety.test.js
 python3 scripts/conformance/rust/safety.py --crate gc --lane inventory --output artifacts/rust-safety/gc-inventory.json
 python3 scripts/conformance/rust/safety.py --crate runtime --lane miri --plan --output artifacts/rust-safety/runtime-miri.json
 node scripts/planning/check-test-manifests.js

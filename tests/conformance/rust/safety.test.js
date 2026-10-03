@@ -41,7 +41,7 @@ function metadata(t, { loom = false, source = 'pub fn fixture() {}\n' } = {}) {
   return directory;
 }
 
-test('actual product crates are inventoried on core without Rust execution', () => {
+test('actual product crates are inventoried without Rust execution', () => {
   for (const crate of ['gc', 'runtime']) {
     const result = invoke({ operation: 'inventory', root, crate });
     assert(['passed', 'unsupported'].includes(result.status), JSON.stringify(result));
