@@ -1,4 +1,5 @@
 import { EditorCommandContext } from '../commands/context.js';
+import { transformOffset } from '../selections.js';
 
 /** CodeMirror document protocol over the editor's native buffer. It owns no text, history or rendering copy. */
 export class NativeCodeMirrorDocument {
@@ -10,7 +11,8 @@ export class NativeCodeMirrorDocument {
     this.listeners = new Map();
     this.marks = new Set();
     this.markSequence = 0;
-    this.cleanVersion = editor.model?.version ?? editor.model?.buffer?.version ?? 0;
+    this.cleanVersion = this.changeGeneration();
+    this.observeModel();
   }
   getDoc() { return this; }
   getValue(separator) {
@@ -82,9 +84,25 @@ export class NativeCodeMirrorDocument {
   redo() { this.editor.undo(true); }
   historySize() { return { undo: this.editor.model?.undoStack?.depth ?? 0, redo: this.editor.model?.undoStack?.redoDepth ?? 0 }; }
   clearHistory() { this.editor.model?.undoStack?.clear?.(); }
-  changeGeneration() { return this.editor.model?.buffer?.version ?? 0; }
+  changeGeneration() { return this.editor.model?.undoStack?.stateId ?? this.editor.model?.buffer?.version ?? 0; }
   isClean(generation = this.cleanVersion) { return generation === this.changeGeneration(); }
   markClean() { this.cleanVersion = this.changeGeneration(); }
+  observeModel() {
+    this.modelSubscription?.();
+    this.modelSubscription = this.editor.model?.onDidChange?.(change => {
+      for (const mark of this.marks) {
+        mark.from = transformOffset(mark.from, change.changes, mark.options.inclusiveLeft ? 'left' : 'right');
+        mark.to = transformOffset(mark.to, change.changes, mark.options.inclusiveRight ? 'right' : 'left');
+        mark.to = Math.max(mark.from, mark.to);
+      }
+      this.signal('changes', change);
+    });
+  }
+  setModel() {
+    for (const mark of this.marks) mark.clear();
+    this.cleanVersion = this.changeGeneration();
+    this.observeModel();
+  }
   getOption(name) { return name === 'readOnly' ? this.context.readOnly : this.options.get(name) ?? this.editor.options?.[name]; }
   setOption(name, value) {
     this.options.set(name, value);
@@ -112,5 +130,11 @@ export class NativeCodeMirrorDocument {
   scrollIntoView(position) { this.editor.view?.reveal?.(this.indexFromPos(position.from ?? position)); }
   coordsChar(position) { return this.posFromIndex(this.editor.view.positionAt(position.left, position.top)); }
   refresh() { this.editor.paint?.(); }
-  dispose() { for (const mark of this.marks) mark.clear(); this.listeners.clear(); this.state.sharpforgeEditor = null; }
+  dispose() {
+    this.modelSubscription?.();
+    for (const mark of this.marks) mark.clear();
+    this.context.dispose();
+    this.listeners.clear();
+    this.state.sharpforgeEditor = null;
+  }
 }
