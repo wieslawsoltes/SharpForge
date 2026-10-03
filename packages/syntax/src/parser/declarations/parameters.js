@@ -17,7 +17,7 @@ export const parameterMethods = {
   /** Parameters up to `close`. After a `,` a parameter is always parsed, so `M(int a, )` reports the missing one. */
   parameters(close) {
     const list = [];
-    if (this.at(close) || this.at('eof')) return list;
+    if (this.at(close) || this.at('eof') || (!this.at(',') && !this.canStartParameter())) return list;
     for (;;) {
       const before = this.i;
       list.push(this.parameter());
@@ -28,8 +28,11 @@ export const parameterMethods = {
     return list;
   },
   canStartParameter() {
-    const token = this.current;
-    return token.kind === '[' || token.kind === '__arglist' || parameterModifiers.has(token.kind) || this.isPredefined(token) || this.isId(token);
+    const token = this.current,
+      kind = token.kind;
+    if (kind === '[' || kind === '(' || kind === '__arglist' || parameterModifiers.has(kind)) return true;
+    if (kind === 'delegate') return this.peek().kind === '*';
+    return this.isPredefined(token) || this.isId(token);
   },
   parameter() {
     const attributeLists = this.attributeLists(),

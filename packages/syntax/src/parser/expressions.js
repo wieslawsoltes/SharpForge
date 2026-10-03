@@ -1,14 +1,6 @@
 import { Precedence, binaryOperators, assignmentOperators, prefixOperators } from '../lexer/operators.js';
 /** Expression parsing by precedence climbing: assignment, conditional, binary, unary, postfix and primary forms. */
-const P = Precedence,
-  literalKinds = {
-    NumericLiteralToken: 'NumericLiteralExpression',
-    CharacterLiteralToken: 'CharacterLiteralExpression',
-    TrueKeyword: 'TrueLiteralExpression',
-    FalseKeyword: 'FalseLiteralExpression',
-    NullKeyword: 'NullLiteralExpression',
-    ArgListKeyword: 'ArgListExpression'
-  };
+const P = Precedence;
 export const expressionMethods = {
   missingName() {
     return this.n('IdentifierName', this.cache.missing('IdentifierToken'));
@@ -59,9 +51,9 @@ export const expressionMethods = {
         if (min > P.Conditional) break;
         const question = this.take();
         this.colonDepth = (this.colonDepth ?? 0) + 1;
-        const whenTrue = this.expressionOrRef();
+        const whenTrue = this.expressionOrThrow();
         this.colonDepth--;
-        left = this.n('ConditionalExpression', left, question, whenTrue, this.expect(':'), this.expressionOrRef());
+        left = this.n('ConditionalExpression', left, question, whenTrue, this.expect(':'), this.expressionOrThrow());
         continue;
       }
       if (text === 'switch') {
@@ -94,7 +86,7 @@ export const expressionMethods = {
       }
       if (text === '>>>') this.feature('UnsignedRightShift', start, this.tokens[this.i + operator.count - 1]);
       const token = this.takeOperator(operator);
-      left = this.n(kind, left, token, this.expression(text === '??' ? precedence : precedence + 1));
+      left = this.n(kind, left, token, text === '??' ? this.coalesceOperand(precedence) : this.expression(precedence + 1));
     }
     return left;
   },
@@ -122,10 +114,7 @@ export const expressionMethods = {
         close = this.expect(')');
       return this.n('CastExpression', open, type, close, this.expression(P.Cast));
     }
-    if (kind === 'throw') {
-      this.feature('ThrowExpression', token);
-      return this.n('ThrowExpression', this.take(), this.expression(P.Coalescing));
-    }
+    if (kind === 'throw') return this.throwExpression(false, min);
     if (kind === 'ref') return this.n('RefExpression', this.take(), this.expression());
     return this.postfix(this.primary(min), min);
   },
@@ -199,17 +188,11 @@ export const expressionMethods = {
     const token = this.current,
       kind = token.kind;
     if (kind === 'interpolated') return this.interpolatedString();
-    if (Object.hasOwn(literalKinds, token.syntaxKind)) return this.n(literalKinds[token.syntaxKind], this.take());
-    if (token.syntaxKind.endsWith('StringLiteralToken'))
-      return this.n(token.flags?.utf8 ? 'Utf8StringLiteralExpression' : 'StringLiteralExpression', this.take());
+    const literal = this.literalExpression();
+    if (literal) return literal;
     switch (kind) {
       case 'default':
-        if (this.peek().kind === '(') {
-          this.feature('Default', token);
-          return this.n('DefaultExpression', this.take(), this.take(), this.type(), this.expect(')'));
-        }
-        this.feature('DefaultLiteral', token);
-        return this.n('DefaultLiteralExpression', this.take());
+        return this.defaultExpression();
       case 'typeof':
         return this.n('TypeOfExpression', this.take(), this.expect('('), this.type(), this.expect(')'));
       case 'sizeof':
@@ -243,7 +226,11 @@ export const expressionMethods = {
   },
   predefinedOrName() {
     const token = this.current;
-    if (this.isPredefined(token)) return this.n('PredefinedType', this.take());
+    if (this.isPredefined(token)) {
+      // A predefined type is an expression only as the receiver of a member access (`int.Parse`).
+      if (this.peek().kind !== '.') this.error(token, 'CS1525', `Invalid expression term '${token.text}'`);
+      return this.n('PredefinedType', this.take());
+    }
     if (this.isWord(token, 'from') && this.isQueryStart()) return this.queryExpression();
     if (this.isWord(token, 'var') && this.peek().kind === '(' && this.isDeconstructionAhead()) return this.declarationExpression();
     if (this.peek().kind === '::') {
