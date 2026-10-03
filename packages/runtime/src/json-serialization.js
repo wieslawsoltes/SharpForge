@@ -22,7 +22,9 @@ export function serializeJson(platform, input) {
     if (depth > JSON_DEPTH_LIMIT || ++nodes > JSON_NODE_LIMIT) {
       throw new ManagedFault('JsonException', 'Serialization depth or node limit exceeded');
     }
-    value = platform.native(value);
+    // Preserve the box type before native conversion erases Boolean/Char identity.
+    const boxed = isReference(value) && platform.heap.get(value).kind === 'box';
+    if (!boxed) value = platform.native(value);
     if (!isReference(value)) {
       value = primitiveValue(value, declaredType);
       if (typeof value === 'number' && !Number.isFinite(value)) {

@@ -11,11 +11,14 @@ const source = readFileSync(new URL('Cases.cs', directory), 'utf8');
 const reference = JSON.parse(readFileSync(new URL('oracle.json', directory), 'utf8'));
 const nativeCharStatement = "objects.Add(1, '<');";
 assert.equal(source.split(nativeCharStatement).length, 2, 'Adapt exactly one unsupported source Char expression');
-const supportedSource = source.replace(nativeCharStatement, 'objects.Add(1, "<");');
+const nativeCatch = 'catch (JsonException)';
+assert.equal(source.split(nativeCatch).length, 2, 'Adapt exactly one unsupported typed catch');
+const supportedSource = source.replace(nativeCharStatement, 'objects.Add(1, "<");')
+  .replace(nativeCatch, 'catch (Exception)');
 let compiled;
 
 for (const engine of ['source', 'cil']) {
-  test(`SF-A09-B02 ${engine} supported source profile matches native JSON with explicit Char-to-string adaptation`, () => {
+  test(`SF-A09-B02 ${engine} supported source profile matches native JSON with explicit Char/catch profile adaptations`, () => {
     compiled ??= compileToIL(supportedSource);
     assert.equal(compiled.success, true, JSON.stringify(compiled.diagnostics));
     const vm = engine === 'source' ? new VirtualMachine(compiled.image) : new CilVirtualMachine(compiled.assembly);
@@ -35,11 +38,15 @@ for (const engine of ['source', 'cil']) {
   test(`SF-A09-B02 ${engine} integer dictionary retains nonfinite and unsupported-object faults`, () => {
     const cases = [
       ['using System.Text.Json; using System.Collections.Generic; ' +
-        'var values = new Dictionary<int, object>(); values.Add(1, new object()); JsonSerializer.Serialize(values);',
+        'class Payload {} class Program { static void Main() { ' +
+        'var values = new Dictionary<int, object>(); values.Add(1, new Payload()); JsonSerializer.Serialize(values); } }',
       'NotSupportedException'],
       ['using System.Text.Json; using System.Collections.Generic; ' +
         'var values = new Dictionary<int, double>(); values.Add(1, 0.0 / 0.0); JsonSerializer.Serialize(values);',
-      'JsonException']
+      'JsonException'],
+      ['using System.Text.Json; using System.Collections.Generic; ' +
+        'var values = new Dictionary<int, object>(); values.Add(1, values); JsonSerializer.Serialize(values);',
+      reference.lines.at(-1)]
     ];
     for (const [program, expected] of cases) {
       const built = compileToIL(program);
