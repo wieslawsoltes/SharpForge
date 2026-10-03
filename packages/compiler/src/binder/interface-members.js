@@ -101,6 +101,15 @@ export function staticMembersOfTypeParameter(parameter, name, core) {
     for (const m of iface.getMembers(name)) if (m.isStatic && (m.isAbstract || m.isVirtual)) out.push(m);
   return out;
 }
+/**
+ * A static abstract / virtual interface member named through a type (`T.Zero`, `IAdd<T>.Zero`): it can be reached
+ * only through a type parameter, which the access is then constrained to.
+ * @returns {null|{constrainedTo:object}|{code:string}} null for any other member; `code` is CS8926
+ */
+export function staticVirtualAccess(member, receiverType) {
+  if (!member.isStatic || !(member.isAbstract || member.isVirtual) || member.containingType?.typeKind !== TypeKind.Interface) return null;
+  return receiverType?.typeKind === TypeKind.TypeParameter ? { constrainedTo: receiverType } : { code: DiagnosticId.CS8926 };
+}
 /** An interface with static abstract members that lack a most specific implementation cannot be a type argument (CS8920). */
 export function canBeTypeArgument(iface) {
   return !(iface.typeKind === TypeKind.Interface && staticVirtualMembers(iface).some(m => m.isAbstract));

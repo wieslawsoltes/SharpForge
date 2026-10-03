@@ -122,7 +122,8 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   if (!compiled && !gatesVersion && !outside.length && !hasReferences && nothingToGenerate) return null;
   const usings = compiled && !gatesVersion && !hasReferences ? suspiciousUsings(compilation) : null,
     // ... and for the few language rules the pipeline does not check on constructs it compiles.
-    ruleCodes = compiled ? applicableRuleCodes(files) : null,
+    nullableContext = compilation.typedOptions?.nullableContext ?? compilation.options.nullableContext ?? compilation.options.nullable,
+    ruleCodes = compiled ? applicableRuleCodes(files, { nullableContext }) : null,
     rechecked = !!ruleCodes?.size;
   if (compiled && !gatesVersion && !hasReferences && !usings && !rechecked) return null;
   let result;

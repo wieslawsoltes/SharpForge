@@ -216,6 +216,9 @@ const detectors = {
   ParenthesizedLambdaExpression: functionFeatures,
   AnonymousMethodExpression: functionFeatures,
   Parameter: parameterFeatures,
+  // Roslyn gates the discard pattern as a recursive pattern (C# 8), next to the construct that contains it.
+  RecursivePattern: (node, context, use) => use('RecursivePatterns', node),
+  DiscardPattern: (node, context, use) => use('RecursivePatterns', node),
   ScopedType: (node, context, use) => use('RefFields', node.firstToken()),
   StackAllocArrayCreationExpression: stackAllocFeatures,
   ImplicitStackAllocArrayCreationExpression: stackAllocFeatures,

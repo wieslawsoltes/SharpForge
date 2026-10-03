@@ -8,19 +8,23 @@
  *   CS8618  non-nullable field or property not initialised when a constructor exits
  *   CS8625  null literal converted to a non-nullable reference type
  *
- * A state maps a variable to 'notNull' or 'maybeNull'; a variable without an entry has the state its declared
+ * A variable is a local, a parameter, a field or property of `this`, a static member, or a member of another variable
+ * (`x.Next.Name`). A state maps a variable to 'notNull' or 'maybeNull'; a variable without an entry has the state its declared
  * annotation gives it. Branches join to 'maybeNull' when either side is; `x == null`, `x is null`, `x is T`,
  * `x?.M()`, `x ?? y` and the analysis attributes (nullable/attributes.js) split or refine states. Loops iterate to a
  * fixed point of the state at the loop head, as Roslyn does (nullable/walker-loops.js).
  */
 import {DiagnosticId} from '../diagnostics/codes.js';
 import { NullableConditions } from './walker-conditions.js';
+import { NullableConditionalAccess } from './walker-conditional-access.js';
+import { NullableMemberSlots } from './walker-member-slots.js';
 import { NullableLoops } from './walker-loops.js';
 import { NullableRules } from './walker-rules.js';
 import { NOT_NULL, MAYBE_NULL, joinStates, FlowState, joinFlow } from './flow-state.js';
 import { NullableAnnotation, RefKind, SymbolKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { allowsNull, argumentStateAfterCall, doesNotReturn, membersNotNullAfterCall, resultState } from './attributes.js';
+import { frameworkResultState } from './framework-annotations.js';
 import { boundChildren } from '../flow/semantic-assignment.js';
 
 const isReferenceLike = type => !!type && type.isReferenceType === true;
@@ -60,15 +64,11 @@ class NullableWalkerCore {
 
   // ---- variables ----
 
-  /** The tracked variable an expression denotes: a local, a parameter or a field/auto-property of `this`. */
+  /** The tracked variable an expression denotes: a local or a parameter (members: nullable/walker-member-slots.js). */
   variableOf(expression) {
     if (!expression) return null;
     if (expression.kind === 'Local') return expression.local;
     if (expression.kind === 'Parameter') return expression.parameter;
-    const viaThis = !expression.receiver || expression.receiver.kind === 'This';
-    if (expression.kind === 'FieldAccess' && viaThis && !expression.field.isStatic)
-      return expression.field.originalDefinition ?? expression.field;
-    if (expression.kind === 'PropertyAccess' && viaThis && expression.property.isAutoProperty) return expression.property;
     return null;
   }
 
@@ -133,14 +133,6 @@ class NullableWalkerCore {
         this.replace(flow, joinFlow(branches.whenTrue, branches.whenFalse));
         return joinStates(whenTrue, whenFalse);
       }
-      case 'ConditionalAccess': {
-        this.expression(node.receiver, flow);
-        const inner = flow.clone();
-        const receiver = this.variableOf(node.receiver);
-        if (receiver) inner.set(receiver, NOT_NULL);
-        this.expression(node.whenNotNull, inner);
-        return MAYBE_NULL;
-      }
       case 'Lambda':
         if (node.body) this.lambdaBody(node.body, flow.clone());
         return NOT_NULL;
@@ -188,7 +180,7 @@ class NullableWalkerCore {
     const variable = this.variableOf(node);
     const tracked = variable ? flow.get(variable) : undefined;
     if (tracked !== undefined) return tracked;
-    return resultState(member) ?? this.declaredState(node);
+    return resultState(member) ?? frameworkResultState(member) ?? this.declaredState(node);
   }
 
   call(node, flow) {
@@ -200,15 +192,18 @@ class NullableWalkerCore {
     for (const argument of node.args ?? []) this.applyPostcondition(argument, null, flow);
     this.applyMemberPostconditions(method, null, flow);
     if (doesNotReturn(method)) this.replace(flow, new FlowState(new Map([['<unreachable>', NOT_NULL]])));
-    return resultState(method, { returnValue: true }) ?? (isAnnotated(method.returnTypeWithAnnotations) ? MAYBE_NULL : NOT_NULL);
+    const declared = resultState(method, { returnValue: true }) ?? frameworkResultState(method, node.receiver?.type);
+    return declared ?? (isAnnotated(method.returnTypeWithAnnotations) ? MAYBE_NULL : NOT_NULL);
   }
 
   argument(argument, method, flow) {
     const value = argument.expression ?? argument;
     const parameter = argument.parameter;
-    if (argument.refKind === RefKind.Out) {
+    if (argument.refKind === RefKind.Out || argument.refKind === RefKind.Ref) {
+      // The callee stores into the variable: afterwards it has the state the parameter type gives it.
+      if (value.receiver) this.dereference(value.receiver, flow);
       const variable = this.variableOf(value);
-      if (variable && parameter) flow.set(variable, isAnnotated(parameter.typeWithAnnotations) ? MAYBE_NULL : NOT_NULL);
+      if (variable && parameter) this.assignVariable(flow, variable, isAnnotated(parameter.typeWithAnnotations) ? MAYBE_NULL : NOT_NULL);
       return;
     }
     const state = this.expression(value, flow);
@@ -245,8 +240,13 @@ class NullableWalkerCore {
     const state = this.expression(node.right, flow);
     this.checkAssignment(target, node.right, state);
     const variable = this.variableOf(target);
-    if (variable) flow.set(variable, state);
+    if (variable) this.assignVariable(flow, variable, state, node.right);
     return state;
+  }
+
+  /** Stores a new value in a variable (members: nullable/walker-member-slots.js). */
+  assignVariable(flow, variable, state) {
+    flow.assign(variable, state);
   }
 
   /** Warns when a possibly null value is stored into a non-nullable reference location. */
@@ -354,7 +354,7 @@ class NullableWalkerCore {
       const local = declaration.local;
       const target = { kind: 'Local', local, type: local.type };
       this.checkAssignment(target, declaration.value, state);
-      flow.set(local, state);
+      this.assignVariable(flow, local, state, declaration.value);
     }
     return flow;
   }
@@ -387,4 +387,4 @@ class NullableWalkerCore {
 }
 
 /** The nullable flow walker: statements and expressions (above) composed with the condition and loop rules. */
-export class NullableWalker extends NullableRules(NullableLoops(NullableConditions(NullableWalkerCore))) {}
+export class NullableWalker extends NullableRules(NullableLoops(NullableConditionalAccess(NullableConditions(NullableMemberSlots(NullableWalkerCore))))) {}

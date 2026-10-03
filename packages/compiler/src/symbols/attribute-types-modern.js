@@ -23,6 +23,9 @@ export function modernAttributes(T) {
     // C# 10
     [compilerServices, 'AsyncMethodBuilderAttribute', types | T.Method, false, [[['builderType', 't']]], []],
     [compilerServices, 'InterpolatedStringHandlerAttribute', T.Class | T.Struct, false, [[]], []],
+    // `params string[]` is not declared: one to three argument names.
+    [compilerServices, 'InterpolatedStringHandlerArgumentAttribute', T.Parameter, false,
+      [[['argument', 's']], [['first', 's'], ['second', 's']], [['first', 's'], ['second', 's'], ['third', 's']]], []],
     // C# 11
     [codeAnalysis, 'SetsRequiredMembersAttribute', T.Constructor, false, [[]], []],
     [codeAnalysis, 'UnscopedRefAttribute', T.Method | T.Property | T.Parameter, false, [[]], []],

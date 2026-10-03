@@ -26,7 +26,7 @@ test('A02-B01 parser-level feature gating is active in Compilation.build', () =>
   const rows = [
     ['var x = 1; Console.WriteLine(x);', '2', 'CS8023', 'var'],
     ['int a = 1; Console.WriteLine($"{a}");', '5', 'CS8026', '$"{a}"'],
-    ['int a = 1; Console.WriteLine(a switch { _ => 2 });', '7', 'CS8107', 'switch'],
+    ['int a = 1; Console.WriteLine(a switch { 1 => 2 });', '7', 'CS8107', 'switch'],
     ['string s = null; s ??= "x"; Console.WriteLine(s);', '7', 'CS8107', '??='],
   ];
   for (const [body, langVersion, code, text] of rows) {
@@ -41,6 +41,14 @@ test('A02-B01 parser-level feature gating is active in Compilation.build', () =>
       false,
     );
   }
+  // Roslyn gates a discard pattern next to the switch expression that contains it ('recursive patterns').
+  const discard = inMain('int a = 1; Console.WriteLine(a switch { _ => 2 });');
+  assert.deepEqual(
+    compile(discard, { langVersion: '7' })
+      .diagnostics.filter(x => x.code === 'CS8107')
+      .map(d => slice(discard, d)),
+    ['switch', '_'],
+  );
   // A feature the binder gates itself is reported once.
   assert.equal(
     compile(inMain('object o = 1; Exception e = new("x"); Console.WriteLine(e.Message);'), { langVersion: '8' }).diagnostics.filter(
