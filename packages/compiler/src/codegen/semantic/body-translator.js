@@ -13,9 +13,11 @@ import { FunctionTranslation } from './translate-functions.js';
 import { PatternTranslation } from './translate-patterns.js';
 import { StatementTranslation } from './translate-statements.js';
 import { AwaitTranslation } from '../../lowering/async/async-methods.js';
+import { ByReferenceTranslation } from '../../lowering/by-reference.js';
 import { Locations } from '../../lowering/tuples/locations.js';
 import { TupleTranslation } from '../../lowering/tuples/translate-tuples.js';
 import { SynthesizedTextTranslation } from '../../lowering/tuples/translate-text.js';
+import { DeconstructionTranslation } from '../../lowering/tuples/translate-deconstruction.js';
 
 export { Frame } from './frame.js';
 
@@ -199,9 +201,11 @@ const families = [
   PatternTranslation,
   StatementTranslation,
   AwaitTranslation,
+  ByReferenceTranslation,
   Locations,
   TupleTranslation,
   SynthesizedTextTranslation,
+  DeconstructionTranslation,
 ];
 
 export class BodyTranslator extends families.reduce(
