@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "engine": "chromium",
+  "browserVersion": "143.0.7499.4",
+  "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+  "playwright": "1.57.0",
+  "commit": "f803047e4fb2d9056596dde26661631e36bb6c10",
+  "command": [
+    "/private/tmp/sharpforge-browser-matrix-venv/bin/python",
+    "scripts/conformance/browser/latency.py",
+    "--engine",
+    "chromium"
+  ],
+  "coldLaunchNavigationCompileRun": {
+    "samplesMs": [
+      864.7851659916341,
+      451.7180419061333,
+      470.9115829318762
+    ],
+    "p95Ms": 864.7851659916341,
+    "p99Ms": 864.7851659916341
+  },
+  "warmCompileRun": {
+    "samplesMs": [
+      63.60508291982114,
+      67.27700005285442,
+      64.81191702187061,
+      64.1047500539571,
+      73.58891586773098,
+      70.19708398729563,
+      75.32795798033476,
+      76.4386251103133,
+      83.43070792034268,
+      80.10399993509054,
+      60.84183300845325,
+      67.22899992018938,
+      60.388708021491766,
+      67.9863328114152,
+      67.82608386129141,
+      75.13958308845758,
+      78.9732919074595,
+      79.42837500013411,
+      76.45841711200774,
+      80.76575002633035,
+      66.50795787572861,
+      69.8675001040101,
+      67.15870904736221,
+      66.23195903375745,
+      78.40458396822214,
+      74.55429201945662,
+      72.15799996629357,
+      70.81595808267593,
+      77.37837499007583,
+      75.11220895685256
+    ],
+    "p95Ms": 80.76575002633035,
+    "p99Ms": 83.43070792034268
+  },
+  "pythonAllocationBytes": {
+    "current": 4154658,
+    "peak": 5041955
+  },
+  "browserAllocations": {
+    "status": "unavailable",
+    "reason": "No cross-engine browser allocation counter"
+  },
+  "scope": "Actual isolated browser processes with native storage and workers. OS disk cache not flushed. Python allocations exclude browser processes. Small sample quantiles are diagnostic, not a regression gate."
+}
