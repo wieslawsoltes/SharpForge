@@ -9,6 +9,7 @@
  *   CS0535 not implemented            CS0738 a candidate has the wrong return type
  *   CS0736 the candidate is static    CS0737 the candidate is not public
  *   CS0539 explicit member not found in the interface      CS0540 the type does not implement that interface
+ *   CS9334 an explicit implementation whose type differs from the member's
  * The resulting map (`type.interfaceImplementations`) is what a back end emits as MethodImpl rows / interface vtables.
  */
 import { TypeKind, SymbolKind, Accessibility } from '../symbols/types.js';
@@ -68,7 +69,8 @@ export function findImplementation(type, iface, member, core) {
     const explicit = t
       .getMembers()
       .find(m => m.explicitInterfaceType && m.explicitInterfaceType.equals(iface) && simpleName(m) === member.name && matches(m, member));
-    if (explicit) return { member: explicit, isExplicit: true };
+    // An explicit implementation must have exactly the type of the member it implements (CS9334): covariance does not apply.
+    if (explicit && sameType(typeOfMember(explicit), typeOfMember(member), explicit, member)) return { member: explicit, isExplicit: true };
     for (const c of t.getMembers(member.name)) {
       if (c.explicitInterfaceSyntax || !matches(c, member)) continue;
       const sameReturn = sameType(typeOfMember(c), typeOfMember(member), c, member);
@@ -132,8 +134,12 @@ export function bindInterfaceImplementations(type, core) {
       diagnostics.push({ code: 'CS0540', args: [m.toDisplayString(), iface.toDisplayString()], member: m, onInterfaceName: true });
       continue;
     }
-    if (!implementableMembers(iface).some(im => im.name === simpleName(m) && matches(m, im)))
-      diagnostics.push({ code: 'CS0539', args: [m.toDisplayString()], member: m });
+    const implemented = implementableMembers(iface).find(im => im.name === simpleName(m) && matches(m, im));
+    if (!implemented) diagnostics.push({ code: 'CS0539', args: [m.toDisplayString()], member: m });
+    else if (!sameType(typeOfMember(m), typeOfMember(implemented), m, implemented)) {
+      const args = [m.toDisplayString(), typeOfMember(implemented).toDisplayString(), implemented.toDisplayString()];
+      diagnostics.push({ code: 'CS9334', args, member: m });
+    }
   }
   // Only interfaces this type lists itself (or gains through them) are checked here; base classes were checked on their own.
   const inheritedFromBase = type.typeKind === TypeKind.Class && type.baseType ? allInterfacesOf(type.baseType, core) : [];

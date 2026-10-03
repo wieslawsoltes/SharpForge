@@ -23,14 +23,14 @@ import { attributeLocations, compilationLocations, describeTargets, knownLocatio
 import { isAccessible } from './accessibility.js';
 import { BodyBinder } from './body-binder.js';
 import { isSourceSymbol } from '../semantic/analysis-helpers.js';
-import { attributesNamed } from './bound-attributes.js';
-
-export { attributesNamed, fullNameOf } from './bound-attributes.js';
+import { fullNameOf, attributesNamed } from './bound-attributes.js';
 
 const defaultUsage = Object.freeze({ validOn: AttributeTargets.All, allowMultiple: false, inherited: true });
 const unknownUsage = Object.freeze({ validOn: AttributeTargets.All, allowMultiple: true, inherited: true, isUnknown: true });
 /** Bound expression kinds that are never an attribute argument, whatever their operands. */
 const neverConstant = new Set(['Call', 'ObjectCreation', 'Local', 'Parameter', 'PropertyAccess', 'This', 'Assignment', 'Lambda']);
+
+export { fullNameOf, attributesNamed };
 
 const constantOf = argument => {
   const value = argument?.constantValue;

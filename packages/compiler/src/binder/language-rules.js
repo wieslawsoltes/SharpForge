@@ -4,7 +4,9 @@
  * rule sees every family and the rules before it.
  */
 import { ExpressionVariableBinding } from './expression-variables.js';
+import { CSharp70Binding } from './csharp70.js';
+import { CSharp7xBinding } from './csharp7x.js';
 import { CSharp8Binding } from './csharp8.js';
 import { IndexRangeBinding } from './index-range.js';
 
-export const languageRules = [ExpressionVariableBinding, IndexRangeBinding, CSharp8Binding];
+export const languageRules = [CSharp70Binding, CSharp7xBinding, ExpressionVariableBinding, IndexRangeBinding, CSharp8Binding];
