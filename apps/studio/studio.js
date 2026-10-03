@@ -18,6 +18,7 @@ import {icon} from './icons.js';
 import {createAboutDialogs} from './dialogs/about.js';
 import {RuntimeTools} from './runtime-tools.js';
 import {createDesignerWorkbench} from './designer-workbench.js';
+import {DesignerMainAppSources} from './designer-main-app-sources.js';
 import {ProjectWizard} from './project-wizard.js';
 import {importWorkspaceRecords,workspaceManifestRecord,importWorkspaceZip,exportWorkspaceZip,validateWorkspaceSettings,workspaceCandidates,writeNewDirectory,decodeWorkspaceFile,encodeWorkspaceFile,prefixWorkspace,convertLegacySolution} from '../../packages/project-system/src/index.js';
 import {validateFilePlan,createProjectPlan,createItemPlan,projectTemplates,itemTemplates} from '../../packages/templates/src/index.js';
@@ -76,6 +77,9 @@ runtime.request=(method,params={})=>{
 };
 hydrate();
 let editor=null,advancedTools=null,designerTools=null,designerWorkbench=null,runtimeTools=null;
+const mainAppSources=new DesignerMainAppSources({
+ files:()=>state.files,workspaceId:()=>designerWorkbench?.workspaceId(),revision:()=>state.revision
+});
 const editors=new Map();
 const navigation=new NavigationHistory();let navigationReplay=false;
 const currentLocation=()=>editor&&state.active?{uri:state.active,start:editor.offset,end:editor.input.selectionEnd}:null;
@@ -106,6 +110,7 @@ advancedTools=new DebuggerExtensions({state,docking,onVisualSelection:ids=>desig
 
 designerWorkbench=studioServices.register('designer',()=>createDesignerWorkbench({
  state,docking,compiler,runtimeRequest,editors,commandRegistry,automation,hostDocument:document,settings:storage,
+ runtimeState:()=>mainAppSources.state(state.debug),
  toast,download,applyEdits,requestCompiler,runtimeOptions:()=>runtimeTools.launchOptions(),records:()=>explorerContext().records,choose:chooseExplorer,
  openSource:openFile,renderTree,renderPanel,saveLocal,saveSoon,loadWorkspace:loadDiskRecords,runApplication:()=>launch(false),
  selectVisual:(ids,{sessionId})=>{
@@ -246,15 +251,17 @@ async function launch(debug=true,options={}){
  if(debug&&state.debug?.state==='paused'){await runtime.request('resume',{mode:'continue'});return;}
  if(state.nativeMode){setPanel('msbuild');throw new Error('Build native projects with MSBuild, then Inspect IL to debug supported CIL. Native process attachment is unavailable; Portable PDBs can be loaded for supported managed DLLs.');}
  if(state.projectSystem?.projects.get(state.startupProject)?.outputType?.toLowerCase()==='library'){const built=await build();if(built?.success){await openAssemblyExplorer(built.assembly);toast('Library built. Select a method in Assembly Explorer.');}return;}
+ const sourceTicket=mainAppSources.capture({compilationFiles:serializedFiles(),eligible:!state.importedAssembly||state.buildDirty});
  const epoch=++state.launchEpoch;state.launchBusy=true;updateDebugButtons();
  try{const result=await build();if(epoch!==state.launchEpoch||!result?.success)return;
  state.programOutput='';state.frameId=null;state.lastManagedLaunch=null;state.debugSources=new Map();
  const stopOnEntry=options.stopOnEntry??state.debugSettings.stopOnEntry;
  log(debug?(stopOnEntry?'Debugger attached · explicit break on entry':'Debugger attached · running to breakpoint'):'Starting without breakpoints',debug?'debug':'system');setPanel(debug?'debug':'output');
+ mainAppSources.arm(sourceTicket,{compilationFiles:serializedFiles(),previousSessionId:state.runtimeSession});
  await runtime.request('launch',{assembly:result.assembly,...state.debugSettings,...runtimeTools.launchOptions(),...options,debug,stopOnEntry:debug&&stopOnEntry,breakpoints:state.breakpoints,functionBreakpoints:state.functionBreakpoints,exceptionBreak:state.debugSettings.exceptionBreak});
- }finally{state.launchBusy=false;updateDebugButtons();}
+ }finally{mainAppSources.cancelPending();state.launchBusy=false;updateDebugButtons();}
 }
-async function stopQuietly(){state.launchEpoch++;if(state.debug&&(['paused','running','ready','waiting'].includes(state.debug.state)||state.debug.uiActive)){try{await runtime.request('stop',{sessionId:undefined});}catch{}}state.debug=null;state.hotEdit=false;if(advancedTools)advancedTools.hotBase=null;state.debugSources.clear();state.watchEpoch=(state.watchEpoch??0)+1;objectRequest++;state.readOnly=false;editors.forEach(e=>e.setReadOnly(false));updateDebugButtons();setEditorDecorations();}
+async function stopQuietly(){state.launchEpoch++;mainAppSources.clear();if(state.debug&&(['paused','running','ready','waiting'].includes(state.debug.state)||state.debug.uiActive)){try{await runtime.request('stop',{sessionId:undefined});}catch{}}state.debug=null;state.hotEdit=false;if(advancedTools)advancedTools.hotBase=null;state.debugSources.clear();state.watchEpoch=(state.watchEpoch??0)+1;objectRequest++;state.readOnly=false;editors.forEach(e=>e.setReadOnly(false));updateDebugButtons();setEditorDecorations();}
 async function step(mode){const reverse=['stepBack','reverseContinue'].includes(mode);if(state.debug?.state!=='paused'&&!(reverse&&['terminated','faulted'].includes(state.debug?.state))){if(['next','stepIn'].includes(mode)&&state.debug?.state!=='running')return launch(true,{stopOnEntry:true});return;}await runtime.request(reverse?mode:'resume',reverse?{}:{mode});}
 async function runToCursor(){const position=new SourceText(editor.value,state.active).positionAt(editor.offset),target={uri:state.active,line:position.line+1,column:position.character+1};if(state.debug?.state==='paused'){if(!matchesDebugSource(target.uri))throw new Error('The active document does not match the source embedded in this debug assembly');return runtime.request('runToCursor',target);}return launch(true,{runToCursor:target,stopOnEntry:false});}
 
@@ -263,7 +270,7 @@ function renderPanelSoon(){if(panelFrame)return;panelFrame=requestAnimationFrame
 function runtimeEvent(event){
  if(event.sessionId!==undefined&&event.sessionId<(state.runtimeSession??0))return;if(event.event==='state'&&event.sessionId!==undefined){if(event.sessionId!==(state.runtimeSession??0)){lastDebugKey='';state.watchEpoch=(state.watchEpoch??0)+1;objectRequest++;}state.runtimeSession=event.sessionId;}
  if(event.event==='ui'){advancedTools?.onUI(event.commands);return;}
- if(event.event==='loaded'){state.runtimeSession=event.sessionId;state.debugSources=new Map(event.sources.filter(s=>typeof s.text==='string').map(s=>[s.uri,s.text]));state.immediateHistory=[];return;}
+ if(event.event==='loaded'){state.runtimeSession=event.sessionId;mainAppSources.loaded(event.sessionId);state.debugSources=new Map(event.sources.filter(s=>typeof s.text==='string').map(s=>[s.uri,s.text]));state.immediateHistory=[];return;}
  if(event.event==='output'){state.programOutput+=event.text;renderPanelSoon();return;}
  if(event.event==='error'||event.event==='runtimeerror'){toast(event.message,'error');return;}
  if(event.event!=='state')return;
