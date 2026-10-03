@@ -161,7 +161,7 @@ export const DeclarationBinding = Base =>
             } else {
               const raw = this.value(isRef && init.kind === 'RefExpression' ? init.expression : init);
               if (isRef) {
-                value = raw;
+                value = this.markAliased(raw);
                 if (!raw.hasErrors && raw.type && !raw.type.equals(declaredType) && !declaredType.isErrorType())
                   this.report(init, 'CS8173', [this.display(declaredType)]);
               } else {

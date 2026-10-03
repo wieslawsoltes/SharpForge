@@ -23,6 +23,8 @@ export class SourceAssemblyCore {
     this.globalNamespace = new NamespaceSymbol('', null, NamespaceExtent.Source, this.module);
     this.types = [];
     this.unitScopes = new Map();
+    /** Every scope that has using or extern alias directives, in declaration order. */
+    this.usingScopes = [];
     this.topLevel = [];
     this.bodies = [];
   }
@@ -38,10 +40,16 @@ export class SourceAssemblyCore {
         unit = new Scope('unit', {
           namespace: merged,
           sourceNamespace: this.globalNamespace,
-          usings: { directives: [...file.syntax.usings.filter(u => !u.globalKeyword)], global: globalUsings, bound: null },
+          usings: {
+            directives: [...file.syntax.usings.filter(u => !u.globalKeyword)],
+            global: globalUsings,
+            externs: [...file.syntax.externs],
+            bound: null,
+          },
           uri,
         });
       this.unitScopes.set(uri, unit);
+      this.usingScopes.push(unit);
       this.declareMembers(file.syntax.members, unit, this.globalNamespace, null, file);
     }
     return this;
@@ -59,9 +67,10 @@ export class SourceAssemblyCore {
           inner = inner.child('namespace', {
             namespace: merged,
             sourceNamespace: ns,
-            usings: i === parts.length - 1 ? { directives: [...member.usings], global: [], bound: null } : null,
+            usings: i === parts.length - 1 ? { directives: [...member.usings], global: [], externs: [...member.externs], bound: null } : null,
           });
         });
+        this.usingScopes.push(inner);
         this.declareMembers(member.members, inner, ns, null, file);
       } else if (isTypeDeclaration(member)) this.declareType(member, scope, namespace, container, file);
       else if (member.kind === 'GlobalStatement') this.topLevel.push({ statement: member.statement, scope, file });

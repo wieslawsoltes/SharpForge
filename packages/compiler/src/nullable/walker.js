@@ -10,11 +10,11 @@
  *
  * A state maps a variable to 'notNull' or 'maybeNull'; a variable without an entry has the state its declared
  * annotation gives it. Branches join to 'maybeNull' when either side is; `x == null`, `x is null`, `x is T`,
- * `x?.M()`, `x ?? y` and the analysis attributes (nullable/attributes.js) split or refine states. Loops are walked
- * once: a variable assigned null later in a loop body is not seen as nullable at the loop head (Roslyn iterates to a
- * fixed point; this walker under-reports there rather than over-reporting).
+ * `x?.M()`, `x ?? y` and the analysis attributes (nullable/attributes.js) split or refine states. Loops iterate to a
+ * fixed point of the state at the loop head, as Roslyn does (nullable/walker-loops.js).
  */
 import { NullableConditions } from './walker-conditions.js';
+import { NullableLoops } from './walker-loops.js';
 import { NOT_NULL, MAYBE_NULL, joinStates, FlowState, joinFlow } from './flow-state.js';
 import { NullableAnnotation, RefKind, SymbolKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
@@ -37,6 +37,7 @@ class NullableWalkerCore {
     this.uri = uri;
     this.diagnostics = [];
     this.method = null;
+    this.jumpTargets = [];
   }
 
   /** @returns {{ node: object, code: string, args: any[] }[]} */
@@ -159,10 +160,13 @@ class NullableWalkerCore {
 
   lambdaBody(body, flow) {
     const saved = this.method;
+    const savedTargets = this.jumpTargets;
     this.method = null;
+    this.jumpTargets = [];
     if ('completes' in body) this.statement(body, flow);
     else this.expression(body, flow);
     this.method = saved;
+    this.jumpTargets = savedTargets;
   }
 
   /** Reports a dereference of a possibly null receiver and marks the variable not-null afterwards. */
@@ -287,34 +291,16 @@ class NullableWalkerCore {
         const afterElse = node.otherwise ? this.statement(node.otherwise, branches.whenFalse) : branches.whenFalse;
         return joinFlow(afterThen, afterElse);
       }
-      case 'While': {
-        const branches = this.condition(node.condition, flow);
-        this.statement(node.body, branches.whenTrue);
-        return branches.whenFalse ?? flow;
-      }
-      case 'Do': {
-        const afterBody = this.statement(node.body, flow.clone());
-        return afterBody ? this.condition(node.condition, afterBody).whenFalse : flow;
-      }
-      case 'For': {
-        const current = this.declarations(node.declaration ?? [], flow);
-        for (const initializer of node.initializers) this.expression(initializer, current);
-        const branches = node.condition ? this.condition(node.condition, current) : { whenTrue: current, whenFalse: null };
-        const afterBody = this.statement(node.body, branches.whenTrue?.clone() ?? null);
-        if (afterBody) for (const incrementor of node.incrementors) this.expression(incrementor, afterBody);
-        return branches.whenFalse ?? current;
-      }
-      case 'ForEach': {
-        this.dereference(node.collection, flow);
-        this.statement(node.body, flow.clone());
-        return flow;
-      }
-      case 'Switch': {
-        this.expression(node.governing, flow);
-        let result = flow.clone();
-        for (const section of node.sections) result = joinFlow(result, this.statement(section.body, flow.clone()));
-        return result;
-      }
+      case 'While':
+        return this.whileLoop(node, flow);
+      case 'Do':
+        return this.doLoop(node, flow);
+      case 'For':
+        return this.forLoop(node, flow);
+      case 'ForEach':
+        return this.forEachLoop(node, flow);
+      case 'Switch':
+        return this.switchStatement(node, flow);
       case 'Return': {
         const state = node.expression ? this.expression(node.expression, flow) : NOT_NULL;
         if (node.expression) this.checkReturn(node.expression, state);
@@ -325,7 +311,9 @@ class NullableWalkerCore {
         if (node.expression) this.dereference(node.expression, flow);
         return null;
       case 'Break':
+        return this.breakStatement(flow);
       case 'Continue':
+        return this.continueStatement(flow);
       case 'Goto':
       case 'YieldBreak':
         return null;
@@ -395,5 +383,5 @@ class NullableWalkerCore {
   }
 }
 
-/** The nullable flow walker: statements and expressions (above) composed with the condition rules. */
-export class NullableWalker extends NullableConditions(NullableWalkerCore) {}
+/** The nullable flow walker: statements and expressions (above) composed with the condition and loop rules. */
+export class NullableWalker extends NullableLoops(NullableConditions(NullableWalkerCore)) {}
