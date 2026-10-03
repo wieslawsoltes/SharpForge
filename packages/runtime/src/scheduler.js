@@ -1,4 +1,5 @@
 import {markUnhandled} from './execution/unhandled.js';
+import {startAsyncContext} from './execution/async-start.js';
 import {retainsContextFrames, releaseContextFrames, finishContext, cancelContexts} from './execution/context-lifetimes.js';
 import {managedDelegateSignature} from '@sharpforge/cil';
 import {callRoots} from './execution/generic-calls.js';
@@ -145,9 +146,7 @@ export class CooperativeScheduler {
       if(d.name==='Sleep'){const ms=Number(n(values[0]));if(!Number.isInteger(ms)||ms<0||ms>86400000)throw new ManagedFault('ArgumentOutOfRangeException','Sleep duration must be 0–86400000 milliseconds');const t=this.createTask('void',{deadline:this.now()+ms});return this.wait(t.ref,{pushResult:wantsResult,voidResult:true});}
       if(d.name==='Yield'){this.steps=this.quantum;return p.managed(true,'bool');}
     }
-    if(d.kind==='startTask'){
-      const type=taskResult(d.result),t=this.createTask(type);this.vm.heap.withRoots([t.ref],()=>this.enqueue(values[0],[],{kind:d.owner==='SharpForge.Runtime.Async'?'async':'task',task:t,eager:d.owner==='SharpForge.Runtime.Async'&&!this.suppressed}));return t.ref;
-    }
+    if(d.kind==='startTask'||d.kind==='startAsyncVoid')return startAsyncContext(this,d,values[0]);
     if(d.kind==='await')return this.wait(values[0],{pushResult:wantsResult,voidResult:d.result==='void',forceYield:!!this.taskRecord(values[0]).forceYield});
     if(d.kind==='get'){
       if(d.property==='CompletedTask'){const t=this.createTask();this.complete(t);return t.ref;}

@@ -11,7 +11,8 @@ while resuming an event or debugger pause does not deliver it twice. A notificat
 exception handled. These semantics follow the [FirstChanceException contract](https://learn.microsoft.com/en-us/dotnet/api/system.appdomain.firstchanceexception).
 
 Unhandled callbacks receive the original managed exception and `IsTerminating=true` before the VM enters
-its terminal fault state. A callback failure cannot replace that original terminating fault. Task-owned
+its terminal fault state. Their sender is null; first-chance callbacks receive the current domain.
+A callback failure cannot replace that original terminating fault. Task-owned
 faults are captured by their Task; async-void faults enter a terminating notification context. Exhausted
 instruction/output/stack budgets skip guest callbacks and bypass guest catches. The VM reports the managed
 exception HRESULT exit code; a native process may expose a different platform exit status or signal.
@@ -23,6 +24,16 @@ changed by one callback affect later events. Callback continuations are plain sn
 parked roots retain the original fault, arguments and remaining delegates. Portable restore validates the
 saved subscriber and continuation identities before mutation. Stop releases the domain singleton.
 
+Both source lowering paths use `SharpForge.Runtime.Async.StartVoid(Action)` for `async void`, appended
+to the A05 contract reservation. Its hidden task retains the suspended context while escaped faults are
+posted to the process. Ordinary async Task methods still use `Start` and keep faults on their task.
+Semantic framework event assignments emit native delegates for static and instance method groups,
+including explicit delegate construction and null subscriptions. Delegate variables, lambdas and local
+functions as semantic framework event handlers still report an explicit profile diagnostic; their lowered
+delegate-class representation is not silently passed to the native event registry.
+
 `tests/a05-appdomain-events.test.js` and `tests/fixtures/a05/appdomain-events/Program.cs` provide focused
 source/reloaded/CIL regression and reference-program inputs. The expected output is an assertion target,
-not recorded native evidence. E01 tests, native comparison and builds remain deferred until assembly.
+not recorded native evidence. `tests/a05-appdomain-source-regressions.test.js` adds the semantic method-group,
+async-void versus async-Task, and portable unhandled-observer regressions. Qualification is serialized by
+the integration owner; this follow-up was prepared by static review and has not run its tests.

@@ -54,7 +54,7 @@ export const AsyncMethods = Base =>
      */
     asyncBody(kickoff, origin) {
       const result = asyncResultType(kickoff.returnType),
-        start = result === null ? null : asyncContract('Start', startDelegateType(result));
+        start = result === null ? null : asyncContract(kickoff.returnType === 'void' ? 'StartVoid' : 'Start', startDelegateType(result));
       if (!start) {
         const shown = kickoff.returnType.replace('System.Threading.Tasks.', '').replace('`1', '');
         return this.unsupported(`an async function returning '${shown}' (the runtime has no task of that result type)`, origin.syntax, origin.uri);
@@ -75,7 +75,7 @@ export const AsyncMethods = Base =>
       kickoff.hasSource = false;
       const capture = this.asyncCapture(kickoff, body, origin.name),
         started = n.frameworkCall({ contract: start }, null, [capture], start.result);
-      // `async void`: the task is not observable; the kickoff returns once the body suspends or ends.
+      // StartVoid posts escaped faults to the process; Task-returning methods retain task fault semantics.
       const statement = kickoff.returnType === 'void' ? n.expressionStatement(started) : n.returnStatement(started);
       this.addSynthesizedBody(kickoff, n.block([statement]));
       return body;

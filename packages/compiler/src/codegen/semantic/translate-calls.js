@@ -6,6 +6,7 @@ import { BuiltinMap } from '@sharpforge/bytecode';
 import { TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { n } from './node-factory.js';
+import {frameworkEventAssignment} from './framework-events.js';
 
 const primitiveToString = new Set(['int', 'double', 'bool', 'string']);
 
@@ -220,9 +221,9 @@ export const CallTranslation = Base =>
     /** `e += handler` and `e -= handler`: a field-like event combines into its field, otherwise the accessor is called. */
     exprEventAssignment(node) {
       const event = node.event.originalDefinition ?? node.event,
-        handler = this.expression(node.handler),
         adding = node.operator === '+=';
-      if (!this.g.isSource(event)) return this.unsupported('framework events with lowered delegates', node.syntax);
+      if (!this.g.isSource(event)) return frameworkEventAssignment(this, node, event);
+      const handler = this.expression(node.handler);
       const accessor = adding ? event.addMethod : event.removeMethod;
       if (accessor?.hasBody) {
         const record = this.g.methodOf(accessor, node.syntax);

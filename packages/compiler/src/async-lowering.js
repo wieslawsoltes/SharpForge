@@ -30,7 +30,7 @@ export function lowerAsyncFiles(files) {
       const local=N('Local',{declarations:[N('VariableDeclarator',{name:'<>capture',type:closure,hidden:true,initializer:N('New',{type:closure,args:[],initializers:[]})})]});
       const statements=[local];if(!isStatic)statements.push(expression(assign(member(name('<>capture'),'receiver'),name('this'))));
       method.parameters.forEach((p,i)=>statements.push(expression(assign(member(name('<>capture'),`arg${i}`),name(p.name)))));
-      const start=call(member(name('SharpForge.Runtime.Async'),'Start'),[member(name('<>capture'),'Invoke')]);
+      const start=call(member(name('SharpForge.Runtime.Async'),returnType==='void'?'StartVoid':'Start'),[member(name('<>capture'),'Invoke')]);
       statements.push(returnType==='void'?expression(start):N('Return',{expression:start}));
       const wrapper={...method,parameters:method.parameters.map(p=>({...p,debugHidden:true})),modifiers:method.modifiers.filter(m=>m!=='async'),asyncOrigin:origin,asyncRole:'kickoff',body:N('Block',{statements})};
       const body={...method,name:bodyName,returnType:result,modifiers:method.modifiers.filter(m=>m!=='async'),generated:true,asyncBody:true,asyncOrigin:origin,asyncRole:'body'};
