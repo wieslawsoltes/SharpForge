@@ -82,7 +82,8 @@ function accessorFeatures(node, context, use) {
 
 function functionFeatures(node, context, use) {
   const asyncToken = [...(node.modifiers ?? [])].find(token => token.text === 'async');
-  if (asyncToken) use('Async', asyncToken);
+  // Roslyn reports an async method or local function on its name, an async lambda or anonymous method on the keyword.
+  if (asyncToken) use('Async', lambdaKinds.has(node.kind) ? asyncToken : node.identifier);
   if (node.kind === 'MethodDeclaration') {
     if (has(node, 'readonly')) use('ReadOnlyMembers', node.identifier);
     if (node.identifier.valueText === 'ToString' && has(node, 'sealed') && context.enclosingType?.kind === 'RecordDeclaration') {
@@ -210,6 +211,9 @@ const detectors = {
   ParenthesizedLambdaExpression: functionFeatures,
   AnonymousMethodExpression: functionFeatures,
   Parameter: parameterFeatures,
+  // Roslyn gates the discard pattern as a recursive pattern (C# 8), next to the construct that contains it.
+  RecursivePattern: (node, context, use) => use('RecursivePatterns', node),
+  DiscardPattern: (node, context, use) => use('RecursivePatterns', node),
   ScopedType: (node, context, use) => use('RefFields', node.firstToken()),
   StackAllocArrayCreationExpression: stackAllocFeatures,
   ImplicitStackAllocArrayCreationExpression: stackAllocFeatures,

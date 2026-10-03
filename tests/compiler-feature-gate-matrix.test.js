@@ -155,7 +155,7 @@ test('A02-B01 the syntax walker finds features the parser does not record', () =
   assert.deepEqual(found, [
     'AutoImplementedProperties:A',
     'ReadonlyAutoImplementedProperties:A',
-    'Async:async',
+    'Async:M',
     'StaticLocalFunctions:L',
     'RefFor:ref int',
   ]);

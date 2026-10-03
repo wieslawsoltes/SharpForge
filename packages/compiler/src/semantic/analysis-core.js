@@ -54,6 +54,7 @@ export class AnalysisCore {
       tolerateNamespace: (name, options) => this.tolerateNamespace(name, options),
       isFrameworkGap: (namespaceName, name) => this.isFrameworkGap(namespaceName, name),
       useFeature: (uri, node, feature) => this.gate(uri, node, feature),
+      languageVersionAt: uri => this.versionOf(uri).number,
       unknownUsing: () => {
         this.hasUnknownUsings = true;
       },

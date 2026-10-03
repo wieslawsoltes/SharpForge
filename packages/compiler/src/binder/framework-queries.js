@@ -160,7 +160,11 @@ export const FrameworkQueries = Base =>
       if (result.error.code === 'CS0121') {
         const [first, second] = result.ambiguous.map(m => typeText(m.contract.owner) + '.' + m.contract.name);
         this.c.report(node, 'CS0121', [first, second]);
-      } else this.c.report(node, 'CS1501', [name, args.length]);
+      } else {
+        // Roslyn reports the argument count on the member name, not on the whole invocation.
+        const nameSpan = node.target.nameSpan;
+        this.c.report(nameSpan ? { uri: node.uri, ...nameSpan } : node, 'CS1501', [name, args.length]);
+      }
       return null;
     }
 

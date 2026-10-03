@@ -361,7 +361,9 @@ export class TypeBinder {
           this.host.useFeature?.(scope.uri, syntax, 'NativeInt');
           return plain(this.core.keyword(name));
         }
-        if (name === 'dynamic' && !this.lookup(name, 0, scope)) return plain(DynamicTypeSymbol.instance);
+        // 'dynamic' is a type from C# 4; before that it is an ordinary name (CS0246 unless something declares it).
+        const hasDynamic = (this.host.languageVersionAt?.(scope.uri) ?? 4) >= 4;
+        if (name === 'dynamic' && hasDynamic && !this.lookup(name, 0, scope)) return plain(DynamicTypeSymbol.instance);
       }
       // falls through
       case 'GenericName':
