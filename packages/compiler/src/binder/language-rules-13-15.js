@@ -9,13 +9,17 @@ import { FieldKeywordBinding } from './field-keyword.js';
 import { ExtensionMemberBinding } from './extension-members.js';
 import { ParamsCollectionBinding } from './params-collections.js';
 import { ClosedTypeBinding } from './closed-types.js';
+import { CollectionArgumentBinding } from './collection-arguments.js';
+import { ExtensionIndexerBinding } from './extension-indexers.js';
 
 export const languageRules13to15 = Object.freeze([
   ConditionalAssignmentBinding,
   ParamsCollectionBinding,
   ExtensionMemberBinding,
+  ExtensionIndexerBinding,
   CSharp14Binding,
   LabeledJumpBinding,
   FieldKeywordBinding,
   ClosedTypeBinding,
+  CollectionArgumentBinding,
 ]);

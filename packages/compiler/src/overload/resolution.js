@@ -113,12 +113,18 @@ export class OverloadResolver {
         wanted === given ||
         (wanted === RefKind.In && (given === RefKind.None || given === RefKind.Ref)) ||
         (wanted === RefKind.RefReadOnlyParameter && [RefKind.None, RefKind.In, RefKind.Ref].includes(given));
-      if (!refOk) {
+      // COM interop: `ref` may be omitted on a call to a COM interface method; the argument is then passed by value.
+      // An argument that does not convert to the parameter type is still reported as a missing `ref`.
+      const mayOmit = !refOk && wanted === RefKind.Ref && given === RefKind.None && !!this.allowsRefOmission?.(method),
+        byValue = mayOmit ? this.conversions.classifyFromExpression(args[i], c.parameterTypes[i]) : null,
+        omitsRef = !!byValue?.exists && byValue.isImplicit;
+      if (omitsRef) c.omitsRef = true;
+      else if (!refOk) {
         c.failure ??= { kind: 'refKind', argument: i, expected: wanted, given };
         c.conversions.push(null);
         continue;
       }
-      if (wanted === RefKind.Ref || wanted === RefKind.Out) {
+      if ((wanted === RefKind.Ref && !omitsRef) || wanted === RefKind.Out) {
         // By-reference arguments need an identical type; `out var x` / `out _` have none and take the parameter's type.
         const ok = !args[i].type || this.conversions.isIdentity(args[i].type, c.parameterTypes[i]);
         if (!ok) c.failure ??= { kind: 'conversion', argument: i, to: c.parameterTypes[i] };
