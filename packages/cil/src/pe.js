@@ -6,13 +6,9 @@ export function writeMethodBody(code,localToken,maxStack,handlers=[]) {
   if(handlers.length){w.pad();const size=4+24*handlers.length;if(size>0xffffff)throw new CilError('Exception table exceeds CLI limit');w.u8(0x41).u8(size).u8(size>>>8).u8(size>>>16);for(const h of handlers)w.u32(h.flags??0).u32(h.start).u32(h.end-h.start).u32(h.target).u32(h.handlerEnd-h.target).u32(h.catchType);}
   return w.finish();
 }
-export function writePE(sectionBytes,metadataOffset,metadataLength,entryToken) {
-  const section=sectionBytes.slice(),cli=new DataView(section.buffer);cli.setUint32(0,72,true);cli.setUint16(4,2,true);cli.setUint16(6,5,true);cli.setUint32(8,TEXT_RVA+metadataOffset,true);cli.setUint32(12,metadataLength,true);cli.setUint32(16,1,true);cli.setUint32(20,entryToken,true);
-  const w=new Writer(align(512+section.length,512));w.u16(0x5a4d).zero(58).u32(0x80).zero(64);w.u32(0x4550).u16(0x14c).u16(1).u32(0).u32(0).u32(0).u16(224).u16(0x2022);
-  const optional=w.length;w.u16(0x10b).u8(1).u8(0).u32(align(section.length,512)).u32(0).u32(0).u32(0).u32(TEXT_RVA).u32(0).u32(0x400000).u32(8192).u32(512).u16(4).u16(0).u16(0).u16(0).u16(4).u16(0).u32(0).u32(align(TEXT_RVA+section.length,8192)).u32(512).u32(0).u16(3).u16(0x8540).u32(0x100000).u32(0x1000).u32(0x100000).u32(0x1000).u32(0).u32(16);
-  for(let i=0;i<16;i++)w.u32(i===14?TEXT_RVA:0).u32(i===14?72:0);if(w.length-optional!==224)throw new CilError('Invalid optional PE header');
-  w.bytes(utf8('.text\0\0\0')).u32(section.length).u32(TEXT_RVA).u32(align(section.length,512)).u32(512).u32(0).u32(0).u16(0).u16(0).u32(0x60000020).zero(512-w.length).bytes(section).pad(512);return w.finish();
-}
+export { writePortableExecutable } from './pe/writer.js';
+export { PEMachine, CorFlags, PEPlatforms, PEDirectoryNames } from './pe/headers.js';
+export { writeManagedPE as writePE } from './pe/writer.js';
 export function readPE(input,{maxBytes=64*1024*1024,inspection=false}={}) {
   const bytes=input instanceof ArrayBuffer?new Uint8Array(input):input;if(!(bytes instanceof Uint8Array)||bytes.length>maxBytes)throw new CilError('Invalid PE input or assembly exceeds size limit');const r=new Reader(bytes);if(r.u16()!==0x5a4d)throw new CilError('Not a PE assembly (missing MZ header)');r.position=0x3c;r.position=r.u32();if(r.u32()!==0x4550)throw new CilError('Invalid PE signature');const machine=r.u16(),sectionCount=r.u16();r.u32();r.u32();r.u32();const optionalSize=r.u16(),characteristics=r.u16(),optionalStart=r.position;const magic=r.u16();if(magic!==0x10b&&magic!==0x20b)throw new CilError('Invalid optional PE header');if(sectionCount<1||sectionCount>96)throw new CilError('Invalid PE section count');const dataStart=optionalStart+(magic===0x10b?96:112);if(optionalSize<(dataStart-optionalStart)+15*8)throw new CilError('Missing CLI data directory');r.position=dataStart+14*8;const cliRva=r.u32(),cliSize=r.u32();if(cliSize<72)throw new CilError('Not a managed CLI image');r.position=optionalStart+optionalSize;const sections=[];
   for(let i=0;i<sectionCount;i++){const headerOffset=r.position,name=String.fromCharCode(...r.take(8)).replace(/\0.*$/,''),virtualSize=r.u32(),rva=r.u32(),size=r.u32(),offset=r.u32();r.take(16);if(offset+size>bytes.length)throw new CilError('Truncated PE section');sections.push({name,rva,virtualSize,size,offset,headerOffset});}
