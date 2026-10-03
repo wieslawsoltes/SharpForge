@@ -38,6 +38,7 @@ export * from './resource-transition.js';
 export * from './resource-preview.js';
 export * from './resource-instances.js';
 export * from './resource-documents.js';
+export * from './resource-source.js';
 export * from './resource-clipboard.js';
 export * from './resource-node-references.js';
 export * from './resource-codegen.js';
