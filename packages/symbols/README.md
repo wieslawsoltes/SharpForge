@@ -91,3 +91,12 @@ Recorded validation covers Node 24 on macOS arm64 and native SRM on .NET 10 with
 Roslyn 4.8/5.3. Browser, Windows/Linux host, Rust/Wasm and Visual Studio debugger
 qualification were not run for this batch. The symbols library has no native
 execution backend and does not by itself establish VM execution parity.
+
+`decodeSource(rawBytes, { fallbackEncoding: 'windows-1252', maxBytes: 16777216 })`
+returns `{ text, encoding, bomBytes }`. It detects UTF-8/UTF-16 LE/BE BOMs, defaults
+to strict UTF-8, preserves line endings, and uses an optional TextDecoder-supported
+fallback only when BOM-less UTF-8 decoding fails. Invalid text, unknown encodings,
+UTF-32 BOMs and byte-budget violations raise `SymbolError`. Decoding alone does
+not verify a document. `bindSources(symbols, sources, options)` accepts the same
+options, verifies exact raw bytes including BOMs and line endings first, and only
+then decodes trusted text; bound documents expose their selected `encoding`.
