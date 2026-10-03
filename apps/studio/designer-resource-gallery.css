@@ -1,6 +1,21 @@
 .design-resource-scaffold-hidden {
   display: none !important;
 }
+.design-resource-visual-disabled > :not(.design-resource-unavailable) {
+  display: none !important;
+}
+.design-resource-unavailable {
+  padding: 12px;
+  color: var(--design-foreground);
+}
+.design-resource-unavailable p {
+  color: var(--design-muted);
+  line-height: 1.5;
+}
+.design-resource-gallery [hidden],
+.design-command-bar [hidden] {
+  display: none !important;
+}
 .design-resource-gallery {
   flex: 1;
   overflow: auto;
@@ -50,6 +65,26 @@
   width: 240px;
   height: 150px;
   pointer-events: none;
+}
+.design-resource-scalar-preview {
+  box-sizing: border-box;
+  overflow: auto;
+  padding: 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.design-resource-gallery-preview[data-contrast="high"] {
+  --sf-app-bg: #000;
+  --sf-app-fg: #fff;
+  --sf-app-input: #000;
+  --sf-app-line: #fff;
+  --sf-app-accent: #ff0;
+}
+.design-resource-gallery-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 .design-resource-gallery nav {
   display: flex;
