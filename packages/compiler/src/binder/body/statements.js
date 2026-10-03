@@ -19,6 +19,13 @@ const statementExpressionKinds = new Set([
   'ConditionalAccessExpression',
 ]);
 const stmt = (kind, syntax, completes, props) => ({ kind, syntax, completes, ...props });
+/** True when a statement is, or contains, a labeled statement (lambdas and local functions have labels of their own). */
+function containsLabel(syntax) {
+  if (syntax.kind === 'LabeledStatement') return true;
+  if (/LambdaExpression$|^AnonymousMethodExpression$|^LocalFunctionStatement$/.test(syntax.kind)) return false;
+  for (const child of syntax.childNodes?.() ?? []) if (containsLabel(child)) return true;
+  return false;
+}
 
 /** Class mixin: Statement dispatch: blocks and scopes, control flow, labels and reachability (`completes`), which drives */
 export const StatementBinding = Base =>
@@ -46,18 +53,17 @@ export const StatementBinding = Base =>
         let reachable = true,
           warned = false;
         for (const s of statements) {
-          if (
-            !reachable &&
-            !warned &&
-            s.kind !== 'LocalFunctionStatement' &&
-            s.kind !== 'LabeledStatement' &&
-            !this.usesGoto &&
-            !this.hasLabels
-          ) {
-            this.report(s.firstToken() ?? s, 'CS0162');
-            warned = true;
+          if (!reachable && s.kind !== 'LocalFunctionStatement') {
+            // A label may be the target of a goto: what follows it (or a statement that holds one) is taken as
+            // reachable, and the next unreachable run gets a warning of its own.
+            if (containsLabel(s)) {
+              reachable = true;
+              warned = false;
+            } else if (!warned) {
+              this.report(s.firstToken() ?? s, 'CS0162');
+              warned = true;
+            }
           }
-          if (s.kind === 'LabeledStatement') reachable = true;
           const b = this.statement(s);
           bound.push(b);
           if (s.kind !== 'LocalFunctionStatement' && reachable) reachable = b.completes !== false;

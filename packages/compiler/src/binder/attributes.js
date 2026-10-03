@@ -23,23 +23,14 @@ import { attributeLocations, compilationLocations, describeTargets, knownLocatio
 import { isAccessible } from './accessibility.js';
 import { BodyBinder } from './body-binder.js';
 import { isSourceSymbol } from '../semantic/analysis-helpers.js';
+import { fullNameOf, attributesNamed } from './bound-attributes.js';
 
 const defaultUsage = Object.freeze({ validOn: AttributeTargets.All, allowMultiple: false, inherited: true });
 const unknownUsage = Object.freeze({ validOn: AttributeTargets.All, allowMultiple: true, inherited: true, isUnknown: true });
 /** Bound expression kinds that are never an attribute argument, whatever their operands. */
 const neverConstant = new Set(['Call', 'ObjectCreation', 'Local', 'Parameter', 'PropertyAccess', 'This', 'Assignment', 'Lambda']);
 
-/** The namespace-qualified name of a named type, without type arguments (`System.ObsoleteAttribute`). */
-export function fullNameOf(type) {
-  const parts = [];
-  for (let s = type?.originalDefinition ?? type; s && s.name; s = s.containingSymbol) parts.unshift(s.name);
-  return parts.join('.');
-}
-
-/** The bound attributes of a symbol whose class has the full name `fullName`. */
-export function attributesNamed(symbol, fullName) {
-  return (symbol?.boundAttributes ?? []).filter(attribute => fullNameOf(attribute.attributeClass) === fullName);
-}
+export { fullNameOf, attributesNamed };
 
 const constantOf = argument => {
   const value = argument?.constantValue;
@@ -150,6 +141,8 @@ export const AttributeBinding = Base =>
         container = this.globalNamespace;
         simple = name.name;
       }
+      // C# 11 generic attributes (./csharp11.js).
+      if (simple.kind === 'GenericName' && this.genericAttributeClass) return this.genericAttributeClass(name, simple, container, scope, uri);
       if (simple.kind !== 'IdentifierName' || (name.kind === 'AliasQualifiedName' && !container)) {
         const type = binder.bindType(name, scope).type;
         return type.isErrorType() ? null : this.checkAttributeClass(type, name, uri);
@@ -189,6 +182,7 @@ export const AttributeBinding = Base =>
         this.incomplete = true;
         return null;
       }
+      if (this.reportAttributeArity?.(simple, text, scope, container, uri)) return null;
       const missing = container ? ['CS0234', container.toDisplayString()] : ['CS0246'];
       for (const candidate of [text + 'Attribute', text]) this.report(uri, simple, missing[0], [candidate, ...missing.slice(1)]);
       return null;
@@ -232,7 +226,8 @@ export const AttributeBinding = Base =>
         isStatic: true,
         isFieldInitializer: true,
         isStaticInitializer: true,
-        parameters: [],
+        // C# 11: the parameters of a method are in scope in its attributes and in those of its parameters (for nameof).
+        parameters: this.attributeScopeParameters?.(site) ?? [],
       });
       const all = syntax.argumentList?.arguments ?? [],
         positional = all.filter(argument => !argument.nameEquals).map(argument => binder.argument(argument));

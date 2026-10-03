@@ -63,7 +63,7 @@ export class BinderCore {
     this.checked = false;
     this.localFunctions = [];
     this.usesGoto = false;
-    for (const p of context.parameters ?? context.method?.parameters ?? []) if (p.name) this.scopes[0].set(p.name, p);
+    for (const p of context.parameters ?? context.method?.parameters ?? []) if (p.name && !p.isDiscard) this.scopes[0].set(p.name, p);
     // Expression variables of a constructor initializer are in scope in the constructor body.
     for (const [name, symbol] of context.outerLocals ?? []) this.scopes[0].set(name, symbol);
   }
@@ -327,15 +327,8 @@ export class BinderCore {
           [this.checked, this.uncheckedContext] = saved;
         }
       }
-      case 'InterpolatedStringExpression': {
-        const parts = [];
-        for (const content of syntax.contents)
-          if (content.kind === 'Interpolation') {
-            parts.push(this.value(content.expression));
-            if (content.alignmentClause) this.convert(this.value(content.alignmentClause.value), this.core.int);
-          }
-        return this.node('InterpolatedString', syntax, this.core.string, { parts, form: 'interpolatedString' });
-      }
+      case 'InterpolatedStringExpression':
+        return this.interpolatedString(syntax);
       case 'AwaitExpression':
         return this.await(syntax);
       case 'ThrowExpression': {
@@ -367,12 +360,13 @@ export class BinderCore {
       case 'WithExpression':
         return this.withExpression(syntax);
       case 'AnonymousObjectCreationExpression':
+        return this.anonymousObjectCreation(syntax);
       case 'QueryExpression':
       case 'RangeExpression':
       case 'IndexExpression':
-        // Bound by later epics (anonymous types, queries, ranges, records): operands are still bound for their own diagnostics.
+        // Bound by later epics (queries, ranges): operands are still bound for their own diagnostics.
         for (const child of syntax.childNodes())
-          if (/Expression$|Name$/.test(child.kind) && kind !== 'QueryExpression' && kind !== 'AnonymousObjectCreationExpression')
+          if (/Expression$|Name$/.test(child.kind) && kind !== 'QueryExpression')
             this.expression(child);
         return this.lenient(syntax);
       default:

@@ -12,12 +12,13 @@ import { checkConstructedType } from '../binder/constraints.js';
 import { bindEnumMembers } from '../binder/enums.js';
 import { checkStructLayout, checkStructDeclaration } from '../binder/structs.js';
 import { checkReadOnlyDeclarations } from '../binder/readonly.js';
+import { checkInterfaceMemberKinds } from '../binder/interface-members.js';
 import { checkRefStructDeclarations, checkAsyncOrIteratorUse } from '../binder/ref-struct.js';
 import { checkTypeModifierFeatures } from './type-modifier-features.js';
 import { checkVarianceSafety } from '../conversions/variance.js';
 import { checkNullableSignatures } from '../nullable/signature-checks.js';
-import { checkTypeModifiers } from '../binder/type-modifiers.js';
-import { checkConditionalMethods } from '../binder/csharp2-misc.js';
+import { uninitializedMembersWithoutConstructor } from '../nullable/uninitialized-members.js';
+import { checkTypeModifiers, signatureNameOf } from '../binder/type-modifiers.js';
 import { accessRank, baseOrSelf } from './analysis-helpers.js';
 
 /** Class mixin: Declaration-level checks of every source type: hiding, overrides, abstract members, interface */
@@ -34,8 +35,6 @@ export const DeclarationChecks = Base =>
       const core = this.core,
         version = this.versionOf(type.locations[0].uri).number;
       for (const d of checkTypeModifiers(type)) this.report(d.uri, d.node, d.code, d.args);
-      if (type.typeKind !== TypeKind.Enum && type.typeKind !== TypeKind.Delegate)
-        for (const d of checkConditionalMethods(type)) this.report(d.uri, d.node, d.code, d.args);
       if (type.typeKind === TypeKind.Enum) {
         bindEnumMembers(
           type,
@@ -100,6 +99,7 @@ export const DeclarationChecks = Base =>
         else this.reportAt(d.member, d.code, d.args);
       }
       for (const d of checkReadOnlyDeclarations(type)) this.reportAt(d.member, d.code, d.args);
+      for (const d of checkInterfaceMemberKinds(type)) this.reportAt(d.member, d.code, d.args);
       for (const d of checkRefStructDeclarations(type, version)) {
         if (d.feature) this.gate(this.at(type).uri, this.at(type), d.feature.name, d.feature);
         else if (d.onType && d.member.typeSyntax) this.report(this.at(d.member).uri, d.member.typeSyntax, d.code, d.args);
@@ -122,6 +122,8 @@ export const DeclarationChecks = Base =>
       // Nullable reference type signature agreement between overrides/implementations and their bases.
       if (this.nullableAt(this.at(type).uri, this.at(type).start).warnings)
         for (const d of checkNullableSignatures(type)) this.reportAt(d.member, d.code, d.args, 'warning');
+      for (const d of uninitializedMembersWithoutConstructor(type))
+        if (this.nullableAt(this.at(d.member).uri, this.at(d.member).start).warnings) this.reportAt(d.member, d.code, d.args, 'warning');
     }
     /** CS0050-CS0059: a member may not expose a type less accessible than itself. */
     checkMemberAccessibility(m, type) {
@@ -160,7 +162,9 @@ export const DeclarationChecks = Base =>
         if (!type || type.isErrorType?.()) continue;
         for (const v of checkConstructedType(type, this.core)) {
           const index = v.type === type ? v.index : null,
-            node = index !== null && c.argSyntax[index] ? c.argSyntax[index] : c.syntax;
+            written = index !== null && c.argSyntax[index] ? c.argSyntax[index] : c.syntax,
+            // A static type argument in a member's signature is reported on the member's name, once.
+            node = v.code === 'CS0718' ? (signatureNameOf(c.syntax) ?? written) : written;
           this.report(c.scope.uri, node, v.code, v.args, v.severity);
         }
       }

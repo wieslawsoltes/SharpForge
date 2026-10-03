@@ -2,6 +2,9 @@
   "schemaVersion": 1,
   "area": "A04",
   "nodeGlobs": [
+    "tests/clr-context-*.test.js",
+    "tests/clr-identity-*.test.js",
+    "tests/clr-types-*.test.js",
     "tests/managed-il.test.js"
   ],
   "browserScripts": [

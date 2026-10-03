@@ -48,13 +48,11 @@ const notGated = {
   ImprovedOverloadCandidates: 'changes which candidates overload resolution keeps; there is no construct to report',
   ExtensibleFixedStatement: needsOperandTypes,
   IndexingMovableFixedBuffers: needsOperandTypes,
-  UnconstrainedTypeParameterInNullCoalescingOperator: needsOperandTypes,
   NameShadowingInNestedFunctions: 'below C# 8 Roslyn reports CS0136, not a language-version diagnostic',
   UnmanagedConstructedTypes: needsOperandTypes,
   ObsoleteOnPropertyAccessor: needsAttributeBinding,
   NullPointerConstantPattern: needsOperandTypes,
-  TargetTypedConditional: needsOperandTypes,
-  ModuleInitializers: needsAttributeBinding,
+  TargetTypedConditional: 'below C# 9 Roslyn reports CS8957 for the conditional, not a language-version diagnostic (pinned)',
   ExtensionGetAsyncEnumerator: needsOperandTypes,
   MemberNotNull: needsAttributeBinding,
   VarianceSafetyForStaticInterfaceMembers: 'needs the variance check of interface members',
@@ -67,9 +65,8 @@ const notGated = {
   SpanCharConstantPattern: needsOperandTypes,
   InlineArrays: needsOperandTypes,
   LockObject: needsOperandTypes,
-  OverloadResolutionPriority: needsAttributeBinding,
   FirstClassSpan: needsOperandTypes,
-  ExpressionOptionalAndNamedArguments: 'needs expression-tree conversion of lambdas',
+  ExpressionOptionalAndNamedArguments: 'Roslyn reports CS0853 / CS0854 below C# 14, not a feature diagnostic (expression-tree-arguments fixtures)',
 };
 
 /**

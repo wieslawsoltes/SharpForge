@@ -1,7 +1,13 @@
 import {canonicalType,frameworkType,frameworkAssignable,findContracts,enumValue,enumTypes,eventsFor} from '@sharpforge/framework';
 import {Op,frameworkBuiltin} from '@sharpforge/bytecode';
 import {typeText} from './type-utils.js';
-const pathOf=e=>e?.kind==='Name'?e.name:e?.kind==='Member'&&pathOf(e.target)?pathOf(e.target)+'.'+e.name:null;
+/** The dotted path of a name or member-access chain, or null. The receiver's path is computed once per level. */
+function pathOf(node) {
+  if (node?.kind === 'Name') return node.name;
+  if (node?.kind !== 'Member') return null;
+  const target = pathOf(node.target);
+  return target ? target + '.' + node.name : null;
+}
 /** Closed framework binder layer (class mixin, composed in method-compiler.js); ordinary user members retain precedence. */
 export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
     frameworkReceiver(node) {
