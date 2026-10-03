@@ -42,7 +42,8 @@ export const UnusedSymbolWarnings = Base =>
       // Roslyn reports unused-field warnings only for a compilation without errors.
       if (this.incomplete) return;
       for (const type of this.assembly.types) {
-        if (type.typeKind !== TypeKind.Class && type.typeKind !== TypeKind.Struct) continue;
+        // Interfaces have fields too: static ones from C# 8, and instance ones that are an error but still declared.
+        if (type.typeKind !== TypeKind.Class && type.typeKind !== TypeKind.Struct && type.typeKind !== TypeKind.Interface) continue;
         for (const f of type.getMembers()) {
           if (f.kind !== SymbolKind.Field || f.isConst || f.isImplicitlyDeclared || !f.type || f.type.isErrorType()) continue;
           const rank = Math.min(effectiveAccessibility(type), accessRank(f.declaredAccessibility)),

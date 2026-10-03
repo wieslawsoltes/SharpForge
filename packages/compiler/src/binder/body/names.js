@@ -11,6 +11,7 @@ import { tupleElement, tupleElementProblem } from '../tuples.js';
 import { checkConstructedType } from '../constraints.js';
 import { staticMembersOfTypeParameter } from '../interface-members.js';
 import { accessorNamed, isOperatorMethod } from '../special-methods.js';
+import { staticImportsNamed } from '../csharp6.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 const isSource = symbol => {
@@ -73,27 +74,22 @@ export const NameBinding = Base =>
       for (const level of this.typeScope.namespaceChain) {
         const usings = level.scope.usings ? this.d.typeBinder.usingsOf(level.scope) : null;
         if (!usings) continue;
-        const members = usings.staticTypes.flatMap(t => t.getMembers(name).filter(m => m.isStatic));
+        const { members, ambiguous } = staticImportsNamed(usings.staticTypes, name);
+        if (ambiguous) {
+          this.report(syntax, 'CS0229', ambiguous.map(member => member.toDisplayString()));
+          return this.bad(syntax);
+        }
         if (members.length)
-          return (
-            this.memberResult(
-              members.filter(m => m.kind === members[0].kind),
-              syntax,
-              null,
-              members[0].containingType,
-              name,
-              typeArguments,
-              options,
-              false,
-            ) ?? this.bad(syntax)
-          );
+          return this.memberResult(members, syntax, null, members[0].containingType, name, typeArguments, options, false) ?? this.bad(syntax);
       }
       if (name === 'nameof' && options.invoked) return this.node('NameOfMarker', syntax, null, {});
       if (name === 'var' || name === 'dynamic') return this.lenient(syntax);
       if (this.d.isKnownFrameworkName(name)) return this.lenient(syntax);
       for (let type = this.c.containingType; type; type = type.containingType)
         if (this.reportAccessorByName(type, name, syntax.identifier)) return this.bad(syntax);
-      this.report(syntax.kind === 'GenericName' ? syntax : syntax.identifier, 'CS0103', [name]);
+      // A local of the file's top-level statements is in scope inside its types, where it cannot be used (CS8801).
+      const isTopLevelName = !this.rootBinder.c.isTopLevel && this.d.topLevelNames?.(this.c.uri).has(name);
+      this.report(syntax.kind === 'GenericName' ? syntax : syntax.identifier, isTopLevelName ? 'CS8801' : 'CS0103', [name]);
       return this.bad(syntax);
     }
     /** `alias::Name` in an expression: a namespace or type reached through a using alias, an extern alias or `global`. */
@@ -190,14 +186,17 @@ export const NameBinding = Base =>
       } else {
         if (viaType) {
           if (receiver.syntax?.kind === 'IdentifierName' && receiver.colorColor) r = receiver.colorColor;
-          else {
+          else if (!options.nameofOperand) {
             used();
             this.report(syntax, 'CS0120', [first.toDisplayString()]);
             return this.bad(syntax);
           }
         } else {
           r = instanceReceiver();
-          if (!r) {
+          // `nameof` names a member without evaluating it; reaching through an instance member needs C# 12.
+          if (!r && options.nameofOperand) {
+            if (options.memberAccessLeft) this.d.gate(this.c.uri, syntax, 'InstanceMemberInNameof');
+          } else if (!r) {
             used();
             this.report(syntax, this.c.isFieldInitializer && !this.c.isStatic && !outer ? 'CS0236' : 'CS0120', [first.toDisplayString()]);
             return this.bad(syntax);
@@ -249,7 +248,7 @@ export const NameBinding = Base =>
       if (!nameSyntax || nameSyntax.identifier?.isMissing) return this.bad(syntax);
       const name = nameSyntax.identifier.valueText,
         typeArguments = this.typeArgumentsOf(nameSyntax);
-      let left = this.expression(syntax.expression, { ...options, invoked: false, memberAccessLeft: true });
+      let left = this.requireNaturalType(this.expression(syntax.expression, { ...options, invoked: false, memberAccessLeft: true }));
       if (left.hasErrors) {
         if (left.kind === 'Local') left.local.reads++;
         // A member named after a field of the enclosing type counts as a use of that field even though the access failed.
@@ -311,23 +310,22 @@ export const NameBinding = Base =>
       }
       left = this.asValue(left);
       if (left.hasErrors) return this.bad(syntax);
+      if (left.kind === 'MethodGroup' && left.methods.length) {
+        this.report(syntax.expression, 'CS0119', [left.methods[0].toDisplayString(), 'method']);
+        return this.bad(syntax);
+      }
+      if (left.literal === 'default') {
+        this.report(syntax.expression, 'CS8716');
+        return this.bad(syntax);
+      }
       if (left.kind === 'MethodGroup' || left.form === 'lambda' || left.literal) {
-        this.report(syntax, 'CS0023', [
-          '.',
-          left.literal === 'null'
-            ? '<null>'
-            : left.literal === 'default'
-              ? 'default'
-              : left.form === 'lambda'
-                ? 'lambda expression'
-                : 'method group',
-        ]);
+        this.report(syntax, 'CS0023', ['.', left.literal === 'null' ? '<null>' : left.form === 'lambda' ? 'lambda expression' : 'method group']);
         return this.bad(syntax);
       }
       const type = left.type;
       if (!type) return this.bad(syntax);
       if (type.specialType === 'System_Void') {
-        this.report(syntax, 'CS0023', ['.', 'void']);
+        this.report(syntax.operatorToken ?? syntax, 'CS0023', ['.', 'void']);
         return this.bad(syntax);
       }
       return this.instanceMember(left, type, name, nameSyntax, syntax, typeArguments, options);

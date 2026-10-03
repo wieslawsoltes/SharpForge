@@ -25,13 +25,24 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
           cache: npm
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npm run check
+      - name: Plan affected areas with conservative fallback
+        id: impact
+        run: node scripts/conformance/ci-planning/impact.js
+      - name: Reject expired test quarantines
+        run: node scripts/conformance/flaky/detect.js --check-quarantine
       - run: npm test
+        if: steps.impact.outputs.mode != 'impacted'
+      - name: Run impacted consumers and shared checks
+        if: steps.impact.outputs.mode == 'impacted'
+        run: node scripts/conformance/ci-planning/impact.js --run artifacts/ci-plan.json
       - run: npm run build
       - name: Require a clean checkout
         if: always()

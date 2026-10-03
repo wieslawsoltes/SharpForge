@@ -95,6 +95,10 @@ export const OperatorBinding = Base =>
       if (operator !== '+' && operator !== '-') return null;
       const type = [left, right].map(e => e.type).find(t => t?.typeKind === TypeKind.Delegate);
       if (!type) return null;
+      // A typed operand that is not a delegate of that type leaves the operator to overload resolution: `text + handler`
+      // is string concatenation.
+      const fits = e => !e.type || e.type.equals(type) || this.conversions.classifyFromExpression(e, type).isImplicit;
+      if (!fits(left) || !fits(right)) return null;
       const operands = [left, right].map(e => {
         const converted = this.convert(e, type, e.syntax);
         if (e.form === 'lambda' && !converted.hasErrors) this.finishLambda(e, type);
@@ -239,6 +243,12 @@ export const OperatorBinding = Base =>
             left,
             right: this.applyConversion(right, underlying, asUnderlying),
           });
+        const toLeft = this.conversions.classifyFromExpression(right, left.type);
+        if (left.type && !left.type.isErrorType() && !(toLeft.exists && toLeft.isImplicit)) {
+          // Like `??`, the operator as a whole does not apply: the right operand is not reported on its own.
+          this.report(syntax, 'CS0019', ['??=', this.display(left.type), this.operandDisplay(right)]);
+          return this.bad(syntax);
+        }
         return this.node('CoalesceAssignment', syntax, left.type, { left, right: this.convert(right, left.type, syntax.right) });
       }
       // Compound assignment: x op= y is x = (T)(x op y) with x evaluated once.
@@ -348,28 +358,14 @@ export const OperatorBinding = Base =>
         else if (y && !x) type = a.type;
         else if (x && y) type = a.constantValue && !b.constantValue ? b.type : a.type;
       }
-      if (!type) {
-        // C# 9 target-typed conditional: no natural type, converted when a target type is known.
-        const n = this.node('Conditional', syntax, null, { condition, whenTrue: a, whenFalse: b, form: 'conditional' });
-        n.convert = to => {
-          const ca = this.conversions.classifyFromExpression(a, to),
-            cb = this.conversions.classifyFromExpression(b, to);
-          return ca.exists && ca.isImplicit && cb.exists && cb.isImplicit ? new Conversion(ConversionKind.Identity) : null;
-        };
-        n.noNaturalType = { left: a, right: b };
-        n.form = 'implicitNew';
-        n.materialize = to =>
-          this.node('Conditional', syntax, to, { condition, whenTrue: this.convert(a, to), whenFalse: this.convert(b, to) });
-        n.isTargetTypedConditional = true;
-        return n;
-      }
+      if (!type) return this.targetTypedConditional(syntax, condition, a, b);
       const n = this.node('Conditional', syntax, type, { condition, whenTrue: this.convert(a, type), whenFalse: this.convert(b, type) });
       if (condition.constantValue && n.whenTrue.constantValue && n.whenFalse.constantValue)
         n.constantValue = condition.constantValue.value ? n.whenTrue.constantValue : n.whenFalse.constantValue;
       return n;
     }
     coalesce(syntax) {
-      const left = this.value(syntax.left),
+      const left = this.requireNaturalType(this.value(syntax.left)),
         right = this.value(syntax.right);
       if (left.hasErrors || right.hasErrors) return this.bad(syntax);
       const fail = () => {

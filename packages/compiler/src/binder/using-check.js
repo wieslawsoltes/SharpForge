@@ -10,9 +10,10 @@
 import { SymbolKind } from '../symbols/types.js';
 import { isBclNamespace } from '../symbols/bcl-namespaces.js';
 import { collectUsingDirectives, resolveQualifiedName } from './usings.js';
+import { checkGlobalUsingPlacement } from './global-usings.js';
 
 /** Diagnostics of a using or extern alias directive itself. */
-const directiveCodes = new Set(['CS0246', 'CS0234', 'CS0138', 'CS7007', 'CS1537', 'CS0105', 'CS0430', 'CS1681', 'CS0426']);
+const directiveCodes = new Set(['CS0246', 'CS0234', 'CS0138', 'CS7007', 'CS1537', 'CS0105', 'CS0430', 'CS1681', 'CS0426', 'CS8914', 'CS8915']);
 /** Diagnostics that only namespace and alias lookup produce, wherever they are reported. */
 const namespaceCodes = new Set(['CS0234', 'CS0138', 'CS7007', 'CS1537', 'CS0576', 'CS0431', 'CS0432', 'CS0430']);
 const plainName = /^[A-Za-z_][A-Za-z0-9_]*(\.[A-Za-z_][A-Za-z0-9_]*)*$/;
@@ -53,10 +54,17 @@ export function suspiciousUsings(compilation) {
     return names.has(name);
   };
   let result = null;
+  // Global aliases share one declaration space across files.
+  const globalAliases = new Set();
   for (const file of compilation.inputFiles) {
     if (file.syntax?.externs?.length) return 'names';
+    if (checkGlobalUsingPlacement(file).length) result = 'directives';
     const scopes = new Map();
     for (const directive of collectUsingDirectives(file)) {
+      if (directive.isGlobal && directive.kind === 'alias') {
+        if (globalAliases.has(directive.alias)) result = 'directives';
+        globalAliases.add(directive.alias);
+      }
       let scope = scopes.get(directive.namespace);
       if (!scope) scopes.set(directive.namespace, (scope = { seen: new Set(), aliases: new Set() }));
       const found = suspicion(directive, globalNamespace, scope.seen, scope.aliases, declared);

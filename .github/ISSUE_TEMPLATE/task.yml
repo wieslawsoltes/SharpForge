@@ -1,0 +1,43 @@
+name: Existing-area implementation task
+description: Define a bounded task with an existing area owner and explicit acceptance evidence.
+title: "[SF-A00-T00] "
+body:
+  - type: markdown
+    attributes:
+      value: "Replace the title Work ID with a unique existing/planned ID. Do not create a duplicate of a tracked leaf."
+  - type: input
+    id: area
+    attributes:
+      label: Area and parent
+      description: "Include **Area:** Axx and **Parent:** #number in this value."
+      value: "**Area:** A00 · **Parent:** #1"
+    validations:
+      required: true
+  - type: textarea
+    id: deliverable
+    attributes:
+      label: Deliverable
+      value: "## Deliverable\n\nDescribe the observable behavior."
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      value: "## Acceptance criteria\n\n- [ ] Positive, negative, boundary and cancellation/disposal cases.\n- [ ] Exact-source evidence; unsupported targets explicit."
+    validations:
+      required: true
+  - type: textarea
+    id: ownership
+    attributes:
+      label: Ownership and lock keys
+      value: "**Owns:** `packages/replace-with-owned-package/**`\nLock keys: none\nAgent: unassigned\nBranch: not created\nLease: not claimed"
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Dependencies and evidence
+      value: "Dependencies: list existing task IDs if required\n\nRecord exact commit, commands, environment and artifact digests. Unrun checks remain unknown."
+    validations:
+      required: true

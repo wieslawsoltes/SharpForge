@@ -118,14 +118,7 @@ export const ConversionBinding = Base =>
         else this.report(anonymousFunctionAnchor(e.syntax, node), 'CS1660', [e.isAnonymousMethod ? 'anonymous method' : 'lambda expression', to]);
         return;
       }
-      if (e.noNaturalType) {
-        this.report(node, 'CS0173', [this.operandDisplay(e.noNaturalType.left), this.operandDisplay(e.noNaturalType.right)]);
-        return;
-      }
-      if (e.isTargetTypedSwitch) {
-        this.report(node, 'CS8506');
-        return;
-      }
+      if (this.reportTargetTypedFailure(e, type)) return;
       if (e.form === 'implicitNew') {
         this.report(node, 'CS8752', [to]);
         return;

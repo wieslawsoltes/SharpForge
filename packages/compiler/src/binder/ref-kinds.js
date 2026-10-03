@@ -63,7 +63,9 @@ export function classifyVariable(expression, context = {}) {
     case 'This': {
       const t = context.containingType;
       if (!t || t.typeKind !== TypeKind.Struct) return { isVariable: false, isWritable: false, reason: 'this' };
-      if (t.isReadOnly || context.method?.isReadOnly) return { isVariable: true, isWritable: false, reason: 'this' };
+      // `readonly` on a constructor is an error of its own (CS0106); the constructor still assigns the fields.
+      const inReadOnlyMember = !!context.method?.isReadOnly && !context.method.isConstructor;
+      if (t.isReadOnly || inReadOnlyMember) return { isVariable: true, isWritable: false, reason: 'this' };
       return yes;
     }
     case 'FieldAccess': {
@@ -114,6 +116,9 @@ export function classifyVariable(expression, context = {}) {
         return { isVariable: false, isWritable: false, reason: 'initOnly', isProperty: true, symbol: p };
       return { isVariable: false, isWritable: true, isProperty: true, symbol: p };
     }
+    case 'ImplicitIndexerAccess':
+      // `a[^1]` is as assignable as the element or indexer it stands for; a slice (`a[1..2]`) is a value.
+      return expression.accessKind === 'index' ? classifyVariable(expression.access, context) : no('notVariable');
     case 'EventAccess':
       return { isVariable: true, isWritable: true };
     case 'Call':

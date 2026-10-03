@@ -1,0 +1,13 @@
+{
+  "tuple-lowering/element-access-and-assignment-errors": ["diagnostics", "warnings"],
+  "tuple-lowering/element-name-rules": ["diagnostics", "warnings"],
+  "tuple-lowering/equality-conversions-and-default": ["diagnostics", "warnings", "bytecode", "cil"],
+  "tuple-lowering/equality-needs-7-3": ["diagnostics", "warnings"],
+  "tuple-lowering/equality-operand-errors": ["diagnostics", "warnings"],
+  "tuple-lowering/inferred-names-need-7-1": ["diagnostics", "warnings"],
+  "tuple-lowering/literals-elements-and-names": ["diagnostics", "warnings", "bytecode", "cil"],
+  "tuple-lowering/returns-parameters-and-nesting": ["diagnostics", "warnings", "bytecode", "cil"],
+  "tuple-lowering/text-of-tuples": ["diagnostics", "warnings", "bytecode", "cil"],
+  "tuple-lowering/tuples-in-fields-arrays-and-properties": ["diagnostics", "warnings", "bytecode", "cil"],
+  "tuple-lowering/value-semantics-on-copy-and-element-store": ["diagnostics", "warnings", "bytecode", "cil"]
+}

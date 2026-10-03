@@ -113,8 +113,8 @@ export class OverloadResolver {
         continue;
       }
       if (wanted === RefKind.Ref || wanted === RefKind.Out) {
-        // By-reference arguments need an identical type; `out var x` / `out _` take the parameter's type.
-        const ok = !args[i].type || args[i].isOutVarOrDiscard || this.conversions.isIdentity(args[i].type, c.parameterTypes[i]);
+        // By-reference arguments need an identical type; `out var x` / `out _` have none and take the parameter's type.
+        const ok = !args[i].type || this.conversions.isIdentity(args[i].type, c.parameterTypes[i]);
         if (!ok) c.failure ??= { kind: 'conversion', argument: i, to: c.parameterTypes[i] };
         c.conversions.push(ok ? this.conversions.constructor.identity : null);
         continue;
@@ -227,7 +227,7 @@ export class OverloadResolver {
     if (e.kind === 'noSuchName') return { code: 'CS1739', args: [isDelegate ? shown : shown, e.name], argument: e.argument };
     if (e.kind === 'nameUsedTwice') return { code: 'CS1740', args: [e.name], argument: e.argument };
     if (e.kind === 'namedAlreadyPositional') return { code: 'CS1744', args: [e.name], argument: e.argument };
-    if (e.kind === 'badNonTrailingName') return { code: 'CS8323', args: [args[e.argument - 1]?.name ?? ''], argument: e.argument - 1 };
+    if (e.kind === 'badNonTrailingName') return { code: 'CS8323', args: [e.name], argument: e.argument };
     // Too few arguments: Roslyn names the first required parameter without an argument when exactly one candidate
     // could otherwise be meant; with several candidates of other arities it reports the argument count.
     const missing = analysed.filter(c => c.failure.kind === 'mapping' && c.failure.error.kind === 'missing');
@@ -259,7 +259,24 @@ export class OverloadResolver {
     if (a.usedDefaults !== b.usedDefaults) return !a.usedDefaults;
     const specific = this.moreSpecific(a, b);
     if (specific !== 0) return specific > 0;
-    return false;
+    return this.prefersByValue(a, b, args) > 0;
+  }
+  /**
+   * The last tie-breaker (C# 7.2): for an argument passed without a modifier, a by-value parameter is better than
+   * an `in` parameter. >0 when a is better in this way, <0 when b is, 0 when neither or both are.
+   */
+  prefersByValue(a, b, args) {
+    let result = 0;
+    for (let i = 0; i < args.length; i++) {
+      if (refOf(args[i]) !== RefKind.None) continue;
+      const x = a.method.parameters[a.mapping.parameterOf[i]].refKind ?? RefKind.None,
+        y = b.method.parameters[b.mapping.parameterOf[i]].refKind ?? RefKind.None;
+      const r = x === RefKind.None && y === RefKind.In ? 1 : x === RefKind.In && y === RefKind.None ? -1 : 0;
+      if (r === 0) continue;
+      if (result !== 0 && r !== result) return 0;
+      result = r;
+    }
+    return result;
   }
   /** >0 when a's uninstantiated parameter types are more specific than b's, <0 for the reverse, 0 otherwise. */
   moreSpecific(a, b) {
