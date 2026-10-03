@@ -86,6 +86,16 @@ function sanitize(text) {
   return String(text).replace(/[<>,()[\]?*&`\s]/g, '_');
 }
 
+/**
+ * An image type name as it appears inside a synthesized class name. A registry generic is written with the
+ * characters a type-name parser reads (``List`1<string>``); inside another name it is spelled like a construction:
+ * `System.Collections.Generic.List{string}`.
+ */
+export function imageTypeNameText(name) {
+  if (!name.includes('`')) return name;
+  return name.replace(/`\d+/g, '').replace(/</g, '{').replace(/>/g, '}').replace(/,\s*/g, ';');
+}
+
 /** The image class name of a closed construction of a source generic class. */
 export function instantiationTypeName(type) {
   return typeNameText(type);

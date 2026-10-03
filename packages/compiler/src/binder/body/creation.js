@@ -147,6 +147,7 @@ export const CreationBinding = Base =>
       let elementType,
         rank = 1,
         sizes = [];
+      if (implicit && syntax.commas.length) return this.implicitMultiDimensionalArray(syntax);
       if (implicit) {
         rank = syntax.commas.length + 1;
         const values = init.expressions.map(e => (e.kind === 'ArrayInitializerExpression' ? null : this.value(e)));
@@ -190,13 +191,15 @@ export const CreationBinding = Base =>
       if (!init && !sizes.length && ranks[0].sizes.every(s => s.kind === 'OmittedArraySizeExpression')) {
         this.report(typeSyntax.rankSpecifiers[0], 'CS1586');
       }
+      if (init && sizes.length) this.checkArrayInitializer(init, rank, sizes);
       const elements = init ? this.arrayInitializer(init, elementType, rank) : null;
       return this.node('ArrayCreation', syntax, full, { sizes, elements });
     }
-    arrayInitializer(init, elementType, rank) {
+    arrayInitializer(init, elementType, rank, isNested = false) {
+      if (!isNested) this.checkArrayInitializer(init, rank);
       return init.expressions.map(e => {
         if (e.kind === 'ArrayInitializerExpression') {
-          if (rank > 1) return this.arrayInitializer(e, elementType, rank - 1);
+          if (rank > 1) return this.arrayInitializer(e, elementType, rank - 1, true);
           if (elementType instanceof ArrayTypeSymbol)
             return this.node('ArrayCreation', e, elementType, {
               elements: this.arrayInitializer(e, elementType.elementType, elementType.rank),
