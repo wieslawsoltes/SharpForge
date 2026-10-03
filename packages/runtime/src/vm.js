@@ -1,6 +1,6 @@
 import {ManagedPlatform,SUSPENDED} from './platform.js';
 import {CooperativeScheduler} from './scheduler.js';
-import {copyExecution} from './snapshot.js';
+import {snapshotVM,restoreVM} from './snapshot.js';
 import { loadAssembly } from '@sharpforge/cil';
 import { Op, BinaryName, UnaryName, verifyImage } from '@sharpforge/bytecode';
 import { ManagedHeap, ManagedFault, isReference } from './heap.js';
@@ -83,6 +83,6 @@ export class VirtualMachine {
   async runAsync(options={}){await this.scheduler.runAsync(options);return {state:this.state,output:this.output.join(''),returnValue:this.value(this.returnValue),exitCode:this.exitCode,fault:this.fault,stats:this.statistics()};}
   stop(){this.scheduler.cancelAll();this.platform.closeAll();this.state='terminated';this.pendingFault=null;this.frames=[];this.stack=[];this.currentPoint=null;}
   statistics(){return {artifactFormat:this.image.il?'ECMA-335':'SharpForge IR',assembly:this.image.il?{bytes:this.image.il.assemblyBytes,loadMs:this.image.il.loadMs,decodeMs:this.image.il.decodeMs,verificationMs:this.image.il.verificationMs}:null,instructions:this.instructions,elapsedMs:this.elapsedMs,frames:this.frames.length,heap:{...this.heap.stats,maxBytes:this.heap.maxBytes,threshold:this.heap.threshold}};}
-  snapshot(){const hostRevision=this.platform.hostOperations.snapshotVersion(),memo=new Map();return {hostRevision,owner:this.snapshotOwner,platform:this.platform.snapshot(),scheduler:this.scheduler.snapshot(),sourcePause:this.sourcePause,writeRevision:this.writeRevision,stack:[...this.stack],frames:copyExecution(this.frames,memo),statics:[...this.statics],constantValues:[...this.constantValues],heap:this.heap.snapshot(),state:this.state,instructions:this.instructions,elapsedMs:this.elapsedMs,frameId:this.frameId,currentPoint:this.currentPoint,output:[...this.output],outputCharacters:this.outputCharacters,exitCode:this.exitCode,returnValue:this.returnValue,pendingFault:copyExecution(this.pendingFault,memo),fault:copyExecution(this.fault,memo)};}
-  restore(s){if(s?.owner!==this.snapshotOwner)throw new TypeError('Snapshot belongs to another source VM');this.platform.hostOperations.checkRestore(s.hostRevision);const memo=new Map();this.stack=[...s.stack];this.frames=copyExecution(s.frames,memo);this.statics=[...s.statics];this.constantValues=new Map(s.constantValues);this.heap.restore(s.heap);this.state='paused';this.instructions=s.instructions;this.elapsedMs=s.elapsedMs;this.frameId=Math.max(this.frameId,s.frameId);this.writeRevision=s.writeRevision??0;this.sourcePause=s.sourcePause??false;this.currentPoint=this.top?.point??null;this.output=[...s.output];this.outputCharacters=s.outputCharacters;this.exitCode=s.exitCode;this.returnValue=s.returnValue;this.pendingFault=copyExecution(s.pendingFault,memo);this.fault=copyExecution(s.fault,memo);this.scheduler.restore(s.scheduler);this.platform.restore(s.platform);}
+  snapshot(){return snapshotVM(this,'source');}
+  restore(snapshot){return restoreVM(this,snapshot,'source');}
 }
