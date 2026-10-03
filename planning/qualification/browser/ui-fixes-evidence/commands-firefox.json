@@ -1,0 +1,50 @@
+{
+  "source": {
+    "commit": "0e3dc9a0e6ff6eb7d5fd5ec1664fa15ab33ea403",
+    "dirty": false
+  },
+  "commands": [
+    {
+      "command": [
+        "/private/tmp/sharpforge-browser-matrix-venv/bin/python",
+        "tests/conformance/browser/ui_regressions.py",
+        "--engine",
+        "firefox"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/private/tmp/sharpforge-browser-matrix-venv/bin/python",
+        "tests/conformance/browser/run_matrix.py",
+        "--engine",
+        "firefox",
+        "--suite",
+        "mobile"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/private/tmp/sharpforge-browser-matrix-venv/bin/python",
+        "tests/conformance/browser/run_matrix.py",
+        "--engine",
+        "firefox",
+        "--suite",
+        "a11y"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/private/tmp/sharpforge-browser-matrix-venv/bin/python",
+        "tests/conformance/browser/run_matrix.py",
+        "--engine",
+        "firefox",
+        "--suite",
+        "smoke"
+      ],
+      "exitCode": 0
+    }
+  ]
+}

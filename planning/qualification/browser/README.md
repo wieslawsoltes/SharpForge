@@ -36,7 +36,7 @@ Cold navigation-to-compiler-ready and warm correctness-gated compile/run samples
 |1154|`standalone_file_test.py` actual navigation, compile/run/debug|Harness injection remains a different mode|
 |1155|Shared CSP monitor and negative real-browser fixture|Policy is never disabled|
 |1156|iPhone 13, Pixel 5, iPad descriptors, touch controls|No physical hardware/OS keyboard claims|
-|1157|ARIA names/roles, keyboard traversal, media modes|Violations retained; product fixes owned elsewhere|
+|1157|ARIA names/roles, keyboard traversal, media modes|Observed label and focus defects fixed; no complete WCAG or assistive-technology claim|
 |1158|Post-deploy job using actual output URL|Existing deploy without enforced CSP fails|
 |1159|Validated report/category merger and negative unit tests|No hardware qualification without evidence|
 
@@ -52,3 +52,5 @@ deployed CSP and the absent product SharedArrayBuffer path remain open concerns;
 physical devices and Linux/Windows browser execution remain unqualified.
 No local tests, builds or browser captures ran for these workflow readiness
 changes. Broader validation is deferred until the integrated scope is complete.
+
+The [mobile and accessibility follow-up](ui-fixes.md) records actual fixes and a separate revision-bound recapture. The [original qualification](qualification.md) remains the baseline for measurements not repeated by that follow-up.

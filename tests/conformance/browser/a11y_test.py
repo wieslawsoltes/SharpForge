@@ -22,18 +22,24 @@ def names(page):
             rows.append({'selector':selector,'snapshot':snapshot})
     return rows
 
-def tab_to(page, selector, limit=100):
+def tab_to(page, selector, limit=200, reverse=False):
     visits={}
     for _ in range(limit):
-        page.keyboard.press('Tab')
+        if page.evaluate('document.activeElement?.matches(".sf-input, .CodeMirror textarea")'):
+            page.keyboard.press('Escape')
+        key=getattr(page,'_qualificationTabKey','Tab')
+        if reverse:key='Shift+'+key
+        page.keyboard.press(key)
         if page.evaluate('selector=>document.activeElement?.matches(selector)',selector):return
         active=page.evaluate('document.activeElement?.outerHTML.slice(0,200)')
         visits[active]=visits.get(active,0)+1
-        if visits[active]>=5:raise AssertionError('Keyboard focus cannot escape '+str(active)+' to reach '+selector)
+        if visits[active]>=5 and page.evaluate('document.hasFocus()'):raise AssertionError('Keyboard focus cannot escape '+str(active)+' to reach '+selector)
     raise AssertionError('Keyboard traversal cannot reach '+selector)
 
 def qualify(checks, **options):
     page=checks.page
+    import platform
+    page._qualificationTabKey='Alt+Tab' if options.get('engine')=='webkit' and platform.system()=='Darwin' else 'Tab'
     def named():
         violations=names(page)
         (checks.directory/'accessibility-violations.json').write_text(__import__('json').dumps(violations,indent=2)+'\n',encoding='utf8')
@@ -49,10 +55,15 @@ def qualify(checks, **options):
         page.keyboard.press('ArrowRight')
         truth(page.evaluate('document.activeElement.dataset.dockTab') not in (None,before),'Docking arrow traversal did not move')
         tab_to(page,'.sf-dock-divider');before=page.evaluate('document.activeElement.getAttribute("aria-valuenow")')
+        split=page.evaluate('document.activeElement.parentElement.dataset.splitId')
         page.keyboard.press('ArrowRight')
-        truth(page.locator('.sf-dock-divider').first.get_attribute('aria-valuenow')!=before,'Keyboard docking resize did not change value')
-        tab_to(page,'.sf-input');page.keyboard.press('End');page.keyboard.type(' // keyboard')
-        truth(page.evaluate('document.activeElement.value.endsWith("// keyboard")'),'Keyboard editor input failed')
+        truth(page.locator('[data-split-id="'+split+'"] > .sf-dock-divider').get_attribute('aria-valuenow')!=before,'Keyboard docking resize did not change value')
+        tab_to(page,'.sf-input',reverse=True)
+        before=page.evaluate('document.activeElement.value')
+        page.keyboard.press('End');page.keyboard.type(' // keyboard')
+        after=page.evaluate('document.activeElement.value')
+        truth(len(after)==len(before)+len(' // keyboard') and ' // keyboard' in after,'Keyboard editor input failed')
+        return {'traversal':page._qualificationTabKey,'editorExit':'Escape followed by native traversal key'}
     checks.check('keyboard-menu-docking-editor',keyboard)
     for feature,value in [('forced_colors','active'),('reduced_motion','reduce')]:
         def media(feature=feature,value=value):
