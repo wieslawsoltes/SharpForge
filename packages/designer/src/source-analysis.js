@@ -3,6 +3,7 @@ import {validateDesign, childSlot} from './model.js';
 import {prepareDesignSources, ownerName} from './source-symbols.js';
 import {SourceConstructionReader} from './source-reader.js';
 import {retainSourceIdentities} from './source-identity.js';
+import {retainSourceDesignMetadata} from './source-design-metadata.js';
 import {inferSourceStyle} from './source-text.js';
 import {designSourceDiagnostics, failSource} from './source-errors.js';
 
@@ -39,10 +40,10 @@ export function analyzeDesignSources(sources, options = {}) {
     const value = window.properties[key] ?? content?.properties[key] ?? previous?.[key.toLowerCase()] ?? (key === 'Width' ? 960 : 640);
     return Number.isFinite(value) ? Math.max(100, value) : key === 'Width' ? 960 : 640;
   };
-  const document = validateDesign({version: 1, name: previous?.name ?? context.chosen.owner?.name ?? 'CSharpView',
+  const document = validateDesign(retainSourceDesignMetadata({version: 1, name: previous?.name ?? context.chosen.owner?.name ?? 'CSharpView',
     width: size('Width'), height: size('Height'), root, nodes, styles: reader.styles, templates: reader.templates,
     ...(options.projectTypes ? {projectTypes: Array.isArray(options.projectTypes) ? options.projectTypes
-      : Object.entries(options.projectTypes).map(([type, baseType]) => ({type, baseType}))} : {})});
+      : Object.entries(options.projectTypes).map(([type, baseType]) => ({type, baseType}))} : {})}, previous));
   const {method, owner, parsed} = context.chosen;
   const ownership = {version: 1, uri: parsed.source.uri, className: ownerName(owner), methodName: method.name,
     methodSymbol: context.methodSymbol?.name ?? method.name, span: {start: method.body.start, end: method.body.end}, regions: reader.regions};

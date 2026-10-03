@@ -5,6 +5,7 @@ import {sourceTreeEdits} from './source-edit-tree.js';
 import {sourceResourceEdits} from './source-edit-resources.js';
 import {applySourceEdits, coalesceSourceEdits, sameSourceValue, sourceIdentifier} from './source-text.js';
 import {checkSourceCancellation, failSource} from './source-errors.js';
+import {retainSourceDesignMetadata} from './source-design-metadata.js';
 
 function namesFor(base, document) {
   const names = new Map();
@@ -123,8 +124,13 @@ export function finishSourcePlan(base, edits, options = {}) {
     return {...file, text};
   });
   if (grouped.size) failSource('Source plan references a missing partial file', null, 'SFSYNC_CONFLICT');
-  const analysis = changes.length ? analyzeDesignSources(sources, {...base.options, ...options, uri: base.uri,
+  let analysis = changes.length ? analyzeDesignSources(sources, {...base.options, ...options, uri: base.uri,
     methodName: base.method.name, previous: options.document ? {document: options.document, bindings: base.bindings} : base}) : base;
+  if (!changes.length && options.document) {
+    const document = validateDesign(retainSourceDesignMetadata(structuredClone(base.document), options.document));
+    analysis = {...base, document};
+    Object.defineProperty(analysis, 'context', {value: base.context, enumerable: false});
+  }
   if (options.requireCompilation && !analysis.compilationSucceeded) {
     const errors = analysis.compilerDiagnostics.filter(diagnostic => diagnostic.severity === 'error');
     const first = errors[0];

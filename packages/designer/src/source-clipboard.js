@@ -1,10 +1,12 @@
 import {DesignDocument, validateDesign} from './model.js';
 import {planDesignSourceUpdate} from './source-plan.js';
 import {failSource} from './source-errors.js';
+import {importDesignerAuthoringResources} from './resource-clipboard.js';
+import {retainSourceDesignMetadata} from './source-design-metadata.js';
 
 const clipboardFormat = 'sharpforge.design-clipboard';
 
-/** Serializes selected subtrees and their transitive style/template dependencies, without source code. */
+/** Serializes selected subtrees, referenced resources and their preview data, without source code. */
 export function copyDesignSelection(input, selected) {
   const document = validateDesign(input.document ?? input);
   const nodes = new Map(document.nodes.map(node => [node.id, node]));
@@ -31,6 +33,7 @@ export function copyDesignSelection(input, selected) {
   }
   const styles = {};
   const templates = {};
+  const resources = {styles, templates};
   const addStyle = key => {
     if (styles[key]) return;
     const style = document.styles[key];
@@ -42,15 +45,22 @@ export function copyDesignSelection(input, selected) {
     delete node.runtimeId;
     if (node.style) addStyle(node.style);
     if (node.template) templates[node.template] = structuredClone(document.templates[node.template]);
+    importDesignerAuthoringResources(document, resources, node);
     return node;
   });
+  const parts = Object.values(templates).map(template => template.root);
+  while (parts.length) {
+    const part = parts.pop();
+    importDesignerAuthoringResources(document, resources, part);
+    parts.push(...(part.children ?? []));
+  }
   let root = '__clipboard_root';
   while (included.has(root)) root += '_';
   const wrapper = {id: root, type: 'Canvas', properties: {}, children: roots, events: {}};
   if (copied.some(node => node.type.endsWith('.Window'))) failSource('Copy child controls instead of a top-level Window', null, 'SFSYNC_OWNERSHIP');
   const payload = {format: clipboardFormat, version: 1, selection: roots,
-    document: validateDesign({version: 1, name: document.name, width: document.width, height: document.height,
-      root, nodes: [wrapper, ...copied], styles, templates, ...(document.projectTypes ? {projectTypes: document.projectTypes} : {})})};
+    document: validateDesign(retainSourceDesignMetadata({version: 1, name: document.name, width: document.width, height: document.height,
+      root, nodes: [wrapper, ...copied], ...resources}, document))};
   return JSON.stringify(payload);
 }
 

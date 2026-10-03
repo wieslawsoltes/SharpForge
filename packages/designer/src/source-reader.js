@@ -170,7 +170,9 @@ export class SourceConstructionReader {
       entry.dynamic = true;
       binding.properties[key] = entry;
       const previous = this.previousNodes.get(node.id);
-      if (previous && Object.hasOwn(previous.properties, key)) node.properties[key] = structuredClone(previous.properties[key]);
+      if (previous?.type === node.type && previous.projectType === node.projectType && Object.hasOwn(previous.properties, key)) {
+        node.properties[key] = structuredClone(previous.properties[key]);
+      }
       this.region.kind = 'protected';
       this.region.expressions.at(-1).capability = 'navigate';
       this.warnings.push({code: 'SFSYNC_DYNAMIC', node: node.id, property: key, message: error.message,
