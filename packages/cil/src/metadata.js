@@ -1,19 +1,10 @@
 import {frameworkType,canonicalType} from '@sharpforge/framework';
 import { Writer, Reader, CilError, align, utf8, text, buildId } from './binary.js';
 /** ECMA-335 II.22 tables and II.24 heaps. Table/index widths are computed, never fixed. */
-export const Tables = Object.freeze({Module:0,TypeRef:1,TypeDef:2,Field:4,MethodDef:6,Param:8,MemberRef:10,StandAloneSig:17,Assembly:32,AssemblyRef:35});
-export const metadataSchemas = {
-  0:['u16','str','guid','guid','guid'],1:['ResolutionScope','str','str'],2:['u32','str','str','TypeDefOrRef','t4','t6'],3:['t4'],4:['u16','str','blob'],5:['t6'],6:['u32','u16','u16','str','blob','t8'],7:['t8'],8:['u16','u16','str'],9:['t2','TypeDefOrRef'],10:['MemberRefParent','str','blob'],11:['u16','HasConstant','blob'],12:['HasCustomAttribute','CustomAttributeType','blob'],13:['HasFieldMarshal','blob'],14:['u16','HasDeclSecurity','blob'],15:['u16','u32','t2'],16:['u32','t4'],17:['blob'],18:['t2','t20'],19:['t20'],20:['u16','str','TypeDefOrRef'],21:['t2','t23'],22:['t23'],23:['u16','str','blob'],24:['u16','t6','HasSemantics'],25:['t2','MethodDefOrRef','MethodDefOrRef'],26:['str'],27:['blob'],28:['u16','MemberForwarded','str','t26'],29:['u32','t4'],30:['u32','u32'],31:['u32'],32:['u32','u16','u16','u16','u16','u32','blob','str','str'],33:['u32'],34:['u32','u32','u32'],35:['u16','u16','u16','u16','u32','blob','str','str','blob'],36:['u32','t35'],37:['u32','u32','u32','t35'],38:['u32','str','blob'],39:['u32','u32','str','str','Implementation'],40:['u32','u32','str','Implementation'],41:['t2','t2'],42:['u16','u16','TypeOrMethodDef','str'],43:['MethodDefOrRef','blob'],44:['t42','TypeDefOrRef'],48:['blob','guid','blob','guid'],49:['t48','blob'],50:['t6','t53','t51','t52','u32','u32'],51:['u16','u16','str'],52:['str','blob'],53:['t53','blob'],54:['t6','t6'],55:['HasCustomDebugInformation','guid','blob']
-};
-const schemas=metadataSchemas;
-export const metadataCodedIndices = {
-  ResolutionScope:[2,[0,26,35,1]],TypeDefOrRef:[2,[2,1,27]],MemberRefParent:[3,[2,1,26,6,27]],HasConstant:[2,[4,8,23]],HasCustomAttribute:[5,[6,4,1,2,8,9,10,0,14,23,20,17,26,27,32,35,38,39,40,42,44,43]],CustomAttributeType:[3,[null,null,6,10,null]],HasFieldMarshal:[1,[4,8]],HasDeclSecurity:[2,[2,6,32]],HasSemantics:[1,[20,23]],MethodDefOrRef:[1,[6,10]],MemberForwarded:[1,[4,6]],Implementation:[2,[38,35,39]],TypeOrMethodDef:[1,[2,6]],HasCustomDebugInformation:[5,[6,4,1,2,8,9,10,0,14,23,20,17,26,27,32,35,38,39,40,42,44,43,48,50,51,52,53]]
-};
-const coded=metadataCodedIndices;
-export function token(table, row) { return (table * 0x1000000 + row) >>> 0; }
-export function codedIndex(kind, metadataToken) { if (!metadataToken) return 0; const [bits,tables] = coded[kind], table = metadataToken >>> 24, tag = tables.indexOf(table); if (tag < 0) throw new CilError(`Token cannot be encoded as ${kind}`); return ((metadataToken & 0xffffff) << bits) | tag; }
-export function decodeCoded(kind, value) { if (!value) return 0; const [bits,tables] = coded[kind],table=tables[value & ((1<<bits)-1)]; if (table === undefined || table === null) throw new CilError(`Invalid ${kind} tag`); return token(table,value>>>bits); }
-export function metadataIndexWidth(kind, counts, heaps) { if (kind==='u16') return 2; if(kind==='u32')return 4; if(kind==='str')return heaps&1?4:2;if(kind==='guid')return heaps&2?4:2;if(kind==='blob')return heaps&4?4:2;if(/^t\d+$/.test(kind))return (counts[+kind.slice(1)]??0)<65536?2:4;const [bits,refs]=coded[kind];return Math.max(...refs.map(t=>counts[t]??0))<(1<<(16-bits))?2:4; }
+import { metadataSchemas as schemas } from './metadata/tables.js';
+import { codedIndex, decodeCoded, token, metadataIndexWidth } from './metadata/indices.js';
+export { Tables, TableId, tableDefinitions, metadataSchemas } from './metadata/tables.js';
+export { metadataCodedIndices, codedIndex, decodeCoded, token, metadataIndexWidth } from './metadata/indices.js';
 export class MetadataBuilder {
   constructor(name='Application', {framework='net8'}={}) {
     this.name=name;this.framework=framework;this.rows={};this.strings=new Writer().u8(0);this.blobs=new Writer().u8(0);this.userStrings=new Writer().u8(0);this.stringMap=new Map([['',0]]);this.blobMap=new Map();this.userStringMap=new Map();this.typeRefs=new Map();this.members=new Map();this.assemblyRefs=new Map();
