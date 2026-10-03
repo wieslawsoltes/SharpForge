@@ -24,7 +24,8 @@ test('a05-05: rectangular arrays preserve rank, row-major order, and dimension b
   const vm=context(),ref=createArray(vm,'int',[2,3],[-2,5]),record=arrayRecord(vm,ref);
   assert.equal(record.methodTable.name,'System.Int32[,]');assert.equal(arrayShape(record).rank,2);
   let n=1;for(let row=-2;row<0;row++)for(let col=5;col<8;col++)arraySet(vm,ref,[row,col],n++);
-  assert.deepEqual(record.data,[1,2,3,4,5,6]);assert.equal(arrayGet(vm,ref,[-1,7]),6);
+  assert(record.data instanceof Int32Array);
+  assert.deepEqual([...record.data],[1,2,3,4,5,6]);assert.equal(arrayGet(vm,ref,[-1,7]),6);
   assert.equal(arrayDimension(vm,ref,0,'lower'),-2);assert.equal(arrayDimension(vm,ref,1,'upper'),7);
   assert.equal(arrayOffset(record,[-1,6]),4);
   assert.throws(()=>arrayGet(vm,ref,[0,5]),{name:'IndexOutOfRangeException'});
@@ -55,8 +56,9 @@ test('a05-05: zero sizes, rank32, signed boundaries, overflow, and allocation li
   assert.throws(()=>createArray(vm,'int',[-1]),{name:'OverflowException'});
   assert.throws(()=>createArray(vm,'int',[-1],null,{reflection:true}),{name:'ArgumentOutOfRangeException'});
   assert.throws(()=>createArray(vm,'int',[2],[2147483647]),{name:'ArgumentOutOfRangeException'});
-  assert.throws(()=>createArray(vm,'int',[1001,1000]),{name:'OutOfMemoryException'});
-  assert.throws(()=>createArray(vm,'int',[0,1000001]),{name:'OutOfMemoryException'});
+  const limited=context();limited.options.maxArrayLength=1000000;
+  assert.throws(()=>createArray(limited,'int',[1001,1000]),{name:'OutOfMemoryException'});
+  assert.throws(()=>createArray(limited,'int',[0,1000001]),{name:'OutOfMemoryException'});
   assert.throws(()=>createArray(vm,'void',[1]),{name:'NotSupportedException'});
   assert.throws(()=>createArray(vm,'List<>',[1]),{name:'NotSupportedException'});
 });
