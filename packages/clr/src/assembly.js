@@ -122,7 +122,14 @@ export class RuntimeModule {
     return this.#genericParameters.forType(typeToken);
   }
 
-  /** Canonical TypeDef-owned GenericParam token lookup; method parameters remain unsupported. */
+  /** Canonical MethodDef-owned generic parameter identities, checked against signature arity. */
+  methodGenericParameters(methodToken) {
+    this.#assembly.ensureUsable();
+    this.#genericParameters ??= new MetadataGenericParameters(this);
+    return this.#genericParameters.forMethod(methodToken);
+  }
+
+  /** Canonical GenericParam token lookup for either TypeDef or MethodDef ownership. */
   genericParameter(token) {
     this.#assembly.ensureUsable();
     this.#genericParameters ??= new MetadataGenericParameters(this);

@@ -24,6 +24,7 @@
  * chosen among all constructors of `List<E>` and then required to be one of the two signatures; the proposal resolves
  * among the two only, which differs for an argument that is ambiguous between `int` and another parameter type.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { previewStampText } from '@sharpforge/syntax';
 import { TypeKind } from '../symbols/types.js';
 
@@ -33,7 +34,7 @@ const feature = 'CollectionExpressionArguments';
 export const CollectionArgumentBinding = Base =>
   class extends Base {
     collectionArgumentRule(node, text) {
-      this.report(node, 'SF2203', [text, previewStampText(feature)]);
+      this.report(node, DiagnosticId.SF2203, [text, previewStampText(feature)]);
     }
     /** Binds a `with(...)` element; returns `{syntax, args}`, or null when it is not the first element. */
     collectionArguments(element, index) {
@@ -56,7 +57,7 @@ export const CollectionArgumentBinding = Base =>
       if (target.kind === 'collection' && to.typeKind !== TypeKind.TypeParameter) return true;
       if (target.kind === 'builder' || to.typeKind === TypeKind.TypeParameter) {
         const what = target.kind === 'builder' ? 'a create method ([CollectionBuilder])' : 'a type parameter target';
-        this.report(syntax, 'SF2202', [`collection arguments for ${what}`, previewStampText(feature)]);
+        this.report(syntax, DiagnosticId.SF2202, [`collection arguments for ${what}`, previewStampText(feature)]);
         return false;
       }
       if (target.kind !== 'interface') {

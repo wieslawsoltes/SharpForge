@@ -36,3 +36,39 @@ Compiler assembly-attribute projection is not implemented by this slice. It does
 AssemblyFileVersionAttribute or other source attributes into these options; that mapping follows the attribute
 emission work. The explicit version options and resource tree are usable independently. This limitation leaves
 T03.5's source-attribute acceptance open. Host-specific Windows loader/display qualification remains separate.
+
+## Projection from explicit assembly metadata
+
+`win32VersionFromAssembly(readPE(assemblyBytes))` returns a `win32Resources.version`
+options object by reading real Assembly CustomAttribute rows. It never instantiates
+attribute classes or executes constructors. Feed the result to the existing resource
+writer/emitter; callers can add or override explicit resource fields afterward.
+
+| Assembly attribute | Version option |
+| --- | --- |
+| AssemblyFileVersion | fileVersion |
+| AssemblyTitle | fileDescription |
+| AssemblyCompany | companyName |
+| AssemblyProduct | productName |
+| AssemblyDescription | comments |
+| AssemblyCopyright | legalCopyright |
+
+Missing AssemblyFileVersion falls back to the Assembly row's four-part version. File
+version attributes with two through four UInt16 decimal components are normalized to
+four parts; wildcards and invalid values fail explicitly. Missing descriptive attributes
+leave their fields absent. ProductVersion follows the existing writer's FileVersion
+default. AssemblyInformationalVersion, trademarks, original/internal file names and other
+attributes are outside this initial projection; callers may supply explicit writer options.
+Source attribute binding/emission remains separate work, so this helper accepts existing
+metadata rather than parsing source.
+
+Duplicate recognized assembly attributes, malformed constructors/blobs, null/NUL-containing
+strings and invalid versions throw CilError. The helper accepts MemberRef and MethodDef
+constructors, reuses the typed custom-attribute decoder, and ignores attributes on other
+parents. Bounds are 4096 CustomAttribute rows, 65536 TypeDefs/MethodDefs for local constructor
+ownership, 256 signature bytes, 32 KiB attribute blobs, and 8192 UTF-16 string code units;
+name heap scans are bounded before decoding. Returned values are strings and retain no input
+byte views. Roslyn 5.3.0 metadata and LLVM 22.1.8 independently captured resource bytes confirm
+the projected FileVersion and descriptive strings. All 15 projection/Win32 tests pass.
+Evidence is under `tests/fixtures/a03-version-attributes`; Windows Explorer and broader
+browser/platform qualification remain open.

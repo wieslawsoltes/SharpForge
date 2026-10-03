@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import {buildControlFlowGraph} from './cfg.js';
 import {analyzeReachability} from './reachability.js';
 import {analyzeDefiniteAssignment} from './definite-assignment.js';
@@ -11,8 +12,8 @@ export function analyzeMethodFlow(compilation,method,body,binder){
   if(!body)return null;
   const graph=buildControlFlowGraph(body),reachability=analyzeReachability(graph,body,{labelText:section=>compilation.caseLabel(section)});
   // Roslyn reports unreachable code on the first token of the statement and fall-through on the section's last label.
-  for(const d of reachability.diagnostics)compilation.report(d.code==='CS0162'?compilation.firstToken(d.node):d.code==='CS0163'||d.code==='CS8070'?compilation.caseLabelSpan(d.node):d.node,d.code,d.args);
-  if(method.returnType!=='void'&&reachability.endReachable)compilation.report(nameOf(method.node),'CS0161',[method.qualifiedName]);
+  for(const d of reachability.diagnostics)compilation.report(d.code===DiagnosticId.CS0162?compilation.firstToken(d.node):d.code===DiagnosticId.CS0163||d.code===DiagnosticId.CS8070?compilation.caseLabelSpan(d.node):d.node,d.code,d.args);
+  if(method.returnType!=='void'&&reachability.endReachable)compilation.report(nameOf(method.node),DiagnosticId.CS0161,[method.qualifiedName]);
   const assignment=analyzeDefiniteAssignment(graph,{reachable:reachability.reachable,parameters:binder.methodSymbol.parameters,exitNode:method.node});
   for(const d of assignment.diagnostics)compilation.report(d.node,d.code,d.args);
   return {graph,reachability,assignment};

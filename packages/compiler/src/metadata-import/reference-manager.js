@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import {SymbolKind,ErrorTypeSymbol,NamedTypeSymbol,ArrayTypeSymbol,PointerTypeSymbol,FunctionPointerTypeSymbol,typeOf} from '../symbols/types.js';
 import {mergeGlobalNamespaces,AliasSymbol} from '../symbols/namespaces.js';
 import {AssemblyIdentity,IdentityComparison,compareAssemblyIdentity,compareVersions} from './assembly-identity.js';
@@ -40,11 +41,11 @@ export function resolveAssemblyReference(reference,definitions,options={}){
 /** The CS1701 / CS1702 / CS1705 diagnostic for a unified reference of `owner` that was bound to `definition`. */
 export function unificationDiagnostic(owner,referenceIdentity,definition){
   const d=definition.identity;
-  if(compareVersions(d.version,referenceIdentity.version)>0)return {code:d.version[0]===referenceIdentity.version[0]&&d.version[1]===referenceIdentity.version[1]?'CS1702':'CS1701',args:[referenceIdentity.getDisplayName(),owner.name,d.getDisplayName(),definition.name]};
-  return {code:'CS1705',args:[owner.name,owner.identity.getDisplayName(),referenceIdentity.getDisplayName(),definition.name,d.getDisplayName()]};
+  if(compareVersions(d.version,referenceIdentity.version)>0)return {code:d.version[0]===referenceIdentity.version[0]&&d.version[1]===referenceIdentity.version[1]?DiagnosticId.CS1702:DiagnosticId.CS1701,args:[referenceIdentity.getDisplayName(),owner.name,d.getDisplayName(),definition.name]};
+  return {code:DiagnosticId.CS1705,args:[owner.name,owner.identity.getDisplayName(),referenceIdentity.getDisplayName(),definition.name,d.getDisplayName()]};
 }
 /** The use-site diagnostics of a unified assembly reference. */
-export const unificationCodes=new Set(['CS1701','CS1702','CS1705']);
+export const unificationCodes=new Set([DiagnosticId.CS1701,DiagnosticId.CS1702,DiagnosticId.CS1705]);
 const sameDiagnostic=(a,b)=>a.code===b.code&&a.args.length===b.args.length&&a.args.every((x,i)=>x===b.args[i]);
 
 /** The bound references of one compilation. */
@@ -82,7 +83,7 @@ export class ReferenceManager {
       entry.duplicateOf=equivalent;
       if(equivalent.assembly===entry.assembly||identity.equals(equivalent.assembly.identity)){equivalent.aliases=mergeAliases(entry.aliases,equivalent.aliases);continue;}
       const other=equivalent.display??equivalent.assembly.identity.getDisplayName();
-      if(identity.isStrongName)this._report('CS1703',[entry.display??identity.getDisplayName(),other]);else this._report('CS1704',[identity.name,entry.display??identity.getDisplayName()]);
+      if(identity.isStrongName)this._report(DiagnosticId.CS1703,[entry.display??identity.getDisplayName(),other]);else this._report(DiagnosticId.CS1704,[identity.name,entry.display??identity.getDisplayName()]);
     }
   }
   _bindAll(){
@@ -121,12 +122,12 @@ export class ReferenceManager {
    * references carrying that alias, or {diagnostic}: CS0430 when no reference has it, CS1681 for `global`.
    */
   resolveExternAlias(name,syntax=null){
-    if(name===GlobalAlias)return {alias:null,diagnostic:{code:'CS1681',args:[]}};const target=this._namespaceOf(name);
-    return target?{alias:new AliasSymbol(name,target,{isExtern:true,syntax}),diagnostic:null}:{alias:null,diagnostic:{code:'CS0430',args:[name]}};
+    if(name===GlobalAlias)return {alias:null,diagnostic:{code:DiagnosticId.CS1681,args:[]}};const target=this._namespaceOf(name);
+    return target?{alias:new AliasSymbol(name,target,{isExtern:true,syntax}),diagnostic:null}:{alias:null,diagnostic:{code:DiagnosticId.CS0430,args:[name]}};
   }
   /** The display name of the assembly a type forwarder for `metadataName` points to when that assembly is not referenced, or null. */
   forwardedToMissingAssembly(metadataName,alias=GlobalAlias){
-    for(const r of this.references){if(r.duplicateOf||!r.aliases.includes(alias))continue;const type=r.assembly.resolveType(metadataName);if(type instanceof ErrorTypeSymbol&&type.reason?.code==='CS0012')return type.reason.args[1];}
+    for(const r of this.references){if(r.duplicateOf||!r.aliases.includes(alias))continue;const type=r.assembly.resolveType(metadataName);if(type instanceof ErrorTypeSymbol&&type.reason?.code===DiagnosticId.CS0012)return type.reason.args[1];}
     return null;
   }
   /** The bound assembly with exactly this identity (an AssemblyIdentity or a display name), or null. */

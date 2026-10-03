@@ -28,6 +28,7 @@ export class MethodDesc {
   get #parameterMetadata() { return this.#state.parameterMetadata ??= this.module.methodParameters(this.metadataToken); }
   get parameters() { return this.#parameterMetadata.parameters; }
   get returnParameter() { return this.#parameterMetadata.returnParameter; }
+  get genericParameters() { return this.#state.genericParameters ??= this.module.methodGenericParameters(this.metadataToken); }
   get signature() {
     if (this.#signature) return this.#signature;
     try {

@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import {BoundArrayCreation} from '../bound/nodes.js';
 import {boxPrimitiveValue} from './value-arguments.js';
 
@@ -5,7 +6,7 @@ import {boxPrimitiveValue} from './value-arguments.js';
 export function bindArrayCreation(binder, syntax) {
   let type = syntax.type;
   if (type === 'var[]') {
-    if (!syntax.values?.length) binder.c.report(syntax, 'CS0826');
+    if (!syntax.values?.length) binder.c.report(syntax, DiagnosticId.CS0826);
     type = (syntax.values?.length ? binder.infer(syntax.values[0]) : 'error') + '[]';
   }
   type = binder.c.resolveType(type, syntax, false, binder.m);

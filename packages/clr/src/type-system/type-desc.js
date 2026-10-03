@@ -23,6 +23,7 @@ export class TypeDesc {
   get loadContext() { return this.#state.context ?? this.assembly.loadContext; }
   get metadataToken() { return this.#state.token; }
   get declaringType() { return this.#state.declaringType; }
+  get declaringMethod() { return this.#state.declaringMethod ?? null; }
   get baseType() { return this.#state.baseType ?? null; }
   get interfaces() { return this.#state.interfaces ?? empty; }
   get underlyingType() { return this.#state.underlyingType ?? null; }

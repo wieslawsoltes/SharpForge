@@ -1,3 +1,4 @@
+import {nativeIntegerBits} from './execution/native-int.js';
 import {formatDoubleDefault} from '@sharpforge/bcl-core';
 import {isReference} from './heap.js';
 import {enumToString} from './execution/enums.js';
@@ -7,7 +8,9 @@ const boxedDisplayTypes = Object.freeze({
   'System.Boolean': 'bool',
   'System.Char': 'char',
   'System.UInt32': 'uint',
-  'System.UInt64': 'ulong'
+  'System.UInt64': 'ulong',
+  'System.IntPtr': 'nint',
+  'System.UIntPtr': 'nuint'
 });
 
 /** Preserve source managed-value display semantics, with invariant binary64 numeric text. */
@@ -39,6 +42,8 @@ export function formatCilValue(vm, value, type) {
   const native = vm.value(value);
   if (type === 'bool') return native ? 'True' : 'False';
   if (type === 'char') return String.fromCharCode(Number(native));
+  if (type === 'nint' || type === 'System.IntPtr') return String(native);
+  if (type === 'nuint' || type === 'System.UIntPtr') return String(BigInt.asUintN(nativeIntegerBits(vm.options), BigInt(native)));
   if (type === 'uint') return String(Number(native) >>> 0);
   if (type === 'ulong') return String(BigInt.asUintN(64, native));
   if (isReference(native)) {
