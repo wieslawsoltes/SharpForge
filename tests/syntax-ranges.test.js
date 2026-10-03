@@ -47,8 +47,8 @@ test('T38 ranges reach the legacy AST as nodes under their Roslyn names', () => 
 });
 
 test('T38 ^ and .. are rejected below C# 8 and recover as Roslyn does', () => {
-  assert.deepEqual(diagnosticsOf('class C { void M() { var _ = a[^1]; } }', '7.3'), ['CS8370@31 "^"']);
-  assert.deepEqual(diagnosticsOf('class C { void M() { var _ = 1..2; } }', '7.3'), ['CS8370@30 ".."']);
+  assert.deepEqual(diagnosticsOf('class C { void M() { var _ = a[^1]; } }', '7.3'), ['CS8370@31 "^1"']);
+  assert.deepEqual(diagnosticsOf('class C { void M() { var _ = 1..2; } }', '7.3'), ['CS8370@29 "1..2"']);
   assert.deepEqual(diagnosticsOf('class C { void M() { var _ = a[^1]; var r = 1..2; } }', '8'), []);
   assert.deepEqual(diagnosticsOf('class C { void M(int a, int b) { int c = a ^ b; } }', '1'), [], 'binary ^ is C# 1');
   const { tree } = assertRecoversLikeRoslyn('reference/csharp8/ranges-recovery.cs');

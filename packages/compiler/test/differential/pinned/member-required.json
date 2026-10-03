@@ -1,0 +1,9 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "member-required/required-members-set-by-initializers":{"hash":"2037e50a0168f1f8","kind":"output","langVersion":"14.0","diagnostics":[],"output":"ctor\nctor\nctor\n5n1 1t23 4\n"},
+  "member-required/required-member-must-be-set":{"hash":"d20bd59dec5483fd","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS9035",171,1,"error"],["CS9035",204,1,"error"],["CS9035",223,3,"error"],["CS9035",250,1,"error"]]},
+  "member-required/sets-required-members":{"hash":"78193378c8d66156","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS9039",252,4,"error"],["CS9035",419,1,"error"],["CS9035",447,1,"error"],["CS9035",476,1,"error"]]},
+  "member-required/required-declaration-errors":{"hash":"45ca4d3cf2b73812","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0169",34,6,"warning"],["CS9032",34,6,"error"],["CS9032",68,5,"error"],["CS0106",119,1,"error"],["CS9034",146,8,"error"],["CS9034",197,2,"error"],["CS0106",231,1,"error"],["CS9032",262,10,"error"],["CS0106",320,1,"error"]]},
+  "member-required/required-and-nested-initializers":{"hash":"70815da5310d6f7a","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS9036",187,9,"error"],["CS9036",202,11,"error"]]},
+  "member-required/required-new-constraint":{"hash":"43318d621a6fcace","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS9040",207,7,"error"]]},
+  "member-required/required-language-version":{"hash":"85396302b5adb594","kind":"diagnostics","langVersion":"10.0","diagnostics":[["CS8936",30,1,"error"]]}
+}}

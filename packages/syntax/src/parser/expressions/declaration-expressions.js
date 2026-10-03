@@ -49,10 +49,10 @@ export const declarationExpressionMethods = {
     const end = this.scanDesignation(i + 1);
     return end > 0 && (this.kindAt(end) === '=' || this.kindAt(end) === 'in');
   },
-  /** The expression of an `out` argument: a declaration (`out var x`, `out int _`) or any other expression. */
-  outArgumentExpression() {
+  /** The expression of an `out` argument: a declaration (`out var x`, `out int _`) or any other expression. `outToken` is the keyword. */
+  outArgumentExpression(outToken) {
     if (!this.isOutDeclarationAhead()) return this.expression();
-    this.feature('OutVar', this.current);
+    this.feature('OutVar', outToken);
     return this.declarationExpression();
   },
   declarationExpression() {

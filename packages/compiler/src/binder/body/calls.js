@@ -12,6 +12,7 @@ import { lookupMembers } from '../inheritance.js';
 import { checkWritable, argumentRefKind } from '../ref-kinds.js';
 import { checkConstructedMethod } from '../constraints.js';
 import { isVirtualCall } from '../overrides.js';
+import { isCallOmitted } from '../csharp2-misc.js';
 import { receiverPassing } from '../readonly.js';
 
 const unknown = ErrorTypeSymbol.unknown;
@@ -306,6 +307,8 @@ export const CallBinding = Base =>
               ? group.receiverType
               : null,
       });
+      // A call to a [Conditional] method whose symbols are not defined in this file is not executed.
+      if (isCallOmitted(method, this.d.definedSymbols(this.c.uri))) n.isOmitted = true;
       if (receiver && receiver.type?.isValueType === true && !method.isStatic) {
         const passing = receiverPassing(receiver, method, this.variableContext);
         n.receiverPassing = passing.mode;
@@ -380,15 +383,13 @@ export const CallBinding = Base =>
         this.report(syntax, 'CS0021', [this.display(type)]);
         return this.bad(syntax);
       }
-      const accessorOf = p => p.getMethod ?? p.setMethod,
-        byAccessor = new Map(indexers.map(p => [accessorOf(p), p])),
+      // Candidates are the accessors seen with the indexer's own parameter list (no `value`, defaults included).
+      const byAccessor = new Map(),
         shapes = indexers.map(p => {
-          const a = accessorOf(p);
-          if (a === p.getMethod) return a;
-          const copy = Object.create(a);
-          Object.defineProperty(copy, 'parameters', { value: a.parameters.slice(0, -1) });
-          byAccessor.set(copy, p);
-          return copy;
+          const shape = Object.create(p.getMethod ?? p.setMethod);
+          Object.defineProperty(shape, 'parameters', { value: p.parameters });
+          byAccessor.set(shape, p);
+          return shape;
         });
       const r = this.d.overloads.resolve(shapes, args, { name: 'this' });
       if (!r.succeeded) {
@@ -409,6 +410,8 @@ export const CallBinding = Base =>
           expression: r.conversions[i] && a.type ? this.applyConversion(a, r.parameterTypes[i], r.conversions[i]) : a,
           parameter: property.parameters[r.mapping.parameterOf[i]],
         })),
+        mapping: r.mapping,
+        expanded: r.expanded,
       });
     }
   };

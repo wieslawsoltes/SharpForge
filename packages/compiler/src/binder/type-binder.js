@@ -364,6 +364,8 @@ export class TypeBinder {
       }
       case 'ArrayType': {
         let element = this.bindType(syntax.elementType, scope, options);
+        if (element.type.isStatic && element.type.kind === SymbolKind.NamedType)
+          this.report(scope, syntax.elementType, 'CS0719', [element.type.toDisplayString()]);
         // Rank specifiers read left to right from the outside in: int[][,] is an array of int[,].
         for (const rank of [...syntax.rankSpecifiers].reverse()) element = plain(this.core.arrayOf(element, rank.sizes.length || 1));
         return element;

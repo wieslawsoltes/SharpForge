@@ -1,0 +1,240 @@
+{
+  "schemaVersion": 1,
+  "passed": true,
+  "artifacts": [
+    {
+      "id": "dist",
+      "path": "dist",
+      "bytes": 15026880,
+      "maxBytes": 17281024,
+      "delta": -2254144,
+      "passed": true
+    },
+    {
+      "id": "standalone",
+      "path": "artifacts/SharpForge-standalone.html",
+      "bytes": 3194784,
+      "maxBytes": 3674112,
+      "delta": -479328,
+      "passed": true
+    },
+    {
+      "id": "worker:compiler.worker.js",
+      "path": "dist/compiler.worker.js",
+      "bytes": 437605,
+      "maxBytes": 503808,
+      "delta": -66203,
+      "passed": true
+    },
+    {
+      "id": "worker:runtime.worker.js",
+      "path": "dist/runtime.worker.js",
+      "bytes": 727971,
+      "maxBytes": 837632,
+      "delta": -109661,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/archive",
+      "path": "artifacts/sharpforge-archive-0.14.0.tgz",
+      "bytes": 8339,
+      "maxBytes": 10240,
+      "delta": -1901,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/bytecode",
+      "path": "artifacts/sharpforge-bytecode-0.14.0.tgz",
+      "bytes": 4904,
+      "maxBytes": 6144,
+      "delta": -1240,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/cil",
+      "path": "artifacts/sharpforge-cil-0.14.0.tgz",
+      "bytes": 42836,
+      "maxBytes": 50176,
+      "delta": -7340,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/compiler",
+      "path": "artifacts/sharpforge-compiler-0.14.0.tgz",
+      "bytes": 26563,
+      "maxBytes": 30720,
+      "delta": -4157,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/compute",
+      "path": "artifacts/sharpforge-compute-0.14.0.tgz",
+      "bytes": 12914,
+      "maxBytes": 15360,
+      "delta": -2446,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/controls",
+      "path": "artifacts/sharpforge-controls-0.14.0.tgz",
+      "bytes": 11025,
+      "maxBytes": 13312,
+      "delta": -2287,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/debugger",
+      "path": "artifacts/sharpforge-debugger-0.14.0.tgz",
+      "bytes": 39895,
+      "maxBytes": 46080,
+      "delta": -6185,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/designer",
+      "path": "artifacts/sharpforge-designer-0.14.0.tgz",
+      "bytes": 20116,
+      "maxBytes": 23552,
+      "delta": -3436,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/docking",
+      "path": "artifacts/sharpforge-docking-0.14.0.tgz",
+      "bytes": 12414,
+      "maxBytes": 14336,
+      "delta": -1922,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/editor",
+      "path": "artifacts/sharpforge-editor-0.14.0.tgz",
+      "bytes": 201945,
+      "maxBytes": 232448,
+      "delta": -30503,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/extensions",
+      "path": "artifacts/sharpforge-extensions-0.14.0.tgz",
+      "bytes": 5459,
+      "maxBytes": 7168,
+      "delta": -1709,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/framework",
+      "path": "artifacts/sharpforge-framework-0.14.0.tgz",
+      "bytes": 18698,
+      "maxBytes": 21504,
+      "delta": -2806,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/language",
+      "path": "artifacts/sharpforge-language-0.14.0.tgz",
+      "bytes": 4704,
+      "maxBytes": 6144,
+      "delta": -1440,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/msbuild",
+      "path": "artifacts/sharpforge-msbuild-0.14.0.tgz",
+      "bytes": 21834,
+      "maxBytes": 25600,
+      "delta": -3766,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/network",
+      "path": "artifacts/sharpforge-network-0.14.0.tgz",
+      "bytes": 6281,
+      "maxBytes": 8192,
+      "delta": -1911,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/project-system",
+      "path": "artifacts/sharpforge-project-system-0.14.0.tgz",
+      "bytes": 23917,
+      "maxBytes": 27648,
+      "delta": -3731,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/protocol",
+      "path": "artifacts/sharpforge-protocol-0.14.0.tgz",
+      "bytes": 11202,
+      "maxBytes": 13312,
+      "delta": -2110,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/refactoring",
+      "path": "artifacts/sharpforge-refactoring-0.14.0.tgz",
+      "bytes": 6338,
+      "maxBytes": 8192,
+      "delta": -1854,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/runtime",
+      "path": "artifacts/sharpforge-runtime-0.14.0.tgz",
+      "bytes": 58334,
+      "maxBytes": 67584,
+      "delta": -9250,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/symbols",
+      "path": "artifacts/sharpforge-symbols-0.14.0.tgz",
+      "bytes": 12612,
+      "maxBytes": 15360,
+      "delta": -2748,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/syntax",
+      "path": "artifacts/sharpforge-syntax-0.14.0.tgz",
+      "bytes": 10467,
+      "maxBytes": 12288,
+      "delta": -1821,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/templates",
+      "path": "artifacts/sharpforge-templates-0.14.0.tgz",
+      "bytes": 9699,
+      "maxBytes": 11264,
+      "delta": -1565,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/text",
+      "path": "artifacts/sharpforge-text-0.14.0.tgz",
+      "bytes": 3274,
+      "maxBytes": 4096,
+      "delta": -822,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/winui",
+      "path": "artifacts/sharpforge-winui-0.14.0.tgz",
+      "bytes": 25031,
+      "maxBytes": 29696,
+      "delta": -4665,
+      "passed": true
+    },
+    {
+      "id": "package:@sharpforge/workspace",
+      "path": "artifacts/sharpforge-workspace-0.14.0.tgz",
+      "bytes": 3154,
+      "maxBytes": 4096,
+      "delta": -942,
+      "passed": true
+    }
+  ],
+  "policyRef": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+  "policyDigest": "73a246ed0a791419081c2ceeb73a9d9ef655106fc270c297b50b10fe1dcd3213"
+}

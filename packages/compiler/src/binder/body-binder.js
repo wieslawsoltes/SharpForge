@@ -23,13 +23,18 @@ import { OperatorBinding } from './body/operators.js';
 import { TypeTestBinding } from './body/type-tests.js';
 import { TupleBinding } from './body/tuples.js';
 import { DeconstructionBinding } from './body/deconstruction.js';
+import { WithBinding } from './with-expression.js';
 import { LambdaBinding } from './body/lambdas.js';
 import { PatternBinding } from './body/patterns.js';
+import { StructuralPatternBinding } from './body/structural-patterns.js';
 import { StackAllocBinding } from './body/stackalloc.js';
+import { QueryBinding } from './queries.js';
 import { StatementBinding } from './body/statements.js';
 import { DeclarationBinding } from './body/declarations.js';
 import { FlowStatementBinding } from './body/flow-statements.js';
 import { LocalFunctionBinding } from './body/local-functions.js';
+import { JumpBinding } from './jumps.js';
+import { ExceptionBinding } from './exceptions.js';
 
 const expressionFamilies = [
   ConversionBinding,
@@ -41,11 +46,14 @@ const expressionFamilies = [
   TypeTestBinding,
   TupleBinding,
   DeconstructionBinding,
+  WithBinding,
   LambdaBinding,
   PatternBinding,
+  StructuralPatternBinding,
   StackAllocBinding,
+  QueryBinding,
 ];
-const statementFamilies = [StatementBinding, DeclarationBinding, FlowStatementBinding, LocalFunctionBinding];
+const statementFamilies = [StatementBinding, DeclarationBinding, FlowStatementBinding, LocalFunctionBinding, JumpBinding, ExceptionBinding];
 const compose = (base, mixins) => mixins.reduce((composed, mixin) => mixin(composed), base);
 
 /**

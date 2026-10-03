@@ -8,6 +8,7 @@
   "requiredServices": [],
   "timeout": 300000,
   "tags": [
-    "legacy"
+    "syntax",
+    "integration"
   ]
 }

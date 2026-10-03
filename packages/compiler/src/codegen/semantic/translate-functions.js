@@ -113,6 +113,13 @@ export const FunctionTranslation = Base =>
         node: n.spanOf(symbol.syntax, this.frame.uri),
         hasSource: true,
       });
+      root.localFunctions.set(symbol, { method, extra });
+      if (symbol.body.binder?.c?.isIterator) {
+        // An iterator local function: its kickoff stores the arguments, the receiver and the captured cells.
+        const enclosing = this.frame;
+        this.g.queueBody({ run: () => this.g.translateIterator(symbol, method, symbol.body, { frame: enclosing, extra }) });
+        return;
+      }
       const target = this.bodyMethod(method, symbol.isAsync, at);
       const frame = new Frame({ uri: this.frame.uri, method: target, captures: this.frame.captures, root });
       extra.forEach((e, i) => {
@@ -123,7 +130,6 @@ export const FunctionTranslation = Base =>
           frame.vars.set(e.variable, () => n.field(n.parameter(slot), e.cell.value));
         }
       });
-      root.localFunctions.set(symbol, { method, extra });
       this.g.queueBody({ frame, bound: symbol.body, parameters: symbol.parameters, returnsValue: target.returnType !== 'void' });
     }
     localFunction(symbol, syntax) {

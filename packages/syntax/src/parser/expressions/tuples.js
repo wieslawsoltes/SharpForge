@@ -7,7 +7,8 @@ export const tupleMethods = {
       saved = this.tupleContext;
     let args = [];
     this.nested(() => {
-      this.tupleContext = true;
+      const end = this.matchingBracket(this.i - 1);
+      this.tupleContext = saved || this.kindAt(end + 1) === '=' || (this.declarationContext ?? 0) > 0;
       for (;;) {
         const before = this.i;
         // Roslyn: the first element is a declaration only when a comma follows, so `(a * b)` stays a multiplication.
@@ -24,7 +25,7 @@ export const tupleMethods = {
     const close = this.expect(')'),
       first = args[0];
     if (args.length === 1 && !first.children[0] && !first.children[1]) return this.n('ParenthesizedExpression', open, first.children[2], close);
-    this.feature('Tuples', start);
+    this.feature('Tuples', start, this.tokens[this.i - 1]);
     return this.n('TupleExpression', open, args, close);
   }
 };

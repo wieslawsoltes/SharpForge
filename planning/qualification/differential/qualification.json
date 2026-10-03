@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "task": "SF-A29-T04",
+  "issues": [
+    400,
+    1136,
+    1137,
+    1138,
+    1139,
+    1140,
+    1141,
+    1142
+  ],
+  "implementationCommit": "76eb0bfafae911c24eeebab2341b79ea9c9aa963",
+  "parentOracleCommit": "c1b2149debab7516d9aaa7a8559b69d2c8fb0bb1",
+  "platform": "darwin-arm64",
+  "node": "v24.21.0",
+  "toolchain": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "referencePack": "10.0.5",
+    "roslyn": {
+      "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+      "sha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16"
+    },
+    "referenceAssemblies": {
+      "count": 167,
+      "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+    }
+  },
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "qualification": "Actual pinned Roslyn/CoreCLR plus actual JavaScript interpreters; local OS image is unpinned. This is a runner qualification, not complete language/runtime parity.",
+  "checks": [
+    {
+      "command": "node --test --test-reporter=tap tests/conformance/differential/differential.test.js tests/conformance/differential/engines.native.js",
+      "commit": "44df8806e0960c996cf97fe35dc2b91f4ce39654",
+      "passed": 12,
+      "failed": 0,
+      "skipped": 0,
+      "note": "Nine host-safe unit tests and three mandatory real-native tests; subsequent changes only added replay corpus output files.",
+      "sha256": "fb25b2abacd8138e7b152f1c7e6b1fd542a0d0fd0695ced89bfcbf7644361cfb"
+    },
+    {
+      "command": "node scripts/conformance/diff/run.js",
+      "commit": "76eb0bfafae911c24eeebab2341b79ea9c9aa963",
+      "fixtures": 8,
+      "repetitions": 2,
+      "policyPassed": true,
+      "parityPassed": false,
+      "knownDifferences": 4,
+      "newDifferences": 0,
+      "unsupportedObservations": 18,
+      "reportSHA256": "9525654c8ac5fc1df19157d3f319097c1e4e099628dbe10a1a93cdd5e597c4b0"
+    },
+    {
+      "command": "node scripts/conformance/diff/run.js --corpus artifacts/differential/repros/negative-zero/778f8c8ba3748dc2b4be6874fe2bbc9dd4d6a95e538905a93605b5fcea0be276/corpus.json --output artifacts/differential-replay --no-reduce",
+      "commit": "76eb0bfafae911c24eeebab2341b79ea9c9aa963",
+      "policyPassed": true,
+      "knownDifferences": 1,
+      "unexaminedKnown": 3
+    },
+    {
+      "command": "node scripts/conformance/diff/benchmark.js",
+      "commit": "76eb0bfafae911c24eeebab2341b79ea9c9aa963",
+      "correctnessPassed": true,
+      "repetitionsPerFixture": 10,
+      "fixtures": 3,
+      "allocationScope": "VM managed heap counters only. Node heap delta is not exact allocation accounting; native process allocations are unavailable."
+    }
+  ],
+  "differences": [
+    {
+      "fixtureId": "negative-zero",
+      "class": "runtime",
+      "phase": "execute",
+      "engines": [
+        "clr-sharpforge",
+        "cil-vm"
+      ],
+      "fingerprint": "778f8c8ba3748dc2b4be6874fe2bbc9dd4d6a95e538905a93605b5fcea0be276",
+      "reproPath": "repros/negative-zero/778f8c8ba3748dc2b4be6874fe2bbc9dd4d6a95e538905a93605b5fcea0be276/repro.cs"
+    },
+    {
+      "fixtureId": "syntax-negative",
+      "class": "compiler",
+      "phase": "compile",
+      "engines": [
+        "clr-roslyn",
+        "clr-sharpforge"
+      ],
+      "fingerprint": "3e4db169052b67d81a8ff5911cd2abe6759588343eda1065fb60ed638062caa3",
+      "reproPath": "repros/syntax-negative/3e4db169052b67d81a8ff5911cd2abe6759588343eda1065fb60ed638062caa3/repro.cs"
+    },
+    {
+      "fixtureId": "stdin",
+      "class": "compiler",
+      "phase": "compile",
+      "engines": [
+        "clr-roslyn",
+        "clr-sharpforge"
+      ],
+      "fingerprint": "1dae0a98d6a39b7de64a05e36e545ca580dda70e3b45a5c126d657971d5a9207",
+      "reproPath": "repros/stdin/1dae0a98d6a39b7de64a05e36e545ca580dda70e3b45a5c126d657971d5a9207/repro.cs"
+    },
+    {
+      "fixtureId": "wall-clock",
+      "class": "runtime",
+      "phase": "load",
+      "engines": [
+        "clr-sharpforge",
+        "cil-vm"
+      ],
+      "fingerprint": "be206985e0bde6558851f67ae312d507e3d730499b8313a7a0e5946c87c7beb5",
+      "reproPath": "repros/wall-clock/be206985e0bde6558851f67ae312d507e3d730499b8313a7a0e5946c87c7beb5/repro.cs"
+    }
+  ],
+  "reducer": {
+    "testCommit": "44df8806e0960c996cf97fe35dc2b91f4ce39654",
+    "beforeLines": 207,
+    "afterLines": 7,
+    "attempts": 26,
+    "identicalIndependentReductions": 2,
+    "budgetExhausted": false
+  },
+  "pendingPlatforms": [
+    "linux-x64 hosted native differential workflow",
+    "win32-x64 hosted native differential workflow, including stdout codepage evidence"
+  ],
+  "unsupported": [
+    "Rust native and Wasm managed execution until actual A27 artifacts are supplied",
+    "stdin in current source and CIL VM profiles",
+    "structural reduction of malformed source that the parser cannot parse",
+    "native allocator counts"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "references": [
+    {
+      "file": "csharp-history.json",
+      "source": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/Language-Version-History.md",
+      "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+      "sha256": "cc249bbb0746800faf5431a7cc6a1d6b28c6665ad971b075ffdde84e176fb791",
+      "scope": "Factual feature names, versions and specification URLs; source descriptive prose is not copied."
+    },
+    {
+      "file": "lsp-3.17.json",
+      "source": "https://raw.githubusercontent.com/microsoft/language-server-protocol/f20ba0702f2bbfe538226a5255739fc118744407/_specifications/lsp/3.17/metaModel/metaModel.json",
+      "commit": "f20ba0702f2bbfe538226a5255739fc118744407",
+      "sha256": "c207890d9e0f54d8f9e462a924670f563423ec9af90a0a369645ff55384c8d6d",
+      "licenseFile": "lsp-3.17.json.LICENSE.txt",
+      "licenseSource": "https://raw.githubusercontent.com/microsoft/language-server-protocol/f20ba0702f2bbfe538226a5255739fc118744407/License.txt"
+    },
+    {
+      "file": "dap.json",
+      "source": "https://raw.githubusercontent.com/microsoft/debug-adapter-protocol/b584b597ab1bb43a28817a2b7582808f92d3b6e8/debugAdapterProtocol.json",
+      "commit": "b584b597ab1bb43a28817a2b7582808f92d3b6e8",
+      "sha256": "ff8ae4c6cfd588a050e9346c35fd104748a27ef4518d1c3268529ca6f8ff5818",
+      "licenseFile": "dap.json.LICENSE.txt",
+      "licenseSource": "https://raw.githubusercontent.com/microsoft/debug-adapter-protocol/b584b597ab1bb43a28817a2b7582808f92d3b6e8/License.txt"
+    },
+    {
+      "file": "ecma335.json",
+      "source": "https://ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf",
+      "sha256": "68c027ebe0ea7740fe5dc3be9eb8cdcf5b35a2145c90bf710c05be67a448a00f",
+      "scope": "Factual opcode names/encodings and metadata table identities, with source PDF digest in the extracted catalog."
+    }
+  ]
+}

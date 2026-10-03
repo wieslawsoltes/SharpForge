@@ -57,6 +57,8 @@ export const BodyBinding = Base =>
         parameters: method.parameters,
       });
       for (const p of method.parameters) if (p.defaultSyntax) this.bindParameterDefault(p, binder);
+      // The optional parameters of an indexer belong to the property; its accessors bind them.
+      for (const p of method.associatedSymbol?.parameters ?? []) if (p.defaultSyntax) this.bindParameterDefault(p, binder);
       let body = null;
       if (syntax.body ?? syntax.block) body = binder.block(syntax.body ?? syntax.block);
       else if (syntax.expressionBody) {

@@ -86,7 +86,7 @@ export function loadReferenceFixture(file) {
 }
 /** Tracked C# sources in the repository (examples, templates and the syntax fixtures). */
 export function repositorySources() {
-  return [...filesUnder(join(repoRoot, 'examples')), ...filesUnder(join(repoRoot, 'packages/templates')), ...filesUnder(join(repoRoot, 'apps')), ...filesUnder(fixtureRoot)].map(file => ({ name: file.slice(repoRoot.length), text: readFileSync(file, 'utf8') }));
+  return [...filesUnder(join(repoRoot, 'examples')), ...filesUnder(join(repoRoot, 'packages/templates')), ...filesUnder(join(repoRoot, 'apps')), ...filesUnder(fixtureRoot)].map(file => ({ name: file.slice(repoRoot.length).replaceAll('\\', '/'), text: readFileSync(file, 'utf8') }));
 }
 /**
  * Asserts that the fixture at `relative` (under packages/syntax/test) has a pinned Roslyn dump and that SharpForge

@@ -1,5 +1,5 @@
 /**
- * foreach over every enumeration pattern, switch statements with patterns, try/catch/finally and return.
+ * foreach over every enumeration pattern, switch statements with patterns and return.
  */
 import { SymbolKind, TypeKind, ErrorTypeSymbol, ArrayTypeSymbol } from '../../symbols/types.js';
 import { LocalDeclarationKind } from '../../symbols/members.js';
@@ -9,6 +9,7 @@ import { checkRefReturn } from '../ref-locals.js';
 import { numericKind } from '../../conversions/numeric.js';
 import { reportAwaitOutsideAsync } from '../async.js';
 import { bindAsyncForEach, isOnlyAsyncEnumerable } from '../async-streams.js';
+import { extensionEnumeratorMethod } from '../foreach-extension.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 const isSourceType = t => {
@@ -17,7 +18,7 @@ const isSourceType = t => {
 };
 const stmt = (kind, syntax, completes, props) => ({ kind, syntax, completes, ...props });
 
-/** Class mixin: foreach over every enumeration pattern, switch statements with patterns, try/catch/finally and return. */
+/** Class mixin: foreach over every enumeration pattern, switch statements with patterns and return. */
 export const FlowStatementBinding = Base =>
   class extends Base {
     forEach(syntax) {
@@ -25,7 +26,8 @@ export const FlowStatementBinding = Base =>
       this.pushScope();
       try {
         let element = null,
-          enumeration = null;
+          enumeration = null,
+          extension = null;
         const type = collection.type;
         if (syntax.awaitKeyword) reportAwaitOutsideAsync(this, syntax.awaitKeyword);
         if (!collection.hasErrors && type && !type.isErrorType()) {
@@ -55,7 +57,14 @@ export const FlowStatementBinding = Base =>
               const generic = findConstruction(type, this.core.ienumerableT, this.core);
               if (generic) element = generic.typeArguments[0].type;
               else if (implementsInterface(type, this.core.ienumerable, this.core)) element = this.core.object;
-              else if (isOnlyAsyncEnumerable(type, this.core, this.c.containingType)) {
+              else if ((extension = extensionEnumeratorMethod(this, collection, 'GetEnumerator'))) {
+                // C# 9: the enumerator comes from an extension method; its result supplies MoveNext and Current.
+                this.d.gate(this.c.uri, syntax.expression, 'ExtensionGetEnumerator');
+                const current = lookupMembers(extension.returnType, 'Current', this.core, { within: this.c.containingType }).members.find(
+                  m => m.kind === SymbolKind.Property,
+                );
+                element = current?.type ?? unknown;
+              } else if (isOnlyAsyncEnumerable(type, this.core, this.c.containingType)) {
                 this.report(syntax.expression, 'CS8414', [this.display(type), 'GetEnumerator']);
                 element = unknown;
               } else if (
@@ -77,6 +86,9 @@ export const FlowStatementBinding = Base =>
           this.report(syntax.expression, 'CS0186');
         }
         element ??= unknown;
+        // `foreach (var (a, b) in items)`: each element is deconstructed into the variables (binder/body/deconstruction.js).
+        if (syntax.kind === 'ForEachVariableStatement')
+          return this.forEachDeconstruction(syntax, { collection, elementType: element, enumeration, extensionGetEnumerator: extension });
         const bound = this.bindType(syntax.type.kind === 'RefType' ? syntax.type.type : syntax.type, { allowVar: true }),
           iterationType = bound.isVar ? element : bound.type;
         if (!bound.isVar && !element.isErrorType() && !iterationType.isErrorType()) {
@@ -92,19 +104,28 @@ export const FlowStatementBinding = Base =>
         const loop = this.enterLoop(),
           body = this.embedded(syntax.statement);
         this.exitLoop();
-        return stmt('ForEach', syntax, true, { collection, local, elementType: element, body, isAwait: !!syntax.awaitKeyword, enumeration });
+        return stmt('ForEach', syntax, true, {
+          collection,
+          local,
+          elementType: element,
+          body,
+          isAwait: !!syntax.awaitKeyword,
+          enumeration,
+          extensionGetEnumerator: extension,
+        });
       } finally {
         this.popScope();
       }
     }
     switchStatement(syntax) {
       const governing = this.value(syntax.expression),
-        sw = this.enterLoop(false),
+        sw = Object.assign(this.enterLoop(false), { syntax, governing }),
         sections = [],
         seen = new Map();
       let hasDefault = false,
         anyCompletes = false;
       this.pushScope();
+      this.enterLabels([]);
       try {
         const type = governing.hasErrors ? null : governing.type,
           pendingNames = [];
@@ -159,80 +180,19 @@ export const FlowStatementBinding = Base =>
           sections.push({ labels, body, syntax: section });
         });
       } finally {
+        this.leaveLabels();
         this.popScope();
         this.exitLoop();
       }
+      if (governing.type)
+        this.reportSwitchArms(
+          governing.type,
+          sections.flatMap(s => s.labels.map((label, i) => ({ pattern: label, when: label.when ?? null, node: s.syntax.labels[i].value ?? s.syntax.labels[i].pattern ?? s.syntax.labels[i], isDefault: label.kind === 'default' }))),
+          { isExpression: false, node: syntax },
+        );
       const exhaustive =
         hasDefault || sections.some(s => s.labels.some(l => l.kind === 'DiscardPattern' || (l.kind === 'VarPattern' && !l.when)));
-      return stmt('Switch', syntax, sw.hasBreak || !exhaustive || anyCompletes, { governing, sections });
-    }
-    tryStatement(syntax) {
-      const body = this.block(syntax.block),
-        catches = [],
-        caught = [];
-      let completes = body.completes;
-      for (const clause of syntax.catches) {
-        this.pushScope();
-        try {
-          let type = this.core.exception,
-            local = null;
-          if (clause.declaration) {
-            type = this.bindType(clause.declaration.type).type;
-            if (
-              !type.isErrorType() &&
-              !(
-                type.equals(this.core.exception) ||
-                this.conversions.classifyImplicit(type, this.core.exception).exists ||
-                type.typeKind === TypeKind.TypeParameter
-              )
-            ) {
-              this.report(clause.declaration.type, 'CS0155');
-              type = unknown;
-            }
-            if (clause.declaration.identifier) {
-              local = this.newLocal(
-                clause.declaration.identifier.valueText,
-                type,
-                clause.declaration.identifier,
-                LocalDeclarationKind.Catch,
-              );
-              local.writes++;
-              local.isCatch = true;
-              this.declare(local.name, local, clause.declaration.identifier);
-            }
-          }
-          const filter = clause.filter ? this.condition(clause.filter.filterExpression) : null;
-          if (!type.isErrorType() && !filter) {
-            const previous = caught.find(t => t.equals(type) || this.conversions.classifyImplicit(type, t).exists);
-            if (previous)
-              this.report(clause.declaration?.type ?? clause.catchKeyword, clause.declaration ? 'CS0160' : 'CS1017', [
-                this.display(previous),
-              ]);
-          }
-          if (!filter) caught.push(type);
-          this.catchDepth++;
-          const savedFinally = this.finallyInCatch;
-          this.finallyInCatch = false;
-          const block = this.block(clause.block);
-          this.finallyInCatch = savedFinally;
-          this.catchDepth--;
-          if (block.completes) completes = true;
-          catches.push({ type, local, filter, block });
-        } finally {
-          this.popScope();
-        }
-      }
-      let finallyBlock = null;
-      if (syntax.finally) {
-        this.finallyDepth++;
-        const saved = this.finallyInCatch;
-        this.finallyInCatch = this.catchDepth > 0;
-        finallyBlock = this.block(syntax.finally.block);
-        this.finallyInCatch = saved;
-        this.finallyDepth--;
-        if (!finallyBlock.completes) completes = false;
-      }
-      return stmt('Try', syntax, completes, { body, catches, finallyBlock });
+      return stmt('Switch', syntax, sw.hasBreak || !exhaustive || anyCompletes, { governing, sections, gotoTargets: sw.gotoTargets ?? null });
     }
     iteratorElementType() {
       const t = this.c.declaredReturnType ?? this.c.returnType;
