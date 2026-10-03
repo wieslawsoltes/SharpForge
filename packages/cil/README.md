@@ -58,6 +58,15 @@ This API writes attribute blobs; emitting source attributes and pseudo-attribute
 flags/tables is tracked separately. The native gate is
 `node packages/cil/tools/validate-custom-attributes.mjs`.
 
+`decodeCustomAttribute(bytes, parameterTypes, options)` accepts the same type and
+constructor-token contracts. It returns `{ success, constructorArguments,
+namedArguments, diagnostics }`; malformed blobs return stable MD0100–MD0110 errors
+without throwing. Typed constants are `{ kind, type, value }`; arrays contain typed
+constants, Type values retain their serialized name, and large integers use BigInt.
+Enums require known storage rather than an assumed Int32 width. The compiler importer
+reuses this codec through its existing result adapter, preserving its historical
+Int32 fallback when callers cannot resolve enum storage.
+
 | Capability | API | Evidence |
 | --- | --- | --- |
 | Primitive and constructed types | Type AST encoder/decoder | SRM BlobEncoder corpus |
@@ -83,3 +92,5 @@ It accepts a `Uint8Array` of at most 128 MiB, preserves the input (including sub
 an independent 32-byte digest. Invalid input types throw `TypeError`; oversized input throws `RangeError`.
 The browser/worker implementation uses no host crypto or asynchronous work. `@sharpforge/symbols` retains
 its existing `sha256` export as a reexport of this function; SHA-1 remains in the symbols package.
+
+Embedded data emission and bounded inspection are documented in [RESOURCES.md](./RESOURCES.md).
