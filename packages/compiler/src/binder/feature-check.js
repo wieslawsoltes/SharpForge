@@ -86,7 +86,9 @@ export function checkSemanticFeature(key, version, fallback = null) {
     };
   return {
     code: codes[selected.number] ?? 'CS9058',
-    message: `Feature '${fallback.name}' is not available in C# ${display(selected.number)}. Please use language version ${display(fallback.version)} or greater.`,
+    message:
+      `Feature '${fallback.name}' is not available in C# ${display(selected.number)}. ` +
+      `Please use language version ${display(fallback.version)} or greater.`,
   };
 }
 /** A binder-side gate: `gate(node,key,fallback)` reports through `report(node,code,message)` once per node and returns whether the feature is available. */

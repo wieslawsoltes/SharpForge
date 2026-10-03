@@ -3,17 +3,14 @@
  * expression dispatcher. The expression and statement families are class mixins composed in ../body-binder.js.
  */
 import { TypeKind, ErrorTypeSymbol } from '../../symbols/types.js';
-import { MethodKind, LocalSymbol, LocalDeclarationKind } from '../../symbols/members.js';
-import { ConstantValue, isFoldError } from '../../constants/constant-value.js';
-import { foldConversion, defaultValue } from '../../constants/fold.js';
-import { Conversion, ConversionKind } from '../../conversions/classify.js';
+import { LocalSymbol, LocalDeclarationKind } from '../../symbols/members.js';
+import { ConstantValue } from '../../constants/constant-value.js';
+import { defaultValue } from '../../constants/fold.js';
 import { numericKind } from '../../conversions/numeric.js';
-import { classifyConstantNarrowing } from '../../conversions/constant-narrowing.js';
-import { isNullableType, stripNullable } from '../../conversions/nullable.js';
-import { delegateInvoke } from '../../overload/type-inference.js';
-import { isAccessible } from '../accessibility.js';
+import { isNullableType } from '../../conversions/nullable.js';
 
 const unknown = ErrorTypeSymbol.unknown;
+
 const binaryOperators = {
   AddExpression: '+',
   SubtractExpression: '-',
@@ -35,7 +32,9 @@ const binaryOperators = {
   GreaterThanExpression: '>',
   GreaterThanOrEqualExpression: '>=',
 };
+
 const unaryOperators = { UnaryPlusExpression: '+', UnaryMinusExpression: '-', BitwiseNotExpression: '~', LogicalNotExpression: '!' };
+
 const keywordOf = type =>
   numericKind(type) ??
   { System_Boolean: 'bool', System_String: 'string', System_Char: 'char', System_Object: 'object' }[type?.specialType] ??
@@ -171,184 +170,6 @@ export class BinderCore {
   }
   display(type) {
     return type ? type.toDisplayString() : '<null>';
-  }
-  // ---- conversions ----
-  /** Converts a bound expression to a type implicitly, reporting the Roslyn diagnostic when no conversion exists. */
-  convert(e, type, node = e.syntax, { argument = null } = {}) {
-    if (!type || e.hasErrors || type.isErrorType() || e.type?.isErrorType?.()) return e;
-    if (e.kind === 'TypeExpression' || e.kind === 'NamespaceExpression') {
-      this.report(e.syntax, 'CS0119', [
-        e.kind === 'TypeExpression' ? this.display(e.referencedType) : e.namespace.toDisplayString(),
-        e.kind === 'TypeExpression' ? 'type' : 'namespace',
-      ]);
-      return this.bad(node);
-    }
-    if (e.type && !e.literal && !e.form && !e.constantValue && e.type.equals(type)) return e;
-    const c = this.conversions.classifyFromExpression(e, type);
-    if (c.exists && c.isImplicit && !c.isAmbiguous) return this.applyConversion(e, type, c, node);
-    this.reportConversionFailure(e, type, node, c);
-    return this.bad(node, { operand: e });
-  }
-  applyConversion(e, type, c, node = e.syntax, isExplicit = false) {
-    if (c.kind === ConversionKind.Identity && e.type && !e.constantValue?.isEnum && e.type.equals(type)) return e;
-    if (
-      e.materialize &&
-      (c.kind === ConversionKind.ObjectCreation ||
-        c.kind === ConversionKind.CollectionExpression ||
-        e.isTargetTypedConditional ||
-        e.isTargetTypedSwitch)
-    )
-      return e.materialize(type);
-    if (e.form === 'lambda' && c.kind === ConversionKind.AnonymousFunction) {
-      e.boundAs = type;
-      return this.node('Conversion', node, type, { operand: e, conversion: c, isExplicit });
-    }
-    const result = this.node('Conversion', node, type, {
-      operand: e,
-      conversion: c,
-      isExplicit,
-      isImplicitIdentity: c.kind === ConversionKind.Identity,
-    });
-    if (e.constantValue) {
-      const target = type.typeKind === TypeKind.Enum ? type : keywordOf(stripNullable(type));
-      if (target && !isNullableType(type)) {
-        const folded = foldConversion(e.constantValue, target, { checked: !this.uncheckedContext });
-        if (isFoldError(folded)) {
-          this.report(node, folded.error.code, folded.error.args);
-          result.hasErrors = true;
-        } else if (folded) result.constantValue = folded;
-      } else if (e.constantValue.isNull && type.isReferenceType === true)
-        result.constantValue = ConstantValue.null(keywordOf(type) ?? 'object');
-    }
-    return result;
-  }
-  reportConversionFailure(e, type, node, c) {
-    const to = this.display(type);
-    if (c?.isAmbiguous) {
-      this.report(node, 'CS0457', [c.candidates[0].toDisplayString(), c.candidates[1]?.toDisplayString() ?? '', this.display(e.type), to]);
-      return;
-    }
-    if (e.literal === 'null') {
-      this.report(node, 'CS0037', [to]);
-      return;
-    }
-    if (e.form === 'methodGroup') {
-      const r = e.lastConversionError,
-        at = e.nameNode && node === e.syntax ? e.nameNode : node;
-      if (r && delegateInvoke(type)) {
-        this.report(at, r.code, r.args);
-        return;
-      }
-      this.report(at, 'CS0428', [e.name, to]);
-      return;
-    }
-    if (e.form === 'lambda') {
-      const r = e.lastConversionError;
-      if (r) for (const x of r) this.report(x.node ?? node, x.code, x.args);
-      else this.report(node, 'CS1660', [e.isAnonymousMethod ? 'anonymous method' : 'lambda expression', to]);
-      return;
-    }
-    if (e.noNaturalType) {
-      this.report(node, 'CS0173', [this.operandDisplay(e.noNaturalType.left), this.operandDisplay(e.noNaturalType.right)]);
-      return;
-    }
-    if (e.isTargetTypedSwitch) {
-      this.report(node, 'CS8506');
-      return;
-    }
-    if (e.form === 'implicitNew') {
-      this.report(node, 'CS8752', [to]);
-      return;
-    }
-    if (!e.type) {
-      this.report(node, 'CS0029', ['?', to]);
-      return;
-    }
-    if (e.type.specialType === 'System_Void') {
-      this.report(node, 'CS0029', ['void', to]);
-      return;
-    }
-    const from = this.display(e.type);
-    // Numeric constants: CS0031 when the value does not fit, CS0664 for a double literal assigned to float/decimal.
-    if (e.constantValue && !e.constantValue.isNull) {
-      const a = this.conversions.kindOf(e.type),
-        b = this.conversions.kindOf(stripNullable(type));
-      if (a && b) {
-        const r = classifyConstantNarrowing(a, e.constantValue.isIntegral ? e.constantValue.bigint : null, b, {
-          isRealLiteral: e.kind === 'Literal' && a === 'double',
-          display: e.constantValue.displayValue,
-        });
-        if (r && r.code && r.code !== 'CS0266') {
-          this.report(node, r.code, r.args);
-          return;
-        }
-      }
-    }
-    const explicit = this.conversions.classifyExplicit(e.type, type);
-    this.report(node, explicit.exists ? 'CS0266' : 'CS0029', [from, to]);
-  }
-  /** Binds an expression that must produce a value (not a type, namespace or bare method group). */
-  value(syntax, options) {
-    return this.asValue(this.expression(syntax, options));
-  }
-  asValue(e) {
-    if (e.hasErrors) {
-      if (e.kind === 'Local') e.local.reads++;
-      return e;
-    }
-    if (e.kind === 'TypeExpression') {
-      this.report(e.syntax, 'CS0119', [this.display(e.referencedType), 'type']);
-      return this.bad(e.syntax);
-    }
-    if (e.kind === 'NamespaceExpression') {
-      this.report(e.syntax, 'CS0119', [e.namespace.toDisplayString(), 'namespace']);
-      return this.bad(e.syntax);
-    }
-    return this.markRead(e);
-  }
-  markRead(e) {
-    if (e.kind === 'PropertyAccess' && !e.readChecked) {
-      e.readChecked = true;
-      const p = e.property;
-      if (!p.getMethod && p.setMethod) this.report(e.syntax, 'CS0154', [p.toDisplayString()]);
-      else if (
-        p.getMethod &&
-        p.getMethod.declaredAccessibility !== p.declaredAccessibility &&
-        !isAccessible(p.getMethod.originalDefinition ?? p.getMethod, this.c.containingType?.originalDefinition ?? null, {
-          withinModule: this.d.assembly.module,
-        })
-      )
-        this.report(e.syntax, 'CS0271', [p.toDisplayString()]);
-    }
-    if (e.kind === 'Local') {
-      e.local.reads++;
-    } else if (e.kind === 'FieldAccess') {
-      const f = e.field.originalDefinition ?? e.field;
-      f.reads = (f.reads ?? 0) + 1;
-    } else if (e.kind === 'MethodGroup' && e.methods.length === 1 && e.methods[0].methodKind === MethodKind.LocalFunction)
-      e.methods[0].uses = (e.methods[0].uses ?? 0) + 1;
-    return e;
-  }
-  markWrite(e, value) {
-    if (e.kind === 'Local') {
-      e.local.writes++;
-      if (value && !(value.constantValue || value.literal || value.kind === 'Default')) e.local.nonConstantWrite = true;
-    } else if (e.kind === 'FieldAccess') {
-      const f = e.field.originalDefinition ?? e.field;
-      f.writes = (f.writes ?? 0) + 1;
-      if ((value && !(value.constantValue || value.literal || value.kind === 'Default')) || !value) f.nonConstantWrite = true;
-    }
-  }
-  /** Binds and converts to bool (conditions), accepting `operator true`. */
-  condition(syntax) {
-    const e = this.value(syntax);
-    if (e.hasErrors || !e.type) return e.type ? e : this.convert(e, this.core.bool);
-    if (e.type.specialType === 'System_Boolean') return e;
-    const c = this.conversions.classifyFromExpression(e, this.core.bool);
-    if (c.exists && c.isImplicit) return this.applyConversion(e, this.core.bool, c);
-    const op = this.d.operators.trueOperator(e.type);
-    if (op) return this.node('UserDefinedCondition', syntax, this.core.bool, { operand: e, method: op });
-    return this.convert(e, this.core.bool);
   }
   // ---- expressions ----
   expression(syntax, options = {}) {
@@ -572,51 +393,5 @@ export class BinderCore {
       isStatic: this.c.isStatic,
       inObjectInitializer: this.inObjectInitializer,
     };
-  }
-  /** The best common type of a set of expressions (spec 12.6.3.15): the candidate type every expression converts to. */
-  bestCommonType(values) {
-    const candidates = [];
-    for (const v of values)
-      if (v.type && v.type.specialType !== 'System_Void' && !candidates.some(c => c.equals(v.type))) candidates.push(v.type);
-    const best = candidates.filter(c =>
-      values.every(v => {
-        const r = this.conversions.classifyFromExpression(v, c);
-        return r.exists && r.isImplicit;
-      }),
-    );
-    if (best.length === 1) return best[0];
-    if (best.length > 1) {
-      const top = best.filter(c => best.every(o => o === c || this.conversions.classifyImplicit(o, c).exists));
-      if (top.length === 1) return top[0];
-    }
-    return null;
-  }
-  operandDisplay(e) {
-    return e.literal === 'null'
-      ? '<null>'
-      : e.kind === 'MethodGroup'
-        ? 'method group'
-        : e.form === 'lambda'
-          ? 'lambda expression'
-          : e.literal === 'default'
-            ? 'default'
-            : this.display(e.type);
-  }
-  operand(e, type) {
-    if (!type || (!e.type && !e.literal)) return e;
-    if (e.type && e.type.equals(type)) return e;
-    const c = this.conversions.classifyFromExpression(e, type);
-    return c.exists ? this.applyConversion(e, type, c) : e;
-  }
-  convertQuiet(e, type) {
-    const c = this.conversions.classifyFromExpression(e, type);
-    return c.exists ? this.applyConversion(e, type, c) : e;
-  }
-  /** Constant expression evaluation used by const fields, enum members, parameter defaults and case labels. */
-  constant(syntax, type = null) {
-    const e = this.value(syntax);
-    if (e.hasErrors) return { errors: true, bound: e };
-    const converted = type ? this.convert(e, type, syntax) : e;
-    return { constant: converted.constantValue, type: converted.type, bound: converted, errors: !!converted.hasErrors };
   }
 }

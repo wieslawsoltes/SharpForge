@@ -61,7 +61,8 @@ const kindWord = s =>
 
 export class TypeBinder {
   /**
-   * @param {{core:object, globalNamespace:object, report:(uri,node,code,args)=>void, nullableAnnotationsAt?:(uri,position)=>boolean, tolerateNamespace?:(name)=>boolean}} host
+   * @param {{core:object, globalNamespace:object, report:(uri,node,code,args)=>void, nullableAnnotationsAt?:(uri,position)=>boolean,
+   *   tolerateNamespace?:(name)=>boolean}} host
    */
   constructor(host) {
     this.host = host;

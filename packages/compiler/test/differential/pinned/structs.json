@@ -3,5 +3,10 @@
   "structs/struct-in-array":{"hash":"f0eaddb787675e67","kind":"output","langVersion":"14.0","diagnostics":[],"output":"0 5 0 \n"},
   "structs/operator-overloads":{"hash":"29068bac4d89698d","kind":"output","langVersion":"14.0","diagnostics":[],"output":"4,6\nTrue\nTrue\n"},
   "structs/cs0037-null-to-struct":{"hash":"41358dac47c790c4","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0037",20,4,"error"],["CS0649",72,1,"warning"]]},
-  "structs/cs0170-unassigned-field":{"hash":"5c81fec45334ad6f","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0170",72,3,"error"],["CS0649",104,1,"warning"]]}
+  "structs/cs0170-unassigned-field":{"hash":"5c81fec45334ad6f","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0170",72,3,"error"],["CS0649",104,1,"warning"]]},
+  "structs/cs0523-layout-cycle":{"hash":"f68582971ee96ecd","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS5001",-1,0,"error"],["CS0523",20,1,"error"],["CS0649",20,1,"warning"],["CS0523",45,1,"error"],["CS0649",45,1,"warning"],["CS0649",73,1,"warning"],["CS0649",88,4,"warning"]]},
+  "structs/cs1612-cs0200-member-of-rvalue":{"hash":"fad694bf822e1d0a","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1612",22,3,"error"],["CS0200",44,10,"error"]]},
+  "structs/cs1510-cs0206-ref-arguments":{"hash":"e3a45646eff9a290","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1510",63,1,"error"],["CS0206",80,3,"error"],["CS1620",95,1,"error"],["CS1615",113,1,"error"]]},
+  "structs/cs8340-readonly-struct":{"hash":"6a85869467ee57cf","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS5001",-1,0,"error"],["CS0649",31,1,"warning"],["CS8340",31,1,"error"],["CS0649",54,1,"warning"],["CS8341",68,1,"error"]]},
+  "structs/cs0191-cs1648-readonly":{"hash":"d22d9b125c68102b","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS5001",-1,0,"error"],["CS0191",87,1,"error"],["CS1648",94,3,"error"]]}
 }}

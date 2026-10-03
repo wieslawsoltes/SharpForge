@@ -14,6 +14,7 @@
  * methods and reaches the others through `this`.
  */
 import { BinderCore } from './body/binder-core.js';
+import { ConversionBinding } from './body/conversions.js';
 import { NameBinding } from './body/names.js';
 import { CallBinding } from './body/calls.js';
 import { CreationBinding } from './body/creation.js';
@@ -26,7 +27,16 @@ import { DeclarationBinding } from './body/declarations.js';
 import { FlowStatementBinding } from './body/flow-statements.js';
 import { LocalFunctionBinding } from './body/local-functions.js';
 
-const expressionFamilies = [NameBinding, CallBinding, CreationBinding, OperatorBinding, TypeTestBinding, LambdaBinding, PatternBinding];
+const expressionFamilies = [
+  ConversionBinding,
+  NameBinding,
+  CallBinding,
+  CreationBinding,
+  OperatorBinding,
+  TypeTestBinding,
+  LambdaBinding,
+  PatternBinding,
+];
 const statementFamilies = [StatementBinding, DeclarationBinding, FlowStatementBinding, LocalFunctionBinding];
 const compose = (base, mixins) => mixins.reduce((composed, mixin) => mixin(composed), base);
 

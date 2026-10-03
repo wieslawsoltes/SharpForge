@@ -20,7 +20,10 @@ export const localScope = depth => EscapeScope.CurrentMethod + depth;
 const narrowest = list => list.reduce((a, b) => Math.max(a, b), EscapeScope.CallingMethod);
 
 export class RefSafety {
-  /** @param {{useUpdatedEscapeRules?:boolean}} [options] C# 11 rules (default) or the C# 7.2-10 rules (ref parameters escape to the calling method; out parameters too) */
+  /**
+   * @param {{useUpdatedEscapeRules?:boolean}} [options] C# 11 rules (default) or the C# 7.2-10 rules (ref parameters escape to the calling method;
+   * out parameters too)
+   */
   constructor(options = {}) {
     this.updated = options.useUpdatedEscapeRules !== false;
     this.locals = new Map();
@@ -35,7 +38,10 @@ export class RefSafety {
     });
     return this;
   }
-  /** Records what an initializer or (ref) assignment gives a local. Ref-struct locals take the safe context of their initializer; ref locals its ref safe context. */
+  /**
+   * Records what an initializer or (ref) assignment gives a local. Ref-struct locals take the safe context of their initializer; ref locals its ref
+   * safe context.
+   */
   initializeLocal(local, initializer, { isRef = false } = {}) {
     const entry = this.locals.get(local);
     if (!entry) return;

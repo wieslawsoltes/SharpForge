@@ -176,6 +176,14 @@ export const CallBinding = Base =>
           if (!result && ext.found) {
             if (ext.error && scopes.flatMap(s => s.methods).every(isSource)) {
               const offset = ext.extensionArgumentOffset ?? 1;
+              if (ext.error.code === 'CS1503' && ext.error.argument === 0 && ext.best) {
+                // The receiver does not convert to the `this` parameter of the best candidate.
+                const candidate = ext.best.definition;
+                const receiverType = this.display(group.receiver.type);
+                const wanted = this.display(candidate.parameters[0].type);
+                this.report(group.receiver.syntax, 'CS1929', [receiverType, group.name, candidate.toDisplayString(), wanted]);
+                return this.bad(syntax);
+              }
               this.report(
                 ext.error.argument !== undefined && ext.error.argument >= offset
                   ? this.errorNode({ ...ext.error }, args, nameNode, offset)

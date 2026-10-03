@@ -202,7 +202,8 @@ export class TypeInferrer {
   /**
    * Runs both phases.
    * @param {TypeSymbol[]} parameterTypes formal parameter types (open), one per argument
-   * @param {object[]} args `{type, refKind, lambda?:{parameterTypes?:TypeSymbol[]|null, inferReturnType(parameterTypes):TypeSymbol|null}, methodGroup?:{returnTypeFor(parameterTypes):TypeSymbol|null}}`
+   * @param {object[]} args `{type, refKind, lambda?:{parameterTypes?:TypeSymbol[]|null, inferReturnType(parameterTypes):TypeSymbol|null},
+   *   methodGroup?:{returnTypeFor(parameterTypes):TypeSymbol|null}}`
    * @returns {TypeSymbol[]|null} the inferred type arguments in type-parameter order, or null (CS0411)
    */
   infer(parameterTypes, args) {

@@ -270,7 +270,9 @@ export class Conversions {
   }
   /**
    * Implicit conversion of an expression to a type.
-   * @param expression `{type, constantValue?, literal?:'null'|'default', form?:'methodGroup'|'lambda'|'interpolatedString'|'throw'|'tupleLiteral'|'implicitNew'|'collection', convert?:(to)=>Conversion|null, elements?:[expression]}`
+   * @param expression `{type, constantValue?, literal?:'null'|'default',
+   *   form?:'methodGroup'|'lambda'|'interpolatedString'|'throw'|'tupleLiteral'|'implicitNew'|'collection', convert?:(to)=>Conversion|null,
+   *   elements?:[expression]}`
    */
   classifyFromExpression(expression, to) {
     if (!to || to.isErrorType()) return NONE;

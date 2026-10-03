@@ -92,6 +92,7 @@ if (process.argv[1] && import.meta.url.endsWith(process.argv[1].split('/').pop()
       console.log((fp ? 'FALSE-POSITIVE ' : 'mismatch ') + f.id + (row.incomplete ? ' (incomplete)' : ''), JSON.stringify(row.details));
   }
   console.log(
-    `semantic analysis: ${ok}/${fixtures.length} fixtures match Roslyn${withWarnings ? ' (errors and warnings)' : ' (errors)'}; ${falsePositives} valid programs with false errors; ${crashes} crashes`,
+    `semantic analysis: ${ok}/${fixtures.length} fixtures match Roslyn${withWarnings ? ' (errors and warnings)' : ' (errors)'}; ` +
+      `${falsePositives} valid programs with false errors; ${crashes} crashes`,
   );
 }
