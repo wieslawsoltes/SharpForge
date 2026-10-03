@@ -4,6 +4,7 @@ import {VirtualDispatch} from './vtable.js';
 import {MethodTableRegistry} from './method-table.js';
 import {castCacheFor} from './casting.js';
 import {FieldResolutionCache} from './field-resolution-cache.js';
+import {cachedTypeName} from './token-cache.js';
 
 /** Assembly-derived metadata indexes. They are rebuilt on load, never snapshotted. */
 export class CilTypeSystem {
@@ -17,7 +18,7 @@ export class CilTypeSystem {
     this.initializers=new Map();
     this.dispatch=new VirtualDispatch(vm.inspector);
     const metadata=vm.inspector.metadata;
-    this.methodTables=new MethodTableRegistry({tokenResolver:token=>metadata.typeName(token)});
+    this.methodTables=new MethodTableRegistry({tokenResolver:token=>cachedTypeName(vm,token)});
     for(const type of this.types.values()) {
       this.initializers.set(type.token,type.methods.find(method=>method.name==='.cctor')??null);
       const base=type.baseToken?metadata.typeName(type.baseToken):null;
