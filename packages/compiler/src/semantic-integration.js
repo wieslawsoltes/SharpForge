@@ -115,8 +115,8 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   // Errors the pipeline owns (no entry point, options, language-version gates, syntax) stand whatever the analysis
   // would say, so a program that has only those is not analysed at all: this is the common case of a file without Main.
   // Nor is a program without an entry point: nothing can be generated for it, so the pipeline's diagnostics stand.
-  if (!compiled && !gatesVersion && !profile.length && !compilation.options.references?.length && (onlyStandingErrors(legacy, files) || hasNoEntryPoint(legacy)))
-    return null;
+  const nothingToGenerate = onlyStandingErrors(legacy, files) || hasNoEntryPoint(legacy);
+  if (!compiled && !gatesVersion && !profile.length && !hasReferences && nothingToGenerate) return null;
   const usings = compiled && !gatesVersion ? suspiciousUsings(compilation) : null;
   if (compiled && !gatesVersion && !usings) return null;
   let result;
