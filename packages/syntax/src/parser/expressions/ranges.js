@@ -7,14 +7,17 @@ import { Precedence } from '../../lexer/operators.js';
 export const rangeMethods = {
   /** `^operand`; the cursor is at `^`. */
   indexExpression() {
-    this.feature('IndexOperator', this.current);
-    const operator = this.take();
-    return this.n('IndexExpression', operator, this.expression(Precedence.Unary));
+    const start = this.current,
+      operator = this.take(),
+      operand = this.expression(Precedence.Unary);
+    this.feature('IndexOperator', start, this.tokens[this.i - 1]);
+    return this.n('IndexExpression', operator, operand);
   },
-  /** `..` with an optional right operand, after the optional `left` operand; the cursor is at `..`. */
-  rangeExpression(left) {
-    this.feature('RangeOperator', this.current);
-    const operator = this.take();
-    return this.n('RangeExpression', left, operator, this.canStartExpression() ? this.expression(Precedence.Unary) : null);
+  /** `..` with an optional right operand, after the optional `left` operand whose tokens start at index `start`; the cursor is at `..`. */
+  rangeExpression(left, start = this.i) {
+    const operator = this.take(),
+      right = this.canStartExpression() ? this.expression(Precedence.Unary) : null;
+    this.feature('RangeOperator', this.tokens[start], this.tokens[this.i - 1]);
+    return this.n('RangeExpression', left, operator, right);
   }
 };

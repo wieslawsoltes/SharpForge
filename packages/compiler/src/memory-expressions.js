@@ -1,3 +1,4 @@
+import {isReference} from './type-utils.js';
 import {Op, NumericType, numericMode, arrayType, spanType, memoryTypeName} from '@sharpforge/bytecode';
 import {integral} from './numeric.js';
 
@@ -91,6 +92,7 @@ function rectangularAllocation(compiler, node) {
 function stackAllocation(compiler, node) {
   compiler.c.requireFeature(node, 7.2, 'Span stackalloc expressions');
   const element = compiler.c.resolveType(node.element === 'var' ? (node.values?.length ? compiler.infer(node.values[0]) : 'error') : node.element, node);
+  if(isReference(element))compiler.c.report(node,'CS0208',[element]);
   if (node.length) integerIndex(compiler, node.length);
   else compiler.emitConstant(node.values?.length ?? 0);
   if (node.values && node.length && compiler.constant(node.length)?.value !== node.values.length) {

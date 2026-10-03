@@ -29,7 +29,7 @@ export function bindArrayBuiltin(compiler, node, report = false) {
   }));
   candidates.sort((left, right) => left.parameters.filter(type => type === 'long').length - right.parameters.filter(type => type === 'long').length);
   if (!candidates.length) {
-    if (report) compiler.c.report(node, 'CS1501', 'No supported Array.' + name + ' overload accepts these arguments');
+    if (report) compiler.c.report(node, 'CS1501', ['Array.' + name, arguments_.length]);
     return {error: true, result: 'error'};
   }
   const descriptor = candidates[0];

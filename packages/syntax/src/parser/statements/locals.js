@@ -44,9 +44,11 @@ export const localStatementMethods = {
           ? this.n('ScopedType', this.takeWord('scoped'), this.type())
           : this.type();
     if (type.kind === 'RefType') this.feature('RefLocalsReturns', start);
-    const identifier = this.id();
+    const nameToken = this.current,
+      identifier = this.id();
+    if (this.fieldKeyword && !this.isLocalFunctionAhead()) this.fieldNamedVariable(nameToken, nameToken, nameToken);
     if (this.isLocalFunctionAhead() && !usingKeyword)
-      return this.localFunctionStatement({ attributeLists, modifiers, firstModifier, type, identifier, start });
+      return this.localFunctionStatement({ attributeLists, modifiers, firstModifier, type, identifier, nameToken });
     if (type.kind === 'IdentifierName' && start.value === 'var' && !start.flags) this.feature('ImplicitLocal', start);
     return this.n(
       'LocalDeclarationStatement',

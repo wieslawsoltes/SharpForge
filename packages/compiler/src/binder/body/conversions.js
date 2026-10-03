@@ -13,6 +13,7 @@ import { classifyConstantNarrowing } from '../../conversions/constant-narrowing.
 import { isNullableType, stripNullable } from '../../conversions/nullable.js';
 import { delegateInvoke } from '../../overload/type-inference.js';
 import { isAccessible } from '../accessibility.js';
+import { reportTupleLiteralFailure } from '../tuples.js';
 
 const keywordOf = type =>
   numericKind(type) ??
@@ -87,6 +88,7 @@ export const ConversionBinding = Base =>
         this.report(node, 'CS0037', [to]);
         return;
       }
+      if (e.form === 'tupleLiteral' && reportTupleLiteralFailure(this, e, type)) return;
       if (e.form === 'methodGroup') {
         const r = e.lastConversionError,
           at = e.nameNode && node === e.syntax ? e.nameNode : node;
@@ -169,7 +171,7 @@ export const ConversionBinding = Base =>
       return this.markRead(e);
     }
     markRead(e) {
-      if (e.kind === 'PropertyAccess' && !e.readChecked) {
+      if ((e.kind === 'PropertyAccess' || (e.kind === 'IndexerAccess' && e.property.containingType)) && !e.readChecked) {
         e.readChecked = true;
         const p = e.property;
         if (!p.getMethod && p.setMethod) this.report(e.syntax, 'CS0154', [p.toDisplayString()]);

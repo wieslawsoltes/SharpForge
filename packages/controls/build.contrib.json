@@ -3,7 +3,7 @@
   "styles": [
     {
       "source": "packages/controls/src/controls.css",
-      "order": 3
+      "order": 3000
     }
   ],
   "workers": [],
