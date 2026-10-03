@@ -1,4 +1,5 @@
 import {ManagedFault} from '../heap.js';
+import {exceptionMatches} from './exception-types.js';
 
 export function frameState() { return {exception: null, caught: [], unwinds: []}; }
 
@@ -87,6 +88,16 @@ export function rethrow(frame) {
     ?? new ManagedFault('InvalidOperationException', 'No active exception to rethrow');
 }
 
+function matches(vm, fault, type = 'Exception') {
+  if (exceptionMatches(fault.name, type)) return true;
+  if (!fault.reference) return false;
+  const target = vm.heap.methodTables.get(type);
+  for (let table = vm.heap.get(fault.reference).methodTable; table; table = table.base) {
+    if (table === target) return true;
+  }
+  return false;
+}
+
 export function handleFault(vm, error) {
   const fault = vm.makeFault(error);
   vm.fault = fault;
@@ -99,7 +110,9 @@ export function handleFault(vm, error) {
   fault.frames ??= vm.frames.slice().reverse().map(f => ({method: vm.image.methods[f.methodId].qualifiedName, point: f.point}));
   while (vm.frames.length) {
     const frame = vm.top, method = vm.image.methods[frame.methodId], pc = frame.pc - 1;
-    const handler = method.handlers.filter(h => h.kind !== 'finally' && pc >= h.start && pc < h.end).sort((a, b) => (a.end - a.start) - (b.end - b.start))[0];
+    const handler = method.handlers
+      .filter(h => h.kind !== 'finally' && pc >= h.start && pc < h.end && matches(vm, fault, h.type))
+      .sort((a, b) => (a.end - a.start) - (b.end - b.start))[0];
     const target = handler?.target ?? Infinity, finals = vm.finalizers(frame, pc, target);
     // Exceptions caught inside the active finally preserve its original continuation.
     frame.unwinds = frame.unwinds.filter(u => u.active && target >= u.active.target && target < u.active.handlerEnd);

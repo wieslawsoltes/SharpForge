@@ -98,8 +98,15 @@ export function contractsAt(ref, root = process.cwd()) {
   const paths = git(['ls-tree','-r','--name-only',ref,'--','planning/contracts'],root).trim().split('\n').filter(path => /(?:\.lock|\.schema)\.json$/.test(path) || /^planning\/contracts\/schema\/[^/]+\.json$/.test(path) || path==='planning/contracts/spec-revisions.json');
   return Object.fromEntries(paths.map(path=>[path,JSON.parse(git(['show',`${ref}:${path}`],root))]));
 }
+export function versionsAt(ref, root = process.cwd()) {
+  const path = 'planning/contracts/versions.json';
+  return git(['ls-tree', '--name-only', ref, '--', path], root).trim()
+    ? JSON.parse(git(['show', `${ref}:${path}`], root)) : {};
+}
 if (isMain(import.meta.url)) {
   const {values} = parseArgs({options:{base:{type:'string',default:'origin/main'},head:{type:'string',default:'HEAD'},labels:{type:'string',default:''}}});
-  const versions = ref => git(['ls-tree','--name-only',ref,'--','planning/contracts/versions.json']).trim() ? JSON.parse(git(['show',`${ref}:planning/contracts/versions.json`])) : {};
-  report(checkContractChange({before:contractsAt(values.base),after:contractsAt(values.head),beforeVersions:versions(values.base),afterVersions:versions(values.head),labels:values.labels.split(',')}));
+  report(checkContractChange({
+    before: contractsAt(values.base), after: contractsAt(values.head),
+    beforeVersions: versionsAt(values.base), afterVersions: versionsAt(values.head), labels: values.labels.split(','),
+  }));
 }

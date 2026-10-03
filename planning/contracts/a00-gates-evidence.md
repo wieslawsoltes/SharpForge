@@ -19,6 +19,16 @@ Unknown schema changes conservatively require a declaration. Introducing the
 initial registry is additive; subsequent incompatible contracts require the
 baseline version registry and a strict bump.
 
+The existing `core` PR job invokes `node scripts/planning/review-gates.js` before
+dependency installation and validation. It reads labels only from GitHub's PR
+event snapshot, verifies the workflow checkout SHA and its PR head/merge parents,
+and compares committed contracts from the pinned base/head's unique merge base
+to the PR head. This excludes unrelated changes made on the base branch after
+the PR branched. Missing or mismatched event context fails closed. The same step
+rejects a `seam` PR that changes the golden lock, without rebuilding the corpus.
+Adding or removing a label reruns `core`. Pushes, manual qualification and merge
+groups do not carry a PR label snapshot and do not run these review-only gates.
+
 `node scripts/planning/import-graph.js` regenerates the deterministic static ESM
 graph. V8 parses actual declarations through its
 [SourceTextModule API](https://nodejs.org/api/vm.html#class-vmsourcetextmodule);

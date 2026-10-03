@@ -9,6 +9,8 @@
  *   - Its conversion diagnostics point at the `delegate` keyword, and at a parameter's name.
  *   - A ref, out or in parameter of the enclosing method cannot be used inside it (CS1628; the rule is the same for
  *     lambdas and local functions).
+ *   - A returned value that does not convert to the delegate's return type is CS1662 next to the conversion error
+ *     (lambdas too).
  */
 import { RefKind, SymbolKind } from '../symbols/types.js';
 
@@ -29,7 +31,9 @@ export const anonymousFunctionAnchor = (syntax, fallback = null) => syntax.deleg
  * @returns {null|{node: object, code: string, args: any[]}[]}
  */
 export function anonymousMethodSignatureErrors(syntax, parameterSyntax, invoke) {
-  if (syntax.kind !== 'AnonymousMethodExpression') return null;
+  const isLambda = syntax.kind !== 'AnonymousMethodExpression';
+  // A simple lambda `x => ...` has a bare identifier for a parameter: it declares no ref kind and takes the delegate's.
+  if (isLambda && !(parameterSyntax ?? []).every(parameter => parameter.kind === 'Parameter')) return null;
   if (!parameterSyntax) {
     return invoke.parameters.some(parameter => parameter.refKind === RefKind.Out) ? [{ node: syntax.delegateKeyword, code: 'CS1688', args: [] }] : null;
   }
@@ -48,6 +52,19 @@ export function anonymousMethodSignatureErrors(syntax, parameterSyntax, invoke) 
 export const AnonymousMethodBinding = Base =>
   class extends Base {
     /** True when `symbol` is a ref, out or in parameter of an enclosing function, not of the function being bound. */
+    /**
+     * Converts a returned value to the return type. In an anonymous function a value that does not convert also
+     * fails the conversion of the function to its delegate type, which Roslyn reports next to the conversion error
+     * (CS1662).
+     */
+    convertReturned(value, type, node) {
+      const converted = this.convert(value, type, node);
+      // Only a value whose own type does not convert: an inner anonymous function or method group has its own errors.
+      const isTyped = !!value.type || !!value.literal,
+        mismatch = isTyped && converted.hasErrors && !value.hasErrors && !this.conversions.classifyFromExpression(value, type).isImplicit;
+      if (this.c.isLambda && mismatch) this.report(node, 'CS1662', [this.c.isAnonymousMethod ? 'anonymous method' : 'lambda expression']);
+      return converted;
+    }
     isOuterByRefParameter(symbol) {
       if (symbol.kind !== SymbolKind.Parameter || !byReference(symbol.refKind)) return false;
       return !this.scopes.some(scope => scope.get(symbol.name) === symbol);
