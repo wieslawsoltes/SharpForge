@@ -1,0 +1,108 @@
+.sf-dock-guides { position: absolute; inset: 0; z-index: 60; pointer-events: none; }
+.sf-dock-guide-target {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--accent, #a58be8);
+  background: var(--panel, #24242c);
+  color: var(--text, #dedee8);
+  font-size: 22px;
+  box-shadow: 0 3px 9px #0006;
+  pointer-events: auto;
+  touch-action: none;
+}
+.sf-dock-guide-target.active { background: var(--accent, #a58be8); color: var(--bg, #1e1e24); }
+.sf-dock-guide-preview {
+  position: absolute;
+  box-sizing: border-box;
+  background: #9681e43d;
+  border: 2px solid var(--accent, #a58be8);
+  pointer-events: none;
+}
+.sf-dock-guide-preview[hidden] { display: none; }
+.sf-dock-tab.preview { font-style: italic; }
+.sf-dock-tab.pinned { border-bottom: 2px solid var(--accent, #a58be8); }
+.sf-dock-tab.pinned::before { content: '◆'; margin-right: 5px; font-size: 9px; }
+.sf-dock-tab.dirty::after { content: '●'; margin-left: 6px; font-size: 9px; }
+.sf-dock-tab.drop-before { box-shadow: inset 3px 0 var(--accent, #a58be8); }
+.sf-dock-tab { touch-action: pan-x; }
+.sf-dock-button:focus-visible, .sf-dock-float-title:focus-visible, .sf-dock-float-grip:focus-visible {
+  outline: 2px solid var(--accent, #a58be8);
+  outline-offset: -2px;
+}
+.sf-dock-menu button:disabled { opacity: .45; cursor: default; }
+.sf-dock-menu-divider { width: 100%; border: 0; border-top: 1px solid var(--border, #454350); }
+.sf-dock-flyout-grip { position: absolute; touch-action: none; }
+.sf-dock-flyout-grip.left, .sf-dock-flyout-grip.right { top: 0; bottom: 0; width: 7px; cursor: col-resize; }
+.sf-dock-flyout-grip.left { right: 0; }
+.sf-dock-flyout-grip.right { left: 0; }
+.sf-dock-flyout-grip.top, .sf-dock-flyout-grip.bottom { left: 0; right: 0; height: 7px; cursor: row-resize; }
+.sf-dock-flyout-grip.top { bottom: 0; }
+.sf-dock-flyout-grip.bottom { top: 0; }
+.sf-dock-flyout-grip:focus-visible { background: var(--accent, #a58be8); outline: none; }
+.sf-dock-group.sf-dock-maximized { position: absolute; inset: 0; z-index: 40; height: auto; }
+.sf-dock-fullscreen .sf-dock-group.tool,
+.sf-dock-fullscreen .sf-dock-shelf,
+.sf-dock-fullscreen .sf-dock-auto-popup,
+.sf-dock-fullscreen .sf-dock-floating:has(.sf-dock-group.tool) { visibility: hidden; }
+.sf-dock-fullscreen .sf-dock-maximized { visibility: visible; }
+.sf-workbench-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 6000;
+  display: grid;
+  place-items: center;
+  background: #0006;
+}
+.sf-workbench-dialog, .sf-window-navigator {
+  color: var(--text, #dedee8);
+  background: var(--panel, #24242c);
+  border: 1px solid var(--border, #454350);
+  box-shadow: 0 12px 48px #0008;
+  border-radius: 6px;
+  padding: 20px;
+  max-width: min(780px, 90vw);
+  max-height: 80vh;
+  overflow: auto;
+  font: 13px system-ui, sans-serif;
+}
+.sf-workbench-dialog h2, .sf-window-navigator h2 { font-size: 16px; margin: 0 0 16px; }
+.sf-workbench-dialog > select { display: block; min-width: min(550px, 75vw); }
+.sf-workbench-dialog input, .sf-workbench-dialog select {
+  background: var(--bg, #1e1e24);
+  color: inherit;
+  border: 1px solid var(--border, #454350);
+  padding: 7px;
+}
+.sf-workbench-dialog footer { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.sf-workbench-dialog button { min-height: 32px; padding: 5px 12px; }
+.sf-workbench-dialog-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin: 10px 0; }
+.sf-workbench-dialog-row span { overflow-wrap: anywhere; }
+.sf-window-navigator { position: fixed; left: 50%; top: 24%; transform: translateX(-50%); z-index: 5500; min-width: min(650px, 85vw); }
+.sf-window-navigator [role='listbox'] { max-height: 45vh; overflow: auto; }
+.sf-window-navigator [role='option'] { padding: 8px 12px; white-space: nowrap; }
+.sf-window-navigator .selected { background: var(--accent-bg, #443957); outline: 1px solid var(--accent, #a58be8); outline-offset: -1px; }
+@media (pointer: coarse) {
+  .sf-dock-bar { flex-basis: 42px; }
+  .sf-dock-tab, .sf-dock-button, .sf-dock-menu button { min-width: 40px; min-height: 40px; }
+  .sf-dock-shelf.left button, .sf-dock-shelf.right button { padding: 12px; }
+  .sf-dock-divider { flex-basis: 12px; position: relative; z-index: 2; }
+  .sf-dock-divider::before { content: ''; position: absolute; inset: 0 -14px; }
+  .vertical > .sf-dock-divider::before { inset: -14px 0; }
+  .sf-dock-float-grip { width: 40px; height: 40px; }
+  .sf-dock-float-title { min-height: 40px; }
+  .sf-dock-flyout-grip.left, .sf-dock-flyout-grip.right { width: 40px; }
+  .sf-dock-flyout-grip.top, .sf-dock-flyout-grip.bottom { height: 40px; }
+  .sf-workbench-dialog button, .sf-workbench-dialog select { min-height: 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sf-dock-host *, .sf-workbench-dialog *, .sf-window-navigator * { scroll-behavior: auto; animation: none; transition: none; }
+}
+@media (forced-colors: active) {
+  .sf-dock-guide-target, .sf-dock-guide-preview, .sf-dock-tab.selected, .sf-window-navigator .selected {
+    border: 2px solid Highlight;
+    forced-color-adjust: auto;
+  }
+  .sf-dock-tab.pinned { border-bottom-color: Highlight; }
+}
