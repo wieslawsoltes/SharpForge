@@ -751,6 +751,8 @@ export const roslynCodes=Object.freeze({
  CS8934:["ERR_CantConvAnonMethReturnType","error",0,"Cannot convert {0} to type '{1}' because the return type does not match the delegate return type"],
  CS8936:["ERR_FeatureNotAvailableInVersion10","error",0,"Feature '{0}' is not available in C# 10.0. Please use language version {1} or greater."],
  CS8937:["ERR_SimpleProgramIsEmpty","error",0,"At least one top-level statement must be non-empty."],
+ CS8941:["ERR_InterpolatedStringHandlerMethodReturnMalformed","error",0,"Interpolated string handler method '{0}' is malformed. It does not return 'void' or 'bool'."],
+ CS8942:["ERR_InterpolatedStringHandlerMethodReturnInconsistent","error",0,"Interpolated string handler method '{0}' has inconsistent return type. Expected to return '{1}'."],
  CS8957:["ERR_NoImplicitConvTargetTypedConditional","error",0,"Conditional expression is not valid in language version {0} because a common type was not found between '{1}' and '{2}'. To use a target-typed conversion, upgrade to language version {3} or greater."],
  CS8958:["ERR_NonPublicParameterlessStructConstructor","error",0,"The parameterless struct constructor must be 'public'."],
  CS8959:["ERR_NoConversionForCallerArgumentExpressionParam","error",0,"CallerArgumentExpressionAttribute cannot be applied because there are no standard conversions from type '{0}' to type '{1}'"],
