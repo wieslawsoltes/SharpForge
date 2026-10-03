@@ -21,8 +21,10 @@ import { AttributeBinding } from './binder/attributes.js';
 import { CallerInfoChecks } from './binder/caller-info.js';
 import { ObsoleteUses } from './binder/obsolete.js';
 import { SpecialMemberChecks } from './binder/special-members.js';
+import { ComInteropChecks } from './binder/com-interop.js';
 import { ConditionalMethodChecks } from './binder/csharp2-misc.js';
-import { modernRules } from './binder/modern-rules.js';
+import { UnsafeDeclarationChecks } from './binder/unsafe-declarations.js';
+import { modernRules, modernUseRules } from './binder/modern-rules.js';
 
 const phases = [
   DeclarationChecks,
@@ -31,12 +33,15 @@ const phases = [
   AttributeBinding,
   CallerInfoChecks,
   SpecialMemberChecks,
+  ComInteropChecks,
   ConditionalMethodChecks,
+  UnsafeDeclarationChecks,
   ...modernRules,
   BodyBinding,
   TopLevelPrograms,
   MemberBodyChecks,
   ObsoleteUses,
+  ...modernUseRules,
   UnusedSymbolWarnings,
 ];
 

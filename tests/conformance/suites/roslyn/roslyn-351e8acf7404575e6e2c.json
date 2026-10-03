@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-351e8acf7404575e6e2c",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n\nunsafe\n{\n    var x = new[] { 0, 1, 2 };\n    int[]* xp = &x;\n    var c = new C(xp);\n    c.Print();\n}\n\npublic unsafe class C\n{\n    private int[]* _x;\n\n    public C(int[]* x)\n    {\n        _x = x;\n    }\n\n    public void Print()\n    {\n        int[] x = *_x;\n        for (int i = 0; i < x.Length; i++)\n        {\n            Console.Write(x[i]);\n        }\n    }\n}",
+  "sourceSHA256": "466140c34c3d103b08789348e8b1d5253dd4afdb61a695f92299c0153db6894a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/ManagedAddressTests.cs",
+    "sha256": "1ad6372c886b2d5aff0045d5177ab1d664e46c731827fd7ca36c5729fc8eb53d",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/ManagedAddressTests.cs",
+    "license": "MIT",
+    "method": "TestPointerToArray",
+    "offset": 1446
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.UnsafeDebugExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8500",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8500",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8500",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8500",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,5): warning CS8500: This takes the address of, gets the size of, or declares a pointer to a managed type ('int[]')\n                //     int[]* xp = &x;\n                Diagnostic(ErrorCode.WRN_ManagedAddr, \"int[]*\").WithArguments(\"int[]\").WithLocation(6, 5),\n                // (6,17): warning CS8500: This takes the address of, gets the size of, or declares a pointer to a managed type ('int[]')\n                //     int[]* xp = &x;\n                Diagnostic(ErrorCode.WRN_ManagedAddr, \"&x\").WithArguments(\"int[]\").WithLocation(6, 17),\n                // (13,20): warning CS8500: This takes the address of, gets the size of, or declares a pointer to a managed type ('int[]')\n                //     private int[]* _x;\n                Diagnostic(ErrorCode.WRN_ManagedAddr, \"_x\").WithArguments(\"int[]\").WithLocation(13, 20),\n                // (15,21): warning CS8500: This takes the address of, gets the size of, or declares a pointer to a managed type ('int[]')\n                //     public C(int[]* x)\n                Diagnostic(ErrorCode.WRN_ManagedAddr, \"x\").WithArguments(\"int[]\").WithLocation(15, 21)\n                ",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

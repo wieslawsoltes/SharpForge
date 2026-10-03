@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0048e7fab4df4b654158",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    void M()\n    {\n        var x9 = (1, 2, 3, 4, 5, 6, 7, 8, 9);\n        System.Console.Write(x9);\n    }\n}\nnamespace System\n{\n    [Obsolete]\n    public struct ValueTuple<T1, T2>\n    {\n        public ValueTuple(T1 item1, T2 item2) => throw null;\n    }\n    public struct ValueTuple<T1, T2, T3, T4, T5, T6, T7, TRest>\n    {\n        public ValueTuple(T1 item1, T2 item2, T3 item3, T4 item4, T5 item5, T6 item6, T7 item7, TRest rest) { Rest = rest; }\n\n        public TRest Rest;\n    }\n}\n",
+  "sourceSHA256": "91b4686dabb01275d477d44b8911097ad88706378e06edb3ee896ba58a2c6234",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "ObsoleteValueTuple2",
+    "offset": 986396
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,18): warning CS0612: '(T1, T2)' is obsolete\n                //         var x9 = (1, 2, 3, 4, 5, 6, 7, 8, 9);\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"(1, 2, 3, 4, 5, 6, 7, 8, 9)\").WithArguments(\"(T1, T2)\").WithLocation(6, 18)\n                ",
+  "unsupported": []
+}

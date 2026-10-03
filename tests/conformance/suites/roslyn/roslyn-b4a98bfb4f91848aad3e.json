@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b4a98bfb4f91848aad3e",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nusing System.Threading.Tasks;\n\nclass C\n{\n    static async Task<Func<string, Task<string>>> BarAsync()\n    {\n        return async s =>\n        {\n            await Task.CompletedTask;\n            throw new NotImplementedException();\n        };\n    }\n}",
+  "sourceSHA256": "e64d1aa927ddcedea90a754409f3bd92016c18015e4ca2ae767207d9d3c87a40",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncIteratorTests.cs",
+    "sha256": "2a479a205fe4eddf9b52c9f60cf9113b2a7281ac99d38dbe85934dd132a12c5b",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncIteratorTests.cs",
+    "license": "MIT",
+    "method": "LambdaWithBindingErrorInReturn",
+    "offset": 384064
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(src, targetFramework: TargetFramework.Net80)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

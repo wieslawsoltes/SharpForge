@@ -55,8 +55,14 @@ export const ConstantBinding = Base =>
         const r = this.evaluateConstant(field.initializerSyntax, field.scope, field.containingType, field.type);
         if (this.constantState.get(field) === 'done') return null;
         if (!r.errors) {
-          if (r.constant) value = r.constant;
-          else if (!(r.bound?.literal === 'null')) this.report(field.uri, field.initializerSyntax, 'CS0133', [field.toDisplayString()]);
+          const type = field.type,
+            isNull = r.bound?.literal === 'null' || r.constant?.isNull,
+            onlyNull = type?.isReferenceType === true && type.specialType !== 'System_String' && !type.isErrorType();
+          // A const of a reference type other than string can only be null: a non-null constant initializer is CS0134.
+          const written = r.constant ?? r.bound?.operand?.constantValue;
+          if (onlyNull && written && !isNull) this.report(field.uri, field.initializerSyntax, 'CS0134', [field.toDisplayString(), type.toDisplayString()]);
+          else if (r.constant) value = r.constant;
+          else if (!isNull) this.report(field.uri, field.initializerSyntax, 'CS0133', [field.toDisplayString()]);
         }
       } else this.reportAt(field, 'CS0145');
       field.constantValueObject = value;
@@ -102,7 +108,9 @@ export const ConstantBinding = Base =>
             r.bound.kind === 'Default' ||
             (r.bound.kind === 'ObjectCreation' && !r.bound.args?.length) ||
             r.bound.operand?.literal ||
-            r.bound.operand?.kind === 'Default'
+            r.bound.operand?.kind === 'Default' ||
+            // A constant wrapped into a nullable type: `long? x = 0`.
+            (r.bound.conversion?.kind === 'ImplicitNullable' && r.bound.operand?.constantValue)
           )
         )
           binder.report(p.defaultSyntax, 'CS1736', [p.name]);

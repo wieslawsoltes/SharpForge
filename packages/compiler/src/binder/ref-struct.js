@@ -43,13 +43,16 @@ export function checkArrayElementType(elementType) {
 }
 /**
  * A ref struct as a parameter or local of an async method, async lambda or iterator.
- * @param {'parameter'|'local'} what  @param {{isAsync?:boolean,isIterator?:boolean}} method  @returns {null|{code,args}}
+ * @param {'parameter'|'local'} what  @param {{isAsync?:boolean,isIterator?:boolean}} method
+ * @returns {null|{code,args}|{feature}} a diagnostic, or the language feature the declaration needs
  */
 export function checkAsyncOrIteratorUse(type, what, method, languageVersion = 14) {
   if (!isRefLike(type) || !(method.isAsync || method.isIterator)) return null;
   if (what === 'parameter') return { code: method.isAsync ? 'CS4012' : 'CS4013', args: [type.toDisplayString()] };
-  // Locals: an error before C# 13; from C# 13 allowed while they do not live across an await or yield (CS4007, reported by flow analysis).
-  return languageVersion < 13 ? { code: method.isAsync ? 'CS4012' : 'CS4013', args: [type.toDisplayString()] } : null;
+  // Locals of an iterator were never an error where they are declared; in an async method they are the C# 13 feature
+  // "ref and unsafe in async and iterator methods" (Roslyn gates the type of the declaration). What cannot be done at
+  // any version is keeping the value across an await or yield: CS4007 (./ref-struct-suspensions.js).
+  return languageVersion < 13 && method.isAsync ? { feature: refAndUnsafeInAsyncFeature } : null;
 }
 /** A ref struct local or parameter (or `this` of a ref struct) captured by a lambda or local function (CS8175). */
 export function checkCapture(symbol, type) {

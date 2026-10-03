@@ -39,26 +39,28 @@ export const CallTranslation = Base =>
         fixed = mapping.expanded ? last : parameters.length,
         slots = new Array(fixed).fill(null),
         rest = [];
+      const elementType = mapping.expanded ? this.imageType(parameters[last].type.elementType, node.syntax) : null;
       values.forEach((value, i) => {
-        if (mapping.expanded && positions[i] === last) rest.push(value);
+        if (mapping.expanded && positions[i] === last) rest.push(this.objectArgument(value, elementType));
         else slots[positions[i]] = value;
       });
-      const lowered = slots.map((value, i) => value ?? this.defaultArgument(parameters[i], node));
+      const lowered = slots.map((value, i) => value ?? this.defaultArgument(parameters[i], node, i));
       if (mapping.expanded) {
-        const elementType = this.imageType(parameters[last].type.elementType, node.syntax);
         lowered.push(n.newArray(elementType, n.literal(rest.length, 'int'), rest));
       }
       if (prefix && lowered.length) lowered[0] = n.sequence(prefix.locals, prefix.effects, lowered[0]);
       return lowered;
     }
-    defaultArgument(parameter, node) {
+    defaultArgument(parameter, node, index) {
       const type = this.imageType(parameter.type, node.syntax),
         value = parameter.explicitDefaultValue ?? parameter.defaultValue;
       // Caller info replaces the declared default (binder/caller-info.js).
       const callerInfo = node.callerInfo?.get(parameter.ordinal);
       if (callerInfo !== undefined) {
         const supplied = typeof callerInfo === 'number' ? 'int' : 'string';
-        if (type !== supplied && type !== 'object') return this.unsupported('caller info for a parameter of this type', node.syntax);
+        // The line number converts like any `int` constant: to `double` at compile time.
+        if (supplied === 'int' && type === 'double') return n.literal(callerInfo, 'double');
+        if (type !== supplied && type !== 'object') return this.unsupported(`caller info for a parameter of type '${type}'`, node.syntax);
         return n.literal(callerInfo, supplied);
       }
       // A default that was never bound must not silently become zero.

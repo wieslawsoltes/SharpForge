@@ -1,0 +1,39 @@
+{
+  "runtime": ".NET 10.0.5",
+  "cases": [
+    {
+      "framework": "net10",
+      "references": [
+        {
+          "name": "System.Console",
+          "version": "10.0.0.0",
+          "culture": "",
+          "publicKeyToken": "b03f5f7f11d50a3a"
+        },
+        {
+          "name": "System.Runtime",
+          "version": "10.0.0.0",
+          "culture": "",
+          "publicKeyToken": "b03f5f7f11d50a3a"
+        }
+      ]
+    },
+    {
+      "framework": "net9",
+      "references": [
+        {
+          "name": "System.Console",
+          "version": "9.0.0.0",
+          "culture": "",
+          "publicKeyToken": "b03f5f7f11d50a3a"
+        },
+        {
+          "name": "System.Runtime",
+          "version": "9.0.0.0",
+          "culture": "",
+          "publicKeyToken": "b03f5f7f11d50a3a"
+        }
+      ]
+    }
+  ]
+}

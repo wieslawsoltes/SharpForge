@@ -1,7 +1,10 @@
 # CLR assembly resolution services
 
 This package supplies explicit, offline assembly identity and asset-selection
-services. It does not yet load CLR types or execute assemblies.
+services. [Assembly load contexts](CONTEXTS.md) add lazy metadata loading and
+explicit lifetimes. Full CLR type construction and execution are separate work.
+Bounded AST [generic signature substitution](GENERICS.md) preserves metadata
+tokens and open caller scopes without parsing display names.
 
 `AssemblyName.parse(displayName)` parses immutable partial identities, preserving
 unspecified components as `null`. `fullName` formats CLR quoting and escaping.

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "gaps": [
+    {
+      "id": "dap-error-response-body",
+      "status": "fixed-local-production-probe",
+      "component": "packages/protocol/src/dap.js",
+      "reason": "DebugAdapter now returns the empty body required by the pinned ErrorResponse schema. Seven focused protocol tests and the local synthetic production-message probe pass; the historical failed observation is retained. Recorded client sessions and cross-platform qualification remain pending.",
+      "ownership": "Project 13 / A14, SF-A14-T06.6 (#2860); coordinated protocol regression and evidence follow-up for Project 4 / A29, SF-A29-T28 (#498).",
+      "observation": "planning/qualification/protocol/observed/unsupported-darwin-arm64.json"
+    },
+    {
+      "id": "vscode-recorded-sessions",
+      "status": "not-run",
+      "reason": "Recording extension and transparent stdio proxy are provided, but no installed VS Code client or previously recorded session was found."
+    }
+  ]
+}

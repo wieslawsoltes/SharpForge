@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a0f3cfe9b4c5fe7d2008",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public static void Main()\n    {\n        Compare((1, null), (1, null), true);\n        Compare(null, (1, (2, 3)), false);\n        Compare((1, (2, 3)), (1, null), false);\n        Compare((1, (4, 4)), (1, (4, 4)), true);\n        Compare((1, (5, 5)), (1, (10, 10)), false);\n        System.Console.Write(\"Success\");\n    }\n    private static void Compare((int, (int, int)?)? nt1, (int, (int, int)?)? nt2, bool expectMatch)\n    {\n        if (expectMatch != (nt1 == nt2) || expectMatch == (nt1 != nt2))\n        {\n            throw null;\n        }\n     }\n}\n",
+  "sourceSHA256": "4a88946e6b544009d73e5fcf2e577a4bfe825e6d130caf53d07a14348a4af248",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestNotEqualOnNullableVsNullableNestedTuples",
+    "offset": 142726
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

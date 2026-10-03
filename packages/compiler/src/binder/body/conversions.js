@@ -70,6 +70,8 @@ export const ConversionBinding = Base =>
         isExplicit,
         isImplicitIdentity: c.kind === ConversionKind.Identity,
       });
+      // A constant string converted to ReadOnlySpan<char> by the C# 14 span conversion has no side effect (CS0219 applies).
+      if (c.kind === ConversionKind.ImplicitSpan && e.constantValue) result.isCompileTimeValue = true;
       if (e.constantValue) {
         const target = type.typeKind === TypeKind.Enum ? type : keywordOf(stripNullable(type));
         if (target && !isNullableType(type)) {
@@ -104,7 +106,7 @@ export const ConversionBinding = Base =>
           at = e.nameNode && node === e.syntax ? e.nameNode : node;
         if (r && delegateInvoke(type)) {
           // A wrong return type is reported on the whole method group expression, the other mismatches on the method name.
-          this.report(r.code === 'CS0407' ? node : at, r.code, r.args);
+          this.report(r.code === 'CS0407' || r.code === 'CS1113' ? node : at, r.code, r.args);
           return;
         }
         this.report(at, 'CS0428', [e.name, to]);
@@ -119,6 +121,10 @@ export const ConversionBinding = Base =>
         return;
       }
       if (this.reportTargetTypedFailure(e, type)) return;
+      if (e.form === 'collection' && e.elements) {
+        this.reportCollectionFailure(e, type);
+        return;
+      }
       if (e.form === 'implicitNew') {
         this.report(node, 'CS8752', [to]);
         return;

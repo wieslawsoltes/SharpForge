@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d60c6924be61d595b569",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.CompilerServices;\n\npartial class D\n{\n    partial void Goo(int line, string member, string path);\n}\n\npartial class D\n{\n    partial void Goo(\n        [CallerLineNumber] int line,\n        [CallerMemberName] string member,\n        [CallerFilePath] string path) { }\n\n    public static void Main()\n    {\n    }\n}",
+  "sourceSHA256": "6f3e0d8a31b72b0f2606577e61f0029c8800a0ef7e93d5ede79f736ca9fc3313",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "sha256": "afc3ea7577c9e597760812239c750126e0cb09ea32cb52bdc8e9850a45ebeac9",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "license": "MIT",
+    "method": "TestUnconsumedCallerInfoAttributes",
+    "offset": 111674
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS4024",
+        "severity": "warning"
+      },
+      {
+        "code": "CS4026",
+        "severity": "warning"
+      },
+      {
+        "code": "CS4025",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (12,10): warning CS4024: The CallerLineNumberAttribute applied to parameter 'line' will have no effect because it applies to a member that is used in contexts that do not allow optional arguments\n                //         [CallerLineNumber] int line,\n                Diagnostic(ErrorCode.WRN_CallerLineNumberParamForUnconsumedLocation, \"CallerLineNumber\").WithArguments(\"line\"),\n                // (13,10): warning CS4026: The CallerMemberNameAttribute applied to parameter 'member' will have no effect because it applies to a member that is used in contexts that do not allow optional arguments\n                //         [CallerMemberName] string member,\n                Diagnostic(ErrorCode.WRN_CallerMemberNameParamForUnconsumedLocation, \"CallerMemberName\").WithArguments(\"member\"),\n                // (14,10): warning CS4025: The CallerFilePathAttribute applied to parameter 'path' will have no effect because it applies to a member that is used in contexts that do not allow optional arguments\n                //         [CallerFilePath] string path) { }\n                Diagnostic(ErrorCode.WRN_CallerFilePathParamForUnconsumedLocation, \"CallerFilePath\").WithArguments(\"path\")",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

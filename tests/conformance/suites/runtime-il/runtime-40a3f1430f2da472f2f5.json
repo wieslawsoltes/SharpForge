@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "runtime-40a3f1430f2da472f2f5",
+  "kind": "runtime",
+  "sourceText": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n.assembly extern legacy library mscorlib {}\n.assembly extern xunit.core {}\n\n\n.assembly 'and'{}\n\n.namespace and_\n{\n.class public _and {\n\n.field public static   int32 even32\n.field public static   int64 even64\n.method public static void initialize() {\n.maxstack       2\n        ldc.i4  0xAAAAAAAA\n        stsfld  int32 and_._and::even32\n        ldc.i8  0xAAAAAAAAAAAAAAAA\n        stsfld  int64 and_._and::even64\n        ret\n}\n\n.method public static int32 main() {\n.custom instance void [xunit.core]Xunit.FactAttribute::.ctor() = (\n    01 00 00 00\n)\n.entrypoint\n.maxstack\t10\n\tcall\tvoid and_._and::initialize()\n\tldsfld\tint32 and_._and::even32\n\tldc.i4\t0xFFFFFFFF\n\tand\n\tldsfld\tint32 and_._and::even32\n\tceq\n\tbrfalse\tFAIL\n        ldsfld  int64 and_._and::even64\n        ldc.i8  0xFFFFFFFFFFFFFFFF\n        and\n        ldsfld  int64 and_._and::even64\n        ceq\n        brfalse FAIL\nPASS:\n\tldc.i4 100\n\tret\nFAIL:\n\tldc.i4\t0x0\n\tret\n}\n}\n}\n",
+  "unsupported": [
+    "Upstream IL preprocessor/legacy assembly rewrite required"
+  ],
+  "language": "il",
+  "opcodeFamilies": [
+    "arithmetic",
+    "branches",
+    "calls",
+    "objects"
+  ],
+  "sourceSHA256": "66cd19b9cd8930dde7e930db2e68e2b848859a66f1411943b4bfdc7259d29d1f",
+  "originalSource": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n.assembly extern legacy library mscorlib {}\n.assembly extern xunit.core {}\n\n\n.assembly 'and'{}\n\n.namespace and_\n{\n.class public _and {\n\n.field public static   int32 even32\n.field public static   int64 even64\n.method public static void initialize() {\n.maxstack       2\n        ldc.i4  0xAAAAAAAA\n        stsfld  int32 and_._and::even32\n        ldc.i8  0xAAAAAAAAAAAAAAAA\n        stsfld  int64 and_._and::even64\n        ret\n}\n\n.method public static int32 main() {\n.custom instance void [xunit.core]Xunit.FactAttribute::.ctor() = (\n    01 00 00 00\n)\n.entrypoint\n.maxstack\t10\n\tcall\tvoid and_._and::initialize()\n\tldsfld\tint32 and_._and::even32\n\tldc.i4\t0xFFFFFFFF\n\tand\n\tldsfld\tint32 and_._and::even32\n\tceq\n\tbrfalse\tFAIL\n        ldsfld  int64 and_._and::even64\n        ldc.i8  0xFFFFFFFFFFFFFFFF\n        and\n        ldsfld  int64 and_._and::even64\n        ceq\n        brfalse FAIL\nPASS:\n\tldc.i4 100\n\tret\nFAIL:\n\tldc.i4\t0x0\n\tret\n}\n}\n}\n",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/tests/JIT/IL_Conformance/Old/Base/and.il",
+    "sha256": "66cd19b9cd8930dde7e930db2e68e2b848859a66f1411943b4bfdc7259d29d1f",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/tests/JIT/IL_Conformance/Old/Base/and.il",
+    "license": "MIT"
+  },
+  "namespace": "JIT",
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack"
+  ],
+  "expected": {
+    "exitCode": 100
+  },
+  "adaptation": "Unmodified upstream IL. Native ILAsm required; no IL simulation."
+}

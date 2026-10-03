@@ -1,0 +1,8 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "field-keyword/accessors-initializers-static-and-generic":{"hash":"be2d44ac3c6ec1ff","kind":"output","langVersion":"14.0","diagnostics":[],"output":"set v\nv\nx\nhi|\n0\n7\ncompute\n84\n10 6\n2\n8\n4\n"},
+  "field-keyword/cs9258-member-named-field":{"hash":"66719e3389ab172e","kind":"output","langVersion":"14.0","diagnostics":[["CS9258",67,5,"warning"],["CS9258",82,5,"warning"]],"output":"0\n7 5\n"},
+  "field-keyword/cs9258-warnings":{"hash":"1ee61e30b64810ee","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS9258",56,5,"warning"],["CS9258",70,5,"warning"]]},
+  "field-keyword/cs0103-cs8050-outside-property-accessors":{"hash":"c2ecfcf1e7f312d8","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS8050",39,1,"error"],["CS0103",89,5,"error"],["CS0103",133,5,"error"],["CS0103",195,5,"error"]]},
+  "field-keyword/csharp13-member-named-field":{"hash":"df7b277af7abd843","kind":"output","langVersion":"13.0","diagnostics":[],"output":"5\n14 15\n"},
+  "field-keyword/csharp13-no-member-named-field":{"hash":"a9713eb67bda6f67","kind":"diagnostics","langVersion":"13.0","diagnostics":[["CS0103",42,5,"error"],["CS0103",57,5,"error"],["CS9260",91,5,"error"],["CS0103",111,5,"error"]]}
+}}

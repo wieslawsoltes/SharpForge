@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-aa961cef11035c6032f4",
+  "kind": "diagnostics",
+  "sourceText": "\n#pragma warning disable 8321 // Unreferenced local function\n\nusing System.Runtime.InteropServices;\n\nclass X\n{\n    void M()\n    {\n        static void f1(\n            [MarshalAs(UnmanagedType.ByValArray)]\n            int ByValArray,\n\n            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1)]\n            int ByValTStr\n        )\n        {\n        }\n\n        [return: MarshalAs(UnmanagedType.ByValArray)]\n        static int f2() { return 0; }\n\n        [return: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1)]\n        static int f3() { return 0; }\n    }\n}\n",
+  "sourceSHA256": "a8fbbb18965917f006130aa805e52ee451963062a4da82253600f58f9a648022",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_MarshalAs.cs",
+    "sha256": "bb4e4ad059ab1c1eda93b5a74e4516301a4d849e95af99ceb05f3e76a1b628a0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_MarshalAs.cs",
+    "license": "MIT",
+    "method": "Parameters_Errors_LocalFunction",
+    "offset": 79594
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS7055",
+        "severity": "error"
+      },
+      {
+        "code": "CS7055",
+        "severity": "error"
+      },
+      {
+        "code": "CS7055",
+        "severity": "error"
+      },
+      {
+        "code": "CS7055",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (11,24): error CS7055: Unmanaged type 'ByValArray' is only valid for fields.\n                    //             [MarshalAs(UnmanagedType.ByValArray)]\n                    Diagnostic(ErrorCode.ERR_MarshalUnmanagedTypeOnlyValidForFields, \"UnmanagedType.ByValArray\").WithArguments(\"ByValArray\").WithLocation(11, 24),\n                    // (14,24): error CS7055: Unmanaged type 'ByValTStr' is only valid for fields.\n                    //             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1)]\n                    Diagnostic(ErrorCode.ERR_MarshalUnmanagedTypeOnlyValidForFields, \"UnmanagedType.ByValTStr\").WithArguments(\"ByValTStr\").WithLocation(14, 24),\n                    // (20,28): error CS7055: Unmanaged type 'ByValArray' is only valid for fields.\n                    //         [return: MarshalAs(UnmanagedType.ByValArray)]\n                    Diagnostic(ErrorCode.ERR_MarshalUnmanagedTypeOnlyValidForFields, \"UnmanagedType.ByValArray\").WithArguments(\"ByValArray\").WithLocation(20, 28),\n                    // (23,28): error CS7055: Unmanaged type 'ByValTStr' is only valid for fields.\n                    //         [return: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1)]\n                    Diagnostic(ErrorCode.ERR_MarshalUnmanagedTypeOnlyValidForFields, \"UnmanagedType.ByValTStr\").WithArguments(\"ByValTStr\").WithLocation(23, 28)",
+  "unsupported": []
+}

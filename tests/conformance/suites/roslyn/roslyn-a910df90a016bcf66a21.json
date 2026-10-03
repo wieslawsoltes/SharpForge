@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a910df90a016bcf66a21",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    // should be a syntax error\n    // just make sure binder is ok with this\n    static ref readonly ref int M(int x)\n    {\n        return ref M(x);\n    }\n\n    // should be a syntax error\n    // just make sure binder is ok with this\n    static readonly int M1(int x)\n    {\n        return ref M(x);\n    }\n}\n",
+  "sourceSHA256": "3cc0d4e3acd0e2caad84642692733968656bb9199ca3aa98d91e399d2140687c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefReadonlyReturnTests.cs",
+    "sha256": "87f31f30239082ac067728f573ca1d7b0ba9ae37f73b80e7f9236b308df7d195",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefReadonlyReturnTests.cs",
+    "license": "MIT",
+    "method": "BindingInvalidRefRoCombination",
+    "offset": 10971
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, new[] { ValueTupleRef, SystemRuntimeFacadeRef })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1031",
+        "severity": "error"
+      },
+      {
+        "code": "CS0106",
+        "severity": "error"
+      },
+      {
+        "code": "CS0120",
+        "severity": "error"
+      },
+      {
+        "code": "CS8149",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,25): error CS1031: Type expected\n                //     static ref readonly ref int M(int x)\n                Diagnostic(ErrorCode.ERR_TypeExpected, \"ref\").WithLocation(6, 25),\n                // (13,25): error CS0106: The modifier 'readonly' is not valid for this item\n                //     static readonly int M1(int x)\n                Diagnostic(ErrorCode.ERR_BadMemberFlag, \"M1\").WithArguments(\"readonly\").WithLocation(13, 25),\n                // (15,20): error CS0120: An object reference is required for the non-static field, method, or property 'Program.M(int)'\n                //         return ref M(x);\n                Diagnostic(ErrorCode.ERR_ObjectRequired, \"M\").WithArguments(\"Program.M(int)\").WithLocation(15, 20),\n                // (15,9): error CS8149: By-reference returns may only be used in methods that return by reference\n                //         return ref M(x);\n                Diagnostic(ErrorCode.ERR_MustNotHaveRefReturn, \"return\").WithLocation(15, 9)\n            ",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

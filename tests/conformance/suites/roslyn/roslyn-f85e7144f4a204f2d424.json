@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f85e7144f4a204f2d424",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class A\n{\n    public virtual void Finalize() { }\n}\n\npublic class B : A\n{\n    ~B() { }\n}\n",
+  "sourceSHA256": "9083397ff63dbf557a36be4106f7f401e2627a787906b04dfcb80a791dc02578",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/DestructorTests.cs",
+    "sha256": "c3c01b4213dc487ae5aa6698154143eacecf849117a0148d5714ed117fa2995d",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/DestructorTests.cs",
+    "license": "MIT",
+    "method": "DestructorOverridesPublicFinalize",
+    "offset": 19976
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, options: TestOptions.ReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0465",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,25): warning CS0465: Introducing a 'Finalize' method can interfere with destructor invocation. Did you intend to declare a destructor?\n                //     public virtual void Finalize() { }\n                Diagnostic(ErrorCode.WRN_FinalizeMethod, \"Finalize\")",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

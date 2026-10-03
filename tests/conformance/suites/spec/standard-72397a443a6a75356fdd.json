@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-72397a443a6a75356fdd",
+  "kind": "spec",
+  "sourceText": "interface IPrintable\n{\n    void Print();\n}\n\nclass Printer<T> where T : IPrintable\n{\n    void PrintOne(T x) => x.Print();\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "c51fdff003dcc649593646306f3e883205a880ad3f96469724eaa52e8cb86500",
+  "originalSource": "interface IPrintable\n{\n    void Print();\n}\n\nclass Printer<T> where T : IPrintable\n{\n    void PrintOne(T x) => x.Print();\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "TypeParameterConstraints4"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "TypeParameterConstraints4",
+    "offsetInUnquotedMarkdown": 37935
+  }
+}

@@ -11,9 +11,9 @@ export function reviewContext({ root = process.cwd(), event, eventName, expected
     throw new Error('Review gates require a pull_request event snapshot');
   }
   const request = event.pull_request;
-  const base = request.base?.sha;
+  const eventBase = request.base?.sha;
   const head = request.head?.sha;
-  if (![base, head, expectedSha].every(value => typeof value === 'string' && commitSha.test(value))) {
+  if (![eventBase, head, expectedSha].every(value => typeof value === 'string' && commitSha.test(value))) {
     throw new Error('Review gates require immutable base, head and workflow commit SHAs');
   }
   if (!Array.isArray(request.labels) || request.labels.some(label => typeof label?.name !== 'string' || !label.name)) {
@@ -22,8 +22,14 @@ export function reviewContext({ root = process.cwd(), event, eventName, expected
   const checkout = git(['rev-parse', 'HEAD'], root).trim();
   if (checkout !== expectedSha) throw new Error('Checkout does not match the workflow commit SHA');
   const parents = git(['show', '-s', '--format=%P', checkout], root).trim().split(' ');
-  if (checkout !== head && (parents.length !== 2 || parents[0] !== base || parents[1] !== head)) {
+  if (checkout !== head && (parents.length !== 2 || parents[1] !== head)) {
     throw new Error('PR event base/head do not match this checkout');
+  }
+  const base = checkout === head ? eventBase : parents[0];
+  // GitHub can refresh the synthetic merge after the event's base snapshot.
+  // Accept only forward ancestry; the head and workflow checkout stay exact.
+  if (base !== eventBase && git(['merge-base', '--all', eventBase, base], root).trim() !== eventBase) {
+    throw new Error(`PR merge checkout base ${base} does not descend from event base ${eventBase}`);
   }
   // The PR diff starts at the pinned merge base, so unrelated base-branch
   // additions are not mistaken for deletions by a branch that predates them.
@@ -31,7 +37,7 @@ export function reviewContext({ root = process.cwd(), event, eventName, expected
   if (mergeBases.length !== 1 || !commitSha.test(mergeBases[0])) {
     throw new Error('Review gates require one unambiguous PR merge base');
   }
-  return { base, head, checkout, mergeBase: mergeBases[0], labels: request.labels.map(label => label.name) };
+  return { base, eventBase, head, checkout, mergeBase: mergeBases[0], labels: request.labels.map(label => label.name) };
 }
 
 /** Review committed contract/golden lock changes only; never build or regenerate outputs. */

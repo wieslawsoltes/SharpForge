@@ -160,7 +160,7 @@ test('review reads pinned commits even when worktree locks are edited after chec
   assert.deepEqual(result.changes, []);
 });
 
-test('real merge checkout verifies exact parents and excludes unrelated additions on the base branch', t => {
+test('real merge checkout verifies the exact head and excludes unrelated additions on the base branch', t => {
   const repository = fixture(t);
   const head = repository.commit({ 'feature.txt': 'feature\n' });
   repository.command(['checkout', '-b', 'base-update', repository.base]);
@@ -172,7 +172,44 @@ test('real merge checkout verifies exact parents and excludes unrelated addition
   assert.deepEqual(result.changes, []);
   assert.notEqual(result.checkout, head);
   assert.match(repository.run({ base, head: repository.base }).errors.join('\n'), /base\/head do not match/);
-  assert.match(repository.run({ base: repository.base, head }).errors.join('\n'), /base\/head do not match/);
+  // A refreshed GitHub merge can legitimately have a newer first parent than its event snapshot.
+  const advanced = repository.run({ base: repository.base, head, labels: ['seam'] });
+  assert.equal(advanced.status, 0);
+  assert.equal(advanced.eventBase, repository.base);
+  assert.equal(advanced.base, base);
+});
+
+test('advanced merge base excludes contract changes that have already landed on the target branch', t => {
+  const repository = fixture(t);
+  const shared = repository.commit({ [idsPath]: [] });
+  const head = repository.commit({ 'feature.txt': 'feature\n' });
+  repository.command(['checkout', '-b', 'base-update', shared]);
+  const base = repository.commit({ 'main.txt': 'main advanced\n' });
+  repository.command(['merge', '--no-ff', '--no-edit', head]);
+  const result = repository.run({ base: repository.base, head, labels: ['seam'] });
+  assert.equal(result.status, 0);
+  assert.equal(result.eventBase, repository.base);
+  assert.equal(result.base, base);
+  assert.equal(result.mergeBase, shared);
+  assert.deepEqual(result.changes, []);
+});
+
+test('a merge checkout with a rewound or divergent base cannot borrow the PR event labels', async t => {
+  for (const kind of ['rewound', 'divergent']) await t.test(kind, child => {
+    const repository = fixture(child);
+    const head = repository.commit({ 'feature.txt': 'feature\n' });
+    repository.command(['checkout', '-b', 'merge-base', repository.base]);
+    const base = repository.commit({ 'main.txt': 'target at merge\n' });
+    repository.command(['merge', '--no-ff', '--no-edit', head]);
+    const checkout = repository.command(['rev-parse', 'HEAD']);
+    repository.command(['checkout', '--detach', kind === 'rewound' ? base : repository.base]);
+    const eventBase = repository.commit({ 'event.txt': 'different event base\n' });
+    repository.command(['checkout', '--detach', checkout]);
+    const result = repository.run({ base: eventBase, head, labels: ['contract-change', 'seam'] });
+    assert.equal(result.status, 1);
+    assert.equal(result.passed, false);
+    assert.match(result.errors.join('\n'), /does not descend from event base/);
+  });
 });
 
 test('missing labels, mutable refs, stale workflow SHAs and non-PR event snapshots fail closed', async t => {

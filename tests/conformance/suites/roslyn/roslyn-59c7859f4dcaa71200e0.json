@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-59c7859f4dcaa71200e0",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public static void Main()\n    {\n        C c1, c2;\n        c1 ??= new C(); // LHS unassigned\n\n        c1 = null;\n        c1 ??= c2; // RHS unassigned\n\n        object x1;\n        object y1;\n        GetC(x1 = 1).Prop ??= (y1 = 2);\n        x1.ToString();\n        y1.ToString();\n\n        object x2;\n        object y2;\n        GetC(x2 = 1).Field ??= (y2 = 2);\n        x2.ToString();\n        y2.ToString();\n    }\n    static C GetC(object i) => null;\n    object Prop { get; set; }\n    object Field;\n}",
+  "sourceSHA256": "96c6796a345bf93392f8d9e6a351b358a9f97f11e38cb19aeba18c59a9110099",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "sha256": "14d37a1c90475a8d190ab227c55d1f41260459c0a6f80d570d1736b34d3ab914",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "license": "MIT",
+    "method": "UseBeforeAssignment",
+    "offset": 69287
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\npublic class C\n{\n    public static void Main()\n    {\n        C c1, c2;\n        c1 ??= new C(); // LHS unassigned\n\n        c1 = null;\n        c1 ??= c2; // RHS unassigned\n\n        object x1;\n        object y1;\n        GetC(x1 = 1).Prop ??= (y1 = 2);\n        x1.ToString();\n        y1.ToString();\n\n        object x2;\n        object y2;\n        GetC(x2 = 1).Field ??= (y2 = 2);\n        x2.ToString();\n        y2.ToString();\n    }\n    static C GetC(object i) => null;\n    object Prop { get; set; }\n    object Field;\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,9): error CS0165: Use of unassigned local variable 'c1'\n                //         c1 ??= new C(); // LHS unassigned\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"c1\").WithArguments(\"c1\").WithLocation(7, 9),\n                // (10,16): error CS0165: Use of unassigned local variable 'c2'\n                //         c1 ??= c2; // RHS unassigned\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"c2\").WithArguments(\"c2\").WithLocation(10, 16),\n                // (16,9): error CS0165: Use of unassigned local variable 'y1'\n                //         y1.ToString();\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"y1\").WithArguments(\"y1\").WithLocation(16, 9),\n                // (22,9): error CS0165: Use of unassigned local variable 'y2'\n                //         y2.ToString();\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"y2\").WithArguments(\"y2\").WithLocation(22, 9)\n            ",
+  "unsupported": []
+}

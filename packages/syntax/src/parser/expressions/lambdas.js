@@ -49,7 +49,17 @@ export const lambdaMethods = {
     const open = this.scanType(j);
     if (open <= j || this.kindAt(open) !== '(') return null;
     const close = this.matchingBracket(open);
-    return close > 0 && this.kindAt(close + 1) === '=>' ? 'typed' : null;
+    if (close < 0 || this.kindAt(close + 1) !== '=>') return null;
+    return this.isConditionalBeforeLambda(j, open, close) ? null : 'typed';
+  },
+  /**
+   * `b ? () => 1 : null` could start a lambda that returns `b?`. Roslyn reads the `?` as the conditional operator when
+   * a `:` follows the lambda, and as a nullable return type otherwise (`b? () => null`). A predefined type cannot be a
+   * condition, so `int? () => null` is always a lambda. `j` starts the type, `open` and `close` are its parentheses.
+   */
+  isConditionalBeforeLambda(j, open, close) {
+    if (this.kindAt(open - 1) !== '?' || this.isPredefined(this.tokens[j])) return false;
+    return this.colonsAfter(close + 2) > 0;
   },
   simpleLambda(attributeLists, modifiers) {
     const parameter = this.n('Parameter', null, null, null, this.id(), null),

@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-295da865d470afcdcaff",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\npublic class Test\n{\n    public static void Main()\n    {\n        Test t = new Test();\n        t = 10;\n        t = (Test)\"10\";\n\n        Test c = new Test();\n        Test c1 = -c;\n        Test c2 = c++;\n        bool b1 = c? true: false;\n        if (c && c1)\n        {\n          c1 += c;\n        }\n    }\n\n    [Obsolete]\n    static public implicit operator Test(int value) { return new Test(); }\n\n    [Obsolete]\n    static public explicit operator Test(string value) { return new Test(); }\n\n    [Obsolete]\n    static public Test operator -(Test x) { return new Test(); }\n\n    [Obsolete]\n    static public Test operator ++(Test x) { return new Test(); }\n\n    [Obsolete]\n    static public bool operator true(Test x) { return true; }\n    [Obsolete]\n    static public bool operator false(Test x) { return false; }\n\n    [Obsolete]\n    static public Test operator +(Test x, Test y) { return new Test(); }\n\n    [Obsolete]\n    static public Test operator &(Test x, Test x2) { return new Test(); }\n}\n",
+  "sourceSHA256": "534dc5eff81e745f98a477af393db2540ad95ee5c5b81e6747650dc5d798f779",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestObsoleteAttributeOnOperators",
+    "offset": 240220
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (27,13): warning CS0612: 'Test.implicit operator Test(int)' is obsolete\n                //         t = 10;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"10\").WithArguments(\"Test.implicit operator Test(int)\"),\n                // (28,13): warning CS0612: 'Test.explicit operator Test(string)' is obsolete\n                //         t = (Test)\"10\";\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, @\"(Test)\"\"10\"\"\").WithArguments(\"Test.explicit operator Test(string)\"),\n                // (13,19): warning CS0612: 'Test.operator -(Test)' is obsolete\n                //         Test c1 = -c;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"-c\").WithArguments(\"Test.operator -(Test)\"),\n                // (14,19): warning CS0612: 'Test.operator ++(Test)' is obsolete\n                //         Test c2 = c++;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"c++\").WithArguments(\"Test.operator ++(Test)\"),\n                // (15,19): warning CS0612: 'Test.operator true(Test)' is obsolete\n                //         bool b1 = c? true: false;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"c\").WithArguments(\"Test.operator true(Test)\"),\n                // (16,13): warning CS0612: 'Test.operator &(Test, Test)' is obsolete\n                //         if (c && c1)\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"c && c1\").WithArguments(\"Test.operator &(Test, Test)\"),\n                // (16,13): warning CS0612: 'Test.operator true(Test)' is obsolete\n                //         if (c && c1)\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"c && c1\").WithArguments(\"Test.operator true(Test)\"),\n                // (18,11): warning CS0612: 'Test.operator +(Test, Test)' is obsolete\n                //           c1 += c;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"c1 += c\").WithArguments(\"Test.operator +(Test, Test)\")",
+  "unsupported": []
+}
