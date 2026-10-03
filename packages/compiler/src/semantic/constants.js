@@ -1,0 +1,94 @@
+/**
+ * Constant evaluation in declaration contexts: const fields (with circularity detection), enum members
+ * and parameter default values.
+ */
+import { SymbolKind, TypeKind } from '../symbols/types.js';
+import { bindEnumMembers } from '../binder/enums.js';
+import { BodyBinder } from '../binder/body-binder.js';
+
+/** Class mixin: Constant evaluation in declaration contexts: const fields (with circularity detection), enum members */
+export const ConstantBinding = Base =>
+  class extends Base {
+    /** Evaluates a constant expression in a declaration context (const fields, enum members, parameter defaults). */
+    evaluateConstant(syntax, scope, containingType, targetType) {
+      const binder = new BodyBinder(this, {
+        uri: scope.uri,
+        scope,
+        containingType,
+        method: null,
+        isStatic: true,
+        isFieldInitializer: true,
+        isStaticInitializer: true,
+        parameters: [],
+        enumInitializerOf: containingType?.typeKind === TypeKind.Enum ? containingType : null,
+      });
+      return binder.constant(syntax, targetType);
+    }
+    /** The constant value of a const field or enum member (bound on demand; circular definitions are CS0110). */
+    constantOf(field) {
+      if (field.isEnumMember) {
+        if (field.constantValue === undefined) {
+          const type = field.containingType;
+          bindEnumMembers(
+            type,
+            this.core,
+            (syntax, scope) => this.evaluateConstant(syntax, scope, type, null),
+            (uri, node, code, args) => this.report(uri, node, code, args),
+          );
+        }
+        return field.constantValue ?? null;
+      }
+      if (!field.isConst || (!field.isSource && !field.initializerSyntax))
+        return field.hasConstantValue && field.constantValue instanceof Object ? field.constantValue : null;
+      const state = this.constantState.get(field);
+      if (state === 'done') return field.constantValueObject ?? null;
+      if (state === 'active') {
+        this.reportAt(field, 'CS0110', [field.toDisplayString()]);
+        this.constantState.set(field, 'done');
+        field.constantValueObject = null;
+        return null;
+      }
+      this.constantState.set(field, 'active');
+      let value = null;
+      if (field.initializerSyntax) {
+        const r = this.evaluateConstant(field.initializerSyntax, field.scope, field.containingType, field.type);
+        if (this.constantState.get(field) === 'done') return null;
+        if (!r.errors) {
+          if (r.constant) value = r.constant;
+          else if (!(r.bound?.literal === 'null')) this.report(field.uri, field.initializerSyntax, 'CS0133', [field.toDisplayString()]);
+        }
+      } else this.reportAt(field, 'CS0145');
+      field.constantValueObject = value;
+      this.constantState.set(field, 'done');
+      return value;
+    }
+    bindConstants(type) {
+      if (type.typeKind === TypeKind.Enum) return;
+      for (const m of type.getMembers())
+        if (m.kind === SymbolKind.Field && m.isConst) {
+          this.constantOf(m);
+          const t = m.type;
+          if (t && !t.isErrorType() && t.isValueType === true && t.typeKind === TypeKind.Struct && !t.specialType && m.typeSyntax)
+            this.report(m.uri, m.typeSyntax, 'CS0283', [t.toDisplayString()]);
+        }
+    }
+    bindParameterDefault(p, binder) {
+      if (!p.defaultSyntax || p.defaultBound) return;
+      p.defaultBound = true;
+      const r = binder.constant(p.defaultSyntax, p.type);
+      if (!r.errors) {
+        if (r.constant) p.explicitDefaultValue = r.constant;
+        else if (
+          r.bound &&
+          !(
+            r.bound.literal ||
+            r.bound.kind === 'Default' ||
+            (r.bound.kind === 'ObjectCreation' && !r.bound.args?.length) ||
+            r.bound.operand?.literal ||
+            r.bound.operand?.kind === 'Default'
+          )
+        )
+          binder.report(p.defaultSyntax, 'CS1736', [p.name]);
+      }
+    }
+  };

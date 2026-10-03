@@ -1,0 +1,14 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "namespaces/nested-and-qualified":{"hash":"f6d961a9adce95e0","kind":"output","langVersion":"14.0","diagnostics":[],"output":"item\n4\n2\n"},
+  "namespaces/using-alias-and-static":{"hash":"b67f84dcc4fe2e19","kind":"output","langVersion":"14.0","diagnostics":[],"output":"abs=3\n7\n"},
+  "namespaces/file-scoped":{"hash":"e546fc5d9a11bc39","kind":"output","langVersion":"14.0","diagnostics":[],"output":"Demo.Program\n3\n"},
+  "namespaces/same-name-different-namespaces":{"hash":"a803b7f0a7283dda","kind":"output","langVersion":"14.0","diagnostics":[],"output":"AB\n"},
+  "namespaces/cs0104-ambiguous-reference":{"hash":"9f9ab88d6e78940a","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0104",137,5,"error"]]},
+  "namespaces/cs0104-framework-ambiguity":{"hash":"bb54848889198a8a","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0104",100,5,"error"]]},
+  "namespaces/cs0234-missing-namespace-member":{"hash":"dfb6875534265fd4","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0234",62,7,"error"]]},
+  "namespaces/cs0246-unknown-using":{"hash":"ba97279afa9774d9","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0246",20,4,"error"]]},
+  "namespaces/cs0246-list-without-using":{"hash":"87c6353604f2ae91","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0246",27,9,"error"]]},
+  "namespaces/cs0101-duplicate-in-namespace":{"hash":"40d25d14b439e505","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0101",62,1,"error"]]},
+  "namespaces/cs0105-duplicate-using":{"hash":"a6f52b20533d2189","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0105",20,6,"warning"]]},
+  "namespaces/cs1529-using-after-declaration":{"hash":"d963310be36f6d55","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1529",42,18,"error"]]}
+}}
