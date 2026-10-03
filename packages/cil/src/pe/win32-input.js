@@ -1,4 +1,5 @@
 import { Reader, Writer, CilError, utf8 } from '../binary.js';
+import { maximumWin32ResourceBytes } from './win32-limits.js';
 import { writeWin32Version } from './win32-version.js';
 
 function iconEntries(bytes, language) {
@@ -36,6 +37,9 @@ export function win32ResourceEntries(options, { library = false } = {}) {
   if (options.version !== undefined) entries.push({ type: 16, name: 1, language,
     bytes: writeWin32Version(options.version, { language, library }) });
   if (options.manifest !== undefined) {
+    if (typeof options.manifest === 'string' && options.manifest.length > maximumWin32ResourceBytes) {
+      throw new CilError('Win32 application manifest exceeds size limit before UTF-8 encoding');
+    }
     if (typeof options.manifest !== 'string' || !options.manifest || options.manifest.includes('\0')) {
       throw new CilError('Win32 application manifest must be nonempty XML text without NUL');
     }
