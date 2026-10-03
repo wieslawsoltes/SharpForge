@@ -13,6 +13,7 @@ const implementations={
   objectToString:({vm,self})=>vm.heap.string(vm.format(self)),
   exceptionCtor:({vm,self,parameters})=>{vm.heap.get(self).data[0]=parameters[0]??vm.heap.string('Exception');return null;},
   exceptionMessage:({vm,self})=>vm.heap.get(self).data[0],
+  exceptionInner:({vm,self})=>vm.heap.get(self).data[1]??null,
   stringConcat:({vm,parameters})=>vm.heap.string(parameters.map(value=>vm.format(value)).join('')),
   stringCompare:({descriptor,values})=>(values[0]===values[1])!==(descriptor.name==='op_Inequality')?1:0,
   stringNullOrEmpty:({values})=>values[0]===null||values[0]===''?1:0,

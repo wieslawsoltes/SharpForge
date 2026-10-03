@@ -5,10 +5,11 @@ import { AssemblyInspector, verifyCilAssembly, CilError } from '@sharpforge/cil'
 import { ManagedHeap, ManagedFault, isReference } from './heap.js';
 import {float,number,defaults,compare as numericCompare,binary as numericBinary,convert as numericConvert,unary as numericUnary,storage as numericStorage,indirect as numericIndirect} from './execution/numeric-ops.js';
 import {cilHandlers} from './execution/handlers/index.js';
-import {call,ensureInitialized,invoke} from './execution/calls.js';
+import {call,ensureInitialized,invoke,prepareCall} from './execution/calls.js';
 import {CilTypeSystem} from './execution/type-system.js';
 import {throwFault,continueUnwind,exceptionRoots,fatalFaults} from './execution/eh.js';
 import {invokeIntrinsic} from './execution/intrinsics.js';
+import {initializationRoots} from './execution/static-init.js';
 const numericContext=Object.freeze({fault:(name,message)=>new ManagedFault(name,message),error:message=>new CilError(message),isReference});
 /** Direct, cooperative CIL interpreter for a verified managed subset, independent of #SF.
  * No eval, native imports, network, files, threads, dynamic JS plugins or CLR loading. */
@@ -24,10 +25,11 @@ export class CilVirtualMachine {
     const input=options.arguments??(entry.signature.parameters.length===1&&entry.signature.parameters[0]==='string[]'?[[]]:[]);
     if(input.length!==entry.signature.parameters.length)throw new CilError('Argument count does not match selected method');
     const args=[];this.heap.withRoots(args,()=>{for(let i=0;i<input.length;i++){const value=this.marshal(input[i],entry.signature.parameters[i]);args.push(value);this.heap.pins.push(value);}});
-    this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);this.call(entry.token,args);this.ensureInitialized(entry.ownerToken);
+    this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);this.call(entry.token,args);this.ensureInitialized(entry.ownerToken,'static-method');
   }
   *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots()??[];
     const root=function*(v){if(v?.byref){if(v.owner)yield v.owner;}else yield v;};
+    yield* initializationRoots(this);
     for(const v of this.statics.values())yield* root(v);yield* this.strings.values();yield this.returnValue;
     if(this.fault?.reference)yield this.fault.reference;if(this.pendingFault?.reference)yield this.pendingFault.reference;
     for(const f of this.frames){for(const v of f.stack)yield* root(v);for(const v of f.args)yield* root(v);for(const v of f.locals)yield* root(v);yield f.returnObject;yield* exceptionRoots(f);}
@@ -59,7 +61,7 @@ export class CilVirtualMachine {
   push(v){if(this.top.stack.length>=this.options.maxStackValues)throw new ManagedFault('ExecutionLimitException','Evaluation stack budget exceeded');this.top.stack.push(v);}
   pop(){if(!this.top.stack.length)throw new ManagedFault('InvalidProgramException','Evaluation stack underflow');return this.top.stack.pop();}
   call(token,args,extra={}){return call(this,token,args,extra);}
-  ensureInitialized(typeToken){return ensureInitialized(this,typeToken);}
+  ensureInitialized(typeToken,trigger='field',genericIdentity=null){return ensureInitialized(this,typeToken,trigger,genericIdentity);}
   layout(typeToken,depth=0){return this.typeSystem.layout(typeToken,depth);}
   typeOf(ref){return this.typeSystem.typeOf(ref);}
   matches(ref,typeName){return this.typeSystem.matches(ref,typeName);}
@@ -107,6 +109,7 @@ export class CilVirtualMachine {
   raise(error){return throwFault(this,error);}
   *exceptionRoots(frame){yield* exceptionRoots(frame);}
   step(){
+    if(!prepareCall(this))return;
     const frame=this.top,instruction=frame.method.instructions[frame.pc++];
     if(!instruction)throw new ManagedFault('InvalidProgramException','Instruction pointer is outside the method');
     frame.lastOffset=instruction.offset;
