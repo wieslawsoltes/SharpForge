@@ -49,24 +49,45 @@ export function createDesignerMetadata(manifest = frameworkManifest) {
 
 export const designerMetadata = createDesignerMetadata();
 
-/** Attached properties derive from the public setter contracts, preserving explicit owners. */
+/** Registry-owned immutable schemas amortize manifest traversal across source/property-grid lookups. */
+export class DesignerMetadataRegistry {
+  constructor(manifest = frameworkManifest) {
+    this.manifest = manifest;
+    this.schemas = new Map();
+    this.emptySchema = Object.freeze({});
+    this.attachedSetters = manifest.members.filter(member => member.kind === 'attachedSet' && member.parameters.length === 2);
+  }
+
+  propertySchema(type) {
+    type = canonicalType(type);
+    if (!frameworkType(type)) return this.emptySchema;
+    if (this.schemas.has(type)) return this.schemas.get(type);
+    const result = {};
+    for (const [name, property] of Object.entries(propertiesFor(type))) {
+      result[name] = Object.freeze({...property, category: propertyCategory(name), constraints: propertyConstraints(name, property)});
+    }
+    for (const member of this.attachedSetters) {
+      if (!frameworkAssignable(member.parameters[0], type)) continue;
+      const name = member.owner === CONTROLS + 'VariableSizedWrapGrid' && !member.property.startsWith('Wrap') ?
+        'Wrap' + member.property : member.property;
+      result[name] = Object.freeze({type: member.parameters[1], attached: true, owner: member.owner,
+        member: member.name.slice(3), category: 'Placement', constraints: propertyConstraints(name, {type: member.parameters[1]})});
+    }
+    const schema = Object.freeze(result);
+    this.schemas.set(type, schema);
+    return schema;
+  }
+}
+
+export const designerMetadataRegistry = new DesignerMetadataRegistry();
+
+/** Attached properties derive from indexed public setters; repeated canonical-type lookups are O(1). */
 export function designerPropertySchema(type) {
-  type = canonicalType(type);
-  const result = {};
-  for (const [name, property] of Object.entries(propertiesFor(type))) {
-    result[name] = {...property, category: propertyCategory(name), constraints: propertyConstraints(name, property)};
-  }
-  for (const member of frameworkManifest.members) {
-    if (member.kind !== 'attachedSet' || member.parameters.length !== 2 || !frameworkAssignable(member.parameters[0], type)) continue;
-    const name = member.owner === CONTROLS + 'VariableSizedWrapGrid' ? 'Wrap' + member.property : member.property;
-    result[name] = {type: member.parameters[1], attached: true, owner: member.owner,
-      member: member.property, category: 'Placement', constraints: propertyConstraints(name, {type: member.parameters[1]})};
-  }
-  return result;
+  return designerMetadataRegistry.propertySchema(type);
 }
 
 export function designerChildSlot(type) {
-  const schema = propertiesFor(canonicalType(type));
+  const schema = designerPropertySchema(type);
   for (const property of ['Children', 'TabItems', 'MenuItems', 'Items']) {
     if (frameworkType(schema[property]?.type)?.kind === 'collection') return {property, many: true};
   }
