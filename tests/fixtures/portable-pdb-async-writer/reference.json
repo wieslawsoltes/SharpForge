@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "reference": {
+    "sdk": "10.0.201",
+    "compilerVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "compilerSha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16",
+    "runtime": "10.0.5",
+    "mode": "Debug",
+    "sourceSha256": "ca3538292db03ed5c7a85f1b4284c36da94a795e5cdc203199ef5ac565a84c52",
+    "assemblySha256": "a71bd36cf7970a39c9e621986bf318e93b057d591f690a4db0b0a951fce6d901",
+    "nativePdbSha256": "08df163a2afc50912ecea33be8178af8ebff82b5ed90f682544371dd27435c79",
+    "generatedPdbSha256": "d7a602a339a57e7eb66ad844e082d807527531c342bbb5ee2bf84ea4c3b0b268"
+  },
+  "records": [
+    {
+      "moveNext": 100663334,
+      "kickoff": 100663328,
+      "name": "Fire",
+      "steps": {
+        "catchHandlerOffset": 112,
+        "awaits": [
+          {
+            "yieldOffset": 47,
+            "resumeOffset": 74,
+            "resumeMethod": 100663334
+          }
+        ],
+        "bytes": "710000002f0000004a00000026"
+      }
+    },
+    {
+      "moveNext": 100663338,
+      "kickoff": 100663329,
+      "name": "Iterator",
+      "steps": null
+    },
+    {
+      "moveNext": 100663345,
+      "kickoff": 100663327,
+      "name": "Result",
+      "steps": {
+        "catchHandlerOffset": -1,
+        "awaits": [
+          {
+            "yieldOffset": 72,
+            "resumeOffset": 103,
+            "resumeMethod": 100663345
+          },
+          {
+            "yieldOffset": 170,
+            "resumeOffset": 199,
+            "resumeMethod": 100663345
+          }
+        ],
+        "bytes": "00000000480000006700000031aa000000c700000031"
+      }
+    }
+  ]
+}

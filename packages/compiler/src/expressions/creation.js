@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { Op, BuiltinMap } from '@sharpforge/bytecode';
 import { assignable, typeText } from '../type-utils.js';
 import { emitArrayCreation } from '../codegen/legacy-array-creation.js';
@@ -8,11 +9,11 @@ export function emitNewArray(node) {
 
 export function emitNew(node) {
   if (node.collectionInitializers?.length)
-    this.c.report(node, 'SF2013');
+    this.c.report(node, DiagnosticId.SF2013);
   const name = this.c.typeName(node.type, this.m);
   if (name === 'Exception') {
     if (node.args.length > 1)
-      this.c.report(node, 'CS1501', ['Exception', node.args.length]);
+      this.c.report(node, DiagnosticId.CS1501, ['Exception', node.args.length]);
     if (node.args.length)
       this.checkAssign('string', this.expr(node.args[0]), node.args[0]);
     else
@@ -22,7 +23,7 @@ export function emitNew(node) {
   }
   const type = this.c.findType(name, this.m);
   if (!type) {
-    this.c.report(node, 'CS0246', [typeText(name)]);
+    this.c.report(node, DiagnosticId.CS0246, [typeText(name)]);
     this.emitConstant(null);
     return 'error';
   }
@@ -45,12 +46,12 @@ export function emitNew(node) {
     this.emit(Op.POP);
   }
   else if (node.args.length || ctors.length)
-    this.c.report(node, 'CS1729', [name, node.args.length]);
+    this.c.report(node, DiagnosticId.CS1729, [name, node.args.length]);
   for (const init of node.initializers) {
     const property = type.properties.find(p => p.name === init.name && !p.isStatic);
     const field = type.fields.find(f => f.name === init.name && !f.isStatic);
     if (!property && !field) {
-      this.c.report(init, 'CS0117', [name, init.name]);
+      this.c.report(init, DiagnosticId.CS0117, [name, init.name]);
       continue;
     }
     if (property) {
