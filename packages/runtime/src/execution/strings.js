@@ -47,12 +47,15 @@ export function stringChar(vm,reference,index) {
   return text.charCodeAt(index);
 }
 
-/** String(char[]) copies UTF-16 code units into a fresh, non-interned string. */
+/** String(char[]) copies UTF-16; null/empty arrays return the canonical empty string.
+ * https://learn.microsoft.com/dotnet/api/system.string.-ctor?view=net-10.0
+ */
 export function stringFromChars(vm,arrayReference) {
-  if(arrayReference===null)throw new ManagedFault('ArgumentNullException','Character array is null');
+  if(arrayReference===null)return literalString(vm,'');
   const record=vm.heap.get(arrayReference);
   if(record.kind!=='array'||!['char[]','System.Char[]'].includes(record.type))
     throw new ManagedFault('ArgumentException','Character array required');
+  if(!record.data.length)return literalString(vm,'');
   let value='';
   for(let offset=0;offset<record.data.length;offset+=4096)value+=String.fromCharCode(...record.data.slice(offset,offset+4096).map(code=>Number(code)&0xffff));
   return vm.heap.string(value,[arrayReference]);

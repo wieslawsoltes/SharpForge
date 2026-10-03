@@ -136,7 +136,7 @@ test('strings: String(char[]) copies UTF-16 units, remains non-interned, and rej
   const first=stringFromChars(vm,chars),second=stringFromChars(vm,chars);
   assert.equal(vm.heap.get(first).data,'A😀');assert.equal(referenceEquals(first,second),false);
   vm.heap.get(chars).data[0]=66;assert.equal(vm.heap.get(first).data,'A😀');
-  assert.throws(()=>stringFromChars(vm,null),{name:'ArgumentNullException'});
+  assert.equal(vm.heap.get(stringFromChars(vm,null)).data,'');
   assert.throws(()=>stringFromChars(vm,vm.heap.array('int',0)),{name:'ArgumentException'});
 });
 
