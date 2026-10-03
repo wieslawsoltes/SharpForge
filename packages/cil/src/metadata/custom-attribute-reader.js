@@ -4,7 +4,7 @@ import { AttributeContext, AttributeError, attributePrimitiveName } from './cust
 
 const constant = (kind, type, value) => Object.freeze({ kind, type, value });
 
-class AttributeReader {
+export class AttributeReader {
   constructor(bytes, context) {
     if (!(bytes instanceof Uint8Array)) throw new AttributeError('MD0100');
     context.size(bytes.length);
@@ -62,7 +62,12 @@ class AttributeReader {
     const reader = this.reader;
     if (reader.u16() !== 1) throw new AttributeError('MD0101', undefined, 0);
     const constructorArguments = parameters.map(type => this.value(type));
-    const count = reader.u16();
+    return { constructorArguments, namedArguments: this.namedArguments(reader.u16()) };
+  }
+
+  /** Shared named-argument grammar; permission sets use a compressed count instead of the attribute UInt16. */
+  namedArguments(count) {
+    const reader = this.reader;
     if (count > reader.end - reader.position) throw new AttributeError('MD0102');
     const namedArguments = [];
     for (let index = 0; index < count; index++) {
@@ -74,7 +79,7 @@ class AttributeReader {
       namedArguments.push(Object.freeze({ name, isField: tag === 0x53, value: this.value(type) }));
     }
     if (reader.position !== reader.end) throw new AttributeError('MD0107', undefined, reader.position);
-    return { constructorArguments, namedArguments };
+    return namedArguments;
   }
 }
 

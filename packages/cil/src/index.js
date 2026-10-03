@@ -17,3 +17,4 @@ export {resolveExecutionField,genericTypeParts,substituteTypeArguments} from './
 export { sha256 } from './binary/hash.js';
 export { linkAssemblyModules } from './pe/module-linker.js';
 export { readAssemblyModules } from './pe/module-reader.js';
+export { decodeBinaryPermissionSet, securityDiagnosticCatalog } from './metadata/security-declarations.js';
