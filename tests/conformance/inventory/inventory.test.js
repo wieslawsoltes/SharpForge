@@ -99,13 +99,13 @@ test('inventory obligations retain unqualified Firefox/WebKit and both DAP VM ba
   assert.ok(obligations.rows.every(row=>!Object.hasOwn(row,'status')),'inventory rows must not turn target presence into passing evidence');
 });
 
-test('inventory native/browser jobs require explicit dispatch or full-ci without main-push qualification', async () => {
+test('inventory native/browser qualification is explicit and serial', async () => {
   const workflow=await readFile(path.join(root,'.github/workflows/inventory.yml'),'utf8');
-  assert.match(workflow,/pull_request:\n    types: \[opened, synchronize, reopened, labeled\]/);
-  assert.doesNotMatch(workflow,/^  push:/m);assert.match(workflow,/^  workflow_dispatch:/m);
-  assert.match(workflow,/github.event.pull_request.number \|\| github.ref/);
+  assert.doesNotMatch(workflow,/^  (?:push|pull_request|schedule|merge_group):/m);
+  assert.match(workflow,/^  workflow_dispatch:/m);
   const jobs=workflow.slice(workflow.indexOf('jobs:'));
   assert.equal([...jobs.matchAll(/^  [a-z-]+:/gm)].length,3);
-  const gate="    if: github.event_name == 'workflow_dispatch' || contains(github.event.pull_request.labels.*.name, 'full-ci')";
-  for(const job of ['linux','desktop','browser'])assert.ok(jobs.includes(`  ${job}:\n${gate}\n`),job);
+  assert.match(jobs,/desktop:\n    needs: linux/);
+  assert.match(jobs,/browser:\n    needs: desktop/);
+  assert.equal([...jobs.matchAll(/max-parallel: 1/g)].length,2);
 });
