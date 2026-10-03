@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-6bef732c43205b90b89b",
+  "kind": "diagnostics",
+  "sourceText": "using System.Runtime.CompilerServices;\n\npublic class IA\n{\n\t[IndexerName(\"ItemX\")]\n\t[IndexerName(\"ItemY\")]\n\tpublic virtual int this[int index]\n\t{\n\t\tget\t{ return 1;}\n\t\tset\t{}\n\t}\n}\n",
+  "sourceSHA256": "b329469b4b50f2daad9a6f0f99786069b2e847d3472b23e28f114525e4d85eee",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "ApplyIndexerNameAttributeTwice",
+    "offset": 338316
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0579",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,3): error CS0579: Duplicate 'IndexerName' attribute\n                // \t[IndexerName(\"ItemY\")]\n                Diagnostic(ErrorCode.ERR_DuplicateAttribute, \"IndexerName\").WithArguments(\"IndexerName\").WithLocation(6, 3)",
+  "unsupported": []
+}

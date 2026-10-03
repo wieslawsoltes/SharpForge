@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-052b150870411a23ca70",
+  "kind": "diagnostics",
+  "sourceText": "\nnamespace System.Runtime.InteropServices\n{\n    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, Inherited = false)]\n    public sealed class UnmanagedCallersOnlyAttribute : Attribute\n    {\n        [UnmanagedCallersOnly(CallConvs = new[] { typeof(UnmanagedCallersOnlyAttribute) })]\n        public UnmanagedCallersOnlyAttribute() { }\n        public Type[] CallConvs;\n    }\n}\n",
+  "sourceSHA256": "8fc07ea95aef7a6abd73bb2027c0890953172f71ed6caaa62992961ebf7d7ca8",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenFunctionPointersTests.cs",
+    "sha256": "6ae3195a3dd105e6e2f998eb4dd574db2a2568f521c73ec47e2d10473bed0787",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenFunctionPointersTests.cs",
+    "license": "MIT",
+    "method": "UnmanagedCallersOnlyWithLoopInDefinition_2",
+    "offset": 384916
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nnamespace System.Runtime.InteropServices\n{\n    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, Inherited = false)]\n    public sealed class UnmanagedCallersOnlyAttribute : Attribute\n    {\n        [UnmanagedCallersOnly(CallConvs = new[] { typeof(UnmanagedCallersOnlyAttribute) })]\n        public UnmanagedCallersOnlyAttribute() { }\n        public Type[] CallConvs;\n    }\n}\n\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8893",
+        "severity": "error"
+      },
+      {
+        "code": "CS8896",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,10): error CS8893: 'UnmanagedCallersOnlyAttribute' is not a valid calling convention type for 'UnmanagedCallersOnly'.\n                //         [UnmanagedCallersOnly(CallConvs = new[] { typeof(UnmanagedCallersOnlyAttribute) })]\n                Diagnostic(ErrorCode.ERR_InvalidUnmanagedCallersOnlyCallConv, \"UnmanagedCallersOnly(CallConvs = new[] { typeof(UnmanagedCallersOnlyAttribute) })\").WithArguments(\"System.Runtime.InteropServices.UnmanagedCallersOnlyAttribute\").WithLocation(7, 10),\n                // (7,10): error CS8896: 'UnmanagedCallersOnly' can only be applied to ordinary static non-abstract, non-virtual methods or static local functions.\n                //         [UnmanagedCallersOnly(CallConvs = new[] { typeof(UnmanagedCallersOnlyAttribute) })]\n                Diagnostic(ErrorCode.ERR_UnmanagedCallersOnlyRequiresStatic, \"UnmanagedCallersOnly\").WithLocation(7, 10)\n            ",
+  "unsupported": []
+}

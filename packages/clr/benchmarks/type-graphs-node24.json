@@ -1,0 +1,25 @@
+{
+  "node": "v24.21.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "cpu": "Apple M3 Pro",
+  "imageBytes": 11264,
+  "allocationCount": "not measured",
+  "previousEquivalentImplementation": false,
+  "results": [
+    {
+      "name": "cold context, image and inheritance graph",
+      "unit": "microseconds/operation",
+      "median": 150.53340000000048,
+      "p95": 1494.9334000000022,
+      "p99": 3095.7333999999946
+    },
+    {
+      "name": "warm inheritance graph lookup",
+      "unit": "microseconds/operation",
+      "median": 0.31375000000025466,
+      "p95": 1.9762500000001637,
+      "p99": 82.05083000000002
+    }
+  ]
+}

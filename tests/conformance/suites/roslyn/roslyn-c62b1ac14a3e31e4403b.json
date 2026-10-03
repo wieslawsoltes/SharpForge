@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c62b1ac14a3e31e4403b",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Security.Permissions;\n\npublic class MySecurityAttribute : SecurityAttribute\n{\n    public MySecurityAttribute(SecurityAction action): base(action) {}\n    public override System.Security.IPermission CreatePermission() { return null; }\n}\n\nnamespace N\n{\n    [MySecurityAttribute((SecurityAction)0)]        // Invalid attribute argument\n    [MySecurityAttribute((SecurityAction)11)]       // Invalid attribute argument\n    [MySecurityAttribute((SecurityAction)(-1))]     // Invalid attribute argument\n    [MySecurityAttribute()]                         // Invalid attribute constructor\n    public class C\n\t{\n        [MySecurityAttribute(SecurityAction.Demand)]   // Invalid attribute target\n        public int x;\n    }\n}",
+  "sourceSHA256": "7672d663cfa06097af0326965b79b3410ff27cc65109e792f1de02c6ea77d40d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Security.cs",
+    "sha256": "995f9a35982f60a6e97828d01cb24f09a40124463d1f9e4c6b48f42ec012d8ff",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Security.cs",
+    "license": "MIT",
+    "method": "CS7049ERR_SecurityAttributeInvalidAction_02",
+    "offset": 12855
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS7049",
+        "severity": "error"
+      },
+      {
+        "code": "CS7049",
+        "severity": "error"
+      },
+      {
+        "code": "CS7049",
+        "severity": "error"
+      },
+      {
+        "code": "CS7036",
+        "severity": "error"
+      },
+      {
+        "code": "CS0592",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (12,26): error CS7049: Security attribute 'MySecurityAttribute' has an invalid SecurityAction value '(SecurityAction)0'\n                //     [MySecurityAttribute((SecurityAction)0)]        // Invalid attribute argument\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidAction, \"(SecurityAction)0\").WithArguments(\"MySecurityAttribute\", \"(SecurityAction)0\").WithLocation(12, 26),\n                // (13,26): error CS7049: Security attribute 'MySecurityAttribute' has an invalid SecurityAction value '(SecurityAction)11'\n                //     [MySecurityAttribute((SecurityAction)11)]       // Invalid attribute argument\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidAction, \"(SecurityAction)11\").WithArguments(\"MySecurityAttribute\", \"(SecurityAction)11\").WithLocation(13, 26),\n                // (14,26): error CS7049: Security attribute 'MySecurityAttribute' has an invalid SecurityAction value '(SecurityAction)(-1)'\n                //     [MySecurityAttribute((SecurityAction)(-1))]     // Invalid attribute argument\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidAction, \"(SecurityAction)(-1)\").WithArguments(\"MySecurityAttribute\", \"(SecurityAction)(-1)\").WithLocation(14, 26),\n                // (15,6): error CS7036: There is no argument given that corresponds to the required parameter 'action' of 'MySecurityAttribute.MySecurityAttribute(System.Security.Permissions.SecurityAction)'\n                //     [MySecurityAttribute()]                         // Invalid attribute constructor\n                Diagnostic(ErrorCode.ERR_NoCorrespondingArgument, \"MySecurityAttribute()\").WithArguments(\"action\", \"MySecurityAttribute.MySecurityAttribute(System.Security.Permissions.SecurityAction)\").WithLocation(15, 6),\n                // (18,10): error CS0592: Attribute 'MySecurityAttribute' is not valid on this declaration type. It is only valid on 'assembly, class, struct, constructor, method' declarations.\n                //         [MySecurityAttribute(SecurityAction.Demand)]   // Invalid attribute target\n                Diagnostic(ErrorCode.ERR_AttributeOnBadSymbolType, \"MySecurityAttribute\").WithArguments(\"MySecurityAttribute\", \"assembly, class, struct, constructor, method\").WithLocation(18, 10)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

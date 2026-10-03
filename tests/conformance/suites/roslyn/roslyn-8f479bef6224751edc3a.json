@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8f479bef6224751edc3a",
+  "kind": "diagnostics",
+  "sourceText": "public class C\n{\n    public int P\n    {\n        get\n        {\n            const string X = \"Hello\";\n            const string Y = \"World\";\n            const string Z = \"unused\";\n            [My($\"{X}, World\", Prop = $\"Hello, {Y}\")] int F() => 0;\n            return F();\n        }\n    }\n}\npublic class MyAttribute : System.Attribute\n{\n    public MyAttribute(string param) { }\n    public string Prop { get; set; }\n}",
+  "sourceSHA256": "c1e48a68d124c3f66a26e00d8b79e4f339bee574ff38f71af59a471c58f77fcd",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "LocalMethod_AttributeArguments_StringInterpolation",
+    "offset": 252552
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,26): warning CS0219: The variable 'Z' is assigned but its value is never used\n                //             const string Z = \"unused\";\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"Z\").WithArguments(\"Z\").WithLocation(9, 26)",
+  "unsupported": []
+}

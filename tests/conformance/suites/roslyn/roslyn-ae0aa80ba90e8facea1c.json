@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ae0aa80ba90e8facea1c",
+  "kind": "diagnostics",
+  "sourceText": "\npublic struct S\n{\n    private int value;\n    public S(int v)\n    {\n        value = v;\n    }\n    public static S operator &(S x, S y)\n    {\n        return new S(x.value + y.value);    \n    }\n    public static bool operator true(S x)\n    {\n        return x.value > 0;\n    }\n    public static bool operator false(S x)\n    {\n        return x.value <= 0;\n    }\n}\n\nclass C\n{\n    public void M()\n    {\n        var x = new S(-1);\n        var y = new S(1);\n        if (x && y) { }\n        else if (x) { }\n    }\n}\n",
+  "sourceSHA256": "c6cea378933e615f4b0b02aab7063e2b5c5e69811c1e7efead1c839399699b61",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "sha256": "eb33d60956503b30bec29f823f9033347fac98a9029a70b139e6a57a3ad1abef",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "UnaryTrueFalseOperationCSharp",
+    "offset": 68371
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

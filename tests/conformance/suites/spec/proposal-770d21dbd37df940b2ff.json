@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-770d21dbd37df940b2ff",
+  "kind": "spec",
+  "sourceText": "interface IA\n{\n    void M(int x) { }\n}\ninterface IB : IA\n{\n    override void M(int y) { } // 'override' not permitted\n}\ninterface IC : IB\n{\n    static void M2()\n    {\n        M(y: 3); // permitted? Decision: No.\n    }\n    override void IB.M(int z) { } // permitted? What does it override? Decision: No.\n}",
+  "sourceSHA256": "aa59fa7e148b69d12d4827d656437627369d6768214c8c0f7697011af61cf460",
+  "target": "library",
+  "featureId": "csharp-8-0-default-interface-members",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/default-interface-methods.md",
+    "sha256": "feebc11b0983ad0c24c2017ac76706a9f3ff81b9cf1cc2703ec12d4829f24c42",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/default-interface-methods.md",
+    "license": "NOASSERTION",
+    "offset": 32909
+  }
+}

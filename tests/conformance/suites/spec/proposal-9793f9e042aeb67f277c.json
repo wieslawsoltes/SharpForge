@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-9793f9e042aeb67f277c",
+  "kind": "spec",
+  "sourceText": "class Base\n{\n    public bool Value { get; init; }\n}\n\nclass Derived : Base\n{\n    public Derived()\n    {\n        // Not allowed with get only properties but allowed with init\n        Value = true;\n    }\n}\n\nclass Consumption\n{\n    void Example()\n    {\n        var d = new Derived() { Value = true };\n    }\n}\n",
+  "sourceSHA256": "119a0cef0e330b5d8ae9d103a786e8137b3a81b90ea7739fc3a5e90c9e086c14",
+  "target": "library",
+  "featureId": "csharp-9-0-init-only-setters",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/init.md",
+    "sha256": "299746635180451088968dc21830e0e4ef886be903357c63780a90434b5034e5",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/init.md",
+    "license": "NOASSERTION",
+    "offset": 3131
+  }
+}

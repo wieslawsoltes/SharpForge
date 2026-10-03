@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3912afa7e868f91cb97e",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass Program\n{\n    static void Main()\n    {\n        Console.Write(M1(string.Empty));\n        Console.Write(M2(string.Empty));\n    }\n    public static int M1(string s)\n    {\n        return s switch { \"a\"=>1, \"b\"=>2, \"c\"=>3, \"d\"=>4, \"e\"=>5, \"f\"=>6, \"g\"=>7, \"h\"=>8, _ => 9 };\n    }\n    public static int M2(string s)\n    {\n        return s switch { \"a\"=>1, \"b\"=>2, \"c\"=>3, \"d\"=>4, \"e\"=>5, \"f\"=>6, \"g\"=>7, \"h\"=>8, _ => 9 };\n    }\n}\n",
+  "sourceSHA256": "55bae40ed9c49d2cb894cdc03e305b67f197499da660108277eeba061e86dc81",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "GenerateStringHashOnlyOnce",
+    "offset": 94755
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

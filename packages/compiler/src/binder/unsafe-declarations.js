@@ -2,6 +2,7 @@
  * Unsafe code at declaration level (SF-A02-T47, C# spec 23.2, 23.3 and 23.8).
  *
  *   CS0227  an `unsafe` modifier on a type or member without the /unsafe option
+ *   CS0764  `unsafe` on one part of a partial member only
  *   CS0214  a pointer type in the signature of a member that is not in an unsafe context
  *   CS8500  (warning) a pointer to a managed type
  *   fixed-size buffers  `fixed int Data[4];` is only a struct member (CS1642), its element type is one of the
@@ -10,6 +11,8 @@
  */
 import { SymbolKind, TypeKind, PointerTypeSymbol, ArrayTypeSymbol } from '../symbols/types.js';
 import { isPointerType } from '../conversions/pointer.js';
+import { isNullableType } from '../conversions/nullable.js';
+import { isUnmanagedType } from './constraints.js';
 
 const bufferElementTypes = new Set([
   'System_Boolean',
@@ -65,6 +68,37 @@ export function isManagedType(type, seen = new Set()) {
   return type.getMembers().some(member => member.kind === SymbolKind.Field && !member.isStatic && !member.isConst && isManagedType(member.type, seen));
 }
 
+/** C# 8 'unmanaged constructed types': a constructed generic struct without managed fields, such as `Pair<int>`. */
+export function isUnmanagedConstructedType(type) {
+  if (!type?.typeArguments?.length || type.isValueType !== true || type.isErrorType?.() || isNullableType(type)) return false;
+  return isUnmanagedType(type);
+}
+
+/** True when `type` is, or is an array or pointer built from, a pointer to an unmanaged constructed type. */
+export function pointsAtConstructedType(type) {
+  for (let t = type; t; t = t.elementType ?? t.pointedAtType) {
+    if (isPointerType(t) && isUnmanagedConstructedType(t.pointedAtType)) return true;
+    if (!(t instanceof ArrayTypeSymbol) && !isPointerType(t)) return false;
+  }
+  return false;
+}
+
+/** The types of a member's signature with the node Roslyn reports each at: the member name, or the parameter name. */
+function signatureTypes(member) {
+  const own = member.locations?.[0],
+    parameters = (member.parameters ?? []).map(parameter => ({ type: parameter.type, node: parameter.syntax?.identifier ?? own }));
+  switch (member.kind) {
+    case SymbolKind.Field:
+      return [{ type: member.type, node: own }];
+    case SymbolKind.Method:
+      return member.isAccessor ? [] : [{ type: member.returnType, node: own }, ...parameters];
+    case SymbolKind.Property:
+      return [{ type: member.type, node: own }, ...parameters];
+    default:
+      return [];
+  }
+}
+
 function signatureTypeSyntaxes(member) {
   switch (member.kind) {
     case SymbolKind.Field:
@@ -83,7 +117,8 @@ function signatureTypeSyntaxes(member) {
 /**
  * The declaration-level rules of one source type.
  * @param {(syntax: object, scope: object) => {constant: object|null, errors?: boolean}} evaluate binds a constant expression
- * @returns {{code: string, args: any[], uri: string, node: object}[]}
+ * @returns {{code?: string, args?: any[], feature?: string, uri: string, node: object}[]} a row with `feature` is a
+ *   use of a language feature (reported through the language-version gate), any other row a diagnostic
  */
 export function checkUnsafeDeclarations(type, { allowUnsafe, core, evaluate }) {
   const results = [];
@@ -95,12 +130,19 @@ export function checkUnsafeDeclarations(type, { allowUnsafe, core, evaluate }) {
     if (member.isImplicitlyDeclared || member.kind === SymbolKind.NamedType || (member.kind === SymbolKind.Method && member.isAccessor)) continue;
     const uri = member.uri ?? member.locations?.[0]?.uri,
       add = (code, args, node) => results.push({ code, args, uri, node });
-    if (!allowUnsafe && hasUnsafeModifier(member) && member.locations?.[0]) add('CS0227', [], member.locations[0]);
+    // Both parts of a partial member are declarations of their own; with /unsafe they must agree on the modifier.
+    const definition = member.partialDefinitionPart ?? null;
+    for (const part of [definition, member])
+      if (!allowUnsafe && part && hasUnsafeModifier(part) && part.locations?.[0]) add('CS0227', [], part.locations[0]);
+    if (allowUnsafe && definition && hasUnsafeModifier(definition) !== hasUnsafeModifier(member) && member.locations?.[0])
+      add('CS0764', [], member.locations[0]);
     const isUnsafe = isUnsafeSymbol(member, type);
     for (const syntax of signatureTypeSyntaxes(member)) {
       const pointer = findPointerSyntax(syntax);
       if (pointer && !isUnsafe) add('CS0214', [], pointer);
     }
+    for (const { type: signatureType, node } of signatureTypes(member))
+      if (node && pointsAtConstructedType(signatureType)) results.push({ feature: 'UnmanagedConstructedTypes', uri, node });
     if (member.kind === SymbolKind.Field && modifiersOf(member).includes('fixed')) checkFixedBuffer(member, type, isUnsafe, { core, evaluate, add });
   }
   return results;
@@ -143,7 +185,10 @@ export const UnsafeDeclarationChecks = Base =>
       };
       for (const type of this.assembly.types) {
         if (type.typeKind === TypeKind.Enum) continue;
-        for (const found of checkUnsafeDeclarations(type, options)) this.report(found.uri, found.node, found.code, found.args);
+        for (const found of checkUnsafeDeclarations(type, options)) {
+          if (found.feature) this.gate(found.uri, found.node, found.feature);
+          else this.report(found.uri, found.node, found.code, found.args);
+        }
       }
     }
   };

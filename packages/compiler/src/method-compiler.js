@@ -4,6 +4,8 @@ import {evaluateConstant,ConstantError} from './constants.js';
 import {normalize,numeric,isReference,assignable,defaultValue,alwaysReturns,pathOf,typeText,usingSpan} from './type-utils.js';
 import {FrameworkCompiler} from './framework.js';
 import {ModernCompiler} from './modern.js';
+import {emitArrayCreation} from './codegen/legacy-array-creation.js';
+import {CallScopedInference} from './binder/inference-cache.js';
 /** Core statement/expression compiler for the string-typed profile; framework and modern layers are composed below. */
 class CoreMethodCompiler {
   constructor(compilation,method){this.c=compilation;this.m=method;this.code=[];this.locals=[];this.scopes=[new Map()];this.assigned=new Set();this.loops=[];this.handlers=[];this.catchDepth=0;this.finallyScopes=[];this.checkedContext=null;this.constantDiagnostics=new Set();
@@ -136,7 +138,7 @@ class CoreMethodCompiler {
     const path=pathOf(node.target),owner=this.c.findType(path,this.m);if(owner)return owner.fields.find(f=>f.name===node.name&&f.isStatic)??null;
     const type=this.infer(node.target);return this.c.findType(type,this.m)?.fields.find(f=>f.name===node.name&&!f.isStatic)??null;
   }
-  isNameof(node){return node?.kind==='Call'&&node.target.kind==='Name'&&node.target.name==='nameof'&&!this.c.methods.some(m=>m.name==='nameof'&&(m.owner===this.m.owner||!m.owner));}
+  isNameof(node){return node?.kind==='Call'&&node.target.kind==='Name'&&node.target.name==='nameof'&&!this.c.methodIndex.named('nameof').some(m=>m.owner===this.m.owner||!m.owner);}
   nameof(node,bind=true){
     const argument=node.args[0];if(node.args.length!==1||!argument||!['Name','Member'].includes(argument.kind)){if(bind)this.c.report(node,'CS8081');return '';}
     // The restricted profile supports identifier/member chains, not arbitrary receiver expressions.
@@ -172,7 +174,7 @@ class CoreMethodCompiler {
   }
   findMethod(node,report=true){
     let candidates=[];const target=node.target;
-    if(target.kind==='Name')candidates=this.c.methods.filter(m=>m.name===target.name&&(m.owner===this.m.owner||!m.owner)&&(!this.m.isStatic||m.isStatic));
+    if(target.kind==='Name')candidates=this.c.methodIndex.named(target.name).filter(m=>(m.owner===this.m.owner||!m.owner)&&(!this.m.isStatic||m.isStatic));
     else if(target.kind==='Member'){const path=pathOf(target.target),type=this.c.findType(path,this.m);if(type)candidates=type.methods.filter(m=>m.name===target.name&&m.isStatic);else{const type=this.c.findType(this.infer(target.target),this.m);candidates=type?.methods.filter(m=>m.name===target.name&&!m.isStatic)??[];}}
     if(candidates.some(m=>m.accessor)){if(report)this.c.report(node,'CS0571',[pathOf(target)??target.name]);candidates=candidates.filter(m=>!m.accessor);}
     const types=node.args.map(a=>this.infer(a));candidates=candidates.filter(m=>m.parameters.length===types.length&&m.parameters.every((p,i)=>assignable(p.type,types[i])));
@@ -189,7 +191,7 @@ class CoreMethodCompiler {
     switch(node.kind){
       case 'InterpolatedString':{
         this.emitConstant('');const format=findContracts('SharpForge.Runtime.Formatting','FormatValue',true)[0];
-        for(const part of node.parts){if(part.text!==undefined)this.emitConstant(part.text);else{const type=this.expr(part.expression);if(type==='void')this.c.report(part.expression,'CS0029',['void','object']);this.emitConstant(part.format);this.emitConstant(part.alignment);this.emitConstant(type);this.emitContract(format);}this.emit(Op.BINARY,Binary['+'],2);}return 'string';
+        for(const part of node.parts){if(part.text!==undefined)this.emitConstant(part.text);else{const type=this.expr(part.expression);if(type==='void')this.c.report(part.expression,'CS0029',['void','object']);if(part.alignmentExpression){const width=this.constant(part.alignmentExpression);if(!width||width.type!=='int')this.c.report(part.alignmentExpression,'CS0150');}this.emitConstant(part.format);this.emitConstant(part.alignment);this.emitConstant(type);this.emitContract(format);}this.emit(Op.BINARY,Binary['+'],2);}return 'string';
       }
       case 'Await':{if(!this.m.node.asyncBody&&!this.m.name.startsWith('<startup>'))this.c.report(node,'CS4032',[typeText(this.m.returnType)]);const type=this.expr(node.expression),d=findContracts('SharpForge.Runtime.Async','Await',true).find(x=>x.parameters[0]===type);if(!d){this.c.report(node,'CS1061',[typeText(type),'GetAwaiter']);return 'error';}const builtin=frameworkBuiltin(d);this.emit(Op.BUILTIN,builtin.id,1);return d.result;}
       case 'Default':{const type=this.c.resolveType(node.type,node,false,this.m);if(type==='void')this.c.report(node,'CS1547');this.emitConstant(defaultValue(type),type);return type;}
@@ -239,12 +241,7 @@ class CoreMethodCompiler {
         node.args.forEach((arg,i)=>{const type=this.typedExpr(arg,method?.parameters[i]?.type);if(method)this.checkAssign(method.parameters[i]?.type??'error',type,arg);});
         if(method){if(method.symbol){this.c.reference(node.target,method.symbol);const reference=this.c.references.at(-1);reference.call=true;reference.callerId=this.m.symbol?.id??null;}this.emit(Op.CALL,method.id,count);return method.returnType;}
         for(let i=0;i<count;i++)this.emit(Op.POP);this.emitConstant(null);return 'error';}
-      case 'NewArray':{
-        let type=node.type;if(type==='var[]'){if(!node.values?.length)this.c.report(node,'CS0826');type=(node.values?.length?this.infer(node.values[0]):'error')+'[]';}
-        type=this.c.resolveType(type,node,false,this.m);const element=type.slice(0,-2);
-        if(node.length)this.checkAssign('int',this.expr(node.length),node.length);else this.emitConstant(node.values?.length??0);
-        this.emit(Op.NEWARR,this.c.constant(element));
-        if(node.values)node.values.forEach((value,i)=>{this.emit(Op.DUP);this.emitConstant(i);this.checkAssign(element,this.typedExpr(value,element),value);this.emit(Op.STELEM);this.emit(Op.POP);});return type;}
+      case 'NewArray':return emitArrayCreation(this,node);
       case 'New':{if(node.collectionInitializers?.length)this.c.report(node,'SF2013');
         const name=this.c.typeName(node.type,this.m);if(name==='Exception'){if(node.args.length>1)this.c.report(node,'CS1501',['Exception',node.args.length]);if(node.args.length)this.checkAssign('string',this.expr(node.args[0]),node.args[0]);else this.emitConstant('An exception was thrown.');this.emit(Op.BUILTIN,BuiltinMap.get('Exception.new').id,1);return 'Exception';}
         const type=this.c.findType(name,this.m);if(!type){this.c.report(node,'CS0246',[typeText(name)]);this.emitConstant(null);return 'error';}
@@ -290,4 +287,4 @@ class CoreMethodCompiler {
   storeRef(ref){if(ref.kind==='framework'){this.storeFramework(ref);return;}if(ref.kind==='property'){const value=this.temp(ref.type);this.emit(Op.STLOC,value);this.emit(Op.POP);if(ref.property.set){if(!ref.property.isStatic)this.emit(Op.LDLOC,ref.receiver);this.emit(Op.LDLOC,value);this.emit(Op.CALL,ref.property.set.id,ref.property.isStatic?1:2);this.emit(Op.POP);}this.emit(Op.LDLOC,value);this.clear(value);if(ref.receiver!==null)this.clear(ref.receiver);}else if(ref.kind==='local'){this.emit(Op.STLOC,ref.slot);this.assigned.add(ref.slot);}else if(ref.kind==='static')this.emit(Op.STSTATIC,ref.index);else{const value=this.temp(ref.type);this.emit(Op.STLOC,value);this.emit(Op.POP);this.emit(Op.LDLOC,ref.receiver);if(ref.kind==='index')this.emit(Op.LDLOC,ref.index);this.emit(Op.LDLOC,value);this.emit(ref.kind==='field'?Op.STFLD:Op.STELEM,ref.kind==='field'?ref.index:0);this.clear(value);this.clear(ref.receiver);if(ref.kind==='index')this.clear(ref.index);}}
 }
 /** The complete method compiler: explicit class composition instead of prototype patching. */
-export class MethodCompiler extends ModernCompiler(FrameworkCompiler(CoreMethodCompiler)) {}
+export class MethodCompiler extends CallScopedInference(ModernCompiler(FrameworkCompiler(CoreMethodCompiler))) {}

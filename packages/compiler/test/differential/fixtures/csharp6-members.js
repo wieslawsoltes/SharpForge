@@ -48,8 +48,7 @@ const interpolation = feature('interpolation-binding', [
       }
     `,
   ),
-  // The parser's interpolation scanner rejects every alignment that is not an integer literal with a diagnostic of
-  // its own (CS8076), so these three do not match Roslyn through compile(); the binder reports them as Roslyn does.
+  // The parser accepts any expression as an alignment; the binder reports the ones that are not int constants.
   diag(
     'cs0150-cs0266-cs0029-alignments-that-are-not-int-constants',
     cs`
@@ -144,6 +143,36 @@ const memberBodies = feature('member-bodies', [
           public int Both { get { return 1; } } => 2;
       }
       class Program { static void Main() { } }
+    `,
+  ),
+  diag(
+    'cs8057-block-and-expression-body-on-every-kind-of-member',
+    cs`
+      using System;
+      class C
+      {
+          int count;
+          int M() { return 1; } => 2;
+          void V() { } => Console.WriteLine();
+          C() { } => count = 1;
+          ~C() { } => count = 2;
+          public static C operator +(C a, C b) { return a; } => b;
+          public static implicit operator int(C c) { return 1; } => 2;
+          int P { get { return 1; } => 2; set { } => count = value; }
+          int Q { get => 1; set { count = value; } }
+          int this[int i] { get { return i; } => i + 1; }
+          int R { get { return 1; } } => 2;
+          int this[string s] { get { return 1; } } => 2;
+          event EventHandler E { add { } => count = 1; remove { } => count = 2; }
+          static void Main()
+          {
+              int Local() { return 1; } => 2;
+              void LocalVoid() { } => Console.WriteLine();
+              Func<int> f = () => 1;
+              Console.WriteLine(Local() + f());
+              LocalVoid();
+          }
+      }
     `,
   ),
 ]);

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0af830d2add992ea2723",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\npublic class C\n{\n    public static void Main()\n    {\n        foreach (var i in new C())\n        {\n            Console.Write(i);\n        }\n    }\n    public sealed class Enumerator\n    {\n        public int Current { get; private set; }\n        public bool MoveNext() => Current++ != 3;\n    }\n}\npublic static class Extensions\n{\n    public static C.Enumerator GetEnumerator(this C self, __arglist) => new C.Enumerator();\n}",
+  "sourceSHA256": "a8ef05d85348fc1922b1767cd40b5d837e50b392c836f53a41bceaaca07b450c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenForEachTests.cs",
+    "sha256": "a8916f977bf7fcd541545be2f5e4bdc8faf297975fa81f0c7ad4833e9a24ce17",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenForEachTests.cs",
+    "license": "MIT",
+    "method": "TestGetEnumeratorPatternViaExtensionWithArgList",
+    "offset": 115055
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS7036",
+        "severity": "error"
+      },
+      {
+        "code": "CS1579",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (7,27): error CS7036: There is no argument given that corresponds to the required parameter '__arglist' of 'Extensions.GetEnumerator(C, __arglist)'\n                    //         foreach (var i in new C())\n                    Diagnostic(ErrorCode.ERR_NoCorrespondingArgument, \"new C()\").WithArguments(\"__arglist\", \"Extensions.GetEnumerator(C, __arglist)\").WithLocation(7, 27),\n                    // (7,27): error CS1579: foreach statement cannot operate on variables of type 'C' because 'C' does not contain a public instance or extension definition for 'GetEnumerator'\n                    //         foreach (var i in new C())\n                    Diagnostic(ErrorCode.ERR_ForEachMissingMember, \"new C()\").WithArguments(\"C\", \"GetEnumerator\").WithLocation(7, 27)",
+  "unsupported": []
+}

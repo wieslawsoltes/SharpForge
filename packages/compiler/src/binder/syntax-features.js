@@ -110,6 +110,9 @@ function functionFeatures(node, context, use) {
 }
 
 function parameterFeatures(node, context, use) {
+  // `scoped` has no feature of its own: Roslyn reports it as 'ref fields' (C# 11), at the keyword.
+  const scoped = [...(node.modifiers ?? [])].find(token => token.text === 'scoped');
+  if (scoped) use('RefFields', scoped);
   if (context.inLambdaParameters) return;
   if (has(node, 'this') && (has(node, 'ref') || has(node, 'in'))) use('RefExtensionMethods', node);
   if (has(node, 'params') && node.type && node.type.kind !== 'ArrayType') use('ParamsCollections', node);
@@ -151,7 +154,9 @@ function constantFeatures(node, context, use) {
 function localDeclarationFeatures(node, context, use) {
   if (node.awaitKeyword && node.usingKeyword) use('AsyncUsing', node.awaitKeyword);
   constantFeatures(node, context, use);
-  if (context.inAsyncOrIterator && node.declaration.type.kind === 'RefType') use('RefUnsafeInIteratorAsync', node.declaration.type);
+  // Roslyn names each ref local, not its type.
+  if (context.inAsyncOrIterator && node.declaration.type.kind === 'RefType')
+    for (const variable of node.declaration.variables) use('RefUnsafeInIteratorAsync', variable.identifier);
 }
 
 function typeConstraintFeatures(node, context, use) {
@@ -205,6 +210,7 @@ const detectors = {
   ParenthesizedLambdaExpression: functionFeatures,
   AnonymousMethodExpression: functionFeatures,
   Parameter: parameterFeatures,
+  ScopedType: (node, context, use) => use('RefFields', node.firstToken()),
   StackAllocArrayCreationExpression: stackAllocFeatures,
   ImplicitStackAllocArrayCreationExpression: stackAllocFeatures,
   FieldDeclaration: fieldFeatures,

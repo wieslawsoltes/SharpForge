@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-623553ffca23b74ebd4f",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Gen<T> {}\nclass Gen2<T> : System.Attribute {}\nclass Gen3<T> : System.Attribute { Gen3(T parameter) { } }\n\n[Gen]\n[Gen2]\n[Gen2()]\n[Gen2<U>]\n[Gen2<System.Collections.Generic.List<U>>]\n[Gen3(1)]\npublic class Test<U>\n{\n\tpublic static int Main()\n\t{\n\t\treturn 1;\n\t}\n}",
+  "sourceSHA256": "1cc65e6b5db61845d4554f05a957c9f40dd01e3fc2620c2dd287a5a6de705c4a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "OpenGenericTypeInAttributeWithGenericAttributeFeature",
+    "offset": 312381
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.RegularPreview)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0616",
+        "severity": "error"
+      },
+      {
+        "code": "CS0305",
+        "severity": "error"
+      },
+      {
+        "code": "CS0305",
+        "severity": "error"
+      },
+      {
+        "code": "CS8968",
+        "severity": "error"
+      },
+      {
+        "code": "CS8968",
+        "severity": "error"
+      },
+      {
+        "code": "CS0579",
+        "severity": "error"
+      },
+      {
+        "code": "CS0305",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,2): error CS0616: 'Gen<T>' is not an attribute class\n                // [Gen]\n                Diagnostic(ErrorCode.ERR_NotAnAttributeClass, \"Gen\").WithArguments(\"Gen<T>\").WithLocation(6, 2),\n                // (7,2): error CS0305: Using the generic type 'Gen2<T>' requires 1 type arguments\n                // [Gen2]\n                Diagnostic(ErrorCode.ERR_BadArity, \"Gen2\").WithArguments(\"Gen2<T>\", \"type\", \"1\").WithLocation(7, 2),\n                // (8,2): error CS0305: Using the generic type 'Gen2<T>' requires 1 type arguments\n                // [Gen2()]\n                Diagnostic(ErrorCode.ERR_BadArity, \"Gen2\").WithArguments(\"Gen2<T>\", \"type\", \"1\").WithLocation(8, 2),\n                // (9,2): error CS8968: 'U': an attribute type argument cannot use type parameters\n                // [Gen2<U>]\n                Diagnostic(ErrorCode.ERR_AttrTypeArgCannotBeTypeVar, \"Gen2<U>\").WithArguments(\"U\").WithLocation(9, 2),\n                // (10,2): error CS8968: 'U': an attribute type argument cannot use type parameters\n                // [Gen2<System.Collections.Generic.List<U>>]\n                Diagnostic(ErrorCode.ERR_AttrTypeArgCannotBeTypeVar, \"Gen2<System.Collections.Generic.List<U>>\").WithArguments(\"U\").WithLocation(10, 2),\n                // (10,2): error CS0579: Duplicate 'Gen2<>' attribute\n                // [Gen2<System.Collections.Generic.List<U>>]\n                Diagnostic(ErrorCode.ERR_DuplicateAttribute, \"Gen2<System.Collections.Generic.List<U>>\").WithArguments(\"Gen2<>\").WithLocation(10, 2),\n                // (11,2): error CS0305: Using the generic type 'Gen3<T>' requires 1 type arguments\n                // [Gen3(1)]\n                Diagnostic(ErrorCode.ERR_BadArity, \"Gen3\").WithArguments(\"Gen3<T>\", \"type\", \"1\").WithLocation(11, 2)",
+  "unsupported": []
+}

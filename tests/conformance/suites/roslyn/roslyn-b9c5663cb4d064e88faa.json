@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b9c5663cb4d064e88faa",
+  "kind": "diagnostics",
+  "sourceText": "\ninternal class C\n{\n    internal unsafe void CM(B b)\n    {\n        b.M()();\n    }\n}",
+  "sourceSHA256": "002b71898f9740727be39f636e5a1f54aeb1a758e170f276f98c5e97b08a9bd3",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenFunctionPointersTests.cs",
+    "sha256": "6ae3195a3dd105e6e2f998eb4dd574db2a2568f521c73ec47e2d10473bed0787",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenFunctionPointersTests.cs",
+    "license": "MIT",
+    "method": "InternalsVisibleToAccessChecks_01",
+    "offset": 89301
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { aRef, bRef }, assemblyName: \"C\", parseOptions: TestOptions.RegularPreview, options: TestOptions.UnsafeReleaseDll)",
+  "options": "(@\"\ninternal class C\n{\n    internal unsafe void CM(B b)\n    {\n        b.M()();\n    }\n}\", references: new[] { aRef, bRef }, assemblyName: \"C\", parseOptions: TestOptions.RegularPreview, options: TestOptions.UnsafeReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0122",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (6,9): error CS0122: 'B.M()' is inaccessible due to its protection level\n                    //         b.M()();\n                    Diagnostic(ErrorCode.ERR_BadAccess, \"b.M\").WithArguments(\"B.M()\").WithLocation(6, 9)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}
