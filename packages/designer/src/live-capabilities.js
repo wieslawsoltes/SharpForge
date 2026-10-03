@@ -112,7 +112,7 @@ export function prepareLiveDesignChanges(before, after, {resolvedProperties}) {
       if (!equivalent(previous?.[field], node[field])) report(field, label, {nodeId: node.id});
     }
     if (node.projectType !== previous?.projectType) report('projectType', 'Project control construction or replacement', {nodeId: node.id});
-    if (!equivalent(previous?.events, node.events)) report('events', 'Managed event subscription changes', {nodeId: node.id});
+    if (!equivalent(previous?.events, node.events)) report('events', 'Managed event handlers', {nodeId: node.id});
     const current = resolvedProperties(after, node).properties;
     const prior = previous ? resolvedProperties(before, previous).properties : {};
     for (const [property, value] of Object.entries(current)) {
