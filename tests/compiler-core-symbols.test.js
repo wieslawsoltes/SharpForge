@@ -84,7 +84,7 @@ test('A02-T19 every registry contract and builtin is reachable as a member symbo
     if(c.kind==='constructor')assert.equal(m.methodKind,MethodKind.Constructor);if(c.kind==='get'){assert.equal(m.methodKind,MethodKind.PropertyGet);assert.equal(m.associatedSymbol.name,c.property);same(owner.getMembers(c.property)[0].getMethod,m);}
     if(c.kind==='eventAdd')same(owner.getMembers(c.event)[0].addMethod,m);}
   for(const b of Builtins.filter(b=>!b.contract&&!b.name.startsWith('$'))){const m=bridge.symbolForBuiltin(b);assert(m,b.name);same(m.builtin,b);}
-  const add=bridge.typeFromName('List<string>').getMembers('Add')[0];assert.equal(add.toDisplayString(F.Test),'System.Void System.Collections.Generic.List<System.String>.Add(System.String arg0)');
+  const add=bridge.typeFromName('List<string>').getMembers('Add')[0];assert.equal(add.toDisplayString(F.Test),'void System.Collections.Generic.List<System.String>.Add(System.String arg0)');
   const dictionary=bridge.typeFromName('Dictionary<string, int>'),indexer=dictionary.getMembers('this[]')[0];assert.equal(indexer.isIndexer,true);assert.equal(indexer.toDisplayString(),'System.Collections.Generic.Dictionary<string, int>.this[string]');assert.equal(indexer.setMethod.contract.name,'set_Item');
   const click=bridge.typeFromName('Button').getMembers('Click')[0];assert.equal(click.kind,SymbolKind.Event);same(click.type,bridge.typeFromName('Microsoft.UI.Xaml.RoutedEventHandler'));assert.equal(click.type.delegateInvokeMethod.methodKind,MethodKind.DelegateInvoke);
   const collapsed=bridge.typeFromName('Microsoft.UI.Xaml.Visibility').getMembers('Collapsed')[0];assert.equal(collapsed.isConst,true);assert.equal(collapsed.constantValue,1);

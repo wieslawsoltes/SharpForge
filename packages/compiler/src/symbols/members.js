@@ -86,7 +86,7 @@ export class MethodSymbol extends MemberSymbol {
     if(this.methodKind===MethodKind.AnonymousFunction)return 'lambda expression';
     const generic=this.arity?'<'+this.typeArguments.map(a=>a.toDisplayString(format)).join(', ')+'>':'',parameters='('+this.parameters.map(p=>format===SymbolDisplayFormat.Test?p.toDisplayString(format):(p.isParams?'params ':'')+refPrefix(p.refKind)+p.typeWithAnnotations.toDisplayString(format)).join(', ')+(this.isVararg?(this.parameters.length?', ':'')+'__arglist':'')+')';
     let name=this.name;const owner=this.containingType;
-    if(this.isConstructor)name=owner?.name??this.name;else if(this.methodKind===MethodKind.Destructor)name='~'+(owner?.name??'');
+    if(this.isConstructor)name=format===SymbolDisplayFormat.Test?this.metadataName:owner?.name??this.name;else if(this.methodKind===MethodKind.Destructor)name='~'+(owner?.name??'');
     else if(this.isAccessor&&this.associatedSymbol){const suffix={propertyGet:'get',propertySet:this.isInitOnly?'init':'set',eventAdd:'add',eventRemove:'remove',eventRaise:'raise'}[this.methodKind];const text=this.associatedSymbol.qualifiedNameText(format)+'.'+suffix;return format===SymbolDisplayFormat.Test?this.returnTypeWithAnnotations.toDisplayString(format)+' '+text:text;}
     else if(this.methodKind===MethodKind.UserDefinedOperator||this.methodKind===MethodKind.Conversion)name=operatorDisplayName(this.name,this.returnTypeWithAnnotations,format);
     const prefix=this.methodKind===MethodKind.LocalFunction?'':containerPrefix(this,format),text=prefix+name+generic+parameters;
