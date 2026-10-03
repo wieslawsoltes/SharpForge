@@ -31,6 +31,7 @@ import { StatementBinding } from './body/statements.js';
 import { DeclarationBinding } from './body/declarations.js';
 import { FlowStatementBinding } from './body/flow-statements.js';
 import { LocalFunctionBinding } from './body/local-functions.js';
+import { CSharp8Binding } from './csharp8.js';
 
 const expressionFamilies = [
   ConversionBinding,
@@ -48,6 +49,8 @@ const expressionFamilies = [
   QueryBinding,
 ];
 const statementFamilies = [StatementBinding, DeclarationBinding, FlowStatementBinding, LocalFunctionBinding];
+/** Rules of one language version that refine several families at once; applied last so they see every family. */
+const versionRules = [CSharp8Binding];
 const compose = (base, mixins) => mixins.reduce((composed, mixin) => mixin(composed), base);
 
 /**
@@ -56,6 +59,6 @@ const compose = (base, mixins) => mixins.reduce((composed, mixin) => mixin(compo
  * operator resolvers, type binder, diagnostics sink); `context` says where the body lives: `{ uri, scope,
  * containingType, method, isStatic, returnType, returnRefKind, isAsync, isIterator, isFieldInitializer, parent }`.
  */
-export class BodyBinder extends compose(BinderCore, [...expressionFamilies, ...statementFamilies]) {}
+export class BodyBinder extends compose(BinderCore, [...expressionFamilies, ...statementFamilies, ...versionRules]) {}
 
 export { dumpSemanticTree } from '../bound/semantic-dump.js';
