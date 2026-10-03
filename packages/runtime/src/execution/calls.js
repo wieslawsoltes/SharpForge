@@ -6,12 +6,14 @@ import {SUSPENDED} from '../platform.js';
 import {storageDefault} from './storage.js';
 import {createExceptionState} from './eh.js';
 import {ensureTypeInitialized} from './static-init.js';
+import {enterCilMethod} from './cil-method-events.js';
 
 export function call(vm,token,args,extra={}) {
   if(vm.frames.length>=vm.options.maxFrames)throw new ManagedFault('StackOverflowException','Managed call depth exceeded');
   const method=vm.inspector.getMethod(token);
   if(!method.signature.isStatic&&args[0]===null)throw new ManagedFault('NullReferenceException','Instance method receiver is null');
   vm.frames.push({id:++vm.frameId,method,args,locals:method.locals.map(type=>method.initLocals?storageDefault(vm,type):undefined),stack:[],pc:0,lastOffset:0,offsets:methodOffsets(method),...createExceptionState(),needsInitialization:method.name!=='.cctor',...extra});
+  enterCilMethod(vm, vm.top);
 }
 export function ensureInitialized(vm,typeToken,trigger='field',genericIdentity=null) {
   return ensureTypeInitialized(vm,typeToken,trigger,genericIdentity);
