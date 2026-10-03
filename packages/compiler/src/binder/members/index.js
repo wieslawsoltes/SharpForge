@@ -4,5 +4,6 @@
  */
 import { InitializerBinding } from './initializers.js';
 import { PrimaryConstructorBinding } from './primary-constructors.js';
+import { PartialMemberBinding } from './partial-members.js';
 
-export const memberBindings = Object.freeze([InitializerBinding, PrimaryConstructorBinding]);
+export const memberBindings = Object.freeze([InitializerBinding, PrimaryConstructorBinding, PartialMemberBinding]);
