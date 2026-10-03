@@ -1,0 +1,23 @@
+{
+  "name": "@sharpforge/refactoring",
+  "version": "0.14.0",
+  "description": "Version-checked transactional workspace edits and conservative C# refactorings.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@sharpforge/text": "0.14.0",
+    "@sharpforge/syntax": "0.14.0"
+  }
+}

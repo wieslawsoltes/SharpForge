@@ -1,0 +1,19 @@
+{
+  "name": "@sharpforge/templates",
+  "version": "0.14.0",
+  "type": "module",
+  "description": "Data-described C# / WinUI web project, solution and item templates with transactional file plans",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@sharpforge/project-system": "0.14.0",
+    "@sharpforge/archive": "0.14.0"
+  }
+}

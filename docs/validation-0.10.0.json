@@ -1,0 +1,105 @@
+{
+  "release": "0.10.0",
+  "baseline": "0.9.0",
+  "node": {
+    "passed": 1669,
+    "failed": 0,
+    "skipped": 0,
+    "added": 298
+  },
+  "syntax": {
+    "modules": 166,
+    "errors": 0
+  },
+  "browser": {
+    "checks": 251,
+    "suites": [
+      {
+        "report": "browser-results.json",
+        "checks": 29,
+        "passed": true
+      },
+      {
+        "report": "browser-managed-results.json",
+        "checks": 12,
+        "passed": true
+      },
+      {
+        "report": "browser-workspace-results.json",
+        "checks": 23,
+        "passed": true
+      },
+      {
+        "report": "browser-release05-results.json",
+        "checks": 17,
+        "passed": true
+      },
+      {
+        "report": "browser-release06-results.json",
+        "checks": 27,
+        "passed": true
+      },
+      {
+        "report": "browser-msbuild-results.json",
+        "checks": 32,
+        "passed": true
+      },
+      {
+        "report": "browser-release08-results.json",
+        "checks": 37,
+        "passed": true
+      },
+      {
+        "report": "browser-native-explorer-results.json",
+        "checks": 11,
+        "passed": true
+      },
+      {
+        "report": "browser-release09-results.json",
+        "checks": 41,
+        "passed": true
+      },
+      {
+        "report": "browser-release10-validation.json",
+        "checks": 22,
+        "passed": true
+      }
+    ],
+    "environment": "Chromium 144.0.7559.96; production application/modules plus two real bundled Blob workers in an in-memory origin; native file suite forwards bytes to the actual loopback host"
+  },
+  "standalone": {
+    "checks": 39,
+    "workers": 2,
+    "errors": []
+  },
+  "packages": {
+    "count": 20,
+    "offline": true,
+    "isolatedInstalled": true
+  },
+  "nativeSdk": {
+    "available": false,
+    "simulated": false,
+    "status": 1,
+    "reason": "dotnet ENOENT"
+  },
+  "gpu": {
+    "hardwareQualified": false,
+    "actualBackendsTested": [
+      "canvas2d",
+      "dom"
+    ],
+    "webgpuUnavailableFallbackTested": true
+  },
+  "examples": {
+    "studio": 47,
+    "runnable": 46,
+    "new": 10,
+    "enginePaths": [
+      "internal IR VM",
+      "canonical IL reload",
+      "direct CIL",
+      "export/reassemble IL"
+    ]
+  }
+}

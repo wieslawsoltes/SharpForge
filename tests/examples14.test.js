@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {compileToIL} from '@sharpforge/compiler';import {VirtualMachine,CilVirtualMachine} from '@sharpforge/runtime';import {loadAssembly,formatILDocument,assembleILDocument} from '@sharpforge/cil';
+import {release14Samples} from '../apps/studio/samples-release14.js';
+for(const e of release14Samples)for(const path of ['source','reload','cil','reassembled'])test(`release14 sample ${e.id}: ${path}`,async()=>{const c=compileToIL(e.files,e.compilationOptions);assert(c.success,JSON.stringify(c.diagnostics));const VM=['source','reload'].includes(path)?VirtualMachine:CilVirtualMachine;const vm=new VM(path==='source'?c.image:path==='reload'?loadAssembly(c.assembly):path==='reassembled'?assembleILDocument(formatILDocument(c.assembly)).bytes:c.assembly);try{const r=await vm.runAsync();assert.equal(r.fault,null,JSON.stringify(r.fault));assert.equal(r.output,e.expectedOutput);}finally{vm.stop();}});

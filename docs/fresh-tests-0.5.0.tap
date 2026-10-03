@@ -1,0 +1,4563 @@
+
+> sharpforge@0.5.0 test
+> node --test tests/*.test.js
+
+TAP version 13
+# Subtest: CLI: default .dll artifact, runtime configuration, disassembly and exec
+ok 1 - CLI: default .dll artifact, runtime configuration, disassembly and exec
+  ---
+  duration_ms: 440.845397
+  type: 'test'
+  ...
+# Subtest: CLI: legacy IR remains an explicit option
+ok 2 - CLI: legacy IR remains an explicit option
+  ---
+  duration_ms: 202.144308
+  type: 'test'
+  ...
+# Subtest: CLI: invalid format and missing option values fail cleanly
+ok 3 - CLI: invalid format and missing option values fail cleanly
+  ---
+  duration_ms: 144.260549
+  type: 'test'
+  ...
+# Subtest: CIL execution: hello
+ok 4 - CIL execution: hello
+  ---
+  duration_ms: 14.854451
+  type: 'test'
+  ...
+# Subtest: CIL execution: precedence
+ok 5 - CIL execution: precedence
+  ---
+  duration_ms: 3.745969
+  type: 'test'
+  ...
+# Subtest: CIL execution: Int32 wrap
+ok 6 - CIL execution: Int32 wrap
+  ---
+  duration_ms: 2.710052
+  type: 'test'
+  ...
+# Subtest: CIL execution: Int32 multiplication
+ok 7 - CIL execution: Int32 multiplication
+  ---
+  duration_ms: 1.465442
+  type: 'test'
+  ...
+# Subtest: CIL execution: integer division
+ok 8 - CIL execution: integer division
+  ---
+  duration_ms: 1.713535
+  type: 'test'
+  ...
+# Subtest: CIL execution: floating division
+ok 9 - CIL execution: floating division
+  ---
+  duration_ms: 2.158924
+  type: 'test'
+  ...
+# Subtest: CIL execution: minimum int
+ok 10 - CIL execution: minimum int
+  ---
+  duration_ms: 1.534355
+  type: 'test'
+  ...
+# Subtest: CIL execution: bitwise
+ok 11 - CIL execution: bitwise
+  ---
+  duration_ms: 1.279923
+  type: 'test'
+  ...
+# Subtest: CIL execution: boolean
+ok 12 - CIL execution: boolean
+  ---
+  duration_ms: 1.577431
+  type: 'test'
+  ...
+# Subtest: CIL execution: short circuit
+ok 13 - CIL execution: short circuit
+  ---
+  duration_ms: 1.732984
+  type: 'test'
+  ...
+# Subtest: CIL execution: if else
+ok 14 - CIL execution: if else
+  ---
+  duration_ms: 1.425232
+  type: 'test'
+  ...
+# Subtest: CIL execution: for
+ok 15 - CIL execution: for
+  ---
+  duration_ms: 1.885443
+  type: 'test'
+  ...
+# Subtest: CIL execution: while continue break
+ok 16 - CIL execution: while continue break
+  ---
+  duration_ms: 2.127587
+  type: 'test'
+  ...
+# Subtest: CIL execution: do while
+ok 17 - CIL execution: do while
+  ---
+  duration_ms: 2.025213
+  type: 'test'
+  ...
+# Subtest: CIL execution: for continue
+ok 18 - CIL execution: for continue
+  ---
+  duration_ms: 1.693365
+  type: 'test'
+  ...
+# Subtest: CIL execution: ternary
+ok 19 - CIL execution: ternary
+  ---
+  duration_ms: 1.073503
+  type: 'test'
+  ...
+# Subtest: CIL execution: coalescing
+ok 20 - CIL execution: coalescing
+  ---
+  duration_ms: 1.523809
+  type: 'test'
+  ...
+# Subtest: CIL execution: array foreach
+ok 21 - CIL execution: array foreach
+  ---
+  duration_ms: 2.15624
+  type: 'test'
+  ...
+# Subtest: CIL execution: implicit array
+ok 22 - CIL execution: implicit array
+  ---
+  duration_ms: 1.579253
+  type: 'test'
+  ...
+# Subtest: CIL execution: default array
+ok 23 - CIL execution: default array
+  ---
+  duration_ms: 1.075576
+  type: 'test'
+  ...
+# Subtest: CIL execution: array assignment receiver evaluated once
+ok 24 - CIL execution: array assignment receiver evaluated once
+  ---
+  duration_ms: 3.018526
+  type: 'test'
+  ...
+# Subtest: CIL execution: postfix
+ok 25 - CIL execution: postfix
+  ---
+  duration_ms: 1.083448
+  type: 'test'
+  ...
+# Subtest: CIL execution: prefix
+ok 26 - CIL execution: prefix
+  ---
+  duration_ms: 1.106863
+  type: 'test'
+  ...
+# Subtest: CIL execution: method calls
+ok 27 - CIL execution: method calls
+  ---
+  duration_ms: 1.532433
+  type: 'test'
+  ...
+# Subtest: CIL execution: recursion
+ok 28 - CIL execution: recursion
+  ---
+  duration_ms: 2.62211
+  type: 'test'
+  ...
+# Subtest: CIL execution: expression body
+ok 29 - CIL execution: expression body
+  ---
+  duration_ms: 1.572162
+  type: 'test'
+  ...
+# Subtest: CIL execution: overloads
+ok 30 - CIL execution: overloads
+  ---
+  duration_ms: 1.463148
+  type: 'test'
+  ...
+# Subtest: CIL execution: objects constructor fields
+ok 31 - CIL execution: objects constructor fields
+  ---
+  duration_ms: 3.704506
+  type: 'test'
+  ...
+# Subtest: CIL execution: object initializer
+ok 32 - CIL execution: object initializer
+  ---
+  duration_ms: 1.271471
+  type: 'test'
+  ...
+# Subtest: CIL execution: static initializer dependency
+ok 33 - CIL execution: static initializer dependency
+  ---
+  duration_ms: 1.410389
+  type: 'test'
+  ...
+# Subtest: CIL execution: string value equality
+ok 34 - CIL execution: string value equality
+  ---
+  duration_ms: 1.013443
+  type: 'test'
+  ...
+# Subtest: CIL execution: object identity
+ok 35 - CIL execution: object identity
+  ---
+  duration_ms: 1.253003
+  type: 'test'
+  ...
+# Subtest: CIL execution: string library
+ok 36 - CIL execution: string library
+  ---
+  duration_ms: 1.143158
+  type: 'test'
+  ...
+# Subtest: CIL execution: length
+ok 37 - CIL execution: length
+  ---
+  duration_ms: 0.747363
+  type: 'test'
+  ...
+# Subtest: CIL execution: numeric parse
+ok 38 - CIL execution: numeric parse
+  ---
+  duration_ms: 3.266048
+  type: 'test'
+  ...
+# Subtest: CIL execution: round-to-even conversion
+ok 39 - CIL execution: round-to-even conversion
+  ---
+  duration_ms: 1.279803
+  type: 'test'
+  ...
+# Subtest: CIL execution: array sort
+ok 40 - CIL execution: array sort
+  ---
+  duration_ms: 1.847146
+  type: 'test'
+  ...
+# Subtest: CIL execution: caught division
+ok 41 - CIL execution: caught division
+  ---
+  duration_ms: 1.756349
+  type: 'test'
+  ...
+# Subtest: CIL execution: throw exception
+ok 42 - CIL execution: throw exception
+  ---
+  duration_ms: 1.044119
+  type: 'test'
+  ...
+# Subtest: CIL execution: cross-frame catch
+ok 43 - CIL execution: cross-frame catch
+  ---
+  duration_ms: 1.286133
+  type: 'test'
+  ...
+# Subtest: CIL execution: rethrow
+ok 44 - CIL execution: rethrow
+  ---
+  duration_ms: 1.283598
+  type: 'test'
+  ...
+# Subtest: CIL execution: Main args
+ok 45 - CIL execution: Main args
+  ---
+  duration_ms: 1.020954
+  type: 'test'
+  ...
+# Subtest: CIL execution: definite assignment both branches
+ok 46 - CIL execution: definite assignment both branches
+  ---
+  duration_ms: 2.524924
+  type: 'test'
+  ...
+# Subtest: CIL sample: particles
+ok 47 - CIL sample: particles
+  ---
+  duration_ms: 6.048829
+  type: 'test'
+  ...
+# Subtest: CIL sample: gc
+ok 48 - CIL sample: gc
+  ---
+  duration_ms: 14.552367
+  type: 'test'
+  ...
+# Subtest: CIL sample: recursion
+ok 49 - CIL sample: recursion
+  ---
+  duration_ms: 4.915376
+  type: 'test'
+  ...
+# Subtest: CIL sample: exceptions
+ok 50 - CIL sample: exceptions
+  ---
+  duration_ms: 1.820275
+  type: 'test'
+  ...
+# Subtest: CIL sample: arrays
+ok 51 - CIL sample: arrays
+  ---
+  duration_ms: 9.003508
+  type: 'test'
+  ...
+# Subtest: CIL sample: partial
+ok 52 - CIL sample: partial
+  ---
+  duration_ms: 2.317132
+  type: 'test'
+  ...
+# Subtest: CIL sample: switch
+ok 53 - CIL sample: switch
+  ---
+  duration_ms: 2.273437
+  type: 'test'
+  ...
+# Subtest: CIL sample: conversions
+ok 54 - CIL sample: conversions
+  ---
+  duration_ms: 1.393303
+  type: 'test'
+  ...
+# Subtest: CIL sample: null-assignment
+ok 55 - CIL sample: null-assignment
+  ---
+  duration_ms: 2.267297
+  type: 'test'
+  ...
+# Subtest: CIL sample: call-hierarchy
+ok 56 - CIL sample: call-hierarchy
+  ---
+  duration_ms: 1.502948
+  type: 'test'
+  ...
+# Subtest: CIL sample: guarded-calls
+ok 57 - CIL sample: guarded-calls
+  ---
+  duration_ms: 1.755448
+  type: 'test'
+  ...
+# Subtest: CIL sample: short-circuit
+ok 58 - CIL sample: short-circuit
+  ---
+  duration_ms: 1.648998
+  type: 'test'
+  ...
+# Subtest: CIL sample: nameof
+ok 59 - CIL sample: nameof
+  ---
+  duration_ms: 1.159131
+  type: 'test'
+  ...
+# Subtest: CIL sample: properties
+ok 60 - CIL sample: properties
+  ---
+  duration_ms: 3.708493
+  type: 'test'
+  ...
+# Subtest: CIL sample: readonly-properties
+ok 61 - CIL sample: readonly-properties
+  ---
+  duration_ms: 4.290517
+  type: 'test'
+  ...
+# Subtest: CIL sample: finally
+ok 62 - CIL sample: finally
+  ---
+  duration_ms: 1.8969
+  type: 'test'
+  ...
+# Subtest: CIL sample: finally-loop
+ok 63 - CIL sample: finally-loop
+  ---
+  duration_ms: 1.754426
+  type: 'test'
+  ...
+# Subtest: CIL sample: structural-refactoring
+ok 64 - CIL sample: structural-refactoring
+  ---
+  duration_ms: 2.656001
+  type: 'test'
+  ...
+# Subtest: CIL sample: safe-watches
+ok 65 - CIL sample: safe-watches
+  ---
+  duration_ms: 2.209259
+  type: 'test'
+  ...
+# Subtest: CIL sample: analyzer-tasks
+ok 66 - CIL sample: analyzer-tasks
+  ---
+  duration_ms: 0.939522
+  type: 'test'
+  ...
+# Subtest: CIL: emitted bytes contain real PE/CLI headers and real opcodes
+ok 67 - CIL: emitted bytes contain real PE/CLI headers and real opcodes
+  ---
+  duration_ms: 0.526672
+  type: 'test'
+  ...
+# Subtest: CIL: deterministic full artifact
+ok 68 - CIL: deterministic full artifact
+  ---
+  duration_ms: 1.046763
+  type: 'test'
+  ...
+# Subtest: CIL: code is decoded from IL, not from embedded source
+ok 69 - CIL: code is decoded from IL, not from embedded source
+  ---
+  duration_ms: 0.76538
+  type: 'test'
+  ...
+# Subtest: CIL: int Main entry signature and result are preserved
+ok 70 - CIL: int Main entry signature and result are preserved
+  ---
+  duration_ms: 1.135035
+  type: 'test'
+  ...
+# Subtest: CIL: typed literal 7.0 remains ldc.r8 instead of ldc.i4
+ok 71 - CIL: typed literal 7.0 remains ldc.r8 instead of ldc.i4
+  ---
+  duration_ms: 0.837679
+  type: 'test'
+  ...
+# Subtest: CIL regression: mixed numeric conditional
+ok 72 - CIL regression: mixed numeric conditional
+  ---
+  duration_ms: 1.081645
+  type: 'test'
+  ...
+# Subtest: CIL regression: typed assignment expression
+ok 73 - CIL regression: typed assignment expression
+  ---
+  duration_ms: 1.633274
+  type: 'test'
+  ...
+# Subtest: CIL regression: double method arguments
+ok 74 - CIL regression: double method arguments
+  ---
+  duration_ms: 0.988425
+  type: 'test'
+  ...
+# Subtest: CIL regression: return in protected region
+ok 75 - CIL regression: return in protected region
+  ---
+  duration_ms: 1.007665
+  type: 'test'
+  ...
+# Subtest: CIL regression: void return in catch
+ok 76 - CIL regression: void return in catch
+  ---
+  duration_ms: 3.410625
+  type: 'test'
+  ...
+# Subtest: CIL regression: break crossing protected region
+ok 77 - CIL regression: break crossing protected region
+  ---
+  duration_ms: 0.976587
+  type: 'test'
+  ...
+# Subtest: CIL regression: continue crossing protected region
+ok 78 - CIL regression: continue crossing protected region
+  ---
+  duration_ms: 1.621677
+  type: 'test'
+  ...
+# Subtest: CIL regression: empty string and Unicode
+ok 79 - CIL regression: empty string and Unicode
+  ---
+  duration_ms: 0.992902
+  type: 'test'
+  ...
+# Subtest: CIL regression: all boolean operations
+ok 80 - CIL regression: all boolean operations
+  ---
+  duration_ms: 0.850428
+  type: 'test'
+  ...
+# Subtest: CIL regression: string mixed concat
+ok 81 - CIL regression: string mixed concat
+  ---
+  duration_ms: 0.902847
+  type: 'test'
+  ...
+# Subtest: CIL regression: floating NaN comparisons
+ok 82 - CIL regression: floating NaN comparisons
+  ---
+  duration_ms: 1.081295
+  type: 'test'
+  ...
+# Subtest: CIL: emit native-only assembly without debug stream
+ok 83 - CIL: emit native-only assembly without debug stream
+  ---
+  duration_ms: 0.968465
+  type: 'test'
+  ...
+# Subtest: CIL: source-free profile is still executable and debuggable
+ok 84 - CIL: source-free profile is still executable and debuggable
+  ---
+  duration_ms: 0.767744
+  type: 'test'
+  ...
+# Subtest: CIL: CLR-compatible constructor wrappers and raw allocator have distinct signatures
+ok 85 - CIL: CLR-compatible constructor wrappers and raw allocator have distinct signatures
+  ---
+  duration_ms: 0.775175
+  type: 'test'
+  ...
+# Subtest: CIL: catch regions carry real CLI exception metadata
+ok 86 - CIL: catch regions carry real CLI exception metadata
+  ---
+  duration_ms: 0.541504
+  type: 'test'
+  ...
+# Subtest: CIL: source stepping, watches and reverse snapshots survive IL predecoding
+ok 87 - CIL: source stepping, watches and reverse snapshots survive IL predecoding
+  ---
+  duration_ms: 4.047863
+  type: 'test'
+  ...
+# Subtest: CIL: invalid headers and every truncated prefix are rejected
+ok 88 - CIL: invalid headers and every truncated prefix are rejected
+  ---
+  duration_ms: 0.840493
+  type: 'test'
+  ...
+# Subtest: CIL: modified CIL instruction is rejected before execution
+ok 89 - CIL: modified CIL instruction is rejected before execution
+  ---
+  duration_ms: 0.867434
+  type: 'test'
+  ...
+# Subtest: CIL: unsupported opcode is rejected, not silently interpreted
+ok 90 - CIL: unsupported opcode is rejected, not silently interpreted
+  ---
+  duration_ms: 0.466942
+  type: 'test'
+  ...
+# Subtest: CIL: compressed unsigned integer boundaries roundtrip
+ok 91 - CIL: compressed unsigned integer boundaries roundtrip
+  ---
+  duration_ms: 0.154932
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: entry point
+ok 92 - CIL/CLR semantic fixture: entry point
+  ---
+  duration_ms: 1.710019
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: integer precedence
+ok 93 - CIL/CLR semantic fixture: integer precedence
+  ---
+  duration_ms: 1.176788
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: signed less-or-equal
+ok 94 - CIL/CLR semantic fixture: signed less-or-equal
+  ---
+  duration_ms: 0.990799
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: signed greater-or-equal
+ok 95 - CIL/CLR semantic fixture: signed greater-or-equal
+  ---
+  duration_ms: 0.742656
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: signed strict comparisons
+ok 96 - CIL/CLR semantic fixture: signed strict comparisons
+  ---
+  duration_ms: 1.234956
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: Int32 wrap
+ok 97 - CIL/CLR semantic fixture: Int32 wrap
+  ---
+  duration_ms: 0.857218
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: Int32 multiply
+ok 98 - CIL/CLR semantic fixture: Int32 multiply
+  ---
+  duration_ms: 0.841334
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: Int32 division
+ok 99 - CIL/CLR semantic fixture: Int32 division
+  ---
+  duration_ms: 2.406776
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: double literal division
+ok 100 - CIL/CLR semantic fixture: double literal division
+  ---
+  duration_ms: 0.799541
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: numeric conditional
+ok 101 - CIL/CLR semantic fixture: numeric conditional
+  ---
+  duration_ms: 1.311551
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: typed assignment
+ok 102 - CIL/CLR semantic fixture: typed assignment
+  ---
+  duration_ms: 0.89841
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: for loop
+ok 103 - CIL/CLR semantic fixture: for loop
+  ---
+  duration_ms: 1.302727
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: continue and break
+ok 104 - CIL/CLR semantic fixture: continue and break
+  ---
+  duration_ms: 1.958133
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: do while
+ok 105 - CIL/CLR semantic fixture: do while
+  ---
+  duration_ms: 0.973663
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: boolean bitwise
+ok 106 - CIL/CLR semantic fixture: boolean bitwise
+  ---
+  duration_ms: 0.708505
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: short circuit
+ok 107 - CIL/CLR semantic fixture: short circuit
+  ---
+  duration_ms: 0.855035
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: null coalescing
+ok 108 - CIL/CLR semantic fixture: null coalescing
+  ---
+  duration_ms: 0.77206
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: array foreach
+ok 109 - CIL/CLR semantic fixture: array foreach
+  ---
+  duration_ms: 1.513304
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: bool array default
+ok 110 - CIL/CLR semantic fixture: bool array default
+  ---
+  duration_ms: 0.796187
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: array assignment receiver
+ok 111 - CIL/CLR semantic fixture: array assignment receiver
+  ---
+  duration_ms: 1.017809
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: prefix and postfix
+ok 112 - CIL/CLR semantic fixture: prefix and postfix
+  ---
+  duration_ms: 0.751089
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: recursion
+ok 113 - CIL/CLR semantic fixture: recursion
+  ---
+  duration_ms: 4.335956
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: overloads
+ok 114 - CIL/CLR semantic fixture: overloads
+  ---
+  duration_ms: 1.306323
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: object constructor
+ok 115 - CIL/CLR semantic fixture: object constructor
+  ---
+  duration_ms: 1.393163
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: object initializer
+ok 116 - CIL/CLR semantic fixture: object initializer
+  ---
+  duration_ms: 0.928645
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: static initializer
+ok 117 - CIL/CLR semantic fixture: static initializer
+  ---
+  duration_ms: 0.815315
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: object identity
+ok 118 - CIL/CLR semantic fixture: object identity
+  ---
+  duration_ms: 1.125601
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: UTF16 string length
+ok 119 - CIL/CLR semantic fixture: UTF16 string length
+  ---
+  duration_ms: 0.657377
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: double method arguments
+ok 120 - CIL/CLR semantic fixture: double method arguments
+  ---
+  duration_ms: 0.834023
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: try return
+ok 121 - CIL/CLR semantic fixture: try return
+  ---
+  duration_ms: 1.168546
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: caught division
+ok 122 - CIL/CLR semantic fixture: caught division
+  ---
+  duration_ms: 0.926282
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: cross-frame exception
+ok 123 - CIL/CLR semantic fixture: cross-frame exception
+  ---
+  duration_ms: 0.943147
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: throw exception
+ok 124 - CIL/CLR semantic fixture: throw exception
+  ---
+  duration_ms: 1.110328
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: rethrow
+ok 125 - CIL/CLR semantic fixture: rethrow
+  ---
+  duration_ms: 1.739013
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: return in catch
+ok 126 - CIL/CLR semantic fixture: return in catch
+  ---
+  duration_ms: 0.987334
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: break leaves try
+ok 127 - CIL/CLR semantic fixture: break leaves try
+  ---
+  duration_ms: 0.9053
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: continue leaves try
+ok 128 - CIL/CLR semantic fixture: continue leaves try
+  ---
+  duration_ms: 1.055476
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: NaN comparisons
+ok 129 - CIL/CLR semantic fixture: NaN comparisons
+  ---
+  duration_ms: 3.885458
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: shift count masking
+ok 130 - CIL/CLR semantic fixture: shift count masking
+  ---
+  duration_ms: 0.759411
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: Int32 division overflow
+ok 131 - CIL/CLR semantic fixture: Int32 division overflow
+  ---
+  duration_ms: 0.867033
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: typed field assignment
+ok 132 - CIL/CLR semantic fixture: typed field assignment
+  ---
+  duration_ms: 5.693215
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: typed array assignment
+ok 133 - CIL/CLR semantic fixture: typed array assignment
+  ---
+  duration_ms: 3.992911
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: nested object fields
+ok 134 - CIL/CLR semantic fixture: nested object fields
+  ---
+  duration_ms: 17.448569
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: array of references
+ok 135 - CIL/CLR semantic fixture: array of references
+  ---
+  duration_ms: 2.706968
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: Main string args
+ok 136 - CIL/CLR semantic fixture: Main string args
+  ---
+  duration_ms: 2.961851
+  type: 'test'
+  ...
+# Subtest: CIL/CLR semantic fixture: definite assignment
+ok 137 - CIL/CLR semantic fixture: definite assignment
+  ---
+  duration_ms: 0.962787
+  type: 'test'
+  ...
+# Subtest: CIL API: errors block binary emission
+ok 138 - CIL API: errors block binary emission
+  ---
+  duration_ms: 0.380551
+  type: 'test'
+  ...
+# Subtest: CIL API: backend errors become diagnostics
+ok 139 - CIL API: backend errors become diagnostics
+  ---
+  duration_ms: 0.214572
+  type: 'test'
+  ...
+# Subtest: CIL API: ArrayBuffer executes directly
+ok 140 - CIL API: ArrayBuffer executes directly
+  ---
+  duration_ms: 0.593792
+  type: 'test'
+  ...
+# Subtest: CIL API: direct debugger construction accepts DLL bytes
+ok 141 - CIL API: direct debugger construction accepts DLL bytes
+  ---
+  duration_ms: 0.695696
+  type: 'test'
+  ...
+# Subtest: CIL inspection: standard opcodes and metadata names
+ok 142 - CIL inspection: standard opcodes and metadata names
+  ---
+  duration_ms: 1.790461
+  type: 'test'
+  ...
+# Subtest: CIL runtime configuration: explicit host policy
+ok 143 - CIL runtime configuration: explicit host policy
+  ---
+  duration_ms: 0.23936
+  type: 'test'
+  ...
+# Subtest: CIL front end remains light: ordinary compile does not emit an assembly
+ok 144 - CIL front end remains light: ordinary compile does not emit an assembly
+  ---
+  duration_ms: 0.129775
+  type: 'test'
+  ...
+# Subtest: Workspace cache includes assembly-related compilation options
+ok 145 - Workspace cache includes assembly-related compilation options
+  ---
+  duration_ms: 0.742706
+  type: 'test'
+  ...
+# Subtest: CIL metadata: genuine four-byte string and blob heap indexes
+ok 146 - CIL metadata: genuine four-byte string and blob heap indexes
+  ---
+  duration_ms: 4.647073
+  type: 'test'
+  ...
+# Subtest: execution: hello
+ok 147 - execution: hello
+  ---
+  duration_ms: 11.131636
+  type: 'test'
+  ...
+# Subtest: execution: precedence
+ok 148 - execution: precedence
+  ---
+  duration_ms: 1.309768
+  type: 'test'
+  ...
+# Subtest: execution: Int32 wrap
+ok 149 - execution: Int32 wrap
+  ---
+  duration_ms: 1.822208
+  type: 'test'
+  ...
+# Subtest: execution: Int32 multiplication
+ok 150 - execution: Int32 multiplication
+  ---
+  duration_ms: 0.694974
+  type: 'test'
+  ...
+# Subtest: execution: integer division
+ok 151 - execution: integer division
+  ---
+  duration_ms: 0.762305
+  type: 'test'
+  ...
+# Subtest: execution: floating division
+ok 152 - execution: floating division
+  ---
+  duration_ms: 0.645219
+  type: 'test'
+  ...
+# Subtest: execution: minimum int
+ok 153 - execution: minimum int
+  ---
+  duration_ms: 1.167775
+  type: 'test'
+  ...
+# Subtest: execution: bitwise
+ok 154 - execution: bitwise
+  ---
+  duration_ms: 0.674764
+  type: 'test'
+  ...
+# Subtest: execution: boolean
+ok 155 - execution: boolean
+  ---
+  duration_ms: 0.893182
+  type: 'test'
+  ...
+# Subtest: execution: short circuit
+ok 156 - execution: short circuit
+  ---
+  duration_ms: 1.328416
+  type: 'test'
+  ...
+# Subtest: execution: if else
+ok 157 - execution: if else
+  ---
+  duration_ms: 0.666852
+  type: 'test'
+  ...
+# Subtest: execution: for
+ok 158 - execution: for
+  ---
+  duration_ms: 1.315297
+  type: 'test'
+  ...
+# Subtest: execution: while continue break
+ok 159 - execution: while continue break
+  ---
+  duration_ms: 0.976898
+  type: 'test'
+  ...
+# Subtest: execution: do while
+ok 160 - execution: do while
+  ---
+  duration_ms: 0.303856
+  type: 'test'
+  ...
+# Subtest: execution: for continue
+ok 161 - execution: for continue
+  ---
+  duration_ms: 0.374883
+  type: 'test'
+  ...
+# Subtest: execution: ternary
+ok 162 - execution: ternary
+  ---
+  duration_ms: 0.216606
+  type: 'test'
+  ...
+# Subtest: execution: coalescing
+ok 163 - execution: coalescing
+  ---
+  duration_ms: 0.364338
+  type: 'test'
+  ...
+# Subtest: execution: array foreach
+ok 164 - execution: array foreach
+  ---
+  duration_ms: 0.640863
+  type: 'test'
+  ...
+# Subtest: execution: implicit array
+ok 165 - execution: implicit array
+  ---
+  duration_ms: 0.512229
+  type: 'test'
+  ...
+# Subtest: execution: default array
+ok 166 - execution: default array
+  ---
+  duration_ms: 0.371108
+  type: 'test'
+  ...
+# Subtest: execution: array assignment receiver evaluated once
+ok 167 - execution: array assignment receiver evaluated once
+  ---
+  duration_ms: 0.430597
+  type: 'test'
+  ...
+# Subtest: execution: postfix
+ok 168 - execution: postfix
+  ---
+  duration_ms: 0.221423
+  type: 'test'
+  ...
+# Subtest: execution: prefix
+ok 169 - execution: prefix
+  ---
+  duration_ms: 0.274993
+  type: 'test'
+  ...
+# Subtest: execution: method calls
+ok 170 - execution: method calls
+  ---
+  duration_ms: 1.341145
+  type: 'test'
+  ...
+# Subtest: execution: recursion
+ok 171 - execution: recursion
+  ---
+  duration_ms: 1.146853
+  type: 'test'
+  ...
+# Subtest: execution: expression body
+ok 172 - execution: expression body
+  ---
+  duration_ms: 0.696126
+  type: 'test'
+  ...
+# Subtest: execution: overloads
+ok 173 - execution: overloads
+  ---
+  duration_ms: 1.19792
+  type: 'test'
+  ...
+# Subtest: execution: objects constructor fields
+ok 174 - execution: objects constructor fields
+  ---
+  duration_ms: 0.916006
+  type: 'test'
+  ...
+# Subtest: execution: object initializer
+ok 175 - execution: object initializer
+  ---
+  duration_ms: 0.576786
+  type: 'test'
+  ...
+# Subtest: execution: static initializer dependency
+ok 176 - execution: static initializer dependency
+  ---
+  duration_ms: 0.407713
+  type: 'test'
+  ...
+# Subtest: execution: string value equality
+ok 177 - execution: string value equality
+  ---
+  duration_ms: 0.263957
+  type: 'test'
+  ...
+# Subtest: execution: object identity
+ok 178 - execution: object identity
+  ---
+  duration_ms: 0.33273
+  type: 'test'
+  ...
+# Subtest: execution: string library
+ok 179 - execution: string library
+  ---
+  duration_ms: 0.349986
+  type: 'test'
+  ...
+# Subtest: execution: length
+ok 180 - execution: length
+  ---
+  duration_ms: 0.187021
+  type: 'test'
+  ...
+# Subtest: execution: numeric parse
+ok 181 - execution: numeric parse
+  ---
+  duration_ms: 0.304688
+  type: 'test'
+  ...
+# Subtest: execution: round-to-even conversion
+ok 182 - execution: round-to-even conversion
+  ---
+  duration_ms: 0.194903
+  type: 'test'
+  ...
+# Subtest: execution: array sort
+ok 183 - execution: array sort
+  ---
+  duration_ms: 0.390206
+  type: 'test'
+  ...
+# Subtest: execution: caught division
+ok 184 - execution: caught division
+  ---
+  duration_ms: 0.673642
+  type: 'test'
+  ...
+# Subtest: execution: throw exception
+ok 185 - execution: throw exception
+  ---
+  duration_ms: 0.301473
+  type: 'test'
+  ...
+# Subtest: execution: cross-frame catch
+ok 186 - execution: cross-frame catch
+  ---
+  duration_ms: 0.418018
+  type: 'test'
+  ...
+# Subtest: execution: rethrow
+ok 187 - execution: rethrow
+  ---
+  duration_ms: 0.340752
+  type: 'test'
+  ...
+# Subtest: execution: Main args
+ok 188 - execution: Main args
+  ---
+  duration_ms: 0.21996
+  type: 'test'
+  ...
+# Subtest: execution: definite assignment both branches
+ok 189 - execution: definite assignment both branches
+  ---
+  duration_ms: 0.237507
+  type: 'test'
+  ...
+# Subtest: diagnostic: type mismatch
+ok 190 - diagnostic: type mismatch
+  ---
+  duration_ms: 0.302905
+  type: 'test'
+  ...
+# Subtest: diagnostic: unassigned
+ok 191 - diagnostic: unassigned
+  ---
+  duration_ms: 0.143205
+  type: 'test'
+  ...
+# Subtest: diagnostic: short circuit definite assignment
+ok 192 - diagnostic: short circuit definite assignment
+  ---
+  duration_ms: 0.208894
+  type: 'test'
+  ...
+# Subtest: diagnostic: branch definite assignment
+ok 193 - diagnostic: branch definite assignment
+  ---
+  duration_ms: 0.210887
+  type: 'test'
+  ...
+# Subtest: diagnostic: unknown name
+ok 194 - diagnostic: unknown name
+  ---
+  duration_ms: 0.123736
+  type: 'test'
+  ...
+# Subtest: diagnostic: duplicate type
+ok 195 - diagnostic: duplicate type
+  ---
+  duration_ms: 0.162144
+  type: 'test'
+  ...
+# Subtest: diagnostic: duplicate member
+ok 196 - diagnostic: duplicate member
+  ---
+  duration_ms: 0.587884
+  type: 'test'
+  ...
+# Subtest: diagnostic: multiple Main
+ok 197 - diagnostic: multiple Main
+  ---
+  duration_ms: 1.21785
+  type: 'test'
+  ...
+# Subtest: diagnostic: missing return
+ok 198 - diagnostic: missing return
+  ---
+  duration_ms: 0.274362
+  type: 'test'
+  ...
+# Subtest: diagnostic: break outside loop
+ok 199 - diagnostic: break outside loop
+  ---
+  duration_ms: 0.110786
+  type: 'test'
+  ...
+# Subtest: diagnostic: rethrow outside catch
+ok 200 - diagnostic: rethrow outside catch
+  ---
+  duration_ms: 0.082935
+  type: 'test'
+  ...
+# Subtest: diagnostic: unknown type
+ok 201 - diagnostic: unknown type
+  ---
+  duration_ms: 0.101132
+  type: 'test'
+  ...
+# Subtest: diagnostic: double to int
+ok 202 - diagnostic: double to int
+  ---
+  duration_ms: 0.098277
+  type: 'test'
+  ...
+# Subtest: diagnostic: const write
+ok 203 - diagnostic: const write
+  ---
+  duration_ms: 0.178488
+  type: 'test'
+  ...
+# Subtest: diagnostic: no entry
+ok 204 - diagnostic: no entry
+  ---
+  duration_ms: 0.084908
+  type: 'test'
+  ...
+# Subtest: diagnostic: unsupported long
+ok 205 - diagnostic: unsupported long
+  ---
+  duration_ms: 0.106119
+  type: 'test'
+  ...
+# Subtest: diagnostic: unsupported float literal
+ok 206 - diagnostic: unsupported float literal
+  ---
+  duration_ms: 0.241603
+  type: 'test'
+  ...
+# Subtest: diagnostic: invalid condition
+ok 207 - diagnostic: invalid condition
+  ---
+  duration_ms: 0.123426
+  type: 'test'
+  ...
+# Subtest: profile: unsupported syntax blocks emission class A<T>{}Console.WriteLine(1);
+ok 208 - profile: unsupported syntax blocks emission class A<T>{}Console.WriteLine(1);
+  ---
+  duration_ms: 0.565259
+  type: 'test'
+  ...
+# Subtest: profile: unsupported syntax blocks emission class A{public int X{get;init;}}Console.
+ok 209 - profile: unsupported syntax blocks emission class A{public int X{get;init;}}Console.
+  ---
+  duration_ms: 0.33217
+  type: 'test'
+  ...
+# Subtest: profile: unsupported syntax blocks emission class B{}class A:B{}Console.WriteLine(1)
+ok 210 - profile: unsupported syntax blocks emission class B{}class A:B{}Console.WriteLine(1)
+  ---
+  duration_ms: 0.134672
+  type: 'test'
+  ...
+# Subtest: profile: unsupported syntax blocks emission class A{static async void Main(){}}
+ok 211 - profile: unsupported syntax blocks emission class A{static async void Main(){}}
+  ---
+  duration_ms: 0.101963
+  type: 'test'
+  ...
+# Subtest: profile: unsupported syntax blocks emission try{Console.WriteLine(1);}catch(Exceptio
+ok 212 - profile: unsupported syntax blocks emission try{Console.WriteLine(1);}catch(Exceptio
+  ---
+  duration_ms: 0.349165
+  type: 'test'
+  ...
+# Subtest: profile: unsupported syntax blocks emission Console.WriteLine($"hi {1}");
+ok 213 - profile: unsupported syntax blocks emission Console.WriteLine($"hi {1}");
+  ---
+  duration_ms: 0.154042
+  type: 'test'
+  ...
+# Subtest: compiler: references resolve across source files
+ok 214 - compiler: references resolve across source files
+  ---
+  duration_ms: 0.373601
+  type: 'test'
+  ...
+# Subtest: compiler: int Main exit code survives startup
+ok 215 - compiler: int Main exit code survives startup
+  ---
+  duration_ms: 0.211187
+  type: 'test'
+  ...
+# Subtest: bytecode: serialize and verify roundtrip
+ok 216 - bytecode: serialize and verify roundtrip
+  ---
+  duration_ms: 1.099302
+  type: 'test'
+  ...
+# Subtest: bytecode: rejects corrupt version and stack underflow
+ok 217 - bytecode: rejects corrupt version and stack underflow
+  ---
+  duration_ms: 0.403466
+  type: 'test'
+  ...
+# Subtest: bytecode: rejects invalid branch target
+ok 218 - bytecode: rejects invalid branch target
+  ---
+  duration_ms: 0.162184
+  type: 'test'
+  ...
+# Subtest: sample: particles
+ok 219 - sample: particles
+  ---
+  duration_ms: 2.183261
+  type: 'test'
+  ...
+# Subtest: sample: gc
+ok 220 - sample: gc
+  ---
+  duration_ms: 0.7383
+  type: 'test'
+  ...
+# Subtest: sample: recursion
+ok 221 - sample: recursion
+  ---
+  duration_ms: 1.94283
+  type: 'test'
+  ...
+# Subtest: sample: exceptions
+ok 222 - sample: exceptions
+  ---
+  duration_ms: 0.568143
+  type: 'test'
+  ...
+# Subtest: sample: arrays
+ok 223 - sample: arrays
+  ---
+  duration_ms: 1.019942
+  type: 'test'
+  ...
+# Subtest: sample: errors
+ok 224 - sample: errors
+  ---
+  duration_ms: 0.229515
+  type: 'test'
+  ...
+# Subtest: sample: partial
+ok 225 - sample: partial
+  ---
+  duration_ms: 0.627523
+  type: 'test'
+  ...
+# Subtest: sample: switch
+ok 226 - sample: switch
+  ---
+  duration_ms: 1.088456
+  type: 'test'
+  ...
+# Subtest: sample: conversions
+ok 227 - sample: conversions
+  ---
+  duration_ms: 0.362694
+  type: 'test'
+  ...
+# Subtest: sample: null-assignment
+ok 228 - sample: null-assignment
+  ---
+  duration_ms: 0.882837
+  type: 'test'
+  ...
+# Subtest: sample: call-hierarchy
+ok 229 - sample: call-hierarchy
+  ---
+  duration_ms: 1.010408
+  type: 'test'
+  ...
+# Subtest: sample: guarded-calls
+ok 230 - sample: guarded-calls
+  ---
+  duration_ms: 0.533041
+  type: 'test'
+  ...
+# Subtest: sample: short-circuit
+ok 231 - sample: short-circuit
+  ---
+  duration_ms: 0.353572
+  type: 'test'
+  ...
+# Subtest: sample: nameof
+ok 232 - sample: nameof
+  ---
+  duration_ms: 0.31892
+  type: 'test'
+  ...
+# Subtest: sample: properties
+ok 233 - sample: properties
+  ---
+  duration_ms: 0.955646
+  type: 'test'
+  ...
+# Subtest: sample: readonly-properties
+ok 234 - sample: readonly-properties
+  ---
+  duration_ms: 0.60503
+  type: 'test'
+  ...
+# Subtest: sample: finally
+ok 235 - sample: finally
+  ---
+  duration_ms: 0.601564
+  type: 'test'
+  ...
+# Subtest: sample: finally-loop
+ok 236 - sample: finally-loop
+  ---
+  duration_ms: 0.414663
+  type: 'test'
+  ...
+# Subtest: sample: structural-refactoring
+ok 237 - sample: structural-refactoring
+  ---
+  duration_ms: 0.531278
+  type: 'test'
+  ...
+# Subtest: sample: safe-watches
+ok 238 - sample: safe-watches
+  ---
+  duration_ms: 0.750848
+  type: 'test'
+  ...
+# Subtest: sample: analyzer-tasks
+ok 239 - sample: analyzer-tasks
+  ---
+  duration_ms: 0.188433
+  type: 'test'
+  ...
+# Subtest: compiler: empty file set reports a missing entry point
+ok 240 - compiler: empty file set reports a missing entry point
+  ---
+  duration_ms: 0.110076
+  type: 'test'
+  ...
+# Subtest: debugger: entry, step over, step in and step out use source points
+ok 241 - debugger: entry, step over, step in and step out use source points
+  ---
+  duration_ms: 21.474067
+  type: 'test'
+  ...
+# Subtest: debugger: step over does not enter called method
+ok 242 - debugger: step over does not enter called method
+  ---
+  duration_ms: 1.095556
+  type: 'test'
+  ...
+# Subtest: debugger: bound breakpoints, conditions and hit counts
+ok 243 - debugger: bound breakpoints, conditions and hit counts
+  ---
+  duration_ms: 1.874016
+  type: 'test'
+  ...
+# Subtest: debugger: logpoints continue without pausing
+ok 244 - debugger: logpoints continue without pausing
+  ---
+  duration_ms: 0.661113
+  type: 'test'
+  ...
+# Subtest: debugger: invalid breakpoints report unverified locations
+ok 245 - debugger: invalid breakpoints report unverified locations
+  ---
+  duration_ms: 1.144219
+  type: 'test'
+  ...
+# Subtest: debugger: disabled breakpoints do not stop
+ok 246 - debugger: disabled breakpoints do not stop
+  ---
+  duration_ms: 0.642225
+  type: 'test'
+  ...
+# Subtest: debugger: function breakpoints stop in callee
+ok 247 - debugger: function breakpoints stop in callee
+  ---
+  duration_ms: 0.947464
+  type: 'test'
+  ...
+# Subtest: debugger: data breakpoint fires on local write
+ok 248 - debugger: data breakpoint fires on local write
+  ---
+  duration_ms: 0.497537
+  type: 'test'
+  ...
+# Subtest: debugger: side-effect-free watches cannot invoke or mutate
+ok 249 - debugger: side-effect-free watches cannot invoke or mutate
+  ---
+  duration_ms: 1.666024
+  type: 'test'
+  ...
+# Subtest: debugger: local edits affect continuation and validate types
+ok 250 - debugger: local edits affect continuation and validate types
+  ---
+  duration_ms: 1.711923
+  type: 'test'
+  ...
+# Subtest: debugger: const locals cannot be edited
+ok 251 - debugger: const locals cannot be edited
+  ---
+  duration_ms: 0.436586
+  type: 'test'
+  ...
+# Subtest: debugger: arrays and object children expose actual values
+ok 252 - debugger: arrays and object children expose actual values
+  ---
+  duration_ms: 1.32448
+  type: 'test'
+  ...
+# Subtest: debugger: exception break happens before catch and resumes into handler
+ok 253 - debugger: exception break happens before catch and resumes into handler
+  ---
+  duration_ms: 0.857959
+  type: 'test'
+  ...
+# Subtest: debugger: uncaught-only exception mode ignores caught exceptions
+ok 254 - debugger: uncaught-only exception mode ignores caught exceptions
+  ---
+  duration_ms: 0.417948
+  type: 'test'
+  ...
+# Subtest: debugger: reverse snapshots restore locals and output
+ok 255 - debugger: reverse snapshots restore locals and output
+  ---
+  duration_ms: 0.657978
+  type: 'test'
+  ...
+# Subtest: debugger: reverse snapshots retain objects across later collection
+ok 256 - debugger: reverse snapshots retain objects across later collection
+  ---
+  duration_ms: 1.240534
+  type: 'test'
+  ...
+# Subtest: debugger: recording is bounded and optional
+ok 257 - debugger: recording is bounded and optional
+  ---
+  duration_ms: 1.289898
+  type: 'test'
+  ...
+# Subtest: debugger: pause/stop are cooperative and invalidate frames
+ok 258 - debugger: pause/stop are cooperative and invalidate frames
+  ---
+  duration_ms: 0.36562
+  type: 'test'
+  ...
+# Subtest: initial model places all panels closed with persistent empty document group
+ok 259 - initial model places all panels closed with persistent empty document group
+  ---
+  duration_ms: 1.915398
+  type: 'test'
+  ...
+# Subtest: open activate close reopen retains unique placement
+ok 260 - open activate close reopen retains unique placement
+  ---
+  duration_ms: 0.8324
+  type: 'test'
+  ...
+# Subtest: edge dock left
+ok 261 - edge dock left
+  ---
+  duration_ms: 0.563096
+  type: 'test'
+  ...
+# Subtest: edge dock right
+ok 262 - edge dock right
+  ---
+  duration_ms: 0.536025
+  type: 'test'
+  ...
+# Subtest: edge dock top
+ok 263 - edge dock top
+  ---
+  duration_ms: 0.821525
+  type: 'test'
+  ...
+# Subtest: edge dock bottom
+ok 264 - edge dock bottom
+  ---
+  duration_ms: 0.187402
+  type: 'test'
+  ...
+# Subtest: tab reorder is deterministic
+ok 265 - tab reorder is deterministic
+  ---
+  duration_ms: 0.230577
+  type: 'test'
+  ...
+# Subtest: float redock cleans empty floating nodes
+ok 266 - float redock cleans empty floating nodes
+  ---
+  duration_ms: 0.281323
+  type: 'test'
+  ...
+# Subtest: auto hide pin close and reopen move one panel
+ok 267 - auto hide pin close and reopen move one panel
+  ---
+  duration_ms: 0.59168
+  type: 'test'
+  ...
+# Subtest: documents cannot auto hide
+ok 268 - documents cannot auto hide
+  ---
+  duration_ms: 0.647784
+  type: 'test'
+  ...
+# Subtest: nonclosable panels cannot close
+ok 269 - nonclosable panels cannot close
+  ---
+  duration_ms: 0.247773
+  type: 'test'
+  ...
+# Subtest: layout JSON restore roundtrips split auto hide and floats
+ok 270 - layout JSON restore roundtrips split auto hide and floats
+  ---
+  duration_ms: 0.430117
+  type: 'test'
+  ...
+# Subtest: invalid restore is atomic s=>s.root.active='missing'
+ok 271 - invalid restore is atomic s=>s.root.active='missing'
+  ---
+  duration_ms: 0.145689
+  type: 'test'
+  ...
+# Subtest: invalid restore is atomic s=>s.closed.push('output')
+ok 272 - invalid restore is atomic s=>s.closed.push('output')
+  ---
+  duration_ms: 0.158398
+  type: 'test'
+  ...
+# Subtest: invalid restore is atomic s=>s.root.id=''
+ok 273 - invalid restore is atomic s=>s.root.id=''
+  ---
+  duration_ms: 0.089615
+  type: 'test'
+  ...
+# Subtest: invalid restore is atomic s=>s.version=999
+ok 274 - invalid restore is atomic s=>s.version=999
+  ---
+  duration_ms: 0.08002
+  type: 'test'
+  ...
+# Subtest: invalid restore is atomic s=>s.closed.pop()
+ok 275 - invalid restore is atomic s=>s.closed.pop()
+  ---
+  duration_ms: 0.076885
+  type: 'test'
+  ...
+# Subtest: invalid restore is atomic s=>s.autoHide.left.push('unknown')
+ok 276 - invalid restore is atomic s=>s.autoHide.left.push('unknown')
+  ---
+  duration_ms: 0.211868
+  type: 'test'
+  ...
+# Subtest: invalid restore is atomic s=>s.floating.push({id:'f',x:0,y:0,width:-1,height:100,root:createGroup('g',[])})
+ok 277 - invalid restore is atomic s=>s.floating.push({id:'f',x:0,y:0,width:-1,height:100,root:createGroup('g',[])})
+  ---
+  duration_ms: 0.125128
+  type: 'test'
+  ...
+# Subtest: invalid operation rolls back model
+ok 278 - invalid operation rolls back model
+  ---
+  duration_ms: 0.339059
+  type: 'test'
+  ...
+# Subtest: undo redo restore correct placements
+ok 279 - undo redo restore correct placements
+  ---
+  duration_ms: 0.223886
+  type: 'test'
+  ...
+# Subtest: split resize validates finite ratio and clamps keyboard movement
+ok 280 - split resize validates finite ratio and clamps keyboard movement
+  ---
+  duration_ms: 0.31939
+  type: 'test'
+  ...
+# Subtest: closing final document keeps a docking target
+ok 281 - closing final document keeps a docking target
+  ---
+  duration_ms: 0.119349
+  type: 'test'
+  ...
+# Subtest: history bound and subscriptions can unsubscribe
+ok 282 - history bound and subscriptions can unsubscribe
+  ---
+  duration_ms: 0.853743
+  type: 'test'
+  ...
+# Subtest: register and unregister document panels preserve invariants
+ok 283 - register and unregister document panels preserve invariants
+  ---
+  duration_ms: 0.169505
+  type: 'test'
+  ...
+# Subtest: duplicate tree identifiers are rejected
+ok 284 - duplicate tree identifiers are rejected
+  ---
+  duration_ms: 0.152319
+  type: 'test'
+  ...
+# Subtest: randomized moves maintain uniqueness and valid round trips
+ok 285 - randomized moves maintain uniqueness and valid round trips
+  ---
+  duration_ms: 150.493405
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: cast int
+ok 286 - C\# language additions on IR, strict IL and direct CIL: cast int
+  ---
+  duration_ms: 29.469154
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: cast double
+ok 287 - C\# language additions on IR, strict IL and direct CIL: cast double
+  ---
+  duration_ms: 6.563599
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: typed defaults
+ok 288 - C\# language additions on IR, strict IL and direct CIL: typed defaults
+  ---
+  duration_ms: 6.577924
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: switch grouped
+ok 289 - C\# language additions on IR, strict IL and direct CIL: switch grouped
+  ---
+  duration_ms: 10.394555
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: string switch
+ok 290 - C\# language additions on IR, strict IL and direct CIL: string switch
+  ---
+  duration_ms: 10.219822
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: null switch
+ok 291 - C\# language additions on IR, strict IL and direct CIL: null switch
+  ---
+  duration_ms: 2.929873
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: negative pattern
+ok 292 - C\# language additions on IR, strict IL and direct CIL: negative pattern
+  ---
+  duration_ms: 2.500417
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: switch expression
+ok 293 - C\# language additions on IR, strict IL and direct CIL: switch expression
+  ---
+  duration_ms: 3.261802
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: numeric switch expression
+ok 294 - C\# language additions on IR, strict IL and direct CIL: numeric switch expression
+  ---
+  duration_ms: 2.772998
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: nested switch continue
+ok 295 - C\# language additions on IR, strict IL and direct CIL: nested switch continue
+  ---
+  duration_ms: 3.063143
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: null coalescing assignment once
+ok 296 - C\# language additions on IR, strict IL and direct CIL: null coalescing assignment once
+  ---
+  duration_ms: 3.035031
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: null coalescing field
+ok 297 - C\# language additions on IR, strict IL and direct CIL: null coalescing field
+  ---
+  duration_ms: 5.468227
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: unchecked overflow
+ok 298 - C\# language additions on IR, strict IL and direct CIL: unchecked overflow
+  ---
+  duration_ms: 1.740756
+  type: 'test'
+  ...
+# Subtest: C\# language additions on IR, strict IL and direct CIL: unchecked block
+ok 299 - C\# language additions on IR, strict IL and direct CIL: unchecked block
+  ---
+  duration_ms: 1.569749
+  type: 'test'
+  ...
+# Subtest: C\# diagnostics: duplicate switch
+ok 300 - C\# diagnostics: duplicate switch
+  ---
+  duration_ms: 0.382705
+  type: 'test'
+  ...
+# Subtest: C\# diagnostics: fallthrough
+ok 301 - C\# diagnostics: fallthrough
+  ---
+  duration_ms: 0.355364
+  type: 'test'
+  ...
+# Subtest: C\# diagnostics: nonconstant switch
+ok 302 - C\# diagnostics: nonconstant switch
+  ---
+  duration_ms: 0.237697
+  type: 'test'
+  ...
+# Subtest: C\# diagnostics: invalid cast
+ok 303 - C\# diagnostics: invalid cast
+  ---
+  duration_ms: 0.158869
+  type: 'test'
+  ...
+# Subtest: C\# nonexhaustive switch expression warns and throws for unmatched value
+ok 304 - C\# nonexhaustive switch expression warns and throws for unmatched value
+  ---
+  duration_ms: 1.379243
+  type: 'test'
+  ...
+# Subtest: Generators: build-info source participates in binding and execution
+ok 305 - Generators: build-info source participates in binding and execution
+  ---
+  duration_ms: 1.940275
+  type: 'test'
+  ...
+# Subtest: Generators: source/additional/options snapshots invalidate input cache
+ok 306 - Generators: source/additional/options snapshots invalidate input cache
+  ---
+  duration_ms: 0.855586
+  type: 'test'
+  ...
+# Subtest: Generators: cache reused when compiler-only options change
+ok 307 - Generators: cache reused when compiler-only options change
+  ---
+  duration_ms: 0.59223
+  type: 'test'
+  ...
+# Subtest: Generators: JSON schema classes are usable by source
+ok 308 - Generators: JSON schema classes are usable by source
+  ---
+  duration_ms: 0.678109
+  type: 'test'
+  ...
+# Subtest: Generators: failure rolls back partial output and blocks emission
+ok 309 - Generators: failure rolls back partial output and blocks emission
+  ---
+  duration_ms: 0.573041
+  type: 'test'
+  ...
+# Subtest: Generators: Promise callbacks explicitly refused
+ok 310 - Generators: Promise callbacks explicitly refused
+  ---
+  duration_ms: 0.374813
+  type: 'test'
+  ...
+# Subtest: Generators: duplicate paths and traversal rejected
+ok 311 - Generators: duplicate paths and traversal rejected
+  ---
+  duration_ms: 0.937018
+  type: 'test'
+  ...
+# Subtest: Generators: generated-document API cannot be edited as user source
+ok 312 - Generators: generated-document API cannot be edited as user source
+  ---
+  duration_ms: 0.66518
+  type: 'test'
+  ...
+# Subtest: Generators: output budgets reject oversized generators
+ok 313 - Generators: output budgets reject oversized generators
+  ---
+  duration_ms: 0.333691
+  type: 'test'
+  ...
+# Subtest: Analyzers: unreferenced locals and empty catches use actual source spans
+ok 314 - Analyzers: unreferenced locals and empty catches use actual source spans
+  ---
+  duration_ms: 0.912872
+  type: 'test'
+  ...
+# Subtest: Analyzers: severity overrides can suppress or block compilation
+ok 315 - Analyzers: severity overrides can suppress or block compilation
+  ---
+  duration_ms: 0.523947
+  type: 'test'
+  ...
+# Subtest: Extensions: cancellation precedes callback execution
+ok 316 - Extensions: cancellation precedes callback execution
+  ---
+  duration_ms: 0.290477
+  type: 'test'
+  ...
+# Subtest: Refactoring: bound var to explicit type applies transactionally
+ok 317 - Refactoring: bound var to explicit type applies transactionally
+  ---
+  duration_ms: 2.247468
+  type: 'test'
+  ...
+# Subtest: Refactoring: stale, overlapping and malformed multi-file edits never partially apply
+ok 318 - Refactoring: stale, overlapping and malformed multi-file edits never partially apply
+  ---
+  duration_ms: 0.976508
+  type: 'test'
+  ...
+# Subtest: Refactoring: successful project rejects a rewrite that introduces compile errors
+ok 319 - Refactoring: successful project rejects a rewrite that introduces compile errors
+  ---
+  duration_ms: 0.570607
+  type: 'test'
+  ...
+# Subtest: Refactoring: rename updates bound references, not strings or comments
+ok 320 - Refactoring: rename updates bound references, not strings or comments
+  ---
+  duration_ms: 1.75047
+  type: 'test'
+  ...
+# Subtest: Formatting: indentation preserves literal and comment text
+ok 321 - Formatting: indentation preserves literal and comment text
+  ---
+  duration_ms: 1.292242
+  type: 'test'
+  ...
+# Subtest: Folding and selection ranges are nested and ignore braces inside literals
+ok 322 - Folding and selection ranges are nested and ignore braces inside literals
+  ---
+  duration_ms: 0.901064
+  type: 'test'
+  ...
+# Subtest: LSP: new capabilities correspond to actual handlers
+ok 323 - LSP: new capabilities correspond to actual handlers
+  ---
+  duration_ms: 1.798122
+  type: 'test'
+  ...
+# Subtest: LSP: code actions carry versions and type hints use inferred types
+ok 324 - LSP: code actions carry versions and type hints use inferred types
+  ---
+  duration_ms: 1.264931
+  type: 'test'
+  ...
+# Subtest: LSP: versioned rename WorkspaceEdit when client supports documentChanges
+ok 325 - LSP: versioned rename WorkspaceEdit when client supports documentChanges
+  ---
+  duration_ms: 0.951209
+  type: 'test'
+  ...
+# Subtest: workspace: unchanged compilation returns cached identity
+ok 326 - workspace: unchanged compilation returns cached identity
+  ---
+  duration_ms: 8.829278
+  type: 'test'
+  ...
+# Subtest: workspace: edit retains other document tree and reparses only changed file
+ok 327 - workspace: edit retains other document tree and reparses only changed file
+  ---
+  duration_ms: 1.692274
+  type: 'test'
+  ...
+# Subtest: workspace: rejects stale changes
+ok 328 - workspace: rejects stale changes
+  ---
+  duration_ms: 0.117016
+  type: 'test'
+  ...
+# Subtest: workspace: incremental UTF-16 document changes
+ok 329 - workspace: incremental UTF-16 document changes
+  ---
+  duration_ms: 0.891209
+  type: 'test'
+  ...
+# Subtest: workspace: pre-cancelled request aborts
+ok 330 - workspace: pre-cancelled request aborts
+  ---
+  duration_ms: 0.669947
+  type: 'test'
+  ...
+# Subtest: workspace: limits and atomic project imports
+ok 331 - workspace: limits and atomic project imports
+  ---
+  duration_ms: 0.342524
+  type: 'test'
+  ...
+# Subtest: workspace: export/import roundtrip
+ok 332 - workspace: export/import roundtrip
+  ---
+  duration_ms: 0.43917
+  type: 'test'
+  ...
+# Subtest: language: member completion on unfinished file
+ok 333 - language: member completion on unfinished file
+  ---
+  duration_ms: 2.465916
+  type: 'test'
+  ...
+# Subtest: language: local type-aware array completion
+ok 334 - language: local type-aware array completion
+  ---
+  duration_ms: 1.370149
+  type: 'test'
+  ...
+# Subtest: language: definitions, bound references, hover and rename
+ok 335 - language: definitions, bound references, hover and rename
+  ---
+  duration_ms: 3.543155
+  type: 'test'
+  ...
+# Subtest: language: rename collision rejected
+ok 336 - language: rename collision rejected
+  ---
+  duration_ms: 0.446261
+  type: 'test'
+  ...
+# Subtest: language: no unbound text replacements during rename
+ok 337 - language: no unbound text replacements during rename
+  ---
+  duration_ms: 1.156758
+  type: 'test'
+  ...
+# Subtest: language: cross-file method definition
+ok 338 - language: cross-file method definition
+  ---
+  duration_ms: 0.646212
+  type: 'test'
+  ...
+# Subtest: language: document symbols and semantic tokens
+ok 339 - language: document symbols and semantic tokens
+  ---
+  duration_ms: 0.946743
+  type: 'test'
+  ...
+# Rewritten assemblies are unsigned. \#SF debug maps were invalidated. Metadata and resources were preserved; method bodies came only from IL text.
+# Subtest: Managed DLL without \#SF: int output
+ok 340 - Managed DLL without \#SF: int output
+  ---
+  duration_ms: 17.750464
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: double
+ok 341 - Managed DLL without \#SF: double
+  ---
+  duration_ms: 4.026081
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: loop
+ok 342 - Managed DLL without \#SF: loop
+  ---
+  duration_ms: 3.803305
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: call
+ok 343 - Managed DLL without \#SF: call
+  ---
+  duration_ms: 3.012797
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: object
+ok 344 - Managed DLL without \#SF: object
+  ---
+  duration_ms: 7.021011
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: array
+ok 345 - Managed DLL without \#SF: array
+  ---
+  duration_ms: 2.867159
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: throw catch
+ok 346 - Managed DLL without \#SF: throw catch
+  ---
+  duration_ms: 2.49536
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: null catch
+ok 347 - Managed DLL without \#SF: null catch
+  ---
+  duration_ms: 2.116631
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: bool boxing
+ok 348 - Managed DLL without \#SF: bool boxing
+  ---
+  duration_ms: 2.100937
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: empty catch
+ok 349 - Managed DLL without \#SF: empty catch
+  ---
+  duration_ms: 3.04844
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: string ops
+ok 350 - Managed DLL without \#SF: string ops
+  ---
+  duration_ms: 1.267434
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: ceil
+ok 351 - Managed DLL without \#SF: ceil
+  ---
+  duration_ms: 0.97138
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: methods can be invoked without an entry point
+ok 352 - Independent managed DLL: methods can be invoked without an entry point
+  ---
+  duration_ms: 2.126125
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: 64-bit arithmetic stays exact
+ok 353 - Independent managed DLL: 64-bit arithmetic stays exact
+  ---
+  duration_ms: 0.495224
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: short floating literal and conversion
+ok 354 - Independent managed DLL: short floating literal and conversion
+  ---
+  duration_ms: 0.364849
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: switch table dispatch
+ok 355 - Independent managed DLL: switch table dispatch
+  ---
+  duration_ms: 0.837088
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: managed address into local
+ok 356 - Independent managed DLL: managed address into local
+  ---
+  duration_ms: 0.666682
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: static initializer executes exactly once
+ok 357 - Independent managed DLL: static initializer executes exactly once
+  ---
+  duration_ms: 1.527575
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: finally executes on leave
+ok 358 - Independent managed DLL: finally executes on leave
+  ---
+  duration_ms: 0.909136
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: checked overflow becomes a managed fault
+ok 359 - Independent managed DLL: checked overflow becomes a managed fault
+  ---
+  duration_ms: 0.574794
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: unsigned division uses unsigned operands
+ok 360 - Independent managed DLL: unsigned division uses unsigned operands
+  ---
+  duration_ms: 0.470076
+  type: 'test'
+  ...
+# Subtest: Direct CIL: hard instruction limit
+ok 361 - Direct CIL: hard instruction limit
+  ---
+  duration_ms: 0.589385
+  type: 'test'
+  ...
+# Subtest: Direct CIL: hard output limit
+ok 362 - Direct CIL: hard output limit
+  ---
+  duration_ms: 1.107144
+  type: 'test'
+  ...
+# Subtest: Direct CIL: unknown external method is refused before output
+ok 363 - Direct CIL: unknown external method is refused before output
+  ---
+  duration_ms: 1.480395
+  type: 'test'
+  ...
+# Subtest: Direct CIL: native pointer instructions remain inspectable, not executable
+ok 364 - Direct CIL: native pointer instructions remain inspectable, not executable
+  ---
+  duration_ms: 0.637928
+  type: 'test'
+  ...
+# Subtest: Direct CIL: invalid local slot and stack underflow rejected
+ok 365 - Direct CIL: invalid local slot and stack underflow rejected
+  ---
+  duration_ms: 0.715135
+  type: 'test'
+  ...
+# Subtest: Direct CIL: host arguments use strict declared types and arity
+ok 366 - Direct CIL: host arguments use strict declared types and arity
+  ---
+  duration_ms: 1.073654
+  type: 'test'
+  ...
+# Subtest: IL text: every method rebuilt; changed constants actually execute
+ok 367 - IL text: every method rebuilt; changed constants actually execute
+  ---
+  duration_ms: 2.683663
+  type: 'test'
+  ...
+# Subtest: IL text: IL from a debug-profile binary loses stale profile metadata
+ok 368 - IL text: IL from a debug-profile binary loses stale profile metadata
+  ---
+  duration_ms: 2.875822
+  type: 'test'
+  ...
+# Subtest: IL text: long, branch and switch round trips
+ok 369 - IL text: long, branch and switch round trips
+  ---
+  duration_ms: 0.947234
+  type: 'test'
+  ...
+# Subtest: IL text: catches round trip
+ok 370 - IL text: catches round trip
+  ---
+  duration_ms: 2.277964
+  type: 'test'
+  ...
+# Subtest: IL text: omitted or duplicate methods are never read from image fallback
+ok 371 - IL text: omitted or duplicate methods are never read from image fallback
+  ---
+  duration_ms: 0.781805
+  type: 'test'
+  ...
+# Subtest: IL text: undefined labels and invalid opcodes are rejected
+ok 372 - IL text: undefined labels and invalid opcodes are rejected
+  ---
+  duration_ms: 1.931943
+  type: 'test'
+  ...
+# Subtest: Decompiler: simple independently authored Add is reconstructable C\#
+ok 373 - Decompiler: simple independently authored Add is reconstructable C\#
+  ---
+  duration_ms: 3.604486
+  type: 'test'
+  ...
+# Subtest: Decompiler: mutable local loads captured before writes
+ok 374 - Decompiler: mutable local loads captured before writes
+  ---
+  duration_ms: 0.93213
+  type: 'test'
+  ...
+# Subtest: Decompiler: EH returns full IL and explicit fallback, not fake C\#
+ok 375 - Decompiler: EH returns full IL and explicit fallback, not fake C\#
+  ---
+  duration_ms: 3.16121
+  type: 'test'
+  ...
+# Subtest: Decoder: i64, r4 and standard two-byte operations
+ok 376 - Decoder: i64, r4 and standard two-byte operations
+  ---
+  duration_ms: 0.115323
+  type: 'test'
+  ...
+# Subtest: Decoder: branch into operand rejected
+ok 377 - Decoder: branch into operand rejected
+  ---
+  duration_ms: 0.150476
+  type: 'test'
+  ...
+# Subtest: Metadata: generic method spec signature uses its blob column
+ok 378 - Metadata: generic method spec signature uses its blob column
+  ---
+  duration_ms: 1.121014
+  type: 'test'
+  ...
+# Subtest: Metadata: generic variables, arrays, byrefs and function pointers inspect
+ok 379 - Metadata: generic variables, arrays, byrefs and function pointers inspect
+  ---
+  duration_ms: 0.247662
+  type: 'test'
+  ...
+# Subtest: PE: inspection rejects malformed and truncated user DLLs
+ok 380 - PE: inspection rejects malformed and truncated user DLLs
+  ---
+  duration_ms: 0.387943
+  type: 'test'
+  ...
+# Subtest: GC: strong handles retain; weak handles clear after strong release
+ok 381 - GC: strong handles retain; weak handles clear after strong release
+  ---
+  duration_ms: 0.406842
+  type: 'test'
+  ...
+# Subtest: GC: scratch marks reused; foreign handles rejected
+ok 382 - GC: scratch marks reused; foreign handles rejected
+  ---
+  duration_ms: 0.214021
+  type: 'test'
+  ...
+# Subtest: CLI: inspect, invoke, decompile, editable IL, assemble, exec ordinary DLL
+ok 383 - CLI: inspect, invoke, decompile, editable IL, assemble, exec ordinary DLL
+  ---
+  duration_ms: 577.348908
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: byte local truncates and extends
+ok 384 - Direct CIL storage: byte local truncates and extends
+  ---
+  duration_ms: 0.920964
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: sbyte local truncates and extends
+ok 385 - Direct CIL storage: sbyte local truncates and extends
+  ---
+  duration_ms: 0.588454
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: ushort local truncates and extends
+ok 386 - Direct CIL storage: ushort local truncates and extends
+  ---
+  duration_ms: 0.456095
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: short local truncates and extends
+ok 387 - Direct CIL storage: short local truncates and extends
+  ---
+  duration_ms: 0.514543
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: ldelem.u1 array extends correctly
+ok 388 - Direct CIL storage: ldelem.u1 array extends correctly
+  ---
+  duration_ms: 0.63252
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: ldelem.i1 array extends correctly
+ok 389 - Direct CIL storage: ldelem.i1 array extends correctly
+  ---
+  duration_ms: 0.824199
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: indirect byte store truncates before unsigned load
+ok 390 - Direct CIL storage: indirect byte store truncates before unsigned load
+  ---
+  duration_ms: 0.638129
+  type: 'test'
+  ...
+# Subtest: Direct CIL host result keeps uint identity
+ok 391 - Direct CIL host result keeps uint identity
+  ---
+  duration_ms: 0.572971
+  type: 'test'
+  ...
+# Subtest: Direct CIL host result keeps ulong identity
+ok 392 - Direct CIL host result keeps ulong identity
+  ---
+  duration_ms: 0.590066
+  type: 'test'
+  ...
+# Subtest: Direct CIL host result keeps bool identity
+ok 393 - Direct CIL host result keeps bool identity
+  ---
+  duration_ms: 0.509466
+  type: 'test'
+  ...
+# Subtest: Direct CIL: string[] Main defaults to an empty argument array
+ok 394 - Direct CIL: string[] Main defaults to an empty argument array
+  ---
+  duration_ms: 0.513902
+  type: 'test'
+  ...
+# Subtest: CLI: no dummy arguments required for method decompilation or string[] entry point
+ok 395 - CLI: no dummy arguments required for method decompilation or string[] entry point
+  ---
+  duration_ms: 155.096128
+  type: 'test'
+  ...
+# Subtest: XML parses quoted >, namespaces, numeric entities, comments and CDATA
+ok 396 - XML parses quoted >, namespaces, numeric entities, comments and CDATA
+  ---
+  duration_ms: 2.251804
+  type: 'test'
+  ...
+# Subtest: reject malformed or unsafe XML <!DOCTYPE x><x/>
+ok 397 - reject malformed or unsafe XML <!DOCTYPE x><x/>
+  ---
+  duration_ms: 0.408073
+  type: 'test'
+  ...
+# Subtest: reject malformed or unsafe XML <!ENTITY x "hi"><x/>
+ok 398 - reject malformed or unsafe XML <!ENTITY x "hi"><x/>
+  ---
+  duration_ms: 1.577911
+  type: 'test'
+  ...
+# Subtest: reject malformed or unsafe XML <x>&evil;</x>
+ok 399 - reject malformed or unsafe XML <x>&evil;</x>
+  ---
+  duration_ms: 0.3267
+  type: 'test'
+  ...
+# Subtest: reject malformed or unsafe XML <x>&oops</x>
+ok 400 - reject malformed or unsafe XML <x>&oops</x>
+  ---
+  duration_ms: 0.19341
+  type: 'test'
+  ...
+# Subtest: reject malformed or unsafe XML <x a="1" a="2"/>
+ok 401 - reject malformed or unsafe XML <x a="1" a="2"/>
+  ---
+  duration_ms: 0.151518
+  type: 'test'
+  ...
+# Subtest: reject malformed or unsafe XML <x></y>
+ok 402 - reject malformed or unsafe XML <x></y>
+  ---
+  duration_ms: 0.206701
+  type: 'test'
+  ...
+# Subtest: reject malformed or unsafe XML <x/><y/>
+ok 403 - reject malformed or unsafe XML <x/><y/>
+  ---
+  duration_ms: 0.150917
+  type: 'test'
+  ...
+# Subtest: reject malformed or unsafe XML <x>
+ok 404 - reject malformed or unsafe XML <x>
+  ---
+  duration_ms: 0.391368
+  type: 'test'
+  ...
+# Subtest: reject malformed or unsafe XML <x a="<"/>
+ok 405 - reject malformed or unsafe XML <x a="<"/>
+  ---
+  duration_ms: 0.491098
+  type: 'test'
+  ...
+# Subtest: reject malformed or unsafe XML <x>&\#0;</x>
+ok 406 - reject malformed or unsafe XML <x>&\#0;</x>
+  ---
+  duration_ms: 0.204107
+  type: 'test'
+  ...
+# Subtest: XML structural limits
+ok 407 - XML structural limits
+  ---
+  duration_ms: 0.265178
+  type: 'test'
+  ...
+# Subtest: workspace paths normalize separators and internal parents
+ok 408 - workspace paths normalize separators and internal parents
+  ---
+  duration_ms: 0.455995
+  type: 'test'
+  ...
+# Subtest: reject unsafe workspace path "../../out"
+ok 409 - reject unsafe workspace path "../../out"
+  ---
+  duration_ms: 0.193541
+  type: 'test'
+  ...
+# Subtest: reject unsafe workspace path "/tmp/x"
+ok 410 - reject unsafe workspace path "/tmp/x"
+  ---
+  duration_ms: 0.084306
+  type: 'test'
+  ...
+# Subtest: reject unsafe workspace path "C:\\\\x"
+ok 411 - reject unsafe workspace path "C:\\\\x"
+  ---
+  duration_ms: 0.070736
+  type: 'test'
+  ...
+# Subtest: reject unsafe workspace path "https://example/a"
+ok 412 - reject unsafe workspace path "https://example/a"
+  ---
+  duration_ms: 0.067211
+  type: 'test'
+  ...
+# Subtest: reject unsafe workspace path ".."
+ok 413 - reject unsafe workspace path ".."
+  ---
+  duration_ms: 0.075593
+  type: 'test'
+  ...
+# Subtest: reject unsafe workspace path "\\u0000"
+ok 414 - reject unsafe workspace path "\\u0000"
+  ---
+  duration_ms: 0.060711
+  type: 'test'
+  ...
+# Subtest: glob matches zero or multiple directories, not partial filenames
+ok 415 - glob matches zero or multiple directories, not partial filenames
+  ---
+  duration_ms: 0.43298
+  type: 'test'
+  ...
+# Subtest: condition grammar implements comparison, boolean precedence and Exists
+ok 416 - condition grammar implements comparison, boolean precedence and Exists
+  ---
+  duration_ms: 0.871269
+  type: 'test'
+  ...
+# Subtest: SDK globs exclude bin obj hidden and files outside project
+ok 417 - SDK globs exclude bin obj hidden and files outside project
+  ---
+  duration_ms: 2.426376
+  type: 'test'
+  ...
+# Subtest: Compile include exclude remove update links and disabled defaults
+ok 418 - Compile include exclude remove update links and disabled defaults
+  ---
+  duration_ms: 0.992392
+  type: 'test'
+  ...
+# Subtest: duplicate implicit/explicit compile is a build error
+ok 419 - duplicate implicit/explicit compile is a build error
+  ---
+  duration_ms: 0.291848
+  type: 'test'
+  ...
+# Subtest: conditions use configuration globals and inherited properties
+ok 420 - conditions use configuration globals and inherited properties
+  ---
+  duration_ms: 0.47899
+  type: 'test'
+  ...
+# Subtest: SLNX folders preserve solution-relative paths and references in dependency order
+ok 421 - SLNX folders preserve solution-relative paths and references in dependency order
+  ---
+  duration_ms: 0.509746
+  type: 'test'
+  ...
+# Subtest: missing sibling project diagnostics explain folder granting
+ok 422 - missing sibling project diagnostics explain folder granting
+  ---
+  duration_ms: 0.913082
+  type: 'test'
+  ...
+# Subtest: project cycles are diagnosed and traversal terminates
+ok 423 - project cycles are diagnosed and traversal terminates
+  ---
+  duration_ms: 0.191397
+  type: 'test'
+  ...
+# Subtest: missing compile files and external root traversal are errors
+ok 424 - missing compile files and external root traversal are errors
+  ---
+  duration_ms: 0.243196
+  type: 'test'
+  ...
+# Subtest: packages binaries analyzers and target execution are explicitly blocked
+ok 425 - packages binaries analyzers and target execution are explicitly blocked
+  ---
+  duration_ms: 0.4462
+  type: 'test'
+  ...
+# Subtest: unsupported condition is not treated as true
+ok 426 - unsupported condition is not treated as true
+  ---
+  duration_ms: 0.353451
+  type: 'test'
+  ...
+# Subtest: create csproj and slnx round trip quoted names
+ok 427 - create csproj and slnx round trip quoted names
+  ---
+  duration_ms: 0.43222
+  type: 'test'
+  ...
+# Subtest: file input reads binary and preserves directory paths
+ok 428 - file input reads binary and preserves directory paths
+  ---
+  duration_ms: 1.228667
+  type: 'test'
+  ...
+# Subtest: disk save checks every baseline before any write
+ok 429 - disk save checks every baseline before any write
+  ---
+  duration_ms: 0.755816
+  type: 'test'
+  ...
+# Subtest: disk save writes explicit changes and updates baseline
+ok 430 - disk save writes explicit changes and updates baseline
+  ---
+  duration_ms: 0.572921
+  type: 'test'
+  ...
+# Subtest: disk save partial I/O failure reports already-written files
+ok 431 - disk save partial I/O failure reports already-written files
+  ---
+  duration_ms: 0.434313
+  type: 'test'
+  ...
+# Subtest: directory traversal retains handles and skips .git
+ok 432 - directory traversal retains handles and skips .git
+  ---
+  duration_ms: 0.408474
+  type: 'test'
+  ...
+# Subtest: LSP: initialization advertises implemented UTF-16 capabilities
+ok 433 - LSP: initialization advertises implemented UTF-16 capabilities
+  ---
+  duration_ms: 1.784051
+  type: 'test'
+  ...
+# Subtest: LSP: versioned diagnostics publish on open and edit
+ok 434 - LSP: versioned diagnostics publish on open and edit
+  ---
+  duration_ms: 8.916699
+  type: 'test'
+  ...
+# Subtest: LSP: completion, rename and semantic tokens return protocol shapes
+ok 435 - LSP: completion, rename and semantic tokens return protocol shapes
+  ---
+  duration_ms: 2.020056
+  type: 'test'
+  ...
+# Subtest: LSP: unknown methods return method-not-found
+ok 436 - LSP: unknown methods return method-not-found
+  ---
+  duration_ms: 0.249354
+  type: 'test'
+  ...
+# Subtest: DAP: launch, stepping, inspection and repeated stopped events
+ok 437 - DAP: launch, stepping, inspection and repeated stopped events
+  ---
+  duration_ms: 6.060517
+  type: 'test'
+  ...
+# Subtest: DAP: unsupported requests fail explicitly
+ok 438 - DAP: unsupported requests fail explicitly
+  ---
+  duration_ms: 0.311188
+  type: 'test'
+  ...
+# Subtest: DAP: breakpoints can be configured before launch
+ok 439 - DAP: breakpoints can be configured before launch
+  ---
+  duration_ms: 1.660024
+  type: 'test'
+  ...
+# Subtest: DAP: IL launch from Uint8Array retains source stepping and IL frame coordinates
+ok 440 - DAP: IL launch from Uint8Array retains source stepping and IL frame coordinates
+  ---
+  duration_ms: 13.312475
+  type: 'test'
+  ...
+# Subtest: DAP: IL launch from ArrayBuffer retains source stepping and IL frame coordinates
+ok 441 - DAP: IL launch from ArrayBuffer retains source stepping and IL frame coordinates
+  ---
+  duration_ms: 4.849557
+  type: 'test'
+  ...
+# Subtest: DAP: IL launch from JSON byte array retains source stepping and IL frame coordinates
+ok 442 - DAP: IL launch from JSON byte array retains source stepping and IL frame coordinates
+  ---
+  duration_ms: 4.822366
+  type: 'test'
+  ...
+# Subtest: DAP: malformed assembly transport bytes are rejected rather than coerced
+ok 443 - DAP: malformed assembly transport bytes are rejected rather than coerced
+  ---
+  duration_ms: 0.468214
+  type: 'test'
+  ...
+# Subtest: 0.4 example exact output on IR / loader / direct CIL: partial
+ok 444 - 0.4 example exact output on IR / loader / direct CIL: partial
+  ---
+  duration_ms: 32.03489
+  type: 'test'
+  ...
+# Subtest: 0.4 example exact output on IR / loader / direct CIL: switch
+ok 445 - 0.4 example exact output on IR / loader / direct CIL: switch
+  ---
+  duration_ms: 9.421168
+  type: 'test'
+  ...
+# Subtest: 0.4 example exact output on IR / loader / direct CIL: conversions
+ok 446 - 0.4 example exact output on IR / loader / direct CIL: conversions
+  ---
+  duration_ms: 4.529947
+  type: 'test'
+  ...
+# Subtest: 0.4 example exact output on IR / loader / direct CIL: null-assignment
+ok 447 - 0.4 example exact output on IR / loader / direct CIL: null-assignment
+  ---
+  duration_ms: 7.18657
+  type: 'test'
+  ...
+# Subtest: 0.4 example exact output on IR / loader / direct CIL: call-hierarchy
+ok 448 - 0.4 example exact output on IR / loader / direct CIL: call-hierarchy
+  ---
+  duration_ms: 2.511764
+  type: 'test'
+  ...
+# Subtest: 0.4 example exact output on IR / loader / direct CIL: guarded-calls
+ok 449 - 0.4 example exact output on IR / loader / direct CIL: guarded-calls
+  ---
+  duration_ms: 9.858315
+  type: 'test'
+  ...
+# Subtest: 0.4 example exact output on IR / loader / direct CIL: short-circuit
+ok 450 - 0.4 example exact output on IR / loader / direct CIL: short-circuit
+  ---
+  duration_ms: 2.892687
+  type: 'test'
+  ...
+# Subtest: 0.4 example exact output on IR / loader / direct CIL: nameof
+ok 451 - 0.4 example exact output on IR / loader / direct CIL: nameof
+  ---
+  duration_ms: 1.737641
+  type: 'test'
+  ...
+# Subtest: 0.4 example exact output on IR / loader / direct CIL: properties
+ok 452 - 0.4 example exact output on IR / loader / direct CIL: properties
+  ---
+  duration_ms: 5.761719
+  type: 'test'
+  ...
+# Subtest: 0.4 example exact output on IR / loader / direct CIL: readonly-properties
+ok 453 - 0.4 example exact output on IR / loader / direct CIL: readonly-properties
+  ---
+  duration_ms: 5.416429
+  type: 'test'
+  ...
+# Subtest: 0.4 example exact output on IR / loader / direct CIL: finally
+ok 454 - 0.4 example exact output on IR / loader / direct CIL: finally
+  ---
+  duration_ms: 8.062486
+  type: 'test'
+  ...
+# Subtest: 0.4 example exact output on IR / loader / direct CIL: finally-loop
+ok 455 - 0.4 example exact output on IR / loader / direct CIL: finally-loop
+  ---
+  duration_ms: 2.804534
+  type: 'test'
+  ...
+# Subtest: 0.4 example exact output on IR / loader / direct CIL: structural-refactoring
+ok 456 - 0.4 example exact output on IR / loader / direct CIL: structural-refactoring
+  ---
+  duration_ms: 6.191333
+  type: 'test'
+  ...
+# Subtest: 0.4 example exact output on IR / loader / direct CIL: safe-watches
+ok 457 - 0.4 example exact output on IR / loader / direct CIL: safe-watches
+  ---
+  duration_ms: 3.468603
+  type: 'test'
+  ...
+# Subtest: 0.4 example exact output on IR / loader / direct CIL: analyzer-tasks
+ok 458 - 0.4 example exact output on IR / loader / direct CIL: analyzer-tasks
+  ---
+  duration_ms: 1.254986
+  type: 'test'
+  ...
+# Subtest: 0.4 C\# unassigned name
+ok 459 - 0.4 C\# unassigned name
+  ---
+  duration_ms: 1.11825
+  type: 'test'
+  ...
+# Subtest: 0.4 C\# method group
+ok 460 - 0.4 C\# method group
+  ---
+  duration_ms: 2.530643
+  type: 'test'
+  ...
+# Subtest: 0.4 C\# instance name no dereference
+ok 461 - 0.4 C\# instance name no dereference
+  ---
+  duration_ms: 1.47697
+  type: 'test'
+  ...
+# Subtest: 0.4 C\# shadowed contextual method
+ok 462 - 0.4 C\# shadowed contextual method
+  ---
+  duration_ms: 1.36381
+  type: 'test'
+  ...
+# Subtest: 0.4 C\# nameof in switch
+ok 463 - 0.4 C\# nameof in switch
+  ---
+  duration_ms: 1.523299
+  type: 'test'
+  ...
+# Subtest: 0.4 C\# file namespace partial
+ok 464 - 0.4 C\# file namespace partial
+  ---
+  duration_ms: 1.865413
+  type: 'test'
+  ...
+# Subtest: 0.4 C\# explicit diagnostic unknown nameof
+ok 465 - 0.4 C\# explicit diagnostic unknown nameof
+  ---
+  duration_ms: 0.30632
+  type: 'test'
+  ...
+# Subtest: 0.4 C\# explicit diagnostic invalid nameof expression
+ok 466 - 0.4 C\# explicit diagnostic invalid nameof expression
+  ---
+  duration_ms: 0.255765
+  type: 'test'
+  ...
+# Subtest: 0.4 C\# explicit diagnostic partial missing marker
+ok 467 - 0.4 C\# explicit diagnostic partial missing marker
+  ---
+  duration_ms: 0.145108
+  type: 'test'
+  ...
+# Subtest: 0.4 C\# explicit diagnostic partial access conflict
+ok 468 - 0.4 C\# explicit diagnostic partial access conflict
+  ---
+  duration_ms: 0.11253
+  type: 'test'
+  ...
+# Subtest: 0.4 C\# explicit diagnostic distinct namespaces not conflated
+ok 469 - 0.4 C\# explicit diagnostic distinct namespaces not conflated
+  ---
+  duration_ms: 0.287101
+  type: 'test'
+  ...
+# Subtest: 0.4 C\# explicit diagnostic partial methods rejected
+ok 470 - 0.4 C\# explicit diagnostic partial methods rejected
+  ---
+  duration_ms: 0.206941
+  type: 'test'
+  ...
+# Subtest: 0.4 partial cached syntax is not mutated by repeated compilation
+ok 471 - 0.4 partial cached syntax is not mutated by repeated compilation
+  ---
+  duration_ms: 0.828705
+  type: 'test'
+  ...
+# Subtest: 0.4 library no Main, real cctor, roundtrip and invocation debug=true
+ok 472 - 0.4 library no Main, real cctor, roundtrip and invocation debug=true
+  ---
+  duration_ms: 16.166394
+  type: 'test'
+  ...
+# Subtest: 0.4 library no Main, real cctor, roundtrip and invocation debug=false
+ok 473 - 0.4 library no Main, real cctor, roundtrip and invocation debug=false
+  ---
+  duration_ms: 2.1627
+  type: 'test'
+  ...
+# Subtest: 0.4 library permits empty class
+ok 474 - 0.4 library permits empty class
+  ---
+  duration_ms: 0.382876
+  type: 'test'
+  ...
+# Subtest: 0.4 library rejects top-level executable statements
+ok 475 - 0.4 library rejects top-level executable statements
+  ---
+  duration_ms: 0.169044
+  type: 'test'
+  ...
+# Subtest: 0.4 library treats Main as ordinary method
+ok 476 - 0.4 library treats Main as ordinary method
+  ---
+  duration_ms: 0.606201
+  type: 'test'
+  ...
+# Subtest: 0.4 library workspace keeps compiler options during refactor validation
+ok 477 - 0.4 library workspace keeps compiler options during refactor validation
+  ---
+  duration_ms: 2.214377
+  type: 'test'
+  ...
+# Subtest: 0.4 bounded literal search literal punctuation
+ok 478 - 0.4 bounded literal search literal punctuation
+  ---
+  duration_ms: 2.050481
+  type: 'test'
+  ...
+# Subtest: 0.4 bounded literal search unicode case offset
+ok 479 - 0.4 bounded literal search unicode case offset
+  ---
+  duration_ms: 0.234873
+  type: 'test'
+  ...
+# Subtest: 0.4 bounded literal search surrogate UTF16
+ok 480 - 0.4 bounded literal search surrogate UTF16
+  ---
+  duration_ms: 0.277938
+  type: 'test'
+  ...
+# Subtest: 0.4 bounded literal search whole word unicode
+ok 481 - 0.4 bounded literal search whole word unicode
+  ---
+  duration_ms: 1.176848
+  type: 'test'
+  ...
+# Subtest: 0.4 bounded literal search case sensitive
+ok 482 - 0.4 bounded literal search case sensitive
+  ---
+  duration_ms: 0.081623
+  type: 'test'
+  ...
+# Subtest: 0.4 bounded literal search empty query
+ok 483 - 0.4 bounded literal search empty query
+  ---
+  duration_ms: 0.050967
+  type: 'test'
+  ...
+# Subtest: 0.4 search correct line positions after skipped whole-word matches
+ok 484 - 0.4 search correct line positions after skipped whole-word matches
+  ---
+  duration_ms: 0.280352
+  type: 'test'
+  ...
+# Subtest: 0.4 search bounds distinguish exact count from truncated result
+ok 485 - 0.4 search bounds distinguish exact count from truncated result
+  ---
+  duration_ms: 0.291859
+  type: 'test'
+  ...
+# Subtest: 0.4 search cancellation and limits
+ok 486 - 0.4 search cancellation and limits
+  ---
+  duration_ms: 0.545089
+  type: 'test'
+  ...
+# Subtest: 0.4 versioned replace-all across two files
+ok 487 - 0.4 versioned replace-all across two files
+  ---
+  duration_ms: 1.103248
+  type: 'test'
+  ...
+# Subtest: 0.4 replace-all will not partially apply a truncated search
+ok 488 - 0.4 replace-all will not partially apply a truncated search
+  ---
+  duration_ms: 9.309871
+  type: 'test'
+  ...
+# Subtest: 0.4 call hierarchy excludes nameof from execution edges
+ok 489 - 0.4 call hierarchy excludes nameof from execution edges
+  ---
+  duration_ms: 0.916878
+  type: 'test'
+  ...
+# Subtest: 0.4 call hierarchy rejects stale symbols
+ok 490 - 0.4 call hierarchy rejects stale symbols
+  ---
+  duration_ms: 0.378518
+  type: 'test'
+  ...
+# Subtest: 0.4 LSP call-hierarchy and reference lenses wire shapes
+ok 491 - 0.4 LSP call-hierarchy and reference lenses wire shapes
+  ---
+  duration_ms: 1.287124
+  type: 'test'
+  ...
+# Subtest: 0.4 heap census sums sizes and type counts
+ok 492 - 0.4 heap census sums sizes and type counts
+  ---
+  duration_ms: 0.237186
+  type: 'test'
+  ...
+# Subtest: 0.4 heap paging sorted and complete without duplicate handles
+ok 493 - 0.4 heap paging sorted and complete without duplicate handles
+  ---
+  duration_ms: 0.947363
+  type: 'test'
+  ...
+# Subtest: 0.4 heap stale pages invalidated by allocation, collection and restore
+ok 494 - 0.4 heap stale pages invalidated by allocation, collection and restore
+  ---
+  duration_ms: 0.301172
+  type: 'test'
+  ...
+# Subtest: 0.4 heap generations do not alias abandoned debugger future
+ok 495 - 0.4 heap generations do not alias abandoned debugger future
+  ---
+  duration_ms: 0.293642
+  type: 'test'
+  ...
+# Subtest: 0.4 heap retention path traces strong roots and fields, not weak handles
+ok 496 - 0.4 heap retention path traces strong roots and fields, not weak handles
+  ---
+  duration_ms: 0.427352
+  type: 'test'
+  ...
+# Subtest: 0.4 heap retention diagnostics are bounded for cycles
+ok 497 - 0.4 heap retention diagnostics are bounded for cycles
+  ---
+  duration_ms: 0.137537
+  type: 'test'
+  ...
+# Subtest: 0.4 heap validates page and traversal budgets
+ok 498 - 0.4 heap validates page and traversal budgets
+  ---
+  duration_ms: 0.145228
+  type: 'test'
+  ...
+# Subtest: 0.4 write permissions resolved before any streams open
+ok 499 - 0.4 write permissions resolved before any streams open
+  ---
+  duration_ms: 0.615955
+  type: 'test'
+  ...
+# Subtest: 0.4 disk conflict rechecked after permission prompt
+ok 500 - 0.4 disk conflict rechecked after permission prompt
+  ---
+  duration_ms: 3.45316
+  type: 'test'
+  ...
+# Subtest: 0.4 disk project example Workshop/Workshop.slnx 
+ok 501 - 0.4 disk project example Workshop/Workshop.slnx 
+  ---
+  duration_ms: 5.817172
+  type: 'test'
+  ...
+# Subtest: 0.4 disk project example Linked/Linked.csproj 
+ok 502 - 0.4 disk project example Linked/Linked.csproj 
+  ---
+  duration_ms: 15.027572
+  type: 'test'
+  ...
+# Subtest: 0.4 disk project example Configurations/Configurations.csproj Debug
+ok 503 - 0.4 disk project example Configurations/Configurations.csproj Debug
+  ---
+  duration_ms: 2.740689
+  type: 'test'
+  ...
+# Subtest: 0.4 disk project example Configurations/Configurations.csproj Release
+ok 504 - 0.4 disk project example Configurations/Configurations.csproj Release
+  ---
+  duration_ms: 1.209657
+  type: 'test'
+  ...
+# Subtest: 0.4 disk project example Library/Library.csproj 
+ok 505 - 0.4 disk project example Library/Library.csproj 
+  ---
+  duration_ms: 1.863571
+  type: 'test'
+  ...
+# Subtest: 0.4 disk project example Unsupported/Unsupported.csproj 
+ok 506 - 0.4 disk project example Unsupported/Unsupported.csproj 
+  ---
+  duration_ms: 0.471739
+  type: 'test'
+  ...
+# Subtest: 0.4 disk project example Generated/Generated.csproj 
+ok 507 - 0.4 disk project example Generated/Generated.csproj 
+  ---
+  duration_ms: 2.111944
+  type: 'test'
+  ...
+# Subtest: 0.4 CLI solution run
+ok 508 - 0.4 CLI solution run
+  ---
+  duration_ms: 117.623006
+  type: 'test'
+  ...
+# Subtest: 0.4 CLI linked sources
+ok 509 - 0.4 CLI linked sources
+  ---
+  duration_ms: 90.448459
+  type: 'test'
+  ...
+# Subtest: 0.4 CLI release configuration
+ok 510 - 0.4 CLI release configuration
+  ---
+  duration_ms: 93.022928
+  type: 'test'
+  ...
+# Subtest: 0.4 CLI library invocation
+ok 511 - 0.4 CLI library invocation
+  ---
+  duration_ms: 146.551137
+  type: 'test'
+  ...
+# Subtest: 0.4 CLI unsupported package blocks build
+ok 512 - 0.4 CLI unsupported package blocks build
+  ---
+  duration_ms: 158.483527
+  type: 'test'
+  ...
+# Subtest: 0.4 CLI project information
+ok 513 - 0.4 CLI project information
+  ---
+  duration_ms: 68.624233
+  type: 'test'
+  ...
+# Subtest: 0.5 CIL debugger: entry, real instruction bytes, and primitive slots without debug metadata
+ok 514 - 0.5 CIL debugger: entry, real instruction bytes, and primitive slots without debug metadata
+  ---
+  duration_ms: 13.943173
+  type: 'test'
+  ...
+# Subtest: 0.5 CIL debugger: argument mutation before the load changes execution
+ok 515 - 0.5 CIL debugger: argument mutation before the load changes execution
+  ---
+  duration_ms: 3.102833
+  type: 'test'
+  ...
+# Subtest: 0.5 CIL debugger: editing argument does not rewrite values already on evaluation stack
+ok 516 - 0.5 CIL debugger: editing argument does not rewrite values already on evaluation stack
+  ---
+  duration_ms: 1.892243
+  type: 'test'
+  ...
+# Subtest: 0.5 CIL debugger: step advances exactly one decoded instruction
+ok 517 - 0.5 CIL debugger: step advances exactly one decoded instruction
+  ---
+  duration_ms: 1.525603
+  type: 'test'
+  ...
+# Subtest: 0.5 CIL debugger: conditional instruction breakpoints and resume skip
+ok 518 - 0.5 CIL debugger: conditional instruction breakpoints and resume skip
+  ---
+  duration_ms: 3.210685
+  type: 'test'
+  ...
+# Subtest: 0.5 CIL debugger: logpoints do not stop and use safe watches
+ok 519 - 0.5 CIL debugger: logpoints do not stop and use safe watches
+  ---
+  duration_ms: 1.308486
+  type: 'test'
+  ...
+# Subtest: 0.5 CIL debugger: invalid locations, expressions and hit conditions rejected
+ok 520 - 0.5 CIL debugger: invalid locations, expressions and hit conditions rejected
+  ---
+  duration_ms: 1.157629
+  type: 'test'
+  ...
+# Subtest: 0.5 CIL debugger: run to instruction is temporary
+ok 521 - 0.5 CIL debugger: run to instruction is temporary
+  ---
+  duration_ms: 0.699401
+  type: 'test'
+  ...
+# Subtest: 0.5 CIL debugger: conditions must be boolean
+ok 522 - 0.5 CIL debugger: conditions must be boolean
+  ---
+  duration_ms: 1.381667
+  type: 'test'
+  ...
+# Subtest: 0.5 CIL debugger: side effects and wrong-type edits are refused
+ok 523 - 0.5 CIL debugger: side effects and wrong-type edits are refused
+  ---
+  duration_ms: 1.376789
+  type: 'test'
+  ...
+# Subtest: 0.5 CIL debugger: comparison and boolean watch semantics
+ok 524 - 0.5 CIL debugger: comparison and boolean watch semantics
+  ---
+  duration_ms: 0.900754
+  type: 'test'
+  ...
+# Subtest: 0.5 CIL debugger: exception pause resumes handling and finally exactly once
+ok 525 - 0.5 CIL debugger: exception pause resumes handling and finally exactly once
+  ---
+  duration_ms: 8.829028
+  type: 'test'
+  ...
+# Subtest: 0.5 CIL debugger: uncaught-only ignores exceptions with finally plus outer catch
+ok 526 - 0.5 CIL debugger: uncaught-only ignores exceptions with finally plus outer catch
+  ---
+  duration_ms: 3.079217
+  type: 'test'
+  ...
+# Subtest: 0.5 CIL debugger: function entry and step out honor stack depth
+ok 527 - 0.5 CIL debugger: function entry and step out honor stack depth
+  ---
+  duration_ms: 2.441569
+  type: 'test'
+  ...
+# Subtest: 0.5 CIL debugger: native break pauses only in debug mode
+ok 528 - 0.5 CIL debugger: native break pauses only in debug mode
+  ---
+  duration_ms: 0.387562
+  type: 'test'
+  ...
+# Subtest: 0.5 DAP: managed DLL launch, pending instruction breakpoints, disassembly and restart
+ok 529 - 0.5 DAP: managed DLL launch, pending instruction breakpoints, disassembly and restart
+  ---
+  duration_ms: 2.224943
+  type: 'test'
+  ...
+# Subtest: 0.5 refactor: introduce whole initializer preserves side effects once
+ok 530 - 0.5 refactor: introduce whole initializer preserves side effects once
+  ---
+  duration_ms: 25.909805
+  type: 'test'
+  ...
+# Subtest: 0.5 refactor: introduce return expression stays inside block
+ok 531 - 0.5 refactor: introduce return expression stays inside block
+  ---
+  duration_ms: 2.771665
+  type: 'test'
+  ...
+# Subtest: 0.5 refactor: introduce local avoids existing names
+ok 532 - 0.5 refactor: introduce local avoids existing names
+  ---
+  duration_ms: 6.68099
+  type: 'test'
+  ...
+# Subtest: 0.5 refactor: no extraction from conditional branch or call argument
+ok 533 - 0.5 refactor: no extraction from conditional branch or call argument
+  ---
+  duration_ms: 0.762666
+  type: 'test'
+  ...
+# Subtest: 0.5 refactor: no extraction from a for initializer
+ok 534 - 0.5 refactor: no extraction from a for initializer
+  ---
+  duration_ms: 0.812992
+  type: 'test'
+  ...
+# Subtest: 0.5 refactor: inline immutable literal preserves type and all references
+ok 535 - 0.5 refactor: inline immutable literal preserves type and all references
+  ---
+  duration_ms: 18.296755
+  type: 'test'
+  ...
+# Subtest: 0.5 refactor: mutable local is not offered for inline
+ok 536 - 0.5 refactor: mutable local is not offered for inline
+  ---
+  duration_ms: 0.56579
+  type: 'test'
+  ...
+# Subtest: 0.5 refactor: overload-affecting literal widening is not inlined
+ok 537 - 0.5 refactor: overload-affecting literal widening is not inlined
+  ---
+  duration_ms: 0.449715
+  type: 'test'
+  ...
+# Subtest: 0.5 refactor: invert if keeps one condition evaluation
+ok 538 - 0.5 refactor: invert if keeps one condition evaluation
+  ---
+  duration_ms: 6.335771
+  type: 'test'
+  ...
+# Subtest: 0.5 refactor: expand initialized auto-property preserves get/set execution
+ok 539 - 0.5 refactor: expand initialized auto-property preserves get/set execution
+  ---
+  duration_ms: 9.050491
+  type: 'test'
+  ...
+# Subtest: 0.5 refactor: expansion preserves static initializer and private setter
+ok 540 - 0.5 refactor: expansion preserves static initializer and private setter
+  ---
+  duration_ms: 4.803459
+  type: 'test'
+  ...
+# Subtest: 0.5 refactor: getter-only constructor property is not expanded unsafely
+ok 541 - 0.5 refactor: getter-only constructor property is not expanded unsafely
+  ---
+  duration_ms: 0.862255
+  type: 'test'
+  ...
+# Subtest: 0.5 refactor: stale structural edit fails atomically
+ok 542 - 0.5 refactor: stale structural edit fails atomically
+  ---
+  duration_ms: 0.803427
+  type: 'test'
+  ...
+# Subtest: 0.5 editor: bracket pairs ignore comments and escaped string punctuation
+ok 543 - 0.5 editor: bracket pairs ignore comments and escaped string punctuation
+  ---
+  duration_ms: 0.282054
+  type: 'test'
+  ...
+# Subtest: 0.5 editor: unmatched delimiters are not paired across mismatch
+ok 544 - 0.5 editor: unmatched delimiters are not paired across mismatch
+  ---
+  duration_ms: 0.136656
+  type: 'test'
+  ...
+# Subtest: 0.5 editor: lexical insertion contexts include EOF comments and incomplete strings
+ok 545 - 0.5 editor: lexical insertion contexts include EOF comments and incomplete strings
+  ---
+  duration_ms: 0.576637
+  type: 'test'
+  ...
+# Subtest: 0.5 editor: literal replacement honors UTF-16, word and case constraints
+ok 546 - 0.5 editor: literal replacement honors UTF-16, word and case constraints
+  ---
+  duration_ms: 2.241789
+  type: 'test'
+  ...
+# Subtest: 0.5 editor: search text is literal rather than regex
+ok 547 - 0.5 editor: search text is literal rather than regex
+  ---
+  duration_ms: 0.18657
+  type: 'test'
+  ...
+# Subtest: 0.5 editor: replacement preflights result and match limits
+ok 548 - 0.5 editor: replacement preflights result and match limits
+  ---
+  duration_ms: 7.598488
+  type: 'test'
+  ...
+# Subtest: 0.5 editor: duplicate selected whole lines excludes trailing newline
+ok 549 - 0.5 editor: duplicate selected whole lines excludes trailing newline
+  ---
+  duration_ms: 0.201853
+  type: 'test'
+  ...
+# Subtest: 0.5 editor: duplicate last line upward and validate ranges
+ok 550 - 0.5 editor: duplicate last line upward and validate ranges
+  ---
+  duration_ms: 0.104377
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nested rethrow restores lexical exception / IR
+ok 551 - 0.5 language: nested rethrow restores lexical exception / IR
+  ---
+  duration_ms: 16.253815
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nested rethrow restores lexical exception / canonical CIL
+ok 552 - 0.5 language: nested rethrow restores lexical exception / canonical CIL
+  ---
+  duration_ms: 8.269086
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nested rethrow restores lexical exception / direct CIL
+ok 553 - 0.5 language: nested rethrow restores lexical exception / direct CIL
+  ---
+  duration_ms: 6.296482
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nested rethrow restores lexical exception / edited CIL
+ok 554 - 0.5 language: nested rethrow restores lexical exception / edited CIL
+  ---
+  duration_ms: 10.164755
+  type: 'test'
+  ...
+# Subtest: 0.5 language: auto property / IR
+ok 555 - 0.5 language: auto property / IR
+  ---
+  duration_ms: 3.537405
+  type: 'test'
+  ...
+# Subtest: 0.5 language: auto property / canonical CIL
+ok 556 - 0.5 language: auto property / canonical CIL
+  ---
+  duration_ms: 7.641623
+  type: 'test'
+  ...
+# Subtest: 0.5 language: auto property / direct CIL
+ok 557 - 0.5 language: auto property / direct CIL
+  ---
+  duration_ms: 4.074783
+  type: 'test'
+  ...
+# Subtest: 0.5 language: auto property / edited CIL
+ok 558 - 0.5 language: auto property / edited CIL
+  ---
+  duration_ms: 8.799754
+  type: 'test'
+  ...
+# Subtest: 0.5 language: expression getter / IR
+ok 559 - 0.5 language: expression getter / IR
+  ---
+  duration_ms: 2.467909
+  type: 'test'
+  ...
+# Subtest: 0.5 language: expression getter / canonical CIL
+ok 560 - 0.5 language: expression getter / canonical CIL
+  ---
+  duration_ms: 3.281432
+  type: 'test'
+  ...
+# Subtest: 0.5 language: expression getter / direct CIL
+ok 561 - 0.5 language: expression getter / direct CIL
+  ---
+  duration_ms: 2.081208
+  type: 'test'
+  ...
+# Subtest: 0.5 language: expression getter / edited CIL
+ok 562 - 0.5 language: expression getter / edited CIL
+  ---
+  duration_ms: 4.754264
+  type: 'test'
+  ...
+# Subtest: 0.5 language: explicit accessors / IR
+ok 563 - 0.5 language: explicit accessors / IR
+  ---
+  duration_ms: 1.255717
+  type: 'test'
+  ...
+# Subtest: 0.5 language: explicit accessors / canonical CIL
+ok 564 - 0.5 language: explicit accessors / canonical CIL
+  ---
+  duration_ms: 2.173476
+  type: 'test'
+  ...
+# Subtest: 0.5 language: explicit accessors / direct CIL
+ok 565 - 0.5 language: explicit accessors / direct CIL
+  ---
+  duration_ms: 1.572272
+  type: 'test'
+  ...
+# Subtest: 0.5 language: explicit accessors / edited CIL
+ok 566 - 0.5 language: explicit accessors / edited CIL
+  ---
+  duration_ms: 5.83604
+  type: 'test'
+  ...
+# Subtest: 0.5 language: expression accessors / IR
+ok 567 - 0.5 language: expression accessors / IR
+  ---
+  duration_ms: 1.212762
+  type: 'test'
+  ...
+# Subtest: 0.5 language: expression accessors / canonical CIL
+ok 568 - 0.5 language: expression accessors / canonical CIL
+  ---
+  duration_ms: 3.83665
+  type: 'test'
+  ...
+# Subtest: 0.5 language: expression accessors / direct CIL
+ok 569 - 0.5 language: expression accessors / direct CIL
+  ---
+  duration_ms: 1.705203
+  type: 'test'
+  ...
+# Subtest: 0.5 language: expression accessors / edited CIL
+ok 570 - 0.5 language: expression accessors / edited CIL
+  ---
+  duration_ms: 5.41646
+  type: 'test'
+  ...
+# Subtest: 0.5 language: getter only constructor / IR
+ok 571 - 0.5 language: getter only constructor / IR
+  ---
+  duration_ms: 2.642641
+  type: 'test'
+  ...
+# Subtest: 0.5 language: getter only constructor / canonical CIL
+ok 572 - 0.5 language: getter only constructor / canonical CIL
+  ---
+  duration_ms: 1.797482
+  type: 'test'
+  ...
+# Subtest: 0.5 language: getter only constructor / direct CIL
+ok 573 - 0.5 language: getter only constructor / direct CIL
+  ---
+  duration_ms: 1.892073
+  type: 'test'
+  ...
+# Subtest: 0.5 language: getter only constructor / edited CIL
+ok 574 - 0.5 language: getter only constructor / edited CIL
+  ---
+  duration_ms: 12.573725
+  type: 'test'
+  ...
+# Subtest: 0.5 language: static auto initialization / IR
+ok 575 - 0.5 language: static auto initialization / IR
+  ---
+  duration_ms: 4.389436
+  type: 'test'
+  ...
+# Subtest: 0.5 language: static auto initialization / canonical CIL
+ok 576 - 0.5 language: static auto initialization / canonical CIL
+  ---
+  duration_ms: 2.04293
+  type: 'test'
+  ...
+# Subtest: 0.5 language: static auto initialization / direct CIL
+ok 577 - 0.5 language: static auto initialization / direct CIL
+  ---
+  duration_ms: 1.560645
+  type: 'test'
+  ...
+# Subtest: 0.5 language: static auto initialization / edited CIL
+ok 578 - 0.5 language: static auto initialization / edited CIL
+  ---
+  duration_ms: 2.474668
+  type: 'test'
+  ...
+# Subtest: 0.5 language: assignment results / IR
+ok 579 - 0.5 language: assignment results / IR
+  ---
+  duration_ms: 2.130472
+  type: 'test'
+  ...
+# Subtest: 0.5 language: assignment results / canonical CIL
+ok 580 - 0.5 language: assignment results / canonical CIL
+  ---
+  duration_ms: 2.551805
+  type: 'test'
+  ...
+# Subtest: 0.5 language: assignment results / direct CIL
+ok 581 - 0.5 language: assignment results / direct CIL
+  ---
+  duration_ms: 2.081378
+  type: 'test'
+  ...
+# Subtest: 0.5 language: assignment results / edited CIL
+ok 582 - 0.5 language: assignment results / edited CIL
+  ---
+  duration_ms: 4.624359
+  type: 'test'
+  ...
+# Subtest: 0.5 language: property receiver evaluated once / IR
+ok 583 - 0.5 language: property receiver evaluated once / IR
+  ---
+  duration_ms: 1.554506
+  type: 'test'
+  ...
+# Subtest: 0.5 language: property receiver evaluated once / canonical CIL
+ok 584 - 0.5 language: property receiver evaluated once / canonical CIL
+  ---
+  duration_ms: 2.145053
+  type: 'test'
+  ...
+# Subtest: 0.5 language: property receiver evaluated once / direct CIL
+ok 585 - 0.5 language: property receiver evaluated once / direct CIL
+  ---
+  duration_ms: 1.577981
+  type: 'test'
+  ...
+# Subtest: 0.5 language: property receiver evaluated once / edited CIL
+ok 586 - 0.5 language: property receiver evaluated once / edited CIL
+  ---
+  duration_ms: 8.618091
+  type: 'test'
+  ...
+# Subtest: 0.5 language: coalescing property / IR
+ok 587 - 0.5 language: coalescing property / IR
+  ---
+  duration_ms: 4.183166
+  type: 'test'
+  ...
+# Subtest: 0.5 language: coalescing property / canonical CIL
+ok 588 - 0.5 language: coalescing property / canonical CIL
+  ---
+  duration_ms: 1.931342
+  type: 'test'
+  ...
+# Subtest: 0.5 language: coalescing property / direct CIL
+ok 589 - 0.5 language: coalescing property / direct CIL
+  ---
+  duration_ms: 4.742687
+  type: 'test'
+  ...
+# Subtest: 0.5 language: coalescing property / edited CIL
+ok 590 - 0.5 language: coalescing property / edited CIL
+  ---
+  duration_ms: 3.211225
+  type: 'test'
+  ...
+# Subtest: 0.5 language: private setter inside owner / IR
+ok 591 - 0.5 language: private setter inside owner / IR
+  ---
+  duration_ms: 1.652443
+  type: 'test'
+  ...
+# Subtest: 0.5 language: private setter inside owner / canonical CIL
+ok 592 - 0.5 language: private setter inside owner / canonical CIL
+  ---
+  duration_ms: 1.855028
+  type: 'test'
+  ...
+# Subtest: 0.5 language: private setter inside owner / direct CIL
+ok 593 - 0.5 language: private setter inside owner / direct CIL
+  ---
+  duration_ms: 1.776019
+  type: 'test'
+  ...
+# Subtest: 0.5 language: private setter inside owner / edited CIL
+ok 594 - 0.5 language: private setter inside owner / edited CIL
+  ---
+  duration_ms: 3.377786
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nameof property / IR
+ok 595 - 0.5 language: nameof property / IR
+  ---
+  duration_ms: 0.970588
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nameof property / canonical CIL
+ok 596 - 0.5 language: nameof property / canonical CIL
+  ---
+  duration_ms: 1.551411
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nameof property / direct CIL
+ok 597 - 0.5 language: nameof property / direct CIL
+  ---
+  duration_ms: 1.200845
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nameof property / edited CIL
+ok 598 - 0.5 language: nameof property / edited CIL
+  ---
+  duration_ms: 3.769865
+  type: 'test'
+  ...
+# Subtest: 0.5 language: normal finally / IR
+ok 599 - 0.5 language: normal finally / IR
+  ---
+  duration_ms: 0.72545
+  type: 'test'
+  ...
+# Subtest: 0.5 language: normal finally / canonical CIL
+ok 600 - 0.5 language: normal finally / canonical CIL
+  ---
+  duration_ms: 1.13121
+  type: 'test'
+  ...
+# Subtest: 0.5 language: normal finally / direct CIL
+ok 601 - 0.5 language: normal finally / direct CIL
+  ---
+  duration_ms: 1.029768
+  type: 'test'
+  ...
+# Subtest: 0.5 language: normal finally / edited CIL
+ok 602 - 0.5 language: normal finally / edited CIL
+  ---
+  duration_ms: 1.917631
+  type: 'test'
+  ...
+# Subtest: 0.5 language: return preserves value / IR
+ok 603 - 0.5 language: return preserves value / IR
+  ---
+  duration_ms: 1.214645
+  type: 'test'
+  ...
+# Subtest: 0.5 language: return preserves value / canonical CIL
+ok 604 - 0.5 language: return preserves value / canonical CIL
+  ---
+  duration_ms: 1.306594
+  type: 'test'
+  ...
+# Subtest: 0.5 language: return preserves value / direct CIL
+ok 605 - 0.5 language: return preserves value / direct CIL
+  ---
+  duration_ms: 1.034815
+  type: 'test'
+  ...
+# Subtest: 0.5 language: return preserves value / edited CIL
+ok 606 - 0.5 language: return preserves value / edited CIL
+  ---
+  duration_ms: 1.812734
+  type: 'test'
+  ...
+# Subtest: 0.5 language: return reference remains rooted / IR
+ok 607 - 0.5 language: return reference remains rooted / IR
+  ---
+  duration_ms: 1.396839
+  type: 'test'
+  ...
+# Subtest: 0.5 language: return reference remains rooted / canonical CIL
+ok 608 - 0.5 language: return reference remains rooted / canonical CIL
+  ---
+  duration_ms: 2.24921
+  type: 'test'
+  ...
+# Subtest: 0.5 language: return reference remains rooted / direct CIL
+ok 609 - 0.5 language: return reference remains rooted / direct CIL
+  ---
+  duration_ms: 1.70371
+  type: 'test'
+  ...
+# Subtest: 0.5 language: return reference remains rooted / edited CIL
+ok 610 - 0.5 language: return reference remains rooted / edited CIL
+  ---
+  duration_ms: 2.601349
+  type: 'test'
+  ...
+# Subtest: 0.5 language: exception finally then catch / IR
+ok 611 - 0.5 language: exception finally then catch / IR
+  ---
+  duration_ms: 0.733362
+  type: 'test'
+  ...
+# Subtest: 0.5 language: exception finally then catch / canonical CIL
+ok 612 - 0.5 language: exception finally then catch / canonical CIL
+  ---
+  duration_ms: 1.169067
+  type: 'test'
+  ...
+# Subtest: 0.5 language: exception finally then catch / direct CIL
+ok 613 - 0.5 language: exception finally then catch / direct CIL
+  ---
+  duration_ms: 2.216331
+  type: 'test'
+  ...
+# Subtest: 0.5 language: exception finally then catch / edited CIL
+ok 614 - 0.5 language: exception finally then catch / edited CIL
+  ---
+  duration_ms: 1.805773
+  type: 'test'
+  ...
+# Subtest: 0.5 language: try catch finally / IR
+ok 615 - 0.5 language: try catch finally / IR
+  ---
+  duration_ms: 0.816598
+  type: 'test'
+  ...
+# Subtest: 0.5 language: try catch finally / canonical CIL
+ok 616 - 0.5 language: try catch finally / canonical CIL
+  ---
+  duration_ms: 1.098201
+  type: 'test'
+  ...
+# Subtest: 0.5 language: try catch finally / direct CIL
+ok 617 - 0.5 language: try catch finally / direct CIL
+  ---
+  duration_ms: 1.321236
+  type: 'test'
+  ...
+# Subtest: 0.5 language: try catch finally / edited CIL
+ok 618 - 0.5 language: try catch finally / edited CIL
+  ---
+  duration_ms: 1.48372
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nested finally / IR
+ok 619 - 0.5 language: nested finally / IR
+  ---
+  duration_ms: 0.669606
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nested finally / canonical CIL
+ok 620 - 0.5 language: nested finally / canonical CIL
+  ---
+  duration_ms: 1.244801
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nested finally / direct CIL
+ok 621 - 0.5 language: nested finally / direct CIL
+  ---
+  duration_ms: 1.000463
+  type: 'test'
+  ...
+# Subtest: 0.5 language: nested finally / edited CIL
+ok 622 - 0.5 language: nested finally / edited CIL
+  ---
+  duration_ms: 1.469919
+  type: 'test'
+  ...
+# Subtest: 0.5 language: catch inside finally preserves return / IR
+ok 623 - 0.5 language: catch inside finally preserves return / IR
+  ---
+  duration_ms: 0.90506
+  type: 'test'
+  ...
+# Subtest: 0.5 language: catch inside finally preserves return / canonical CIL
+ok 624 - 0.5 language: catch inside finally preserves return / canonical CIL
+  ---
+  duration_ms: 1.386413
+  type: 'test'
+  ...
+# Subtest: 0.5 language: catch inside finally preserves return / direct CIL
+ok 625 - 0.5 language: catch inside finally preserves return / direct CIL
+  ---
+  duration_ms: 0.876607
+  type: 'test'
+  ...
+# Subtest: 0.5 language: catch inside finally preserves return / edited CIL
+ok 626 - 0.5 language: catch inside finally preserves return / edited CIL
+  ---
+  duration_ms: 1.439543
+  type: 'test'
+  ...
+# Subtest: 0.5 language: throw from finally overrides return / IR
+ok 627 - 0.5 language: throw from finally overrides return / IR
+  ---
+  duration_ms: 0.645781
+  type: 'test'
+  ...
+# Subtest: 0.5 language: throw from finally overrides return / canonical CIL
+ok 628 - 0.5 language: throw from finally overrides return / canonical CIL
+  ---
+  duration_ms: 3.038155
+  type: 'test'
+  ...
+# Subtest: 0.5 language: throw from finally overrides return / direct CIL
+ok 629 - 0.5 language: throw from finally overrides return / direct CIL
+  ---
+  duration_ms: 0.819682
+  type: 'test'
+  ...
+# Subtest: 0.5 language: throw from finally overrides return / edited CIL
+ok 630 - 0.5 language: throw from finally overrides return / edited CIL
+  ---
+  duration_ms: 1.419633
+  type: 'test'
+  ...
+# Subtest: 0.5 language: throw from finally overrides exception / IR
+ok 631 - 0.5 language: throw from finally overrides exception / IR
+  ---
+  duration_ms: 0.619321
+  type: 'test'
+  ...
+# Subtest: 0.5 language: throw from finally overrides exception / canonical CIL
+ok 632 - 0.5 language: throw from finally overrides exception / canonical CIL
+  ---
+  duration_ms: 1.255297
+  type: 'test'
+  ...
+# Subtest: 0.5 language: throw from finally overrides exception / direct CIL
+ok 633 - 0.5 language: throw from finally overrides exception / direct CIL
+  ---
+  duration_ms: 0.810198
+  type: 'test'
+  ...
+# Subtest: 0.5 language: throw from finally overrides exception / edited CIL
+ok 634 - 0.5 language: throw from finally overrides exception / edited CIL
+  ---
+  duration_ms: 1.19116
+  type: 'test'
+  ...
+# Subtest: 0.5 language: break finally / IR
+ok 635 - 0.5 language: break finally / IR
+  ---
+  duration_ms: 0.754053
+  type: 'test'
+  ...
+# Subtest: 0.5 language: break finally / canonical CIL
+ok 636 - 0.5 language: break finally / canonical CIL
+  ---
+  duration_ms: 1.034024
+  type: 'test'
+  ...
+# Subtest: 0.5 language: break finally / direct CIL
+ok 637 - 0.5 language: break finally / direct CIL
+  ---
+  duration_ms: 0.588334
+  type: 'test'
+  ...
+# Subtest: 0.5 language: break finally / edited CIL
+ok 638 - 0.5 language: break finally / edited CIL
+  ---
+  duration_ms: 1.498171
+  type: 'test'
+  ...
+# Subtest: 0.5 language: continue finally / IR
+ok 639 - 0.5 language: continue finally / IR
+  ---
+  duration_ms: 0.679411
+  type: 'test'
+  ...
+# Subtest: 0.5 language: continue finally / canonical CIL
+ok 640 - 0.5 language: continue finally / canonical CIL
+  ---
+  duration_ms: 10.809294
+  type: 'test'
+  ...
+# Subtest: 0.5 language: continue finally / direct CIL
+ok 641 - 0.5 language: continue finally / direct CIL
+  ---
+  duration_ms: 1.013663
+  type: 'test'
+  ...
+# Subtest: 0.5 language: continue finally / edited CIL
+ok 642 - 0.5 language: continue finally / edited CIL
+  ---
+  duration_ms: 1.593054
+  type: 'test'
+  ...
+# Subtest: 0.5 language: loop internal finally / IR
+ok 643 - 0.5 language: loop internal finally / IR
+  ---
+  duration_ms: 3.629093
+  type: 'test'
+  ...
+# Subtest: 0.5 language: loop internal finally / canonical CIL
+ok 644 - 0.5 language: loop internal finally / canonical CIL
+  ---
+  duration_ms: 1.215256
+  type: 'test'
+  ...
+# Subtest: 0.5 language: loop internal finally / direct CIL
+ok 645 - 0.5 language: loop internal finally / direct CIL
+  ---
+  duration_ms: 0.980454
+  type: 'test'
+  ...
+# Subtest: 0.5 language: loop internal finally / edited CIL
+ok 646 - 0.5 language: loop internal finally / edited CIL
+  ---
+  duration_ms: 1.474936
+  type: 'test'
+  ...
+# Subtest: 0.5 language: empty protected clauses / IR
+ok 647 - 0.5 language: empty protected clauses / IR
+  ---
+  duration_ms: 0.517748
+  type: 'test'
+  ...
+# Subtest: 0.5 language: empty protected clauses / canonical CIL
+ok 648 - 0.5 language: empty protected clauses / canonical CIL
+  ---
+  duration_ms: 0.761083
+  type: 'test'
+  ...
+# Subtest: 0.5 language: empty protected clauses / direct CIL
+ok 649 - 0.5 language: empty protected clauses / direct CIL
+  ---
+  duration_ms: 0.518379
+  type: 'test'
+  ...
+# Subtest: 0.5 language: empty protected clauses / edited CIL
+ok 650 - 0.5 language: empty protected clauses / edited CIL
+  ---
+  duration_ms: 0.944089
+  type: 'test'
+  ...
+# Subtest: 0.5 language: catch return runs final / IR
+ok 651 - 0.5 language: catch return runs final / IR
+  ---
+  duration_ms: 0.595855
+  type: 'test'
+  ...
+# Subtest: 0.5 language: catch return runs final / canonical CIL
+ok 652 - 0.5 language: catch return runs final / canonical CIL
+  ---
+  duration_ms: 1.033253
+  type: 'test'
+  ...
+# Subtest: 0.5 language: catch return runs final / direct CIL
+ok 653 - 0.5 language: catch return runs final / direct CIL
+  ---
+  duration_ms: 0.739251
+  type: 'test'
+  ...
+# Subtest: 0.5 language: catch return runs final / edited CIL
+ok 654 - 0.5 language: catch return runs final / edited CIL
+  ---
+  duration_ms: 1.440425
+  type: 'test'
+  ...
+# Subtest: 0.5 language: property setter finally / IR
+ok 655 - 0.5 language: property setter finally / IR
+  ---
+  duration_ms: 0.956427
+  type: 'test'
+  ...
+# Subtest: 0.5 language: property setter finally / canonical CIL
+ok 656 - 0.5 language: property setter finally / canonical CIL
+  ---
+  duration_ms: 1.655708
+  type: 'test'
+  ...
+# Subtest: 0.5 language: property setter finally / direct CIL
+ok 657 - 0.5 language: property setter finally / direct CIL
+  ---
+  duration_ms: 5.095297
+  type: 'test'
+  ...
+# Subtest: 0.5 language: property setter finally / edited CIL
+ok 658 - 0.5 language: property setter finally / edited CIL
+  ---
+  duration_ms: 3.160249
+  type: 'test'
+  ...
+# Subtest: 0.5 diagnostic: getter-only write
+ok 659 - 0.5 diagnostic: getter-only write
+  ---
+  duration_ms: 0.605059
+  type: 'test'
+  ...
+# Subtest: 0.5 diagnostic: private setter
+ok 660 - 0.5 diagnostic: private setter
+  ---
+  duration_ms: 0.349626
+  type: 'test'
+  ...
+# Subtest: 0.5 diagnostic: write-only read
+ok 661 - 0.5 diagnostic: write-only read
+  ---
+  duration_ms: 0.200962
+  type: 'test'
+  ...
+# Subtest: 0.5 diagnostic: duplicate getter
+ok 662 - 0.5 diagnostic: duplicate getter
+  ---
+  duration_ms: 0.215204
+  type: 'test'
+  ...
+# Subtest: 0.5 diagnostic: auto write-only
+ok 663 - 0.5 diagnostic: auto write-only
+  ---
+  duration_ms: 0.194302
+  type: 'test'
+  ...
+# Subtest: 0.5 diagnostic: return exits finally
+ok 664 - 0.5 diagnostic: return exits finally
+  ---
+  duration_ms: 0.268874
+  type: 'test'
+  ...
+# Subtest: 0.5 diagnostic: break exits finally
+ok 665 - 0.5 diagnostic: break exits finally
+  ---
+  duration_ms: 0.152509
+  type: 'test'
+  ...
+# Subtest: 0.5 diagnostic: continue exits finally
+ok 666 - 0.5 diagnostic: continue exits finally
+  ---
+  duration_ms: 0.131168
+  type: 'test'
+  ...
+# Subtest: 0.5 diagnostic: init remains explicit limitation
+ok 667 - 0.5 diagnostic: init remains explicit limitation
+  ---
+  duration_ms: 0.253862
+  type: 'test'
+  ...
+# Subtest: 0.5 metadata: property maps and method semantics survive canonical loading
+ok 668 - 0.5 metadata: property maps and method semantics survive canonical loading
+  ---
+  duration_ms: 2.019906
+  type: 'test'
+  ...
+# Subtest: 0.5 MSIL sizeof System.Boolean
+ok 669 - 0.5 MSIL sizeof System.Boolean
+  ---
+  duration_ms: 9.343711
+  type: 'test'
+  ...
+# Subtest: 0.5 MSIL sizeof System.Byte
+ok 670 - 0.5 MSIL sizeof System.Byte
+  ---
+  duration_ms: 1.181435
+  type: 'test'
+  ...
+# Subtest: 0.5 MSIL sizeof System.Int16
+ok 671 - 0.5 MSIL sizeof System.Int16
+  ---
+  duration_ms: 0.717559
+  type: 'test'
+  ...
+# Subtest: 0.5 MSIL sizeof System.Char
+ok 672 - 0.5 MSIL sizeof System.Char
+  ---
+  duration_ms: 0.623057
+  type: 'test'
+  ...
+# Subtest: 0.5 MSIL sizeof System.Int32
+ok 673 - 0.5 MSIL sizeof System.Int32
+  ---
+  duration_ms: 0.675095
+  type: 'test'
+  ...
+# Subtest: 0.5 MSIL sizeof System.UInt32
+ok 674 - 0.5 MSIL sizeof System.UInt32
+  ---
+  duration_ms: 5.788929
+  type: 'test'
+  ...
+# Subtest: 0.5 MSIL sizeof System.Int64
+ok 675 - 0.5 MSIL sizeof System.Int64
+  ---
+  duration_ms: 0.720693
+  type: 'test'
+  ...
+# Subtest: 0.5 MSIL sizeof System.Single
+ok 676 - 0.5 MSIL sizeof System.Single
+  ---
+  duration_ms: 0.49917
+  type: 'test'
+  ...
+# Subtest: 0.5 MSIL sizeof System.Double
+ok 677 - 0.5 MSIL sizeof System.Double
+  ---
+  duration_ms: 1.142206
+  type: 'test'
+  ...
+# Subtest: 0.5 MSIL cpobj copies primitive managed slots
+ok 678 - 0.5 MSIL cpobj copies primitive managed slots
+  ---
+  duration_ms: 1.656028
+  type: 'test'
+  ...
+# Subtest: 0.5 MSIL unbox provides an address into the original box
+ok 679 - 0.5 MSIL unbox provides an address into the original box
+  ---
+  duration_ms: 0.989156
+  type: 'test'
+  ...
+# Subtest: 0.5 MSIL unbox address roots its box through collection
+ok 680 - 0.5 MSIL unbox address roots its box through collection
+  ---
+  duration_ms: 1.505382
+  type: 'test'
+  ...
+# Subtest: 0.5 MSIL primitive-only sizeof refuses arbitrary object layout
+ok 681 - 0.5 MSIL primitive-only sizeof refuses arbitrary object layout
+  ---
+  duration_ms: 0.555575
+  type: 'test'
+  ...
+# Subtest: 0.5 MSIL wrong boxed type fails explicitly
+ok 682 - 0.5 MSIL wrong boxed type fails explicitly
+  ---
+  duration_ms: 0.916337
+  type: 'test'
+  ...
+# Subtest: 0.5 protocol UTF-8 byte count and one-byte chunking
+ok 683 - 0.5 protocol UTF-8 byte count and one-byte chunking
+  ---
+  duration_ms: 1.08484
+  type: 'test'
+  ...
+# Subtest: 0.5 protocol coalesced frames and buffer compaction
+ok 684 - 0.5 protocol coalesced frames and buffer compaction
+  ---
+  duration_ms: 0.409586
+  type: 'test'
+  ...
+# Subtest: 0.5 protocol rejects malformed framing Content-Length: 2\\r\\nContent-Length: 
+ok 685 - 0.5 protocol rejects malformed framing Content-Length: 2\\r\\nContent-Length: 
+  ---
+  duration_ms: 0.446881
+  type: 'test'
+  ...
+# Subtest: 0.5 protocol rejects malformed framing Content-Length: -1\\r\\n\\r\\n
+ok 686 - 0.5 protocol rejects malformed framing Content-Length: -1\\r\\n\\r\\n
+  ---
+  duration_ms: 0.123095
+  type: 'test'
+  ...
+# Subtest: 0.5 protocol rejects malformed framing X-Length: 2\\r\\n\\r\\n{}
+ok 687 - 0.5 protocol rejects malformed framing X-Length: 2\\r\\n\\r\\n{}
+  ---
+  duration_ms: 0.108703
+  type: 'test'
+  ...
+# Subtest: 0.5 protocol rejects malformed framing Content-Length: 2\\r\\nContent-Type: ap
+ok 688 - 0.5 protocol rejects malformed framing Content-Length: 2\\r\\nContent-Type: ap
+  ---
+  duration_ms: 0.244016
+  type: 'test'
+  ...
+# Subtest: 0.5 protocol rejects malformed framing Content-Length: 2\\r\\n\\r\\n[]
+ok 689 - 0.5 protocol rejects malformed framing Content-Length: 2\\r\\n\\r\\n[]
+  ---
+  duration_ms: 0.20643
+  type: 'test'
+  ...
+# Subtest: 0.5 protocol refuses invalid UTF-8, oversized header/body and truncated streams
+ok 690 - 0.5 protocol refuses invalid UTF-8, oversized header/body and truncated streams
+  ---
+  duration_ms: 0.244518
+  type: 'test'
+  ...
+# Subtest: 0.5 LSP stdio handles real UTF-8 requests, diagnostics and shutdown
+ok 691 - 0.5 LSP stdio handles real UTF-8 requests, diagnostics and shutdown
+  ---
+  duration_ms: 118.815087
+  type: 'test'
+  ...
+# Subtest: 0.5 DAP stdio loads a disk DLL and executes selected method
+ok 692 - 0.5 DAP stdio loads a disk DLL and executes selected method
+  ---
+  duration_ms: 92.02523
+  type: 'test'
+  ...
+# Subtest: 0.5 read-only auto-property rejects X++
+ok 693 - 0.5 read-only auto-property rejects X++
+  ---
+  duration_ms: 7.979101
+  type: 'test'
+  ...
+# Subtest: 0.5 read-only auto-property rejects X+=1
+ok 694 - 0.5 read-only auto-property rejects X+=1
+  ---
+  duration_ms: 1.246983
+  type: 'test'
+  ...
+# Subtest: 0.5 read-only auto-property rejects X??=null
+ok 695 - 0.5 read-only auto-property rejects X??=null
+  ---
+  duration_ms: 0.927053
+  type: 'test'
+  ...
+# Subtest: 0.5 C\# explicit accessor method calls are diagnosed
+ok 696 - 0.5 C\# explicit accessor method calls are diagnosed
+  ---
+  duration_ms: 1.875799
+  type: 'test'
+  ...
+# Subtest: 0.5 inline refuses references inside nameof
+ok 697 - 0.5 inline refuses references inside nameof
+  ---
+  duration_ms: 2.06334
+  type: 'test'
+  ...
+# Subtest: 0.5 source watch reads auto-property without executing computed getter
+ok 698 - 0.5 source watch reads auto-property without executing computed getter
+  ---
+  duration_ms: 16.524162
+  type: 'test'
+  ...
+# Subtest: 0.5 source run-to-cursor adds no persistent breakpoint
+ok 699 - 0.5 source run-to-cursor adds no persistent breakpoint
+  ---
+  duration_ms: 3.57371
+  type: 'test'
+  ...
+# Subtest: 0.5 source data breakpoint uses frame identity and local slot
+ok 700 - 0.5 source data breakpoint uses frame identity and local slot
+  ---
+  duration_ms: 2.265725
+  type: 'test'
+  ...
+# Subtest: 0.5 stale allocation watchpoint cannot match reused heap slot
+ok 701 - 0.5 stale allocation watchpoint cannot match reused heap slot
+  ---
+  duration_ms: 1.804171
+  type: 'test'
+  ...
+# Subtest: 0.5 debugger snapshots retain finally unwind continuations
+ok 702 - 0.5 debugger snapshots retain finally unwind continuations
+  ---
+  duration_ms: 3.079147
+  type: 'test'
+  ...
+# Subtest: 0.5 direct watches compare strings and bools and refuse invalid cast
+ok 703 - 0.5 direct watches compare strings and bools and refuse invalid cast
+  ---
+  duration_ms: 5.119654
+  type: 'test'
+  ...
+# Subtest: 0.5 JSON schema optionally emits real auto-properties
+ok 704 - 0.5 JSON schema optionally emits real auto-properties
+  ---
+  duration_ms: 1.560435
+  type: 'test'
+  ...
+# Subtest: 0.5 analyzers report literal conditions and task comments, never strings
+ok 705 - 0.5 analyzers report literal conditions and task comments, never strings
+  ---
+  duration_ms: 1.752403
+  type: 'test'
+  ...
+# Subtest: 0.5 analyzer severity overrides and generation cache remain valid
+ok 706 - 0.5 analyzer severity overrides and generation cache remain valid
+  ---
+  duration_ms: 0.420361
+  type: 'test'
+  ...
+# Subtest: heap: unreachable object cycles are reclaimed
+ok 707 - heap: unreachable object cycles are reclaimed
+  ---
+  duration_ms: 2.247657
+  type: 'test'
+  ...
+# Subtest: heap: roots retain entire reachable graph
+ok 708 - heap: roots retain entire reachable graph
+  ---
+  duration_ms: 0.264017
+  type: 'test'
+  ...
+# Subtest: heap: references in newly allocated object survive reserve collection
+ok 709 - heap: references in newly allocated object survive reserve collection
+  ---
+  duration_ms: 0.191017
+  type: 'test'
+  ...
+# Subtest: heap: native pins unwind after failures
+ok 710 - heap: native pins unwind after failures
+  ---
+  duration_ms: 0.226911
+  type: 'test'
+  ...
+# Subtest: heap: generations reject stale handles after slot reuse
+ok 711 - heap: generations reject stale handles after slot reuse
+  ---
+  duration_ms: 0.283195
+  type: 'test'
+  ...
+# Subtest: heap: budgets are enforced
+ok 712 - heap: budgets are enforced
+  ---
+  duration_ms: 0.364828
+  type: 'test'
+  ...
+# Subtest: heap: snapshots are independent after mutation and collection
+ok 713 - heap: snapshots are independent after mutation and collection
+  ---
+  duration_ms: 0.333962
+  type: 'test'
+  ...
+# Subtest: heap: iterative marking handles deep graphs
+ok 714 - heap: iterative marking handles deep graphs
+  ---
+  duration_ms: 20.284702
+  type: 'test'
+  ...
+# Subtest: VM: compiler clears temporary roots after object assignment
+ok 715 - VM: compiler clears temporary roots after object assignment
+  ---
+  duration_ms: 7.671178
+  type: 'test'
+  ...
+# Subtest: VM: collection preserves locals, stack arguments and static roots
+ok 716 - VM: collection preserves locals, stack arguments and static roots
+  ---
+  duration_ms: 1.954156
+  type: 'test'
+  ...
+# Subtest: VM: scoped references no longer root dead objects
+ok 717 - VM: scoped references no longer root dead objects
+  ---
+  duration_ms: 0.71822
+  type: 'test'
+  ...
+# Subtest: VM fault: null field
+ok 718 - VM fault: null field
+  ---
+  duration_ms: 0.688314
+  type: 'test'
+  ...
+# Subtest: VM fault: array bounds
+ok 719 - VM fault: array bounds
+  ---
+  duration_ms: 0.651208
+  type: 'test'
+  ...
+# Subtest: VM fault: negative array
+ok 720 - VM fault: negative array
+  ---
+  duration_ms: 0.617518
+  type: 'test'
+  ...
+# Subtest: VM fault: divide zero
+ok 721 - VM fault: divide zero
+  ---
+  duration_ms: 0.56539
+  type: 'test'
+  ...
+# Subtest: VM fault: Int32 division overflow
+ok 722 - VM fault: Int32 division overflow
+  ---
+  duration_ms: 0.378789
+  type: 'test'
+  ...
+# Subtest: VM fault: parse overflow
+ok 723 - VM fault: parse overflow
+  ---
+  duration_ms: 0.374663
+  type: 'test'
+  ...
+# Subtest: VM fault: invalid parse
+ok 724 - VM fault: invalid parse
+  ---
+  duration_ms: 0.29306
+  type: 'test'
+  ...
+# Subtest: VM fault: substring range
+ok 725 - VM fault: substring range
+  ---
+  duration_ms: 0.345239
+  type: 'test'
+  ...
+# Subtest: VM fault: throw null
+ok 726 - VM fault: throw null
+  ---
+  duration_ms: 0.171968
+  type: 'test'
+  ...
+# Subtest: VM: instruction budget is uncatchable
+ok 727 - VM: instruction budget is uncatchable
+  ---
+  duration_ms: 1.335332
+  type: 'test'
+  ...
+# Subtest: VM: output budget enforced
+ok 728 - VM: output budget enforced
+  ---
+  duration_ms: 0.397628
+  type: 'test'
+  ...
+# Subtest: VM: stack budget enforced
+ok 729 - VM: stack budget enforced
+  ---
+  duration_ms: 0.428965
+  type: 'test'
+  ...
+# Subtest: VM: runSlice yields at instruction budget
+ok 730 - VM: runSlice yields at instruction budget
+  ---
+  duration_ms: 1.343579
+  type: 'test'
+  ...
+# Subtest: VM: stopped execution never continues
+ok 731 - VM: stopped execution never continues
+  ---
+  duration_ms: 0.284608
+  type: 'test'
+  ...
+# Subtest: VM: snapshot restores output and numeric state
+ok 732 - VM: snapshot restores output and numeric state
+  ---
+  duration_ms: 0.55883
+  type: 'test'
+  ...
+# Subtest: VM: Math.Abs honors selected int versus double overload
+ok 733 - VM: Math.Abs honors selected int versus double overload
+  ---
+  duration_ms: 0.511599
+  type: 'test'
+  ...
+# Subtest: text: immutable snapshots and UTF-16 positions
+ok 734 - text: immutable snapshots and UTF-16 positions
+  ---
+  duration_ms: 2.505345
+  type: 'test'
+  ...
+# Subtest: text: out-of-range LSP columns clamp before line ending
+ok 735 - text: out-of-range LSP columns clamp before line ending
+  ---
+  duration_ms: 0.976238
+  type: 'test'
+  ...
+# Subtest: text: empty documents and source size validation
+ok 736 - text: empty documents and source size validation
+  ---
+  duration_ms: 0.185238
+  type: 'test'
+  ...
+# Subtest: cache: bounded eviction
+ok 737 - cache: bounded eviction
+  ---
+  duration_ms: 0.145749
+  type: 'test'
+  ...
+# Subtest: lexer: exact trivia roundtrip "// before\\r\\nint x = 1; /* "
+ok 738 - lexer: exact trivia roundtrip "// before\\r\\nint x = 1; /* "
+  ---
+  duration_ms: 6.392716
+  type: 'test'
+  ...
+# Subtest: lexer: exact trivia roundtrip "using System;\\nclass A { s"
+ok 739 - lexer: exact trivia roundtrip "using System;\\nclass A { s"
+  ---
+  duration_ms: 0.196976
+  type: 'test'
+  ...
+# Subtest: lexer: exact trivia roundtrip "int café = 0xFF + 0b1010 "
+ok 740 - lexer: exact trivia roundtrip "int café = 0xFF + 0b1010 "
+  ---
+  duration_ms: 0.232399
+  type: 'test'
+  ...
+# Subtest: lexer: exact trivia roundtrip "\\"unfinished\\\\"
+ok 741 - lexer: exact trivia roundtrip "\\"unfinished\\\\"
+  ---
+  duration_ms: 0.269165
+  type: 'test'
+  ...
+# Subtest: lexer: exact trivia roundtrip "/* unterminated"
+ok 742 - lexer: exact trivia roundtrip "/* unterminated"
+  ---
+  duration_ms: 0.256366
+  type: 'test'
+  ...
+# Subtest: lexer: exact trivia roundtrip ""
+ok 743 - lexer: exact trivia roundtrip ""
+  ---
+  duration_ms: 0.343166
+  type: 'test'
+  ...
+# Subtest: lexer: exact trivia roundtrip "   \\n\\t"
+ok 744 - lexer: exact trivia roundtrip "   \\n\\t"
+  ---
+  duration_ms: 0.116195
+  type: 'test'
+  ...
+# Subtest: lexer: exact trivia roundtrip "💥 \#bad\\n"
+ok 745 - lexer: exact trivia roundtrip "💥 \#bad\\n"
+  ---
+  duration_ms: 0.358639
+  type: 'test'
+  ...
+# Subtest: lexer: unchanged token interning preserves identity
+ok 746 - lexer: unchanged token interning preserves identity
+  ---
+  duration_ms: 0.143275
+  type: 'test'
+  ...
+# Subtest: lexer: diagnostic CS1010 "unclosed
+ok 747 - lexer: diagnostic CS1010 "unclosed
+  ---
+  duration_ms: 0.087912
+  type: 'test'
+  ...
+# Subtest: lexer: diagnostic CS1035 /*bad
+ok 748 - lexer: diagnostic CS1035 /*bad
+  ---
+  duration_ms: 0.047952
+  type: 'test'
+  ...
+# Subtest: lexer: diagnostic SF1002 $"{x}"
+ok 749 - lexer: diagnostic SF1002 $"{x}"
+  ---
+  duration_ms: 0.047221
+  type: 'test'
+  ...
+# Subtest: lexer: diagnostic SF1001 \#if true\\n
+ok 750 - lexer: diagnostic SF1001 \#if true\\n
+  ---
+  duration_ms: 0.047942
+  type: 'test'
+  ...
+# Subtest: lexer: diagnostic SF1005 3.2f
+ok 751 - lexer: diagnostic SF1005 3.2f
+  ---
+  duration_ms: 0.074712
+  type: 'test'
+  ...
+# Subtest: lexer: diagnostic SF1003 123L
+ok 752 - lexer: diagnostic SF1003 123L
+  ---
+  duration_ms: 0.044196
+  type: 'test'
+  ...
+# Subtest: lexer: diagnostic CS1013 0xZZ
+ok 753 - lexer: diagnostic CS1013 0xZZ
+  ---
+  duration_ms: 0.03977
+  type: 'test'
+  ...
+# Subtest: lexer: diagnostic CS1012 'ab'
+ok 754 - lexer: diagnostic CS1012 'ab'
+  ---
+  duration_ms: 0.065318
+  type: 'test'
+  ...
+# Subtest: parser: precedence and right associative assignments
+ok 755 - parser: precedence and right associative assignments
+  ---
+  duration_ms: 0.608134
+  type: 'test'
+  ...
+# Subtest: parser: syntax tree survives missing tokens
+ok 756 - parser: syntax tree survives missing tokens
+  ---
+  duration_ms: 0.773352
+  type: 'test'
+  ...
+# Subtest: parser: deterministic punctuation fuzz recovers without throwing
+ok 757 - parser: deterministic punctuation fuzz recovers without throwing
+  ---
+  duration_ms: 52.755447
+  type: 'test'
+  ...
+# Subtest: parser: nesting budget reports a diagnostic
+ok 758 - parser: nesting budget reports a diagnostic
+  ---
+  duration_ms: 2.201288
+  type: 'test'
+  ...
+1..758
+# tests 758
+# suites 0
+# pass 758
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2144.639282

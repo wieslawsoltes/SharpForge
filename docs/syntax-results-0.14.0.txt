@@ -1,0 +1,5 @@
+
+> sharpforge@0.14.0 check
+> node scripts/check.js
+
+Checked 232 JavaScript modules; 0 syntax errors.

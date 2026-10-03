@@ -1,0 +1,10 @@
+using System;
+int[] values = [1, 2, 3, 4];
+Array.Copy(values, 0, values, 1, 3);
+Console.WriteLine(string.Join(",", values));
+Array.Fill(values, 9, 2, 2);
+Array.Clear(values, 0, 1);
+Console.WriteLine(string.Join(",", values));
+var random = new Random(1);
+Console.WriteLine(random.Next());
+Console.WriteLine(random.Next());

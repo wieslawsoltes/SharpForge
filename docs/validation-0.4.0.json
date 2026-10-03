@@ -1,0 +1,75 @@
+{
+  "version": "0.4.0",
+  "validatedAt": "2026-10-01T22:26:54.016429+00:00",
+  "environment": {
+    "node": "v22.16.0",
+    "platform": "linux",
+    "arch": "x64",
+    "chromium": "144.0.7559.96",
+    "browserHarness": "in-memory production ES modules / actual compiler and runtime workers; no browser URL policy changes"
+  },
+  "regression": {
+    "passed": 544,
+    "failed": 0,
+    "skipped": 0,
+    "previousReleasePassed": 401,
+    "added": 143,
+    "evidence": "core-results.tap"
+  },
+  "syntax": {
+    "modules": 77,
+    "errors": 0,
+    "evidence": "syntax-check.txt"
+  },
+  "browser": {
+    "original": 29,
+    "managedDllIde": 12,
+    "workspaceDockingDisk": 23,
+    "totalPassed": 64,
+    "failed": 0,
+    "javascriptErrors": 0,
+    "evidence": [
+      "browser-results.json",
+      "browser-managed-results.json",
+      "browser-workspace-results.json"
+    ]
+  },
+  "standalone": {
+    "passed": 13,
+    "failed": 0,
+    "workers": 2,
+    "evidence": "standalone-results.json"
+  },
+  "packages": {
+    "passed": true,
+    "count": 15,
+    "version": "0.4.0",
+    "mode": "offline isolated install/import and execution without source-workspace links",
+    "evidence": "package-results.json"
+  },
+  "examples": {
+    "sourceExamples": 14,
+    "executable": 13,
+    "intentionalDiagnostics": 1,
+    "diskDirectories": 6,
+    "projectConfigurations": 7,
+    "manifest": "../examples/coverage.json"
+  },
+  "benchmarks": {
+    "rerun": true,
+    "evidence": [
+      "benchmark-results.json",
+      "il-benchmark.json"
+    ],
+    "comparisonClaim": false,
+    "note": "Warm shared-container synthetic measurements; IL benchmark uses the original canonical/predecoded path, not the direct-CIL engine."
+  },
+  "notVerified": [
+    "Normal browser HTTP/file-origin navigation, CSP and durable browser storage",
+    "Native filesystem write permission dialogs and real write streams (preflight/error behavior covered with unit mocks)",
+    "Desktop CLR, ILVerify and broad third-party/Roslyn DLL compatibility for this release",
+    "Full MSBuild/NuGet, separate assembly linking, full C#/CLR/BCL/decompilation parity",
+    "External LSP/DAP clients, screen-reader/touch/native OS docking parity",
+    "Hosted GitHub Actions, registry publication and public deployment"
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "checks": [
+    {
+      "name": "all seven designer tools initialize with production preview and two runtime/compiler workers",
+      "passed": true,
+      "milliseconds": 21.49
+    },
+    {
+      "name": "searchable toolbox inserts a real NumberBox into the selected parent and supports undo",
+      "passed": true,
+      "milliseconds": 195.03
+    },
+    {
+      "name": "actual mouse dragging uses snapped Canvas coordinates and a single undo/redo transaction",
+      "passed": true,
+      "milliseconds": 483.37
+    },
+    {
+      "name": "eight-handle adorner resizes actual controls without losing selection or source geometry",
+      "passed": true,
+      "milliseconds": 326.36
+    },
+    {
+      "name": "typed property grid updates the design and preview; filtering retains editor focus",
+      "passed": true,
+      "milliseconds": 142.47
+    },
+    {
+      "name": "tree/surface copy-paste creates independent controls and delete restores through undo",
+      "passed": true,
+      "milliseconds": 170.51
+    },
+    {
+      "name": "layout panel converts Canvas to Grid, edits Auto/pixel/star tracks and mouse-drags controls between cells",
+      "passed": true,
+      "milliseconds": 771.42
+    },
+    {
+      "name": "actual Grid boundary dragging resizes adjacent tracks and restores through one undo",
+      "passed": true,
+      "milliseconds": 458.0
+    },
+    {
+      "name": "anchor-preserving Ctrl-wheel zoom and Shift marquee select controls and reveal them in the tree",
+      "passed": true,
+      "milliseconds": 508.01
+    },
+    {
+      "name": "style setter UI applies shared styles and local values override then clear back to style",
+      "passed": true,
+      "milliseconds": 309.86
+    },
+    {
+      "name": "control-template editor creates bound parts and clones independent per-control template trees",
+      "passed": true,
+      "milliseconds": 184.18
+    },
+    {
+      "name": "saved design JSON including styles/templates survives a real complete-workspace ZIP export/reopen",
+      "passed": true,
+      "milliseconds": 115.64
+    },
+    {
+      "name": "Build & Run generates a real csproj/slnx and C# view with managed event handlers",
+      "passed": true,
+      "milliseconds": 356.76
+    },
+    {
+      "name": "source VM live designer patch retains typed input, object identity, counter state and callbacks",
+      "passed": true,
+      "milliseconds": 487.3
+    },
+    {
+      "name": "direct CIL live designer patch retains typed input, object identity, counter state and callbacks",
+      "passed": true,
+      "milliseconds": 481.44
+    },
+    {
+      "name": "actual compiler-worker Edit & Continue adds a method and static field while keeping the live C# window",
+      "passed": true,
+      "milliseconds": 252.89
+    },
+    {
+      "name": "stale designer session is rejected before any managed mutation",
+      "passed": true,
+      "milliseconds": 47.94
+    },
+    {
+      "name": "independent JavaScript facade supports shared styles, stable dependency properties, templates and real bound input",
+      "passed": true,
+      "milliseconds": 37.65
+    },
+    {
+      "name": "new control gallery routes NumberBox, radio groups, date/time inputs and closable tabs into real managed state",
+      "passed": true,
+      "milliseconds": 535.69
+    },
+    {
+      "name": "all designer workflows finish without page errors and keep the same two real workers",
+      "passed": true,
+      "milliseconds": 421.59
+    }
+  ],
+  "errors": [],
+  "workers": 2,
+  "harness": "in-memory production modules and real workers"
+}

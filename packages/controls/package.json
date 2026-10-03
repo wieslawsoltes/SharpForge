@@ -1,0 +1,20 @@
+{
+  "name": "@sharpforge/controls",
+  "version": "0.14.0",
+  "type": "module",
+  "description": "Accessible virtualized tree, command registry and keyboard context menus for browser IDEs.",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./controls.css": "./src/controls.css"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  }
+}

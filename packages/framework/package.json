@@ -1,0 +1,19 @@
+{
+  "name": "@sharpforge/framework",
+  "version": "0.14.0",
+  "description": "Versioned managed web-framework ABI and code-first WinUI/Task/Thread contracts.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  }
+}

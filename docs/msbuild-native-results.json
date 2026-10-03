@@ -1,0 +1,8 @@
+{
+  "passed": false,
+  "simulated": false,
+  "available": false,
+  "checks": [],
+  "error": "Error: dotnet: spawn dotnet ENOENT. Install a .NET SDK or select an installed MSBuild executable.\n    at file:///mnt/data/release14-work/SharpForge/scripts/validate-msbuild.js:9:375\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+  "timestamp": "2026-10-03T09:02:17.856Z"
+}

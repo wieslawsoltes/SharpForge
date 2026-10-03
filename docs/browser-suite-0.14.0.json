@@ -1,0 +1,86 @@
+[
+  {
+    "suite": "browser_release14_test",
+    "exitCode": 0,
+    "seconds": 16.87,
+    "log": "release14-browser_release14_test.log"
+  },
+  {
+    "suite": "browser_test",
+    "exitCode": 0,
+    "seconds": 4.85,
+    "log": "release14-browser_test.log"
+  },
+  {
+    "suite": "browser_managed_test",
+    "exitCode": 0,
+    "seconds": 8.59,
+    "log": "release14-browser_managed_test.log"
+  },
+  {
+    "suite": "browser_workspace_test",
+    "exitCode": 0,
+    "seconds": 10.51,
+    "log": "release14-browser_workspace_test.log"
+  },
+  {
+    "suite": "browser_release05_test",
+    "exitCode": 0,
+    "seconds": 8.41,
+    "log": "release14-browser_release05_test.log"
+  },
+  {
+    "suite": "browser_release06_test",
+    "exitCode": 0,
+    "seconds": 10.21,
+    "log": "release14-browser_release06_test.log"
+  },
+  {
+    "suite": "browser_msbuild_test",
+    "exitCode": 0,
+    "seconds": 5.99,
+    "log": "release14-browser_msbuild_test.log"
+  },
+  {
+    "suite": "browser_release08_test",
+    "exitCode": 0,
+    "seconds": 17.23,
+    "log": "release14-browser_release08_test.log"
+  },
+  {
+    "suite": "browser_native_explorer_test",
+    "exitCode": 0,
+    "seconds": 14.43,
+    "log": "release14-browser_native_explorer_test.log"
+  },
+  {
+    "suite": "browser_release09_test",
+    "exitCode": 0,
+    "seconds": 10.3,
+    "log": "release14-browser_release09_test.log"
+  },
+  {
+    "suite": "browser_release10_test",
+    "exitCode": 0,
+    "seconds": 8.46,
+    "log": "release14-browser_release10_test.log"
+  },
+  {
+    "suite": "browser_release11_test",
+    "exitCode": 0,
+    "seconds": 12.31,
+    "log": "release14-browser_release11_test.log"
+  },
+  {
+    "suite": "browser_release12_test",
+    "exitCode": 0,
+    "seconds": 8.46,
+    "log": "release14-browser_release12_test.log"
+  },
+  {
+    "suite": "browser_release13_test",
+    "exitCode": 0,
+    "seconds": 8.42,
+    "log": "release14-browser_release13_test.log"
+  }
+]

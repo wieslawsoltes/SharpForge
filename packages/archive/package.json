@@ -1,0 +1,16 @@
+{
+  "name": "@sharpforge/archive",
+  "version": "0.14.0",
+  "type": "module",
+  "description": "Bounded, deterministic ZIP archives and portable workspace file codecs for browsers and Node",
+  "exports": {
+    ".": "./src/index.js",
+    "./deflate": "./src/deflate.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT"
+}

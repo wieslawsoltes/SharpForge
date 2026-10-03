@@ -1,0 +1,254 @@
+// SharpForge.IL/1 — metadata-preserving IL workspace
+// Every method body below is authoritative. Numeric metadata tokens reference .image.
+// Editing declarations/signature tokens requires existing compatible metadata.
+.image "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"
+.assembly "UsingResources"
+
+// SharpForge.<>Program::Work() -> int
+.method 0x06000001
+{
+  .maxstack 18
+  .locals 0x11000001
+  .initlocals 1
+  IL_0000: nop
+  IL_0001: ldnull
+  IL_0002: newobj 0x06000008 // instance void Lease::.ctor(SharpForge.<>AllocationToken)
+  IL_0007: dup
+  IL_0008: stloc 0
+  IL_000c: pop
+  IL_000d: ldloc 0
+  IL_0011: ldstr 0x70000001 // "outer"
+  IL_0016: call 0x06000006 // instance void Lease::<ctor-body>(string)
+  IL_001b: ldnull
+  IL_001c: pop
+  IL_001d: ldloc 0
+  IL_0021: ldnull
+  IL_0022: dup
+  IL_0023: stloc 0
+  IL_0027: pop
+  IL_0028: dup
+  IL_0029: stloc 1
+  IL_002d: pop
+  IL_002e: nop
+  IL_002f: ldnull
+  IL_0030: newobj 0x06000008 // instance void Lease::.ctor(SharpForge.<>AllocationToken)
+  IL_0035: dup
+  IL_0036: stloc 2
+  IL_003a: pop
+  IL_003b: ldloc 2
+  IL_003f: ldstr 0x7000000d // "inner"
+  IL_0044: call 0x06000006 // instance void Lease::<ctor-body>(string)
+  IL_0049: ldnull
+  IL_004a: pop
+  IL_004b: ldloc 2
+  IL_004f: ldnull
+  IL_0050: dup
+  IL_0051: stloc 2
+  IL_0055: pop
+  IL_0056: dup
+  IL_0057: stloc 3
+  IL_005b: pop
+  IL_005c: nop
+  IL_005d: ldstr 0x70000019 // "body"
+  IL_0062: call 0x0a000001 // void System.Console::WriteLine(string)
+  IL_0067: ldnull
+  IL_0068: pop
+  IL_0069: nop
+  IL_006a: ldc.i4 42
+  IL_006f: stloc 4
+  IL_0073: leave IL_00e2
+  IL_0078: leave IL_00a3
+  IL_007d: nop
+  IL_007e: ldloc 3
+  IL_0082: ldnull
+  IL_0083: ceq
+  IL_0085: ldc.i4 0
+  IL_008a: ceq
+  IL_008c: brfalse IL_00a2
+  IL_0091: nop
+  IL_0092: ldloc 3
+  IL_0096: call 0x06000007 // instance void Lease::Dispose()
+  IL_009b: ldnull
+  IL_009c: pop
+  IL_009d: br IL_00a2
+  IL_00a2: endfinally
+  IL_00a3: ldnull
+  IL_00a4: dup
+  IL_00a5: stloc 3
+  IL_00a9: pop
+  IL_00aa: leave IL_00d5
+  IL_00af: nop
+  IL_00b0: ldloc 1
+  IL_00b4: ldnull
+  IL_00b5: ceq
+  IL_00b7: ldc.i4 0
+  IL_00bc: ceq
+  IL_00be: brfalse IL_00d4
+  IL_00c3: nop
+  IL_00c4: ldloc 1
+  IL_00c8: call 0x06000007 // instance void Lease::Dispose()
+  IL_00cd: ldnull
+  IL_00ce: pop
+  IL_00cf: br IL_00d4
+  IL_00d4: endfinally
+  IL_00d5: ldnull
+  IL_00d6: dup
+  IL_00d7: stloc 1
+  IL_00db: pop
+  IL_00dc: ldc.i4 0
+  IL_00e1: ret
+  IL_00e2: ldloc 4
+  IL_00e6: ret
+  .eh 2 IL_005c IL_007d IL_007d IL_00a3 0x00000000
+  .eh 2 IL_002e IL_00af IL_00af IL_00d5 0x00000000
+}
+
+// SharpForge.<>Program::<Main>() -> void
+.method 0x06000002
+{
+  .maxstack 17
+  .locals 0x00000000
+  .initlocals 1
+  IL_0000: nop
+  IL_0001: call 0x06000001 // int SharpForge.<>Program::Work()
+  IL_0006: call 0x0a000002 // void System.Console::WriteLine(int)
+  IL_000b: ldnull
+  IL_000c: pop
+  IL_000d: ldnull
+  IL_000e: pop
+  IL_000f: ret
+}
+
+// SharpForge.<>Program::<startup>() -> void
+.method 0x06000003
+{
+  .maxstack 17
+  .locals 0x00000000
+  .initlocals 1
+  IL_0000: call 0x06000002 // void SharpForge.<>Program::<Main>()
+  IL_0005: ldnull
+  IL_0006: pop
+  IL_0007: ret
+}
+
+// SharpForge.<>Program::<assert>(bool, string) -> void
+.method 0x06000004
+{
+  .maxstack 2
+  .locals 0x00000000
+  .initlocals 1
+  IL_0000: ldarg 0
+  IL_0004: brtrue IL_0013
+  IL_0009: ldarg 1
+  IL_000d: newobj 0x0a000004 // instance void System.Exception::.ctor(string)
+  IL_0012: throw
+  IL_0013: ret
+}
+
+// Lease::get_Name() -> string
+.method 0x06000005
+{
+  .maxstack 17
+  .locals 0x11000002
+  .initlocals 1
+  IL_0000: ldarg 0
+  IL_0004: stloc 0
+  IL_0008: nop
+  IL_0009: ldloc 0
+  IL_000d: ldfld 0x04000001 // string Lease::<Name>k__BackingField
+  IL_0012: ret
+  IL_0013: ldnull
+  IL_0014: ret
+}
+
+// Lease::<ctor-body>(string) -> void
+.method 0x06000006
+{
+  .maxstack 18
+  .locals 0x11000003
+  .initlocals 1
+  IL_0000: ldarg 0
+  IL_0004: stloc 0
+  IL_0008: ldarg 1
+  IL_000c: stloc 1
+  IL_0010: nop
+  IL_0011: ldloc 0
+  IL_0015: dup
+  IL_0016: stloc 2
+  IL_001a: pop
+  IL_001b: ldloc 1
+  IL_001f: dup
+  IL_0020: stloc 3
+  IL_0024: pop
+  IL_0025: ldloc 2
+  IL_0029: ldloc 3
+  IL_002d: stloc 4
+  IL_0031: ldloc 4
+  IL_0035: stfld 0x04000001 // string Lease::<Name>k__BackingField
+  IL_003a: ldloc 4
+  IL_003e: ldnull
+  IL_003f: dup
+  IL_0040: stloc 3
+  IL_0044: pop
+  IL_0045: ldnull
+  IL_0046: dup
+  IL_0047: stloc 2
+  IL_004b: pop
+  IL_004c: pop
+  IL_004d: nop
+  IL_004e: ldstr 0x70000023 // "acquire "
+  IL_0053: ldloc 1
+  IL_0057: call 0x0a000005 // string System.String::Concat(object, object)
+  IL_005c: call 0x0a000001 // void System.Console::WriteLine(string)
+  IL_0061: ldnull
+  IL_0062: pop
+  IL_0063: ldnull
+  IL_0064: pop
+  IL_0065: ret
+}
+
+// Lease::Dispose() -> void
+.method 0x06000007
+{
+  .maxstack 18
+  .locals 0x11000004
+  .initlocals 1
+  IL_0000: ldarg 0
+  IL_0004: stloc 0
+  IL_0008: nop
+  IL_0009: ldstr 0x70000035 // "dispose "
+  IL_000e: ldloc 0
+  IL_0012: call 0x06000005 // instance string Lease::get_Name()
+  IL_0017: call 0x0a000005 // string System.String::Concat(object, object)
+  IL_001c: call 0x0a000001 // void System.Console::WriteLine(string)
+  IL_0021: ldnull
+  IL_0022: pop
+  IL_0023: ldnull
+  IL_0024: pop
+  IL_0025: ret
+}
+
+// Lease::.ctor(SharpForge.<>AllocationToken) -> void
+.method 0x06000008
+{
+  .maxstack 2
+  .locals 0x00000000
+  .initlocals 1
+  IL_0000: ldarg 0
+  IL_0004: call 0x0a000003 // instance void System.Object::.ctor()
+  IL_0009: ret
+}
+
+// Lease::.ctor(string) -> void
+.method 0x06000009
+{
+  .maxstack 2
+  .locals 0x00000000
+  .initlocals 1
+  IL_0000: ldarg 0
+  IL_0004: call 0x0a000003 // instance void System.Object::.ctor()
+  IL_0009: ldarg 0
+  IL_000d: ldarg 1
+  IL_0011: call 0x06000006 // instance void Lease::<ctor-body>(string)
+  IL_0016: ret
+}

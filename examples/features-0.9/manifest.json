@@ -1,0 +1,132 @@
+[
+  {
+    "id": "debug-exact",
+    "name": "Exact breakpoint locations",
+    "description": "F5 stops at the multiline WriteLine statement, not the following statement. Requested continuation line and executing span stay distinct.",
+    "expectedOutput": "0\n1\n2\n",
+    "files": [
+      {
+        "uri": "Program.cs",
+        "text": "// F5: the requested line is inside a multiline statement.\nfor (int i = 0; i < 3; i++)\n{\n    Console.WriteLine(\n        i\n    );\n}\n"
+      }
+    ],
+    "debug": {
+      "breakpoints": {
+        "Program.cs": [
+          {
+            "line": 5
+          }
+        ]
+      },
+      "watches": [
+        "i"
+      ]
+    }
+  },
+  {
+    "id": "debug-callsite",
+    "name": "Caller storage and stack frames",
+    "description": "At the assignment, right-click value in Locals and choose Break on write. Continue stops after assignment at the caller, not at the return in Answers.cs.",
+    "expectedOutput": "42\n",
+    "files": [
+      {
+        "uri": "Program.cs",
+        "text": "class Program\n{\n    static void Main()\n    {\n        int value = 0;\n        value = Answers.Get();\n        Console.WriteLine(value);\n    }\n}\n"
+      },
+      {
+        "uri": "Answers.cs",
+        "text": "class Answers\n{\n    public static int Get()\n    {\n        return 42;\n    }\n}\n"
+      }
+    ],
+    "debug": {
+      "breakpoints": {
+        "Program.cs": [
+          {
+            "line": 6
+          }
+        ]
+      },
+      "watches": [
+        "value"
+      ]
+    }
+  },
+  {
+    "id": "debug-conditions",
+    "name": "Changed conditions and reverse replay",
+    "description": "F5 stops when i/2 changes: i=2 and i=4. Reverse Continue restores the previous retained stop and its encounter count.",
+    "expectedOutput": "0\n1\n2\n3\n4\n5\n",
+    "files": [
+      {
+        "uri": "Program.cs",
+        "text": "// Has changed seeds at i=0 without stopping.\nfor (int i = 0; i < 6; i++)\n{\n    Console.WriteLine(i);\n}\n"
+      }
+    ],
+    "debug": {
+      "breakpoints": {
+        "Program.cs": [
+          {
+            "line": 4,
+            "condition": "i / 2",
+            "conditionMode": "whenChanged"
+          }
+        ]
+      },
+      "watches": [
+        "i",
+        "i / 2"
+      ]
+    }
+  },
+  {
+    "id": "debug-function",
+    "name": "Conditional function breakpoints",
+    "description": "F5 stops in MathBox.AddOne(int) only when value >= 2. Select Main to inspect the caller; Show Next Statement returns to the actual executing frame.",
+    "expectedOutput": "1\n2\n3\n",
+    "files": [
+      {
+        "uri": "Program.cs",
+        "text": "class Program\n{\n    static void Main()\n    {\n        for (int i = 0; i < 3; i++)\n        {\n            Console.WriteLine(MathBox.AddOne(i));\n        }\n    }\n}\n"
+      },
+      {
+        "uri": "MathBox.cs",
+        "text": "class MathBox\n{\n    public static int AddOne(int value)\n    {\n        return value + 1;\n    }\n}\n"
+      }
+    ],
+    "debug": {
+      "functionBreakpoints": [
+        {
+          "name": "MathBox.AddOne(int)",
+          "condition": "value >= 2"
+        }
+      ],
+      "watches": [
+        "value"
+      ]
+    }
+  },
+  {
+    "id": "debug-exception",
+    "name": "Exception stops and cleanup replay",
+    "description": "Add System.OverflowException \u2192 When thrown in Debugger / Exception Settings. The stop is at checked arithmetic before unwinding; reverse replay preserves the pending fault.",
+    "expectedOutput": "overflow caught\ncleanup\n42\n",
+    "files": [
+      {
+        "uri": "Program.cs",
+        "text": "try\n{\n    int value = 2147483647;\n    value = checked(value + 1);\n}\ncatch (Exception error)\n{\n    Console.WriteLine(\"overflow caught\");\n}\nfinally\n{\n    Console.WriteLine(\"cleanup\");\n}\nConsole.WriteLine(42);\n"
+      }
+    ],
+    "debug": {
+      "breakpoints": {
+        "Program.cs": [
+          {
+            "line": 4
+          }
+        ]
+      },
+      "watches": [
+        "value"
+      ]
+    }
+  }
+]

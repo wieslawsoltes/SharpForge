@@ -1,0 +1,1 @@
+<Project><PropertyGroup><ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally></PropertyGroup><ItemGroup><PackageVersion Include="SharpForge.LocalPackage" Version="1.0.0" /></ItemGroup></Project>

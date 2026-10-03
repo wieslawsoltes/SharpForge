@@ -1,0 +1,10 @@
+<Solution>
+  <!-- Adding another project to src must reuse this folder. -->
+  <Folder Name="/src/">
+    <Project Path="App/App.csproj" />
+    <Project Path="Library/Library.csproj" />
+  </Folder>
+  <Folder Name="/docs/">
+    <File Path="README.md" />
+  </Folder>
+</Solution>

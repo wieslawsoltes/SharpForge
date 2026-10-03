@@ -1,0 +1,10 @@
+using System.Collections.Generic;
+var numbers = new List<int>() { 3, 1, 2 };
+numbers.Sort();
+Console.WriteLine(string.Join(",", numbers.ToArray()));
+var unique = new HashSet<int>(new int[] { 1, 1, 2, 3 });
+Console.WriteLine(unique.Count);
+var queue = new Queue<string>(); queue.Enqueue("first"); queue.Enqueue("second");
+Console.WriteLine(queue.Dequeue());
+var stack = new Stack<int>(); stack.Push(1); stack.Push(2);
+Console.WriteLine(stack.Pop());

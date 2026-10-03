@@ -1,0 +1,30 @@
+{
+  "name": "@sharpforge/protocol",
+  "version": "0.14.0",
+  "description": "LSP/DAP subset adapters, bounded Content-Length framing and local stdio servers.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@sharpforge/workspace": "0.14.0",
+    "@sharpforge/language": "0.14.0",
+    "@sharpforge/debugger": "0.14.0",
+    "@sharpforge/refactoring": "0.14.0"
+  },
+  "bin": {
+    "sharpforge-lsp": "./bin/sharpforge-lsp.js",
+    "sharpforge-dap": "./bin/sharpforge-dap.js"
+  }
+}

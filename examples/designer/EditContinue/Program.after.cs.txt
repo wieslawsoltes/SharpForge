@@ -1,0 +1,17 @@
+class Counter
+{
+    public int Value = 40;
+    public int Added = 99;
+}
+class Program
+{
+    static int Adjust(int value) { return Helper(value); }
+    static int Helper(int value) { return value + 10; }
+    static void Main()
+    {
+        Counter counter = new Counter();
+        int value = counter.Value;
+        value++;
+        Console.WriteLine(Adjust(value));
+    }
+}

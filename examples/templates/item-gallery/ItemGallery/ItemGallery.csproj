@@ -1,0 +1,93 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>ItemGallery</AssemblyName>
+    <RootNamespace>ItemGallery</RootNamespace>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <DebugType>portable</DebugType>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <SharpForgeUIProfile>WinUIWeb</SharpForgeUIProfile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Items/class/ClassExample.cs" />
+    <Compile Include="Items/class/ClassExample.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Items/partial-class/PartialClassExample.cs" />
+    <Compile Include="Items/partial-class/PartialClassExample.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Items/partial-class/PartialClassExample.Methods.cs" />
+    <Compile Include="Items/partial-class/PartialClassExample.Methods.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Items/static-class/StaticClassExample.cs" />
+    <Compile Include="Items/static-class/StaticClassExample.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Items/disposable-class/DisposableClassExample.cs" />
+    <Compile Include="Items/disposable-class/DisposableClassExample.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Items/view-model/ViewModelExample.cs" />
+    <Compile Include="Items/view-model/ViewModelExample.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Items/winui-page/WinuiPageExample.cs" />
+    <Compile Include="Items/winui-page/WinuiPageExample.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Items/winui-counter-page/WinuiCounterPageExample.cs" />
+    <Compile Include="Items/winui-counter-page/WinuiCounterPageExample.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Items/winui-grid-page/WinuiGridPageExample.cs" />
+    <Compile Include="Items/winui-grid-page/WinuiGridPageExample.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Items/winui-settings-page/WinuiSettingsPageExample.cs" />
+    <Compile Include="Items/winui-settings-page/WinuiSettingsPageExample.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Items/winui-user-control/WinuiUserControlExample.cs" />
+    <Compile Include="Items/winui-user-control/WinuiUserControlExample.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Items/winui-custom-control/WinuiCustomControlExample.cs" />
+    <Compile Include="Items/winui-custom-control/WinuiCustomControlExample.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Items/winui-window/WinuiWindowExample.cs" />
+    <Compile Include="Items/winui-window/WinuiWindowExample.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Items/winui-flyout/WinuiFlyoutExample.cs" />
+    <Compile Include="Items/winui-flyout/WinuiFlyoutExample.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Items/winui-resources/WinuiResourcesExample.cs" />
+    <Compile Include="Items/winui-resources/WinuiResourcesExample.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Items/text/Notes.txt" />
+    <None Include="Items/text/Notes.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Items/json/settings.json" />
+    <None Include="Items/json/settings.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Items/editorconfig/.editorconfig" />
+    <None Include="Items/editorconfig/.editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Items/build-props/Directory.Build.props" />
+    <None Include="Items/build-props/Directory.Build.props" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Items/build-targets/Directory.Build.targets" />
+    <None Include="Items/build-targets/Directory.Build.targets" />
+  </ItemGroup>
+</Project>

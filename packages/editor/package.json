@@ -1,0 +1,25 @@
+{
+  "name": "@sharpforge/editor",
+  "version": "0.14.0",
+  "description": "Reusable source editor with Visual Studio/VS Code presets and bundled Vim/Emacs/Sublime modes.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./editor.css": "./src/editor.css",
+    "./classic.css": "./src/vendor/classic.css"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@sharpforge/text": "0.14.0",
+    "@sharpforge/syntax": "0.14.0"
+  }
+}

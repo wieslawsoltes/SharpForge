@@ -1,0 +1,22 @@
+{
+  "name": "@sharpforge/syntax",
+  "version": "0.14.0",
+  "description": "Source-preserving tokenization and error-recovering parsing of the SharpForge C# subset.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@sharpforge/text": "0.14.0"
+  }
+}

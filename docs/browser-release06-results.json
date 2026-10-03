@@ -1,0 +1,143 @@
+{
+  "passed": true,
+  "browser": "144.0.7559.96",
+  "mode": "in-memory-production-workers",
+  "checks": [
+    {
+      "name": "two production compiler/runtime workers initialized",
+      "passed": true,
+      "milliseconds": 0.0
+    },
+    {
+      "name": "production workers: checked-arithmetic",
+      "passed": true,
+      "milliseconds": 86.4
+    },
+    {
+      "name": "production workers: using-resources",
+      "passed": true,
+      "milliseconds": 80.41
+    },
+    {
+      "name": "production workers: using-failure",
+      "passed": true,
+      "milliseconds": 65.45
+    },
+    {
+      "name": "production workers: constant-patterns",
+      "passed": true,
+      "milliseconds": 66.28
+    },
+    {
+      "name": "production workers: refactor-safe06",
+      "passed": true,
+      "milliseconds": 65.31
+    },
+    {
+      "name": "production workers: immutable-schema",
+      "passed": true,
+      "milliseconds": 55.46
+    },
+    {
+      "name": "production workers: unreachable-analyzer",
+      "passed": true,
+      "milliseconds": 49.53
+    },
+    {
+      "name": "production workers: reversible-storage",
+      "passed": true,
+      "milliseconds": 56.44
+    },
+    {
+      "name": "large editor scroll renders only visible syntax and gutter",
+      "passed": true,
+      "milliseconds": 490.57
+    },
+    {
+      "name": "native multiline replacement publishes one revision despite duplicate events",
+      "passed": true,
+      "milliseconds": 484.25
+    },
+    {
+      "name": "syntax expand/shrink selection uses worker UTF-16 ranges",
+      "passed": true,
+      "milliseconds": 85.15
+    },
+    {
+      "name": "document Back/Forward restores selection and crosses source files",
+      "passed": true,
+      "milliseconds": 187.45
+    },
+    {
+      "name": "make-constant action applies validated edit and one-step undo",
+      "passed": true,
+      "milliseconds": 226.86
+    },
+    {
+      "name": "disk SLNX preserves per-project checked defaults and using cleanup",
+      "passed": true,
+      "milliseconds": 89.58
+    },
+    {
+      "name": "ordinary hand-authored EXE opens with optional reversible history",
+      "passed": true,
+      "milliseconds": 153.62
+    },
+    {
+      "name": "local context menu creates write breakpoint and stops after storage changes",
+      "passed": true,
+      "milliseconds": 146.85
+    },
+    {
+      "name": "step back restores local and instruction, then write breakpoint replays",
+      "passed": true,
+      "milliseconds": 98.56
+    },
+    {
+      "name": "object inspector array child watches generation-checked element storage",
+      "passed": true,
+      "milliseconds": 247.84
+    },
+    {
+      "name": "reverse restores array heap contents and replay restores write",
+      "passed": true,
+      "milliseconds": 82.0
+    },
+    {
+      "name": "completed ordinary EXE reverses and resumes without recompilation",
+      "passed": true,
+      "milliseconds": 220.28
+    },
+    {
+      "name": "reverse continue visits recorded write stops then earliest retained instruction",
+      "passed": true,
+      "milliseconds": 210.29
+    },
+    {
+      "name": "history toggle disables snapshot work while preserving invocation",
+      "passed": true,
+      "milliseconds": 160.61
+    },
+    {
+      "name": "analyzer severity settings round-trip through docked tool and worker",
+      "passed": true,
+      "milliseconds": 162.41
+    },
+    {
+      "name": "updated docking workspace renders source, IL and reverse controls",
+      "passed": true,
+      "milliseconds": 4840.39
+    },
+    {
+      "name": "active docking captions remain visible after debug preset and activation",
+      "passed": true,
+      "milliseconds": 2.22
+    },
+    {
+      "name": "no browser JavaScript errors",
+      "passed": true,
+      "milliseconds": 0.0
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,20 @@
+{
+  "name": "@sharpforge/winui",
+  "version": "0.14.0",
+  "description": "Code-first WinUI-shaped web controls, managed scene bridge, and WebGPU/Canvas2D/DOM drawing fallbacks.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./style.css": "./src/style.css"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@sharpforge/framework": "0.14.0"
+  }
+}

@@ -1,0 +1,1 @@
+<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><EnableDefaultCompileItems>false</EnableDefaultCompileItems></PropertyGroup><ItemGroup Condition="'$(Configuration)' == 'Debug'"><Compile Include="Debug.cs" /></ItemGroup><ItemGroup Condition="'$(Configuration)' == 'Release'"><Compile Include="Release.cs" /></ItemGroup></Project>

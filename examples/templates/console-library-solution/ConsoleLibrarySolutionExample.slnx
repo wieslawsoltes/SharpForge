@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="ConsoleLibrarySolutionExample/ConsoleLibrarySolutionExample.csproj" />
+      <Project Path="ConsoleLibrarySolutionExample.Core/ConsoleLibrarySolutionExample.Core.csproj" />
+</Folder>
+</Solution>

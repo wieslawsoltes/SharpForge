@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType><UseAppHost>false</UseAppHost></PropertyGroup>
+  <ItemGroup><ProjectReference Include="../Library/Library.csproj" /><AdditionalFiles Include="build-note.txt" /></ItemGroup>
+  <Target Name="GenerateBuildTag" BeforeTargets="CoreCompile" Inputs="build-note.txt;$(MSBuildProjectFullPath)" Outputs="$(IntermediateOutputPath)BuildTag.g.cs">
+    <WriteLinesToFile File="$(IntermediateOutputPath)BuildTag.g.cs" Lines="internal static class BuildTag { public const int Answer = 42%3B }" Overwrite="true" />
+  </Target>
+  <Target Name="IncludeBuildTag" BeforeTargets="CoreCompile" DependsOnTargets="GenerateBuildTag">
+    <ItemGroup><Compile Include="$(IntermediateOutputPath)BuildTag.g.cs" /></ItemGroup>
+  </Target>
+</Project>

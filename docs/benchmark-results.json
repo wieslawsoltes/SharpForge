@@ -1,0 +1,104 @@
+{
+  "recordedAt": "2026-10-01T22:22:18.810Z",
+  "environment": {
+    "node": "v22.16.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "logicalCpus": 5,
+    "hostMemoryGiB": 6
+  },
+  "methodology": "Single-process warm microbenchmarks in a shared Linux container. Wall-clock milliseconds, external performance.now(). No forced JS GC, no network, no browser rendering. Not conformance or comparative compiler measurements.",
+  "results": [
+    {
+      "name": "full parse + bind + emit: particle project",
+      "iterations": 25,
+      "warmup": 5,
+      "batch": 1,
+      "medianMs": 1.502615999999989,
+      "p95Ms": 1.7483749999999958,
+      "minMs": 0.8834499999999963,
+      "maxMs": 1.8606860000000012,
+      "files": 2,
+      "lines": 55,
+      "characters": 1378
+    },
+    {
+      "name": "full parse + bind + emit: approximately 1K lines",
+      "iterations": 25,
+      "warmup": 5,
+      "batch": 1,
+      "medianMs": 5.62870300000003,
+      "p95Ms": 7.555211000000014,
+      "minMs": 4.636279000000002,
+      "maxMs": 10.305057000000005,
+      "files": 11,
+      "lines": 981,
+      "characters": 14464
+    },
+    {
+      "name": "full parse + bind + emit: approximately 10K lines",
+      "iterations": 15,
+      "warmup": 5,
+      "batch": 1,
+      "medianMs": 55.825604999999996,
+      "p95Ms": 76.28118900000004,
+      "minMs": 54.09533299999998,
+      "maxMs": 76.28118900000004,
+      "files": 26,
+      "lines": 9951,
+      "characters": 147809
+    },
+    {
+      "name": "unchanged workspace result cache lookup",
+      "iterations": 25,
+      "warmup": 5,
+      "batch": 1000,
+      "medianMs": 0.0005181079999999838,
+      "p95Ms": 0.0006877149999997982,
+      "minMs": 0.0002332059999998819,
+      "maxMs": 0.002162639999999783,
+      "files": 26,
+      "lines": 9951,
+      "characters": 147809,
+      "note": "Returns the same compilation result; not a recompile."
+    },
+    {
+      "name": "one-file edit in approximately 10K-line workspace",
+      "iterations": 15,
+      "warmup": 5,
+      "batch": 1,
+      "medianMs": 11.832758999999896,
+      "p95Ms": 12.143520999999964,
+      "minMs": 10.707247999999936,
+      "maxMs": 12.143520999999964,
+      "files": 26,
+      "lines": 9951,
+      "characters": 147809,
+      "note": "One file reparsed, all methods rebound and re-emitted; update cost included."
+    },
+    {
+      "name": "VM: 10,000-iteration integer loop",
+      "iterations": 15,
+      "warmup": 5,
+      "batch": 1,
+      "medianMs": 3.8754579999999805,
+      "p95Ms": 15.811531999999943,
+      "minMs": 3.5678040000000237,
+      "maxMs": 15.811531999999943,
+      "includes": "VM creation, verification, execution and one output line; no source compilation.",
+      "instructions": 210021
+    },
+    {
+      "name": "GC: trace and sweep 10,000-object chain",
+      "iterations": 15,
+      "warmup": 5,
+      "batch": 1,
+      "medianMs": 7.813482999999906,
+      "p95Ms": 16.702464999999847,
+      "minMs": 4.986523000000034,
+      "maxMs": 16.702464999999847,
+      "includes": "Allocation, one live trace, one dead sweep; not a pause-only benchmark."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "format": "sharpforge-project",
+  "version": 1,
+  "name": "Generated immutable models",
+  "extensions": {
+    "schema": true,
+    "analyzers": true,
+    "additionalFiles": [
+      {
+        "uri": "reading.schema.json",
+        "text": "{\n  \"name\": \"Reading\",\n  \"immutable\": true,\n  \"fields\": [\n    {\n      \"name\": \"Value\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"Name\",\n      \"type\": \"string\"\n    }\n  ]\n}"
+      }
+    ]
+  },
+  "files": [
+    {
+      "uri": "Program.cs",
+      "text": "var row = new Reading(42, \"sensor\");\nConsole.WriteLine(row.Value);\nConsole.WriteLine(row.Name);\n"
+    }
+  ]
+}

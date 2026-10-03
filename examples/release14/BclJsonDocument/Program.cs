@@ -1,0 +1,10 @@
+using System.Collections.Generic;
+using System.Text.Json;
+using var document = JsonDocument.Parse("{\"items\":[10,12,20]}");
+var items = document.RootElement.GetProperty("items");
+int total = 0;
+foreach (var item in items.EnumerateArray()) total += item.GetInt32();
+Console.WriteLine($"items: {items.GetArrayLength()}");
+Console.WriteLine($"Total: {total}");
+var summary = new Dictionary<string, int>() { { "total", total } };
+Console.WriteLine(JsonSerializer.Serialize(summary));

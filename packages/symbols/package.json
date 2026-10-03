@@ -1,0 +1,17 @@
+{
+  "name": "@sharpforge/symbols",
+  "version": "0.14.0",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": "./src/index.js",
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@sharpforge/cil": "0.14.0",
+    "@sharpforge/archive": "0.14.0"
+  }
+}

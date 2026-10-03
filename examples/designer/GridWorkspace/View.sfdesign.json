@@ -1,0 +1,210 @@
+{
+  "version": 1,
+  "name": "Responsive Grid Designer",
+  "width": 960,
+  "height": 640,
+  "root": "window",
+  "nodes": [
+    {
+      "id": "window",
+      "type": "Microsoft.UI.Xaml.Window",
+      "properties": {
+        "Title": "Responsive Grid Designer"
+      },
+      "children": [
+        "canvas"
+      ],
+      "events": {}
+    },
+    {
+      "id": "canvas",
+      "type": "Microsoft.UI.Xaml.Controls.Grid",
+      "properties": {
+        "Name": "Root",
+        "Width": 960,
+        "Height": 640,
+        "Background": {
+          "valueType": "Microsoft.UI.Xaml.Media.SolidColorBrush",
+          "Color": {
+            "valueType": "Windows.UI.Color",
+            "A": 255,
+            "R": 32,
+            "G": 36,
+            "B": 43
+          }
+        },
+        "Padding": {
+          "valueType": "Microsoft.UI.Xaml.Thickness",
+          "Left": 24,
+          "Top": 24,
+          "Right": 24,
+          "Bottom": 24
+        }
+      },
+      "children": [
+        "title",
+        "caption",
+        "action",
+        "NumberBox_1",
+        "InfoBar_1"
+      ],
+      "events": {},
+      "rows": [
+        {
+          "valueType": "Microsoft.UI.Xaml.GridLength",
+          "Value": 1,
+          "GridUnitType": 0
+        },
+        {
+          "valueType": "Microsoft.UI.Xaml.GridLength",
+          "Value": 1,
+          "GridUnitType": 2
+        },
+        {
+          "valueType": "Microsoft.UI.Xaml.GridLength",
+          "Value": 1,
+          "GridUnitType": 0
+        }
+      ],
+      "columns": [
+        {
+          "valueType": "Microsoft.UI.Xaml.GridLength",
+          "Value": 2,
+          "GridUnitType": 2
+        },
+        {
+          "valueType": "Microsoft.UI.Xaml.GridLength",
+          "Value": 1,
+          "GridUnitType": 2
+        }
+      ]
+    },
+    {
+      "id": "title",
+      "type": "Microsoft.UI.Xaml.Controls.TextBlock",
+      "properties": {
+        "Name": "Title",
+        "Text": "Build something remarkable",
+        "FontSize": 20,
+        "Width": 670,
+        "Height": 48,
+        "Foreground": {
+          "valueType": "Microsoft.UI.Xaml.Media.SolidColorBrush",
+          "Color": {
+            "valueType": "Windows.UI.Color",
+            "A": 255,
+            "R": 246,
+            "G": 247,
+            "B": 250
+          }
+        }
+      },
+      "children": [],
+      "events": {}
+    },
+    {
+      "id": "caption",
+      "type": "Microsoft.UI.Xaml.Controls.TextBlock",
+      "properties": {
+        "Text": "Code-first WinUI • live preview • managed events",
+        "FontSize": 16,
+        "Width": 670,
+        "Height": 32,
+        "Foreground": {
+          "valueType": "Microsoft.UI.Xaml.Media.SolidColorBrush",
+          "Color": {
+            "valueType": "Windows.UI.Color",
+            "A": 255,
+            "R": 176,
+            "G": 191,
+            "B": 212
+          }
+        },
+        "Row": 1
+      },
+      "children": [],
+      "events": {}
+    },
+    {
+      "id": "action",
+      "type": "Microsoft.UI.Xaml.Controls.Button",
+      "properties": {
+        "Name": "ActionButton",
+        "Content": "Run action",
+        "Width": 160,
+        "Height": 40,
+        "Column": 1,
+        "Row": 2
+      },
+      "style": "Accent",
+      "events": {
+        "Click": "Program.OnAction"
+      },
+      "children": []
+    },
+    {
+      "id": "NumberBox_1",
+      "type": "Microsoft.UI.Xaml.Controls.NumberBox",
+      "properties": {
+        "Name": "Amount",
+        "Value": 42,
+        "Width": 200,
+        "Row": 1,
+        "Column": 1
+      },
+      "children": [],
+      "events": {}
+    },
+    {
+      "id": "InfoBar_1",
+      "type": "Microsoft.UI.Xaml.Controls.InfoBar",
+      "properties": {
+        "Name": "InfoBar_1",
+        "Content": "InfoBar",
+        "Title": "Designer workspace",
+        "Message": "Edit Grid tracks and shared styles without recreating managed objects.",
+        "Row": 2,
+        "Column": 0,
+        "Width": 550
+      },
+      "children": [],
+      "events": {}
+    }
+  ],
+  "styles": {
+    "Accent": {
+      "targetType": "Microsoft.UI.Xaml.Controls.Button",
+      "setters": {
+        "Background": {
+          "valueType": "Microsoft.UI.Xaml.Media.SolidColorBrush",
+          "Color": {
+            "valueType": "Windows.UI.Color",
+            "A": 255,
+            "R": 0,
+            "G": 95,
+            "B": 184
+          }
+        },
+        "Foreground": {
+          "valueType": "Microsoft.UI.Xaml.Media.SolidColorBrush",
+          "Color": {
+            "valueType": "Windows.UI.Color",
+            "A": 255,
+            "R": 255,
+            "G": 255,
+            "B": 255
+          }
+        },
+        "CornerRadius": {
+          "valueType": "Microsoft.UI.Xaml.CornerRadius",
+          "TopLeft": 5,
+          "TopRight": 5,
+          "BottomRight": 5,
+          "BottomLeft": 5
+        },
+        "FontSize": 15
+      }
+    }
+  },
+  "templates": {}
+}

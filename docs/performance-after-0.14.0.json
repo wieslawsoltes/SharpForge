@@ -1,0 +1,61 @@
+{
+  "node": "v22.16.0",
+  "results": [
+    {
+      "name": "dictionary",
+      "engine": "source",
+      "medianMs": 26.754174500000005,
+      "allocatedBytes": 131440,
+      "output": "4501500\n"
+    },
+    {
+      "name": "dictionary",
+      "engine": "cil",
+      "medianMs": 60.354514999999964,
+      "allocatedBytes": 131440,
+      "output": "4501500\n"
+    },
+    {
+      "name": "list",
+      "engine": "source",
+      "medianMs": 22.000602500000014,
+      "allocatedBytes": 131504,
+      "output": "18003000\n"
+    },
+    {
+      "name": "list",
+      "engine": "cil",
+      "medianMs": 179.358559,
+      "allocatedBytes": 131504,
+      "output": "18003000\n"
+    },
+    {
+      "name": "queue",
+      "engine": "source",
+      "medianMs": 12.84358450000002,
+      "allocatedBytes": 65952,
+      "output": "7998000\n"
+    },
+    {
+      "name": "queue",
+      "engine": "cil",
+      "medianMs": 76.69958250000002,
+      "allocatedBytes": 65952,
+      "output": "7998000\n"
+    },
+    {
+      "name": "builder",
+      "engine": "source",
+      "medianMs": 12.737730500000225,
+      "allocatedBytes": 177996,
+      "output": "8000\n"
+    },
+    {
+      "name": "builder",
+      "engine": "cil",
+      "medianMs": 40.648550000000114,
+      "allocatedBytes": 177996,
+      "output": "8000\n"
+    }
+  ]
+}

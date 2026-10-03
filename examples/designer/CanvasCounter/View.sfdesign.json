@@ -1,0 +1,210 @@
+{
+  "version": 1,
+  "name": "Live Designer Counter",
+  "width": 960,
+  "height": 640,
+  "root": "window",
+  "nodes": [
+    {
+      "id": "window",
+      "type": "Microsoft.UI.Xaml.Window",
+      "properties": {
+        "Title": "Live Designer Counter"
+      },
+      "children": [
+        "canvas"
+      ],
+      "events": {}
+    },
+    {
+      "id": "canvas",
+      "type": "Microsoft.UI.Xaml.Controls.Canvas",
+      "properties": {
+        "Name": "Root",
+        "Width": 960,
+        "Height": 640,
+        "Background": {
+          "valueType": "Microsoft.UI.Xaml.Media.SolidColorBrush",
+          "Color": {
+            "valueType": "Windows.UI.Color",
+            "A": 255,
+            "R": 32,
+            "G": 36,
+            "B": 43
+          }
+        }
+      },
+      "children": [
+        "title",
+        "caption",
+        "action",
+        "TextBox_1"
+      ],
+      "events": {}
+    },
+    {
+      "id": "title",
+      "type": "Microsoft.UI.Xaml.Controls.TextBlock",
+      "properties": {
+        "Name": "Title",
+        "Text": "Build something remarkable",
+        "FontSize": 30,
+        "Left": 48,
+        "Top": 44,
+        "Width": 670,
+        "Height": 48,
+        "Foreground": {
+          "valueType": "Microsoft.UI.Xaml.Media.SolidColorBrush",
+          "Color": {
+            "valueType": "Windows.UI.Color",
+            "A": 255,
+            "R": 246,
+            "G": 247,
+            "B": 250
+          }
+        }
+      },
+      "children": [],
+      "events": {}
+    },
+    {
+      "id": "caption",
+      "type": "Microsoft.UI.Xaml.Controls.TextBlock",
+      "properties": {
+        "Text": "Code-first WinUI • live preview • managed events",
+        "FontSize": 16,
+        "Left": 50,
+        "Top": 103,
+        "Width": 670,
+        "Height": 32,
+        "Foreground": {
+          "valueType": "Microsoft.UI.Xaml.Media.SolidColorBrush",
+          "Color": {
+            "valueType": "Windows.UI.Color",
+            "A": 255,
+            "R": 176,
+            "G": 191,
+            "B": 212
+          }
+        }
+      },
+      "children": [],
+      "events": {}
+    },
+    {
+      "id": "action",
+      "type": "Microsoft.UI.Xaml.Controls.Button",
+      "properties": {
+        "Name": "ActionButton",
+        "Content": "Run action",
+        "Left": 50,
+        "Top": 162,
+        "Width": 160,
+        "Height": 40
+      },
+      "style": "Accent",
+      "events": {
+        "Click": "Program.OnAction"
+      },
+      "children": []
+    },
+    {
+      "id": "TextBox_1",
+      "type": "Microsoft.UI.Xaml.Controls.TextBox",
+      "properties": {
+        "Name": "Input",
+        "Text": "Hello",
+        "Left": 50,
+        "Top": 236,
+        "Width": 320,
+        "Height": 36
+      },
+      "children": [],
+      "events": {},
+      "template": "InputFrame"
+    }
+  ],
+  "styles": {
+    "Accent": {
+      "targetType": "Microsoft.UI.Xaml.Controls.Button",
+      "setters": {
+        "Background": {
+          "valueType": "Microsoft.UI.Xaml.Media.SolidColorBrush",
+          "Color": {
+            "valueType": "Windows.UI.Color",
+            "A": 255,
+            "R": 0,
+            "G": 95,
+            "B": 184
+          }
+        },
+        "Foreground": {
+          "valueType": "Microsoft.UI.Xaml.Media.SolidColorBrush",
+          "Color": {
+            "valueType": "Windows.UI.Color",
+            "A": 255,
+            "R": 255,
+            "G": 255,
+            "B": 255
+          }
+        },
+        "CornerRadius": {
+          "valueType": "Microsoft.UI.Xaml.CornerRadius",
+          "TopLeft": 5,
+          "TopRight": 5,
+          "BottomRight": 5,
+          "BottomLeft": 5
+        },
+        "FontSize": 15
+      }
+    }
+  },
+  "templates": {
+    "InputFrame": {
+      "targetType": "Microsoft.UI.Xaml.Controls.TextBox",
+      "root": {
+        "id": "frame",
+        "type": "Microsoft.UI.Xaml.Controls.Border",
+        "properties": {
+          "Padding": {
+            "valueType": "Microsoft.UI.Xaml.Thickness",
+            "Left": 8,
+            "Top": 8,
+            "Right": 8,
+            "Bottom": 8
+          },
+          "Background": {
+            "valueType": "Microsoft.UI.Xaml.Media.SolidColorBrush",
+            "Color": {
+              "valueType": "Windows.UI.Color",
+              "A": 255,
+              "R": 48,
+              "G": 58,
+              "B": 72
+            }
+          },
+          "CornerRadius": {
+            "valueType": "Microsoft.UI.Xaml.CornerRadius",
+            "TopLeft": 6,
+            "TopRight": 6,
+            "BottomRight": 6,
+            "BottomLeft": 6
+          }
+        },
+        "children": [
+          {
+            "id": "input",
+            "type": "Microsoft.UI.Xaml.Controls.TextBox",
+            "properties": {
+              "Name": "PART_Input"
+            },
+            "bindings": {
+              "Text": "Text"
+            },
+            "children": []
+          }
+        ]
+      }
+    }
+  }
+}

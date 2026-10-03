@@ -1,0 +1,18 @@
+{
+  "name": "@sharpforge/project-system",
+  "version": "0.14.0",
+  "type": "module",
+  "description": "Bounded, data-only csproj/slnx loading and permission-based browser disk workspaces",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@sharpforge/archive": "0.14.0"
+  }
+}

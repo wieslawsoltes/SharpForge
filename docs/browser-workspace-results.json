@@ -1,0 +1,125 @@
+{
+  "version": "0.4.0",
+  "mode": "in-memory production modules and workers",
+  "nativeWritePermissions": "not tested; permission and conflict logic covered by node mocks",
+  "checks": [
+    {
+      "name": "all 21 tools have independent dock identities; no legacy shared panels",
+      "passed": true,
+      "milliseconds": 402.74
+    },
+    {
+      "name": "split documents keep independent buffers, focus, undo and compiler contents",
+      "passed": true,
+      "milliseconds": 185.01
+    },
+    {
+      "name": "multi-file validated edits update both visible split editors",
+      "passed": true,
+      "milliseconds": 43.39
+    },
+    {
+      "name": "toggle comments, move line, undo and IME shortcut guard",
+      "passed": true,
+      "milliseconds": 142.81
+    },
+    {
+      "name": "floating tools move, resize and redock using live contents",
+      "passed": true,
+      "milliseconds": 254.11
+    },
+    {
+      "name": "splitter keyboard sizing preserves focus",
+      "passed": true,
+      "milliseconds": 34.38
+    },
+    {
+      "name": "auto-hide shelf opens live tools, Escape closes, pin restores",
+      "passed": true,
+      "milliseconds": 181.09
+    },
+    {
+      "name": "HTML drag/drop creates an edge split and clears docking guide",
+      "passed": true,
+      "milliseconds": 142.87
+    },
+    {
+      "name": "named layout restores placements and invalid imports roll back",
+      "passed": true,
+      "milliseconds": 114.14
+    },
+    {
+      "name": "separate browser tool window receives real worker output and returns intact",
+      "passed": true,
+      "milliseconds": 171.1
+    },
+    {
+      "name": "separate document window edits and compiles through shared workspace; close reattaches",
+      "passed": true,
+      "milliseconds": 133.76
+    },
+    {
+      "name": "native directory file input loads SLNX, inherited props and project references",
+      "passed": true,
+      "milliseconds": 103.6
+    },
+    {
+      "name": "malformed disk project does not replace active source workspace",
+      "passed": true,
+      "milliseconds": 13.25
+    },
+    {
+      "name": "unresolved package diagnostic blocks source/IL build instead of being ignored",
+      "passed": true,
+      "milliseconds": 63.42
+    },
+    {
+      "name": "library csproj builds without Main and Run opens method invocation workbench",
+      "passed": true,
+      "milliseconds": 237.99
+    },
+    {
+      "name": "direct decompiler DLL file picker preserves project and invokes selected method",
+      "passed": true,
+      "milliseconds": 101.19
+    },
+    {
+      "name": "direct decompiler EXE file picker shows full IL, executes entry point and retains history",
+      "passed": true,
+      "milliseconds": 202.63
+    },
+    {
+      "name": "find in files and replace-all preview apply a validated source transaction",
+      "passed": true,
+      "milliseconds": 245.61
+    },
+    {
+      "name": "call hierarchy tool shows bound incoming and outgoing source calls",
+      "passed": true,
+      "milliseconds": 48.59
+    },
+    {
+      "name": "seven additional C# feature examples execute in real browser workers",
+      "passed": true,
+      "milliseconds": 442.3
+    },
+    {
+      "name": "managed heap paging and census controls run against worker heap",
+      "passed": true,
+      "milliseconds": 136.28
+    },
+    {
+      "name": "desktop dark/light and 390px responsive docking layouts",
+      "passed": true,
+      "milliseconds": 5194.78
+    },
+    {
+      "name": "no browser JavaScript errors",
+      "passed": true,
+      "milliseconds": 0.0
+    }
+  ],
+  "passed": 23,
+  "failed": 0,
+  "errors": []
+}

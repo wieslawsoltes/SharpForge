@@ -1,0 +1,24 @@
+{
+  "name": "@sharpforge/language",
+  "version": "0.14.0",
+  "description": "Reusable diagnostics, completion, navigation, rename, symbols and classification.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@sharpforge/syntax": "0.14.0",
+    "@sharpforge/bytecode": "0.14.0",
+    "@sharpforge/framework": "0.14.0"
+  }
+}

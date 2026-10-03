@@ -1,0 +1,10 @@
+node_modules/
+dist/
+artifacts/
+__pycache__/
+*.pyc
+*.sfb.json
+.DS_Store
+
+.sharpforge/
+**/.packages/

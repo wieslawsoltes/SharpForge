@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "sourceSamples": [
+    {
+      "id": "partial",
+      "output": "Add\n42\n"
+    },
+    {
+      "id": "switch",
+      "output": "one\nsmall\nsmall\nother\n"
+    },
+    {
+      "id": "conversions",
+      "output": "3\n1.5\n0\nFalse\n-2147483648\n"
+    },
+    {
+      "id": "null-assignment",
+      "output": "local\nfield\narray\n"
+    },
+    {
+      "id": "call-hierarchy",
+      "output": "42\n"
+    },
+    {
+      "id": "guarded-calls",
+      "output": "invalid input\n42\n"
+    },
+    {
+      "id": "short-circuit",
+      "output": "False\nTrue\n0\nyes\n"
+    },
+    {
+      "id": "nameof",
+      "output": "unassigned\nValue\n"
+    }
+  ],
+  "projects": [
+    {
+      "entry": "Workshop/Workshop.slnx",
+      "startup": "Workshop/App/App.csproj",
+      "output": "42\n"
+    },
+    {
+      "entry": "Linked/Linked.csproj",
+      "output": "42\n"
+    },
+    {
+      "entry": "Configurations/Configurations.csproj",
+      "configuration": "Debug",
+      "output": "Debug\n"
+    },
+    {
+      "entry": "Configurations/Configurations.csproj",
+      "configuration": "Release",
+      "output": "Release\n"
+    },
+    {
+      "entry": "Library/Library.csproj",
+      "method": "Arithmetic::Add",
+      "arguments": [
+        1,
+        1
+      ],
+      "returnValue": 42,
+      "outputKind": "library"
+    },
+    {
+      "entry": "Unsupported/Unsupported.csproj",
+      "diagnostic": "SFP1102"
+    },
+    {
+      "entry": "Generated/Generated.csproj",
+      "generator": "JsonSchema",
+      "output": "42\n"
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "release": "0.7.0",
+  "timestamp": "2026-10-02T09:32:03.208502+00:00",
+  "baseline": {
+    "version": "0.6.0",
+    "tests": 1006,
+    "sourceSha256": "f624850a61cf0a9fccda4689c0598a77748c6a4ae96dd97d6d3a021342b93593"
+  },
+  "tests": {
+    "total": 1152,
+    "passed": 1152,
+    "failed": 0,
+    "skipped": 0,
+    "newComparedWithBaseline": 146,
+    "report": "core-results-0.7.0.tap"
+  },
+  "syntax": {
+    "modules": 119,
+    "errors": 0,
+    "report": "syntax-check-0.7.0.txt"
+  },
+  "browser": {
+    "checks": 140,
+    "passed": true,
+    "suites": {
+      "browser-results.json": 29,
+      "browser-managed-results.json": 12,
+      "browser-workspace-results.json": 23,
+      "browser-release05-results.json": 17,
+      "browser-release06-results.json": 27,
+      "browser-msbuild-results.json": 32
+    },
+    "mode": "in-memory production modules and real workers; native integration uses explicit client test double",
+    "nativeSdkExecuted": false,
+    "errors": []
+  },
+  "standalone": {
+    "checks": 23,
+    "passed": true,
+    "workers": 2,
+    "browser": "144.0.7559.96",
+    "mode": "self-contained HTML injected into about:blank"
+  },
+  "packages": {
+    "count": 16,
+    "passed": true,
+    "offline": true,
+    "installedStdioExecutablesTested": true,
+    "installedMSBuildHelpTested": true,
+    "report": "package-results.json"
+  },
+  "nativeMSBuild": {
+    "passed": false,
+    "available": false,
+    "simulated": false,
+    "checksCompleted": 0,
+    "status": "unavailable; real gate exited nonzero (dotnet ENOENT)",
+    "report": "msbuild-native-results.json"
+  },
+  "nativeAdapterTests": {
+    "http": "actual loopback server and temporary disk",
+    "processes": "actual Node child processes running explicitly labeled MSBuild simulator",
+    "notNativeSemanticQualification": true
+  },
+  "environment": {
+    "node": "v22.16.0",
+    "chromium": "144.0.7559.96",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41"
+  },
+  "freshArchive": {
+    "report": "external accompanying SharpForge-0.7.0-final-archive-verification.txt",
+    "scope": "Exact ZIP extraction, source hashes, offline installation, full tests, syntax, rebuild and CLI smoke; not native SDK qualification"
+  },
+  "notVerified": [
+    "actual installed Microsoft MSBuild and SDK semantic/build/task/restore execution",
+    "native Windows process-tree cancellation",
+    "normal HTTP/file-origin browser navigation",
+    "native filesystem permission/write dialogs",
+    "durable browser storage",
+    "desktop CLR/ILVerify and native output execution",
+    "broad third-party DLL/native project interoperability",
+    "external Visual Studio/VS Code client integration",
+    "Portable PDB/native process debugging",
+    "hosted CI/deployment",
+    "independent security audit"
+  ]
+}

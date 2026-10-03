@@ -1,0 +1,20 @@
+{
+  "name": "@sharpforge/text",
+  "version": "0.14.0",
+  "description": "Immutable source snapshots, UTF-16 coordinate conversion, diagnostics and bounded caching.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {}
+}

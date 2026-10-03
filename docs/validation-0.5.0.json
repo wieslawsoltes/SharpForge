@@ -1,0 +1,62 @@
+{
+  "release": "0.5.0",
+  "timestamp": "2026-10-02T06:41:46.302467+00:00",
+  "baselineTests": 544,
+  "tests": {
+    "total": 758,
+    "passed": 758,
+    "failed": 0,
+    "skipped": 0
+  },
+  "syntax": {
+    "modules": 90,
+    "errors": 0
+  },
+  "browser": {
+    "checks": 81,
+    "passed": true,
+    "reports": [
+      "browser-results.json",
+      "browser-managed-results.json",
+      "browser-workspace-results.json",
+      "browser-release05-results.json"
+    ],
+    "mode": "in-memory production modules and real compiler/runtime Blob workers",
+    "errors": []
+  },
+  "standalone": {
+    "checks": 17,
+    "passed": true,
+    "workers": 2,
+    "browser": "144.0.7559.96"
+  },
+  "packages": {
+    "count": 15,
+    "passed": true,
+    "offline": true,
+    "installedStdioExecutablesTested": true,
+    "editorStylesheetTested": true
+  },
+  "notVerified": [
+    "desktop CLR/ILVerify",
+    "broad independent Roslyn-generated DLL corpus",
+    "normal HTTP/file-origin navigation",
+    "native filesystem permission/write dialogs",
+    "durable browser storage",
+    "Visual Studio/VS Code client integration",
+    "hosted GitHub Actions or deployment"
+  ],
+  "environment": {
+    "node": "v22.16.0",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41"
+  },
+  "freshArchive": {
+    "status": "passed",
+    "nodeTests": 758,
+    "offlineInstall": true,
+    "browserBuild": true,
+    "diskSolutionOutput": "cleanup\n42\n",
+    "managedExeReturn": 52,
+    "artifact": "SharpForge-0.5.0-source.zip"
+  }
+}

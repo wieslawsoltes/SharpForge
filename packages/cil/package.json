@@ -1,0 +1,23 @@
+{
+  "name": "@sharpforge/cil",
+  "version": "0.14.0",
+  "description": "Deterministic ECMA-335 PE/CLI emitter, typed CIL decoder/verifier, metadata reader and disassembler.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@sharpforge/bytecode": "0.14.0",
+    "@sharpforge/framework": "0.14.0"
+  }
+}

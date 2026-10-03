@@ -1,0 +1,120 @@
+name: Validate SharpForge
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  core:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm run check
+      - run: npm test
+      - run: npm run build
+      - run: npm run test:packages
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sharpforge-browser
+          path: dist/
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm run build
+      - run: pip install -r tests/requirements.txt
+      - run: python -m playwright install --with-deps chromium
+      - run: npm run test:browser
+      - run: npm run test:browser:managed
+      - run: npm run test:browser:workspace
+      - run: npm run test:browser:release05
+      - run: npm run test:browser:release
+      - run: npm run test:browser:msbuild
+      - run: npm run test:browser:explorer
+      - run: npm run test:browser:native-explorer
+      - run: npm run test:browser:debugger
+      - run: npm run test:browser:advanced
+      - run: npm run test:browser:templates
+      - run: npm run test:browser:designer
+      - run: npm run test:browser:sync
+      - run: npm run test:browser:runtime
+      - run: npm run standalone
+      - run: npm run test:standalone
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-validation
+          path: |
+            docs/browser-results.json
+            docs/browser-managed-results.json
+            docs/browser-workspace-results.json
+            docs/browser-release05-results.json
+            docs/browser-release06-results.json
+            docs/browser-msbuild-results.json
+            docs/browser-release08-results.json
+            docs/browser-native-explorer-results.json
+            docs/browser-release09-results.json
+            docs/browser-release10-validation.json
+            docs/browser-release11-validation.json
+            docs/browser-release12-validation.json
+            docs/browser-release13-validation.json
+            docs/browser-release14-results.json
+            docs/standalone-results.json
+            docs/screenshots/
+
+  native-il:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet: ['8.0.x', '10.0.x']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet }}
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm run test:dotnet
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-il-${{ matrix.dotnet }}
+          path: docs/dotnet-results.json
+
+  native-msbuild:
+    # This job uses actual SDKs and never the process simulator.
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm run test:msbuild:native
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-msbuild-${{ matrix.os }}
+          path: docs/msbuild-native-results.json
