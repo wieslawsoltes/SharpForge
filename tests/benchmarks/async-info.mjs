@@ -17,6 +17,17 @@ for (let row = 1; row <= count; row++) {
   ]);
 }
 const bytes = builder.finish({ 6: count * 2 }, 0).bytes;
+const setupSamples = [];
+for (let warmup = 0; warmup < 3; warmup++) readPortablePdb(bytes).asyncInfo(token(6, 1));
+for (let sample = 0; sample < 15; sample++) {
+  globalThis.gc?.();
+  const start = performance.now();
+  for (let iteration = 0; iteration < 10; iteration++) {
+    if (readPortablePdb(bytes).asyncInfo(token(6, 1)).steps.length !== 1) throw Error('Incomplete setup result');
+  }
+  setupSamples.push((performance.now() - start) / 10);
+}
+setupSamples.sort((left, right) => left - right);
 const symbols = readPortablePdb(bytes);
 const query = () => {
   let total = 0;
@@ -45,6 +56,9 @@ console.log(
       queriesPerSample: count * 10,
       medianMsPerQuery: samples[7],
       p95MsPerQuery: samples[14],
+      setupPerSample: 10,
+      medianMsParseAndFirstQuery: setupSamples[7],
+      p95MsParseAndFirstQuery: setupSamples[14],
       allocationMeasurement: 'Not measured; queries now return independent state and step records.',
     },
     null,
