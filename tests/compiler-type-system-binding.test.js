@@ -258,7 +258,7 @@ test('A02-B01 semantic features are gated with the shared catalog', () => {
 });
 
 test('A02-E01 compile(): Roslyn diagnostics for invalid programs, SF2200 for valid programs the profile cannot run', () => {
-  const invalid = compile('using System; enum Color { Red } Color c = 1; Console.WriteLine(c);');
+  const invalid = compile('using System; Color c = 1; Console.WriteLine(c); enum Color { Red }');
   assert.equal(invalid.success, false);
   assert.deepEqual(
     invalid.diagnostics.filter(d => d.code.startsWith('CS')).map(d => d.code),

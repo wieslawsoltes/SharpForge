@@ -25,6 +25,7 @@ export const fixtures = feature('language-version', [
   gated('gate-native-int-at-8', 'NativeInt', '8'),
   gated('gate-inferred-delegate-type-at-9', 'InferredDelegateType', '9'),
   gated('gate-lambda-optional-parameters-at-11', 'LambdaOptionalParameters', '11'),
+  gated('gate-instance-member-in-nameof-at-11', 'InstanceMemberInNameof', '11'),
   gated('gate-params-collections-at-12', 'ParamsCollections', '12'),
   // Below C# 4 `dynamic` is simply an unknown type name (CS0246): Roslyn has no language-version diagnostic for it.
   { ...diag('no-gate-dynamic-at-3', featureSnippets.Dynamic, { langVersion: '3' }), featureId: 'Dynamic', roslynGates: false },

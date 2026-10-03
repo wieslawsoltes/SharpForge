@@ -12,6 +12,7 @@
  */
 import { SymbolKind } from '../symbols/types.js';
 import { bindExternAliases } from './reference-lookup.js';
+import { implicitUsingsUri } from './global-usings.js';
 
 const nameKinds = new Set(['IdentifierName', 'QualifiedName', 'AliasQualifiedName', 'GenericName']);
 const textOf = syntax => syntax.toString().replace(/\s+/g, '');
@@ -32,40 +33,60 @@ export function bindUsingDirectives(binder, scope, createOuterScope) {
     bound.externAliases = bindExternAliases(usings.externs, resolve, (node, code, args) => binder.report(scope, node, code, args));
   }
   const outer = createOuterScope(),
-    seen = new Set();
+    seen = new Map();
   for (const directive of [...(usings.global ?? []), ...usings.directives]) {
+    // A global using directive of another file is bound here too; what is wrong with it is reported in that file.
+    const origin = usings.globalUris?.get(directive) ?? scope.uri,
+      isForeign = origin !== scope.uri,
+      at = isForeign ? { uri: origin } : scope;
     const target = directive.namespaceOrType,
       alias = directive.alias?.name?.identifier?.valueText ?? null;
     if (alias) {
-      if (bound.aliases.has(alias)) binder.report(scope, directive.alias.name, 'CS1537', [alias]);
-      else bound.aliases.set(alias, { syntax: directive, scope: outer, target: undefined });
+      if (bound.aliases.has(alias)) binder.report(at, directive.alias.name, 'CS1537', [alias]);
+      else bound.aliases.set(alias, { syntax: directive, scope: isForeign ? foreignScope(outer, origin) : outer, target: undefined });
       continue;
     }
+    // While an implicit using is bound the host records a namespace the registry lacks instead of giving up.
+    host.bindingImplicitUsing = origin === implicitUsingsUri;
     const symbol = binder.bindNamespaceOrType(target, outer, { quietMissingNamespace: true });
+    host.bindingImplicitUsing = false;
     if (!symbol || symbol.kind === SymbolKind.ErrorType) {
-      reportMissingTarget(binder, scope, target, symbol);
+      reportMissingTarget(binder, at, target, symbol, origin === implicitUsingsUri);
       continue;
     }
-    const key = (directive.staticKeyword ? 'static ' : '') + symbol.toDisplayString();
-    if (seen.has(key)) {
-      binder.report(scope, target, 'CS0105', [symbol.toDisplayString()]);
+    const key = (directive.staticKeyword ? 'static ' : '') + symbol.toDisplayString(),
+      previous = seen.get(key);
+    if (previous) {
+      // Repeating a directive of the same file is CS0105; repeating a global using of another file is not reported.
+      if (previous === 'own' && !isForeign) binder.report(scope, target, 'CS0105', [symbol.toDisplayString()]);
+      if (!isForeign) seen.set(key, 'own');
       continue;
     }
-    seen.add(key);
+    seen.set(key, isForeign ? 'foreign' : 'own');
     const isNamespace = symbol.kind === SymbolKind.Namespace;
     if (directive.staticKeyword) {
-      if (isNamespace) binder.report(scope, target, 'CS7007', [symbol.toDisplayString()]);
+      if (isNamespace) binder.report(at, target, 'CS7007', [symbol.toDisplayString()]);
       else bound.staticTypes.push(symbol);
-    } else if (isNamespace) bound.namespaces.push(symbol);
-    else binder.report(scope, target, 'CS0138', [symbol.toDisplayString()]);
+    } else if (isNamespace) {
+      bound.namespaces.push(symbol);
+      // A namespace that exists only as the parent of a modelled one (System.Linq of System.Linq.Expressions) has
+      // types and extension methods the registry does not list: what it could supply is unknown, like an unmodelled using.
+      const isImplicit = origin === implicitUsingsUri;
+      if (!symbol.getTypeMembers().length && host.tolerateNamespace?.(textOf(target), { isImplicit })) host.unknownUsing?.();
+    } else binder.report(at, target, 'CS0138', [symbol.toDisplayString()]);
   }
   return bound;
 }
 
+/** The scope a global alias of another file is bound in: the outer scope, reporting into that file. */
+function foreignScope(outer, uri) {
+  return Object.assign(Object.create(Object.getPrototypeOf(outer)), outer, { uri });
+}
+
 /** A directive whose target did not bind: silent for a BCL namespace or type outside the registry, an error otherwise. */
-function reportMissingTarget(binder, scope, target, symbol) {
+function reportMissingTarget(binder, scope, target, symbol, isImplicit = false) {
   const host = binder.host;
-  if (symbol?.isFrameworkGap || host.tolerateNamespace?.(textOf(target))) {
+  if (symbol?.isFrameworkGap || host.tolerateNamespace?.(textOf(target), { isImplicit })) {
     host.unknownUsing?.();
     return;
   }
