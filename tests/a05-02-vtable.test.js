@@ -37,7 +37,9 @@ test('T02.1 warmed dispatch reads its slot index without enumerating declaration
 });
 
 test('T02.1 overriding a final slot is rejected while abstract dispatch faults explicitly', () => {
-  assert.throws(() => verifyCilAssembly(fixture({sealed: true})), /final virtual/);
+  const report = verifyCilAssembly(fixture({sealed: true}));
+  assert.equal(report.success, false);
+  assert(report.issues.some(issue => /final virtual/.test(issue.message)));
   const inspector = new AssemblyInspector(fixture({abstract: true}));
   const dispatch = new VirtualDispatch(inspector);
   const method = [...inspector.methods.values()].find(item => item.owner === 'Base' && item.name === 'Value');
