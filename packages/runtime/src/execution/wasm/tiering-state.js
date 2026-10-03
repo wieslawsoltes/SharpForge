@@ -2,13 +2,13 @@ import {executionCodeState} from '../code-version.js';
 
 const states = new WeakMap();
 const defaults = Object.freeze({callThreshold: 32, backedgeThreshold: 256,
-  maxMethodInstructions: 4096, maxMethods: 64, maxConcurrentCompilations: 2});
+  maxMethodInstructions: 4096, maxMethods: 64, maxConcurrentCompilations: 2, maxBackedgesPerMethod: 1024});
 
 function configuration(vm) {
   const configured = typeof vm.options.wasmTiering === 'object' ? vm.options.wasmTiering : {};
   const options = {...defaults, ...configured};
   for (const key of Object.keys(defaults)) {
-    const maximum = key === 'maxMethodInstructions' ? 65536 : key === 'maxMethods' ? 1024 :
+    const maximum = key === 'maxMethodInstructions' || key === 'maxBackedgesPerMethod' ? 65536 : key === 'maxMethods' ? 1024 :
       key === 'maxConcurrentCompilations' ? 8 : 0x7fffffff;
     if (!Number.isSafeInteger(options[key]) || options[key] < 1 || options[key] > maximum) {
       throw new RangeError(`Invalid Wasm tiering ${key}`);
@@ -36,7 +36,8 @@ export function wasmMethodRecord(state, method) {
   let record = state.methods.get(method);
   if (record) return record;
   if (state.records.size >= state.options.maxMethods) return null;
-  record = {method, calls: 0, backedges: 0, status: 'cold', reason: null, eligibility: null,
+  record = {method, calls: 0, backedges: 0, hottestBackedge: 0,
+    backedgeSites: new Map(), backedgeSiteCount: 0, backedgeOverflow: 0, status: 'cold', reason: null, eligibility: null,
     promise: null, entries: null, context: null, ir: null};
   state.methods.set(method, record);
   state.records.add(record);
