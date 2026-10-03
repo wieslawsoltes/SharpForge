@@ -1,6 +1,7 @@
 import {frameworkType} from '@sharpforge/framework';
 import { AssemblyInspector } from './inspector.js';
 import { CilError } from './binary.js';
+import {CilDispatchTable} from './dispatch-profile.js';
 // Broad decoding is deliberately separate from this managed execution allowlist.
 const simple = new Set(('ldftn nop break ldnull dup pop ret switch ldstr newobj call callvirt throw rethrow endfinally ldlen newarr ldfld stfld ldsfld stsfld ldflda ldsflda ldobj stobj initobj ldelema ldelem stelem box unbox unbox.any cpobj sizeof castclass isinst ckfinite').split(' '));
 const arithmetic = /^(add|sub|mul)(\.ovf(\.un)?)?$|^(div|rem|shr)(\.un)?$|^(and|or|xor|shl|neg|not|ceq|cgt|clt)(\.un)?$/;
@@ -39,6 +40,7 @@ export function stackEffect(inspector,m,i){
  * This is a constrained runtime verifier, NOT an implementation of the CLR verifier/type system. */
 export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethods=10000,...options}={}){
   const inspector=input instanceof AssemblyInspector?input:new AssemblyInspector(input,options),issues=[],visited=new Set(),pending=[],stackHeights={},entry=selectMethod(inspector,methodToken,args);
+  const dispatch=new CilDispatchTable(inspector);
   const issue=(m,i,code,message)=>{if(issues.length<200)issues.push({methodToken:m?.token,method:m?m.owner+'::'+m.name:undefined,offset:i?.offset,code,message});};
   if(!(inspector.pe.flags&1)||inspector.pe.flags&0x10)issue(null,null,'IL_IMAGE','Only IL-only managed images are executable');pending.push(entry);
   // Static initializers can be reached by allocation, field access or method invocation.
@@ -62,7 +64,13 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
       if(['call','callvirt','newobj'].includes(i.name)){
         try{const d=inspector.resolveToken(i.operand);if(d.kind!=='method')throw new CilError('Call operand is not a method');const target=d.resolvedToken??(d.token>>>24===6?d.token:null);
           if(d.genericArguments)issue(m,i,'IL_GENERIC','Generic method instantiations are inspection-only');
-          else if(target)pending.push(target);else if(!supportedIntrinsic(d))issue(m,i,'IL_REFERENCE',`External member '${d.owner}::${d.name}' is not implemented`);
+          else if(target) {
+            if(i.name==='callvirt'&&(inspector.methods.get(target)?.flags&0x40)) {
+              const targets=dispatch.targets(target);
+              if(!targets.size)issue(m,i,'IL_DISPATCH','Virtual method has no executable implementation');
+              for(const implementation of targets)pending.push(implementation);
+            } else pending.push(target);
+          }else if(!supportedIntrinsic(d))issue(m,i,'IL_REFERENCE',`External member '${d.owner}::${d.name}' is not implemented`);
           if(i.name==='newobj'&&(d.name!=='.ctor'||d.signature.isStatic))issue(m,i,'IL_CTOR','newobj requires an instance constructor');
         }catch(error){issue(m,i,'IL_TOKEN',error.message);}
       }
