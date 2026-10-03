@@ -1,10 +1,11 @@
+import {compareObjects} from './object-comparison.js';
 import {fail, string} from '../host.js';
 
 const comparerType = 'System.StringComparer';
 const stringInterface = 'System.Collections.Generic.IComparer`1<string>';
 
 /** Compare nullable native strings by UTF-16 code units; only the sign is specified. */
-function compareOrdinal(first, second) {
+export function compareOrdinal(first, second) {
   if (first === second) return 0;
   if (first === null) return -1;
   if (second === null) return 1;
@@ -35,7 +36,7 @@ function registerStringComparer(registry) {
     registry.member(name, 'Compare', [element, element], 'int', {isAbstract: true});
   }
   registry.define(comparerType, {
-    kind: 'bcl', family: 'stringComparer', isAbstract: true, interfaces: [stringInterface]
+    kind: 'bcl', family: 'stringComparer', isAbstract: true, interfaces: [stringInterface, 'System.Collections.IComparer']
   });
   registry.prop(comparerType, 'Ordinal', comparerType, null, true, true);
   registry.member(comparerType, 'Compare', ['string', 'string'], 'int', {isAbstract: true});
@@ -46,7 +47,13 @@ function invokeStringComparer(platform, descriptor, args) {
     const value = platform.singleton(comparerType + '.Ordinal', () => platform.make(comparerType, {'$comparison': 'ordinal'}));
     return {handled: true, value};
   }
-  if (descriptor.name === 'Compare') return invokeStringCompare(platform, args);
+  if (descriptor.name === 'Compare') {
+    if (descriptor.parameters[0] === 'object') {
+      const compare = resolveStringComparer(platform, args[0]);
+      return {handled: true, value: compareObjects(platform, args[1], args[2], compare)};
+    }
+    return invokeStringCompare(platform, args);
+  }
   fail(platform, 'MissingMethodException', descriptor.owner + '.' + descriptor.name);
 }
 

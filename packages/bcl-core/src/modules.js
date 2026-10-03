@@ -1,3 +1,4 @@
+import {objectComparerModule} from './system/object-comparer.js';
 import {stringModule} from './system/string.js';
 import {stringBuilderModule} from './text/string-builder.js';
 import {formattingModule} from './formatting/index.js';
@@ -14,5 +15,6 @@ export const bclModules = Object.freeze([
   {...arrayModule, group: 'runtime14'},
   {...randomModule, group: 'runtime14'},
   {...environmentModule, group: 'extensions'},
-  {...stringComparerModule, group: 'extensions'}
+  {...stringComparerModule, group: 'extensions'},
+  objectComparerModule
 ].map(module => Object.freeze(module)));
