@@ -363,7 +363,9 @@ export const CallBinding = Base =>
         if (declared.length > 1) indexers = declared;
       }
       if (!indexers.length) {
-        if (!isSource(type) && type.typeKind !== TypeKind.TypeParameter && !this.d.registryIsComplete(type, 'this[]'))
+        // `object` has no indexer; any other framework type may have one the registry does not list.
+        const isObject = type.specialType === 'System_Object';
+        if (!isObject && !isSource(type) && type.typeKind !== TypeKind.TypeParameter && !this.d.registryIsComplete(type, 'this[]'))
           return this.lenient(syntax);
         this.report(syntax, 'CS0021', [this.display(type)]);
         return this.bad(syntax);
