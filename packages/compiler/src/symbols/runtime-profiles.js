@@ -1,5 +1,5 @@
 /** Source-visible symbols for append-only runtime profiles, preserving their builtin identities. */
-import {numericTypeName, integerType} from '@sharpforge/bytecode';
+import {numericTypeName, numericTypeNames, integerType} from '@sharpforge/bytecode';
 import {ConstantValue} from '../constants/constant-value.js';
 import {builtinOwners} from './registry-builtins.js';
 import {TypeParameterSymbol, ArrayTypeSymbol, Accessibility} from './types.js';
@@ -66,7 +66,7 @@ export function runtimeProfileSymbols(bridge, builtin, owner) {
 export function scalarConstantFields(owner, registryName) {
   const type = numericTypeName(registryName), values = {};
   const integer = integerType(type);
-  if (integer && !integer.native) {
+  if (integer && !integer.native && numericTypeNames.includes(type)) {
     const bits = BigInt(integer.bits);
     values.MinValue = ConstantValue.of(type, integer.unsigned ? 0n : -(1n << (bits - 1n)));
     values.MaxValue = ConstantValue.of(type, (1n << (integer.unsigned ? bits : bits - 1n)) - 1n);
