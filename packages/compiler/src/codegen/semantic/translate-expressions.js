@@ -197,9 +197,14 @@ export const ExpressionTranslation = Base =>
       const kind = node.conversion?.kind,
         operand = node.operand;
       switch (kind) {
+        case 'InterpolatedString':
+          // The string is not built: the object keeps the format and the arguments, to be formatted later.
+          return this.unsupported(
+            `an interpolated string as '${node.type.toDisplayString()}' (the registry has no FormattableStringFactory.Create)`,
+            node.syntax,
+          );
         case 'Identity':
         case 'ImplicitReference':
-        case 'InterpolatedString':
         case 'ImplicitEnumeration':
         case 'ExplicitEnumeration':
           return this.retyped(this.expression(operand), node);

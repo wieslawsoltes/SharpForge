@@ -1,4 +1,7 @@
-import {float, floatBinary, floatCompare, int64Binary, int64Compare, int64Unary, uint32Binary, uint32Compare} from '@sharpforge/bytecode';
+import {
+  float, floatBinary, floatCompare, int64Binary, int64Compare, int64Unary,
+  uint32Binary, uint32Compare, smallInteger, smallIntegerIndirect
+} from '@sharpforge/bytecode';
 export {float} from '@sharpforge/bytecode';
 
 /** Pure operations on CIL evaluation-stack values.
@@ -11,6 +14,8 @@ export {float} from '@sharpforge/bytecode';
 const fault = (type, message) => Object.assign(new Error(message), {name: type});
 const error = message => Object.assign(new Error(message), {name: 'CilError'});
 const reference = value => value !== null && typeof value === 'object' && Number.isInteger(value.h) && Number.isInteger(value.g);
+const smallStorageTypes = new Set(['sbyte', 'byte', 'short', 'ushort', 'char', 'bool']);
+const smallIndirectSuffixes = new Set(['i1', 'u1', 'i2', 'u2']);
 
 export const number = value => value?.float ? value.value : value;
 export const isNumber = value => typeof value === 'number' || typeof value === 'bigint' || !!value?.float;
@@ -136,11 +141,16 @@ export function convert(name, value, {fault: createFault = fault, error: createE
 /** CLI storage locations narrow integers and round single precision on write/load. */
 export function storage(value, type, context) {
   type = numericAliases[type] ?? type;
+  if (type === 'bool' && typeof value === 'boolean') return value ? 1 : 0;
+  if (smallStorageTypes.has(type) &&
+      (typeof value === 'bigint' || Number.isInteger(value))) return smallInteger(value, type, context);
   const conversion = {sbyte: 'i1', byte: 'u1', short: 'i2', ushort: 'u2', char: 'u2', bool: 'u1', int: 'i4', uint: 'u4', long: 'i8', ulong: 'u8', float: 'r4', double: 'r8'}[type];
   return conversion ? convert('conv.' + conversion, value, context) : value;
 }
 
 export function indirect(value, name, context) {
   const suffix = name.split('.').at(-1);
+  if (smallIndirectSuffixes.has(suffix) &&
+      (typeof value === 'bigint' || Number.isInteger(value))) return smallIntegerIndirect(value, suffix, context);
   return ['i1', 'u1', 'i2', 'u2', 'i4', 'u4', 'i8', 'r4', 'r8', 'i'].includes(suffix) ? convert('conv.' + suffix, value, context) : value;
 }
