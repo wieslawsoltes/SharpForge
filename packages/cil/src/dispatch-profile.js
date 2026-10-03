@@ -65,9 +65,10 @@ export class CilDispatchTable {
       for(const method of type.methods) {
         if(!(method.flags&virtual)||method.flags&0x10)continue;
         const signature=instantiateSignature(this.inspector.signature(method.token),context.arguments),key=method.name+'::'+signatureKey(signature),declarationKey=name+'::'+method.token;
-        const inherited=method.flags&newslot?undefined:visible.get(key),slot=inherited??declarationKey;
+        const privateBody=(method.flags&7)===1;
+        const inherited=method.flags&newslot||privateBody?undefined:visible.get(key),slot=inherited??declarationKey;
         if(inherited!==undefined&&this.inspector.methods.get(this.resolveSlot({slots,aliases},slot))?.flags&final)throw new CilError('A final virtual method cannot be overridden');
-        aliases.delete(slot);slots.set(slot,method.token);declarations.set(declarationKey,{token:method.token,owner:name,slot,signature});visible.set(key,slot);
+        aliases.delete(slot);slots.set(slot,method.token);declarations.set(declarationKey,{token:method.token,owner:name,slot,signature});if(!privateBody)visible.set(key,slot);
         if (type.flags & 0x20) addInterfaceCandidate(interfaceCandidates, slot, name, method.token);
       }
       for(const iface of interfaces)for(const declaration of iface.declarations.values()) {
