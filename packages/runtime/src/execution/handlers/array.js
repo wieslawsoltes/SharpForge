@@ -1,3 +1,4 @@
+import {ManagedFault} from '../../heap.js';
 import {storageDefault} from '../storage.js';
 import {CilError} from '@sharpforge/cil';
 import {number} from '../numeric-ops.js';
@@ -9,7 +10,7 @@ const handlers=new Map([
     vm.heap.get(ref).data.fill(storageDefault(vm,alias));vm.push(ref);
   }],
   ['ldlen',vm=>{const record=vm.heap.get(vm.pop());if(record.kind!=='array')throw new CilError('ldlen requires an array');vm.push(record.data.length);}],
-  ['ldelema',vm=>{const index=number(vm.pop()),ref=vm.pop();vm.indexed(ref,index);vm.push(vm.address('array',index,ref));}]
+  ['ldelema',(vm,frame,instruction)=>{const index=number(vm.pop()),ref=vm.pop(),record=vm.indexed(ref,index),target=vm.typeSystem.table(instruction.operand);if(!target.flags.valueType&&record.methodTable.elementType!==target)throw new ManagedFault('ArrayTypeMismatchException','Writable array address requires the actual element type');vm.push(vm.address('array',index,ref));}]
 ]);
 for(const suffix of ['', '.i1','.u1','.i2','.u2','.i4','.u4','.i8','.i','.r4','.r8','.ref']) {
   handlers.set('ldelem'+suffix,(vm,frame,instruction)=>{
