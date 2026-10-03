@@ -8,8 +8,7 @@ export const operatorMethods = {
       expressionBody = null,
       semicolon = null;
     if (this.at('=>')) {
-      this.feature('ExpressionBodiedIndexer', this.current);
-      expressionBody = this.n('ArrowExpressionClause', this.take(), this.expressionOrRef());
+      expressionBody = this.arrowExpressionClause('ExpressionBodiedIndexer');
       semicolon = this.expect(';');
     } else if (this.at('{')) {
       accessors = this.accessorList();
