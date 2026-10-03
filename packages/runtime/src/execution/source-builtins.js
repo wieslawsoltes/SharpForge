@@ -1,15 +1,31 @@
 import {hasLegacyBclBuiltin,invokeLegacyBclBuiltin} from '@sharpforge/bcl-core';
 import {mutateArray} from './array-ops.js';
 import {Builtins} from '@sharpforge/bytecode';
-import {ManagedFault} from '../heap.js';
+import {ManagedFault,isReference} from '../heap.js';
 import {internString,isInternedString,referenceEquals,stringChar} from './strings.js';
 import {enumHasFlag} from './enums.js';
 import {SourceBuiltinResults} from './source-values.js';
 import {objectType,typeName,runtimeTypeText} from './tokens.js';
 
+function legacyStringPlatform(vm) {
+  // The builtin seam also supports heap/value/format services without a complete VM.
+  return vm.platform ?? {
+    heap: vm.heap,
+    vm,
+    native: value => vm.value(value),
+    managed: (value, type) => type === 'string' ? vm.heap.string(value) : value,
+    bclHost: {
+      isReference,
+      fault(type, message) {
+        throw new ManagedFault(type, message);
+      }
+    }
+  };
+}
+
 function legacyHost(vm) {
   return vm.legacyBclHost ??= {
-    platform: vm.platform,
+    platform: legacyStringPlatform(vm),
     heap: vm.heap,
     value: value => vm.value(value),
     format: value => vm.format(value),
