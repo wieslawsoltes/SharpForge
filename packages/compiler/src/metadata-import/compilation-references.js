@@ -9,6 +9,7 @@
  */
 import { bindReferences } from './reference-manager.js';
 import { coreTypeDescriptor } from '../symbols/special-types.js';
+import { readCompilationReferences } from './reference-input.js';
 
 /** The registry as the core library: every predefined type comes from the bridge. */
 class RegistryCoreLibrary {
@@ -65,7 +66,8 @@ export function bindCompilationReferences(references, bridge) {
       useSiteDiagnostics: () => [],
     };
   }
-  const manager = bindReferences(references);
+  const imported = readCompilationReferences(references);
+  const manager = bindReferences(imported.references);
   const referenced = manager.globalNamespace;
   const coreAssembly = manager.corLibrary;
   const globalNamespaces = [];
@@ -75,7 +77,7 @@ export function bindCompilationReferences(references, bridge) {
   return {
     coreLibrary: coreAssembly ? new MetadataCoreLibrary(coreAssembly, bridge) : new RegistryCoreLibrary(bridge),
     globalNamespaces,
-    diagnostics: [...manager.diagnostics, ...manager.unificationDiagnostics],
+    diagnostics: [...imported.diagnostics, ...manager.diagnostics, ...manager.unificationDiagnostics],
     hasCoreLibrary: !!coreAssembly,
     manager,
     useSiteDiagnostics: symbol => manager.useSiteDiagnostics(symbol),

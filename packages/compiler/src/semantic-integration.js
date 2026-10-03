@@ -8,7 +8,7 @@
  *   - the program is valid C#: keep the profile diagnostics, drop the stumbling errors, add the semantic warnings and
  *     one SF2200 at emit time naming what the runtime profile cannot execute - the image is never produced;
  *   - the analysis could not decide (it met framework members the closed registry does not list): nothing changes.
- * Programs the profile executes are not analysed here at all, so their images and diagnostics are untouched.
+ * Programs the profile executes without supplied metadata references are not analysed here, so their images and diagnostics are untouched.
  */
 import { diagnostic } from '@sharpforge/text';
 import { SemanticAnalysis } from './semantic-analysis.js';
@@ -86,7 +86,7 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
     files = compilation.inputFiles,
     hasReferences = !!compilation.options.references?.length;
   const profile = legacy.filter(d => isProfileConstructDiagnostic(d.code));
-  if (!profile.length && !(hasReferences && legacy.some(d => d.severity === 'error'))) return null;
+  if (!profile.length && !hasReferences) return null;
   if (!files.every(f => f.syntax)) return null;
   let result;
   try {
@@ -132,7 +132,11 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   if (result.incomplete) return null;
   // Valid C# that the runtime profile cannot execute.
   const names = [...new Set(profile.map(d => constructNames[d.code] ?? d.code))];
-  const first = profile[0],
+  // Imported symbols can bind semantically while the execution binder cannot emit them. Removing its lookup errors
+  // must still reject the image; the bound emitter may already have skipped every method because of those errors.
+  const rejectedReference = hasReferences ? legacy.find(d => d.severity === 'error' && !owned(d)) : null;
+  if (!names.length && rejectedReference) names.push('referenced types or members outside the execution profile');
+  const first = profile[0] ?? rejectedReference,
     source = compilation.sources.get(first?.uri) ?? compilation.files[0]?.source;
   const kept = legacy.filter(d => (owned(d) && !(d.code === 'CS5001')) || isProfileConstructDiagnostic(d.code));
   const diagnostics = merge(kept, semantic);
