@@ -1,4 +1,5 @@
 import {ManagedFault} from './heap.js';
+import {validateSnapshotState} from './snapshot-validation.js';
 
 /** Clone execution graphs, preserving aliases, immutable handles and fault identity. */
 export function copyExecution(value, memo = new Map()) {
@@ -38,13 +39,18 @@ export function copyExecution(value, memo = new Map()) {
 
 /** Method bodies and decode maps belong to the code generation, not execution state. */
 export function copyFrames(frames, memo = new Map()) {
-  return frames.map(frame => {
+  if(memo.has(frames))return memo.get(frames);
+  const copied=[];memo.set(frames,copied);
+  for(const frame of frames) {
+    if(memo.has(frame)){copied.push(memo.get(frame));continue;}
+    const copy={};memo.set(frame,copy);copied.push(copy);
     const {method, offsets, ...execution} = frame;
-    return {...copyExecution(execution, memo), ...(method ? {method, offsets} : {})};
-  });
+    Object.assign(copy,copyExecution(execution,memo),method?{method,offsets}:{});
+  }
+  return copied;
 }
 
-export const snapshotSchemaVersion = 1;
+export const snapshotSchemaVersion = 2;
 const field = (name, copier = copyExecution, options = {}) => Object.freeze({name, copier, ...options});
 const component = name => field(name, null, {component: true});
 const retain = value => value;
@@ -107,11 +113,14 @@ export function snapshotVM(vm, engine) {
   const selected = assertSnapshotFields(vm, engine), memo = new Map();
   const snapshot = {
     schemaVersion: selected.schemaVersion, engine, owner: vm.snapshotOwner,
+    codeOwner: vm.inspector??vm.image,
     hostRevision: vm.platform.hostOperations.snapshotVersion()
   };
   for (const item of selected.fields) {
     if (item.optional && !Object.hasOwn(vm, item.name)) continue;
-    snapshot[item.name] = item.component ? vm[item.name].snapshot() : item.copier(vm[item.name], memo);
+    snapshot[item.name] = item.component
+      ? item.name==='scheduler'?vm.scheduler.snapshot(memo):copyExecution(vm[item.name].snapshot(),memo)
+      : item.copier(vm[item.name], memo);
   }
   if (engine === 'cil') snapshot.heapRevision = vm.heap.mutationRevision;
   return snapshot;
@@ -122,25 +131,29 @@ export function restoreVM(vm, snapshot, engine) {
   if (snapshot?.owner !== vm.snapshotOwner) throw new TypeError(`Snapshot belongs to another ${engine === 'cil' ? 'CIL' : 'source'} VM`);
   if (snapshot.schemaVersion !== selected.schemaVersion || snapshot.engine !== engine)
     throw new TypeError(`Unsupported ${engine} VM snapshot schema version`);
+  if(snapshot.codeOwner!==(vm.inspector??vm.image))throw new TypeError('Snapshot belongs to another code generation');
   for (const item of selected.fields) {
     if (!item.optional && !Object.hasOwn(snapshot, item.name))
       throw new TypeError(`Snapshot is missing '${item.name}'`);
   }
-  if (!Array.isArray(snapshot.frames) || !Array.isArray(snapshot.output)) throw new TypeError('Invalid snapshot execution state');
+  validateSnapshotState(vm,snapshot,engine);
   vm.platform.hostOperations.checkRestore(snapshot.hostRevision);
   // Copy before changing the VM; the same memo preserves frame/fault aliases.
   const memo = new Map(), values = new Map();
   for (const item of selected.fields) {
-    if (item.component || !Object.hasOwn(snapshot, item.name)) continue;
-    const value = item.copier(snapshot[item.name], memo);
+    if (!Object.hasOwn(snapshot, item.name)) continue;
+    const value = item.component
+      ? item.name==='scheduler'?vm.scheduler.copySnapshot(snapshot.scheduler,memo):copyExecution(snapshot[item.name],memo)
+      : item.copier(snapshot[item.name], memo);
     values.set(item.name, item.restore ? item.restore(value) : item.monotonic ? Math.max(vm[item.name], value) : value);
   }
-  vm.heap.restore(snapshot.heap);
+  vm.heap.restore(values.get('heap'));
   for (const item of selected.fields) {
+    if(item.component)continue;
     if (values.has(item.name)) vm[item.name] = values.get(item.name);
     else if (item.optional) delete vm[item.name];
   }
   if (engine === 'source') { vm.state = 'paused'; vm.currentPoint = vm.top?.point ?? null; }
-  vm.scheduler.restore(snapshot.scheduler);
-  vm.platform.restore(snapshot.platform);
+  vm.scheduler.restore(values.get('scheduler'),memo,true);
+  vm.platform.restore(values.get('platform'));
 }

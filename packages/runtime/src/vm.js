@@ -21,7 +21,7 @@ export class VirtualMachine {
   }
   *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots()??[];yield this.returnValue;yield* this.stack;yield* this.statics;yield* this.constantValues.values();yield* stringRoots(this);yield* runtimeTypeRoots(this);for(const f of this.frames)yield* f.locals;yield* exceptionRoots(this);}
   call(methodId,args){if(this.frames.length>=this.options.maxFrames)throw new ManagedFault('StackOverflowException','Maximum managed call depth exceeded');const method=this.image.methods[methodId],locals=Array(method.locals.length).fill(undefined);args.forEach((v,i)=>locals[i]=v);if(!method.isStatic&&args[0]===null)throw new ManagedFault('NullReferenceException','Cannot call an instance method on null');this.frames.push({id:++this.frameId,methodId,pc:0,base:this.stack.length,locals,point:null,...frameState()});}
-  notifyWrite(write){this.writeRevision++;if(['field','array'].includes(write.kind))this.heap.mutationRevision++;this.onWrite?.(write);}
+  notifyWrite(write){this.writeRevision++;if(['field','array','box'].includes(write.kind))this.heap.mutationRevision++;this.onWrite?.(write);}
   get top(){return this.frames.at(-1);}
   value(ref){if(ref?.enumType)return ref.value;return isReference(ref)&&this.heap.get(ref).kind==='string'?this.heap.get(ref).data:ref;}
   format(value){const name=runtimeTypeText(this,value)??enumToString(this,value);if(name!==null)return name;if(value===null)return '';if(value===undefined)return '<unassigned>';if(value===true)return 'True';if(value===false)return 'False';if(isReference(value)){const r=this.heap.get(value);if(r.kind==='string')return r.data;if(r.kind==='exception')return r.type+': '+this.format(r.data[0]);return r.type;}return String(value);}
