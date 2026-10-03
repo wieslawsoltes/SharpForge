@@ -1,5 +1,6 @@
 import {CilError} from '@sharpforge/cil';
 import {number} from '../numeric-ops.js';
+import {storageRead} from '../array-storage.js';
 import {createArray,arrayAddress,arrayVectorRecord} from '../arrays.js';
 
 const handlers=new Map([
@@ -13,7 +14,7 @@ const handlers=new Map([
 for(const suffix of ['', '.i1','.u1','.i2','.u2','.i4','.u4','.i8','.i','.r4','.r8','.ref']) {
   handlers.set('ldelem'+suffix,(vm,frame,instruction)=>{
     const index=number(vm.pop()),ref=vm.pop(),record=arrayVectorRecord(vm,ref,index);
-    vm.push(vm.heap.withRoots([ref],()=>suffix?vm.indirect(record.data[index],instruction.name):vm.storage(record.data[index],vm.typeSystem.table(instruction.operand))));
+    vm.push(vm.heap.withRoots([ref],()=>suffix?vm.indirect(storageRead(record.data,Number(index),record.methodTable.elementType),instruction.name):vm.storage(storageRead(record.data,Number(index),record.methodTable.elementType),vm.typeSystem.table(instruction.operand))));
   });
   if(['.u1','.u2','.u4'].includes(suffix))continue;
   handlers.set('stelem'+suffix,(vm,frame,instruction)=>{

@@ -1,19 +1,12 @@
 import {resolveExecutionField} from '@sharpforge/cil';
 import {ManagedFault,isReference} from '../heap.js';
 import {checkArrayStore} from './casting.js';
+import {frameById} from './frame-lifetimes.js';
+import {isArrayStorage,storageRead,storageWrite} from './array-storage.js';
 import {storageValue} from './storage.js';
 import {isValueTypeValue,replaceValueField,copyValue} from './value-types.js';
 
 const invalid=message=>new ManagedFault('InvalidProgramException',message);
-const terminal=new Set(['completed','faulted','canceled']);
-function frameFor(vm,id) {
-  let frame=vm.frames.find(frame=>frame.id===id);if(frame)return frame;
-  for(const context of vm.scheduler?.contexts?.values()??[]) {
-    if(terminal.has(context.status)||context.id===vm.scheduler.currentId&&!vm.scheduler.parked)continue;
-    frame=context.frames.find(frame=>frame.id===id);if(frame)return frame;
-  }
-  throw invalid('Managed address outlived its frame');
-}
 function checkPointer(vm,pointer) {
   if(pointer===null)throw new ManagedFault('NullReferenceException','Managed pointer is null');
   if(!vm.snapshotOwner||!pointer?.byref||pointer.vmOwner!==vm.snapshotOwner||!Object.isFrozen(pointer)||!Array.isArray(pointer.path)||!Object.isFrozen(pointer.path))throw invalid('Malformed managed pointer or pointer belongs to another VM');
@@ -23,7 +16,7 @@ function slot(vm,pointer) {
   checkPointer(vm,pointer);let slots,table,frame;
   const {kind,index,owner}=pointer;
   if(kind==='local'||kind==='arg') {
-    frame=frameFor(vm,pointer.frameId);slots=kind==='arg'?(frame.args??frame.locals):frame.locals;
+    frame=frameById(vm,pointer.frameId);slots=kind==='arg'?(frame.args??frame.locals):frame.locals;
     const type=vm.inspector?vm.slotType(frame,kind==='arg',index):vm.image?.methods[frame.methodId]?.locals[index]?.type;
     table=type?vm.heap.methodTables.get(type):pointer.baseType;
   } else if(kind==='static') {
@@ -39,8 +32,13 @@ function slot(vm,pointer) {
     if(kind==='field'&&['string','array','box'].includes(record.kind))throw invalid('An object field address is required');
     slots=record.data;table=kind==='box'?record.methodTable:kind==='array'?record.methodTable.elementType:record.methodTable.fields[index]?.type??pointer.baseType;
   } else throw invalid('Unknown managed address kind');
-  if(!Array.isArray(slots)||!Number.isInteger(index)||index<0||index>=slots.length)throw invalid('Invalid managed address slot');
-  return {get:()=>slots[index],set:value=>{slots[index]=value;},table,frame};
+  if(!isArrayStorage(slots)||!Number.isInteger(index)||index<0||index>=slots.length)throw invalid('Invalid managed address slot');
+  const get=()=>storageRead(slots,index,table,{source:!!vm.image&&!vm.inspector});
+  const set=value=>{
+    if(owner)slots=vm.heap.ensureWritable?vm.heap.ensureWritable(owner):vm.heap.get(owner).data;
+    storageWrite(slots,index,value);
+  };
+  return {get,set,table,frame};
 }
 function leaf(vm,pointer) {
   const base=slot(vm,pointer);let value=base.get(),table=base.table;

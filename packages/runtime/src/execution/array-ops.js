@@ -78,9 +78,10 @@ export function resumeArrayOperation(vm,frame,{deadline=Infinity,workBudget=1,no
   const state=validateArrayContinuation(vm,frame);
   if(!state)return {work:0,done:true,returns:false,value:null};
   const record=recordFor(vm,state.reference);let work=0,done=false;
+  const data=vm.heap.ensureWritable?vm.heap.ensureWritable(state.reference):record.data;
   try {
     while(work<workBudget&&now()<deadline) {
-      for(let i=0;i<arrayWorkQuantum;i++){if(step(vm,state,record.data)){done=true;break;}}
+      for(let i=0;i<arrayWorkQuantum;i++){if(step(vm,state,data)){done=true;break;}}
       work++;state.work++;
       if(done)break;
     }

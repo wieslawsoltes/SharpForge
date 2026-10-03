@@ -5,13 +5,11 @@ import {boxValue,unboxValue,copyValue} from './value-types.js';
 import {address,dereference} from './managed-pointers.js';
 import {checkArrayStore,castCacheFor} from './casting.js';
 import {enumUnderlying} from './enums.js';
+import {arrayInteger,reserveArray} from './array-limits.js';
+import {isArrayStorage,primitiveArrayStorage,storageRead} from './array-storage.js';
 
 const fault=(name,message)=>new ManagedFault(name,message);
-function integer(value,error='ArgumentOutOfRangeException') {
-  const raw=number(value),n=typeof raw==='bigint'&&raw>= -2147483648n&&raw<=2147483647n?Number(raw):raw;
-  if(!Number.isInteger(n)||n< -2147483648||n>2147483647)throw fault(error,'Array dimension or index must be an Int32');
-  return n;
-}
+const integer=arrayInteger;
 export function arrayRecord(vm,reference) {
   const record=vm.heap.get(reference);
   if(record.kind!=='array'||!record.methodTable.flags.array)throw fault('InvalidProgramException','An array reference is required');
@@ -27,15 +25,15 @@ export function arrayShape(record) {
 export function validateArrayShape(record) {
   const invalid=()=>{throw new TypeError('Invalid snapshot array shape');};
   const table=record?.methodTable,shape=record?.arrayShape;
-  if(!table?.flags.array||!Array.isArray(record.data))invalid();
+  if(!table?.flags.array||!isArrayStorage(record.data))invalid();
   if(shape===undefined){if(!table.flags.szArray)invalid();return;}
   if(!shape||!Number.isInteger(shape.rank)||shape.rank<1||shape.rank>32||shape.rank!==table.rank||shape.szArray!==table.flags.szArray||
     ![shape.lengths,shape.lowerBounds,shape.strides].every(values=>Array.isArray(values)&&values.length===shape.rank))invalid();
   let total=1;
   for(let i=shape.rank-1;i>=0;i--) {
     const length=shape.lengths[i],lower=shape.lowerBounds[i];
-    if(!Number.isInteger(length)||length<0||length>2147483647||!Number.isInteger(lower)||lower< -2147483648||lower>2147483647||
-      length>0&&lower+length-1>2147483647||shape.strides[i]!==total)invalid();
+    if(!Number.isInteger(length)||length<0||length>Number.MAX_SAFE_INTEGER||!Number.isInteger(lower)||lower<Number.MIN_SAFE_INTEGER||lower>Number.MAX_SAFE_INTEGER||
+      length>0&&!Number.isSafeInteger(lower+length-1)||shape.strides[i]!==total)invalid();
     total*=length;
   }
   if(total!==record.data.length||shape.szArray&&(shape.rank!==1||shape.lowerBounds[0]!==0))invalid();
@@ -60,20 +58,18 @@ export function createArray(vm,elementType,lengths,lowerBounds=null,{reflection=
   let total=1;
   for(let i=0;i<sizes.length;i++) {
     if(sizes[i]<0)throw fault(reflection?'ArgumentOutOfRangeException':'OverflowException','Array length cannot be negative');
-    if(sizes[i]>0&&bounds[i]+sizes[i]-1>2147483647)throw fault('ArgumentOutOfRangeException','Array upper bound exceeds Int32');
+    if(sizes[i]>0&&!Number.isSafeInteger(bounds[i]+sizes[i]-1))throw fault('ArgumentOutOfRangeException','Array upper bound exceeds exact addressing');
     total*=sizes[i];
     if(!Number.isSafeInteger(total)||total>0xffffffff)throw fault('OutOfMemoryException','Array dimensions exceed the supported allocation size');
   }
-  const limit=vm.options?.maxArrayLength??1_000_000;
-  if(sizes.some(size=>size>limit)||total>limit)throw fault('OutOfMemoryException','Array exceeds the configured element limit');
+  reserveArray(vm,element,total);
   const strides=Array(sizes.length);let stride=1;
   for(let i=sizes.length-1;i>=0;i--){strides[i]=stride;stride*=sizes[i];}
   // CoreCLR also morphs rank-one ARRAY constructors with lower bound zero to SZARRAY.
   const szArray=sizes.length===1&&bounds[0]===0;
   const suffix=szArray?'[]':sizes.length===1?'[*]':'['+','.repeat(sizes.length-1)+']';
   const table=vm.heap.methodTables.get(element.name+suffix);
-  vm.heap.reserve(32+total*8);
-  const zero=storageDefault(vm,element),reference=vm.heap.allocate('array',table,Array(total).fill(zero));
+  const zero=storageDefault(vm,element),reference=vm.heap.allocate('array',table,primitiveArrayStorage(element,total,zero));
   vm.heap.get(reference).arrayShape=Object.freeze({rank:sizes.length,szArray,lengths:Object.freeze(sizes),lowerBounds:Object.freeze(bounds),strides:Object.freeze(strides)});
   return reference;
 }
@@ -92,13 +88,13 @@ export function arrayDimension(vm,reference,dimension,property='length') {
   const shape=arrayShape(arrayRecord(vm,reference)),index=integer(dimension,'IndexOutOfRangeException');
   if(index<0||index>=shape.rank)throw fault('IndexOutOfRangeException','Array dimension is outside its rank');
   if(property==='lower')return shape.lowerBounds[index];
-  if(property==='upper')return (shape.lowerBounds[index]+shape.lengths[index]-1)|0;
+  if(property==='upper')return shape.lowerBounds[index]+shape.lengths[index]-1;
   return shape.lengths[index];
 }
 export function arrayGet(vm,reference,indices,{reflection=false,type=null}={}) {
   return vm.heap.withRoots([reference],()=>{
     const record=arrayRecord(vm,reference),offset=arrayOffset(record,indices,{reflection}),element=record.methodTable.elementType;
-    const value=copyValue(vm,record.data[offset],type??element);
+    const value=copyValue(vm,storageRead(record.data,offset,element,{source:!!vm.image&&!vm.inspector}),type??element);
     return reflection&&element.flags.valueType?boxValue(vm,value,element):value;
   });
 }
