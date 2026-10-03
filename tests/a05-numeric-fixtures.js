@@ -59,6 +59,14 @@ export const conversionReturnType = {i1: 'int', u1: 'int', i2: 'int', u2: 'int',
 export const numericConversionCases = [...wideningConversionCases, ...floatingConversionCases];
 export const numericConversionOutput = numericConversionCases.map(c => String(c.expected) + '\n').join('');
 
+// The shared fixture builder's source-profile writer does not emit unsigned or
+// single-precision primitive signatures. Use genuine CLI element types here:
+// native .NET must not see class references named "uint", "ulong", or "float".
+const primitiveSignature = (result, parameters) => {
+  const element = {void: 0x01, int: 0x08, uint: 0x09, long: 0x0a, ulong: 0x0b, float: 0x0c, double: 0x0d};
+  return Uint8Array.of(0, parameters.length, element[result], ...parameters.map(type => element[type]));
+};
+
 /** Identical authored IL can run on the direct VM and the native .NET JIT.
  * NoInlining keeps conversion inputs dynamic so JIT constant folding cannot
  * replace the float-to-small-integer path this compatibility table describes.
@@ -70,11 +78,12 @@ export function numericConversionFixture(cases = numericConversionCases) {
       {name: 'Main', result: 'void', body(w, c) {
         for (const item of cases) {
           w.op(item.source === 'double' ? 'ldc.r8' : item.source === 'float' ? 'ldc.r4' : item.source === 'long' ? 'ldc.i8' : 'ldc.i4', item.input);
-          w.op('call', c.methods[item.id]).op('call', c.member('System.Console', 'WriteLine', 'void', [conversionReturnType[item.target]]));
+          const writeLine = c.md.member(c.md.typeRef('System.Console'), 'WriteLine', primitiveSignature('void', [conversionReturnType[item.target]]));
+          w.op('call', c.methods[item.id]).op('call', writeLine);
         }
         w.op('ret');
       }},
-      ...cases.map(item => ({name: item.id, parameters: [item.source], result: conversionReturnType[item.target], body: w => w.op('ldarg.0').op('conv.' + item.target).op('ret')})),
+      ...cases.map(item => ({name: item.id, parameters: [item.source], result: conversionReturnType[item.target], signature: primitiveSignature(conversionReturnType[item.target], [item.source]), body: w => w.op('ldarg.0').op('conv.' + item.target).op('ret')})),
     ],
     decorate(c) { for (const row of c.md.rows[6]) row[1] |= 8; },
   });
