@@ -7,6 +7,14 @@ import os from 'node:os';
 // --root also measures a clean checkout with the same workload and Node engine.
 const rootArgument = process.argv.indexOf('--root');
 const root = resolve(rootArgument < 0 ? '.' : process.argv[rootArgument + 1]);
+function countOption(name, fallback) {
+  const index = process.argv.indexOf(name);
+  const value = index < 0 ? fallback : Number(process.argv[index + 1]);
+  if (!Number.isInteger(value) || value < 1 || value > 10000) throw new Error(`Invalid ${name}`);
+  return value;
+}
+const samples = countOption('--samples', 20);
+const warmup = countOption('--warmup', 4);
 const require = createRequire(resolve(root, 'package.json'));
 const {compileToIL} = await import(pathToFileURL(require.resolve('@sharpforge/compiler')));
 const {VirtualMachine, CilVirtualMachine} = await import(pathToFileURL(require.resolve('@sharpforge/runtime')));
@@ -27,7 +35,7 @@ for (const [name, body] of Object.entries(workloads)) {
   ]) {
     const times = [];
     const allocations = [];
-    for (let iteration = 0; iteration < 24; iteration++) {
+    for (let iteration = 0; iteration < warmup + samples; iteration++) {
       const begin = performance.now();
       const vm = create();
       const result = vm.run();
@@ -35,10 +43,10 @@ for (const [name, body] of Object.entries(workloads)) {
       times.push(performance.now() - begin);
       allocations.push(vm.heap.stats.allocatedBytes);
     }
-    const warm = times.slice(4);
+    const warm = times.slice(warmup);
     measurements.push({name, engine, coldMs: times[0], medianMs: quantile(warm, 0.5),
       p95Ms: quantile(warm, 0.95), p99Ms: quantile(warm, 0.99), managedAllocatedBytes: quantile(allocations, 0.5)});
   }
 }
 console.log(JSON.stringify({node: process.version, platform: process.platform, architecture: process.arch,
-  cpu: os.cpus()[0].model, samples: 20, measurements}, null, 2));
+  cpu: os.cpus()[0].model, samples, warmup, measurements}, null, 2));

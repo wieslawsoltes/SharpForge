@@ -48,7 +48,7 @@ function cilAssembly(fixture) {
     result: fixture.result,
     body(writer, context) {
       for (let index = 0; index < types.length; index++) writer.op('ldarg', index);
-      const parameters = isStatic ? types : types.slice(1);
+      const parameters = fixture.cilParameters ?? (isStatic ? types : types.slice(1));
       const member = context.member(owners[owner], name, fixture.result, parameters, isStatic);
       writer.op(isStatic ? 'call' : 'callvirt', member).op('ret');
     }
@@ -91,6 +91,33 @@ test('A07 Replace with a null old value reports ArgumentNullException on both en
   for (const engine of ['source', 'cil']) {
     assert.deepEqual(execute(fixture, engine), {fault: 'ArgumentNullException'});
   }
+});
+
+test('A07 source legacy strings retain their heap budget above the contract text limit', () => {
+  const half = 'a'.repeat(600000);
+  const text = half + half;
+  const fixtures = [
+    {name: 'string.Concat', args: [half, half], expected: text},
+    {name: 'string.ToUpper', args: [text], expected: 'A'.repeat(text.length)},
+    {name: 'string.Substring', args: [text + '!', 0, text.length], expected: text}
+  ];
+  for (const fixture of fixtures) {
+    const result = execute({...fixture, result: 'string'}, 'source');
+    assert.equal(result.fault, undefined, fixture.name);
+    assert.equal(result.value?.length, 1200000, fixture.name);
+    assert.ok(result.value === fixture.expected, fixture.name + ' preserves the entire result');
+  }
+});
+
+test('A07 direct CIL legacy object Concat retains its heap budget while the string contract stays bounded', () => {
+  const half = 'a'.repeat(600000);
+  const fixture = {name: 'string.Concat', args: [half, half], result: 'string'};
+  // Object Concat uses the legacy intrinsic; the registered string overload uses the contract.
+  const legacy = execute({...fixture, cilParameters: ['object', 'object']}, 'cil');
+  assert.equal(legacy.fault, undefined);
+  assert.equal(legacy.value?.length, 1200000);
+  assert.ok(legacy.value === half + half, 'legacy CIL preserves the entire result');
+  assert.deepEqual(execute(fixture, 'cil'), {fault: 'OutOfMemoryException'});
 });
 
 test('A07 legacy builtin host caches do not enter source or CIL VM snapshots', () => {

@@ -70,8 +70,7 @@ function next(p, reference, record, native) {
   return Math.floor(value * span) + minimum;
 }
 
-function invoke(p, descriptor, args) {
-  const type = p.bclHost.frameworkType(descriptor.owner);
+function invoke(p, descriptor, args, type = p.bclHost.frameworkType(descriptor.owner)) {
   if (type?.kind !== 'bcl14' || type.family !== 'random') return {handled: false};
   const native = args.map(value => p.native(value));
   if (descriptor.kind === 'constructor') {

@@ -10,6 +10,9 @@ Each family module has `name`, `families`, `contracts(registry)` and
 `{handled: true, value}` or `{handled: false}` synchronously. Module registration
 is validated before publication, with a constant-time family lookup per call.
 Registries are independent and immutable; managed state stays in the host heap.
+`registry.invoke` and `invokeBclModules` accept an optional fourth argument with
+the already resolved owner type. The registry passes it to the module's `invoke`
+method; omitting it retains the host lookup, and `null` means an unknown type.
 
 Add a module to `src/modules.js` to make it available to framework registration,
 runtime dispatch and the generated inventory. The extracted release 13 and 14

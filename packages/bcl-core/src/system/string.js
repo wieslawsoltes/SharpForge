@@ -143,8 +143,7 @@ function instanceString(platform, name, receiver, values, scalars) {
   }
 }
 
-/** Invoke a registered String member; text allocations remain bounded and heap-owned. */
-export function invokeString(platform, descriptor, args) {
+function invokeStringMember(platform, descriptor, args, contractBounded) {
   const reference = descriptor.isStatic || descriptor.kind === 'constructor' ? null : args[0];
   const values = reference === null ? args : args.slice(1);
   const scalars = values.map(value => bclScalar(platform, value));
@@ -156,8 +155,18 @@ export function invokeString(platform, descriptor, args) {
     if (descriptor.name === 'Split') return {handled: true, value: splitString(platform, receiver, values, scalars)};
     output = instanceString(platform, descriptor.name, receiver, values, scalars);
   }
-  const value = platform.managed(typeof output === 'string' ? bounded(platform, output) : output, descriptor.result);
+  const value = platform.managed(typeof output === 'string' && contractBounded ? bounded(platform, output) : output, descriptor.result);
   return {handled: true, value};
+}
+
+/** Registered String contracts retain their one-million-unit text limit. */
+export function invokeString(platform, descriptor, args) {
+  return invokeStringMember(platform, descriptor, args, true);
+}
+
+/** Legacy intrinsics share String operations but allocate against the managed heap budget. */
+export function invokeLegacyStringMember(platform, descriptor, args) {
+  return invokeStringMember(platform, descriptor, args, false);
 }
 
 export const stringModule = Object.freeze({

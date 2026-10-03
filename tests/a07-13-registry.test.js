@@ -24,6 +24,28 @@ test('BCL contributions extend contracts and dispatch through one family registr
   assert(Object.isFrozen(modules.modules[0].families));
 });
 
+test('BCL dispatch reuses resolved types and preserves standalone owner lookup', () => {
+  const type = {family: 'example'};
+  const received = [];
+  const modules = createBclRegistry([{
+    ...example(),
+    invoke(platform, descriptor, args, resolvedType) {
+      received.push(resolvedType);
+      return {handled: true, value: 42};
+    }
+  }]);
+  let lookups = 0;
+  const platform = {bclHost: {frameworkType() { lookups++; return type; }}};
+  const descriptor = {owner: 'example'};
+  assert.deepEqual(modules.invoke(platform, descriptor, [], type), {handled: true, value: 42});
+  assert.equal(lookups, 0);
+  assert.deepEqual(modules.invoke(platform, descriptor, [], null), {handled: false});
+  assert.equal(lookups, 0);
+  assert.deepEqual(modules.invoke(platform, descriptor, []), {handled: true, value: 42});
+  assert.equal(lookups, 1);
+  assert.deepEqual(received, [type, type]);
+});
+
 test('BCL registry rejects duplicate ownership and malformed contributions', () => {
   for (const value of [null, {}, [null], [{name: 'bad'}]]) assert.throws(() => createBclRegistry(value), TypeError);
   assert.throws(() => createBclRegistry([example(), example()]), /Duplicate BCL module/);
