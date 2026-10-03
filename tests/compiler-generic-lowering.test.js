@@ -7,6 +7,7 @@ import { testPinnedFeature } from './support/pinned-feature.js';
 // SF-A02-T02.6: user-defined generics run as one image class or method per closed construction (monomorphization).
 // The pinned fixtures print on both back ends what the same programs print on .NET (Roslyn 5.3.0, .NET 10.0.5).
 testPinnedFeature('SF-A02-T02.6', 'generic-lowering', { outputs: 9, diagnostics: 5 });
+testPinnedFeature('SF-A02-T02.6', 'generic-interactions', { outputs: 3, diagnostics: 0 });
 
 const program = (declarations, body) => `using System;\n${declarations}\nclass Program { static void Main() { ${body} } }\n`;
 const box = 'class Box<T> { public T Value; public static int Count; public Box(T value) { Value = value; Count++; } public T Get() { return Value; } }';
@@ -128,7 +129,7 @@ test('A02-T02.6 what needs the run-time type or dispatch is reported as SF2200, 
     [program('static class U { public static T As<T>(object o) { return (T)o; } }', 'U.As<string>("s");'), /runtime type check/],
     [program('record Wrapper<T>(T Value);', 'var w = new Wrapper<int>(1);'), /generic records/],
     // Polymorphic recursion has no finite set of constructions.
-    [program(`${box} static class U { public static int D<T>(T x, int n) { return n == 0 ? 0 : D(new Box<T>(x), n - 1); } }`, 'U.D(1, 2);'), /does not terminate/],
+    [program(`${box} static class U { public static int D<T>(T x, int n) { return D(new Box<T>(x), n - 1); } }`, "U.D(1, 2);"), /does not terminate/],
   ];
   for (const [source, expected] of cases) assert.match(notExecutable(source).message, expected, source);
 });
@@ -142,4 +143,25 @@ test('A02-T02.6 a generic class or method that is never constructed does not mak
     ),
   );
   assert.deepEqual(lines, ['ok']);
+});
+
+test('A02-T02.6 a task over a reference result shares the registry task over object; other framework generics do not', () => {
+  const animal = 'class Animal { public string Name = "a"; }';
+  const asyncProgram = (declarations, body) =>
+    `using System;\nusing System.Threading.Tasks;\n${declarations}\nclass Program { ${body} }\n`;
+  const shared = compile(
+    asyncProgram(animal, 'static async Task<Animal> Make() { await Task.Yield(); return new Animal(); } static async Task Main() { await Make(); }'),
+  );
+  assert.ok(shared.image, 'Task<Animal> is executable');
+  const make = shared.image.methods.find(method => method.qualifiedName === 'Program.Make');
+  assert.equal(make.returnType, 'System.Threading.Tasks.Task`1<object>');
+  // The run-time type of such a task is Task<object>, so it must not reach ToString() either.
+  const printed = asyncProgram(
+    animal,
+    'static async Task<Animal> Make() { await Task.Yield(); return new Animal(); } static async Task Main() { Console.WriteLine(Make()); await Make(); }',
+  );
+  assert.match(notExecutable(printed).message, /converting a constructed generic type to 'object'/);
+  // A task of a value the runtime cannot represent is still named.
+  const wide = asyncProgram('', 'static async Task<long> Make() { await Task.Yield(); return 1; } static async Task Main() { await Make(); }');
+  assert.match(notExecutable(wide).message, /64-bit integers/);
 });

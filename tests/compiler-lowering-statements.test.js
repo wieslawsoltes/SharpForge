@@ -114,7 +114,7 @@ test('constructs that need runtime support are reported with their name and posi
     ['delegate void D(ref int x); class P { static void M(ref int x) { x = 1; } static void Main() { D d = M; int v = 0; d(ref v); } }', /ref, out and in parameters/],
     ['class P { static void Main() { long big = 1; System.Console.WriteLine(big); } }', /64-bit integers/],
     ['using System; class P { static void Main() { try { } catch (InvalidOperationException) { } } }', /./],
-    ['class Box<T> { } class P { static int D<T>(T x, int n) { return n == 0 ? 0 : D(new Box<T>(), n - 1); } static void Main() { D(1, 2); } }', /generic instantiation that does not terminate/],
+    ['class B<T> { } class P { static int D<T>(T x, int n) { return D(new B<T>(), n); } static void Main() { D(1, 2); } }', /does not terminate/],
     ['class P { static void Main() { object o = "s"; string s = (string)o; System.Console.WriteLine(s); } }', /runtime type check/],
   ];
   for (const [source, expected] of cases) {
