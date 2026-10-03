@@ -18,6 +18,7 @@ New modules use the `extensions` group in the reserved A07 range. Registering a
 module through the framework remains transactional.
 
 Run `node packages/bcl-core/scripts/inventory.js` to regenerate the documented
-surface; `--check` compares the checked-in output. The reference is the released
-SharpForge ABI, not a claim of complete .NET BCL parity. Later work adds the
-versioned .NET inventory and capabilities independently of this extraction.
+surface; `--check` compares the checked-in output. Public String, StringBuilder,
+Array and Random metadata is pinned to .NET 10.0.5 and SDK 10.0.201, with native
+extractor and source hashes. Exact signature presence is reported separately
+from behavioral qualification; this extraction does not claim complete BCL parity.
