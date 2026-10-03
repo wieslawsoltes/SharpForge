@@ -16,3 +16,15 @@ test('native execution cancellation and time budgets dispose temporary DLLs',{ti
  try{for(const run of [runSharpCLR,runRoslynCLR]){const actual=await run(fixture,{toolchain,temporaryRoot});assert.equal(actual.status,'budget-exceeded');const controller=new AbortController();const pending=run({...fixture,limits:{...fixture.limits,timeoutMs:10000}},{toolchain,temporaryRoot,signal:controller.signal});setTimeout(()=>controller.abort(),150);assert.equal((await pending).status,'cancelled');}
  assert.deepEqual(await readdir(temporaryRoot),[]);}finally{await rm(temporaryRoot,{recursive:true,force:true});}
 });
+
+
+test('native UTF-8 transport preserves Unicode input and exact emitted DLL identity', {timeout:30000}, async()=>{
+  const fixture=hydrateFixture({...definition,stdin:'Zażółć → café\n'},'using System; class Program { static void Main() { Console.WriteLine(Console.ReadLine()); } }');
+  const actual=await runRoslynCLR(fixture,{toolchain});
+  assert.equal(actual.status,'completed',JSON.stringify(actual));
+  assert.equal(actual.stdout.replaceAll('\r',''),'Zażółć → café\n');
+  assert.equal(Buffer.from(actual.stdoutBase64,'base64').toString('utf8'),actual.stdout);
+  assert.equal(actual.host.id,'utf8-console-v1');
+  assert.match(actual.host.assemblySHA256,/^[0-9a-f]{64}$/);
+  assert.notEqual(actual.artifactHash,actual.host.assemblySHA256);
+});

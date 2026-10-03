@@ -4,6 +4,7 @@ on:
     - cron: '31 2 * * *'
   workflow_dispatch:
   pull_request:
+    types: [opened, synchronize, reopened, labeled]
     paths:
       - '.github/workflows/differential.yml'
       - 'scripts/conformance/diff/**'
@@ -16,6 +17,7 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   linux:
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     container:
@@ -45,6 +47,7 @@ jobs:
           path: artifacts/differential/
           if-no-files-found: error
   desktop:
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ${{ matrix.os }}
     timeout-minutes: 25
     strategy:

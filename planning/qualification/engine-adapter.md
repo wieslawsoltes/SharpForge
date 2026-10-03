@@ -13,6 +13,15 @@ otherwise unchanged. Native stdout/stderr bytes are retained as Base64 alongside
 UTF-8 decoded text, so host codepage discrepancies remain inspectable. No source
 API injection or silent mojibake normalization is used.
 
+Native processes use an explicit UTF-8 console transport profile for input and
+output. A small [CoreCLR startup hook](https://github.com/dotnet/runtime/blob/main/docs/design/features/host-startup-hook.md)
+sets console encodings before Main. The hook is compiled with the same pinned
+compiler/reference pack, has a separate assembly identity, and records both its
+source and assembly hashes. Both native paths receive the identical host policy;
+the tested source, emitted DLL bytes, and raw stdout/stderr remain unchanged.
+Programs may explicitly change their encoding; any resulting bytes remain visible.
+This avoids depending on the Windows runner console codepage.
+
 The adapters return `engine`, `status`, `phase`, `stdout`, `stderr`, `exitCode`,
 `exception`, `diagnostics`, `artifactHash` and separate metrics. Status is
 completed, compile-error, runtime-error, host-error, cancelled, budget-exceeded
@@ -61,3 +70,7 @@ fields, wrong engine/hash/protocol and malformed output are host failures.
 For Wasm the engine field is rust-wasm. A27 must enforce managed budgets, own its
 module lifetime and close all guest resources before responding. Unit fixtures
 for this transport do not qualify a Rust or Wasm runtime.
+
+The native differential workflow follows the shared minimal PR policy: ordinary
+pull requests run core checks, while `full-ci` opts a PR into native differential
+qualification. Scheduled and manual runs keep the full three-platform matrix.

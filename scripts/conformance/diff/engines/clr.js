@@ -7,13 +7,18 @@ import {runChild} from '../process.js';
 import {result,failure,unsupported} from '../result.js';
 import {compileSharp} from './vm.js';
 import {sha256} from '../fixtures.js';
+import {consoleHost} from '../host/console.js';
 export async function executeCLR(assembly,fixture,toolchain,{signal,temporaryRoot=os.tmpdir()}={}){
   if(!(assembly instanceof Uint8Array)||!assembly.length)throw new Error('Successful DLL emission is required');
+  const host=await consoleHost(toolchain,{signal});
   const directory=await mkdtemp(path.join(temporaryRoot,'sharpforge-diff-clr-'));
   try{
     await writeFile(path.join(directory,'Differential.dll'),assembly);
+    const hook=path.join(directory,'SharpForge.Differential.ConsoleHost.dll');
+    await writeFile(hook,host.assembly);
     await writeFile(path.join(directory,'Differential.runtimeconfig.json'),JSON.stringify({runtimeOptions:{tfm:pin.targetFramework,rollForward:'Disable',framework:{name:'Microsoft.NETCore.App',version:pin.runtime},configProperties:{'System.Globalization.Invariant':true}}}));
-    return await runChild(toolchain.dotnet,['exec','--runtimeconfig',path.join(directory,'Differential.runtimeconfig.json'),path.join(directory,'Differential.dll')],{cwd:directory,stdin:fixture.stdin,signal,timeoutMs:fixture.limits.timeoutMs,maxOutputBytes:fixture.limits.maxOutputBytes});
+    const raw=await runChild(toolchain.dotnet,['exec','--runtimeconfig',path.join(directory,'Differential.runtimeconfig.json'),path.join(directory,'Differential.dll')],{cwd:directory,stdin:fixture.stdin,signal,timeoutMs:fixture.limits.timeoutMs,maxOutputBytes:fixture.limits.maxOutputBytes,env:{DOTNET_STARTUP_HOOKS:hook}});
+    return {...raw,host:host.profile};
   }finally{await rm(directory,{recursive:true,force:true});}
 }
 export async function runCLR(kind,fixture,{toolchain,compiled,signal,sharedCompileMs,temporaryRoot}={}){
@@ -33,7 +38,7 @@ export async function runCLR(kind,fixture,{toolchain,compiled,signal,sharedCompi
     phase='execute';const raw=await executeCLR(assembly,fixture,toolchain,{signal,temporaryRoot});
     const match=/^Unhandled exception\. ([A-Za-z_][A-Za-z0-9_.+`]*)(?:: ([^\r\n]*))?/m.exec(raw.stderr),exception=match?{type:match[1],message:match[2]??''}:null;
     const hostFailure=raw.signal&&!exception;
-    return result(engine,{status:hostFailure?'host-error':exception?'runtime-error':'completed',phase,stdout:raw.stdout,stderr:raw.stderr,stdoutBase64:raw.stdoutBase64,stderrBase64:raw.stderrBase64,exitCode:exception?null:raw.exitCode,exitCodeKind:'process',exception,artifactHash:sha256(assembly),...(hostFailure?{error:'Native process exited on '+raw.signal}:{}),metrics:{compileMs,executeMs:raw.elapsedMs,managedAllocations:null},toolchain:toolchain.actual,environment:toolchain.environment});
+    return result(engine,{status:hostFailure?'host-error':exception?'runtime-error':'completed',phase,stdout:raw.stdout,stderr:raw.stderr,stdoutBase64:raw.stdoutBase64,stderrBase64:raw.stderrBase64,exitCode:exception?null:raw.exitCode,exitCodeKind:'process',exception,artifactHash:sha256(assembly),host:raw.host,...(hostFailure?{error:'Native process exited on '+raw.signal}:{}),metrics:{compileMs,executeMs:raw.elapsedMs,managedAllocations:null},toolchain:toolchain.actual,environment:toolchain.environment});
   }catch(error){return {...failure(engine,error,phase),artifactHash:assembly?sha256(assembly):null,metrics:{compileMs:compileMs??null}};}
 }
 export const runSharpCLR=(fixture,options)=>runCLR('sharpforge',fixture,options);
