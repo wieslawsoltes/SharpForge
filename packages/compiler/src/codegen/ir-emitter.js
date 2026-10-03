@@ -1,3 +1,4 @@
+import {emitVarargsExpression} from './varargs-emission.js';
 import {emitReferenceExpression, prepareReference, loadReference, storeReference} from './reference-emission.js';
 import {emitScalarExpression, emitScalarBinary} from './scalar-expressions.js';
 import {emitMemoryExpression, prepareMemoryTarget} from './memory-expressions.js';
@@ -133,7 +134,7 @@ export class IrEmitter {
     this.emit(Op.BINARY,Binary[operator],binaryMode(operator,left,classifyBinary(operator,left,right).result,checked));
   }
   expr(node){
-    if(emitReferenceExpression(this,node))return;
+    if(emitVarargsExpression(this,node)||emitReferenceExpression(this,node))return;
     if(emitMemoryExpression(this,node)||emitScalarExpression(this,node))return;
     switch(node.kind){
       case 'Literal':this.emitConstant(node.value,node.legacyType);break;

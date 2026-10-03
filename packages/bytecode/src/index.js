@@ -1,3 +1,4 @@
+import {varargsStackEffect} from './varargs-verification.js';
 import {referenceStackEffect} from './reference-verification.js';
 import {exceptionRegionEntries} from './exception-regions.js';
 import {Op, OpName} from './opcodes.js';
@@ -31,12 +32,13 @@ export function verifyImage(image){
   const fail=(m,pc,msg)=>{if(errors.length<100)errors.push(`${m?.qualifiedName??'<image>'}:${pc}: ${msg}`);};
   if(image.outputKind==='library'?image.entryPoint!==null:!Number.isInteger(image.entryPoint)||!image.methods[image.entryPoint])fail(null,0,'Invalid entry point');
   for(const m of image.methods){
+    if(![undefined,0,5].includes(m.callingConvention))fail(m,0,'Unsupported source calling convention');
     if(!(m.code instanceof Int32Array)||m.code.length%3||m.code.length>3_000_000||!Array.isArray(m.locals)||!Array.isArray(m.handlers)){fail(m,0,'Invalid code or metadata');continue;}
     const n=m.code.length/3,heights=new Map(),queue=[[0,0]];
     queue.push(...exceptionRegionEntries(m,fail));
     while(queue.length){const [pc,height]=queue.pop();if(pc<0||pc>=n){fail(m,pc,'Control flow leaves the method');continue;}if(heights.has(pc)){if(heights.get(pc)!==height)fail(m,pc,'Inconsistent stack height at join');continue;}heights.set(pc,height);
       const op=m.code[pc*3],a=m.code[pc*3+1],b=m.code[pc*3+2];let need=0,delta=0;
-      const memory=referenceStackEffect(op,a,b,image,m)??memoryStackEffect(op,a,b,image.constants);
+      const memory=varargsStackEffect(op,a,b,image,m)??referenceStackEffect(op,a,b,image,m)??memoryStackEffect(op,a,b,image.constants);
       if(memory){need=memory.need;delta=memory.delta;if(!memory.valid)fail(m,pc,'Invalid memory instruction');}
       else switch(op){
         case Op.ENUM:if(!enumTypes[a])fail(m,pc,'Invalid enum type');delta=1;break;case Op.DELEGATE:need=1;if(!image.methods[a]||frameworkType(image.constants[b])?.kind!=='delegate')fail(m,pc,'Invalid delegate');break;case Op.NOP:break;case Op.ENDFINALLY:if(height!==0)fail(m,pc,'Finally must have an empty stack');break;
@@ -51,7 +53,7 @@ export function verifyImage(image){
         case Op.CONVERT:need=1;if(!numericTypeNames[a]&&!enumTypes[a-EnumConvertBase]||(b>=16?(()=>{try{decodeNumericMode(b);return false;}catch{return true;}})():![0,1].includes(b)||b===1&&a===1))fail(m,pc,'Invalid numeric conversion');break;
         case Op.UNARY:need=1;if(!UnaryName[a]||(b>=16?(()=>{try{decodeNumericMode(b);return false;}catch{return true;}})():![0,1,5].includes(b)||b===5&&a!==0))fail(m,pc,'Invalid unary operator');break;
         case Op.JUMP:break;case Op.JFALSE:case Op.JTRUE:need=1;delta=-1;break;
-        case Op.CALL:if(!image.methods[a])fail(m,pc,'Invalid method');else if(b!==image.methods[a].parameters.length+(image.methods[a].isStatic?0:1))fail(m,pc,'Invalid argument count');need=b;delta=1-b;break;
+        case Op.CALL:if(!image.methods[a])fail(m,pc,'Invalid method');else if((image.methods[a].callingConvention===5?b<image.methods[a].parameters.length+(image.methods[a].isStatic?0:1):b!==image.methods[a].parameters.length+(image.methods[a].isStatic?0:1)))fail(m,pc,'Invalid argument count');need=b;delta=1-b;break;
         case Op.BUILTIN:if(!Builtins[a]||b<Builtins[a].min||b>Builtins[a].max)fail(m,pc,'Invalid intrinsic');need=b;delta=1-b;break;
         case Op.RET:need=1;delta=-1;if(height!==1)fail(m,pc,'Return stack must contain exactly one value');break;
         case Op.NEWOBJ:if(!image.types[a])fail(m,pc,'Invalid managed type');delta=1;break;
@@ -91,3 +93,5 @@ export {arrayType, spanType, memoryTypeName, memoryOpcodes} from './memory-types
 export {memoryStackEffect} from './memory-verification.js';
 
 export {exceptionIntrinsicDefinitions} from './exception-intrinsic-profile.js';
+
+export {varargsIntrinsicDefinitions,varargsTypeDefinition,fixedCallSignature,validVarargsSignature} from './varargs-profile.js';

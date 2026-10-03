@@ -128,6 +128,7 @@ export const Declarations = Base =>
       const name = isConstructor ? '.ctor' : symbol.methodKind === MethodKind.StaticConstructor ? '<cctor>' : symbol.name;
       const record = this.program.addMethod(owner, name, {
         isStatic: symbol.isStatic,
+        callingConvention: symbol.isVararg?5:0,
         returnType: isConstructor || symbol.methodKind === MethodKind.StaticConstructor ? 'void' : this.types.imageType(symbol.returnType, at) + (isByReference(symbol) ? '&' : ''),
         parameters: this.parametersOf(symbol),
         node: this.nodeOf(symbol),

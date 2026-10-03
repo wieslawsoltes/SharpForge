@@ -1,3 +1,4 @@
+import {varargsIntrinsicDefinitions} from './varargs-profile.js';
 import {sourceExceptionDefinitions} from './source-exception-profile.js';
 import {numericIntrinsicDefinitions} from './numeric-intrinsic-profile.js';
 import {syncIntrinsicDefinitions} from './sync-intrinsic-profile.js';
@@ -7,7 +8,7 @@ import {arrayIntrinsicDefinitions} from './array-intrinsic-profile.js';
 export function appendExecutionBuiltins(entries) {
   for (const [kind, definitions] of [
     ['numeric', numericIntrinsicDefinitions], ['synchronization', syncIntrinsicDefinitions],
-    ['arrayRuntime', arrayIntrinsicDefinitions], ['exceptionRuntime', sourceExceptionDefinitions]
+    ['arrayRuntime', arrayIntrinsicDefinitions], ['exceptionRuntime', sourceExceptionDefinitions], ['varargsRuntime', varargsIntrinsicDefinitions]
   ]) {
     for (const descriptor of definitions) {
       const constructor = descriptor.name === '.ctor';

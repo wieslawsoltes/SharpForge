@@ -5,7 +5,7 @@ import {builtinOwners} from './registry-builtins.js';
 import {TypeParameterSymbol, ArrayTypeSymbol, Accessibility} from './types.js';
 import {MethodSymbol, FieldSymbol, PropertySymbol, ParameterSymbol, MethodKind, DeclarationModifiers} from './members.js';
 
-export const runtimeProfile = builtin => builtin.numeric ?? builtin.arrayRuntime ?? builtin.synchronization;
+export const runtimeProfile = builtin => builtin.numeric ?? builtin.arrayRuntime ?? builtin.synchronization ?? builtin.varargsRuntime;
 export const runtimeBuiltinOwner = builtin => runtimeProfile(builtin)?.owner ??
   builtinOwners[builtin.name.slice(0, builtin.name.lastIndexOf('.'))];
 

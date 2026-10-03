@@ -1,3 +1,4 @@
+import {VarargsTranslation} from '../../lowering/varargs.js';
 /**
  * Lowers one semantic bound body (binder/body-binder.js) to the nodes the IR emitter consumes. The translator owns
  * the per-body state: where each variable lives (a slot, a parameter or a closure cell), the locals of the block
@@ -218,6 +219,7 @@ const families = [
   AwaitTranslation,
   AsyncStreamTranslation,
   ByReferenceTranslation,
+  VarargsTranslation,
   Locations,
   TupleTranslation,
   SynthesizedTextTranslation,

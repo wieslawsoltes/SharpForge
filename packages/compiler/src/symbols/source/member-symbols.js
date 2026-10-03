@@ -34,7 +34,13 @@ export const MemberSymbolBuilder = Base =>
     }
     parameters(list, scope, uri, owner) {
       const seen = new Set();
-      return (list?.parameters ?? []).map((p, ordinal) => {
+      const entries = list?.parameters ?? [];
+      entries.forEach((parameter, index) => {
+        if (parameter.identifier.valueText === '__arglist' && (index !== entries.length - 1 || !owner?.isVararg)) {
+          this.report(uri, parameter, 'CS1669');
+        }
+      });
+      return entries.filter(p => p.identifier.valueText !== '__arglist').map((p, ordinal) => {
         const mods = words(p.modifiers),
           name = p.identifier.valueText;
         if (seen.has(name) && name) this.report(uri, p.identifier, 'CS0100', [name]);
@@ -110,6 +116,8 @@ export const MemberSymbolBuilder = Base =>
       }
       method.returnTypeWithAnnotations = returnSyntax ? this.bindType(returnSyntax, mscope) : twa(this.core.void);
       method.returnTypeSyntax = returnSyntax;
+      method.isVararg = (parameterList?.parameters ?? []).some(p => p.identifier.valueText === '__arglist');
+      if (method.isVararg && (typeParameters.length || type.arity)) this.report(uri, syntax, 'CS1669');
       const parameters = this.parameters(parameterList, mscope, uri, method);
       method.parameters = Object.freeze(
         parameters.map((p, i) => {

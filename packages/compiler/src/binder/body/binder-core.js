@@ -1,3 +1,4 @@
+import {bindArgumentHandle} from './varargs.js';
 /**
  * The core of the body binder: scopes and locals, diagnostics, conversions of bound expressions and the
  * expression dispatcher. The expression and statement families are class mixins composed in ../body-binder.js.
@@ -194,6 +195,7 @@ export class BinderCore {
         n.constantValue = constant;
         return n;
       }
+      case 'ArgListExpression': return bindArgumentHandle(this,syntax);
       case 'TrueLiteralExpression':
       case 'FalseLiteralExpression': {
         const n = this.node('Literal', syntax, this.core.bool);

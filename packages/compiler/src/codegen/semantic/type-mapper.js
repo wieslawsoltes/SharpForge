@@ -8,7 +8,7 @@ const specialNames = Object.freeze({
   System_Byte: 'byte', System_SByte: 'sbyte', System_Int16: 'short', System_UInt16: 'ushort', System_Char: 'char',
   System_Double: 'double', System_Single: 'float', System_Decimal: 'decimal',
   System_IntPtr: 'nint', System_UIntPtr: 'nuint', System_Boolean: 'bool',
-  System_String: 'string', System_Object: 'object', System_Void: 'void',
+  System_String: 'string', System_Object: 'object', System_Void: 'void', System_TypedReference:'typedref',
 });
 
 export class TypeMapper {

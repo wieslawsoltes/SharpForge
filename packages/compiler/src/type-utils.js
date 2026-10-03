@@ -7,7 +7,7 @@ export const supported = new Set([...numericTypeNames, 'bool','string','object',
 export const aliases = {'System.Boolean':'bool','System.String':'string','System.Object':'object','System.Void':'void','System.Exception':'Exception'};
 export const normalize = type => memoryTypeName(canonicalType(normalizeNumeric(aliases[type] ?? type)));
 export function isReference(type) {
-  if (spanType(type)) return false;
+  if (spanType(type)||['typedref','System.TypedReference','System.ArgIterator','System.RuntimeArgumentHandle','System.RuntimeTypeHandle'].includes(type)) return false;
   return ['string','object','Exception'].includes(type) || !!arrayType(type) ||
     !supported.has(type) && frameworkType(type)?.kind !== 'enum';
 }

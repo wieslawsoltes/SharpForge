@@ -56,6 +56,7 @@ export function classifyVariable(expression, context = {}) {
     case 'Discard':
     case 'DeclarationExpression':
       return yes;
+    case 'TypedReferenceValue':
     case 'ArrayAccess':
     case 'PointerIndirection':
       return yes;
