@@ -190,7 +190,9 @@ export class TypeInferrer {
     let candidates = [];
     for (const t of [...b.exact, ...b.lower, ...b.upper]) add(candidates, t);
     if (!candidates.length) return false;
-    const implicit = (x, y) => x.equals(y) || this.conversions.classifyImplicit(x, y).exists;
+    // The conversion from `dynamic` exists for expressions only: as a bound, `dynamic` converts to itself and `object`.
+    const fromDynamic = (x, y) => x.typeKind === TypeKind.Dynamic && y.specialType !== 'System_Object';
+    const implicit = (x, y) => x.equals(y) || (!fromDynamic(x, y) && this.conversions.classifyImplicit(x, y).exists);
     for (const e of b.exact) candidates = candidates.filter(c => c.equals(e));
     for (const l of b.lower) candidates = candidates.filter(c => implicit(l, c));
     for (const u of b.upper) candidates = candidates.filter(c => implicit(c, u));

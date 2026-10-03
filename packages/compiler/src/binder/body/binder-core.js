@@ -291,8 +291,8 @@ export class BinderCore {
         return n;
       }
       case 'TypeOfExpression': {
-        this.bindType(syntax.type, { allowUnbound: true });
-        return this.node('TypeOf', syntax, this.core.type);
+        const operandType = this.bindType(syntax.type, { allowUnbound: true })?.type ?? null;
+        return this.node('TypeOf', syntax, this.core.type, { operandType });
       }
       case 'SizeOfExpression': {
         const type = this.bindType(syntax.type).type;
