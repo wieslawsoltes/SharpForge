@@ -2,15 +2,16 @@
  * Returning null means nonconstant; diagnostics retain the exact source node.
  * BigInt is used internally to detect Int32 multiplication overflow exactly.
  */
+import {formatMessage} from './diagnostics/codes.js';
 export class ConstantError extends Error {
-  constructor(node, code, message) { super(message); this.name='ConstantError';this.node=node;this.code=code; }
+  constructor(node, code, args=[]) { super(formatMessage(code,args)); this.name='ConstantError';this.node=node;this.code=code;this.args=args; }
 }
 export function evaluateConstant(node, {resolve=()=>null, checked=true, maxNodes=2048}={}) {
   let remaining=maxNodes;
   const fail=(n,code,text)=>{throw new ConstantError(n,code,text);};
   const int=(v,n,check)=>{
     const b=typeof v==='bigint'?v:BigInt(v);
-    if(check&&(b< -2147483648n||b>2147483647n))fail(n,'CS0220','The operation overflows at compile time in checked mode');
+    if(check&&(b< -2147483648n||b>2147483647n))fail(n,'CS0220',[]);
     return {type:'int',value:Number(BigInt.asIntN(32,b))};
   };
   const walk=(n,check)=>{
@@ -30,7 +31,7 @@ export function evaluateConstant(node, {resolve=()=>null, checked=true, maxNodes
     if(n.kind==='Cast'){
       const x=walk(n.expression,check);if(!x||!['int','double'].includes(x.type)||!['int','double'].includes(n.type))return null;
       if(n.type==='double')return {type:'double',value:Number(x.value)};
-      const value=Math.trunc(x.value);if(!Number.isFinite(value)){if(check)fail(n,'CS0221','Constant value cannot be converted to int');return {type:'int',value:-2147483648};}
+      const value=Math.trunc(x.value);if(!Number.isFinite(value)){if(check)fail(n,'CS0221',[String(x.value),'int']);return {type:'int',value:-2147483648};}
       if(!check&&x.type==='double'&&(value<-2147483648||value>2147483647))return {type:'int',value:-2147483648};
       return int(value,n,check);
     }
@@ -56,8 +57,8 @@ export function evaluateConstant(node, {resolve=()=>null, checked=true, maxNodes
     }
     if(['<<','>>','&','|','^'].includes(op))return int(op==='<<'?a<<(b&31):op==='>>'?a>>(b&31):op==='&'?a&b:op==='|'?a|b:a^b,n,false);
     if(!['+','-','*','/','%'].includes(op))return null;
-    if((op==='/'||op==='%')&&b===0)fail(n,'CS0020','Division by constant zero');
-    if(op==='/'&&a===-2147483648&&b===-1)fail(n,'CS0220','Constant Int32 division overflows');
+    if((op==='/'||op==='%')&&b===0)fail(n,'CS0020',[]);
+    if(op==='/'&&a===-2147483648&&b===-1)fail(n,'CS0220',[]);
     const x=BigInt(a),y=BigInt(b);return int(op==='+'?x+y:op==='-'?x-y:op==='*'?x*y:op==='/'?x/y:x%y,n,check);
   };
   return walk(node,checked);

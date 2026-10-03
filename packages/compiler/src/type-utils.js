@@ -9,4 +9,5 @@ export function assignable(target,from) { return frameworkAssignable(target,from
 export function defaultValue(type){return numeric(type)?0:type==='bool'?false:null;}
 export function alwaysReturns(s){return (s?.kind==='Using'||s?.kind==='OverflowContext')&&alwaysReturns(s.body)||s?.kind==='Switch'&&s.sections.some(x=>x.labels.includes(null))&&s.sections.every(x=>x.statements.some(alwaysReturns))||s?.kind==='Return'||s?.kind==='Throw'||s?.kind==='Block'&&s.statements.some(alwaysReturns)||s?.kind==='If'&&alwaysReturns(s.then)&&alwaysReturns(s.otherwise)||s?.kind==='Try'&&(alwaysReturns(s.finallyBody)||alwaysReturns(s.body)&&s.catches.every(c=>alwaysReturns(c.body)));}
 export function pathOf(e){return e.kind==='Name'?e.name:e.kind==='Member'?`${pathOf(e.target)}.${e.name}`:null;}
-export function builtInRange(b){return `${b.min}–${b.max}`;}
+/** Display text of a legacy type name in diagnostics: CLR arity markers are dropped (List`1<int> prints as List<int>). */
+export function typeText(type){return String(type??'error').replace(/`\d+/g,'');}
