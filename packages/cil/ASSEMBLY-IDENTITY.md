@@ -37,7 +37,8 @@ key validation is not performed by the metadata writer.
 Existing `net8`/`mscorlib4` fallback identities are unchanged. New `net9` and `net10` profiles
 require supplied identity data for each referenced framework assembly; missing input fails
 explicitly. Canonical replay reconstructs those records from actual AssemblyRef metadata.
-Native reference-pack/GetReferencedAssemblies validation remains pending its queued slot.
-
+Native `Assembly.GetReferencedAssemblies` on .NET 10.0.5 confirms versions 9.0.0.0 and
+10.0.0.0 and token b03f5f7f11d50a3a from the real net9/net10 reference packs. The six
+focused tests cover both JavaScript engines, malformed inputs and legacy defaults.
 
 The full-key flag follows the [AssemblyFlags.PublicKey contract](https://learn.microsoft.com/en-us/dotnet/api/system.reflection.assemblyflags).
