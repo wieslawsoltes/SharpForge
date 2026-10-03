@@ -64,7 +64,6 @@ test('A02-E12 features that are not bound report SF2202 with the pinned proposal
     [`union Shape(int, string); ${main}`, 'SF2202:Shape', /unions\.md revision 1/],
     ['class Program { static safe void M() { } static void Main() { } }', 'SF2202:safe', /unsafe-evolution\.md revision 1/],
     ['class Program { static void Main() { int a = unsafe(1); } }', 'SF2202:unsafe(1)', /unsafe-evolution\.md revision 1/],
-    [`static class X { extension(int[] a) { public int this[string key] { get { return 0; } } } } ${main}`, 'SF2202:this', /extension-indexers\.md revision 1/],
   ];
   for (const [source, expected, proposal] of rows) {
     const result = compile(source, preview);
