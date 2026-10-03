@@ -7,7 +7,7 @@
  * assignment to a getter-only property, definite assignment and code generation treat it alike, and
  * `usesFieldKeyword` tells the two apart.
  */
-import { Accessibility } from '../types.js';
+import { Accessibility, TypeKind } from '../types.js';
 import { FieldSymbol, DeclarationModifiers } from '../members.js';
 import { backingFieldName } from '../../lowering/generated-names.js';
 
@@ -25,9 +25,20 @@ export function usesFieldKeyword(syntax) {
 /** Class mixin for the source assembly: the backing field of a property that uses `field`. */
 export const FieldKeywordSymbols = Base =>
   class extends Base {
+    /** True for `{ get; set { ... } }`: a property that is neither abstract nor extern with both kinds of accessor. */
+    mixesAutoAndBodiedAccessors(property, syntax) {
+      const accessors = syntax.accessorList?.accessors ?? [],
+        hasBody = accessor => !!(accessor.body || accessor.expressionBody);
+      if (property.isAbstract || property.isExtern || !accessors.some(hasBody) || accessors.every(hasBody)) return false;
+      return property.containingType?.typeKind !== TypeKind.Interface;
+    }
     property(type, syntax, scope, uri) {
       const members = super.property(type, syntax, scope, uri),
         property = members[0];
+      if (property && syntax.kind === 'PropertyDeclaration' && this.mixesAutoAndBodiedAccessors(property, syntax))
+        // An auto-implemented accessor next to one with a body is part of the feature: CS9260 below C# 14, where
+        // Roslyn reports it on the property name.
+        this.host.useFeature?.(uri, syntax.identifier, 'FieldKeyword');
       if (!property || property.backingField || syntax.kind !== 'PropertyDeclaration' || !usesFieldKeyword(syntax)) return members;
       const setter = property.setMethod;
       // Unlike the field of a getter-only auto-property this one is writable: an accessor may assign `field` (lazy getters).

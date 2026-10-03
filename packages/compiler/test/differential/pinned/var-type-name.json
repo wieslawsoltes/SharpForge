@@ -1,0 +1,4 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "var-type-name/a-class-named-var-is-the-type-of-the-declaration":{"hash":"16c58ef1f7b08786","kind":"output","langVersion":"14.0","diagnostics":[],"output":"3\nTrue\n"},
+  "var-type-name/cs0029-var-is-not-inferred-when-a-type-has-the-name":{"hash":"b7fb240c302eafbb","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0029",170,1,"error"],["CS0029",189,6,"error"]]}
+}}

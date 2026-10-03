@@ -14,16 +14,23 @@ values. The DAP validator follows local schema references, allOf/oneOf, required
 properties, enums, arrays/maps and integer bounds. Unknown successful requests
 and unmodelled notifications/events fail; they are not silently schema-qualified.
 
-A current production mismatch remains open in Project 6 / A13:
-`DebugAdapter` unsuccessful responses omit `body`, which Microsoft's pinned
-`ErrorResponse` schema requires. The retained clean-commit observation is
+The `DebugAdapter` error-response schema mismatch was fixed in Project 13 / A14,
+SF-A14-T06.6 (#2860), by [PR #3448](https://github.com/wieslawsoltes/SharpForge/pull/3448).
+Unsuccessful responses now include the empty `body` required by Microsoft's
+pinned `ErrorResponse` schema. Seven focused protocol tests passed at implementation
+commit `5788e4363eee9a6c54437a9871a176b11c3fdf7e`. The local synthetic
+production-message probe also passed at final metadata-only follow-up
+`800dcbe03684b19e99a5a75b2a235e6dd9627e27`, on darwin-arm64 with Node 24.21.0.
+Those checks do not establish recorded-client interoperability or platform
+qualification; the probe still reports `qualification: unknown`.
+The retained historical clean-commit observation is
 [observed/unsupported-darwin-arm64.json](observed/unsupported-darwin-arm64.json).
-It records a nonzero failing probe, not qualification. The standalone probe reports the actual message
-and the schema failure; its process exits unsuccessfully. Tooling tests check that
-this failure is detected. They do not count it as passing protocol qualification.
+It records the earlier failing probe, not the post-fix result or qualification.
+The standalone probe validates actual production responses and fails on schema
+violations; focused tooling tests also check request/response correlation.
 LSP unsupported requests must return JSON-RPC `-32601`. DAP defines unsuccessful
 responses with a message and error body, not a universal numeric method-not-found
-code. No product edits outside Project 4 are included here.
+code. Recorded-client and cross-platform acceptance for #498 remain open.
 
 ```sh
 node scripts/conformance/protocol/probe.js
@@ -69,8 +76,8 @@ the extension using `vscode.version`; it is provenance, not a cryptographic proo
 of client authenticity. Failed or interrupted captures retain their incomplete
 status and cannot qualify replay.
 
-The manual/`full-ci` workflow always uploads replay and production-probe reports.
-It intentionally fails while the DAP schema mismatch persists. The initial empty
-recording registry does not establish VS Code interoperability on any platform.
-Keep #498 open pending actual recordings, A13's product fix and staged platform
+The manually dispatched `protocol-replay.yml` workflow always uploads replay and
+production-probe reports. Schema violations still fail the probe. The initial
+empty recording registry does not establish VS Code interoperability on any
+platform. Keep #498 open pending actual recordings and staged platform
 qualification.

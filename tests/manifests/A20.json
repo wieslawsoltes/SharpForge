@@ -2,8 +2,13 @@
   "schemaVersion": 1,
   "area": "A20",
   "nodeGlobs": [
+    "tests/editor-model-selections.test.js",
     "tests/release05-editor-refactoring.test.js",
-    "tests/release06-editor-refactoring.test.js"
+    "tests/release06-editor-refactoring.test.js",
+    "tests/text-buffer.test.js",
+    "tests/text-diff-merge.test.js",
+    "tests/text-search-regex.test.js",
+    "tests/text-unicode.test.js"
   ],
   "browserScripts": [],
   "requiredServices": [],
