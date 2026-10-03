@@ -149,6 +149,31 @@ test('A02-B01 gate codes agree with Roslyn for the pinned rows', () => {
   }
 });
 
+// The catalog rows that the syntax walker (binder/syntax-features.js) decides, without the parser and without binding.
+const walkerRows = (
+  'AutoImplementedProperties ReadonlyAutoImplementedProperties Discards RefExtensionMethods RefConditional RefFor RefForEach ' +
+  'EnumGenericTypeConstraint DelegateGenericTypeConstraint UnmanagedGenericTypeConstraint NotNullGenericTypeConstraint NestedStackalloc ' +
+  'SealedToStringInRecord PositionalFieldsInRecords ConstantInterpolatedStrings RelaxedShiftOperator RefFields ImplicitIndexerInitializer ' +
+  'RefUnsafeInIteratorAsync'
+).split(' ');
+
+test('A02-B01 gate spans agree with Roslyn for every pinned gated row, which include all rows the syntax walker decides', () => {
+  const pinned = loadPinned().results,
+    gatedFixtures = roslynFixtures.filter(fixture => fixture.roslynGates);
+  const pinnedRows = new Set(gatedFixtures.map(fixture => fixture.featureId));
+  assert.deepEqual(walkerRows.filter(id => !pinnedRows.has(id)), [], 'walker rows without a Roslyn pin');
+  for (const fixture of gatedFixtures) {
+    const row = languageFeatures.find(r => r.id === fixture.featureId),
+      show = (start, length) => `${row.code}@${start}+${length} ${JSON.stringify(fixture.source.slice(start, start + length))}`;
+    // Roslyn's and SharpForge's diagnostics with the row's code, each as code, start and length over the fixture text.
+    const theirs = pinned.get(fixture.id).diagnostics.filter(d => d[0] === row.code).map(d => show(d[1], d[2]));
+    const result = compile(fixture.source, { langVersion: fixture.langVersion, allowUnsafe: !!fixture.allowUnsafe });
+    const mine = result.diagnostics.filter(d => d.code === row.code).map(d => show(d.start, d.length));
+    assert(theirs.length > 0, fixture.id);
+    assert.deepEqual(mine, theirs, fixture.id);
+  }
+});
+
 test('A02-B01 the syntax walker finds features the parser does not record', () => {
   const source =
     'class P { int A { get; } static async void M(int[] a) { static int L() { return 1; } L(); ' +
@@ -158,7 +183,7 @@ test('A02-B01 the syntax walker finds features the parser does not record', () =
   assert.deepEqual(found, [
     'AutoImplementedProperties:A',
     'ReadonlyAutoImplementedProperties:A',
-    'Async:async',
+    'Async:M',
     'StaticLocalFunctions:L',
     'RefFor:ref int',
   ]);
