@@ -9,7 +9,7 @@
  * Arithmetic on `void*` is CS0242: the element size is unknown.
  */
 import {DiagnosticId} from '../diagnostics/codes.js';
-import { isPointerType, isVoidPointer } from '../conversions/pointer.js';
+import { isPointerType, isVoidPointer, isFunctionPointerType } from '../conversions/pointer.js';
 
 const comparisons = new Set(['==', '!=', '<', '>', '<=', '>=']);
 const offsetKinds = ['int', 'uint', 'long', 'ulong'];
@@ -22,6 +22,16 @@ const undefinedOnVoid = { kind: 'error', code: DiagnosticId.CS0242, args: [] };
  * @returns a builtin operator result, an error result, or null when no pointer operator applies
  */
 export function pointerBinaryOperator(operator, left, right, core, offsetType) {
+  // Function pointers are compared like data pointers; they have no arithmetic.
+  const leftFunction = isFunctionPointerType(left.type),
+    rightFunction = isFunctionPointerType(right.type);
+  if (leftFunction || rightFunction) {
+    if (!comparisons.has(operator)) return null;
+    if (leftFunction && rightFunction) return result(left.type, right.type, core.bool);
+    const pointer = leftFunction ? left.type : right.type,
+      other = leftFunction ? right : left;
+    return other.literal === 'null' || isPointerType(other.type) ? result(pointer, pointer, core.bool) : null;
+  }
   const leftPointer = isPointerType(left.type),
     rightPointer = isPointerType(right.type);
   if (!leftPointer && !rightPointer) return null;

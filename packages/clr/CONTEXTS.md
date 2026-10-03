@@ -86,6 +86,33 @@ The machine is shared, allocations were not measured, and no equivalent previous
 implementation exists. Construction materializes its interface and method
 signatures once; cached identities avoid rebuilding them.
 
+`context.types.isAssignableFrom(target, source, {signal})` compares loaded
+TypeDesc identities without loading assemblies or executing an instance cast.
+It handles non-generic class inheritance, interface closure, value-type boxing
+to their declared bases, and array covariance/rank rules. Array elements use
+unboxed conversion rules, including matching CLI signed/unsigned integral
+categories and enum underlying types. Vectors also support the five registered
+generic collection contracts with the CLR's array-specific element conversion.
+This is separate from general generic variance.
+
+Results are cached with weak type keys. An uncached decision walks the bounded
+base/interface graph; GenericParam owners are indexed once per module to reject
+unimplemented generic definitions explicitly. `maxDepth` and `maxMetadataRows`
+apply, and cancellation is checked before cached results and during traversal.
+Unloaded descriptors, general generic variance/Nullable rules and pointer/byref/
+function-pointer casts report TypeLoad diagnostics. COM/type-equivalence and
+dynamic interface behavior are outside this metadata-only service. Full
+500-pair and executable cast qualification remains separate work under T03.7.
+The independent SDK 10.0.201 / CoreCLR 10.0.5 capture checks 33 targeted pairs;
+all 16 focused type tests passed on Node 24.21.0. Regenerate with
+`node packages/clr/tools/capture-assignability.mjs tests/fixtures/clr-assignability`.
+`node packages/clr/tools/benchmark-assignability.mjs` measured cold pair decisions
+with loaded descriptors at median 0.7222 µs / p95 2.8043 µs, and cached interface
+decisions at median 0.0746 µs / p95 0.0915 µs on Apple M3 Pro/darwin-arm64.
+The machine is shared, allocations are unmeasured, and no previous equivalent
+implementation exists. This evidence covers the JavaScript metadata service;
+source VM, direct CIL and Rust/Wasm executable casts remain unqualified here.
+
 `AssemblyLoadSession` owns a Default context and a registry of custom contexts.
 No process-global assembly registry is used. `createContext` accepts a name,
 collectibility flag, finite `AssemblyResolver`, optional asynchronous load

@@ -2,6 +2,7 @@
  * Declaration rules of C# 14 extension blocks (SF-A02-T83), reported where Roslyn reports them:
  *
  *   CS9283  the block is not in a top-level, non-generic, static class          (the `extension` keyword)
+ *   CS9284  a default value on the receiver parameter                           (the parameter)
  *   CS9285  more than one receiver parameter                                    (each extra parameter)
  *   CS9300  a `ref` receiver that is not a value type or struct-constrained     (the receiver type)
  *   CS9301  an `in` / `ref readonly` receiver that is not a concrete value type (the receiver type)
@@ -39,9 +40,12 @@ export function disallowedMemberToken(member) {
         isAuto = !member.expressionBody && accessors.every(accessor => !accessor.body && !accessor.expressionBody);
       return isAuto ? member.identifier : null;
     }
-    case 'IndexerDeclaration':
-      // Below preview the parser gates extension indexers; at preview binder/preview-features.js reports them as not bound.
-      return null;
+    case 'IndexerDeclaration': {
+      // C# 15 preview (the parser gates it below): like a property, an indexer needs accessor bodies.
+      const accessors = member.accessorList?.accessors ?? [],
+        isAuto = !member.expressionBody && accessors.every(accessor => !accessor.body && !accessor.expressionBody);
+      return isAuto ? member.thisKeyword : null;
+    }
     case 'FieldDeclaration':
     case 'EventFieldDeclaration':
       return member.declaration.variables[0]?.identifier ?? member;
@@ -55,7 +59,10 @@ export function disallowedMemberToken(member) {
 /** The rules of the block itself: its container and its receiver parameter list. */
 export function checkExtensionBlock(type, block, report) {
   if (!canDeclareExtensions(type)) report(block.firstToken(), DiagnosticId.CS9283);
-  for (const extra of (block.parameterList?.parameters ?? []).slice(1)) report(extra, DiagnosticId.CS9285);
+  const [receiver, ...extras] = block.parameterList?.parameters ?? [];
+  // Roslyn reports the default value on the receiver only; an extra parameter is CS9285 whatever it declares.
+  if (receiver?.default) report(receiver, DiagnosticId.CS9284);
+  for (const extra of extras) report(extra, DiagnosticId.CS9285);
   checkExtensionReceiverName(block, report);
 }
 
@@ -85,24 +92,28 @@ export function checkExtensionReceiverName(block, report) {
  */
 export function checkExtensionMember(member, context, report) {
   const modifiers = words(member.modifiers ?? []),
-    receiver = context.receiver;
-  if (modifiers.includes('protected')) report(member.identifier, DiagnosticId.CS9302, [context.display]);
-  if (!context.isStatic && receiver && !receiver.name) report(member.identifier, DiagnosticId.CS9303, [context.display]);
+    receiver = context.receiver,
+    // An extension indexer (C# 15 preview) has no identifier: its rules are reported at `this`.
+    at = member.identifier ?? member.thisKeyword;
+  if (modifiers.includes('protected')) report(at, DiagnosticId.CS9302, [context.display]);
+  if (!context.isStatic && receiver && !receiver.name) report(at, DiagnosticId.CS9303, [context.display]);
   const extended = receiver?.type;
-  if (extended?.name && extended.name === context.name) report(member.identifier, DiagnosticId.CS9326, [context.display]);
+  if (extended?.name && extended.name === context.name) report(at, DiagnosticId.CS9326, [context.display]);
   if (receiver?.name) {
     for (const parameter of member.parameterList?.parameters ?? [])
       if (parameter.identifier?.valueText === receiver.name) report(parameter.identifier, DiagnosticId.CS9290, [receiver.name]);
     for (const parameter of member.typeParameterList?.parameters ?? [])
       if (parameter.identifier.valueText === receiver.name) report(parameter.identifier, DiagnosticId.CS9292, [receiver.name]);
   }
-  if (member.kind !== 'PropertyDeclaration') return;
+  if (member.kind !== 'PropertyDeclaration' && member.kind !== 'IndexerDeclaration') return;
   for (const accessor of member.accessorList?.accessors ?? []) {
     if (accessor.keyword.text === 'init') report(accessor.keyword, DiagnosticId.CS9304, [context.display]);
     else if (accessor.keyword.text === 'set' && receiver?.name === 'value') report(accessor.keyword, DiagnosticId.CS9291);
   }
-  for (const parameter of context.blockTypeParameters)
-    if (!extended || !containsTypeParameter(extended, [parameter])) report(member.identifier, DiagnosticId.CS9295, [parameter.name]);
+  // "all the type parameters of its extension block must be used in the combined set of parameters from the
+  // extension and the member" (extension-indexers.md revision 1, "Declaration"); a property has no parameters.
+  const usedBy = parameter => [extended, ...(context.ownParameters ?? []).map(own => own.type)].some(type => type && containsTypeParameter(type, [parameter]));
+  for (const parameter of context.blockTypeParameters) if (!usedBy(parameter)) report(at, DiagnosticId.CS9295, [parameter.name]);
 }
 
 /** CS9317 / CS9319: a parameter of an extension operator must have the extended type; CS0558: public and static. */

@@ -295,7 +295,7 @@ export function delegateInvoke(type) {
 }
 /**
  * Infers the type arguments of a generic method for a call.
- * @returns {{typeArguments:TypeSymbol[]}|{error:{code:DiagnosticId.CS0411,args:[string]}}}
+ * @returns {{typeArguments:TypeSymbol[]}|{error:{code:'CS0411',args:[string]}}}
  */
 export function inferMethodTypeArguments(method, parameterTypes, args, conversions, core) {
   const definition = method.constructedFrom ?? method,

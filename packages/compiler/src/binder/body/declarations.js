@@ -64,7 +64,8 @@ export const DeclarationBinding = Base =>
           { isAsync: this.c.isAsync, isIterator: this.c.isIterator },
           this.version.number,
         );
-        if (bad) this.report(typeSyntax, bad.code, bad.args);
+        if (bad?.feature) this.d.gate(this.c.uri, typeSyntax, 'RefUnsafeInIteratorAsync', bad.feature);
+        else if (bad) this.report(typeSyntax, bad.code, bad.args);
         if (declaredType instanceof ArrayTypeSymbol) {
           const e = checkArrayElementType(declaredType.elementType);
           if (e) this.report(typeSyntax, e.code, e.args);

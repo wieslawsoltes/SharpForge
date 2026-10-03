@@ -91,7 +91,7 @@ export function varianceViolation(type, position) {
  * Declaration-site validity of a variant interface or delegate.
  * @param type the interface/delegate definition
  * @param {{staticMembers?:boolean}} [options] `staticMembers`: also check static members (the rule below C# 9: CS8904)
- * @returns [{code:DiagnosticId.CS1961|DiagnosticId.CS8904,args,member,parameter}] - args are
+ * @returns [{code:'CS1961'|'CS8904',args,member,parameter}] - args are
  *   [member display, type parameter name, its declared variance, how the position needs it] as Roslyn formats them.
  */
 export function checkVarianceSafety(type, { staticMembers = false } = {}) {
