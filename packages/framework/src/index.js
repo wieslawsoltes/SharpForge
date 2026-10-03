@@ -1,10 +1,9 @@
-import {createRegistry,ABI_VERSION} from './registry.js';
-import {contributionManifest,idReservations,bclExtensionContribution} from './contributions/manifest.js';
+import {ABI_VERSION} from './registry.js';
+import {createFrameworkRegistry} from './contributions/manifest.js';
 export {ABI_VERSION,XAML,CONTROLS,MEDIA,TASK,THREAD,createRegistry} from './registry.js';
 export {colorValues} from './contributions/core-xaml.js';
 export {contributionManifest,areaReservations,idReservations} from './contributions/manifest.js';
-const registry=createRegistry({reservations:idReservations});
-registry.registerAll([...contributionManifest,bclExtensionContribution]);
+const registry=createFrameworkRegistry();
 export const types=registry.types;
 export const contracts=registry.contracts;
 export const canonicalType=registry.canonicalType;

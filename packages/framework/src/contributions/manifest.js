@@ -1,3 +1,4 @@
+import {createRegistry} from '../registry.js';
 import {registerBclModules} from '@sharpforge/bcl-core';
 import {registerCoreXaml} from './core-xaml.js';
 import {registerCoreControls} from './core-controls.js';
@@ -20,3 +21,10 @@ export const idReservations=Object.freeze([...contributionManifest,...areaReserv
 export const bclExtensionContribution=Object.freeze({
   name:'A07', register:registry=>registerBclModules(registry,{group:'extensions'})
 });
+
+/** Compose released and extension contracts through the same transactional registry. */
+export function createFrameworkRegistry() {
+  const registry=createRegistry({reservations:idReservations});
+  registry.registerAll([...contributionManifest,bclExtensionContribution]);
+  return registry;
+}
