@@ -30,6 +30,7 @@
   "language-version/gate-native-int-at-8":{"hash":"1fce834e61c848cd","kind":"diagnostics","langVersion":"8.0","diagnostics":[["CS8400",37,4,"error"],["CS0219",42,1,"warning"]]},
   "language-version/gate-inferred-delegate-type-at-9":{"hash":"b229f79f11726368","kind":"diagnostics","langVersion":"9.0","diagnostics":[["CS8773",45,7,"error"]]},
   "language-version/gate-lambda-optional-parameters-at-11":{"hash":"2345f52389711a98","kind":"diagnostics","langVersion":"11.0","diagnostics":[["CS9058",52,1,"error"]]},
+  "language-version/gate-instance-member-in-nameof-at-11":{"hash":"8919bcdb4582f4e0","kind":"diagnostics","langVersion":"11.0","diagnostics":[["CS0649",24,4,"warning"],["CS9058",64,4,"error"]]},
   "language-version/gate-params-collections-at-12":{"hash":"b5145dac1960f2f8","kind":"diagnostics","langVersion":"12.0","diagnostics":[["CS9202",30,50,"error"]]},
   "language-version/no-gate-dynamic-at-3":{"hash":"d301c7f435d5ac75","kind":"diagnostics","langVersion":"3","diagnostics":[["CS0246",37,7,"error"]]},
   "language-version/no-gate-null-coalescing-at-1":{"hash":"b27709539f7f98f5","kind":"output","langVersion":"1","diagnostics":[],"output":""},

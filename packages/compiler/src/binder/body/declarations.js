@@ -155,24 +155,23 @@ export const DeclarationBinding = Base =>
           if (isUsing || isFixed) local.nonConstantWrite = true;
         }
         if (isConst && value && !value.hasErrors) {
-          const t = local.type;
-          if (!value.constantValue) {
-            this.report(init, 'CS0133', [name]);
-          } else {
+          const t = local.type,
+            cannotBeConst =
+              t &&
+              !t.isErrorType() &&
+              !(
+                numericKind(t) ||
+                ['System_Boolean', 'System_String', 'System_Char'].includes(t.specialType) ||
+                t.typeKind === TypeKind.Enum ||
+                t.isReferenceType === true
+              );
+          // A type that cannot be const is reported alone: its initializer is not asked to be constant.
+          if (cannotBeConst) this.report(typeSyntax, 'CS0283', [this.display(t)]);
+          else if (!value.constantValue) this.report(init, 'CS0133', [name]);
+          if (value.constantValue) {
             local.constantValueObject = value.constantValue;
             local.hasConstantValue = true;
           }
-          if (
-            t &&
-            !t.isErrorType() &&
-            !(
-              numericKind(t) ||
-              ['System_Boolean', 'System_String', 'System_Char'].includes(t.specialType) ||
-              t.typeKind === TypeKind.Enum ||
-              t.isReferenceType === true
-            )
-          )
-            this.report(typeSyntax, 'CS0283', [this.display(t)]);
         }
         if (isUsing && local.type && !local.type.isErrorType()) this.checkDisposable(local.type, syntax, isAwait, value);
         results.push({ local, value });

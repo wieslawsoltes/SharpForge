@@ -24,6 +24,8 @@ export const Declarations = Base =>
     declareTypes() {
       for (const type of this.analysis.assembly.types) {
         if (type.typeKind !== TypeKind.Class) continue;
+        // A generic class exists only as its constructions, declared when code refers to them (lowering/generics).
+        if (this.generics.isGenericClass(type)) continue;
         this.checkClassShape(type);
         this.classes.set(type, this.program.addClass(this.classNameOf(type), this.nodeOf(type)));
       }
@@ -32,26 +34,29 @@ export const Declarations = Base =>
     classNameOf(type) {
       return type.toDisplayString();
     }
-    /** Classes the runtime can represent today: no base class but object, no interfaces, no type parameters. */
+    /** Classes the runtime can represent today: no base class but object and no interface that needs dispatch. */
     checkClassShape(type) {
       const at = type.locations?.[0];
-      if (type.arity || type.typeParameters?.length) this.unsupported('user-defined generics', at);
       const base = type.baseType;
       if (base && base.specialType !== 'System_Object') this.unsupported('class inheritance', at);
       // Three interfaces need no dispatch: `using` and `await using` call the method of the static type, and a
       // collection initializer only requires IEnumerable to be listed (its Add calls are bound statically).
+      // Nor does an interface declared in source: the framework cannot call it, a value of the interface type is
+      // refused where it is used ('interface dispatch'), and a call through a type parameter constrained to it is
+      // bound to the implementing method of each construction (lowering/generics).
       const core = this.analysis.core,
         dispatchFree = [core.iasyncDisposable, core.ienumerable],
-        needsDispatch = i => i.specialType !== 'System_IDisposable' && !dispatchFree.includes(i);
+        needsDispatch = i => i.specialType !== 'System_IDisposable' && !dispatchFree.includes(i) && !this.isSource(i);
       if (type.interfaces?.some(needsDispatch)) this.unsupported('interface implementation', at);
     }
-    /** The image class of a source class symbol. */
+    /** The image class of a source class symbol; for a generic class, of the construction `type` names. */
     classOf(type, syntax = null) {
-      const record = this.classes.get(definitionOf(type));
+      const key = this.generics.keyOf(type, syntax),
+        record = key.record ?? this.classes.get(key);
       return record ?? this.unsupported(`type '${type.toDisplayString()}'`, syntax);
     }
     declareMembers(type) {
-      const owner = this.classes.get(type);
+      const owner = this.classOf(type);
       for (const member of type.getMembers()) {
         switch (member.kind) {
           case SymbolKind.Field:
@@ -121,14 +126,14 @@ export const Declarations = Base =>
         default:
           break;
       }
-      if (symbol.typeParameters?.length) this.unsupported('user-defined generics', at);
       const isVirtual = symbol.isAbstract || symbol.isVirtual || symbol.isOverride;
       if (isVirtual && !this.records.dispatchesStatically(symbol)) this.unsupported('virtual dispatch', at);
       if (symbol.isExtern) this.unsupported('extern methods', at);
       const isConstructor = symbol.methodKind === MethodKind.Constructor;
       // The implicit parameterless constructor has nothing to run: creation allocates and runs the field initializers.
       if (isConstructor && symbol.isImplicitlyDeclared) return undefined;
-      const name = isConstructor ? '.ctor' : symbol.methodKind === MethodKind.StaticConstructor ? '<cctor>' : symbol.name;
+      const ordinary = this.generics.methodNameOf(symbol),
+        name = isConstructor ? '.ctor' : symbol.methodKind === MethodKind.StaticConstructor ? '<cctor>' : ordinary;
       const record = this.program.addMethod(owner, name, {
         isStatic: symbol.isStatic,
         returnType: isConstructor || symbol.methodKind === MethodKind.StaticConstructor ? 'void' : this.types.imageType(symbol.returnType, at),
@@ -156,8 +161,7 @@ export const Declarations = Base =>
     }
     /** The image method of a source method symbol. */
     methodOf(symbol, syntax = null) {
-      const definition = definitionOf(symbol),
-        record = this.methods.get(definition) ?? this.records.methodOf(definition, syntax);
+      const record = this.methods.get(symbol) ?? this.records.methodOf(definitionOf(symbol), syntax);
       return record ?? this.unsupported(`method '${symbol.toDisplayString()}'`, syntax);
     }
   };

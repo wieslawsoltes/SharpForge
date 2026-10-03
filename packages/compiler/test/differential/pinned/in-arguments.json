@@ -1,0 +1,4 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "in-arguments/a-by-value-parameter-is-better-than-in-without-a-modifier":{"hash":"77c0db64b54e3551","kind":"output","langVersion":"14.0","diagnostics":[],"output":"valinvalin1in5in1ininstring\n"},
+  "in-arguments/in-arguments-are-readonly-variables":{"hash":"42ae4f13caa6491b","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS8331",60,1,"error"],["CS8329",138,1,"error"],["CS8156",232,1,"error"],["CS1503",249,1,"error"],["CS1615",267,1,"error"],["CS8156",284,5,"error"],["CS8156",322,1,"error"]]}
+}}

@@ -1,0 +1,8 @@
+{
+  "pattern-lowering/exhaustive-switch-expressions-have-no-warning": ["diagnostics", "warnings", "bytecode", "cil"],
+  "pattern-lowering/list-patterns-over-arrays": ["diagnostics", "warnings", "bytecode", "cil"],
+  "pattern-lowering/positional-and-list-errors": ["diagnostics", "warnings"],
+  "pattern-lowering/positional-patterns-over-tuples-records-and-deconstruct": ["diagnostics", "warnings", "bytecode", "cil"],
+  "pattern-lowering/subsumed-arms-and-cases": ["diagnostics", "warnings"],
+  "pattern-lowering/switch-expression-not-exhaustive": ["diagnostics", "warnings"]
+}

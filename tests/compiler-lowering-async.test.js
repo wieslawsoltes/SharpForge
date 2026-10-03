@@ -118,12 +118,23 @@ test('SF-A02-T09.2 top-level statements with await run as an async entry point',
 });
 
 test('SF-A02-T09.2 a task of a result type the runtime does not have is named', () => {
-  const userResult = notExecutable(
+  const longResult = notExecutable(
     program(`
-      static async Task<Program> Make() { await Task.Yield(); return new Program(); }
+      static async Task<long> Make() { await Task.Yield(); return 1; }
       static async Task Main() { await Make(); }`),
   );
-  assert.match(userResult.message, /Task<Program>/);
+  assert.match(longResult.message, /64-bit integers/);
+});
+
+test('SF-A02-T02.6 a task of a user class shares the runtime task over object', () => {
+  // This program was "not executable: Task<Program>" before generic lowering; the registry lists Task<object>.
+  const { lines } = runAsyncOnBothBackEnds(
+    program(`
+      public string Name = "made";
+      static async Task<Program> Make() { await Task.Yield(); return new Program(); }
+      static async Task Main() { Console.WriteLine((await Make()).Name); }`),
+  );
+  assert.deepEqual(lines, ['made']);
 });
 
 test('SF-A02-T09.2 async diagnostics: parameters, lock, return and await placement', () => {
