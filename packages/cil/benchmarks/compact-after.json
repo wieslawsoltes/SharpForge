@@ -1,0 +1,84 @@
+{
+  "label": "compact-extraction",
+  "node": "v24.21.0",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "results": [
+    {
+      "compact": false,
+      "instructionPairs": 65536,
+      "bytes": 589824,
+      "medianMs": 3.6794999999999902,
+      "p95Ms": 6.631582999999992,
+      "medianHeapDelta": 22280,
+      "samples": [
+        {
+          "ms": 6.631582999999992,
+          "heapDelta": 158720
+        },
+        {
+          "ms": 3.6185839999999985,
+          "heapDelta": 22280
+        },
+        {
+          "ms": 3.4923750000000098,
+          "heapDelta": 16888
+        },
+        {
+          "ms": 3.6794999999999902,
+          "heapDelta": 17360
+        },
+        {
+          "ms": 3.341791999999998,
+          "heapDelta": 16928
+        },
+        {
+          "ms": 5.60499999999999,
+          "heapDelta": 67384
+        },
+        {
+          "ms": 3.6930830000000014,
+          "heapDelta": 24224
+        }
+      ]
+    },
+    {
+      "compact": true,
+      "instructionPairs": 65536,
+      "bytes": 324608,
+      "medianMs": 3.816874999999982,
+      "p95Ms": 6.246916999999996,
+      "medianHeapDelta": 13504,
+      "samples": [
+        {
+          "ms": 3.816874999999982,
+          "heapDelta": 20184
+        },
+        {
+          "ms": 4.005833999999993,
+          "heapDelta": 13280
+        },
+        {
+          "ms": 3.686417000000006,
+          "heapDelta": 18368
+        },
+        {
+          "ms": 3.6144999999999925,
+          "heapDelta": 72
+        },
+        {
+          "ms": 3.593416999999988,
+          "heapDelta": 72
+        },
+        {
+          "ms": 6.246916999999996,
+          "heapDelta": 70048
+        },
+        {
+          "ms": 4.023624999999981,
+          "heapDelta": 13504
+        }
+      ]
+    }
+  ]
+}
