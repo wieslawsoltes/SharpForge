@@ -76,7 +76,16 @@ export function mountDiagnosticTimeline(host, {model, sessions, onError}) {
   const body = element(document, 'div', {className: 'wb-timeline'});
   host.replaceChildren(toolbar, body);
   let grid;
+  const sessionChooser = select(document, 'Application session', [], sessionId, value => { sessionId = value; refresh(); });
   const refresh = () => {
+    const available = sessions?.list() ?? [];
+    const signature = available.map(session => session.id + ':' + session.name).join('\n');
+    if (sessionChooser.dataset.sessions !== signature) {
+      sessionChooser.replaceChildren(...available.map(session => element(document, 'option', {value: session.id, text: session.name})));
+      sessionChooser.dataset.sessions = signature;
+    }
+    if (!available.some(session => session.id === sessionId)) sessionId = sessions?.active?.id ?? available[0]?.id;
+    sessionChooser.value = sessionId ?? '';
     grid?.dispose(); grid = null;
     body.replaceChildren();
     const history = model.sessions.get(sessionId);
@@ -106,8 +115,7 @@ export function mountDiagnosticTimeline(host, {model, sessions, onError}) {
         diff.types.map(type => `${type.type}: ${type.objects} objects, ${type.bytes} bytes`).join('\n')}));
     }
   };
-  toolbar.append(select(document, 'Application session', (sessions?.list() ?? []).map(session => ({value: session.id, label: session.name})),
-    sessionId, value => { sessionId = value; refresh(); }),
+  toolbar.append(sessionChooser,
   select(document, 'Diagnostic view', [{value: 'summary', label: 'Summary'}, {value: 'events', label: 'Events'},
     {value: 'memory', label: 'Memory Usage'}, {value: 'cpu', label: 'CPU Usage'}], tab, value => { tab = value; refresh(); }),
   button(document, 'Take heap snapshot', runAction(async () => { await model.snapshot(sessions?.get(sessionId)); refresh(); }, onError)));

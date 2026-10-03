@@ -1,28 +1,40 @@
 import {WorkbenchEvents, abortError, cancellable} from './events.js';
 import {compileFileGlobs, searchDocuments} from './search-engine.js';
+import {boundedDocuments} from './document-size.js';
+import {workerRequest} from './worker-request.js';
 
 export class SearchService extends WorkbenchEvents {
-  constructor({documents, context = () => ({}), applyEdits, createWorker, timeoutMs = 5000} = {}) {
+  constructor({documents, context = () => ({}), applyEdits, createWorker, sessionProject, timeoutMs = 5000} = {}) {
     super();
     this.documents = documents;
     this.context = context;
     this.applyEdits = applyEdits;
+    this.sessionProject = sessionProject;
     this.createWorker = createWorker ?? (globalThis.Worker ? () => new Worker(
       new URL('./search.worker.js', import.meta.url), {type: 'module'}) : null);
     this.timeoutMs = timeoutMs;
     this.results = new Map();
     this.queries = new Map();
     this.serial = 0;
+    this.disposed = false;
   }
   files(scope, globs) {
     const context = this.context();
     const matches = compileFileGlobs(globs);
-    return this.documents.list().filter(document => matches(document.uri) &&
+    scope = ({'current-project': 'project', 'current-document': 'document', 'open-documents': 'open'})[scope] ?? scope;
+    const projectId = scope?.startsWith('project:') ? scope.slice(8) :
+      scope?.startsWith('session:') ? this.sessionProject?.(scope.slice(8)) : context.projectId;
+    const projectScope = scope === 'project' || scope?.startsWith('project:') || scope?.startsWith('session:');
+    if (projectScope && !projectId) throw new Error('The selected scope has no available project');
+    const records = this.documents.list().filter(document => matches(document.uri) &&
       (scope === 'solution' || !scope || scope === 'document' && document.uri === context.uri ||
-        scope === 'open' && context.openUris?.includes(document.uri) || scope === 'project' && document.projectId === context.projectId))
-      .map(document => ({uri: document.uri, text: document.text, version: document.version, projectId: document.projectId}));
+        scope === 'open' && context.openUris?.includes(document.uri) || projectScope &&
+        (document.projectId === projectId || this.documents.projectsFor?.(document.uri)?.includes(projectId))));
+    return boundedDocuments(this.documents, records);
   }
   async run(query, options = {}) {
+    if (this.disposed) throw abortError('Search service is disposed');
+    options.signal?.throwIfAborted();
     const instance = options.instance ?? 'find-results-1';
     if (this.results.get(instance)?.locked && !options.keepResults) throw new Error('This result window is locked; use Keep Results');
     const target = options.keepResults ? instance + '-' + ++this.serial : instance;
@@ -32,14 +44,18 @@ export class SearchService extends WorkbenchEvents {
     const abort = () => controller.abort(options.signal?.reason);
     options.signal?.addEventListener('abort', abort, {once: true});
     options.signal?.throwIfAborted();
-    const documents = this.files(options.scope, options.globs ?? '*');
     try {
+      const documents = this.files(options.scope, options.globs ?? '*');
       const result = await this.search(documents, query, options, controller.signal);
       controller.signal.throwIfAborted();
       if (this.queries.get(target) !== controller) throw abortError('Search superseded');
       const snapshot = {id: target, query, options: {...options, signal: undefined}, ...result, locked: false};
+      if (!this.results.has(target) && this.results.size >= 20) {
+        const oldest = [...this.results.values()].find(result => !result.locked);
+        if (!oldest) throw new Error('All 20 search result windows are locked; unlock one before keeping another result');
+        this.results.delete(oldest.id);
+      }
       this.results.set(target, snapshot);
-      while (this.results.size > 20) this.results.delete(this.results.keys().next().value);
       this.emit({type: 'results', result: snapshot});
       return snapshot;
     } finally {
@@ -52,23 +68,10 @@ export class SearchService extends WorkbenchEvents {
       if (options.regex) throw new Error('Regex workspace search requires a worker so it can be interrupted safely');
       return this.searchInline(documents, query, options, signal);
     }
-    return new Promise((resolve, reject) => {
-      const worker = this.createWorker();
-      const cleanup = () => { clearTimeout(timer); signal.removeEventListener('abort', abort); worker.terminate(); };
-      const fail = error => { cleanup(); reject(error); };
-      const abort = () => fail(signal.reason ?? abortError());
-      const timer = setTimeout(() => fail(new Error('Workspace search exceeded ' + this.timeoutMs + ' ms and was stopped')), this.timeoutMs);
-      signal.addEventListener('abort', abort, {once: true});
-      worker.onmessage = event => {
-        const message = event.data;
-        if (message.type === 'progress') { options.onProgress?.(message.progress); return; }
-        if (message.type === 'error') { fail(Object.assign(new Error(message.error.message), {name: message.error.name})); return; }
-        if (message.type === 'result') { cleanup(); resolve(message.result); }
-      };
-      worker.onerror = event => fail(new Error(event.message ?? 'Search worker failed'));
-      worker.postMessage({documents, query, options: {...options, signal: undefined, onProgress: undefined}});
-    });
+    return workerRequest({documents, query, options: {...options, signal: undefined, onProgress: undefined}},
+      {createWorker: this.createWorker, signal, timeoutMs: this.timeoutMs, onProgress: options.onProgress});
   }
+
   async searchInline(documents, query, options, signal) {
     const matches = [];
     let scannedFiles = 0;
@@ -105,7 +108,12 @@ export class SearchService extends WorkbenchEvents {
     return {changedDocuments: [...groups.keys()], skipped};
   }
   cancel(instance) { this.queries.get(instance)?.abort(); }
-  dispose() { for (const controller of this.queries.values()) controller.abort(); this.results.clear(); super.dispose(); }
+  dispose() {
+    this.disposed = true;
+    for (const controller of this.queries.values()) controller.abort();
+    this.results.clear();
+    super.dispose();
+  }
 }
 
 export class WorkspaceSymbolIndex {

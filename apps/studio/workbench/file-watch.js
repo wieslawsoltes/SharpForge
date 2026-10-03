@@ -1,4 +1,5 @@
 import {element, button, runAction} from './ui.js';
+import {boundedDocuments, documentSize} from './document-size.js';
 
 /** Browser file handles are polled only through explicitly supplied readers; permissions are never persisted. */
 export class FileWatch {
@@ -10,6 +11,18 @@ export class FileWatch {
     this.disposed = false;
     this.polling = false;
     this.timer = null;
+    this.recoveryPending = Boolean(storage?.getItem(this.key));
+    this.largeFiles = new Map();
+  }
+  canReadAutomatically(document) {
+    const size = documentSize(this.documents, document);
+    if (size !== null && size <= 8_000_000) return true;
+    if (this.largeFiles.get(document.uri) !== document.version) {
+      this.largeFiles.set(document.uri, document.version);
+      this.notify({id: 'large-file-recovery:' + document.uri, code: 'SF-WB-LARGE-RECOVERY', severity: 'info',
+        message: document.uri + ' exceeds automatic recovery and disk polling limits. Save it explicitly to preserve changes.'});
+    }
+    return false;
   }
   async poll({signal} = {}) {
     if (this.polling || this.disposed || !this.readDisk) return;
@@ -17,6 +30,7 @@ export class FileWatch {
     try {
       for (const document of this.documents.list()) {
         signal?.throwIfAborted();
+        if (!this.canReadAutomatically(document)) continue;
         const disk = await this.readDisk(document.uri, {signal});
         if (disk === null || disk === undefined || this.disposed) continue;
         const text = typeof disk === 'string' ? disk : disk.text;
@@ -37,9 +51,9 @@ export class FileWatch {
     } finally { this.polling = false; }
   }
   snapshot() {
-    const files = this.documents.list().filter(document => document.dirty).map(document => ({
-      uri: document.uri, text: document.text, version: document.version, projectId: document.projectId
-    }));
+    if (this.recoveryPending) return null;
+    const records = this.documents.list().filter(document => document.dirty && this.canReadAutomatically(document));
+    const files = boundedDocuments(this.documents, records, {maxFile: 8_000_000, maxTotal: 16_000_000});
     if (!files.length) { this.storage?.removeItem(this.key); return null; }
     const payload = {version: 1, timestamp: this.clock(), files};
     const text = JSON.stringify(payload);
@@ -88,16 +102,28 @@ export function showRecovery(dialogs, watch, {restore}) {
     host.append(element(host.ownerDocument, 'p', {text: 'Unsaved recovery snapshot: ' + new Date(recovery.timestamp).toLocaleString()}));
     for (const file of recovery.files) host.append(element(host.ownerDocument, 'p', {text: file.uri}));
   }, actions: [
-    {label: 'Restore', run: async () => { await restore(recovery.files); watch.storage?.removeItem(watch.key); return true; }},
-    {label: 'Discard snapshot', run: () => { watch.storage?.removeItem(watch.key); return true; }}
+    {label: 'Restore', run: async () => {
+      await restore(recovery.files);
+      watch.storage?.removeItem(watch.key);
+      watch.recoveryPending = false;
+      return true;
+    }},
+    {label: 'Discard snapshot', run: () => {
+      watch.storage?.removeItem(watch.key);
+      watch.recoveryPending = false;
+      return true;
+    }}
   ]});
 }
 
 /** Directory traversal is bounded and preserves relative paths for the existing workspace importer. */
 export async function readDroppedFiles(dataTransfer, {signal, maxFiles = 10000, maxBytes = 100_000_000} = {}) {
+  signal?.throwIfAborted();
   const result = [];
   let bytes = 0;
+  let visited = 0;
   const append = (file, path) => {
+    signal?.throwIfAborted();
     bytes += file.size;
     if (result.length >= maxFiles || bytes > maxBytes) throw new RangeError('Dropped files exceed workspace import limits');
     if (path && path !== file.name) Object.defineProperty(file, 'webkitRelativePath', {value: path, configurable: true});
@@ -105,6 +131,7 @@ export async function readDroppedFiles(dataTransfer, {signal, maxFiles = 10000, 
   };
   const visit = async (entry, path = '', depth = 0) => {
     signal?.throwIfAborted();
+    if (++visited > maxFiles * 4) throw new RangeError('Dropped folder entry limit exceeded');
     if (depth > 64) throw new RangeError('Dropped folder nesting exceeds 64');
     if (entry.isFile) {
       const file = await new Promise((resolve, reject) => entry.file(resolve, reject));

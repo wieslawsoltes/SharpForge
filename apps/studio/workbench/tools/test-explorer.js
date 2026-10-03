@@ -11,7 +11,7 @@ export class TestProviders extends WorkbenchEvents {
     this.providers.set(id, provider);
     this.emit({type: 'provider', id});
     return () => {
-      this.runs.get(id)?.abort();
+      for (const controller of this.runs.values()) if (controller.providerIds.has(id)) controller.abort();
       this.providers.delete(id);
       for (const [key, test] of this.tests) if (test.providerId === id) this.tests.delete(key);
       this.emit({type: 'provider-removed', id});
@@ -27,6 +27,7 @@ export class TestProviders extends WorkbenchEvents {
         if (!test.id || !test.name) throw new TypeError('Tests require id and name');
         const id = providerId + ':' + test.id;
         if (next.has(id)) throw new Error('Duplicate discovered test ' + id);
+        if (next.size >= 100000) throw new RangeError('Test discovery limit exceeded');
         next.set(id, {...test, providerTestId: test.id, id, providerId, state: this.tests.get(id)?.state ?? 'not-run'});
       }
     }
@@ -45,13 +46,15 @@ export class TestProviders extends WorkbenchEvents {
     }
     const runId = 'test-run:' + ++this.serial;
     const controller = new AbortController();
+    controller.providerIds = new Set(groups.keys());
     const abort = () => controller.abort(signal?.reason);
     signal?.throwIfAborted();
     signal?.addEventListener('abort', abort, {once: true});
     this.runs.set(runId, controller);
+    const selectedById = new Map(selected.map(test => [test.providerId + ':' + test.providerTestId, test]));
     const update = event => {
       if (controller.signal.aborted) return;
-      const test = selected.find(item => item.providerTestId === event.id && item.providerId === event.providerId);
+      const test = selectedById.get(event.providerId + ':' + event.id);
       if (!test) throw new Error('Provider updated an unselected test');
       if (!['queued', 'running', 'passed', 'failed', 'skipped', 'cancelled'].includes(event.state)) throw new TypeError('Invalid test state');
       Object.assign(test, {state: event.state, duration: event.duration, message: event.message, output: event.output});
@@ -69,6 +72,14 @@ export class TestProviders extends WorkbenchEvents {
       for (const test of selected.filter(item => ['queued', 'running'].includes(item.state))) {
         test.state = 'failed'; test.message = 'Provider completed without reporting a final result';
       }
+    } catch (error) {
+      for (const test of selected) {
+        if (!['queued', 'running'].includes(test.state)) continue;
+        test.state = controller.signal.aborted ? 'cancelled' : 'failed';
+        test.message = error.message;
+      }
+      controller.abort(error);
+      throw error;
     } finally {
       signal?.removeEventListener('abort', abort);
       this.runs.delete(runId);
@@ -130,7 +141,6 @@ export function mountTestExplorer(host, {model, tasks, navigate, onError}) {
     button(host.ownerDocument, 'Run failed', runAction(() => run(false, true), onError)),
     button(host.ownerDocument, 'Cancel', () => model.cancel()),
     select(host.ownerDocument, 'Group tests by', ['project', 'state'], groupBy, value => { groupBy = value; refresh(); }));
-  const unsubscribe = model.subscribe(refresh);
   refresh();
-  return {refresh, run, dispose: () => { unsubscribe(); tree.dispose(); }};
+  return {refresh, run, dispose: () => tree.dispose()};
 }
