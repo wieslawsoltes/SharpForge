@@ -1,4 +1,0 @@
-{
-  "tuples/cs8132-deconstruct-arity": ["diagnostics", "warnings"],
-  "tuples/literals-and-deconstruction": ["diagnostics", "warnings", "bytecode", "cil"]
-}

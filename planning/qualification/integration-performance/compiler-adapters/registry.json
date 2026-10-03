@@ -1,5 +1,0 @@
-[
-  {"id":"A02/compile-1k","area":"A02","engine":"sharpforge-compiler","module":"compiler.mjs"},
-  {"id":"A02/compile-10k","area":"A02","engine":"sharpforge-compiler","module":"compiler.mjs"},
-  {"id":"A02/edit-10k","area":"A02","engine":"sharpforge-compiler","module":"compiler.mjs"}
-]

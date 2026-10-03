@@ -1,7 +1,0 @@
-{
-  "enums/cs0019-enum-times-int": ["diagnostics", "warnings"],
-  "enums/cs0117-missing-enum-member": ["diagnostics", "warnings"],
-  "enums/cs0266-enum-to-int": ["diagnostics", "warnings"],
-  "enums/cs0266-int-to-enum": ["diagnostics"],
-  "enums/cs0543-enum-overflow": ["diagnostics", "warnings"]
-}

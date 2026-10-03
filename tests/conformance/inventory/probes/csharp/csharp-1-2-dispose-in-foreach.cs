@@ -1,1 +1,0 @@
-class E:System.Collections.IEnumerator,System.IDisposable { public object Current {get{return 1;}} public bool MoveNext(){return false;} public void Reset(){} public void Dispose(){} } class Bag {public E GetEnumerator(){return new E();}} class C {void M(){foreach(object x in new Bag()){}}}
