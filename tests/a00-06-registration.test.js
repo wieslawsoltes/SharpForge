@@ -3,12 +3,13 @@ import assert from 'node:assert/strict';
 import {mkdtemp, mkdir, writeFile, readFile, rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {resolve, join} from 'node:path';
+import {createHash} from 'node:crypto';
 import {spawnSync} from 'node:child_process';
 import {validate} from '../scripts/planning/schema/validate.js';
 import {discoverManifests, repositoryRoot, selectManifests, parseTestArgs} from '../scripts/planning/test-manifests.js';
 import {ciMatrix} from '../scripts/planning/ci-matrix.js';
 import {taskPlan, loadTasks} from '../scripts/run.js';
-import {loadBuildContributions} from '../scripts/build-contributions.js';
+import {loadBuildContributions, concatenateStyles} from '../scripts/build-contributions.js';
 import {discoverPackages, validatePacked} from '../scripts/verify-packages.js';
 const root=repositoryRoot;
 const json=async path=>JSON.parse(await readFile(path,'utf8'));
@@ -93,8 +94,8 @@ test('A00 T06 new tasks need no root script edit and reject duplicate tasks, cyc
 test('A00 T06 contributed stylesheet bytes and worker order retain the original build exactly',async()=>{
  const baseline=await json(join(root,'tests/manifests/fixtures/build-baseline.json')),contributions=await loadBuildContributions();
  assert.deepEqual(contributions.styles.map(item=>item.source),baseline.styles);assert.deepEqual(contributions.workers.map(item=>item.entry),baseline.workers);
- const css=async paths=>(await Promise.all(paths.map(path=>readFile(join(root,path),'utf8')))).join('\n');
- assert.equal(await css(contributions.styles.map(item=>item.source)),await css(baseline.styles));assert(contributions.assets.some(item=>item.source==='packages/compiler'));
+ const css=await concatenateStyles(contributions.styles,root);
+ assert.equal(createHash('sha256').update(css).digest('hex'),baseline.concatenationSha256);assert(contributions.assets.some(item=>item.source==='packages/compiler'));
 });
 test('A00 T06 build contributions discover new styles/assets and reject duplicate and escaping paths',async t=>{
  const dir=await fixture(t),base={schemaVersion:1,styles:[],workers:[],assets:[]};
