@@ -2,6 +2,7 @@ import {compileWasmMethod} from './compile.js';
 import {instantiatedMethod} from '../generics.js';
 import {invokeWasmEntry, leaveWasmFrame} from './deopt.js';
 import {wasmTierState, wasmTierEnabled, wasmMethodRecord, wasmFrameState} from './tiering-state.js';
+import {RuntimeEventName} from '../runtime-events.js';
 
 function considerCompilation(vm, state, record) {
   if (record.status === 'cold' && (record.calls >= state.options.callThreshold || record.backedges >= state.options.backedgeThreshold)) {
@@ -28,16 +29,20 @@ export function executeTieredInstruction(vm, frame, plan, index) {
   const current = wasmFrameState(state, frame);
   considerCompilation(vm, state, record);
   const entry = !current.started && index === 0;
-  if (!current.active && record.status === 'ready' && (entry || current.nextEntry === index)) {
-    current.active = true;
-    state.statistics[entry ? 'entryTransitions' : 'osrTransitions']++;
-  }
+  const transition = !current.active && record.status === 'ready' && (entry || current.nextEntry === index);
   current.started = true;
   current.nextEntry = null;
   const instruction = record.ir?.instructions[index];
-  if (current.active && (!instruction || record.context.active ||
+  if ((current.active || transition) && (!instruction || record.context.active ||
       instruction.depth !== null && frame.stack.length !== instruction.depth)) {
     leaveWasmFrame(state, current, 'frame-shape');
+  } else if (transition) {
+    current.active = true;
+    state.statistics[entry ? 'entryTransitions' : 'osrTransitions']++;
+    if (vm.profiler) vm.profiler.event(RuntimeEventName.TierUp, {
+      method: vm.profiler.method(frame), methodToken: frame.method.token, frame: frame.id,
+      kind: entry ? 'entry' : 'osr', ilOffset: plan.instructions[index].offset, epoch: state.epoch
+    });
   }
   try {
     if (current.active) {

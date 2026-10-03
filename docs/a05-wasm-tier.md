@@ -79,6 +79,35 @@ The existing debugger callback executes before native entry, the existing budget
 counter counts one instruction, and GC runs after the same boundary. No Wasm
 function, module, active import context or frame reference is serialized.
 
+### Automatic debugger deoptimization and tier events
+
+The CIL `state` accessor deoptimizes all active and parked tiered frames when the
+state changes to `paused`. This covers source/IL/function breakpoints, stepping,
+run-to-cursor and IL `break` through the debugger's instruction callback; data
+breakpoints raised inside a managed write; first-chance exception stops; manual
+pause from running or waiting; and a host's direct `vm.state = 'paused'` assignment.
+Repeated assignment while already paused does not add deoptimizations. Snapshot
+restore still captures the public state and invalidates compiled code; observer
+state and native functions stay outside the snapshot. Resume uses canonical
+interpreter values and may re-enter a compiled loop at its next backward target.
+
+With `profile: true`, a real compiled method entry or loop OSR records `TierUp`.
+Its flat payload contains the profile method ID, MethodDef `methodToken`, `frame`,
+`kind` (`entry` or `osr`), `ilOffset` and code `epoch`. Prewarming, fallback,
+disposed code and rejected frame shapes emit no transition event. Subscriber
+delivery stays at the existing host slice boundary; the tier does not call host
+subscribers from native imports. With profiling disabled it constructs no tier
+event payload. The existing profiler's instruction clock remains cumulative.
+
+`tests/a05-wasm-debug-events.test.js` prepares real debugger breakpoint, write,
+step, manual pause, exception, snapshot and entry/OSR event regressions. It also
+covers repeated pauses, disposal, fallback and prototype-based state access.
+No execution or overhead measurement was performed for this patch. The root's
+single-worker queue runs it alongside `tests/a05-wasm-tiering.test.js` and
+`tests/a05-profiler.test.js`. Source/reloaded engines have no Wasm tier; this patch
+does not extend their backend. Browser/platform qualification, latency and
+allocation measurements, and the remaining full T10/T11 acceptance stay pending.
+
 The encoder follows the primary WebAssembly
 [module format](https://webassembly.github.io/spec/core/binary/modules.html),
 [instruction encodings](https://webassembly.github.io/spec/core/binary/instructions.html),
