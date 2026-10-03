@@ -63,6 +63,7 @@ export class GenericInstantiations {
     // True while the fields of a construction are declared: its methods wait until code refers to them.
     this.deferMethods = false;
     this.ids = new DefinitionIds();
+    this.plain = new Map();
     this.types = new Map();
     this.methods = new Map();
   }
@@ -165,14 +166,28 @@ export class GenericInstantiations {
   keyOf(symbol, syntax = null) {
     if (symbol instanceof TypeInstance || symbol instanceof MemberInstance) return symbol;
     const definition = symbol.originalDefinition ?? symbol;
-    if (symbol.kind === SymbolKind.NamedType) return this.isGenericClass(symbol) ? this.instanceOf(symbol, syntax) : definition;
-    if (definition.methodKind === MethodKind.LocalFunction || definition.methodKind === MethodKind.AnonymousFunction) return definition;
+    // Most symbols have nothing generic about them; that is decided once per definition.
+    let plain = this.plain.get(definition);
+    if (plain === undefined) {
+      plain = this.isPlain(definition);
+      this.plain.set(definition, plain);
+    }
+    if (plain) return definition;
+    if (symbol.kind === SymbolKind.NamedType) return this.instanceOf(symbol, syntax);
     const container = symbol.containingType ?? null,
       owner = container && this.isGenericClass(container) ? this.instanceOf(container, syntax) : null,
       generic = this.host.isSource(definition) && this.isGenericMethod(definition);
     if (!owner && !generic) return definition;
     const typeArguments = generic ? symbol.typeArguments.map(argument => this.closed(argument, syntax)) : null;
     return this.memberInstance(owner, definition, typeArguments, syntax);
+  }
+  /** True for a definition whose key is itself: neither a generic class, nor a member of one, nor a generic method. */
+  isPlain(definition) {
+    if (definition.kind === SymbolKind.NamedType) return !this.isGenericClass(definition);
+    if (definition.methodKind === MethodKind.LocalFunction || definition.methodKind === MethodKind.AnonymousFunction) return true;
+    const container = definition.containingType ?? null;
+    if (container && this.isGenericClass(container)) return false;
+    return !(this.host.isSource(definition) && this.isGenericMethod(definition));
   }
   memberInstance(owner, definition, typeArguments, syntax) {
     const table = owner ? owner.members : this.methods,
