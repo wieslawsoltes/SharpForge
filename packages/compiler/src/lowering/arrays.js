@@ -9,9 +9,9 @@
  *   members          `Length` is the length of the flat array, `Rank` a constant, `GetLength(d)` the stored length,
  *                    `GetLowerBound(d)` zero and `GetUpperBound(d)` the length minus one; `foreach` walks the flat array.
  *
- * Not lowered (reported as not executable): a dimension argument that is not a constant, an array viewed as
- * System.Array or as an interface, and a conversion between array types with different element types (array
- * covariance): the runtime does not check the element type on a store, so a covariant array would accept anything.
+ * Not lowered (reported as not executable): a dimension argument that is not a constant. Conversions of an array to
+ * System.Array, to an interface or to an array of another element type (array covariance) are reported by the
+ * conversion lowering, as before.
  */
 import { ArrayTypeSymbol } from '../symbols/types.js';
 import { n } from '../codegen/semantic/node-factory.js';
@@ -145,18 +145,6 @@ export const ArrayTranslation = Base =>
           ? n.field(receiver, this.arrayClassOf(type, node.syntax).lengths[dimension])
           : n.arrayLength(receiver);
       return member === 'GetLength' ? length : n.binary('-', length, int(1), 'int');
-    }
-    exprConversion(node) {
-      const from = node.operand?.type,
-        to = node.type;
-      if (from instanceof ArrayTypeSymbol && to && !node.operand.literal) {
-        if (to instanceof ArrayTypeSymbol) {
-          const same = from.rank === to.rank && this.imageType(from, node.syntax) === this.imageType(to, node.syntax);
-          if (!same) return this.unsupported('array covariance (the runtime does not check the element type of a store)', node.syntax);
-        } else if (to.specialType !== 'System_Object')
-          return this.unsupported(`an array viewed as '${to.toDisplayString()}'`, node.syntax);
-      }
-      return super.exprConversion(node);
     }
     stmtForEach(node) {
       const type = node.collection?.type;
