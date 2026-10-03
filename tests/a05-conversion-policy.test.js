@@ -20,7 +20,8 @@ test('T01.6 conversion policy exposes immutable metadata for every valid target'
 });
 
 test('T01.6 invalid opcode combinations do not silently select another conversion', () => {
-  for (const name of ['conv.r', 'conv.ovf.r4', 'conv.ovf.r8.un', 'conv.u4.un', 'conv.i3', 'conv.i4.extra']) {
+  for (const name of ['conv.r', 'conv.ovf.r4', 'conv.ovf.r8.un', 'conv.ovf.r.un', 'conv.r4.un',
+    'conv.u4.un', 'conv.i3', 'conv.i4.extra', 'conv.ovf.i4.un.un']) {
     assert.throws(() => convert(name, 1), {name: 'CilError'});
   }
   for (const value of [null, '1', {}, true]) {
@@ -47,4 +48,42 @@ test('T01.6 native aliases retain the current 32-bit profile and injectable erro
   const diagnostic = new Error('host opcode diagnostic'), managed = new Error('managed overflow');
   assert.throws(() => convert('conv.r', 1, {error: () => diagnostic}), error => error === diagnostic);
   assert.throws(() => convert('conv.ovf.u1', 300, {fault: () => managed}), error => error === managed);
+});
+
+test('T01.6 every checked integer policy preserves exact endpoints and rejects adjacent values', () => {
+  const ranges = [
+    ['i1', -128n, 127n, 127], ['u1', 0n, 255n, 255],
+    ['i2', -32768n, 32767n, 32767], ['u2', 0n, 65535n, 65535],
+    ['i4', -2147483648n, 2147483647n, 2147483647], ['u4', 0n, 4294967295n, -1],
+    ['i8', -9223372036854775808n, 9223372036854775807n, 9223372036854775807n],
+    ['u8', 0n, 18446744073709551615n, -1n],
+    ['i', -2147483648n, 2147483647n, 2147483647], ['u', 0n, 4294967295n, -1]
+  ];
+  for (const [target, minimum, maximum, encodedMaximum] of ranges) {
+    const opcode = 'conv.ovf.' + target;
+    const encodedMinimum = target.endsWith('8') ? minimum : Number(minimum);
+    assert.equal(convert(opcode, minimum), encodedMinimum, opcode);
+    assert.equal(convert(opcode, maximum), encodedMaximum, opcode);
+    assert.throws(() => convert(opcode, minimum - 1n), {name: 'OverflowException'}, opcode);
+    assert.throws(() => convert(opcode, maximum + 1n), {name: 'OverflowException'}, opcode);
+    assert.equal(convert(opcode + '.un', 0n), target.endsWith('8') ? 0n : 0, opcode + '.un');
+    assert.equal(convert(opcode + '.un', maximum), encodedMaximum, opcode + '.un');
+    if (target !== 'u8') {
+      assert.throws(() => convert(opcode + '.un', -1n), {name: 'OverflowException'}, opcode + '.un');
+    } else {
+      assert.equal(convert(opcode + '.un', -1n), -1n);
+    }
+  }
+});
+
+test('T01.6 small unsigned F conversions retain signed Int32 saturation before narrowing', () => {
+  for (const [target, maximum] of [['u1', 255], ['u2', 65535]]) {
+    assert.equal(convert('conv.' + target, float(Infinity)), maximum);
+    assert.equal(convert('conv.' + target, float(-Infinity)), 0);
+    assert.equal(convert('conv.' + target, float(NaN)), 0);
+    assert.throws(() => convert('conv.ovf.' + target, float(Infinity)), {name: 'OverflowException'});
+    assert.throws(() => convert('conv.ovf.' + target + '.un', float(-1)), {name: 'OverflowException'});
+  }
+  assert.equal(number(convert('conv.r.un', -1)), 4294967295);
+  assert.equal(number(convert('conv.r.un', float(-1))), -1);
 });

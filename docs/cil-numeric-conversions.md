@@ -46,6 +46,11 @@ one suffix, not a separate opcode per host width. This increment retains the
 current 32-bit native profile. Configurable native width and Decimal integration
 remain separate work.
 
+Valid opcode policies are compiled once into a private lookup table. Integer
+targets share frozen exact bounds and floating saturation thresholds; conversion
+calls do not parse opcode names or reconstruct those bounds. This is a code-path
+change without a measured throughput or allocation-rate claim.
+
 Malformed opcode combinations such as `conv.r`, `conv.ovf.r4` and `conv.u4.un`
 now reject with `CilError` instead of accidentally selecting a valid conversion.
 The optional `error(message)` and `fault(name, message)` factories preserve

@@ -18,8 +18,6 @@ export const conversionTargets = Object.freeze([
   Object.freeze({name: 'r.un', floating: true, unsignedSource: true}),
 ]);
 
-const targetByName = new Map(conversionTargets.map(target => [target.name, target]));
-
 function invalidConversion(context) {
   if (context.error) throw context.error('Invalid conversion');
   numericFault(context, 'CilError', 'Invalid conversion');
@@ -27,24 +25,51 @@ function invalidConversion(context) {
 
 function integerBounds(bits, signed) {
   const width = BigInt(bits);
-  return {
-    minimum: signed ? -(1n << (width - 1n)) : 0n,
-    maximum: (1n << (signed ? width - 1n : width)) - 1n,
-  };
+  const minimum = signed ? -(1n << (width - 1n)) : 0n;
+  const maximum = (1n << (signed ? width - 1n : width)) - 1n;
+  return Object.freeze({minimum, maximum, numericMinimum: Number(minimum), numericMaximum: Number(maximum)});
 }
 
-function floatingInteger(value, target, checked, context) {
-  if (checked) {
+function compilePolicies() {
+  const policies = new Map();
+  const boundsByLayout = new Map();
+  for (const target of conversionTargets) {
+    if (!target.floating) {
+      const key = target.bits * 2 + Number(target.signed);
+      if (!boundsByLayout.has(key)) boundsByLayout.set(key, integerBounds(target.bits, target.signed));
+    }
+  }
+  for (const target of conversionTargets) {
+    if (target.floating) {
+      policies.set('conv.' + target.name, Object.freeze({
+        target, unsignedSource: !!target.unsignedSource, kind: target.name === 'r4' ? 'r4' : 'r8'
+      }));
+      continue;
+    }
+    const bounds = boundsByLayout.get(target.bits * 2 + Number(target.signed));
+    const saturationBounds = target.bits < 32 ? boundsByLayout.get(32 * 2 + 1) : bounds;
+    const layout = {target, bounds, saturationBounds};
+    policies.set('conv.' + target.name, Object.freeze({...layout, checked: false, unsignedSource: false}));
+    policies.set('conv.ovf.' + target.name, Object.freeze({...layout, checked: true, unsignedSource: false}));
+    policies.set('conv.ovf.' + target.name + '.un', Object.freeze({...layout, checked: true, unsignedSource: true}));
+  }
+  return policies;
+}
+
+// Opcode parsing and bounds construction belong to policy initialization, not guest execution.
+const conversionPolicies = compilePolicies();
+const emptyContext = Object.freeze({});
+
+function floatingInteger(value, policy, context) {
+  if (policy.checked) {
     if (!Number.isFinite(value)) numericFault(context, 'OverflowException', 'Non-finite integer conversion');
     return BigInt(Math.trunc(value));
   }
   // .NET 9/10 saturate i4/u4/i8/u8. Smaller destinations saturate to i4, then narrow.
-  const bits = Math.max(target.bits, 32);
-  const signed = target.bits < 32 || target.signed;
-  const {minimum, maximum} = integerBounds(bits, signed);
+  const {minimum, maximum, numericMinimum, numericMaximum} = policy.saturationBounds;
   if (Number.isNaN(value)) return 0n;
-  if (value <= Number(minimum)) return minimum;
-  if (value >= Number(maximum)) return maximum;
+  if (value <= numericMinimum) return minimum;
+  if (value >= numericMaximum) return maximum;
   return BigInt(Math.trunc(value));
 }
 
@@ -55,35 +80,27 @@ function integerSource(raw, target, checked, unsignedSource) {
 }
 
 /** CLI conversions with explicit signed source interpretation and pinned .NET saturation. */
-export function convert(name, value, context = {}) {
+export function convert(name, value, context = emptyContext) {
   if (!isNumber(value)) {
     numericFault(context, 'InvalidProgramException', 'Numeric conversion required');
   }
-  const match = /^conv\.(ovf\.)?(i1|u1|i2|u2|i4|u4|i8|u8|i|u|r4|r8|r)(\.un)?$/.exec(name);
-  if (!match) invalidConversion(context);
-  const checked = !!match[1];
-  const unsignedSource = !!match[3];
-  const targetName = match[2] === 'r' && unsignedSource ? 'r.un' : match[2];
-  const descriptor = targetByName.get(targetName);
-  if (!descriptor || descriptor.floating && checked || unsignedSource && !checked && targetName !== 'r.un') {
-    invalidConversion(context);
-  }
+  const policy = conversionPolicies.get(name);
+  if (!policy) invalidConversion(context);
+  const {target, checked, unsignedSource} = policy;
   const raw = number(value);
-  if (descriptor.floating) {
-    const kind = targetName === 'r4' ? 'r4' : 'r8';
+  if (target.floating) {
     const converted = unsignedSource && !value?.float ?
       (typeof raw === 'bigint' ? BigInt.asUintN(64, raw) : raw >>> 0) : raw;
-    return float(Number(converted), kind);
+    return float(Number(converted), policy.kind);
   }
-  const target = descriptor;
   // Tagged F values retain their source kind even inside the Int32 domain.
   // Direct host inputs outside that domain also take the floating path.
   const floating = !!value?.float || typeof raw === 'number' &&
     (!Number.isInteger(raw) || raw < -2147483648 || raw > 4294967295);
-  const integer = floating ? floatingInteger(raw, target, checked, context) :
+  const integer = floating ? floatingInteger(raw, policy, context) :
     integerSource(raw, target, checked, unsignedSource);
   if (checked) {
-    const {minimum, maximum} = integerBounds(target.bits, target.signed);
+    const {minimum, maximum} = policy.bounds;
     if (integer < minimum || integer > maximum) {
       numericFault(context, 'OverflowException', 'Checked conversion overflow');
     }
