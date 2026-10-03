@@ -38,8 +38,9 @@ function arrayElements(text,index){let depth=0,quote=null,count=0,seen=false;for
   return -1;}
 test('A02-T36 report() call sites pass as many arguments as the message format consumes',()=>{
   let checked=0;
-  for(const [file,text] of files)for(const m of text.matchAll(/report\([^;'`]*?,'((?:CS|SF)\d{4})'(,\[)?/g)){
-    const d=diagnosticDescriptor(m[1]),supplied=m[2]?arrayElements(text,m.index+m[0].length-1):0;checked++;
+  for(const [file,text] of files)for(const m of text.matchAll(/report\([^;'`]*?,'((?:CS|SF)\d{4})'(,\[|\)|,[^\[])/g)){
+    if(m[2]!==',['&&m[2]!==')')continue; // arguments computed elsewhere: checked at run time by the callers' tests
+    const d=diagnosticDescriptor(m[1]),supplied=m[2]===',['?arrayElements(text,m.index+m[0].length-1):0;checked++;
     assert.equal(supplied,d.argumentCount,`${file}: ${m[1]} supplies ${supplied} of ${d.argumentCount} arguments near '${text.slice(m.index,m.index+90)}'`);
   }
   assert(checked>100,'expected to check the compiler call sites, saw '+checked);

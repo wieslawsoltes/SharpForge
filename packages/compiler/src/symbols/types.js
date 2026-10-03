@@ -157,6 +157,7 @@ export class NamedTypeSymbol extends TypeSymbol {
     const test=format===SymbolDisplayFormat.Test;
     if(this.isNullableValueType&&!this.isDefinition)return this.typeArguments[0].toDisplayString(format)+'?';
     if(this.isTupleType&&!this.isDefinition&&this.arity>1)return '('+this.typeArguments.map((a,i)=>a.toDisplayString(format)+(this.tupleElementNames?.[i]?' '+this.tupleElementNames[i]:'')).join(', ')+')';
+    if(test&&this.specialType==='System_Void')return 'void';
     if(!test){if(this.isNativeInteger)return this.specialType==='System_UIntPtr'?'nuint':'nint';const keyword=specialTypeKeyword(this.specialType);if(keyword)return keyword;}
     const outer=this.containingType,prefix=outer?outer.toDisplayString(format)+'.':format===SymbolDisplayFormat.MinimallyQualified?'':qualifiedName(this,format);
     return prefix+this.name+(this.arity?'<'+this.typeArguments.map(a=>a.toDisplayString(format)).join(', ')+'>':'');
