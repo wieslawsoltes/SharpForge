@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "repository": "wieslawsoltes/SharpForge",
+  "source": "Portfolio #1 and release #422 read 2026-10-03T11:19Z; owner access is verified at apply time.",
+  "create_missing_projects": false,
+  "bindings": {
+    "portfolio": 3, "release": 3,
+    "A00": 4, "A29": 4,
+    "A01": 5, "A02": 5,
+    "A03": 6, "A04": 6, "A13": 6,
+    "A05": 7, "A06": 8,
+    "A07": 9, "A08": 9, "A09": 9,
+    "A10": 10, "A11": 11, "A12": 12, "A14": 13,
+    "A15": 14, "A16": 14, "A17": 14,
+    "A18": 15, "A19": 16, "A20": 16,
+    "A21": 17, "A22": 17,
+    "A23": 18, "A24": 18,
+    "A25": 19, "A26": 20,
+    "A27": 21, "A28": 21
+  }
+}

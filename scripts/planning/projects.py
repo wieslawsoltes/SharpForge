@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Resumable Projects v2 provisioning; offline plan by default, --apply to write.
+"""Resumable reconciliation of EXISTING Projects; offline plan by default.
+Never creates boards: logical area/release selectors reuse reviewed owner project numbers.
 Uses existing issue IDs. Never changes issue state/assignees or existing Status,
 Agent, Branch, lease, lock or evidence values. Native Projects access is required.
 """
@@ -101,31 +102,48 @@ def safe_values(current, desired):
     return updates
 
 
-def provision(client, manifest, config, p, wanted, bindings, audit):
-    rid, links=client.issues()
+def targets(manifest, config, p, wanted, overrides):
     defs=[x for x in definitions(manifest,config,p) if wanted=='all' or x['key']==wanted]
     if not defs:
         raise ValueError('Unknown project selector')
+    reviewed=json.loads((ROOT/'planning/project-bindings.json').read_text())
+    if reviewed.get('repository')!=REPO or reviewed.get('schema')!=1:
+        raise ValueError('Invalid reviewed project binding manifest')
+    bindings={**reviewed['bindings'],**overrides}
+    grouped={}
+    for d in defs:
+        number=bindings.get(d['key'])
+        if type(number)!=int or number<1:
+            raise ValueError('An explicit existing project binding is required: '+d['key'])
+        if number not in grouped:
+            grouped[number]=dict(key=d['key'],keys=[],number=number,title=d['title'],ids=[])
+        group=grouped[number];group['keys'].append(d['key'])
+        group['ids']=sorted(set(group['ids'])|set(d['ids']))
+    return list(grouped.values())
+
+
+def provision(client, manifest, config, p, wanted, bindings, audit):
+    _, links=client.issues()
+    defs=targets(manifest,config,p,wanted,bindings)
     missing=set(k for d in defs for k in d['ids'])-set(links)
     if missing:
         raise RuntimeError('Provision existing release issues first: '+','.join(sorted(missing)))
-    owner_id,rows=owner_projects(client)
-    # All naming/access conflicts are discovered before creating any project.
-    choices={d['key']:choose_project(rows,d,bindings.get(d['key'])) for d in defs}
+    _,rows=owner_projects(client)
+    # The portfolio now has 18 area boards. Reuse them; never create duplicates.
+    choices={d['number']:choose_project(rows,d,d['number']) for d in defs}
     for d in defs:
-        project=choices[d['key']]
-        if project and project['closed']:
-            raise RuntimeError('Project is closed; will not reopen automatically: '+project['url'])
-        if not project:
-            project=client.query('mutation($i:CreateProjectV2Input!){createProjectV2(input:$i){projectV2{id number title url closed}}}',{'i':{'ownerId':owner_id,'repositoryId':rid,'title':d['title']}})['createProjectV2']['projectV2']
-            audit['created'].append(project['url'])
-            readme='<!-- sharpforge-project:'+REPO+':'+d['key']+' -->\n\n# '+d['title']+'\n\nCanonical issue ownership remains in the area hierarchy. Do not duplicate issues per board or count epics as delivered leaf work. Claim one leaf with an explicit lease, branch, paths and evidence. Status alone is not a claim lock.\n\n0.15 tracker: https://github.com/'+REPO+'/issues/422\n\nSuggested views: '+ '; '.join(config['project_policy']['views'])
-            client.query('mutation($i:UpdateProjectV2Input!){updateProjectV2(input:$i){projectV2{id}}}',{'i':{'projectId':project['id'],'readme':readme}})
+        project=choices[d['number']]
+        if not project or project['closed']:
+            raise RuntimeError('Existing project unavailable/closed; refusing to create or reopen: '+str(d['number']))
+    for d in defs:
+        project=choices[d['number']]
         fs=fields(client,project['id'])
-        for name in config['project_policy']['fields']:
+        for configured_name in config['project_policy']['fields']:
+            name='Lock keys' if configured_name=='File locks' else configured_name
             if name in fs:
-                if fs[name]['dataType']!='TEXT':
-                    raise RuntimeError('Existing field has incompatible type: '+name)
+                # Human fields may already be Date/SingleSelect, not Text.
+                if name.startswith('SF ') and fs[name]['dataType']!='TEXT':
+                    raise RuntimeError('Existing machine field has incompatible type: '+name)
                 continue
             f=client.query('mutation($i:CreateProjectV2FieldInput!){createProjectV2Field(input:$i){projectV2Field{... on ProjectV2Field{id name dataType}}}}',{'i':{'projectId':project['id'],'name':name,'dataType':'TEXT'}})['createProjectV2Field']['projectV2Field']
             fs[name]=f
@@ -138,14 +156,13 @@ def provision(client, manifest, config, p, wanted, bindings, audit):
                 item=client.query('mutation($i:AddProjectV2ItemByIdInput!){addProjectV2ItemById(input:$i){item{id}}}',{'i':{'projectId':project['id'],'contentId':content_id}})['addProjectV2ItemById']['item']
             for name,value in changes.items():
                 client.query('mutation($i:UpdateProjectV2ItemFieldValueInput!){updateProjectV2ItemFieldValue(input:$i){projectV2Item{id}}}',{'i':{'projectId':project['id'],'itemId':item['id'],'fieldId':fs[name]['id'],'value':{'text':value}}})
-        # Read back membership and metadata, not just mutation responses.
         verified=items(client,project['id'])
         for key in d['ids']:
             item=verified.get(links[key]['id'])
             if not item or safe_values(item['text'],metadata(key,p)):
                 raise RuntimeError('Incomplete project read-back: '+key)
-        audit['verified'].append({'key':d['key'],'url':project['url'],'items':len(d['ids'])})
-        print('Verified project',d['key'],project['url'],flush=True)
+        audit['verified'].append({'keys':d['keys'],'url':project['url'],'items':len(d['ids'])})
+        print('Verified existing project',','.join(d['keys']),project['url'],flush=True)
 
 
 def main():
@@ -165,7 +182,7 @@ def main():
     if not isinstance(bindings,dict) or any(k not in {d['key'] for d in ds} or type(v)!=int or v<1 for k,v in bindings.items()):
         ap.error('Invalid project bindings')
     if not a.apply:
-        print(json.dumps({'dry_run':True,'projects_defined':len(ds),'projects':[dict(key=d['key'],title=d['title'],items=len(d['ids'])) for d in ds if a.project=='all' or d['key']==a.project],'status':'not provisioned'},indent=2));return
+        print(json.dumps({'dry_run':True,'logical_selectors':len(ds),'existing_boards':len(targets(m,c,p,'all',bindings)),'projects':[dict(keys=d['keys'],number=d['number'],items=len(d['ids'])) for d in targets(m,c,p,a.project,bindings)],'status':'existing board membership/fields not reconciled by this dry run'},indent=2));return
     if os.environ.get('GITHUB_REPOSITORY',REPO)!=REPO:
         raise RuntimeError('Wrong repository')
     token=os.environ.get('GH_PROJECT_TOKEN') or os.environ.get('GH_TOKEN')

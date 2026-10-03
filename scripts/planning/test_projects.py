@@ -14,19 +14,16 @@ class Fake:
     def __init__(self):
         self.projects={};self.fieldmap={};self.itemmap={};self.writes=0;self.limit=100000
         self.links={k:{'id':k,'url':'https://github.com/'+g.REPO+'/issues/'+str(i)} for i,k in enumerate(['SF-PORTFOLIO','SF-R015']+list(P['items']),1)}
+        for n in range(3,22):
+            key='proj:'+str(n);self.projects[key]=dict(id=key,number=n,title='Existing '+str(n),url='https://github.com/users/example/projects/'+str(n),readme='User-owned README',closed=False);self.fieldmap[key]={};self.itemmap[key]={}
     def issues(self):return 'REPO',copy.deepcopy(self.links)
     def query(self,q,v=None):
         v=v or {};i=v.get('i',{})
         if q.startswith('mutation'):
             if self.writes>=self.limit:raise g.BudgetReached('limit')
             self.writes+=1
-            if 'createProjectV2(' in q:
-                n=len(self.projects)+1;key='proj:'+str(n)
-                row=dict(id=key,number=n,title=i['title'],url='https://github.com/users/example/projects/'+str(n),readme='',closed=False)
-                self.projects[key]=row;self.fieldmap[key]={};self.itemmap[key]={}
-                return {'createProjectV2':{'projectV2':copy.deepcopy(row)}}
-            if 'updateProjectV2(' in q:
-                self.projects[i['projectId']]['readme']=i['readme'];return {'updateProjectV2':{'projectV2':{'id':i['projectId']}}}
+            if 'createProjectV2(' in q or 'updateProjectV2(' in q:
+                raise AssertionError('Must not create or rename existing boards')
             if 'createProjectV2Field(' in q:
                 row=dict(id=i['projectId']+':field:'+i['name'],name=i['name'],dataType=i['dataType'])
                 self.fieldmap[i['projectId']][i['name']]=row
@@ -82,36 +79,34 @@ class ProjectTests(unittest.TestCase):
         f=Fake();del f.links['SF-A18-T02']
         with self.assertRaises(RuntimeError):run(f)
         self.assertEqual(f.writes,0)
-    def test_title_collision_refuses_adoption(self):
-        f=Fake();title=next(d['title'] for d in g.definitions(M,C,P) if d['key']=='release')
-        f.query('mutation createProjectV2(',{'i':{'title':title}});f.writes=0
+    def test_missing_board_refuses_creation(self):
+        f=Fake();del f.projects['proj:3']
         with self.assertRaises(RuntimeError):run(f)
         self.assertEqual(f.writes,0)
     def test_explicit_binding_preserves_readme(self):
-        f=Fake();f.query('mutation createProjectV2(',{'i':{'title':'Existing board'}});f.projects['proj:1']['readme']='User description'
-        run(f,bindings={'release':1});self.assertEqual(f.projects['proj:1']['readme'],'User description');self.assertEqual(len(f.projects),1)
+        f=Fake();run(f,bindings={'release':4});self.assertEqual(f.projects['proj:4']['readme'],'User-owned README');self.assertEqual(len(f.projects),19)
     def test_closed_board_is_not_reopened(self):
-        f=Fake();f.query('mutation createProjectV2(',{'i':{'title':'Existing'}});f.projects['proj:1']['closed']=True;f.writes=0
-        with self.assertRaises(RuntimeError):run(f,bindings={'release':1})
+        f=Fake();f.projects['proj:3']['closed']=True
+        with self.assertRaises(RuntimeError):run(f)
         self.assertEqual(f.writes,0)
     def test_repeat_is_noop(self):
         f=Fake();a=run(f);w=f.writes;b=run(f)
-        self.assertEqual(w,f.writes);self.assertEqual(len(a['created']),1);self.assertFalse(b['created']);self.assertEqual(a['verified'][0]['items'],129)
+        self.assertEqual(w,f.writes);self.assertEqual(len(a['created']),0);self.assertFalse(b['created']);self.assertEqual(a['verified'][0]['items'],129)
     def test_partial_batch_resumes(self):
         f=Fake();f.limit=57
         with self.assertRaises(g.BudgetReached):run(f)
-        f.limit=10000;run(f);self.assertEqual(len(f.projects),1);self.assertEqual(len(f.itemmap['proj:1']),129)
+        f.limit=10000;run(f);self.assertEqual(len(f.projects),19);self.assertEqual(len(f.itemmap['proj:3']),129)
     def test_machine_metadata_conflict_not_overwritten(self):
-        f=Fake();run(f);row=f.itemmap['proj:1']['SF-A18-T02'];row['text']['SF Area']='User override';w=f.writes
+        f=Fake();run(f);row=f.itemmap['proj:3']['SF-A18-T02'];row['text']['SF Area']='User override';w=f.writes
         with self.assertRaises(RuntimeError):run(f)
         self.assertEqual(row['text']['SF Area'],'User override');self.assertEqual(f.writes,w)
     def test_human_fields_unrelated_items_and_status_preserved(self):
-        f=Fake();run(f);row=f.itemmap['proj:1']['SF-A18-T02'];row['text'].update(Agent='agent-7',Branch='feature/foo',Evidence='run-1');row['status']='In Progress'
-        f.itemmap['proj:1']['unrelated']={'id':'unrelated-item','content':{'id':'external-issue'},'text':{'Agent':'other-agent'},'status':'Done'}
+        f=Fake();run(f);row=f.itemmap['proj:3']['SF-A18-T02'];row['text'].update(Agent='agent-7',Branch='feature/foo',Evidence='run-1');row['status']='In Progress'
+        f.itemmap['proj:3']['unrelated']={'id':'unrelated-item','content':{'id':'external-issue'},'text':{'Agent':'other-agent'},'status':'Done'}
         before=copy.deepcopy(f.itemmap);w=f.writes;run(f)
         self.assertEqual(before,f.itemmap);self.assertEqual(w,f.writes)
     def test_incompatible_field_type_preserved(self):
-        f=Fake();run(f);f.fieldmap['proj:1']['Agent']['dataType']='SINGLE_SELECT';w=f.writes
+        f=Fake();run(f);f.fieldmap['proj:3']['SF Release']['dataType']='SINGLE_SELECT';w=f.writes
         with self.assertRaises(RuntimeError):run(f)
         self.assertEqual(w,f.writes)
     def test_duplicate_project_markers(self):
@@ -119,9 +114,18 @@ class ProjectTests(unittest.TestCase):
         rows=[dict(number=i,title='x',readme=marker,url='url') for i in [1,2]]
         with self.assertRaises(RuntimeError):g.choose_project(rows,d)
     def test_all_area_definitions_and_portfolio(self):
-        f=Fake();a=run(f,'all');self.assertEqual(len(a['verified']),32);w=f.writes;run(f,'all');self.assertEqual(f.writes,w)
+        f=Fake();a=run(f,'all');self.assertEqual(len(a['verified']),19);w=f.writes;run(f,'all');self.assertEqual(f.writes,w)
     def test_does_not_clear_populated_metadata(self):
         with self.assertRaises(RuntimeError):g.safe_values({'SF Release':'0.14'},{'SF Release':''})
         self.assertEqual(g.safe_values({'Agent':'agent'},{'SF Work ID':'ID'}),{'SF Work ID':'ID'})
+
+    def test_preserve_existing_date_and_selection_fields(self):
+        f=Fake();run(f);f.fieldmap['proj:3']['Agent']['dataType']='SINGLE_SELECT';f.fieldmap['proj:3']['Lease expires']['dataType']='DATE';w=f.writes
+        run(f);self.assertEqual(f.writes,w)
+    def test_grouped_bindings_do_not_duplicate_boards_or_items(self):
+        ds=g.targets(M,C,P,'all',{})
+        self.assertEqual(len(ds),19);self.assertEqual(len({d['number'] for d in ds}),19)
+        self.assertEqual(next(d for d in ds if d['number']==3)['keys'],['portfolio','release'])
+        for d in ds:self.assertEqual(len(d['ids']),len(set(d['ids'])))
 
 if __name__=='__main__':unittest.main()
