@@ -46,16 +46,18 @@ async function requestResponse(settings, input, operation, purpose) {
     );
     if (granted !== true) throw sourceFailure(SourceStatus.denied, 'Source origin permission denied');
     operation.check();
-    const response = await operation.wait(() =>
-      settings.fetch(url.href, {
-        method: 'GET',
-        credentials: 'omit',
-        redirect: 'manual',
-        referrerPolicy: 'no-referrer',
-        cache: 'no-store',
-        mode: 'cors',
-        signal: operation.signal,
-      }),
+    const response = await operation.wait(
+      () =>
+        settings.fetch(url.href, {
+          method: 'GET',
+          credentials: 'omit',
+          redirect: 'manual',
+          referrerPolicy: 'no-referrer',
+          cache: 'no-store',
+          mode: 'cors',
+          signal: operation.signal,
+        }),
+      (lateResponse) => operation.cancelBody(lateResponse?.body),
     );
     if (response.redirected || response.type === 'opaqueredirect') {
       operation.cancelBody(response.body);

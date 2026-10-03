@@ -217,6 +217,39 @@ test('timeout includes permission waits and stream reads', async () => {
   assert.equal((await streaming.fetch(document, url)).status, SourceStatus.timeout);
 });
 
+test('a response arriving after cancellation has its body cancelled', async () => {
+  let entered;
+  let complete;
+  let cancelled = 0;
+  const started = new Promise((resolve) => {
+    entered = resolve;
+  });
+  const service = client({
+    fetch() {
+      entered();
+      return new Promise((resolve) => {
+        complete = resolve;
+      });
+    },
+  });
+  const controller = new AbortController();
+  const pending = service.fetch(document, url, { signal: controller.signal });
+  await started;
+  controller.abort();
+  assert.equal((await pending).status, SourceStatus.cancelled);
+  complete(
+    new Response(
+      new ReadableStream({
+        cancel() {
+          cancelled++;
+        },
+      }),
+    ),
+  );
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(cancelled, 1);
+});
+
 test('concurrency is bounded and cleanup failures remain observable', async () => {
   let release;
   const permission = new Promise((resolve) => {
