@@ -61,7 +61,7 @@ export class DesignerLayoutPanel {
     if (node.type.endsWith('.Canvas')) {
       const conversion = this.section(root, 'Container layout');
       conversion.append(button(root.ownerDocument, 'Convert to Grid', () => this.view.safe(() => this.convertCanvas(node)),
-        !this.view.readOnly && !(this.view.outline?.isLocked(node.id) ?? false)));
+        !this.view.readOnly && !this.view.sourceSync?.session?.analysis?.readOnly && !(this.view.outline?.isLocked(node.id) ?? false)));
     }
     const parent = this.view.document.parent(node.id);
     const grid = node.type.endsWith('.Grid') ? node : parent?.type.endsWith('.Grid') ? parent : null;
@@ -96,7 +96,8 @@ export class DesignerLayoutPanel {
       const child = geometry.get(id);
       return [id, child ? {Width: child.width, Height: child.height} : {}];
     }));
-    convertCanvasToGrid(this.view.document, {id: canvas.id, canEdit, readOnly: !!this.view.readOnly,
+    convertCanvasToGrid(this.view.document, {id: canvas.id, canEdit,
+      readOnly: !!(this.view.readOnly || this.view.sourceSync?.session?.analysis?.readOnly),
       bounds: measured ? {Width: measured.width, Height: measured.height} : undefined, childBounds});
   }
 

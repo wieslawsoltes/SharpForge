@@ -1,5 +1,7 @@
 import {DesignGeometrySession, geometryInvariant, rectanglePoints, boundsOfPoints, toggleDesignAnchor,
   transformRectangle, inverseMatrix, guideSettings, DesignSnaplines} from '@sharpforge/designer';
+import {DesignerOrderGesture} from './designer-surface-order.js';
+import {marginLayoutBounds} from './designer-surface-margin.js';
 
 /** Pointer/keyboard gesture ownership is explicit; no temporary document or history mutation is needed. */
 export class DesignerSurfaceGestures {
@@ -69,7 +71,7 @@ export class DesignerSurfaceGestures {
     if (anchor) {
       event.preventDefault();
       event.stopPropagation();
-      this.anchor(anchor.dataset.controlId, anchor.dataset.anchorSide);
+      this.controller.margin.begin(event, anchor.dataset.controlId, anchor.dataset.anchorSide);
       return;
     }
     if (event.target.closest('[data-user-guide],[data-grid-rails]')) return;
@@ -184,8 +186,8 @@ export class DesignerSurfaceGestures {
   anchor(id, side) {
     const entry = this.controller.geometry.get(id);
     const parent = this.controller.geometry.get(this.view.document.parent(id)?.id);
-    return toggleDesignAnchor(this.view.document, {id, side, bounds: entry.rectangle,
-      parentBounds: {Width: parent.width, Height: parent.height}});
+    geometryInvariant(entry && parent, 'SFD_ANCHOR_MEASUREMENT', 'Margin anchors require measured child and parent layout.');
+    return toggleDesignAnchor(this.view.document, {id, side, ...marginLayoutBounds(entry, parent)});
   }
 
   nudge(event) {
@@ -193,9 +195,10 @@ export class DesignerSurfaceGestures {
     const resize = event.ctrlKey || event.metaKey;
     geometryInvariant(ids.length && (resize || ids.every(id => this.view.document.parent(id)?.type.endsWith('.Canvas'))),
       'SFD_NUDGE_PARENT', 'Movement requires Canvas children; Ctrl+arrow resizes layout children.');
-    if (!this.keyboard || this.keyboard.resize !== resize || this.keyboard.document !== this.view.document) {
+    if (!this.keyboard || this.keyboard.kind !== 'geometry' || this.keyboard.resize !== resize ||
+      this.keyboard.document !== this.view.document || this.keyboard.ids !== ids.join('\0')) {
       this.finishKeyboard();
-      this.keyboard = {session: this.session(ids), resize, document: this.view.document};
+      this.keyboard = {kind: 'geometry', ids: ids.join('\0'), session: this.session(ids), resize, document: this.view.document};
     }
     const amount = event.shiftKey ? guideSettings(this.view.document.value).gridSize : 1;
     const delta = {x: event.key === 'ArrowLeft' ? -amount : event.key === 'ArrowRight' ? amount : 0,
@@ -204,11 +207,23 @@ export class DesignerSurfaceGestures {
     this.controller.adorners.paint(this.keyboard.session.next);
   }
 
+  orderKey(event, delta) {
+    const ids = this.view.document.selection;
+    if (this.keyboard?.kind !== 'order' || this.keyboard.document !== this.view.document || this.keyboard.ids !== ids.join('\0')) {
+      this.finishKeyboard();
+      this.keyboard = new DesignerOrderGesture(this.controller, ids);
+    }
+    this.keyboard.update(delta);
+  }
+
   finishKeyboard(cancel = false) {
     const keyboard = this.keyboard;
     this.keyboard = null;
     if (!keyboard) return;
-    if (cancel) keyboard.session.cancel();
+    if (keyboard.kind === 'order') {
+      if (cancel) keyboard.cancel();
+      else keyboard.commit();
+    } else if (cancel) keyboard.session.cancel();
     else keyboard.session.commit({properties: id => this.properties(id)});
     this.controller.drawAdorners();
   }

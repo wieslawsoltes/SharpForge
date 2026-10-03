@@ -172,6 +172,11 @@ export class DesignerAccessibility {
     if (!intent) return false;
     event.preventDefault();
     event.stopPropagation();
+    if (intent.kind === 'reorder' && this.view.surface?.orderKey) {
+      this.view.safe(() => this.view.surface.orderKey(event, intent.delta));
+      return true;
+    }
+    this.view.surface?.finishKeyboard?.();
     this.view.safe(() => this.applyIntent(intent));
     return true;
   }

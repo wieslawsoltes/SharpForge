@@ -1,4 +1,6 @@
-import {childSlot, geometryInvariant, reorderDesignSelection, resetDesignLayout} from '@sharpforge/designer';
+import {childSlot, designerEventSourceAccess, geometryInvariant, reorderDesignSelection, resetDesignLayout} from '@sharpforge/designer';
+import {designerInlineTextCapability} from './designer-surface-text.js';
+import {defaultDesignerEvent} from './designer-event-actions.js';
 
 /** Context menus and keyboard bindings share one command registry and enablement policy. */
 export class DesignerSurfaceCommands {
@@ -29,7 +31,8 @@ export class DesignerSurfaceCommands {
     register('undo', () => this.view.canUndo?.(false) ?? document().undoStack.length > 0, () => this.view.undo(false));
     register('redo', () => this.view.canUndo?.(true) ?? document().redoStack.length > 0, () => this.view.undo(true));
     register('reset-layout', childSelection, () => resetDesignLayout(document()));
-    register('inline-text', () => selected().length === 1 && childSelection(), () => controller.text.begin());
+    register('inline-text', () => selected().length === 1 && childSelection() && designerInlineTextCapability(this.view).editable,
+      () => controller.text.begin());
     register('open-component', () => selected().length === 1 && Boolean(this.view.componentDefinition?.(selected()[0])),
       () => this.view.openComponent(selected()[0]));
     for (const direction of ['front', 'back', 'forward', 'backward']) {
@@ -69,7 +72,8 @@ export class DesignerSurfaceCommands {
       const binding = analysis.bindings[document().selection[0]];
       this.view.openSource(analysis.uri, binding?.declaration?.start ?? analysis.method.start);
     });
-    register('go-handler', () => Boolean(this.view.sourceSync.session) && Object.keys(document().node().events ?? {}).length > 0,
+    register('go-handler', () => selected().length === 1 && typeof this.view.sourceSync?.navigateEvent === 'function' &&
+      this.handlerEvent() !== null,
       () => this.goHandler());
     register('fit-selection', () => selected().length > 0, () => controller.fitSelection());
   }
@@ -88,7 +92,17 @@ export class DesignerSurfaceCommands {
 
   goHandler() {
     const node = this.view.document.node();
-    return this.view.sourceSync.navigateEvent(node.id, Object.keys(node.events)[0]);
+    return this.view.sourceSync.navigateEvent(node.id, this.handlerEvent());
+  }
+
+  handlerEvent() {
+    const node = this.view.document.node();
+    const analysis = this.view.sourceSync?.session?.analysis;
+    if (!node || !analysis) return null;
+    const bindings = analysis.bindings?.[node.id]?.events ?? {};
+    const preferred = defaultDesignerEvent(this.view, node.id);
+    const names = [...new Set([preferred, ...Object.keys(bindings).sort()].filter(Boolean))];
+    return names.find(name => designerEventSourceAccess(bindings[name], {uri: analysis.uri}).canNavigate) ?? null;
   }
 
   item(id, label, shortcut = '') {

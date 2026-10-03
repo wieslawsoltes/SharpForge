@@ -109,6 +109,10 @@ export class DesignerAdornerLayer {
         button.dataset.anchorSide = side;
         button.dataset.controlId = entry.id;
         button.setAttribute('aria-label', `Toggle ${side} margin anchor`);
+        button.setAttribute('aria-description', 'Click to toggle; drag to adjust the margin. Alt temporarily disables snapping.');
+        button.addEventListener('click', event => {
+          if (event.detail === 0) this.view.safe(() => this.view.surface.anchor(entry.id, side));
+        });
         button.textContent = side[0].toUpperCase();
         rail.append(button);
       }

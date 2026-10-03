@@ -9,6 +9,8 @@ import {DesignerDrawCreate} from './designer-surface-drawing.js';
 import {DesignerUserGuides} from './designer-surface-guides.js';
 import {DesignerSurfaceCommands} from './designer-surface-commands.js';
 import {DesignerSurfaceGestures} from './designer-surface-gestures.js';
+import {DesignerMarginDrag} from './designer-surface-margin.js';
+import {activateDesignerEvent, defaultDesignerEvent} from './designer-event-actions.js';
 
 /** Explicit integration seam for visual surface authoring; legacy DesignerTools delegates here. */
 export class DesignerSurfaceController {
@@ -23,6 +25,7 @@ export class DesignerSurfaceController {
     this.drawing = new DesignerDrawCreate(this);
     this.guides = new DesignerUserGuides(this);
     this.gestures = new DesignerSurfaceGestures(this);
+    this.margin = new DesignerMarginDrag(this);
     this.commands = new DesignerSurfaceCommands(this);
     this.listeners = [];
     this.cancelPointer = null;
@@ -30,6 +33,8 @@ export class DesignerSurfaceController {
     this.disposed = false;
     this.lastDocument = view.document;
     this.multiply = multiplyMatrix;
+    this.lastClick = null;
+    this.doubleClickInterval = null;
   }
 
   install() {
@@ -49,12 +54,15 @@ export class DesignerSurfaceController {
     });
     listen(view.scroller, 'keydown', event => this.keydown(event));
     listen(view.scroller, 'keyup', event => {
-      if (event.key.startsWith('Arrow')) view.safe(() => this.finishKeyboard());
+      if (event.key.startsWith('Arrow') || event.key === 'Alt' && this.gestures.keyboard?.kind === 'order') {
+        view.safe(() => this.finishKeyboard());
+      }
     });
     listen(view.scroller, 'focusout', event => {
       if (!view.scroller.contains(event.relatedTarget)) view.safe(() => this.finishKeyboard());
     });
     listen(view.stage, 'dblclick', event => this.doubleClick(event));
+    listen(view.stage, 'click', event => this.click(event));
     listen(view.stage.ownerDocument.defaultView, 'blur', () => {
       this.cancelPointer?.();
       view.safe(() => this.finishKeyboard());
@@ -84,6 +92,7 @@ export class DesignerSurfaceController {
       this.gestures.finishKeyboard(true);
       this.text.cancel();
       this.lastDocument = this.view.document;
+      this.lastClick = null;
       this.preview.environment.update({state: null});
     }
     if (event.kind !== 'selection') this.geometry.invalidate();
@@ -99,7 +108,7 @@ export class DesignerSurfaceController {
   }
 
   drawAdorners() {
-    if (!this.installed || this.disposed || this.gestures.active || this.gestures.keyboard) return;
+    if (!this.installed || this.disposed || this.gestures.active || this.gestures.keyboard || this.margin.active) return;
     this.adorners.request();
   }
 
@@ -111,6 +120,22 @@ export class DesignerSurfaceController {
     return this.gestures.pointerDown(event);
   }
 
+  click(event) {
+    if (this.view.preview) return;
+    const hit = event.target.closest('[data-sf-id]')?.dataset.sfId;
+    const id = this.view.host.nodes.get(hit)?.designId ?? hit;
+    if (!id || !this.view.document.node(id)) return;
+    const previous = this.lastClick;
+    this.lastClick = {id, time: event.timeStamp, x: event.clientX, y: event.clientY};
+    const interval = previous?.id === id ? event.timeStamp - previous.time : null;
+    this.doubleClickInterval = {id, interval};
+    const samePoint = previous && Math.hypot(event.clientX - previous.x, event.clientY - previous.y) <= 4;
+    if (event.detail === 1 && interval >= 450 && interval <= 1500 && samePoint && !this.view.componentDefinition?.(id)) {
+      this.lastClick = null;
+      this.view.safe(() => this.text.begin(id));
+    }
+  }
+
   doubleClick(event) {
     const view = this.view;
     if (view.preview) return;
@@ -120,10 +145,15 @@ export class DesignerSurfaceController {
     event.preventDefault();
     event.stopPropagation();
     if (view.componentDefinition?.(id)) {
+      this.lastClick = null;
       view.safe(() => view.openComponent(id));
       return;
     }
-    view.safe(() => this.text.begin(id));
+    const slow = this.doubleClickInterval?.id === id && this.doubleClickInterval.interval >= 400;
+    const eventName = slow ? null : defaultDesignerEvent(view, id);
+    this.lastClick = null;
+    if (eventName) return view.safe(() => activateDesignerEvent(view, id, eventName));
+    return view.safe(() => this.text.begin(id));
   }
 
   snaplines(parentId, excluded) {
@@ -141,6 +171,10 @@ export class DesignerSurfaceController {
 
   finishKeyboard(cancel = false) {
     return this.gestures.finishKeyboard(cancel);
+  }
+
+  orderKey(event, delta) {
+    return this.gestures.orderKey(event, delta);
   }
 
   command(id) {
@@ -168,6 +202,13 @@ export class DesignerSurfaceController {
   }
 
   keydown(event) {
+    if (event.key === 'Escape' && (this.cancelPointer || this.gestures.keyboard)) {
+      this.cancelPointer?.();
+      this.finishKeyboard(true);
+      event.preventDefault();
+      event.stopPropagation();
+      return true;
+    }
     if (this.view.accessibility?.handleKey(event)) return true;
     if (this.view.preview || event.target.matches('input,select,textarea,[contenteditable=true]')) return false;
     if (event.key === 'Escape') {
@@ -276,6 +317,7 @@ export class DesignerSurfaceController {
     this.disposed = true;
     this.cancelPointer?.();
     for (const dispose of this.listeners.splice(0)) dispose();
-    for (const owned of [this.gestures, this.text, this.drawing, this.guides, this.zoom, this.preview, this.adorners, this.geometry]) owned.dispose();
+    for (const owned of [this.gestures, this.margin, this.text, this.drawing, this.guides,
+      this.zoom, this.preview, this.adorners, this.geometry]) owned.dispose();
   }
 }
