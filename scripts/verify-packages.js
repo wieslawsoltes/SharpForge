@@ -1,3 +1,5 @@
+import {npmCli} from './conformance/node-tools.js';
+import {resultPath} from './conformance/results.js';
 /** Pack every workspace, install the tarballs in an isolated offline project,
  * import every public entry point, then compile/load/execute a real DLL there.
  */
@@ -7,7 +9,7 @@ import { resolve,join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 const root=fileURLToPath(new URL('../',import.meta.url));
-function run(command,args,cwd=root){const result=spawnSync(command,args,{cwd,encoding:'utf8',timeout:120000});if(result.error||result.status!==0)throw new Error(`${command} failed: ${result.error?.message??result.stderr}\n${result.stdout}`);return result.stdout;}
+function run(command,args,cwd=root){const result=spawnSync(command==='npm'?process.execPath:command,command==='npm'?[npmCli(),...args]:args,{cwd,encoding:'utf8',timeout:120000});if(result.error||result.status!==0)throw new Error(`${command} failed: ${result.error?.message??result.stderr}\n${result.stdout}`);return result.stdout;}
 const artifacts=join(root,'artifacts');await mkdir(artifacts,{recursive:true});
 for(const name of await readdir(artifacts))if(name.endsWith('.tgz'))await rm(join(artifacts,name));
 run('npm',['pack','--workspaces','--ignore-scripts','--pack-destination',artifacts,'--json']);
@@ -94,9 +96,10 @@ try{assert.equal((await transport14.request(origin14)).text,'packed HTTP');const
 console.log(JSON.stringify({passed:true,node:process.version,mode:'All twenty-five 0.14.0 tarballs installed offline in an isolated project, without source workspace links',packages,execution:{source,output:execution.output,fault:execution.fault,assemblyBytes:result.assembly.length,format:'ECMA-335',methodTokens:executable.il.methodTokens}},null,2));`;
  await writeFile(join(directory,'verify.mjs'),script);
  const output=run(process.execPath,['verify.mjs'],directory);
+ const protocolRoot=join(directory,'node_modules','@sharpforge','protocol'),protocolBins=JSON.parse(await readFile(join(protocolRoot,'package.json'),'utf8')).bin;
  const {encodeProtocolMessage,ProtocolMessageReader}=await import('../packages/protocol/src/framing.js');
- for(const [bin,message]of [['sharpforge-lsp',{jsonrpc:'2.0',id:1,method:'initialize',params:{}}],['sharpforge-dap',{seq:1,type:'request',command:'initialize',arguments:{}}]]){const result=spawnSync(join(directory,'node_modules','.bin',bin),[],{cwd:directory,input:encodeProtocolMessage(message),timeout:10000});if(result.status!==0)throw new Error('Packaged '+bin+' failed: '+result.stderr);const messages=new ProtocolMessageReader().feed(result.stdout);if(!messages.some(m=>m.id===1||m.request_seq===1&&m.success))throw new Error('Missing packaged protocol response');}
+ for(const [bin,message]of [['sharpforge-lsp',{jsonrpc:'2.0',id:1,method:'initialize',params:{}}],['sharpforge-dap',{seq:1,type:'request',command:'initialize',arguments:{}}]]){const result=spawnSync(process.execPath,[join(protocolRoot,protocolBins[bin])],{cwd:directory,input:encodeProtocolMessage(message),timeout:10000});if(result.status!==0)throw new Error('Packaged '+bin+' failed: '+result.stderr);const messages=new ProtocolMessageReader().feed(result.stdout);if(!messages.some(m=>m.id===1||m.request_seq===1&&m.success))throw new Error('Missing packaged protocol response');}
  const nativeHelp=run(process.execPath,[join(directory,'node_modules','@sharpforge','msbuild','bin','sharpforge-msbuild.js'),'--help'],directory);if(!nativeHelp.includes('--trust-projects'))throw new Error('Installed MSBuild host help missing');
  const report={...JSON.parse(output),timestamp:new Date().toISOString(),tarballs};
- await writeFile(join(root,'docs/package-results.json'),JSON.stringify(report,null,2)+'\n');console.log(output);
+ await writeFile(await resultPath('package-results.json'),JSON.stringify(report,null,2)+'\n');console.log(output);
 }finally{await rm(directory,{recursive:true,force:true});}

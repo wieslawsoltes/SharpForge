@@ -4,7 +4,9 @@ The in-memory mode does not bypass or test native HTTP/file-origin policy.
 import json, os, subprocess, time, traceback
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-from browser_harness import load_in_memory
+from conformance.browser.launch import launch_browser, results_dir
+RESULTS = results_dir()
+from browser_harness import load_application
 ROOT=Path(__file__).resolve().parents[1]
 checks=[];errors=[];server=None
 
@@ -13,13 +15,10 @@ def check(name,action):
 def truth(value,message='assertion failed'):
  if not value:raise AssertionError(message)
 try:
- with sync_playwright() as p:
-  browser=p.chromium.launch(executable_path=os.getenv('CHROMIUM_EXECUTABLE'),headless=True,args=['--no-sandbox'])
+ with sync_playwright() as p, launch_browser(p, __file__) as browser:
   page=browser.new_page(viewport={'width':1600,'height':1050});page.set_default_timeout(10000);page.on('pageerror',lambda e:errors.append(str(e)))
   mode='in-memory' if os.getenv('SHARPFORGE_IN_MEMORY')=='1' else 'http'
-  if mode=='in-memory':load_in_memory(page)
-  else:
-   server=subprocess.Popen(['node','scripts/serve.js'],cwd=ROOT,env={**os.environ,'PORT':'4183'},stdout=subprocess.DEVNULL);time.sleep(.4);page.goto('http://127.0.0.1:4183/');page.wait_for_function('sharpforge?.getState().metrics')
+  load_application(page)
   state=lambda:page.evaluate('sharpforge.getState()')
   wait=lambda expr:page.wait_for_function(expr,timeout=15000)
   cmd=lambda value:page.evaluate('(c)=>sharpforge.execute(c)',value)
@@ -121,14 +120,13 @@ try:
    sample('gc');page.evaluate('sharpforge.debug({stopOnEntry:true})');wait('sharpforge.getState().debug?.state==="paused"');cmd('heap');truth(page.locator('#heap-kind').is_visible());truth(page.locator('#heap-next').is_disabled());truth('Type census' in page.locator('[data-tool=heap]').inner_text());cmd('stop')
   check('managed heap paging and census controls run against worker heap',heap_pages)
   def responsive():
-   sample('partial');cmd('resetLayout');page.wait_for_function('document.querySelectorAll(".toast").length===0',timeout=12000);page.screenshot(path=str(ROOT/'docs/screenshots/docking-workspace.png'));cmd('theme');page.screenshot(path=str(ROOT/'docs/screenshots/docking-workspace-light.png'));cmd('theme');dock('source:Calculator.cs','documents','right');page.screenshot(path=str(ROOT/'docs/screenshots/docking-split-editors.png'));cmd('resetLayout');page.set_viewport_size({'width':390,'height':844});truth(page.evaluate('document.documentElement.scrollWidth<=innerWidth+1'));cmd('toggleExplorer');truth(page.locator('#solution').is_visible());cmd('toggleExplorer');truth(editor('Program.cs').is_visible());page.screenshot(path=str(ROOT/'docs/screenshots/docking-workspace-mobile.png'))
+   sample('partial');cmd('resetLayout');page.wait_for_function('document.querySelectorAll(".toast").length===0',timeout=12000);page.screenshot(path=str(RESULTS/'screenshots/docking-workspace.png'));cmd('theme');page.screenshot(path=str(RESULTS/'screenshots/docking-workspace-light.png'));cmd('theme');dock('source:Calculator.cs','documents','right');page.screenshot(path=str(RESULTS/'screenshots/docking-split-editors.png'));cmd('resetLayout');page.set_viewport_size({'width':390,'height':844});truth(page.evaluate('document.documentElement.scrollWidth<=innerWidth+1'));cmd('toggleExplorer');truth(page.locator('#solution').is_visible());cmd('toggleExplorer');truth(editor('Program.cs').is_visible());page.screenshot(path=str(RESULTS/'screenshots/docking-workspace-mobile.png'))
   check('desktop dark/light and 390px responsive docking layouts',responsive)
   check('no browser JavaScript errors',lambda:truth(not errors,str(errors)))
-  browser.close()
 except Exception as error:
  checks.append({'name':'acceptance failure','passed':False,'error':str(error)});traceback.print_exc()
 finally:
  if server:server.terminate()
  report={'version':'0.4.0','mode':os.getenv('SHARPFORGE_IN_MEMORY')=='1' and 'in-memory production modules and workers' or 'http','nativeWritePermissions':'not tested; permission and conflict logic covered by node mocks','checks':checks,'passed':sum(x['passed'] for x in checks),'failed':sum(not x['passed'] for x in checks),'errors':errors}
- (ROOT/'docs/browser-workspace-results.json').write_text(json.dumps(report,indent=2)+'\n')
+ (RESULTS/'browser-workspace-results.json').write_text(json.dumps(report,indent=2)+'\n')
  if report['failed']:raise SystemExit(1)

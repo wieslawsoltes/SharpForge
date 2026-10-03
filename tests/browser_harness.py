@@ -6,6 +6,8 @@ harness-only in-memory replacement when the about:blank origin forbids Storage.
 Normal CI/browser tests use HTTP instead, by leaving SHARPFORGE_IN_MEMORY unset.
 """
 import json
+import os
+from conformance.browser.launch import load_http
 from pathlib import Path
 from playwright.sync_api import Page
 
@@ -32,7 +34,10 @@ def _wait_for_function(page, expression, *, arg=None, timeout=None, polling=None
 
 Page.wait_for_function = _wait_for_function
 
-def load_in_memory(page):
+def load_application(page, connect_origins=()):
+    if os.getenv('SHARPFORGE_IN_MEMORY') != '1':
+        return load_http(page, connect_origins)
+
     dist = ROOT / 'dist'
     html = (dist / 'index.html').read_text()
     html = html.replace('<link rel="stylesheet" href="./studio.css">', '<style>' + (dist / 'studio.css').read_text() + '</style>')
