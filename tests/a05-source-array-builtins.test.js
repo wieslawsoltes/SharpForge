@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {compileToIL} from '@sharpforge/compiler';
+import {compile, compileToIL} from '@sharpforge/compiler';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
 import {loadAssembly} from '@sharpforge/cil';
 
@@ -31,3 +31,36 @@ test('Array source APIs preserve results across source, reloaded source and CIL'
     assert.equal(vm.output.join(''), '2\n0\n3\n6\n0\n6\n1\n6\nFalse\n');
   }
 });
+
+for (const pipeline of ['bound', 'legacy']) {
+  test('Array.Resize substitutes its ref element type in the ' + pipeline + ' pipeline', () => {
+    const compiled = compileToIL(`using System; class Program {
+      static void Main() {
+        int[] numbers = new int[] { 7 };
+        Array.Resize(ref numbers, 3);
+        string[] words = new string[] { "kept" };
+        System.Array.Resize<string>(ref words, 2);
+        Console.WriteLine(numbers[0]);
+        Console.WriteLine(numbers[2]);
+        Console.WriteLine(words[0]);
+        Console.WriteLine(words[1] == null);
+      }
+    }`, {pipeline});
+    assert.equal(compiled.success, true, JSON.stringify(compiled.diagnostics));
+    for (const vm of [new VirtualMachine(compiled.image), new VirtualMachine(loadAssembly(compiled.assembly)),
+      new CilVirtualMachine(compiled.assembly)]) {
+      const result = vm.run();
+      assert.equal(result.state, 'terminated', result.fault?.message);
+      assert.equal(result.output, '7\n0\nkept\nTrue\n');
+    }
+  });
+
+  for (const argument of ['values', 'out values', 'in values', 'ref values']) {
+    test('Array.Resize enforces an invariant ref array type: ' + pipeline + ', ' + argument, () => {
+      const result = compile('using System; class Program { static void Main() {' +
+        'string[] values = new string[1]; Array.Resize<object>(' + argument + ', 3); }}', {pipeline});
+      assert.equal(result.success, false);
+      assert(result.diagnostics.some(item => item.severity === 'error'));
+    });
+  }
+}
