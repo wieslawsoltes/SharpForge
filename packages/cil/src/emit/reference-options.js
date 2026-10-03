@@ -3,7 +3,7 @@ import { readPortableExecutable } from '../pe/reader.js';
 
 /** Project supplied assembly metadata into identities at the emitter boundary, before constructing tables. */
 export function emissionMetadataOptions(options, framework) {
-  const input = options.referenceAssemblies ?? [];
+  const input = options.referenceAssemblies === undefined ? [] : options.referenceAssemblies;
   if (!Array.isArray(input) || input.length > 1024) throw new CilError('Invalid reference assembly count');
   if (options.assemblyReferences !== undefined
     && (!Array.isArray(options.assemblyReferences) || options.assemblyReferences.length + input.length > 1024)) {

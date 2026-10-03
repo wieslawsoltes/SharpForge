@@ -11,7 +11,7 @@ export function assemblyReferenceRegistry(references = []) {
       throw new CilError('Invalid assembly reference name');
     }
     const flags = reference.flags ?? 0, key = reference.publicKeyOrToken ?? new Uint8Array();
-    if (!Number.isInteger(flags) || flags < 0 || (flags & ~0x301) || !(key instanceof Uint8Array)
+    if (!Number.isInteger(flags) || flags < 0 || flags > 0x301 || (flags & ~0x301) || !(key instanceof Uint8Array)
       || key.length > 16384 || (flags & 1 ? key.length < 16 : key.length !== 0 && key.length !== 8)) {
       throw new CilError('Invalid assembly reference flags or public key/token');
     }

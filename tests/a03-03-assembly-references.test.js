@@ -69,11 +69,11 @@ test('A03 default reference profiles keep their historical versions and empty cu
 test('A03 invalid, duplicate, excessive and missing reference identities are explicit diagnostics', () => {
   const valid = references(10)[0];
   for (const assemblyReferences of [null, {}, new Array(1025), [valid, valid], [{ ...valid, name: '' }],
-    [{ ...valid, version: undefined }], [{ ...valid, flags: 8 }], [{ ...valid, publicKeyOrToken: [] }],
+    [{ ...valid, version: undefined }], [{ ...valid, flags: 8 }], [{ ...valid, flags: 0x100000000 }], [{ ...valid, publicKeyOrToken: [] }],
     [{ ...valid, flags: 0, publicKeyOrToken: key }]]) {
     assert.throws(() => new MetadataBuilder('Invalid', { assemblyReferences }), /reference/i);
   }
-  for (const options of [{ framework: 'net9' }, { referenceAssemblies: [new Uint8Array(2)] },
+  for (const options of [{ framework: 'net9' }, { referenceAssemblies: null }, { referenceAssemblies: [new Uint8Array(2)] },
     { referenceAssemblies: [[]] }, { referenceAssemblies: new Array(1025) }, { assemblyReferences: {} }]) {
     const result = compileToIL('Console.WriteLine(42);', options);
     assert.equal(result.success, false);
