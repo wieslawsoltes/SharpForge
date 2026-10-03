@@ -41,6 +41,7 @@ test('CLR function pointer identity includes every calling convention field', ()
   assert.equal(fn, types.functionPointer({ returnType: integer, parameters: [integer] }));
   assert.notEqual(fn, types.functionPointer({ returnType: integer, parameters: [integer], callingConvention: 1 }));
   assert.throws(() => types.functionPointer({ returnType: integer, callingConvention: 6 }), /Invalid function pointer/);
+  assert.throws(() => types.functionPointer({ returnType: integer, parameters: [types.intrinsic('System.Void')] }), /cannot be void/);
   assert.ok(Object.isFrozen(fn.signature.parameters));
 });
 

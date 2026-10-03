@@ -85,6 +85,7 @@ export class ConstructedTypes {
     requireType(returnType);
     if (parameters.length > 4096) throw loadError(LoadErrorCode.LimitExceeded, 'Function pointer parameter limit exceeded');
     for (const parameter of parameters) requireType(parameter);
+    if (parameters.some(parameter => this.#loader.isIntrinsic(parameter, 'System.Void'))) throw fail('Function pointer parameters cannot be void');
     if (![0, 1, 2, 3, 4, 5, 9, 11].includes(callingConvention) || (explicitThis && !hasThis) ||
         !Number.isInteger(genericArity) || genericArity < 0 || genericArity > 1024 ||
         (genericArity && ![0, 5].includes(callingConvention)) || !Number.isInteger(sentinel) || sentinel < -1 ||
