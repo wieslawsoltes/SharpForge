@@ -93,13 +93,19 @@ export function mountMenuBar(host, {registry, menus = workbenchMenus, keybinding
     } else if (event.key === 'Tab') close(false);
   }, {signal: controller.signal});
   document.addEventListener('keydown', event => {
+    if (document.activeElement?.closest('[aria-modal="true"]')) return;
     if (event.key === 'Alt' && !event.ctrlKey && !event.metaKey) {
+      if (bar.contains(document.activeElement)) { event.preventDefault(); close(); return; }
       restoreFocus = document.activeElement;
       buttons[0]?.focus();
       event.preventDefault();
     } else if (event.altKey && !event.ctrlKey && !event.metaKey) {
       const index = menus.findIndex(menu => menu.mnemonic === event.key.toLowerCase());
-      if (index >= 0) { restoreFocus = document.activeElement; open(index); event.preventDefault(); }
+      if (index >= 0) {
+        if (!bar.contains(document.activeElement)) restoreFocus = document.activeElement;
+        open(index);
+        event.preventDefault();
+      }
     }
   }, {signal: controller.signal});
   document.addEventListener('pointerdown', event => { if (!bar.contains(event.target)) close(false); }, {signal: controller.signal});

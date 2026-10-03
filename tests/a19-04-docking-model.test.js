@@ -148,3 +148,37 @@ test('pin and preview partition is deterministic and pin metadata survives tab m
   assert.throws(() => layout.setTabState('a', { preview: true }));
   assert.throws(() => layout.setTabState('watch', { pinned: true }));
 });
+
+test('background app registration preserves every visible group and global activation in one transaction', () => {
+  const layout = fixture();
+  layout.activate('output');
+  layout.activate('a');
+  layout.register({ id: 'app:second', title: 'Second application', kind: 'document' });
+  const previous = layout.snapshot();
+  const notifications = [];
+  layout.subscribe(event => notifications.push(event.type));
+  layout.open('app:second', null, { activate: false });
+  assert.equal(layout.state.activePanel, 'a');
+  assert.equal(layout.group('documents').active, 'a');
+  assert.equal(layout.group('tools').active, 'output');
+  assert(layout.group('documents').panels.includes('app:second'));
+  assert.deepEqual(notifications, ['openBackground']);
+  assert.equal(layout.undo(), true);
+  assert.deepEqual(layout.snapshot(), previous);
+});
+
+test('background reopening auto-hidden tools and existing floating tabs cannot steal activation', () => {
+  const layout = fixture();
+  layout.autoHide('watch', 'right');
+  layout.float('b');
+  layout.activate('a');
+  layout.open('watch', null, { activate: false });
+  assert.equal(layout.state.activePanel, 'a');
+  assert.equal(layout.group('tools').active, 'output');
+  assert.equal(layout.locate('watch').kind, 'group');
+  const before = layout.serialize();
+  const history = layout.undoStack.length;
+  assert.equal(layout.open('b', null, { activate: false }), false);
+  assert.equal(layout.serialize(), before);
+  assert.equal(layout.undoStack.length, history);
+});

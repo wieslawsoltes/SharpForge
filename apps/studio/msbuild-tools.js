@@ -1,3 +1,4 @@
+import {createNativeBuildSettings} from './workbench/lazy-features/native-settings.js';
 import { MSBuildClient, parsePropertyLines, inspectSlnx, createWorkspaceSlnx } from '../../packages/msbuild/src/index.js';
 import { escapeHtml as E } from '../../packages/editor/src/index.js';
 import { createCsproj } from '../../packages/project-system/src/index.js';
@@ -5,9 +6,9 @@ const terminal=s=>['succeeded','failed','cancelled'].includes(s);
 const formatBytes=n=>n<1024?n+' B':n<1048576?(n/1024).toFixed(1)+' KiB':(n/1048576).toFixed(1)+' MiB';
 /** Native build UI has a separate lifecycle from the bounded browser compiler. */
 export class MSBuildTools {
- constructor({onAttach,onOpenSource,getSourceChanges,onSaved,onJob,onAssembly,onSelectPanel,onError,onWorkspace}={}){
+ constructor({onAttach,onOpenSource,getSourceChanges,onSaved,onJob,onAssembly,onSelectPanel,onError,onWorkspace,settings,buffers}={}){
   Object.assign(this,{onAttach,onOpenSource,getSourceChanges,onSaved,onJob,onAssembly,onSelectPanel,onError,onWorkspace});
-  this.client=null;this.capabilities=null;this.workspace=null;this.job=null;this.cursor=0;this.log='';this.buffers=new Map();this.sourcePath=null;this.hosts=new Map();this.inspection=null;this.attached=false;this.busy=false;this.disposed=false;this.settings={project:'',configuration:'Debug',platform:'',framework:'',runtime:'',properties:'',targets:'',resultTargets:'',arguments:'',verbosity:'minimal',maxNodes:'1',restore:true,binaryLog:false,graphBuild:false,trusted:false,save:true};
+  this.client=null;this.capabilities=null;this.workspace=null;this.job=null;this.cursor=0;this.log='';this.buffers=buffers??new Map();this.sourcePath=null;this.hosts=new Map();this.inspection=null;this.attached=false;this.busy=false;this.disposed=false;this.settings=settings??createNativeBuildSettings();
  }
  async autoConnect(){let client;try{client=MSBuildClient.fromLocation();}catch(error){this.onError?.(error);return;}if(client){this.onSelectPanel?.('msbuild');try{await this.connect(client);}catch(error){this.onError?.(error);}}}
  async connect(client=this.client){if(!client)throw new Error('Start the local host and open its printed Studio URL.');if(this.busy)throw new Error('Finish the active operation before reconnecting');this.client=client;this.capabilities=await client.connect();this.workspace=await client.workspace();this.settings.project=this.workspace.solutions[0]??this.workspace.projects[0]??'';this.settings.trusted=false;this.renderBuild(true);this.onWorkspace?.(this.workspace);return this.snapshot();}

@@ -1,4 +1,4 @@
-import { createGroup, createSplit, panelIds, walkLayout, restorePersistedLayout } from '../../../../packages/docking/src/index.js';
+import { createGroup, createSplit, panelIds, walkLayout, restorePersistedLayout } from '@sharpforge/docking';
 
 const clone = value => JSON.parse(JSON.stringify(value));
 

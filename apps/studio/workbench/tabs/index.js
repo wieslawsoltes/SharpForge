@@ -116,13 +116,25 @@ export class DocumentTabs {
 
   documentChanged(event) {
     if (!['changed', 'dirty', 'saved'].includes(event.type)) return;
+    const dirty = Boolean(this.documents.get(event.uri)?.dirty);
+    let metadataChanged = false;
+    const previews = [];
     for (const [id, view] of this.views) {
       if (view.uri !== event.uri || !this.layout.panels.has(id)) continue;
-      const record = this.documents.get(event.uri);
-      this.layout.require(id).dirty = Boolean(record?.dirty);
-      if (record?.dirty) this.promote(id);
+      const panel = this.layout.require(id);
+      if (Boolean(panel.dirty) !== dirty) {
+        panel.dirty = dirty;
+        metadataChanged = true;
+      }
+      if (dirty && this.layout.state.tabState[id]?.preview) previews.push(id);
     }
-    this.layout.notify('documentState');
+    if (previews.length) {
+      this.layout.transaction('documentState', () => {
+        for (const id of previews) this.layout.setTabState(id, { preview: false });
+      });
+    } else if (metadataChanged) {
+      this.layout.notify('documentState');
+    }
   }
 
   close(id) { return this.closeMany([id]); }
