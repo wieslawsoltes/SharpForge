@@ -1,3 +1,4 @@
+import {fileURLToPath} from 'node:url';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,readdirSync} from 'node:fs';
@@ -9,7 +10,7 @@ import {BoundTreeRewriter} from '../packages/compiler/src/bound/rewriter.js';
 import {dumpBoundTree,dumpBoundTreeLines} from '../packages/compiler/src/bound/dump.js';
 import {TypeSymbol} from '../packages/compiler/src/symbols/types.js';
 import {boundFixtures,bindFixture} from '../packages/compiler/test/bound/fixtures.js';
-const pkg=new URL('../packages/compiler/',import.meta.url).pathname,spec=JSON.parse(readFileSync(join(pkg,'src/bound/nodes.json'),'utf8')),snapshots=JSON.parse(readFileSync(join(pkg,'test/bound/snapshots.json'),'utf8'));
+const pkg=fileURLToPath(new URL('../packages/compiler/',import.meta.url)),spec=JSON.parse(readFileSync(join(pkg,'src/bound/nodes.json'),'utf8')),snapshots=JSON.parse(readFileSync(join(pkg,'test/bound/snapshots.json'),'utf8'));
 const bound=boundFixtures.map(([id,source,options])=>({id,...bindFixture(source,options)})),bodies=bound.flatMap(f=>f.compilation.boundPipeline.units.filter(u=>u.kind==='body'&&u.body).map(u=>u.body));
 const each=(node,visit)=>{visit(node);for(const child of node.children)each(child,visit);};
 test('A02-T26 generated bound node files are up to date with nodes.json',()=>{

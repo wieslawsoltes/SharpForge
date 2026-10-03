@@ -13,6 +13,7 @@ import { TypeKind, SymbolKind, TypeMap, Accessibility, typeOf } from '../symbols
 import { MethodKind } from '../symbols/members.js';
 import { isNullableType } from '../conversions/nullable.js';
 import { hasBoxingConversion, hasIdentityOrImplicitReference } from '../conversions/reference.js';
+import { requiredMembersOf } from './members/required-members.js';
 
 /** True when a type has a public parameterless instance constructor (every value type does). */
 export function hasPublicParameterlessConstructor(type) {
@@ -56,7 +57,11 @@ export function checkConstraints(parameters, typeArguments, { core, display, out
     if (argument.isRefLikeType || (argument.typeKind === TypeKind.TypeParameter && argument.allowsRefLikeType)) {
       if (!parameter.allowsRefLikeType) push('CS9244', [display, parameter.name, name]);
     }
-    if (argument.typeKind === TypeKind.Pointer || argument.specialType === 'System_Void' || argument.isStatic) {
+    if (argument.isStatic) {
+      push('CS0718', [name]);
+      return;
+    }
+    if (argument.typeKind === TypeKind.Pointer || argument.specialType === 'System_Void') {
       push('CS0306', [name]);
       return;
     }
@@ -83,6 +88,7 @@ export function checkConstraints(parameters, typeArguments, { core, display, out
       } else if (!hasIdentityOrImplicitReference(argument, wanted, core)) push('CS0311', args);
     }
     if (parameter.hasConstructorConstraint && !hasPublicParameterlessConstructor(argument)) push('CS0310', [display, parameter.name, name]);
+    else if (parameter.hasConstructorConstraint && requiredMembersOf(argument, core).length) push('CS9040', [name, parameter.name, display]);
   });
   return results;
 }

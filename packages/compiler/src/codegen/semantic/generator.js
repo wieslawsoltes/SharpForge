@@ -23,6 +23,7 @@ import { TASK } from '@sharpforge/framework';
 import { AsyncMethods, asyncResultType } from '../../lowering/async/async-methods.js';
 import { TupleClasses } from '../../lowering/tuples/tuple-classes.js';
 import { StructuralMembers } from '../../lowering/tuples/structural-members.js';
+import { RecordMembers } from '../../lowering/records/record-members.js';
 import { stateMachineTypeName, stateMachineParameterProxyFieldName, thisProxyFieldName } from '../../lowering/generated-names.js';
 import { JumpIrEmitter } from './jump-emitter.js';
 import { ProgramModel } from './program-model.js';
@@ -34,6 +35,7 @@ import { BodyTranslator } from './body-translator.js';
 import { Frame } from './frame.js';
 import { UnsupportedConstruct } from './unsupported.js';
 import { n } from './node-factory.js';
+import { memberGenerators } from '../../lowering/members/index.js';
 
 class GeneratorCore {
   /**
@@ -50,6 +52,7 @@ class GeneratorCore {
     this.iterators = new IteratorClasses(this);
     this.structural = new StructuralMembers(this);
     this.tuples = this.structural.register(new TupleClasses(this));
+    this.records = this.structural.register(new RecordMembers(this));
     this.classes = new Map();
     this.fields = new Map();
     this.methods = new Map();
@@ -165,7 +168,7 @@ const Members = Base =>
             returnsValue: frame.method.returnType !== 'void',
             prologue: this.prologueOf(symbol, frame),
           });
-        } else this.synthesizeAccessor(symbol, record);
+        } else if (!this.records.buildConstructor(symbol, record)) this.synthesizeAccessor(symbol, record);
         this.drain();
       }
     }
@@ -275,7 +278,9 @@ const Members = Base =>
     }
   };
 
-export class SemanticGenerator extends Members(AsyncMethods(Initialization(Declarations(GeneratorCore)))) {
+const GeneratorBase = memberGenerators.reduce((composed, mixin) => mixin(composed), Members(AsyncMethods(Initialization(Declarations(GeneratorCore)))));
+
+export class SemanticGenerator extends GeneratorBase {
   /**
    * Generates the image.
    * @returns {{image: object}|{unsupported: {construct: string, syntax: object|null, uri: string|null}}}

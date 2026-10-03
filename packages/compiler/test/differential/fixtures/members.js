@@ -4,5 +4,7 @@
  */
 import { fixtures as memberInitializers } from './member-initializers.js';
 import { fixtures as memberOperators } from './member-operators.js';
+import { fixtures as memberInitRequired } from './member-init-required.js';
+import { fixtures as memberPrimaryConstructors } from './member-primary-constructors.js';
 
-export const fixtures = [...memberInitializers, ...memberOperators];
+export const fixtures = [...memberInitializers, ...memberOperators, ...memberInitRequired, ...memberPrimaryConstructors];

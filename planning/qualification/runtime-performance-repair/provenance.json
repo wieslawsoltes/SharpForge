@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "implementationCommit": "dbe9f50f648b1c44f05f773f0f50e6a3b3c92969",
+  "correctnessCommit": "a822f5d4feff82c810e1e7ab6aac4c8a5ee58f2e",
+  "comparisons": [
+    {
+      "directory": "cil-repair-integration",
+      "exitCode": 0,
+      "source": {
+        "base": "a3093d496861383e0b26b4aaab7dfced552251b9",
+        "head": "dbe9f50f648b1c44f05f773f0f50e6a3b3c92969"
+      },
+      "completed": true,
+      "command": [
+        "node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/ab.js",
+        "--root",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a05-runtime-perf",
+        "--base",
+        "a3093d496861383e0b26b4aaab7dfced552251b9",
+        "--head",
+        "dbe9f50f648b1c44f05f773f0f50e6a3b3c92969",
+        "--adapters",
+        "A05/vm-cil,A08/dictionary-cil",
+        "--pairs",
+        "20",
+        "--output",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a05-runtime-perf/artifacts/results/performance/cil-repair-integration"
+      ]
+    },
+    {
+      "directory": "cil-repair-original",
+      "exitCode": 1,
+      "source": {
+        "base": "defb7ccbe13dae9dfe9a67cc24281b2a0b5f9e99",
+        "head": "dbe9f50f648b1c44f05f773f0f50e6a3b3c92969"
+      },
+      "completed": true,
+      "command": [
+        "node",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a29-performance/scripts/conformance/perf/ab.js",
+        "--root",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a05-runtime-perf",
+        "--base",
+        "defb7ccbe13dae9dfe9a67cc24281b2a0b5f9e99",
+        "--head",
+        "dbe9f50f648b1c44f05f773f0f50e6a3b3c92969",
+        "--adapters",
+        "A05/vm-cil,A08/dictionary-cil",
+        "--pairs",
+        "20",
+        "--output",
+        "/Users/wieslawsoltes/GitHub/SharpForge-a05-runtime-perf/artifacts/results/performance/cil-repair-original"
+      ]
+    }
+  ],
+  "validation": [
+    {
+      "command": "node --test --test-concurrency=2 tests/a05-*.test.js tests/a00-01-value-abi.test.js",
+      "exitCode": 0,
+      "file": "correctness.log",
+      "sha256": "e3850ada6e5eaccc6d8e5d0640a8e2e9a7b52342ac502b6952bc52bf38f3f5f6",
+      "bytes": 30006
+    },
+    {
+      "command": "npm test",
+      "exitCode": 0,
+      "file": "full.log",
+      "sha256": "63e6839a0aa2ca91172dc2d7fd494acec539742d6fbb43a70bb0e3b6a384adc3",
+      "bytes": 318824,
+      "originalCaptureSha256": "89cd47e8a20f4118d5224f1ffa7b217fafa9448d2799b423d532b400fabddce4",
+      "originalCaptureBytes": 318832,
+      "normalization": "Git text attributes normalized CRLF to LF; committed log content hash is recorded separately from original capture."
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "file": "build.log",
+      "sha256": "82deb33c4371294ac72badaddace623d816a98c3f14e85d22cbf4af4cb860d9e",
+      "bytes": 107
+    },
+    {
+      "command": "npm run check:structure",
+      "exitCode": 0,
+      "file": "structure.log",
+      "sha256": "ebc984c4ea01dc21ac32c5c9ea1dee3c2148fa24d2e83192c66d08d67c390cbf",
+      "bytes": 20461
+    },
+    {
+      "command": "npm run check",
+      "exitCode": 0,
+      "javascriptModules": 636,
+      "syntaxErrors": 0,
+      "unassignedTests": 0,
+      "duplicateOwners": 0,
+      "note": "Console output captured in tool transcript; no dedicated log file."
+    }
+  ]
+}

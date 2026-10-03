@@ -1,0 +1,29 @@
+PASS two dedicated browser workers initialized
+PASS initial multi-file compile has no diagnostics
+PASS default build emits real PE/CLI DLL bytes
+PASS run multi-file particle program with actual output
+PASS runtime worker loads IL rather than compiler IR
+PASS F5 runs directly to bound source breakpoint without forced entry
+PASS debugger reuses decoded IL and reports real IL offsets
+PASS toolbar step into/out traverses real call frames
+PASS step back restores earlier managed snapshot
+PASS managed heap inspector shows actual allocations
+PASS all six tool panels render, including disassembly
+PASS actual CIL and decoded IR disassembly toggle
+PASS editing refreshes diagnostics and recompiles repaired program
+PASS member completion on incomplete source
+PASS editor undo/redo preserves input changes
+PASS browser sample: gc
+PASS browser sample: recursion
+PASS browser sample: exceptions
+PASS browser sample: arrays
+PASS error sample blocks IL emission
+PASS File command downloads a real IL assembly
+PASS imported DLL executes directly without rebuilding source
+PASS source-free DLL executes without source recompilation
+PASS dark and light themes
+PASS resizable tool windows
+PASS 390px responsive layout and tool overlays
+PASS tablet diagnostic tools overlay
+PASS documentation and keyboard help dialogs
+PASS no browser JavaScript errors

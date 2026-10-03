@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "engine": "chromium",
+  "failures": [
+    {
+      "id": "navigation-policy",
+      "mode": "deployed",
+      "suite": "smoke",
+      "device": null,
+      "platform": "darwin",
+      "errorContains": "Required script-src self CSP is missing",
+      "issue": "https://github.com/wieslawsoltes/SharpForge/issues/1158",
+      "reason": "The currently published Pages application has no enforced script-src policy."
+    }
+  ]
+}

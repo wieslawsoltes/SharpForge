@@ -1,0 +1,2322 @@
+{
+  "schemaVersion": 1,
+  "harnessCommit": "5108268106ed9a6140198d2e2371019de57ff407",
+  "runnerId": "0496ac14920a9c411b97ae8d",
+  "commit": "a3093d496861383e0b26b4aaab7dfced552251b9",
+  "environment": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M3 Pro",
+    "logicalCpus": 11,
+    "osRelease": "25.6.0",
+    "runnerName": "MacBook-Pro.local",
+    "commit": "a3093d496861383e0b26b4aaab7dfced552251b9"
+  },
+  "benchmarks": [
+    {
+      "id": "A05/vm-source",
+      "area": "A05",
+      "engine": "source",
+      "unit": "ms",
+      "samples": [
+        1.440417000000025,
+        1.42433299999999,
+        1.308540999999991,
+        1.4166250000000105,
+        1.3469589999999698,
+        1.386624999999981,
+        1.6964999999999577,
+        1.3799170000000345,
+        1.842917,
+        1.4700409999999806,
+        1.4072909999999865,
+        1.5744159999999852,
+        1.5107079999999655,
+        1.3769169999999917,
+        1.902832999999987,
+        1.465791999999965,
+        1.315084000000013,
+        1.4300420000000145,
+        1.352624999999989,
+        1.3892920000000117
+      ],
+      "coldSamples": [
+        5.425667000000033,
+        5.811792000000025,
+        5.322834,
+        5.187333000000024,
+        5.188165999999967,
+        5.231167000000028,
+        5.569250000000011,
+        5.330040999999994,
+        5.301125000000013,
+        5.351625000000013,
+        5.370666999999969,
+        5.362542000000019,
+        6.09254100000004,
+        5.352457999999956,
+        5.636584000000028,
+        6.230625000000032,
+        5.260500000000036,
+        5.312292000000014,
+        5.281458000000043,
+        5.835542000000032
+      ],
+      "statistics": {
+        "count": 20,
+        "median": 1.4204790000000003,
+        "p95": 1.842917,
+        "p99": 1.902832999999987,
+        "min": 1.308540999999991,
+        "max": 1.902832999999987
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "124750\n"
+      },
+      "metrics": {
+        "samples": [
+          {
+            "nodeHeapDeltaBytes": 3316760,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.0580009999999902,
+              "maxPauseMs": 0.009666999999978998
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3389008,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.060916999999903965,
+              "maxPauseMs": 0.010166999999967175
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3369600,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.05725200000000541,
+              "maxPauseMs": 0.009584000000018023
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3541360,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.08508400000005167,
+              "maxPauseMs": 0.02833400000002939
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3541408,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.055334999999956835,
+              "maxPauseMs": 0.0072079999999914435
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3112368,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.05620700000008583,
+              "maxPauseMs": 0.007959000000028027
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3078320,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.12554099999999835,
+              "maxPauseMs": 0.06150000000002365
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3541200,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.06358399999987796,
+              "maxPauseMs": 0.01258300000000645
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3401232,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.08029100000004519,
+              "maxPauseMs": 0.014708000000041466
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3297872,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.06233300000002373,
+              "maxPauseMs": 0.009916000000032454
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3371344,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.059873000000095544,
+              "maxPauseMs": 0.009916000000032454
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3200136,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.0691669999999931,
+              "maxPauseMs": 0.012707999999975073
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3263704,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.060871999999960735,
+              "maxPauseMs": 0.008207999999967797
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3337728,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.05729099999996379,
+              "maxPauseMs": 0.009291000000018812
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3541288,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.0791649999999322,
+              "maxPauseMs": 0.015332999999998265
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3541416,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.060502999999982876,
+              "maxPauseMs": 0.010625000000004547
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3294840,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.051791000000093845,
+              "maxPauseMs": 0.006332999999983713
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3541432,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.05816700000002584,
+              "maxPauseMs": 0.0067919999999617175
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3197312,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.0531669999999167,
+              "maxPauseMs": 0.006915999999989708
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3541296,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.05550199999998995,
+              "maxPauseMs": 0.007499999999993179
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "A05/vm-cil",
+      "area": "A05",
+      "engine": "cil",
+      "unit": "ms",
+      "samples": [
+        16.392457999999976,
+        9.756332999999984,
+        9.928540999999996,
+        9.890707999999961,
+        10.076582999999971,
+        10.171999999999969,
+        11.444125000000042,
+        9.604250000000036,
+        10.207416000000023,
+        9.78125,
+        16.555917000000022,
+        25.211750000000052,
+        18.12408400000004,
+        13.995457999999985,
+        13.172915999999987,
+        12.803041000000007,
+        13.73645799999997,
+        27.671709000000078,
+        17.416875000000005,
+        10.81570800000003
+      ],
+      "coldSamples": [
+        19.88654200000002,
+        18.514584000000013,
+        19.765540999999985,
+        18.755042000000003,
+        18.17554199999995,
+        19.930416999999977,
+        18.734041999999988,
+        18.877875000000017,
+        19.42337500000002,
+        18.578750000000014,
+        49.637584000000004,
+        47.831541000000016,
+        45.56966699999998,
+        40.40599999999995,
+        45.29316700000004,
+        51.687458000000106,
+        36.10337500000003,
+        39.070334,
+        22.438375000000008,
+        22.299916999999994
+      ],
+      "statistics": {
+        "count": 20,
+        "median": 12.123583000000025,
+        "p95": 25.211750000000052,
+        "p99": 27.671709000000078,
+        "min": 9.604250000000036,
+        "max": 27.671709000000078
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "124750\n"
+      },
+      "metrics": {
+        "samples": [
+          {
+            "nodeHeapDeltaBytes": -927400,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.40441600000008293,
+              "maxPauseMs": 0.08487500000001091
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -468160,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.10674899999997933,
+              "maxPauseMs": 0.018916999999987638
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -482008,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.10058300000002873,
+              "maxPauseMs": 0.019207999999991898
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -465336,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.11033300000002555,
+              "maxPauseMs": 0.02112499999998363
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -471776,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.12466599999999062,
+              "maxPauseMs": 0.024999999999977263
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -462784,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.11175100000002658,
+              "maxPauseMs": 0.01675000000000182
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -475312,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.19575200000002724,
+              "maxPauseMs": 0.03683300000000145
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -481776,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.1064169999999649,
+              "maxPauseMs": 0.0162499999999568
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -444176,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.13029199999994034,
+              "maxPauseMs": 0.02679200000000037
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -495688,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.10079400000006444,
+              "maxPauseMs": 0.015500000000031378
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -1059256,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.49541599999997743,
+              "maxPauseMs": 0.08841700000004948
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -750904,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.6303329999999505,
+              "maxPauseMs": 0.13870799999995143
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -1023352,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.7331660000000966,
+              "maxPauseMs": 0.24549999999999272
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -680648,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.32720900000015263,
+              "maxPauseMs": 0.07045799999991686
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -930768,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.2536230000001751,
+              "maxPauseMs": 0.04520800000000236
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -477136,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.8627079999998841,
+              "maxPauseMs": 0.6029999999999518
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -1164184,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.324331999999913,
+              "maxPauseMs": 0.09445800000003146
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -523728,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.5204589999997324,
+              "maxPauseMs": 0.08541700000000674
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -497720,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.3791670000001659,
+              "maxPauseMs": 0.07916700000004084
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -948328,
+            "managed": {
+              "operations": 500,
+              "allocations": 500,
+              "allocatedBytes": 20000,
+              "allocationsPerOperation": 1,
+              "bytesPerOperation": 40,
+              "collections": 10,
+              "totalPauseMs": 0.15941699999990533,
+              "maxPauseMs": 0.029541999999992186
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "A08/dictionary-source",
+      "area": "A08",
+      "engine": "source",
+      "unit": "ms",
+      "samples": [
+        1.6654160000000502,
+        1.770417000000009,
+        1.9919170000000008,
+        1.7052919999999858,
+        1.5926249999999982,
+        1.8465830000000096,
+        1.6054589999999962,
+        1.7595000000000027,
+        2.4495000000000005,
+        2.2767499999999927,
+        1.6304580000000328,
+        1.9290829999999914,
+        1.6453339999999912,
+        1.6647500000000264,
+        1.6905840000000012,
+        1.768665999999996,
+        1.8935000000000173,
+        1.7843330000000037,
+        1.7885840000000144,
+        1.5742089999999962
+      ],
+      "coldSamples": [
+        9.503750000000025,
+        10.261792000000014,
+        9.588333999999975,
+        10.528500000000008,
+        10.028750000000002,
+        9.868875000000003,
+        10.003500000000031,
+        9.594708000000026,
+        9.488292000000001,
+        9.553832999999997,
+        9.242917000000034,
+        9.528541999999959,
+        8.990666000000033,
+        10.559708,
+        9.875458999999978,
+        9.746166999999957,
+        9.677958999999987,
+        10.134500000000003,
+        10.882249999999999,
+        9.41583300000002
+      ],
+      "statistics": {
+        "count": 20,
+        "median": 1.7640829999999994,
+        "p95": 2.2767499999999927,
+        "p99": 2.4495000000000005,
+        "min": 1.5742089999999962,
+        "max": 2.4495000000000005
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "125250\n"
+      },
+      "metrics": {
+        "samples": [
+          {
+            "nodeHeapDeltaBytes": 3887344,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3874200,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3877160,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3870488,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3866232,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3873120,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3868248,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3856016,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3870728,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3842456,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3875392,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3571536,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3867712,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3873104,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3873576,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3873216,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3878632,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3861248,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3867008,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 3871280,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "A08/dictionary-cil",
+      "area": "A08",
+      "engine": "cil",
+      "unit": "ms",
+      "samples": [
+        8.080083000000002,
+        7.65745800000002,
+        8.137499999999989,
+        14.335333999999989,
+        20.79362500000002,
+        12.654749999999922,
+        22.003874999999994,
+        14.209124999999972,
+        24.770875000000046,
+        15.495625000000018,
+        15.785582999999974,
+        21.654250000000047,
+        11.705750000000023,
+        10.721625000000017,
+        11.437749999999994,
+        9.291541999999993,
+        8.859624999999994,
+        8.887249999999995,
+        8.06412499999999,
+        7.956457999999998
+      ],
+      "coldSamples": [
+        15.992834000000016,
+        15.103459000000043,
+        14.851166999999975,
+        21.51041600000002,
+        37.0034169999999,
+        27.191708999999946,
+        28.771333000000027,
+        39.60020899999995,
+        51.46900000000005,
+        34.221541,
+        44.1875839999999,
+        22.79550000000006,
+        22.653666999999984,
+        23.592083000000002,
+        20.609624999999994,
+        24.03687500000001,
+        17.085000000000036,
+        16.391500000000008,
+        17.420166999999992,
+        16.485000000000014
+      ],
+      "statistics": {
+        "count": 20,
+        "median": 11.571750000000009,
+        "p95": 22.003874999999994,
+        "p99": 24.770875000000046,
+        "min": 7.65745800000002,
+        "max": 24.770875000000046
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "125250\n"
+      },
+      "metrics": {
+        "samples": [
+          {
+            "nodeHeapDeltaBytes": -4615320,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -4622808,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -4619232,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -4657584,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -4625136,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -4659272,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -4618840,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -4633784,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -4669248,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -5093400,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -4653864,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -4664312,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -4653512,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -4524608,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -4614360,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -4565736,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -4610976,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -4602256,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -4591928,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": -4592344,
+            "managed": {
+              "operations": 500,
+              "allocations": 9,
+              "allocatedBytes": 16656,
+              "allocationsPerOperation": 0.018,
+              "bytesPerOperation": 33.312,
+              "collections": 0,
+              "totalPauseMs": 0,
+              "maxPauseMs": 0
+            },
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "Managed heap accounting is not native allocator instrumentation"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "A10/compute-scalar",
+      "area": "A10",
+      "engine": "scalar",
+      "unit": "ms",
+      "samples": [
+        0.27191700000000196,
+        0.25583299999999554,
+        0.2755830000000117,
+        0.2557920000000138,
+        0.2722920000000215,
+        0.26395800000000236,
+        0.2686250000000143,
+        0.27420799999998735,
+        0.2754589999999837,
+        0.26395899999999983,
+        0.29554099999998584,
+        0.3361250000000098,
+        0.2629169999999874,
+        0.26958300000001145,
+        0.25816700000001447,
+        0.2681249999999977,
+        0.2947499999999934,
+        0.2551249999999925,
+        0.2524999999999977,
+        0.24962499999998045
+      ],
+      "coldSamples": [
+        0.9123749999999973,
+        0.8692090000000121,
+        0.8631670000000042,
+        0.882125000000002,
+        0.881541999999996,
+        1.119957999999997,
+        0.8470000000000084,
+        0.8555829999999958,
+        1.0017500000000155,
+        1.0246249999999861,
+        0.8889170000000206,
+        1.2655419999999822,
+        0.9047079999999994,
+        0.8970410000000015,
+        0.9747079999999926,
+        0.8821670000000097,
+        0.8623330000000067,
+        0.84537499999999,
+        0.8402910000000077,
+        0.8259580000000142
+      ],
+      "statistics": {
+        "count": 20,
+        "median": 0.268375000000006,
+        "p95": 0.29554099999998584,
+        "p99": 0.3361250000000098,
+        "min": 0.24962499999998045,
+        "max": 0.3361250000000098
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "100000:9"
+      },
+      "metrics": {
+        "samples": [
+          {
+            "nodeHeapDeltaBytes": 1360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "A10/compute-wasm",
+      "area": "A10",
+      "engine": "wasm-simd",
+      "unit": "ms",
+      "samples": [
+        0.09662500000001728,
+        0.16204199999998536,
+        0.13112499999999727,
+        0.1097910000000013,
+        0.11429200000000606,
+        0.12441599999999653,
+        0.10545799999999872,
+        0.09933300000000145,
+        0.0979159999999979,
+        0.09991700000000492,
+        0.1123749999999859,
+        0.11108300000000781,
+        0.10316600000001586,
+        0.10708400000001461,
+        0.0952090000000112,
+        0.09858400000001666,
+        0.0993750000000091,
+        0.10370799999998326,
+        0.12424999999998931,
+        0.10395800000000577
+      ],
+      "coldSamples": [
+        0.3614169999999888,
+        0.36325000000002206,
+        0.4431249999999807,
+        0.37487500000000296,
+        0.43345899999999915,
+        0.4780410000000188,
+        0.3903750000000059,
+        0.3405830000000094,
+        0.3523339999999848,
+        0.4142089999999996,
+        0.6381250000000023,
+        0.3603750000000048,
+        0.3946669999999983,
+        0.37554200000002425,
+        0.3495420000000138,
+        0.42370900000000233,
+        0.39324999999999477,
+        1.3280829999999924,
+        0.41929199999998445,
+        0.3762920000000065
+      ],
+      "statistics": {
+        "count": 20,
+        "median": 0.10470800000000224,
+        "p95": 0.13112499999999727,
+        "p99": 0.16204199999998536,
+        "min": 0.0952090000000112,
+        "max": 0.16204199999998536
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "100000:9"
+      },
+      "metrics": {
+        "samples": [
+          {
+            "nodeHeapDeltaBytes": 1704,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1704,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1704,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1704,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1704,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1704,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1704,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1704,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1704,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1704,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1704,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1704,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1704,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1704,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1704,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1704,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1704,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1704,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1704,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 1704,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "A20/editor-index",
+      "area": "A20",
+      "engine": "node",
+      "unit": "ms",
+      "samples": [
+        9.71504200000004,
+        10.98066700000004,
+        10.761083000000042,
+        16.719333000000006,
+        13.759957999999983,
+        9.881083000000046,
+        10.456999999999994,
+        11.62887500000005,
+        12.163749999999993,
+        10.191542000000027,
+        13.20879100000002,
+        11.949583000000018,
+        10.201790999999957,
+        10.38416699999999,
+        10.363917000000015,
+        10.63575000000003,
+        10.384082999999976,
+        11.139166999999986,
+        9.711000000000013,
+        14.558625000000006
+      ],
+      "coldSamples": [
+        18.140208,
+        15.975458000000003,
+        19.016834000000017,
+        20.028625000000005,
+        17.071584,
+        20.20962499999999,
+        20.553082999999987,
+        18.713416999999993,
+        18.249209000000008,
+        18.50883300000001,
+        16.078625000000017,
+        16.298791000000023,
+        17.034167000000025,
+        19.590625000000017,
+        18.840541,
+        16.446874999999977,
+        16.03358400000002,
+        16.71587500000001,
+        16.53395900000001,
+        19.015749999999997
+      ],
+      "statistics": {
+        "count": 20,
+        "median": 10.698416500000036,
+        "p95": 14.558625000000006,
+        "p99": 16.719333000000006,
+        "min": 9.711000000000013,
+        "max": 16.719333000000006
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "10001"
+      },
+      "metrics": {
+        "samples": [
+          {
+            "nodeHeapDeltaBytes": 9668112,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 9319384,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 9230360,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 10281752,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 11212920,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 9520896,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 21730048,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 9319400,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 9494272,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 21726536,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 10998032,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 10491984,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 9319384,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 9416296,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 9425088,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 9424696,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 9422592,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 9319400,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 8366696,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          },
+          {
+            "nodeHeapDeltaBytes": 9415288,
+            "managed": null,
+            "nativeAllocations": {
+              "status": "unsupported",
+              "reason": "No native allocator instrumentation"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "unsupported": [],
+  "registry": null
+}

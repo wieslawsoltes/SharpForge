@@ -1,0 +1,1376 @@
+{
+  "schemaVersion": 1,
+  "revision": "ecma-335-6",
+  "reference": "https://ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf",
+  "sourceSHA256": "8c1decf6d482f020776a12dd601537e024d5d5f30df130a3ea3bbf3c51adb1d6",
+  "extraction": "Sixth-edition informative opcode.def with normative Partition III additions; reserved prefix and unused bytes excluded. Table numbers include reserved pointer/ENC tables, whose support is reported separately.",
+  "opcodes": [
+    {
+      "name": "nop",
+      "value": 0,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "break",
+      "value": 1,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldarg.0",
+      "value": 2,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldarg.1",
+      "value": 3,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldarg.2",
+      "value": 4,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldarg.3",
+      "value": 5,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldloc.0",
+      "value": 6,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldloc.1",
+      "value": 7,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldloc.2",
+      "value": 8,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldloc.3",
+      "value": 9,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stloc.0",
+      "value": 10,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stloc.1",
+      "value": 11,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stloc.2",
+      "value": 12,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stloc.3",
+      "value": 13,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldarg.s",
+      "value": 14,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldarga.s",
+      "value": 15,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "starg.s",
+      "value": 16,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldloc.s",
+      "value": 17,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldloca.s",
+      "value": 18,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stloc.s",
+      "value": 19,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldnull",
+      "value": 20,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldc.i4.m1",
+      "value": 21,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldc.i4.0",
+      "value": 22,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldc.i4.1",
+      "value": 23,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldc.i4.2",
+      "value": 24,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldc.i4.3",
+      "value": 25,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldc.i4.4",
+      "value": 26,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldc.i4.5",
+      "value": 27,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldc.i4.6",
+      "value": 28,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldc.i4.7",
+      "value": 29,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldc.i4.8",
+      "value": 30,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldc.i4.s",
+      "value": 31,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldc.i4",
+      "value": 32,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldc.i8",
+      "value": 33,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldc.r4",
+      "value": 34,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldc.r8",
+      "value": 35,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "dup",
+      "value": 37,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "pop",
+      "value": 38,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "jmp",
+      "value": 39,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "call",
+      "value": 40,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "calli",
+      "value": 41,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ret",
+      "value": 42,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "br.s",
+      "value": 43,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "brfalse.s",
+      "value": 44,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "brtrue.s",
+      "value": 45,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "beq.s",
+      "value": 46,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "bge.s",
+      "value": 47,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "bgt.s",
+      "value": 48,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ble.s",
+      "value": 49,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "blt.s",
+      "value": 50,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "bne.un.s",
+      "value": 51,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "bge.un.s",
+      "value": 52,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "bgt.un.s",
+      "value": 53,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ble.un.s",
+      "value": 54,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "blt.un.s",
+      "value": 55,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "br",
+      "value": 56,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "brfalse",
+      "value": 57,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "brtrue",
+      "value": 58,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "beq",
+      "value": 59,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "bge",
+      "value": 60,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "bgt",
+      "value": 61,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ble",
+      "value": 62,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "blt",
+      "value": 63,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "bne.un",
+      "value": 64,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "bge.un",
+      "value": 65,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "bgt.un",
+      "value": 66,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ble.un",
+      "value": 67,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "blt.un",
+      "value": 68,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "switch",
+      "value": 69,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldind.i1",
+      "value": 70,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldind.u1",
+      "value": 71,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldind.i2",
+      "value": 72,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldind.u2",
+      "value": 73,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldind.i4",
+      "value": 74,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldind.u4",
+      "value": 75,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldind.i8",
+      "value": 76,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldind.i",
+      "value": 77,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldind.r4",
+      "value": 78,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldind.r8",
+      "value": 79,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldind.ref",
+      "value": 80,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stind.ref",
+      "value": 81,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stind.i1",
+      "value": 82,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stind.i2",
+      "value": 83,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stind.i4",
+      "value": 84,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stind.i8",
+      "value": 85,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stind.r4",
+      "value": 86,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stind.r8",
+      "value": 87,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "add",
+      "value": 88,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "sub",
+      "value": 89,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "mul",
+      "value": 90,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "div",
+      "value": 91,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "div.un",
+      "value": 92,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "rem",
+      "value": 93,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "rem.un",
+      "value": 94,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "and",
+      "value": 95,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "or",
+      "value": 96,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "xor",
+      "value": 97,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "shl",
+      "value": 98,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "shr",
+      "value": 99,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "shr.un",
+      "value": 100,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "neg",
+      "value": 101,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "not",
+      "value": 102,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.i1",
+      "value": 103,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.i2",
+      "value": 104,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.i4",
+      "value": 105,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.i8",
+      "value": 106,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.r4",
+      "value": 107,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.r8",
+      "value": 108,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.u4",
+      "value": 109,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.u8",
+      "value": 110,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "callvirt",
+      "value": 111,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "cpobj",
+      "value": 112,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldobj",
+      "value": 113,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldstr",
+      "value": 114,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "newobj",
+      "value": 115,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "castclass",
+      "value": 116,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "isinst",
+      "value": 117,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.r.un",
+      "value": 118,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "unbox",
+      "value": 121,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "throw",
+      "value": 122,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldfld",
+      "value": 123,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldflda",
+      "value": 124,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stfld",
+      "value": 125,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldsfld",
+      "value": 126,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldsflda",
+      "value": 127,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stsfld",
+      "value": 128,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stobj",
+      "value": 129,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.ovf.i1.un",
+      "value": 130,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.ovf.i2.un",
+      "value": 131,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.ovf.i4.un",
+      "value": 132,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.ovf.i8.un",
+      "value": 133,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.ovf.u1.un",
+      "value": 134,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.ovf.u2.un",
+      "value": 135,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.ovf.u4.un",
+      "value": 136,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.ovf.u8.un",
+      "value": 137,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.ovf.i.un",
+      "value": 138,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.ovf.u.un",
+      "value": 139,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "box",
+      "value": 140,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "newarr",
+      "value": 141,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldlen",
+      "value": 142,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldelema",
+      "value": 143,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldelem.i1",
+      "value": 144,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldelem.u1",
+      "value": 145,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldelem.i2",
+      "value": 146,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldelem.u2",
+      "value": 147,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldelem.i4",
+      "value": 148,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldelem.u4",
+      "value": 149,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldelem.i8",
+      "value": 150,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldelem.i",
+      "value": 151,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldelem.r4",
+      "value": 152,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldelem.r8",
+      "value": 153,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldelem.ref",
+      "value": 154,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stelem.i",
+      "value": 155,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stelem.i1",
+      "value": 156,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stelem.i2",
+      "value": 157,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stelem.i4",
+      "value": 158,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stelem.i8",
+      "value": 159,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stelem.r4",
+      "value": 160,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stelem.r8",
+      "value": 161,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stelem.ref",
+      "value": 162,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldelem",
+      "value": 163,
+      "specSection": "ECMA-335-III.4.7"
+    },
+    {
+      "name": "stelem",
+      "value": 164,
+      "specSection": "ECMA-335-III.4.26"
+    },
+    {
+      "name": "unbox.any",
+      "value": 165,
+      "specSection": "ECMA-335-III.4.33"
+    },
+    {
+      "name": "conv.ovf.i1",
+      "value": 179,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.ovf.u1",
+      "value": 180,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.ovf.i2",
+      "value": 181,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.ovf.u2",
+      "value": 182,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.ovf.i4",
+      "value": 183,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.ovf.u4",
+      "value": 184,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.ovf.i8",
+      "value": 185,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.ovf.u8",
+      "value": 186,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "refanyval",
+      "value": 194,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ckfinite",
+      "value": 195,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "mkrefany",
+      "value": 198,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldtoken",
+      "value": 208,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.u2",
+      "value": 209,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.u1",
+      "value": 210,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.i",
+      "value": 211,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.ovf.i",
+      "value": 212,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.ovf.u",
+      "value": 213,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "add.ovf",
+      "value": 214,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "add.ovf.un",
+      "value": 215,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "mul.ovf",
+      "value": 216,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "mul.ovf.un",
+      "value": 217,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "sub.ovf",
+      "value": 218,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "sub.ovf.un",
+      "value": 219,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "endfinally",
+      "value": 220,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "leave",
+      "value": 221,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "leave.s",
+      "value": 222,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stind.i",
+      "value": 223,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "conv.u",
+      "value": 224,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "arglist",
+      "value": 65024,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ceq",
+      "value": 65025,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "cgt",
+      "value": 65026,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "cgt.un",
+      "value": 65027,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "clt",
+      "value": 65028,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "clt.un",
+      "value": 65029,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldftn",
+      "value": 65030,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldvirtftn",
+      "value": 65031,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldarg",
+      "value": 65033,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldarga",
+      "value": 65034,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "starg",
+      "value": 65035,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldloc",
+      "value": 65036,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "ldloca",
+      "value": 65037,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "stloc",
+      "value": 65038,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "localloc",
+      "value": 65039,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "endfilter",
+      "value": 65041,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "unaligned.",
+      "value": 65042,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "volatile.",
+      "value": 65043,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "tail.",
+      "value": 65044,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "initobj",
+      "value": 65045,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "constrained.",
+      "value": 65046,
+      "specSection": "ECMA-335-III.2.1"
+    },
+    {
+      "name": "cpblk",
+      "value": 65047,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "initblk",
+      "value": 65048,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "no.",
+      "value": 65049,
+      "specSection": "ECMA-335-III.2.2"
+    },
+    {
+      "name": "rethrow",
+      "value": 65050,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "sizeof",
+      "value": 65052,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "refanytype",
+      "value": 65053,
+      "specSection": "ECMA-335-VI.Annex-opcode.def"
+    },
+    {
+      "name": "readonly.",
+      "value": 65054,
+      "specSection": "ECMA-335-III.2.3"
+    }
+  ],
+  "tables": [
+    {
+      "name": "Module",
+      "value": 0,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "TypeRef",
+      "value": 1,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "TypeDef",
+      "value": 2,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "FieldPtr",
+      "value": 3,
+      "specSection": "ECMA-335-II.22",
+      "reserved": true
+    },
+    {
+      "name": "Field",
+      "value": 4,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "MethodPtr",
+      "value": 5,
+      "specSection": "ECMA-335-II.22",
+      "reserved": true
+    },
+    {
+      "name": "MethodDef",
+      "value": 6,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "ParamPtr",
+      "value": 7,
+      "specSection": "ECMA-335-II.22",
+      "reserved": true
+    },
+    {
+      "name": "Param",
+      "value": 8,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "InterfaceImpl",
+      "value": 9,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "MemberRef",
+      "value": 10,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "Constant",
+      "value": 11,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "CustomAttribute",
+      "value": 12,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "FieldMarshal",
+      "value": 13,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "DeclSecurity",
+      "value": 14,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "ClassLayout",
+      "value": 15,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "FieldLayout",
+      "value": 16,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "StandAloneSig",
+      "value": 17,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "EventMap",
+      "value": 18,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "EventPtr",
+      "value": 19,
+      "specSection": "ECMA-335-II.22",
+      "reserved": true
+    },
+    {
+      "name": "Event",
+      "value": 20,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "PropertyMap",
+      "value": 21,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "PropertyPtr",
+      "value": 22,
+      "specSection": "ECMA-335-II.22",
+      "reserved": true
+    },
+    {
+      "name": "Property",
+      "value": 23,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "MethodSemantics",
+      "value": 24,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "MethodImpl",
+      "value": 25,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "ModuleRef",
+      "value": 26,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "TypeSpec",
+      "value": 27,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "ImplMap",
+      "value": 28,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "FieldRVA",
+      "value": 29,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "ENCLog",
+      "value": 30,
+      "specSection": "ECMA-335-II.22",
+      "reserved": true
+    },
+    {
+      "name": "ENCMap",
+      "value": 31,
+      "specSection": "ECMA-335-II.22",
+      "reserved": true
+    },
+    {
+      "name": "Assembly",
+      "value": 32,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "AssemblyProcessor",
+      "value": 33,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "AssemblyOS",
+      "value": 34,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "AssemblyRef",
+      "value": 35,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "AssemblyRefProcessor",
+      "value": 36,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "AssemblyRefOS",
+      "value": 37,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "File",
+      "value": 38,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "ExportedType",
+      "value": 39,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "ManifestResource",
+      "value": 40,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "NestedClass",
+      "value": 41,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "GenericParam",
+      "value": 42,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "MethodSpec",
+      "value": 43,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    },
+    {
+      "name": "GenericParamConstraint",
+      "value": 44,
+      "specSection": "ECMA-335-II.22",
+      "reserved": false
+    }
+  ]
+}
