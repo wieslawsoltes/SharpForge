@@ -53,7 +53,13 @@ Prepared tests are `tests/a05-native-width.test.js` and
 independent of the C# compiler and source-image loader. They cover both widths,
 endpoints, overflow, aliases, storage, host boundaries and snapshots. Updated
 conversion/seam tests retain the old default numeric values through `number`.
-No tests, builds, benchmarks or native runs were executed for this batch.
+Serial validation at `2dc0e6c1` passed all 226 tests across the ten focused
+suites listed below (including delegate targets), using Node 24.21.0, one
+worker and a 512 MB heap cap. The initial run passed 223/226; three legacy
+assertions were updated to check the native width tag and exact payload instead
+of a plain Number. Fixed-width and overflow assertions were retained. Required
+core handles static/manifests and build checks. Benchmarks and new native
+reference runs remain staged.
 
 Source C# `nint/nuint` binding/emission and source-image reload support remain
 open, as do Rust/Wasm and native 32/64 reference qualification. Generic/reference
