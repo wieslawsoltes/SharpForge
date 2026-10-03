@@ -162,6 +162,12 @@ export const FlowStatementBinding = Base =>
         this.popScope();
         this.exitLoop();
       }
+      if (governing.type)
+        this.reportSwitchArms(
+          governing.type,
+          sections.flatMap(s => s.labels.map((label, i) => ({ pattern: label, when: label.when ?? null, node: s.syntax.labels[i].value ?? s.syntax.labels[i].pattern ?? s.syntax.labels[i], isDefault: label.kind === 'default' }))),
+          { isExpression: false, node: syntax },
+        );
       const exhaustive =
         hasDefault || sections.some(s => s.labels.some(l => l.kind === 'DiscardPattern' || (l.kind === 'VarPattern' && !l.when)));
       return stmt('Switch', syntax, sw.hasBreak || !exhaustive || anyCompletes, { governing, sections });

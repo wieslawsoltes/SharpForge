@@ -515,6 +515,7 @@ export const roslynCodes=Object.freeze({
  CS8802:["ERR_SimpleProgramMultipleUnitsWithTopLevelStatements","error",0,"Only one compilation unit can have top-level statements."],
  CS8805:["ERR_SimpleProgramNotAnExecutable","error",0,"Program using top-level statements must be an executable."],
  CS8820:["ERR_StaticAnonymousFunctionCannotCaptureVariable","error",0,"A static anonymous function cannot contain a reference to '{0}'."],
+ CS8846:["WRN_SwitchExpressionNotExhaustiveWithWhen","warning",1,"The switch expression does not handle all possible values of its input type (it is not exhaustive). For example, the pattern '{0}' is not covered. However, a pattern with a 'when' clause might successfully match this value."],
  CS8852:["ERR_AssignmentInitOnly","error",0,"Init-only property or indexer '{0}' can only be assigned in an object initializer, or on 'this' or 'base' in an instance constructor or an 'init' accessor."],
  CS8858:["ERR_CannotClone","error",0,"The receiver type '{0}' is not a valid record type and is not a struct type."],
  CS8892:["WRN_SyncAndAsyncEntryPoints","warning",5,"Method '{0}' will not be used as an entry point because a synchronous entry point '{1}' was found."],

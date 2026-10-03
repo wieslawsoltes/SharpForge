@@ -9,6 +9,7 @@
 import { ArrayTypeSymbol, ErrorTypeSymbol } from '../../symbols/types.js';
 import { numericKind } from '../../conversions/numeric.js';
 import { deconstructionOf } from '../deconstruction.js';
+import { checkSwitchArms } from '../../flow/pattern-exhaustiveness.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 const isUsable = type => !!type && !type.isErrorType();
@@ -66,6 +67,22 @@ export const StructuralPatternBinding = Base =>
       const bound = { kind: 'ListPattern', syntax, inputType, elementType, patterns, sliceIndex };
       if (syntax.designation) this.designation(syntax.designation, inputType ?? unknown, bound);
       return bound;
+    }
+    /**
+     * Reports arms that can never be chosen and, for a switch expression, values no arm handles (SF-A02-T08.3).
+     * @param {{pattern, when, node, isDefault?}[]} arms  @param {{isExpression, node}} site
+     */
+    reportSwitchArms(type, arms, site) {
+      const constants = new Set();
+      const checked = arms.filter(arm => {
+        // The same constant twice is the older CS0152, reported where the labels are bound.
+        const key = arm.pattern?.kind === 'ConstantPattern' && !arm.when ? arm.pattern.value?.constantValue?.toString() : undefined;
+        if (key === undefined) return true;
+        if (constants.has(key)) return false;
+        constants.add(key);
+        return true;
+      });
+      for (const problem of checkSwitchArms(type, checked, site)) this.report(problem.node, problem.code, problem.args);
     }
     /** A slice outside a list pattern. */
     straySlicePattern(syntax) {

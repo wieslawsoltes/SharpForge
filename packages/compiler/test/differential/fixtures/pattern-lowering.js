@@ -110,5 +110,86 @@ export const fixtures = [
     }
   `,
     ),
+    diag(
+      'switch-expression-not-exhaustive',
+      cs`
+    enum Color { Red, Green, Blue }
+    record Point(int X, int Y);
+    class Program
+    {
+        static int A(int n) => n switch { 1 => 1, 2 => 2 };
+        static int B(bool b) => b switch { true => 1 };
+        static int C(Color c) => c switch { Color.Red => 1, Color.Green => 2 };
+        static int D(Color c) => c switch { Color.Red => 1, Color.Green => 2, Color.Blue => 3 };
+        static int E((bool, bool) t) => t switch { (true, _) => 1, (false, true) => 2 };
+        static int F(int n) => n switch { > 0 => 1, < 0 => 2 };
+        static int G(string s) => s switch { "a" => 1, "b" => 2 };
+        static int H(int? n) => n switch { > 0 => 1, <= 0 => 2 };
+        static int I(Point p) => p switch { (0, _) => 1, (_, 0) => 2 };
+        static int J(int n) => n switch { > 0 when n > 5 => 1, <= 0 => 2 };
+        static int K(Point p) => p switch { { X: 0 } => 1, { X: not 0, Y: > 0 } => 2 };
+        static void Main() { }
+    }
+  `,
+    ),
+    out(
+      'exhaustive-switch-expressions-have-no-warning',
+      cs`
+    using System;
+    enum Color { Red, Green }
+    record Point(int X, int Y);
+    class Program
+    {
+        static int A(bool b) => b switch { true => 1, false => 2 };
+        static int B((bool, bool) t) => t switch { (true, _) => 1, (false, true) => 2, (false, false) => 3 };
+        static int C(int n) => n switch { > 0 => 1, 0 => 2, < 0 => 3 };
+        static int D(Point p) => p switch { (0, _) => 1, (not 0, <= 5) => 2, (_, > 5) => 3 };
+        static int E(string s) => s switch { "a" => 1, not "a" => 2 };
+        static int F(Point p) => p switch { { X: > 0 } => 1, { X: <= 0 } => 2 };
+        static int G(int n) => n switch { >= 0 and < 10 => 1, >= 10 or < 0 => 2 };
+        static int H(object o) => o switch { null => 0, not null => 1 };
+        static int I((int, Color) t) => t switch { (_, Color.Red) => 1, (> 3, _) => 2, var (n, c) => 3 };
+        static void Main()
+        {
+            Console.WriteLine(A(true) + B((false, false)) + C(-5) + D(new Point(1, 9)) + E("z") + F(new Point(0, 0)) + G(12) + H("x") + I((9, Color.Green)));
+        }
+    }
+  `,
+    ),
+    diag(
+      'subsumed-arms-and-cases',
+      cs`
+    record Point(int X, int Y);
+    class Program
+    {
+        static int A(int n) => n switch { > 0 => 1, 5 => 2, _ => 3 };
+        static int B(bool b) => b switch { true => 1, false => 2, _ => 3 };
+        static int C((int, int) t) => t switch { (0, _) => 1, (0, 1) => 2, _ => 3 };
+        static int D(string s) => s switch { null => 0, not null => 1, "a" => 2 };
+        static int E(Point p) => p switch { { X: > 0 } => 1, (5, 5) => 2, { X: 3, Y: 4 } => 3, _ => 4 };
+        static int F(int n) => n switch { > 5 and < 3 => 1, _ => 2 };
+        static int G(int n) => n switch { 1 when n > 0 => 1, 1 => 2, _ => 3 };
+        static void S(int n, object o)
+        {
+            switch (n)
+            {
+                case > 0: break;
+                case 7: break;
+                case 0: break;
+                case <= 0: break;
+                case 0 when n == 0:
+                default: break;
+            }
+            switch (o)
+            {
+                case null: break;
+                case var x: break;
+                case string s: break;
+            }
+        }
+        static void Main() { }
+    }
+  `,
+    ),
   ]),
 ];
