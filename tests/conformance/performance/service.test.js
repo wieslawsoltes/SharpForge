@@ -9,6 +9,7 @@ import {normalize,producers} from '../../../scripts/conformance/perf/normalize.j
 import {compare,signProbability,summary} from '../../../scripts/conformance/perf/compare.js';
 import {execute} from '../../../scripts/conformance/perf/process.js';
 import {beginAllocation,finishAllocation,allocationSummary} from '../../../scripts/conformance/perf/alloc.js';
+import {ab} from '../../../scripts/conformance/perf/ab.js';
 import {checkSizes,size} from '../../../scripts/conformance/perf/size-budget.js';
 import {updateBaseline,readBaseline} from '../../../scripts/conformance/perf/update-baseline.js';
 import {normalizeBrowser} from '../../../scripts/conformance/perf/normalize-browser.js';
@@ -82,4 +83,25 @@ test('baseline writer requires samples and environment; reader ignores dirty fil
 test('browser normalizer requires independent actual-engine evidence and retained traces',()=>{
  const raw={schemaVersion:1,commit:env.commit,engine:'chromium',browser:'fixture-version',correctness:true,traces:Array.from({length:3},(_,i)=>({path:i+'.zip',sha256:sha(String(i))})),samples:Object.fromEntries(['startup','firstCompile','typing','toolActivation'].map(k=>[k,[1,2,3]])),measurement:{}};
  assert.equal(normalizeBrowser(raw,env).benchmarks.length,4);assert.throws(()=>normalizeBrowser({...raw,correctness:false},env));assert.throws(()=>normalizeBrowser({...raw,commit:'b'.repeat(40)},env));assert.throws(()=>normalizeBrowser({...raw,traces:[]},env));
+});
+
+test('A/B executes both real Git revisions independently and disposes its worktrees on success and cancellation',async()=>{
+ const dir=mkdtempSync(join(tmpdir(),'perf-paired-')),root=join(dir,'repo');mkdirSync(root);
+ const g=(...a)=>execFileSync('git',a,{cwd:root,encoding:'utf8',stdio:['ignore','pipe','pipe']}).trim();
+ try{
+  g('init');g('config','user.email','test@example.invalid');g('config','user.name','test');
+  writeFileSync(join(root,'package.json'),JSON.stringify({name:'paired-service-fixture',version:'1.0.0',private:true}));
+  writeFileSync(join(root,'package-lock.json'),JSON.stringify({name:'paired-service-fixture',version:'1.0.0',lockfileVersion:3,packages:{'':{name:'paired-service-fixture',version:'1.0.0'}}}));
+  writeFileSync(join(root,'.gitignore'),'node_modules/\n');writeFileSync(join(root,'value.json'),'42');g('add','.');g('commit','-m','base');const base=g('rev-parse','HEAD');
+  writeFileSync(join(root,'head-marker'),'separate actual revision');g('add','.');g('commit','-m','head');const head=g('rev-parse','HEAD');
+  const registry=join(dir,'registry.json');writeFileSync(registry,JSON.stringify([{id:'A29/process-fixture',area:'A29',engine:'node-service-integration-fixture',module:'fixture.mjs'}]));
+  writeFileSync(join(dir,'fixture.mjs'),"import {readFileSync} from 'node:fs';import {join} from 'node:path';import assert from 'node:assert/strict';export async function create({root}){const value=JSON.parse(readFileSync(join(root,'value.json'),'utf8'));assert.equal(value,42);return async()=>{const start=performance.now();await new Promise(r=>setTimeout(r,3));return {ms:performance.now()-start,checksum:String(value)};};}");
+  const result=await ab({root,base,head,registry,ids:['A29/process-fixture'],pairs:3,warmups:0,threshold:1,output:join(dir,'result')});
+  assert.equal(result.baseCommit,base);assert.equal(result.headCommit,head);assert.equal(result.passed,true);
+  assert.equal(g('worktree','list','--porcelain').split('worktree ').length-1,1);
+  assert.equal(g('status','--porcelain'),'');
+  const controller=new AbortController(),pending=ab({root,base,head,registry,ids:['A29/process-fixture'],pairs:20,warmups:0,output:join(dir,'cancel'),signal:controller.signal});
+  setTimeout(()=>controller.abort(),150);await assert.rejects(pending);
+  assert.equal(g('worktree','list','--porcelain').split('worktree ').length-1,1);
+ }finally{rmSync(dir,{recursive:true,force:true});}
 });

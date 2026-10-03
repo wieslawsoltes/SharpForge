@@ -9,7 +9,8 @@
     "commit",
     "environment",
     "benchmarks",
-    "unsupported"
+    "unsupported",
+    "harnessCommit"
   ],
   "properties": {
     "schemaVersion": {
@@ -204,6 +205,10 @@
           }
         }
       }
+    },
+    "harnessCommit": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40,64}$"
     }
   }
 }

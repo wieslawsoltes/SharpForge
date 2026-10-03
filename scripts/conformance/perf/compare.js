@@ -3,7 +3,7 @@ import {distribution,validateReport} from './core.js';
 export function signProbability(positive,total){let p=2**(-total),sum=0;for(let k=0;k<=total;k++){if(k>=positive)sum+=p;p=p*(total-k)/(k+1);}return Math.min(1,sum);}
 export function compare(base,head,{threshold=.05,alpha=.01,minSamples=20,quarantine=[]}={}){
  validateReport(base);validateReport(head);
- if(base.runnerId!==head.runnerId||JSON.stringify({...base.environment,commit:null})!==JSON.stringify({...head.environment,commit:null}))throw new Error('A/B requires the same runner and environment');
+ if(base.harnessCommit!==head.harnessCommit||base.runnerId!==head.runnerId||JSON.stringify({...base.environment,commit:null})!==JSON.stringify({...head.environment,commit:null}))throw new Error('A/B requires the same runner and environment');
  if(!Number.isFinite(threshold)||threshold<0||threshold>1||!(alpha>0&&alpha<1)||!Number.isInteger(minSamples)||minSamples<3)throw new Error('Invalid comparison policy');
  const ids=new Set(),rows=[];
  for(const q of quarantine){if(!q.id||!q.reason||!q.expires||Date.parse(q.expires)<=Date.now()||ids.has(q.id))throw new Error('Invalid/expired quarantine');ids.add(q.id);}

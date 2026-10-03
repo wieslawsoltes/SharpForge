@@ -2,7 +2,7 @@ import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {allocationSummary} from './alloc.js';
 import {adapters,workload} from './workloads.js';
-import {args,integer,isMain,repository,environment,report,benchmark,writeJson,json,commit} from './core.js';
+import {args,integer,isMain,repository,environment,report,benchmark,writeJson,json,commit,clean} from './core.js';
 export async function measure({root=repository,id,iterations=20,warmups=3,registry=null}={}){
  integer(iterations,20,1,10000);integer(warmups,3,0,1000);
  const extra=registry?json(registry):[];
@@ -10,7 +10,7 @@ export async function measure({root=repository,id,iterations=20,warmups=3,regist
  const all=[...adapters,...extra],ids=new Set();
  for(const row of all){if(ids.has(row.id))throw new Error('Duplicate adapter '+row.id);ids.add(row.id);}
  const selected=id?all.filter(a=>a.id===id):all;if(!selected.length)throw new Error('Unknown adapter '+id);
- const env=environment(root),rows=[];
+ const head=clean(root),env=environment(root),rows=[];
  for(const adapter of selected){
   const create=adapter.module?(await import(pathToFileURL(resolve(registry,'..',adapter.module)))).create:workload;
   const run=adapter.module?await create({root,adapter}):await create(root,adapter),cold=await run(),values=[],metrics=[];
@@ -19,7 +19,7 @@ export async function measure({root=repository,id,iterations=20,warmups=3,regist
   for(let i=0;i<iterations;i++){const r=await run();if(r.checksum!==cold.checksum)throw new Error('Sample correctness mismatch');values.push(r.ms);metrics.push(r.metrics??null);}
   rows.push(benchmark({...adapter,samples:values,coldSamples:[cold.ms],checksum:cold.checksum,metrics:{samples:metrics,allocationSummary:allocationSummary(metrics)}}));
  }
- if(commit(root)!==env.commit)throw new Error('Commit changed during measurement');
+ if(clean(root)!==head)throw new Error('Commit changed during measurement');
  return report(rows,env,{unsupported:[{target:'native-rust/clr/wasm-runtime',reason:'These adapters execute JS VMs and compute SIMD only; no native runtime performance claim'}]});
 }
 if(isMain(import.meta.url)){const a=args();const result=await measure({root:resolve(a.root??repository),id:a.adapter,iterations:integer(a.samples,20,1,10000),warmups:integer(a.warmups,3,0,1000),registry:a.registry});if(a.output)writeJson(a.output,result);else console.log(JSON.stringify(result));}
