@@ -51,3 +51,38 @@ The benchmark records first-VM load/run time, 10 warmups, 100 warm samples, medi
 ## Pinned references
 
 The numeric contract follows [ECMA-335, sixth edition, Partitions I and III](https://www.ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf), [C# numeric conversions](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/numeric-conversions), and [C# types, sections 8.3.6–8.3.8](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/types). Decimal representation follows [Decimal.GetBits](https://learn.microsoft.com/en-us/dotnet/api/system.decimal.getbits?view=net-10.0); floating conversion and observable scale behavior are pinned to [.NET 10 Decimal.DecCalc](https://github.com/dotnet/runtime/blob/v10.0.0/src/libraries/System.Private.CoreLib/src/System/Decimal.DecCalc.cs). The implementation uses independent BigInt algorithms and the live CLR comparison is the qualification gate.
+
+## T01 child acceptance oracle
+
+The child tasks #1344–#1353 use named runtime seams (`int64`, `small-int`, `uint32`,
+`native-int`, `float`, `conversions`, `decimal`, `checked`) backed by pure bytecode
+modules. This keeps compiler constant semantics and both interpreters on one
+implementation without a compiler-to-runtime dependency. The unsigned right-shift
+operator appends Binary ID 16; existing IDs retain their meanings.
+
+After all E01 leaves are assembled, generate and commit native evidence, then run
+its consumer:
+
+```sh
+node scripts/numeric/generate-oracle.js
+node --test tests/numeric-differential.test.js tests/a05-*-helpers.test.js
+```
+
+Generation is intentionally deferred during implementation. The consumer fails
+when native oracle files are absent; there is no synthetic fallback. The Int64
+fixture contains all 29 operation results for each of 100,000 deterministic
+operand pairs, including managed exception names. UInt32 covers all 25 pairs of
+zero/one/signed-boundary/all-ones operands. Source, reloaded source and direct CIL
+execute the same C# corpus. A separate authored-IL fixture checks all six small
+integer types through locals, arguments, fields, statics, arrays and byrefs.
+
+The conversion oracle includes all 13 ECMA target encodings, all five source
+categories and valid checked/unsigned-source forms. Native i/u instantiated for
+32/64 bits give 15 concrete target columns. Native evidence qualifies only its
+recorded CLR pointer width; configured VM tests exercise the other width without
+claiming that a native process of that architecture ran. C# 11 is selected for
+`>>>`; formatting fixtures retain C# 9 lowering to standard `String.Format`.
+
+Legacy seam assertions for native defaults and indirect loads now expect frozen
+native-width values instead of bare Numbers. This preserves the configured ABI
+through copies and snapshots; observable numeric results remain identical.
