@@ -61,6 +61,7 @@ export function arrangeDesignSelection(document, rectangles, action) {
 
 /** Stable multi-selection ordering preserves order inside both selected and unselected sets. */
 export function reorderDesignSelection(document, direction, ids = document.selection) {
+  geometryInvariant(['front', 'back', 'forward', 'backward'].includes(direction), 'SFD_ORDER_ACTION', 'Unknown order command.');
   const session = new DesignOrderSession(document, {ids, label: `Order ${direction}`});
   session.update(direction);
   return session.commit();

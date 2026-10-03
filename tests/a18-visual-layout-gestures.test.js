@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createDesign, DesignDocument, DesignMarginSession, DesignOrderSession, convertCanvasToGrid} from '@sharpforge/designer';
+import {createDesign, DesignDocument, DesignMarginSession, DesignOrderSession, convertCanvasToGrid,
+  reorderDesignSelection} from '@sharpforge/designer';
 import {DesignerMarginDrag, marginLayoutBounds} from '../apps/studio/designer-surface-margin.js';
 import {DesignerSurfaceGestures} from '../apps/studio/designer-surface-gestures.js';
 import {DesignerSurfaceController} from '../apps/studio/designer-surface-controller.js';
@@ -95,6 +96,7 @@ test('Grid anchors use their occupied cell and preserve padding, gaps and spanni
 
 test('held ordering keeps stable block order and creates only one optimistic history entry', () => {
   const document = new DesignDocument(createDesign());
+  assert.throws(() => reorderDesignSelection(document, 'unknown'), {code: 'SFD_ORDER_ACTION'});
   document.select(['title', 'caption']);
   const before = document.snapshot();
   const gesture = new DesignOrderSession(document);
