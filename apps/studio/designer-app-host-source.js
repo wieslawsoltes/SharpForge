@@ -25,6 +25,27 @@ export function sameAppSources(left, right) {
   return left.length === right.length && left.every((file, index) => file.uri === right[index].uri && file.text === right[index].text);
 }
 
+/** Pin actual compilation inputs; a workspace projection alone never establishes editable project membership. */
+export function captureAppCompilationUris(uris, sourceProjection) {
+  if (uris === undefined || uris === null || Array.isArray(uris) && !uris.length) return null;
+  if (!Array.isArray(uris) || uris.length > 1000) {
+    throw new DesignerAppHostError('App compilation inputs require a bounded URI list', 'SFDA0012');
+  }
+  const available = new Set(sourceProjection.map(file => file.uri));
+  const included = new Set();
+  for (const uri of uris) {
+    if (typeof uri !== 'string' || !uri || uri.length > 4096 || uri.includes('\0') || included.has(uri) || !available.has(uri)) {
+      throw new DesignerAppHostError('App compilation inputs must identify unique workspace sources', 'SFDA0012');
+    }
+    included.add(uri);
+  }
+  return Object.freeze([...included].sort());
+}
+
+function sameCompilationUris(left, right) {
+  return !!left && !!right && left.length === right.length && left.every((uri, index) => uri === right[index]);
+}
+
 export function appWorkspaceIdentity(value) {
   if (!['string', 'number'].includes(typeof value) || !String(value) || String(value).length > 4096 ||
       typeof value === 'number' && !Number.isSafeInteger(value)) {
@@ -57,9 +78,11 @@ export function appLaunchParameters(result, {profile, debug, sourceProjection, r
 
 /** Source edits need a receipt tied to this app, workspace and complete before/after projection. */
 export class DesignerAppSourceOwnership {
-  constructor({workspaceId, sourceProjection, getWorkspaceId, sourceFiles, compile, options, assertCurrent}) {
+  constructor({workspaceId, sourceProjection, compilationUris, getWorkspaceId, sourceFiles, compile, options, assertCurrent}) {
     Object.assign(this, {workspaceId, getWorkspaceId, sourceFiles, compileBuild: compile, options, assertCurrent});
     this.projection = sourceProjection;
+    this.compilationUris = captureAppCompilationUris(compilationUris, sourceProjection);
+    this.compilationUriSet = new Set(this.compilationUris);
     this.authorized = null;
     this.compiled = null;
     this.busy = false;
@@ -83,10 +106,28 @@ export class DesignerAppSourceOwnership {
     if (!sameAppSources(expected, this.current())) {
       throw new DesignerAppHostError('Workspace sources no longer match this app. Restart it before editing its source.', 'SFDA0012');
     }
-    if (!Array.isArray(uris) || uris.some(uri => !expected.some(file => file.uri === uri))) {
+    this.assertCompilationInputs(expected);
+    if (!Array.isArray(uris) || uris.some(uri => !this.compilationUriSet.has(uri))) {
       throw new DesignerAppHostError('The source edit targets a document outside this app', 'SFDA0012');
     }
     return expected;
+  }
+
+  assertCompilationInputs(projection) {
+    if (!this.compilationUris) {
+      throw new DesignerAppHostError('Restart this app with explicit compilation inputs before editing its source', 'SFDA0012');
+    }
+    captureAppCompilationUris(this.compilationUris, projection);
+  }
+
+  assertChangedUris(previous, next) {
+    const before = new Map(previous.map(file => [file.uri, file.text]));
+    const after = new Map(next.map(file => [file.uri, file.text]));
+    for (const uri of new Set([...before.keys(), ...after.keys()])) {
+      if (before.get(uri) !== after.get(uri) && !this.compilationUriSet.has(uri)) {
+        throw new DesignerAppHostError('The source receipt changes a file outside this app compilation', 'SFDA0012');
+      }
+    }
   }
 
   authorizeSourceChanges({before, after}) {
@@ -96,6 +137,8 @@ export class DesignerAppSourceOwnership {
     if (this.uncertain || !sameAppSources(previous, this.authorized ?? this.projection) || !sameAppSources(next, this.current())) {
       throw new DesignerAppHostError('Source changes do not belong to this app projection', 'SFDA0012');
     }
+    this.assertCompilationInputs(next);
+    this.assertChangedUris(previous, next);
     this.authorized = next;
     this.compiled = null;
     return next;
@@ -120,7 +163,13 @@ export class DesignerAppSourceOwnership {
       if (!sameAppSources(projection, this.current())) {
         throw new DesignerAppHostError('Sources changed during app compilation; the result was discarded', 'SFDA0012');
       }
-      if (result?.success) this.compiled = {result, projection};
+      if (result?.success) {
+        const compilationUris = captureAppCompilationUris(result.compilationUris, projection);
+        if (!sameCompilationUris(this.compilationUris, compilationUris)) {
+          throw new DesignerAppHostError('App compilation inputs changed; restart this app before updating its code', 'SFDA0012');
+        }
+        this.compiled = {result, projection, compilationUris};
+      }
       return result;
     } finally {
       this.busy = false;
@@ -135,7 +184,7 @@ export class DesignerAppSourceOwnership {
     const compiled = this.compiled;
     const field = this.options.profile === 'managed-il' ? 'assembly' : 'image';
     if (!compiled?.result?.[field] || parameters[field] !== compiled.result[field] ||
-        !sameAppSources(compiled.projection, this.current())) {
+        !sameAppSources(compiled.projection, this.current()) || !sameCompilationUris(this.compilationUris, compiled.compilationUris)) {
       throw new DesignerAppHostError('Compile this app source projection before applying code', 'SFDA0012');
     }
     return compiled;

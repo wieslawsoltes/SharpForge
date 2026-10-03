@@ -4,10 +4,12 @@ import {DesignerAppHostError} from '../apps/studio/designer-app-host-errors.js';
 import {DesignerAppSourceOwnership, captureAppSources, sameAppSources, appWorkspaceIdentity,
   appProfile, appLaunchParameters} from '../apps/studio/designer-app-host-source.js';
 
-function ownership(compile = async () => ({success: true, image: {entryPoint: 1}, assembly: new Uint8Array([1])})) {
+function ownership(compile = async () => ({
+  success: true, image: {entryPoint: 1}, assembly: new Uint8Array([1]), compilationUris: ['A.cs']
+})) {
   const environment = {workspace: 'Workspace:1', files: [{uri: 'A.cs', text: 'class A {}', version: 1}], active: true};
   const context = new DesignerAppSourceOwnership({
-    workspaceId: environment.workspace, sourceProjection: captureAppSources(environment.files),
+    workspaceId: environment.workspace, sourceProjection: captureAppSources(environment.files), compilationUris: ['A.cs'],
     getWorkspaceId: () => environment.workspace, sourceFiles: () => environment.files, compile,
     options: {profile: 'cil', debug: false, workspaceId: environment.workspace, projectName: 'Demo'},
     assertCurrent: () => { if (!environment.active) throw new DesignerAppHostError('Stale app', 'SFDA0002'); }
@@ -69,11 +71,10 @@ test('ownership rejects unrelated sources and different workspaces before any co
 
 test('verified before/after receipts compile exactly that app projection and accept only its returned artifact', async () => {
   const calls = [];
-  const result = {success: true, image: {entryPoint: 1}, assembly: new Uint8Array([1])};
+  const result = {success: true, image: {entryPoint: 1}, assembly: new Uint8Array([1]), compilationUris: ['A.cs']};
   const {context, environment} = ownership(async options => { calls.push(options); return result; });
   const before = captureAppSources(environment.files);
   environment.files[0].text = 'class A { int x; }';
-  environment.files.push({uri: 'A.Events.cs', text: 'partial class A {}', version: 1});
   const authorized = context.authorizeSourceChanges({before, after: environment.files});
   assert.equal(context.projection[0].text, 'class A {}', 'runtime projection changes only after code is actually applied');
   assert.equal(await context.compile(), result);
