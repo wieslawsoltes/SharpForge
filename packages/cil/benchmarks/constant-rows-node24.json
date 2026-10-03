@@ -1,0 +1,37 @@
+{
+  "before": {
+    "revision": "9e4fd1fd7febeb4c0118a09adc415bf016e811b9",
+    "node": "v24.21.0",
+    "cpu": "Apple M3 Pro",
+    "platform": "darwin",
+    "arch": "arm64",
+    "samples": 31,
+    "note": "Shared host; sequential local validation. Typed-row cost includes 1000 Field rows and one builder; allocations unmeasured.",
+    "construction": {
+      "medianUs": 3.694500000000005,
+      "p95Us": 4.192166999999998,
+      "p99Us": 4.495042000000012
+    },
+    "typedRows": null
+  },
+  "after": {
+    "revision": "working-tree",
+    "node": "v24.21.0",
+    "cpu": "Apple M3 Pro",
+    "platform": "darwin",
+    "arch": "arm64",
+    "samples": 31,
+    "note": "Shared host; sequential local validation. Typed-row cost includes 1000 Field rows and one builder; allocations unmeasured.",
+    "construction": {
+      "medianUs": 3.3706660000000004,
+      "p95Us": 3.9012500000000045,
+      "p99Us": 4.209791999999993
+    },
+    "typedRows": {
+      "medianUs": 1255.625000000009,
+      "p95Us": 2322.2920000000045,
+      "p99Us": 7287.458000000015
+    },
+    "implementationSha256": "a4102e6231283c71f15f22095954df0344150f84f01988a66985742630d852d4"
+  }
+}
