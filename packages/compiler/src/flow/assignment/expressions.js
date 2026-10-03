@@ -95,6 +95,9 @@ export const AssignmentExpressions = Base =>
         case 'ObjectCreation':
         case 'ObjectInitializer':
         case 'IndexerAccess':
+        case 'DynamicInvocation':
+        case 'DynamicElementAccess':
+        case 'DynamicObjectCreation':
         case 'Bad': {
           let s = this.expr(e.receiver, state);
           const outs = [];

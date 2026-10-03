@@ -105,7 +105,7 @@ export const ConversionBinding = Base =>
           at = e.nameNode && node === e.syntax ? e.nameNode : node;
         if (r && delegateInvoke(type)) {
           // A wrong return type is reported on the whole method group expression, the other mismatches on the method name.
-          this.report(r.code === DiagnosticId.CS0407 ? node : at, r.code, r.args);
+          this.report(r.code === DiagnosticId.CS0407 || r.code === DiagnosticId.CS1113 ? node : at, r.code, r.args);
           return;
         }
         this.report(at, DiagnosticId.CS0428, [e.name, to]);
@@ -120,6 +120,10 @@ export const ConversionBinding = Base =>
         return;
       }
       if (this.reportTargetTypedFailure(e, type)) return;
+      if (e.form === 'collection' && e.elements) {
+        this.reportCollectionFailure(e, type);
+        return;
+      }
       if (e.form === 'implicitNew') {
         this.report(node, DiagnosticId.CS8752, [to]);
         return;

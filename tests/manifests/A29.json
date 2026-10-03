@@ -10,7 +10,8 @@
     "tests/examples13.test.js",
     "tests/examples14.test.js",
     "tests/project-runtime14.test.js",
-    "tests/conformance/**/*.test.js"
+    "tests/conformance/**/*.test.js",
+    "tests/a29-*.test.js"
   ],
   "browserScripts": [
     "tests/browser_release05_test.py",
@@ -21,7 +22,8 @@
     "tests/conformance/browser/mobile_test.py",
     "tests/conformance/browser/standalone_file_test.py",
     "tests/conformance/browser/test_matrix.py",
-    "tests/conformance/browser/perf_test.py"
+    "tests/conformance/browser/perf_test.py",
+    "tests/conformance/browser/xss_test.py"
   ],
   "requiredServices": [
     "studio-http",
