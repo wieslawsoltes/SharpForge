@@ -89,6 +89,8 @@ export function parseSignatureType(value, resolveToken, options = {}) {
     budget(depth);
     if (typeof text !== 'string' || !text.trim() || text.length > 65536) throw new CilError('Invalid signature type name');
     text = text.trim();
+    const declared = options.namedTypes?.get(text);
+    if (declared) return declared;
     if (text.endsWith(' pinned')) return { kind: 'pinned', element: parse(text.slice(0, -7), depth + 1) };
     if (text.endsWith(')')) {
       const start = opening(text, ')', '(');

@@ -47,5 +47,6 @@ export function readSignature(bytes, metadata) {
 }
 
 export function readTypeSignature(bytes, metadata, depth = 0) {
-  return formatSignatureType(decodeTypeSignature(bytes, { initialDepth: depth }), metadata, { initialDepth: depth });
+  const options = { initialDepth: depth, context: 'return' };
+  return formatSignatureType(decodeTypeSignature(bytes, options), metadata, options);
 }

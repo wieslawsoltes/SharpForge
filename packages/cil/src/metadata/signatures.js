@@ -110,7 +110,7 @@ export function decodeSignature(bytes, options = {}) {
 /** Decode a TypeSpec AST, preserving class/value semantics, modifiers and array bounds. */
 export function decodeTypeSignature(bytes, options = {}) {
   const state = decoder(bytes, options);
-  const result = state.type(options.initialDepth ?? 0);
+  const result = state.type(options.initialDepth ?? 0, options.context ?? 'type');
   if (state.reader.position !== state.reader.end) throw new CilError('Trailing type signature bytes');
   return result;
 }
