@@ -26,6 +26,12 @@ const widthOf = list => {
   return width;
 };
 export const topLevelMethods = {
+  /** True when a use of feature `id` has been recorded; a plain scan, so the common "none" answer allocates nothing. */
+  hasFeatureUse(id) {
+    const features = this.features;
+    for (let i = 0; i < features.length; i++) if (features[i].id === id) return true;
+    return false;
+  },
   /** A statement at compilation-unit level; `attributeLists` were consumed by the caller. */
   globalStatement(attributeLists) {
     this.statementStart = this.memberStart;
@@ -43,7 +49,7 @@ export const topLevelMethods = {
       reported = false;
     const backEnd = !!this.options.backEndProfile;
     // A reused statement carries the use it had in the previous tree, where it may have been the first statement.
-    if (this.blend) this.features = this.features.filter(use => use.id !== 'TopLevelStatements');
+    if (this.blend && this.hasFeatureUse('TopLevelStatements')) this.features = this.features.filter(use => use.id !== 'TopLevelStatements');
     for (const member of members) {
       const start = offset + member.leadingWidth,
         end = offset + member.fullWidth - member.trailingWidth;

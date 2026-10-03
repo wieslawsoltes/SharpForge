@@ -46,9 +46,8 @@ export const fieldKeywordMethods = {
   },
   /** Warns (CS9258) about each `field` keyword whose containing type declares a member named `field`. */
   fieldKeywordAmbiguity(unit) {
-    if (this.options.backEndProfile) return;
+    if (this.options.backEndProfile || !this.hasFeatureUse('FieldKeyword')) return;
     const uses = this.features.filter(use => use.id === 'FieldKeyword');
-    if (!uses.length) return;
     uses.sort((a, b) => a.start - b.start);
     this.warnInTypes(unit, 0, uses);
   },
