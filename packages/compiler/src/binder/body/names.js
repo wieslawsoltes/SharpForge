@@ -11,7 +11,7 @@ import { extensionScopes, isValidReceiverConversion } from '../../overload/exten
 import { lookupMembers } from '../inheritance.js';
 import { tupleElement, tupleElementProblem } from '../tuples.js';
 import { checkConstructedType } from '../constraints.js';
-import { staticMembersOfTypeParameter } from '../interface-members.js';
+import { staticMembersOfTypeParameter, staticVirtualAccess } from '../interface-members.js';
 import { accessorNamed, isOperatorMethod } from '../special-methods.js';
 import { staticImportsNamed } from '../csharp6.js';
 
@@ -125,7 +125,10 @@ export const NameBinding = Base =>
         return this.node('TypeExpression', syntax, null, { referencedType: t });
       }
       const viaType = receiver?.kind === 'TypeExpression',
-        implicit = !receiver;
+        implicit = !receiver,
+        // C# 11: a static abstract or virtual interface member is reached through a type parameter only.
+        virtualAccess = viaType && !options.nameofOperand ? staticVirtualAccess(first, receiver.referencedType) : null;
+      if (virtualAccess?.code) this.report(syntax, virtualAccess.code);
       const instanceReceiver = () => {
         if (!implicit) return receiver;
         if (this.c.isStatic || (this.c.isFieldInitializer && !this.c.isStaticInitializer) || outer) {
@@ -224,6 +227,7 @@ export const NameBinding = Base =>
         }
         case SymbolKind.Property: {
           const n = this.node('PropertyAccess', syntax, first.type, { property: first, receiver: r });
+          if (virtualAccess?.constrainedTo) n.constrainedTo = virtualAccess.constrainedTo;
           if (first.type?.isErrorType?.()) n.hasErrors = true;
           return n;
         }
@@ -346,6 +350,8 @@ export const NameBinding = Base =>
         // A named tuple element is the field at its position; a name the literal inferred needs C# 7.1 (CS8306).
         if (element.isInferred && this.version.number < 7.1) this.report(nameSyntax, DiagnosticId.CS8306, [name, '7.1']);
         name = element.field;
+        // An element a long tuple holds in `Rest` is a field of the tuple type itself.
+        if (element.symbol) return this.memberResult([element.symbol], syntax, left, type, name, typeArguments, options) ?? this.bad(syntax);
       }
       const lookupType = type instanceof ArrayTypeSymbol ? this.core.array : type;
       const found = lookupMembers(lookupType, name, this.core, {

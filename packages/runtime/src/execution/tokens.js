@@ -1,3 +1,4 @@
+import {isDecimal} from './decimal.js';
 import {decodeCoded,token} from '@sharpforge/cil';
 import {ManagedFault,isReference} from '../heap.js';
 import {cachedMetadataToken} from './token-cache.js';
@@ -50,6 +51,7 @@ export function objectType(vm,value,typeHint=null) {
   if(value?.byref)value=vm.dereference(value);
   let type;
   if(isReference(value)){const record=vm.heap.get(value);type=record.methodTable??record.type;}
+  else if(isDecimal(value))type='System.Decimal';
   else if(value?.enumType)type=value.enumType;
   else if(value?.float)type=value.float==='r4'?'float':'double';
   else if(typeHint)type=typeHint;

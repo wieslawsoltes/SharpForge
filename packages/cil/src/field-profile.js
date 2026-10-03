@@ -1,3 +1,4 @@
+import {isDecimalConstantField} from '@sharpforge/bytecode';
 import {CilError} from './binary.js';
 import {genericTypeParts, substituteTypeArguments, normalizeCallType} from './generic-signatures.js';
 export {genericTypeParts, substituteTypeArguments} from './generic-signatures.js';
@@ -6,6 +7,8 @@ export {genericTypeParts, substituteTypeArguments} from './generic-signatures.js
 export function resolveExecutionField(inspector, token, contextArguments = [], methodArguments = []) {
   const member = inspector.resolveToken(token);
   if (member.kind !== 'field') throw new CilError('Expected a field token');
+  if (member.token >>> 24 === 10 && !member.resolvedToken && isDecimalConstantField(member)) return {...member, isStatic: true, isInitOnly: true,
+    decimalConstant: member.name, resolvedToken: member.token, ownerInstance: null, genericArguments: [], volatile: false};
   const ownerInstance = substituteTypeArguments(member.owner, contextArguments, methodArguments);
   const owner = genericTypeParts(ownerInstance);
   let definition = member.token >>> 24 === 4 ? inspector.fields.get(member.token) : member.resolvedToken ? inspector.fields.get(member.resolvedToken) : null;

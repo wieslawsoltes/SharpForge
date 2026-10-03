@@ -1,11 +1,14 @@
 import {resolveCallType} from './generic-calls.js';
+import {ManagedFault} from '../heap.js';
 import {defaults,storage as numericStorage} from './numeric-ops.js';
 import {enumInfo,enumUnderlying} from './enums.js';
 
 /** Physical static keys can include a closed generic owner and a thread identity. */
 export function staticStorageType(vm, key) {
   const [token, owner] = typeof key === 'string' ? JSON.parse(key) : [key, null];
-  return vm.typeSystem.fieldCache.resolve(token, null, owner).field.signature.type;
+  const field = vm.typeSystem.fieldCache.resolve(token, null, owner).field;
+  if (field.decimalConstant) throw new ManagedFault('InvalidProgramException', 'Decimal constants are readonly');
+  return field.signature.type;
 }
 
 /** CLI enum storage has the width of value__, while its header keeps enum identity. */

@@ -196,9 +196,9 @@ export function applyTupleElementNames(type,names){
     if(s instanceof FunctionPointerTypeSymbol)return t.withType(functionPointerWith(s,a=>visit(a)));
     if(s instanceof NamedTypeSymbol&&!(s instanceof ErrorTypeSymbol)){
       let own=null;const tuple=s.isTupleType&&!s.isDefinition;
-      if(tuple&&!isRest){const count=tupleCardinality(s);if(position+count>names.length)throw Mismatch;own=names.slice(position,position+count);position+=count;}
+      if(tuple){const count=tupleCardinality(s);if(position+count>names.length)throw Mismatch;own=names.slice(position,position+count);position+=count;}
       const args=flatArguments(s),rebuilt=rebuild(s,args.map((a,i)=>visit(a,tuple&&s.originalDefinition.arity===8&&i===args.length-1)));
-      return own&&own.some(n=>n!=null)?t.withType(rebuilt.withTupleElementNames(own)):t.withType(rebuilt);
+      return own&&!isRest&&own.some(n=>n!=null)?t.withType(rebuilt.withTupleElementNames(own)):t.withType(rebuilt);
     }
     return t;
   };

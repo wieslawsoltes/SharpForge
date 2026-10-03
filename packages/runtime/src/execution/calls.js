@@ -1,13 +1,14 @@
 import {instantiatedMethod} from './generics.js';
 import {callDescriptor, selectedCallOwner} from './generic-calls.js';
+import {invokeDecimal} from './decimal-intrinsics.js';
 import {stringFromChars} from './strings.js';
-import {methodOffsets} from './method-offsets.js';
+import {cilCallFrame} from './call-frames.js';
+import {framePool} from './frame-pool.js';
 import {systemType,intrinsicDefinition,supportedDelegateCall} from '@sharpforge/cil';
 import {invokeBoundDelegate} from './delegate-targets.js';
 import {ManagedFault} from '../heap.js';
 import {SUSPENDED} from '../platform.js';
 import {storageDefault} from './storage.js';
-import {createExceptionState} from './eh.js';
 import {ensureTypeInitialized} from './static-init.js';
 import {enterCilMethod} from './cil-method-events.js';
 import {verifiedMethod} from './token-cache.js';
@@ -17,11 +18,7 @@ export function call(vm,token,args,extra={}) {
   if(vm.frames.length>=vm.options.maxFrames)throw new ManagedFault('StackOverflowException','Managed call depth exceeded');
   const method=instantiatedMethod(vm,token,extra.genericIdentity??null,extra.methodArguments??[]);
   if(!method.signature.isStatic&&args[0]===null)throw new ManagedFault('NullReferenceException','Instance method receiver is null');
-  const argumentOffset = method.signature.isStatic ? 0 : 1;
-  for (let index = 0; index < method.signature.parameters.length; index++) {
-    args[index + argumentOffset] = vm.storage(args[index + argumentOffset], method.signature.parameters[index]);
-  }
-  vm.frames.push({id:++vm.frameId,method,args,locals:method.locals.map(type=>method.initLocals?storageDefault(vm,type):undefined),stack:[],pc:0,lastOffset:0,offsets:methodOffsets(method),...createExceptionState(),needsInitialization:method.name!=='.cctor',...extra});
+  vm.frames.push(cilCallFrame(vm,method,args,extra));
   enterCilMethod(vm, vm.top);
 }
 export function ensureInitialized(vm,typeToken,trigger='field',genericIdentity=null) {
@@ -45,14 +42,20 @@ export function invoke(vm,instruction) {
   const genericIdentity=instance===null?null:vm.typeSystem.table(instance).name;
   const trigger=instruction.name==='newobj'||descriptor.name==='.ctor'?'constructor':descriptor.signature.isStatic?'static-method':'instance-method';
   if(target&&vm.ensureInitialized(descriptor.ownerToken,trigger,genericIdentity)){caller.pc--;return;}
-  const args=caller.stack.splice(caller.stack.length-count,count);
+  const delegate = supportedDelegateCall(vm.inspector, descriptor);
+  const intrinsic = intrinsicDefinition(descriptor), contract = intrinsic?.contract;
+  const pool = target && !delegate && !contract ? framePool(vm) : null;
+  const args = pool ? pool.arguments(caller.stack, count) : caller.stack.splice(caller.stack.length - count, count);
+  try {
   vm.heap.withRoots(args,()=>{
-    if(supportedDelegateCall(vm.inspector,descriptor)) {
+    if(delegate) {
       const value=invokeBoundDelegate(vm,descriptor,args,instruction.name==='newobj');
       if((instruction.name==='newobj'||descriptor.signature.returnType!=='void')&&value!==SUSPENDED)caller.stack.push(value);
       return;
     }
-    const contract=intrinsicDefinition(descriptor)?.contract;
+    if(instruction.name==='newobj'&&intrinsic?.implementation==='decimal') {
+      caller.stack.push(invokeDecimal(vm,descriptor,args).value);return;
+    }
     if(instruction.name==='newobj'&&descriptor.owner==='System.String'&&descriptor.signature.parameters.join(',')==='char[]'){caller.stack.push(stringFromChars(vm,args[0]));return;}
     if(instruction.name==='newobj'&&contract){caller.stack.push(vm.platform.invoke(contract,args));return;}
     if(instruction.name==='newobj') {
@@ -76,4 +79,7 @@ export function invoke(vm,instruction) {
       if(descriptor.signature.returnType!=='void'&&value!==SUSPENDED)caller.stack.push(value);
     }
   });
+  } finally {
+    if (pool) pool.releaseArguments(args);
+  }
 }

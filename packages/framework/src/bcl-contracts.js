@@ -7,7 +7,7 @@ const collections = createBclRegistry([closedCollectionsModule]);
 export function registerBcl(registry) {
   const {define, member, prop} = registry;
   registerBclModules(registry, {group: 'bcl-prefix'});
-  collections.register(registry);
+  collections.register(registry, {group: 'bcl-collections'});
   registerBclModules(registry, {group: 'bcl-suffix'});
   define('System.Math', {kind: 'bcl', family: 'math'});
   for (const method of ['Sin', 'Cos', 'Tan', 'Asin', 'Acos', 'Atan', 'Log', 'Log10', 'Exp', 'Truncate']) {
@@ -17,4 +17,9 @@ export function registerBcl(registry) {
   for (const type of ['int', 'double']) member('System.Math', 'Clamp', [type, type, type], type, {isStatic: true});
   prop('System.Math', 'PI', 'double', Math.PI, true, true);
   prop('System.Math', 'E', 'double', Math.E, true, true);
+}
+
+/** New collection contracts occupy A08 without changing released collection IDs. */
+export function registerBclCollectionExtensions(registry) {
+  collections.register(registry, {group: 'extensions'});
 }

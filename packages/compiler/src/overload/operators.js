@@ -11,12 +11,14 @@
 import {DiagnosticId} from '../diagnostics/codes.js';
 import { withCheckedOperators, checkedOperatorName } from './checked-operators.js';
 import { TypeKind, SymbolKind } from '../symbols/types.js';
+import { tupleElements } from '../symbols/tuple-elements.js';
 import { binaryNumericPromotion, unaryNumericPromotion, shiftPromotion, isIntegralKind, isNumericKind } from '../conversions/numeric.js';
 import { isNullableType, stripNullable } from '../conversions/nullable.js';
 import { baseTypeChain } from '../symbols/substitution.js';
 import { hasExplicitReferenceConversion } from '../conversions/reference.js';
 import { argumentDisplay } from './resolution.js';
 import { resolvePredefinedOperator } from './predefined-operators.js';
+import { interfaceOperators, withoutHiddenInterfaceOperators } from './interface-operators.js';
 import { pointerBinaryOperator, pointerUnaryOperator } from './pointer-operators.js';
 
 export const binaryOperatorNames = Object.freeze({
@@ -99,7 +101,8 @@ export class OperatorResolver {
       for (const m of b.getMembers(name)) if (m.kind === SymbolKind.Method && m.isStatic) out.push(m);
       if (out.length) break;
     }
-    return out;
+    // C# 11: a type parameter also has the static abstract operators of its constraint interfaces.
+    return out.length ? out : interfaceOperators(t, name, this.core);
   }
   userDefined(name, operands, parameterCount, isChecked = false) {
     const candidates = [];
@@ -111,7 +114,9 @@ export class OperatorResolver {
       for (const m of declared) if (m.parameters.length === parameterCount && !candidates.includes(m)) candidates.push(m);
     }
     if (!candidates.length) return null;
-    const direct = this.overloads.resolve(candidates, operands, { keepBaseCandidates: true });
+    const applies = m => this.overloads.resolve([m], operands, { keepBaseCandidates: true }).succeeded,
+      visible = withoutHiddenInterfaceOperators(candidates, applies, this.core);
+    const direct = this.overloads.resolve(visible, operands, { keepBaseCandidates: true });
     if (direct.succeeded)
       return {
         kind: 'user',
@@ -306,7 +311,7 @@ export class OperatorResolver {
       )
         return builtin('object', core.object, core.object, core.bool);
       // Tuples compare element-wise (C# 7.3).
-      if (lt.isTupleType && rt.isTupleType && lt.typeArguments?.length === rt.typeArguments?.length)
+      if (lt.isTupleType && rt.isTupleType && tupleElements(lt).length === tupleElements(rt).length)
         return builtin('tuple', lt, rt, core.bool);
     }
     return null;

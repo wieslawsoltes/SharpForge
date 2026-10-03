@@ -1,33 +1,6 @@
 import { Reader, Writer, CilError } from './binary.js';
-/** ECMA-335 opcode numbers. Only the explicitly supported safe managed profile is executable. */
-// Numeric values and operand encodings follow ECMA-335 III, not an execution allowlist.
-const rows = [];
-function group(start, names, operand='') {
-  names.split(' ').forEach((name,index)=>{if(name!=='-')rows.push([name,start+index,operand]);});
-}
-group(0x00,'nop break ldarg.0 ldarg.1 ldarg.2 ldarg.3 ldloc.0 ldloc.1 ldloc.2 ldloc.3 stloc.0 stloc.1 stloc.2 stloc.3');
-group(0x0e,'ldarg.s ldarga.s starg.s ldloc.s ldloca.s stloc.s','u8');
-group(0x14,'ldnull ldc.i4.m1 ldc.i4.0 ldc.i4.1 ldc.i4.2 ldc.i4.3 ldc.i4.4 ldc.i4.5 ldc.i4.6 ldc.i4.7 ldc.i4.8');
-rows.push(['ldc.i4.s',0x1f,'i8'],['ldc.i4',0x20,'i32'],['ldc.i8',0x21,'i64'],['ldc.r4',0x22,'f32'],['ldc.r8',0x23,'f64']);
-group(0x25,'dup pop');group(0x27,'jmp call calli','token');group(0x2a,'ret');
-group(0x2b,'br.s brfalse.s brtrue.s beq.s bge.s bgt.s ble.s blt.s bne.un.s bge.un.s bgt.un.s ble.un.s blt.un.s','br8');
-group(0x38,'br brfalse brtrue beq bge bgt ble blt bne.un bge.un bgt.un ble.un blt.un','br32');
-rows.push(['switch',0x45,'switch']);
-group(0x46,'ldind.i1 ldind.u1 ldind.i2 ldind.u2 ldind.i4 ldind.u4 ldind.i8 ldind.i ldind.r4 ldind.r8 ldind.ref stind.ref stind.i1 stind.i2 stind.i4 stind.i8 stind.r4 stind.r8 add sub mul div div.un rem rem.un and or xor shl shr shr.un neg not conv.i1 conv.i2 conv.i4 conv.i8 conv.r4 conv.r8 conv.u4 conv.u8');
-group(0x6f,'callvirt cpobj ldobj ldstr newobj castclass isinst','token');group(0x76,'conv.r.un');group(0x79,'unbox','token');group(0x7a,'throw');
-group(0x7b,'ldfld ldflda stfld ldsfld ldsflda stsfld stobj','token');
-group(0x82,'conv.ovf.i1.un conv.ovf.i2.un conv.ovf.i4.un conv.ovf.i8.un conv.ovf.u1.un conv.ovf.u2.un conv.ovf.u4.un conv.ovf.u8.un conv.ovf.i.un conv.ovf.u.un');
-group(0x8c,'box newarr','token');group(0x8e,'ldlen');group(0x8f,'ldelema','token');
-group(0x90,'ldelem.i1 ldelem.u1 ldelem.i2 ldelem.u2 ldelem.i4 ldelem.u4 ldelem.i8 ldelem.i ldelem.r4 ldelem.r8 ldelem.ref stelem.i stelem.i1 stelem.i2 stelem.i4 stelem.i8 stelem.r4 stelem.r8 stelem.ref');
-group(0xa3,'ldelem stelem unbox.any','token');group(0xb3,'conv.ovf.i1 conv.ovf.u1 conv.ovf.i2 conv.ovf.u2 conv.ovf.i4 conv.ovf.u4 conv.ovf.i8 conv.ovf.u8');
-group(0xc2,'refanyval','token');group(0xc3,'ckfinite');group(0xc6,'mkrefany','token');group(0xd0,'ldtoken','token');
-group(0xd1,'conv.u2 conv.u1 conv.i conv.ovf.i conv.ovf.u add.ovf add.ovf.un mul.ovf mul.ovf.un sub.ovf sub.ovf.un endfinally');
-rows.push(['leave',0xdd,'br32'],['leave.s',0xde,'br8']);group(0xdf,'stind.i conv.u');
-group(0xfe00,'arglist ceq cgt cgt.un clt clt.un');group(0xfe06,'ldftn ldvirtftn','token');
-group(0xfe09,'ldarg ldarga starg ldloc ldloca stloc','u16');group(0xfe0f,'localloc');group(0xfe11,'endfilter');
-rows.push(['unaligned.',0xfe12,'u8']);group(0xfe13,'volatile. tail.');group(0xfe15,'initobj constrained.','token');group(0xfe17,'cpblk initblk');
-rows.push(['no.',0xfe19,'u8']);group(0xfe1a,'rethrow');group(0xfe1c,'sizeof','token');group(0xfe1d,'refanytype readonly.');
-export const CilOpcodes = Object.freeze(Object.fromEntries(rows.map(([name,value,operand])=>[name,Object.freeze({name,value,operand})])));
+import { CilOpcodes } from './opcodes/catalog.js';
+export { CilOpcodes } from './opcodes/catalog.js';
 const byValue = new Map(Object.values(CilOpcodes).map(op=>[op.value,op]));
 export class CilWriter extends Writer {
   constructor(capacity){super(capacity);this.labels=new Map();this.fixups=[];}
