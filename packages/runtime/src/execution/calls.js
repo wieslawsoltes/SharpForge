@@ -12,7 +12,7 @@ import {cachedMethod,verifiedMethod} from './token-cache.js';
 import {ManagedFault,isReference} from '../heap.js';
 import {SUSPENDED} from './suspension.js';
 import {storageDefault} from './storage.js';
-import {createExceptionState} from './eh.js';
+import {framePool} from './frame-pool.js';
 import {ensureTypeInitialized} from './static-init.js';
 import {instantiatedMethod,bindCallArguments,resolveCallType} from './generic-calls.js';
 import {constructDelegate,invokeDelegateOperation} from './delegate-calls.js';
@@ -31,25 +31,27 @@ export function call(vm, token, args, extra = {}) {
     throw fault;
   }
   const method = instantiatedMethod(vm, token, extra.genericIdentity ?? null, extra.methodArguments ?? []);
-  const values = bindCallArguments(vm, method, args);
-  const varargs = attachVarargs(method, values, extra.optionalArguments);
-  const {optionalArguments, ...frameExtra} = extra;
-  const frame = {
-    id: ++vm.frameId,
-    method,
-    args: values,
-    locals: method.locals.map(type => method.initLocals ? storageDefault(vm, type) : undefined),
-    stack: [],
-    pc: 0,
-    lastOffset: 0,
-    offsets: methodOffsets(method),
-    ...createExceptionState(),
-    needsInitialization: method.name !== '.cctor',
-    ...frameExtra,
-    ...(varargs ? {varargs} : {})
-  };
-  if (replacement) replaceFrame(vm, frame);
-  else pushFrame(vm, frame);
+  const pool = framePool(vm), frame = pool.acquire(method, extra.optionalArguments?.length ?? 0);
+  try {
+    bindCallArguments(vm, method, args, frame.args);
+    frame.varargs = attachVarargs(method, frame.args, extra.optionalArguments) ?? undefined;
+    frame.id = ++vm.frameId;
+    frame.method = method;
+    for (let index = 0; index < method.locals.length; index++) {
+      frame.locals[index] = method.initLocals ? storageDefault(vm, method.locals[index]) : undefined;
+    }
+    frame.pc = 0;
+    frame.lastOffset = 0;
+    frame.offsets = methodOffsets(method);
+    frame.exception = frame.pending = null;
+    frame.needsInitialization = method.name !== '.cctor';
+    for (const key in extra) if (key !== 'optionalArguments') frame[key] = extra[key];
+    if (replacement) replaceFrame(vm, frame);
+    else pushFrame(vm, frame);
+  } catch (error) {
+    pool.retire(frame);
+    throw error;
+  }
 }
 export function ensureInitialized(vm,typeToken,trigger='field',genericIdentity=null) {
   return ensureTypeInitialized(vm,typeToken,trigger,genericIdentity);
@@ -122,9 +124,9 @@ export function invoke(vm,instruction) {
   const trigger=instruction.name==='newobj'||descriptor.name==='.ctor'?'constructor':descriptor.signature.isStatic?'static-method':'instance-method';
   if(target&&vm.ensureInitialized(descriptor.ownerToken,trigger,genericIdentity)){caller.pc--;return;}
   if(caller.stack.length<count)throw new ManagedFault('InvalidProgramException','Call argument stack underflow');
-  const args=caller.stack.splice(caller.stack.length-count,count);
+  const pool=framePool(vm),args=pool.arguments(caller.stack,count);
   const tail=!!caller.tailCall,constrained=caller.constrainedType;caller.tailCall=false;caller.constrainedType=null;
-  vm.heap.withRoots(args,()=>{
+  try { vm.heap.withRoots(args,()=>{
     const delegate=supportedDelegateCall(vm.inspector,descriptor);
     if(delegate) {
       const value=instruction.name==='newobj'?constructDelegate(vm,descriptor.ownerInstance??descriptor.owner,args[0],args[1]):invokeDelegateOperation(vm,descriptor,args);
@@ -160,5 +162,5 @@ export function invoke(vm,instruction) {
       const value=vm.intrinsic(descriptor,args);
       if(descriptor.signature.returnType!=='void'&&value!==SUSPENDED)caller.stack.push(value);
     }
-  });
+  }); } finally { pool.releaseArguments(args); }
 }

@@ -66,7 +66,7 @@ function finishPending(vm, frame) {
   if (pending.handlers.length) {
     pending.active = pending.handlers.shift();
     frame.pc = frame.offsets.get(pending.active.target);
-    frame.stack = [];
+    frame.stack.length = 0;
     return null;
   }
   frame.unwinds.pop();

@@ -7,7 +7,8 @@ import {selectSourceFusion} from './execution/source-fusion.js';
 import {executeSourceMemory} from './execution/source-memory.js';
 import {collectAtInstruction} from './execution/gc-stress.js';
 import {faultFromException} from './execution/exception-object.js';
-import {callSource} from './execution/source-calls.js';
+import {callSource,callSourceFromStack} from './execution/source-calls.js';
+import {flushFramePool} from './execution/frame-pool.js';
 import {createArray,arrayAddress,arrayGet} from './execution/arrays.js';
 import {SyncPrimitives} from './execution/sync-primitives.js';
 import {resumeArrayOperation,arrayContinuationRoots} from './execution/array-ops.js';
@@ -84,7 +85,7 @@ export class VirtualMachine {
           case Op.CONVERT:this.stack.push(convert(this.stack.pop(),a,b,this));break;
           case Op.UNARY:this.stack.push(unary(UnaryName[a],this.stack.pop(),b,this));break;
           case Op.JUMP:this.transfer(frame,'jump',a);break;case Op.JFALSE:if(!this.stack.pop())this.transfer(frame,'jump',a);break;case Op.JTRUE:if(this.stack.pop())this.transfer(frame,'jump',a);break;
-          case Op.CALL:{const args=this.stack.splice(this.stack.length-b,b);this.call(a,args,sourceInputTypes(this,frame).slice(-b));break;}
+          case Op.CALL:callSourceFromStack(this,a,b);break;
           case Op.BUILTIN:{const args=this.stack.splice(this.stack.length-b,b),value=this.builtin(a,args,sourceInputTypes(this,frame).slice(-b));if(value!==SUSPENDED)this.stack.push(value);break;}
           case Op.RET:{const result=sourceStore(this,this.stack.pop(),method.returnType,sourceInputTypes(this,frame).at(-1));this.transfer(frame,'return',Infinity,sourceReturnReference(this,frame,result));break;}
           case Op.NEWOBJ:this.stack.push(sourceNewObject(this,this.image.types[a].name));break;
@@ -97,7 +98,7 @@ export class VirtualMachine {
           default:if(!executeSourceMemory(this,op,a,b))throw new ManagedFault('InvalidProgramException','Unknown instruction');
         }
       }catch(error){const fault=this.makeFault(error);if(isFatalFault(fault)){markUnhandled(this,fault);this.scheduler.cancelAll({preserveCurrent:true});break;}this.handleFault(fault);}finally{if(fusion)count+=this.instructions-before-1;}
-      collectAtInstruction(this);
+      flushFramePool(this);collectAtInstruction(this);
       if(this.scheduler.enabled)this.scheduler.afterInstruction();
     }
     this.currentPoint=this.top?.point??null;this.elapsedMs+=performance.now()-started;if(this.profiler)this.profiler.boundary();return this.state;
