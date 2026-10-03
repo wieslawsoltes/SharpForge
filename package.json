@@ -13,6 +13,7 @@
     "start": "node scripts/run.js start",
     "bench": "node scripts/run.js bench",
     "check": "node scripts/run.js check",
+    "check:structure": "node scripts/quality/check-structure.js",
     "test:browser": "node scripts/run.js test:browser",
     "cli": "node scripts/run.js cli",
     "test:protocol": "node scripts/run.js test:protocol",
