@@ -1,5 +1,5 @@
 import {frameworkType,enumTypes} from '@sharpforge/framework';
-import { Op, BinaryName, UnaryName, Builtins } from '@sharpforge/bytecode';
+import { EnumConvertBase, Op, BinaryName, UnaryName, Builtins } from '@sharpforge/bytecode';
 import { Writer, CilError, align, utf8 } from './binary.js';
 import { MetadataBuilder, token, codedIndex, cliSystemName, methodSignature, localSignature, fieldSignature } from './metadata.js';
 import { CilWriter } from './opcodes.js';
@@ -86,7 +86,7 @@ function emitMethod(c,d) {
         if((left==='double'||top==='double')&&!['&','|','^','<<','>>'].includes(operator))adapt([left,top],['double','double']);
         if(operator in binaryCodes){w.op(binaryCodes[operator]+(b===5?'.ovf':''));w.op(b===1||b===5?'conv.i4':b===3?'conv.u1':'conv.r8');}
         else if(operator==='==')w.op('ceq');else if(operator==='!=')w.op('ceq').integer(0).op('ceq');else if(operator==='<')w.op('clt');else if(operator==='>')w.op('cgt');else if(operator==='<=')w.op(left==='double'||top==='double'?'cgt.un':'cgt').integer(0).op('ceq');else if(operator==='>=')w.op(left==='double'||top==='double'?'clt.un':'clt').integer(0).op('ceq');else throw new CilError('Unsupported operator');break;}
-      case Op.CONVERT:w.op(a===0?(b===1?'conv.ovf.i4':'conv.i4'):'conv.r8').op('nop');break;
+      case Op.CONVERT:if(a>=EnumConvertBase){const type=c.resolveType(enumTypes[a-EnumConvertBase]);w.op(b===1?'conv.ovf.i4':'conv.i4').op('box',type).op('unbox.any',type).op('nop');}else w.op(a===0?(b===1?'conv.ovf.i4':'conv.i4'):'conv.r8').op('nop');break;
       case Op.UNARY:{const operator=UnaryName[a];if(b===5&&operator==='-')w.integer(-1).op('mul.ovf').op('nop');else if(operator==='!')w.integer(0).op('ceq');else if(operator==='~')w.op('not');else{if(operator==='-')w.op('neg');w.op(b===1?'conv.i4':'conv.r8');}break;}
       case Op.JUMP:{const output=analysis.outputs[pc];adapt(output,analysis.states[a]);relative(leaves(pc,a)?'leave':'br',a);terminal=true;break;}
       case Op.JFALSE:case Op.JTRUE:{// C# expression branches leave only their condition at the stack top.

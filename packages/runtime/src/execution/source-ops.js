@@ -1,3 +1,5 @@
+import {enumTypes} from '@sharpforge/framework';
+import {EnumConvertBase} from '@sharpforge/bytecode';
 import {checkArrayStore} from './casting.js';
 import {convert as cilConvert,float} from './numeric-ops.js';
 import {ManagedFault, isReference} from '../heap.js';
@@ -49,7 +51,8 @@ export function binary(vm, operator, a, b, mode = 0) {
   }
 }
 
-export function convert(value, type, checked = 0) {
+export function convert(value, type, checked = 0, vm = {}) {
+  if(type>=EnumConvertBase)return enumValue(vm,enumTypes[type-EnumConvertBase],convert(value,0,checked));
   if(value?.enumType)value=value.value;
   if (type !== 0) return Number(value);
   return cilConvert(checked === 1 ? 'conv.ovf.i4' : 'conv.i4', float(value), {
