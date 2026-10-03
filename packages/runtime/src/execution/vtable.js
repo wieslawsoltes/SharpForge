@@ -11,7 +11,7 @@ export class VirtualDispatch extends CilDispatchTable {
 
   table(type) {
     const table = super.table(type);
-    if (!this.interfaceMaps.has(table)) this.interfaceMaps.set(table, interfaceMap(table, this.inspector.methods, this.types));
+    if (table.declarationsByToken && !this.interfaceMaps.has(table)) this.interfaceMaps.set(table, interfaceMap(table, this.inspector.methods, this.types));
     return table;
   }
 
