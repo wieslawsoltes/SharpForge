@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ea7ffaf35b2aa08db5bd",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nReadOnlySpan<char> s = source();\nstatic string source() => throw null;\n\nnamespace System\n{\n    public readonly ref struct ReadOnlySpan<T> { }\n}",
+  "sourceSHA256": "42beab836021374c2d09b73a23aa67eb430c89812a2f4d023a9401bc96c6ea85",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FirstClassSpanTests.cs",
+    "sha256": "99be7ba6d5e067485b6142b5e65214b7e83d1dbf3a681e7b98e309631ef90315",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FirstClassSpanTests.cs",
+    "license": "MIT",
+    "method": "Conversion_string_ReadOnlySpan_Implicit_MissingHelper",
+    "offset": 63346
+  },
+  "langVersion": "13",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular13)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0029",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (2,24): error CS0029: Cannot implicitly convert type 'string' to 'System.ReadOnlySpan<char>'\n            // ReadOnlySpan<char> s = source();\n            Diagnostic(ErrorCode.ERR_NoImplicitConv, \"source()\").WithArguments(\"string\", \"System.ReadOnlySpan<char>\").WithLocation(2, 24)",
+  "unsupported": []
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b80a1f35d0ae8419d62f",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\n[AttributeUsage(badAttributeTargets)]\npublic class MyAttribute : Attribute\n{\n\tpublic const AttributeTargets badAttributeTargets = Missing;\n}\n",
+  "sourceSHA256": "7f5f12091d6e8626e1b04a40032a81a5bdac0aa30b691fcdf7bf55756cdc6fd7",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestBadAttributeUsageArgument",
+    "offset": 201528
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0103",
+        "severity": "error"
+      },
+      {
+        "code": "CS0182",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,54): error CS0103: The name 'Missing' does not exist in the current context\n                // \tpublic const AttributeTargets badAttributeTargets = Missing;\n                Diagnostic(ErrorCode.ERR_NameNotInContext, \"Missing\").WithArguments(\"Missing\"),\n                // (4,17): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                // [AttributeUsage(badAttributeTargets)]\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"badAttributeTargets\")",
+  "unsupported": []
+}

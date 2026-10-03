@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-4b6dcf6432342cb1f834",
+  "kind": "spec",
+  "sourceText": "interface IDisposable\n{\n    void Dispose();\n}\n\nclass MyFile : IDisposable\n{\n    void IDisposable.Dispose() => Close();\n\n    public void Close()\n    {\n        // Do what is necessary to close the file\n        System.GC.SuppressFinalize(this);\n    }\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "fa7aea6217ae109ca8dfa55fa2af7591f2faae8deeb3c3b6d81942db202530cf",
+  "originalSource": "interface IDisposable\n{\n    void Dispose();\n}\n\nclass MyFile : IDisposable\n{\n    void IDisposable.Dispose() => Close();\n\n    public void Close()\n    {\n        // Do what is necessary to close the file\n        System.GC.SuppressFinalize(this);\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "ExplicitInterfaceMemberImplementations2"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-interfaces",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/interfaces.md",
+    "sha256": "bcdf69f454a7bd5894c0b08364553fc6587a0a6ee444a93bc91c58138ff95f53",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/interfaces.md",
+    "license": "MIT",
+    "example": "ExplicitInterfaceMemberImplementations2",
+    "offsetInUnquotedMarkdown": 41360
+  }
+}

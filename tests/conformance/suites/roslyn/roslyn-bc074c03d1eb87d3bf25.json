@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-bc074c03d1eb87d3bf25",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C \n{\n    int Main(bool b) { return 1; }\n    static int Main() { return 1; }\n    static int Main(string a) { return 1; }\n    static int Main(int a) { return 1; }\n    static int Main(string[] a) { return 1; }\n    static int Main<T>() { return 1; }\n}\n",
+  "sourceSHA256": "110d25a0773a483e2fe0e97ebdb1b03a6ce0fd7e7cdc19ba67d2852d3bf687dc",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "sha256": "84a49b5872a45de355d4ac196b7221b2d05e37d0f4411cf7fa7566336209d2bb",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "license": "MIT",
+    "method": "ExplicitMainTypeHasMultipleMains_MultipleViable",
+    "offset": 24149
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseExe.WithMainTypeName(\"C\"))",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0017",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,16): error CS0017: Program has more than one entry point defined. Compile with /main to specify the type that contains the entry point.\n                Diagnostic(ErrorCode.ERR_MultipleEntryPoints, \"Main\")",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

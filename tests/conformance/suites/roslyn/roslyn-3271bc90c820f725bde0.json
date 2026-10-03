@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-3271bc90c820f725bde0",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass C\n{\n    void M(I<object[]> a) => M1(a);\n    void M1<T>(I<ReadOnlySpan<T>> x) { }\n}\ninterface I<out T> where T : allows ref struct { }",
+  "sourceSHA256": "e02e1175fd4fbc1063007bc47c0c6f99ba767e81f1d368320d04b20757e2dd6f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FirstClassSpanTests.cs",
+    "sha256": "99be7ba6d5e067485b6142b5e65214b7e83d1dbf3a681e7b98e309631ef90315",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FirstClassSpanTests.cs",
+    "license": "MIT",
+    "method": "TypeInference_Array_ReadOnlySpan_07",
+    "offset": 427820
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, targetFramework: TargetFramework.Net90)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1503",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (4,33): error CS1503: Argument 1: cannot convert from 'I<object[]>' to 'I<System.ReadOnlySpan<object>>'\n            //     void M(I<object[]> a) => M1(a);\n            Diagnostic(ErrorCode.ERR_BadArgType, \"a\").WithArguments(\"1\", \"I<object[]>\", \"I<System.ReadOnlySpan<object>>\").WithLocation(4, 33)",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation"
+  ]
+}

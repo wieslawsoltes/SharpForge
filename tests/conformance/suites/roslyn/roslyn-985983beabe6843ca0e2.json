@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-985983beabe6843ca0e2",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.InteropServices;\nclass C\n{\n    public static void M([Out]ref int p) { }\n}",
+  "sourceSHA256": "38f1fe8db5627e763cd1e1a64cd8161ab9ddb41c2e2b79764f2acefad533f37b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "OutAttribute_RefParameter",
+    "offset": 83053
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System.Runtime.InteropServices;\nclass C\n{\n    public static void M([Out]ref int p) { }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0662",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,39): error CS0662: Cannot specify the Out attribute on a ref parameter without also specifying the In attribute.\n                //     public static void M([Out]ref int p) { }\n                Diagnostic(ErrorCode.ERR_OutAttrOnRefParam, \"p\").WithLocation(5, 39)",
+  "unsupported": []
+}

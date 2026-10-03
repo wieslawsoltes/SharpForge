@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-d5f9c8ef935eec9adc29",
+  "kind": "spec",
+  "sourceText": "#nullable enable\npublic class Base\n{\n    public required string Prop1 { get; set; }\n\n    public Base() {}\n\n    [SetsRequiredMembers]\n    public Base(int unused) { Prop1 = \"\"; }\n}\npublic class Derived : Base\n{\n    public required string Prop2 { get; set; }\n\n    [SetsRequiredMembers]\n    public Derived() : base()\n    {\n    } // Warning: Prop1 and Prop2 are possibly null.\n\n    [SetsRequiredMembers]\n    public Derived(int unused) : base()\n    {\n        Prop1.ToString(); // Warning: possibly null dereference\n        Prop2.ToString(); // Warning: possibly null dereference\n    }\n\n    [SetsRequiredMembers]\n    public Derived(int unused, int unused2) : this()\n    {\n        Prop1.ToString(); // Ok\n        Prop2.ToString(); // Ok\n    }\n\n    [SetsRequiredMembers]\n    public Derived(int unused1, int unused2, int unused3) : base(unused1)\n    {\n        Prop1.ToString(); // Ok\n        Prop2.ToString(); // Warning: possibly null dereference\n    }\n}",
+  "sourceSHA256": "60edfd2fc2e7aa2791552ee8e7dcd549cd73047b79af8d8a6adf59985bb87c02",
+  "target": "library",
+  "featureId": "csharp-11-0-required-members",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/required-members.md",
+    "sha256": "0f731d503b589797298f8926899fe7ca9be3843141d8782b074f52d1822f1ed3",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/required-members.md",
+    "license": "NOASSERTION",
+    "offset": 12225
+  }
+}

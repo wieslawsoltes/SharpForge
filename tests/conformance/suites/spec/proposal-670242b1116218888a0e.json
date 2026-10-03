@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-670242b1116218888a0e",
+  "kind": "spec",
+  "sourceText": "using System;\n\n// Nothing is printed; the property initializer is not\n// equivalent to `this.IsActive = true`.\n_ = new Derived();\n\nclass Base\n{\n    public virtual bool IsActive { get; set; } = true;\n}\n\nclass Derived : Base\n{\n    public override bool IsActive\n    {\n        get => base.IsActive;\n        set\n        {\n            base.IsActive = value;\n            Console.WriteLine(\"This will not be reached\");\n        }\n    }\n}",
+  "sourceSHA256": "60b8fcf6f39ab6732870add9208f1435c2ee7b2d103e3fa3f387460930a0a64b",
+  "target": "library",
+  "featureId": "csharp-14-0-field-keyword-in-properties",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/field-keyword.md",
+    "sha256": "3d56c4e42e738ff347e793381ff018b88c01edbd419585475b1a22048516100c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/field-keyword.md",
+    "license": "NOASSERTION",
+    "offset": 7600
+  }
+}

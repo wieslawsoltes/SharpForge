@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-3217dd759df2b3bba73f",
+  "kind": "spec",
+  "sourceText": "struct S\n{\n    readonly object P0 { get => field; } = \"\";         // ok\n    object P1          { get => field ??= \"\"; }        // ok\n    readonly object P2 { get => field ??= \"\"; }        // error: 'field' is readonly\n    readonly object P3 { get; set { _ = field; } }     // ok\n    readonly object P4 { get; set { field = value; } } // error: 'field' is readonly\n}",
+  "sourceSHA256": "e3530a2c8aba63bc3cb5274cd22eb5211ce37304ea26e36792562be239564619",
+  "target": "library",
+  "featureId": "csharp-14-0-field-keyword-in-properties",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/field-keyword.md",
+    "sha256": "3d56c4e42e738ff347e793381ff018b88c01edbd419585475b1a22048516100c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/field-keyword.md",
+    "license": "NOASSERTION",
+    "offset": 36832
+  }
+}

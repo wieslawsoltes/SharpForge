@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-bcaa2d6f7b98dcee5b8c",
+  "kind": "spec",
+  "sourceText": "void M(int[] a)\n{\n    foreach (var x in a.Reverse()) { } // fine previously, an error now (`Reverse` returns `void`)\n    foreach (var x in Enumerable.Reverse(a)) { } // workaround\n}",
+  "sourceSHA256": "a0e897f5322739712a08c7b971f18bb1a45b5fc8caf269ee5b7482e5be956c6e",
+  "target": "library",
+  "featureId": "csharp-14-0-first-class-span-types",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/first-class-span-types.md",
+    "sha256": "3c3ef60c44f7d48f1ee4ada4268a2eb146fa7f74bf6b4a52f09d894366cb626a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/first-class-span-types.md",
+    "license": "NOASSERTION",
+    "offset": 21390
+  }
+}

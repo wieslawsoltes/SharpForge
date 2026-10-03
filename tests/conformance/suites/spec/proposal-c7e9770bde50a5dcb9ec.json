@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-c7e9770bde50a5dcb9ec",
+  "kind": "spec",
+  "sourceText": "readonly struct ReadonlyStruct1\n{\n    public int Prop1 { get; init; } // Allowed\n}\n\nstruct ReadonlyStruct2\n{\n    public readonly int Prop2 { get; init; } // Allowed\n\n    public int Prop3 { get; readonly init; } // Error\n}",
+  "sourceSHA256": "4b1c770cf950ac5adecf4e30eadd31359014688747016464190886a47b36c9b7",
+  "target": "library",
+  "featureId": "csharp-9-0-init-only-setters",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/init.md",
+    "sha256": "299746635180451088968dc21830e0e4ef886be903357c63780a90434b5034e5",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/init.md",
+    "license": "NOASSERTION",
+    "offset": 6509
+  }
+}

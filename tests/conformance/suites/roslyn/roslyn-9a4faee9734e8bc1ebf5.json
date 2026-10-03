@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9a4faee9734e8bc1ebf5",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Collections.Generic;\nnamespace System\n{\n    public struct ValueTuple<T1, T2>\n        where T2 : struct\n    {\n        public ValueTuple(T1 _1, T2 _2)\n            => throw null;\n    }\n}\nclass C<T> where T : class\n{\n    List<(T, T)> field = null;\n    (U, U) M<U>(U x) where U : class\n    {\n        var t0 = new C<int>();\n        var t1 = M((1, 2));\n        return default((U, U));\n    }\n}",
+  "sourceSHA256": "548e833af1e2d5c94c2107ddbef6400181932a33c0d92136a90a293bced20ac1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "Constraints_05",
+    "offset": 408811
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0453",
+        "severity": "error"
+      },
+      {
+        "code": "CS0453",
+        "severity": "error"
+      },
+      {
+        "code": "CS0452",
+        "severity": "error"
+      },
+      {
+        "code": "CS0452",
+        "severity": "error"
+      },
+      {
+        "code": "CS0453",
+        "severity": "error"
+      },
+      {
+        "code": "CS0414",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (15,12): error CS0453: The type 'U' must be a non-nullable value type in order to use it as parameter 'T2' in the generic type or method '(T1, T2)'\n                //     (U, U) M<U>(U x) where U : class\n                Diagnostic(ErrorCode.ERR_ValConstraintNotSatisfied, \"M\").WithArguments(\"(T1, T2)\", \"T2\", \"U\").WithLocation(15, 12),\n                // (14,18): error CS0453: The type 'T' must be a non-nullable value type in order to use it as parameter 'T2' in the generic type or method '(T1, T2)'\n                //     List<(T, T)> field = null;\n                Diagnostic(ErrorCode.ERR_ValConstraintNotSatisfied, \"field\").WithArguments(\"(T1, T2)\", \"T2\", \"T\").WithLocation(14, 18),\n                // (17,24): error CS0452: The type 'int' must be a reference type in order to use it as parameter 'T' in the generic type or method 'C<T>'\n                //         var t0 = new C<int>();\n                Diagnostic(ErrorCode.ERR_RefConstraintNotSatisfied, \"int\").WithArguments(\"C<T>\", \"T\", \"int\").WithLocation(17, 24),\n                // (18,18): error CS0452: The type '(int, int)' must be a reference type in order to use it as parameter 'U' in the generic type or method 'C<T>.M<U>(U)'\n                //         var t1 = M((1, 2));\n                Diagnostic(ErrorCode.ERR_RefConstraintNotSatisfied, \"M\").WithArguments(\"C<T>.M<U>(U)\", \"U\", \"(int, int)\").WithLocation(18, 18),\n                // (19,28): error CS0453: The type 'U' must be a non-nullable value type in order to use it as parameter 'T2' in the generic type or method '(T1, T2)'\n                //         return default((U, U));\n                Diagnostic(ErrorCode.ERR_ValConstraintNotSatisfied, \"U\").WithArguments(\"(T1, T2)\", \"T2\", \"U\").WithLocation(19, 28),\n                // (14,18): warning CS0414: The field 'C<T>.field' is assigned but its value is never used\n                //     List<(T, T)> field = null;\n                Diagnostic(ErrorCode.WRN_UnreferencedFieldAssg, \"field\").WithArguments(\"C<T>.field\").WithLocation(14, 18)\n            ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

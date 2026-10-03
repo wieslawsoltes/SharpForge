@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "gaps": [
+    {
+      "id": "dap-error-response-body",
+      "status": "observed-schema-failure",
+      "component": "packages/protocol/src/dap.js",
+      "reason": "DebugAdapter emits unsuccessful responses without body; the pinned official ErrorResponse schema requires body.",
+      "ownership": "Project 6 / A13; no protocol product patch is included in this Project 4 tooling change.",
+      "observation": "planning/qualification/protocol/observed/unsupported-darwin-arm64.json"
+    },
+    {
+      "id": "vscode-recorded-sessions",
+      "status": "not-run",
+      "reason": "Recording extension and transparent stdio proxy are provided, but no installed VS Code client or previously recorded session was found."
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-196319b80dce1e1ff45d",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System = global;\n\nclass Test\n{\n    static void Main()\n    {\n        ((System.Linq.Expressions.Expression<System.Func<void>>)(() => global::System.Console.WriteLine(\"))).Compile()();\n    }\n}",
+  "sourceSHA256": "ac84d0b3d1b3f42a4ff98b7d09035d51d322a74c85fabe6fb6782ee89ec84176",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenExprLambdaTests.cs",
+    "sha256": "6ded88d14b8dc1163d157ec2de9f3f9566d5ff0a7e20170d6687ea20cf6d1f00",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenExprLambdaTests.cs",
+    "license": "MIT",
+    "method": "NSAliasSystemIsGlobal",
+    "offset": 137297
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1547",
+        "severity": "error"
+      },
+      {
+        "code": "CS1010",
+        "severity": "error"
+      },
+      {
+        "code": "CS1026",
+        "severity": "error"
+      },
+      {
+        "code": "CS1026",
+        "severity": "error"
+      },
+      {
+        "code": "CS1026",
+        "severity": "error"
+      },
+      {
+        "code": "CS1002",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0576",
+        "severity": "error"
+      },
+      {
+        "code": "CS0576",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,58): error CS1547: Keyword 'void' cannot be used in this context\n                //         ((System.Linq.Expressions.Expression<System.Func<void>>)(() => global::System.Console.WriteLine(\"))).Compile()();\n                Diagnostic(ErrorCode.ERR_NoVoidHere, \"void\").WithLocation(8, 58),\n                // (8,105): error CS1010: Newline in constant\n                //         ((System.Linq.Expressions.Expression<System.Func<void>>)(() => global::System.Console.WriteLine(\"))).Compile()();\n                Diagnostic(ErrorCode.ERR_NewlineInConst, \"\").WithLocation(8, 105),\n                // (8,122): error CS1026: ) expected\n                //         ((System.Linq.Expressions.Expression<System.Func<void>>)(() => global::System.Console.WriteLine(\"))).Compile()();\n                Diagnostic(ErrorCode.ERR_CloseParenExpected, \"\").WithLocation(8, 122),\n                // (8,122): error CS1026: ) expected\n                //         ((System.Linq.Expressions.Expression<System.Func<void>>)(() => global::System.Console.WriteLine(\"))).Compile()();\n                Diagnostic(ErrorCode.ERR_CloseParenExpected, \"\").WithLocation(8, 122),\n                // (8,122): error CS1026: ) expected\n                //         ((System.Linq.Expressions.Expression<System.Func<void>>)(() => global::System.Console.WriteLine(\"))).Compile()();\n                Diagnostic(ErrorCode.ERR_CloseParenExpected, \"\").WithLocation(8, 122),\n                // (8,122): error CS1002: ; expected\n                //         ((System.Linq.Expressions.Expression<System.Func<void>>)(() => global::System.Console.WriteLine(\"))).Compile()();\n                Diagnostic(ErrorCode.ERR_SemicolonExpected, \"\").WithLocation(8, 122),\n                // (2,16): error CS0246: The type or namespace name 'global' could not be found (are you missing a using directive or an assembly reference?)\n                // using System = global;\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"global\").WithArguments(\"global\").WithLocation(2, 16),\n                // (8,11): error CS0576: Namespace '<global namespace>' contains a definition conflicting with alias 'System'\n                //         ((System.Linq.Expressions.Expression<System.Func<void>>)(() => global::System.Console.WriteLine(\"))).Compile()();\n                Diagnostic(ErrorCode.ERR_ConflictAliasAndMember, \"System\").WithArguments(\"System\", \"<global namespace>\").WithLocation(8, 11),\n                // (8,46): error CS0576: Namespace '<global namespace>' contains a definition conflicting with alias 'System'\n                //         ((System.Linq.Expressions.Expression<System.Func<void>>)(() => global::System.Console.WriteLine(\"))).Compile()();\n                Diagnostic(ErrorCode.ERR_ConflictAliasAndMember, \"System\").WithArguments(\"System\", \"<global namespace>\").WithLocation(8, 46)\n                ",
+  "unsupported": []
+}

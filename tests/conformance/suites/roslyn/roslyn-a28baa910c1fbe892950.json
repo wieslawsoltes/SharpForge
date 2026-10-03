@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a28baa910c1fbe892950",
+  "kind": "diagnostics",
+  "sourceText": "\n[dynamic]\npublic class C\n{\n    [return: dynamic]\n    [dynamic]\n    public void dynamic([dynamic]dynamic dynamic) { }\n}\n",
+  "sourceSHA256": "b5431311593a5a1b19de14850f374349ac5168411e820eaeaaf987bc83cd2135",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Dynamic.cs",
+    "sha256": "820f741675ec86f59a8098c3c7033bb9a2db6a58bafbf7ae3f3ef848279509da",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Dynamic.cs",
+    "license": "MIT",
+    "method": "DynamicAttributeType",
+    "offset": 93782
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,2): error CS0246: The type or namespace name 'dynamicAttribute' could not be found (are you missing a using directive or an assembly reference?)\n                // [dynamic]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"dynamic\").WithArguments(\"dynamicAttribute\").WithLocation(2, 2),\n                // (2,2): error CS0246: The type or namespace name 'dynamic' could not be found (are you missing a using directive or an assembly reference?)\n                // [dynamic]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"dynamic\").WithArguments(\"dynamic\").WithLocation(2, 2),\n                // (6,6): error CS0246: The type or namespace name 'dynamicAttribute' could not be found (are you missing a using directive or an assembly reference?)\n                //     [dynamic]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"dynamic\").WithArguments(\"dynamicAttribute\").WithLocation(6, 6),\n                // (6,6): error CS0246: The type or namespace name 'dynamic' could not be found (are you missing a using directive or an assembly reference?)\n                //     [dynamic]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"dynamic\").WithArguments(\"dynamic\").WithLocation(6, 6),\n                // (5,14): error CS0246: The type or namespace name 'dynamicAttribute' could not be found (are you missing a using directive or an assembly reference?)\n                //     [return: dynamic]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"dynamic\").WithArguments(\"dynamicAttribute\").WithLocation(5, 14),\n                // (5,14): error CS0246: The type or namespace name 'dynamic' could not be found (are you missing a using directive or an assembly reference?)\n                //     [return: dynamic]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"dynamic\").WithArguments(\"dynamic\").WithLocation(5, 14),\n                // (7,26): error CS0246: The type or namespace name 'dynamicAttribute' could not be found (are you missing a using directive or an assembly reference?)\n                //     public void dynamic([dynamic]dynamic dynamic) { }\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"dynamic\").WithArguments(\"dynamicAttribute\").WithLocation(7, 26),\n                // (7,26): error CS0246: The type or namespace name 'dynamic' could not be found (are you missing a using directive or an assembly reference?)\n                //     public void dynamic([dynamic]dynamic dynamic) { }\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"dynamic\").WithArguments(\"dynamic\").WithLocation(7, 26)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

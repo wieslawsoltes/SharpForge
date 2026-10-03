@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-0aff36ef9d60bd3c8d9f",
+  "kind": "spec",
+  "sourceText": "Span<string> span = [];\nvar d = new Derived();\nd.M(span); // Base today, Derived tomorrow\nint i = 1;\nd.M(i); // Derived today, demonstrates new behavior\n\nclass Base\n{\n    public void M(Span<string> s)\n    {\n        Console.WriteLine(\"Base\");\n    }\n\n    public void M(int i)\n    {\n        Console.WriteLine(\"Base\");\n    }\n}\n\nclass Derived : Base\n{\n    public static implicit operator Derived(ReadOnlySpan<string> r) => new Derived();\n    public static implicit operator Derived(long l) => new Derived();\n\n    public void M(Derived s)\n    {\n        Console.WriteLine(\"Derived\");\n    }\n}",
+  "sourceSHA256": "d7ec82047abb4d70973bfd87036af628b9c27a74508e36ca061653be920924fb",
+  "target": "library",
+  "featureId": "csharp-14-0-first-class-span-types",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/first-class-span-types.md",
+    "sha256": "3c3ef60c44f7d48f1ee4ada4268a2eb146fa7f74bf6b4a52f09d894366cb626a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/first-class-span-types.md",
+    "license": "NOASSERTION",
+    "offset": 26690
+  }
+}

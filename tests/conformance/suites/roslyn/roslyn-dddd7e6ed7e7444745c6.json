@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-dddd7e6ed7e7444745c6",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Collections.Generic;\n\npublic abstract class C1\n{\n    public abstract void M<T>(T t)\n        where T : IEnumerable<(int a, int b)>;\n}\npublic abstract class C2\n{\n    public abstract void M<T>(T t)\n        where T : IEnumerable<(int c, int d)>;\n}",
+  "sourceSHA256": "2ef4887e6c888cb4401c3dfac03de6e0930b1116b0b0a23a84755eac00a6b150",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "ConstraintAttributesAreNotSharedAcrossTypeRefs",
+    "offset": 12684
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: s_valueTupleRefs)",
+  "options": "(src1, references: s_valueTupleRefs)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

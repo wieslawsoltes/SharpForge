@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-7746a6519e1a7b1b49da",
+  "kind": "diagnostics",
+  "sourceText": "class B1 : A, IA\n{\n    public void F1(nint x, System.UIntPtr y) { }\n    public override void F2(System.IntPtr x, nuint y) { }\n}\nclass B2 : A, IA\n{\n    public void F1(System.IntPtr x, nuint y) { }\n    public override void F2(nint x, System.UIntPtr y) { }\n}\nclass A3 : IA\n{\n    void IA.F1(nint x, System.UIntPtr y) { }\n}\nclass A4 : IA\n{\n    void IA.F1(System.IntPtr x, nuint y) { }\n}",
+  "sourceSHA256": "aaf12b862bbb45d2bd6a6e83fcdfcd7f872d8113c6429b01d6ecc8fa1d624ffd",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "sha256": "a7e54d8ce96a59177276eba5d802097c4cc4b2dee81cb9034e7dd309ad524cb8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "license": "MIT",
+    "method": "Overrides_01",
+    "offset": 37343
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "references: new[] { ref2 }, parseOptions: TestOptions.Regular9, targetFramework: TargetFramework.Net70)",
+  "options": "(sourceB, references: new[] { ref2 }, parseOptions: TestOptions.Regular9, targetFramework: TargetFramework.Net70)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}
