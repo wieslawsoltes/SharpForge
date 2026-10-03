@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import {SymbolKind,TypeKind,Accessibility} from '../symbols/types.js';
 /**
  * Accessibility checking (C# spec "Accessibility domains", following Roslyn's AccessCheck).
@@ -121,8 +122,8 @@ export function isAccessible(symbol,within=null,options={}){return check(symbol,
 export function checkAccess(symbol,within=null,options={}){
   const result=check(symbol,within,options);if(result.ok)return null;
   const through=options.throughType?.type??options.throughType??null,withinType=withinTypeOf(within);
-  if(result.failedThroughTypeCheck&&through&&withinType&&!(symbol.kind===SymbolKind.Method&&symbol.isConstructor))return {code:'CS1540',args:[symbol.toDisplayString(),through.toDisplayString(),withinType.toDisplayString()]};
-  return {code:'CS0122',args:[symbol.toDisplayString()]};
+  if(result.failedThroughTypeCheck&&through&&withinType&&!(symbol.kind===SymbolKind.Method&&symbol.isConstructor))return {code:DiagnosticId.CS1540,args:[symbol.toDisplayString(),through.toDisplayString(),withinType.toDisplayString()]};
+  return {code:DiagnosticId.CS0122,args:[symbol.toDisplayString()]};
 }
 /**
  * Accessibility of an instance constructor for `new T(...)` written in `within`. Roslyn checks a protected constructor

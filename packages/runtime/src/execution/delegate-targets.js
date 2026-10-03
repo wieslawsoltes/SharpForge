@@ -1,19 +1,20 @@
 import {managedDelegateSignature} from '@sharpforge/cil';
 import {ManagedFault, isReference} from '../heap.js';
 import {castCacheFor} from './casting.js';
+import {cachedMetadataToken,verifiedMethod} from './token-cache.js';
 
 const fault = message => new ManagedFault('ArgumentException', message);
 const equalReference = (left, right) => left === right || isReference(left) && isReference(right) &&
   left.h === right.h && left.g === right.g;
 
 function targetMethod(vm, token) {
-  if (!Number.isInteger(token) || !vm.report.methods.includes(token)) throw fault('Unverified delegate target');
+  if (!Number.isInteger(token) || !verifiedMethod(vm, token)) throw fault('Unverified delegate target');
   return vm.inspector.getMethod(token);
 }
 
 /** Opaque VM-owned pointer; MemberRef and MethodDef references share the resolved identity. */
 export function delegateMethodPointer(vm, token) {
-  const descriptor = vm.inspector.resolveToken(token);
+  const descriptor = cachedMetadataToken(vm, token);
   const target = descriptor.resolvedToken ?? descriptor.token;
   targetMethod(vm, target);
   return Object.freeze({methodPointer: true, vmOwner: vm.snapshotOwner, token: target});

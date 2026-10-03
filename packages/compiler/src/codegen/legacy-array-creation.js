@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import {Op} from '@sharpforge/bytecode';
 import {emitPrimitiveBox} from './value-arguments.js';
 
@@ -5,7 +6,7 @@ import {emitPrimitiveBox} from './value-arguments.js';
 export function emitArrayCreation(compiler, syntax) {
   let type = syntax.type;
   if (type === 'var[]') {
-    if (!syntax.values?.length) compiler.c.report(syntax, 'CS0826');
+    if (!syntax.values?.length) compiler.c.report(syntax, DiagnosticId.CS0826);
     type = (syntax.values?.length ? compiler.infer(syntax.values[0]) : 'error') + '[]';
   }
   type = compiler.c.resolveType(type, syntax, false, compiler.m);
