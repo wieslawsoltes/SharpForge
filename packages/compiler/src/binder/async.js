@@ -46,3 +46,21 @@ export function checkAsyncBody(method, body, report) {
 export function isValueTask(type, core) {
   return !!type && (type === core.valueTask || type.originalDefinition === core.valueTaskT);
 }
+
+/**
+ * Reports an `await` (expression, `await foreach` or `await using`) that is not inside an async function.
+ * @param binder the body binder  @param node where to report (the expression, or the `await` keyword of a statement)
+ * @returns true when the await is misplaced
+ */
+export function reportAwaitOutsideAsync(binder, node) {
+  const context = binder.c;
+  if (context.isAsync || context.isTopLevel) return false;
+  if (context.isLambda) {
+    binder.report(node, 'CS4034', ['lambda expression']);
+    return true;
+  }
+  const method = context.method,
+    returnsVoid = method?.returnsVoid !== false && method?.returnType?.specialType === 'System_Void';
+  binder.report(node, returnsVoid ? 'CS4033' : 'CS4032', method?.returnsVoid ? [] : [binder.display(method?.returnType)]);
+  return true;
+}

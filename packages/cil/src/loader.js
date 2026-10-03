@@ -1,5 +1,5 @@
 import {contractForMember,frameworkType,enumTypes} from '@sharpforge/framework';
-import { Op, Binary, Unary, BuiltinMap, frameworkBuiltin, FORMAT_VERSION, verifyImage } from '@sharpforge/bytecode';
+import { Op, Binary, Unary, BuiltinMap, frameworkBuiltin, EnumConvertBase, FORMAT_VERSION, verifyImage } from '@sharpforge/bytecode';
 import { CilError, text, equalBytes } from './binary.js';
 import { token, decodeCoded, readSignature, cliSystemName } from './metadata.js';
 import { readPE } from './pe.js';
@@ -7,7 +7,7 @@ import { decodeInstructions } from './opcodes.js';
 import { emitAssembly } from './emitter.js';
 import { defaultValue } from './analysis.js';
 const profileOpcodes=new Set(['ldftn','unbox.any','ldloca','ldloca.s','add.ovf','sub.ovf','mul.ovf','conv.ovf.i4','nop', 'ldarg.0', 'ldarg.1', 'ldarg.2', 'ldarg.3', 'ldloc.0', 'ldloc.1', 'ldloc.2', 'ldloc.3', 'stloc.0', 'stloc.1', 'stloc.2', 'stloc.3', 'ldarg.s', 'starg.s', 'ldloc.s', 'stloc.s', 'ldnull', 'ldc.i4.m1', 'ldc.i4.0', 'ldc.i4.1', 'ldc.i4.2', 'ldc.i4.3', 'ldc.i4.4', 'ldc.i4.5', 'ldc.i4.6', 'ldc.i4.7', 'ldc.i4.8', 'ldc.i4.s', 'ldc.i4', 'ldc.r8', 'dup', 'pop', 'call', 'ret', 'br.s', 'brfalse.s', 'brtrue.s', 'br', 'brfalse', 'brtrue', 'add', 'sub', 'mul', 'div', 'rem', 'and', 'or', 'xor', 'shl', 'shr', 'neg', 'not', 'conv.i4', 'conv.r8', 'callvirt', 'ldstr', 'newobj', 'castclass', 'throw', 'ldfld', 'stfld', 'ldsfld', 'stsfld', 'box', 'newarr', 'ldlen', 'ldelem', 'stelem', 'conv.u1', 'leave', 'leave.s', 'ceq', 'cgt', 'cgt.un', 'clt', 'clt.un', 'ldarg', 'starg', 'ldloc', 'stloc', 'rethrow', 'endfinally']);
-const shortTypes={'System.Int32':'int','System.Double':'double','System.Boolean':'bool','System.String':'string','System.Object':'object','System.Exception':'Exception','System.Array':'Array'};
+const shortTypes={'System.Int32':'int','System.Int64':'long','System.Double':'double','System.Boolean':'bool','System.String':'string','System.Object':'object','System.Exception':'Exception','System.Array':'Array'};
 const arithmetic={'add.ovf':'+','sub.ovf':'-','mul.ovf':'*',add:'+',sub:'-',mul:'*',div:'/',rem:'%',and:'&',or:'|',xor:'^',shl:'<<',shr:'>>'};
 function nativeLocal(i,prefix){if(i.name===prefix)return i.operand;if(i.name===prefix+'.s')return i.operand;if(i.name.startsWith(prefix+'.'))return Number(i.name.slice(prefix.length+1));return null;}
 function constant(i,metadata){if(i.name==='ldnull')return null;if(i.name==='ldstr')return metadata.userString(i.operand);if(i.name==='ldc.i4'||i.name==='ldc.i4.s'||i.name==='ldc.r8')return i.operand;if(i.name==='ldc.i4.m1')return -1;if(i.name.startsWith('ldc.i4.'))return Number(i.name.slice(7));throw new CilError('Expected a constant instruction');}
@@ -76,11 +76,15 @@ function decodeSpan(span,c) {
     else if(target.owner==='System.Console')name='Console.'+target.name;
     else if(target.owner==='System.GC'){name='GC.'+target.name;if(target.name==='GetTotalMemory'&&span.some(i=>i.name.startsWith('ldc.i4')))argc=0;}
     else if(target.owner==='System.Convert'){name='Convert.'+target.name;if(target.name==='ToString'&&sig.parameters[0]==='object')name='object.ToString';}
+    else if(target.owner==='System.Object'&&target.name==='GetType'){const box=span.find(i=>i.name==='box'),type=box?shortTypes[c.metadata.typeName(box.operand)]??c.metadata.typeName(box.operand):null;name=['int','double','bool','long'].includes(type)?'$type.'+type+'.GetType':'object.GetType';}
+    else if(['System.Type','System.Reflection.MemberInfo'].includes(target.owner)&&['get_Name','get_FullName'].includes(target.name))name='Type.'+target.name.slice(4);
+    else if(target.owner==='System.Object'&&target.name==='ReferenceEquals')name='object.ReferenceEquals';
+    else if(target.owner==='System.Enum'&&target.name==='HasFlag')name='Enum.HasFlag';
     else if(target.owner==='System.Environment'&&target.name==='get_TickCount')name='Environment.TickCount';
     else if(owner==='int'||owner==='double'||owner==='string'||owner==='Array')name=owner+'.'+target.name;
     const builtin=BuiltinMap.get(name);if(!builtin)throw new CilError(`External method is not in the browser runtime profile: ${target.owner}.${target.name}`);return emit(Op.BUILTIN,builtin.id,argc);
   }
-  if(names.includes('box')&&names.includes('unbox.any')){const t=c.metadata.typeName(span.find(i=>i.name==='box').operand),id=enumTypes.indexOf(t);if(id>=0)return emit(Op.ENUM,id,constant(span[0],c.metadata));}
+  if(names.includes('box')&&names.includes('unbox.any')){const t=c.metadata.typeName(span.find(i=>i.name==='box').operand),id=enumTypes.indexOf(t);if(id>=0){if(['conv.i4','conv.ovf.i4'].includes(span[0].name))return emit(Op.CONVERT,EnumConvertBase+id,span[0].name==='conv.ovf.i4'?1:0);return emit(Op.ENUM,id,constant(span[0],c.metadata));}}
   const field=span.find(i=>['ldfld','stfld','ldsfld','stsfld'].includes(i.name));if(field){if(field.name.endsWith('sfld')){const index=c.staticByToken.get(field.operand);if(index===undefined)throw new CilError('Unknown static field token');return emit(field.name==='ldsfld'?Op.LDSTATIC:Op.STSTATIC,index);}const f=c.fieldByToken.get(field.operand);if(!f)throw new CilError('Unknown field token');return emit(field.name==='ldfld'?Op.LDFLD:Op.STFLD,f.index);}
   const array=span.find(i=>['newarr','ldelem','stelem','ldlen'].includes(i.name));if(array){if(array.name==='newarr')return emit(Op.NEWARR,c.intern(shortTypes[c.metadata.typeName(array.operand)]??c.metadata.typeName(array.operand)));return emit({ldelem:Op.LDELEM,stelem:Op.STELEM,ldlen:Op.LENGTH}[array.name]);}
   if(names.includes('ret'))return emit(Op.RET);if(names.includes('endfinally'))return emit(Op.ENDFINALLY);

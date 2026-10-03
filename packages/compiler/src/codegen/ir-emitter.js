@@ -1,5 +1,5 @@
 import {canonicalType,frameworkType,enumTypes} from '@sharpforge/framework';
-import {Op,Binary,Unary,BuiltinMap,frameworkBuiltin} from '@sharpforge/bytecode';
+import {EnumConvertBase,Op,Binary,Unary,BuiltinMap,frameworkBuiltin} from '@sharpforge/bytecode';
 import {isReference,defaultValue} from '../type-utils.js';
 import {classifyBinary,binaryMode} from '../binder/operators.js';
 /**
@@ -150,7 +150,9 @@ export class IrEmitter {
       case 'EventAssignmentOperator':this.expr(node.receiver);this.expr(node.argument);this.emitContract(node.event.contract);break;
       case 'Conversion':{
         this.expr(node.operand);if(!node.isExplicit)throw new Error(`Conversion '${node.conversion?.kind}' reached code generation without being lowered`);
-        this.emit(Op.CONVERT,node.legacyType==='int'?0:1,node.isChecked?1:0);break;}
+        // Roslyn folds floating constants differently from runtime conv.i4 saturation.
+        if(node.constantValue&&['int','double'].includes(node.legacyType)){this.emit(Op.POP);this.emitConstant(node.constantValue.value,node.legacyType);break;}
+        this.emit(Op.CONVERT,enumTypes.includes(node.legacyType)?EnumConvertBase+enumTypes.indexOf(node.legacyType):node.legacyType==='int'?0:1,node.isChecked?1:0);break;}
       case 'SwitchExpression':{
         const dispatch=this.switchDispatch(node.syntax,node.expression,node.arms.map(a=>[a.pattern])),ends=[];
         node.arms.forEach((arm,index)=>{for(const p of dispatch.branches[index])this.patch(p);if(dispatch.fallback===index)this.patch(dispatch.otherwise);this.expr(arm.value);ends.push(this.emit(Op.JUMP));});
