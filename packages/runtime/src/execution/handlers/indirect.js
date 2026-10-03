@@ -1,5 +1,5 @@
 import {readMemory, writeMemory} from '../raw-memory.js';
-import {valueLayout} from '../value-layout.js';
+import {sizeOfType} from '../value-layout.js';
 import {storageDefault} from '../storage.js';
 import {finishMemoryAccess} from '../statics.js';
 
@@ -11,7 +11,7 @@ function write(vm, pointer, value, type) {
   return pointer?.memoryPointer ? writeMemory(vm, pointer, stored, type) : vm.dereference(pointer, true, stored);
 }
 const handlers = new Map();
-handlers.set('sizeof', (vm, frame, instruction) => vm.push(valueLayout(vm, instruction.operand).size));
+handlers.set('sizeof', (vm, frame, instruction) => vm.push(sizeOfType(vm, instruction.operand)));
 handlers.set('cpobj', (vm, frame, instruction) => {
   const source = vm.pop();
   const destination = vm.pop();
