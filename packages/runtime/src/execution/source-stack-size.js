@@ -7,7 +7,8 @@ const effects = new Map([
   [Op.DUP, 1], [Op.POP, -1], [Op.BINARY, -1], [Op.UNARY, 0], [Op.CONVERT, 0],
   [Op.JFALSE, -1], [Op.JTRUE, -1], [Op.RET, -1], [Op.NEWARR, 0],
   [Op.LDELEM, -1], [Op.STELEM, -2], [Op.LENGTH, 0], [Op.THROW, -1],
-  [Op.ENDFILTER, -1], [Op.RETHROW, 0], [Op.DELEGATE, 0], [Op.LDIND, 0], [Op.STIND, -1]
+  [Op.ENDFILTER, -1], [Op.RETHROW, 0], [Op.DELEGATE, 0], [Op.LDIND, 0], [Op.STIND, -1],
+  [Op.ARGLIST, 1], [Op.MKREFANY, 0], [Op.REFANYVAL, 0], [Op.REFANYTYPE, 0]
 ]);
 const endings = new Set([Op.RET, Op.THROW, Op.RETHROW, Op.ENDFINALLY, Op.ENDFILTER]);
 

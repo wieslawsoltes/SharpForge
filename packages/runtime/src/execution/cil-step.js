@@ -2,6 +2,7 @@ import {ManagedFault} from '../heap.js';
 import {prepareCall} from './calls.js';
 import {getDecodePlan} from './decode-plan.js';
 import {ensureTypedNumericFrame} from './typed-numeric-frame.js';
+import {beginFrameInstruction, flushFramePool} from './frame-pool.js';
 
 /** Execute one existing debugger-visible instruction through its derived handler slot. */
 export function executeCilStep(vm) {
@@ -13,5 +14,7 @@ export function executeCilStep(vm) {
   const instruction = plan.instructions[index];
   if (!instruction) throw new ManagedFault('InvalidProgramException', 'Instruction pointer is outside the method');
   frame.lastOffset = instruction.offset;
-  plan.handlers[index](vm, frame, instruction);
+  beginFrameInstruction(vm, frame);
+  try { plan.handlers[index](vm, frame, instruction); }
+  finally { flushFramePool(vm); }
 }

@@ -117,7 +117,13 @@ export function framePool(vm) {
 
 /** Callers finish inspecting popped frame continuations before this instruction boundary. */
 export function flushFramePool(vm) {
-  vm.framePool?.flush();
+  if (!vm.framePool) return;
+  vm.framePool.activeFrame = null;
+  vm.framePool.flush();
+}
+
+export function beginFrameInstruction(vm, frame) {
+  framePool(vm).activeFrame = frame;
 }
 
 export function retirePooledFrame(vm, frame) {
