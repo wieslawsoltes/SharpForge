@@ -1,0 +1,169 @@
+{
+  "reference": {
+    "runtime": ".NET 10.0.5",
+    "sdk": "10.0.201",
+    "architecture": "osx-arm64",
+    "sourceCommit": "a466e3ca",
+    "sourcePath": "tests/fixtures/a05/numeric-oracle/int64.cs",
+    "sourceSha256": "6eadf18bcf4285086228f4e525edece53e2cbd419119441ff01c6f6d508cc1d7",
+    "outputPath": "tests/fixtures/a05/numeric-oracle/int64.txt.gz",
+    "outputSha256": "4e57861b8982cd866aa353f26d305e60ed462702d7dd08e4f3941884169deef5",
+    "note": "Selected unchanged output lines from the existing native oracle; no results were regenerated for this slice."
+  },
+  "cases": [
+    {
+      "opcode": "div",
+      "left": "1",
+      "right": "0",
+      "expected": "!DivideByZeroException",
+      "sourceLine": 33
+    },
+    {
+      "opcode": "rem",
+      "left": "1",
+      "right": "0",
+      "expected": "!DivideByZeroException",
+      "sourceLine": 34
+    },
+    {
+      "opcode": "div",
+      "left": "-9223372036854775808",
+      "right": "-1",
+      "expected": "!OverflowException",
+      "sourceLine": 91
+    },
+    {
+      "opcode": "rem",
+      "left": "-9223372036854775808",
+      "right": "-1",
+      "expected": "!OverflowException",
+      "sourceLine": 92
+    },
+    {
+      "opcode": "div.un",
+      "left": "-9223372036854775808",
+      "right": "-1",
+      "expected": "0",
+      "sourceLine": 98
+    },
+    {
+      "opcode": "rem.un",
+      "left": "-9223372036854775808",
+      "right": "-1",
+      "expected": "-9223372036854775808",
+      "sourceLine": 99
+    },
+    {
+      "opcode": "clt",
+      "left": "-9223372036854775808",
+      "right": "-1",
+      "expected": "1",
+      "sourceLine": 109
+    },
+    {
+      "opcode": "clt.un",
+      "left": "-9223372036854775808",
+      "right": "-1",
+      "expected": "1",
+      "sourceLine": 113
+    },
+    {
+      "opcode": "cgt.un",
+      "left": "-9223372036854775808",
+      "right": "-1",
+      "expected": "0",
+      "sourceLine": 115
+    },
+    {
+      "opcode": "add",
+      "left": "9223372036854775807",
+      "right": "1",
+      "expected": "-9223372036854775808",
+      "sourceLine": 117
+    },
+    {
+      "opcode": "add.ovf",
+      "left": "9223372036854775807",
+      "right": "1",
+      "expected": "!OverflowException",
+      "sourceLine": 130
+    },
+    {
+      "opcode": "sub.ovf",
+      "left": "9223372036854775807",
+      "right": "1",
+      "expected": "9223372036854775806",
+      "sourceLine": 131
+    },
+    {
+      "opcode": "mul",
+      "left": "-1",
+      "right": "-1",
+      "expected": "1",
+      "sourceLine": 148
+    },
+    {
+      "opcode": "add.ovf.un",
+      "left": "-1",
+      "right": "-1",
+      "expected": "!OverflowException",
+      "sourceLine": 162
+    },
+    {
+      "opcode": "mul.ovf.un",
+      "left": "-1",
+      "right": "-1",
+      "expected": "!OverflowException",
+      "sourceLine": 164
+    },
+    {
+      "opcode": "shl",
+      "left": "1",
+      "right": "64",
+      "expected": "1",
+      "sourceLine": 180
+    },
+    {
+      "opcode": "shr",
+      "left": "-1",
+      "right": "65",
+      "expected": "-1",
+      "sourceLine": 210
+    },
+    {
+      "opcode": "shr.un",
+      "left": "-1",
+      "right": "65",
+      "expected": "9223372036854775807",
+      "sourceLine": 216
+    },
+    {
+      "opcode": "shl",
+      "left": "1",
+      "right": "-1",
+      "expected": "-9223372036854775808",
+      "sourceLine": 238
+    },
+    {
+      "opcode": "mul",
+      "left": "4294967296",
+      "right": "4294967296",
+      "expected": "0",
+      "sourceLine": 293
+    },
+    {
+      "opcode": "mul.ovf",
+      "left": "4294967296",
+      "right": "4294967296",
+      "expected": "!OverflowException",
+      "sourceLine": 306
+    },
+    {
+      "opcode": "mul.ovf.un",
+      "left": "4294967296",
+      "right": "4294967296",
+      "expected": "!OverflowException",
+      "sourceLine": 309
+    }
+  ]
+}
