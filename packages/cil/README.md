@@ -67,8 +67,23 @@ Enums require known storage rather than an assumed Int32 width. The compiler imp
 reuses this codec through its existing result adapter, preserving its historical
 Int32 fallback when callers cannot resolve enum storage.
 
+`encodeConstant(type, value, options)` returns `{ type, bytes }` for a Constant row.
+Types are CLI element codes or primitive signature names. `decodeConstant(type,
+bytes, options)` returns the value, using BigInt outside JavaScript's safe integer
+range. Strings retain raw UTF-16 code units; null string/object values encode as
+element type `0x12` and four zero bytes. Invalid types, values, lengths, budgets and
+cancellation throw `CilError` with stable MD0120–MD0124 codes. The default `maxBytes`
+is 1 MiB, with a 128 MiB hard maximum; `signal` supports cancellation.
+
+The existing `metadata.definitions.constant({ Type, Parent, Value })` writer accepts
+the encoded type and bytes. Callers still set the owner's HasDefault flags; source
+constant/default emission is a separate follow-up. The compiler metadata importer
+uses the shared decoder. Native evidence is reproducible with
+`node packages/cil/tools/validate-constants.mjs` against .NET SRM and reflection.
+
 | Capability | API | Evidence |
 | --- | --- | --- |
+| Constant metadata values | `encodeConstant` / `decodeConstant` | Roslyn blobs, SRM and reflection |
 | Primitive and constructed types | Type AST encoder/decoder | SRM BlobEncoder corpus |
 | Methods, fields, locals, properties, MethodSpec | Signature AST encoder/decoder | SRM and Roslyn corpus |
 | Existing string emission | Member signature adapters | Focused compatibility tests |
