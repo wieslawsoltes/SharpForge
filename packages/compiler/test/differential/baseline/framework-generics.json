@@ -1,8 +1,0 @@
-{
-  "framework-generics/collections-in-generic-methods-and-nested-constructions": ["diagnostics", "warnings", "bytecode", "cil"],
-  "framework-generics/collections-inside-a-generic-class": ["diagnostics", "warnings", "bytecode", "cil"],
-  "framework-generics/collections-over-a-user-class": ["diagnostics", "warnings", "bytecode", "cil"],
-  "framework-generics/cs0029-cs0200-cs1061-members-of-constructed-collections": ["diagnostics", "warnings"],
-  "framework-generics/cs0029-cs0266-members-of-collections-over-type-parameters": ["diagnostics", "warnings"],
-  "framework-generics/tasks-collections-closures-and-iterators": ["diagnostics", "warnings", "bytecode", "cil"]
-}

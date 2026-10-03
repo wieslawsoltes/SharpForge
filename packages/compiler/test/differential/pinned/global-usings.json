@@ -1,9 +1,0 @@
-{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
-  "global-usings/namespace-static-and-alias":{"hash":"01b23a9f11e3c115","kind":"output","langVersion":"14.0","diagnostics":[],"output":"2\n3\n"},
-  "global-usings/cs8915-after-a-using":{"hash":"637e4bfda5930bba","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS8915",14,6,"error"]]},
-  "global-usings/cs8914-in-a-namespace":{"hash":"de3765c2ed7d877c","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS8914",14,6,"error"]]},
-  "global-usings/cs8914-in-a-file-scoped-namespace":{"hash":"1501b9eabbb86d67","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS8914",13,6,"error"]]},
-  "global-usings/cs0105-repeated-in-one-file":{"hash":"34e3cd561c62d851","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0105",34,6,"warning"],["CS0105",48,6,"warning"]]},
-  "global-usings/cs1537-alias-declared-twice":{"hash":"fa749ea142e60e33","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1537",39,1,"error"]]},
-  "global-usings/global-using-in-csharp-9":{"hash":"170c80ae42c47ddc","kind":"diagnostics","langVersion":"9.0","diagnostics":[["CS8773",0,6,"error"]]}
-}}

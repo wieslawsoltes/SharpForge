@@ -1,9 +1,0 @@
-{
-  "schemaVersion": 1,
-  "sourceCommit": "d506251568c9e441feb468541cca175953965215",
-  "bytes": 112012,
-  "sha256": "a08627ef52a9333c94e73c9d5b8aff28f10e9c63bcdfc3604330027619b650ff",
-  "ruleCount": 1181,
-  "orderedRulesSha256": "17be8347c808418eb2dfe9f4927dce68009da2c05537c40ec2cda4aa9452590a",
-  "sortedRulesSha256": "d1cd118765fb192322c5435988a3b975b2dfd291c004c2908ccaa7b09264aeeb"
-}

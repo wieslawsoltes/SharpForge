@@ -1,5 +1,0 @@
-{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
-  "method-group-arguments/method-groups-as-arguments":{"hash":"7a307bfe1a6912a0","kind":"output","langVersion":"14.0","diagnostics":[],"output":"8\nhello\n8 -4\n12 6 18\n2 4 4\n8\nabab\n6 2\n4\n3\n3\n20\nhello\nhello\n"},
-  "method-group-arguments/method-groups-as-arguments-in-generic-code":{"hash":"3eaa7fbb31c5aa44","kind":"output","langVersion":"14.0","diagnostics":[],"output":"n7\n2\n7 n7\n4\n"},
-  "method-group-arguments/cs1503-cs0123-method-group-argument-mismatch":{"hash":"169e959ddce37855","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1503",249,5,"error"],["CS1503",272,5,"error"],["CS0103",294,7,"error"],["CS7036",323,5,"error"]]}
-}}
