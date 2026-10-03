@@ -30,6 +30,9 @@ to exercise the runtime instruction.
 
 `tests/a05-int32-remainder.test.js` includes pure-helper cases, independently
 assembled CIL methods, source/reload/emitted-CIL regressions, injected fault
-identity and floating signed-zero controls. These tests are prepared but have
-not run for this branch. Native/browser qualification and performance measurement
-remain queued; no throughput claim or full T01 completion is implied.
+identity and floating signed-zero controls. Serial validation at `f6f58480` passed all 38 tests across this file,
+`a05-seams-numeric.test.js` and `a05-seams-source.test.js` under Node 24.21.0,
+with one test worker and a 512 MB heap cap. The required core check handles
+static/manifests and build validation. Native/browser qualification and
+performance measurement remain queued; no throughput claim or full T01
+completion is implied.
