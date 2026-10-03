@@ -1,4 +1,5 @@
 import { adjacentCharacter } from '../commands/movement.js';
+import { normalPoint } from './vim-motions.js';
 
 export function enterInsert(vim, mode = 'insert') {
   if (vim.context.readOnly) { vim.context.status('The document is read-only'); return; }
@@ -27,9 +28,19 @@ export function applyOperator(vim, operation, ranges) {
   const linewise = ordered.every(range => range.linewise);
   if (['d', 'c', 'y'].includes(operation)) {
     let text = ordered.map(range => context.slice(range.start, range.end)).join(linewise ? '' : ordered.length > 1 ? '\n' : '');
-    if (linewise && !text.endsWith('\n')) text += context.editor.options?.eol ?? '\n';
-    vim.registers.write(vim.register, text, { linewise, yank: operation === 'y' });
+    if (linewise && !/[\r\n]$/.test(text)) text += context.eol;
+    const capture = context.capture();
+    const written = vim.registers.write(vim.register, text, { linewise, yank: operation === 'y' });
+    if (written?.then) return written.then(() => {
+      context.assertCurrent(capture, 'writing a register');
+      return commitOperator(vim, operation, ordered);
+    });
   }
+  return commitOperator(vim, operation, ordered);
+}
+
+function commitOperator(vim, operation, ordered) {
+  const context = vim.context;
   vim.register = '"';
   if (operation === 'y') {
     context.goto(ordered[0].start);
@@ -40,9 +51,12 @@ export function applyOperator(vim, operation, ranges) {
   }
   const size = context.editor.options?.indentSize ?? context.editor.options?.tabSize ?? 4;
   const edits = ordered.map(range => {
+    if (operation === 'd' && range.linewise && range.end === context.length && range.start > 0) {
+      range = { ...range, start: context.lineEnd(context.position(range.start).line - 1) };
+    }
     const text = context.slice(range.start, range.end);
     const transforms = {
-      d: () => '', c: () => range.linewise ? context.editor.options?.eol ?? '\n' : '',
+      d: () => '', c: () => range.linewise && /[\r\n]$/.test(text) ? context.eol : '',
       '>': () => text.replace(/^/gm, ' '.repeat(size)).replace(/ +$/, ''),
       '<': () => text.replace(new RegExp(`^(?: {1,${size}}|\\t)`, 'gm'), ''),
       gu: () => text.toLowerCase(), gU: () => text.toUpperCase(),
@@ -56,7 +70,9 @@ export function applyOperator(vim, operation, ranges) {
     context.editor.model?.beginUndoGroup?.('vim-change');
     vim.inUndoGroup = true;
   }
-  context.apply(edits, [{ anchor: ordered[0].start, head: ordered[0].start }], { undoStop: operation !== 'c' });
+  const start = edits[0].start;
+  context.apply(edits, [{ anchor: start, head: start }], { undoStop: operation !== 'c' });
+  if (operation !== 'c') context.goto(normalPoint(context, Math.min(start, context.length)));
   vim.mode = 'normal';
   vim.changed = true;
   vim.resetPending(false);
@@ -110,27 +126,44 @@ export function removeCharacters(vim, backwards = false, count = 1) {
   const context = vim.context;
   const point = context.selection.head;
   let end = point;
-  for (let step = 0; step < count; step++) end = adjacentCharacter(context, end, backwards ? -1 : 1);
-  applyOperator(vim, 'd', [{ start: Math.min(point, end), end: Math.max(point, end), linewise: false }]);
+  const line = context.position(point).line;
+  const limit = backwards ? context.lineStart(line) : context.lineEnd(line);
+  for (let step = 0; step < count && end !== limit; step++) {
+    const next = adjacentCharacter(context, end, backwards ? -1 : 1);
+    end = backwards ? Math.max(limit, next) : Math.min(limit, next);
+  }
+  if (end === point) { vim.resetPending(); return; }
+  return applyOperator(vim, 'd', [{ start: Math.min(point, end), end: Math.max(point, end), linewise: false }]);
 }
 
 export async function pasteRegister(vim, before = false, count = 1) {
   const context = vim.context;
   if (context.readOnly) return;
-  const uri = context.uri;
-  const version = context.buffer?.version;
+  const capture = context.capture();
   const point = context.selection.head;
   const register = await vim.registers.read(vim.register);
   vim.register = '"';
-  if (uri !== context.uri || version !== context.buffer?.version) throw new Error('Document changed while reading a register');
+  context.assertCurrent(capture, 'reading a register');
+  if (context.readOnly) return false;
   if (register.text.length * count > vim.registers.maxCharacters) throw new RangeError('Register paste exceeds the character budget');
   const text = register.text.repeat(count);
+  if (vim.mode.startsWith('visual')) {
+    const ranges = visualRanges(vim);
+    const edits = ranges.map(range => ({ start: range.start, deleteCount: range.end - range.start, text }));
+    const head = ranges[0].start;
+    context.apply(edits, [{ anchor: head, head }]);
+    vim.mode = 'normal';
+    vim.changed = true;
+    vim.finishChange();
+    vim.notify();
+    return true;
+  }
   const position = context.position(point);
-  let start = before ? point : adjacentCharacter(context, point, 1);
+  let start = before ? point : Math.min(context.lineEnd(position.line), adjacentCharacter(context, point, 1));
   let prefix = '';
   if (register.linewise) {
     start = before ? context.lineStart(position.line) : context.lineEnd(position.line, true);
-    if (!before && position.line === context.lineCount - 1) prefix = context.editor.options?.eol ?? '\n';
+    if (!before && position.line === context.lineCount - 1) prefix = context.eol;
   }
   context.apply([{ start, deleteCount: 0, text: prefix + text }], [{ anchor: start + prefix.length, head: start + prefix.length }]);
   vim.changed = true;
