@@ -1,9 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {DesignerSession, DesignerSessionRegistry, DesignDocument, createDesign, generateDesignCode,
+import {DesignerSession, DesignerSessionRegistry, DesignDocument, createDesign, generateDesignProject,
   guideSettings, setUserGuide, updateGuideSettings} from '@sharpforge/designer';
 import {DesignerSourceSync} from '../apps/studio/designer-source-sync.js';
 import {DesignerDocuments} from '../apps/studio/designer-documents.js';
+
+function generatedSources(name, version = 1) {
+  // The default design references Program.OnAction, whose declaration belongs to the generated companion file.
+  return generateDesignProject(createDesign(name)).filter(file => file.path.endsWith('.cs')).map(file => ({
+    uri: file.path === 'DesignedView.g.cs' ? 'View.cs' : file.path, text: file.text, version
+  }));
+}
 
 function sourceView(session, files) {
   let sync;
@@ -31,8 +38,9 @@ const recoveredGuides = {
 };
 
 test('guide recovery survives actual C# source initialization and reconnect without dirtying source or model history', async () => {
-  const text = generateDesignCode(createDesign('Recovered CSharp view'));
-  const files = [{uri: 'View.cs', text, version: 1}];
+  const files = generatedSources('Recovered CSharp view');
+  const before = structuredClone(files);
+  const text = files.find(file => file.uri === 'View.cs').text;
   const registry = new DesignerSessionRegistry();
   registry.restore({version: 1, documents: [{uri: 'View.cs', mode: 'split', guides: recoveredGuides}]}, {files});
   const session = registry.open('View.cs', {viewState: {snap: 64}});
@@ -40,6 +48,7 @@ test('guide recovery survives actual C# source initialization and reconnect with
   const sync = sourceView(session, files);
   await sync.connect('View.cs');
   session.applyRecovery({final: true});
+  assert.equal(session.document.node('action').events.Click, 'Program.OnAction');
   assert.equal(placeholder.disposed, true);
   assert.deepEqual(guideSettings(session.document.value), recoveredGuides);
   assert.equal(session.document.revision, 0);
@@ -49,7 +58,7 @@ test('guide recovery survives actual C# source initialization and reconnect with
   assert.equal(sync.protocol.sourceDirty, false);
   assert.equal(sync.protocol.source.text, text);
   assert.equal(sync.protocol.document.designer, undefined);
-  assert.deepEqual(files, [{uri: 'View.cs', text, version: 1}]);
+  assert.deepEqual(files, before);
   await sync.connect('View.cs');
   assert.deepEqual(guideSettings(session.document.value), recoveredGuides);
   assert.equal(sync.dirty(), false);
@@ -58,8 +67,8 @@ test('guide recovery survives actual C# source initialization and reconnect with
 });
 
 test('guide-only edits, undo and redo request workspace persistence while C# stays synchronized', async () => {
-  const text = generateDesignCode(createDesign('Guide changes'));
-  const files = [{uri: 'View.cs', text, version: 1}];
+  const files = generatedSources('Guide changes');
+  const before = structuredClone(files);
   const events = [];
   const documents = new DesignerDocuments({
     state: {active: 'View.cs', files}, createTools() { throw new Error('No DOM host is needed'); }, openSource() {},
@@ -81,7 +90,7 @@ test('guide-only edits, undo and redo request workspace persistence while C# sta
   assert.equal(sync.dirty(), false);
   assert.equal(sync.protocol.sourceDirty, false);
   assert.equal(sync.designTimer, null);
-  assert.deepEqual(files, [{uri: 'View.cs', text, version: 1}]);
+  assert.deepEqual(files, before);
   documents.dispose();
 });
 
@@ -193,7 +202,7 @@ test('the guide boundary remains recoverable after a failed initial C# parse', a
   const sync = sourceView(session, files);
   await assert.rejects(sync.connect('View.cs'));
   assert.deepEqual(session.snapshot().guides, recoveredGuides);
-  files[0] = {uri: 'View.cs', text: generateDesignCode(createDesign('Repaired')), version: 2};
+  files.splice(0, files.length, ...generatedSources('Repaired', 2));
   await sync.connect('View.cs');
   session.applyRecovery({final: true});
   assert.deepEqual(guideSettings(session.document.value), recoveredGuides);
