@@ -30,14 +30,28 @@ test('LSP unsupported requests require method-not-found; malformed and duplicate
   assert.throws(()=>validate({jsonrpc:'2.0',id:1,error:{code:-32602,message:'wrong error'}},'serverToClient'),/-32601/);
   assert.throws(()=>validator('lsp',models)({jsonrpc:'1.0',method:'initialized',params:{}},'clientToServer'),/2.0/);
 });
-test('DAP schema detects missing error bodies and product probe retains any real conformance failure', async () => {
+test('DAP error responses preserve correlation and messages while satisfying the pinned schema', async () => {
+  const adapter = new DebugAdapter(), schema = dapValidator(models.dap);
+  const cases = [
+    {command:'unsupportedCommand',message:"DAP request 'unsupportedCommand' is not implemented"},
+    {command:'launch',arguments:{assembly:[256]},message:'launch.assembly must contain at most 64 MiB of unsigned bytes'},
+    {command:'continue',message:'A configured, paused debug session is required'},
+  ];
+  for (const [index, fixture] of cases.entries()) {
+    const request={seq:100+index,type:'request',command:fixture.command,arguments:fixture.arguments};
+    const response=await adapter.handle(request);
+    assert.deepEqual(response,{seq:index+1,type:'response',request_seq:request.seq,command:request.command,success:false,message:fixture.message,body:{}});
+    schema.check(response,'ErrorResponse');
+  }
+});
+test('DAP schema detects missing error bodies and the product probe returns a valid error response', async () => {
   const error={seq:1,type:'response',request_seq:1,command:'unsupportedCommand',success:false,message:'unsupported'};
   assert.throws(()=>dapValidator(models.dap).check(error,'ErrorResponse'),/body.*missing required/);
   dapValidator(models.dap).check({...error,body:{}},'ErrorResponse');
   const report=await probeUnsupported(), dap=report.results.find(row=>row.protocol==='dap');
   assert.equal(dap.actual.success,false); assert.match(dap.actual.message,/not implemented/);
-  if (!('body' in dap.actual)) { assert.equal(dap.status,'failed'); assert.equal(report.status,'failed'); assert.match(dap.error,/body/); }
-  else assert.equal(dap.status,'passed');
+  assert.deepEqual(dap.actual.body,{});
+  assert.equal(dap.status,'passed'); assert.equal(report.status,'passed');
   assert.equal(report.qualification,'unknown');
 });
 test('real stdio replay validates synthetic tooling traffic without calling it a VS Code recording', async () => {

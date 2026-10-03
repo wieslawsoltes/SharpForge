@@ -1,11 +1,13 @@
 import {stringFromChars} from './strings.js';
 import {methodOffsets} from './method-offsets.js';
-import {systemType,intrinsicDefinition} from '@sharpforge/cil';
+import {systemType,intrinsicDefinition,supportedDelegateCall} from '@sharpforge/cil';
+import {invokeBoundDelegate} from './delegate-targets.js';
 import {ManagedFault} from '../heap.js';
 import {SUSPENDED} from '../platform.js';
 import {storageDefault} from './storage.js';
 import {createExceptionState} from './eh.js';
 import {ensureTypeInitialized} from './static-init.js';
+import {enterCilMethod} from './cil-method-events.js';
 
 export function call(vm,token,args,extra={}) {
   if(vm.frames.length>=vm.options.maxFrames)throw new ManagedFault('StackOverflowException','Managed call depth exceeded');
@@ -16,6 +18,7 @@ export function call(vm,token,args,extra={}) {
     args[index + argumentOffset] = vm.storage(args[index + argumentOffset], method.signature.parameters[index]);
   }
   vm.frames.push({id:++vm.frameId,method,args,locals:method.locals.map(type=>method.initLocals?storageDefault(vm,type):undefined),stack:[],pc:0,lastOffset:0,offsets:methodOffsets(method),...createExceptionState(),needsInitialization:method.name!=='.cctor',...extra});
+  enterCilMethod(vm, vm.top);
 }
 export function ensureInitialized(vm,typeToken,trigger='field',genericIdentity=null) {
   return ensureTypeInitialized(vm,typeToken,trigger,genericIdentity);
@@ -36,6 +39,11 @@ export function invoke(vm,instruction) {
   if(target&&vm.ensureInitialized(descriptor.ownerToken,trigger,genericIdentity)){caller.pc--;return;}
   const args=caller.stack.splice(caller.stack.length-count,count);
   vm.heap.withRoots(args,()=>{
+    if(supportedDelegateCall(vm.inspector,descriptor)) {
+      const value=invokeBoundDelegate(vm,descriptor,args,instruction.name==='newobj');
+      if((instruction.name==='newobj'||descriptor.signature.returnType!=='void')&&value!==SUSPENDED)caller.stack.push(value);
+      return;
+    }
     const contract=intrinsicDefinition(descriptor)?.contract;
     if(instruction.name==='newobj'&&descriptor.owner==='System.String'&&descriptor.signature.parameters.join(',')==='char[]'){caller.stack.push(stringFromChars(vm,args[0]));return;}
     if(instruction.name==='newobj'&&contract){caller.stack.push(vm.platform.invoke(contract,args));return;}
