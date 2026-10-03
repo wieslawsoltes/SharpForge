@@ -3,12 +3,19 @@
  * deconstruction (`(int a, var b) = e`) and `var (a, (b, c)) = e`. A designation is a name, the discard `_`, or a
  * parenthesised list of designations.
  */
-const tupleElementFollowers = new Set([',', ')', '=']);
 export const declarationExpressionMethods = {
-  /** In a tuple or deconstruction: a type, a designation and then `,`, `)` or `=` (`(int a, var b)`). */
+  /**
+   * In a tuple: a type and a designation followed by `,` (or by `)` after the first element), as in
+   * `(int a, var b)` and `(x, var (y, z))`. Only `var` and predefined types take a parenthesised designation.
+   */
   isDeclarationExpressionAhead(i = this.i) {
     const end = this.scanDeclaredType(i);
-    return end > i && this.isId(this.tokens[end]) && tupleElementFollowers.has(this.kindAt(end + 1));
+    if (end <= i) return false;
+    const nested = this.kindAt(end) === '(' && end === i + 1 && (this.isWord(this.tokens[i], 'var') || this.isPredefined(this.tokens[i])),
+      after = nested ? this.scanDesignation(end) : this.isId(this.tokens[end]) ? end + 1 : -1;
+    if (after < 0) return false;
+    const follower = this.kindAt(after);
+    return follower === ',' || (follower === ')' && !this.tupleFirst);
   },
   /** After `out`: a type followed by a name declares a variable, whatever follows it (Roslyn's rule; `out a.b` is an expression). */
   isOutDeclarationAhead(i = this.i) {

@@ -10,6 +10,7 @@ export const tupleMethods = {
       this.tupleContext = true;
       for (;;) {
         const before = this.i;
+        this.tupleFirst = args.length === 0;
         args.push(this.argument());
         if (this.at(',')) args.push(this.take());
         else break;
@@ -17,6 +18,7 @@ export const tupleMethods = {
       }
     });
     this.tupleContext = saved;
+    this.tupleFirst = false;
     const close = this.expect(')'),
       first = args[0];
     if (args.length === 1 && !first.children[0] && !first.children[1]) return this.n('ParenthesizedExpression', open, first.children[2], close);

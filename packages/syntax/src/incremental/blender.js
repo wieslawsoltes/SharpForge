@@ -202,6 +202,8 @@ export const blenderMethods = {
       if (blend.asyncOf(node) !== this.inAsync) return null;
     } else {
       if ((node.parent.kind !== 'CompilationUnit') !== owner) return null;
+      // A braced namespace is an error inside a file-scoped one, so it is only reused under the same kind of parent.
+      if (node.kind === 'NamespaceDeclaration' && node.parent.kind !== this.namespaceKind) return null;
       const first = this.tokens[this.i].kind;
       if (first === '[' || first === 'extern' || first === 'using') return null;
     }

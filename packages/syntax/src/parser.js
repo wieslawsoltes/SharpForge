@@ -30,7 +30,8 @@ export function parseCompilationUnit(lexed, options = {}) {
 export function parse(source, cache, options = {}) {
   source = asSource(source);
   const lexed = lex(source, cache, options),
-    parsed = parseCompilationUnit(lexed, { ...options, cache }),
+    // The back end runs top-level statements wherever they stand, so the legacy entry point does not report CS8803.
+    parsed = parseCompilationUnit(lexed, { statementsAfterDeclarations: true, ...options, cache }),
     diagnostics = [...parsed.diagnostics, ...lexed.profileDiagnostics];
   const syntax = createNode(parsed.green, null, 0),
     report = (start, end, code, message) => {

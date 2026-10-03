@@ -52,6 +52,11 @@ export class Parser {
     this.memberName = null;
     this.containerKind = null;
     this.accessorBodies = 0;
+    // The namespace-like node whose members are being parsed and the token that closes it (null for the end of file).
+    this.namespaceKind = null;
+    this.namespaceClose = null;
+    // True while the first element of a parenthesised expression or tuple is parsed (it declares a variable only before a comma).
+    this.tupleFirst = false;
   }
   get current() {
     return this.tokens[this.i];
