@@ -12,7 +12,7 @@ function structuralDump(metadata) {
       const layout = rows(15).find(item => item[2] === index + 1);
       const enclosing = rows(41).find(item => item[0] === index + 1);
       return { token: token(2, index + 1), name: metadata.string(row[1]), namespace: metadata.string(row[2]), attributes: row[0],
-        enclosing: enclosing ? token(2, enclosing[1]) : 0, packing: layout?.[0] ?? 0, size: layout?.[1] ?? 0,
+        enclosing: token(2, enclosing?.[1] ?? 0), packing: layout?.[0] ?? 0, size: layout?.[1] ?? 0,
         interfaces: rows(9).map((item, n) => ({ item, n })).filter(entry => entry.item[0] === index + 1)
           .map(({ item, n }) => ({ token: token(9, n + 1), type: decodeCoded('TypeDefOrRef', item[1]) })),
         methods: rows(25).filter(item => item[0] === index + 1)

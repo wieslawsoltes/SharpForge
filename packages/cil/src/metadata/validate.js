@@ -94,7 +94,9 @@ function checkTable(context, table, rows) {
   const definition = tableDefinitions[table];
   if (!definition) { report(context, 'MD0004', { table }); return; }
   const unique = uniqueKeys[table], seen = new Set();
-  const sortKeys = metadataSortKeys[table];
+  // Roslyn preserves declaration order within a class's InterfaceImpl group.
+  // CLR/SRM binary search relies on the primary Class key, not interface order.
+  const sortKeys = table === 9 ? [0] : metadataSortKeys[table];
   const sorted = sortKeys && ((context.metadata.sortedMask ?? 0n) & (1n << BigInt(table)));
   for (let index = 0; index < rows.length; index++) {
     if ((index & 255) === 0) checkCancellation(context.signal);

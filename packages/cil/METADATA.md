@@ -40,3 +40,8 @@ Measure using `node --expose-gc scripts/bench/a03-metadata.js`. It records cold,
 p95 and p99 times plus heap deltas as an allocation proxy; timing is kept outside unit
 assertions. Fixture provenance and regeneration commands live in
 `tests/fixtures/a03-metadata/README.md`.
+
+The writer sorts InterfaceImpl by Class and Interface as specified by II.22. The reader
+validator checks the Class key for compatibility with Roslyn images, which preserve
+interface declaration order inside each class. The checked-in MiniStandard fixture
+covers this producer difference explicitly.

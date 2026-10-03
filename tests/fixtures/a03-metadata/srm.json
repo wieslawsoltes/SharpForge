@@ -1,0 +1,160 @@
+{
+  "counts": {
+    "0": 1,
+    "1": 1,
+    "2": 4,
+    "4": 1,
+    "6": 1,
+    "8": 1,
+    "9": 1,
+    "10": 1,
+    "11": 1,
+    "12": 1,
+    "13": 1,
+    "14": 1,
+    "15": 1,
+    "16": 1,
+    "17": 1,
+    "18": 1,
+    "20": 1,
+    "21": 1,
+    "23": 1,
+    "24": 1,
+    "25": 1,
+    "26": 1,
+    "27": 1,
+    "28": 1,
+    "29": 1,
+    "32": 1,
+    "35": 1,
+    "38": 1,
+    "39": 1,
+    "40": 1,
+    "41": 1,
+    "42": 1,
+    "43": 1,
+    "44": 1
+  },
+  "types": [
+    {
+      "token": 33554433,
+      "name": "\u003CModule\u003E",
+      "namespace": "",
+      "attributes": 0,
+      "enclosing": 33554432,
+      "packing": 0,
+      "size": 0,
+      "interfaces": [],
+      "methods": []
+    },
+    {
+      "token": 33554434,
+      "name": "Owner",
+      "namespace": "Fixture",
+      "attributes": 17,
+      "enclosing": 33554432,
+      "packing": 4,
+      "size": 4,
+      "interfaces": [
+        {
+          "token": 150994945,
+          "type": 33554436
+        }
+      ],
+      "methods": [
+        {
+          "body": 100663297,
+          "declaration": 100663297
+        }
+      ]
+    },
+    {
+      "token": 33554435,
+      "name": "Nested",
+      "namespace": "",
+      "attributes": 2,
+      "enclosing": 33554434,
+      "packing": 0,
+      "size": 0,
+      "interfaces": [],
+      "methods": []
+    },
+    {
+      "token": 33554436,
+      "name": "IContract",
+      "namespace": "Fixture",
+      "attributes": 161,
+      "enclosing": 33554432,
+      "packing": 0,
+      "size": 0,
+      "interfaces": [],
+      "methods": []
+    }
+  ],
+  "fields": [
+    {
+      "token": 67108865,
+      "name": "Number",
+      "attributes": 22,
+      "offset": 0,
+      "rva": 12288,
+      "constant": {
+        "type": 8,
+        "value": "2A000000"
+      }
+    }
+  ],
+  "imports": [
+    {
+      "token": 100663297,
+      "name": "Import",
+      "importName": "native_method",
+      "importModule": 436207617,
+      "importFlags": 257
+    }
+  ],
+  "resources": [
+    {
+      "name": "Resource",
+      "offset": 0,
+      "attributes": 1,
+      "implementation": 637534209
+    }
+  ],
+  "exported": [
+    {
+      "name": "Forwarded",
+      "namespace": "Fixture",
+      "attributes": 2097153,
+      "implementation": 587202561
+    }
+  ],
+  "files": [
+    {
+      "name": "linked.bin",
+      "containsMetadata": false,
+      "hash": "010203"
+    }
+  ],
+  "events": [
+    {
+      "name": "Changed",
+      "type": 16777217,
+      "attributes": 0
+    }
+  ],
+  "security": [
+    {
+      "action": 2,
+      "parent": 536870913,
+      "value": "2E00"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "value",
+      "sequence": 1,
+      "marshal": "07"
+    }
+  ]
+}

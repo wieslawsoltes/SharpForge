@@ -1,6 +1,6 @@
 import { performance } from 'node:perf_hooks';
 import { cpus, platform, arch } from 'node:os';
-import { MetadataBuilder, readMetadata, validateMetadata } from '@sharpforge/cil';
+const { MetadataBuilder, readMetadata, validateMetadata } = await import(process.argv[2] ?? '@sharpforge/cil');
 import { metadataFixture } from '../../tests/fixtures/a03-metadata/fixture.js';
 
 function measure(action, iterations = 30) {
@@ -30,7 +30,11 @@ const blobs = measure(() => {
   for (let index = 0; index < 100000; index++) { view.setUint32(0, index, true); builder.blob(bytes); }
 }, 10);
 const read = measure(() => readMetadata(bytes));
-const validate = measure(() => validateMetadata(readMetadata(bytes)));
+const large = new MetadataBuilder('LargeRows');
+large.rows[1] = Array.from({ length: 10000 }, () => [0, large.string('T'), 0]);
+const largeBytes = large.finish(null, new Uint8Array());
+const read10000Rows = measure(() => readMetadata(largeBytes), 20);
+const validate = validateMetadata ? measure(() => validateMetadata(readMetadata(bytes))) : null;
 console.log(JSON.stringify({ node: process.version, os: platform(), arch: arch(), cpu: cpus()[0].model,
   measurement: 'heapUsed delta is an allocation proxy; explicit GC before iterations when --expose-gc is passed',
-  blobs100k: blobs, read, validate }, null, 2));
+  blobs100k: blobs, read, read10000Rows, validate }, null, 2));
