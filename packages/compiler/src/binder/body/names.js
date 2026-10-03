@@ -368,7 +368,10 @@ export const NameBinding = Base =>
       }
       // A predefined type whose member names are all known cannot have the member: extension methods are next.
       const isKnownGap = isKnownMissingMember(type, name) && !this.importsUnknownNamespaces();
-      if (!isKnownGap && (type.hasUnknownConstraint || !this.d.closedHierarchy(type))) return this.lenient(syntax);
+      // An array's own members are few and known by name, so an extension method of that name is the one meant;
+      // on any other type that is not fully known a missing member proves nothing.
+      const isOpen = !isKnownGap && (type.hasUnknownConstraint || !this.d.closedHierarchy(type));
+      if (isOpen && !(type instanceof ArrayTypeSymbol)) return this.lenient(syntax);
       // Extension methods (only meaningful when the name is invoked, but a method group conversion may also use them).
       const scopes = extensionScopes(
         this.typeScope.namespaceChain.map(l => ({
@@ -389,6 +392,7 @@ export const NameBinding = Base =>
           typeArguments,
           isExtensionOnly: true,
         });
+      if (isOpen) return this.lenient(syntax);
       if (!isKnownGap && !isSource(type) && type.typeKind !== TypeKind.TypeParameter)
         return this.reportMissingFrameworkMember(type, name, nameSyntax, syntax, 'CS1061');
       this.report(nameSyntax, 'CS1061', [this.display(type), name]);
