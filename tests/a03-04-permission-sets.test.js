@@ -41,7 +41,8 @@ test('compressed named-argument counts exceed one byte and preserve field/proper
 });
 
 test('typed array/null values reuse the custom-attribute grammar and own their input', () => {
-  const input = Buffer.from(permissionSet([{ name: 'Names', isField: false, type: 'string[]', value: ['first', null] }]));
+  const input = Buffer.from(permissionSet([{ name: 'Names', isField: false,
+    type: { kind: 'szarray', element: 'string' }, value: ['first', null] }]));
   const result = decodeBinaryPermissionSet(input.subarray(0));
   input.fill(0);
   assert.deepEqual(result.attributes[0].namedArguments[0].value.value.map(value => value.value), ['first', null]);

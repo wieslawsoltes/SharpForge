@@ -1,0 +1,42 @@
+{
+  "scope": "Existing compiler custom-attribute decoder after extracting the shared named-argument grammar",
+  "beforeCommit": "c6761da92f2b944726e165c41d451908bd278b81",
+  "afterSourceCommit": "9ac9aff9",
+  "afterReaderSha256": "80e315e3e86136f83aa2eac93bad8d3410b3466639136134f0a6572d8916987a",
+  "command": "node scripts/limited.js node packages/cil/tools/benchmark-attribute-reader.mjs",
+  "hostConditions": "Shared Apple M3 Pro; team jobs serial, external agents may be active. Not a dedicated quiet host.",
+  "before": {
+    "node": "v24.21.0",
+    "os": "darwin 25.6.0 arm64",
+    "cpu": "Apple M3 Pro",
+    "iterations": 2000,
+    "samples": 31,
+    "allocationMetric": "V8 sampled allocations, including collected objects; estimate, not exact bytes",
+    "results": {
+      "decode": {
+        "coldMicroseconds": 49.54100000000494,
+        "medianMicroseconds": 0.8015624999999886,
+        "p95Microseconds": 1.264354499999996,
+        "p99Microseconds": 1.3543749999999974,
+        "sampledAllocationBytesPerOperation": 2529.116
+      }
+    }
+  },
+  "after": {
+    "node": "v24.21.0",
+    "os": "darwin 25.6.0 arm64",
+    "cpu": "Apple M3 Pro",
+    "iterations": 2000,
+    "samples": 31,
+    "allocationMetric": "V8 sampled allocations, including collected objects; estimate, not exact bytes",
+    "results": {
+      "decode": {
+        "coldMicroseconds": 59.87499999999102,
+        "medianMicroseconds": 0.8159374999999968,
+        "p95Microseconds": 1.3469375000000028,
+        "p99Microseconds": 1.4789584999999974,
+        "sampledAllocationBytesPerOperation": 2521.74
+      }
+    }
+  }
+}

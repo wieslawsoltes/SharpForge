@@ -41,3 +41,17 @@ Reference grammar is the [Roslyn permission-set serializer](https://github.com/d
 and [native SRM BlobEncoder](https://source.dot.net/system.reflection.metadata/System/Reflection/Metadata/Ecma335/Encoding/BlobEncoders.cs.html).
 The fixture uses the installed .NET SRM encoder to produce empty, SecurityPermission
 and multiple-attribute blobs; it does not claim compiler binding of security attributes.
+
+Validation on Node 24.21.0/macOS ARM64: native SDK 10.0.201 / CoreCLR 10.0.5
+confirms all three blobs, 23 focused permission/attribute/compiler-import tests
+pass, syntax checks cover 1940 modules and static checks cover 1936 with zero
+errors, and structure has no introduced findings. The initial array test used
+an unsupported type shorthand; it now supplies the existing typed array AST.
+
+The existing attribute-decoder benchmark measured median 0.80156 → 0.81594 µs
+(+1.8%), p95 1.26435 → 1.34694 µs (+6.5%), and sampled allocations 2529 → 2522
+bytes/op. Root review accepts the 0.083 µs p95 increase for the shared parsing
+seam; this provides permission decoding without copying attribute bodies or
+duplicating their grammar. The host was shared, measurements are not proof of
+statistical significance, and no speedup is claimed. Command and raw 31-sample
+results are in `benchmarks/permission-reader-node24.json`.
