@@ -31,15 +31,17 @@ export const Initialization = Base =>
       return list;
     }
     /** Statements that store each initializer into its field; each initializer is its own scope. */
-    initializerBlock(initializers, frame) {
+    initializerBlock(initializers, frame, parameters = []) {
       const statements = [];
       for (const { member, record, bound } of initializers) {
         const captures = analyzeCaptures(bound.expression);
         const own = new Frame({ uri: this.uriOf(member), method: frame.method, thisExpr: frame.thisExpr, captures, root: frame.root });
         const translator = new BodyTranslator(this, own);
+        // The parameters of a primary constructor are in scope in every instance initializer.
+        const entry = translator.declareParameters(parameters);
         const target = record.isStatic ? n.staticField(record) : n.field(frame.thisExpr(), record);
         const store = n.expressionStatement(n.assign(target, translator.expression(bound.expression)), n.spanOf(bound.syntax, own.uri));
-        statements.push(n.block([translator.withPending(store)], translator.scopes[0]));
+        statements.push(n.block([...entry, translator.withPending(store)], translator.scopes[0]));
       }
       return n.block(statements);
     }
@@ -57,23 +59,31 @@ export const Initialization = Base =>
     declareInstanceInitializers() {
       const work = [];
       for (const [type, owner] of this.classes) {
-        const initializers = this.initializersOf(type, false);
-        if (!initializers.length) continue;
-        const method = this.program.addMethod(owner, '<init>', { isStatic: false, returnType: 'void', parameters: [], node: owner.node });
-        this.instanceInits.set(type, method);
-        work.push({ type, method, initializers });
-        const constructors = type.getMembers('.ctor').filter(c => c.methodKind === MethodKind.Constructor && !c.isImplicitlyDeclared);
-        if (constructors.length) continue;
+        const item = this.declareInstanceInitializer(type, owner);
+        if (item) work.push(item);
+      }
+      return work;
+    }
+    /** The `<init>` of one class (and its constructor when it declares none), or null when it has no initializers. */
+    declareInstanceInitializer(type, owner) {
+      const initializers = this.initializersOf(type, false);
+      if (!initializers.length) return null;
+      // The initializers of a type with a primary constructor run with its parameters in scope.
+      const parameters = type.primaryConstructor ? this.parametersOf(type.primaryConstructor) : [];
+      const method = this.program.addMethod(owner, '<init>', { isStatic: false, returnType: 'void', parameters, node: owner.node });
+      this.instanceInits.set(type, method);
+      const constructors = type.getMembers('.ctor').filter(c => c.methodKind === MethodKind.Constructor && !c.isImplicitlyDeclared);
+      if (!constructors.length) {
         const implicit = this.program.addMethod(owner, '.ctor', { isStatic: false, returnType: 'void', parameters: [], node: owner.node });
         this.implicitConstructors.set(type, implicit);
         this.bodies.push({ method: implicit, body: n.block([n.expressionStatement(n.call(method, n.thisReference(owner.name), []))]) });
       }
-      return work;
+      return { type, method, initializers };
     }
     buildInstanceInitializers(work) {
       for (const { type, method, initializers } of work) {
         const frame = this.memberFrame(method, { name: '.ctor' }, this.uriOf(type), null);
-        this.bodies.push({ method, body: this.initializerBlock(initializers, frame) });
+        this.bodies.push({ method, body: this.initializerBlock(initializers, frame, type.primaryConstructor?.parameters ?? []) });
         this.drain();
       }
     }
@@ -81,15 +91,20 @@ export const Initialization = Base =>
     declareTypeInitializers() {
       const work = [];
       for (const [type, owner] of this.classes) {
-        const initializers = this.initializersOf(type, true),
-          constructor = type.getMembers().find(m => m.kind === SymbolKind.Method && m.methodKind === MethodKind.StaticConstructor);
-        if (!initializers.length && !constructor) continue;
-        const done = this.program.addStatic(owner, '<>initialized', 'bool'),
-          ensure = this.program.addMethod(owner, '<EnsureInitialized>', { isStatic: true, returnType: 'void', parameters: [] });
-        this.typeInits.set(type, { ensure, precise: !!constructor });
-        work.push({ type, done, ensure, initializers, constructor });
+        const item = this.declareTypeInitializer(type, owner);
+        if (item) work.push(item);
       }
       return work;
+    }
+    /** The lazy type initializer of one class, or null when it has neither static initializers nor a static constructor. */
+    declareTypeInitializer(type, owner) {
+      const initializers = this.initializersOf(type, true),
+        constructor = type.getMembers().find(m => m.kind === SymbolKind.Method && m.methodKind === MethodKind.StaticConstructor);
+      if (!initializers.length && !constructor) return null;
+      const done = this.program.addStatic(owner, '<>initialized', 'bool'),
+        ensure = this.program.addMethod(owner, '<EnsureInitialized>', { isStatic: true, returnType: 'void', parameters: [] });
+      this.typeInits.set(type, { ensure, precise: !!constructor });
+      return { type, done, ensure, initializers, constructor };
     }
     buildTypeInitializers(work) {
       for (const { type, done, ensure, initializers, constructor } of work) {
@@ -99,9 +114,11 @@ export const Initialization = Base =>
           n.ifStatement(n.staticField(done), n.returnStatement()),
           n.expressionStatement(n.assign(n.staticField(done), n.literal(true, 'bool'))),
         ];
-        this.typeInitializing = type;
+        // Compared by key: two constructions of one generic class are initialized separately.
+        const outer = this.typeInitializing;
+        this.typeInitializing = this.generics.keyOf(type);
         if (initializers.length) statements.push(this.initializerBlock(initializers, frame));
-        this.typeInitializing = null;
+        this.typeInitializing = outer;
         if (constructor) statements.push(n.expressionStatement(n.call(this.methodOf(constructor), null, [])));
         this.bodies.push({ method: ensure, body: n.block(statements) });
         this.drain();
@@ -110,8 +127,8 @@ export const Initialization = Base =>
     /** The call that initializes the class of a static member before it is used, or null when there is nothing to run. */
     typeInitializerCall(member, { anyMember = false } = {}) {
       const type = member.containingType ?? member.containingSymbol,
-        init = this.typeInits.get(type?.originalDefinition ?? type);
-      if (!init || this.typeInitializing === type) return null;
+        init = type ? this.typeInits.get(type) : null;
+      if (!init || this.typeInitializing === this.generics.keyOf(type)) return null;
       if (anyMember && !init.precise) return null;
       return n.call(init.ensure, null, []);
     }

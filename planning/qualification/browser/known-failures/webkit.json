@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "engine": "webkit",
+  "failures": [
+    {
+      "id": "navigation-policy",
+      "mode": "deployed",
+      "suite": "smoke",
+      "device": null,
+      "platform": "darwin",
+      "errorContains": "Required script-src self CSP is missing",
+      "issue": "https://github.com/wieslawsoltes/SharpForge/issues/1158",
+      "reason": "The currently published Pages application has no enforced script-src policy."
+    },
+    {
+      "id": "transfer-buffer-compute",
+      "mode": "file",
+      "suite": "smoke",
+      "device": null,
+      "platform": "darwin",
+      "errorContains": "Browser predicate timed out: sharpforge.getState().debug?.state",
+      "issue": "https://github.com/wieslawsoltes/SharpForge/issues/1154",
+      "reason": "WebKit standalone file navigation runs basic IL but nested compute does not finish."
+    }
+  ]
+}

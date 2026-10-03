@@ -113,6 +113,10 @@ export const TypeTestBinding = Base =>
       const receiver = this.value(syntax.expression);
       if (receiver.hasErrors) return this.bad(syntax);
       const type = receiver.type;
+      if (receiver.kind === 'MethodGroup' && receiver.methods?.length) {
+        this.report(syntax.expression, 'CS0119', [receiver.methods[0].toDisplayString(), 'method']);
+        return this.bad(syntax);
+      }
       if (!type || receiver.kind === 'MethodGroup') {
         this.report(syntax.operatorToken, 'CS0023', ['?', this.operandDisplay(receiver)]);
         return this.bad(syntax);
@@ -124,10 +128,16 @@ export const TypeTestBinding = Base =>
       const placeholder = this.node('ConditionalReceiver', syntax.expression, isNullableType(type) ? stripNullable(type) : type, {});
       const access = this.whenNotNull(syntax.whenNotNull, placeholder);
       if (access.hasErrors) return this.bad(syntax);
+      if (access.kind === 'MethodGroup') {
+        // `a?.M` without a call: a method group has no nullable form.
+        this.report(syntax.whenNotNull, 'CS8978', ['method group']);
+        return this.bad(syntax);
+      }
       const t = access.type;
       let result;
       if (!t || t.specialType === 'System_Void') result = this.core.void;
       else if (t.isValueType === true && !isNullableType(t)) result = this.core.nullableOf(t);
+      else if (syntax.parent?.kind === 'ExpressionStatement') result = t;
       else if (t.typeKind === TypeKind.TypeParameter && t.isReferenceType !== true && t.isValueType !== true) {
         this.report(syntax.whenNotNull, 'CS8978', [t.name]);
         return this.bad(syntax);
@@ -137,11 +147,16 @@ export const TypeTestBinding = Base =>
     whenNotNull(syntax, receiver) {
       switch (syntax.kind) {
         case 'MemberBindingExpression': {
+          // A missing member is reported on the whole binding (`.Name`), the form Roslyn names.
           const name = syntax.name.identifier.valueText;
-          return this.instanceMember(receiver, receiver.type, name, syntax.name, syntax, this.typeArgumentsOf(syntax.name), {});
+          return this.instanceMember(receiver, receiver.type, name, syntax, syntax, this.typeArgumentsOf(syntax.name), {});
         }
         case 'ElementBindingExpression':
-          return this.lenient(syntax);
+          return this.elementAccessOn(receiver, this.arguments(syntax.argumentList), syntax);
+        case 'ElementAccessExpression': {
+          const left = this.asValueOrGroup(this.whenNotNull(syntax.expression, receiver));
+          return left.hasErrors ? left : this.elementAccessOn(left, this.arguments(syntax.argumentList), syntax);
+        }
         case 'SimpleMemberAccessExpression': {
           const left = this.asValueOrGroup(this.whenNotNull(syntax.expression, receiver));
           if (left.hasErrors) return left;

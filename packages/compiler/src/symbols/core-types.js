@@ -10,9 +10,13 @@ import { specialTypeFromKeyword } from './special-types.js';
 import { MethodSymbol, PropertySymbol, ParameterSymbol, MethodKind, DeclarationModifiers } from './members.js';
 import { Accessibility } from './types.js';
 import { declareSpanTypes } from './span-types.js';
+import { declareIndexRangeTypes } from './index-range-types.js';
 import { declareAsyncEnumeration } from './async-enumeration.js';
+import { declareExpressionTreeTypes } from './expression-tree-types.js';
 import { declareCoreTypeRelations } from './core-type-relations.js';
 import { declareExceptionTypes } from './exception-types.js';
+import { declareAttributeTypes } from './attribute-types.js';
+import { declareArrayMembers } from './array-members.js';
 
 const keywordNames = [
   'object',
@@ -71,14 +75,17 @@ export class CoreTypes {
     this.ireadOnlyCollectionT = bridge.coreType('System_Collections_Generic_IReadOnlyCollection_T');
     this.augment();
     declareExceptionTypes(this);
-    Object.assign(this, declareSpanTypes(this), declareCoreTypeRelations(this));
+    Object.assign(this, declareSpanTypes(this), declareIndexRangeTypes(this), declareCoreTypeRelations(this));
     this.task = bridge.coreType('System_Threading_Tasks_Task');
     this.taskT = bridge.coreType('System_Threading_Tasks_Task_T');
     this.valueTask = bridge.coreType('System_Threading_Tasks_ValueTask');
     this.valueTaskT = bridge.coreType('System_Threading_Tasks_ValueTask_T');
     declareAsyncEnumeration(this);
+    declareExpressionTreeTypes(this);
     this.type = bridge.coreType('System_Type');
     this.attribute = bridge.coreType('System_Attribute');
+    declareAttributeTypes(this);
+    declareArrayMembers(this);
   }
   /**
    * Members every C# program may use but the closed registry does not list: the System.Object surface (so user types

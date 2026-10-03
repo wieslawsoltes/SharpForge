@@ -61,7 +61,7 @@ export const diagnosticCases=[
  ['break outside loop','break;','CS0139'],
  ['rethrow outside catch','throw;','CS0156'],
  ['unknown type','Missing x=null;','CS0246'],
- ['double to int','int x=1.2;','CS0029'],
+ ['double to int','int x=1.2;','CS0266'],
  ['const write','const int x=1;x=2;','CS0131'],
  ['no entry','class A {}','CS5001'],
  ['invalid condition','if(1)Console.WriteLine(1);','CS0029']

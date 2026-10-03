@@ -15,7 +15,7 @@ import { TypeKind } from '../../symbols/types.js';
 import { n } from '../../codegen/semantic/node-factory.js';
 
 /** `expression` with the node `original` replaced by `replacement`, through the conversions applied to it. */
-function substitute(expression, original, replacement) {
+export function substitute(expression, original, replacement) {
   if (expression === original) return replacement;
   if (expression?.kind === 'Conversion') return { ...expression, operand: substitute(expression.operand, original, replacement) };
   return expression;

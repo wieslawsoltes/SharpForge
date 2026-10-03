@@ -1,0 +1,730 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Bounded product acceptance scenario",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "id",
+    "targets",
+    "timeoutMs",
+    "steps"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,63}$"
+    },
+    "targets": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "cli",
+          "studio"
+        ]
+      }
+    },
+    "timeoutMs": {
+      "type": "integer",
+      "minimum": 100,
+      "maximum": 120000
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 100,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action",
+              "fixture",
+              "entry",
+              "startup"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "open"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              },
+              "fixture": {
+                "enum": [
+                  "solution",
+                  "designer"
+                ]
+              },
+              "entry": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 300,
+                "pattern": "^[A-Za-z0-9_./-]+$"
+              },
+              "startup": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 300,
+                "pattern": "^[A-Za-z0-9_./-]+$"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action",
+              "path",
+              "find",
+              "replace"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "edit"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 300,
+                "pattern": "^[A-Za-z0-9_./-]+$"
+              },
+              "find": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              },
+              "replace": {
+                "type": "string",
+                "maxLength": 1000
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "build"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action",
+              "points"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "breakpoints"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              },
+              "points": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 30,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "path",
+                    "line"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 300,
+                      "pattern": "^[A-Za-z0-9_./-]+$"
+                    },
+                    "line": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100000
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "debug"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 300,
+                "pattern": "^[A-Za-z0-9_./-]+$"
+              },
+              "line": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100000
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action",
+              "kind"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "step"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              },
+              "kind": {
+                "enum": [
+                  "next",
+                  "stepIn",
+                  "stepOut"
+                ]
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 300,
+                "pattern": "^[A-Za-z0-9_./-]+$"
+              },
+              "line": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100000
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action",
+              "expression",
+              "equals"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "inspect"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              },
+              "expression": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              },
+              "equals": {
+                "type": "string",
+                "maxLength": 1000
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "continue"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 300,
+                "pattern": "^[A-Za-z0-9_./-]+$"
+              },
+              "line": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100000
+              },
+              "output": {
+                "type": "string",
+                "maxLength": 10000
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action",
+              "fixture"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "designer-create"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              },
+              "fixture": {
+                "enum": [
+                  "solution",
+                  "designer"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action",
+              "path"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "designer-connect"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 300,
+                "pattern": "^[A-Za-z0-9_./-]+$"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action",
+              "node",
+              "property",
+              "value"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "designer-edit"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              },
+              "node": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              },
+              "property": {
+                "enum": [
+                  "Width",
+                  "Height",
+                  "Content",
+                  "Text"
+                ]
+              },
+              "value": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean"
+                ],
+                "maxLength": 1000
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action",
+              "path",
+              "contains"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "source-contains"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 300,
+                "pattern": "^[A-Za-z0-9_./-]+$"
+              },
+              "contains": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "run"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "designer-attach"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action",
+              "name",
+              "property",
+              "value"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "designer-live"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              },
+              "property": {
+                "enum": [
+                  "Width",
+                  "Height",
+                  "Content",
+                  "Text"
+                ]
+              },
+              "value": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean"
+                ],
+                "maxLength": 1000
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action",
+              "name",
+              "property",
+              "value"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "scene"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              },
+              "property": {
+                "enum": [
+                  "Width",
+                  "Height",
+                  "Content",
+                  "Text"
+                ]
+              },
+              "value": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean"
+                ],
+                "maxLength": 1000
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "git-init"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "git-commit"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "git-branch"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "git-merge"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "action"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]{0,63}$"
+              },
+              "action": {
+                "const": "publish"
+              },
+              "timeoutMs": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 120000
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

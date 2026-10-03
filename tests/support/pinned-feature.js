@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { loadFixtures, loadPinned } from '../../packages/compiler/test/differential/corpus.js';
+import { loadFixtures, loadPinned } from '../../packages/compiler/test/differential/corpus-store.js';
 import { runFixture } from '../../packages/compiler/test/differential/harness.js';
 import { semanticRow } from '../../packages/compiler/test/differential/tools/semantic-report.mjs';
 
@@ -10,9 +10,12 @@ import { semanticRow } from '../../packages/compiler/test/differential/tools/sem
  *   - each output fixture prints on the bytecode VM and on the CIL VM what the program prints on .NET.
  * @param {string} workId the work item the tests are named after
  * @param {string} feature the fixture feature id (packages/compiler/test/differential/fixtures)
- * @param {{outputs:number, diagnostics:number}} minimum the least number of fixtures of each kind the feature must have
+ * @param {{outputs:number, diagnostics:number, knownGaps?:Record<string,string>}} minimum the least number of fixtures of
+ *   each kind the feature must have; `knownGaps` maps a fixture id to the reason it does not match yet - such a fixture
+ *   must keep failing, so the entry is removed when the gap closes
  */
 export function testPinnedFeature(workId, feature, minimum) {
+  const knownGaps = minimum.knownGaps ?? {};
   const fixtures = loadFixtures().filter(fixture => fixture.feature === feature);
   const pinned = loadPinned().results;
   const outputs = fixtures.filter(fixture => fixture.kind === 'output');
@@ -24,7 +27,8 @@ export function testPinnedFeature(workId, feature, minimum) {
       assert.ok(expected, `${fixture.id} is not pinned`);
       const row = semanticRow(fixture, expected);
       assert.equal(row.crash, undefined, `${fixture.id}: ${row.crash}`);
-      assert.equal(row.ok, true, `${fixture.id}: ${JSON.stringify(row.details)}`);
+      if (fixture.id in knownGaps) assert.equal(row.ok, false, `${fixture.id} matches now: remove it from knownGaps (${knownGaps[fixture.id]})`);
+      else assert.equal(row.ok, true, `${fixture.id}: ${JSON.stringify(row.details)}`);
     }
   });
 

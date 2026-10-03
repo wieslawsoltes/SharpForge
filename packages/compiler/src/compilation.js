@@ -16,14 +16,17 @@ import {applySuppression} from './diagnostics/suppression.js';
 import {pragmaWarningsOf} from './diagnostics/pragma-trivia.js';
 import {parserDiagnosticsWithoutSuppressMessage} from './diagnostics/suppress-message-attributes.js';
 import {BuckStopsHereBinder,InContainerBinder,WithUsingsBinder} from './binder/binder.js';
-import {featureDiagnosticsOf} from './binder/feature-check.js';
 import {NullableContextMap} from './nullable/annotations.js';
 import {typeSyntaxSpan} from './binder/type-spans.js';
+import {syntaxFeatureChecks} from './syntax-features.js';
 import {reconcileWithSemanticAnalysis} from './semantic-integration.js';
 export class Compilation {
   constructor(parsedFiles, options={}) {
+    const syntaxChecks = syntaxFeatureChecks(parsedFiles, options);
+    this.syntaxFeatureFailures = syntaxChecks.unavailable;
+    this.syntaxFeatureDiagnostics = syntaxChecks.diagnostics;
     this.inputFiles=parsedFiles;parsedFiles=lowerAsyncFiles(parsedFiles);this.files=parsedFiles;this.options=options;this.sources=new Map(parsedFiles.map(p=>[p.source.uri,p.source]));
-    this.diagnostics=parserDiagnosticsWithoutSuppressMessage(parsedFiles);this.symbols=[];this.references=[];this.types=[];this.typeMap=new Map();this.methods=[];this.statics=[];this.constants=[];this.constantMap=new Map();this.sequencePoints=[];
+    this.diagnostics=parserDiagnosticsWithoutSuppressMessage(parsedFiles);for(const d of syntaxChecks.diagnostics)if(!this.diagnostics.some(existing=>existing.uri===d.uri&&existing.start===d.start&&existing.length===d.length&&existing.code===d.code&&existing.message===d.message))this.diagnostics.push(d);this.symbols=[];this.references=[];this.types=[];this.typeMap=new Map();this.methods=[];this.statics=[];this.constants=[];this.constantMap=new Map();this.sequencePoints=[];
     // 'bound' binds to a bound tree, analyses flow, lowers and then emits; 'legacy' is the fused string-typed method compiler.
     this.nullableMaps=new Map();this.fullNames=new Map();this.simpleNames=new Map();this.fileUsings=new Map();this.binderChains=new Map();this.pipeline=options.pipeline??globalThis.process?.env?.SHARPFORGE_PIPELINE??Compilation.defaultPipeline;this.semantic=new CompilationSymbols(this);this.boundPipeline=null;
   }
@@ -90,7 +93,7 @@ export class Compilation {
   selectedVersion(node){try{return languageVersion(this.options.langVersionByUri?.[node?.uri]??this.options.langVersion);}catch{return languageVersion();}}
   /** Source text of the last label of a switch section, as Roslyn prints it in CS0163/CS8070. */
   caseLabel(section){const label=section.labels.at(-1);if(!label)return 'default:';const text=this.sources.get(label.uri)?.text.slice(label.start,label.end);return `case ${text??''}:`;}
-  requireFeature(node,version,name){let selected;try{selected=languageVersion(this.options.langVersionByUri?.[node.uri]??this.options.langVersion);}catch{return false;/* an invalid /langversion is reported once, with the options */}if(version===15?!selected.preview:selected.number<version){if(version===15)this.report(node,'CS8652',[name]);else this.report(node,featureNotAvailableCode(selected.number),[name,Number.isInteger(version)?version+'.0':String(version)]);return false;}return true;}
+  requireFeature(node,version,name){let selected;try{selected=languageVersion(this.options.langVersionByUri?.[node.uri]??this.options.langVersion);}catch{return false;/* an invalid /langversion is reported once, with the options */}if(version===15?!selected.preview:selected.number<version){if(this.syntaxFeatureFailures.some(use=>use.uri===node.uri&&use.version===version&&use.start<(node.end??node.start+1)&&use.end>=(node.start??0)))return false;if(version===15)this.report(node,'CS8652',[name]);else this.report(node,featureNotAvailableCode(selected.number),[name,Number.isInteger(version)?version+'.0':String(version)]);return false;}return true;}
   constant(value){const key=JSON.stringify([typeof value,value]);if(this.constantMap.has(key))return this.constantMap.get(key);const id=this.constants.length;this.constants.push(value);this.constantMap.set(key,id);return id;}
   symbol(node,kind,type,extra={}){
     if(node.generated||node.debugHidden)return null;
@@ -106,8 +109,6 @@ export class Compilation {
     const start=performance.now();
     // Options are validated once, up front (options.js): invalid values report the Roslyn codes.
     const parsed=parseCompilationOptions(this.options);this.typedOptions=parsed.options;for(const d of parsed.diagnostics)this.report(this.files[0]?.root??{},d.code,d.args);
-    // Parser-level language-version gating: every feature use the lexer and parser recorded is checked against the selected version.
-    const featureDiagnostics=this.inputFiles.flatMap(file=>featureDiagnosticsOf(file,this.selectedVersion({uri:file.source.uri})));
     // Two-pass declarations allow forward calls and references across source files.
     for(const file of this.files)for(const decl of file.root.members.filter(n=>n.kind==='Class')){
       const namespace=decl.namespace??'',fullName=(namespace?namespace+'.':'')+decl.name;
@@ -130,7 +131,8 @@ export class Compilation {
     const tops=[];
     for(const file of this.files){
       for(const node of file.root.members.filter(n=>n.kind==='Method'))this.declareMethod(null,{...node,modifiers:[...node.modifiers,'static']});
-      if(file.root.statements.length)tops.push({file,statements:file.root.statements});
+      // A local function is a statement too: a file of local functions alone is a program that does nothing.
+      if(file.root.statements.length||file.root.members.some(n=>n.kind==='Method'))tops.push({file,statements:file.root.statements});
     }
     const library=this.options.outputKind==='library';
     // Entry point: top-level statements, else the one suitable static Main (binder/entry-point.js).
@@ -165,10 +167,8 @@ export class Compilation {
       statics:this.statics.map(f=>({name:`${f.owner.name}.${f.name}`,type:f.type,value:defaultValue(f.type),...(f.backing?{backing:true}:{} )})),
       methods:this.methods.map(m=>({...(m.node?.uri&&m.node.body&&(!m.node.asyncRole||m.node.asyncRole==='body')&&!m.name.startsWith('<startup>')?{sourceRange:{uri:m.node.uri,start:m.node.start,end:m.node.end}}:{}),...(m.node.asyncRole?{asyncRole:m.node.asyncRole,asyncOrigin:m.node.asyncOrigin}:{}),id:m.id,name:m.name,qualifiedName:m.qualifiedName,owner:m.owner?.name??null,isStatic:m.isStatic,returnType:m.returnType,...(m.accessor?{accessor:m.accessor}:{}),...(m.implementsDispose?{implementsDispose:true}:{}),parameters:m.parameters.map(p=>({name:p.name,type:p.type})),locals:m.locals??[],code:m.code??new Int32Array(),handlers:m.handlers??[]}))};
     // Warning options (#pragma warning, nowarn, warnaserror, warning level) decide the final diagnostic list.
-    // A feature the binder gates itself keeps the binder's diagnostic; the parser's is added where nothing covers it.
-    for(const f of featureDiagnostics)if(!this.diagnostics.some(d=>d.uri===f.uri&&(d.code===f.code||d.code==='CS8652'||f.code==='CS8652')&&d.start<f.start+f.length&&f.start<d.start+d.length))this.diagnostics.push(f);
     // Programs outside the execution profile get the diagnostics of the type system (semantic-integration.js).
-    const reconciled=reconcileWithSemanticAnalysis(this,featureDiagnostics);if(reconciled){this.diagnostics=reconciled.diagnostics;this.semanticAnalysis=reconciled.semantic;}const finalImage=reconciled?.image??image;
+    const reconciled=reconcileWithSemanticAnalysis(this,this.syntaxFeatureDiagnostics);if(reconciled){this.diagnostics=reconciled.diagnostics;this.semanticAnalysis=reconciled.semantic;}const finalImage=reconciled?.image??image;
     const pragmas=pragmaWarningsOf(this.inputFiles),diagnostics=applySuppression(pragmas.withoutParserDiagnostics(this.diagnostics),{sources:this.sources,pragmas:pragmas.byUri,includeDirectiveDiagnostics:true,options:this.typedOptions}),errors=diagnostics.filter(d=>d.severity==='error').length;
     return {success:errors===0,image:errors===0?finalImage:null,diagnostics,symbols:this.symbols,references:this.references,...(this.semanticAnalysis?{semantic:{analysed:true,complete:!this.semanticAnalysis.incomplete,...(reconciled?.image?{generated:true}:{})}}:{}),
       metrics:{compileMs:performance.now()-start,files:this.files.length,tokens:this.files.reduce((s,f)=>s+f.tokens.length,0),internedTokenHits:this.files.reduce((s,f)=>s+f.internedTokenHits,0),nodes:this.files.reduce((s,f)=>s+f.nodeCount,0),methods:this.methods.length,instructions:this.methods.reduce((s,m)=>s+(m.code?.length??0)/3,0),errors}};

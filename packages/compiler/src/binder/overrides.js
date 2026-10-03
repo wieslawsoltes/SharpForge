@@ -158,7 +158,10 @@ export function checkModifiers(member, type) {
   if (member.isOverride && (member.isVirtual || member.isNew)) r('CS0113', [display]);
   if (member.isSealed && !member.isOverride && !inInterface) r('CS0238', [display]);
   if (member.isAbstract && !inInterface && !type.isAbstract) r('CS0513', [display, type.toDisplayString()]);
-  if (explicitVao && member.declaredAccessibility === Accessibility.Private && !inInterface && !member.explicitInterfaceSyntax)
+  // A partial method without an accessibility modifier has a rule of its own for virtual modifiers (CS8798).
+  const words = member.modifierWords ?? [],
+    isPlainPartial = words.includes('partial') && !words.some(w => ['public', 'private', 'protected', 'internal'].includes(w));
+  if (explicitVao && member.declaredAccessibility === Accessibility.Private && !inInterface && !member.explicitInterfaceSyntax && !isPlainPartial)
     r('CS0621', [display]);
   if (member.isVirtual && !member.isOverride && type.isSealed && type.typeKind === TypeKind.Class && !type.isStatic && explicitVao)
     r('CS0549', [display, type.toDisplayString()]);

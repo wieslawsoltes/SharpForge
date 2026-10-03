@@ -7,6 +7,7 @@ export const tupleMethods = {
       saved = this.tupleContext;
     let args = [];
     this.nested(() => {
+      // Roslyn: every element of a tuple literal may be a declaration, whatever follows the tuple (`var w = (var (x, y), 2);`).
       this.tupleContext = true;
       for (;;) {
         const before = this.i;

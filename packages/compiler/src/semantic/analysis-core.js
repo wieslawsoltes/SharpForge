@@ -20,8 +20,10 @@ import { formatMessage, defaultSeverity, hasDiagnosticCode } from '../diagnostic
 import { NullableContextMap } from '../nullable/annotations.js';
 import { bindCompilationReferences } from '../metadata-import/compilation-references.js';
 import { spanOf, frameworkNames, isSourceSymbol } from './analysis-helpers.js';
+import { definedSymbols } from '../binder/csharp2-misc.js';
 import { isBclNamespace } from '../symbols/bcl-namespaces.js';
 import { bindAllUsings } from '../binder/using-directives.js';
+import { checkGlobalUsingPlacement } from '../binder/global-usings.js';
 
 export class AnalysisCore {
   /**
@@ -49,13 +51,14 @@ export class AnalysisCore {
       core: this.core,
       report: (uri, node, code, args) => this.report(uri, node, code, args),
       constructions: this.constructions,
-      tolerateNamespace: name => this.tolerateNamespace(name),
+      tolerateNamespace: (name, options) => this.tolerateNamespace(name, options),
       isFrameworkGap: (namespaceName, name) => this.isFrameworkGap(namespaceName, name),
       useFeature: (uri, node, feature) => this.gate(uri, node, feature),
       unknownUsing: () => {
         this.hasUnknownUsings = true;
       },
       useSite: (symbol, uri, node, options) => this.reportUseSite(symbol, uri, node, options),
+      noteUse: (symbol, uri, node) => this.noteUse(symbol, uri, node),
       externAlias: name => this.references.externAlias(name),
       forwardedToMissingAssembly: metadataName => this.references.forwardedToMissingAssembly(metadataName),
       isKnownFrameworkName: name => this.isKnownFrameworkName(name),
@@ -77,6 +80,7 @@ export class AnalysisCore {
       typeBinder: this.typeBinder,
       name: options.name,
       report: (uri, node, code, args) => this.report(uri, node, code, args),
+      useFeature: (uri, node, feature) => this.gate(uri, node, feature),
       resolveBases: type =>
         resolveBases(type, {
           typeBinder: this.typeBinder,
@@ -126,9 +130,12 @@ export class AnalysisCore {
    * A namespace of the base class library that the closed registry does not model is accepted in a using directive.
    * Only namespaces that exist in the BCL are: `System.Nope` is as unknown here as it is to Roslyn.
    */
-  tolerateNamespace(name) {
+  tolerateNamespace(name, { isImplicit = false } = {}) {
     if (this.references.hasCoreLibrary || !isBclNamespace(name)) return false;
-    this.incomplete = true;
+    // An implicit using nobody wrote does not make the analysis incomplete by itself: only a name that is then
+    // not found does (isKnownFrameworkName), because it may be a type of that namespace.
+    if (isImplicit) this.hasUnknownImplicitUsings = true;
+    else this.incomplete = true;
     return true;
   }
   /**
@@ -139,13 +146,14 @@ export class AnalysisCore {
   isFrameworkGap(namespaceName, name) {
     if (this.references.hasCoreLibrary) return false;
     const isGap = isBclNamespace(namespaceName + '.' + name) || (isBclNamespace(namespaceName) && frameworkNames.has(name));
-    if (isGap) this.incomplete = true;
+    if (isGap && this.typeBinder.host.bindingImplicitUsing) this.hasUnknownImplicitUsings = true;
+    else if (isGap) this.incomplete = true;
     return isGap;
   }
   /** Names of common BCL types the registry does not model: using one is not an error, it only makes the analysis incomplete. */
   isKnownFrameworkName(name) {
     if (this.references.hasCoreLibrary) return false;
-    if (frameworkNames.has(name)) {
+    if (frameworkNames.has(name) || this.hasUnknownImplicitUsings) {
       this.incomplete = true;
       return true;
     }
@@ -158,7 +166,8 @@ export class AnalysisCore {
       return !type.hasUnknownConstraint && [...type.constraintTypes].every(c => this.closedHierarchy(c));
     if (type.typeKind === TypeKind.Delegate || type.elementType) return false;
     for (const t of baseTypeChain(type, this.core)) {
-      if (isSourceSymbol(t)) continue;
+      // The members of a source type and of an anonymous type are all known.
+      if (isSourceSymbol(t) || t.isAnonymousType) continue;
       if (['System_Object', 'System_ValueType', 'System_Enum'].includes(t.specialType)) continue;
       return false;
     }
@@ -193,8 +202,14 @@ export class AnalysisCore {
    */
   runUsings() {
     this.assembly.declare(this.globalNamespace);
-    for (const scope of this.assembly.usingScopes) bindAllUsings(this.typeBinder, scope);
+    this.bindUsings();
     return { diagnostics: this.diagnostics, incomplete: true, usingsOnly: true, assembly: this.assembly, bound: this.bound, core: this.core };
+  }
+  /** Using and extern alias directives are bound (and checked) whether or not a lookup reaches them. */
+  bindUsings() {
+    for (const file of this.files)
+      for (const row of checkGlobalUsingPlacement(file)) this.report(file.source.uri, row.node, row.code, row.args);
+    for (const scope of this.assembly.usingScopes) bindAllUsings(this.typeBinder, scope);
   }
   /** Runs every phase and returns `{diagnostics,incomplete,assembly,bound,unexecutable}`. */
   run() {
@@ -211,17 +226,20 @@ export class AnalysisCore {
         unexecutable: this.unexecutable,
       };
     const types = this.assembly.types;
-    // Using and extern alias directives are bound (and checked) whether or not a lookup reaches them.
-    for (const scope of this.assembly.usingScopes) bindAllUsings(this.typeBinder, scope);
+    this.bindUsings();
     for (const type of types) type.baseType;
     for (const type of types) type.getMembers();
     for (const type of types) this.bindExplicitInterfaces(type);
     for (const type of types) this.checkType(type);
     this.checkConstructions();
     for (const type of types) this.bindConstants(type);
+    this.bindAttributes();
+    this.checkSpecialMembers();
+    this.checkConditionalMethods();
     this.bindBodies();
     // Constructed types written inside bodies (`new Box<int>()`) are checked once the bodies are bound.
     this.checkConstructions();
+    this.reportObsoleteUses();
     this.reportUnused();
     return {
       diagnostics: this.diagnostics,
@@ -231,6 +249,11 @@ export class AnalysisCore {
       core: this.core,
       unexecutable: this.unexecutable,
     };
+  }
+  /** The preprocessor symbols defined in the file `uri` (the option plus its #define directives). */
+  definedSymbols(uri) {
+    this.definedByUri ??= new Map(this.files.map(file => [file.source.uri, definedSymbols(file, this.options)]));
+    return this.definedByUri.get(uri) ?? new Set();
   }
   at(symbol) {
     return symbol.locations?.[0] ?? this.assembly.types[0]?.locations[0];

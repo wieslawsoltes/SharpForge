@@ -1,11 +1,11 @@
 import {resolveCallType} from './generic-calls.js';
 import {exceptionMatches} from './exception-types.js';
 import {CilError,decodeCoded,callStorageType} from '@sharpforge/cil';
-import {cachedField,cachedTypeName} from './token-cache.js';
-import {ManagedFault} from '../heap.js';
+import {cachedTypeName} from './token-cache.js';
 import {VirtualDispatch} from './vtable.js';
 import {MethodTableRegistry} from './method-table.js';
 import {castCacheFor} from './casting.js';
+import {FieldResolutionCache} from './field-resolution-cache.js';
 
 /** Assembly-derived metadata indexes. They are rebuilt on load, never snapshotted. */
 export class CilTypeSystem {
@@ -15,6 +15,7 @@ export class CilTypeSystem {
     this.types=new Map(vm.inspector.types.map(type=>[type.token,type]));
     this.names=new Map(vm.inspector.types.map(type=>[type.name,type.token]));
     this.layouts=new Map();
+    this.fieldCache=new FieldResolutionCache(this);
     this.initializers=new Map();
     this.dispatch=new VirtualDispatch(vm.inspector);
     const metadata=vm.inspector.metadata;
@@ -63,9 +64,9 @@ export class CilTypeSystem {
     return this.castCache.isAssignableFrom(target,record.methodTable);
   }
   field(token,ref) {
-    const record=ref===undefined?null:this.vm.heap.get(ref);
-    const field=cachedField(this.vm,token,record?.methodTable);
-    return record?{...field,record}:field;
+    if(ref===undefined)return this.fieldCache.resolve(token);
+    const record=this.vm.heap.get(ref);
+    return {...this.fieldCache.resolve(token,record.methodTable),record};
   }
   virtualTarget(ref,descriptor,target) {
     return this.dispatch.resolve(this.vm.heap.get(ref).methodTable.name,target,descriptor.ownerInstance);

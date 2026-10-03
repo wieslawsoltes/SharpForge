@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "exceptions": [
+    {
+      "path": "tests/conformance/browser/fixtures/localhost-key.pem",
+      "fileSHA256": "c5ae2593e48821c3ce4dcbeb4d7221f533cc91a94b75575004f276bc976851d3",
+      "rule": "private-key",
+      "reason": "Intentionally public self-signed localhost TLS fixture for the loopback browser qualification server; never installed in a trust store or used by deployed-site contexts. Source path and complete file bytes only; built artifacts are not exempt.",
+      "source": "https://github.com/wieslawsoltes/SharpForge/blob/73596fc9d3a77c237a5b933ad17987b6e2ec4e81/tests/conformance/browser/fixtures/README.md"
+    }
+  ]
+}

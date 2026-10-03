@@ -13,7 +13,7 @@
  */
 import {compile,compileToIL} from '@sharpforge/compiler';
 import {VirtualMachine,CilVirtualMachine} from '@sharpforge/runtime';
-import {loadFixtures,loadPinned,fixtureHash} from './corpus.js';
+import {loadFixtures,loadPinned,fixtureHash} from './corpus-store.js';
 
 /** The comparison axes, in report order. */
 export const AXES=Object.freeze(['diagnostics','warnings','bytecode','cil']);
@@ -28,7 +28,8 @@ function runToEnd(vm){
   return result;
 }
 const key=d=>`${d[0]}@${d[1]}+${d[2]}`;
-const keys=(rows,severity)=>rows.filter(d=>d[3]===severity).map(key).sort();
+// The native capture uses Distinct after projecting code/span/severity; compare that same set on both sides.
+const keys=(rows,severity)=>[...new Set(rows.filter(d=>d[3]===severity).map(key))].sort();
 const same=(a,b)=>a.length===b.length&&a.every((v,i)=>v===b[i]);
 const brief=error=>String(error?.message??error).split('\n')[0].slice(0,200);
 

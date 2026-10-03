@@ -333,7 +333,7 @@ export const StatementTranslation = Base =>
     /** A call of a parameterless-or-not instance method that is either a source method or a framework member. */
     memberCall(method, receiver, args, syntax) {
       const definition = method.originalDefinition ?? method;
-      if (this.g.isSource(definition)) return n.call(this.g.methodOf(definition, syntax), receiver, args);
+      if (this.g.isSource(definition)) return n.call(this.g.methodOf(method, syntax), receiver, args);
       if (method.contract || method.builtin) return n.frameworkCall(method, receiver, args, this.imageType(method.returnType, syntax));
       return this.unsupported(`'${method.toDisplayString()}' (not in the framework registry)`, syntax);
     }

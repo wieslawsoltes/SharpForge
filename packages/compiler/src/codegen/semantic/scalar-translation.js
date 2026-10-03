@@ -57,6 +57,9 @@ export const ScalarTranslation = Base => class extends Base {
   }
 
   defaultArgument(parameter, node) {
+    if (node.callerInfo?.has(parameter.ordinal) || parameter.defaultSyntax && !parameter.defaultBound) {
+      return super.defaultArgument(parameter, node);
+    }
     const type = this.imageType(parameter.type, node.syntax);
     if (!numeric(type)) return super.defaultArgument(parameter, node);
     const value = parameter.explicitDefaultValue ?? parameter.defaultValue;

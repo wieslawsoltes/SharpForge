@@ -143,7 +143,7 @@ export const PropertySymbolBuilder = Base =>
           syntax.constraintClauses,
           t => this.bindType(t, scope).type,
           (n, c, a) => this.report(uri, n, c, a),
-          { ownerDisplay: type.toDisplayString() },
+          { ownerDisplay: type.toDisplayString(), useFeature: (node, feature) => this.host.useFeature?.(uri, node, feature) },
         );
       let returnSyntax = syntax.returnType,
         refKind = RefKind.None;
@@ -209,7 +209,8 @@ export const PropertySymbolBuilder = Base =>
               containingSymbol: type,
               declaredAccessibility: Accessibility.Public,
               modifiers: 0,
-              isInitOnly: !get && type.typeKind === TypeKind.Class,
+              // A record class and a readonly record struct have init-only positional properties.
+              isInitOnly: !get && (type.typeKind === TypeKind.Class || type.isReadOnly),
               isImplicitlyDeclared: true,
             });
             a.isAutoAccessor = true;

@@ -57,8 +57,7 @@ export function ensureInitialized(vm,typeToken,trigger='field',genericIdentity=n
   return ensureTypeInitialized(vm,typeToken,trigger,genericIdentity);
 }
 /** Direct scheduler/delegate entries also pass the type-initialization gate. */
-export function prepareCall(vm) {
-  const frame=vm.top;
+export function prepareCall(vm,frame=vm.top) {
   if(!frame?.needsInitialization)return true;
   const method=frame.method,trigger=method.name==='.ctor'?'constructor':method.signature.isStatic?'static-method':'instance-method';
   if(vm.ensureInitialized(method.ownerToken,trigger,frame.genericIdentity??null))return false;

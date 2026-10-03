@@ -12,6 +12,7 @@
  * delegate identity for `-=`.
  */
 import { n } from './node-factory.js';
+import { typeNameText } from '../../lowering/generics/instantiation-names.js';
 
 export class DelegateClasses {
   /** @param generator `{program, types}`: the program model and the type mapper */
@@ -23,6 +24,8 @@ export class DelegateClasses {
   }
   /** The image class of a delegate type, declared on first use. */
   classOf(type, syntax = null) {
+    // In a generic body the delegate type is the one of the construction being lowered (`Func<T, int>` of `T = string`).
+    type = this.generator.generics.closed(type, syntax);
     // Constructed types (`Func<int, int>`) are distinct symbols that compare equal: one class per distinct type.
     let info = this.byType.get(type) ?? this.all.find(known => known.type.equals?.(type));
     if (info) {
@@ -31,8 +34,9 @@ export class DelegateClasses {
     }
     const invoke = type.delegateInvokeMethod;
     if (!invoke) return this.generator.unsupported(`delegate type '${type.toDisplayString()}'`, syntax);
-    // The image reads `Name<...>` as a framework generic, so type arguments are written in parentheses.
-    const record = this.program.addClass(type.toDisplayString().replace(/</g, '(').replace(/>/g, ')'));
+    // The image reads `Name<...>` as a framework generic and `,` as an argument separator (also inside the element
+    // type of an array), so the class is named like a construction: `System.Func{int;string}`.
+    const record = this.program.addClass(typeNameText(type));
     info = { type, record, targets: new Map(), thunks: [], helpers: new Map() };
     // Registered before the signature is mapped: a delegate type may mention itself.
     this.byType.set(type, info);

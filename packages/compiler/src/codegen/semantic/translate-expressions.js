@@ -1,6 +1,6 @@
 /**
  * Lowering of value expressions: literals and constants, variables, member reads, operators, assignments,
- * conversions, interpolated strings and null-conditional access.
+ * conversions and interpolated strings.
  */
 import { findContracts } from '@sharpforge/framework';
 import { TypeKind } from '../../symbols/types.js';
@@ -110,12 +110,20 @@ export const ExpressionTranslation = Base =>
       return n.binary(node.operator, left, right, this.imageType(node.type, node.syntax), !!node.isChecked);
     }
     exprConditional(node) {
-      return n.conditional(
-        this.expression(node.condition),
-        this.expression(node.whenTrue),
-        this.expression(node.whenFalse),
-        this.imageType(node.type, node.syntax),
-      );
+      const type = this.imageType(node.type, node.syntax);
+      return this.choose(this.expression(node.condition), this.expression(node.whenTrue), this.expression(node.whenFalse), type);
+    }
+    /**
+     * `condition ? whenTrue : whenFalse`. The branches of the operator meet on the evaluation stack, which holds one
+     * representation only: when an `object`-typed choice has a primitive branch, each branch is stored into an
+     * `object` temporary instead (the store is where a primitive is boxed).
+     */
+    choose(condition, whenTrue, whenFalse, type) {
+      const isPrimitive = value => ['int', 'double', 'bool'].includes(value.legacyType);
+      if (type !== 'object' || !(isPrimitive(whenTrue) || isPrimitive(whenFalse))) return n.conditional(condition, whenTrue, whenFalse, type);
+      const result = this.holder('object', 'choice'),
+        store = value => n.expressionStatement(n.assign(result.read(), value));
+      return n.sequence([], [result.init(n.nullLiteral('object')), n.ifStatement(condition, store(whenTrue), store(whenFalse))], result.read());
     }
     exprCoalesce(node) {
       if (node.leftConversion && !node.leftConversion.isIdentity) return this.unsupported('nullable value types', node.syntax);
@@ -179,7 +187,7 @@ export const ExpressionTranslation = Base =>
     autoPropertyField(node) {
       const property = node.property.originalDefinition ?? node.property;
       if (property.setMethod || !this.g.isSource(property)) return null;
-      const record = this.g.autoProperties.get(property);
+      const record = this.g.autoProperties.get(node.property);
       if (!record) return null;
       return record.isStatic ? n.staticField(record) : n.field(this.memberReceiver(node), record);
     }
@@ -260,10 +268,9 @@ export const ExpressionTranslation = Base =>
         if (content.kind === 'Interpolation') {
           const bound = node.parts[index++];
           if (bound.type?.typeKind === TypeKind.Enum) return this.unsupported('formatting an enum value', content);
-          const value = this.expression(bound);
           const format = content.formatClause ? n.literal(content.formatClause.formatStringToken.valueText, 'string') : n.nullLiteral('string');
           const alignment = content.alignmentClause ? this.alignmentOf(content.alignmentClause) : n.literal(0, 'int');
-          part = n.frameworkCall({ contract: formatValue() }, null, [value, format, alignment, n.literal(value.legacyType, 'string')], 'string');
+          part = this.interpolationHole(bound, format, alignment);
         } else part = n.literal(content.textToken.value ?? content.textToken.valueText, 'string');
         result = n.binary('+', result, part, 'string');
       }
@@ -274,36 +281,12 @@ export const ExpressionTranslation = Base =>
         value = Number(text);
       return Number.isInteger(value) ? n.literal(value, 'int') : this.unsupported('a computed interpolation alignment', clause);
     }
-    exprConditionalAccess(node) {
-      return this.conditionalAccess(node, false);
+    /** One formatted interpolation hole (lowering/conditional-access.js refines it for value-typed `a?.b`). */
+    interpolationHole(node, format, alignment) {
+      return this.formattedValue(this.expression(node), format, alignment);
     }
-    /**
-     * `receiver?.access`: the receiver is evaluated once into a temporary that `ConditionalReceiver` reads.
-     * As a statement the value is dropped; as a value the access must produce a reference (nullable value types
-     * need runtime support).
-     */
-    conditionalAccess(node, discard) {
-      const receiver = this.expression(node.receiver),
-        temp = this.temp(receiver.legacyType, 'receiver'),
-        saved = this.conditionalReceiver;
-      this.conditionalReceiver = () => n.local(temp);
-      let access;
-      try {
-        access = this.expression(node.whenNotNull);
-      } finally {
-        this.conditionalReceiver = saved;
-      }
-      const hasValue = n.notEquals(n.local(temp), n.nullLiteral(receiver.legacyType));
-      if (discard) {
-        const done = n.sequence([], [access], n.nullLiteral('object'));
-        return n.sequence([temp], [n.assign(n.local(temp), receiver)], n.conditional(hasValue, done, n.nullLiteral('object'), 'object'));
-      }
-      if (node.isLifted || !this.types.isReference(access.legacyType)) return this.unsupported('nullable value types', node.syntax);
-      return n.sequence(
-        [temp],
-        [n.assign(n.local(temp), receiver)],
-        n.conditional(hasValue, access, n.nullLiteral(access.legacyType), access.legacyType),
-      );
+    formattedValue(value, format, alignment) {
+      return n.frameworkCall({ contract: formatValue() }, null, [value, format, alignment, n.literal(value.legacyType, 'string')], 'string');
     }
     exprConditionalReceiver(node) {
       return this.conditionalReceiver ? this.conditionalReceiver() : this.unsupported('a null-conditional receiver', node.syntax);

@@ -12,7 +12,7 @@ import {execFileSync} from 'node:child_process';
 import {mkdirSync,copyFileSync,writeFileSync,readFileSync,existsSync} from 'node:fs';
 import {join,resolve} from 'node:path';
 import {homedir} from 'node:os';
-import {root,loadFixtures,fixtureHash,savePinned} from '../corpus.js';
+import {root,loadFixtures,fixtureHash,savePinned} from '../corpus-store.js';
 
 const args=process.argv.slice(2),option=name=>{const i=args.indexOf(name);return i>=0?args[i+1]:null;};
 const home=join(homedir(),'.dotnet','dotnet');

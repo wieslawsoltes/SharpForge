@@ -15,7 +15,8 @@
  * lowering treat them like lambdas written in source.
  */
 import { SymbolKind } from '../symbols/types.js';
-import { anonymousTypeOf, memberPaths, rangeScope, transparentScope } from './query-scope.js';
+import { memberPaths, rangeScope, transparentScope } from './query-scope.js';
+import { anonymousTypeOf } from '../symbols/synthesized/anonymous-types.js';
 
 const clauseNames = Object.freeze({
   FromClause: 'from',

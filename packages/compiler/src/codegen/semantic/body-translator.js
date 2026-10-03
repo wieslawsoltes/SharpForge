@@ -9,6 +9,7 @@ import {VarargsTranslation} from '../../lowering/varargs.js';
 import { hoistedLocalFieldName, hoistedSynthesizedLocalFieldName } from '../../lowering/generated-names.js';
 import {ScalarTranslation} from './scalar-translation.js';
 import {MemoryTranslation} from './memory-translation.js';
+import {RuntimeArrayTranslation} from './runtime-array-translation.js';
 import {SynchronizationTranslation} from './synchronization-translation.js';
 import { n } from './node-factory.js';
 import { ExpressionTranslation } from './translate-expressions.js';
@@ -29,6 +30,8 @@ import { memberLowerings } from '../../lowering/members/index.js';
 import { InitializerLowering } from '../../lowering/members/initializers.js';
 import { RecordTranslation } from '../../lowering/records/translate-records.js';
 import { StructuralPatternTranslation } from '../../lowering/patterns/translate-structural-patterns.js';
+import { languageLowerings } from '../../lowering/language-lowerings.js';
+import { GenericTranslation } from '../../lowering/generics/index.js';
 
 export { Frame } from './frame.js';
 
@@ -215,6 +218,7 @@ const families = [
   RuntimeGapTranslation,
   ScalarTranslation,
   MemoryTranslation,
+  RuntimeArrayTranslation,
   SynchronizationTranslation,
   AwaitTranslation,
   AsyncStreamTranslation,
@@ -228,6 +232,9 @@ const families = [
   InitializerLowering,
   RecordTranslation,
   StructuralPatternTranslation,
+  ...languageLowerings,
+  // Last: what depends on a type argument is decided before any other family sees the node.
+  GenericTranslation,
 ];
 
 export class BodyTranslator extends families.reduce(

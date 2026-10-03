@@ -75,7 +75,7 @@ export const LocalFunctionBinding = Base =>
           syntax.constraintClauses,
           t => this.d.typeBinder.bindType(t, scope).type,
           (n, c, a) => this.report(n, c, a),
-          { ownerDisplay: name },
+          { ownerDisplay: name, useFeature: (node, feature) => this.d.gate(this.c.uri, node, feature) },
         );
       this.declare(name, method, syntax.identifier);
       this.localFunctions.push(method);
@@ -93,7 +93,8 @@ export const LocalFunctionBinding = Base =>
         scope: method.scope,
         containingType: this.c.containingType,
         isStatic: this.c.isStatic,
-        parent: isStatic ? this.staticParent() : this,
+        parent: this,
+        staticFunction: isStatic ? 'localFunction' : null,
         isLocalFunction: true,
         isFieldInitializer: false,
         isStaticInitializer: this.c.isStaticInitializer,
@@ -101,9 +102,5 @@ export const LocalFunctionBinding = Base =>
         isTopLevel: false,
       });
       return stmt('LocalFunction', syntax, true, { method });
-    }
-    /** A static local function sees enclosing local functions and constants but captures no state (CS8421). */
-    staticParent() {
-      return this;
     }
   };

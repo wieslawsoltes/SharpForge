@@ -58,14 +58,23 @@ export const CallTranslation = Base =>
     defaultArgument(parameter, node) {
       const type = this.imageType(parameter.type, node.syntax),
         value = parameter.explicitDefaultValue ?? parameter.defaultValue;
+      // Caller info replaces the declared default (binder/caller-info.js).
+      const callerInfo = node.callerInfo?.get(parameter.ordinal);
+      if (callerInfo !== undefined) {
+        const supplied = typeof callerInfo === 'number' ? 'int' : 'string';
+        if (type !== supplied && type !== 'object') return this.unsupported('caller info for a parameter of this type', node.syntax);
+        return n.literal(callerInfo, supplied);
+      }
       // A default that was never bound must not silently become zero.
       if (parameter.defaultSyntax && !parameter.defaultBound) return this.unsupported('this optional parameter default', node.syntax);
-      if (value === undefined || value === null) return this.defaultValue(type);
+      if (value === undefined || value === null || value.isNull) return this.defaultValue(type);
       const raw = value.value ?? value;
       if (raw !== null && typeof raw === 'object') return this.unsupported('this optional parameter default', node.syntax);
       return n.literal(typeof raw === 'bigint' ? Number(raw) : raw, type);
     }
     exprCall(node) {
+      // An omitted call to a [Conditional] method evaluates nothing, not even its arguments.
+      if (node.isOmitted) return n.nullLiteral('object');
       const method = node.method,
         definition = method.originalDefinition ?? method;
       if (method.methodKind === MethodKind.DelegateInvoke || node.isDelegateInvoke) {
@@ -73,13 +82,14 @@ export const CallTranslation = Base =>
         return this.g.delegates.invoke(info, this.expression(node.receiver), this.arguments(node, method));
       }
       if (method.methodKind === MethodKind.LocalFunction) return this.localFunctionCall(definition, this.arguments(node, method), node.syntax);
-      if (method.typeArguments?.length || definition.typeParameters?.length) return this.unsupported('user-defined generics', node.syntax);
       if (this.g.isSource(definition)) {
-        const record = this.g.methodOf(definition, node.syntax),
+        // The method as written at the call: its containing construction and type arguments select the image method.
+        const record = this.g.methodOf(method, node.syntax),
           args = this.arguments(node, method);
         if (record.isStatic) return n.call(record, null, args);
         return n.call(record, this.receiver(node), args);
       }
+      if (method.typeArguments?.length || definition.typeParameters?.length) return this.unsupported('generic framework methods', node.syntax);
       return this.frameworkInvocation(node, method);
     }
     receiver(node) {
@@ -126,7 +136,7 @@ export const CallTranslation = Base =>
       if (this.g.isSource(type)) {
         const record = this.g.classOf(type, node.syntax),
           ctor = node.constructor && typeof node.constructor === 'object' && node.constructor.kind ? node.constructor : null;
-        const implicit = this.g.implicitConstructors.get(type.originalDefinition ?? type) ?? null;
+        const implicit = this.g.implicitConstructors.get(type) ?? null;
         const method = ctor && !ctor.isImplicitlyDeclared ? this.g.methodOf(ctor, node.syntax) : implicit;
         creation = n.construct(record, method, method && method !== implicit ? this.arguments(node, ctor) : []);
       } else creation = this.frameworkCreation(node);
@@ -168,8 +178,7 @@ export const CallTranslation = Base =>
       const property = node.property,
         type = this.imageType(node.type, node.syntax);
       if (this.g.isSource(property)) {
-        const definition = property.originalDefinition ?? property,
-          legacy = this.g.propertyOf(definition, node.syntax);
+        const legacy = this.g.propertyOf(property, node.syntax);
         const receiver = legacy.isStatic ? null : this.memberReceiver(node);
         return { kind: 'PropertyAccess', legacyType: type, isExpression: true, property: { legacy }, receiver };
       }
@@ -221,13 +230,15 @@ export const CallTranslation = Base =>
     }
     /** `e += handler` and `e -= handler`: a field-like event combines into its field, otherwise the accessor is called. */
     exprEventAssignment(node) {
-      const event = node.event.originalDefinition ?? node.event,
+      // The event as written (its containing construction selects the image field); `hasBody` is known to the definition.
+      const event = node.event,
+        definition = event.originalDefinition ?? event,
         adding = node.operator === '+=';
       if (!this.g.isSource(event)) return frameworkEventAssignment(this, node, event);
       const handler = this.expression(node.handler);
-      const accessor = adding ? event.addMethod : event.removeMethod;
+      const accessor = adding ? definition.addMethod : definition.removeMethod;
       if (accessor?.hasBody) {
-        const record = this.g.methodOf(accessor, node.syntax);
+        const record = this.g.methodOf(adding ? event.addMethod : event.removeMethod, node.syntax);
         return n.call(record, record.isStatic ? null : this.expression(node.receiver), [handler]);
       }
       const record = this.g.eventFieldOf(event, node.syntax),

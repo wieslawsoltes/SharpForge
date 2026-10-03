@@ -1,0 +1,25 @@
+{
+  "filesystem": [
+    "case-sensitive-or-insensitive-volume",
+    "symlinked-temp-parent-and-native-root",
+    "long-path-and-api-length-boundary",
+    "reserved-windows-names-rejected-before-cli-write",
+    "crlf-bom-and-unicode-byte-preservation",
+    "unicode-normalization-and-portable-collision",
+    "native-file-count-text-size-and-stale-save-boundaries"
+  ],
+  "process": [
+    "cli-success-malformed-and-managed-exit-boundaries",
+    "real-directory-permission-failure-is-cli-exit-one",
+    "loopback-real-http-token-origin-host-and-disposal",
+    "cancellation-reaps-real-child-and-grandchild",
+    "posix-sigterm-cooperatively-disposes",
+    "timeout-and-malformed-executable-fail-closed"
+  ],
+  "node-core": [
+    "node/exact-node-and-npm-versions",
+    "node/check",
+    "node/test",
+    "node/build"
+  ]
+}
