@@ -1,0 +1,29 @@
+/**
+ * Member bodies: a block, a C# 6 expression body (`=> e;`) or a bare semicolon, and C# 6 auto-property initializers.
+ * The feature recorded for an expression body depends on the member: methods, properties, indexers and operators
+ * are C# 6; accessors, constructors and destructors are C# 7.
+ */
+export const expressionBodyMethods = {
+  /** `=> expression` (or `=> ref expression`). `feature` is the catalog id recorded at the arrow, if any. */
+  arrowExpressionClause(feature) {
+    if (feature) this.feature(feature, this.current);
+    const arrow = this.take();
+    return this.n('ArrowExpressionClause', arrow, this.expressionOrRef());
+  },
+  /** A block body, an expression body or a bare semicolon: returns [body, expressionBody, semicolonToken]. */
+  functionBody(feature) {
+    if (this.at('{')) return [this.block(), null, this.match(';')];
+    if (this.at('=>')) return [null, this.arrowExpressionClause(feature), this.expect(';')];
+    return [null, null, this.expect(';')];
+  },
+  /** What follows a property's accessor list or name: returns [expressionBody, initializer, semicolonToken]. */
+  propertyTail() {
+    if (this.at('=>')) return [this.arrowExpressionClause('ExpressionBodiedProperty'), null, this.expect(';')];
+    if (this.at('=')) {
+      this.feature('AutoPropertyInitializer', this.current);
+      const initializer = this.n('EqualsValueClause', this.take(), this.variableInitializer());
+      return [null, initializer, this.expect(';')];
+    }
+    return [null, null, this.match(';')];
+  }
+};

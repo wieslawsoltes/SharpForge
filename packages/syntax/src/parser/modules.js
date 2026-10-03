@@ -58,6 +58,7 @@ import { anonymousObjectMethods } from './expressions/anonymous-objects.js';
 import { parameterMethods } from './declarations/parameters.js';
 import { awaitMethods } from './expressions/await.js';
 import { conditionalAccessMethods } from './expressions/conditional-access.js';
+import { expressionBodyMethods } from './declarations/expression-bodies.js';
 export const parserModules = Object.freeze([
   typeMethods,
   modifierMethods,
@@ -113,5 +114,6 @@ export const parserModules = Object.freeze([
   anonymousObjectMethods,
   parameterMethods,
   awaitMethods,
-  conditionalAccessMethods
+  conditionalAccessMethods,
+  expressionBodyMethods
 ]);
