@@ -17,9 +17,10 @@ and unmodelled notifications/events fail; they are not silently schema-qualified
 The `DebugAdapter` error-response schema mismatch was fixed in Project 13 / A14,
 SF-A14-T06.6 (#2860), by [PR #3448](https://github.com/wieslawsoltes/SharpForge/pull/3448).
 Unsuccessful responses now include the empty `body` required by Microsoft's
-pinned `ErrorResponse` schema. At commit
-`800dcbe03684b19e99a5a75b2a235e6dd9627e27`, seven focused protocol tests and the
-local synthetic production-message probe passed on darwin-arm64 with Node 24.21.0.
+pinned `ErrorResponse` schema. Seven focused protocol tests passed at implementation
+commit `5788e4363eee9a6c54437a9871a176b11c3fdf7e`. The local synthetic
+production-message probe also passed at final metadata-only follow-up
+`800dcbe03684b19e99a5a75b2a235e6dd9627e27`, on darwin-arm64 with Node 24.21.0.
 Those checks do not establish recorded-client interoperability or platform
 qualification; the probe still reports `qualification: unknown`.
 The retained historical clean-commit observation is
