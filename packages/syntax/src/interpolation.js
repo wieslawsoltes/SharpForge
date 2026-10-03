@@ -20,7 +20,8 @@ export function scanInterpolated(text, start, report, hole) {
   if (text[i] === '@') {
     verbatim = true;
     i++;
-    features.push('AltInterpolatedVerbatimStrings');
+    // `@$"` is the C# 8 spelling; Roslyn reports it over these three characters.
+    features.push({ id: 'AltInterpolatedVerbatimStrings', start, end: start + 3 });
   }
   while (text[i] === '$') {
     dollars++;
@@ -214,7 +215,8 @@ export function scanInterpolated(text, start, report, hole) {
       error(segment.open.end, 'Unclosed interpolation');
       broken = true;
     }
-    if (!raw && !verbatim && /[\r\n\u0085\u2028\u2029]/.test(text.slice(segment.open.end, i))) features.push('NewLinesInInterpolations');
+    if (!raw && !verbatim && /[\r\n\u0085\u2028\u2029]/.test(text.slice(segment.open.end, i)))
+      features.push({ id: 'NewLinesInInterpolations', start: segment.close?.start ?? i, end: segment.close?.end ?? i });
     segments.push(segment);
     textStart = i;
     if (segments.length > 20000) {

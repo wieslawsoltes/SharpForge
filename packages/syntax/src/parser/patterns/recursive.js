@@ -14,8 +14,9 @@ export const recursivePatternMethods = {
         list = this.subpatterns('}');
       property = this.n('PropertyPatternClause', open, list, this.expect('}'));
     }
-    this.feature('RecursivePatterns', start);
-    return this.n('RecursivePattern', type, positional, property, this.isDesignationAhead() ? this.designation() : null);
+    const designation = this.isDesignationAhead() ? this.designation() : null;
+    this.feature('RecursivePatterns', start, this.tokens[this.i - 1]);
+    return this.n('RecursivePattern', type, positional, property, designation);
   },
   /** Index after a dotted name at `i` when it is followed by `:` (a subpattern name), else -1. */
   scanSubpatternName(i) {
@@ -34,9 +35,9 @@ export const recursivePatternMethods = {
         let name = null;
         if (colon === this.i + 1) name = this.n('NameColon', this.n('IdentifierName', this.id()), this.take());
         else if (colon > 0) {
-          this.feature('ExtendedPropertyPatterns', this.current);
           let expression = this.n('IdentifierName', this.id());
           while (this.at('.')) expression = this.n('SimpleMemberAccessExpression', expression, this.take(), this.n('IdentifierName', this.id()));
+          this.feature('ExtendedPropertyPatterns', this.current);
           name = this.n('ExpressionColon', expression, this.take());
         }
         list.push(this.n('Subpattern', name, this.pattern(false)));

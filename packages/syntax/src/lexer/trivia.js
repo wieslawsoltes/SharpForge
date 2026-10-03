@@ -56,7 +56,9 @@ function directive(s, hash) {
     // A directive diagnostic covers the whole directive unless it names its own [offset, length] within it.
     for (const [code, message, severity, span] of result.diagnostics)
       s.error(hash + (span?.[0] ?? 0), span?.[1] ?? stop - hash, code, message, severity);
-  if (active) for (const id of features) s.feature(id, hash, stop);
+  // A directive's feature is reported at its name (`pragma`, `nullable`), as in Roslyn.
+  const nameStart = stop - rest.length - word.length;
+  if (active) for (const id of features) s.feature(id, word ? nameStart : hash, word ? nameStart + word.length : stop);
   s.directives.push(piece);
   s.checkpoints.push({ start: hash, end, state: (s.lastSnapshot = snapshotDirectiveState(s.state, s.lastSnapshot)) });
   s.i = end;

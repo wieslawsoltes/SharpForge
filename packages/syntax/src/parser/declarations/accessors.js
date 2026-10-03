@@ -27,7 +27,10 @@ export const accessorMethods = {
       if (kind) {
         keyword = this.takeWord(word);
         if (word === 'init') this.feature('InitOnlySetters', token);
-        if (modifiers.length) this.feature('PropertyAccessorMods', token);
+        if (modifiers.length) {
+          this.feature('PropertyAccessorMods', this.tokens[firstModifier]);
+          this.modifierNameFeatures(firstModifier, this.i - 1, token);
+        }
       } else {
         this.error(token, 'CS1014', 'A get or set accessor expected');
         kind = 'UnknownAccessorDeclaration';

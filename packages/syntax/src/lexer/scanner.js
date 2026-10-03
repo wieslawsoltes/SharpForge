@@ -58,7 +58,10 @@ export class Scanner {
       raw.value = scan.parts;
       raw.structure = scan.structure;
       this.i = scan.end;
-      for (const feature of scan.structure.features) this.feature(feature, start, scan.end);
+      // A feature of an interpolated string covers the whole literal unless the scan gives it a span of its own.
+      for (const feature of scan.structure.features)
+        if (typeof feature === 'string') this.feature(feature, start, scan.end);
+        else this.feature(feature.id, feature.start, feature.end);
     } else if (ch === '"' && text.startsWith('"""', start)) {
       const scan = scanRawString(text, start, report);
       this.i = scan.end;
@@ -84,7 +87,8 @@ export class Scanner {
       raw.literal = Object.freeze({ ...scan.literal, number: scan.value });
       for (const e of scan.errors) this.error(start, scan.end - start, e.code, e.message, e.severity);
       for (const e of scan.profile) this.profile.push(diagnostic(this.source, start, scan.end - start, e.code, e.message));
-      for (const id of scan.features) this.feature(id, start, scan.end);
+      // Roslyn reports the features of a numeric literal with a zero-width span at its start.
+      for (const id of scan.features) this.feature(id, start, start);
       if (!Number.isFinite(scan.value) && !scan.errors.length) this.error(start, scan.end - start, 'CS1013', 'Invalid numeric literal');
     } else if (startsIdentifier(text, start)) {
       const scan = scanIdentifier(text, start);

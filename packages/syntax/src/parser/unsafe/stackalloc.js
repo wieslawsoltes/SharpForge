@@ -4,9 +4,10 @@
  */
 export const stackAllocMethods = {
   stackAllocExpression() {
-    const keyword = this.take();
+    const keywordToken = this.current,
+      keyword = this.take();
     if (this.at('[') && this.peek().kind === ']') {
-      this.feature('StackAllocInitializer', this.current);
+      this.feature('StackAllocInitializer', keywordToken);
       return this.n(
         'ImplicitStackAllocArrayCreationExpression',
         keyword,
@@ -16,7 +17,7 @@ export const stackAllocMethods = {
       );
     }
     const type = this.type('new');
-    if (this.at('{')) this.feature('StackAllocInitializer', this.current);
+    if (this.at('{')) this.feature('StackAllocInitializer', keywordToken);
     return this.n('StackAllocArrayCreationExpression', keyword, type, this.at('{') ? this.initializerExpression('ArrayInitializerExpression') : null);
   }
 };
