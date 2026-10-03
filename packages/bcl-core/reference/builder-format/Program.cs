@@ -1,10 +1,20 @@
 using System;
 using System.Globalization;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 
 internal static class Program
 {
+    private static string Bounded(string value) => value != null && value.Length > 256 ? null : value;
+
+    private static object Summary(string value) => value == null || value.Length <= 256 ? null : new {
+        length = value.Length,
+        sha256 = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(value))).ToLowerInvariant(),
+        prefix = value.Substring(0, 16),
+        suffix = value.Substring(value.Length - 16)
+    };
+
     private static void Format(string id, string format, object[] arguments)
     {
         string result = null;
@@ -15,7 +25,11 @@ internal static class Program
         string builderError = null;
         try { builder.AppendFormat(CultureInfo.InvariantCulture, format, arguments); }
         catch (Exception exception) { builderError = exception.GetType().Name; }
-        Console.WriteLine(JsonSerializer.Serialize(new { id, format, arguments, result, error, builder = builder.ToString(), builderError }));
+        string builderResult = builder.ToString();
+        Console.WriteLine(JsonSerializer.Serialize(new {
+            id, format, arguments, result = Bounded(result), resultSummary = Summary(result), error,
+            builder = Bounded(builderResult), builderSummary = Summary(builderResult), builderError
+        }));
     }
 
     private static void Builder(string id, Func<StringBuilder> operation)

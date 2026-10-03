@@ -29,6 +29,14 @@ function formatHost() {
     bclHost: {isReference, fault(name, message) { throw new ManagedFault(name, message); }}};
 }
 
+function assertText(actual, expected, summary, id) {
+  if (!summary) return assert.equal(actual, expected, id);
+  assert.equal(actual.length, summary.length, id);
+  assert.equal(createHash('sha256').update(actual).digest('hex'), summary.sha256, id);
+  assert.equal(actual.slice(0, 16), summary.prefix, id);
+  assert.equal(actual.slice(-16), summary.suffix, id);
+}
+
 test('B05 StringBuilder metadata advertises the .NET default MaxCapacity', () => {
   assert.equal(frameworkType(builderType).properties.MaxCapacity.value, 2147483647);
 });
@@ -103,8 +111,11 @@ for (const [engine, create] of Object.entries(engines)) {
             let error = null;
             try { platform.invoke(append, [instance, format, arguments_]); }
             catch (exception) { error = exception.name; }
-            assert.equal(error, fixture.builderError, fixture.id);
-            assert.equal(platform.native(platform.invoke(contract('ToString', []), [instance])), fixture.builder, fixture.id);
+            const hostLimit = fixture.builderSummary?.length > MAX;
+            assert.equal(error, hostLimit ? 'OutOfMemoryException' : fixture.builderError, fixture.id);
+            const actual = platform.native(platform.invoke(contract('ToString', []), [instance]));
+            if (hostLimit) assert.equal(actual, 'prefix|', fixture.id);
+            else assertText(actual, fixture.builder, fixture.builderSummary, fixture.id);
           });
         });
       });
@@ -120,7 +131,7 @@ test('B06 composite parser follows pinned .NET whitespace and brace grammar', as
     if (fixture.error) {
       assert.throws(() => compositeFormat(platform, fixture.format, values), {name: fixture.error}, fixture.id);
     } else {
-      assert.equal(compositeFormat(platform, fixture.format, values), fixture.result, fixture.id);
+      assertText(compositeFormat(platform, fixture.format, values), fixture.result, fixture.resultSummary, fixture.id);
     }
   }
 });
