@@ -31,7 +31,11 @@ budgets, snapshot replay and actual instruction-breakpoint Hot Reload. Internal
 `inlineCacheStatistics` reports entries/hits/misses/megamorphic status without
 exposing cached metadata.
 
-No tests, builds or benchmarks have run for this slice. Root owns the serial queue:
+Serial validation at `a0365151` passed all 56 tests across inline-cache,
+virtual-slots, B03 dispatch, token-cache, decode-plan and method-events suites
+under Node 24.21.0, one worker and a 512 MB heap cap. Static/manifests and
+build validation use the required core check. Benchmarks remain staged.
+The focused command is:
 
 ```sh
 node scripts/limited.js node --test tests/a05-inline-cache.test.js tests/a05-b03-dispatch.test.js tests/a05-token-cache.test.js tests/a05-decode-plan.test.js tests/a05-cil-method-events.test.js
