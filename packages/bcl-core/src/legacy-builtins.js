@@ -1,7 +1,8 @@
 import {invokeString} from './system/string.js';
 
-function parseInt32(host, args) {
-  const text = String(host.value(args[0]) ?? '').trim();
+function parseInt32Value(host, input) {
+  if (input === null) throw host.fault('ArgumentNullException', 'String cannot be null');
+  const text = String(input).trim();
   if (!/^[+-]?\d+$/.test(text)) {
     throw host.fault('FormatException', 'Input string was not in a correct format');
   }
@@ -10,6 +11,10 @@ function parseInt32(host, args) {
     throw host.fault('OverflowException', 'Value is outside the Int32 range');
   }
   return value | 0;
+}
+
+function parseInt32(host, args) {
+  return parseInt32Value(host, host.value(args[0]));
 }
 
 function parseDouble(host, args) {
@@ -21,7 +26,10 @@ function parseDouble(host, args) {
 }
 
 function convertInt32(host, args) {
-  const value = Number(host.value(args[0]));
+  const input = host.value(args[0]);
+  if (input === null) return 0;
+  if (typeof input === 'string') return parseInt32Value(host, input);
+  const value = Number(input);
   const floor = Math.floor(value);
   const fraction = value - floor;
   const rounded = fraction === 0.5 ? (floor % 2 === 0 ? floor : floor + 1) : Math.round(value);
