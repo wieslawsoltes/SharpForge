@@ -2,6 +2,7 @@
  * The state of one semantic analysis: files, options, core types, resolvers, the diagnostics sink and the
  * policies for the parts of the framework the closed registry does not model.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { diagnostic } from '@sharpforge/text';
 import { languageVersion as parseVersion } from '@sharpforge/syntax';
 import { TypeKind } from '../symbols/types.js';
@@ -193,7 +194,7 @@ export class AnalysisCore {
     if (!source || this.diagnostics.length >= 400) return;
     const s = spanOf(node),
       start = s.start ?? 0,
-      length = Math.max(code === 'CS0162' || s.end > start ? (s.end ?? start) - start : 1, s.end === start ? 0 : 1);
+      length = Math.max(code === DiagnosticId.CS0162 || s.end > start ? (s.end ?? start) - start : 1, s.end === start ? 0 : 1);
     if (this.diagnostics.some(d => d.code === code && d.uri === source.uri && d.start === start && d.message === message)) return;
     this.diagnostics.push(diagnostic(source, start, length || 1, code, message, severity));
   }

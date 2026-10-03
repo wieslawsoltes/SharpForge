@@ -92,11 +92,12 @@ function assertRejected(row, positive, rejected) {
 }
 
 /**
- * Roslyn knows a row when it has a MessageID and is not preview syntax that the pinned build predates. For those rows
- * Roslyn must report the same code over the same span when it compiles rejected.cs (a zero-width Roslyn span, used
- * for numeric literals, is compared by its start).
+ * Roslyn can confirm every row except preview syntax that the pinned build predates. For the other rows Roslyn must
+ * report the same code over the same span when it compiles rejected.cs (a zero-width Roslyn span, used for numeric
+ * literals, is compared by its start). That includes rows without a Roslyn feature id of their own, such as top-level
+ * statements, which Roslyn gates under another id.
  */
-const roslynKnows = row => !!row.messageId && !row.preview;
+const roslynKnows = row => !row.preview;
 function assertRoslynAgrees(directory, expected) {
   const recorded = JSON.parse(read(join(directory, 'rejected.cs.roslyn.json')));
   const agrees = recorded.errors.some(
@@ -147,7 +148,7 @@ test('matrix: conformance report is emitted as JSON', () => {
   assert.equal(summary.fixtures + summary.compilerGated + summary.firstVersion, summary.total, 'every row is in exactly one group');
   for (const row of rows.filter(r => r.gate === 'compiler')) assert(row.id in featureSnippets, `${row.id} has no snippet in the compiler gate matrix`);
   assert(summary.fixtures >= 125, String(summary.fixtures));
-  assert(summary.roslynAgrees >= 110, String(summary.roslynAgrees));
+  assert(summary.roslynAgrees >= 118, String(summary.roslynAgrees));
   const directory = join(repoRoot, 'artifacts');
   mkdirSync(directory, { recursive: true });
   writeFileSync(join(directory, 'syntax-matrix-conformance.json'), JSON.stringify({ ...report, summary }, null, 1) + '\n');

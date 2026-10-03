@@ -6,6 +6,7 @@
  * A numeric constant that has only an explicit conversion to the destination and does not fit reports CS0031
  * ("Constant value '300' cannot be converted to a 'byte'") instead of CS0266.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { integralRange, isIntegralKind, isNumericKind, implicitNumericConversion } from './numeric.js';
 
 const fromInt = new Set(['sbyte', 'byte', 'short', 'ushort', 'uint', 'ulong', 'nuint']);
@@ -34,13 +35,13 @@ export function classifyConstantNarrowing(from, value, to, { isRealLiteral = fal
   if (implicitNumericConversion(from, to)) return 'implicitNumeric';
   if (isIntegralKind(from) && from !== 'char' && implicitConstantConversion(from, value, to)) return 'implicitConstant';
   if (from === 'double' && isRealLiteral && (to === 'float' || to === 'decimal'))
-    return { code: 'CS0664', args: [to === 'float' ? 'F' : 'M', to] };
+    return { code: DiagnosticId.CS0664, args: [to === 'float' ? 'F' : 'M', to] };
   // Roslyn reports CS0031 for a constant that would convert by the constant rule if only its value fitted (an int constant
   // to a smaller or unsigned type, a long constant to ulong); other narrowing constants are ordinary CS0266.
   if (((from === 'int' && fromInt.has(to)) || (from === 'long' && to === 'ulong')) && value !== null && value !== undefined) {
     const v = big(value),
       [lo, hi] = integralRange(to);
-    if (v < lo || v > hi) return { code: 'CS0031', args: [display ?? String(v), to] };
+    if (v < lo || v > hi) return { code: DiagnosticId.CS0031, args: [display ?? String(v), to] };
   }
-  return { code: 'CS0266' };
+  return { code: DiagnosticId.CS0266 };
 }

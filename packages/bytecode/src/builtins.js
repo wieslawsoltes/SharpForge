@@ -22,5 +22,5 @@ export const BuiltinMap = new Map(Builtins.filter(Boolean).map(b=>[b.name,b]));
 
 /** Contributions append after the released table; its contract offset never moves. */
 export function createBuiltinRegistry(base=Builtins){
-  return createRegistry(base);
+  return createRegistry(base,base===Builtins);
 }

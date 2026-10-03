@@ -1,3 +1,4 @@
+import {DiagnosticId} from './diagnostics/codes.js';
 import { checkFeatures, languageFeature } from '@sharpforge/syntax';
 import { languageVersion } from './modern.js';
 import { collectSyntaxFeatures } from './binder/syntax-features.js';
@@ -7,14 +8,14 @@ import { diagnostic } from '@sharpforge/text';
 import { formatMessage } from './diagnostics/codes.js';
 
 /** Features whose uses are taken from the syntax walk even when the parser recorded them too. */
-const relocatedFeatures = new Set(['Async', 'RecursivePatterns']);
+const relocatedFeatures = new Set(['RecursivePatterns']);
 
 /** CS8803 at the first top-level statement after a namespace or type declaration, with the span the analysis uses. */
 function placementDiagnostics(file) {
   const statement = misplacedTopLevelStatement(file);
   if (!statement) return [];
   const { start, end } = statement.span;
-  return [diagnostic(file.source, start, Math.max(1, end - start), 'CS8803', formatMessage('CS8803', []), 'error')];
+  return [diagnostic(file.source, start, Math.max(1, end - start), DiagnosticId.CS8803, formatMessage(DiagnosticId.CS8803, []), 'error')];
 }
 
 /** Check original parsed files before async lowering, including reused workspace trees. */
@@ -27,7 +28,7 @@ export function syntaxFeatureChecks(files, options) {
     try { selected = languageVersion(options.langVersionByUri?.[file.source.uri] ?? options.langVersion); }
     catch { continue; } // Compilation reports invalid options once with CS1617.
     const located = file.syntax && selected.number < newestLanguageVersion ? collectSyntaxFeatures(file.syntax) : [];
-    // The parser records these where it notices them (the token after `async`, the clauses of a recursive pattern
+    // The parser records these where it notices them (the clauses of a recursive pattern
     // without its type); the syntax walk knows Roslyn's location and the uses the parser does not record (a discard).
     const relocated = new Set(located.filter(use => relocatedFeatures.has(use.id)).map(use => use.id));
     const parsed = [...(file.features ?? [])], uses = parsed.filter(use => !relocated.has(use.id));

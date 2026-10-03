@@ -15,6 +15,7 @@
  *
  * `a ?? b` whose left operand is an unconstrained type parameter is gated below C# 8.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeParameterSymbol } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { implementsInterface } from '../symbols/substitution.js';
@@ -23,8 +24,8 @@ import { isRefLike } from './ref-struct.js';
 
 /** The diagnostics of a capture, by the kind of static function that contains it. */
 const captureCodes = Object.freeze({
-  localFunction: { variable: 'CS8421', instance: 'CS8422' },
-  lambda: { variable: 'CS8820', instance: 'CS8821' },
+  localFunction: { variable: DiagnosticId.CS8421, instance: DiagnosticId.CS8422 },
+  lambda: { variable: DiagnosticId.CS8820, instance: DiagnosticId.CS8821 },
 });
 
 /** True when one of the binder's scopes declares exactly this symbol. */
@@ -133,22 +134,22 @@ export const CSharp8Binding = Base =>
       for (const block of this.openBlocks ?? []) {
         for (const start of block.usingStarts) {
           if (source < start && target > start) {
-            this.report(syntax, 'CS8648');
+            this.report(syntax, DiagnosticId.CS8648);
             return;
           }
           if (source > start && target < start && labelBlock === block) {
-            this.report(syntax, 'CS8649');
+            this.report(syntax, DiagnosticId.CS8649);
             return;
           }
         }
       }
     }
     localDeclaration(syntax) {
-      if (syntax.usingKeyword && syntax.parent?.kind === 'SwitchSection') this.report(syntax, 'CS8647');
+      if (syntax.usingKeyword && syntax.parent?.kind === 'SwitchSection') this.report(syntax, DiagnosticId.CS8647);
       return super.localDeclaration(syntax);
     }
     variableDeclaration(syntax, options) {
-      if (options.isUsing) for (const variable of syntax.variables) if (!variable.initializer) this.report(variable.identifier, 'CS0210');
+      if (options.isUsing) for (const variable of syntax.variables) if (!variable.initializer) this.report(variable.identifier, DiagnosticId.CS0210);
       return super.variableDeclaration(syntax, options);
     }
     // ---- null coalescing ----
