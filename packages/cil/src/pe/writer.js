@@ -1,3 +1,4 @@
+import { patchManagedResourceDirectory } from './managed-resources.js';
 import { desktopEntryStub } from './entry-stub.js';
 import { Writer, CilError, align, utf8 } from '../binary.js';
 import { peOptions, writeOptionalHeader, PEDirectoryNames } from './headers.js';
@@ -101,6 +102,7 @@ export function writeManagedPE(sectionBytes, metadataOffset, metadataLength, ent
   cli.setUint32(12, metadataLength, true);
   cli.setUint32(16, options.corFlags, true);
   cli.setUint32(20, entryToken, true);
+  patchManagedResourceDirectory(cli, options, sectionBytes.length, metadataOffset, metadataLength);
   return writePortableExecutable([{ name: '.text', data: section }, ...additionalSections], {
     ...options, directories: { ...options.directories, cliHeader: { section: '.text', offset: 0, size: 72 } },
   });
