@@ -1,6 +1,7 @@
 import {cancelArrayOperation} from './array-ops.js';
 import {ManagedFault} from '../heap.js';
 import {failInitialization} from './static-init.js';
+import {pushFrame, popFrame} from './frame-stack.js';
 
 export const fatalFaults=new Set(['InstructionLimitException','OutputLimitException','StackOverflowException','ExecutionLimitException']);
 const within=(offset,handler)=>offset>=handler.start&&offset<handler.end;
@@ -32,7 +33,7 @@ function searchHandlers(vm,search) {
         if(vm.frames.length>=vm.options.maxFrames)throw new ManagedFault('StackOverflowException','Managed filter call depth exceeded');
         // A filter evaluates in its declaring method's locals while younger frames
         // remain live. Shared arrays also retain their aliasing through snapshots.
-        vm.frames.push({id:++vm.frameId,method:frame.method,args:frame.args,locals:frame.locals,stack:[search.error.reference],pc:frame.offsets.get(handler.catchType),lastOffset:handler.catchType,offsets:frame.offsets,...createExceptionState(),needsInitialization:false,
+        pushFrame(vm,{id:++vm.frameId,method:frame.method,args:frame.args,locals:frame.locals,stack:[search.error.reference],pc:frame.offsets.get(handler.catchType),lastOffset:handler.catchType,offsets:frame.offsets,...createExceptionState(),needsInitialization:false,
           genericIdentity:frame.genericIdentity??null,methodArguments:frame.methodArguments??[],filterSearch:search,filterOwnerId:frame.id,filterHandler:handler});
         return;
       }
@@ -66,7 +67,7 @@ export function endFilter(vm,value) {
   const frame=vm.top,search=frame?.filterSearch;
   if(!search)throw new ManagedFault('InvalidProgramException','endfilter outside a filter');
   if(!Number.isInteger(value))throw new ManagedFault('InvalidProgramException','endfilter requires an Int32 decision');
-  vm.frames.pop();
+  popFrame(vm);
   if(value!==0){search.selection={kind:'catch',frameId:frame.filterOwnerId,handler:frame.filterHandler};beginUnwind(vm,search);}
   else searchHandlers(vm,search);
 }
@@ -94,7 +95,7 @@ export function continueUnwind(vm,frame,leave=null) {
   const search=pending.search;
   if(search?.selection?.kind==='filter-failure'&&search.selection.frameId===frame.id){endFilter(vm,0);return;}
   const error=frame.initializes?failInitialization(vm,frame,pending.error):pending.error;
-  vm.frames.pop();
+  popFrame(vm);
   if(frame.initializes||!search)throwFault(vm,error);
   else beginUnwind(vm,search);
 }

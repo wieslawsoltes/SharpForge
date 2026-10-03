@@ -1,5 +1,6 @@
 import {cancelArrayOperation} from './array-ops.js';
 import {ManagedFault} from '../heap.js';
+import {popFrame} from './frame-stack.js';
 
 export function frameState() { return {exception: null, caught: [], unwinds: []}; }
 
@@ -38,7 +39,7 @@ export function finalizers(vm, frame, source, target = Infinity) {
 
 export function finishReturn(vm, frame, value) {
   vm.stack.length = frame.base;
-  vm.frames.pop();
+  popFrame(vm);
   if (vm.frames.length) vm.stack.push(value);
   else {
     vm.returnValue = value;
@@ -78,7 +79,7 @@ export function resumeUnwind(vm, frame) {
     vm.fault = null;
     return;
   }
-  vm.frames.pop();
+  popFrame(vm);
   vm.stack.length = frame.base;
   vm.handleFault(unwind.error);
 }
@@ -119,7 +120,7 @@ export function handleFault(vm, error) {
       vm.fault = null;
       return;
     }
-    vm.frames.pop();
+    popFrame(vm);
   }
   vm.state = 'faulted';
 }
