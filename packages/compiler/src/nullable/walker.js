@@ -24,6 +24,7 @@ import { NOT_NULL, MAYBE_NULL, joinStates, FlowState, joinFlow } from './flow-st
 import { NullableAnnotation, RefKind, SymbolKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { allowsNull, argumentStateAfterCall, doesNotReturn, membersNotNullAfterCall, resultState } from './attributes.js';
+import { frameworkResultState } from './framework-annotations.js';
 import { boundChildren } from '../flow/semantic-assignment.js';
 
 const isReferenceLike = type => !!type && type.isReferenceType === true;
@@ -179,7 +180,7 @@ class NullableWalkerCore {
     const variable = this.variableOf(node);
     const tracked = variable ? flow.get(variable) : undefined;
     if (tracked !== undefined) return tracked;
-    return resultState(member) ?? this.declaredState(node);
+    return resultState(member) ?? frameworkResultState(member) ?? this.declaredState(node);
   }
 
   call(node, flow) {
@@ -191,7 +192,8 @@ class NullableWalkerCore {
     for (const argument of node.args ?? []) this.applyPostcondition(argument, null, flow);
     this.applyMemberPostconditions(method, null, flow);
     if (doesNotReturn(method)) this.replace(flow, new FlowState(new Map([['<unreachable>', NOT_NULL]])));
-    return resultState(method, { returnValue: true }) ?? (isAnnotated(method.returnTypeWithAnnotations) ? MAYBE_NULL : NOT_NULL);
+    const declared = resultState(method, { returnValue: true }) ?? frameworkResultState(method, node.receiver?.type);
+    return declared ?? (isAnnotated(method.returnTypeWithAnnotations) ? MAYBE_NULL : NOT_NULL);
   }
 
   argument(argument, method, flow) {
