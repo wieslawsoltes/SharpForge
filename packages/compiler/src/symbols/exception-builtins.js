@@ -9,7 +9,7 @@ const typeName = type => primitiveNames.get(type.toDisplayString()) ?? exception
 const signature = (owner, name, parameters) => owner + '::' + name + '(' + parameters.join(',') + ')';
 const bySignature = new Map();
 for (const builtin of Builtins) {
-  const descriptor = builtin.exceptionRuntime;
+  const descriptor = builtin?.exceptionRuntime;
   if (descriptor) bySignature.set(signature(descriptor.owner, descriptor.name, descriptor.parameters), builtin);
 }
 
