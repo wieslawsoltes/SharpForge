@@ -5,5 +5,11 @@
  */
 import { IndexRangeLowering } from './index-range.js';
 import { ConditionalAccessLowering } from './conditional-access.js';
+import { ThrowExpressionLowering } from './throw-expressions.js';
 
-export const languageLowerings = Object.freeze([IndexRangeLowering, ConditionalAccessLowering]);
+// One entry per line: batches that add a lowering then change different lines.
+export const languageLowerings = Object.freeze([
+  IndexRangeLowering,
+  ConditionalAccessLowering,
+  ThrowExpressionLowering,
+]);

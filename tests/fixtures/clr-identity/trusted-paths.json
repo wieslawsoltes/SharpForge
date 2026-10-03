@@ -1,0 +1,17 @@
+{
+  "sdk": "10.0.201",
+  "runtime": ".NET 10.0.5",
+  "traceSha256": "29e8cceab7bf7b5c293da8c017617f635e71055e3f1c4643d2bb5f90c5b9b2f7",
+  "command": [
+    "dotnet",
+    "exec",
+    "--depsfile",
+    "$APP/oracle.deps.json",
+    "$APP/oracle.dll",
+    "trusted"
+  ],
+  "applicationPaths": [
+    "$APP/NuGet.Frameworks.dll",
+    "$APP/oracle.dll"
+  ]
+}

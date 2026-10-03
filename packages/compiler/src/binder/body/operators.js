@@ -246,6 +246,12 @@ export const OperatorBinding = Base =>
             left,
             right: this.applyConversion(right, underlying, asUnderlying),
           });
+        const toLeft = this.conversions.classifyFromExpression(right, left.type);
+        if (left.type && !left.type.isErrorType() && !(toLeft.exists && toLeft.isImplicit)) {
+          // Like `??`, the operator as a whole does not apply: the right operand is not reported on its own.
+          this.report(syntax, 'CS0019', ['??=', this.display(left.type), this.operandDisplay(right)]);
+          return this.bad(syntax);
+        }
         return this.node('CoalesceAssignment', syntax, left.type, { left, right: this.convert(right, left.type, syntax.right) });
       }
       // Compound assignment: x op= y is x = (T)(x op y) with x evaluated once.

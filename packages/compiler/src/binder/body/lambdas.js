@@ -31,6 +31,8 @@ export const LambdaBinding = Base =>
       const bindWith = (parameterTypes, returnType, quiet, refKinds = null) => {
         const key = parameterTypes.map(t => t.toDisplayString()).join(',') + '=>' + (returnType ? returnType.toDisplayString() : '?');
         if (quiet && cache.has(key)) return cache.get(key);
+        // C# 9: when more than one parameter is named `_` they are discards, and `_` names none of them.
+        const hasDiscards = (parameterSyntax ?? []).filter(p => p.identifier.valueText === '_').length > 1;
         const parameters = (parameterSyntax ?? []).map((p, i) => {
           const mods = p.modifiers?.map(m => m.text) ?? [];
           const s = new ParameterSymbol({
@@ -46,6 +48,7 @@ export const LambdaBinding = Base =>
                   : (refKinds?.[i] ?? RefKind.None),
             syntax: p,
           });
+          s.isDiscard = hasDiscards && s.name === '_';
           return s;
         });
         const diagnostics = [],
