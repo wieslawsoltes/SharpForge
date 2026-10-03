@@ -48,7 +48,6 @@ const notGated = {
   ImprovedOverloadCandidates: 'changes which candidates overload resolution keeps; there is no construct to report',
   ExtensibleFixedStatement: needsOperandTypes,
   IndexingMovableFixedBuffers: needsOperandTypes,
-  UnconstrainedTypeParameterInNullCoalescingOperator: needsOperandTypes,
   NameShadowingInNestedFunctions: 'below C# 8 Roslyn reports CS0136, not a language-version diagnostic',
   UnmanagedConstructedTypes: needsOperandTypes,
   ObsoleteOnPropertyAccessor: needsAttributeBinding,

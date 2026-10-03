@@ -213,6 +213,8 @@ export const roslynCodes=Object.freeze({
  CS0518:["ERR_PredefinedTypeNotFound","error",0,"Predefined type '{0}' is not defined or imported"],
  CS0522:["ERR_StructWithBaseConstructorCall","error",0,"'{0}': structs cannot call base class constructors"],
  CS0523:["ERR_StructLayoutCycle","error",0,"Struct member '{0}' of type '{1}' causes a cycle in the struct layout"],
+ CS0525:["ERR_InterfacesCantContainFields","error",0,"Interfaces cannot contain instance fields"],
+ CS0526:["ERR_InterfacesCantContainConstructors","error",0,"Interfaces cannot contain instance constructors"],
  CS0527:["ERR_NonInterfaceInInterfaceList","error",0,"Type '{0}' in interface list is not an interface"],
  CS0528:["ERR_DuplicateInterfaceInBaseList","error",0,"'{0}' is already listed in interface list"],
  CS0529:["ERR_CycleInInterfaceInheritance","error",0,"Inherited interface '{1}' causes a cycle in the interface hierarchy of '{0}'"],
