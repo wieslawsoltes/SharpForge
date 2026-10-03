@@ -10,6 +10,7 @@ import { lookupMembers } from '../inheritance.js';
 import { tupleElement, tupleElementProblem } from '../tuples.js';
 import { checkConstructedType } from '../constraints.js';
 import { staticMembersOfTypeParameter } from '../interface-members.js';
+import { accessorNamed, isOperatorMethod } from '../special-methods.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 const isSource = symbol => {
@@ -84,6 +85,8 @@ export const NameBinding = Base =>
       if (name === 'nameof' && options.invoked) return this.node('NameOfMarker', syntax, null, {});
       if (name === 'var' || name === 'dynamic') return this.lenient(syntax);
       if (this.d.isKnownFrameworkName(name)) return this.lenient(syntax);
+      for (let type = this.c.containingType; type; type = type.containingType)
+        if (this.reportAccessorByName(type, name, syntax.identifier)) return this.bad(syntax);
       this.report(syntax.kind === 'GenericName' ? syntax : syntax.identifier, 'CS0103', [name]);
       return this.bad(syntax);
     }
@@ -93,6 +96,13 @@ export const NameBinding = Base =>
       if (symbol.kind === SymbolKind.Namespace) return this.node('NamespaceExpression', syntax, null, { namespace: symbol });
       if (symbol.isErrorType()) return symbol.isFrameworkGap ? this.lenient(syntax) : this.bad(syntax);
       return this.node('TypeExpression', syntax, null, { referencedType: symbol });
+    }
+    /** CS0571 when `name` is the metadata name of an accessor of `type` (`get_X`, `add_E`); returns whether it was reported. */
+    reportAccessorByName(type, name, node) {
+      const membersNamed = (owner, memberName) => lookupMembers(owner, memberName, this.core, { within: this.c.containingType }).members,
+        accessor = accessorNamed(type, name, membersNamed);
+      if (accessor) this.report(node, 'CS0571', [accessor]);
+      return !!accessor;
     }
     localNode(local, syntax) {
       const n = this.node('Local', syntax, local.type, { local });
@@ -119,6 +129,10 @@ export const NameBinding = Base =>
       };
       if (first.kind === SymbolKind.Method) {
         const methods = members.filter(m => m.kind === SymbolKind.Method);
+        if (methods.every(isOperatorMethod)) {
+          this.report(nameNode, 'CS0571', [first.toDisplayString()]);
+          return this.bad(syntax);
+        }
         return this.node('MethodGroup', syntax, null, {
           methods,
           receiver: viaType ? null : receiver,
@@ -276,6 +290,7 @@ export const NameBinding = Base =>
             this.report(nameSyntax, 'CS0122', [found.inaccessible[0].toDisplayString()]);
             return this.bad(syntax);
           }
+          if (this.reportAccessorByName(type, name, nameSyntax)) return this.bad(syntax);
           if (!isSource(type) && type.typeKind !== TypeKind.Enum)
             return this.reportMissingFrameworkMember(type, name, nameSyntax, syntax, 'CS0117');
           this.report(nameSyntax, 'CS0117', [this.display(type), name]);
@@ -334,6 +349,7 @@ export const NameBinding = Base =>
         this.report(nameSyntax, 'CS0122', [found.inaccessible[0].toDisplayString()]);
         return this.bad(syntax);
       }
+      if (this.reportAccessorByName(lookupType, name, nameSyntax)) return this.bad(syntax);
       // A base type in an assembly that is not referenced: the lookup cannot be completed (CS0012) and finds nothing.
       const missingBase = this.d.missingBaseReason(lookupType);
       if (missingBase) {
