@@ -1,3 +1,4 @@
+import {DiagnosticId} from './diagnostics/codes.js';
 import {parseExpression} from '@sharpforge/syntax';
 import {parseCompilerInput} from './parse-input.js';
 import {Compilation} from './compilation.js';
@@ -122,7 +123,7 @@ export class SemanticModel {
    * @returns `{bound, type, symbol, constantValue, diagnostics:[{code,args}]}`; nothing is added to the compilation.
    */
   bindSpeculativeExpression(position,expression,{uri}={}){
-    const unit=this.methodAt(position,uri),diagnostics=[];if(!unit)return {bound:null,type:null,symbol:null,constantValue:{hasValue:false,value:undefined},diagnostics:[{code:'CS0103',args:[String(expression)]}]};
+    const unit=this.methodAt(position,uri),diagnostics=[];if(!unit)return {bound:null,type:null,symbol:null,constantValue:{hasValue:false,value:undefined},diagnostics:[{code:DiagnosticId.CS0103,args:[String(expression)]}]};
     let node=expression;if(typeof expression==='string'){const parsed=parseExpression(expression);for(const d of parsed.diagnostics)diagnostics.push({code:d.code,args:[],message:d.message});node=parsed.expression;}
     // A shadow of the compilation: the binder reports, records symbols and references into it, not into the real one.
     const shadow=Object.create(this.compilation);shadow.report=(at,code,args=[])=>{diagnostics.push({code,args});};shadow.symbols=[];shadow.references=[];
