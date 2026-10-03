@@ -24,6 +24,7 @@ export function renderDesignerStates(controller, parent, target) {
       const row = propertyElement(document, 'div', '', 'design-state-row');
       row.append(propertyElement(document, 'span', state.name + ` · ${state.setters.length} setters`),
         propertyButton(document, 'Record property…', () => openRecordState(controller, target, group.name, state.name)),
+        propertyButton(document, 'Preview', () => controller.view.safe(() => controller.previewState(target, {[group.name]: state.name}))),
         propertyButton(document, 'Transition…', () => openTransition(controller, target, group)));
       for (const setter of state.setters) row.append(propertyElement(document, 'small',
         `${setter.target}.${setter.property} = ${formatDesignerProperty(setter.value)}`));

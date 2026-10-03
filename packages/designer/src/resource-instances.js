@@ -1,5 +1,5 @@
 import {CONTROLS} from '@sharpforge/framework';
-import {designScene, validateDesign} from './model.js';
+import {designScene, propertySchema, validateDesign} from './model.js';
 import {authoringError} from './property-diagnostics.js';
 import {projectDesignerState} from './resource-states.js';
 import {projectDesignerAuthoringScene} from './resource-preview.js';
@@ -11,7 +11,13 @@ export function designerInstancePreviews(input, {nodeId, resourceKey, kind = 'st
   if (!root && resourceKey) {
     const resource = kind === 'template' ? design.templates[resourceKey] : design.styles[resourceKey];
     if (!resource) authoringError('SFD1854', 'Preview resource was not found.');
-    root = {id: 'preview', type: resource.targetType, properties: {Content: 'Preview', Width: 160, Height: 48},
+    const schema = propertySchema(resource.targetType);
+    const properties = {};
+    if (schema.Width) properties.Width = 160;
+    if (schema.Height) properties.Height = 48;
+    if (schema.Content) properties.Content = 'Preview';
+    else if (schema.Text) properties.Text = 'Preview';
+    root = {id: 'preview', type: resource.targetType, properties,
       children: [], events: {}, [kind]: resourceKey};
     if (resource.targetType === CONTROLS + 'TextBox') {
       delete root.properties.Content;
@@ -39,8 +45,9 @@ export function designerInstancePreviews(input, {nodeId, resourceKey, kind = 'st
     for (const state of ['Normal', 'PointerOver', 'Pressed', 'Disabled', 'Focused']) {
       const document = structuredClone(base);
       const instance = document.nodes[0];
-      instance.properties.RequestedTheme = theme === 'light' ? 1 : 2;
-      if (state === 'Disabled') instance.properties.IsEnabled = false;
+      const schema = propertySchema(instance.type);
+      if (schema.RequestedTheme) instance.properties.RequestedTheme = theme === 'light' ? 1 : 2;
+      if (state === 'Disabled' && schema.IsEnabled) instance.properties.IsEnabled = false;
       let scene = projectDesignerAuthoringScene(document, designScene(document), {theme, samples: false});
       scene = projectDesignerState(scene, root.states, {'*': state});
       if (root.template) scene = projectDesignerState(scene, design.templates[root.template].states, {'*': state}, {prefix: root.id + '::'});

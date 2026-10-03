@@ -4,6 +4,7 @@ export * from './csharp-sync.js';
 export * from './property-diagnostics.js';
 export * from './metadata.js';
 export * from './property-values.js';
+export * from './property-source-values.js';
 export * from './property-editors.js';
 export * from './property-grid-model.js';
 export * from './property-commands.js';

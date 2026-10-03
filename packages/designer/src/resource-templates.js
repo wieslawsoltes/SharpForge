@@ -3,14 +3,16 @@ import {authoringError, resourceKey} from './property-diagnostics.js';
 
 function flatten(part, nodes) {
   nodes.push({id: part.id, type: part.type, properties: structuredClone(part.properties ?? {}), events: {},
-    children: (part.children ?? []).map(child => child.id), templatePropertyBindings: structuredClone(part.bindings ?? {})});
+    children: (part.children ?? []).map(child => child.id), templatePropertyBindings: structuredClone(part.bindings ?? {}),
+    resourceReferences: structuredClone(part.resourceReferences ?? {})});
   (part.children ?? []).forEach(child => flatten(child, nodes));
 }
 
 function inflate(document, id) {
   const node = document.node(id);
   return {id, type: node.type, properties: structuredClone(node.properties),
-    bindings: structuredClone(node.templatePropertyBindings ?? {}), children: node.children.map(child => inflate(document, child))};
+    bindings: structuredClone(node.templatePropertyBindings ?? {}), resourceReferences: structuredClone(node.resourceReferences ?? {}),
+    children: node.children.map(child => inflate(document, child))};
 }
 
 /** Template editing uses an isolated visual tree and commits atomically back to its resource owner. */
@@ -27,7 +29,8 @@ export class DesignerTemplateScope {
     const nodes = [];
     flatten(template.root, nodes);
     this.document = new DesignDocument({version: 1, name: key, root: template.root.id,
-      width: ownerDocument.value.width, height: ownerDocument.value.height, nodes, styles: {}, templates: {}});
+      width: ownerDocument.value.width, height: ownerDocument.value.height, nodes, styles: {}, templates: {},
+      resources: structuredClone(ownerDocument.value.resources ?? {})});
   }
 
   ensure() { if (this.closed) authoringError('SFD1852', 'Template scope has closed.'); }
@@ -45,6 +48,7 @@ export class DesignerTemplateScope {
       if (!sourceProperty) delete node.templatePropertyBindings?.[property];
       else {
         delete node.properties[property];
+        delete node.resourceReferences?.[property];
         (node.templatePropertyBindings ??= {})[property] = sourceProperty;
       }
     });
@@ -67,6 +71,7 @@ export class DesignerTemplateScope {
     const changed = this.ownerDocument.change('Edit template ' + this.key, design => {
       if (!design.templates[this.key]) authoringError('SFD1852', 'Template was removed while its editor was open.');
       design.templates[this.key].root = root;
+      if (Object.keys(this.document.value.resources ?? {}).length) design.resources = structuredClone(this.document.value.resources);
     }, {expectedRevision: this.ownerRevision});
     this.closed = true;
     return changed;

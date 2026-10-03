@@ -1,5 +1,6 @@
 import {normalizeProperty} from './model.js';
 import {authoringError, resourceKey} from './property-diagnostics.js';
+import {refreshDesignerTemplateBindings} from './resource-preview.js';
 
 function owner(design, target) {
   const result = target.template ? design.templates[target.template] : design.nodes.find(node => node.id === target.nodeId);
@@ -63,15 +64,19 @@ export function setDesignerStateTransition(document, target, groupName, {from = 
 export function projectDesignerState(scene, states, activeStates, {prefix = ''} = {}) {
   const result = structuredClone(scene);
   const nodes = new Map(result.nodes.map(node => [node.id, node]));
+  const assigned = new Set();
   for (const group of states ?? []) {
     const state = group.states.find(candidate => candidate.name === (activeStates[group.name] ?? activeStates['*']));
     if (!state) continue;
     for (const setter of state.setters) {
       const node = nodes.get(prefix + setter.target);
-      if (node) node.properties[setter.property] = structuredClone(setter.value);
+      if (node) {
+        node.properties[setter.property] = structuredClone(setter.value);
+        assigned.add(node.id + ':' + setter.property);
+      }
     }
   }
-  return result;
+  return refreshDesignerTemplateBindings(result, assigned);
 }
 
 /** Deterministic interpolation for preview playback; unsupported compound values switch at completion. */

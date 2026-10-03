@@ -33,7 +33,8 @@ function emitTracks(node, variable) {
 
 function needsWinuiMarkup(design) {
   return Object.keys(design.resources ?? {}).length > 0 || Object.keys(design.templates).length > 0 ||
-    design.nodes.some(node => Object.keys(node.bindings ?? {}).length || Object.keys(node.resourceReferences ?? {}).length || node.states?.length);
+    design.nodes.some(node => Object.keys(node.bindings ?? {}).length || Object.keys(node.resourceReferences ?? {}).length || node.states?.length ||
+      ['Image', 'CalendarDatePicker', 'TimePicker'].some(type => node.type === CONTROLS + type));
 }
 
 /** Deterministic generation preserves the released SharpForge profile and reports unsupported runtime features. */

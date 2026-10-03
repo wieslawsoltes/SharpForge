@@ -5,6 +5,8 @@ import {samePropertyValue} from './property-diagnostics.js';
 
 /** Value-source inspection reports expressions without invoking converters or evaluating bindings. */
 export function designerPropertySource(design, node, name, resolved = resolvedProperties(design, node)) {
+  if (node.templatePropertyBindings?.[name]) return {kind: 'template', value: undefined,
+    expression: node.templatePropertyBindings[name], label: 'TemplateBinding: ' + node.templatePropertyBindings[name]};
   if (node.bindings?.[name]) return {kind: 'binding', value: undefined, expression: structuredClone(node.bindings[name]), label: 'Binding'};
   if (node.resourceReferences?.[name]) {
     const reference = node.resourceReferences[name];

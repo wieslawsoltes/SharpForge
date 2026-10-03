@@ -1,4 +1,5 @@
 import {frameworkAssignable} from '../../packages/framework/src/index.js';
+import {designerPropertySchema} from '../../packages/designer/src/index.js';
 import {propertyButton, propertyDialog, propertyElement, propertyField, propertyInput, propertySelect} from './designer-property-dom.js';
 
 /** Structured binding settings preserve protected expressions; no converter or binding is executed here. */
@@ -54,6 +55,24 @@ export function openDesignerConvertResource(context) {
   modal.body.append(propertyField(context.document, 'Key', name), propertyField(context.document, 'Theme resource', theme));
   modal.footer.append(propertyButton(context.document, 'Convert', () => modal.run(() => {
     context.commands.convertToResource(context.name, name.value.trim(), {ids: context.ids, theme: theme.checked});
+    modal.close();
+  })));
+  return modal;
+}
+
+export function openDesignerTemplateBinding(context) {
+  const scope = context.view.resources?.scope;
+  if (!scope) throw new Error('Enter a template scope before editing TemplateBinding.');
+  const modal = propertyDialog(context.document, 'Template binding for ' + context.name);
+  const compatible = Object.entries(designerPropertySchema(scope.targetType)).filter(([, schema]) =>
+    !schema.isStatic && (schema.type === context.schema.type || context.schema.type === 'object'));
+  const node = scope.document.node(context.ids[0]);
+  const source = propertySelect(context.document, [{value: '', label: '(No template binding)'},
+    ...compatible.map(([name]) => ({value: name, label: name}))], node.templatePropertyBindings?.[context.name] ?? '', 'Owner property');
+  modal.body.append(propertyField(context.document, 'Templated parent property', source));
+  modal.footer.append(propertyButton(context.document, 'Apply template binding', () => modal.run(() => {
+    if (context.ids.length !== 1) throw new Error('Select one template part to edit its binding.');
+    scope.setBinding(context.ids[0], context.name, source.value);
     modal.close();
   })));
   return modal;

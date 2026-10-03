@@ -1,4 +1,4 @@
-import {compoundFields, formatDesignerProperty, scrubDesignerNumber} from '../../packages/designer/src/index.js';
+import {compoundFields, scrubDesignerNumber} from '../../packages/designer/src/index.js';
 import {frameworkType, XAML} from '../../packages/framework/src/index.js';
 import {propertyButton, propertyElement, propertyField, propertyInput, propertySelect} from './designer-property-dom.js';
 
@@ -24,9 +24,8 @@ export function enumPropertyEditor(context) {
   const values = frameworkType(context.schema.type).values;
   const choices = Object.entries(values).map(([label, value]) => ({label, value}));
   if (context.mixed) choices.unshift({label: '(Mixed)', value: ''});
-  return commitOnChange(propertySelect(context.document, choices, context.mixed ? '' : context.value, context.name),
-    context, () => Number(inputValue()));
-  function inputValue() { return context.row.querySelector('[data-property]').value; }
+  const input = propertySelect(context.document, choices, context.mixed ? '' : context.value, context.name);
+  return commitOnChange(input, context, () => Number(input.value));
 }
 
 export function flagsPropertyEditor(context) {
@@ -132,7 +131,16 @@ export function compoundPropertyEditor(context) {
       const values = linked.checked ? Number(input.value) : controls.map(control => Number(control.value));
       return context.commit(values);
     }));
-    root.append(propertyField(context.document, field, input));
+    const pair = propertyElement(context.document, 'div', '', 'design-numeric-editor');
+    const scrub = propertyButton(context.document, '↔', () => {}, {title: 'Drag ' + field + '; Escape cancels'});
+    bindPropertyScrub(scrub, input, {...context, commit: value => {
+      if (linked.checked) return context.commit(value);
+      return context.commit(controls.map((control, currentIndex) => currentIndex === index ? value : Number(control.value)));
+    }});
+    pair.append(input, scrub);
+    const label = propertyElement(context.document, 'label', '', 'design-editor-field');
+    label.append(propertyElement(context.document, 'span', field), pair);
+    root.append(label);
     return input;
   });
   linked.addEventListener('change', () => {

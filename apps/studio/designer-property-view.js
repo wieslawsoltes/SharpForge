@@ -1,5 +1,5 @@
 import {
-  createPropertyEditorRegistry, DesignerPropertyCommands, DesignerPropertyGridState, designerPropertyRows, formatDesignerProperty
+  createPropertyEditorRegistry, DesignerPropertyCommands, DesignerPropertyGridState, designerPropertyRows
 } from '../../packages/designer/src/index.js';
 import {frameworkAssignable} from '../../packages/framework/src/index.js';
 import {propertyButton, propertyElement, propertyInput, propertySelect, runPropertyAction} from './designer-property-dom.js';
@@ -8,7 +8,7 @@ import {
   gridLengthPropertyEditor, numericPropertyEditor, textPropertyEditor
 } from './designer-property-basic.js';
 import {brushPropertyEditor} from './designer-property-brush.js';
-import {openDesignerBindingEditor} from './designer-property-binding.js';
+import {openDesignerBindingEditor, openDesignerTemplateBinding} from './designer-property-binding.js';
 import {openDesignerCollectionEditor} from './designer-property-collection.js';
 import {assetPropertyEditor} from './designer-property-assets.js';
 import {propertySourceMarker} from './designer-property-markers.js';
@@ -111,7 +111,9 @@ export class DesignerPropertyController {
       openReference: () => openDesignerBindingEditor(context, {resource: true})};
     root.append(propertyElement(document, 'label', row.name));
     const body = propertyElement(document, 'div', '', 'design-property-editor');
-    if (row.source.kind === 'binding' || row.source.kind === 'resource') {
+    if (row.source.kind === 'template' && row.source.expression) {
+      body.append(propertyButton(document, row.source.label, () => context.run(() => openDesignerTemplateBinding(context))));
+    } else if (row.source.kind === 'binding' || row.source.kind === 'resource') {
       body.append(propertyButton(document, row.source.label, () => context.run(() =>
         openDesignerBindingEditor(context, {resource: row.source.kind === 'resource'}))));
     } else {

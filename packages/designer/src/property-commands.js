@@ -24,6 +24,7 @@ export class DesignerPropertyCommands {
       const normalized = value === undefined ? undefined : normalizeProperty(node.type, property, value);
       delete node.bindings?.[property];
       delete node.resourceReferences?.[property];
+      delete node.templatePropertyBindings?.[property];
       if (normalized === undefined) delete node.properties[property];
       else node.properties[property] = normalized;
     });

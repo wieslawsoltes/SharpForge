@@ -2,7 +2,7 @@ import {authoringError, finiteNumber} from './property-diagnostics.js';
 
 export const designerOptionsKey = 'sharpforge.designer.settings.v1';
 export const defaultDesignerOptions = Object.freeze({version: 1, defaultView: 'design', splitOrientation: 'vertical',
-  snap: 8, zoom: 0.8, autoSync: true, naming: 'type', arrange: 'category', collapsed: {}});
+  snap: 8, zoom: 0.8, autoSync: true, naming: 'type', arrange: 'category', collapsed: Object.freeze({})});
 
 export function validateDesignerOptions(value) {
   const result = {...defaultDesignerOptions, ...value};

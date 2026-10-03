@@ -1,5 +1,5 @@
 import {propertyButton, propertyElement} from './designer-property-dom.js';
-import {openDesignerBindingEditor, openDesignerConvertResource} from './designer-property-binding.js';
+import {openDesignerBindingEditor, openDesignerConvertResource, openDesignerTemplateBinding} from './designer-property-binding.js';
 
 const markers = Object.freeze({local: '●', style: '◆', template: '◇', resource: '◈', binding: '↗', default: '○', mixed: '◐'});
 
@@ -17,7 +17,8 @@ export function propertySourceMarker(context) {
       {disabled: context.protectedSource}),
     propertyButton(context.document, 'Convert to resource…', () => context.run(() => openDesignerConvertResource(context)),
       {disabled: context.protectedSource || context.mixed || context.value === undefined}),
-    propertyButton(context.document, 'Create / edit binding…', () => context.run(() => openDesignerBindingEditor(context)),
+    propertyButton(context.document, context.view.resources?.scope ? 'Edit template binding…' : 'Create / edit binding…',
+      () => context.run(() => context.view.resources?.scope ? openDesignerTemplateBinding(context) : openDesignerBindingEditor(context)),
       {disabled: context.protectedSource || context.collection}),
     propertyButton(context.document, 'Choose resource…', () => context.run(() => openDesignerBindingEditor(context, {resource: true})),
       {disabled: context.protectedSource || context.collection}),

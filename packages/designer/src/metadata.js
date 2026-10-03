@@ -58,9 +58,10 @@ export function designerPropertySchema(type) {
   }
   for (const member of frameworkManifest.members) {
     if (member.kind !== 'attachedSet' || member.parameters.length !== 2 || !frameworkAssignable(member.parameters[0], type)) continue;
-    const name = member.owner === CONTROLS + 'VariableSizedWrapGrid' ? 'Wrap' + member.property : member.property;
+    const name = member.owner === CONTROLS + 'VariableSizedWrapGrid' && !member.property.startsWith('Wrap') ?
+      'Wrap' + member.property : member.property;
     result[name] = {type: member.parameters[1], attached: true, owner: member.owner,
-      member: member.property, category: 'Placement', constraints: propertyConstraints(name, {type: member.parameters[1]})};
+      member: member.name.slice(3), category: 'Placement', constraints: propertyConstraints(name, {type: member.parameters[1]})};
   }
   return result;
 }

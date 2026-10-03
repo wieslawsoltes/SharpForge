@@ -34,6 +34,9 @@ export class DesignerRootRegistry {
       authoringError('SFD1861', 'Project control metadata requires a successful, versioned compilation.');
     }
     if (!frameworkAssignable(CONTROLS + 'Control', baseType)) authoringError('SFD1861', 'Project type must derive from Control.');
+    if ((this.entries.get(descriptor.type)?.descriptor.analysisVersion ?? -1) > analysisVersion) {
+      authoringError('SFD1861', 'Stale compilation metadata cannot replace a newer project-control preview.');
+    }
     const value = validateDesign(document?.value ?? document);
     if (value.nodes.find(node => node.id === value.root).type !== baseType) authoringError('SFD1861', 'Project document root type mismatch.');
     const entry = {descriptor: {...descriptor, baseType, analysisVersion}, document: value};
