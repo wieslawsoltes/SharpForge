@@ -30,6 +30,13 @@
       "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
     },
     {
+      "path": "packages/cil/tools/benchmark-attribute-reader.mjs",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "a4ea00e726fe88275fba5115364239113b4db55b3060c6479feb15c3017b4551",
+      "reason": "Developer-run benchmark imports the attribute reader from an operator-supplied checkout path or the fixed in-repo compiler module; it is not shipped or loaded by the product."
+    },
+    {
       "path": "packages/compiler/smoke.mjs",
       "operation": "dynamic-import",
       "count": 3,
