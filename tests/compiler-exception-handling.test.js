@@ -1,7 +1,7 @@
 /**
  * SF-A02-T44: catch clauses of any exception type. The Roslyn-pinned cases are in
  * packages/compiler/test/differential/fixtures/exception-handling.js; these tests cover the exception class
- * hierarchy the binder knows and what code generation says about the handlers the runtime cannot run yet.
+ * hierarchy the binder knows, executable typed handlers and explicit constructor profile boundaries.
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -103,16 +103,17 @@ test('SF-A02-T44 catch (Exception), general catch, rethrow and finally execute o
   assert.deepEqual(lines, ['caught first', 'finally', 'general']);
 });
 
-test('SF-A02-T44 a typed handler is valid C# the runtime cannot run: one SF2200 on the caught type', () => {
+test('SF-A02-T44 typed handlers preserve their CLI type and execute through the source/CIL back ends', () => {
   const source = program(`
     static void Main() {
       try { Console.WriteLine(1); }
       catch (FormatException) { Console.WriteLine(2); }
     }`);
-  assert.deepEqual(codes(source), []);
-  const reported = notExecutable(source);
-  assert.match(reported.message, /a catch clause for 'System\.FormatException' \(the runtime catches System\.Exception only\)/);
-  assert.equal(source.slice(reported.start, reported.start + reported.length), 'FormatException');
+  const result = compile(source);
+  assert.equal(result.success, true, JSON.stringify(result.diagnostics));
+  const handlers = result.image.methods.flatMap(method => method.handlers ?? []);
+  assert(handlers.some(handler => handler.type === 'System.FormatException'));
+  assert.deepEqual(linesOf(source), ['1']);
 });
 
 test('SF-A02-T44 creating another exception class is reported, not turned into System.Exception', () => {
