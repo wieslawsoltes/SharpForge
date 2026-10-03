@@ -1,0 +1,430 @@
+{
+  "scope": "SF-A05 B01\u2013B06",
+  "date": "2026-10-03",
+  "commit": "33dce39a0a0db5abc03fac94bc3c1042f50aa9f9",
+  "baselineCommit": "2a2cec94baeb7c61965a1dcbd9089c273cbfb4bd",
+  "tools": {
+    "node": "v24.21.0",
+    "dotnetSdk": "10.0.201",
+    "dotnetRuntime": "10.0.5",
+    "platform": "macOS arm64"
+  },
+  "checks": [
+    {
+      "command": "node --test tests/*.test.js",
+      "passed": 2758,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "node scripts/check.js",
+      "modules": 270,
+      "syntaxErrors": 0
+    },
+    {
+      "command": "node scripts/build.js",
+      "exitCode": 0
+    },
+    {
+      "command": "node scripts/verify-packages.js",
+      "exitCode": 0
+    },
+    {
+      "command": "node scripts/validate-a05-numeric-dotnet.js",
+      "result": {
+        "runtime": "10.0.5",
+        "platform": "darwin",
+        "architecture": "arm64",
+        "conversionCases": 90,
+        "roslynWideningCases": 7,
+        "passed": true
+      }
+    },
+    {
+      "command": "node scripts/validate-a05-faults.mjs",
+      "result": {
+        "sdk": "10.0.201",
+        "node": "v24.21.0",
+        "assemblySha256": "82e58cbf47f6a4f34f1a92e8b92acaf99e2b8d3e133ca28fdc40ce763680be73",
+        "command": "node scripts/validate-a05-faults.mjs",
+        "nativeOutput": "ok\narithmetic\nsystem\nexception\n",
+        "cilOutput": "ok\narithmetic\nsystem\nexception\n"
+      }
+    },
+    {
+      "command": "node scripts/validate-a05-dispatch.js",
+      "result": {
+        "task": "SF-A05-B03",
+        "timestamp": "2026-10-03T12:54:33.691Z",
+        "revision": "0ffc75c0c3d2e6bda665f948561fc25c4b86d9aa",
+        "qualification": "Roslyn-compiled assembly executed by native .NET and directly by CilVirtualMachine",
+        "platform": "darwin",
+        "architecture": "arm64",
+        "node": "v24.21.0",
+        "dotnetSdk": "10.0.201",
+        "dotnetRuntimes": "Microsoft.AspNetCore.App 10.0.5 [/Users/wieslawsoltes/.dotnet/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 10.0.5 [/Users/wieslawsoltes/.dotnet/shared/Microsoft.NETCore.App]",
+        "targetFramework": "net10.0",
+        "source": "tests/fixtures/a05-dispatch/Program.cs",
+        "sourceSha256": "6eb14f6d07f674dac536879add4d9cadc578e4623e110c7acf07ff818102cc3a",
+        "assemblySha256": "7307cea2ff6d7b2e37f2167b5a62876a9185b485cebffbb59b8b9ad6aeda2583",
+        "fixtureEvidence": {
+          "newslot": "B::F",
+          "override": "C::F",
+          "methodImplRows": 1
+        },
+        "native": {
+          "state": "terminated",
+          "exitCode": 0,
+          "output": "1\n3\n3\n7\n"
+        },
+        "cil": {
+          "state": "terminated",
+          "exitCode": 0,
+          "output": "1\n3\n3\n7\n",
+          "instructions": 35
+        },
+        "expectedOutput": "1\n3\n3\n7\n",
+        "passed": true,
+        "commands": [
+          {
+            "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+            "arguments": [
+              "--version"
+            ],
+            "status": 0
+          },
+          {
+            "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+            "arguments": [
+              "--list-runtimes"
+            ],
+            "status": 0
+          },
+          {
+            "command": "git",
+            "arguments": [
+              "rev-parse",
+              "HEAD"
+            ],
+            "status": 0
+          },
+          {
+            "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+            "arguments": [
+              "restore",
+              "VirtualDispatch.csproj",
+              "--configfile",
+              "NuGet.Config",
+              "--verbosity",
+              "quiet"
+            ],
+            "status": 0
+          },
+          {
+            "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+            "arguments": [
+              "build",
+              "VirtualDispatch.csproj",
+              "--configuration",
+              "Release",
+              "--no-restore",
+              "--verbosity",
+              "quiet"
+            ],
+            "status": 0
+          },
+          {
+            "command": "/Users/wieslawsoltes/.dotnet/dotnet",
+            "arguments": [
+              "<temporary-project>/bin/Release/net10.0/VirtualDispatch.dll"
+            ],
+            "status": 0
+          }
+        ]
+      }
+    }
+  ],
+  "regressions": {
+    "B01": {
+      "before": "-1",
+      "after": "4294967295"
+    },
+    "B02": {
+      "before": "5076964154930102272",
+      "after": "9223372036854775807"
+    },
+    "B03": {
+      "before": {
+        "state": "rejected",
+        "output": "",
+        "fault": "CilError"
+      },
+      "after": {
+        "state": "terminated",
+        "output": "1\n3\n3\n7\n"
+      }
+    },
+    "B04": {
+      "before": {
+        "state": "faulted",
+        "output": "",
+        "fault": "DivideByZeroException"
+      },
+      "after": {
+        "state": "terminated",
+        "output": "ok\narithmetic\nsystem\nexception\n"
+      }
+    },
+    "B06": {
+      "before": {
+        "value": "-2147483648",
+        "type": "number",
+        "generation1": "ArgumentOutOfRangeException"
+      },
+      "after": {
+        "value": "2147483648",
+        "type": "bigint",
+        "generation1": 0
+      }
+    }
+  },
+  "dispatchBaseline": {
+    "command": "node --test --test-name-pattern=newslot|hiding artifacts/a05-before-dispatch.test.mjs",
+    "description": "Identical B03 tests imported the E03 baseline VM; newslot and nonvirtual hiding tests failed before and pass after."
+  },
+  "benchmark": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "workload": "fib(25)",
+    "samples": 7,
+    "baselineRoot": "/Users/wieslawsoltes/GitHub/SharpForge-a05-seams",
+    "results": {
+      "baseline": {
+        "coldMs": 1367.7519160000002,
+        "samplesMs": [
+          1285.057917,
+          788.7080409999999,
+          771.4447500000006,
+          1430.765041999999,
+          946.7123749999992,
+          892.1579160000001,
+          1623.9230000000007
+        ],
+        "medianMs": 946.7123749999992,
+        "p95Ms": 1623.9230000000007,
+        "p99Ms": 1623.9230000000007,
+        "calls": 242786,
+        "mapAllocations": 242786,
+        "mapsPerCall": 1
+      },
+      "candidate": {
+        "coldMs": 912.2547500000001,
+        "samplesMs": [
+          816.7003329999998,
+          647.6129579999997,
+          617.4042500000014,
+          667.8796669999992,
+          900.6064580000002,
+          806.1548330000005,
+          761.2627919999977
+        ],
+        "medianMs": 761.2627919999977,
+        "p95Ms": 900.6064580000002,
+        "p99Ms": 900.6064580000002,
+        "calls": 242786,
+        "mapAllocations": 2,
+        "mapsPerCall": 8.237707281309466e-06
+      }
+    },
+    "medianSpeedup": 1.2436078381195885
+  },
+  "browser": {
+    "managed": {
+      "version": "0.4.0",
+      "mode": "http",
+      "checks": [
+        {
+          "name": "ordinary DLL opens in Assembly Explorer without replacing source",
+          "passed": true,
+          "milliseconds": 83.01
+        },
+        {
+          "name": "selected static method runs in bounded direct-CIL worker",
+          "passed": true,
+          "milliseconds": 123.88
+        },
+        {
+          "name": "method C# reconstruction is displayed",
+          "passed": true,
+          "milliseconds": 93.05
+        },
+        {
+          "name": "editable IL is rebuilt and changed arithmetic actually runs",
+          "passed": true,
+          "milliseconds": 214.4
+        },
+        {
+          "name": "all method IL includes resolved signatures and metadata operands",
+          "passed": true,
+          "milliseconds": 95.49
+        },
+        {
+          "name": "unsupported external calls remain inspectable and fail verification",
+          "passed": true,
+          "milliseconds": 68.43
+        },
+        {
+          "name": "malformed uploaded assembly is rejected",
+          "passed": true,
+          "milliseconds": 2.33
+        },
+        {
+          "name": "source generator binds, executes and appears in read-only generated view",
+          "passed": true,
+          "milliseconds": 220.45
+        },
+        {
+          "name": "Ctrl+. refactoring validates, applies and supports editor undo",
+          "passed": true,
+          "milliseconds": 247.8
+        },
+        {
+          "name": "Shift+Alt+F formats indentation through a versioned action",
+          "passed": true,
+          "milliseconds": 28.25
+        },
+        {
+          "name": "assembly workspace renders at desktop and 390px widths",
+          "passed": true,
+          "milliseconds": 5637.11
+        },
+        {
+          "name": "no browser JavaScript errors",
+          "passed": true,
+          "milliseconds": 0.0
+        }
+      ],
+      "passed": 12,
+      "failed": 0,
+      "errors": []
+    },
+    "runtime": {
+      "passed": true,
+      "checks": [
+        {
+          "name": "stable default language, Visual Studio keys, and explicit-deny runtime panel",
+          "passed": true,
+          "milliseconds": 84.44
+        },
+        {
+          "name": "preview language selection gates capacity expressions and labeled loops in compiler worker",
+          "passed": true,
+          "milliseconds": 264.46
+        },
+        {
+          "name": "field-backed properties, conditional assignment, JSON, array helpers and seeded Random execute",
+          "passed": true,
+          "milliseconds": 185.42
+        },
+        {
+          "name": "managed Vector operations execute actual WebAssembly SIMD in the runtime worker",
+          "passed": true,
+          "milliseconds": 47.87
+        },
+        {
+          "name": "explicit scalar fallback preserves vector results and reports actual backend",
+          "passed": true,
+          "milliseconds": 43.07
+        },
+        {
+          "name": "independent compute package uses two real browser workers with owned transferable inputs",
+          "passed": true,
+          "milliseconds": 13.92
+        },
+        {
+          "name": "compute cancellation rejects a queued job and leaves following work usable",
+          "passed": true,
+          "milliseconds": 7.71
+        },
+        {
+          "name": "managed Task continuations await nested compute workers and establish external history epochs",
+          "passed": true,
+          "milliseconds": 64.82
+        },
+        {
+          "name": "ungranted managed HttpClient makes zero actual requests",
+          "passed": true,
+          "milliseconds": 222.46
+        },
+        {
+          "name": "managed HttpClient fetches a real CORS-enabled loopback endpoint and parses its response",
+          "passed": true,
+          "milliseconds": 97.03
+        },
+        {
+          "name": "relative BaseAddress, POST content, explicit headers and buffered response cross actual HTTP",
+          "passed": true,
+          "milliseconds": 189.46
+        },
+        {
+          "name": "managed CancellationTokenSource aborts a real pending browser HTTP request",
+          "passed": true,
+          "milliseconds": 157.56
+        },
+        {
+          "name": "workspace archives and newly loaded samples cannot restore networking grants",
+          "passed": true,
+          "milliseconds": 38.5
+        },
+        {
+          "name": "runtime panel rejects path grants; explicit apply and revoke update real launch settings",
+          "passed": true,
+          "milliseconds": 233.02
+        },
+        {
+          "name": "code-first WinUI async handler awaits real compute worker and updates the existing controls",
+          "passed": true,
+          "milliseconds": 6729.68
+        },
+        {
+          "name": "pre-external managed snapshots cannot be restored after a completed host operation",
+          "passed": true,
+          "milliseconds": 52.59
+        },
+        {
+          "name": "runtime inspector shows actual backend and job metrics without page errors",
+          "passed": true,
+          "milliseconds": 6389.81
+        }
+      ],
+      "pageErrors": [],
+      "workerEvents": 13,
+      "httpRequests": [
+        {
+          "path": "/data",
+          "cookie": null,
+          "method": "GET"
+        },
+        {
+          "path": "/echo",
+          "body": "hello",
+          "method": "POST",
+          "header": "explicit"
+        },
+        {
+          "path": "/slow",
+          "cookie": null,
+          "method": "GET"
+        }
+      ],
+      "mode": "Production modules + real workers via in-memory HTML; actual browser Fetch to CORS-enabled local HTTP server; no fetch or compute test doubles"
+    }
+  },
+  "limits": [
+    "Floating conversions target the .NET 10 policy; older CLR overflow behavior is not claimed.",
+    "Native execution qualified on macOS arm64 only.",
+    "Benchmark uses seven interleaved samples on one active development host. Its p95/p99 are sample maxima, not production tail-latency guarantees.",
+    "GC boundary tests inject accounting counters rather than allocating multi-gigabyte heaps."
+  ]
+}

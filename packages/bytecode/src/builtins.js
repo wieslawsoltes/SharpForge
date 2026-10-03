@@ -3,7 +3,7 @@ export const definitions = Object.freeze( [
  ['Console.WriteLine',0,1,'void',['any']],['Console.Write',1,1,'void',['any']],
  ['Math.Abs',1,1,'numeric',['number']],['Math.Min',2,2,'numeric',['number','number']],['Math.Max',2,2,'numeric',['number','number']],
  ['Math.Pow',2,2,'double',['number','number']],['Math.Sqrt',1,1,'double',['number']],['Math.Floor',1,1,'double',['number']],['Math.Ceiling',1,1,'double',['number']],['Math.Round',1,1,'double',['number']],
- ['GC.Collect',0,0,'void',[]],['GC.GetTotalMemory',0,1,'int',['bool']],['GC.CollectionCount',1,1,'int',['int']],
+ ['GC.Collect',0,0,'void',[]],['GC.GetTotalMemory',0,1,'long',['bool']],['GC.CollectionCount',1,1,'int',['int']],
  ['int.Parse',1,1,'int',['string']],['double.Parse',1,1,'double',['string']],['Convert.ToInt32',1,1,'int',['any']],['Convert.ToDouble',1,1,'double',['any']],['Convert.ToString',1,1,'string',['any']],
  ['string.Concat',2,2,'string',['string','string']],['string.IsNullOrEmpty',1,1,'bool',['string']],
  ['Array.Reverse',1,1,'void',['array']],['Array.Sort',1,1,'void',['array']],
