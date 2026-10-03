@@ -135,6 +135,10 @@ export class LegacyAdapter extends LegacyStatementAdapter {
   }
   /** A block body, or the synthesized block of an expression body: `=> e;` becomes `{ return e; }` (or an expression statement for void). */
   body(red, asReturn, owner = red) {
+    // Roslyn keeps both bodies for the binder to report (CS8057); this profile has one body per member.
+    if (red.body && red.expressionBody) {
+      this.fail(red.expressionBody, 'SF1018', 'Members with both a block body and an expression body are not implemented in this profile');
+    }
     if (red.body) return this.block(red.body);
     const arrow = red.expressionBody;
     if (!arrow) {

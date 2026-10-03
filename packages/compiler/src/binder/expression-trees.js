@@ -8,7 +8,7 @@
  *   CS8514  a switch expression              CS8188  a throw expression
  *   CS8074  an index initializer             CS8143  a tuple literal
  *   CS8110  a call of a local function       CS9307  named arguments out of position
- *   below C# 14:  CS0853  a named argument   CS0854  an omitted optional argument
+ *   below C# 14 only: CS0854 an invocation that omits optional arguments, CS0853 one that names arguments
  *
  * The checks run when the lambda is bound against its final target, so a lambda converted to a delegate is not
  * touched. Nested lambdas are part of the tree and are checked with it.
@@ -28,24 +28,29 @@ const codeByKind = Object.freeze({
 });
 const isAscending = positions => positions.every((position, index) => index === 0 || position >= positions[index - 1]);
 
-const hasNamedArgument = node => !!node.syntax?.argumentList?.arguments?.some(argument => argument.nameColon);
-const omitsOptionalArgument = (node, callee) =>
-  !!node.mapping?.parameterOf && !!callee?.parameters?.some((parameter, index) => parameter.isOptional && !node.mapping.parameterOf.includes(index));
+const invocationKinds = new Set(['Call', 'ObjectCreation', 'IndexerAccess']);
+const hasNamedArgument = node => (node.syntax?.argumentList?.arguments ?? []).some(argument => argument.nameColon);
 
 /**
- * @param {boolean} allowsOptionalAndNamed C# 14 ('expression trees with optional and named arguments'): a call may
- *   name its arguments in position and omit optional ones; below it both are errors (CS0853, CS0854)
+ * Before C# 14 an expression tree may not contain an invocation that omits optional arguments (CS0854) or names
+ * arguments (CS0853); C# 14 allows both ("expression trees with optional and named arguments") and keeps CS9307.
  */
-function nodeProblem(node, allowsOptionalAndNamed) {
+function argumentProblem(node, languageVersion) {
+  if (languageVersion >= 14 || !invocationKinds.has(node.kind)) return null;
+  if (node.mapping?.defaults?.length) return 'CS0854';
+  return hasNamedArgument(node) ? 'CS0853' : null;
+}
+
+function nodeProblem(node, languageVersion) {
   if (assignmentKinds.has(node.kind)) return 'CS0832';
   if (codeByKind[node.kind]) return codeByKind[node.kind];
-  if (node.kind === 'Call' && node.method?.methodKind === MethodKind.LocalFunction) return 'CS8110';
-  if (node.kind !== 'Call' && node.kind !== 'ObjectCreation') return null;
-  if (!allowsOptionalAndNamed) {
-    if (hasNamedArgument(node)) return 'CS0853';
-    if (omitsOptionalArgument(node, node.method ?? node.constructor)) return 'CS0854';
+  if (node.kind === 'Call') {
+    if (node.method?.methodKind === MethodKind.LocalFunction) return 'CS8110';
+    const before14 = argumentProblem(node, languageVersion);
+    if (before14) return before14;
+    if (node.mapping?.parameterOf && !isAscending(node.mapping.parameterOf)) return 'CS9307';
   }
-  return node.kind === 'Call' && node.mapping?.parameterOf && !isAscending(node.mapping.parameterOf) ? 'CS9307' : null;
+  return argumentProblem(node, languageVersion);
 }
 
 /** The lambda's own problems: its body form and modifiers. */
@@ -58,7 +63,7 @@ function lambdaProblem(lambda) {
  * The restrictions a bound lambda violates as an expression tree.
  * @returns {{code: string, syntax: object}[]} in tree order
  */
-export function expressionTreeProblems(lambda, { allowsOptionalAndNamed = true } = {}) {
+export function expressionTreeProblems(lambda, { languageVersion = 14 } = {}) {
   const rows = [];
   const check = current => {
     const own = lambdaProblem(current);
@@ -72,7 +77,7 @@ export function expressionTreeProblems(lambda, { allowsOptionalAndNamed = true }
         check(node);
         return false;
       }
-      const code = nodeProblem(node, allowsOptionalAndNamed);
+      const code = nodeProblem(node, languageVersion);
       if (code) rows.push({ code, syntax: node.syntax });
       for (const entry of node.initializers ?? [])
         if (entry.target?.isInitializerTarget && entry.target.kind !== 'FieldAccess' && entry.target.kind !== 'PropertyAccess')
@@ -92,7 +97,6 @@ export const ExpressionTreeBinding = Base =>
       super.finishLambda(lambda, delegateType);
       if (!first || !lambda.body || !expressionTreeDelegate(delegateType, this.core)) return;
       lambda.isExpressionTree = true;
-      const options = { allowsOptionalAndNamed: this.version.number >= 14 };
-      for (const problem of expressionTreeProblems(lambda, options)) this.report(problem.syntax, problem.code, []);
+      for (const problem of expressionTreeProblems(lambda, { languageVersion: this.version.number })) this.report(problem.syntax, problem.code, []);
     }
   };
