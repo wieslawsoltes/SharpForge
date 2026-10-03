@@ -3,8 +3,8 @@ import {AliasSymbol} from '../symbols/namespaces.js';
 /**
  * Using directives: collection from a parsed file and binding to namespaces, static types and aliases.
  *
- * The current syntax tree does not keep using directives, so `collectUsingDirectives` reads them from the token
- * stream (and prefers `root.usings` once the syntax package provides it). `bindUsings` resolves them against the
+ * `collectUsingDirectives` reads the UsingDirective nodes of the lossless syntax tree (`file.syntax`); a file parsed
+ * without one falls back to the token stream. `bindUsings` resolves them against the
  * merged global namespace and reports CS0246/CS0234 (unknown namespace), CS0138 (using a type as a namespace),
  * CS7007 (using static on a namespace), CS0105 (duplicate using, a warning) and CS1537 (duplicate alias).
  */
@@ -29,6 +29,7 @@ function typeName(tokens,i){
 export function collectUsingDirectives(file){
   const uri=file.source?.uri??file.root?.uri;
   if(Array.isArray(file.root?.usings))return file.root.usings.map(u=>({kind:u.alias?'alias':u.isStatic?'static':'namespace',name:u.name,alias:u.alias??null,isGlobal:!!u.isGlobal,namespace:u.namespace??'',uri:u.uri??uri,start:u.start,end:u.end}));
+  if(file.syntax?.kind==='CompilationUnit')return usingDirectivesFromSyntax(file.syntax,uri);
   const tokens=file.tokens??[],result=[],scopes=[];let fileScoped='',pendingNamespace=null;
   for(let i=0;i<tokens.length;i++){
     const t=tokens[i];
@@ -44,6 +45,20 @@ export function collectUsingDirectives(file){
     result.push({kind,name:target.name,alias,isGlobal,namespace:enclosing,uri,start:(isGlobal?tokens[i-1]:t).start,end:tokens[target.next].end,nameStart:tokens[at].start,nameEnd:tokens[target.next-1].end});i=target.next;
   }
   return result;
+}
+const nameText=node=>node.toString().replace(/\s+/g,'').replace(/,/g,', ');
+/** The using directives of a lossless syntax tree: compilation-unit level first, then each namespace declaration in source order. */
+export function usingDirectivesFromSyntax(root,uri){
+  const result=[];
+  const visit=(container,namespace)=>{
+    for(const u of container.usings??[]){
+      const target=u.namespaceOrType,semicolon=u.semicolonToken;if(!target||target.containsDiagnostics||!semicolon||semicolon.isMissing)continue;
+      const alias=u.alias?.name?.identifier?.valueText??null,kind=alias?'alias':u.staticKeyword?'static':'namespace',first=u.globalKeyword??u.usingKeyword;
+      result.push({kind,name:nameText(target),alias,isGlobal:!!u.globalKeyword,namespace,uri,start:first.spanStart,end:semicolon.span.end,nameStart:target.spanStart,nameEnd:target.span.end,syntax:u});
+    }
+    for(const member of container.members??[])if(member.kind==='NamespaceDeclaration'||member.kind==='FileScopedNamespaceDeclaration')visit(member,(namespace?namespace+'.':'')+nameText(member.name));
+  };
+  visit(root,'');return result.sort((a,b)=>a.start-b.start);
 }
 /** Resolves a dotted name from the global namespace; returns {symbol} or {error:{code,args}}. */
 export function resolveQualifiedName(globalNamespace,name){
