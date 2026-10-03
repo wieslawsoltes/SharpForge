@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fixtureId": "cancellation-disposal",
-  "inputHash": "5161650706ec19bdd083a5b853ba15c75da9338dd8cf3dc7d4357cdc951169d0",
+  "fixtureId": "int32-boundary",
+  "inputHash": "cb149a9f26b70796a6f28575c77026e363f1ffa310a001fdeb35fe96cbf5bc3d",
   "oracleId": "roslyn",
   "toolVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
-  "target": "any",
+  "target": "win32-x64",
   "toolchain": {
     "sdk": "10.0.201",
     "runtime": "10.0.5",
@@ -16,6 +16,6 @@
   "result": {
     "exitCode": 0,
     "diagnostics": [],
-    "assemblySHA256": "4911d359c30aa3c43c0021be5f804d4a7346a818ac470597406f04cbf31f5dda"
+    "assemblySHA256": "31ca16b91cd4815083929bed685b181fc64071e5f0768e6e99a50a0c67bae4e2"
   }
 }

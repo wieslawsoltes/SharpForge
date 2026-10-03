@@ -63,9 +63,13 @@ test('expected schema rejects unknown, malformed, stale, wrong-oracle and wrong-
   const fixture = fixtures.find(value => value.id === definition.id);
   const entry = envelope('roslyn', fixture, syntheticResult);
   assert.equal(validateSchema(entry), true);
+  assert.equal(entry.target, `${process.platform}-${process.arch}`);
+  const windowsEntry = { ...entry, target: 'win32-x64' };
+  const linuxEntry = { ...entry, target: 'linux-x64' };
+  assert.notEqual(expectedPath(windowsEntry), expectedPath(linuxEntry));
   await verifyEntry(entry, fixtures, expectedPath(entry));
   for (const invalid of [
-    { ...entry, extra: 1 }, { ...entry, inputHash: '../escape' }, { ...entry, result: { ...syntheticResult, exitCode: 2 } },
+    { ...entry, extra: 1 }, { ...entry, target: 'any' }, { ...entry, inputHash: '../escape' }, { ...entry, result: { ...syntheticResult, exitCode: 2 } },
     { ...entry, result: { ...syntheticResult, diagnostics: [{ id: 'BAD', severity: 'error', source: null, span: null }] } },
   ]) assert.throws(() => validateSchema(invalid));
   await assert.rejects(verifyEntry({ ...entry, inputHash: '0'.repeat(64) }, fixtures), /Stale input hash/);

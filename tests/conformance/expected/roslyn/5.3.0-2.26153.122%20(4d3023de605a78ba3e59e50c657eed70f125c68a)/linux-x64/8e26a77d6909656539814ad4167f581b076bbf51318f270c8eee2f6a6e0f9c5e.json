@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "fixtureId": "unhandled-exception",
-  "inputHash": "0bb689217692b34c8efa1f3397619b8b84029530cb9d785722cb9bd9a9bfbe8e",
+  "fixtureId": "runtime-version",
+  "inputHash": "8e26a77d6909656539814ad4167f581b076bbf51318f270c8eee2f6a6e0f9c5e",
   "oracleId": "roslyn",
   "toolVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
-  "target": "any",
+  "target": "linux-x64",
   "toolchain": {
     "sdk": "10.0.201",
     "runtime": "10.0.5",
@@ -16,6 +16,6 @@
   "result": {
     "exitCode": 0,
     "diagnostics": [],
-    "assemblySHA256": "5af9e691125105d82aacf4166fe92c90d213162c5f5dbab0423cc7d1c4ef55f7"
+    "assemblySHA256": "3c0009456a91083ce87ed5cb497fbd1ffcfbf6e9320660e3d4238d4aea812182"
   }
 }
