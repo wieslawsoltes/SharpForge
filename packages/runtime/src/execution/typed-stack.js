@@ -185,6 +185,18 @@ export function numericSlotRoot(values, index) {
 }
 
 /** Preserve sharing when filter frames or argument adapters refer to one array. */
-export function typedNumericSlots(values, capacity, maxLength, smallLongs) {
-  return adapters.get(values) ?? new TypedNumericSlots(values, capacity, maxLength, smallLongs);
+export function typedNumericSlots(values, capacity, maxLength, smallLongs, verified = false) {
+  const Constructor = verified ? VerifiedNumericSlots : TypedNumericSlots;
+  return adapters.get(values) ?? new Constructor(values, capacity, maxLength, smallLongs);
+}
+
+/** Admission has proved every incoming and outgoing height against method.maxStack. */
+class VerifiedNumericSlots extends TypedNumericSlots {
+  pushFloat(value, tag) {
+    this.setFloat(this.values.length, value, tag);
+  }
+
+  pushLong(value) {
+    this.setLong(this.values.length, value);
+  }
 }

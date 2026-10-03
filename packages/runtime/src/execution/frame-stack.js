@@ -2,6 +2,11 @@ import {registerFrame, releaseFrame} from './frame-lifetimes.js';
 import {registerStackFrame, releaseStackFrame, replaceStackFrame} from './stack-budget.js';
 import {retirePooledFrame} from './frame-pool.js';
 
+/** Verified methods use their metadata capacity; no per-push global limit check. */
+export function pushStackValue(vm, value) {
+  vm.top.stack.push(value);
+}
+
 /** One admission boundary for byte budgets and pointer lifetime indexing. */
 export function pushFrame(vm, frame) {
   registerStackFrame(vm, frame);
