@@ -58,6 +58,7 @@ export const ConversionBinding = Base =>
         conversion: c,
         isExplicit,
         isImplicitIdentity: c.kind === ConversionKind.Identity,
+        isChecked: this.checked,
       });
       if (e.constantValue) {
         const target = type.typeKind === TypeKind.Enum ? type : keywordOf(stripNullable(type));

@@ -6,6 +6,8 @@
  * The expression and statement families are class mixins (translate-*.js) composed at the bottom of this file.
  */
 import { hoistedLocalFieldName, hoistedSynthesizedLocalFieldName } from '../../lowering/generated-names.js';
+import {ScalarTranslation} from './scalar-translation.js';
+import {MemoryTranslation} from './memory-translation.js';
 import { n } from './node-factory.js';
 import { ExpressionTranslation } from './translate-expressions.js';
 import { CallTranslation } from './translate-calls.js';
@@ -188,7 +190,7 @@ class TranslatorCore {
 }
 
 /** The body translator: the core composed with one mixin per construct family. */
-export class BodyTranslator extends [ExpressionTranslation, CallTranslation, FunctionTranslation, PatternTranslation, StatementTranslation].reduce(
+export class BodyTranslator extends [ExpressionTranslation, CallTranslation, FunctionTranslation, PatternTranslation, StatementTranslation, ScalarTranslation, MemoryTranslation].reduce(
   (composed, mixin) => mixin(composed),
   TranslatorCore,
 ) {}

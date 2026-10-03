@@ -2,7 +2,7 @@ import {ScalarQueries} from '../scalar-queries.js';
 import {inferScalarExpression, scalarConditionalType} from '../scalar-expressions.js';
 import {inferMemoryExpression} from '../memory-expressions.js';
 import {bindArrayBuiltin} from '../array-builtins.js';
-import {canonicalType,frameworkType,frameworkAssignable,taskResult,findContracts,enumValue} from '@sharpforge/framework';
+import {frameworkType,taskResult} from '@sharpforge/framework';
 import {BuiltinMap} from '@sharpforge/bytecode';
 import {evaluateConstant,ConstantError} from '../constants.js';
 import {normalize,numeric,assignable,pathOf,typeText} from '../type-utils.js';
@@ -17,7 +17,6 @@ import {BoundBadExpression} from '../bound/nodes.js';
  * `type` is a TypeSymbol. Scopes, parameters and the checked context live in the binder chain; no IR is produced.
  * `infer` and the member queries are side-effect free; `bind*` methods (expressions.js, statements.js) report.
  */
-const framePath=e=>e?.kind==='Name'?e.name:e?.kind==='Member'&&framePath(e.target)?framePath(e.target)+'.'+e.name:null;
 export class MethodBinderContext extends ScalarQueries(class {}) {
   /** @param compilation the Compilation; @param method the method declaration record being bound. */
   constructor(compilation,method){super();

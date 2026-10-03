@@ -36,3 +36,37 @@ for (const pipeline of ['bound', 'legacy']) {
     }
   });
 }
+
+// Local functions require semantic lowering; these prevent scalar/memory support from silently depending on the legacy adapter.
+const semanticCases = [
+  {
+    name: 'semantic scalar closures and typed framework overloads',
+    source: 'using System; long seed=9223372036854775806L; long Next(){return ++seed;}' +
+      'decimal Round(decimal x){return Math.Round(x,2);} Console.WriteLine(Next());' +
+      'Console.WriteLine(Round(1.235M)); Console.WriteLine(BitConverter.DoubleToInt64Bits(-0.0));',
+    output: '9223372036854775807\n1.24\n-9223372036854775808\n',
+  },
+  {
+    name: 'semantic rectangular arrays and stack allocated spans',
+    source: 'using System; int Sum(){int[,] a=new int[,]{{1,2},{3,4}};' +
+      'Span<int> s=stackalloc int[]{a[0,1],a[1,0]};ReadOnlySpan<int> r=s;' +
+      'return r.Slice(1)[0]+a.GetLength(0);} Console.WriteLine(Sum());',
+    output: '5\n',
+  },
+  {
+    name: 'semantic checked conversions and exact unsigned constants',
+    source: 'using System; byte Narrow(int x){return checked((byte)x);}' +
+      'ulong High(){return ulong.MaxValue>>>1;} Console.WriteLine(Narrow(255));Console.WriteLine(High());',
+    output: '255\n9223372036854775807\n',
+  },
+];
+for (const item of semanticCases) test(item.name, () => {
+  const compiled = compileToIL(item.source);
+  assert(compiled.success, JSON.stringify(compiled.diagnostics));
+  for (const vm of [new VirtualMachine(compiled.image), new VirtualMachine(loadAssembly(compiled.assembly)),
+    new CilVirtualMachine(compiled.assembly)]) {
+    const result = vm.run();
+    assert.equal(result.state, 'terminated', result.fault?.stack);
+    assert.equal(result.output, item.output);
+  }
+});

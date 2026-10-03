@@ -1,3 +1,4 @@
+import {assignable} from './type-utils.js';
 import {nativeProperty} from './native-properties.js';
 import {Builtins, numericIntrinsicDefinitions, numericTypeName, integerType, float as scalarFloat, decimalParse} from '@sharpforge/bytecode';
 import {numeric, implicitNumeric, constantFits} from './numeric.js';
@@ -78,7 +79,7 @@ export const ScalarQueries = Base => class extends Base {
       const constant = this.constant(node);
       return !!constant && constantFits(constant.value, constant.type, target);
     }
-    return this.frameworkConversion?.(target, actual) ?? false;
+    return assignable(target, actual);
   }
 
   scalarBinding(node, report = false) {

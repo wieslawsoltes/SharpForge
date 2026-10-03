@@ -1,33 +1,14 @@
-/**
- * Maps type symbols to image type names. The bytecode image knows `int`, `double`, `bool`, `string`, `object`,
- * `Exception`, framework registry types, classes declared in the image and single-dimensional arrays of those.
- * Everything else either lowers to one of them (enums to `int`, delegate types to a synthesized class) or is
- * reported as not executable on this runtime.
- */
+/** Maps semantic scalar, array, Span, framework and source symbols to runtime image type names. */
 import { TypeKind, ArrayTypeSymbol } from '../../symbols/types.js';
+import {isReference} from '../../type-utils.js';
 import { unsupported } from './unsupported.js';
 
 const specialNames = Object.freeze({
-  System_Int32: 'int',
-  System_Double: 'double',
-  System_Boolean: 'bool',
-  System_String: 'string',
-  System_Object: 'object',
-  System_Void: 'void',
-});
-const unsupportedSpecial = Object.freeze({
-  System_Char: 'char values',
-  System_Int64: '64-bit integers',
-  System_UInt64: '64-bit integers',
-  System_UInt32: 'unsigned integers',
-  System_Byte: 'small integer types',
-  System_SByte: 'small integer types',
-  System_Int16: 'small integer types',
-  System_UInt16: 'small integer types',
-  System_Single: 'float values',
-  System_Decimal: 'decimal values',
-  System_IntPtr: 'native integers',
-  System_UIntPtr: 'native integers',
+  System_Int32: 'int', System_UInt32: 'uint', System_Int64: 'long', System_UInt64: 'ulong',
+  System_Byte: 'byte', System_SByte: 'sbyte', System_Int16: 'short', System_UInt16: 'ushort', System_Char: 'char',
+  System_Double: 'double', System_Single: 'float', System_Decimal: 'decimal',
+  System_IntPtr: 'nint', System_UIntPtr: 'nuint', System_Boolean: 'bool',
+  System_String: 'string', System_Object: 'object', System_Void: 'void',
 });
 
 export class TypeMapper {
@@ -51,17 +32,24 @@ export class TypeMapper {
   }
   compute(type, syntax) {
     if (type instanceof ArrayTypeSymbol) {
-      if (type.rank !== 1) unsupported('multi-dimensional arrays', syntax);
-      return this.imageType(type.elementType, syntax) + '[]';
+      return this.imageType(type.elementType, syntax) + '[' + ','.repeat(type.rank - 1) + ']';
     }
     const special = type.specialType;
     if (special && specialNames[special]) return specialNames[special];
-    if (special && unsupportedSpecial[special]) unsupported(unsupportedSpecial[special], syntax);
     if (type.isErrorType?.()) unsupported('a type the framework registry does not list', syntax);
     const core = this.host.analysis.core,
       definition = type.originalDefinition;
+    if (definition === core.span || definition === core.readOnlySpan) {
+      const name = definition === core.span ? 'Span' : 'ReadOnlySpan';
+      return 'System.' + name + '`1<' + this.imageType(type.typeArguments[0].type, syntax) + '>';
+    }
     if ((definition === core.ienumerableT || definition === core.ienumeratorT) && type.typeArguments?.length === 1)
       return this.host.iterators.classOf(this.imageType(type.typeArguments[0].type, syntax)).record.name;
+    if (type.typeKind === TypeKind.Class && !this.host.isSource(type)) {
+      for (let base = type, depth = 0; base && depth < 64; base = base.baseType, depth++) {
+        if (base === core.exception) return type.toDisplayString();
+      }
+    }
     switch (type.typeKind) {
       case TypeKind.Enum:
         if (this.host.isSource(type)) return 'int';
@@ -90,6 +78,6 @@ export class TypeMapper {
   }
   /** True when values of the image type are references (cleared at scope exit, comparable with null). */
   isReference(imageType) {
-    return !['int', 'double', 'bool'].includes(imageType);
+    return isReference(imageType);
   }
 }
