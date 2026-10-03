@@ -11,6 +11,7 @@ import { MethodSymbol, PropertySymbol, ParameterSymbol, MethodKind, DeclarationM
 import { Accessibility } from './types.js';
 import { declareSpanTypes } from './span-types.js';
 import { declareAsyncEnumeration } from './async-enumeration.js';
+import { declareExpressionTreeTypes } from './expression-tree-types.js';
 import { declareCoreTypeRelations } from './core-type-relations.js';
 import { declareExceptionTypes } from './exception-types.js';
 import { declareAttributeTypes } from './attribute-types.js';
@@ -78,6 +79,7 @@ export class CoreTypes {
     this.valueTask = bridge.coreType('System_Threading_Tasks_ValueTask');
     this.valueTaskT = bridge.coreType('System_Threading_Tasks_ValueTask_T');
     declareAsyncEnumeration(this);
+    declareExpressionTreeTypes(this);
     this.type = bridge.coreType('System_Type');
     this.attribute = bridge.coreType('System_Attribute');
     declareAttributeTypes(this);

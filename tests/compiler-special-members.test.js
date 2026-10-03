@@ -1,6 +1,6 @@
 /**
  * SF-A02-T48: destructors and extern members. The Roslyn-pinned cases are in
- * packages/compiler/test/differential/fixtures/special-members.js; these tests cover the rule function itself and what
+ * packages/compiler/test/differential/fixtures/destructors-extern.js; these tests cover the rule function itself and what
  * code generation does with members that have no body to run.
  */
 import test from 'node:test';

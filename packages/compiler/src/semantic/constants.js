@@ -5,6 +5,7 @@
 import { SymbolKind, TypeKind } from '../symbols/types.js';
 import { bindEnumMembers } from '../binder/enums.js';
 import { BodyBinder } from '../binder/body-binder.js';
+import { isSourceSymbol } from './analysis-helpers.js';
 
 /** Class mixin: Constant evaluation in declaration contexts: const fields (with circularity detection), enum members */
 export const ConstantBinding = Base =>
@@ -38,7 +39,7 @@ export const ConstantBinding = Base =>
         }
         return field.constantValue ?? null;
       }
-      if (!field.isConst || (!field.isSource && !field.initializerSyntax))
+      if (!field.isConst || (!isSourceSymbol(field) && !field.initializerSyntax))
         return field.hasConstantValue && field.constantValue instanceof Object ? field.constantValue : null;
       const state = this.constantState.get(field);
       if (state === 'done') return field.constantValueObject ?? null;
@@ -72,10 +73,26 @@ export const ConstantBinding = Base =>
             this.report(m.uri, m.typeSyntax, 'CS0283', [t.toDisplayString()]);
         }
     }
+    /** The default value converted to the parameter type; a value of the wrong type is CS1750 on the parameter. */
+    parameterDefault(p, binder) {
+      const saved = binder.quiet;
+      binder.quiet = [];
+      let result, raised;
+      try {
+        result = binder.constant(p.defaultSyntax, p.type);
+      } finally {
+        raised = binder.quiet;
+        binder.quiet = saved;
+      }
+      const mismatch = raised.find(d => d.code === 'CS0029' || d.code === 'CS0266');
+      if (mismatch && p.locations?.[0]) binder.report(p.locations[0], 'CS1750', mismatch.args);
+      else for (const d of raised) binder.report(d.node, d.code, d.args);
+      return result;
+    }
     bindParameterDefault(p, binder) {
       if (!p.defaultSyntax || p.defaultBound) return;
       p.defaultBound = true;
-      const r = binder.constant(p.defaultSyntax, p.type);
+      const r = this.parameterDefault(p, binder);
       if (!r.errors) {
         if (r.constant) p.explicitDefaultValue = r.constant;
         else if (

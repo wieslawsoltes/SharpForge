@@ -9,7 +9,7 @@ import { fixtures as typeModifiers } from './type-modifiers.js';
 import { fixtures as conditionalMethods } from './conditional-methods.js';
 import { fixtures as anonymousMethods } from './anonymous-methods.js';
 import { fixtures as attributes } from './attributes.js';
-import { fixtures as specialMembers } from './special-members.js';
+import { fixtures as destructorsExtern } from './destructors-extern.js';
 
 export const fixtures = [
   ...jumps,
@@ -19,5 +19,5 @@ export const fixtures = [
   ...conditionalMethods,
   ...anonymousMethods,
   ...attributes,
-  ...specialMembers,
+  ...destructorsExtern,
 ];

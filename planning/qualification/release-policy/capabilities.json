@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "area": "A29",
+  "scope": "Tool contracts implemented for later validation; these rows do not qualify product engines or platforms",
+  "rows": [
+    {"id":"a29.release-policy.preview-admission","leaf":"SF-A29-T11.2","api":"previewAdmission(feature, langVersion)","qualification":"unknown"},
+    {"id":"a29.release-policy.spec-review","leaf":"SF-A29-T11.1","api":"checkPolicy({root, api, repositoryName, signal})","qualification":"unknown"},
+    {"id":"a29.release-policy.spec-watch","leaf":"SF-A29-T11.3","api":"watch({feeds, api, repository, writeIssues, signal})","qualification":"unknown"},
+    {"id":"a29.release-policy.version-check","leaf":"SF-A29-T11.4","api":"checkVersions({root, tag, signal})","qualification":"unknown"},
+    {"id":"a29.release-policy.draft-release","leaf":"SF-A29-T11.5","api":"release({mode, execute, root, env, api, signal})","qualification":"unknown"},
+    {"id":"a29.release-policy.pr-preview","leaf":"SF-A29-T11.6","api":"recordPreview({env, root, signal}); previewLink({api, repository, runId, signal})","qualification":"unknown"}
+  ],
+  "targets": [
+    {"platform":"node-darwin-arm64","status":"unknown","reason":"New implementation; local validation explicitly deferred"},
+    {"platform":"node-linux-x64","status":"unknown","reason":"No independent policy or product execution captured"},
+    {"platform":"node-win32-x64","status":"unknown","reason":"No independent policy or product execution captured"},
+    {"engine":"source","status":"unknown","reason":"Preview execution tests written but not run at this revision"},
+    {"engine":"cil","status":"unknown","reason":"Preview execution tests written but not run at this revision"},
+    {"engine":"native-coreclr","status":"unsupported","reason":"Pinned released Roslyn does not accept the frozen C#15 proposals"},
+    {"engine":"native-rust","status":"unknown","reason":"No independent Rust execution belongs to this slice"},
+    {"engine":"rust-wasm","status":"unknown","reason":"No independent Wasm execution belongs to this slice"},
+    {"engine":"browser","status":"unknown","reason":"Artifact availability is not browser rendering or hardware qualification"},
+    {"engine":"winui-native","status":"unknown","reason":"Revision watching does not execute Windows App SDK behavior"}
+  ]
+}

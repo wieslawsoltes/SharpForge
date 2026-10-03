@@ -14,6 +14,8 @@ export const fixtures = feature('language-version', [
   gated('gate-static-classes-at-1', 'StaticClasses', '1'),
   gated('gate-switch-on-bool-at-1', 'SwitchOnBool', '1'),
   gated('gate-auto-properties-at-2', 'AutoImplementedProperties', '2'),
+  gated('gate-implicit-local-at-2', 'ImplicitLocal', '2'),
+  gated('gate-implicit-array-at-2', 'ImplicitArray', '2'),
   gated('gate-async-at-4', 'Async', '4'),
   gated('gate-nameof-at-5', 'Nameof', '5'),
   gated('gate-readonly-auto-properties-at-5', 'ReadonlyAutoImplementedProperties', '5'),
@@ -21,6 +23,7 @@ export const fixtures = feature('language-version', [
   gated('gate-ref-for-at-7-2', 'RefFor', '7.2'),
   gated('gate-static-local-functions-at-7-3', 'StaticLocalFunctions', '7.3'),
   gated('gate-native-int-at-8', 'NativeInt', '8'),
+  gated('gate-inferred-delegate-type-at-9', 'InferredDelegateType', '9'),
   gated('gate-lambda-optional-parameters-at-11', 'LambdaOptionalParameters', '11'),
   gated('gate-params-collections-at-12', 'ParamsCollections', '12'),
   // Below C# 4 `dynamic` is simply an unknown type name (CS0246): Roslyn has no language-version diagnostic for it.
