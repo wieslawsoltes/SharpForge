@@ -4,6 +4,8 @@ import {validateDesignerAuthoring} from './resource-validation.js';
 import {normalizeProperty, track} from './document-values.js';
 export {normalizeProperty, track} from './document-values.js';
 import {frameworkManifest,frameworkType,canonicalType,frameworkAssignable,propertiesFor,eventsFor,XAML,CONTROLS,MEDIA} from '@sharpforge/framework';
+import {prepareLiveDesignChanges} from './live-capabilities.js';
+import {readLiveDesignScene} from './live-scene-reader.js';
 const copy=x=>structuredClone(x),same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const dangerous=new Set(['__proto__','constructor','prototype']);
 const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
@@ -31,15 +33,13 @@ export class DesignDocument extends DesignDocumentCore {
     super(value, { ...options, contracts: { validate: validateDesign, normalize: normalizeProperty, childSlot, track } });
   }
 }
-export function designFromScene(scene,{name='Live application'}={}){const source=new Map(scene.nodes.map(n=>[n.id,n])),nodes=[],used=new Set(),map=new Map(),templates={};let serial=0;
-  const supportedProperties=n=>{const values={};for(const [k,v]of Object.entries(n.properties??{})){if(k==='Style'||k==='Template'||k==='Content'&&v?.$ref||k==='Child')continue;try{if(v!==null&&(!['Width','Height','MinWidth','MinHeight','MaxWidth','MaxHeight'].includes(k)||Number.isFinite(v)))values[k]=normalizeProperty(n.type,k,v);}catch{}}return values;};
-  function templatePart(runtimeId,seen=new Set()){if(seen.has(runtimeId))bad('Template visual cycle');seen.add(runtimeId);const n=source.get(runtimeId);if(!n)bad('Missing template visual');const properties=supportedProperties(n),bindings=n.templateBindings??{};for(const key of Object.keys(bindings))delete properties[key];const part={id:'part_'+seen.size,type:n.type,properties,bindings,children:[]},slot=childSlot(n.type);if(slot){const items=slot.many?n.collections[slot.property]??[]:[n.properties[slot.property]];for(const v of items)if(v?.$ref)part.children.push(templatePart(v.$ref,seen));}return part;}
-  function walk(runtimeId){if(map.has(runtimeId))return map.get(runtimeId);const n=source.get(runtimeId);if(!n||!designControls.some(t=>t.type===n.type))return null;const id='live_'+(++serial);map.set(runtimeId,id);const all=supportedProperties(n),p={},baseProperties={};for(const[k,v]of Object.entries(all))(n.localProperties&&!n.localProperties.includes(k)?baseProperties:p)[k]=v;if(p.Name&&used.has(p.Name))delete p.Name;if(p.Name)used.add(p.Name);const item={id,runtimeId,type:n.type,properties:p,baseProperties,children:[],events:{}};nodes.push(item);const slot=childSlot(n.type);if(slot){const list=slot.many?n.collections[slot.property]??[]:[n.properties[slot.property]];for(const v of list)if(v?.$ref){const child=walk(v.$ref);if(child)item.children.push(child);}}for(const [key,property,member]of [['rows','RowDefinitions','Height'],['columns','ColumnDefinitions','Width']])if(n.collections[property])item[key]=n.collections[property].map(v=>source.get(v.$ref)?.properties[member]).filter(Boolean);if(n.templateRoot){const key='LiveTemplate_'+id;templates[key]={targetType:n.type,root:templatePart(n.templateRoot)};item.template=key;}return id;}
-  const root=walk(scene.windows[0]);if(!root)bad('Run a managed WinUI application first');return validateDesign({version:1,name,width:960,height:640,root,nodes,styles:{},templates});}
+export function designFromScene(scene, options = {}) {
+  return readLiveDesignScene(scene, options, {validate: validateDesign, normalize: normalizeProperty, childSlot, controls: designControls});
+}
 /** Minimal live delta. Unchanged effective properties are omitted to preserve running input/state. */
-export function designPatch(before,after){before=validateDesign(before);after=validateDesign(after);if(before.root!==after.root)bad('Replacing the live root requires restart');const old=new Map(before.nodes.map(n=>[n.id,n])),commands=[];
+export function designPatch(before,after){before=validateDesign(before);after=validateDesign(after);if(before.root!==after.root)bad('Replacing the live root requires restart');const extended=prepareLiveDesignChanges(before,after,{resolvedProperties}),old=new Map(before.nodes.map(n=>[n.id,n])),commands=extended.commands;
   for(const n of after.nodes){const previous=old.get(n.id);if(previous&&previous.type!==n.type)bad('Changing live control types requires delete and insert');if(!same(previous?.events??{},n.events))bad('Changing managed event handlers requires a generated-code update');if(!previous)commands.push({op:'create',id:n.id,type:n.type});
-    if((n.children.length||previous?.children.length)&&!same(previous?.children,n.children))commands.push({op:'children',id:n.id,children:n.children});
+    if(!extended.collectionOwners.has(n.id)&&(n.children.length||previous?.children.length)&&!same(previous?.children,n.children))commands.push({op:'children',id:n.id,children:n.children});
     const current=resolvedProperties(after,n).properties,prior=previous?resolvedProperties(before,previous).properties:{};
     for(const [name,value]of Object.entries(current))if(!same(value,prior[name])&&!propertiesFor(n.type)[name]?.readOnly)commands.push({op:'set',id:n.id,property:name,value});
     for(const name of Object.keys(prior))if(!Object.hasOwn(current,name)&&!propertiesFor(n.type)[name]?.readOnly)commands.push({op:'clear',id:n.id,property:name});

@@ -3,10 +3,25 @@ import {
 } from '../../packages/designer/src/index.js';
 import {icon} from './icons.js';
 import {escapeHtml as escape} from '../../packages/editor/src/index.js';
+import {DesignerToolboxTabs} from './designer-toolbox-tabs.js';
+import {decorateDesignerButton} from './designer-command-buttons.js';
 
 const categoryIcons = {Layout: 'layout', Input: 'file', Drawing: 'layers', Controls: 'boxes', Project: 'solution'};
 
-/** Searchable, tabbed toolbox that consumes successful project analysis without executing controls. */
+function controlButton(control, readOnly) {
+  const label = (control.previewOnly ? 'Insert preview of ' : 'Insert ') + control.name;
+  const usage = readOnly ? 'This source preview is read only. Open its source to make changes.' :
+    (control.previewOnly ? 'Preview only; this project type cannot execute on the current runtime. ' : '') +
+    'Click to insert; Alt+click to draw on surface; drag for placement';
+  return `<button type="button" draggable="${!readOnly}" data-control="${escape(control.type)}"` +
+    `${readOnly ? ' disabled' : ''} data-toolbox-preview="${!!control.previewOnly}"` +
+    ` aria-label="${escape(label)}" title="${escape(control.type + '. ' + usage)}">` +
+    `<span aria-hidden="true">${icon(categoryIcons[control.category] ?? 'boxes')}</span>` +
+    `<span>${escape(control.name)}</span>` + (control.previewOnly ? '<small class="design-toolbox-preview-badge">Preview only</small>' : '') +
+    '</button>';
+}
+
+/** Searchable tabs preserve successful catalogs and distinctly label source-proven read-only previews. */
 export class DesignerToolbox {
   constructor(view, {catalog = new DesignerToolboxCatalog()} = {}) {
     this.view = view;
@@ -15,15 +30,19 @@ export class DesignerToolbox {
     this.groups = new Map();
     this.root = null;
     this.disposed = false;
+    this.tabsController = new DesignerToolboxTabs(this);
   }
 
   install() {
     if (this.root || this.disposed) return;
+    this.tabsController.load();
     this.root = this.view.panel('designer-toolbox');
     this.root.classList.add('design-side');
     this.root.innerHTML = '<div class="panel-tools"><b>Toolbox</b>' +
       '<button type="button" data-toolbox-pointer aria-pressed="true">Pointer</button></div>' +
       '<div class="design-toolbox-tabs" role="tablist" aria-label="Toolbox categories"></div>' +
+      '<div class="design-toolbox-tab-actions"><button type="button" data-toolbox-tab-add>New tab</button>' +
+      '<button type="button" data-toolbox-tab-remove disabled>Remove tab</button></div>' +
       '<input type="search" aria-label="Search toolbox" placeholder="Search controls">' +
       '<div class="design-toolbox-list" role="tabpanel" aria-label="Common controls"></div>';
     this.root.querySelector('input').value = this.view.search;
@@ -38,6 +57,10 @@ export class DesignerToolbox {
       this.view.scroller.focus();
       this.view.accessibility?.announce('Pointer selection tool');
     };
+    this.root.querySelector('[data-toolbox-tab-add]').onclick = () => this.view.safe(() => this.tabsController.open());
+    this.root.querySelector('[data-toolbox-tab-remove]').onclick = () => this.view.safe(() => this.tabsController.remove());
+    decorateDesignerButton(this.root.querySelector('[data-toolbox-tab-add]'), {icon: 'file-plus', label: 'New tab'});
+    decorateDesignerButton(this.root.querySelector('[data-toolbox-tab-remove]'), {icon: 'clear', label: 'Remove tab'});
     this.keyHandler = event => this.keydown(event);
     this.root.addEventListener('keydown', this.keyHandler);
     this.renderTabs();
@@ -45,6 +68,12 @@ export class DesignerToolbox {
 
   updateAnalysis(analysis) {
     const changed = this.catalog.updateAnalysis(analysis);
+    if (changed && this.root) this.render();
+    return changed;
+  }
+
+  updatePreviewAnalysis(analysis) {
+    const changed = this.catalog.updatePreviewAnalysis(analysis);
     if (changed && this.root) this.render();
     return changed;
   }
@@ -64,13 +93,14 @@ export class DesignerToolbox {
       button.onclick = () => this.selectTab(tab.id);
       tabs.append(button);
     }
+    this.root.querySelector('[data-toolbox-tab-remove]').disabled = !this.catalog.customTabs.has(this.tab);
   }
 
   selectTab(id) {
     if (!this.catalog.tabs().some(tab => tab.id === id)) throw new TypeError('Unknown toolbox tab');
     this.tab = id;
     this.render();
-    this.root.querySelector(`[data-toolbox-tab="${id}"]`)?.focus();
+    this.root?.querySelector(`[data-toolbox-tab="${id}"]`)?.focus();
   }
 
   render() {
@@ -87,17 +117,13 @@ export class DesignerToolbox {
     list.innerHTML = [...groups].map(([category, controls]) => {
       const open = this.view.search || this.groups.get(category) !== false;
       return `<details class="design-toolbox-category" ${open ? 'open' : ''} data-category="${escape(category)}">` +
-        `<summary><span>${escape(category)}</span></summary>` + controls.map(control =>
-          `<button type="button" draggable="true" data-control="${escape(control.type)}"` +
-          ` aria-label="Insert ${escape(control.name)}" title="${escape(control.type)}. ` +
-          'Click to insert; Alt+click to draw on surface; drag for placement">' +
-          `<span aria-hidden="true">${icon(categoryIcons[category] ?? 'boxes')}</span>` +
-          `<span>${escape(control.name)}</span></button>`).join('') + '</details>';
+        `<summary><span>${escape(category)}</span></summary>` + controls.map(control => controlButton(control, this.view.document.readOnly))
+          .join('') + '</details>';
     }).join('');
     if (!groups.size) {
       const empty = list.ownerDocument.createElement('p');
       empty.setAttribute('role', 'status');
-      empty.textContent = this.tab === 'project' ? 'No constructible project UserControls in the last successful analysis.' :
+      empty.textContent = this.tab === 'project' ? 'No compiled controls or qualified project previews are available.' :
         this.tab === 'recent' ? 'Inserted controls appear here.' : 'No matching controls.';
       list.append(empty);
     }
@@ -124,7 +150,9 @@ export class DesignerToolbox {
       properties.Left = Math.round((point.x - bounds.left) / this.view.zoom / this.view.snap) * this.view.snap;
       properties.Top = Math.round((point.y - bounds.top) / this.view.zoom / this.view.snap) * this.view.snap;
     }
-    const id = insertToolboxControl(this.view.document, this.catalog, type, {properties, accepts, parentId: parent.id});
+    const id = insertToolboxControl(this.view.document, this.catalog, type, {
+      properties, accepts, parentId: parent.id, naming: this.view.naming ?? this.view.designerOptions?.value.naming ?? 'type'
+    });
     this.render();
     this.view.accessibility?.announce('Inserted ' + this.catalog.control(type).name);
     return id;
@@ -137,6 +165,7 @@ export class DesignerToolbox {
   }
 
   createDrawn(type, {parentId = this.insertionParent().id, bounds, index, properties = {}} = {}) {
+    if (this.view.document.readOnly) throw new TypeError('This source preview is read only. Open its source to make changes.');
     if (!bounds || ![bounds.x, bounds.y, bounds.width, bounds.height].every(Number.isFinite) ||
       bounds.width <= 0 || bounds.height <= 0) throw new TypeError('Drawn control bounds must be positive and finite');
     const accepts = id => !this.view.outline?.isLocked(id) && this.view.outline?.isVisible(id) !== false;
@@ -145,7 +174,9 @@ export class DesignerToolbox {
     const candidate = new DesignDocument(this.view.document.snapshot());
     const geometry = {Width: bounds.width, Height: bounds.height, ...properties};
     if (parent.type.endsWith('.Canvas')) Object.assign(geometry, {Left: bounds.x, Top: bounds.y});
-    const id = insertToolboxControl(candidate, this.catalog, type, {parentId, properties: geometry, recordRecent: false});
+    const id = insertToolboxControl(candidate, this.catalog, type, {
+      parentId, properties: geometry, recordRecent: false, naming: this.view.naming ?? this.view.designerOptions?.value.naming ?? 'type'
+    });
     if (index !== undefined) {
       if (!Number.isInteger(index) || index < 0) throw new TypeError('Drawing insertion index must be nonnegative');
       candidate.move(id, parentId, Math.min(index, candidate.node(parentId).children.length - 1));
@@ -185,6 +216,7 @@ export class DesignerToolbox {
   dispose() {
     this.disposed = true;
     this.root?.removeEventListener('keydown', this.keyHandler);
+    this.tabsController.dispose();
     this.root = null;
   }
 }

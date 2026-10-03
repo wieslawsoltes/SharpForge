@@ -51,3 +51,37 @@ test('geometry arrows remain with Surface gestures while Alt+arrow keeps accessi
   assert.equal(stopped, 1);
   assert.deepEqual(announcements, [1]);
 });
+
+test('structured live capability findings preserve codes, source locations and actionable details in the Error List', () => {
+  const {accessibility, view, published, announcements} = controller();
+  view.path = 'View.cs';
+  view.sourceSync.session.analysis.bindings = {action: {declaration: {start: 120, end: 150}}};
+  const diagnostics = [
+    {code: 'SFDL0010', severity: 'error', source: 'Designer', nodeId: 'action', span: null,
+      capability: 'bindings', message: 'Binding cannot be materialized', fixHint: 'Keep the edit staged'},
+    {code: 'SFDL0011', severity: 'error', uri: 'Other.cs', span: {start: 8, length: 5}, message: 'Stale Items'}
+  ];
+  accessibility.reportError({message: 'Live design remains staged', diagnostics});
+  const output = published.at(-1);
+  assert.equal(output[0].code, 'SFDL0010');
+  assert.equal(output[0].capability, 'bindings');
+  assert.equal(output[0].fixHint, 'Keep the edit staged');
+  assert.equal(output[0].uri, 'View.cs');
+  assert.deepEqual(output[0].span, {start: 120, end: 150});
+  assert.deepEqual(output[1].span, {start: 8, end: 13});
+  assert.equal(output[1].uri, 'Other.cs');
+  assert.equal(diagnostics[0].span, null);
+  assert.equal(announcements.at(-1), 'Live design remains staged');
+});
+
+test('standalone live errors require no source binding to remain navigable diagnostics', () => {
+  const {accessibility, view, published} = controller();
+  delete view.sourceSync;
+  view.path = 'Live.sfdesign';
+  accessibility.reportError({message: 'Items changed', diagnostic: {
+    code: 'SFDL0011', severity: 'error', span: null, message: 'Items changed'
+  }});
+  assert.equal(published.at(-1)[0].code, 'SFDL0011');
+  assert.equal(published.at(-1)[0].uri, 'Live.sfdesign');
+  assert.deepEqual(published.at(-1)[0].span, {start: 0, end: 0});
+});

@@ -117,8 +117,11 @@ export class DesignerLiveAttachment {
     if (!this.view.sourceSync.session) throw new Error('Connect the attached design to its C# source before Hot Reload');
     const target = this.attachment.target;
     const writeSource = async identity => {
-      this.attachment.resolve(target);
+      const session = this.attachment.resolve(target);
       if (this.view.writeDesignerSourceForSession) return this.view.writeDesignerSourceForSession(identity, this.view);
+      if (session.assertSourceOwnership || session.authorizeSourceChanges) {
+        throw new DesignerLiveError('This app requires its source receipt callback before editing C# for Hot Reload.', 'SFDL0006');
+      }
       if (this.view.state.readOnly) throw new Error('Enable source editing for this paused app before Hot Reload');
       return this.view.sourceSync.write();
     };
