@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "styles": [],
+  "workers": [],
+  "assets": [
+    {
+      "source": "packages/text",
+      "target": "packages/text",
+      "order": 100
+    }
+  ]
+}
