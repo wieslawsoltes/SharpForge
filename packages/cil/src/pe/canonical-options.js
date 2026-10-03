@@ -1,3 +1,4 @@
+import { readAssemblyReferenceIdentities } from '../metadata/assembly-references.js';
 import { assemblyDefinitionOptions } from '../metadata/assembly-identity.js';
 import { canonicalStrongNameOptions } from './strong-name.js';
 import { readWin32Resources } from './win32-reader.js';
@@ -12,7 +13,7 @@ export function canonicalEmissionOptions(pe, debug) {
   });
   const entries = readWin32Resources(pe, { includeBytes: true });
   return { ...debug.peOptions, ...assemblyDefinitionOptions(pe.metadata), ...canonicalStrongNameOptions(pe),
-    name: debug.name, framework: debug.framework,
+    name: debug.name, framework: debug.framework, assemblyReferences: readAssemblyReferenceIdentities(pe.metadata),
     embedSources: debug.sources.every(source => typeof source.text === 'string'), managedResources,
     ...(pe.directories.resource.size ? { win32Resources: { entries } } : {}) };
 }
