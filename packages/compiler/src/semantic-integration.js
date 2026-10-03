@@ -70,6 +70,12 @@ const constructNames = {
 };
 const key = d => d.code + '|' + d.uri + '|' + d.start + '|' + d.length;
 
+function internalFailure(compilation, error) {
+  const source = compilation.files[0]?.source;
+  const reason = String(error?.message ?? error).split('\n')[0];
+  return diagnostic(source, 0, 1, 'SF2201', formatMessage('SF2201', [reason]), 'warning');
+}
+
 /**
  * @param compilation the Compilation after its pipeline ran  @param {object[]} featureDiagnostics parser-level version gates
  * @returns {null|{diagnostics:object[],semantic:object}} the reconciled diagnostic list, or null when nothing changes
@@ -88,8 +94,9 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
       nullableContext: compilation.typedOptions?.nullableContext ?? compilation.options.nullableContext,
     }).run();
   } catch (error) {
-    if (globalThis.SHARPFORGE_SEMANTIC_STRICT) throw error;
-    return null;
+    // An internal failure of the analysis must not hide the profile diagnostics the pipeline already has, and it must
+    // not pass silently either: it is reported as a diagnostic of its own.
+    return { diagnostics: [...legacy, internalFailure(compilation, error)], semantic: null };
   }
   if (result.unsupported) return null;
   const semantic = result.diagnostics,

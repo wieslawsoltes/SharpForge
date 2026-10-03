@@ -38,10 +38,11 @@ const isBoundNode = value =>
 
 function describeField(name, value) {
   if (typeof value === 'string' || typeof value === 'number' || value === true) return `${name}=${value}`;
-  if (value?.kind === SymbolKind.Local || value?.kind === SymbolKind.Parameter) return `${name}=${value.name}`;
   if (value instanceof Conversion) return `${name}=${value.toString()}`;
-  if (isSymbol(value)) return `${name}=${value.toDisplayString()}`;
-  return null;
+  if (!isSymbol(value)) return null;
+  // Locals and parameters print by name; other symbols by their display string. (Bound nodes are children, not fields.)
+  const isVariable = value.kind === SymbolKind.Local || value.kind === SymbolKind.Parameter;
+  return `${name}=${isVariable ? value.name : value.toDisplayString()}`;
 }
 
 function describeNode(node) {

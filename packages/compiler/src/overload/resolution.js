@@ -231,7 +231,7 @@ export class OverloadResolver {
     // Too few arguments: Roslyn names the first required parameter without an argument when exactly one candidate
     // could otherwise be meant; with several candidates of other arities it reports the argument count.
     const missing = analysed.filter(c => c.failure.kind === 'mapping' && c.failure.error.kind === 'missing');
-    if (e.kind === 'missing' && (analysed.length === 1 || missing.length === analysed.length)) {
+    if (e.kind === 'missing' && analysed.length === 1) {
       const c = missing.sort((a, b) => a.definition.parameters.length - b.definition.parameters.length)[0];
       return { code: 'CS7036', args: [c.failure.error.parameter.name, memberDisplay(c.definition)] };
     }
