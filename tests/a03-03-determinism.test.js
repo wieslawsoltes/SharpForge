@@ -81,3 +81,15 @@ test('A03 symbol reattachment recomputes checksum and detects checksum tampering
   assert.equal(readPE(compatibility.assembly).checksum, 0);
   assert.equal(loadAssembly(compatibility.assembly).entryPoint, compatibility.image.entryPoint);
 });
+
+
+test('A03 deterministic finalization owns its Buffer copy without mutating an offset subarray', () => {
+  const compiled = compile(undefined, { portablePdb: false });
+  const carrier = Buffer.alloc(compiled.assembly.length + 16, 0x5a);
+  const bytes = carrier.subarray(7, 7 + compiled.assembly.length);
+  bytes.set(compiled.assembly);
+  const before = Buffer.from(carrier), finalized = finalizeDeterministicPE(bytes);
+  assert.deepEqual(finalized, compiled.assembly);
+  finalized.fill(0);
+  assert.deepEqual(carrier, before);
+});
