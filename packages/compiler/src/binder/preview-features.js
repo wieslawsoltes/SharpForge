@@ -6,9 +6,11 @@
  *
  * Bound (closed hierarchies and closed enums, SF-A02-T90):
  *   - a `closed` class is implicitly abstract; `sealed`, `static` or an explicit `abstract` on it is an error;
+ *   - a generic class that directly derives from a closed class must use all its type parameters in the base class;
  *   - a closed enum must declare a member for the value 0;
- *   - a switch expression that handles every member of a closed enum is exhaustive (flow/pattern-exhaustiveness.js
- *     reads `isClosedEnum`).
+ *   - the classes that directly derive from a closed class are recorded with it (`closedSubtypes`), and the members
+ *     of a closed enum are all its values (`isClosedEnum`): flow/pattern-exhaustiveness.js decides exhaustiveness
+ *     from them, ./closed-types.js checks the uses in bodies.
  *
  * Not bound, reported instead of guessed (SF2202 names the feature and its proposal):
  *   unions (SF-A02-T89), the `safe` modifier and `unsafe(...)` expressions (SF-A02-T92), extension indexers
@@ -20,6 +22,7 @@
 import {DiagnosticId} from '../diagnostics/codes.js';
 import { previewStampText } from '@sharpforge/syntax';
 import { TypeKind } from '../symbols/types.js';
+import { containsTypeParameter } from '../symbols/substitution.js';
 
 const modifiersOf = syntax => (syntax.modifiers ?? []).map(token => token.text);
 const isZero = value => value === 0 || value === 0n || Number(value?.value ?? NaN) === 0;
@@ -54,10 +57,30 @@ export const PreviewFeatureRules = Base =>
         for (const [id, name, node] of unboundPreviewConstructs(file.syntax)) this.report(file.source.uri, node, DiagnosticId.SF2202, [name, previewStampText(id)]);
       }
     }
+    closedDeclarationOf(type) {
+      return (type.declarations ?? []).find(part => modifiersOf(part.syntax).includes('closed') && this.isPreview(part.uri)) ?? null;
+    }
+    /** Records a class that directly derives from a closed class with it, and checks the type parameter restriction. */
+    checkClosedBase(type) {
+      const base = type.typeKind === TypeKind.Class ? type.baseType : null,
+        definition = base?.originalDefinition;
+      if (!definition || definition.typeKind !== TypeKind.Class || !this.closedDeclarationOf(definition)) return;
+      (definition.closedSubtypes ??= []).push(type);
+      const part = type.declarations[0];
+      for (const parameter of type.typeParameters ?? []) {
+        if (containsTypeParameter(base, [parameter])) continue;
+        const text = `the type parameter '${parameter.name}' of a class that derives from a closed class must be used in the base class`;
+        this.report(part.uri, part.syntax.identifier, DiagnosticId.SF2203, [text, previewStampText('ClosedClasses')]);
+      }
+    }
     checkType(type) {
-      const closed = (type.declarations ?? []).find(part => modifiersOf(part.syntax).includes('closed') && this.isPreview(part.uri));
-      if (closed && type.typeKind === TypeKind.Class) type.isAbstract = true;
+      const closed = this.closedDeclarationOf(type);
+      if (closed && type.typeKind === TypeKind.Class) {
+        type.isAbstract = true;
+        type.isClosedClass = true;
+      }
       super.checkType(type);
+      this.checkClosedBase(type);
       if (!closed) return;
       const at = closed.syntax.identifier,
         rule = (id, text) => this.report(closed.uri, at, DiagnosticId.SF2203, [text, previewStampText(id)]);

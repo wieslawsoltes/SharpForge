@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0fa713ab4cd00ee02c39",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void Main()\n    {\n        System.Console.Write((null, () => 1) == (default, default));\n        System.Console.Write((null, () => 2) == default);\n    }\n}",
+  "sourceSHA256": "f77c0493fabdf82037b98d4114a203218e5c356556a512b1ae660e9fed2119e9",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestTypelessTupleAndTupleOfDefaults",
+    "offset": 51161
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0034",
+        "severity": "error"
+      },
+      {
+        "code": "CS0034",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,30): error CS0034: Operator '==' is ambiguous on operands of type '<null>' and 'default'\n                //         System.Console.Write((null, () => 1) == (default, default));\n                Diagnostic(ErrorCode.ERR_AmbigBinaryOps, \"(null, () => 1) == (default, default)\").WithArguments(\"==\", \"<null>\", \"default\").WithLocation(6, 30),\n                // (7,30): error CS0034: Operator '==' is ambiguous on operands of type '(<null>, lambda expression)' and 'default'\n                //         System.Console.Write((null, () => 2) == default);\n                Diagnostic(ErrorCode.ERR_AmbigBinaryOps, \"(null, () => 2) == default\").WithArguments(\"==\", \"(<null>, lambda expression)\", \"default\").WithLocation(7, 30)\n                ",
+  "unsupported": []
+}

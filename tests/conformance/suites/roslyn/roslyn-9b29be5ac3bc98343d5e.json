@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9b29be5ac3bc98343d5e",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\npublic class A\n{\n    public virtual int this[int x] { get { return 0; } set { } }\n}\n\npublic class B : A\n{\n    [Obsolete]\n    public B() { }\n\n    [Obsolete]\n    public override int this[int x] { get { return 0; } set { } }\n}\n\npublic class C : B\n{\n    public C() { } // Implicit base constructor invocation.\n    public C(int x) : base() { } // Doesn't override anything anyway.\n\n    private void Test()\n    {\n        base[1]++;\n    }\n}\n",
+  "sourceSHA256": "079f470cba12a3725595674c4a80fb8f1b720fb105de77d2e99edb1c5e4eea5d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "ObsoleteOnVirtual_OnDerived_BaseCall2",
+    "offset": 310322
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0809",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (15,25): warning CS0809: Obsolete member 'B.this[int]' overrides non-obsolete member 'A.this[int]'\n                //     public override int this[int x] { get { return 0; } set { } }\n                Diagnostic(ErrorCode.WRN_ObsoleteOverridingNonObsolete, \"this\").WithArguments(\"B.this[int]\", \"A.this[int]\"),\n\n                // (20,5): warning CS0612: 'B.B()' is obsolete\n                //     public C() { } // Implicit base constructor invocation.\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"public C() { }\").WithArguments(\"B.B()\"),\n                // (21,21): warning CS0612: 'B.B()' is obsolete\n                //     public C(int x) : base() { } // Doesn't override anything anyway.\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \": base()\").WithArguments(\"B.B()\"),\n\n                // (25,9): warning CS0612: 'B.this[int]' is obsolete\n                //         base[1]++;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"base[1]\").WithArguments(\"B.this[int]\")",
+  "unsupported": []
+}

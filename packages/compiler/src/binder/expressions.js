@@ -3,7 +3,9 @@ import {canonicalType,frameworkType,enumValue,eventsFor} from '@sharpforge/frame
 import {BuiltinMap} from '@sharpforge/bytecode';
 import {numeric,isReference,assignable,pathOf,typeText} from '../type-utils.js';
 import {classifyBinary} from './operators.js';
-import {BoundLiteral,BoundDefaultExpression,BoundLocal,BoundParameter,BoundThisReference,BoundFieldAccess,BoundPropertyAccess,BoundIndexerAccess,BoundArrayAccess,BoundArrayLength,BoundCall,BoundObjectCreationExpression,BoundObjectInitializerMember,BoundCollectionElementInitializer,BoundArrayCreation,BoundDelegateCreationExpression,BoundUnaryOperator,BoundIncrementOperator,BoundBinaryOperator,BoundNullCoalescingOperator,BoundConditionalOperator,BoundAssignmentOperator,BoundCompoundAssignmentOperator,BoundNullCoalescingAssignmentOperator,BoundEventAssignmentOperator,BoundConversion,BoundInterpolatedString,BoundStringInsert,BoundAwaitExpression,BoundSwitchExpression,BoundSwitchExpressionArm,BoundConstantPattern,BoundCollectionExpression,BoundCollectionElement,BoundCollectionSpread} from '../bound/nodes.js';
+import {bindArrayCreation} from './array-creation.js';
+import {bindValueArgument} from './value-arguments.js';
+import {BoundLiteral,BoundDefaultExpression,BoundLocal,BoundParameter,BoundThisReference,BoundFieldAccess,BoundPropertyAccess,BoundIndexerAccess,BoundArrayAccess,BoundArrayLength,BoundCall,BoundObjectCreationExpression,BoundObjectInitializerMember,BoundCollectionElementInitializer,BoundDelegateCreationExpression,BoundUnaryOperator,BoundIncrementOperator,BoundBinaryOperator,BoundNullCoalescingOperator,BoundConditionalOperator,BoundAssignmentOperator,BoundCompoundAssignmentOperator,BoundNullCoalescingAssignmentOperator,BoundEventAssignmentOperator,BoundConversion,BoundInterpolatedString,BoundStringInsert,BoundAwaitExpression,BoundSwitchExpression,BoundSwitchExpressionArm,BoundConstantPattern,BoundCollectionExpression,BoundCollectionElement,BoundCollectionSpread} from '../bound/nodes.js';
 /**
  * Expression binding: syntax to bound expressions typed with TypeSymbols. No IR is produced here; evaluation order,
  * temporaries and ABI calls are the business of lowering and code generation.
@@ -12,7 +14,6 @@ import {BoundLiteral,BoundDefaultExpression,BoundLocal,BoundParameter,BoundThisR
  * `bindLValue` binds an assignment target, `bindBool` a condition. Reads of locals are not checked for definite
  * assignment here - that is flow analysis (flow/definite-assignment.js).
  */
-const primitive=t=>['int','double','bool'].includes(t);
 export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
   bindBool(node){const bound=this.bindExpression(node);this.checkAssign('bool',bound.legacyType,node);return bound;}
   /** A reference to a local, parameter or `this`. */
@@ -84,11 +85,7 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
         return this.node(BoundCompoundAssignmentOperator,node,{operator,left,right,isChecked:this.overflowChecked(node),method:this.sym.contract(info.contract),negate:info.negate},target,info.implemented?null:{hasErrors:true});}
       case 'Conditional':{const condition=this.bindBool(node.condition),consequence=this.bindExpression(node.whenTrue),alternative=this.bindExpression(node.whenFalse),yes=consequence.legacyType,no=alternative.legacyType;if(!assignable(yes,no)&&!assignable(no,yes))this.c.report(node,DiagnosticId.CS0173,[typeText(yes),typeText(no)]);return this.node(BoundConditionalOperator,node,{condition,consequence,alternative},yes==='null'?no:yes==='double'||no==='double'?'double':yes);}
       case 'Call':return this.bindCall(node);
-      case 'NewArray':{
-        let type=node.type;if(type==='var[]'){if(!node.values?.length)this.c.report(node,DiagnosticId.CS0826);type=(node.values?.length?this.infer(node.values[0]):'error')+'[]';}
-        type=this.c.resolveType(type,node,false,this.m);const element=type.slice(0,-2);let length=null;if(node.length){length=this.bindExpression(node.length);this.checkAssign('int',length.legacyType,node.length);}
-        const initializer=(node.values??[]).map(value=>{const bound=this.bindTyped(value,element);this.checkAssign(element,bound.legacyType,value);return bound;});
-        return this.node(BoundArrayCreation,node,{length,initializer,hasInitializer:!!node.values},type);}
+      case 'NewArray':return bindArrayCreation(this,node);
       case 'New':return this.bindObjectCreation(node);
       default:this.c.report(node,DiagnosticId.SF2098,[node.kind]);return this.bad(node);
     }
@@ -235,12 +232,7 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
     return this.node(BoundDelegateCreationExpression,node,{receiver,method:this.sym.method(binding.method)},canonicalType(type));
   }
   bindFrameworkArguments(args,parameters,boxPrimitives=false){
-    return args.map((arg,i)=>{
-      if(frameworkType(parameters[i])?.kind==='delegate'&&this.delegateMethod(arg,parameters[i]))return this.bindDelegate(arg,parameters[i]);
-      const value=this.bindTyped(arg,parameters[i]);this.checkAssign(parameters[i],value.legacyType,arg);
-      // Value-typed arguments passed as object to the base class library cross the ABI boxed.
-      return boxPrimitives&&parameters[i]==='object'&&primitive(value.legacyType)?this.node(BoundConversion,null,{operand:value,conversion:{kind:'Boxing',from:value.legacyType,to:'object'},isExplicit:false,isChecked:false},'object'):value;
-    });
+    return args.map((arg,i)=>bindValueArgument(this,arg,parameters[i],boxPrimitives));
   }
   bindFrameworkExpression(node){
     if(node.kind==='Index'){const get=this.frameworkMethod(this.infer(node.target),'get_Item',false);if(get){const receiver=this.bindExpression(node.target),index=this.bindExpression(node.index);this.checkAssign(get.parameters[0],index.legacyType,node.index);return this.node(BoundIndexerAccess,node,{receiver,indexer:this.frameworkPropertySymbol(get,this.frameworkMethod(receiver.legacyType,'set_Item',false)),args:[index]},get.result);}}

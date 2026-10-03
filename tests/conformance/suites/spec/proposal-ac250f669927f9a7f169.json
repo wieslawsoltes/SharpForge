@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-ac250f669927f9a7f169",
+  "kind": "spec",
+  "sourceText": "// Union constructor making `string?` a case type\npublic Union(string? value) { ... }",
+  "sourceSHA256": "a685c96794740b806c52e814bbf0bb2af97d9c2c3b6eebed63cb0f542a662ab2",
+  "target": "library",
+  "featureId": "csharp-15-0-unions",
+  "langVersion": "preview",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-15.0/unions.md",
+    "sha256": "eb6de7e24e702567a909286e0b4b6d5b409ae3e7016fadd87ab4fc8c16c9fa4a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/unions.md",
+    "license": "NOASSERTION",
+    "offset": 5073
+  }
+}

@@ -37,6 +37,13 @@ const rules = [
     codes: [DiagnosticId.CS8860, DiagnosticId.CS9029, DiagnosticId.CS9062, DiagnosticId.CS9056, DiagnosticId.CS9306],
   },
   {
+    // An interpolation alignment beyond 32767 (binder/csharp6.js): the warning CS8094. Only a literal of five digits
+    // or more can be out of range without leaving the profile (a constant expression is bound by the analysis anyway).
+    text: /,\s*-?\s*\d{5,}\s*[:}]/,
+    applies: node => !!node.alignmentClause,
+    codes: [DiagnosticId.CS8094],
+  },
+  {
     // C# 15 preview `closed` types (binder/preview-features.js): the provisional rules of the pinned proposals.
     text: /\bclosed\s+(?:class|enum)\b/,
     applies: node => (node.kind === 'ClassDeclaration' || node.kind === 'EnumDeclaration') && (node.modifiers ?? []).some(token => token.text === 'closed'),

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-a19fd1aa4ae15143a225",
+  "kind": "spec",
+  "sourceText": "// \"c\" and \"result\" have element names \"f1\" and \"f2\"\nvar result = list.Select(c => (c.f1, c.f2)).Where(t => t.f2 == 1); ",
+  "sourceSHA256": "39106b90090e6283bbf95aabea5dcdbb629640bb3f679c3a530d8a5ad38ceaa4",
+  "target": "library",
+  "featureId": "csharp-7-1-inferred-tuple-element-names",
+  "langVersion": "7.1",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.1/infer-tuple-names.md",
+    "sha256": "788d02fde920dc3f09c43f6a43666618adc914d1043fb463fe4875d3c3df8642",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.1/infer-tuple-names.md",
+    "license": "NOASSERTION",
+    "offset": 555
+  }
+}

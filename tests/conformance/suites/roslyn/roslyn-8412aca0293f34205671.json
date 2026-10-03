@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8412aca0293f34205671",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    static void Test()\n    {\n        M() = 1;\n        M1().Alice = 2;\n\n        M() ++;\n        M1().Alice --;\n\n        M() += 1;\n        M1().Alice -= 2;\n    }\n\n    static ref readonly int M() => throw null;\n    static ref readonly (int Alice, int Bob) M1() => throw null;\n}\n",
+  "sourceSHA256": "de0762235a4c4cc76dbad97c752cecd86d3689ca20616c4bdfd79860d362c817",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefReadonlyReturnTests.cs",
+    "sha256": "87f31f30239082ac067728f573ca1d7b0ba9ae37f73b80e7f9236b308df7d195",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenRefReadonlyReturnTests.cs",
+    "license": "MIT",
+    "method": "ReadonlyReturnCannotAssign",
+    "offset": 12543
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(text, new[] { ValueTupleRef, SystemRuntimeFacadeRef })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8331",
+        "severity": "error"
+      },
+      {
+        "code": "CS8332",
+        "severity": "error"
+      },
+      {
+        "code": "CS8331",
+        "severity": "error"
+      },
+      {
+        "code": "CS8332",
+        "severity": "error"
+      },
+      {
+        "code": "CS8331",
+        "severity": "error"
+      },
+      {
+        "code": "CS8332",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,9): error CS8331: Cannot assign to method 'M' or use it as the right hand side of a ref assignment because it is a readonly variable\n                //         M() = 1;\n                Diagnostic(ErrorCode.ERR_AssignReadonlyNotField, \"M()\").WithArguments(\"method\", \"M\").WithLocation(6, 9),\n                // (7,9): error CS8332: Cannot assign to a member of method 'M1' or use it as the right hand side of a ref assignment because it is a readonly variable\n                //         M1().Alice = 2;\n                Diagnostic(ErrorCode.ERR_AssignReadonlyNotField2, \"M1().Alice\").WithArguments(\"method\", \"M1\").WithLocation(7, 9),\n                // (9,9): error CS8331: Cannot assign to method 'M' or use it as the right hand side of a ref assignment because it is a readonly variable\n                //         M() ++;\n                Diagnostic(ErrorCode.ERR_AssignReadonlyNotField, \"M()\").WithArguments(\"method\", \"M\").WithLocation(9, 9),\n                // (10,9): error CS8332: Cannot assign to a member of method 'M1' or use it as the right hand side of a ref assignment because it is a readonly variable\n                //         M1().Alice --;\n                Diagnostic(ErrorCode.ERR_AssignReadonlyNotField2, \"M1().Alice\").WithArguments(\"method\", \"M1\").WithLocation(10, 9),\n                // (12,9): error CS8331: Cannot assign to method 'M' or use it as the right hand side of a ref assignment because it is a readonly variable\n                //         M() += 1;\n                Diagnostic(ErrorCode.ERR_AssignReadonlyNotField, \"M()\").WithArguments(\"method\", \"M\").WithLocation(12, 9),\n                // (13,9): error CS8332: Cannot assign to a member of method 'M1' or use it as the right hand side of a ref assignment because it is a readonly variable\n                //         M1().Alice -= 2;\n                Diagnostic(ErrorCode.ERR_AssignReadonlyNotField2, \"M1().Alice\").WithArguments(\"method\", \"M1\").WithLocation(13, 9)\n            ",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -12,6 +12,7 @@
  * CS0702 (special class), CS0454 (circular constraint dependency), CS0080 (clause on a non-generic declaration).
  */
 import {DiagnosticId} from '../../diagnostics/codes.js';
+import { isDynamicType, containsDynamic } from '../dynamic-types.js';
 import { TypeParameterSymbol, Variance, TypeKind } from '../types.js';
 
 const span = node => {
@@ -87,7 +88,7 @@ export function bindConstraintClauses(parameters, clauses, bindType, report, opt
           else parameter.hasDefaultConstraint = true;
           break;
         case 'ConstructorConstraint':
-          if (!last && constraints[index + 1]?.kind !== 'AllowsConstraintClause') report(c, DiagnosticId.CS0401);
+          if (!last && constraints[index + 1]?.kind !== 'AllowsConstraintClause') report(c.newKeyword ?? c, DiagnosticId.CS0401);
           if (parameter.hasUnmanagedTypeConstraint) report(c.newKeyword ?? c, DiagnosticId.CS8375);
           else if (parameter.hasValueTypeConstraint) report(c, DiagnosticId.CS0451);
           else parameter.hasConstructorConstraint = true;
@@ -118,6 +119,10 @@ export function bindConstraintClauses(parameters, clauses, bindType, report, opt
           }
           if (types.some(t => t.equals(type))) {
             report(c, DiagnosticId.CS0405, [type.toDisplayString(), parameter.name]);
+            break;
+          }
+          if (containsDynamic(type)) {
+            report(c.type, ...(isDynamicType(type) ? [DiagnosticId.CS1967] : [DiagnosticId.CS1968, [type.toDisplayString()]]));
             break;
           }
           const isClass = type.typeKind === TypeKind.Class,
