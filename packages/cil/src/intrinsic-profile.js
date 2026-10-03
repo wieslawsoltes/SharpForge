@@ -21,6 +21,9 @@ for(const name of ['Write','WriteLine'])for(const type of primitive)add('System.
 add('System.Console','WriteLine',[],'void',true,'console');
 add('System.Object','.ctor',[],'void',false,'objectCtor');
 add('System.Object','ToString',[],'string',false,'objectToString');
+add('System.Object','ReferenceEquals',['object','object'],'bool',true,'objectReferenceEquals');
+add('System.Enum','ToString',[],'string',false,'enumToString');
+add('System.Enum','HasFlag',['System.Enum'],'bool',false,'enumHasFlag');
 for(const parameters of [[],['string']])add('System.Exception','.ctor',parameters,'void',false,'exceptionCtor');
 add('System.Exception','get_Message',[],'string',false,'exceptionMessage');
 add('System.Exception','get_InnerException',[],'System.Exception',false,'exceptionInner');
@@ -30,6 +33,8 @@ for(const count of [2,3,4])add('System.String','Concat',Array(count).fill('strin
 add('System.String','Concat',['object','object'],'string',true,'stringConcat');
 for(const name of ['op_Equality','op_Inequality','Equals'])add('System.String',name,['string','string'],'bool',true,'stringCompare');
 add('System.String','IsNullOrEmpty',['string'],'bool',true,'stringNullOrEmpty');
+add('System.String','Intern',['string'],'string',true,'stringIntern');
+add('System.String','IsInterned',['string'],'string',true,'stringIsInterned');
 add('System.String','get_Length',[],'int',false,'stringLength');
 add('System.String','get_Chars',['int'],'char',false,'stringChars');
 for(const name of ['ToUpperInvariant','ToLowerInvariant','ToUpper','ToLower','Trim','ToString'])add('System.String',name,[],'string',false,'stringTransform');

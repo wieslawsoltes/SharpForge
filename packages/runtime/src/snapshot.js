@@ -73,7 +73,7 @@ const schema = (engine, fields, excluded) => Object.freeze({
 /** Every own VM field is explicitly captured or classified as host/derived metadata. */
 export const snapshotSchemas = Object.freeze({
   source: schema('source', [...common,
-    field('stack'), field('constantValues', entries, {restore: value => new Map(value)}),
+    field('strings'), field('stack'), field('constantValues', entries, {restore: value => new Map(value)}),
     field('sourcePause', retain), field('currentPoint')
   ], {image: 'Immutable bytecode for the current code generation.'}),
   cil: schema('cil', [...common,
