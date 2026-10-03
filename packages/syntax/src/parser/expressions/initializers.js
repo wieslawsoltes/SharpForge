@@ -17,13 +17,16 @@ export const initializerMethods = {
         if (kind === 'ArrayInitializerExpression') list.push(this.variableInitializer());
         else if (kind === 'ObjectInitializerExpression' || kind === 'WithInitializerExpression') list.push(this.memberInitializer());
         else list.push(this.at('{') ? this.initializerExpression('ComplexElementInitializerExpression') : this.expression());
-        if (this.at(',')) list.push(this.take());
-        else break;
-        if (before === this.i) break;
+        const comma = this.separator(this.canStartInitializerElement);
+        if (!comma || before === this.i) break;
+        list.push(comma);
       }
     });
     this.leave();
     return this.n(kind, open, list, this.expect('}'));
+  },
+  canStartInitializerElement() {
+    return this.at('{') || this.canStartExpression();
   },
   memberInitializer() {
     const start = this.current;
