@@ -78,12 +78,12 @@ test('A05 T26 verifier rejects malformed volatile prefixes and branches that spl
 
 test('A05 T26 interleaved cooperative workers retain independent ThreadStatic values',()=>{
   const bytes=managedFixture({fields:[{name:'Value'}],methods:[
-    {name:'Main',result:'void',body:(w,c)=>w.op('ldftn',c.methods.Worker).op('pop').op('ret')},
-    {name:'Worker',result:'int',parameters:['int'],body:(w,c)=>w.op('ldarg.0').op('stsfld',c.fields.Value).op('nop').op('ldsfld',c.fields.Value).op('ret')}
+    {name:'Main',result:'void',body:(w,c)=>w.op('ldftn',c.methods.First).op('pop').op('ldftn',c.methods.Second).op('pop').op('ret')},
+    ...[['First',42],['Second',17]].map(([name,value])=>({name,result:'int',body:(w,c)=>w.op('ldc.i4',value).op('stsfld',c.fields.Value).op('nop').op('ldsfld',c.fields.Value).op('ret')}))
   ],decorate:({md,fields,member})=>md.add(12,[codedIndex('HasCustomAttribute',fields.Value),codedIndex('CustomAttributeType',member('System.ThreadStaticAttribute','.ctor','void',[],false)),md.blob(new Uint8Array([1,0,0,0]))])});
-  const vm=new CilVirtualMachine(bytes,{schedulerQuantum:1}),worker=[...vm.inspector.methods.values()].find(method=>method.name==='Worker');
-  const delegate=vm.platform.delegate('System.Func`2<int, int>',worker.token,null),first=vm.scheduler.createTask('int'),second=vm.scheduler.createTask('int');
-  vm.scheduler.enqueue(delegate,[42],{task:first});vm.scheduler.enqueue(delegate,[17],{task:second});
+  const vm=new CilVirtualMachine(bytes,{schedulerQuantum:1}),delegate=name=>vm.platform.delegate('System.Func`1<int>',[...vm.inspector.methods.values()].find(method=>method.name===name).token,null);
+  const first=vm.scheduler.createTask('int'),second=vm.scheduler.createTask('int');
+  vm.scheduler.enqueue(delegate('First'),[],{task:first});vm.scheduler.enqueue(delegate('Second'),[],{task:second});
   const result=vm.run();assert.equal(result.state,'terminated',result.fault?.stack);
   assert.equal(first.result,42);assert.equal(second.result,17);assert.equal(first.status,'completed');assert.equal(second.status,'completed');
 });

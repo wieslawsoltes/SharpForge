@@ -23,10 +23,10 @@ export function validateParityAllowlist(entries,fixtureIds) {
 export function compareEngineResults(fixture,results,allowlist=[],used=new Set()) {
   const entries=Object.entries(results);assert(entries.length>=2,'Parity needs independent engines');
   const allowance=allowlist.find(entry=>entry.fixture===fixture.id);
-  const normalize=result=>({...result,output:allowance?allowance.outputReplacements.reduce((output,{pattern,replacement})=>output.replace(pattern,replacement),result.output):result.output});
+  const normalize=result=>({state:result.state,output:allowance?allowance.outputReplacements.reduce((output,{pattern,replacement})=>output.replace(pattern,replacement),result.output):result.output,exceptionType:result.exceptionType,exitCode:result.exitCode});
   const [baselineName,baseline]=entries[0];
   for(const [name,result] of entries.slice(1)) {
-    assert.deepEqual(normalize(result),normalize(baseline),`${fixture.id}: ${name} differs from ${baselineName}`);
+    assert.deepEqual(normalize(result),normalize(baseline),`${fixture.id}: ${name} differs from ${baselineName}${result.error?'\n'+result.error.message:''}`);
     if(allowance&&result.output!==baseline.output)used.add(allowance.fixture);
   }
   const expected={state:'terminated',exceptionType:null,exitCode:0,...fixture.expected};
@@ -41,7 +41,7 @@ async function execute(create,signal) {
     vm=create();const result=await vm.runAsync({signal});
     return {state:result.state,output:result.output,exceptionType:canonicalFaultType(result.fault),exitCode:result.exitCode};
   } catch(error) {
-    return {state:vm?'host-error':'load-error',output:vm?.output.join('')??'',exceptionType:canonicalFaultType(error),exitCode:vm?.exitCode??null};
+    return {state:vm?'host-error':'load-error',output:vm?.output.join('')??'',exceptionType:canonicalFaultType(error),exitCode:vm?.exitCode??null,error:{message:error.message,stack:error.stack}};
   } finally {vm?.stop();}
 }
 

@@ -47,7 +47,7 @@ export function binary(name, a, b, {fault: createFault = fault, error: createErr
   if (wide || checked) {
     let x = BigInt(a), y = BigInt(b), bits = wide ? 64 : 32;
     if (unsigned) { x = BigInt.asUintN(bits, x); y = BigInt.asUintN(bits, y); }
-    if (['div', 'rem'].includes(op) && y === 0n) throw createFault('DivideByZeroException', 'Integer division by zero');
+    if (['div', 'rem'].includes(op) && y === 0n) throw createFault('DivideByZeroException', 'Attempted to divide by zero');
     if (op === 'div' && !unsigned && x === -(1n << BigInt(bits - 1)) && y === -1n) throw createFault('OverflowException', 'Integer division overflow');
     const shift = y & BigInt(bits - 1);
     const value = {add: () => x + y, sub: () => x - y, mul: () => x * y, div: () => x / y, rem: () => x % y, and: () => x & y, or: () => x | y, xor: () => x ^ y, shl: () => x << shift, shr: () => x >> shift}[op]();
@@ -55,7 +55,7 @@ export function binary(name, a, b, {fault: createFault = fault, error: createErr
     return wide ? BigInt.asIntN(64, value) : Number(BigInt.asIntN(32, value));
   }
   if (unsigned) { a >>>= 0; b >>>= 0; }
-  if (['div', 'rem'].includes(op) && b === 0) throw createFault('DivideByZeroException', 'Integer division by zero');
+  if (['div', 'rem'].includes(op) && b === 0) throw createFault('DivideByZeroException', 'Attempted to divide by zero');
   if (op === 'div' && !unsigned && a === -2147483648 && b === -1) throw createFault('OverflowException', 'Integer division overflow');
   switch (op) {
     case 'add': return (a + b) | 0;
