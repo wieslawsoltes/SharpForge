@@ -394,6 +394,7 @@ export const CallBinding = Base =>
         return this.bad(syntax);
       }
       const property = byAccessor.get(r.candidate.definition) ?? byAccessor.get(r.method) ?? indexers[0];
+      if (isSource(property) && this.reportIfInaccessible(property, type, syntax)) return this.bad(syntax);
       return this.node('IndexerAccess', syntax, property.type, {
         receiver: target,
         property,
