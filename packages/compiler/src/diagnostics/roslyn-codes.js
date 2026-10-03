@@ -750,6 +750,7 @@ export const roslynCodes=Object.freeze({
  CS9212:["ERR_SpreadMissingMember","error",0,"Spread operator '..' cannot operate on variables of type '{0}' because '{0}' does not contain a public instance or extension definition for '{1}'"],
  CS9214:["ERR_CollectionExpressionMissingConstructor","error",0,"Collection expression type must have an applicable constructor that can be called with no arguments."],
  CS9215:["ERR_CollectionExpressionMissingAdd","error",0,"Collection expression type '{0}' must have an instance or extension method 'Add' that can be called with a single argument."],
+ CS9217:["ERR_RefLocalAcrossAwait","error",0,"A 'ref' local cannot be preserved across 'await' or 'yield' boundary."],
  CS9228:["ERR_ParamsCollectionMissingConstructor","error",0,"Non-array params collection type must have an applicable constructor that can be called with no arguments."],
  CS9242:["ERR_AllowsClauseMustBeLast","error",0,"The 'allows' constraint clause must be the last constraint specified"],
  CS9244:["ERR_NotRefStructConstraintNotSatisfied","error",0,"The type '{2}' may not be a ref struct or a type parameter allowing ref structs in order to use it as parameter '{1}' in the generic type or method '{0}'"],
