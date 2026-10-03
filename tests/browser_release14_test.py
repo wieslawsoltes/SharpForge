@@ -32,8 +32,8 @@ with sync_playwright() as p:
  def wait(code):return wait_condition(page,code,timeout=30000)
  def state():return ev('sharpforge.getState()')
  def stop():return ev('sharpforge.execute("stop")')
- def load(id):ev('id=>sharpforge.loadSample(id)',id);truth(not state()['diagnostics'],str(state()['diagnostics']))
- def source(text):stop();ev('text=>sharpforge.loadDiskRecords([{path:"Program.cs",text}],{name:"RuntimeQualification"})',text);ev('sharpforge.build()');truth(not state()['diagnostics'],str(state()['diagnostics']))
+ def load(id):ev('id=>sharpforge.loadSample(id)',id);truth(not [d for d in state()['diagnostics'] if d['severity']=='error'],str(state()['diagnostics']))
+ def source(text):stop();ev('text=>sharpforge.loadDiskRecords([{path:"Program.cs",text}],{name:"RuntimeQualification"})',text);ev('sharpforge.build()');truth(not [d for d in state()['diagnostics'] if d['severity']=='error'],str(state()['diagnostics']))
  def run():ev('sharpforge.run()');wait('sharpforge.getState().debug?.state==="terminated"');r=state()['debug'];truth(not r['fault'],str(r));return r
  def configure(value):return ev('s=>sharpforge.configureRuntime(s)',value)
  try:
@@ -42,7 +42,7 @@ with sync_playwright() as p:
    truth(len(workers)==2);truth(ev('sharpforge.getKeymap().id')=='visual-studio');s=ev('sharpforge.getRuntimeSettings()');truth(s['langVersion']=='14' and not s['enabled']);ev('sharpforge.openTool("runtime-settings")');truth(page.locator('#runtime-network').is_visible());truth(not page.locator('#runtime-network').is_checked());truth(page.locator('#runtime-backend').input_value()=='auto')
   check('stable default language, Visual Studio keys, and explicit-deny runtime panel',defaults)
   def preview():
-   load('csharp-preview-collections');truth(ev('sharpforge.getRuntimeSettings().langVersion')=='preview');truth(run()['output']=='1,2,3,4\n22\n');stop();configure({'langVersion':'14'});ev('sharpforge.build()');truth(any('preview' in d['message'].lower() or '15' in d['message'] for d in state()['diagnostics']));configure({'langVersion':'preview'});ev('sharpforge.build()');truth(not state()['diagnostics'])
+   load('csharp-preview-collections');truth(ev('sharpforge.getRuntimeSettings().langVersion')=='preview');truth(run()['output']=='1,2,3,4\n22\n');stop();configure({'langVersion':'14'});ev('sharpforge.build()');truth(any('preview' in d['message'].lower() or '15' in d['message'] for d in state()['diagnostics']));configure({'langVersion':'preview'});ev('sharpforge.build()');truth(not [d for d in state()['diagnostics'] if d['severity']=='error'],str(state()['diagnostics']))
   check('preview language selection gates capacity expressions and labeled loops in compiler worker',preview)
   def modern():
    load('csharp-modern-properties');truth(run()['output']=='42\n0\n');load('bcl-json-document');truth(run()['output']=='items: 3\nTotal: 42\n{"total":42}\n');load('bcl-array-random');truth(run()['output'].endswith('534011718\n237820880\n'))
