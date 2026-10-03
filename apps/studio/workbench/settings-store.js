@@ -53,7 +53,13 @@ export function validateSettings(input, {partial = false} = {}) {
     if (!values || typeof values !== 'object' || Array.isArray(values)) throw new TypeError('Invalid category ' + category);
     output[category] ??= {};
     for (const [key, value] of Object.entries(values)) {
-      if (allowed[category].has(key)) output[category][key] = safeValue(value, 0, category === 'tasks');
+      if (!allowed[category].has(key)) continue;
+      const expected = settingsDefaults[category][key];
+      if (expected !== null && (Array.isArray(expected) ? !Array.isArray(value) :
+        typeof value !== typeof expected || typeof expected === 'object' && (value === null || Array.isArray(value)))) {
+        throw new TypeError('Invalid setting type: ' + category + '.' + key);
+      }
+      output[category][key] = safeValue(value, 0, category === 'tasks');
     }
   }
   const environment = output.environment ?? {};
@@ -67,7 +73,8 @@ export function validateSettings(input, {partial = false} = {}) {
   }
   for (const [category, key, minimum, maximum] of [
     ['environment', 'fontSize', 9, 32], ['editor', 'fontSize', 8, 72], ['editor', 'tabSize', 1, 16],
-    ['editor', 'zoom', 25, 400], ['runtime', 'maxSessions', 1, 32], ['projects', 'autoRecoverSeconds', 5, 3600]
+    ['editor', 'indentSize', 1, 16], ['editor', 'zoom', 25, 400], ['runtime', 'maxSessions', 1, 32],
+    ['projects', 'autoRecoverSeconds', 5, 3600]
   ]) {
     const value = output[category]?.[key];
     if (value !== undefined && (!Number.isFinite(value) || value < minimum || value > maximum)) {
@@ -76,7 +83,8 @@ export function validateSettings(input, {partial = false} = {}) {
   }
   const bindings = output.keyboard?.bindings;
   if (bindings && (!Array.isArray(bindings) || bindings.some(binding =>
-    !binding || typeof binding.command !== 'string' || !['string', 'object'].includes(typeof binding.keys)))) {
+    !binding || typeof binding.id !== 'string' || typeof binding.command !== 'string' ||
+    !(typeof binding.keys === 'string' || Array.isArray(binding.keys) && binding.keys.every(key => typeof key === 'string'))))) {
     throw new TypeError('Invalid custom keyboard bindings');
   }
   const tokens = output.tasks?.tokens;
