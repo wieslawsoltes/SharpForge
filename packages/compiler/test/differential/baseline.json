@@ -1,6 +1,10 @@
 {
-  "diagnostics": [
+  "diagnostics":[
     "accessibility/cs0122-private-nested-type",
+    "anonymous-methods/body-rules",
+    "anonymous-methods/captures-and-multicast",
+    "anonymous-methods/parameterless-form-fits-any-signature",
+    "anonymous-methods/signature-rules",
     "arithmetic/bitwise",
     "arithmetic/compound-assignment",
     "arithmetic/cs0020-constant-division-by-zero",
@@ -543,6 +547,8 @@
     "statement-lowering/lock-requires-a-reference-type",
     "statement-lowering/using-requires-idisposable",
     "statement-lowering/using-statement-forms",
+    "string-operations/concatenation-and-equality",
+    "string-operations/switch-on-string",
     "strings/concat-and-length",
     "strings/cs0200-assign-char-index",
     "strings/cs0200-assign-length",
@@ -608,12 +614,16 @@
     "using-dispose/using-declaration",
     "using-dispose/using-statement"
   ],
-  "warnings": [
+  "warnings":[
     "accessibility/cs0050-inconsistent-accessibility",
     "accessibility/cs0122-default-private-method",
     "accessibility/cs0122-private-constructor",
     "accessibility/cs0122-private-nested-type",
     "accessibility/cs0122-protected-from-outside",
+    "anonymous-methods/body-rules",
+    "anonymous-methods/captures-and-multicast",
+    "anonymous-methods/parameterless-form-fits-any-signature",
+    "anonymous-methods/signature-rules",
     "arithmetic/bitwise",
     "arithmetic/compound-assignment",
     "arithmetic/cs0020-constant-division-by-zero",
@@ -1239,6 +1249,8 @@
     "statement-lowering/lock-requires-a-reference-type",
     "statement-lowering/using-requires-idisposable",
     "statement-lowering/using-statement-forms",
+    "string-operations/concatenation-and-equality",
+    "string-operations/switch-on-string",
     "strings/concat-and-length",
     "strings/cs0200-assign-char-index",
     "strings/cs0200-assign-length",
@@ -1312,7 +1324,9 @@
     "using-dispose/using-declaration",
     "using-dispose/using-statement"
   ],
-  "bytecode": [
+  "bytecode":[
+    "anonymous-methods/captures-and-multicast",
+    "anonymous-methods/parameterless-form-fits-any-signature",
     "arithmetic/bitwise",
     "arithmetic/compound-assignment",
     "arithmetic/double-ops",
@@ -1520,6 +1534,8 @@
     "statement-lowering/checked-and-unchecked-blocks",
     "statement-lowering/checked-context-is-lexical",
     "statement-lowering/using-statement-forms",
+    "string-operations/concatenation-and-equality",
+    "string-operations/switch-on-string",
     "strings/concat-and-length",
     "strings/escapes-and-verbatim",
     "strings/null-concat",
@@ -1541,7 +1557,9 @@
     "using-dispose/using-declaration",
     "using-dispose/using-statement"
   ],
-  "cil": [
+  "cil":[
+    "anonymous-methods/captures-and-multicast",
+    "anonymous-methods/parameterless-form-fits-any-signature",
     "arithmetic/bitwise",
     "arithmetic/compound-assignment",
     "arithmetic/double-ops",
@@ -1749,6 +1767,8 @@
     "statement-lowering/checked-and-unchecked-blocks",
     "statement-lowering/checked-context-is-lexical",
     "statement-lowering/using-statement-forms",
+    "string-operations/concatenation-and-equality",
+    "string-operations/switch-on-string",
     "strings/concat-and-length",
     "strings/escapes-and-verbatim",
     "strings/null-concat",
