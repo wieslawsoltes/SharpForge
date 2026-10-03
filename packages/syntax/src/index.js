@@ -12,5 +12,6 @@ export * from './preview-revisions.js';
 export * from './syntax-tree.js';
 export * from './visitor.js';
 export * from './cancellation.js';
+export * from './incremental/token-list.js';
 export * from './incremental/relex.js';
 export * from './incremental/blender.js';

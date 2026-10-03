@@ -5,5 +5,7 @@
  */
 export const extensionIndexerMethods = {
   /** Called for every indexer declaration; `token` is the `this` keyword. */
-  extensionIndexer(token) { if (this.inExtension) this.feature('ExtensionIndexers', token); }
+  extensionIndexer(token) {
+    if (this.inExtension) this.feature('ExtensionIndexers', token);
+  }
 };

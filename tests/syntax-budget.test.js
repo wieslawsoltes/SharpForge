@@ -25,24 +25,75 @@ const cases = {
   memberChain: 'class C { int f = a' + '.b'.repeat(depth) + '; }',
   interpolations: 'class C { string f = ' + '$"{'.repeat(2000) + '1' + '}"'.repeat(2000) + '; }'
 };
-const limited = new Set(['parentheses', 'blocks', 'patterns', 'lambdas', 'initializers', 'tupleTypes', 'unary', 'casts', 'conditionals', 'calls', 'ifs', 'types', 'namespaces']);
-for (const [name, text] of Object.entries(cases)) test(`budget: ${name === 'interpolations' ? '2,000' : '100,000'}-deep ${name} terminate without a stack overflow`, () => {
-  const start = performance.now(), tree = SyntaxTree.parseText(text), elapsed = performance.now() - start;
-  assert.equal(tree.green.fullWidth, text.length); assert(tree.toFullString() === text, 'no character is lost'); assert(elapsed < 20_000, `${elapsed} ms`);
-  const codes = new Set(tree.getDiagnostics().map(d => d.code));
-  if (limited.has(name)) { assert(codes.has('SF1099'), [...codes].join(',')); assert.equal(tree.getDiagnostics().filter(d => d.code === 'SF1099').length, 1, 'the limit is reported once'); }
-  if (name !== 'interpolations') assert(tree.getDiagnostics().length <= 400);
-  const legacy = parse(text); assert.equal(legacy.green.fullWidth, text.length, 'the legacy AST conversion also terminates');
-  if (name === 'binaryChain' || name === 'memberChain') assert(legacy.diagnostics.some(d => d.code === 'SF1099'), 'a chain too deep for the legacy AST is reported, not thrown');
-  let tokens = 0; for (const item of tree.root.descendantTokens()) tokens += item.green.fullWidth >= 0 ? 1 : 0; assert(tokens > 0, 'tree iteration is not recursive');
-});
+const limited = new Set([
+  'parentheses',
+  'blocks',
+  'patterns',
+  'lambdas',
+  'initializers',
+  'tupleTypes',
+  'unary',
+  'casts',
+  'conditionals',
+  'calls',
+  'ifs',
+  'types',
+  'namespaces'
+]);
+for (const [name, text] of Object.entries(cases))
+  test(`budget: ${name === 'interpolations' ? '2,000' : '100,000'}-deep ${name} terminate without a stack overflow`, () => {
+    const start = performance.now(),
+      tree = SyntaxTree.parseText(text),
+      elapsed = performance.now() - start;
+    assert.equal(tree.green.fullWidth, text.length);
+    assert(tree.toFullString() === text, 'no character is lost');
+    assert(elapsed < 20_000, `${elapsed} ms`);
+    const codes = new Set(tree.getDiagnostics().map(d => d.code));
+    if (limited.has(name)) {
+      assert(codes.has('SF1099'), [...codes].join(','));
+      assert.equal(tree.getDiagnostics().filter(d => d.code === 'SF1099').length, 1, 'the limit is reported once');
+    }
+    if (name !== 'interpolations') assert(tree.getDiagnostics().length <= 400);
+    const legacy = parse(text);
+    assert.equal(legacy.green.fullWidth, text.length, 'the legacy AST conversion also terminates');
+    if (name === 'binaryChain' || name === 'memberChain')
+      assert(
+        legacy.diagnostics.some(d => d.code === 'SF1099'),
+        'a chain too deep for the legacy AST is reported, not thrown'
+      );
+    let tokens = 0;
+    for (const item of tree.root.descendantTokens()) tokens += item.green.fullWidth >= 0 ? 1 : 0;
+    assert(tokens > 0, 'tree iteration is not recursive');
+  });
 test('budget: the limit is the shared budget and nesting below it is untouched', () => {
   assert.equal(nestingBudget, 200);
   const nested = n => 'class C { void M() { var x = ' + '('.repeat(n) + '1' + ')'.repeat(n) + '; } }';
-  assert.deepEqual(SyntaxTree.parseText(nested(60)).getDiagnostics(), []); assert.deepEqual(SyntaxTree.parseText(nested(400)).getDiagnostics().filter(d => d.code === 'SF1099').length, 1);
-  const blocks = n => 'class C { void M() ' + '{ '.repeat(n) + '} '.repeat(n) + '}'; assert.deepEqual(SyntaxTree.parseText(blocks(150)).getDiagnostics(), []);
-  const types = n => 'class C { '.repeat(n) + '}'.repeat(n); assert.deepEqual(SyntaxTree.parseText(types(150)).getDiagnostics(), []); assert(SyntaxTree.parseText(types(300)).getDiagnostics().some(d => d.code === 'SF1099' && /nesting limit/.test(d.message)));
-  const lists = n => 'class C { int[] f = ' + '{ '.repeat(n) + '} '.repeat(n) + '; }'; assert.deepEqual(SyntaxTree.parseText(lists(150)).getDiagnostics(), []); assert(SyntaxTree.parseText(lists(300)).getDiagnostics().some(d => d.code === 'SF1099'));
+  assert.deepEqual(SyntaxTree.parseText(nested(60)).getDiagnostics(), []);
+  assert.deepEqual(
+    SyntaxTree.parseText(nested(400))
+      .getDiagnostics()
+      .filter(d => d.code === 'SF1099').length,
+    1
+  );
+  const blocks = n => 'class C { void M() ' + '{ '.repeat(n) + '} '.repeat(n) + '}';
+  assert.deepEqual(SyntaxTree.parseText(blocks(150)).getDiagnostics(), []);
+  const types = n => 'class C { '.repeat(n) + '}'.repeat(n);
+  assert.deepEqual(SyntaxTree.parseText(types(150)).getDiagnostics(), []);
+  assert(
+    SyntaxTree.parseText(types(300))
+      .getDiagnostics()
+      .some(d => d.code === 'SF1099' && /nesting limit/.test(d.message))
+  );
+  const lists = n => 'class C { int[] f = ' + '{ '.repeat(n) + '} '.repeat(n) + '; }';
+  assert.deepEqual(SyntaxTree.parseText(lists(150)).getDiagnostics(), []);
+  assert(
+    SyntaxTree.parseText(lists(300))
+      .getDiagnostics()
+      .some(d => d.code === 'SF1099')
+  );
   // After the budget is exhausted the rest of the input is kept as skipped text on the end-of-file token.
-  const text = nested(400) + '\nclass After { }', tree = SyntaxTree.parseText(text); assert.equal(tree.toFullString(), text); assert(tree.root.endOfFileToken.leadingTrivia.some(t => t.kind === 'SkippedTokensTrivia' && t.text.includes('class After')));
+  const text = nested(400) + '\nclass After { }',
+    tree = SyntaxTree.parseText(text);
+  assert.equal(tree.toFullString(), text);
+  assert(tree.root.endOfFileToken.leadingTrivia.some(t => t.kind === 'SkippedTokensTrivia' && t.text.includes('class After')));
 });

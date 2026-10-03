@@ -601,7 +601,10 @@ export const slotTypes = Object.freeze({
   UnionCaseTypeList: '020',
   UnsafeExpression: '0000'
 });
-const unwrap = value => Array.isArray(value) ? (value.length ? new GreenNode('SyntaxList', value.map(unwrap)) : null) : value && value.green ? value.green : value ?? null;
+const unwrap = value => {
+  if (Array.isArray(value)) return value.length ? new GreenNode('SyntaxList', value.map(unwrap)) : null;
+  return value && value.green ? value.green : value ?? null;
+};
 const make = (kind, children) => createNode(new GreenNode(kind, children.map(unwrap)), null, 0);
 export class CompilationUnitSyntax extends SyntaxNode {
   get externs() { return this.list(0); }

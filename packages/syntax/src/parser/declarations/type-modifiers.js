@@ -7,8 +7,16 @@ export const typeModifierMethods = {
   typeModifierFeatures(modifiers, kind, token) {
     const isStruct = kind === 'StructDeclaration' || kind === 'RecordStructDeclaration';
     for (const modifier of modifiers) {
-      const feature = modifier.kind === 'PartialKeyword' ? 'PartialTypes' : modifier.kind === 'StaticKeyword' && kind === 'ClassDeclaration' ? 'StaticClasses' : modifier.kind === 'RefKeyword' ? 'RefStructs'
-        : modifier.kind === 'ReadOnlyKeyword' && isStruct ? 'ReadOnlyStructs' : null;
+      const feature =
+        modifier.kind === 'PartialKeyword'
+          ? 'PartialTypes'
+          : modifier.kind === 'StaticKeyword' && kind === 'ClassDeclaration'
+            ? 'StaticClasses'
+            : modifier.kind === 'RefKeyword'
+              ? 'RefStructs'
+              : modifier.kind === 'ReadOnlyKeyword' && isStruct
+                ? 'ReadOnlyStructs'
+                : null;
       if (feature) this.feature(feature, token);
     }
   }

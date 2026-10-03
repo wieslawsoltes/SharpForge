@@ -75,40 +75,134 @@ namespace N
     enum E { A = 1, B }
 }
 `;
-const snippets = [' ', '\n', ';', '{', '}', '(', ')', '[', ']', '<', '>', '=', '+', '-', '*', '/', '.', ',', ':', '?', '!', '"', "'", '$"', '@"', '"""', '//', '/*', '*/', '///', '#if X\n', '#else\n', '#endif\n', '#define Q\n', '#region R\n', '#endregion\n',
-  'x', 'int', 'var', 'class C { }', 'void M() { }', 'int y = 1;', 'return;', 'if (a) b();', 'else', 'async', 'await', 'static', 'public', 'new', '=>', '..', '>>', '0x', '1.5', 'e3', 'u8', '\\u0041', '{x}', '\r\n', '\t', 'namespace N', 'using', 'catch', 'case 1:', 'where T : struct', '@', '#'];
+const snippets = [
+  ' ',
+  '\n',
+  ';',
+  '{',
+  '}',
+  '(',
+  ')',
+  '[',
+  ']',
+  '<',
+  '>',
+  '=',
+  '+',
+  '-',
+  '*',
+  '/',
+  '.',
+  ',',
+  ':',
+  '?',
+  '!',
+  '"',
+  "'",
+  '$"',
+  '@"',
+  '"""',
+  '//',
+  '/*',
+  '*/',
+  '///',
+  '#if X\n',
+  '#else\n',
+  '#endif\n',
+  '#define Q\n',
+  '#region R\n',
+  '#endregion\n',
+  'x',
+  'int',
+  'var',
+  'class C { }',
+  'void M() { }',
+  'int y = 1;',
+  'return;',
+  'if (a) b();',
+  'else',
+  'async',
+  'await',
+  'static',
+  'public',
+  'new',
+  '=>',
+  '..',
+  '>>',
+  '0x',
+  '1.5',
+  'e3',
+  'u8',
+  '\\u0041',
+  '{x}',
+  '\r\n',
+  '\t',
+  'namespace N',
+  'using',
+  'catch',
+  'case 1:',
+  'where T : struct',
+  '@',
+  '#'
+];
 /** A deterministic generator: `next(text)` returns { start, length, text } for the next edit of `text`. */
 export function editGenerator(seed) {
   let state = seed >>> 0;
-  const random = n => { state = (Math.imul(state, 1103515245) + 12345) >>> 0; return (state >>> 8) % n; };
-  return { random, next(text) {
-    const kind = random(10), start = random(text.length + 1);
-    if (kind < 4) return { start, length: 0, text: snippets[random(snippets.length)] };
-    if (kind < 7) return { start, length: Math.min(text.length - start, 1 + random(kind === 6 ? 40 : 4)), text: '' };
-    if (kind < 9) return { start, length: Math.min(text.length - start, random(6)), text: snippets[random(snippets.length)] + (random(3) ? '' : snippets[random(snippets.length)]) };
-    const from = random(text.length), copy = text.slice(from, from + random(60)); return { start, length: 0, text: copy };
-  } };
+  const random = n => {
+    state = (Math.imul(state, 1103515245) + 12345) >>> 0;
+    return (state >>> 8) % n;
+  };
+  return {
+    random,
+    next(text) {
+      const kind = random(10),
+        start = random(text.length + 1);
+      if (kind < 4) return { start, length: 0, text: snippets[random(snippets.length)] };
+      if (kind < 7) return { start, length: Math.min(text.length - start, 1 + random(kind === 6 ? 40 : 4)), text: '' };
+      if (kind < 9)
+        return {
+          start,
+          length: Math.min(text.length - start, random(6)),
+          text: snippets[random(snippets.length)] + (random(3) ? '' : snippets[random(snippets.length)])
+        };
+      const from = random(text.length),
+        copy = text.slice(from, from + random(60));
+      return { start, length: 0, text: copy };
+    }
+  };
 }
 export const applyEdit = (text, edit) => text.slice(0, edit.start) + edit.text + text.slice(edit.start + edit.length);
-const triviaEquals = (a, b) => { if (a.length !== b.length) return false; for (let i = 0; i < a.length; i++) if (a[i] !== b[i] && (a[i].kind !== b[i].kind || a[i].text !== b[i].text)) return false; return true; };
+const triviaEquals = (a, b) => {
+  if (a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i++) if (a[i] !== b[i] && (a[i].kind !== b[i].kind || a[i].text !== b[i].text)) return false;
+  return true;
+};
 /** Structural green comparison: kinds, child shape, token text, value flags and trivia. Returns a description of the first difference or null. */
 export function greenDifference(a, b) {
   const stack = [[a, b]];
   while (stack.length) {
-    const [x, y] = stack.pop(); if (x === y) continue;
+    const [x, y] = stack.pop();
+    if (x === y) continue;
     if (!x || !y) return `child presence differs (${x?.kind} vs ${y?.kind})`;
     if (x.kind !== y.kind) return `kind ${x.kind} != ${y.kind}`;
-    if (x.fullWidth !== y.fullWidth || x.flags !== y.flags) return `${x.kind}: width or flags differ (${x.fullWidth}/${x.flags} vs ${y.fullWidth}/${y.flags})`;
-    if (x.isNode) { if (x.children.length !== y.children.length) return `${x.kind}: child count ${x.children.length} != ${y.children.length}`; for (let i = 0; i < x.children.length; i++) stack.push([x.children[i], y.children[i]]); }
-    else if (x.text !== y.text || !triviaEquals(x.leading, y.leading) || !triviaEquals(x.trailing, y.trailing)) return `token ${x.kind} ${JSON.stringify(x.text)} != ${JSON.stringify(y.text)} or its trivia`;
+    if (x.fullWidth !== y.fullWidth || x.flags !== y.flags)
+      return `${x.kind}: width or flags differ (${x.fullWidth}/${x.flags} vs ${y.fullWidth}/${y.flags})`;
+    if (x.isNode) {
+      if (x.children.length !== y.children.length) return `${x.kind}: child count ${x.children.length} != ${y.children.length}`;
+      for (let i = 0; i < x.children.length; i++) stack.push([x.children[i], y.children[i]]);
+    } else if (x.text !== y.text || !triviaEquals(x.leading, y.leading) || !triviaEquals(x.trailing, y.trailing))
+      return `token ${x.kind} ${JSON.stringify(x.text)} != ${JSON.stringify(y.text)} or its trivia`;
   }
   return null;
 }
-const diagnosticKey = d => `${d.code}@${d.start}+${d.length} ${d.severity} ${d.message} v${d.version} ${d.range.start.line}:${d.range.start.character}`;
-const featureKey = f => `${f.id}@${f.start}-${f.end}`, directiveKey = d => `${d.kind}@${d.start}-${d.end}`;
+const diagnosticKey = d =>
+  `${d.code}@${d.start}+${d.length} ${d.severity} ${d.message} v${d.version} ${d.range.start.line}:${d.range.start.character}`;
+const featureKey = f => `${f.id}@${f.start}-${f.end}`,
+  directiveKey = d => `${d.kind}@${d.start}-${d.end}`;
 export function assertSameTree(incremental, full, label) {
   assert.equal(incremental.toFullString(), full.source.text, label + ': text');
-  const difference = greenDifference(incremental.green, full.green); if (difference) assert.fail(`${label}: ${difference}`);
+  const difference = greenDifference(incremental.green, full.green);
+  if (difference) assert.fail(`${label}: ${difference}`);
   assert.deepEqual(incremental.getDiagnostics().map(diagnosticKey).sort(), full.getDiagnostics().map(diagnosticKey).sort(), label + ': diagnostics');
   assert.deepEqual(incremental.features.map(featureKey).sort(), full.features.map(featureKey).sort(), label + ': features');
   assert.deepEqual(incremental.directives.map(directiveKey), full.directives.map(directiveKey), label + ': directives');

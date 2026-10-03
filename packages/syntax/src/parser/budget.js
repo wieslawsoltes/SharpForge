@@ -12,8 +12,14 @@ export const budgetMethods = {
   enter(message = 'Syntax nesting limit exceeded') {
     if (this.cancellation && (++this.ticks & 255) === 0) this.cancellation.throwIfCancellationRequested();
     if (++this.depth <= nestingBudget) return true;
-    if (!this.budgetExhausted) { this.budgetExhausted = true; this.error(this.current, 'SF1099', message); }
-    this.skipRest(); return false;
+    if (!this.budgetExhausted) {
+      this.budgetExhausted = true;
+      this.error(this.current, 'SF1099', message);
+    }
+    this.skipRest();
+    return false;
   },
-  leave() { this.depth--; }
+  leave() {
+    this.depth--;
+  }
 };
