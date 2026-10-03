@@ -97,6 +97,7 @@ export const TypeTestBinding = Base =>
               ].includes(c.kind) &&
               !(c.isNullable && !stripNullable(operand.type).equals(stripNullable(type)))) ||
             operand.type.typeKind === TypeKind.TypeParameter ||
+            operand.type.typeKind === TypeKind.Dynamic ||
             type.typeKind === TypeKind.TypeParameter;
         if (!allowed) {
           this.report(syntax, 'CS0039', [this.display(operand.type), this.display(type)]);
@@ -173,14 +174,7 @@ export const TypeTestBinding = Base =>
         case 'InvocationExpression': {
           const target = this.whenNotNull(syntax.expression, receiver),
             args = this.arguments(syntax.argumentList);
-          if (target.hasErrors) return target;
-          if (target.kind === 'MethodGroup') return this.call(target, args, syntax);
-          const invoke = target.type ? delegateInvoke(target.type) : null;
-          if (invoke) {
-            const r = this.d.overloads.resolve([invoke], args, { isDelegate: true });
-            if (r.succeeded) return this.finishCall(r, target, args, syntax, { isDelegateInvoke: true });
-          }
-          return this.lenient(syntax);
+          return target.hasErrors ? target : this.invokeConditional(target, args, syntax);
         }
         case 'ConditionalAccessExpression': {
           const inner = this.asValueOrGroup(this.whenNotNull(syntax.expression, receiver));
@@ -198,6 +192,16 @@ export const TypeTestBinding = Base =>
           return this.lenient(syntax);
       }
     }
+    /** The invocation inside `a?.M(...)`: a method of the receiver or a delegate-typed member. */
+    invokeConditional(target, args, syntax) {
+      if (target.kind === 'MethodGroup') return this.call(target, args, syntax);
+      const invoke = target.type ? delegateInvoke(target.type) : null;
+      if (invoke) {
+        const r = this.d.overloads.resolve([invoke], args, { isDelegate: true });
+        if (r.succeeded) return this.finishCall(r, target, args, syntax, { isDelegateInvoke: true });
+      }
+      return this.lenient(syntax);
+    }
     asValueOrGroup(e) {
       return e.kind === 'MethodGroup' ? this.bad(e.syntax) : e;
     }
@@ -206,6 +210,8 @@ export const TypeTestBinding = Base =>
       if (reportAwaitOutsideAsync(this, syntax)) return this.bad(syntax);
       if (operand.hasErrors || !operand.type) return this.bad(syntax);
       const t = operand.type;
+      // The awaiter of a dynamic value is found at run time, and so is the type of the result.
+      if (t.typeKind === TypeKind.Dynamic) return this.node('Await', syntax, t, { operand, isDynamic: true });
       if (t.originalDefinition === this.core.taskT || (t.originalDefinition?.name === 'ValueTask' && t.typeArguments?.length === 1))
         return this.node('Await', syntax, t.typeArguments[0].type, { operand });
       if (t.equals(this.core.task) || t.name === 'ValueTask') return this.node('Await', syntax, this.core.void, { operand });

@@ -60,6 +60,8 @@ export class TypeMapper {
       if (type.rank !== 1) return this.host.arrays.classOf(this.imageType(type.elementType, syntax), type.rank).record.name;
       return this.imageType(type.elementType, syntax) + '[]';
     }
+    // A dynamic value is an object; what is done with it is late bound and reported there (lowering/dynamic.js).
+    if (type.typeKind === TypeKind.Dynamic) return 'object';
     if (type.typeKind === TypeKind.Pointer) unsupported('pointer types (the image has no addressable storage)', syntax);
     const special = type.specialType;
     if (special && specialNames[special]) return specialNames[special];
