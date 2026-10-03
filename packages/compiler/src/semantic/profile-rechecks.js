@@ -7,6 +7,7 @@
  * program contains such a construct; only then is the analysis consulted, and only the diagnostics listed in
  * `semanticRuleCodes` are taken from it - the image and every other diagnostic of the pipeline stand.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { needsTopLevelRules } from '../binder/top-level.js';
 
 /** The rules: a source-text filter that is false for almost every program, the syntax that needs the rule, and its codes. */
@@ -15,7 +16,7 @@ const rules = [
     // Catch clauses after one that already catches everything: CS0160, CS1017 and the warning CS1058.
     text: /\bcatch\b[^]*\bcatch\b/,
     applies: node => node.kind === 'TryStatement' && node.catches.length > 1,
-    codes: ['CS0160', 'CS1017', 'CS1058'],
+    codes: [DiagnosticId.CS0160, DiagnosticId.CS1017, DiagnosticId.CS1058],
   },
 ];
 
@@ -24,7 +25,7 @@ const unitRules = [
   {
     // Top-level statements: placement, the Program type, the `args` parameter, unused local functions (binder/top-level.js).
     applies: needsTopLevelRules,
-    codes: ['CS8937', 'CS0260', 'CS0101', 'CS0136', 'CS8321'],
+    codes: [DiagnosticId.CS8937, DiagnosticId.CS0260, DiagnosticId.CS0101, DiagnosticId.CS0136, DiagnosticId.CS8321],
   },
 ];
 

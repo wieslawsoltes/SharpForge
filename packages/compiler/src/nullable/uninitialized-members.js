@@ -7,6 +7,7 @@
  *   - static members of a type without a static constructor: reported on themselves.
  * A member with an initializer, a `required` member and a nullable or oblivious member are fine.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { NullableAnnotation, SymbolKind, TypeKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 
@@ -19,7 +20,7 @@ const needsValue = member =>
 
 /**
  * @param type a source class or struct declared where nullable warnings are enabled
- * @returns {{ code: 'CS8618', args: string[], member: object }[]}
+ * @returns {{ code: DiagnosticId.CS8618, args: string[], member: object }[]}
  */
 export function uninitializedMembersWithoutConstructor(type) {
   const results = [];
@@ -34,7 +35,7 @@ export function uninitializedMembersWithoutConstructor(type) {
     if ((!isField && !isAutoProperty) || !needsValue(member)) continue;
     // A struct without a constructor is created by `default`, which the language lets leave its fields null.
     if (member.isStatic ? hasStaticConstructor : hasInstanceConstructor || type.typeKind === TypeKind.Struct) continue;
-    results.push({ code: 'CS8618', args: [isField ? 'field' : 'property', member.name], member });
+    results.push({ code: DiagnosticId.CS8618, args: [isField ? 'field' : 'property', member.name], member });
   }
   return results;
 }
