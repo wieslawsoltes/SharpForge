@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   DesignDocument, readDesignSource, designSourceSnapshot, planDesignSourceUpdate, copyDesignSelection,
-  setDesignerSampleData, normalizeDesignerBrush
+  setDesignerSampleData, normalizeDesignerBrush, retainDesignMetadata
 } from '@sharpforge/designer';
 import {MEDIA} from '@sharpforge/framework';
 
@@ -81,6 +81,20 @@ test('metadata-only plans retain staged samples without source edits or recompil
   const cleared = planDesignSourceUpdate(plan.analysis, empty);
   assert.equal(cleared.document.designTime, undefined);
   assert.equal(cleared.document.designer, undefined);
+});
+
+test('history metadata retention clones both inputs and prunes samples for removed controls', () => {
+  const {analysis, document} = enriched();
+  const next = structuredClone(analysis.document);
+  next.nodes = next.nodes.filter(node => node.id !== 'action');
+  next.nodes.find(node => node.id === 'root').children = ['other'];
+  const oldText = document.serialize();
+  const nextText = JSON.stringify(next);
+  const retained = retainDesignMetadata(document.value, next);
+  assert.deepEqual(Object.keys(retained.designTime.nodes), ['other']);
+  assert.deepEqual(retained.designer, document.value.designer);
+  assert.equal(document.serialize(), oldText);
+  assert.equal(JSON.stringify(next), nextText);
 });
 
 test('property plans preserve design metadata while changing only the owned C# token', () => {

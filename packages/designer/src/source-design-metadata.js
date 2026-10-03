@@ -1,5 +1,10 @@
 import {validateGuideSettings} from './guides-document.js';
 
+/** Returns a cloned source document with compatible design-only metadata retained from the prior document. */
+export function retainDesignMetadata(previousDocument, nextDocument) {
+  return retainSourceDesignMetadata(structuredClone(nextDocument), previousDocument);
+}
+
 /** Carries preview and editor data across a source read after control identities have been matched. */
 export function retainSourceDesignMetadata(document, previous) {
   const before = previous?.document ?? previous;
