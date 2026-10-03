@@ -95,3 +95,29 @@ Focused validation: `node scripts/limited.js node --test tests/a24-vfs-fsa.test.
 The deterministic handle fixture covers byte identity, permissions, failed
 writes, cancellation and concurrent directory rename. Actual browser handles
 and operating-system folder pickers require separate browser qualification.
+
+
+## Origin Private File System
+
+`await OriginPrivateFileSystemProvider.open({name})` creates a persistent,
+case-sensitive workspace under `sharpforge-workspaces/<name>` without a folder
+picker. Names are bounded Unicode letters/digits, `_` or `-`. The provider uses
+asynchronous writable streams by default and a dedicated sync-access worker for
+files at least `workerThresholdBytes` (1 MiB by default) when a worker can start.
+`backend` identifies the actual active implementation. Unavailable sync access
+reports a diagnostic and selects the asynchronous implementation explicitly;
+missing OPFS itself throws `Unavailable`.
+
+Worker writes stage bytes, honor cancellation between bounded chunks and commit
+only after staging completes. `OpfsWorkerClient` correlates request IDs and waits
+for cancellation acknowledgments, and `createOpfsSyncWorkerHandler` exposes the
+same bounded service for embedding/tests. Dispose terminates the worker and
+rejects pending requests. `quota()` reports usage, quota, available bytes and
+persistence when those browser APIs are available. The build contribution ships
+the worker with the package so production CSP does not require dynamic scripts.
+
+Focused validation: `node scripts/limited.js node --test tests/a24-opfs-worker.test.js`.
+Node fixtures exercise async and sync-access contracts, byte round trips,
+staging cancellation, quota reporting and unsupported APIs. Real OPFS reload
+and CSP qualification are separate browser checks; Node mocks do not establish
+browser persistence or operating-system picker support.
