@@ -40,7 +40,7 @@ Cold navigation-to-compiler-ready and warm correctness-gated compile/run samples
 |1158|Post-deploy job using actual output URL|Existing deploy without enforced CSP fails|
 |1159|Validated report/category merger and negative unit tests|No hardware qualification without evidence|
 
-Use `python scripts/conformance/browser/latency.py --engine chromium --cold 3 --warm 10` for separately measured cold browser launches and warm compile/run percentiles. `accessibility_smoke.py` proves the name audit rejects an empty button and accepts a YAML-quoted named control on each real engine. Known failure catalogs currently identify only measured macOS cells; the Linux/Windows workflow does not inherit those findings as exemptions. The full browser workflow requires manual dispatch or the `full-ci` PR label; ordinary PRs and main pushes do not start it.
+Use `python scripts/conformance/browser/latency.py --engine chromium --cold 3 --warm 10` for separately measured cold browser launches and warm compile/run percentiles. `accessibility_smoke.py` proves the name audit rejects an empty button and accepts a YAML-quoted named control on each real engine. Known failure catalogs currently identify only measured macOS cells; the Linux/Windows workflow does not inherit those findings as exemptions. The full browser workflow requires manual dispatch; ordinary PRs and main pushes do not start it.
 
 Workflow actions use the reviewed immutable pins from the A29 supply policy.
 Pages write permissions are confined to its deploy job; browser qualification is
