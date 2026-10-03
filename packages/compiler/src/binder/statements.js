@@ -37,7 +37,7 @@ export const StatementBinder=Base=>class StatementBinder extends Base {
       case 'Local':{
         if(node.declarations.some(d=>d.isConst&&d.type==='var'))this.c.report(node,'CS0822');if(node.declarations.length>1&&node.declarations.some(d=>d.type==='var'))this.c.report(node,'CS0819');
         const declarations=node.declarations.map(d=>{
-          let declared=this.c.resolveType(d.type,d,true,this.m.owner),initializer=null,initType;
+          let declared=this.c.resolveType(d.type,d,true,this.m),initializer=null,initType;
           if(d.initializer){initializer=this.bindTyped(d.initializer,declared==='var'?null:declared);initType=initializer.legacyType;}
           if(declared==='var'){if(!d.initializer||initType==='null'||initType==='void')this.c.report(d,'CS0818');declared=initType??'error';}
           if(declared==='void')this.c.report(d,'CS1547');
@@ -81,7 +81,7 @@ export const StatementBinder=Base=>class StatementBinder extends Base {
       }
       case 'Try':{
         const tryBlock=this.bindStatement(node.body),catchBlocks=node.catches.map(ca=>{
-          this.pushScope();const type=this.c.resolveType(ca.type,node,false,this.m.owner);if(type!=='Exception')this.c.report(node,'SF2002');let local=null;
+          this.pushScope();const type=this.c.resolveType(ca.type,node,false,this.m);if(type!=='Exception')this.c.report(node,'SF2002');let local=null;
           if(ca.name)local=this.local(ca.name,'Exception',{...ca.body,name:ca.name,nameSpan:ca.nameSpan},false,{declarationKind:LocalDeclarationKind.Catch});
           this.catchDepth++;const body=this.bindStatement(ca.body);this.catchDepth--;this.popScope();
           return this.statement(BoundCatchBlock,ca.body,{exceptionType:this.type(type),local,body});
@@ -96,7 +96,7 @@ export const StatementBinder=Base=>class StatementBinder extends Base {
     const collectionType=this.infer(node.expression),getEnumerator=findContracts(collectionType,'GetEnumerator',false)[0],labels=node.labels??[];
     if(getEnumerator)return this.bindEnumeratorForeach(node,getEnumerator);
     this.pushScope();const expression=this.bindExpression(node.expression),arrayType=expression.legacyType;if(!arrayType.endsWith('[]'))this.c.report(node,'CS1579',[typeText(arrayType),'GetEnumerator']);
-    const element=arrayType.endsWith('[]')?arrayType.slice(0,-2):'error',local=this.local(node.name,node.type==='var'?element:this.c.resolveType(node.type,node,false,this.m.owner),{...node,isIteration:true},false,{synthesizedKind:node.synthesizedKind,noSymbol:!!node.synthesizedKind});this.checkAssign(local.legacyType,element,node);
+    const element=arrayType.endsWith('[]')?arrayType.slice(0,-2):'error',local=this.local(node.name,node.type==='var'?element:this.c.resolveType(node.type,node,false,this.m),{...node,isIteration:true},false,{synthesizedKind:node.synthesizedKind,noSymbol:!!node.synthesizedKind});this.checkAssign(local.legacyType,element,node);
     this.loops.push({labels});const body=this.bindStatement(node.body)??this.statement(BoundNoOpStatement,null,{});this.loops.pop();const locals=this.popScope();
     return this.statement(BoundForEachStatement,node,{expression,enumerator:null,iterationVariable:local,locals,body,labels},!arrayType.endsWith('[]'));
   }
@@ -122,7 +122,7 @@ export const StatementBinder=Base=>class StatementBinder extends Base {
     if(node.resources.kind==='Local'&&node.resources.declarations.length>1&&node.resources.declarations.some(d=>d.type==='var'))this.c.report(node,'CS0819');
     const declarations=node.resources.kind==='Local'?node.resources.declarations:[{...node.resources,kind:'Variable',name:this.syntheticName('$using'),type:'var',initializer:node.resources,hidden:true,synthesizedKind:'using'}];
     for(const d of declarations){
-      const type=d.type==='var'?this.infer(d.initializer):this.c.typeName(d.type,this.m.owner),owner=this.c.findType(type,this.m.owner);if(!d.initializer)this.c.report(d,'CS0210');
+      const type=d.type==='var'?this.infer(d.initializer):this.c.typeName(d.type,this.m),owner=this.c.findType(type,this.m);if(!d.initializer)this.c.report(d,'CS0210');
       if(!owner?.interfaces.includes('System.IDisposable')&&!(['network','bcl','bcl14'].includes(frameworkType(type)?.kind)&&findContracts(type,'Dispose',false).some(c=>!c.parameters.length)))this.c.report(d,'CS1674',[typeText(type)]);
     }
     const resources=[],bindLevel=index=>{

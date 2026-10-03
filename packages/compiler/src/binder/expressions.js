@@ -40,9 +40,9 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
         return this.node(BoundInterpolatedString,node,{parts},'string');
       }
       case 'Await':{if(!this.m.node.asyncBody&&!this.m.name.startsWith('<startup>'))this.c.report(node,'CS4032',[typeText(this.m.returnType)]);const expression=this.bindExpression(node.expression),type=expression.legacyType,d=findContracts('SharpForge.Runtime.Async','Await',true).find(x=>x.parameters[0]===type);if(!d){this.c.report(node,'CS1061',[typeText(type),'GetAwaiter']);return this.bad(node,[expression]);}return this.node(BoundAwaitExpression,node,{expression,awaiter:this.sym.contract(d)},d.result);}
-      case 'Default':{const type=this.c.resolveType(node.type,node,false,this.m.owner);if(type==='void')this.c.report(node,'CS1547');return this.node(BoundDefaultExpression,node,{},type);}
+      case 'Default':{const type=this.c.resolveType(node.type,node,false,this.m);if(type==='void')this.c.report(node,'CS1547');return this.node(BoundDefaultExpression,node,{},type);}
       case 'Checked':case 'Unchecked':return this.inCheckedContext(node.kind==='Checked',()=>this.bindExpression(node.expression));
-      case 'Cast':{const operand=this.bindExpression(node.expression),from=operand.legacyType,to=this.c.resolveType(node.type,node,false,this.m.owner);if(!numeric(from)||!numeric(to))this.c.report(node,'CS0030',[typeText(from),typeText(to)]);return this.node(BoundConversion,node,{operand,conversion:{kind:from===to?'Identity':'ExplicitNumeric',from,to},isExplicit:true,isChecked:this.overflowChecked(node)&&to==='int'},to,constant);}
+      case 'Cast':{const operand=this.bindExpression(node.expression),from=operand.legacyType,to=this.c.resolveType(node.type,node,false,this.m);if(!numeric(from)||!numeric(to))this.c.report(node,'CS0030',[typeText(from),typeText(to)]);return this.node(BoundConversion,node,{operand,conversion:{kind:from===to?'Identity':'ExplicitNumeric',from,to},isExplicit:true,isChecked:this.overflowChecked(node)&&to==='int'},to,constant);}
       case 'SwitchExpression':return this.bindSwitchExpression(node);
       case 'Error':return this.bad(node);
       case 'Literal':if(node.type==='char')this.c.report(node,'SF2003');if(node.type==='int'&&node.value>2147483647&&!this.c.reportedAt(node,'SF1004'))this.c.report(node,'SF2004');return this.node(BoundLiteral,node,{value:node.value},node.type,{constantValue:{value:node.value}});
@@ -84,7 +84,7 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
       case 'Call':return this.bindCall(node);
       case 'NewArray':{
         let type=node.type;if(type==='var[]'){if(!node.values?.length)this.c.report(node,'CS0826');type=(node.values?.length?this.infer(node.values[0]):'error')+'[]';}
-        type=this.c.resolveType(type,node,false,this.m.owner);const element=type.slice(0,-2);let length=null;if(node.length){length=this.bindExpression(node.length);this.checkAssign('int',length.legacyType,node.length);}
+        type=this.c.resolveType(type,node,false,this.m);const element=type.slice(0,-2);let length=null;if(node.length){length=this.bindExpression(node.length);this.checkAssign('int',length.legacyType,node.length);}
         const initializer=(node.values??[]).map(value=>{const bound=this.bindTyped(value,element);this.checkAssign(element,bound.legacyType,value);return bound;});
         return this.node(BoundArrayCreation,node,{length,initializer,hasInitializer:!!node.values},type);}
       case 'New':return this.bindObjectCreation(node);
@@ -118,13 +118,13 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
   }
   bindObjectCreation(node){
     if(node.collectionInitializers?.length)this.c.report(node,'SF2013');
-    const name=this.c.typeName(node.type,this.m.owner);
+    const name=this.c.typeName(node.type,this.m);
     if(name==='Exception'){
       if(node.args.length>1)this.c.report(node,'CS1501',['Exception',node.args.length]);let message;
       if(node.args.length){message=this.bindExpression(node.args[0]);this.checkAssign('string',message.legacyType,node.args[0]);}else message=this.node(BoundLiteral,null,{value:'An exception was thrown.'},'string');
       return this.node(BoundObjectCreationExpression,node,{constructorMethod:this.sym.builtin(BuiltinMap.get('Exception.new')),args:[message],initializers:[],collectionInitializers:[]},'Exception');
     }
-    const type=this.c.findType(name,this.m.owner);if(!type){this.c.report(node,'CS0246',[typeText(name)]);return this.bad(node);}
+    const type=this.c.findType(name,this.m);if(!type){this.c.report(node,'CS0246',[typeText(name)]);return this.bad(node);}
     const ctors=type.methods.filter(m=>m.name==='.ctor'),ctor=ctors.find(m=>m.parameters.length===node.args.length&&m.parameters.every((p,i)=>assignable(p.type,this.infer(node.args[i]))));let args=[],broken=false;
     if(ctor)args=node.args.map((arg,i)=>this.bindTyped(arg,ctor.parameters[i].type));else if(node.args.length||ctors.length){this.c.report(node,'CS1729',[name,node.args.length]);broken=true;}
     const initializers=[];
@@ -170,10 +170,10 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
     const path=pathOf(argument);if(!path||path.includes('null.')){if(bind)this.c.report(argument,'CS8081');return '';}
     let symbol=null,valid=false;
     if(argument.kind==='Name'){
-      const local=this.lookup(argument.name),field=this.m.owner?.fields.find(f=>f.name===argument.name)??this.m.owner?.properties.find(p=>p.name===argument.name),type=this.c.findType(argument.name,this.m.owner),methods=this.c.methods.filter(m=>m.name===argument.name&&(m.owner===this.m.owner||!m.owner));
+      const local=this.lookup(argument.name),field=this.m.owner?.fields.find(f=>f.name===argument.name)??this.m.owner?.properties.find(p=>p.name===argument.name),type=this.c.findType(argument.name,this.m),methods=this.c.methods.filter(m=>m.name===argument.name&&(m.owner===this.m.owner||!m.owner));
       symbol=local?.ideSymbol??field?.symbol??type?.symbol??(methods.length===1?methods[0].symbol:null);valid=!!local||!!field||!!type||methods.length>0||['System','Console','Math','GC','Array','Convert','Debug','Exception'].includes(argument.name);
     }else{
-      const receiver=pathOf(argument.target),local=argument.target.kind==='Name'?this.lookup(receiver):null,type=this.c.findType(receiver??'',this.m.owner)??this.c.findType(this.infer(argument.target),this.m.owner),field=type?.fields.find(f=>f.name===argument.name)??type?.properties.find(p=>p.name===argument.name),methods=type?.methods.filter(m=>m.name===argument.name)??[];
+      const receiver=pathOf(argument.target),local=argument.target.kind==='Name'?this.lookup(receiver):null,type=this.c.findType(receiver??'',this.m)??this.c.findType(this.infer(argument.target),this.m),field=type?.fields.find(f=>f.name===argument.name)??type?.properties.find(p=>p.name===argument.name),methods=type?.methods.filter(m=>m.name===argument.name)??[];
       symbol=field?.symbol??(methods.length===1?methods[0].symbol:null);valid=!!field||methods.length>0||BuiltinMap.has(path.replace(/^System\./,''))||path==='System.Console'||path==='System.Math'||path==='System.GC'||path==='System.Exception'||path==='System.String'||path==='System.Int32'||argument.name==='Length'&&(local?.legacyType==='string'||local?.legacyType?.endsWith('[]'));
       if(bind&&local?.ideSymbol)this.c.reference(argument.target,local.ideSymbol);
     }
@@ -254,7 +254,7 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
       return this.node(BoundCall,node,{receiver,method:this.sym.contract(call.contract),args,intrinsic:null},call.contract.result);
     }
     if(node.kind==='New'){
-      const t=frameworkType(node.type);if(!t)return undefined;if(t.kind==='delegate')return this.bindDelegate(node,t.name);
+      const t=this.c.findType(node.type,this.m)?null:frameworkType(node.type);if(!t)return undefined;if(t.kind==='delegate')return this.bindDelegate(node,t.name);
       const candidates=findContracts(t.name,'.ctor',false).filter(d=>d.owner===t.name&&d.parameters.length===node.args.length&&d.parameters.every((p,i)=>this.frameworkConversion(p,this.infer(node.args[i]))||this.canTarget(node.args[i],p)||this.delegateMethod(node.args[i],p)));
       if(candidates.length!==1){this.c.report(node,'CS1729',[typeText(t.name),node.args.length]);return this.bad(node,[],t.name);}
       const args=this.bindFrameworkArguments(node.args,candidates[0].parameters,t.kind==='bcl'),initializers=[],collectionInitializers=[];let broken=false;

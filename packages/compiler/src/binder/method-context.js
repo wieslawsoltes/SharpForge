@@ -70,13 +70,13 @@ export class MethodBinderContext {
   property(node){
     if(node.kind==='Name')return this.lookup(node.name)?null:this.m.owner?.properties.find(p=>p.name===node.name)??null;
     if(node.kind!=='Member')return null;
-    const named=this.c.findType(pathOf(node.target),this.m.owner);if(named)return named.properties.find(p=>p.name===node.name&&p.isStatic)??null;
-    return this.c.findType(this.infer(node.target),this.m.owner)?.properties.find(p=>p.name===node.name&&!p.isStatic)??null;
+    const named=this.c.findType(pathOf(node.target),this.m);if(named)return named.properties.find(p=>p.name===node.name&&p.isStatic)??null;
+    return this.c.findType(this.infer(node.target),this.m)?.properties.find(p=>p.name===node.name&&!p.isStatic)??null;
   }
   field(node){
     if(node.kind==='Name')return this.m.owner?.fields.find(f=>f.name===node.name)??null;
-    const path=pathOf(node.target),owner=this.c.findType(path,this.m.owner);if(owner)return owner.fields.find(f=>f.name===node.name&&f.isStatic)??null;
-    const type=this.infer(node.target);return this.c.findType(type,this.m.owner)?.fields.find(f=>f.name===node.name&&!f.isStatic)??null;
+    const path=pathOf(node.target),owner=this.c.findType(path,this.m);if(owner)return owner.fields.find(f=>f.name===node.name&&f.isStatic)??null;
+    const type=this.infer(node.target);return this.c.findType(type,this.m)?.fields.find(f=>f.name===node.name&&!f.isStatic)??null;
   }
   isNameof(node){return node?.kind==='Call'&&node.target.kind==='Name'&&node.target.name==='nameof'&&!this.c.methods.some(m=>m.name==='nameof'&&(m.owner===this.m.owner||!m.owner));}
   findBuiltin(node){
@@ -87,7 +87,7 @@ export class MethodBinderContext {
   findMethod(node,report=true){
     let candidates=[];const target=node.target;
     if(target.kind==='Name')candidates=this.c.methods.filter(m=>m.name===target.name&&(m.owner===this.m.owner||!m.owner)&&(!this.m.isStatic||m.isStatic));
-    else if(target.kind==='Member'){const path=pathOf(target.target),type=this.c.findType(path,this.m.owner);if(type)candidates=type.methods.filter(m=>m.name===target.name&&m.isStatic);else{const type=this.c.findType(this.infer(target.target),this.m.owner);candidates=type?.methods.filter(m=>m.name===target.name&&!m.isStatic)??[];}}
+    else if(target.kind==='Member'){const path=pathOf(target.target),type=this.c.findType(path,this.m);if(type)candidates=type.methods.filter(m=>m.name===target.name&&m.isStatic);else{const type=this.c.findType(this.infer(target.target),this.m);candidates=type?.methods.filter(m=>m.name===target.name&&!m.isStatic)??[];}}
     if(candidates.some(m=>m.accessor)){if(report)this.c.report(node,'CS0571',[pathOf(target)??target.name]);candidates=candidates.filter(m=>!m.accessor);}
     const types=node.args.map(a=>this.infer(a));candidates=candidates.filter(m=>m.parameters.length===types.length&&m.parameters.every((p,i)=>assignable(p.type,types[i])));
     const rank=m=>m.parameters.reduce((s,p,i)=>s+(p.type===types[i]?0:1),0);candidates.sort((a,b)=>rank(a)-rank(b));
@@ -102,9 +102,9 @@ export class MethodBinderContext {
     if(node.kind==='BoundTemp')return node.type;if(node.kind==='CollectionExpression')return node.targetType??'error';if(node.kind==='New'&&node.type==='<target>')return 'error';
     const external=this.frameworkInfer(node);if(external!==undefined)return external;
     switch(node.kind){
-      case 'Await':return taskResult(this.infer(node.expression))??'error';case 'Checked':case 'Unchecked':return this.infer(node.expression);case 'Cast':case 'Default':return this.c.typeName(node.type,this.m.owner);case 'SwitchExpression':return this.switchType(node);
+      case 'Await':return taskResult(this.infer(node.expression))??'error';case 'Checked':case 'Unchecked':return this.infer(node.expression);case 'Cast':case 'Default':return this.c.typeName(node.type,this.m);case 'SwitchExpression':return this.switchType(node);
       case 'InterpolatedString':return 'string';case 'Literal':return node.type;case 'Name':return this.lookup(node.name)?.legacyType??this.property(node)?.type??this.m.owner?.fields.find(f=>f.name===node.name)?.type??'error';
-      case 'New':return this.c.typeName(node.type,this.m.owner);case 'NewArray':return node.type==='var[]'?(node.values?.length?this.infer(node.values[0])+'[]':'error[]'):node.type;
+      case 'New':return this.c.typeName(node.type,this.m);case 'NewArray':return node.type==='var[]'?(node.values?.length?this.infer(node.values[0])+'[]':'error[]'):node.type;
       case 'Index':{const t=this.infer(node.target);return t.endsWith('[]')?t.slice(0,-2):'error';}
       case 'Member':if(node.name==='Length')return 'int';if(node.name==='Message'&&this.infer(node.target)==='Exception')return 'string';return this.property(node)?.type??this.field(node)?.type??'error';
       case 'Call':{if(this.isNameof(node))return 'string';const builtin=this.findBuiltin(node);if(builtin)return builtin.result==='numeric'?node.args.some(a=>this.infer(a)==='double')?'double':'int':builtin.result;return this.findMethod(node,false)?.returnType??'error';}
@@ -117,7 +117,7 @@ export class MethodBinderContext {
   canTarget(node,type){return node?.kind==='New'&&node.type==='<target>'&&type!=='object'||node?.kind==='CollectionExpression'&&(type?.endsWith('[]')||['List','HashSet'].includes(frameworkType(type)?.family));}
   frameworkReceiver(node){
     if(node?.kind!=='Member')return null;
-    const path=framePath(node.target),staticType=path&&frameworkType(path==='string'?'System.String':path);
+    const path=framePath(node.target),staticType=path&&!this.c.findType(path,this.m)&&frameworkType(path==='string'?'System.String':path);
     if(staticType)return {type:staticType.name,isStatic:true,node:null};
     const inferred=this.infer(node.target),type=inferred==='string'?'System.String':canonicalType(inferred);
     return frameworkType(type)?{type:frameworkType(type).name,isStatic:false,node:node.target}:null;
@@ -133,7 +133,7 @@ export class MethodBinderContext {
     const contract=frameworkType(type);if(contract?.kind!=='delegate')return null;
     const target=node.kind==='New'&&node.args.length===1?node.args[0]:node;let methods=[],receiver=null;
     if(target.kind==='Name')methods=this.c.methods.filter(m=>m.name===target.name&&(m.owner===this.m.owner||!m.owner)&&(!this.m.isStatic||m.isStatic));
-    else if(target.kind==='Member'){const owner=this.c.findType(framePath(target.target),this.m.owner);if(owner)methods=owner.methods.filter(m=>m.isStatic&&m.name===target.name);else{receiver=target.target;methods=this.c.findType(this.infer(receiver),this.m.owner)?.methods.filter(m=>!m.isStatic&&m.name===target.name)??[];}}
+    else if(target.kind==='Member'){const owner=this.c.findType(framePath(target.target),this.m);if(owner)methods=owner.methods.filter(m=>m.isStatic&&m.name===target.name);else{receiver=target.target;methods=this.c.findType(this.infer(receiver),this.m)?.methods.filter(m=>!m.isStatic&&m.name===target.name)??[];}}
     methods=methods.filter(m=>m.parameters.length===contract.parameters.length&&m.parameters.every((p,i)=>this.frameworkConversion(p.type,contract.parameters[i]))&&(contract.result===m.returnType||!['int','double','bool','void'].includes(m.returnType)&&frameworkAssignable(contract.result,m.returnType)));
     const exact=methods.filter(m=>m.returnType===contract.result);if(exact.length===1)methods=exact;if(methods.length!==1){if(report)this.c.report(node,'CS0123',[target.name??'<expression>',typeText(type)]);return null;}
     return {method:methods[0],receiver,node:target};
@@ -151,7 +151,7 @@ export class MethodBinderContext {
   frameworkInfer(node){
     if(node.kind==='Index')return findContracts(this.infer(node.target),'get_Item',false)[0]?.result;
     if(node.kind==='Member')return enumValue(framePath(node))?.type??this.frameworkProperty(node)?.type;
-    if(node.kind==='New')return frameworkType(node.type)?.name;
+    if(node.kind==='New')return this.c.findType(node.type,this.m)?undefined:frameworkType(node.type)?.name;
     if(node.kind==='Call')return this.frameworkCall(node)?.contract.result;
     return undefined;
   }

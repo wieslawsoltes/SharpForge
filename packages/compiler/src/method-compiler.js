@@ -34,7 +34,7 @@ class CoreMethodCompiler {
       case 'Empty':break;
       case 'Using':this.stmt(this.lowerUsing(node));break;
       case 'UsingDeclaration':this.c.report(node,'CS1023');break;
-      case 'Local':this.seq(node);if(node.declarations.some(d=>d.isConst&&d.type==='var'))this.c.report(node,'CS0822');if(node.declarations.length>1&&node.declarations.some(d=>d.type==='var'))this.c.report(node,'CS0819');for(const d of node.declarations){let declared=this.c.resolveType(d.type,d,true,this.m.owner),initType;
+      case 'Local':this.seq(node);if(node.declarations.some(d=>d.isConst&&d.type==='var'))this.c.report(node,'CS0822');if(node.declarations.length>1&&node.declarations.some(d=>d.type==='var'))this.c.report(node,'CS0819');for(const d of node.declarations){let declared=this.c.resolveType(d.type,d,true,this.m),initType;
         if(d.initializer)initType=this.typedExpr(d.initializer,declared==='var'?null:declared);if(declared==='var'){if(!d.initializer||initType==='null'||initType==='void')this.c.report(d,'CS0818');declared=initType??'error';}
         if(declared==='void')this.c.report(d,'CS1547');
         const l=this.local(d.name,declared,d,false,!!d.hidden);if(d.initializer){this.checkAssign(declared,initType,d);this.emit(Op.STLOC,l.slot);this.emit(Op.POP);this.assigned.add(l.slot);}if(d.isConst&&!d.initializer)this.c.report(d,'CS0145');else if(d.isConst){const value=this.constant(d.initializer);if(!value)this.c.report(d,'CS0133',[d.name]);else l.constantValue={...value,type:declared};}}break;
@@ -54,7 +54,7 @@ class CoreMethodCompiler {
         if(getEnumerator){const name='$enumerator'+this.locals.length,base={uri:node.uri,start:node.start,end:node.end},N=n=>({...base,kind:'Name',name:n}),M=(target,name)=>({...base,kind:'Member',target,name}),call=(target,name)=>({...base,kind:'Call',target:M(target,name),args:[]}),enumName=N(name),currentType=findContracts(getEnumerator.result,'get_Current',false)[0]?.result;
           const tree={...base,kind:'Block',statements:[{...base,kind:'Local',declarations:[{...base,name,type:getEnumerator.result,hidden:true,initializer:call(node.expression,'GetEnumerator')}]},{...base,kind:'Try',body:{...base,kind:'While',labels:node.labels,condition:call(enumName,'MoveNext'),body:{...base,kind:'Block',statements:[{...base,kind:'Local',declarations:[{...base,name:node.name,nameSpan:node.nameSpan,type:node.type==='var'?currentType:node.type,isIteration:true,initializer:M(enumName,'Current')}]},node.body]}},catches:[],finallyBody:{...base,kind:'Block',statements:[{...base,kind:'ExpressionStatement',expression:call(enumName,'Dispose')}]}}]};this.stmt(tree);break;}
         this.scopes.push(new Map());this.seq({...node,end:node.expression.end});const arrayType=this.expr(node.expression);if(!arrayType.endsWith('[]'))this.c.report(node,'CS1579',[typeText(arrayType),'GetEnumerator']);const element=arrayType.endsWith('[]')?arrayType.slice(0,-2):'error',arr=this.temp(arrayType),index=this.temp('int');this.emit(Op.STLOC,arr);this.emit(Op.POP);this.emitConstant(0);this.emit(Op.STLOC,index);this.emit(Op.POP);
-        const l=this.local(node.name,node.type==='var'?element:this.c.resolveType(node.type,node,false,this.m.owner),{...node,isIteration:true},true);this.checkAssign(l.type,element,node);const start=this.pc;this.seq({...node,end:node.expression.end});this.emit(Op.LDLOC,index);this.emit(Op.LDLOC,arr);this.emit(Op.LENGTH);this.emit(Op.BINARY,Binary['<']);const exit=this.emit(Op.JFALSE);this.emit(Op.LDLOC,arr);this.emit(Op.LDLOC,index);this.emit(Op.LDELEM);this.emit(Op.STLOC,l.slot);this.emit(Op.POP);
+        const l=this.local(node.name,node.type==='var'?element:this.c.resolveType(node.type,node,false,this.m),{...node,isIteration:true},true);this.checkAssign(l.type,element,node);const start=this.pc;this.seq({...node,end:node.expression.end});this.emit(Op.LDLOC,index);this.emit(Op.LDLOC,arr);this.emit(Op.LENGTH);this.emit(Op.BINARY,Binary['<']);const exit=this.emit(Op.JFALSE);this.emit(Op.LDLOC,arr);this.emit(Op.LDLOC,index);this.emit(Op.LDELEM);this.emit(Op.STLOC,l.slot);this.emit(Op.POP);
         const loop={breaks:[],continues:[],labels:node.labels??[]};this.loops.push(loop);this.stmt(node.body);for(const p of loop.continues)this.patch(p);this.emit(Op.LDLOC,index);this.emitConstant(1);this.emit(Op.BINARY,Binary['+'],1);this.emit(Op.STLOC,index);this.emit(Op.POP);this.emit(Op.JUMP,start);this.patch(exit);for(const p of loop.breaks)this.patch(p);this.loops.pop();this.clear(arr);for(const local of this.scopes.at(-1).values())if(isReference(local.type))this.clear(local.slot);this.closeScope();break;}
       case 'Break':case 'Continue':{this.seq(node);if(node.label)this.c.requireFeature(node,15,'Labeled break and continue');const loop=node.label?[...this.loops].reverse().find(l=>l.labels?.includes(node.label)&&(node.kind!=='Continue'||!l.switch)):node.kind==='Continue'?[...this.loops].reverse().find(l=>!l.switch):this.loops.at(-1);if(loop&&this.finallyScopes.length&&!this.loops.slice(this.finallyScopes.at(-1)).includes(loop))this.c.report(node,'CS0157');if(!loop)this.c.report(node,'CS0139');else loop[node.kind==='Break'?'breaks':'continues'].push(this.emit(Op.JUMP));break;}
       case 'Switch':this.switchStatement(node);break;
@@ -68,7 +68,7 @@ class CoreMethodCompiler {
           this.assigned=new Set(before);this.finallyScopes.push(this.loops.length);this.stmt(node.finallyBody);this.finallyScopes.pop();this.emit(Op.ENDFINALLY);handler.handlerEnd=this.pc;this.patch(jump);for(const slot of normalAssigned)this.assigned.add(slot);break;
         }
         const start=this.pc,before=new Set(this.assigned);this.stmt(node.body);if(this.pc===start)this.emit(Op.NOP);const end=this.pc,jumps=[this.emit(Op.JUMP)];
-        for(const ca of node.catches){this.scopes.push(new Map());this.assigned=new Set(before);const type=this.c.resolveType(ca.type,node,false,this.m.owner);if(type!=='Exception')this.c.report(node,'SF2002');const slot=this.temp('Exception');if(ca.name){const l=this.local(ca.name,'Exception',{...ca.body,name:ca.name,nameSpan:ca.nameSpan},true);l.scopeEnd=ca.body.end;this.locals[slot].hidden=true;this.handlers.push({start,end,target:this.pc,slot:l.slot,type});}else this.handlers.push({start,end,target:this.pc,slot,type});this.catchDepth++;this.stmt(ca.body);this.catchDepth--;jumps.push(this.emit(Op.JUMP));this.closeScope();}
+        for(const ca of node.catches){this.scopes.push(new Map());this.assigned=new Set(before);const type=this.c.resolveType(ca.type,node,false,this.m);if(type!=='Exception')this.c.report(node,'SF2002');const slot=this.temp('Exception');if(ca.name){const l=this.local(ca.name,'Exception',{...ca.body,name:ca.name,nameSpan:ca.nameSpan},true);l.scopeEnd=ca.body.end;this.locals[slot].hidden=true;this.handlers.push({start,end,target:this.pc,slot:l.slot,type});}else this.handlers.push({start,end,target:this.pc,slot,type});this.catchDepth++;this.stmt(ca.body);this.catchDepth--;jumps.push(this.emit(Op.JUMP));this.closeScope();}
         for(const jump of jumps)this.patch(jump);this.assigned=before;break;}
       default:this.c.report(node,'SF2099',[node.kind]);
     }
@@ -81,7 +81,7 @@ class CoreMethodCompiler {
     const declarations=node.resources.kind==='Local'?node.resources.declarations:[{...node.resources,kind:'Variable',name:`$using${this.locals.length}_${this.pc}`,type:'var',initializer:node.resources,hidden:true}];
     const lower=index=>{
       if(index>=declarations.length)return node.body;
-      const d=declarations[index],type=d.type==='var'?this.infer(d.initializer):this.c.typeName(d.type,this.m.owner),owner=this.c.findType(type,this.m.owner);
+      const d=declarations[index],type=d.type==='var'?this.infer(d.initializer):this.c.typeName(d.type,this.m),owner=this.c.findType(type,this.m);
       if(!d.initializer)this.c.report(d,'CS0210');
       if(!owner?.interfaces.includes('System.IDisposable')&&!(['network','bcl','bcl14'].includes(frameworkType(type)?.kind)&&findContracts(type,'Dispose',false).some(c=>!c.parameters.length)))this.c.report(d,'CS1674',[typeText(type)]);
       const name={...d,kind:'Name',name:d.name},nil={...d,kind:'Literal',type:'null',value:null};
@@ -119,8 +119,8 @@ class CoreMethodCompiler {
   property(node){
     if(node.kind==='Name')return this.lookup(node.name)?null:this.m.owner?.properties.find(p=>p.name===node.name)??null;
     if(node.kind!=='Member')return null;
-    const named=this.c.findType(pathOf(node.target),this.m.owner);if(named)return named.properties.find(p=>p.name===node.name&&p.isStatic)??null;
-    return this.c.findType(this.infer(node.target),this.m.owner)?.properties.find(p=>p.name===node.name&&!p.isStatic)??null;
+    const named=this.c.findType(pathOf(node.target),this.m);if(named)return named.properties.find(p=>p.name===node.name&&p.isStatic)??null;
+    return this.c.findType(this.infer(node.target),this.m)?.properties.find(p=>p.name===node.name&&!p.isStatic)??null;
   }
   propertyAccess(property,node,kind){
     const method=property[kind];this.c.reference(node,property.symbol);
@@ -133,8 +133,8 @@ class CoreMethodCompiler {
   readProperty(property,node){const getter=this.propertyAccess(property,node,'get');if(getter){this.propertyReceiver(property,node);this.emit(Op.CALL,getter.id,property.isStatic?0:1);}else this.emitConstant(null);return property.type;}
   field(node){
     if(node.kind==='Name')return this.m.owner?.fields.find(f=>f.name===node.name)??null;
-    const path=pathOf(node.target),owner=this.c.findType(path,this.m.owner);if(owner)return owner.fields.find(f=>f.name===node.name&&f.isStatic)??null;
-    const type=this.infer(node.target);return this.c.findType(type,this.m.owner)?.fields.find(f=>f.name===node.name&&!f.isStatic)??null;
+    const path=pathOf(node.target),owner=this.c.findType(path,this.m);if(owner)return owner.fields.find(f=>f.name===node.name&&f.isStatic)??null;
+    const type=this.infer(node.target);return this.c.findType(type,this.m)?.fields.find(f=>f.name===node.name&&!f.isStatic)??null;
   }
   isNameof(node){return node?.kind==='Call'&&node.target.kind==='Name'&&node.target.name==='nameof'&&!this.c.methods.some(m=>m.name==='nameof'&&(m.owner===this.m.owner||!m.owner));}
   nameof(node,bind=true){
@@ -143,10 +143,10 @@ class CoreMethodCompiler {
     const path=pathOf(argument);if(!path||path.includes('null.')){if(bind)this.c.report(argument,'CS8081');return '';}
     let symbol=null,valid=false;
     if(argument.kind==='Name'){
-      const local=this.lookup(argument.name),field=this.m.owner?.fields.find(f=>f.name===argument.name)??this.m.owner?.properties.find(p=>p.name===argument.name),type=this.c.findType(argument.name,this.m.owner),methods=this.c.methods.filter(m=>m.name===argument.name&&(m.owner===this.m.owner||!m.owner));
+      const local=this.lookup(argument.name),field=this.m.owner?.fields.find(f=>f.name===argument.name)??this.m.owner?.properties.find(p=>p.name===argument.name),type=this.c.findType(argument.name,this.m),methods=this.c.methods.filter(m=>m.name===argument.name&&(m.owner===this.m.owner||!m.owner));
       symbol=local?.symbol??field?.symbol??type?.symbol??(methods.length===1?methods[0].symbol:null);valid=!!local||!!field||!!type||methods.length>0||['System','Console','Math','GC','Array','Convert','Debug','Exception'].includes(argument.name);
     }else{
-      const receiver=pathOf(argument.target),local=argument.target.kind==='Name'?this.lookup(receiver):null,type=this.c.findType(receiver??'',this.m.owner)??this.c.findType(this.infer(argument.target),this.m.owner),field=type?.fields.find(f=>f.name===argument.name)??type?.properties.find(p=>p.name===argument.name),methods=type?.methods.filter(m=>m.name===argument.name)??[];
+      const receiver=pathOf(argument.target),local=argument.target.kind==='Name'?this.lookup(receiver):null,type=this.c.findType(receiver??'',this.m)??this.c.findType(this.infer(argument.target),this.m),field=type?.fields.find(f=>f.name===argument.name)??type?.properties.find(p=>p.name===argument.name),methods=type?.methods.filter(m=>m.name===argument.name)??[];
       symbol=field?.symbol??(methods.length===1?methods[0].symbol:null);valid=!!field||methods.length>0||BuiltinMap.has(path.replace(/^System\./,''))||path==='System.Console'||path==='System.Math'||path==='System.GC'||path==='System.Exception'||path==='System.String'||path==='System.Int32'||argument.name==='Length'&&(local?.type==='string'||local?.type?.endsWith('[]'));
       if(bind&&local?.symbol)this.c.reference(argument.target,local.symbol);
     }
@@ -155,9 +155,9 @@ class CoreMethodCompiler {
   }
   infer(node){
     if(!node)return 'error';const external=this.frameworkInfer(node);if(external!==undefined)return external;switch(node.kind){
-      case 'Await':return taskResult(this.infer(node.expression))??'error';case 'Checked':case 'Unchecked':return this.infer(node.expression);case 'Cast':case 'Default':return this.c.typeName(node.type,this.m.owner);case 'SwitchExpression':return this.switchType(node);
+      case 'Await':return taskResult(this.infer(node.expression))??'error';case 'Checked':case 'Unchecked':return this.infer(node.expression);case 'Cast':case 'Default':return this.c.typeName(node.type,this.m);case 'SwitchExpression':return this.switchType(node);
       case 'InterpolatedString':return 'string';case 'Literal':return node.type;case 'Name':return this.lookup(node.name)?.type??this.property(node)?.type??this.m.owner?.fields.find(f=>f.name===node.name)?.type??'error';
-      case 'New':return this.c.typeName(node.type,this.m.owner);case 'NewArray':return node.type==='var[]'?(node.values?.length?this.infer(node.values[0])+'[]':'error[]'):node.type;
+      case 'New':return this.c.typeName(node.type,this.m);case 'NewArray':return node.type==='var[]'?(node.values?.length?this.infer(node.values[0])+'[]':'error[]'):node.type;
       case 'Index':{const t=this.infer(node.target);return t.endsWith('[]')?t.slice(0,-2):'error';}
       case 'Member':if(node.name==='Length')return 'int';if(node.name==='Message'&&this.infer(node.target)==='Exception')return 'string';return this.property(node)?.type??this.field(node)?.type??'error';
       case 'Call':{if(this.isNameof(node))return 'string';const builtin=this.findBuiltin(node);if(builtin)return builtin.result==='numeric'?node.args.some(a=>this.infer(a)==='double')?'double':'int':builtin.result;return this.findMethod(node,false)?.returnType??'error';}
@@ -173,7 +173,7 @@ class CoreMethodCompiler {
   findMethod(node,report=true){
     let candidates=[];const target=node.target;
     if(target.kind==='Name')candidates=this.c.methods.filter(m=>m.name===target.name&&(m.owner===this.m.owner||!m.owner)&&(!this.m.isStatic||m.isStatic));
-    else if(target.kind==='Member'){const path=pathOf(target.target),type=this.c.findType(path,this.m.owner);if(type)candidates=type.methods.filter(m=>m.name===target.name&&m.isStatic);else{const type=this.c.findType(this.infer(target.target),this.m.owner);candidates=type?.methods.filter(m=>m.name===target.name&&!m.isStatic)??[];}}
+    else if(target.kind==='Member'){const path=pathOf(target.target),type=this.c.findType(path,this.m);if(type)candidates=type.methods.filter(m=>m.name===target.name&&m.isStatic);else{const type=this.c.findType(this.infer(target.target),this.m);candidates=type?.methods.filter(m=>m.name===target.name&&!m.isStatic)??[];}}
     if(candidates.some(m=>m.accessor)){if(report)this.c.report(node,'CS0571',[pathOf(target)??target.name]);candidates=candidates.filter(m=>!m.accessor);}
     const types=node.args.map(a=>this.infer(a));candidates=candidates.filter(m=>m.parameters.length===types.length&&m.parameters.every((p,i)=>assignable(p.type,types[i])));
     candidates.sort((a,b)=>a.parameters.reduce((s,p,i)=>s+(p.type===types[i]?0:1),0)-b.parameters.reduce((s,p,i)=>s+(p.type===types[i]?0:1),0));
@@ -192,9 +192,9 @@ class CoreMethodCompiler {
         for(const part of node.parts){if(part.text!==undefined)this.emitConstant(part.text);else{const type=this.expr(part.expression);if(type==='void')this.c.report(part.expression,'CS0029',['void','object']);this.emitConstant(part.format);this.emitConstant(part.alignment);this.emitConstant(type);this.emitContract(format);}this.emit(Op.BINARY,Binary['+'],2);}return 'string';
       }
       case 'Await':{if(!this.m.node.asyncBody&&!this.m.name.startsWith('<startup>'))this.c.report(node,'CS4032',[typeText(this.m.returnType)]);const type=this.expr(node.expression),d=findContracts('SharpForge.Runtime.Async','Await',true).find(x=>x.parameters[0]===type);if(!d){this.c.report(node,'CS1061',[typeText(type),'GetAwaiter']);return 'error';}const builtin=frameworkBuiltin(d);this.emit(Op.BUILTIN,builtin.id,1);return d.result;}
-      case 'Default':{const type=this.c.resolveType(node.type,node,false,this.m.owner);if(type==='void')this.c.report(node,'CS1547');this.emitConstant(defaultValue(type),type);return type;}
+      case 'Default':{const type=this.c.resolveType(node.type,node,false,this.m);if(type==='void')this.c.report(node,'CS1547');this.emitConstant(defaultValue(type),type);return type;}
       case 'Checked':case 'Unchecked':{const previous=this.checkedContext;this.checkedContext=node.kind==='Checked';try{return this.expr(node.expression);}finally{this.checkedContext=previous;}}
-      case 'Cast':{const from=this.expr(node.expression),to=this.c.resolveType(node.type,node,false,this.m.owner);if(!numeric(from)||!numeric(to))this.c.report(node,'CS0030',[typeText(from),typeText(to)]);this.emit(Op.CONVERT,to==='int'?0:1,this.overflowChecked(node)&&to==='int'?1:0);return to;}
+      case 'Cast':{const from=this.expr(node.expression),to=this.c.resolveType(node.type,node,false,this.m);if(!numeric(from)||!numeric(to))this.c.report(node,'CS0030',[typeText(from),typeText(to)]);this.emit(Op.CONVERT,to==='int'?0:1,this.overflowChecked(node)&&to==='int'?1:0);return to;}
       case 'SwitchExpression':return this.switchExpression(node);
       case 'Error':this.emitConstant(null);return 'error';
       case 'Literal':if(node.type==='char')this.c.report(node,'SF2003');if(node.type==='int'&&node.value>2147483647&&!this.c.reportedAt(node,'SF1004'))this.c.report(node,'SF2004');this.emitConstant(node.value,node.type);return node.type;
@@ -240,13 +240,13 @@ class CoreMethodCompiler {
         for(let i=0;i<count;i++)this.emit(Op.POP);this.emitConstant(null);return 'error';}
       case 'NewArray':{
         let type=node.type;if(type==='var[]'){if(!node.values?.length)this.c.report(node,'CS0826');type=(node.values?.length?this.infer(node.values[0]):'error')+'[]';}
-        type=this.c.resolveType(type,node,false,this.m.owner);const element=type.slice(0,-2);
+        type=this.c.resolveType(type,node,false,this.m);const element=type.slice(0,-2);
         if(node.length)this.checkAssign('int',this.expr(node.length),node.length);else this.emitConstant(node.values?.length??0);
         this.emit(Op.NEWARR,this.c.constant(element));
         if(node.values)node.values.forEach((value,i)=>{this.emit(Op.DUP);this.emitConstant(i);this.checkAssign(element,this.typedExpr(value,element),value);this.emit(Op.STELEM);this.emit(Op.POP);});return type;}
       case 'New':{if(node.collectionInitializers?.length)this.c.report(node,'SF2013');
-        const name=this.c.typeName(node.type,this.m.owner);if(name==='Exception'){if(node.args.length>1)this.c.report(node,'CS1501',['Exception',node.args.length]);if(node.args.length)this.checkAssign('string',this.expr(node.args[0]),node.args[0]);else this.emitConstant('An exception was thrown.');this.emit(Op.BUILTIN,BuiltinMap.get('Exception.new').id,1);return 'Exception';}
-        const type=this.c.findType(name,this.m.owner);if(!type){this.c.report(node,'CS0246',[typeText(name)]);this.emitConstant(null);return 'error';}
+        const name=this.c.typeName(node.type,this.m);if(name==='Exception'){if(node.args.length>1)this.c.report(node,'CS1501',['Exception',node.args.length]);if(node.args.length)this.checkAssign('string',this.expr(node.args[0]),node.args[0]);else this.emitConstant('An exception was thrown.');this.emit(Op.BUILTIN,BuiltinMap.get('Exception.new').id,1);return 'Exception';}
+        const type=this.c.findType(name,this.m);if(!type){this.c.report(node,'CS0246',[typeText(name)]);this.emitConstant(null);return 'error';}
         this.emit(Op.NEWOBJ,type.id);const slot=this.temp(name);this.emit(Op.STLOC,slot);this.emit(Op.POP);
         if(type.initializer!==undefined){this.emit(Op.LDLOC,slot);this.emit(Op.CALL,type.initializer,1);this.emit(Op.POP);}
         const ctors=type.methods.filter(m=>m.name==='.ctor'),ctor=ctors.find(m=>m.parameters.length===node.args.length&&m.parameters.every((p,i)=>assignable(p.type,this.infer(node.args[i]))));
