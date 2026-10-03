@@ -32,6 +32,7 @@ export function zipLimits(options = {}) {
     }
   }
   if (limits.chunkSize > 4 * 1024 * 1024) zipError('SFZIP001', 'ZIP chunk size exceeds 4 MiB');
+  if (!['preserve', 'reject'].includes(options.nestedArchives ?? 'preserve')) zipError('SFZIP001', 'Invalid nested archive policy');
   return limits;
 }
 
