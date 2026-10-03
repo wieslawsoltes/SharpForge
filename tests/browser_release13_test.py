@@ -60,7 +60,7 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
    ev('sharpforge.openFile("Program.cs")');cmd('undo');wait('sharpforge.designer.get().document.nodes.find(n=>n.id==="label").properties.Text==="Keep my code"');cmd('redo');wait('sharpforge.designer.get().document.nodes.find(n=>n.id==="label").properties.Text==="Edited in C#"')
   check('source undo and redo resynchronize the preview without replacing the editor',source_undo)
   def incomplete():
-   before=text();edit(before.replace('Width = 248','Width ='));wait('sharpforge.designer.get().sourceSync.state==="blocked"');truth(node('button')['properties']['Width']==248);edit(before);wait('sharpforge.designer.get().sourceSync.state==="synced"')
+   before=text();edit(before.replace('Width = 248.0','Width ='));wait('sharpforge.designer.get().sourceSync.state==="blocked"');truth(node('button')['properties']['Width']==248);edit(before);wait('sharpforge.designer.get().sourceSync.state==="synced"')
   check('incomplete C# keeps the last valid preview and recovers when corrected',incomplete)
   def structural():
    ev('sharpforge.designer.setAutoSync(false)');id_=ev('sharpforge.designer.add("TextBox","root")');ev('id=>sharpforge.designer.set("Text","New input",[id])',id_);ev('sharpforge.designer.writeSource()');truth('New input' in text());truth('// Keep this hand-written handler exactly, including Unicode: λ.' in text());truth('clicks++; label.Text = $"Clicks: {clicks:D2}";' in text());truth(not ev('sharpforge.getState().diagnostics'))
