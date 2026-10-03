@@ -11,7 +11,8 @@ function escapeAt(text, i) {
 }
 /** True when an identifier (optionally @-prefixed or starting with a Unicode escape) starts at `i`. */
 export function startsIdentifier(text, i) {
-  if (text[i] === '@') i++;
+  let c = text.charCodeAt(i); if (c === 64) c = text.charCodeAt(++i);
+  if (c < 128) { if (c >= 97 && c <= 122 || c >= 65 && c <= 90 || c === 95) return true; if (c !== 92) return false; }
   return isIdentifierStart(text[i]) || isIdentifierStart(escapeAt(text, i)?.ch);
 }
 /**
@@ -20,6 +21,12 @@ export function startsIdentifier(text, i) {
  */
 export function scanIdentifier(text, start) {
   let i = start, value = '', hasEscapes = false; const verbatim = text[i] === '@'; if (verbatim) i++;
+  // Fast path: ASCII letters, digits and underscores with no escape or non-ASCII character following.
+  let c = text.charCodeAt(i);
+  if (c >= 97 && c <= 122 || c >= 65 && c <= 90 || c === 95) {
+    let j = i; do c = text.charCodeAt(++j); while (c >= 97 && c <= 122 || c >= 65 && c <= 90 || c === 95 || c >= 48 && c <= 57);
+    if (!(c >= 128 || c === 92)) return { end: j, value: text.slice(i, j), verbatim, hasEscapes: false };
+  }
   for (let first = true; ; first = false) {
     const escape = escapeAt(text, i), ch = escape ? escape.ch : text[i];
     if (!(first ? isIdentifierStart(ch) : isIdentifierPart(ch))) break;

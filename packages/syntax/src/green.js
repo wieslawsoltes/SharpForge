@@ -8,7 +8,7 @@ const inherited = GreenFlags.ContainsDiagnostics | GreenFlags.ContainsSkippedTex
 let nextId = 1;
 export class GreenTrivia {
   constructor(kind, text, structure = null) {
-    this.kind = kind; this.text = text; this.structure = structure; this.fullWidth = text.length; this.id = nextId++;
+    this.kind = kind; this.text = text; this.structure = structure; this.fullWidth = text.length; this.id = nextId++; this.asList = Object.freeze([this]);
     this.flags = kind === 'SkippedTokensTrivia' ? GreenFlags.ContainsSkippedText : structure || kind === 'DisabledTextTrivia' ? GreenFlags.ContainsDirectives : 0;
     Object.freeze(this);
   }
@@ -53,31 +53,47 @@ export function greenText(root) {
 }
 /** The frozen token view kept for editor consumers: every trivia character between two tokens is `leading`. */
 export function legacyGreenToken(kind, text, leading, value) { return Object.freeze({ kind, text, leading, width: leading.length + text.length, fullText: leading + text, value }); }
-const caches = new WeakMap(), maxInternedChildren = 12;
+const caches = new WeakMap(), maxInternedChildren = 12, kindHashes = new Map();
+const kindHash = kind => { let h = kindHashes.get(kind); if (h === undefined) kindHashes.set(kind, h = Math.imul(kindHashes.size + 1, 0x9E3779B1) | 0); return h; };
+const sameItems = (a, b) => { if (a === b) return true; if (a.length !== b.length) return false; for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return false; return true; };
 /**
- * Structural interning of green elements on top of a workspace-owned BoundedCache: identical trivia and tokens,
- * and diagnostic-free nodes of up to twelve children with identical children, are shared between trees and between
- * parses - so after an edit every statement and member whose tokens did not change is reused by identity.
+ * Structural interning of green elements: identical trivia and tokens, and nodes of up to twelve children with
+ * identical children, are shared between trees and between parses that use the same workspace-owned BoundedCache.
+ * Lookups use integer hashes of element ids (no key strings) and verify the candidate, so the cache is exact; it is
+ * bounded by the store's limit and a colliding entry simply replaces the older one.
  */
 export class GreenCache {
-  constructor(store = new BoundedCache(65536)) { this.store = store; this.hits = 0; }
+  constructor(store = new BoundedCache(65536)) { this.store = store; this.hits = 0; this.limit = Math.max(1024, store.limit ?? 65536); this.trivias = new Map(); this.tokens = new Map(); this.nodes = new Map(); this.missings = new Map(); }
   static for(store) { if (!store) return new GreenCache(); let cache = caches.get(store); if (!cache) caches.set(store, cache = new GreenCache(store)); return cache; }
-  intern(key, factory) {
-    const map = this.store.map, found = map.get(key); if (found !== undefined) { this.hits++; return found; }
-    const value = factory(); map.set(key, value); if (map.size > this.store.limit) map.delete(map.keys().next().value); return value;
+  clear() { this.trivias.clear(); this.tokens.clear(); this.nodes.clear(); this.missings.clear(); }
+  trivia(kind, text, structure = null) {
+    if (structure) return new GreenTrivia(kind, text, structure);
+    const map = this.trivias, found = map.get(text); if (found !== undefined) { if (found.kind === kind) { this.hits++; return found; } return new GreenTrivia(kind, text); }
+    const value = new GreenTrivia(kind, text); if (map.size >= this.limit) map.clear(); map.set(text, value); return value;
   }
-  trivia(kind, text, structure = null) { return structure ? new GreenTrivia(kind, text, structure) : this.intern('t\0' + kind + '\0' + text, () => new GreenTrivia(kind, text)); }
-  triviaList(items) { return items.length ? items.length === 1 ? this.intern('l\0' + items[0].id, () => Object.freeze([items[0]])) : Object.freeze(items) : empty; }
+  triviaList(items) { return items.length ? items.length === 1 ? items[0].asList : Object.freeze(items) : empty; }
   token(kind, text, value, leading = empty, trailing = empty, flags = 0) {
     if (flags || leading.length > 3 || trailing.length > 3) return new GreenToken(kind, text, value, leading, trailing, flags);
-    let key = 'k\0' + kind + '\0' + text; for (const t of leading) key += '\0' + t.id; key += '\0|'; for (const t of trailing) key += '\0' + t.id;
-    return this.intern(key, () => new GreenToken(kind, text, value, leading, trailing, flags));
+    let h = kindHash(kind); const length = text.length, scan = length < 24 ? length : 24;
+    for (let i = 0; i < scan; i++) h = Math.imul(h, 31) + text.charCodeAt(i) | 0;
+    h = Math.imul(h, 31) + length | 0;
+    for (let i = 0; i < leading.length; i++) h = Math.imul(h, 31) + leading[i].id | 0;
+    h = Math.imul(h, 37) | 0; for (let i = 0; i < trailing.length; i++) h = Math.imul(h, 31) + trailing[i].id | 0;
+    const map = this.tokens, found = map.get(h);
+    if (found !== undefined && found.kind === kind && found.text === text && sameItems(found.leading, leading) && sameItems(found.trailing, trailing)) { this.hits++; return found; }
+    const token = new GreenToken(kind, text, value, leading, trailing, flags); if (found === undefined && map.size >= this.limit) map.clear(); map.set(h, token); return token;
   }
-  missing(kind, leading = empty) { return leading.length ? new GreenToken(kind, '', undefined, leading, empty, GreenFlags.Missing) : this.intern('m\0' + kind, () => new GreenToken(kind, '', undefined, empty, empty, GreenFlags.Missing)); }
+  missing(kind, leading = empty) {
+    if (leading.length) return new GreenToken(kind, '', undefined, leading, empty, GreenFlags.Missing);
+    let token = this.missings.get(kind); if (token === undefined) this.missings.set(kind, token = new GreenToken(kind, '', undefined, empty, empty, GreenFlags.Missing)); else this.hits++; return token;
+  }
   node(kind, children, flags = 0) {
-    if (flags || children.length > maxInternedChildren) return new GreenNode(kind, children, flags);
-    let key = 'n\0' + kind; for (const child of children) { if (child && child.flags & (GreenFlags.ContainsDiagnostics | GreenFlags.ContainsSkippedText)) return new GreenNode(kind, children, flags); key += '\0' + (child ? child.id : 0); }
-    return this.intern(key, () => new GreenNode(kind, children, flags));
+    const count = children.length; if (flags || count > maxInternedChildren) return new GreenNode(kind, children, flags);
+    let h = kindHash(kind);
+    for (let i = 0; i < count; i++) { const child = children[i]; if (child === null) { h = Math.imul(h, 31) | 0; continue; } if (child.flags & (GreenFlags.ContainsDiagnostics | GreenFlags.ContainsSkippedText)) return new GreenNode(kind, children, flags); h = Math.imul(h, 31) + child.id | 0; }
+    const map = this.nodes, found = map.get(h);
+    if (found !== undefined && found.kind === kind && sameItems(found.children, children)) { this.hits++; return found; }
+    const node = new GreenNode(kind, children, flags); if (found === undefined && map.size >= this.limit) map.clear(); map.set(h, node); return node;
   }
   list(items) { return items.length ? this.node('SyntaxList', items) : null; }
 }

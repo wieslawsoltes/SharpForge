@@ -12,9 +12,11 @@ export const punctuationKinds = Object.freeze({
 const scanned = ['<<=', '??=', '=>', '==', '!=', '<=', '>=', '&&', '||', '++', '--', '+=', '-=', '*=', '/=', '%=', '??', '<<', '&=', '|=', '^=', '::', '->', '..'];
 const single = '{}()[];:,.?+-*/%<>=!~&|^';
 /** Returns the operator or punctuation text at `i`, or null when the character cannot start a token. */
+const byFirst = new Map(); for (const op of scanned) { const list = byFirst.get(op[0]); if (list) list.push(op); else byFirst.set(op[0], [op]); }
 export function scanOperator(text, i) {
-  for (const op of scanned) if (text.startsWith(op, i)) return op;
-  return single.includes(text[i]) ? text[i] : null;
+  const ch = text[i], list = byFirst.get(ch);
+  if (list !== undefined) for (let k = 0; k < list.length; k++) if (text.startsWith(list[k], i)) return list[k];
+  return single.includes(ch) ? ch : null;
 }
 /** `>`-family operators assembled by the parser from adjacent tokens: [parts, merged text]. Longest first. */
 export const greaterThanMerges = Object.freeze([[['>', '>', '>='], '>>>='], [['>', '>', '>'], '>>>'], [['>', '>='], '>>='], [['>', '>'], '>>']]);

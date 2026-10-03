@@ -44,18 +44,31 @@ export class SyntaxNode {
   get span() { return { start: this.position + this.green.leadingWidth, end: this.position + this.green.fullWidth - this.green.trailingWidth }; }
   get containsDiagnostics() { return this.green.containsDiagnostics; }
   get root() { let node = this; while (node.parent) node = node.parent; return node; }
+  /** Red children are created per slot on first use, so consumers that read a few slots never materialise the rest. */
+  _wrap(child, at) {
+    if (child.isToken) return new SyntaxToken(child, this, at);
+    if (child.kind !== 'SyntaxList') return createNode(child, this, at);
+    const items = child.children, out = new Array(items.length);
+    for (let k = 0; k < items.length; k++) { const green = items[k]; out[k] = green.isToken ? new SyntaxToken(green, this, at) : createNode(green, this, at); at += green.fullWidth; }
+    return Object.freeze(out);
+  }
   _build() {
-    const slots = [], children = []; let at = this.position;
-    const wrap = green => { const red = green.isToken ? new SyntaxToken(green, this, at) : createNode(green, this, at); at += green.fullWidth; children.push(red); return red; };
-    for (const child of this.green.children) {
-      if (!child) slots.push(null);
-      else if (child.isNode && child.isList) slots.push(Object.freeze(child.children.map(wrap)));
-      else slots.push(wrap(child));
+    const green = this.green.children, slots = this._slots ??= new Array(green.length).fill(undefined), children = []; let at = this.position;
+    for (let i = 0; i < green.length; i++) {
+      const child = green[i]; if (!child) { slots[i] = null; continue; }
+      let value = slots[i]; if (value === undefined) value = slots[i] = this._wrap(child, at);
+      if (Array.isArray(value)) for (let k = 0; k < value.length; k++) children.push(value[k]); else children.push(value);
+      at += child.fullWidth;
     }
-    this._slots = slots; this._children = Object.freeze(children);
+    this._children = Object.freeze(children);
   }
   /** The red child in grammar slot `index`: a node, a token, an array (list slot) or null. */
-  slot(index) { if (!this._slots) this._build(); return this._slots[index]; }
+  slot(index) {
+    const green = this.green.children, slots = this._slots ??= new Array(green.length).fill(undefined), value = slots[index]; if (value !== undefined) return value;
+    const child = green[index]; if (!child) return slots[index] = null;
+    let at = this.position; for (let k = 0; k < index; k++) { const before = green[k]; if (before) at += before.fullWidth; }
+    return slots[index] = this._wrap(child, at);
+  }
   /** List slot contents; `separated` drops the separator tokens. */
   list(index, separated = false) { const items = this.slot(index); return !items ? empty : separated ? items.filter((_, i) => i % 2 === 0) : items; }
   separators(index) { const items = this.slot(index); return items ? items.filter((_, i) => i % 2 === 1) : empty; }

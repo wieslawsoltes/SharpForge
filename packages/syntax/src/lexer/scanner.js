@@ -11,7 +11,9 @@ import { scanTrivia } from './trivia.js';
 import { DirectiveState, unterminatedDirectives } from '../directives/conditional.js';
 import { scanInterpolated } from '../interpolation.js';
 import { legacyGreenToken } from '../green.js';
-const nestingLimit = 200, empty = Object.freeze([]);
+const nestingLimit = 200, empty = Object.freeze([]), fixedTokens = new WeakMap();
+/** Per-cache tables for keyword and punctuation tokens with no leading trivia or one leading space, keyed by the (pre-hashed) kind. */
+const fixedFor = cache => { let tables = fixedTokens.get(cache); if (!tables) fixedTokens.set(cache, tables = [new Map(), new Map()]); return tables; };
 /** Character scanner producing the flat token stream. Trivia is attached to tokens with Roslyn's leading/trailing rules. */
 export class Scanner {
   constructor(source, cache = new BoundedCache(), options = {}) {
@@ -37,7 +39,7 @@ export class Scanner {
       const scan = scanString(text, start, report); this.i = scan.end; raw.kind = scan.kind; raw.syntaxKind = scan.kind === 'char' ? 'CharacterLiteralToken' : 'StringLiteralToken'; raw.value = scan.value;
       if (scan.verbatim) raw.flags = { verbatim: true };
       for (const feature of scan.features) this.feature(feature.id, feature.start, feature.end);
-    } else if (/[0-9]/.test(ch) || ch === '.' && /[0-9]/.test(text[start + 1] ?? '')) {
+    } else if (ch >= '0' && ch <= '9' || ch === '.' && text[start + 1] >= '0' && text[start + 1] <= '9') {
       const scan = ch === '.' ? scanReal(text, start) : scanNumber(text, start); this.i = scan.end;
       raw.kind = scan.kind; raw.syntaxKind = 'NumericLiteralToken'; raw.value = scan.value; raw.literal = Object.freeze({ ...scan.literal, number: scan.value });
       for (const e of scan.errors) this.error(start, scan.end - start, e.code, e.message, e.severity);
@@ -47,10 +49,10 @@ export class Scanner {
     } else if (startsIdentifier(text, start)) {
       const scan = scanIdentifier(text, start); this.i = scan.end; raw.value = scan.value;
       raw.kind = !scan.verbatim && !scan.hasEscapes && keywords.has(scan.value) ? scan.value : 'identifier'; raw.syntaxKind = reservedKeywordKinds[raw.kind] ?? 'IdentifierToken';
-      if (scan.verbatim || scan.hasEscapes) raw.flags = { verbatim: scan.verbatim, escaped: scan.hasEscapes };
+      if (scan.verbatim || scan.hasEscapes) raw.flags = { verbatim: scan.verbatim, escaped: scan.hasEscapes }; else if (raw.kind !== 'identifier') raw.fixed = true;
     } else {
       const op = scanOperator(text, start);
-      if (op) { raw.kind = op; raw.syntaxKind = punctuationKinds[op]; this.i = start + op.length; }
+      if (op) { raw.kind = op; raw.syntaxKind = punctuationKinds[op]; raw.fixed = true; this.i = start + op.length; }
       else { const point = text.codePointAt(start); this.i = start + (point > 0xFFFF ? 2 : 1); this.error(start, this.i - start, 'CS1056', `Unexpected character '${text.slice(start, this.i)}'`); raw.kind = 'bad'; raw.syntaxKind = 'BadToken'; }
     }
     if (raw.syntaxKind.endsWith('StringLiteralToken')) {
@@ -87,11 +89,16 @@ export class Scanner {
   }
   /** Converts raw scan records into frozen tokens. `fullStart` is where the first token's preceding trivia begins. */
   finish(raws, fullStart) {
-    const text = this.text, cache = this.cache, tokens = [];
+    const text = this.text, cache = this.cache, tokens = [], fixed = fixedFor(cache);
     for (const raw of raws) {
-      const { kind, start, end, value } = raw, tokenText = text.slice(start, end), fullText = text.slice(fullStart, end), key = kind + '\0' + fullText;
-      let green = cache.map.get(key);
-      if (green !== undefined) this.reused++; else green = cache.getOrAdd(key, () => legacyGreenToken(kind, tokenText, fullText.slice(0, start - fullStart), value));
+      const { kind, start, end, value } = raw, tokenText = raw.fixed ? kind : text.slice(start, end), fullText = start === fullStart ? tokenText : text.slice(fullStart, end);
+      // Interned by full text; the rare spelling shared by two kinds falls back to a kind-qualified key.
+      const lead = start - fullStart, table = raw.fixed && (lead === 0 || lead === 1 && text.charCodeAt(fullStart) === 32) ? fixed[lead] : null;
+      let green = table ? table.get(kind) : cache.map.get(fullText);
+      if (table) { if (green !== undefined) this.reused++; else table.set(kind, green = legacyGreenToken(kind, tokenText, lead ? ' ' : '', value)); }
+      else if (green !== undefined && green.kind === kind) this.reused++;
+      else if (green === undefined) green = cache.getOrAdd(fullText, () => legacyGreenToken(kind, tokenText, fullText.slice(0, start - fullStart), value));
+      else { const key = kind + '\0' + fullText; green = cache.map.get(key); if (green !== undefined) this.reused++; else green = cache.getOrAdd(key, () => legacyGreenToken(kind, tokenText, fullText.slice(0, start - fullStart), value)); }
       const flags = raw.flags, syntaxKind = raw.syntaxKind;
       const token = { kind, syntaxKind, value, text: tokenText, start, end, fullStart, green, leadingTrivia: Object.freeze(raw.leading ?? empty), trailingTrivia: Object.freeze(raw.trailing ?? empty) };
       if (raw.literal) token.literal = raw.literal;
