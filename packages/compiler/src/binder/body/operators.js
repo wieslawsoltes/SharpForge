@@ -24,6 +24,10 @@ export const OperatorBinding = Base =>
         if (e.form === 'lambda' && !c.hasErrors) this.finishLambda(e, type);
         return c;
       }
+      if (type.isStatic && type.typeKind === TypeKind.Class) {
+        this.report(syntax, 'CS0716', [this.display(type)]);
+        return this.bad(syntax);
+      }
       const c = this.conversions.classifyCastFromExpression(e, type);
       if (!c.exists) {
         if (e.literal === 'null') this.report(syntax, 'CS0037', [this.display(type)]);
@@ -125,6 +129,7 @@ export const OperatorBinding = Base =>
           method: r.method,
           isLifted: r.isLifted,
           isLogical: !!r.isLogical,
+          shortCircuit: r.shortCircuitOperator ?? null,
         });
       }
       const l = this.operand(left, r.leftType),
@@ -150,19 +155,7 @@ export const OperatorBinding = Base =>
     }
     assignment(syntax) {
       const operator = syntax.operatorToken.text;
-      if (syntax.left.kind === 'TupleExpression' || syntax.left.kind === 'DeclarationExpression') {
-        // Deconstruction (bound in full by SF-A02-T08.5): the declared variables enter scope, the parts are bound for their own diagnostics.
-        this.value(syntax.right);
-        if (syntax.left.kind === 'DeclarationExpression')
-          for (const d of this.designationsIn(syntax.left)) this.designation(d, unknown, {});
-        for (const a of syntax.left.arguments ?? []) {
-          if (a.expression.kind === 'DeclarationExpression') {
-            if (a.expression.designation.kind === 'SingleVariableDesignation') this.declarationExpression(a.expression, null);
-            else for (const d of this.designationsIn(a.expression)) this.designation(d, unknown, {});
-          } else this.markWrite(this.expression(a.expression, { allowDiscard: true }), null);
-        }
-        return this.lenient(syntax);
-      }
+      if (operator === '=' && this.isDeconstructionTarget(syntax.left)) return this.deconstruction(syntax);
       const left = this.expression(syntax.left, { allowDiscard: true });
       if (left.kind === 'Discard') {
         const v = this.value(syntax.right);
@@ -202,16 +195,7 @@ export const OperatorBinding = Base =>
         this.value(syntax.right);
         return this.bad(syntax);
       }
-      if (
-        (left.kind === 'PropertyAccess' || left.kind === 'IndexerAccess') &&
-        left.property.setMethod &&
-        left.property.setMethod.declaredAccessibility !== left.property.declaredAccessibility &&
-        !isAccessible(
-          left.property.setMethod.originalDefinition ?? left.property.setMethod,
-          this.c.containingType?.originalDefinition ?? null,
-          { withinModule: this.d.assembly.module },
-        )
-      ) {
+      if (this.hasInaccessibleSetter(left)) {
         this.report(syntax.left, 'CS0272', [left.property.toDisplayString()]);
         this.value(syntax.right);
         return this.bad(syntax);
@@ -304,10 +288,22 @@ export const OperatorBinding = Base =>
         return a.field === b.field && ((!a.receiver && !b.receiver) || (a.receiver?.kind === 'This' && b.receiver?.kind === 'This'));
       return false;
     }
+    /** True for a property or indexer whose set accessor is less accessible than the property and not accessible here. */
+    hasInaccessibleSetter(target) {
+      if (target.kind !== 'PropertyAccess' && target.kind !== 'IndexerAccess') return false;
+      const setter = target.property.setMethod;
+      if (!setter || setter.declaredAccessibility === target.property.declaredAccessibility) return false;
+      const within = this.c.containingType?.originalDefinition ?? null;
+      return !isAccessible(setter.originalDefinition ?? setter, within, { withinModule: this.d.assembly.module });
+    }
     increment(syntax) {
       const operator = syntax.operatorToken.text,
         operand = this.expression(syntax.operand);
       if (operand.hasErrors) return this.bad(syntax);
+      if (this.hasInaccessibleSetter(operand)) {
+        this.report(syntax.operand, 'CS0272', [operand.property.toDisplayString()]);
+        return this.bad(syntax);
+      }
       if (operand.kind === 'TypeExpression' || operand.kind === 'NamespaceExpression') {
         this.asValue(operand);
         return this.bad(syntax);

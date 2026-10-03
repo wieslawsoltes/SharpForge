@@ -1,0 +1,9 @@
+/**
+ * The member lowerings of SF-A02-T10 as translator mixins, in composition order (a later mixin may refine an earlier
+ * one through `super`). The body translator composes them after its own expression and statement families.
+ */
+import { EvaluateOnce } from './evaluate-once.js';
+import { InitializerLowering } from './initializers.js';
+import { OperatorLowering } from './operators.js';
+
+export const memberLowerings = Object.freeze([EvaluateOnce, InitializerLowering, OperatorLowering]);

@@ -40,7 +40,8 @@ test('SF-A02-T09.6 foreach over arrays, framework collections and the GetEnumera
         Console.WriteLine(total);
       }
     }`);
-  assert.deepEqual(lines, ['6ab321', '3']);
+  // Cursor has a Dispose method but is not IDisposable: foreach does not call it (.NET prints the same).
+  assert.deepEqual(lines, ['6ab320', '3']);
 });
 
 test('using statements dispose in reverse order, also when the body throws', () => {
@@ -110,7 +111,7 @@ test('constructs that need runtime support are reported with their name and posi
   const cases = [
     ['class B { } class D : B { } class P { static void Main() { } }', /class inheritance/],
     ['struct S { } class P { static void Main() { S s = new S(); } }', /struct types/],
-    ['class P { static void M(ref int x) { x = 1; } static void Main() { } }', /ref, out and in parameters/],
+    ['delegate void D(ref int x); class P { static void M(ref int x) { x = 1; } static void Main() { D d = M; int v = 0; d(ref v); } }', /ref, out and in parameters/],
     ['class P { static void Main() { long big = 1; System.Console.WriteLine(big); } }', /64-bit integers/],
     ['using System; class P { static void Main() { try { } catch (InvalidOperationException) { } } }', /./],
     ['class Box<T> { } class P { static void Main() { } }', /user-defined generics/],
@@ -134,7 +135,7 @@ test('a program inside the execution profile is still compiled by the profile pi
   assert.equal(result.semantic, undefined, 'the semantic generator is not involved');
 });
 
-test('SF-A02-T43 goto and labels are jumps; goto case is reported', () => {
+test('SF-A02-T43 goto and labels are jumps', () => {
   const lines = linesOf(
     program(`
       static void Main() {
@@ -152,7 +153,6 @@ test('SF-A02-T43 goto and labels are jumps; goto case is reported', () => {
       }`),
   );
   assert.deepEqual(lines, ['134.....']);
-  const result = compile(program(`static void Main() { int n = 1; switch (n) { case 1: goto case 2; case 2: Console.WriteLine(n); break; } }`));
-  assert.equal(result.image, null);
-  assert.ok(result.diagnostics.some(d => d.code === 'SF2200' && /goto case/.test(d.message)));
+  // goto case used to be reported as SF2200; it is lowered now (tests/compiler-jumps.test.js).
+  assert.deepEqual(linesOf(program(`static void Main() { int n = 1; switch (n) { case 1: goto case 2; case 2: Console.WriteLine(n); break; } }`)), ['1']);
 });

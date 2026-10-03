@@ -5,7 +5,11 @@ export const typeDeclarationMethods = {
   /** Parses a type or delegate declaration when one starts here; returns null otherwise. */
   typeLikeDeclaration(attributeLists, modifiers) {
     this.interfaceNestedType();
-    this.fileTypeName(modifiers);
+    if (modifiers.length) {
+      this.fileTypeName(modifiers);
+      const name = this.typeNameAhead();
+      if (name) this.modifierNameFeatures(this.memberModifiers, this.memberModifiersEnd, name);
+    }
     if (this.atAny(['class', 'struct', 'interface'])) return this.typeDeclaration(attributeLists, modifiers);
     if (this.at('enum')) return this.enumDeclaration(attributeLists, modifiers);
     if (this.at('delegate') && this.peek().kind !== '*') return this.delegateDeclaration(attributeLists, modifiers);

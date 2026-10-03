@@ -12,6 +12,7 @@ import { formatMessage, isFeatureGateCode } from './diagnostics/codes.js';
 import { suspiciousUsings, usingDiagnosticClassifier } from './binder/using-check.js';
 import { featureDiagnosticCodes, newestLanguageVersion } from './binder/feature-check.js';
 import { generateFromSemanticAnalysis, isEntryPointCandidate } from './codegen/semantic/generator.js';
+import { needsSemanticRules, semanticRuleCodes } from './semantic/profile-rechecks.js';
 
 /** Profile diagnostics that mark a construct the execution profile cannot run (as opposed to option and API errors). */
 export const isProfileConstructDiagnostic = code =>
@@ -114,8 +115,10 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   // Nor is a program without an entry point: nothing can be generated for it, so the pipeline's diagnostics stand.
   const nothingToGenerate = onlyStandingErrors(legacy, files) || hasNoEntryPoint(legacy);
   if (!compiled && !gatesVersion && !profile.length && !hasReferences && nothingToGenerate) return null;
-  const usings = compiled && !gatesVersion && !hasReferences ? suspiciousUsings(compilation) : null;
-  if (compiled && !gatesVersion && !hasReferences && !usings) return null;
+  const usings = compiled && !gatesVersion && !hasReferences ? suspiciousUsings(compilation) : null,
+    // ... and for the few language rules the pipeline does not check on constructs it compiles.
+    rechecked = compiled && needsSemanticRules(files);
+  if (compiled && !gatesVersion && !hasReferences && !usings && !rechecked) return null;
   let result;
   try {
     const analysis = new SemanticAnalysis(files, {
@@ -123,7 +126,7 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
       nullableContext: compilation.typedOptions?.nullableContext ?? compilation.options.nullableContext,
     });
     // Wrong using directives of a program that compiles are diagnosed from the directives alone.
-    result = usings === 'directives' ? analysis.runUsings() : analysis.run();
+    result = usings === 'directives' && !rechecked ? analysis.runUsings() : analysis.run();
   } catch (error) {
     // An internal failure of the analysis must not hide the profile diagnostics the pipeline already has, and it must
     // not pass silently either: it is reported as a diagnostic of its own.
@@ -156,7 +159,8 @@ export function reconcileWithSemanticAnalysis(compilation, featureDiagnostics = 
   const unchanged = () => (featureGates.length ? { diagnostics: merge(legacy, featureGates), semantic: result } : null);
   if (compiled && (!hasReferences || !errors.length)) {
     // The image stands; the analysis only adds what it found in the using directives and alias declarations.
-    const extra = [...semantic.filter(d => isUsingDiagnostic(d) || d.code === 'CS0576'), ...featureGates];
+    const taken = d => isUsingDiagnostic(d) || d.code === 'CS0576' || (rechecked && semanticRuleCodes.has(d.code));
+    const extra = [...semantic.filter(taken), ...featureGates];
     return extra.length ? { diagnostics: merge(legacy, extra), semantic: result } : null;
   }
   if (errors.length) {

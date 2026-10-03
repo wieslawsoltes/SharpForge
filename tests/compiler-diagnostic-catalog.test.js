@@ -1,3 +1,4 @@
+import {fileURLToPath} from 'node:url';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,readdirSync} from 'node:fs';
@@ -6,7 +7,7 @@ import {spawnSync} from 'node:child_process';
 import {compile} from '@sharpforge/compiler';
 import {diagnosticDescriptor,formatMessage,argumentCount,diagnosticCodes,profileCodes,defaultSeverity,roslynEquivalent,featureNotAvailableCode,hasDiagnosticCode} from '../packages/compiler/src/diagnostics/codes.js';
 import {roslynCodes,ROSLYN_VERSION} from '../packages/compiler/src/diagnostics/roslyn-codes.js';
-const pkg=new URL('../packages/compiler/',import.meta.url).pathname,root=join(pkg,'src');
+const pkg=fileURLToPath(new URL('../packages/compiler/',import.meta.url)),root=join(pkg,'src');
 const pinned=JSON.parse(readFileSync(join(pkg,'test/roslyn/diagnostic-messages.json'),'utf8'));
 const sources=dir=>readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?sources(join(dir,e.name)):e.name.endsWith('.js')?[join(dir,e.name)]:[]);
 const files=sources(root).filter(f=>!f.endsWith('roslyn-codes.js')).map(f=>[f,readFileSync(f,'utf8')]);

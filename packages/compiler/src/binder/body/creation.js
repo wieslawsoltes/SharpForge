@@ -1,14 +1,12 @@
 /**
- * Object, delegate and array creation with object and collection initializers and target-typed `new`.
+ * Object, delegate and array creation and target-typed `new`; initializers are bound in ../members/initializers.js.
  */
 import { SymbolKind, TypeKind, ArrayTypeSymbol } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { Conversion, ConversionKind } from '../../conversions/classify.js';
 import { numericKind } from '../../conversions/numeric.js';
 import { isNullableType, stripNullable } from '../../conversions/nullable.js';
-import { lookupMembers } from '../inheritance.js';
 import { isAccessible } from '../accessibility.js';
-import { checkWritable } from '../ref-kinds.js';
 
 const isSource = symbol => {
   for (let s = symbol?.originalDefinition ?? symbol; s; s = s.containingSymbol) if (s.isSource || s.containingAssembly) return true;
@@ -71,7 +69,7 @@ export const CreationBinding = Base =>
         return this.bad(syntax);
       }
       if (type.isStatic) {
-        this.report(typeNode, 'CS0712', [this.display(type)]);
+        this.report(typeNode === syntax.newKeyword ? typeNode : syntax, 'CS0712', [this.display(type)]);
         return this.bad(syntax);
       }
       if (type.typeKind === TypeKind.TypeParameter) {
@@ -137,95 +135,6 @@ export const CreationBinding = Base =>
         this.node('ObjectCreation', syntax, type, { constructor: r.method, args: call.args, expanded: r.expanded }),
         initializer,
       );
-    }
-    initializerSilently(initializer, type = null) {
-      const saved = this.quiet;
-      this.quiet = [];
-      try {
-        for (const e of initializer.expressions) {
-          if (e.kind === 'SimpleAssignmentExpression') this.expression(e.right.kind.endsWith('InitializerExpression') ? e.left : e.right);
-          else if (!e.kind.endsWith('InitializerExpression')) this.expression(e);
-        }
-      } finally {
-        this.quiet = saved;
-      }
-    }
-    withInitializer(creation, initializer) {
-      if (!initializer) return creation;
-      const type = creation.type,
-        members = [];
-      if (initializer.kind === 'ObjectInitializerExpression') {
-        for (const item of initializer.expressions) {
-          if (item.kind !== 'SimpleAssignmentExpression' || item.left.kind !== 'IdentifierName') {
-            this.incomplete = true;
-            this.d.incomplete = true;
-            continue;
-          }
-          const name = item.left.identifier.valueText,
-            found = lookupMembers(type, name, this.core, { within: this.c.containingType, throughType: type }).members.filter(
-              m => m.kind === SymbolKind.Field || m.kind === SymbolKind.Property,
-            );
-          if (!found.length) {
-            if (!isSource(type) && !this.d.registryIsComplete(type, name)) {
-              this.lenient(item);
-              this.initializerSilently({ expressions: [item] });
-              continue;
-            }
-            this.report(item.left, 'CS0117', [this.display(type), name]);
-            this.value(item.right.kind.endsWith('InitializerExpression') ? item.left : item.right);
-            continue;
-          }
-          const m = found[0],
-            target = this.node(m.kind === SymbolKind.Field ? 'FieldAccess' : 'PropertyAccess', item.left, m.type, {
-              [m.kind === SymbolKind.Field ? 'field' : 'property']: m,
-              receiver: creation,
-              isInitializerTarget: true,
-            });
-          if (m.isStatic) {
-            this.report(item.left, 'CS1914', [m.toDisplayString()]);
-            continue;
-          }
-          if (item.right.kind.endsWith('InitializerExpression')) {
-            members.push({ target, value: this.withInitializer({ ...target, type: m.type }, item.right) });
-            continue;
-          }
-          this.inObjectInitializer = true;
-          const w = checkWritable(target, 'assignment', this.variableContext);
-          this.inObjectInitializer = false;
-          if (w) this.report(item.left, w.code, w.args);
-          const value = this.value(item.right);
-          this.markWrite(target, value);
-          members.push({ target, value: this.convert(value, m.type, item.right) });
-        }
-        return { ...creation, initializers: members };
-      }
-      // Collection initializer: each element is an Add call.
-      const elements = [];
-      for (const item of initializer.expressions) {
-        const values = item.kind === 'ComplexElementInitializerExpression' ? item.expressions.map(e => this.value(e)) : [this.value(item)];
-        const adds = lookupMembers(type, 'Add', this.core, { within: this.c.containingType }).members.filter(
-          m => m.kind === SymbolKind.Method,
-        );
-        if (!adds.length || values.some(v => v.hasErrors)) {
-          if (!adds.length && isSource(type)) {
-            this.report(item, 'CS1061', [this.display(type), 'Add']);
-          } else if (!adds.length) this.incomplete = this.d.incomplete = true;
-          continue;
-        }
-        const r = this.d.overloads.resolve(adds, values, { name: 'Add' });
-        if (!r.succeeded) {
-          if (adds.every(isSource) || this.d.registryIsComplete(type, 'Add')) {
-            const e = r.error;
-            this.report(e.argument !== undefined ? values[e.argument].syntax : item, e.code, e.args);
-          } else this.incomplete = this.d.incomplete = true;
-          continue;
-        }
-        elements.push({
-          method: r.method,
-          args: values.map((v, i) => (r.conversions[i] && v.type ? this.applyConversion(v, r.parameterTypes[i], r.conversions[i]) : v)),
-        });
-      }
-      return { ...creation, collectionInitializers: elements };
     }
     arrayCreation(syntax) {
       const implicit = syntax.kind === 'ImplicitArrayCreationExpression',

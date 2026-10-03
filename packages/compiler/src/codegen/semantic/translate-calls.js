@@ -8,6 +8,10 @@ import { MethodKind } from '../../symbols/members.js';
 import { n } from './node-factory.js';
 
 const primitiveToString = new Set(['int', 'double', 'bool', 'string']);
+const derivesFrom = (type, ancestor) => {
+  for (let current = type.baseType; current; current = current.baseType) if (current.equals(ancestor)) return true;
+  return false;
+};
 
 /** Class mixin: calls, creation, properties, indexers, events. */
 export const CallTranslation = Base =>
@@ -50,6 +54,8 @@ export const CallTranslation = Base =>
     defaultArgument(parameter, node) {
       const type = this.imageType(parameter.type, node.syntax),
         value = parameter.explicitDefaultValue ?? parameter.defaultValue;
+      // A default that was never bound must not silently become zero.
+      if (parameter.defaultSyntax && !parameter.defaultBound) return this.unsupported('this optional parameter default', node.syntax);
       if (value === undefined || value === null) return this.defaultValue(type);
       const raw = value.value ?? value;
       if (raw !== null && typeof raw === 'object') return this.unsupported('this optional parameter default', node.syntax);
@@ -130,8 +136,13 @@ export const CallTranslation = Base =>
       return this.withInitializers(node, creation);
     }
     frameworkCreation(node) {
+      if (node.type.specialType === 'System_Object')
+        return this.unsupported("creating 'object' (the framework registry has no System.Object constructor)", node.syntax);
       const ctor = node.constructor,
-        name = this.imageType(node.type, node.syntax);
+        exception = this.g.analysis.core.exception;
+      if (!node.type.equals(exception) && derivesFrom(node.type, exception))
+        return this.unsupported(`exception class '${node.type.toDisplayString()}' (the runtime creates System.Exception only)`, node.syntax);
+      const name = this.imageType(node.type, node.syntax);
       if (!ctor || typeof ctor !== 'object' || !(ctor.contract || ctor.builtin))
         return this.unsupported(`creating '${node.type.toDisplayString()}' (constructor not in the framework registry)`, node.syntax);
       this.checkFrameworkParameters(ctor, node.syntax);
@@ -145,23 +156,6 @@ export const CallTranslation = Base =>
         initializers: [],
         collectionInitializers: [],
       };
-    }
-    /** `new T(...) { A = x, B = y }`: the object is held in a temporary while its members are assigned in order. */
-    withInitializers(node, creation) {
-      const temp = this.temp(creation.legacyType, 'new'),
-        saved = this.initializerReceiver;
-      const effects = [n.assign(n.local(temp), creation)];
-      this.initializerReceiver = { read: () => n.local(temp) };
-      try {
-        for (const init of node.initializers ?? []) {
-          if (!init.target || !init.value) return this.unsupported('this object initializer form', node.syntax);
-          effects.push(n.assign(this.target(init.target), this.expression(init.value)));
-        }
-        if (node.collectionInitializers?.length) return this.unsupported('collection initializers', node.syntax);
-      } finally {
-        this.initializerReceiver = saved;
-      }
-      return n.sequence([temp], effects, n.local(temp));
     }
     memberReceiver(node) {
       const receiver = node.receiver;
@@ -198,7 +192,7 @@ export const CallTranslation = Base =>
       if (this.g.isSource(node.property)) {
         const getter = node.property.getMethod;
         if (!getter) return this.unsupported('reading a write-only indexer', node.syntax);
-        return n.call(this.g.methodOf(getter, node.syntax), this.expression(node.receiver), this.arguments(node, getter));
+        return n.call(this.g.methodOf(getter, node.syntax), this.expression(node.receiver), this.arguments(node, node.property));
       }
       return this.indexerReference(node);
     }
@@ -222,7 +216,7 @@ export const CallTranslation = Base =>
       const setter = node.property.setMethod;
       if (!setter) return this.unsupported('assignment to a read-only indexer', node.syntax);
       const stored = this.temp(value.legacyType, 'value'),
-        args = node.args.map(a => this.expression(a.expression));
+        args = this.arguments(node, node.property);
       const store = n.call(this.g.methodOf(setter, node.syntax), this.expression(node.receiver), [...args, n.local(stored)]);
       return n.sequence([stored], [n.assign(n.local(stored), value), store], n.local(stored));
     }

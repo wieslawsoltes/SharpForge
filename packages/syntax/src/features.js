@@ -200,6 +200,16 @@ const dedicatedDiagnostics = {
     'warning',
     'Field-targeted attributes on auto-properties are not supported in language version {0}. Please use language version 7.3 or greater.'
   ],
+  AltInterpolatedVerbatimStrings: [
+    'CS8401',
+    'error',
+    "To use '@$' instead of '$@' for an interpolated verbatim string, please use language version '{2}' or greater."
+  ],
+  NewLinesInInterpolations: [
+    'CS8967',
+    'error',
+    'Newlines inside a non-verbatim interpolated string are not supported in C# {0}. Please use language version {2} or greater.'
+  ],
   StaticAbstractMembersInInterfaces: ['CS8703', 'error', invalidModifierMessage, 'abstract'],
   PartialProperties: ['CS8703', 'error', invalidModifierMessage, 'partial']
 };

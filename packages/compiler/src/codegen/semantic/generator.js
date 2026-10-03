@@ -121,8 +121,9 @@ class GeneratorCore {
     if (!method.isStatic) frame.thisExpr = () => n.thisReference(method.owner.name);
     return frame;
   }
-  /** Lowers one queued body and records it for emission. */
-  translate({ frame, bound, parameters = [], returnsValue = true, prologue = null }) {
+  /** Lowers one queued body and records it for emission; a queued `run` thunk lowers its body itself. */
+  translate({ frame, bound, parameters = [], returnsValue = true, prologue = null, run = null }) {
+    if (run) return run();
     const translator = new BodyTranslator(this, frame);
     const entry = translator.declareParameters(parameters);
     // `prologue(translator)` builds statements that run after the parameters are in place (a constructor initializer).
@@ -142,7 +143,8 @@ const Members = Base =>
       for (const [symbol, record] of this.methods) {
         const body = bound.get(symbol);
         if (body) {
-          if (body.binder?.isIterator || body.binder?.c?.isIterator) {
+          // The context of the body itself decides: a yield in a local function makes that function the iterator.
+          if (body.binder?.c?.isIterator) {
             this.translateIterator(symbol, record, body);
             this.drain();
             continue;
@@ -163,14 +165,17 @@ const Members = Base =>
     /**
      * An iterator method becomes a kickoff (the method itself: it creates the iterator object and stores the
      * arguments) and a state machine (`<M>d__N.MoveNext`) that runs the body with its locals hoisted into fields.
+     * @param [local] for an iterator local function: `{frame, extra}`, the frame of the enclosing body and the
+     *   parameters the function receives after its declared ones (the receiver and the cells of captured variables)
      */
-    translateIterator(symbol, record, bound) {
+    translateIterator(symbol, record, bound, local = null) {
       const at = symbol.locations?.[0],
-        uri = this.uriOf(symbol),
+        uri = local?.frame.uri ?? this.uriOf(symbol),
         info = this.iterators.infoOf(record.returnType);
       if (!info) return this.unsupported('an iterator method that does not return IEnumerable<T> or IEnumerator<T>', at, uri);
-      const frame = this.memberFrame(record, symbol, uri, bound),
-        machine = this.iterators.addMachine(info, stateMachineTypeName(symbol.name, frame.root.ordinal)),
+      const frame = local?.frame ?? this.memberFrame(record, symbol, uri, bound),
+        name = local ? `<${record.name}>d` : stateMachineTypeName(symbol.name, frame.root.ordinal),
+        machine = this.iterators.addMachine(info, name),
         self = () => n.parameter(n.newParameter('iterator', info.record.name, 0)),
         values = [];
       const proxy = (name, type, value) => {
@@ -193,6 +198,16 @@ const Members = Base =>
       const liveParameters = symbol.parameters.map((p, i) => {
         const type = record.parameters[i].type;
         return proxy(p.name, type, () => n.parameter(n.newParameter(p.name, type, i)));
+      });
+      (local?.extra ?? []).forEach((extra, i) => {
+        const ordinal = symbol.parameters.length + i,
+          live = proxy('<>8__' + extra.name, extra.type, () => n.parameter(n.newParameter(extra.name, extra.type, ordinal))),
+          read = () => n.field(self(), live);
+        if (extra.isThis) machineFrame.thisExpr = read;
+        else {
+          machineFrame.cells.set(extra.variable, read);
+          machineFrame.vars.set(extra.variable, () => n.field(read(), extra.cell.value));
+        }
       });
       this.bodies.push({ method: record, body: n.block([n.returnStatement(this.iterators.create(info, machine, values))]) });
       const translator = new BodyTranslator(this, machineFrame),
@@ -261,8 +276,7 @@ export class SemanticGenerator extends Members(AsyncMethods(Initialization(Decla
   generate() {
     try {
       this.declareTypes();
-      this.declareTypeInitializers();
-      this.declareInstanceInitializers();
+      this.declareInitializers();
       const entry = this.entryPoint();
       this.translateMembers();
       const startup = this.startup(entry);

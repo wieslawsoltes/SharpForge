@@ -37,7 +37,7 @@ test('T33 await is an operator only in async local functions', () => {
 
 test('T33 local functions need C# 7; static needs 8; extern and attributes need 9', () => {
   const source = body => `class C { void M() { ${body} } }`;
-  assert.deepEqual(diagnosticsOf(source('int Twice(int a) => a * 2;'), '6'), ['CS8059@21 "int"']);
+  assert.deepEqual(diagnosticsOf(source('int Twice(int a) => a * 2;'), '6'), ['CS8059@25 "Twice"']);
   assert.deepEqual(diagnosticsOf(source('int Twice(int a) => a * 2;'), '7'), []);
   assert.deepEqual(diagnosticsOf(source('async Task A() { } unsafe void U() { }'), '7'), [], 'async and unsafe are C# 7 modifiers');
   assert.deepEqual(diagnosticsOf(source('static int S(int a) => a;'), '7.3'), ['CS8370@21 "static"']);

@@ -1,3 +1,4 @@
+import {fileURLToPath} from 'node:url';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
@@ -10,7 +11,7 @@ import { parse } from '@sharpforge/syntax';
 import { FrameworkMembers } from '../packages/compiler/src/binder/framework-members.js';
 import { ErrorTypeSymbol } from '../packages/compiler/src/symbols/types.js';
 
-const binderDirectory = new URL('../packages/compiler/src/binder/', import.meta.url).pathname;
+const binderDirectory = fileURLToPath(new URL('../packages/compiler/src/binder/',import.meta.url));
 const members = new FrameworkMembers();
 const argumentOf = name => {
   if (name === 'null') return { literal: 'null', type: null };
