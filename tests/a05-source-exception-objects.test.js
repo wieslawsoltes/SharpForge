@@ -33,6 +33,14 @@ const cases = [
     body: 'Func<string> get=null;try{throw new ArithmeticException("captured");}' +
       'catch(ArithmeticException e){get=()=>e.Message;}Console.WriteLine(get());',
     output: 'captured\n'
+  },
+  {
+    name: 'successive exception base conversions preserve identity and dispatch',
+    body: 'ArithmeticException arithmetic=new DivideByZeroException("base chain");' +
+      'SystemException system=arithmetic;Exception error=system;' +
+      'Console.WriteLine(error==arithmetic);Console.WriteLine(error.Message);' +
+      'Console.WriteLine(error.GetType().Name);',
+    output: 'True\nbase chain\nDivideByZeroException\n'
   }
 ];
 
