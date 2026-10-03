@@ -1,4 +1,5 @@
-import {languageVersion,hasBackingField,rewriteBackingField} from './modern.js';
+import {languageVersion} from './modern.js';
+import {reportFieldKeywordUses} from './binder/field-keyword.js';
 import {lowerAsyncFiles} from './async-lowering.js';
 import {frameworkType,taskResult,findContracts} from '@sharpforge/framework';
 import {diagnostic} from '@sharpforge/text';
@@ -188,8 +189,9 @@ export class Compilation {
     if(node.accessors.filter(a=>a.modifiers.length).length>1)this.report(node,'CS0274',[owner.name+'.'+node.name]);
     const property={name:node.name,type,isStatic,access,node,owner,get:null,set:null,backing:null};owner.properties.push(property);
     property.symbol=this.symbol(node,'property',type,{owner:owner.name,isStatic,access,readable:node.accessors.some(a=>a.name==='get'),writable:node.accessors.some(a=>a.name==='set')});
-    const auto=node.accessors.some(a=>!a.body),fieldBacked=node.accessors.some(a=>hasBackingField(a.body)),mixed=auto&&node.accessors.some(a=>a.body),backed=auto||fieldBacked;
-    if(fieldBacked||mixed)this.requireFeature(node,14,'Field-backed properties');
+    const fieldBacked=reportFieldKeywordUses(node,this.selectedVersion(node),(at,code,args)=>this.report(at,code,args));
+    const auto=node.accessors.some(a=>!a.body),mixed=auto&&node.accessors.some(a=>a.body),backed=auto||fieldBacked;
+    if(mixed)this.requireFeature(node.nameSpan?{...node,...node.nameSpan}:node,14,'field keyword');
     if(auto&&!fieldBacked&&!node.accessors.some(a=>a.name==='get'))this.report(node,'CS8051');
     if(node.initializer&&!backed)this.report(node,'CS8050');
     if(backed)property.backing=this.declareField(owner,{...node,kind:'Field',name:`<${node.name}>k__BackingField`,backing:true,modifiers:isStatic?['static']:[],initializer:node.initializer});
@@ -200,7 +202,7 @@ export class Compilation {
       if(accessor.modifiers.length!==specified.length||specified.length>1)this.report(accessor,'CS0106',[accessor.modifiers.find(m=>!['private','internal','protected','public'].includes(m))??accessor.modifiers[1]]);
       const visibility=specified[0]??access;
       if(specified.length&&(node.accessors.length!==2||visibility===access||visibility==='public'||access==='private'||access==='internal'&&visibility!=='private'||access==='protected'&&visibility!=='private'))this.report(accessor,'CS0273',[owner.name+'.'+node.name+'.'+accessor.name,owner.name+'.'+node.name]);
-      let body=fieldBacked?rewriteBackingField(accessor.body,property.backing.name,n=>this.report(n,'CS9273',[this.selectedVersion(n).name])):accessor.body;
+      let body=fieldBacked?null:accessor.body;
       if(!body){const field={...node,kind:'Name',name:property.backing.name};const expression=accessor.name==='get'?field:{...node,kind:'Assignment',operator:'=',left:field,right:{...accessor,kind:'Name',name:'value'}};
         body={...accessor,kind:'Block',statements:[{...accessor,kind:accessor.name==='get'?'Return':'ExpressionStatement',expression}]};}
       const method=this.declareMethod(owner,{...node,kind:'Method',name:accessor.name+'_'+node.name,returnType:accessor.name==='get'?type:'void',parameters:accessor.name==='get'?[]:[{...accessor,kind:'Parameter',name:'value',type}],modifiers:isStatic?['static']:[],body},true);

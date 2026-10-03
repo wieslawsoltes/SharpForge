@@ -1,5 +1,8 @@
-import {float, floatBinary, floatCompare, int64Binary, int64Compare, int64Unary, uint32Binary, uint32Compare} from '@sharpforge/bytecode';
-export {float} from '@sharpforge/bytecode';
+import {
+  float, floatBinary, floatCompare, int64Binary, int64Compare, int64Unary,
+  uint32Binary, uint32Compare, smallInteger, smallIntegerIndirect, convert, number, isNumber
+} from '@sharpforge/bytecode';
+export {float, convert, number, isNumber} from '@sharpforge/bytecode';
 
 /** Pure operations on CIL evaluation-stack values.
  *
@@ -11,9 +14,9 @@ export {float} from '@sharpforge/bytecode';
 const fault = (type, message) => Object.assign(new Error(message), {name: type});
 const error = message => Object.assign(new Error(message), {name: 'CilError'});
 const reference = value => value !== null && typeof value === 'object' && Number.isInteger(value.h) && Number.isInteger(value.g);
+const smallStorageTypes = new Set(['sbyte', 'byte', 'short', 'ushort', 'char', 'bool']);
+const smallIndirectSuffixes = new Set(['i1', 'u1', 'i2', 'u2']);
 
-export const number = value => value?.float ? value.value : value;
-export const isNumber = value => typeof value === 'number' || typeof value === 'bigint' || !!value?.float;
 const numericAliases = {'System.SByte': 'sbyte', 'System.Byte': 'byte', 'System.Int16': 'short', 'System.UInt16': 'ushort', 'System.Char': 'char', 'System.Boolean': 'bool', 'System.Int32': 'int', 'System.UInt32': 'uint', 'System.Int64': 'long', 'System.UInt64': 'ulong', 'System.Single': 'float', 'System.Double': 'double', 'System.IntPtr':'nint', 'System.UIntPtr':'nuint'};
 export const defaults = input => { const type=numericAliases[input]??input; return type === 'long' || type === 'ulong' ? 0n : type === 'double' ? float(0) : type === 'float' ? float(0, 'r4') : ['int', 'uint', 'short', 'ushort', 'byte', 'sbyte', 'char', 'bool', 'nint', 'nuint'].includes(type) ? 0 : null; };
 
@@ -95,52 +98,19 @@ export function unary(name, value, context = {}) {
   return name === 'neg' ? (-raw) | 0 : ~raw;
 }
 
-export function convert(name, value, {fault: createFault = fault, error: createError = error} = {}) {
-  if (!isNumber(value)) throw createFault('InvalidProgramException', 'Numeric conversion required');
-  const checked = name.includes('.ovf.'), unsignedSource = name.endsWith('.un'), target = name.replace(/^conv\.(ovf\.)?/, '').replace(/\.un$/, ''), raw = number(value);
-  if (['r', 'r4', 'r8'].includes(target)) {
-    const n = unsignedSource && !value?.float ? (typeof raw === 'bigint' ? BigInt.asUintN(64, raw) : raw >>> 0) : raw;
-    return float(Number(n), target === 'r4' ? 'r4' : 'r8');
-  }
-  const bits = {i1: 8, u1: 8, i2: 16, u2: 16, i4: 32, u4: 32, i8: 64, u8: 64, i: 32, u: 32}[target], signed = target.startsWith('i');
-  if (!bits) throw createError('Invalid conversion');
-  // CIL F values are tagged. Direct callers can also supply bare host Numbers;
-  // only values outside the signed/unsigned Int32 domain are treated as floats.
-  // In particular, -1 and 0xffffffff remain integer bit patterns, never F values.
-  const floating = !!value?.float || typeof raw === 'number' && (!Number.isInteger(raw) || raw < -2147483648 || raw > 4294967295);
-  let n;
-  if (floating) {
-    if (checked) {
-      if (!Number.isFinite(raw)) throw createFault('OverflowException', 'Non-finite integer conversion');
-      n = BigInt(Math.trunc(raw));
-    } else {
-      // Pin unspecified ECMA overflow/NaN results to .NET 10: saturate 32/64-bit
-      // targets; small targets first saturate to Int32 and then narrow below.
-      // See docs/cil-numeric-conversions.md for the complete compatibility table.
-      const saturationBits = Math.max(bits, 32), saturationSigned = bits < 32 || signed;
-      const min = saturationSigned ? -(1n << BigInt(saturationBits - 1)) : 0n;
-      const max = (1n << BigInt(saturationSigned ? saturationBits - 1 : saturationBits)) - 1n;
-      n = Number.isNaN(raw) ? 0n : raw <= Number(min) ? min : raw >= Number(max) ? max : BigInt(Math.trunc(raw));
-    }
-  } else if (typeof raw === 'bigint') n = unsignedSource ? BigInt.asUintN(64, raw) : raw;
-  else {
-    // conv.u8 zero-extends an Int32 source. Checked conversions use the signed
-    // source unless .un is explicit; an Int64 source already supplies 64 bits.
-    n = BigInt(unsignedSource || !checked && target === 'u8' ? raw >>> 0 : raw);
-  }
-  if (checked && (n < (signed ? -(1n << BigInt(bits - 1)) : 0n) || n > (signed ? (1n << BigInt(bits - 1)) - 1n : (1n << BigInt(bits)) - 1n))) throw createFault('OverflowException', 'Checked conversion overflow');
-  n = signed ? BigInt.asIntN(bits, n) : BigInt.asUintN(bits, n);
-  return bits === 64 ? BigInt.asIntN(64, n) : Number(n) | 0;
-}
-
 /** CLI storage locations narrow integers and round single precision on write/load. */
 export function storage(value, type, context) {
   type = numericAliases[type] ?? type;
+  if (type === 'bool' && typeof value === 'boolean') return value ? 1 : 0;
+  if (smallStorageTypes.has(type) &&
+      (typeof value === 'bigint' || Number.isInteger(value))) return smallInteger(value, type, context);
   const conversion = {sbyte: 'i1', byte: 'u1', short: 'i2', ushort: 'u2', char: 'u2', bool: 'u1', int: 'i4', uint: 'u4', long: 'i8', ulong: 'u8', float: 'r4', double: 'r8'}[type];
   return conversion ? convert('conv.' + conversion, value, context) : value;
 }
 
 export function indirect(value, name, context) {
   const suffix = name.split('.').at(-1);
+  if (smallIndirectSuffixes.has(suffix) &&
+      (typeof value === 'bigint' || Number.isInteger(value))) return smallIntegerIndirect(value, suffix, context);
   return ['i1', 'u1', 'i2', 'u2', 'i4', 'u4', 'i8', 'r4', 'r8', 'i'].includes(suffix) ? convert('conv.' + suffix, value, context) : value;
 }
