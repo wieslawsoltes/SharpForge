@@ -56,7 +56,7 @@ for(const [name,source,code]of [
  ['type mismatch','int x="text";','CS0029'],
  ['unassigned','int x;Console.WriteLine(x);','CS0165'],
  ['short circuit definite assignment','int x;bool b=false && (x=2)>0;Console.WriteLine(x);','CS0165'],
- ['branch definite assignment','int x;if(true)x=1;Console.WriteLine(x);','CS0165'],
+ ['branch definite assignment','bool c=false;int x;if(c)x=1;Console.WriteLine(x);','CS0165'],
  ['unknown name','Console.WriteLine(missing);','CS0103'],
  ['duplicate type','class A{}class A{}Console.WriteLine(1);','CS0101'],
  ['duplicate member','class A{int X;int X;}Console.WriteLine(1);','CS0102'],
@@ -68,7 +68,7 @@ for(const [name,source,code]of [
  ['double to int','int x=1.2;','CS0029'],
  ['const write','const int x=1;x=2;','CS0131'],
  ['no entry','class A {}','CS5001'],
- ['unsupported long','long x=1;','CS0246'],
+ ['unsupported long','long x=1;','SF2200'],
  ['unsupported float literal','var x=1.2f;','SF1005'],
  ['invalid condition','if(1)Console.WriteLine(1);','CS0029']
 ])test('diagnostic: '+name,()=>{const r=compile(source);assert.equal(r.success,false);assert.equal(r.image,null);assert(r.diagnostics.some(d=>d.code===code),JSON.stringify(r.diagnostics));});

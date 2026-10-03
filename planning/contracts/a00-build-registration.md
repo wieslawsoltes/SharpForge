@@ -39,7 +39,9 @@ register ordered styles, workers, and static assets. Paths are repository-relati
 for sources and dist-relative for targets/worker entries. Equal order values are
 resolved by contribution path then source path, preserving deterministic builds.
 Assets are copied before module rewriting, styles are concatenated with the
-original newline separator, and declared worker entries are bundled afterward.
+original newline separator by default, and declared worker entries are bundled
+afterward. A style entry may set `separator` to the empty string to retain a
+contiguous fragment boundary, or explicitly to a newline. Other values fail.
 Adding a stylesheet or worker only requires an owner contribution change.
 
 The package verifier derives workspace package identities and exact tarball
