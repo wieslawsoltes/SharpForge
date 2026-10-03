@@ -63,3 +63,5 @@ medians, p95, p99 and verdicts. Baseline update/review procedure is in perf-base
 | Browser latency | Chromium/Firefox/WebKit entrypoint | only actual executed targets qualify |
 | Rust/CLR allocation | unavailable | explicitly unsupported |
 | Reviewed history | committed raw arrays, environment, hashes and review reference | dirty baseline substitution rejected |
+
+Local measured qualification and raw sample retention: [macOS arm64 evidence](evidence/macos-arm64-2026-10-03/README.md). The initial budget policy is a review proposal, not an approved historical performance baseline.
