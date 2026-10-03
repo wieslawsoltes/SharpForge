@@ -16,7 +16,7 @@ export function registerDesignerWorker(protocol, {maxCachedDocuments = 4, maxCac
   const unregisterValidation = workspace ? registerDesignerValidation(protocol, workspace) : null;
   const analyses = new Map();
   const options = params => ({
-    uri: params.uri, previous: params.previous,
+    uri: params.uri, previous: params.previous, className: params.className, methodName: params.methodName,
     projectTypes: params.projectTypes ?? params.previous?.document?.projectTypes,
     compilationOptions: { ...params.compilationOptions, outputKind: 'library' }
   });

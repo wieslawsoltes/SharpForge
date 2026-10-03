@@ -91,7 +91,7 @@ export class DesignerTools {
     this.status = error.message ?? String(error);
     this.toast?.(this.status, 'error');
     if (this.statusElement) this.statusElement.textContent = this.status;
-    this.accessibility?.error?.(error);
+    this.accessibility?.reportError?.(error);
   }
 
   async safe(action) {
@@ -168,6 +168,7 @@ export class DesignerTools {
     if (!this.initialized || this.disposed) return;
     this.syncing = true;
     try {
+      this.surface.onDocumentChanged(event);
       this.updateTree(event);
       if (event.kind !== 'selection') this.updatePreview();
       this.renderToolbox();
@@ -177,7 +178,6 @@ export class DesignerTools {
       this.updateButtons();
       this.statusElement.textContent = this.status + ' · revision ' + this.document.revision;
       this.outline.render();
-      this.surface.onDocumentChanged(event);
       this.accessibility.update(event);
       this.liveAttachment.update(event);
       this.chrome.renderSelection();
@@ -205,11 +205,18 @@ export class DesignerTools {
     this.treeView.render();
   }
 
-  updatePreview() {
-    const theme = this.stage.ownerDocument.documentElement.dataset.theme ?? 'dark';
-    const scene = projectDesignerAuthoringScene(this.document.value, this.surface.scene(), {
+  buildPreviewScene() {
+    const environment = this.surface.preview.value;
+    const theme = environment.contrast === 'high' ? 'highContrast' : environment.theme;
+    const options = {
       theme, samples: true, resolveAsset: uri => this.assetPreviews.resolve(uri)
-    });
+    };
+    const scene = projectDesignerAuthoringScene(this.document.value, this.surface.scene(), options);
+    return this.projectRoots?.project(this.document.value, scene, options).scene ?? scene;
+  }
+
+  updatePreview() {
+    const scene = this.buildPreviewScene();
     this.host.load(scene);
     this.host.flush();
     for (const decoration of designerPreviewDecorations(scene)) {
@@ -252,6 +259,16 @@ export class DesignerTools {
   reorder(delta) { return this.surface.command(delta < 0 ? 'order:backward' : 'order:forward'); }
   attach(sessionId, options) { return this.liveAttachment.attach(sessionId, options); }
   applyLive(options) { return this.liveAttachment.apply(options); }
+  componentDefinition(id) {
+    const node = this.document.node(id);
+    return node ? this.projectRoots?.definition(node) ?? null : null;
+  }
+
+  openComponent(id = this.document.selection[0]) {
+    const definition = this.componentDefinition(id);
+    if (!definition) throw new Error('The selected control has no project design document');
+    return this.openDesignDocument(definition.uri);
+  }
 
   canUndo(redo = false) {
     if (!this.templateScope && this.sourceSync.session && !this.sourceSync.dirty()) {

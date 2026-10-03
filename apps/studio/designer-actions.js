@@ -1,10 +1,11 @@
-import {createDesign, generateDesignCode, generateDesignProject} from '@sharpforge/designer';
+import {createDesign, createDesignerRoot, createDesignerResourceDocument,
+  generateDesignCode, generateDesignProject, generateDesignerResourceClass} from '@sharpforge/designer';
 import {escapeHtml} from '@sharpforge/editor';
 
 /** Feature controllers contribute actions through explicit composition rather than a shared switch. */
 export function createDesignerActions(view) {
   return new Map(Object.entries({
-    new: () => view.createDesignDocument?.(createDesign()) ?? view.replace(createDesign()),
+    new: () => createNewDocument(view),
     open: () => openDesignDocument(view),
     save: () => view.save(),
     download: () => view.download(view.path, view.document.serialize(), 'application/json'),
@@ -34,6 +35,7 @@ export function createDesignerActions(view) {
       view.statusElement.textContent = view.status;
     },
     attach: () => view.attach(),
+    'run-app': () => view.launchDesignerApp({uri: view.session.kind === 'csharp' ? view.session.uri : undefined}),
     apply: () => view.applyLive(),
     source: () => {
       if (view.session.kind === 'csharp') return view.documentHost.setMode('code');
@@ -47,6 +49,14 @@ export function createDesignerActions(view) {
     },
     options: () => view.options.open()
   }));
+}
+
+async function createNewDocument(view) {
+  const root = await view.choose('New designer document', ['Window', 'UserControl', 'Page', 'ContentDialog', 'Resources']);
+  if (!root) return;
+  const document = root === 'Window' ? createDesign() : root === 'Resources' ?
+    createDesignerResourceDocument().value : createDesignerRoot(root).value;
+  return view.createDesignDocument ? view.createDesignDocument(document) : view.replace(document);
 }
 
 function copySelection(view, cut = false) {
@@ -80,7 +90,8 @@ async function openDesignDocument(view) {
 }
 
 function exportGeneratedSource(view) {
-  const source = generateDesignCode(view.document.value, {profile: 'winui'});
+  const source = view.document.value.documentKind === 'resources' ? generateDesignerResourceClass(view.document.value) :
+    generateDesignCode(view.document.value, {target: 'winui'});
   view.download(view.path.replace(/\.sfdesign\.json$/i, '.g.cs'), source, 'text/plain');
 }
 

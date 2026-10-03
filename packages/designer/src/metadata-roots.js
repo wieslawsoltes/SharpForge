@@ -51,7 +51,7 @@ export class DesignerRootRegistry {
     return entry ? {type: entry.descriptor.type, uri: entry.descriptor.uri, document: structuredClone(entry.document)} : null;
   }
 
-  project(design, input = designScene(design)) {
+  project(design, input = designScene(design), {createScene = designScene} = {}) {
     const scene = structuredClone(input);
     const diagnostics = [];
     const expand = (document, mapping, ancestry, depth) => {
@@ -67,7 +67,7 @@ export class DesignerRootRegistry {
         if (ancestry.has(node.projectType)) authoringError('SFD1861', 'Recursive project-control composition.');
         const ownerId = mapping.get(node.id) ?? node.id;
         const owner = scene.nodes.find(candidate => candidate.id === ownerId);
-        const nested = designScene(entry.document);
+        const nested = createScene(entry.document);
         const nestedIds = new Map(nested.nodes.map(child => [child.id, ownerId + '::component:' + child.id]));
         for (const child of nested.nodes) {
           const clone = {...child, id: nestedIds.get(child.id), designId: owner.designId ?? owner.id,

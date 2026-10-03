@@ -24,6 +24,7 @@ export function mountDesignerSurface(view) {
     </div>
     <div class="panel-tools design-toolbar">
       <button data-design-action="attach">Attach running app</button><button data-design-action="apply">Apply to live</button>
+      <button data-design-action="run-app">Run another app</button>
       <button data-design-action="generate">Build &amp; Run C#</button><button data-design-action="source">View Code</button>
       <button data-design-action="options">Options</button>
       <label>W <input id="designer-width" type="number" min="100" max="10000" value="960"></label>
