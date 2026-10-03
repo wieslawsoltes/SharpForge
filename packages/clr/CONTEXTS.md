@@ -89,6 +89,15 @@ strong leases retain their context. `roots.enumerate()` is the explicit bridge
 for a managed collector to visit roots; weak roots are opt-in. The JavaScript
 WeakRef regression requires `node --expose-gc` and does not qualify A06/Rust GC.
 
+A06 VMs attach these roots explicitly with
+`vm.gcRuntime.registerContextRoots(context.roots)` or the `contextRoots` VM option.
+The disposable bridge visits strong managed targets and uses the bounded
+`roots.subscribe(listener)` publication hook to shade newly added strong targets
+during incremental collection. Weak entries remain unrooted. Snapshot restore
+rejects crossing registry revisions or bridge attachment changes before touching
+the heap; host root leases cannot be rewound by a VM snapshot. This root bridge
+does not implement managed AssemblyLoadContext execution.
+
 `RuntimeAppDomain` exposes the current logical domain, loaded-assembly
 enumeration, AssemblyLoad, AssemblyResolve and TypeResolve subscriptions.
 `RuntimeAppContext` stores runtimeconfig-derived data and Boolean switches with
