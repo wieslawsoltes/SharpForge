@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-1efbf9a1cf10c940e38a",
+  "kind": "spec",
+  "sourceText": "partial class AVAudioCompressedBuffer : AVAudioBuffer\n{\n    [Export(\"initWithFormat:packetCapacity:\")]\n    public partial AVAudioCompressedBuffer(AVAudioFormat format, uint packetCapacity);\n\n    [Export(\"create:\")]\n    public partial event EventHandler Created;\n}",
+  "sourceSHA256": "e10a504d7880a27b0def64fe41efd628b2148cd011ed55ce22817fd70ab14352",
+  "target": "library",
+  "featureId": "csharp-14-0-partial-events-and-constructors",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/partial-events-and-constructors.md",
+    "sha256": "104e69ae2f93be87d2915774c1afbffb4f14f5e05a045df83370bbc01fd486b4",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/partial-events-and-constructors.md",
+    "license": "NOASSERTION",
+    "offset": 1588
+  }
+}

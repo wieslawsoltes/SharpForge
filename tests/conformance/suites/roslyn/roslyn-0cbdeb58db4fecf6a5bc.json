@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0cbdeb58db4fecf6a5bc",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public void M()\n    {\n        int x;\n        bool L1()\n        {\n            L2();\n            return x == 0;\n        }\n        bool L2()\n        {\n            L3();\n            return x == 0;\n        }\n        bool L3()\n        {\n            L4();\n            return x == 0;\n        }\n        void L4()\n        {\n            x = 0;\n        }\n        L1();\n    }\n}",
+  "sourceSHA256": "bc1ebc3887b7f83401924a43e3c6adb082e02fac2a8d1b77ffe654c09fde0b13",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "LongWriteChain",
+    "offset": 16032
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nclass C\n{\n    public void M()\n    {\n        int x;\n        bool L1()\n        {\n            L2();\n            return x == 0;\n        }\n        bool L2()\n        {\n            L3();\n            return x == 0;\n        }\n        bool L3()\n        {\n            L4();\n            return x == 0;\n        }\n        void L4()\n        {\n            x = 0;\n        }\n        L1();\n    }\n}\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a85ea75b65dab57bbbf0",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public void M1()\n    {\n        this ??= new C();\n    }\n}\nstruct S\n{\n    public void M2()\n    {\n        this ??= new S();\n    }\n}\n",
+  "sourceSHA256": "01c14ccf133309d0439d02527e9b9bc2abc9b0008a1c649daccb1ca1d4cf2f5f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "sha256": "14d37a1c90475a8d190ab227c55d1f41260459c0a6f80d570d1736b34d3ab914",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "license": "MIT",
+    "method": "ThisDisallowed",
+    "offset": 78259
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1604",
+        "severity": "error"
+      },
+      {
+        "code": "CS0019",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,9): error CS1604: Cannot assign to 'this' because it is read-only\n                //         this ??= new C();\n                Diagnostic(ErrorCode.ERR_AssgReadonlyLocal, \"this\").WithArguments(\"this\").WithLocation(6, 9),\n                // (13,9): error CS0019: Operator '??=' cannot be applied to operands of type 'S' and 'S'\n                //         this ??= new S();\n                Diagnostic(ErrorCode.ERR_BadBinaryOps, \"this ??= new S()\").WithArguments(\"??=\", \"S\", \"S\").WithLocation(13, 9)\n            ",
+  "unsupported": []
+}

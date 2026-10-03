@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-ad96de59319550f87d9b",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass A\n{\n    public virtual void F() => Console.WriteLine(\"A.F\");\n}\n\nclass B : A\n{\n    public override void F() => Console.WriteLine(\"B.F\");\n}\n\nclass C : B\n{\n    public new virtual void F() => Console.WriteLine(\"C.F\");\n}\n\nclass D : C\n{\n    public override void F() => Console.WriteLine(\"D.F\");\n}\n\nclass Test\n{\n    static void Main()\n    {\n        D d = new D();\n        A a = d;\n        B b = d;\n        C c = d;\n        a.F();\n        b.F();\n        c.F();\n        d.F();\n    }\n}",
+  "unsupported": [
+    "Runtime expectation requires upstream output/exception/argument extraction"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "5fbe9e25d26e7b95a70adf936fd67fd2ed31b6d8d044825162d39ac4130bf5b9",
+  "originalSource": "class A\n{\n    public virtual void F() => Console.WriteLine(\"A.F\");\n}\n\nclass B : A\n{\n    public override void F() => Console.WriteLine(\"B.F\");\n}\n\nclass C : B\n{\n    public new virtual void F() => Console.WriteLine(\"C.F\");\n}\n\nclass D : C\n{\n    public override void F() => Console.WriteLine(\"D.F\");\n}\n\nclass Test\n{\n    static void Main()\n    {\n        D d = new D();\n        A a = d;\n        B b = d;\n        C c = d;\n        a.F();\n        b.F();\n        c.F();\n        d.F();\n    }\n}",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "VirtualMethods2",
+    "inferOutput": true
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "VirtualMethods2",
+    "offsetInUnquotedMarkdown": 133928
+  }
+}

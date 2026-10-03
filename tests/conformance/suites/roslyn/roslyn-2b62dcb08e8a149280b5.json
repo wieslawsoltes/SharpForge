@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-2b62dcb08e8a149280b5",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass A : Attribute\n{\n    public A(int param) { }\n}\nclass Program\n{\n    static void Main()\n    {\n        [A(default(T))] void F<T>() { }\n        F<int>();\n    }\n}",
+  "sourceSHA256": "85ca969a7f8aafe382d882ce57f50ac24198ae4ab6c755e95714f4fb7fea78f2",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "LocalMethod_AttributeArguments_GenericParameter",
+    "offset": 251228
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0246",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,20): error CS0246: The type or namespace name 'T' could not be found (are you missing a using directive or an assembly reference?)\n                //         [A(default(T))] void F<T>() { }\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"T\").WithArguments(\"T\").WithLocation(10, 20)",
+  "unsupported": []
+}

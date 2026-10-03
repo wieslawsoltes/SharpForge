@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "library-a8829153c6f1db70066d",
+  "kind": "library",
+  "namespace": "System.Linq",
+  "sourceText": "using System;\nusing System.Collections;\nusing System.Collections.Generic;\nusing System.Linq;\nusing Xunit;\nclass SuiteProgram { static int Main() {\n\n            Assert.Equal(expected, source.RunOnce().Contains(value));\n            Assert.Equal(expected, source.RunOnce().Contains(value, null));\n        \nreturn 0; } }\n// SharpForge's deliberately small test adapter. Assertions fail by throwing.\n\nnamespace Xunit\n{\n    public static class Assert\n    {\n        public static void True(bool value) { if (!value) throw new Exception(\"Assert.True\"); }\n        public static void False(bool value) { if (value) throw new Exception(\"Assert.False\"); }\n        public static void Null(object value) { if (value != null) throw new Exception(\"Assert.Null\"); }\n        public static void NotNull(object value) { if (value == null) throw new Exception(\"Assert.NotNull\"); }\n        public static void Same(object expected, object actual)\n        { if (!object.ReferenceEquals(expected, actual)) throw new Exception(\"Assert.Same\"); }\n        public static void Equal<T>(T expected, T actual)\n        {\n            if (expected is System.Collections.IEnumerable && !(expected is string))\n                throw new NotSupportedException(\"Shim Equal supports scalar values only, not sequence equality\");\n            if (!object.Equals(expected, actual)) throw new Exception(\"Assert.Equal\");\n        }\n        public static T Throws<T>(Action action) where T : Exception\n        {\n            try { action(); }\n            catch (Exception error)\n            {\n                if (error.GetType() != typeof(T)) throw new Exception(\"Assert.Throws: wrong exception type\");\n                return (T)error;\n            }\n            throw new Exception(\"Assert.Throws: no exception\");\n        }\n    }\n}\n",
+  "sourceSHA256": "a19d3fa6a3b01378def3b59c406a050e8a792c6f5f7e552208af457de52b16b6",
+  "originalSource": "public void IntRunOnce(IEnumerable<int> source, int value, bool expected)\n        {\n            Assert.Equal(expected, source.RunOnce().Contains(value));\n            Assert.Equal(expected, source.RunOnce().Contains(value, null));\n        }",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/libraries/System.Linq/tests/ContainsTests.cs",
+    "sha256": "01879d4bec278978bb6fa936abd7b0c0d65993ce1b883d43a65acae1622c8c5f",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/libraries/System.Linq/tests/ContainsTests.cs",
+    "license": "MIT",
+    "method": "IntRunOnce",
+    "offset": 2219
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack",
+    "local XunitShim.cs"
+  ],
+  "expected": {
+    "exitCode": 0
+  },
+  "unsupported": [
+    "Parameterized theory/member data needs explicit argument materialization",
+    "Upstream helper, fixture state, or platform-specific dependency"
+  ],
+  "adaptation": "Original method body in standalone Main; no base fixture/helpers imported. Native compilation preflight detects unresolved dependencies; scalar assertions, reference identity and exact exception assertions execute."
+}

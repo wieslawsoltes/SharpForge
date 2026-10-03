@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-38c6f057d019f2f9b643",
+  "kind": "diagnostics",
+  "sourceText": "\n\npublic class Test\n{\n\tstatic void Main ()\n\t{\n\t\tPublicClass.InternalMethod();\n        PublicClass.ProtectedMethod();\n        PublicClass.PrivateMethod();\n        PublicClass.InternalProtectedMethod();\n        PublicClass.PrivateProtectedMethod();\n\t}\n}",
+  "sourceSHA256": "653e4102bb739961877f8c544b663fb641ce7d6981a3d9f56b36a93a5689bd9c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "sha256": "9e10a51f7f673a0e4ecef9e74c9a16fba06fbe3b89f9e5f5374503377b2b2a09",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "license": "MIT",
+    "method": "CS0281Method",
+    "offset": 46098
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "references: new[] { friendClass.EmitToImageReference() }, assemblyName: \"cs0281\", options: TestOptions.SigningReleaseDll, parseOptions: parseOptions)",
+  "options": "(cs0281, references: new[] { friendClass.EmitToImageReference() }, assemblyName: \"cs0281\", options: TestOptions.SigningReleaseDll, parseOptions: parseOptions)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0281",
+        "severity": "error"
+      },
+      {
+        "code": "CS0122",
+        "severity": "error"
+      },
+      {
+        "code": "CS0117",
+        "severity": "error"
+      },
+      {
+        "code": "CS0281",
+        "severity": "error"
+      },
+      {
+        "code": "CS0281",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (7,15): error CS0281: Friend access was granted by 'Paul, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null', but the public key of the output assembly ('') does not match that specified by the InternalsVisibleTo attribute in the granting assembly.\n                    // \t\tPublicClass.InternalMethod();\n                    Diagnostic(ErrorCode.ERR_FriendRefNotEqualToThis, \"InternalMethod\").WithArguments(\"Paul, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\", \"\").WithLocation(7, 15),\n                    // (8,21): error CS0122: 'PublicClass.ProtectedMethod()' is inaccessible due to its protection level\n                    //         PublicClass.ProtectedMethod();\n                    Diagnostic(ErrorCode.ERR_BadAccess, \"ProtectedMethod\").WithArguments(\"PublicClass.ProtectedMethod()\").WithLocation(8, 21),\n                    // (9,21): error CS0117: 'PublicClass' does not contain a definition for 'PrivateMethod'\n                    //         PublicClass.PrivateMethod();\n                    Diagnostic(ErrorCode.ERR_NoSuchMember, \"PrivateMethod\").WithArguments(\"PublicClass\", \"PrivateMethod\").WithLocation(9, 21),\n                    // (10,21): error CS0281: Friend access was granted by 'Paul, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null', but the public key of the output assembly ('') does not match that specified by the InternalsVisibleTo attribute in the granting assembly.\n                    //         PublicClass.InternalProtectedMethod();\n                    Diagnostic(ErrorCode.ERR_FriendRefNotEqualToThis, \"InternalProtectedMethod\").WithArguments(\"Paul, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\", \"\").WithLocation(10, 21),\n                    // (11,21): error CS0281: Friend access was granted by 'Paul, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null', but the public key of the output assembly ('') does not match that specified by the InternalsVisibleTo attribute in the granting assembly.\n                    //         PublicClass.PrivateProtectedMethod();\n                    Diagnostic(ErrorCode.ERR_FriendRefNotEqualToThis, \"PrivateProtectedMethod\").WithArguments(\"Paul, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\", \"\").WithLocation(11, 21)\n                    ",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

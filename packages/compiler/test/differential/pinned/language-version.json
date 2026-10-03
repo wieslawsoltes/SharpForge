@@ -50,5 +50,6 @@
   "language-version/cs8704-non-public-implementation-at-9":{"hash":"320528c5868385e6","kind":"diagnostics","langVersion":"9.0","diagnostics":[["CS8704",62,1,"error"]]},
   "language-version/cs0171-auto-default-structs-at-10":{"hash":"60531723d1ebd8b1","kind":"diagnostics","langVersion":"10.0","diagnostics":[["CS0649",22,1,"warning"],["CS0171",32,1,"error"]]},
   "language-version/cs0854-expression-optional-arguments-at-13":{"hash":"8905440f2ec472d9","kind":"diagnostics","langVersion":"13.0","diagnostics":[["CS0854",124,3,"error"]]},
-  "language-version/no-gate-first-class-span-at-13":{"hash":"9a378c7d1e81bfbe","kind":"output","langVersion":"13.0","diagnostics":[],"output":""}
+  "language-version/no-gate-first-class-span-at-13":{"hash":"9a378c7d1e81bfbe","kind":"output","langVersion":"13.0","diagnostics":[],"output":""},
+  "language-version/gate-inline-arrays-at-11":{"hash":"528a02d8b59c6209","kind":"diagnostics","langVersion":"11.0","diagnostics":[["CS9058",130,4,"error"]]}
 }}

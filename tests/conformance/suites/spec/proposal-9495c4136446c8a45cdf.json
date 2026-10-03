@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-9495c4136446c8a45cdf",
+  "kind": "spec",
+  "sourceText": "expr.Length is 3\n&& expr[new Index(0, fromEnd: false)] is 1\n&& expr[new Index(1, fromEnd: false)] is 2\n&& expr[new Index(2, fromEnd: false)] is 3",
+  "sourceSHA256": "6a557391e3f0ae56c0c0c684977ab15113b854d34c750fc7a5e1ef2770ef47da",
+  "target": "library",
+  "featureId": "csharp-11-0-list-patterns",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/list-patterns.md",
+    "sha256": "c8a0aa1f21e5d589683f0b164f5e282e792a676ebfd183b368a959235cbe3206",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/list-patterns.md",
+    "license": "NOASSERTION",
+    "offset": 4046
+  }
+}

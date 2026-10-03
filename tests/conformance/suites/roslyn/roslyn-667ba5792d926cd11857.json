@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-667ba5792d926cd11857",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    void M()\n    {\n        L();\n        const int x;\n        int L() => x;\n    }\n}",
+  "sourceSHA256": "90ef7955490b09fbeba9fddbd6c2e2e4260f366edf5a876e9f8b54267f8afe85",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "sha256": "14b7bc1860ec5aa90aa2cf9fc12841dfecbbb2ec7f4643ceba545b8568726be0",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/LocalFunctions.cs",
+    "license": "MIT",
+    "method": "ConstUnassigned3",
+    "offset": 5361
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nclass C\n{\n    void M()\n    {\n        L();\n        const int x;\n        int L() => x;\n    }\n}\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0145",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,19): error CS0145: A const field requires a value to be provided\n                //         const int x;\n                Diagnostic(ErrorCode.ERR_ConstValueRequired, \"x\").WithLocation(7, 19)",
+  "unsupported": []
+}

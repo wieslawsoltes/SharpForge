@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-4caf2da8bf720f0cf134",
+  "kind": "spec",
+  "sourceText": "interface I1\n{\n    // 1. The addition of a DIM method to an _existing_ interface\n    void M() { }\n}\n\n// 2. A ref struct implementing the interface but not explicitly defining the DIM \n// method\nref struct S : I1 { }\n\n// 3. The invocation of the DIM method in a generic method that has the `allows ref struct`\n// anti-constraint\nvoid M<T>(T p)\n    where T : allows ref struct, I1\n{\n    p.M();\n}",
+  "sourceSHA256": "6af2fe6604eb4aec437fb9c1c7e35b57a76758950e56b26e4d579001b89a8cf4",
+  "target": "library",
+  "featureId": "csharp-13-0-ref-struct-interfaces",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/ref-struct-interfaces.md",
+    "sha256": "89db7c6f20f22a5b99df61e63033ebecc1f2cde6459e71f2fa50cd9458a4b123",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/ref-struct-interfaces.md",
+    "license": "NOASSERTION",
+    "offset": 34375
+  }
+}

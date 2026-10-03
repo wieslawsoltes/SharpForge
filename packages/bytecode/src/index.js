@@ -62,3 +62,4 @@ export function verifyImage(image){
 
 export {float, floatBinary, floatCompare, finiteFloat, ieeeRemainder} from './numeric/float.js';
 export {int64Binary, int64Compare, int64Unary} from './numeric/int64.js';
+export {uint32Binary, uint32Compare} from './numeric/uint32.js';

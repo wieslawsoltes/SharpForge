@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-6f356a81fa0bbc139ab8",
+  "kind": "spec",
+  "sourceText": "class X\n{\n    private D __Ev; // field to hold the delegate\n\n    public event D Ev\n    {\n        add\n        {\n            /* Add the delegate in a thread safe way */\n        }\n        remove\n        {\n            /* Remove the delegate in a thread safe way */\n        }\n    }\n}",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0169",
+        "severity": "warning"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "6bb0a00e3b7e32cc7e72171d8d7809428dcd1cc06dc822ae8cf119852b45a5b5",
+  "originalSource": "class X\n{\n    private D __Ev; // field to hold the delegate\n\n    public event D Ev\n    {\n        add\n        {\n            /* Add the delegate in a thread safe way */\n        }\n        remove\n        {\n            /* Remove the delegate in a thread safe way */\n        }\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "FieldlikeEvents3",
+    "expectedWarnings": [
+      "CS0169"
+    ],
+    "additionalFiles": [
+      "D.cs"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "FieldlikeEvents3",
+    "offsetInUnquotedMarkdown": 208778
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-7cc9b3b25e64f0ea6b11",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass C\n{\n    const string K1 = \"frog\";\n    const string K2 = \"toad\";\n    public static void M(string msg)\n    {\n        try\n        {\n            T(msg);\n        }\n        catch (Exception e) when (e.Message switch\n            {\n                K1 => true,\n                K2 => true,\n                _ => false,\n            })\n        {\n            throw new Exception(e.Message);\n        }\n        catch\n        {\n        }\n    }\n    static void T(string msg)\n    {\n        throw new Exception(msg);\n    }\n    static void Main()\n    {\n        Try(K1);\n        Try(K2);\n        Try(\"fox\");\n    }\n    static void Try(string s)\n    {\n        try { M(s); } catch (Exception ex) { Console.WriteLine(ex.Message); }\n    }\n}\n",
+  "sourceSHA256": "b7907d6c8cb6a9338b57671ff1b9679079ec706ea8c80f846d3919fff228d2d4",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "SwitchExpressionAsExceptionFilter_01",
+    "offset": 127303
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: compilationOptions)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}
