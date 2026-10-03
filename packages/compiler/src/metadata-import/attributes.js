@@ -24,7 +24,7 @@ export const WellKnownAttribute=Object.freeze({
 export const ByRefLikeObsoleteMarker='Types with embedded references are not supported in this version of your compiler.';
 export const RequiredMembersObsoleteMarker='Constructors of types with required members are not supported in this version of your compiler.';
 /** Compiler features this compiler understands; any other CompilerFeatureRequired name makes a symbol unusable. */
-export const supportedCompilerFeatures=Object.freeze(['RefStructs','RequiredMembers']);
+export const supportedCompilerFeatures=Object.freeze(['RefStructs','RequiredMembers','ClosedClasses']);
 /** Adapt the shared CIL codec to the compiler's existing typed-constant result shape. */
 export function decodeAttributeBlob(blob, parameterTypes = [], env = {}) {
   // Legacy callers have always treated unresolved enum storage as Int32.
