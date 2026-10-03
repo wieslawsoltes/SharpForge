@@ -1,5 +1,6 @@
 import {spawn} from 'node:child_process';
 import {discoverManifests, selectManifests, parseTestArgs, isMain} from './test-manifests.js';
+import {acquireRunSlot, limitedEnv} from './lib/resource-limits.js';
 export function serialTestArgs(args) {
   if (args[0] !== '--test') return args;
   const result = [];
@@ -15,7 +16,7 @@ export function serialTestArgs(args) {
 }
 export function runProcess(command, args, {cwd, timeout}) {
   return new Promise((resolve, reject) => {
-    const child = spawn(command, args, {cwd, stdio: 'inherit', timeout, shell: false});
+    const child = spawn(command, args, {cwd, stdio: 'inherit', timeout, shell: false, env: limitedEnv()});
     const forward = signal => child.kill(signal);
     const interrupt = () => forward('SIGINT'), terminate = () => forward('SIGTERM');
     process.on('SIGINT', interrupt); process.on('SIGTERM', terminate);
@@ -29,17 +30,23 @@ export async function runTests(options) {
   if (options.list) {console.log(JSON.stringify(manifests, null, 2)); return 0;}
   const nodeFiles = manifests.flatMap(manifest => manifest.nodeFiles);
   console.error(`Discovered ${nodeFiles.length} Node test files and ${manifests.reduce((n, m) => n + m.browserScripts.length, 0)} Python suites in ${manifests.length} area manifests. Node reports executed test counts below.`);
-  // One serial Node runner retains aggregate counts without overlapping test files.
-  if (nodeFiles.length) {
-    const args = serialTestArgs(['--test', '--test-timeout=' + Math.max(...manifests.map(m => m.timeout)), ...options.nodeArgs, ...nodeFiles]);
-    const status = await runProcess(process.execPath, args, {cwd: options.root});
-    if (status) return status;
+  // One serial Node runner retains aggregate counts without overlapping test files. Locally the run also waits for a
+  // machine-wide run slot and caps the heap of each process (lib/resource-limits.js); CI is not limited by those.
+  const release = await acquireRunSlot();
+  try {
+    if (nodeFiles.length) {
+      const args = serialTestArgs(['--test', '--test-timeout=' + Math.max(...manifests.map(m => m.timeout)), ...options.nodeArgs, ...nodeFiles]);
+      const status = await runProcess(process.execPath, args, {cwd: options.root});
+      if (status) return status;
+    }
+    if (options.browser) for (const manifest of manifests) for (const script of manifest.browserScripts) {
+      const status = await runProcess(process.env.PYTHON || 'python', [script], {cwd: options.root, timeout: manifest.timeout});
+      if (status) return status;
+    }
+    return 0;
+  } finally {
+    release();
   }
-  if (options.browser) for (const manifest of manifests) for (const script of manifest.browserScripts) {
-    const status = await runProcess(process.env.PYTHON || 'python', [script], {cwd: options.root, timeout: manifest.timeout});
-    if (status) return status;
-  }
-  return 0;
 }
 if (isMain(import.meta.url)) {
   try {process.exitCode = await runTests(parseTestArgs(process.argv.slice(2)));}
