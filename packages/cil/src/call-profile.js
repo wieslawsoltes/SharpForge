@@ -66,7 +66,7 @@ export function supportedDelegateCall(inspector,descriptor) {
   const signature=descriptor.signature,type=descriptor.ownerInstance??descriptor.owner,delegate=managedDelegateSignature(inspector,type);
   if(delegate&&descriptor.name==='.ctor')return !signature.isStatic&&signature.returnType==='void'&&signature.parameters.length===2&&signature.parameters[0]==='object'&&['nint','System.IntPtr'].includes(signature.parameters[1]);
   if(delegate&&descriptor.name==='Invoke')return callSignatureKey(delegate)===callSignatureKey(signature);
-  if(!['System.Delegate','System.MulticastDelegate'].includes(descriptor.owner))return false;
+  if(!delegate&&!['System.Delegate','System.MulticastDelegate'].includes(descriptor.owner))return false;
   const key=descriptor.name+'|'+signature.parameters.join(',')+'|'+signature.returnType+'|'+signature.isStatic;
-  return new Set(['Combine|System.Delegate,System.Delegate|System.Delegate|true','Combine|System.Delegate[]|System.Delegate|true','Remove|System.Delegate,System.Delegate|System.Delegate|true','RemoveAll|System.Delegate,System.Delegate|System.Delegate|true','op_Equality|System.Delegate,System.Delegate|bool|true','op_Inequality|System.Delegate,System.Delegate|bool|true','GetInvocationList||System.Delegate[]|false']).has(key);
+  return new Set(['Combine|System.Delegate,System.Delegate|System.Delegate|true','Combine|System.Delegate[]|System.Delegate|true','Remove|System.Delegate,System.Delegate|System.Delegate|true','RemoveAll|System.Delegate,System.Delegate|System.Delegate|true','op_Equality|System.Delegate,System.Delegate|bool|true','op_Inequality|System.Delegate,System.Delegate|bool|true','GetInvocationList||System.Delegate[]|false','Equals|object|bool|false']).has(key);
 }
