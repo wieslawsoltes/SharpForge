@@ -1,3 +1,4 @@
+import {int64Binary, int64Unary} from './int64.js';
 import {numericAliases,nativeIntegerBits} from './numeric-types.js';
 import {isDecimal,decimalZero,decimalToInteger,decimalToFloat} from './decimal-ops.js';
 
@@ -59,7 +60,8 @@ export function binary(name, a, b, {fault: createFault = fault, error: createErr
   }
   const wide = typeof a === 'bigint';
   if (!nativeBits&&typeof b === 'bigint' !== wide && !['shl', 'shr'].includes(op)) throw createFault('InvalidProgramException', 'Mismatched integer widths');
-  if (wide || checked || nativeBits) {
+  if (wide && !nativeBits) return int64Binary(name, a, b, {fault: createFault, error: createError});
+  if (checked || nativeBits) {
     let x = BigInt(a), y = BigInt(b), bits = nativeBits || (wide ? 64 : 32);
     if (unsigned) { x = BigInt.asUintN(bits, x); y = BigInt.asUintN(bits, y); }
     if (['div', 'rem'].includes(op) && y === 0n) throw createFault('DivideByZeroException', 'Attempted to divide by zero');
@@ -97,7 +99,7 @@ export function unary(name, value, {fault: createFault = fault, error: createErr
     if (name === 'neg') return float(-raw,value.float);
     throw createError('not requires integer');
   }
-  const result=typeof raw === 'bigint' ? BigInt.asIntN(64, name === 'neg' ? -raw : ~raw) : name === 'neg' ? (-raw) | 0 : ~raw;
+  const result=typeof raw === 'bigint' ? int64Unary(name, raw) : name === 'neg' ? (-raw) | 0 : ~raw;
   return isNativeInteger(value)?nativeInteger(result,value.nativeInt):result;
 }
 
