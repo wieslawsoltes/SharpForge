@@ -2,6 +2,7 @@
  * Unsafe code at declaration level (SF-A02-T47, C# spec 23.2, 23.3 and 23.8).
  *
  *   CS0227  an `unsafe` modifier on a type or member without the /unsafe option
+ *   CS0764  `unsafe` on one part of a partial member only
  *   CS0214  a pointer type in the signature of a member that is not in an unsafe context
  *   CS8500  (warning) a pointer to a managed type
  *   fixed-size buffers  `fixed int Data[4];` is only a struct member (CS1642), its element type is one of the
@@ -95,7 +96,12 @@ export function checkUnsafeDeclarations(type, { allowUnsafe, core, evaluate }) {
     if (member.isImplicitlyDeclared || member.kind === SymbolKind.NamedType || (member.kind === SymbolKind.Method && member.isAccessor)) continue;
     const uri = member.uri ?? member.locations?.[0]?.uri,
       add = (code, args, node) => results.push({ code, args, uri, node });
-    if (!allowUnsafe && hasUnsafeModifier(member) && member.locations?.[0]) add('CS0227', [], member.locations[0]);
+    // Both parts of a partial member are declarations of their own; with /unsafe they must agree on the modifier.
+    const definition = member.partialDefinitionPart ?? null;
+    for (const part of [definition, member])
+      if (!allowUnsafe && part && hasUnsafeModifier(part) && part.locations?.[0]) add('CS0227', [], part.locations[0]);
+    if (allowUnsafe && definition && hasUnsafeModifier(definition) !== hasUnsafeModifier(member) && member.locations?.[0])
+      add('CS0764', [], member.locations[0]);
     const isUnsafe = isUnsafeSymbol(member, type);
     for (const syntax of signatureTypeSyntaxes(member)) {
       const pointer = findPointerSyntax(syntax);
