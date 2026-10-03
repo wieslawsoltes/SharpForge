@@ -1,5 +1,6 @@
 import {ManagedFault} from '../heap.js';
 import {failInitialization} from './static-init.js';
+import {leaveCilMethod} from './cil-method-events.js';
 
 export const fatalFaults=new Set(['InstructionLimitException','OutputLimitException','StackOverflowException','ExecutionLimitException']);
 const within=(offset,handler)=>offset>=handler.start&&offset<handler.end;
@@ -33,6 +34,7 @@ export function continueUnwind(vm,frame,leave=null) {
     frame.exception=pending.error;frame.stack=[pending.error.reference];frame.pc=frame.offsets.get(pending.catch.target);return;
   }
   const error=frame.initializes?failInitialization(vm,frame,pending.error):pending.error;
+  leaveCilMethod(vm, frame, 'exception');
   vm.frames.pop();throwFault(vm,error);
 }
 
@@ -56,7 +58,7 @@ export function throwFault(vm,error,instruction=null) {
   if(!frame){vm.state='faulted';return;}
   frame.volatileAccess=false;
   // A delegate target waiting at its entry gate has not entered any protected region.
-  if(frame.needsInitialization){vm.frames.pop();throwFault(vm,fault);return;}
+  if(frame.needsInitialization){leaveCilMethod(vm,frame,'exception');vm.frames.pop();throwFault(vm,fault);return;}
   const handlers=frame.method.handlers.filter(handler=>within(frame.lastOffset,handler)).sort((a,b)=>(a.end-a.start)-(b.end-b.start));
   const catcher=handlers.find(handler=>handler.flags===0&&vm.matches(fault.reference,vm.inspector.metadata.typeName(handler.catchType)));
   const finals=handlers.filter(handler=>(handler.flags===2||handler.flags===4)&&(!catcher||!within(catcher.target,handler)));

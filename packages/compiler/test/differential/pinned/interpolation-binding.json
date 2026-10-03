@@ -4,5 +4,6 @@
   "interpolation-binding/cs8094-cs1503-cs8917-holes-without-a-value":{"hash":"3b647f5014fa7c38","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1503",107,3,"error"],["CS8917",135,2,"error"],["CS0103",189,7,"error"],["CS8094",222,5,"warning"],["CS0133",256,6,"error"]]},
   "interpolation-binding/cs0150-cs0266-cs0029-alignments-that-are-not-int-constants":{"hash":"ec81929e0c9b9327","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0150",96,1,"error"],["CS0266",122,3,"error"],["CS0029",150,3,"error"]]},
   "interpolation-binding/constant-expression-alignments":{"hash":"650f32b04b0f6676","kind":"output","langVersion":"14.0","diagnostics":[],"output":"[    42][42    ][  ab][ab  ]\n[      42][ 42][   42][42  ]\n[  0042][  1.50][42][ab]\n"},
-  "interpolation-binding/cs8094-alignment-out-of-range-in-a-program-that-compiles":{"hash":"a8d80f8f3797152a","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS8094",109,5,"warning"],["CS8094",119,6,"warning"],["CS8094",151,5,"warning"]]}
+  "interpolation-binding/cs8094-alignment-out-of-range-in-a-program-that-compiles":{"hash":"a8d80f8f3797152a","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS8094",109,5,"warning"],["CS8094",119,6,"warning"],["CS8094",151,5,"warning"]]},
+  "interpolation-binding/cs0029-formattable-string-and-iformattable-targets":{"hash":"3c113d1924b39b65","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0029",844,7,"error"],["CS0029",894,11,"error"],["CS0029",945,14,"error"],["CS0029",1000,1,"error"]]}
 }}
