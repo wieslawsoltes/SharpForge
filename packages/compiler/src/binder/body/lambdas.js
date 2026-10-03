@@ -2,7 +2,7 @@
  * Lambdas and anonymous methods (bound per candidate delegate type, cached, diagnostics reported once),
  * switch expressions and collection expressions.
  */
-import { RefKind, ErrorTypeSymbol, ArrayTypeSymbol, NamedTypeSymbol } from '../../symbols/types.js';
+import { RefKind, ErrorTypeSymbol } from '../../symbols/types.js';
 import { ParameterSymbol } from '../../symbols/members.js';
 import { Conversion, ConversionKind } from '../../conversions/classify.js';
 import { naturalDelegateType } from '../../conversions/method-group.js';
@@ -267,38 +267,5 @@ export const LambdaBinding = Base =>
         governing,
         arms: arms.map(a => ({ ...a, value: this.convert(a.value, type) })),
       });
-    }
-    collectionExpression(syntax) {
-      const elements = syntax.elements.map(e =>
-        e.kind === 'ExpressionElement'
-          ? this.value(e.expression)
-          : e.kind === 'SpreadElement'
-            ? { spread: this.value(e.expression) }
-            : null,
-      );
-      const n = this.node('CollectionExpression', syntax, null, { elements, form: 'collection' });
-      n.convert = to => {
-        const element =
-          to instanceof ArrayTypeSymbol
-            ? to.elementType
-            : to instanceof NamedTypeSymbol && to.typeArguments.length === 1
-              ? to.typeArguments[0].type
-              : null;
-        if (!element) return null;
-        return elements.every(
-          e =>
-            !e ||
-            e.spread ||
-            e.hasErrors ||
-            (() => {
-              const c = this.conversions.classifyFromExpression(e, element);
-              return c.exists && c.isImplicit;
-            })(),
-        )
-          ? new Conversion(ConversionKind.CollectionExpression)
-          : null;
-      };
-      n.materialize = to => this.node('CollectionExpression', syntax, to, { elements });
-      return n;
     }
   };
