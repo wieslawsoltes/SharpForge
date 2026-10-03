@@ -1,6 +1,7 @@
 import { cliSystemName, decodeCoded, decodeSignature, decodeTypeSignature } from '@sharpforge/cil';
 import { createTypeDesc, completeTypeDesc, TypeDesc, TypeKind } from './type-desc.js';
 import { ConstructedTypes, resolveArrayMethod } from './constructed-types.js';
+import { TypeAssignability } from './casting.js';
 import { checkCancellation, loadError, LoadErrorCode } from '../load-errors.js';
 
 const fail = message => loadError(LoadErrorCode.TypeLoad, message);
@@ -15,6 +16,7 @@ export class TypeLoader {
   #indices = new WeakMap();
   #intrinsics = new Map();
   #constructed;
+  #casting;
   #maxConstructedTypes;
   #specMarkers = new WeakMap();
   constructor(context, { resolveExternalType = null, maxDepth = 128, maxMetadataRows = 100000, maxConstructedTypes = 100000 } = {}) {
@@ -72,6 +74,11 @@ export class TypeLoader {
   pointer(element) { return this.constructElement(TypeKind.Pointer, element); }
   byRef(element) { return this.constructElement(TypeKind.ByRef, element); }
   functionPointer(signature) { return this.#constructions.functionPointer(signature); }
+  /** Compare already loaded descriptors; unsupported generic/unsafe cases fail explicitly. */
+  isAssignableFrom(target, source, options = {}) {
+    this.#casting ??= new TypeAssignability({ maxDepth: this.#maxDepth, maxMetadataRows: this.#maxRows });
+    return this.#casting.isAssignableFrom(target, source, options);
+  }
 
   #index(module) {
     if (this.#indices.has(module)) return this.#indices.get(module);

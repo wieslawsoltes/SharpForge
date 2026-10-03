@@ -73,7 +73,7 @@ export function checkReadOnlyDeclarations(type) {
 }
 /**
  * How a struct receiver is passed to an instance member.
- * @returns {{mode:'address'|'copy'|'value',warning?:{code:DiagnosticId.CS8656,args}}}
+ * @returns {{mode:'address'|'copy'|'value',warning?:{code:'CS8656',args}}}
  *   'address' - call on the variable itself; 'copy' - defensive copy first; 'value' - an rvalue receiver (spilled to a temp)
  */
 export function receiverPassing(receiver, member, context = {}) {
