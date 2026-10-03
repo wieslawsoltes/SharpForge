@@ -111,7 +111,7 @@ test('constructs that need runtime support are reported with their name and posi
   const cases = [
     ['class B { } class D : B { } class P { static void Main() { } }', /class inheritance/],
     ['struct S { } class P { static void Main() { S s = new S(); } }', /struct types/],
-    ['class P { static void M(ref int x) { x = 1; } static void Main() { } }', /ref, out and in parameters/],
+    ['delegate void D(ref int x); class P { static void M(ref int x) { x = 1; } static void Main() { D d = M; int v = 0; d(ref v); } }', /ref, out and in parameters/],
     ['class P { static void Main() { long big = 1; System.Console.WriteLine(big); } }', /64-bit integers/],
     ['using System; class P { static void Main() { try { } catch (InvalidOperationException) { } } }', /./],
     ['class Box<T> { } class P { static void Main() { } }', /user-defined generics/],

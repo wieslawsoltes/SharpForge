@@ -85,10 +85,20 @@ export const TupleTranslation = Base =>
       );
     }
     // ---- operators and conversions ----
-    /** A part of a tuple comparison stands for the value its operand was evaluated to. */
+    /** A bound node with a substitution stands for a value that was already evaluated (a part of a tuple comparison). */
     expression(node) {
-      const part = this.tupleParts?.get(node);
+      const part = this.substitutions?.get(node);
       return part ? part() : super.expression(node);
+    }
+    /** Runs `build` with bound nodes replaced by thunks that read their already evaluated values. */
+    withSubstitutions(parts, build) {
+      const outer = this.substitutions;
+      this.substitutions = new Map([...(outer ?? []), ...parts]);
+      try {
+        return build();
+      } finally {
+        this.substitutions = outer;
+      }
     }
     /**
      * `left == right` on tuples: every element of both operands is evaluated once, left operand first, and then the
@@ -97,16 +107,12 @@ export const TupleTranslation = Base =>
      */
     exprBinary(node) {
       if (node.family !== 'tuple') return super.exprBinary(node);
-      const outer = this.tupleParts,
-        evaluation = { locals: [], effects: [] };
-      this.tupleParts = new Map(outer ?? []);
-      try {
+      const evaluation = { locals: [], effects: [] };
+      return this.withSubstitutions([], () => {
         this.evaluateTupleOperand(node, 'left', evaluation);
         this.evaluateTupleOperand(node, 'right', evaluation);
         return n.sequence(evaluation.locals, evaluation.effects, this.tupleComparison(node));
-      } finally {
-        this.tupleParts = outer;
-      }
+      });
     }
     /** Evaluates one operand of a tuple comparison and records how each of its parts is read. */
     evaluateTupleOperand(comparison, side, evaluation) {
@@ -121,12 +127,12 @@ export const TupleTranslation = Base =>
       if (operand.kind !== 'Tuple') {
         const tuple = hold(this.expression(operand)),
           info = this.g.tuples.classOf(operand.type, operand.syntax);
-        parts.forEach((part, index) => this.tupleParts.set(part, () => n.field(tuple(), info.fields[index])));
+        parts.forEach((part, index) => this.substitutions.set(part, () => n.field(tuple(), info.fields[index])));
       }
       parts.forEach((part, index) => {
         const elementOperator = comparison.operation.elements[index];
         if (elementOperator.family === 'tuple' && elementOperator.operation) this.evaluateTupleOperand(elementOperator, side, evaluation);
-        else if (operand.kind === 'Tuple') this.tupleParts.set(part, hold(this.expression(part)));
+        else if (operand.kind === 'Tuple') this.substitutions.set(part, hold(this.expression(part)));
       });
     }
     tupleComparison(comparison) {
