@@ -5,5 +5,6 @@
 import { fixtures as targetTyping } from './target-typing.js';
 import { fixtures as topLevel } from './top-level.js';
 import { fixtures as globalUsings } from './global-usings.js';
+import { fixtures as csharp9Rules } from './csharp9-rules.js';
 
-export const fixtures = [...targetTyping, ...topLevel, ...globalUsings];
+export const fixtures = [...targetTyping, ...topLevel, ...globalUsings, ...csharp9Rules];
