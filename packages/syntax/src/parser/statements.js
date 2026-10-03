@@ -40,7 +40,9 @@ export const statementMethods = {
       statements = [],
       saved = this.colonDepth,
       tuple = this.tupleContext,
-      declaration = this.declarationContext;
+      declaration = this.declarationContext,
+      restricted = this.restrictedVariables;
+    this.restrictedVariables = false;
     this.colonDepth = 0;
     this.tupleContext = false;
     this.declarationContext = 0;
@@ -61,6 +63,7 @@ export const statementMethods = {
     this.colonDepth = saved;
     this.tupleContext = tuple;
     this.declarationContext = declaration;
+    this.restrictedVariables = restricted;
     return this.n('Block', attributeLists, open, statements, this.expect('}'));
   },
   /** Parses one statement. `attributeLists` may be supplied by a caller that already consumed them. */
@@ -70,7 +73,10 @@ export const statementMethods = {
       this.skipRest();
       return this.n('EmptyStatement', attributeLists, this.cache.missing('SemicolonToken'));
     }
-    attributeLists ??= this.at('[') && this.isAttributeListAhead() ? this.attributeLists() : null;
+    if (!attributeLists) {
+      this.statementStart = this.i;
+      if (this.at('[') && this.isAttributeListAhead()) attributeLists = this.attributeLists();
+    }
     const result = this.statementCore(attributeLists);
     this.leave();
     return result;

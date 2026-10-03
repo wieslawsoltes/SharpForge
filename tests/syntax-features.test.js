@@ -55,7 +55,10 @@ test('feature gate: code depends on the selected version and matches the catalog
     assert.equal(featureAvailability(row.id, String(row.version)), null, row.id); assert.equal(featureAvailability(row.id, 'latest'), null, row.id);
     const previous = previousLanguageVersion(row.version); if (previous === null) continue;
     const result = featureAvailability(row.id, String(previous));
-    assert.equal(result.code, row.code, row.id); assert.equal(result.code, codes[previous], row.id);
+    assert.equal(result.code, row.code, row.id);
+    // A few features have a diagnostic of their own in Roslyn (checked against Roslyn by the matrix test) instead of the generic one.
+    if (row.dedicatedMessage) { assert.notEqual(result.code, codes[previous], row.id); assert.equal(result.severity, row.severity, row.id); continue; }
+    assert.equal(result.code, codes[previous], row.id);
     assert.match(result.message, new RegExp(`is not available in C# ${displayLanguageVersion(previous).replace('.', '\\.')}\\. Please use language version ${displayLanguageVersion(row.version).replace('.', '\\.')} or greater`));
   }
   assert.equal(featureAvailability('Generics', '1').code, 'CS8022'); assert.equal(featureAvailability('RawStringLiterals', '7.3').code, 'CS8370'); assert.equal(featureAvailability('RawStringLiterals', '9').code, 'CS8773');
