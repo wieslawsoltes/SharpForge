@@ -58,8 +58,9 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
     enqueueType(m.ownerToken);
     if(m.flags&0x2000){issue(m,null,'IL_UNMANAGED','Unmanaged P/Invoke is unavailable: '+m.owner+'::'+m.name,{exceptionType:'NotSupportedException',member:m.owner+'::'+m.name});continue;}
     if(!m.hasBody||m.implFlags&3){issue(m,null,'IL_NATIVE','Native, runtime and abstract methods are not executable');continue;}
-    const illegalType=()=>false;
-    if(m.signature.callingConvention&&m.signature.callingConvention!==5){issue(m,null,'IL_SIGNATURE','Only default and managed vararg calling conventions are executable');continue;}
+    // Memory pointers and pinned locals are checked by the managed memory handlers.
+    const illegalType=type=>typeof type!=='string';
+    if(m.signature.callingConvention&&m.signature.callingConvention!==5||m.signature.parameters.concat(m.locals,m.signature.returnType).some(illegalType)){issue(m,null,'IL_SIGNATURE','Unsupported managed method calling convention');continue;}
     if(methodGenericParameters(inspector,m.token).length!==(m.signature.genericArity??0)){issue(m,null,'IL_GENERIC','Generic parameter metadata does not match method arity');continue;}
     const map=new Map(m.instructions.map((i,index)=>[i.offset,index]));
     verifyControlRegions(inspector,m,issue);

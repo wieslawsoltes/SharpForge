@@ -93,6 +93,14 @@ export function ownedWireValue(vm, value) {
   if (value === vm.snapshotOwner) return {kind: 'owner', owner: 'vm'};
   if (value === vm.heap.handleOwner) return {kind: 'owner', owner: 'heap'};
   if (value === (vm.inspector ?? vm.image)) return {kind: 'owner', owner: 'code'};
+  if (value.byref || value.span || value.methodPointer || value.typedReference || value.runtimeArgumentHandle || value.argIterator) {
+    if (!Object.isFrozen(value) || value.vmOwner !== vm.snapshotOwner) {
+      snapshotFormatError('SNAPSHOT_OWNER', 'A memory value belongs to another VM or is mutable');
+    }
+  }
+  if (value.registry && value.flags && value.registry !== vm.heap.methodTables) {
+    snapshotFormatError('SNAPSHOT_OWNER', 'A memory value type belongs to another VM');
+  }
   if (isReference(value)) {
     if (value.heapOwner !== undefined && value.heapOwner !== vm.heap.handleOwner) {
       snapshotFormatError('SNAPSHOT_OWNER', 'A managed reference belongs to another heap');

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "fixtureId": "unhandled-exception",
+  "inputHash": "0bb689217692b34c8efa1f3397619b8b84029530cb9d785722cb9bd9a9bfbe8e",
+  "oracleId": "coreclr",
+  "toolVersion": "10.0.5",
+  "target": "darwin-arm64",
+  "toolchain": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "roslyn": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "referencePack": "10.0.5",
+    "windowsAppSDK": null
+  },
+  "langVersion": "12.0",
+  "result": {
+    "stdout": "before throw\n",
+    "stderr": "Unhandled exception. System.InvalidOperationException: oracle failure\n   at Program.Main()\n",
+    "exitCode": null,
+    "signal": "SIGABRT",
+    "unhandledException": "System.InvalidOperationException"
+  }
+}

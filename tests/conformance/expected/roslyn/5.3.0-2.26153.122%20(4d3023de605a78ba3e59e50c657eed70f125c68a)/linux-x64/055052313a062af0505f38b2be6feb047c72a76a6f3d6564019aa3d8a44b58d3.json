@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "fixtureId": "hello-unicode",
+  "inputHash": "055052313a062af0505f38b2be6feb047c72a76a6f3d6564019aa3d8a44b58d3",
+  "oracleId": "roslyn",
+  "toolVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+  "target": "linux-x64",
+  "toolchain": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "roslyn": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "referencePack": "10.0.5",
+    "windowsAppSDK": null
+  },
+  "langVersion": "12.0",
+  "result": {
+    "exitCode": 0,
+    "diagnostics": [],
+    "assemblySHA256": "d063367f823eda5772efa32486fb426d545503cfd119ab33d3fdeb766259ebc3"
+  }
+}

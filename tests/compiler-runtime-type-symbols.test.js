@@ -37,3 +37,13 @@ test('Enum.HasFlag, string interning and reference equality expose CLR member sh
     assert.equal(method.parameters.length, builtin.params.length);
   }
 });
+
+test('known Type members preserve the explicit diagnostic for unsupported typeof emission', () => {
+  const source = 'using System; namespace Demo; class Program {' +
+    'static void Main() { Console.WriteLine(typeof(Program).FullName); } }';
+  const result = compile(source);
+  assert.equal(result.success, false);
+  assert.equal(result.image, null);
+  assert(result.diagnostics.some(d => d.code === 'SF2200' && d.message.includes('type of expressions')));
+  assert(!result.diagnostics.some(d => d.code === 'CS1061' || d.code === 'SF2201'));
+});

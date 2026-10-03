@@ -5,8 +5,13 @@
  */
 export const propertyMethods = {
   propertyDeclaration(attributeLists, modifiers, type, explicit, identifier) {
-    const accessors = this.at('{') ? this.accessorList() : null,
+    const bodies = this.accessorBodies,
+      nameToken = this.memberName,
+      accessors = this.at('{') ? this.accessorList() : null,
+      tail = this.i,
       [expressionBody, initializer, semicolon] = this.propertyTail();
+    this.accessorMemberForm(nameToken, bodies, expressionBody ? tail + 1 : -1);
+    if (initializer) this.structFieldInitializer(nameToken);
     return this.n('PropertyDeclaration', attributeLists, modifiers, type, explicit, identifier, accessors, expressionBody, initializer, semicolon);
   }
 };

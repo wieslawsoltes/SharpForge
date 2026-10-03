@@ -65,6 +65,14 @@ def main():
                             ('runtimeBundleSha256', report['runtimeBundleSha256']), ('suiteSha256', report['suiteSha256'])]:
             if manifest.get(key) != actual:
                 raise RuntimeError('Stale or modified browser preparation: ' + key + '. Re-run scripts/prepare-a05-browser.js.')
+        report['suiteFiles'] = {}
+        for name, expected in manifest['suiteFiles'].items():
+            if Path(name).name != name:
+                raise RuntimeError('Invalid browser suite file name: ' + name)
+            actual = digest((ROOT / 'tests' / name).read_bytes())
+            report['suiteFiles'][name] = actual
+            if actual != expected:
+                raise RuntimeError('Stale or modified browser suite: ' + name)
         from playwright.sync_api import sync_playwright
         report['playwright'] = importlib.metadata.version('playwright')
         handler = partial(QuietHandler, directory=str(artifacts))

@@ -34,15 +34,20 @@ function recordCopy(record, memo, share) {
   return Object.freeze(copy);
 }
 
-function equalValue(left, right, depth = 0) {
+function equalValue(left, right, pairs, reverse, depth = 0) {
   if (Object.is(left, right)) return true;
   if (depth > 128 || left === null || right === null
       || typeof left !== 'object' || typeof right !== 'object') return false;
   if (right instanceof ReadonlySnapshotArray) return right.equals(left);
+  if (pairs.has(left) || reverse.has(right)) {
+    return pairs.get(left) === right && reverse.get(right) === left;
+  }
+  pairs.set(left, right);
+  reverse.set(right, left);
   if (Array.isArray(left)) {
     if (!Array.isArray(right) || left.length !== right.length) return false;
     for (let index = 0; index < left.length; index++) {
-      if (!equalValue(left[index], right[index], depth + 1)) return false;
+      if (!equalValue(left[index], right[index], pairs, reverse, depth + 1)) return false;
     }
     return true;
   }
@@ -50,23 +55,34 @@ function equalValue(left, right, depth = 0) {
   for (const key in left) {
     if (!Object.hasOwn(left, key)) continue;
     leftCount++;
-    if (!Object.hasOwn(right, key) || !equalValue(left[key], right[key], depth + 1)) return false;
+    if (!Object.hasOwn(right, key) || !equalValue(left[key], right[key], pairs, reverse, depth + 1)) return false;
   }
   let rightCount = 0;
   for (const key in right) if (Object.hasOwn(right, key)) rightCount++;
   return leftCount === rightCount;
 }
 
-function unchangedRecord(record, cached) {
+function unchangedRecord(record, cached, memo, pairs, reverse) {
   if (cached?.record !== record || cached.version !== record.version) return false;
   // Legacy host integrations can retain heap.get(...).data. Comparing immutable
   // payloads at capture catches such writes without adding proxies to VM loads.
-  return equalValue(record, cached.snapshot);
+  pairs.clear();
+  reverse.clear();
+  if (!equalValue(record, cached.snapshot, pairs, reverse)) return false;
+  // A changed record copied earlier can already own part of this alias graph.
+  // Reuse only if its copies agree, then seed the memo for later records.
+  for (const [live, saved] of pairs) {
+    if (memo.has(live) && memo.get(live) !== saved) return false;
+  }
+  for (const [live, saved] of pairs) memo.set(live, saved);
+  return true;
 }
 
 /** Capture changed records once; immutable copies survive later heap mutations. */
 export function snapshotHeap(heap, {memo = new Map(), shared = true} = {}) {
   const records = new Array(heap.records.length);
+  const pairs = new Map();
+  const reverse = new Map();
   let reusedRecords = 0;
   let copiedRecords = 0;
   for (let index = 0; index < records.length; index++) {
@@ -77,7 +93,7 @@ export function snapshotHeap(heap, {memo = new Map(), shared = true} = {}) {
       continue;
     }
     const cached = heap.snapshotRecords.get(index);
-    if (shared && unchangedRecord(record, cached)) {
+    if (shared && unchangedRecord(record, cached, memo, pairs, reverse)) {
       records[index] = cached.snapshot;
       reusedRecords++;
       continue;
@@ -109,9 +125,21 @@ export function snapshotHeap(heap, {memo = new Map(), shared = true} = {}) {
   };
 }
 
-function mutableData(data) {
-  if (data instanceof ReadonlySnapshotArray) return data.toMutableArray();
-  if (Array.isArray(data) || ArrayBuffer.isView(data)) return data.slice();
+function mutableData(data, memo) {
+  if (memo.has(data)) return memo.get(data);
+  if (data instanceof ReadonlySnapshotArray) {
+    const copy = data.toMutableArray();
+    memo.set(data, copy);
+    return copy;
+  }
+  if (Array.isArray(data) && Object.isFrozen(data)) {
+    const copy = [];
+    memo.set(data, copy);
+    for (const value of data) copy.push(copyExecution(value, memo));
+    return copy;
+  }
+  // The full-copy/prepared graph is already independent. Copying its backing
+  // again would split self references and aliases shared by other records.
   return data;
 }
 
@@ -124,12 +152,13 @@ export function restoreHeap(heap, snapshot, {memo = new Map(), prepared = false}
   heap.nextHandleId = Math.max(heap.nextHandleId, state.nextHandleId ?? 1);
   heap.snapshotRecords.clear();
   heap.snapshotGenerations = null;
+  const backingCopies = new Map();
   heap.records = state.records.map(record => {
     if (!record) return null;
     const methodTable = record.methodTable?.registry === heap.methodTables
       ? record.methodTable
       : heap.methodTables.get(record.methodTable?.name ?? record.type);
-    const live = {...record, methodTable, data: mutableData(record.data)};
+    const live = {...record, methodTable, data: mutableData(record.data, backingCopies)};
     heap.ownRecord(live);
     return live;
   });
