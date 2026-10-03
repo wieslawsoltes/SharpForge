@@ -4,10 +4,9 @@
  */
 import { SymbolKind, TypeKind, RefKind, ErrorTypeSymbol, ArrayTypeSymbol } from '../../symbols/types.js';
 import { LocalDeclarationKind } from '../../symbols/members.js';
-import { lookupMembers } from '../inheritance.js';
 import { implementsInterface } from '../../symbols/substitution.js';
 import { checkRefLocalInitializer, checkRefWritability, recordRefLocal } from '../ref-locals.js';
-import { checkAsyncOrIteratorUse, isRefLike, checkArrayElementType } from '../ref-struct.js';
+import { checkAsyncOrIteratorUse, checkArrayElementType } from '../ref-struct.js';
 import { numericKind } from '../../conversions/numeric.js';
 import { isAsyncDisposable } from '../async-streams.js';
 import { reportAwaitOutsideAsync } from '../async.js';
@@ -234,15 +233,11 @@ export const DeclarationBinding = Base =>
           ? null
           : this.core.func(types.length + 1).construct([...types, m.returnType]);
     }
-    /** A `using` resource must convert to IDisposable (or, for ref structs, have a Dispose method; IAsyncDisposable for await using). */
+    /** A `using` resource must convert to IDisposable (IAsyncDisposable for await using); ../csharp8.js adds pattern-based disposal. */
     checkDisposable(type, node, isAwait, value) {
       if (!type || type.isErrorType?.() || value?.hasErrors || value?.literal === 'null') return;
       if (isAwait ? isAsyncDisposable(type, this.core) : implementsInterface(type, this.core.idisposable, this.core)) return;
       if (type.typeKind === TypeKind.TypeParameter && type.constraintTypes.length) return;
-      const pattern = lookupMembers(type, 'Dispose', this.core, {}).members.some(
-        m => m.kind === SymbolKind.Method && !m.isStatic && m.parameters.every(p => p.isOptional || p.isParams),
-      );
-      if (!isAwait && pattern && isRefLike(type)) return;
       // Registry types do not list their interfaces completely: only source types and primitives are known not to be disposable.
       if (
         !isSourceType(type) &&
