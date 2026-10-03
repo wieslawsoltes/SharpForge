@@ -132,16 +132,23 @@ export class AssemblyLoadContext {
 
   /** Resolve on first use. A context binds at most one version of each simple assembly name. */
   async loadFromAssemblyName(value, options = {}) {
+    return this.#loadWithPath(value, options, []);
+  }
+
+  async #loadWithPath(value, options, path) {
     this.ensureActive();
     checkCancellation(options.signal);
     const reference = asAssemblyName(value);
     const key = reference.name.toLowerCase();
     const existing = this.#bindings.get(key);
     if (existing) return this.#checkIdentity(reference, existing, options);
-    if (this.#callbacks.has(key)) throw loadError(LoadErrorCode.RecursiveResolution, `Reentrant resolution of ${reference.name}`);
+    if (this.#callbacks.has(key) || path.includes(key)) {
+      throw loadError(LoadErrorCode.RecursiveResolution, `Reentrant resolution of ${reference.name}`);
+    }
     if (!this.#pending.has(key)) {
       if (this.#pending.size >= this.#maxAssemblies) throw loadError(LoadErrorCode.LimitExceeded, 'Pending assembly load limit exceeded');
-      const pending = this.#resolve(reference, options);
+      // Publish before invoking host code so independent asynchronous callers share this operation.
+      const pending = Promise.resolve().then(() => this.#resolve(reference, options, [...path, key]));
       this.#pending.set(key, pending);
     }
     const pending = this.#pending.get(key);
@@ -155,8 +162,11 @@ export class AssemblyLoadContext {
     }
   }
 
-  async #resolve(reference, options) {
-    const request = Object.freeze({ context: this, assemblyName: reference, requester: options.requester ?? null, signal: options.signal });
+  async #resolve(reference, options, path) {
+    const request = Object.freeze({
+      context: this, assemblyName: reference, requester: options.requester ?? null, signal: options.signal,
+      resolveAssembly: (name, nestedOptions = {}) => this.#loadWithPath(name, { ...options, ...nestedOptions }, path),
+    });
     const key = reference.name.toLowerCase();
     let result = this.#load ? await this.#invokeCallback(key, () => this.#load(request)) : null;
     this.ensureActive();
@@ -184,9 +194,9 @@ export class AssemblyLoadContext {
     return this.#acceptAssembly(assembly, options);
   }
 
-  async #invokeCallback(key, callback) {
+  #invokeCallback(key, callback) {
     this.#callbacks.add(key);
-    try { return await callback(); }
+    try { return callback(); }
     finally { this.#callbacks.delete(key); }
   }
 

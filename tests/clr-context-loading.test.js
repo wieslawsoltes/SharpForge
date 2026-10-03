@@ -77,3 +77,34 @@ test('CLR 50-assembly load keeps method bodies lazy and caches each requested bo
   assert.match(module.moduleVersionId, /^[a-f\d]{8}(?:-[a-f\d]{4}){3}-[a-f\d]{12}$/);
   assert.throws(() => module.typeIdentity(0x06000001), error => error.code === LoadErrorCode.InvalidImage);
 });
+
+test('CLR independent same-name requests share an awaited resolving callback', async () => {
+  const context = new AssemblyLoadSession().defaultContext;
+  let release;
+  const gate = new Promise(resolve => { release = resolve; });
+  let entered;
+  const started = new Promise(resolve => { entered = resolve; });
+  let calls = 0;
+  context.onResolving(async () => {
+    calls++;
+    entered();
+    await gate;
+    return contextFixture('Concurrent');
+  });
+  const first = context.loadFromAssemblyName('Concurrent');
+  await started;
+  const second = context.loadFromAssemblyName('Concurrent');
+  release();
+  const [one, two] = await Promise.all([first, second]);
+  assert.equal(one, two);
+  assert.equal(calls, 1);
+});
+
+test('CLR scoped async callback resolution rejects a dependency cycle after await', async () => {
+  const context = new AssemblyLoadSession().defaultContext;
+  context.onResolving(async request => {
+    await Promise.resolve();
+    return request.resolveAssembly(request.assemblyName.name === 'First' ? 'Second' : 'First');
+  });
+  await assert.rejects(context.loadFromAssemblyName('First'), error => error.code === LoadErrorCode.RecursiveResolution);
+});

@@ -18,8 +18,13 @@ A context binds at most one version per simple name. An existing higher version
 can satisfy a lower name request; loading a different version from bytes is a
 conflict. Explicitly sharing an assembly across contexts preserves its original
 type identity. A resolver cannot register an unrelated assembly while failing
-the requested identity. Same-name reentry during a user resolving callback fails
-explicitly; hosts should serialize such requests while their callback is pending.
+the requested identity. Independent concurrent requests share a pending resolution.
+Synchronous same-name callback reentry fails explicitly. Async callbacks must use
+`request.resolveAssembly(name, options)` for dependent resolution: its explicit
+ancestry detects cycles across `await` boundaries. A direct call through
+`request.context.loadFromAssemblyName` after `await` has no ancestry and cannot be
+distinguished from independent concurrency; using it to await the same pending
+assembly is unsupported and may deadlock.
 
 `RuntimeAssembly.manifestModule` exposes immutable row snapshots, heap values,
 MVID, interned TypeDef identity handles and lazy method bodies. Method byte arrays
