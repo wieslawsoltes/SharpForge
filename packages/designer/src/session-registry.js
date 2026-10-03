@@ -1,4 +1,12 @@
-import {DesignerSession, designerDocumentUri} from './designer-session.js';
+import {DesignerSession, designerDocumentUri, normalizeDesignerViewState} from './designer-session.js';
+import {recoverSessionGuides} from './session-guide-state.js';
+
+function recoveredSessionState(item) {
+  const kind = ['design', 'csharp', 'resources'].includes(item.kind) ? item.kind
+    : /\.sfdesign\.json$/i.test(item.uri) ? 'design' : 'csharp';
+  const guides = recoverSessionGuides(item.guides);
+  return {uri: item.uri, kind, ...normalizeDesignerViewState(item, kind === 'design' ? 'design' : 'code'), ...(guides ? {guides} : {})};
+}
 
 /** Explicit workspace registry; tab visibility does not determine session lifetime. */
 export class DesignerSessionRegistry {
@@ -48,7 +56,7 @@ export class DesignerSessionRegistry {
     return this.active;
   }
 
-  close(uri) {
+  close(uri, {preserveState = false} = {}) {
     this.assertOpen();
     this.pendingState.delete(uri);
     const session = this.get(uri);
@@ -57,6 +65,10 @@ export class DesignerSessionRegistry {
     this.subscriptions.get(uri)?.();
     this.subscriptions.delete(uri);
     this.sessions.delete(uri);
+    if (preserveState) {
+      this.pendingState.set(uri, session.snapshot());
+      while (this.pendingState.size > this.maxSessions) this.pendingState.delete(this.pendingState.keys().next().value);
+    }
     try { session.dispose(); } finally { this.emit({kind: 'close', uri, session}); }
     return true;
   }
@@ -86,7 +98,7 @@ export class DesignerSessionRegistry {
   }
 
   snapshot() {
-    const snapshots = new Map(this.pendingState);
+    const snapshots = new Map([...this.pendingState].map(([uri, value]) => [uri, structuredClone(value)]));
     for (const [uri, session] of this.sessions) snapshots.set(uri, session.snapshot());
     return {version: 1, activeUri: this.activeUri, documents: [...snapshots.values()]};
   }
@@ -100,9 +112,10 @@ export class DesignerSessionRegistry {
     for (const item of snapshot.documents.slice(0, this.maxSessions)) {
       if (!item || typeof item.uri !== 'string' || !item.uri || item.uri.length > 4096 || item.uri.includes('\0')) continue;
       if (allowed && !allowed.has(item.uri)) continue;
+      const recovery = recoveredSessionState(item);
       const session = this.get(item.uri);
-      if (session) session.restore(item);
-      else this.pendingState.set(item.uri, {...item});
+      if (session) session.restore(recovery);
+      else this.pendingState.set(item.uri, recovery);
     }
     if (snapshot.activeUri === null || this.sessions.has(snapshot.activeUri)) this.activate(snapshot.activeUri);
     this.emit({kind: 'restore'});

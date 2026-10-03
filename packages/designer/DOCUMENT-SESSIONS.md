@@ -42,6 +42,16 @@ case sensitive and never silently decoded or normalized. Recovery clamps finite 
 removed URIs, and drops unknown node IDs after source initialization. Live attachments and executable objects are never serialized.
 Session zoom uses the surface's 0.1–8 range (10–800%); snap spacing uses the guide contract's 0.25–1,024 design pixel range.
 
+The optional `guides` recovery field stores only the validated guide settings and up to 256 named guide positions. Unknown metadata,
+malformed values, and newer guide schema versions are ignored. Recovered settings survive the initial placeholder and failed source
+parses; `session.applyRecovery({final: true})` completes guide and selection recovery after successful source initialization. Guide
+restoration changes no C# text, model revision, or undo entries. Guide edits and guide undo/redo publish a view change so workspace
+recovery is saved even when C# remains clean. Reconnecting the same C# document preserves its existing guides. New document option
+defaults do not replace recovered metadata.
+
+`registry.close(uri, {preserveState: true})` disposes the live session but keeps a bounded view snapshot for remounting the same file.
+The Studio adapter uses this only when replacing a cached source mount. File removal and workspace reset discard those snapshots.
+
 `session.own(name, resource, dispose)` registers one resource; replacement disposes the former resource. Resources are disposed in
 reverse registration order. The source-sync object is session owned. A rendering adapter receiving a session therefore disposes its
 own visuals without disposing `session.sourceSync` again. `beginOperation(name)` aborts older work in that named channel and returns a

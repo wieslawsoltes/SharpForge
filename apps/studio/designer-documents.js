@@ -60,7 +60,7 @@ export class DesignerDocuments {
   wrap(uri, element, editor, record = null) {
     if (this.disposed) throw new Error('Designer documents host is disposed');
     const previous = this.sources.get(uri);
-    if (previous && previous.element !== element) this.close(uri);
+    if (previous && previous.element !== element) this.close(uri, {preserveState: true});
     this.sources.set(uri, {element, editor, record});
     if (!this.views.has(uri) && this.probe(uri).compatible) this.createView(uri);
     if (this.state.active === uri) this.activate(uri);
@@ -88,7 +88,7 @@ export class DesignerDocuments {
     session.own('document-host', view);
     this.views.set(uri, view);
     if (kind === 'design') {
-      session.applySelection({final: true});
+      session.applyRecovery({final: true});
       view.ready = Promise.resolve(session);
     } else this.initializeView(view);
     return view;
@@ -102,7 +102,7 @@ export class DesignerDocuments {
     view.ready = Promise.resolve().then(() => operation.current() ? view.tools.sourceSync.connect(session.uri) : null).then(() => {
       if (!operation.current()) return null;
       session.setViewState(stateBeforeConnect);
-      session.applySelection({final: true});
+      session.applyRecovery({final: true});
       operation.finish();
       this.router.route(this.active);
       return session;
@@ -175,10 +175,10 @@ export class DesignerDocuments {
     this.probeTimers.delete(uri);
   }
 
-  /** Tab closure can keep a document cached; call close only for file removal or explicit workspace reset. */
-  close(uri) {
+  /** Remounting an existing file keeps its view recovery; removal and workspace reset discard it. */
+  close(uri, {preserveState = false} = {}) {
     this.cancelProbe(uri);
-    const closed = this.registry.close(uri);
+    const closed = this.registry.close(uri, {preserveState: preserveState && !!this.file(uri)});
     this.sources.delete(uri);
     this.probes.delete(uri);
     return closed;
@@ -196,7 +196,7 @@ export class DesignerDocuments {
   restore(snapshot) {
     const restored = this.registry.restore(snapshot, {files: [...this.state.files, ...this.records()]});
     for (const session of this.registry.sessions.values()) {
-      if (!session.operations.has('initialize-source')) session.applySelection({final: true});
+      if (!session.operations.has('initialize-source')) session.applyRecovery({final: true});
     }
     return restored;
   }
