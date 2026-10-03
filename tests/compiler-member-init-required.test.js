@@ -9,13 +9,7 @@ import { requiredMembersOf, setsRequiredMembers } from '../packages/compiler/src
 import { testPinnedFeature } from './support/pinned-feature.js';
 
 testPinnedFeature('SF-A02-T10.4', 'member-init', { outputs: 1, diagnostics: 4 });
-testPinnedFeature('SF-A02-T10.4', 'member-required', {
-  outputs: 1,
-  diagnostics: 6,
-  knownGaps: {
-    'member-required/required-language-version': 'the parser reports the gate on the `required` keyword; Roslyn reports it on the member name',
-  },
-});
+testPinnedFeature('SF-A02-T10.4', 'member-required', { outputs: 1, diagnostics: 6 });
 
 const analysisOf = source => analyze([parse(new SourceText(source, 'a.cs'))]);
 const errorsOf = source =>

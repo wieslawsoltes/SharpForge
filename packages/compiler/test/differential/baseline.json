@@ -350,6 +350,7 @@
     "member-operators/user-defined-conversions",
     "member-required/required-and-nested-initializers",
     "member-required/required-declaration-errors",
+    "member-required/required-language-version",
     "member-required/required-member-must-be-set",
     "member-required/required-members-set-by-initializers",
     "member-required/required-new-constraint",
