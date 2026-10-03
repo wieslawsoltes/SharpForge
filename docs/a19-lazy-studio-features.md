@@ -1,5 +1,9 @@
 # Lazy Studio feature activation
 
+## Lazy tool review scope
+
+Review04 contains the docking, navigation, Watch and lazy tool source modules and their focused tests. Studio bootstrap wiring, actual Studio browser workflows, standalone bundling changes and A20 performance drivers remain in the dependent composition layer. Qualification records below describe the original completed source batches; no tests or builds were rerun for this review branch. The standalone docking DOM fixture is present and uses built assets with the production server/CSP, but remains unrun. See [project16-workbench-review.md](project16-workbench-review.md) for the exact scope and host contracts.
+
 `createStudioLazyFeatures` registers the Designer, Assembly Explorer, Disassembly,
 MSBuild integration, and Project Wizard through the explicit `studioToolLoaders`
 module table. The normal editor startup imports none of those five controllers.
