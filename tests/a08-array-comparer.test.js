@@ -90,7 +90,7 @@ for (const [engine, create] of Object.entries(engines)) {
         return result;
       };
       const nan = box('double', NaN);
-      for (const [id, right] of [['nan-equal', nan], ['nan-first', box('double', 0)]]) {
+      for (const [id, right] of [['nan-equal', box('double', NaN)], ['nan-first', box('double', 0)]]) {
         const expected = reference.cases.find(row => row.id === id);
         assert.equal(Math.sign(platform.invoke(compare, [comparer, nan, right])), expected.value);
       }

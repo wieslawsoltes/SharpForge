@@ -72,3 +72,34 @@ comparison function. Its sign expresses ordering. It allocates no managed memory
 null receivers raise `NullReferenceException`, and unsupported implementations
 raise `NotSupportedException`. Collections reuse this helper through the public
 core entry point. Custom managed callbacks remain tracked by #2655.
+
+`StringComparer` also implements non-generic `System.Collections.IComparer`.
+Its `Compare(object, object)` overload preserves reference identity and null
+ordering, compares strings ordinally, and uses the existing managed primitive
+identity for compatible boxed values. Different primitive types and objects
+without IComparable raise `ArgumentException`; arbitrary managed IComparable
+callbacks remain explicitly unsupported under #2655. NaN sorts first and
+compares equal to NaN. The new contracts occupy A07 slots `524293`–`524295`.
+
+`Array.BinarySearch(Array, object, IComparer)` uses that comparer without
+allocating managed boxes for value-array elements. It returns a matching index
+or the complemented insertion index in O(log n) comparisons and does not mutate
+storage. The old and new overloads share one search loop. Comparison failures
+become `InvalidOperationException` retaining the original managed InnerException;
+array null/rank checks happen first. Empty arrays never invoke the comparer.
+Unsupported custom comparers on nonempty arrays raise `NotSupportedException`.
+One-dimensional arrays with explicit lower bounds remain unsupported by this
+execution profile; multidimensional arrays raise `RankException`.
+
+A null comparer retains the released ordinal default string profile. Default
+invariant ordering is still outstanding in #829. The pinned 33-case .NET capture
+under `reference/array-comparer` covers this actual non-generic overload and its
+object comparisons/faults. Ordinary tests also consume the prior 97-string
+ordinal search corpus. NaN comparisons and rank rejection are covered through
+both managed platforms without claiming unsupported source syntax support.
+
+The host `fault(type, message, reference = null)` service and public
+`fail(platform, type, message, reference = null)` helper can carry an existing
+managed exception reference. Callers root that reference during fault creation;
+the runtime's ordinary exception frames retain it afterward. Existing calls
+without a reference keep their previous behavior.
