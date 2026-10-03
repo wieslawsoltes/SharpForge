@@ -1,3 +1,4 @@
+import {invokeDecimal} from './decimal-intrinsics.js';
 import {stringFromChars} from './strings.js';
 import {methodOffsets} from './method-offsets.js';
 import {systemType,intrinsicDefinition,supportedDelegateCall} from '@sharpforge/cil';
@@ -50,7 +51,10 @@ export function invoke(vm,instruction) {
       if((instruction.name==='newobj'||descriptor.signature.returnType!=='void')&&value!==SUSPENDED)caller.stack.push(value);
       return;
     }
-    const contract=intrinsicDefinition(descriptor)?.contract;
+    const intrinsic=intrinsicDefinition(descriptor),contract=intrinsic?.contract;
+    if(instruction.name==='newobj'&&intrinsic?.implementation==='decimal') {
+      caller.stack.push(invokeDecimal(vm,descriptor,args).value);return;
+    }
     if(instruction.name==='newobj'&&descriptor.owner==='System.String'&&descriptor.signature.parameters.join(',')==='char[]'){caller.stack.push(stringFromChars(vm,args[0]));return;}
     if(instruction.name==='newobj'&&contract){caller.stack.push(vm.platform.invoke(contract,args));return;}
     if(instruction.name==='newobj') {
