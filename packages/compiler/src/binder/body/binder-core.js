@@ -1,3 +1,4 @@
+import {bindNumericLiteral} from './numeric-literal.js';
 import {bindArgumentHandle} from './varargs.js';
 /**
  * The core of the body binder: scopes and locals, diagnostics, conversions of bound expressions and the
@@ -181,20 +182,7 @@ export class BinderCore {
     switch (kind) {
       case 'ParenthesizedExpression':
         return this.expression(syntax.expression, options);
-      case 'NumericLiteralExpression': {
-        const v = syntax.token.value;
-        if (!v || !v.type) return this.bad(syntax);
-        const type = this.core.keyword(v.type);
-        let constant = null;
-        try {
-          constant = ConstantValue.of(v.type, v.value);
-        } catch {
-          constant = null;
-        }
-        const n = this.node('Literal', syntax, type);
-        n.constantValue = constant;
-        return n;
-      }
+      case 'NumericLiteralExpression': return bindNumericLiteral(this, syntax);
       case 'ArgListExpression': return bindArgumentHandle(this,syntax);
       case 'TrueLiteralExpression':
       case 'FalseLiteralExpression': {
