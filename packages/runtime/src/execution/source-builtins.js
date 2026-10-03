@@ -27,7 +27,7 @@ export function builtin(vm, id, args,types=[]) {
     const a = vm.value(args[0]), b = vm.value(args[1]), c = vm.value(args[2]);
     if(name.startsWith('$type.'))return objectType(vm,args[0],name.split('.')[1]);
     if (name.startsWith('Math.')) {
-      const type=entry.result==='numeric'?(types.includes('double')?'double':types.includes('float')?'float':types.includes('long')?'long':'int'):entry.result;
+      const type=entry.result==='numeric'?(types.includes('double')?'double':types.includes('float')?'float':types.includes('long')?'long':types.length?'int':'double'):entry.result;
       return invokeNumericIntrinsic(vm,{owner:'System.Math',name:name.slice(5),parameters:types,returnType:type,isStatic:true},args).value;
     }
     switch (name) {

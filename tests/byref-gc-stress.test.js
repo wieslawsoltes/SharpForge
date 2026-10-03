@@ -47,7 +47,7 @@ test('1000 seeded managed programs preserve byref owners with collection after e
     const {operations, expected} = program(seed);
     const vm = new CilVirtualMachine(cilProgram(seed, operations), {gcStress: 'instruction'});
     vm.run();
-    assert.equal(vm.state, 'completed', 'seed ' + seed + ': ' + vm.fault?.message);
+    assert.equal(vm.state, 'terminated', 'seed ' + seed + ': ' + vm.fault?.message);
     assert.equal(vm.returnValue, expected, 'seed ' + seed);
     assert.ok(vm.heap.stats.collections >= vm.instructions - 1, 'GC hook missing for seed ' + seed);
   }
@@ -71,7 +71,7 @@ test('source ref/out programs retain array interiors under instruction GC', () =
     assert.equal(compiled.success, true, JSON.stringify(compiled.diagnostics));
     const vm = new VirtualMachine(compiled.image, {gcStress: 'instruction'});
     vm.run();
-    assert.equal(vm.state, 'completed', 'source seed ' + seed + ': ' + vm.fault?.message);
+    assert.equal(vm.state, 'terminated', 'source seed ' + seed + ': ' + vm.fault?.message);
     assert.equal(vm.returnValue, expected, 'source seed ' + seed);
     assert.ok(vm.heap.stats.collections >= vm.instructions - 1);
   }

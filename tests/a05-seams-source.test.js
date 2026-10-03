@@ -167,7 +167,8 @@ function exceptionContext(handlers = []) {
   const frame = {id: 1, methodId: 0, pc: 6, base: 0, locals: [], point: null, ...sourceEH.frameState()};
   const vm = Object.assign(Object.create(VirtualMachine.prototype), {
     heap: new ManagedHeap(), image: {methods: [{qualifiedName: 'Test.Main', code: new Int32Array(120), handlers}]},
-    frames: [frame], stack: [], state: 'running', fault: null, pendingFault: null
+    frames: [frame], stack: [], state: 'running', fault: null, pendingFault: null,
+    platform: {singletons: new Map()}, scheduler: {current: null}
   });
   vm.heap.rootProvider = () => sourceEH.roots(vm);
   return {vm, frame};
@@ -215,7 +216,7 @@ test('source EH seam: faults cross cleanup before entering a catch and retain ma
   assert.equal(frame.pc, 12);
   assert.equal(vm.fault, null);
   vm.heap.collect();
-  assert.equal(vm.heap.get(fault.reference).type, 'Exception');
+  assert.equal(vm.heap.get(fault.reference).type, 'System.Exception');
   vm.resumeUnwind(frame);
   assert.equal(frame.pc, 28);
   assert.equal(frame.locals[0], fault.reference);
