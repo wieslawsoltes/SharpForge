@@ -8,7 +8,7 @@ import { CSharp70Binding } from './csharp70.js';
 import { CSharp7xBinding } from './csharp7x.js';
 import { CSharp8Binding } from './csharp8.js';
 import { IndexRangeBinding } from './index-range.js';
-import { modernRules } from './modern-rules.js';
+import { languageRules13to15 } from './language-rules-13-15.js';
 
 export const languageRules = [
   CSharp70Binding,
@@ -16,6 +16,6 @@ export const languageRules = [
   ExpressionVariableBinding,
   IndexRangeBinding,
   CSharp8Binding,
-  // C# 13 to 15: one line per rule, registered in ./modern-rules.js.
-  ...modernRules,
+  // C# 13 to 15: one line per rule, registered in ./language-rules-13-15.js.
+  ...languageRules13to15,
 ];

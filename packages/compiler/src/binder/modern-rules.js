@@ -1,9 +1,8 @@
 /**
- * Binder rules of the C# 13, 14 and 15 epics (SF-A02-E11, SF-A02-E12), in composition order: class mixins like the
- * rules of ./language-rules.js, which appends this list to its own. A new rule is one import and one line here.
+ * The analysis phases of the C# 9 to 12 epics (SF-A02-E09, SF-A02-E10), in composition order. Each is a class mixin of
+ * the semantic analysis that runs once the attributes are bound; a new one is registered here, so
+ * ../semantic-analysis.js lists these epics once.
  */
-import { ConditionalAssignmentBinding } from './conditional-assignment.js';
+import { CSharp9Rules } from './csharp9.js';
 
-export const modernRules = Object.freeze([
-  ConditionalAssignmentBinding,
-]);
+export const modernRules = Object.freeze([CSharp9Rules]);
