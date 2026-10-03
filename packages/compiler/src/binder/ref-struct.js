@@ -69,7 +69,10 @@ export function wouldBox(from, to) {
       to.typeKind === TypeKind.Dynamic)
   );
 }
-/** Instance methods of object/ValueType cannot be called on a ref struct unless it overrides them (the call would box): CS0029-family; returns true when the call is illegal. */
+/**
+ * Instance methods of object/ValueType cannot be called on a ref struct unless it overrides them (the call would box): CS0029-family; returns true
+ * when the call is illegal.
+ */
 export function callWouldBox(receiverType, method) {
   return (
     isRefLike(receiverType) &&

@@ -13,7 +13,9 @@ import { RefKind } from '../symbols/types.js';
  * @param {ParameterSymbol[]} parameters
  * @param {{name?:string|null,refKind?:string}[]} args in source order
  * @param {{expanded?:boolean}} [options] expanded = params form (the last parameter takes zero or more arguments)
- * @returns {{ok:true,parameterOf:number[],expanded:boolean,paramsCount:number,defaults:number[]}|{ok:false,error:{code:string,kind:string,argument?:number,parameter?:ParameterSymbol,name?:string}}}
+ * @returns
+ *   on success `{ ok: true, parameterOf: number[], expanded, paramsCount, defaults: number[] }`;
+ *   on failure `{ ok: false, error: { code, kind, argument?, parameter?, name? } }`
  *   error kinds: 'tooMany' (CS1501), 'noSuchName' (CS1739), 'nameUsedTwice' (CS1740), 'namedAlreadyPositional' (CS1744),
  *   'badNonTrailingName' (CS8323), 'missing' (CS7036), 'notExpandable'
  */

@@ -92,7 +92,9 @@ test('A02-B01 parser-detectable features report the Roslyn code of the selected 
 });
 test('A02-T24 using directives, namespaces and aliases are read from the syntax tree', () => {
   const source =
-    'global using System;\nusing Txt = System.Text;\nusing static System.Math;\nnamespace A.B { using System.Collections.Generic; namespace C { using L = System.Collections.Generic.List<int>; } }\n// using Fake;\nclass X{void M(){using(var d=new D()){} string s="using Nope;";}}\n';
+    'global using System;\nusing Txt = System.Text;\nusing static System.Math;\n' +
+    'namespace A.B { using System.Collections.Generic; namespace C { using L = System.Collections.Generic.List<int>; } }\n' +
+    '// using Fake;\nclass X{void M(){using(var d=new D()){} string s="using Nope;";}}\n';
   const file = parse(new SourceText(source, 'u.cs')),
     list = collectUsingDirectives(file);
   assert.deepEqual(
@@ -148,7 +150,8 @@ test('A02-T24 type-name diagnostics are reported on the type syntax', () => {
 });
 test('A02-T37 #pragma warning reaches the final diagnostic list end to end', () => {
   const body =
-    'int a;\n#pragma warning disable CS0168\nint b;\n#pragma warning restore CS0168\nint c;\n#pragma warning disable 168, 219\nint d; int e = 1;\n#pragma warning restore\nint f;\n';
+    'int a;\n#pragma warning disable CS0168\nint b;\n#pragma warning restore CS0168\nint c;\n' +
+    '#pragma warning disable 168, 219\nint d; int e = 1;\n#pragma warning restore\nint f;\n';
   const names = (source, options) => compile(source, options).diagnostics.map(d => d.code + ':' + slice(source, d));
   assert.deepEqual(names(body), ['CS0168:a', 'CS0168:c', 'CS0168:f']);
   // warnaserror does not resurrect a pragma-disabled warning; an enabled one becomes an error.

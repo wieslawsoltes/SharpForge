@@ -64,7 +64,7 @@ test('A02-T27 bound expressions are typed with TypeSymbols',()=>{
   assert.equal(dumpBoundTree(new BoundLiteral(null,{value:'a'},null,{legacyType:'string'})),'Literal value="a" : ?');
 });
 test('A02-T27/T28 the binder emits no IR',()=>{
-  const dir=join(pkg,'src/binder');for(const file of readdirSync(dir)){const text=readFileSync(join(dir,file),'utf8');
+  const dir=join(pkg,'src/binder');for(const file of readdirSync(dir,{recursive:true})){if(!file.endsWith('.js'))continue;const text=readFileSync(join(dir,file),'utf8');
     assert(!/\bOp\./.test(text)&&!/\{[^}]*\bOp\b[^}]*\} from '@sharpforge\/bytecode'/.test(text),file+' references IR opcodes');assert(!/\.emit\(|emitConstant\(|emitContract\(/.test(text),file+' emits IR');assert(!/ir-emitter|method-compiler/.test(text),file+' depends on code generation');}
   // Binding a method leaves its record without code: emission is a separate, later stage.
   const f=bindFixture('int x="text";Console.WriteLine(x);');assert.equal(f.compilation.methods.every(m=>m.code===undefined),true);assert.deepEqual(f.diagnostics,['CS0029@4+8']);assert(f.methods['<Main>'].includes('LocalDeclaration local=x:int !'));

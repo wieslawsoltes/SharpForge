@@ -150,7 +150,8 @@ export const DeclarationChecks = Base =>
     }
     /** Constraint checks for every constructed type written in source (deferred until all declarations are known). */
     checkConstructions() {
-      for (const c of this.constructions) {
+      const pending = this.constructions.splice(0);
+      for (const c of pending) {
         const type = c.type;
         if (!type || type.isErrorType?.()) continue;
         for (const v of checkConstructedType(type, this.core)) {

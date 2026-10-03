@@ -19,7 +19,8 @@ export function enumUnderlyingKind(enumType, core) {
 /**
  * Evaluates the members of a source enum.
  * @param enumType the enum symbol  @param core CoreTypes
- * @param {(syntax,scope,field)=>{constant:ConstantValue|null,type:TypeSymbol|null,errors?:boolean}} evaluate binds an initializer expression (references to sibling members re-enter through `valueOf`)
+ * @param {(syntax,scope,field)=>{constant:ConstantValue|null,type:TypeSymbol|null,errors?:boolean}} evaluate binds an initializer expression
+ *   (references to sibling members re-enter through `valueOf`)
  * @param report (uri,node,code,args)
  */
 export function bindEnumMembers(enumType, core, evaluate, report) {

@@ -198,7 +198,9 @@ export const OperatorBinding = Base =>
       }
       const writable = checkWritable(left, operator === '=' ? 'assignment' : 'compound', this.variableContext);
       if (writable && !(isRefAssign && left.kind === 'Local' && left.local.refKind !== RefKind.None)) {
-        this.report(syntax.left, writable.code, writable.args);
+        // CS1612 points at the struct-valued expression whose member cannot be modified.
+        const target = writable.code === 'CS1612' && left.receiver?.syntax ? left.receiver.syntax : syntax.left;
+        this.report(target, writable.code, writable.args);
         this.markRead(left);
         this.value(syntax.right);
         return this.bad(syntax);

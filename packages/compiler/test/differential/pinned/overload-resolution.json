@@ -10,5 +10,11 @@
   "overload-resolution/cs1739-no-parameter-named":{"hash":"1bee9010c9efb942","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1739",107,1,"error"]]},
   "overload-resolution/cs1503-second-argument":{"hash":"e7bb884554600db4","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1503",95,3,"error"]]},
   "overload-resolution/cs7036-constructor":{"hash":"0a972f7ead384066","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS7036",26,1,"error"]]},
-  "overload-resolution/cs1501-library-method":{"hash":"80dc8e172e3ebbe1","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1501",38,9,"error"]]}
+  "overload-resolution/cs1501-library-method":{"hash":"80dc8e172e3ebbe1","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1501",38,9,"error"]]},
+  "overload-resolution/cs0121-better-conversion":{"hash":"c5449dc7ba7809eb","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0121",5,1,"error"]]},
+  "overload-resolution/cs1739-cs1744-named-arguments":{"hash":"6f052510c2d831b5","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1739",30,1,"error"],["CS1744",47,1,"error"]]},
+  "overload-resolution/cs0457-cs0029-user-conversions":{"hash":"ed3d1e460a1dfae1","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0266",25,1,"error"],["CS0029",54,1,"error"],["CS0649",88,1,"warning"]]},
+  "overload-resolution/cs0019-user-operators":{"hash":"294db3a9a9a6bc2e","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0019",61,5,"error"]]},
+  "overload-resolution/cs0123-cs0407-method-groups":{"hash":"716a262c86bd4c0c","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0123",39,3,"error"],["CS0407",61,9,"error"]]},
+  "overload-resolution/cs1061-extension-scope":{"hash":"3dbe79850eef0c0d","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS5001",-1,0,"error"],["CS1929",181,3,"error"],["CS1061",254,5,"error"]]}
 }}
