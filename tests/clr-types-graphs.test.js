@@ -49,6 +49,12 @@ test('CLR graph loading retains canonical shared identities and rejects invalid 
   } });
   const sealedModule = (await context.loadFromStream(sealed)).manifestModule;
   await assert.rejects(context.types.load(sealedModule, 0x02000003), /sealed or value type/);
+  let wrongTypes;
+  const wrong = new AssemblyLoadSession({ typeOptions: { resolveExternalType: () => wrongTypes.intrinsic('Wrong') } }).defaultContext;
+  wrongTypes = wrong.types;
+  wrongTypes.defineIntrinsic('Wrong');
+  const wrongModule = (await wrong.loadFromStream(managedFixture())).manifestModule;
+  await assert.rejects(wrong.types.load(wrongModule, 0x02000002), /returned Wrong for System.Object/);
 });
 
 test('CLR unresolved framework references and constructed inheritance stay explicit diagnostics', async () => {

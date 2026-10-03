@@ -142,6 +142,7 @@ export class TypeLoader {
       checkCancellation(operation.signal);
       if (external != null) {
         if (!(external instanceof TypeDesc) || !external.isLoaded) throw fail('External resolver must return a loaded TypeDesc');
+        if (external.fullName !== fullName) throw fail(`External type resolver returned ${external.fullName} for ${fullName}`);
         return external;
       }
       target = (await module.assembly.resolveReference(rid, operation)).manifestModule;
