@@ -64,7 +64,9 @@ test('framework metadata: projected interfaces participate in runtime casts and 
   const {frameworkMethodTable} = await import('../packages/runtime/src/execution/framework-method-table.js');
   const registry = new MethodTableRegistry();
   registry.define({name: 'Fixture.IConsumer`1', ...frameworkMethodTable({typeKind: 'interface', variance: ['in']})});
-  registry.define({name: 'Fixture.Parent', ...frameworkMethodTable({interfaces: ['Fixture.IConsumer`1<object>'], isAbstract: true})});
+  registry.define({name: 'Fixture.Parent', ...frameworkMethodTable({
+    interfaces: ['Fixture.IConsumer`1<object>'], isAbstract: true
+  })});
   registry.define({name: 'Fixture.Child', ...frameworkMethodTable({base: 'Fixture.Parent', isSealed: true})});
   const cache = new CastCache(registry);
   const child = registry.get('Fixture.Child');
