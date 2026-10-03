@@ -126,3 +126,16 @@ test('GraphQL resource limits shrink page size and surface permanent node overfl
   const bad = new GitHubProject({ owner: 'test', transport: async () => ({ errors: [{ message: 'MAX_NODE_LIMIT' }] }) });
   await assert.rejects(bad.graphql('query { items(first:1) { id } }'), e => e.exitCode === 65);
 });
+
+test('recorded live Project 4 fields support text, date and single-select projections', async () => {
+  const { readFileSync } = await import('node:fs');
+  const recorded = JSON.parse(readFileSync(new URL('./github-project-fields.fixture.json', import.meta.url)));
+  const { fake, claims, client } = setup(); fake.fields = recorded.fields;
+  await claims.claim(options);
+  await claims.lock({ ...options, key: 'studio' });
+  assert.equal((await client.item(1)).fields.Agent, options.agent);
+  assert.equal((await client.item(1)).fields['Lease expires'], '2026-10-04');
+  assert.equal((await client.item(1)).fields['Lock keys'], 'studio');
+  await claims.release(options);
+  assert.deepEqual((await client.item(1)).fields, { Status: 'Ready' });
+});
