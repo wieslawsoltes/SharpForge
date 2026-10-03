@@ -20,6 +20,34 @@ export function additive(before, after, key = '') {
   return true;
 }
 
+// A deliberately conservative schema proof: unknown validation keywords and
+// conjunction/exclusive-union extensions may narrow acceptance and need a bump.
+export function additiveSchema(before,after) {
+  if(isDeepStrictEqual(before,after))return true;
+  if(before===false)return true;
+  if(!before||!after||typeof before!=='object'||typeof after!=='object'||Array.isArray(before)||Array.isArray(after))return false;
+  const annotation=new Set(['title','description','$comment','examples']);
+  for(const [name,value] of Object.entries(before)){
+    if(annotation.has(name))continue;
+    if(!Object.hasOwn(after,name))return false;
+    if(isDeepStrictEqual(value,after[name]))continue;
+    if(name==='required') {if(!Array.isArray(after[name])||!after[name].every(v=>value.includes(v)))return false;}
+    else if(name==='enum'||name==='anyOf') {if(!Array.isArray(after[name])||!value.every(v=>after[name].some(w=>isDeepStrictEqual(v,w))))return false;}
+    else if(name==='properties'||name==='$defs') {
+      if(!after[name]||typeof after[name]!=='object'||Array.isArray(after[name]))return false;
+      if(!Object.keys(value).every(k=>Object.hasOwn(after[name],k)&&additiveSchema(value[k],after[name][k])))return false;
+      if(name==='properties'&&before.additionalProperties!==false&&Object.keys(after[name]).some(k=>!Object.hasOwn(value,k)))return false;
+    }else return false;
+  }
+  for(const name of Object.keys(after).filter(name=>!Object.hasOwn(before,name))) {
+    if(annotation.has(name)||name==='$defs')continue;
+    if(name==='properties'&&before.additionalProperties===false)continue;
+    if(name==='required'&&Array.isArray(after[name])&&!after[name].length)continue;
+    return false;
+  }
+  return true;
+}
+
 export function uniqueContractIds(value, path = '$') {
   const errors = [];
   if (Array.isArray(value)) {
@@ -53,7 +81,9 @@ export function checkContractChange({ before, after, beforeVersions, afterVersio
   for (const path of [...new Set([...Object.keys(before),...Object.keys(after)])].sort()) {
     if (after[path] !== undefined) errors.push(...uniqueContractIds(after[path],path));
     if (isDeepStrictEqual(before[path],after[path])) continue;
-    const breaking = before[path] !== undefined && (after[path] === undefined || !additive(before[path],after[path]));
+    const compatible=path.endsWith('.lock.json')||path.endsWith('spec-revisions.json')?additive:additiveSchema;
+    const breaking = before[path] !== undefined && (after[path] === undefined || !compatible(before[path],after[path]));
+    if(path.endsWith('spec-revisions.json')&&breaking)errors.push(`${path}: registered revision descriptors are immutable; append a new revision id`);
     const component = contractComponent(path); changes.push({path,component,breaking});
     if (breaking) {
       if (!labels.includes('contract-change')) errors.push(`${path}: non-additive change requires contract-change label`);
@@ -65,7 +95,7 @@ export function checkContractChange({ before, after, beforeVersions, afterVersio
 }
 
 export function contractsAt(ref, root = process.cwd()) {
-  const paths = git(['ls-tree','-r','--name-only',ref,'--','planning/contracts'],root).trim().split('\n').filter(path => /(?:\.lock|\.schema)\.json$/.test(path) || /^planning\/contracts\/schema\/[^/]+\.json$/.test(path));
+  const paths = git(['ls-tree','-r','--name-only',ref,'--','planning/contracts'],root).trim().split('\n').filter(path => /(?:\.lock|\.schema)\.json$/.test(path) || /^planning\/contracts\/schema\/[^/]+\.json$/.test(path) || path==='planning/contracts/spec-revisions.json');
   return Object.fromEntries(paths.map(path=>[path,JSON.parse(git(['show',`${ref}:${path}`],root))]));
 }
 if (isMain(import.meta.url)) {
