@@ -13,12 +13,18 @@ export const objectCreationMethods = {
     }
     if (this.at('{')) return this.anonymousObjectCreation(start, keyword);
     if (this.at('[')) return this.implicitArrayCreation(start, keyword);
-    const type = this.type('new');
+    const type = this.canStartNewType() ? this.type('new') : this.missingName();
     if (type.kind === 'ArrayType')
       return this.n('ArrayCreationExpression', keyword, type, this.at('{') ? this.initializerExpression('ArrayInitializerExpression') : null);
-    const args = this.at('(') ? this.argumentList() : null,
-      initializer = this.at('{') ? this.objectOrCollectionInitializer() : null;
-    if (!args && !initializer) this.error(this.current, 'CS1526', 'A new expression requires an argument list or (), [], or {} after type');
-    return this.n('ObjectCreationExpression', keyword, type, args, initializer);
+    const args = this.at('(') ? this.argumentList() : this.at('{') ? null : this.missingArgumentList();
+    return this.n('ObjectCreationExpression', keyword, type, args, this.at('{') ? this.objectOrCollectionInitializer() : null);
+  },
+  canStartNewType() {
+    return this.isPredefined() || this.isId() || this.at('(') || (this.at('delegate') && this.peek().kind === '*');
+  },
+  /** `new T` with neither arguments nor an initializer: CS1526 and an argument list of two missing parentheses, as in Roslyn. */
+  missingArgumentList() {
+    this.error(this.errorAnchor(), 'CS1526', 'A new expression requires an argument list or (), [], or {} after type');
+    return this.n('ArgumentList', this.missing('('), null, this.missing(')'));
   }
 };
