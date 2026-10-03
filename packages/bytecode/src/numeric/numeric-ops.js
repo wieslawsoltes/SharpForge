@@ -1,3 +1,4 @@
+import {uint32Binary} from './uint32.js';
 import {smallIntegerIndirect} from './small-int.js';
 import {int64Binary, int64Unary} from './int64.js';
 import {numericAliases,nativeIntegerBits} from './numeric-types.js';
@@ -62,7 +63,7 @@ export function binary(name, a, b, {fault: createFault = fault, error: createErr
   const wide = typeof a === 'bigint';
   if (!nativeBits&&typeof b === 'bigint' !== wide && !['shl', 'shr'].includes(op)) throw createFault('InvalidProgramException', 'Mismatched integer widths');
   if (wide && !nativeBits) return int64Binary(name, a, b, {fault: createFault, error: createError});
-  if (checked || nativeBits) {
+  if (nativeBits) {
     let x = BigInt(a), y = BigInt(b), bits = nativeBits || (wide ? 64 : 32);
     if (unsigned) { x = BigInt.asUintN(bits, x); y = BigInt.asUintN(bits, y); }
     if (['div', 'rem'].includes(op) && y === 0n) throw createFault('DivideByZeroException', 'Attempted to divide by zero');
@@ -74,22 +75,7 @@ export function binary(name, a, b, {fault: createFault = fault, error: createErr
     if (checked && (value < (unsigned ? 0n : -(1n << BigInt(bits - 1))) || value > (unsigned ? (1n << BigInt(bits)) - 1n : (1n << BigInt(bits - 1)) - 1n))) throw createFault('OverflowException', 'Checked arithmetic overflow');
     return nativeBits?nativeInteger(value,nativeBits):wide ? BigInt.asIntN(64, value) : Number(BigInt.asIntN(32, value));
   }
-  if (unsigned) { a >>>= 0; b >>>= 0; }
-  if (['div', 'rem'].includes(op) && b === 0) throw createFault('DivideByZeroException', 'Attempted to divide by zero');
-  if (op === 'div' && !unsigned && a === -2147483648 && b === -1) throw createFault('OverflowException', 'Integer division overflow');
-  switch (op) {
-    case 'add': return (a + b) | 0;
-    case 'sub': return (a - b) | 0;
-    case 'mul': return Math.imul(a, b);
-    case 'div': return (a / b) | 0;
-    case 'rem': return (a % b) | 0;
-    case 'and': return a & b;
-    case 'or': return a | b;
-    case 'xor': return a ^ b;
-    case 'shl': return a << (b & 31);
-    case 'shr': return unsigned ? (a >>> (b & 31)) | 0 : a >> (b & 31);
-    default: throw createError('Unknown arithmetic opcode');
-  }
+  return uint32Binary(name, a, b, {fault: createFault, error: createError});
 }
 
 export function unary(name, value, {fault: createFault = fault, error: createError = error} = {}) {
