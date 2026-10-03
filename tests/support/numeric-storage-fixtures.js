@@ -1,4 +1,7 @@
 import {controlFixture} from './control-fixture.js';
+import {numericAliases} from '@sharpforge/bytecode';
+
+const metadataNames = Object.freeze(Object.fromEntries(Object.entries(numericAliases).map(([name, alias]) => [alias, name])));
 
 export const smallStorageTypes = Object.freeze([
   {type: 'sbyte', suffix: 'i1', minimum: -128, maximum: 127},
@@ -32,7 +35,7 @@ export function smallStorageFixture(type, suffix, location, input) {
           writer.integer(input).op('stsfld', field).op('ldsfld', field);
           break;
         case 'array':
-          writer.integer(1).op('newarr', context.resolve(type)).op('stloc.2');
+          writer.integer(1).op('newarr', context.resolve(metadataNames[type])).op('stloc.2');
           writer.op('ldloc.2').integer(0).integer(input).op('stelem.' + suffix.replace('u', 'i'));
           writer.op('ldloc.2').integer(0).op('ldelem.' + suffix);
           break;
