@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import {NamedTypeSymbol,ErrorTypeSymbol,TypeKind,TypeParameterSymbol,Variance} from './types.js';
 /**
  * Special types (the predefined types the language itself knows: System.Object ... System.Nullable<T>) and
@@ -78,8 +79,8 @@ export class TypeProvider {
   getCoreType(id,node=null){
     let type=this.cache.get(id);
     if(!type){const d=coreTypeDescriptor(id);if(!d)throw new RangeError(`Unknown core type '${id}'`);const found=this.globalNamespace.lookupNamespace(d.namespace)?.getTypeMembers(d.name,d.arity)??[];
-      type=found[0]??new ErrorTypeSymbol(d.name,d.arity,{reason:{code:'CS0518',args:[d.metadataName.replace(/`\d+$/,'')]}});this.cache.set(id,type);}
-    if(type.isErrorType()&&this.report&&!this.reported.has(id)){this.reported.add(id);this.report(node,'CS0518',type.reason.args);}
+      type=found[0]??new ErrorTypeSymbol(d.name,d.arity,{reason:{code:DiagnosticId.CS0518,args:[d.metadataName.replace(/`\d+$/,'')]}});this.cache.set(id,type);}
+    if(type.isErrorType()&&this.report&&!this.reported.has(id)){this.reported.add(id);this.report(node,DiagnosticId.CS0518,type.reason.args);}
     return type;
   }
   getSpecialType(id,node=null){if(!specialTable.has(id))throw new RangeError(`'${id}' is not a special type`);return this.getCoreType(id,node);}

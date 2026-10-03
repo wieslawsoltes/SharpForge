@@ -7,6 +7,7 @@
  * A conditional or switch expression that has a natural type never takes this path, so code that compiled before
  * C# 9 keeps its meaning: `short s = b ? 1 : 2;` is still CS0266 although both arms convert to `short`.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { TypeKind, ArrayTypeSymbol } from '../symbols/types.js';
 import { Conversion, ConversionKind } from '../conversions/classify.js';
 import { stripNullable } from '../conversions/nullable.js';
@@ -35,7 +36,7 @@ export const TargetTypedBinding = Base =>
     }
     createFromTarget(type, args, syntax) {
       if (isIllegalNewTarget(type)) {
-        this.report(syntax, 'CS8752', [this.display(type)]);
+        this.report(syntax, DiagnosticId.CS8752, [this.display(type)]);
         if (syntax.initializer) this.initializerSilently(syntax.initializer);
         return this.bad(syntax);
       }
@@ -54,7 +55,7 @@ export const TargetTypedBinding = Base =>
       n.targetArms = arms;
       n.materialize = to => {
         if (this.version.number < 9)
-          this.report(syntax, 'CS8957', [versionText(this.version), this.operandDisplay(a), this.operandDisplay(b), '9.0']);
+          this.report(syntax, DiagnosticId.CS8957, [versionText(this.version), this.operandDisplay(a), this.operandDisplay(b), '9.0']);
         const [whenTrue, whenFalse] = arms.map(arm => this.convertArm(arm, to));
         return this.node('Conditional', syntax, to, { condition, whenTrue, whenFalse });
       };
@@ -96,11 +97,11 @@ export const TargetTypedBinding = Base =>
      */
     requireNaturalType(e) {
       if (e.hasErrors || e.type) return e;
-      if (e.kind === 'ImplicitNew') this.report(e.syntax, 'CS8754', ['new()']);
+      if (e.kind === 'ImplicitNew') this.report(e.syntax, DiagnosticId.CS8754, ['new()']);
       else if (e.isTargetTypedConditional)
-        this.report(e.syntax, 'CS0173', [this.operandDisplay(e.noNaturalType.left), this.operandDisplay(e.noNaturalType.right)]);
-      else if (e.isTargetTypedSwitch) this.report(e.syntax.switchKeyword ?? e.syntax, 'CS8506');
-      else if (e.form === 'collection') this.report(e.syntax, 'CS9176');
+        this.report(e.syntax, DiagnosticId.CS0173, [this.operandDisplay(e.noNaturalType.left), this.operandDisplay(e.noNaturalType.right)]);
+      else if (e.isTargetTypedSwitch) this.report(e.syntax.switchKeyword ?? e.syntax, DiagnosticId.CS8506);
+      else if (e.form === 'collection') this.report(e.syntax, DiagnosticId.CS9176);
       else return e;
       return this.bad(e.syntax);
     }

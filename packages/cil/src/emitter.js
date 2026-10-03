@@ -1,27 +1,26 @@
-import { emittedAssemblyName } from './emit/assembly-options.js';
-import { emissionPEOptions, debugPEOptions, finishEmittedPE } from './emit/pe-options.js';
+import { prepareEmission } from './emit/emission-context.js';
+import { emissionTypeDescriptors } from './emit/type-descriptors.js';
+import { debugPEOptions, finishEmittedPE } from './emit/pe-options.js';
 import { EmitterSignatures } from './emitter-signatures.js';
 import { emitPropertyMetadata } from './emitter-properties.js';
 import {frameworkType,enumTypes} from '@sharpforge/framework';
 import { EnumConvertBase, Op, BinaryName, UnaryName, Builtins } from '@sharpforge/bytecode';
 import { Writer, CilError, align, utf8 } from './binary.js';
-import { MetadataBuilder, token, codedIndex, cliSystemName } from './metadata.js';
+import { token, codedIndex, cliSystemName } from './metadata.js';
 import { CilWriter } from './opcodes.js';
 import { TEXT_RVA, writeMethodBody } from './pe.js';
-import { analyzeMethod, constantType, validateInput } from './analysis.js';
+import { analyzeMethod, constantType } from './analysis.js';
 const markerName='SharpForge.<>AllocationToken';
 const isValue=t=>['int','long','double','bool'].includes(t)||['enum','value'].includes(frameworkType(t)?.kind);
 const binaryCodes={'+':'add','-':'sub','*':'mul','/':'div','%':'rem','&':'and','|':'or','^':'xor','<<':'shl','>>':'shr'};
 /** Emits genuine PE/CLI metadata and CIL bodies. No JS source, host eval or embedded executable bytecode. */
 export function emitAssembly(image,options={}) { return emitAssemblyDetailed(image,options).bytes; }
 export function emitAssemblyDetailed(image,options={}) {
-  let {name=image.name??'Application',framework='net8',embedSources=true,includeDebug=true}=options;
-  const peOptions=emissionPEOptions(image,options,framework);
-  validateInput(image);name=emittedAssemblyName(name,framework);const started=performance.now(),metadata=new MetadataBuilder(name,{...options,framework});
+  const {name,framework,embedSources,includeDebug,peOptions,metadata,started}=prepareEmission(image,options);
   const context={image,metadata,framework,typeTokens:new Map(),methodTokens:new Map(),fieldTokens:new Map(),staticTokens:[],allocTokens:new Map(),descriptors:[],helperToken:0};
   context.resolveType=t=>context.typeTokens.get(t)??metadata.typeRef(cliSystemName(t));
   const objectToken=context.resolveType('object');
-  const typeDescriptors=[{name:'<Module>',namespace:'',flags:0,original:null},{name:'<>Program',namespace:'SharpForge',flags:0x100181,original:null,program:true},{name:'<>AllocationToken',namespace:'SharpForge',flags:0x100101,original:null,marker:true},...image.types.map(t=>({name:t.name,namespace:'',flags:image.outputKind==='library'?0x000001:0x100001,original:t}))];
+  const typeDescriptors=emissionTypeDescriptors(image,peOptions);
   typeDescriptors.forEach((t,index)=>{t.token=token(2,index+1);if(t.original)context.typeTokens.set(t.original.name,t.token);if(t.marker)context.typeTokens.set(markerName,t.token);});
   context.signatures=new EmitterSignatures(context.typeTokens,context.resolveType);
   // Preallocate all definition tokens before signatures or bodies can reference them.

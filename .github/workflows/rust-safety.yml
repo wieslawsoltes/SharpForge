@@ -1,0 +1,42 @@
+name: Rust memory safety
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  CARGO_BUILD_JOBS: '1'
+  RUST_TEST_THREADS: '1'
+concurrency:
+  group: rust-safety-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  safety:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        crate: [gc, runtime]
+        lane: [inventory, address, thread, miri, loom]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Inventory and qualify actual Rust crate
+        env:
+          SAFETY_CRATE: ${{ matrix.crate }}
+          SAFETY_LANE: ${{ matrix.lane }}
+        run: >-
+          python scripts/conformance/rust/safety.py
+          --crate "$SAFETY_CRATE" --lane "$SAFETY_LANE"
+          --output "artifacts/rust-safety/$SAFETY_CRATE-$SAFETY_LANE.json"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: rust-safety-${{ matrix.crate }}-${{ matrix.lane }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/rust-safety/*.json
+          if-no-files-found: error

@@ -1,0 +1,604 @@
+{
+  "schemaVersion": 1,
+  "workstream": "A20 editor insights and widgets",
+  "branch": "codex/project16/02-editor",
+  "implementationRevision": "4afa8284ab12d6d3c54e711232a35ea8adf2bcb7",
+  "leafCount": 25,
+  "items": [
+    {
+      "workId": "SF-A20-T06.1",
+      "issue": 1614,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/services/providers.js",
+        "packages/editor/src/features/context.js",
+        "packages/editor/src/features/insights.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Explicit standalone provider registry; supplied data providers are callable without Studio. Compiler bridge integration is deferred.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [],
+      "closeIssue": false,
+      "deferredNodeTests": [
+        "tests/a20-editor-language-worker.test.js"
+      ]
+    },
+    {
+      "workId": "SF-A20-T06.2",
+      "issue": 1615,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/services/async-guard.js",
+        "packages/editor/src/features/context.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js",
+        "tests/a20-editor-cooperative-search.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Per-feature generations, AbortSignal propagation, model/snapshot/version guards, cross-document target version handling and disposal.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T06.3",
+      "issue": 1616,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/services/decorations.js",
+        "packages/editor/src/widgets/insights.css"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Severity, unnecessary/deprecated tags, quick-fix metadata, glyph and overview decoration mapping.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [],
+      "closeIssue": false,
+      "deferredNodeTests": [
+        "tests/a20-editor-language-worker.test.js"
+      ]
+    },
+    {
+      "workId": "SF-A20-T06.4",
+      "issue": 1617,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/services/workspace-edit.js",
+        "packages/editor/src/services/model-workspace.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Validate every target before commit; all roots swap before notifications; internal failure rolls back bytes, selections and undo.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T06.5",
+      "issue": 1618,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/services/decorations.js",
+        "packages/editor/src/features/analysis-decorations.js",
+        "packages/editor/src/widgets/insights.css"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Versioned semantic spans overlay lexical presentation without editing source; type, method, parameter and local styles differ.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [],
+      "closeIssue": false,
+      "deferredNodeTests": [
+        "tests/a20-editor-language-worker.test.js"
+      ]
+    },
+    {
+      "workId": "SF-A20-T10.2",
+      "issue": 1633,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/diff/side-by-side.js",
+        "packages/editor/src/diff/rows.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-search-diff.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Virtual aligned rows, synchronized scroll positions, F8 change navigation and overview controls.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T10.3",
+      "issue": 1634,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/diff/inline.js",
+        "packages/editor/src/diff/rows.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-search-diff.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Inline inserted/deleted rows share exactly the same source hunks as side-by-side mode.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T10.5",
+      "issue": 1636,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/diff/merge-editor.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-search-diff.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Editable three-pane merge, left/right/both/manual resolution, conflict count and undo; unresolved bytes remain explicit.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T13",
+      "issue": 1482,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/widgets/completion.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-snippets-intelligence.test.js",
+        "tests/a20-editor-services.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Fuzzy/ranked/kind-filtered completion, matching highlights, docs, MRU, suggestion mode, trigger/commit characters and snippet insertion.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [],
+      "closeIssue": false,
+      "deferredNodeTests": [
+        "tests/a20-editor-language-worker.test.js"
+      ]
+    },
+    {
+      "workId": "SF-A20-T14",
+      "issue": 1483,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/widgets/signature-help.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-snippets-intelligence.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Nested invocation tracking, provider-resolved overloads, active parameter highlighting, docs and overload cycling.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [],
+      "closeIssue": false,
+      "deferredNodeTests": [
+        "tests/a20-editor-language-worker.test.js"
+      ]
+    },
+    {
+      "workId": "SF-A20-T15",
+      "issue": 1484,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/widgets/quick-info.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Colorized signature and safe documentation, diagnostics with codes, quick-fix link, delayed hover and sticky/focusable popup.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [],
+      "closeIssue": false,
+      "deferredNodeTests": [
+        "tests/a20-editor-language-worker.test.js"
+      ]
+    },
+    {
+      "workId": "SF-A20-T16",
+      "issue": 1485,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/widgets/code-actions.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Margin and inline action controls, nested actions and exact per-document preview before atomic apply; optional provider fix-all scopes.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [
+        "The current Studio RefactoringEngine supplies no Fix All operation; the UI exposes scopes only from an advertising provider."
+      ],
+      "closeIssue": false,
+      "deferredNodeTests": [
+        "tests/a20-editor-language-worker.test.js"
+      ]
+    },
+    {
+      "workId": "SF-A20-T17",
+      "issue": 1486,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/widgets/peek-definition.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Inline result picker with editable target, serial versioned target writes, promotion, target navigation and cancellation.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [],
+      "closeIssue": false,
+      "deferredNodeTests": [
+        "tests/a20-editor-language-worker.test.js"
+      ]
+    },
+    {
+      "workId": "SF-A20-T18",
+      "issue": 1487,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/features/analysis-decorations.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Member view zones, visible unresolved-lens resolution, click/Alt-digit/menu activation and local copies of frozen provider data.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [
+        "The default Studio provider supplies reference counts; test-status and other lenses require their owning providers."
+      ],
+      "closeIssue": false,
+      "deferredNodeTests": [
+        "tests/a20-editor-language-worker.test.js"
+      ]
+    },
+    {
+      "workId": "SF-A20-T19",
+      "issue": 1488,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/widgets/rename.js",
+        "packages/editor/src/features/rename-preview.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Checkpoint-backed live occurrence preview, exact Escape restoration, provider-gated options and atomic workspace commit.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [
+        "The current bound language service rejects type rename and does not implement comment/string/file rename; corresponding options remain disabled unless advertised."
+      ],
+      "closeIssue": false,
+      "deferredNodeTests": [
+        "tests/a20-editor-language-worker.test.js"
+      ]
+    },
+    {
+      "workId": "SF-A20-T20",
+      "issue": 1489,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/features/analysis-decorations.js"
+      ],
+      "nodeTests": [],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Non-editable provider labels, type/parameter hint shapes and Alt-F1 visibility hold. Language-specific hint derivation is external.",
+      "qualification": "Browser fixture authored but unexecuted; the language-provider Node evidence belongs to the deferred integration scope.",
+      "capabilityLimits": [
+        "Default bound hints show inferred var types; parameter-name hints are supported by the renderer but require an upstream provider."
+      ],
+      "closeIssue": false,
+      "deferredNodeTests": [
+        "tests/a20-editor-language-worker.test.js"
+      ]
+    },
+    {
+      "workId": "SF-A20-T21",
+      "issue": 1490,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/widgets/navigation-bar.js"
+      ],
+      "nodeTests": [],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Project/type/member dropdowns, sorted members, provider ownership hierarchy and caret synchronization.",
+      "qualification": "Browser fixture authored but unexecuted; the language-provider Node evidence belongs to the deferred integration scope.",
+      "capabilityLimits": [],
+      "closeIssue": false,
+      "deferredNodeTests": [
+        "tests/a20-editor-language-worker.test.js"
+      ]
+    },
+    {
+      "workId": "SF-A20-T22",
+      "issue": 1491,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/features/analysis-decorations.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Current-version highlights, next/previous references, edit invalidation, lexical Ctrl-hover underline and bound definition navigation.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [],
+      "closeIssue": false,
+      "deferredNodeTests": [
+        "tests/a20-editor-language-worker.test.js"
+      ]
+    },
+    {
+      "workId": "SF-A20-T23",
+      "issue": 1492,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/features/analysis-decorations.js",
+        "packages/editor/src/services/decorations.js",
+        "packages/editor/src/widgets/insights.css"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-services.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Squiggles, glyphs, overview metadata, optional inline messages and current-version diagnostic navigation.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [],
+      "closeIssue": false,
+      "deferredNodeTests": [
+        "tests/a20-editor-language-worker.test.js"
+      ]
+    },
+    {
+      "workId": "SF-A20-T24",
+      "issue": 1493,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/snippets/parser.js",
+        "packages/editor/src/snippets/builtins.js",
+        "packages/editor/src/snippets/session.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-snippets-intelligence.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Bounded placeholders/mirrors/nesting/choices/variables, C# catalog, picker/Tab expansion and primary-plus-mirrors undo groups.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [
+        "Regex snippet transforms are explicitly unsupported and rejected."
+      ],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T25",
+      "issue": 1494,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/snippets/session.js",
+        "packages/editor/src/snippets/builtins.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-snippets-intelligence.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Selection wrapping with if/try/region/using snippets, indentation adaptation and undo-preserved source selection.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T26",
+      "issue": 1495,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/features/formatting.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-formatting.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Semicolon/brace, real clipboard-paste and completion triggers, disable options, range adapter and separate formatting undo.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [],
+      "closeIssue": false,
+      "deferredNodeTests": [
+        "tests/a20-editor-language-worker.test.js"
+      ]
+    },
+    {
+      "workId": "SF-A20-T27",
+      "issue": 1496,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/features/smart-typing.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-snippets-intelligence.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Cached lexical guards, bracket/quote type-over and paired backspace, smart newline and generic XML summary template.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [
+        "Documentation comments generate a generic summary template; symbol-specific parameter/return tags require an upstream provider."
+      ],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T37",
+      "issue": 1506,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/widgets/find-replace.js",
+        "packages/editor/src/features/search-session.js",
+        "packages/editor/src/features/search-snapshots.js",
+        "packages/editor/src/features/cooperative-search.js",
+        "packages/editor/src/features/search-worker.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-search-diff.test.js",
+        "tests/a20-editor-cooperative-search.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Scoped regex/capture and preserve-case replacement, history/count/highlights, exact preview, cancellation and responsive 100 MiB literal search.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [
+        "Built-in edit previews keep the 32,000,000 UTF-16 document limit; 100 MiB Find is supported independently of replacement preview.",
+        "Large regex is a bounded safe-VM worker and may report SEARCH_LIMIT; actual browser worker execution is unverified."
+      ],
+      "closeIssue": false
+    },
+    {
+      "workId": "SF-A20-T38",
+      "issue": 1507,
+      "implementation": "implemented",
+      "files": [
+        "packages/editor/src/widgets/incremental-search.js"
+      ],
+      "nodeTests": [
+        "tests/a20-editor-search-diff.test.js",
+        "tests/a20-editor-cooperative-search.test.js"
+      ],
+      "browserTests": [
+        "tests/browser_a20_insights_test.py",
+        "tests/browser_a20_view_test.py"
+      ],
+      "behavior": "Forward/reverse/repeat incremental search with original-caret cancellation, wrap status and cooperative large-source search.",
+      "qualification": "Included focused files passed in the source worktree; no rerun on the review branch. Browser fixtures remain unexecuted.",
+      "capabilityLimits": [],
+      "closeIssue": false
+    }
+  ],
+  "sourceQualificationRevision": "57d69326c6717600da812cc13f2211adc6e1b592",
+  "validation": {
+    "nodeStatus": "passed-in-source-worktree; not-rerun-in-review-branch",
+    "nodeTests": {
+      "tests/a20-editor-services.test.js": 11,
+      "tests/a20-editor-snippets-intelligence.test.js": 8,
+      "tests/a20-editor-search-diff.test.js": 9,
+      "tests/a20-editor-cooperative-search.test.js": 5,
+      "tests/a20-editor-formatting.test.js": 3
+    },
+    "includedPreviouslyPassingCount": 36,
+    "sourceBatch": {
+      "revision": "57d69326c6717600da812cc13f2211adc6e1b592",
+      "nodeCount": 43,
+      "command": "node --test tests/a20-editor-services.test.js tests/a20-editor-snippets-intelligence.test.js tests/a20-editor-search-diff.test.js tests/a20-editor-cooperative-search.test.js tests/a20-editor-language-worker.test.js tests/a20-editor-formatting.test.js",
+      "note": "The original 43-test batch included seven compiler bridge cases deferred from this editor-only review."
+    },
+    "scheduledPackageCommand": "node scripts/limited.js node --test tests/a20-editor-services.test.js tests/a20-editor-snippets-intelligence.test.js tests/a20-editor-search-diff.test.js tests/a20-editor-cooperative-search.test.js tests/a20-editor-formatting.test.js",
+    "browserStatus": "not-run",
+    "browserReason": "No usable supported Playwright browser is installed; the supported installation attempt failed. No browser/platform parity is claimed.",
+    "fullMatrix": "Staged after the completed stack scope; no new build or test execution was performed while materializing review02."
+  },
+  "deferredIntegration": {
+    "files": [
+      "apps/studio/workers/editor-language.js",
+      "apps/studio/workers/protocol.js",
+      "apps/studio/compiler.worker.js",
+      "packages/language/src/inlay-hints.js",
+      "packages/language/src/signature-help.js",
+      "packages/language/src/index.js",
+      "packages/protocol/src/lsp.js"
+    ],
+    "nodeTests": [
+      "tests/a20-editor-language-worker.test.js"
+    ],
+    "note": "Host/compiler worker registrations and language/protocol providers belong to the dependent Studio review scope. Package providers are supplied explicitly."
+  },
+  "documentation": [
+    "packages/editor/docs/insights.md",
+    "docs/project16-editor-review.md"
+  ]
+}

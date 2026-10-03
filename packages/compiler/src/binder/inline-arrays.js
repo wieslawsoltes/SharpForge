@@ -12,6 +12,7 @@
  *
  * Not bound: indexing with `System.Index` or `System.Range`, and the conversions to `Span<T>` and `ReadOnlySpan<T>`.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind } from '../symbols/types.js';
 import { attributesNamed } from './bound-attributes.js';
 
@@ -44,13 +45,13 @@ export const InlineArrayBinding = Base =>
       if (target.kind === 'FieldAccess') this.markWrite(target, null);
       const conversion = args.length === 1 ? this.conversions.classifyFromExpression(args[0], this.core.int) : null;
       if (!conversion?.exists || !conversion.isImplicit) {
-        this.report(syntax, 'CS9172');
+        this.report(syntax, DiagnosticId.CS9172);
         return this.bad(syntax);
       }
       const index = this.applyConversion(args[0], this.core.int, conversion),
         constant = index.constantValue?.value;
       if (typeof constant === 'number' && shape.length !== null && (constant < 0 || constant >= shape.length)) {
-        this.report(args[0].syntax, 'CS9166');
+        this.report(args[0].syntax, DiagnosticId.CS9166);
         return this.bad(syntax);
       }
       return this.node('InlineArrayAccess', syntax, shape.elementType, { receiver: target, index });
