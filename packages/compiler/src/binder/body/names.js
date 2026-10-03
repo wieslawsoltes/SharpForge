@@ -11,6 +11,7 @@ import { tupleElement, tupleElementProblem } from '../tuples.js';
 import { checkConstructedType } from '../constraints.js';
 import { staticMembersOfTypeParameter } from '../interface-members.js';
 import { accessorNamed, isOperatorMethod } from '../special-methods.js';
+import { staticImportsNamed } from '../csharp6.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 const isSource = symbol => {
@@ -73,20 +74,13 @@ export const NameBinding = Base =>
       for (const level of this.typeScope.namespaceChain) {
         const usings = level.scope.usings ? this.d.typeBinder.usingsOf(level.scope) : null;
         if (!usings) continue;
-        const members = usings.staticTypes.flatMap(t => t.getMembers(name).filter(m => m.isStatic));
+        const { members, ambiguous } = staticImportsNamed(usings.staticTypes, name);
+        if (ambiguous) {
+          this.report(syntax, 'CS0229', ambiguous.map(member => member.toDisplayString()));
+          return this.bad(syntax);
+        }
         if (members.length)
-          return (
-            this.memberResult(
-              members.filter(m => m.kind === members[0].kind),
-              syntax,
-              null,
-              members[0].containingType,
-              name,
-              typeArguments,
-              options,
-              false,
-            ) ?? this.bad(syntax)
-          );
+          return this.memberResult(members, syntax, null, members[0].containingType, name, typeArguments, options, false) ?? this.bad(syntax);
       }
       if (name === 'nameof' && options.invoked) return this.node('NameOfMarker', syntax, null, {});
       if (name === 'var' || name === 'dynamic') return this.lenient(syntax);
@@ -190,14 +184,17 @@ export const NameBinding = Base =>
       } else {
         if (viaType) {
           if (receiver.syntax?.kind === 'IdentifierName' && receiver.colorColor) r = receiver.colorColor;
-          else {
+          else if (!options.nameofOperand) {
             used();
             this.report(syntax, 'CS0120', [first.toDisplayString()]);
             return this.bad(syntax);
           }
         } else {
           r = instanceReceiver();
-          if (!r) {
+          // `nameof` names a member without evaluating it; reaching through an instance member needs C# 12.
+          if (!r && options.nameofOperand) {
+            if (options.memberAccessLeft) this.d.gate(this.c.uri, syntax, 'InstanceMemberInNameof');
+          } else if (!r) {
             used();
             this.report(syntax, this.c.isFieldInitializer && !this.c.isStatic && !outer ? 'CS0236' : 'CS0120', [first.toDisplayString()]);
             return this.bad(syntax);
