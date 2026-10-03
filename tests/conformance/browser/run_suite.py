@@ -7,6 +7,7 @@ import signal
 import subprocess
 import sys
 import time
+import uuid
 
 ROOT = Path(__file__).resolve().parents[3]
 SUITES = {
@@ -18,9 +19,13 @@ SUITES = {
 }
 
 
-def cancel(process):
-    if os.name == 'nt':
-        process.send_signal(signal.CTRL_BREAK_EVENT)
+def cancel(process, cancel_file=None):
+    if cancel_file is not None:
+        # CTRL_BREAK_EVENT is delivered to the entire Windows process group,
+        # including Playwright's Node driver. Keep it alive for diagnostics.
+        Path(cancel_file).write_text('cancel requested\n', encoding='utf-8')
+    elif os.name == 'nt':
+        raise ValueError('Windows browser cancellation requires a cooperative cancel file')
     else:
         process.send_signal(signal.SIGTERM)
 
@@ -31,14 +36,16 @@ def run(suite, timeout):
         directory = ROOT / directory
     directory.mkdir(parents=True, exist_ok=True)
     start = time.monotonic()
+    cancel_file = directory / ('cancel-' + uuid.uuid4().hex + '.request') if os.name == 'nt' else None
     process = subprocess.Popen([sys.executable, str(ROOT / 'tests' / SUITES[suite])], cwd=ROOT,
+        env={**os.environ, **({'SHARPFORGE_CANCEL_FILE': str(cancel_file)} if cancel_file else {})},
         creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == 'nt' else 0)
     timed_out = False
     try:
         code = process.wait(timeout=timeout)
     except (subprocess.TimeoutExpired, KeyboardInterrupt):
         timed_out = True
-        cancel(process)
+        cancel(process, cancel_file)
         try:
             process.wait(timeout=60)
         except subprocess.TimeoutExpired:

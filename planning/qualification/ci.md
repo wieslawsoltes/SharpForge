@@ -48,7 +48,7 @@ network tests add only their own exact loopback origin to the production CSP.
 
 Failure and cancellation retain `<suite>/trace.zip`, `console.log`, `screenshot.png`
 and `session.json`. Console output is flushed as it arrives. A real-browser smoke
-regression forces both assertion failure and signal cancellation and verifies the
+regression forces assertion failure, native cancellation and cooperative-file cancellation and verifies the
 ZIP contents, PNG signature and log message. Browser disposal is owned by the shared
 context manager, so cleanup executes after failure capture. Successful sessions
 retain their console/session metadata and discard tracing snapshots.
@@ -112,3 +112,15 @@ from actual workflow runs; a smaller duration is not claimed from the YAML alone
 
 Issue ownership: #397 leaves #1113–#1120; defects #477, #478, #480, #481. JavaScript
 static analysis (#482/#502) is a separate scope and is not claimed by syntax checks.
+
+Windows cancellation uses a unique request file passed to the child through
+`SHARPFORGE_CANCEL_FILE`. The browser wrapper checks it after returning from
+Playwright's dispatcher and unwinds through diagnostic cleanup. Windows console
+break signals reach the entire process group, including the Node driver, so they
+cannot preserve a usable browser for trace/screenshot collection. POSIX uses
+SIGTERM to the Python child; the file-channel regression also runs on POSIX.
+
+Hosted run 37125167557 artifact 11275690534 established this failure: the driver
+closed during `Page.wait_for_timeout`, then cleanup could not emit trace/screenshot.
+The correction passed five launcher contract tests and all three real Chromium
+artifact cases locally. Windows qualification still requires the hosted rerun.
