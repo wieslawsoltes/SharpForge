@@ -4,6 +4,11 @@ export class DirectiveState {
   /** True while source text is compiled (every enclosing #if branch was taken). Regions do not affect it. */
   get active() { return this.stack.every(entry => entry.kind !== 'if' || entry.branchTaken); }
 }
+/** An immutable copy of the scanner's preprocessor state, recorded after every directive so relexing can resume mid-file. */
+export function snapshotDirectiveState(state, previous) {
+  const same = previous && previous.symbols.size === state.symbols.size && [...state.symbols].every(symbol => previous.symbols.has(symbol));
+  return Object.freeze({ symbols: same ? previous.symbols : new Set(state.symbols), stack: Object.freeze(state.stack.map(entry => Object.freeze({ ...entry }))), sawIf: state.sawIf });
+}
 const identifier = /^[\p{L}\p{Nl}_][\p{L}\p{Nl}\p{Nd}\p{Mn}\p{Mc}\p{Pc}\p{Cf}]*/u;
 /**
  * Evaluates a pp-expression (`A && !B || (C == true)`) against the defined symbols.

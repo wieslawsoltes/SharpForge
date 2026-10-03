@@ -18,7 +18,7 @@ const fixedFor = cache => { let tables = fixedTokens.get(cache); if (!tables) fi
 export class Scanner {
   constructor(source, cache = new BoundedCache(), options = {}) {
     this.source = source; this.text = source.text; this.cache = cache; this.options = options; this.i = 0;
-    this.diagnostics = []; this.profile = []; this.features = []; this.directives = []; this.reused = 0;
+    this.diagnostics = []; this.profile = []; this.features = []; this.directives = []; this.checkpoints = []; this.lastSnapshot = null; this.reused = 0;
     this.state = new DirectiveState(options.preprocessorSymbols ?? []);
   }
   error(start, length, code, message, severity) { this.diagnostics.push(diagnostic(this.source, start, length, code, message, severity)); }
@@ -119,10 +119,11 @@ export class Scanner {
  * Tokenises a SourceText. Options: `preprocessorSymbols` (defined symbols for #if), `script` (allow #r/#load),
  * `directives: false` (treat `#` as an unexpected character) and `profile: false` (omit the SharpForge back-end
  * profile diagnostics SF1003-SF1005 for literal types the current compiler cannot consume).
- * Returns { source, tokens, diagnostics, internedTokenHits, directives, features, lexicalDiagnostics, profileDiagnostics }.
+ * Returns { source, tokens, diagnostics, internedTokenHits, directives, features, lexicalDiagnostics, profileDiagnostics, symbols,
+ * checkpoints } - `checkpoints` are the preprocessor states after each directive, used by incremental relexing.
  */
 export function lex(source, cache = new BoundedCache(), options = {}) {
   const scanner = new Scanner(source, cache ?? new BoundedCache(), options ?? {}), tokens = scanner.run();
   const lexical = scanner.diagnostics, diagnostics = options?.profile === false ? [...lexical] : [...lexical, ...scanner.profile].sort((a, b) => a.start - b.start);
-  return { source, tokens, diagnostics, internedTokenHits: scanner.reused, directives: Object.freeze(scanner.directives), features: scanner.features, lexicalDiagnostics: lexical, profileDiagnostics: scanner.profile, symbols: scanner.state.symbols };
+  return { source, tokens, diagnostics, internedTokenHits: scanner.reused, directives: Object.freeze(scanner.directives), features: scanner.features, lexicalDiagnostics: lexical, profileDiagnostics: scanner.profile, symbols: scanner.state.symbols, checkpoints: scanner.checkpoints };
 }

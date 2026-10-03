@@ -11,3 +11,4 @@ export * from './feature-gate.js';
 export * from './preview-revisions.js';
 export * from './syntax-tree.js';
 export * from './visitor.js';
+export * from './incremental/relex.js';

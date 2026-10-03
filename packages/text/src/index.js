@@ -1,6 +1,6 @@
 /** Immutable UTF-16 source snapshots; positions use the same units as browser editors/LSP. */
 export class SourceText {
-  #lines;
+  #lines; #origin = null;
   constructor(text, uri = 'Program.cs', version = 1) {
     if (typeof text !== 'string') throw new TypeError('Source must be a string');
     this.text = text; this.uri = uri; this.version = version;
@@ -9,12 +9,19 @@ export class SourceText {
   get length() { return this.text.length; }
   get lineStarts() {
     if (!this.#lines) {
-      const lines = [0];
-      for (let i = 0; i < this.text.length; i++) {
-        if (this.text[i] === '\r') { if (this.text[i + 1] === '\n') i++; lines.push(i + 1); }
-        else if (this.text[i] === '\n') lines.push(i + 1);
-      }
-      this.#lines = Object.freeze(lines);
+      const origin = this.#origin, text = this.text; this.#origin = null;
+      const scan = (lines, from, to) => { for (let i = from; i < to; i++) { const c = text.charCodeAt(i); if (c === 13) { if (text.charCodeAt(i + 1) === 10) i++; lines.push(i + 1); } else if (c === 10) lines.push(i + 1); } };
+      if (origin && origin.old.#lines) {
+        // Derived from the previous snapshot: lines before the edit are kept, the edited lines are rescanned and the rest shifted.
+        const old = origin.old.#lines, delta = origin.inserted - origin.deleted, oldEnd = origin.start + origin.deleted, lines = []; let k = 0;
+        while (k < old.length && old[k] < origin.start) lines.push(old[k++]);
+        if (!lines.length) lines.push(0);
+        const scanned = []; scan(scanned, Math.max(0, origin.start - 1), Math.min(text.length, origin.start + origin.inserted + 1));
+        for (const line of scanned) if (line > lines[lines.length - 1]) lines.push(line);
+        while (k < old.length && old[k] <= oldEnd + 1) k++;
+        for (; k < old.length; k++) { const line = old[k] + delta; if (line > lines[lines.length - 1]) lines.push(line); }
+        this.#lines = Object.freeze(lines);
+      } else { const lines = [0]; scan(lines, 0, text.length); this.#lines = Object.freeze(lines); }
     }
     return this.#lines;
   }
@@ -33,7 +40,8 @@ export class SourceText {
   }
   withChange(start, deleteCount, insertText) {
     if (!Number.isInteger(start) || !Number.isInteger(deleteCount) || start < 0 || deleteCount < 0 || start + deleteCount > this.length) throw new RangeError('Invalid text change');
-    return new SourceText(this.text.slice(0, start) + insertText + this.text.slice(start + deleteCount), this.uri, this.version + 1);
+    const next = new SourceText(this.text.slice(0, start) + insertText + this.text.slice(start + deleteCount), this.uri, this.version + 1);
+    if (this.#lines) next.#origin = { old: this, start, deleted: deleteCount, inserted: insertText.length }; return next;
   }
 }
 export function diagnostic(source, start, length, code, message, severity = 'error') {
