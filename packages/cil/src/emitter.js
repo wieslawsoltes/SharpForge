@@ -1,3 +1,4 @@
+import { emitPropertyMetadata } from './emitter-properties.js';
 import {frameworkType,enumTypes} from '@sharpforge/framework';
 import { EnumConvertBase, Op, BinaryName, UnaryName, Builtins } from '@sharpforge/bytecode';
 import { Writer, CilError, align, utf8 } from './binary.js';
@@ -31,14 +32,7 @@ export function emitAssemblyDetailed(image,{name=image.name??'Application',frame
   for(const t of typeDescriptors){metadata.add(2,[t.flags,metadata.string(t.name),metadata.string(t.namespace),t.name==='<Module>'?0:codedIndex('TypeDefOrRef',objectToken),t.fieldStart,t.methodStart]);for(const f of t.fields)metadata.add(4,[(f.isStatic?0x10:0)|(f.backing?1:6),metadata.string(f.name),metadata.blob(fieldSignature(f.type,context.resolveType))]);}
   for(const t of typeDescriptors)for(const name of t.original?.interfaces??[])metadata.add(9,[t.token&0xffffff,codedIndex('TypeDefOrRef',context.resolveType(name))]);
   let paramRow=1;for(const d of context.descriptors){d.row=metadata.add(6,[0,0,d.flags,metadata.string(d.name),metadata.blob(methodSignature(d.returnType,d.parameters.map(p=>p.type),d.isStatic,context.resolveType)),paramRow]);if(d.row!==d.token)throw new CilError('Method token allocation mismatch');for(let i=0;i<d.parameters.length;i++){metadata.add(8,[0,i+1,metadata.string(d.parameters[i].name)]);paramRow++;}}
-  for(const descriptor of typeDescriptors){const properties=descriptor.original?.properties??[];if(!properties.length)continue;
-    metadata.add(21,[descriptor.token&0xffffff,(metadata.rows[23]?.length??0)+1]);
-    for(const property of properties){const signature=methodSignature(property.type,[],property.isStatic,context.resolveType);signature[0]|=8;
-      const pt=metadata.add(23,[0,metadata.string(property.name),metadata.blob(signature)]);
-      if(property.get!==null)metadata.add(24,[2,context.methodTokens.get(property.get)&0xffffff,codedIndex('HasSemantics',pt)]);
-      if(property.set!==null)metadata.add(24,[1,context.methodTokens.get(property.set)&0xffffff,codedIndex('HasSemantics',pt)]);
-    }
-  }
+  emitPropertyMetadata(typeDescriptors, context);
   context.external=(owner,name,returnType,parameters,isStatic=true)=>metadata.member(context.resolveType(owner),name,methodSignature(returnType,parameters,isStatic,context.resolveType));
   const section=new Writer().zero(72),debugMethods=[];let ilBytes=0;
   for(const d of context.descriptors){section.pad();const rva=TEXT_RVA+section.length;metadata.rows[6][(d.token&0xffffff)-1][0]=rva;const body=d.original?emitMethod(context,d):emitHelper(context,d);d.body=body;ilBytes+=body.code.length;const sig=body.locals.length?metadata.add(17,[metadata.blob(localSignature(body.locals,context.resolveType))]):0;section.bytes(writeMethodBody(body.code,sig,body.maxStack,body.handlers));
