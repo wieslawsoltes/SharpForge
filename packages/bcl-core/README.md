@@ -19,6 +19,12 @@ runtime dispatch and the generated inventory. The extracted release 13 and 14
 modules use explicit registration groups to preserve every existing contract ID.
 New modules use the `extensions` group in the reserved A07 range. Registering a
 module through the framework remains transactional.
+An existing module may provide `extensionContracts(registry)` for additional
+members in that reserved range. The `extensions` registration group invokes
+this hook separately from the module's released `contracts` hook; both hooks
+must be synchronous. Registration without a group, including selection by
+module name, invokes both hooks in order. The caller supplies the ID reservation;
+framework composition uses the separate groups to preserve released IDs.
 
 Run `node packages/bcl-core/scripts/inventory.js` to regenerate the documented
 surface; `--check` compares the checked-in output. Public String, StringBuilder,
@@ -44,3 +50,13 @@ the current length raise `ArgumentOutOfRangeException`. The host budget is not
 a claim that allocations up to .NET's maximum can be satisfied. Constructor
 defaults are captured in `reference/builder-format/oracle.json` against the
 pinned .NET toolchain, and source/direct CIL regression tests consume the capture.
+
+Composite formatting follows the pinned .NET brace and ASCII-space grammar:
+`{0 ,5}` is valid, `{ 0}` is invalid, and escaped closing braces after a format
+item are processed as literal text. StringBuilder retains text written before
+a later malformed item raises `FormatException`. Its `AppendFormat(string,
+params object[])` overload supports expanded arguments, an explicit array and
+zero arguments through the compiler's existing params lowering. The new
+overload occupies reserved A07 ID `524288`; released IDs remain unchanged.
+Formatting still uses the supported invariant numeric formats and the host's
+1,000,000-unit output budget, rather than claiming the full .NET formatting API.

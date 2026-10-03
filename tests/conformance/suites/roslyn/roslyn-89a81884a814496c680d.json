@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-89a81884a814496c680d",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n\n[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\nclass A : Attribute { public A(string s) { } }\n\npartial class C\n{\n    [A(nameof(p1))]\n    [A(nameof(p2))] // 1\n    partial C(\n        [A(nameof(p1))] // 2\n        [A(nameof(p2))]\n        int p1);\n\n    [A(nameof(p1))]\n    [A(nameof(p2))] // 3\n    partial C(\n        [A(nameof(p1))] // 4\n        [A(nameof(p2))]\n        int p2)\n    {\n        Console.WriteLine(nameof(p1)); // 5\n        Console.WriteLine(nameof(p2));\n    }\n}",
+  "sourceSHA256": "0af9cbb5053865617e0f2755a75cfc37156c4e3d4de6cfdbe151316c085d73bb",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "Difference_ParameterNames_NameOf",
+    "offset": 153247
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS9256",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0103",
+        "severity": "error"
+      },
+      {
+        "code": "CS0103",
+        "severity": "error"
+      },
+      {
+        "code": "CS0103",
+        "severity": "error"
+      },
+      {
+        "code": "CS0103",
+        "severity": "error"
+      },
+      {
+        "code": "CS0103",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (17,13): warning CS9256: Partial member declarations 'C.C(int p1)' and 'C.C(int p2)' have signature differences.\n            //     partial C(\n            Diagnostic(ErrorCode.WRN_PartialMemberSignatureDifference, \"C\").WithArguments(\"C.C(int p1)\", \"C.C(int p2)\").WithLocation(17, 13),\n            // (18,19): error CS0103: The name 'p1' does not exist in the current context\n            //         [A(nameof(p1))] // 4\n            Diagnostic(ErrorCode.ERR_NameNotInContext, \"p1\").WithArguments(\"p1\").WithLocation(18, 19),\n            // (11,19): error CS0103: The name 'p1' does not exist in the current context\n            //         [A(nameof(p1))] // 2\n            Diagnostic(ErrorCode.ERR_NameNotInContext, \"p1\").WithArguments(\"p1\").WithLocation(11, 19),\n            // (9,15): error CS0103: The name 'p2' does not exist in the current context\n            //     [A(nameof(p2))] // 1\n            Diagnostic(ErrorCode.ERR_NameNotInContext, \"p2\").WithArguments(\"p2\").WithLocation(9, 15),\n            // (16,15): error CS0103: The name 'p2' does not exist in the current context\n            //     [A(nameof(p2))] // 3\n            Diagnostic(ErrorCode.ERR_NameNotInContext, \"p2\").WithArguments(\"p2\").WithLocation(16, 15),\n            // (22,34): error CS0103: The name 'p1' does not exist in the current context\n            //         Console.WriteLine(nameof(p1)); // 5\n            Diagnostic(ErrorCode.ERR_NameNotInContext, \"p1\").WithArguments(\"p1\").WithLocation(22, 34)",
+  "unsupported": []
+}

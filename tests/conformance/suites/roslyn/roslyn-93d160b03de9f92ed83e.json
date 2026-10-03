@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-93d160b03de9f92ed83e",
+  "kind": "diagnostics",
+  "sourceText": "public interface B { void M(A a); }",
+  "sourceSHA256": "977ab0957f6918c507dbe8bb38bc36dd33a43cb3046ca0f80c1c09a067c5ff19",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOverridingAndHiding.cs",
+    "sha256": "1362359003a56088beb732c1b01d57e4b0e4b8b408037adca585b20ae29b4f98",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOverridingAndHiding.cs",
+    "license": "MIT",
+    "method": "MissingAssemblyReference02",
+    "offset": 171378
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { new CSharpCompilationReference(A) }, assemblyName: \"B\")",
+  "options": "(@\"public interface B { void M(A a); }\", references: new[] { new CSharpCompilationReference(A) }, assemblyName: \"B\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

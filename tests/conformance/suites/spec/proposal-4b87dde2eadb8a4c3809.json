@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-4b87dde2eadb8a4c3809",
+  "kind": "spec",
+  "sourceText": "int nineteen = 0b10011;",
+  "sourceSHA256": "3d072f60c5c52ea7f2d323302f4b2a0af3129c19da3988260b076f36b6bdc870",
+  "target": "library",
+  "featureId": "csharp-7-0-binary-literals",
+  "langVersion": "7.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.0/binary-literals.md",
+    "sha256": "55fc6e056a7ae47c5da7e7b6ffeacbe327e72a7b0faa48f4d4abe2757cfea742",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.0/binary-literals.md",
+    "license": "NOASSERTION",
+    "offset": 316
+  }
+}

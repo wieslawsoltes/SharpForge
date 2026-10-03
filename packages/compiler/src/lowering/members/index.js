@@ -8,7 +8,7 @@ import { OperatorLowering } from './operators.js';
 import { PrimaryConstructorLowering, PrimaryConstructorGeneration } from './primary-constructors.js';
 import { PartialMemberLowering, PartialMemberGeneration } from './partial-members.js';
 import { ExpressionTreeTranslation } from '../expression-trees.js';
-import { ExtensionMemberGeneration } from './extension-members.js';
+import { ExtensionMemberGeneration, ExtensionIndexerLowering } from './extension-members.js';
 
 export const memberLowerings = Object.freeze([
   EvaluateOnce,
@@ -17,6 +17,7 @@ export const memberLowerings = Object.freeze([
   PrimaryConstructorLowering,
   PartialMemberLowering,
   ExpressionTreeTranslation,
+  ExtensionIndexerLowering,
 ]);
 
 /** Generator mixins of the member lowerings, composed over the generator's own declaration and initialization passes. */

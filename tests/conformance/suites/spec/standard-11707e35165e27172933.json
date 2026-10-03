@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-11707e35165e27172933",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass Program {\npublic static async Task ExampleCombination()\n{\n    var sourceOne = new CancellationTokenSource();\n    var sourceTwo = new CancellationTokenSource();\n    await using (IAsyncEnumerator<string> enumerator =\n        GetStringsAsync(sourceOne.Token).GetAsyncEnumerator(sourceTwo.Token))\n    {\n        while (await enumerator.MoveNextAsync())\n        {\n            string number = enumerator.Current;\n            if (number == \"8\") sourceOne.Cancel();\n            if (number == \"5\") sourceTwo.Cancel();\n            Console.WriteLine(number);\n        }\n    }\n}\n\nstatic async IAsyncEnumerable<string> GetStringsAsync(\n  [EnumeratorCancellation] CancellationToken token)\n{\n    for (int i = 0; i < 10; i++)\n    {\n        if (token.IsCancellationRequested) yield break;\n        await Task.Delay(1000, token);\n        yield return i.ToString();\n    }\n}\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "d5a4c72f64e70259dc6be1a61789f541d969ad05de42bea7d0fc1ffb4e0d48cf",
+  "originalSource": "public static async Task ExampleCombination()\n{\n    var sourceOne = new CancellationTokenSource();\n    var sourceTwo = new CancellationTokenSource();\n    await using (IAsyncEnumerator<string> enumerator =\n        GetStringsAsync(sourceOne.Token).GetAsyncEnumerator(sourceTwo.Token))\n    {\n        while (await enumerator.MoveNextAsync())\n        {\n            string number = enumerator.Current;\n            if (number == \"8\") sourceOne.Cancel();\n            if (number == \"5\") sourceTwo.Cancel();\n            Console.WriteLine(number);\n        }\n    }\n}\n\nstatic async IAsyncEnumerable<string> GetStringsAsync(\n  [EnumeratorCancellation] CancellationToken token)\n{\n    for (int i = 0; i < 10; i++)\n    {\n        if (token.IsCancellationRequested) yield break;\n        await Task.Delay(1000, token);\n        yield return i.ToString();\n    }\n}",
+  "metadata": {
+    "template": "code-in-class-lib",
+    "name": "AsyncEnumeratorCancellation"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-attributes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/attributes.md",
+    "sha256": "9ab07c36a912273dd0eb341141ca62153c76e5f32f422e70950477a6b89c5242",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/attributes.md",
+    "license": "MIT",
+    "example": "AsyncEnumeratorCancellation",
+    "offsetInUnquotedMarkdown": 57259
+  }
+}

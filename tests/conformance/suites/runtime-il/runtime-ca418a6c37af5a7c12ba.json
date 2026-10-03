@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "runtime-ca418a6c37af5a7c12ba",
+  "kind": "runtime",
+  "sourceText": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n//\nusing System;\nusing System.Runtime.CompilerServices;\nusing TestLibrary;\n\n\npublic class NintIndexOutOfRangeTest\n{\n    [MethodImpl(MethodImplOptions.NoInlining)]\n    static void Stelem_Ref(object[] arr, nint i, Object value)\n        => arr[i] = value;\n\n    [MethodImpl(MethodImplOptions.NoInlining)]\n    static void LdElemATestHelper(ref object nothingOfInterest)\n    {}\n\n    [MethodImpl(MethodImplOptions.NoInlining)]\n    static void LdElemA(object[] arr, nint i)\n    {\n        LdElemATestHelper(ref arr[i]);\n    }\n\n    \n    [ActiveIssue(\"https://github.com/dotnet/runtime/issues/91923\", typeof(PlatformDetection), nameof(PlatformDetection.IsAppleMobile))]\n    public static unsafe int Main()\n    {\n        long longIndex = ((long)1) << 32;\n        nint index = (nint)longIndex;\n        bool failed = false;\n\n        // On a 32bit platform, just succeed.\n        if (sizeof(long) != sizeof(nint))\n            return 100;\n\n        var arr = new Object[10];\n        // Try store to invalid index with null\n        try\n        {\n            Stelem_Ref(arr, index, null);\n            failed = true;\n            Console.WriteLine(\"Failed to throw IndexOutOfRange when storing null\");\n        }\n        catch (IndexOutOfRangeException) {}\n\n        // Try store to invalid index with actual value\n        try\n        {\n            Stelem_Ref(arr, index, new object());\n            failed = true;\n            Console.WriteLine(\"Failed to throw IndexOutOfRange when storing object\");\n        }\n        catch (IndexOutOfRangeException) {}\n\n        // Try to load element address\n        try\n        {\n            LdElemA(arr, index);\n            failed = true;\n            Console.WriteLine(\"Failed to throw IndexOutOfRange when accessing element\");\n        }\n        catch (IndexOutOfRangeException) {}\n\n        if (failed)\n            return 1;\n        else\n            return 100;\n    }\n}\n",
+  "language": "csharp",
+  "unsupported": [
+    "External runtime test harness or conditional platform dependency",
+    "Requires exactly one static int test entry point"
+  ],
+  "opcodeFamilies": [],
+  "sourceSHA256": "7a8dd2d24d64bbd2ef907c02cd1a4afd03808e2c1de53878b9bcc6d3789d29c4",
+  "originalSource": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n//\nusing System;\nusing System.Runtime.CompilerServices;\nusing TestLibrary;\nusing Xunit;\n\npublic class NintIndexOutOfRangeTest\n{\n    [MethodImpl(MethodImplOptions.NoInlining)]\n    static void Stelem_Ref(object[] arr, nint i, Object value)\n        => arr[i] = value;\n\n    [MethodImpl(MethodImplOptions.NoInlining)]\n    static void LdElemATestHelper(ref object nothingOfInterest)\n    {}\n\n    [MethodImpl(MethodImplOptions.NoInlining)]\n    static void LdElemA(object[] arr, nint i)\n    {\n        LdElemATestHelper(ref arr[i]);\n    }\n\n    [Fact]\n    [ActiveIssue(\"https://github.com/dotnet/runtime/issues/91923\", typeof(PlatformDetection), nameof(PlatformDetection.IsAppleMobile))]\n    public static unsafe int TestEntryPoint()\n    {\n        long longIndex = ((long)1) << 32;\n        nint index = (nint)longIndex;\n        bool failed = false;\n\n        // On a 32bit platform, just succeed.\n        if (sizeof(long) != sizeof(nint))\n            return 100;\n\n        var arr = new Object[10];\n        // Try store to invalid index with null\n        try\n        {\n            Stelem_Ref(arr, index, null);\n            failed = true;\n            Console.WriteLine(\"Failed to throw IndexOutOfRange when storing null\");\n        }\n        catch (IndexOutOfRangeException) {}\n\n        // Try store to invalid index with actual value\n        try\n        {\n            Stelem_Ref(arr, index, new object());\n            failed = true;\n            Console.WriteLine(\"Failed to throw IndexOutOfRange when storing object\");\n        }\n        catch (IndexOutOfRangeException) {}\n\n        // Try to load element address\n        try\n        {\n            LdElemA(arr, index);\n            failed = true;\n            Console.WriteLine(\"Failed to throw IndexOutOfRange when accessing element\");\n        }\n        catch (IndexOutOfRangeException) {}\n\n        if (failed)\n            return 1;\n        else\n            return 100;\n    }\n}\n",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/tests/JIT/Directed/Arrays/nintindexoutofrange.cs",
+    "sha256": "4e8f03a7e8faca1ed45cddb16933437058841f2c0896e75742ccd821db4dd20b",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/tests/JIT/Directed/Arrays/nintindexoutofrange.cs",
+    "license": "MIT"
+  },
+  "namespace": "JIT",
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack"
+  ],
+  "expected": {
+    "exitCode": 100
+  },
+  "adaptation": "Remove Fact/OuterLoop discovery attributes and Xunit using; rename TestEntryPoint to Main. Test body unchanged."
+}

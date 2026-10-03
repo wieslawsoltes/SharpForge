@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "library-321dae2bfaa016d4f974",
+  "kind": "library",
+  "namespace": "System.Collections",
+  "sourceText": "using System;\nusing System.Collections;\nusing System.Collections.Generic;\nusing System.Linq;\nusing Xunit;\nclass SuiteProgram { static int Main() {\n\n            BitArray bitArray = new BitArray(4);\n            AssertExtensions.Throws<ArgumentOutOfRangeException>(\"index\", () => bitArray.Set(-1, true));\n            AssertExtensions.Throws<ArgumentOutOfRangeException>(\"index\", () => bitArray.Set(bitArray.Length, true));\n\n            AssertExtensions.Throws<ArgumentOutOfRangeException>(\"index\", () => bitArray[-1] = true);\n            AssertExtensions.Throws<ArgumentOutOfRangeException>(\"index\", () => bitArray[bitArray.Length] = true);\n        \nreturn 0; } }\n// SharpForge's deliberately small test adapter. Assertions fail by throwing.\n\nnamespace Xunit\n{\n    public static class Assert\n    {\n        public static void True(bool value) { if (!value) throw new Exception(\"Assert.True\"); }\n        public static void False(bool value) { if (value) throw new Exception(\"Assert.False\"); }\n        public static void Null(object value) { if (value != null) throw new Exception(\"Assert.Null\"); }\n        public static void NotNull(object value) { if (value == null) throw new Exception(\"Assert.NotNull\"); }\n        public static void Same(object expected, object actual)\n        { if (!object.ReferenceEquals(expected, actual)) throw new Exception(\"Assert.Same\"); }\n        public static void Equal<T>(T expected, T actual)\n        {\n            if (expected is System.Collections.IEnumerable && !(expected is string))\n                throw new NotSupportedException(\"Shim Equal supports scalar values only, not sequence equality\");\n            if (!object.Equals(expected, actual)) throw new Exception(\"Assert.Equal\");\n        }\n        public static T Throws<T>(Action action) where T : Exception\n        {\n            try { action(); }\n            catch (Exception error)\n            {\n                if (error.GetType() != typeof(T)) throw new Exception(\"Assert.Throws: wrong exception type\");\n                return (T)error;\n            }\n            throw new Exception(\"Assert.Throws: no exception\");\n        }\n    }\n}\n",
+  "sourceSHA256": "7c10eb91223871f9a16a36d19b85f15bd431106e2c8a9137dc34a131010bd1b4",
+  "originalSource": "public static void Set_InvalidIndex_ThrowsArgumentOutOfRangeException()\n        {\n            BitArray bitArray = new BitArray(4);\n            AssertExtensions.Throws<ArgumentOutOfRangeException>(\"index\", () => bitArray.Set(-1, true));\n            AssertExtensions.Throws<ArgumentOutOfRangeException>(\"index\", () => bitArray.Set(bitArray.Length, true));\n\n            AssertExtensions.Throws<ArgumentOutOfRangeException>(\"index\", () => bitArray[-1] = true);\n            AssertExtensions.Throws<ArgumentOutOfRangeException>(\"index\", () => bitArray[bitArray.Length] = true);\n        }",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/libraries/System.Collections/tests/BitArray/BitArray_GetSetTests.cs",
+    "sha256": "29c54f4ec46606a58868b8a8f0a0b6c5b88617733870dfc6789eb8132d1f6226",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/libraries/System.Collections/tests/BitArray/BitArray_GetSetTests.cs",
+    "license": "MIT",
+    "method": "Set_InvalidIndex_ThrowsArgumentOutOfRangeException",
+    "offset": 2108
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack",
+    "local XunitShim.cs"
+  ],
+  "expected": {
+    "exitCode": 0
+  },
+  "unsupported": [
+    "Upstream helper, fixture state, or platform-specific dependency",
+    "No directly supported assertion; helper-based assertions require adaptation"
+  ],
+  "adaptation": "Original method body in standalone Main; no base fixture/helpers imported. Native compilation preflight detects unresolved dependencies; scalar assertions, reference identity and exact exception assertions execute."
+}

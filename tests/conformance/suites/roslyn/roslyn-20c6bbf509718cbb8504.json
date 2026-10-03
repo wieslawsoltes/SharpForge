@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-20c6bbf509718cbb8504",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    partial F() { }\n    partial C() { }\n}",
+  "sourceSHA256": "3eed7a37f0d2f3b9a5d21199be870c968979f7dbf1f51407fc2690812bb5ff3a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "ReturningPartialType_Method_CouldBePartialConstructor",
+    "offset": 6775
+  },
+  "langVersion": "13",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular13)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS9260",
+        "severity": "error"
+      },
+      {
+        "code": "CS0161",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS9260",
+        "severity": "error"
+      },
+      {
+        "code": "CS0542",
+        "severity": "error"
+      },
+      {
+        "code": "CS0161",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (3,5): error CS0246: The type or namespace name 'partial' could not be found (are you missing a using directive or an assembly reference?)\n            //     partial F() { }\n            Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"partial\").WithArguments(\"partial\").WithLocation(3, 5),\n            // (3,5): error CS9260: Feature 'partial events and constructors' is not available in C# 13.0. Please use language version 14.0 or greater.\n            //     partial F() { }\n            Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion13, \"partial\").WithArguments(\"partial events and constructors\", \"14.0\").WithLocation(3, 5),\n            // (3,13): error CS0161: 'C.F()': not all code paths return a value\n            //     partial F() { }\n            Diagnostic(ErrorCode.ERR_ReturnExpected, \"F\").WithArguments(\"C.F()\").WithLocation(3, 13),\n            // (4,5): error CS0246: The type or namespace name 'partial' could not be found (are you missing a using directive or an assembly reference?)\n            //     partial C() { }\n            Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"partial\").WithArguments(\"partial\").WithLocation(4, 5),\n            // (4,5): error CS9260: Feature 'partial events and constructors' is not available in C# 13.0. Please use language version 14.0 or greater.\n            //     partial C() { }\n            Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion13, \"partial\").WithArguments(\"partial events and constructors\", \"14.0\").WithLocation(4, 5),\n            // (4,13): error CS0542: 'C': member names cannot be the same as their enclosing type\n            //     partial C() { }\n            Diagnostic(ErrorCode.ERR_MemberNameSameAsType, \"C\").WithArguments(\"C\").WithLocation(4, 13),\n            // (4,13): error CS0161: 'C.C()': not all code paths return a value\n            //     partial C() { }\n            Diagnostic(ErrorCode.ERR_ReturnExpected, \"C\").WithArguments(\"C.C()\").WithLocation(4, 13)",
+  "unsupported": []
+}

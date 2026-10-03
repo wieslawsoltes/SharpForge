@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-4bd86f746b509863ca9d",
+  "kind": "diagnostics",
+  "sourceText": "\nclass D\n{\n    void M()\n    {\n        System.Console.Write(C.GetTuple().Item1);\n    }\n}",
+  "sourceSHA256": "55c8efa82ecb6a527c9a8359d780b8aadb222147d43aaedcc67d99820fa69615",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "UseSiteDiagnosticOnTupleField",
+    "offset": 129963
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "references: new[] { ValueTupleRef, SystemRuntimeFacadeRef, libComp.ToMetadataReference() }, parseOptions: TestOptions.Regular)",
+  "options": "(source_cs,\n                references: new[] { ValueTupleRef, SystemRuntimeFacadeRef, libComp.ToMetadataReference() }, parseOptions: TestOptions.Regular)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0012",
+        "severity": "error"
+      },
+      {
+        "code": "CS0012",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,30): error CS0012: The type 'Missing' is defined in an assembly that is not referenced. You must add a reference to assembly 'UseSiteDiagnosticOnTupleField_missingComp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.\n                //         System.Console.Write(C.GetTuple().Item1);\n                Diagnostic(ErrorCode.ERR_NoTypeDef, \"C.GetTuple\").WithArguments(\"Missing\", \"UseSiteDiagnosticOnTupleField_missingComp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\"),\n                // (6,43): error CS0012: The type 'Missing' is defined in an assembly that is not referenced. You must add a reference to assembly 'UseSiteDiagnosticOnTupleField_missingComp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.\n                //         System.Console.Write(C.GetTuple().Item1);\n                Diagnostic(ErrorCode.ERR_NoTypeDef, \"Item1\").WithArguments(\"Missing\", \"UseSiteDiagnosticOnTupleField_missingComp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\")\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

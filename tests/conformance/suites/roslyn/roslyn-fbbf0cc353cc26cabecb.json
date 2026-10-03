@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-fbbf0cc353cc26cabecb",
+  "kind": "diagnostics",
+  "sourceText": "\n[Embedded]\npublic class Test\n{\n\tpublic ref readonly int M(in int p) => ref p;\n}",
+  "sourceSHA256": "d54ba4ccdd6c92ca91722f1c0380b4db5c9b19b1cd7e7f22e6d22d7507ac691e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_RefReadOnly.cs",
+    "sha256": "2665f48f409039e29d4a618fc5f62e300dd7135d0832a11765aad115a6b75db9",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_RefReadOnly.cs",
+    "license": "MIT",
+    "method": "UserReferencingEmbeddedAttributeShouldResultInAnError",
+    "offset": 34041
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(code)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (2,2): error CS0246: The type or namespace name 'EmbeddedAttribute' could not be found (are you missing a using directive or an assembly reference?)\n                // [Embedded]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"Embedded\").WithArguments(\"EmbeddedAttribute\").WithLocation(2, 2),\n                // (2,2): error CS0246: The type or namespace name 'Embedded' could not be found (are you missing a using directive or an assembly reference?)\n                // [Embedded]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"Embedded\").WithArguments(\"Embedded\").WithLocation(2, 2)",
+  "unsupported": []
+}

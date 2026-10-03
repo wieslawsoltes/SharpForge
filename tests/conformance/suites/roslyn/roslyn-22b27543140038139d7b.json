@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-22b27543140038139d7b",
+  "kind": "diagnostics",
+  "sourceText": "\npublic struct Test\n{\n    [field: System.Runtime.InteropServices.FieldOffset(-1)]\n    public int P { get; set; }\n}\n",
+  "sourceSHA256": "9b3290c5ca9dfbe9651b8f035256ee09e21fd9ec2838669b290661516f3cf5ce",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "TestWellKnownAttributeOnProperty_FieldOffset2",
+    "offset": 82942
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0636",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,56): error CS0591: Invalid value for argument to 'System.Runtime.InteropServices.FieldOffset' attribute\n                //     [field: System.Runtime.InteropServices.FieldOffset(-1)]\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, \"-1\").WithArguments(\"System.Runtime.InteropServices.FieldOffset\").WithLocation(4, 56),\n                // (4,13): error CS0636: The FieldOffset attribute can only be placed on members of types marked with the StructLayout(LayoutKind.Explicit)\n                //     [field: System.Runtime.InteropServices.FieldOffset(-1)]\n                Diagnostic(ErrorCode.ERR_StructOffsetOnBadStruct, \"System.Runtime.InteropServices.FieldOffset\").WithLocation(4, 13)\n                ",
+  "unsupported": []
+}
