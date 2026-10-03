@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "id": "designer-roundtrip",
+  "targets": [
+    "studio"
+  ],
+  "timeoutMs": 30000,
+  "steps": [
+    {
+      "id": "create",
+      "action": "designer-create",
+      "fixture": "designer"
+    },
+    {
+      "id": "build",
+      "action": "build"
+    },
+    {
+      "id": "connect",
+      "action": "designer-connect",
+      "path": "Program.cs"
+    },
+    {
+      "id": "edit",
+      "action": "designer-edit",
+      "node": "button",
+      "property": "Width",
+      "value": 248
+    },
+    {
+      "id": "source",
+      "action": "source-contains",
+      "path": "Program.cs",
+      "contains": "Width = 248"
+    },
+    {
+      "id": "rebuild",
+      "action": "build"
+    },
+    {
+      "id": "run",
+      "action": "run"
+    },
+    {
+      "id": "scene",
+      "action": "scene",
+      "name": "Action",
+      "property": "Width",
+      "value": 248
+    },
+    {
+      "id": "attach",
+      "action": "designer-attach"
+    },
+    {
+      "id": "hot-apply",
+      "action": "designer-live",
+      "name": "Action",
+      "property": "Height",
+      "value": 64
+    },
+    {
+      "id": "live-scene",
+      "action": "scene",
+      "name": "Action",
+      "property": "Height",
+      "value": 64
+    }
+  ]
+}
