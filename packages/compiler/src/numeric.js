@@ -1,6 +1,14 @@
+import {arrayType, spanType, memoryTypeName} from '@sharpforge/bytecode';
 import {numericTypeNames,numericAliases,numericTypeName,integerType,decodeScalar,encodeScalar,scalarConvert,scalarBinary,scalarUnary,decimalParse,number} from '@sharpforge/bytecode';
 export const numeric=type=>numericTypeNames.includes(numericTypeName(type));
-export const normalizeNumeric=type=>type?.endsWith('[]')?normalizeNumeric(type.slice(0,-2))+'[]':type?.endsWith('&')?normalizeNumeric(type.slice(0,-1))+'&':numericAliases[type]??type;
+export function normalizeNumeric(type) {
+  if (type?.endsWith('&')) return normalizeNumeric(type.slice(0, -1)) + '&';
+  const array = arrayType(type);
+  if (array) return normalizeNumeric(array.element) + '[' + ','.repeat(array.rank - 1) + ']';
+  const span = spanType(type);
+  if (span) return memoryTypeName((span.readonly ? 'ReadOnlySpan' : 'Span') + '<' + normalizeNumeric(span.element) + '>');
+  return numericAliases[type] ?? type;
+}
 const implicit={sbyte:['short','int','long','nint','float','double','decimal'],byte:['short','ushort','int','uint','long','ulong','nint','nuint','float','double','decimal'],short:['int','long','nint','float','double','decimal'],ushort:['int','uint','long','ulong','nint','nuint','float','double','decimal'],char:['ushort','int','uint','long','ulong','nint','nuint','float','double','decimal'],int:['long','nint','float','double','decimal'],uint:['long','ulong','nuint','float','double','decimal'],long:['float','double','decimal'],ulong:['float','double','decimal'],nint:['long','float','double','decimal'],nuint:['ulong','float','double','decimal'],float:['double']};
 export const implicitNumeric=(from,to)=>from===to||!!implicit[from]?.includes(to);
 export const integral=type=>numeric(type)&&!['float','double','decimal'].includes(type);

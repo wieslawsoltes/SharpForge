@@ -1,3 +1,7 @@
+import {ScalarQueries} from '../scalar-queries.js';
+import {inferScalarExpression, scalarConditionalType} from '../scalar-expressions.js';
+import {inferMemoryExpression} from '../memory-expressions.js';
+import {bindArrayBuiltin} from '../array-builtins.js';
 import {frameworkType,taskResult} from '@sharpforge/framework';
 import {BuiltinMap} from '@sharpforge/bytecode';
 import {evaluateConstant,ConstantError} from '../constants.js';
@@ -13,9 +17,9 @@ import {BoundBadExpression} from '../bound/nodes.js';
  * `type` is a TypeSymbol. Scopes, parameters and the checked context live in the binder chain; no IR is produced.
  * `infer` and the member queries are side-effect free; `bind*` methods (expressions.js, statements.js) report.
  */
-export class MethodBinderContext {
+export class MethodBinderContext extends ScalarQueries(class {}) {
   /** @param compilation the Compilation; @param method the method declaration record being bound. */
-  constructor(compilation,method){
+  constructor(compilation,method){super();
     this.c=compilation;this.m=method;this.sym=compilation.semantic;this.loops=[];this.catchDepth=0;this.finallyScopes=[];this.constantDiagnostics=new Set();this.scopeNode=null;this.synthesized=0;this.boundMap=new Map();this.scopeSpans=[];
     this.methodSymbol=this.sym.method(method);const container=compilation.containerBinder?.(method)??new InContainerBinder(method.owner?this.sym.type(method.owner):this.sym.globalNamespace,new BuckStopsHereBinder(compilation,BinderFlags.None));
     this.methodBinder=new InMethodBinder(this.methodSymbol,container);this.thisParameter=null;this.parameters=new Map();this.scope=new LocalScopeBinder(this.methodBinder,method.node);this.scopeSpans.push({binder:this.scope,start:method.node.start,end:method.node.end});
@@ -64,7 +68,7 @@ export class MethodBinderContext {
   /** Runs `action` in a checked or unchecked context. */
   inCheckedContext(checked,action){const previous=this.scope;this.scope=this.scope.withCheckedContext(checked);try{return action();}finally{this.scope=previous;}}
   /** Evaluates a constant expression; reports each folding error once. Returns {type,value} or null. */
-  constant(node){try{return evaluateConstant(node,{checked:this.checkedContext!==false,resolve:n=>{if(n.kind!=='Name')return null;const local=this.lookup(n.name);if(local?.constant)local.usedAsConstant=true;return local?.constant??null;}});}catch(error){if(!(error instanceof ConstantError))throw error;const key=error.node.start+':'+error.code;if(!this.constantDiagnostics.has(key)){this.constantDiagnostics.add(key);this.c.report(error.node,error.code,error.args);}return null;}}
+  constant(node){try{return evaluateConstant(node,{checked:this.checkedContext!==false,resolve:n=>{if(n.kind!=='Name')return this.scalarConstant(n);const local=this.lookup(n.name);if(local?.constant)local.usedAsConstant=true;return local?.constant??null;}});}catch(error){if(!(error instanceof ConstantError))throw error;const key=error.node.start+':'+error.code;if(!this.constantDiagnostics.has(key)){this.constantDiagnostics.add(key);this.c.report(error.node,error.code,error.args);}return null;}}
   // ---- member queries (no diagnostics) -----------------------------------------------------------------------
   property(node){
     if(node.kind==='Name')return this.lookup(node.name)?null:this.m.owner?.properties.find(p=>p.name===node.name)??null;
@@ -94,9 +98,15 @@ export class MethodBinderContext {
     if(candidates.length>1&&rank(candidates[0])===rank(candidates[1])&&report)this.c.report(node,'CS0121',[candidates[0].qualifiedName,candidates[1].qualifiedName]);
     return candidates[0]??null;
   }
-  switchType(node){const types=node.arms.map(a=>this.infer(a.expression));return types.includes('double')&&types.every(t=>numeric(t))?'double':types.find(t=>t!=='null')??'error';}
+  switchType(node){const types=node.arms.map(a=>this.infer(a.expression));if(types.every(numeric))return [...new Set(types)].find(type=>node.arms.every(arm=>this.scalarAccepts(arm.expression,type)))??'error';return types.find(t=>t!=='null')??'error';}
   /** The type an expression will have, computed without binding it (used to choose overloads and targets). */
   infer(node){
+    const array=bindArrayBuiltin(this,node);if(array)return array.result;
+    const memory=inferMemoryExpression(this,node);if(memory!==undefined)return memory;
+    const scalar=inferScalarExpression(this,node);if(scalar!==undefined)return scalar;
+    const constant=this.scalarConstant(node);if(constant)return constant.type;
+    const profile=this.scalarBinding(node);if(profile)return profile.result??'error';
+    if(node?.kind==='Conditional'){const type=scalarConditionalType(this,node);if(type)return type;}
     if(!node)return 'error';
     if(node.kind==='BoundTemp')return node.type;if(node.kind==='CollectionExpression')return node.targetType??'error';if(node.kind==='New'&&node.type==='<target>')return 'error';
     const external=this.frameworkInfer(node);if(external!==undefined)return external;

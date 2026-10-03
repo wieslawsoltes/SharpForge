@@ -52,20 +52,20 @@ export function compileBinary(compiler, operator, left, right, node) {
     if (numeric(right)) compiler.scalarString(right);
     result = 'string';
   } else if (promoted) {
-    if (bitwise.has(operator) && !integral(promoted)) compiler.c.report(node, 'CS0019', 'Bitwise operators require integers');
+    if (bitwise.has(operator) && !integral(promoted)) compiler.c.report(node, 'CS0019', [operator,left,right]);
     result = comparisons.has(operator) ? 'bool' : promoted;
   } else if (operator === '==' || operator === '!=') {
     if (!assignable(left, right) && !assignable(right, left)) {
-      compiler.c.report(node, 'CS0019', `Operator '${operator}' cannot compare '${left}' and '${right}'`);
+      compiler.c.report(node, 'CS0019', [operator,left,right]);
     }
     result = 'bool';
   } else if (['&', '|', '^'].includes(operator) && left === 'bool' && right === 'bool') result = 'bool';
   else {
-    compiler.c.report(node, 'CS0019', `Operator '${operator}' cannot be applied to '${left}' and '${right}'`);
+    compiler.c.report(node, 'CS0019', [operator,left,right]);
     result = 'error';
   }
   if (!(operator in Binary)) {
-    compiler.c.report(node, 'SF2006', `Operator '${operator}' is not implemented`);
+    compiler.c.report(node, 'SF2006', [operator]);
     compiler.emit(Op.POP);
     return 'error';
   }
