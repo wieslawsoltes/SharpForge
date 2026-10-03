@@ -44,7 +44,7 @@ export const versions = { roslyn: pin.roslyn.version, coreclr: pin.runtime, winu
 export function envelope(oracleId, fixture, result) {
   return {
     schemaVersion: 1, fixtureId: fixture.id, inputHash: fixture.inputHash, oracleId,
-    toolVersion: versions[oracleId], target: oracleId === 'roslyn' ? 'any' : platform,
+    toolVersion: versions[oracleId], target: platform,
     toolchain: { sdk: pin.sdk, runtime: pin.runtime, roslyn: pin.roslyn.version, referencePack: pin.referencePack, windowsAppSDK: oracleId === 'winui' ? pin.windowsAppSDK : null },
     langVersion: fixture.langVersion ?? null, result,
   };
@@ -82,8 +82,7 @@ export async function verifyEntry(entry, fixtures, file) {
   const resultKeys = Object.keys(entry.result);
   const discriminator = { roslyn: 'diagnostics', coreclr: 'unhandledException', winui: 'dispatcherOrder' }[entry.oracleId];
   if (!resultKeys.includes(discriminator)) throw new Error(`Wrong result shape for ${entry.oracleId}`);
-  if ((entry.oracleId === 'roslyn') !== (entry.target === 'any')) throw new Error('Roslyn must use target any; execution must identify its platform');
-  if (entry.oracleId !== 'roslyn' && !requireTarget(entry.oracleId, entry.target).supported) throw new Error('Evidence target is unsupported by the pinned harness');
+  if (!requireTarget(entry.oracleId, entry.target).supported) throw new Error('Evidence target is unsupported by the pinned harness');
   if (entry.oracleId === 'coreclr' && !fixture.execute) throw new Error('Compile-negative fixtures cannot have CoreCLR execution evidence');
   if (file && path.normalize(file).split(path.sep).slice(-4).join('/') !== expectedPath(entry).split(path.sep).slice(-4).join('/')) throw new Error(`Expected store path/key mismatch: ${file}`);
   return true;
