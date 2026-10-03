@@ -3,7 +3,7 @@
   "styles": [
     {
       "source": "packages/winui/src/style.css",
-      "order": 6
+      "order": 6000
     }
   ],
   "workers": [],
