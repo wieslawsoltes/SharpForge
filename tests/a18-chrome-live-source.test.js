@@ -191,3 +191,22 @@ test('a design edit during a pending snapshot cannot replace the source attachme
   assert.equal(view.document.undoStack.length, 1);
   adapter.dispose();
 });
+
+test('a receipt-aware app cannot fall back to an unguarded generic C# write callback', async () => {
+  const document = new DesignDocument(createDesign());
+  const baseline = document.snapshot();
+  const app = runningApp(baseline);
+  const view = sourceView(document, baseline);
+  delete view.writeDesignerSourceForSession;
+  const writes = [];
+  view.sourceSync.write = async () => writes.push('unguarded source write');
+  app.sessions.get(app.sessionId).assertSourceOwnership = () => [];
+  const adapter = new DesignerLiveAttachment(view, {sessions: app.sessions});
+  await adapter.attach(app.sessionId);
+  const calls = app.calls.length;
+  await assert.rejects(adapter.hotReload(), error => error.code === 'SFDL0006' && error.sourceWritten === false && !error.codeApplied);
+  assert.deepEqual(writes, []);
+  assert.equal(app.calls.length, calls);
+  assert.equal(view.document, document);
+  adapter.dispose();
+});

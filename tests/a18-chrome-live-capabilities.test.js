@@ -134,3 +134,17 @@ test('new collection item gradients are diagnosed before constructing any runtim
   assert.throws(() => designPatch(before, after), error => error.code === 'SFDL0010' &&
     error.diagnostics.some(diagnostic => diagnostic.itemIndex === 0 && diagnostic.capability === 'value.gradient'));
 });
+
+test('an app ownership rejection occurs before the source callback as well as before compilation and worker dispatch', async () => {
+  const {attachment, document, calls, sourceWrites, compiles} = await attached();
+  attachment.sessions.get('selected').assertSourceOwnership = () => {
+    const error = new Error('This app belongs to another source projection');
+    error.code = 'SFDA0012';
+    throw error;
+  };
+  await assert.rejects(attachment.hotReload(document, {writeSource: async options => sourceWrites.push(options)}),
+    error => error.code === 'SFDA0012' && error.sourceWritten === false && error.codeApplied === false);
+  assert.deepEqual(calls, []);
+  assert.deepEqual(sourceWrites, []);
+  assert.deepEqual(compiles, []);
+});

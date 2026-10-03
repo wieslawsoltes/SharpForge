@@ -241,6 +241,7 @@ export class LiveDesignAttachment {
     let codeApplied = false;
     try {
       canceled(signal);
+      session.assertSourceOwnership?.();
       await writeSource({sessionId: target.sessionId, generation: target.generation, signal});
       sourceWritten = true;
       this.resolve(target);
