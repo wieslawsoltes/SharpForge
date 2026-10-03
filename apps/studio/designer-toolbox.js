@@ -89,7 +89,8 @@ export class DesignerToolbox {
       return `<details class="design-toolbox-category" ${open ? 'open' : ''} data-category="${escape(category)}">` +
         `<summary><span>${escape(category)}</span></summary>` + controls.map(control =>
           `<button type="button" draggable="true" data-control="${escape(control.type)}"` +
-          ` aria-label="Insert ${escape(control.name)}" title="${escape(control.type)}">` +
+          ` aria-label="Insert ${escape(control.name)}" title="${escape(control.type)}. ` +
+          'Click to insert; Alt+click to draw on surface; drag for placement">' +
           `<span aria-hidden="true">${icon(categoryIcons[category] ?? 'boxes')}</span>` +
           `<span>${escape(control.name)}</span></button>`).join('') + '</details>';
     }).join('');

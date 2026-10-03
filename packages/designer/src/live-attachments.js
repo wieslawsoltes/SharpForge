@@ -1,4 +1,7 @@
 import {designFromScene, designPatch, validateDesign} from './model.js';
+import {bindLinkedLiveDesign} from './live-source-binding.js';
+
+export {bindLinkedLiveDesign, LiveSourceBindingError} from './live-source-binding.js';
 
 /** Stable failure codes for stale targets, unsupported channels and conflicting live operations. */
 export class DesignerLiveError extends Error {
@@ -148,7 +151,9 @@ export class LiveDesignAttachment {
     return result;
   }
 
-  async attach(sessionId, {generation = this.sessions.get(sessionId)?.generation, windowId, signal} = {}) {
+  async attach(sessionId, {
+    generation = this.sessions.get(sessionId)?.generation, windowId, signal, linkedDocument, linkedBaseline = linkedDocument, assertCurrent
+  } = {}) {
     if (this.disposed) throw new DesignerLiveError('Live attachment is disposed', 'SFDL0005');
     identity(sessionId, generation);
     const session = this.sessions.resolve(sessionId, generation);
@@ -164,13 +169,29 @@ export class LiveDesignAttachment {
       throw new DesignerLiveError('The chosen app window no longer exists', 'SFDL0001');
     }
     const selectedScene = windowId === undefined ? scene : {...scene, windows: [windowId]};
-    const document = designFromScene(selectedScene, {name: session.projectName ?? session.windowTitle ?? 'Running app'});
+    const captured = designFromScene(selectedScene, {name: session.projectName ?? session.windowTitle ?? 'Running app'});
+    const bound = linkedDocument ? bindLinkedLiveDesign(linkedDocument, captured, {scene, baseline: linkedBaseline}) : null;
+    const document = bound?.document ?? captured;
     Object.assign(target, {
-      baseline: structuredClone(document), revision: snapshot.revision, sceneRevision: snapshot.revision,
-      codeVersion: session.codeVersion ?? 0
+      baseline: bound?.baseline ?? structuredClone(document), revision: snapshot.revision, sceneRevision: snapshot.revision,
+      codeVersion: session.codeVersion ?? 0, sourceLinked: !!bound
     });
+    assertCurrent?.();
     this.target = target;
     return {document, live: target};
+  }
+
+  /** Adopt a prepared target in another designer; the registry token and generation remain authoritative. */
+  adopt(target) {
+    this.resolve(target);
+    if (this.busy) throw new DesignerLiveError('Wait for the pending live update before changing the attachment', 'SFDL0004');
+    if (!Number.isSafeInteger(target.sceneRevision) || target.sceneRevision < 0) {
+      throw new DesignerLiveError('The prepared attachment has an invalid scene revision', 'SFDL0003');
+    }
+    const baseline = validateDesign(target.baseline);
+    this.epoch++;
+    this.target = {...target, baseline};
+    return this.target;
   }
 
   async apply(document, {signal} = {}) {
