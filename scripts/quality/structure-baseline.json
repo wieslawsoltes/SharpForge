@@ -1,0 +1,804 @@
+{
+ "limits": {
+  "lines": 500,
+  "bytes": 40000,
+  "lineLength": 160
+ },
+ "files": {
+  "apps/cli/main.js": {
+   "lines": 127,
+   "bytes": 14148,
+   "lineLength": 602
+  },
+  "apps/cli/project.js": {
+   "lines": 28,
+   "bytes": 2482,
+   "lineLength": 187
+  },
+  "apps/cli/workspace.js": {
+   "lines": 25,
+   "bytes": 6244,
+   "lineLength": 1320
+  },
+  "apps/studio/assembly-workbench.js": {
+   "lines": 34,
+   "bytes": 9710,
+   "lineLength": 2561
+  },
+  "apps/studio/compiler.worker.js": {
+   "lines": 64,
+   "bytes": 8227,
+   "lineLength": 817
+  },
+  "apps/studio/debugger-extensions.js": {
+   "lines": 45,
+   "bytes": 19447,
+   "lineLength": 2586
+  },
+  "apps/studio/debugger-tools.js": {
+   "lines": 64,
+   "bytes": 20312,
+   "lineLength": 2518
+  },
+  "apps/studio/designer-chrome.js": {
+   "lines": 37,
+   "bytes": 11771,
+   "lineLength": 1845
+  },
+  "apps/studio/designer-source-sync.js": {
+   "lines": 24,
+   "bytes": 7694,
+   "lineLength": 1182
+  },
+  "apps/studio/designer-tools.js": {
+   "lines": 72,
+   "bytes": 51298,
+   "lineLength": 2737
+  },
+  "apps/studio/disassembly-tool.js": {
+   "lines": 38,
+   "bytes": 8352,
+   "lineLength": 1151
+  },
+  "apps/studio/docking-workspace.js": {
+   "lines": 63,
+   "bytes": 9100,
+   "lineLength": 1161
+  },
+  "apps/studio/explorer-commands.js": {
+   "lines": 153,
+   "bytes": 27034,
+   "lineLength": 860
+  },
+  "apps/studio/msbuild-tools.js": {
+   "lines": 91,
+   "bytes": 21391,
+   "lineLength": 1166
+  },
+  "apps/studio/project-wizard.js": {
+   "lines": 58,
+   "bytes": 16340,
+   "lineLength": 1754
+  },
+  "apps/studio/release08.css": {
+   "lines": 15,
+   "bytes": 5706,
+   "lineLength": 721
+  },
+  "apps/studio/release09.css": {
+   "lines": 2,
+   "bytes": 1832,
+   "lineLength": 1831
+  },
+  "apps/studio/release10.css": {
+   "lines": 4,
+   "bytes": 2954,
+   "lineLength": 2678
+  },
+  "apps/studio/release11.css": {
+   "lines": 3,
+   "bytes": 4993,
+   "lineLength": 4904
+  },
+  "apps/studio/release12.css": {
+   "lines": 40,
+   "bytes": 8885,
+   "lineLength": 885
+  },
+  "apps/studio/release13.css": {
+   "lines": 26,
+   "bytes": 10222,
+   "lineLength": 1308
+  },
+  "apps/studio/release14.css": {
+   "lines": 2,
+   "bytes": 1059,
+   "lineLength": 1058
+  },
+  "apps/studio/runtime-tools.js": {
+   "lines": 32,
+   "bytes": 6962,
+   "lineLength": 1088
+  },
+  "apps/studio/runtime.worker.js": {
+   "lines": 114,
+   "bytes": 11360,
+   "lineLength": 315
+  },
+  "apps/studio/samples-designer.js": {
+   "lines": 89,
+   "bytes": 17459,
+   "lineLength": 5116
+  },
+  "apps/studio/samples-release13.js": {
+   "lines": 103,
+   "bytes": 12280,
+   "lineLength": 3467
+  },
+  "apps/studio/samples-release14.js": {
+   "lines": 104,
+   "bytes": 8189,
+   "lineLength": 1242
+  },
+  "apps/studio/samples.js": {
+   "lines": 219,
+   "bytes": 34531,
+   "lineLength": 2365
+  },
+  "apps/studio/solution-explorer.js": {
+   "lines": 46,
+   "bytes": 7714,
+   "lineLength": 792
+  },
+  "apps/studio/studio.css": {
+   "lines": 42,
+   "bytes": 49885,
+   "lineLength": 6108
+  },
+  "apps/studio/studio.js": {
+   "lines": 751,
+   "bytes": 190682,
+   "lineLength": 6074
+  },
+  "packages/archive/src/deflate.js": {
+   "lines": 17,
+   "bytes": 3839,
+   "lineLength": 653
+  },
+  "packages/archive/src/index.js": {
+   "lines": 77,
+   "bytes": 12269,
+   "lineLength": 638
+  },
+  "packages/bytecode/src/index.js": {
+   "lines": 73,
+   "bytes": 8344,
+   "lineLength": 520
+  },
+  "packages/cil/src/analysis.js": {
+   "lines": 39,
+   "bytes": 5023,
+   "lineLength": 804
+  },
+  "packages/cil/src/binary.js": {
+   "lines": 41,
+   "bytes": 4838,
+   "lineLength": 358
+  },
+  "packages/cil/src/decompiler.js": {
+   "lines": 70,
+   "bytes": 10220,
+   "lineLength": 626
+  },
+  "packages/cil/src/disassembler.js": {
+   "lines": 22,
+   "bytes": 2627,
+   "lineLength": 858
+  },
+  "packages/cil/src/emitter.js": {
+   "lines": 132,
+   "bytes": 21865,
+   "lineLength": 938
+  },
+  "packages/cil/src/execution-profile.js": {
+   "lines": 116,
+   "bytes": 12221,
+   "lineLength": 335
+  },
+  "packages/cil/src/il-document.js": {
+   "lines": 93,
+   "bytes": 11934,
+   "lineLength": 600
+  },
+  "packages/cil/src/inspector.js": {
+   "lines": 88,
+   "bytes": 8221,
+   "lineLength": 368
+  },
+  "packages/cil/src/loader.js": {
+   "lines": 116,
+   "bytes": 22626,
+   "lineLength": 977
+  },
+  "packages/cil/src/metadata.js": {
+   "lines": 99,
+   "bytes": 18085,
+   "lineLength": 1421
+  },
+  "packages/cil/src/opcodes.js": {
+   "lines": 50,
+   "bytes": 6652,
+   "lineLength": 932
+  },
+  "packages/cil/src/pe.js": {
+   "lines": 29,
+   "bytes": 6526,
+   "lineLength": 1310
+  },
+  "packages/compiler/src/async-lowering.js": {
+   "lines": 42,
+   "bytes": 3804,
+   "lineLength": 260
+  },
+  "packages/compiler/src/constants.js": {
+   "lines": 65,
+   "bytes": 4518,
+   "lineLength": 216
+  },
+  "packages/compiler/src/framework.js": {
+   "lines": 128,
+   "bytes": 11388,
+   "lineLength": 668
+  },
+  "packages/compiler/src/index.js": {
+   "lines": 433,
+   "bytes": 67892,
+   "lineLength": 969
+  },
+  "packages/compiler/src/modern.js": {
+   "lines": 64,
+   "bytes": 7029,
+   "lineLength": 435
+  },
+  "packages/compute/src/kernel.js": {
+   "lines": 29,
+   "bytes": 3431,
+   "lineLength": 488
+  },
+  "packages/compute/src/pool.js": {
+   "lines": 54,
+   "bytes": 7524,
+   "lineLength": 456
+  },
+  "packages/compute/src/wasm.js": {
+   "lines": 3,
+   "bytes": 9216,
+   "lineLength": 9156
+  },
+  "packages/controls/src/commands.js": {
+   "lines": 9,
+   "bytes": 1357,
+   "lineLength": 385
+  },
+  "packages/controls/src/controls.css": {
+   "lines": 8,
+   "bytes": 3046,
+   "lineLength": 852
+  },
+  "packages/controls/src/menu.js": {
+   "lines": 52,
+   "bytes": 7581,
+   "lineLength": 807
+  },
+  "packages/controls/src/tree-model.js": {
+   "lines": 70,
+   "bytes": 6339,
+   "lineLength": 442
+  },
+  "packages/controls/src/tree-view.js": {
+   "lines": 72,
+   "bytes": 11590,
+   "lineLength": 529
+  },
+  "packages/debugger/src/advanced.js": {
+   "lines": 42,
+   "bytes": 11438,
+   "lineLength": 1562
+  },
+  "packages/debugger/src/breakpoints.js": {
+   "lines": 20,
+   "bytes": 2170,
+   "lineLength": 343
+  },
+  "packages/debugger/src/cil-debugger.js": {
+   "lines": 384,
+   "bytes": 38277,
+   "lineLength": 576
+  },
+  "packages/debugger/src/concurrency.js": {
+   "lines": 9,
+   "bytes": 2224,
+   "lineLength": 543
+  },
+  "packages/debugger/src/edit-plan.js": {
+   "lines": 80,
+   "bytes": 8497,
+   "lineLength": 402
+  },
+  "packages/debugger/src/evaluation.js": {
+   "lines": 237,
+   "bytes": 23442,
+   "lineLength": 635
+  },
+  "packages/debugger/src/index.js": {
+   "lines": 407,
+   "bytes": 34138,
+   "lineLength": 583
+  },
+  "packages/designer/src/codegen.js": {
+   "lines": 15,
+   "bytes": 7000,
+   "lineLength": 1215
+  },
+  "packages/designer/src/csharp-sync.js": {
+   "lines": 170,
+   "bytes": 24907,
+   "lineLength": 1245
+  },
+  "packages/designer/src/model.js": {
+   "lines": 79,
+   "bytes": 28369,
+   "lineLength": 2208
+  },
+  "packages/docking/src/host.js": {
+   "lines": 97,
+   "bytes": 19805,
+   "lineLength": 1249
+  },
+  "packages/docking/src/model.js": {
+   "lines": 66,
+   "bytes": 10176,
+   "lineLength": 461
+  },
+  "packages/docking/src/style.css": {
+   "lines": 4,
+   "bytes": 5739,
+   "lineLength": 4980
+  },
+  "packages/editor/src/editor.css": {
+   "lines": 12,
+   "bytes": 9156,
+   "lineLength": 4339
+  },
+  "packages/editor/src/highlight.js": {
+   "lines": 41,
+   "bytes": 3134,
+   "lineLength": 389
+  },
+  "packages/editor/src/index.js": {
+   "lines": 164,
+   "bytes": 29400,
+   "lineLength": 1494
+  },
+  "packages/editor/src/keymaps.js": {
+   "lines": 66,
+   "bytes": 10812,
+   "lineLength": 622
+  },
+  "packages/editor/src/navigation.js": {
+   "lines": 15,
+   "bytes": 1667,
+   "lineLength": 361
+  },
+  "packages/editor/src/operations.js": {
+   "lines": 32,
+   "bytes": 3099,
+   "lineLength": 329
+  },
+  "packages/extensions/src/index.js": {
+   "lines": 69,
+   "bytes": 10644,
+   "lineLength": 985
+  },
+  "packages/framework/src/animation-clock.js": {
+   "lines": 33,
+   "bytes": 7399,
+   "lineLength": 960
+  },
+  "packages/framework/src/bcl-contracts.js": {
+   "lines": 65,
+   "bytes": 5679,
+   "lineLength": 345
+  },
+  "packages/framework/src/index.js": {
+   "lines": 261,
+   "bytes": 24345,
+   "lineLength": 436
+  },
+  "packages/framework/src/runtime14-contracts.js": {
+   "lines": 42,
+   "bytes": 9156,
+   "lineLength": 514
+  },
+  "packages/framework/src/winui13-contracts.js": {
+   "lines": 20,
+   "bytes": 5353,
+   "lineLength": 602
+  },
+  "packages/language/src/index.js": {
+   "lines": 50,
+   "bytes": 9642,
+   "lineLength": 910
+  },
+  "packages/msbuild/src/cli.js": {
+   "lines": 67,
+   "bytes": 6793,
+   "lineLength": 486
+  },
+  "packages/msbuild/src/client.js": {
+   "lines": 33,
+   "bytes": 2895,
+   "lineLength": 307
+  },
+  "packages/msbuild/src/contract.js": {
+   "lines": 57,
+   "bytes": 7259,
+   "lineLength": 510
+  },
+  "packages/msbuild/src/engine.js": {
+   "lines": 106,
+   "bytes": 13444,
+   "lineLength": 666
+  },
+  "packages/msbuild/src/file-operations.js": {
+   "lines": 63,
+   "bytes": 11332,
+   "lineLength": 943
+  },
+  "packages/msbuild/src/server.js": {
+   "lines": 62,
+   "bytes": 8079,
+   "lineLength": 564
+  },
+  "packages/msbuild/src/solution.js": {
+   "lines": 12,
+   "bytes": 2029,
+   "lineLength": 613
+  },
+  "packages/msbuild/src/workspace.js": {
+   "lines": 79,
+   "bytes": 9709,
+   "lineLength": 512
+  },
+  "packages/network/src/index.js": {
+   "lines": 64,
+   "bytes": 11462,
+   "lineLength": 1041
+  },
+  "packages/project-system/src/archive.js": {
+   "lines": 68,
+   "bytes": 12254,
+   "lineLength": 1159
+  },
+  "packages/project-system/src/conditions.js": {
+   "lines": 27,
+   "bytes": 3255,
+   "lineLength": 488
+  },
+  "packages/project-system/src/disk.js": {
+   "lines": 40,
+   "bytes": 6615,
+   "lineLength": 932
+  },
+  "packages/project-system/src/explorer.js": {
+   "lines": 104,
+   "bytes": 20345,
+   "lineLength": 849
+  },
+  "packages/project-system/src/index.js": {
+   "lines": 165,
+   "bytes": 22055,
+   "lineLength": 657
+  },
+  "packages/project-system/src/legacy-solution.js": {
+   "lines": 25,
+   "bytes": 4109,
+   "lineLength": 676
+  },
+  "packages/project-system/src/paths.js": {
+   "lines": 12,
+   "bytes": 889,
+   "lineLength": 218
+  },
+  "packages/project-system/src/xml.js": {
+   "lines": 37,
+   "bytes": 3484,
+   "lineLength": 589
+  },
+  "packages/protocol/bin/transport.js": {
+   "lines": 33,
+   "bytes": 4089,
+   "lineLength": 459
+  },
+  "packages/protocol/src/dap.js": {
+   "lines": 84,
+   "bytes": 15136,
+   "lineLength": 964
+  },
+  "packages/protocol/src/framing.js": {
+   "lines": 43,
+   "bytes": 4431,
+   "lineLength": 417
+  },
+  "packages/protocol/src/lsp.js": {
+   "lines": 55,
+   "bytes": 9506,
+   "lineLength": 880
+  },
+  "packages/refactoring/src/index.js": {
+   "lines": 19,
+   "bytes": 7646,
+   "lineLength": 1248
+  },
+  "packages/refactoring/src/structural.js": {
+   "lines": 54,
+   "bytes": 7700,
+   "lineLength": 395
+  },
+  "packages/runtime/src/animation.js": {
+   "lines": 27,
+   "bytes": 6763,
+   "lineLength": 920
+  },
+  "packages/runtime/src/bcl.js": {
+   "lines": 150,
+   "bytes": 20343,
+   "lineLength": 822
+  },
+  "packages/runtime/src/bcl14.js": {
+   "lines": 27,
+   "bytes": 4453,
+   "lineLength": 596
+  },
+  "packages/runtime/src/cil-vm.js": {
+   "lines": 307,
+   "bytes": 40568,
+   "lineLength": 598
+  },
+  "packages/runtime/src/design-patch.js": {
+   "lines": 38,
+   "bytes": 7732,
+   "lineLength": 807
+  },
+  "packages/runtime/src/heap.js": {
+   "lines": 77,
+   "bytes": 11923,
+   "lineLength": 685
+  },
+  "packages/runtime/src/host-operations.js": {
+   "lines": 19,
+   "bytes": 2789,
+   "lineLength": 431
+  },
+  "packages/runtime/src/json.js": {
+   "lines": 64,
+   "bytes": 7519,
+   "lineLength": 350
+  },
+  "packages/runtime/src/network.js": {
+   "lines": 91,
+   "bytes": 9642,
+   "lineLength": 390
+  },
+  "packages/runtime/src/numeric.js": {
+   "lines": 26,
+   "bytes": 3532,
+   "lineLength": 425
+  },
+  "packages/runtime/src/platform.js": {
+   "lines": 168,
+   "bytes": 29662,
+   "lineLength": 1831
+  },
+  "packages/runtime/src/scheduler.js": {
+   "lines": 160,
+   "bytes": 20679,
+   "lineLength": 793
+  },
+  "packages/runtime/src/styling.js": {
+   "lines": 44,
+   "bytes": 9767,
+   "lineLength": 807
+  },
+  "packages/runtime/src/vm.js": {
+   "lines": 146,
+   "bytes": 22964,
+   "lineLength": 879
+  },
+  "packages/symbols/src/hash.js": {
+   "lines": 7,
+   "bytes": 2736,
+   "lineLength": 934
+  },
+  "packages/symbols/src/index.js": {
+   "lines": 70,
+   "bytes": 27700,
+   "lineLength": 1945
+  },
+  "packages/syntax/src/interpolation.js": {
+   "lines": 40,
+   "bytes": 3347,
+   "lineLength": 370
+  },
+  "packages/syntax/src/lexer.js": {
+   "lines": 79,
+   "bytes": 6017,
+   "lineLength": 473
+  },
+  "packages/syntax/src/parser.js": {
+   "lines": 182,
+   "bytes": 23271,
+   "lineLength": 779
+  },
+  "packages/templates/src/index.js": {
+   "lines": 126,
+   "bytes": 25849,
+   "lineLength": 1198
+  },
+  "packages/text/src/index.js": {
+   "lines": 57,
+   "bytes": 2725,
+   "lineLength": 181
+  },
+  "packages/text/src/search.js": {
+   "lines": 19,
+   "bytes": 2012,
+   "lineLength": 325
+  },
+  "packages/winui/src/animation-system.js": {
+   "lines": 24,
+   "bytes": 5705,
+   "lineLength": 1092
+  },
+  "packages/winui/src/host.js": {
+   "lines": 171,
+   "bytes": 32682,
+   "lineLength": 1278
+  },
+  "packages/winui/src/javascript.js": {
+   "lines": 67,
+   "bytes": 12760,
+   "lineLength": 1795
+  },
+  "packages/winui/src/style-system.js": {
+   "lines": 28,
+   "bytes": 9104,
+   "lineLength": 1215
+  },
+  "packages/winui/src/style.css": {
+   "lines": 26,
+   "bytes": 4862,
+   "lineLength": 459
+  },
+  "packages/winui/src/surface.js": {
+   "lines": 88,
+   "bytes": 9461,
+   "lineLength": 524
+  },
+  "packages/workspace/src/index.js": {
+   "lines": 26,
+   "bytes": 5735,
+   "lineLength": 1667
+  },
+  "scripts/benchmark-compute14.js": {
+   "lines": 15,
+   "bytes": 1701,
+   "lineLength": 364
+  },
+  "scripts/benchmark-il.js": {
+   "lines": 50,
+   "bytes": 5562,
+   "lineLength": 454
+  },
+  "scripts/benchmark-release06.js": {
+   "lines": 28,
+   "bytes": 3414,
+   "lineLength": 528
+  },
+  "scripts/benchmark-release14.js": {
+   "lines": 19,
+   "bytes": 1495,
+   "lineLength": 295
+  },
+  "scripts/benchmark.js": {
+   "lines": 27,
+   "bytes": 4245,
+   "lineLength": 453
+  },
+  "scripts/build-designer-examples.js": {
+   "lines": 98,
+   "bytes": 10676,
+   "lineLength": 1613
+  },
+  "scripts/build-framework-api.js": {
+   "lines": 8,
+   "bytes": 2186,
+   "lineLength": 978
+  },
+  "scripts/build-managed-examples.js": {
+   "lines": 24,
+   "bytes": 3545,
+   "lineLength": 554
+  },
+  "scripts/build-release10-examples.js": {
+   "lines": 10,
+   "bytes": 1047,
+   "lineLength": 210
+  },
+  "scripts/build-release13-examples.js": {
+   "lines": 138,
+   "bytes": 12743,
+   "lineLength": 894
+  },
+  "scripts/build-release14-examples.js": {
+   "lines": 148,
+   "bytes": 9022,
+   "lineLength": 1112
+  },
+  "scripts/build-template-examples.js": {
+   "lines": 15,
+   "bytes": 3258,
+   "lineLength": 1246
+  },
+  "scripts/build.js": {
+   "lines": 23,
+   "bytes": 2922,
+   "lineLength": 611
+  },
+  "scripts/bundle-worker.js": {
+   "lines": 35,
+   "bytes": 2730,
+   "lineLength": 378
+  },
+  "scripts/check.js": {
+   "lines": 7,
+   "bytes": 679,
+   "lineLength": 394
+  },
+  "scripts/network-example-server.js": {
+   "lines": 5,
+   "bytes": 705,
+   "lineLength": 345
+  },
+  "scripts/serve.js": {
+   "lines": 15,
+   "bytes": 1685,
+   "lineLength": 381
+  },
+  "scripts/standalone.js": {
+   "lines": 19,
+   "bytes": 1866,
+   "lineLength": 237
+  },
+  "scripts/validate-clr-wasm.js": {
+   "lines": 31,
+   "bytes": 3553,
+   "lineLength": 451
+  },
+  "scripts/validate-dotnet.js": {
+   "lines": 25,
+   "bytes": 2720,
+   "lineLength": 385
+  },
+  "scripts/validate-msbuild.js": {
+   "lines": 25,
+   "bytes": 4348,
+   "lineLength": 397
+  },
+  "scripts/verify-packages.js": {
+   "lines": 103,
+   "bytes": 21175,
+   "lineLength": 767
+  }
+ }
+}
