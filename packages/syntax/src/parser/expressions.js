@@ -25,26 +25,30 @@ export const expressionMethods = {
       this.skip();
       return this.missingName();
     }
-    const left = this.binary(this.unary(min), min);
+    const start = this.i,
+      left = this.binary(this.unary(min), min, start);
     this.leave();
     return left;
   },
-  binary(left, min) {
+  /** Extends `left`, whose tokens start at index `start`, with the binary, conditional and assignment operators that bind at least as tightly as `min`. */
+  binary(left, min, start) {
     for (;;) {
       const operator = this.operatorAt(),
         text = operator.text,
-        start = this.current;
+        operatorToken = this.current;
       if (assignmentOperators[text]) {
         if (min > P.Assignment) break;
-        const token = this.takeOperator(operator);
-        if (text === '??=') this.feature('CoalesceAssignmentExpression', start);
-        else if (text === '>>>=') this.feature('UnsignedRightShift', start, this.tokens[this.i - 1]);
+        const token = this.takeOperator(operator),
+          target = left;
+        if (text === '??=') this.feature('CoalesceAssignmentExpression', operatorToken);
         left = this.n(
           assignmentOperators[text],
           left,
           token,
           text === '=' && this.at('ref') ? this.expressionOrRef() : this.expression(P.Assignment)
         );
+        if (text === '=' && target.kind === 'TupleExpression') this.mixedDeconstruction(target, start);
+        else if (text === '>>>=') this.unsignedRightShiftExpression(start);
         continue;
       }
       if (text === '?') {
@@ -82,9 +86,9 @@ export const expressionMethods = {
         left = this.n('AsExpression', left, this.take(), this.type('afterIs'));
         continue;
       }
-      if (text === '>>>') this.feature('UnsignedRightShift', start, this.tokens[this.i + operator.count - 1]);
       const token = this.takeOperator(operator);
       left = this.n(kind, left, token, text === '??' ? this.coalesceOperand(precedence) : this.expression(precedence + 1));
+      if (text === '>>>') this.unsignedRightShiftExpression(start);
     }
     return left;
   },
@@ -120,11 +124,11 @@ export const expressionMethods = {
     if (info.must) return true;
     const next = this.tokens[Math.min(end + 1, this.tokens.length - 1)],
       kind = next.kind;
+    if (kind === '[') return this.isCollectionCast(info);
     if (
       kind === 'is' ||
       kind === 'as' ||
       kind === 'switch' ||
-      kind === '[' ||
       (kind === 'await' && !this.canStartExpression(this.tokens[Math.min(end + 2, this.tokens.length - 1)]))
     )
       return false;
@@ -232,6 +236,7 @@ export const expressionMethods = {
       const alias = this.n('IdentifierName', this.atWord('global') ? this.takeWord('global') : this.id());
       return this.n('AliasQualifiedName', alias, this.take(), this.simpleName(false));
     }
+    if (this.fieldKeyword && this.isFieldExpression()) return this.fieldExpression();
     return this.simpleName(false);
   }
 };

@@ -14,6 +14,8 @@ export const initializerMethods = {
     if (this.enter('Initializer nesting limit exceeded'))
       this.nested(() => {
         while (!this.at('}') && !this.at('eof')) {
+          // After a comma the list goes on only with another element (or another comma, which reports the missing one).
+          if (list.length && !this.at(',') && !this.canStartInitializerElement()) break;
           const before = this.i;
           list.push(parseElement.call(this));
           const comma = this.separator(this.canStartInitializerElement);

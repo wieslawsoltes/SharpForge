@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "styles": [],
+  "workers": [],
+  "assets": [
+    {
+      "source": "packages/refactoring",
+      "target": "packages/refactoring",
+      "order": 100
+    }
+  ]
+}
