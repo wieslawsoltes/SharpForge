@@ -1,0 +1,364 @@
+{
+  "schemaVersion": 1,
+  "specification": {
+    "name": "ECMA-335",
+    "edition": 6,
+    "partition": "III",
+    "url": "https://ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf"
+  },
+  "cases": [
+    {
+      "id": "stack-underflow-accept",
+      "rule": "stack-underflow",
+      "section": "III.1.8.1",
+      "polarity": "accept",
+      "source": "fixtures/stack-underflow-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "04a65790f5152c7911e948315848c11098e86c0fe304cf1a203ce33c48261d11"
+    },
+    {
+      "id": "stack-underflow-reject",
+      "rule": "stack-underflow",
+      "section": "III.1.8.1",
+      "polarity": "reject",
+      "source": "fixtures/stack-underflow-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "StackUnderflow"
+      ],
+      "sha256": "e63dfe42fd71c6a4250952bfa7d7282af60642d96f300cd36434e925c6a358f7"
+    },
+    {
+      "id": "stack-overflow-accept",
+      "rule": "stack-overflow",
+      "section": "III.1.8.1",
+      "polarity": "accept",
+      "source": "fixtures/stack-overflow-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "6bbc45fdcd389f232e1513eec75e72729e5466892aef6340662223f246bd54ef"
+    },
+    {
+      "id": "stack-overflow-reject",
+      "rule": "stack-overflow",
+      "section": "III.1.8.1",
+      "polarity": "reject",
+      "source": "fixtures/stack-overflow-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "StackOverflow"
+      ],
+      "sha256": "612a1c039d276f6b199a7f4bd45ac1d6e21ad2c39ef6b2639580a74334194dcd"
+    },
+    {
+      "id": "void-return-accept",
+      "rule": "void-return",
+      "section": "III.3.57",
+      "polarity": "accept",
+      "source": "fixtures/void-return-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "0a98cf19eeec0f169909655b61bd2a9e4f8da6fdf5af1b341b6777230c038b8d"
+    },
+    {
+      "id": "void-return-reject",
+      "rule": "void-return",
+      "section": "III.3.57",
+      "polarity": "reject",
+      "source": "fixtures/void-return-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "ReturnVoid"
+      ],
+      "sha256": "e0e00d6b6cc7176ec50217a89a27bccd6e74afaf9461d7e8b74fb2f2af1aeed3"
+    },
+    {
+      "id": "missing-return-accept",
+      "rule": "missing-return",
+      "section": "III.3.57",
+      "polarity": "accept",
+      "source": "fixtures/missing-return-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "6aa618b13da6aa834abee61b5395bf168c95bef2c0be1fa0f6790eac95381ecd"
+    },
+    {
+      "id": "missing-return-reject",
+      "rule": "missing-return",
+      "section": "III.3.57",
+      "polarity": "reject",
+      "source": "fixtures/missing-return-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "ReturnMissing"
+      ],
+      "sha256": "6fd6cc9728521b247bcacba77ecd3dcc260ac83d69be671c10302e2091e93260"
+    },
+    {
+      "id": "extra-return-accept",
+      "rule": "extra-return",
+      "section": "III.3.57",
+      "polarity": "accept",
+      "source": "fixtures/extra-return-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "07b55523f0f74df38aea69014d30b180f4e067fff556be1dea63c0217bed40db"
+    },
+    {
+      "id": "extra-return-reject",
+      "rule": "extra-return",
+      "section": "III.3.57",
+      "polarity": "reject",
+      "source": "fixtures/extra-return-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "ReturnEmpty"
+      ],
+      "sha256": "72eea5ebab42437a31a448334203b4ec9009fa3b897db8dd9f55305492edb4e3"
+    },
+    {
+      "id": "return-type-accept",
+      "rule": "return-type",
+      "section": "III.3.57",
+      "polarity": "accept",
+      "source": "fixtures/return-type-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "78cf57335e21b98159e51a4f00c4461374cf9c9aa63f0a61c1b05e44a7b61db3"
+    },
+    {
+      "id": "return-type-reject",
+      "rule": "return-type",
+      "section": "III.3.57",
+      "polarity": "reject",
+      "source": "fixtures/return-type-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "StackUnexpected"
+      ],
+      "sha256": "a56643e8165aec672bb91a79b990f8cb52ea6689d8acb65229520d5724773020"
+    },
+    {
+      "id": "local-index-accept",
+      "rule": "local-index",
+      "section": "III.3.43",
+      "polarity": "accept",
+      "source": "fixtures/local-index-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "79597edce92fcd7d598e03fd197123521718db8487ea5702ee7421c597e38405"
+    },
+    {
+      "id": "local-index-reject",
+      "rule": "local-index",
+      "section": "III.3.43",
+      "polarity": "reject",
+      "source": "fixtures/local-index-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "UnrecognizedLocalNumber"
+      ],
+      "sha256": "db6a7c6b09fce36c88dd1f5ed22c21104229d41ffa9c7673d37c3a14029baf79"
+    },
+    {
+      "id": "argument-index-accept",
+      "rule": "argument-index",
+      "section": "III.3.38",
+      "polarity": "accept",
+      "source": "fixtures/argument-index-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "e0bf5edca2ef0ee8dd8e55c10c370b296694d899a80f206202580d4442b731ca"
+    },
+    {
+      "id": "argument-index-reject",
+      "rule": "argument-index",
+      "section": "III.3.38",
+      "polarity": "reject",
+      "source": "fixtures/argument-index-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "UnrecognizedArgumentNumber"
+      ],
+      "sha256": "f5cc995aeaabd9eb661179059070c45a424446f9e413a62f099769ef09bbeeba"
+    },
+    {
+      "id": "shift-count-accept",
+      "rule": "shift-count",
+      "section": "III.3.58",
+      "polarity": "accept",
+      "source": "fixtures/shift-count-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "9e80fd394912db6660fba34fbd3101be47ca7c53f51bd660f3359ca9cc03976d"
+    },
+    {
+      "id": "shift-count-reject",
+      "rule": "shift-count",
+      "section": "III.3.58",
+      "polarity": "reject",
+      "source": "fixtures/shift-count-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "ExpectedIntegerType"
+      ],
+      "sha256": "f1bf6173ca7681467c165de802b9826cc705649430fd796d363353c47a45c559"
+    },
+    {
+      "id": "numeric-negation-accept",
+      "rule": "numeric-negation",
+      "section": "III.3.50",
+      "polarity": "accept",
+      "source": "fixtures/numeric-negation-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "eb43bcc14a9a2f3f4e0e70fff4e3151cdb5daff1e44e39411fd1dcb54c4c5738"
+    },
+    {
+      "id": "numeric-negation-reject",
+      "rule": "numeric-negation",
+      "section": "III.3.50",
+      "polarity": "reject",
+      "source": "fixtures/numeric-negation-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "ExpectedNumericType"
+      ],
+      "sha256": "39989c7429d0a6c13598d8ceac088ac0d4a0a3520c3dd2d5e4b1ae5e55f3b301"
+    },
+    {
+      "id": "throw-reference-accept",
+      "rule": "throw-reference",
+      "section": "III.4.31",
+      "polarity": "accept",
+      "source": "fixtures/throw-reference-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "0dc97521c6033d5d7ecc5b1e31d56ea7392259b653ad30cd595fde18c26202b5"
+    },
+    {
+      "id": "throw-reference-reject",
+      "rule": "throw-reference",
+      "section": "III.4.31",
+      "polarity": "reject",
+      "source": "fixtures/throw-reference-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "StackObjRef"
+      ],
+      "sha256": "76eae944afae028ab6fd7e51f6ae5a3a8b429cfc68a09d7f7e2d7b3168fff830"
+    },
+    {
+      "id": "rethrow-handler-accept",
+      "rule": "rethrow-handler",
+      "section": "III.4.24",
+      "polarity": "accept",
+      "source": "fixtures/rethrow-handler-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "52bdcab673fbda6e90dc636808fa59cc6bb9611e35788cda3f1c836b49b15572"
+    },
+    {
+      "id": "rethrow-handler-reject",
+      "rule": "rethrow-handler",
+      "section": "III.4.24",
+      "polarity": "reject",
+      "source": "fixtures/rethrow-handler-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "Rethrow"
+      ],
+      "sha256": "930926400fd9aabca3883699a26a915ffbb4f9981e87132403ce647a4c875f81"
+    },
+    {
+      "id": "endfinally-handler-accept",
+      "rule": "endfinally-handler",
+      "section": "III.3.35",
+      "polarity": "accept",
+      "source": "fixtures/endfinally-handler-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "b072f7706d028aaa3c3757ee85a2d72ff544513065a757a422834137656d89eb"
+    },
+    {
+      "id": "endfinally-handler-reject",
+      "rule": "endfinally-handler",
+      "section": "III.3.35",
+      "polarity": "reject",
+      "source": "fixtures/endfinally-handler-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "Endfinally"
+      ],
+      "sha256": "45992474b57a80d6ad71824d8709290aa8d30d81caf983ee8109273b32b241a6"
+    },
+    {
+      "id": "branch-stack-depth-accept",
+      "rule": "branch-stack-depth",
+      "section": "III.1.8.1.3",
+      "polarity": "accept",
+      "source": "fixtures/branch-stack-depth-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "88b70f039cbef88d2faf27155c6b872c31bc1b8ce22bcb53e46e3b0f0afe9ec7"
+    },
+    {
+      "id": "branch-stack-depth-reject",
+      "rule": "branch-stack-depth",
+      "section": "III.1.8.1.3",
+      "polarity": "reject",
+      "source": "fixtures/branch-stack-depth-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "PathStackDepth"
+      ],
+      "sha256": "ab8f594d9b39309a0772cfadfe5fdb5c25450eda4c88ced454f11365b3be5cb8"
+    },
+    {
+      "id": "volatile-prefix-accept",
+      "rule": "volatile-prefix",
+      "section": "III.2.6",
+      "polarity": "accept",
+      "source": "fixtures/volatile-prefix-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "c6167a544aed868146bbab75402a9ef74c6a3c43c665f14f9b0fc75c284ed347"
+    },
+    {
+      "id": "volatile-prefix-reject",
+      "rule": "volatile-prefix",
+      "section": "III.2.6",
+      "polarity": "reject",
+      "source": "fixtures/volatile-prefix-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "Volatile"
+      ],
+      "sha256": "c20b2fb0ea151531dd17d51f80f8ef51c02cd10a19ecf6ae68d70cb31740909b"
+    },
+    {
+      "id": "unaligned-prefix-accept",
+      "rule": "unaligned-prefix",
+      "section": "III.2.5",
+      "polarity": "accept",
+      "source": "fixtures/unaligned-prefix-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "f04175ecfadec0d46977fd26d3651abecce65934ad852095e07357fab60f9359"
+    },
+    {
+      "id": "unaligned-prefix-reject",
+      "rule": "unaligned-prefix",
+      "section": "III.2.5",
+      "polarity": "reject",
+      "source": "fixtures/unaligned-prefix-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "Unaligned"
+      ],
+      "sha256": "266bad6e934da7d784e8a5e42211dfa3f776601892664ba45f8325966ee2d350"
+    }
+  ],
+  "scope": "16 seed verification rules. The complete ILVerify diagnostic inventory and upstream hand-assembled methods are retained separately; uncovered rules remain explicit gaps."
+}
