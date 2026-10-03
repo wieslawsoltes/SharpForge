@@ -1,4 +1,4 @@
-import {prepareExecution} from '@sharpforge/runtime';
+import {prepareExecution, executionCodeStatistics} from '@sharpforge/runtime';
 import {finalizeRow, measuredMetric} from './evidence.js';
 import {withVM, createVM, prepareWarmVM, executionSample, samplePhase, abortIfNeeded} from './operations.js';
 
@@ -21,6 +21,11 @@ export async function measureMicro(fixture, engine, artifact, protocol, signal, 
       if (prepared.status !== 'prepared') throw new Error('Warm sample preparation failed');
       globalThis.gc?.();
       const sample = await executionSample(vm, fixture, signal);
+      const after = executionCodeStatistics(vm);
+      if (after.epoch !== prepared.statistics.epoch || after.decodePlans !== prepared.statistics.decodePlans ||
+          after.sourcePlans !== prepared.statistics.sourcePlans) {
+        throw new Error(`${fixture.id}: execution created a cold plan inside a prepared sample`);
+      }
       row.samples.push({index, phase: samplePhase(index, protocol.warmup), ...sample});
     }
     return finalizeRow(row);
