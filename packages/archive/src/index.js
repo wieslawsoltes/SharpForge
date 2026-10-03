@@ -1,6 +1,6 @@
 /** Standard single-disk ZIP (stored / deflate). All input is untrusted data. */
 import {inflateRaw} from './deflate.js';
-export {inflateRaw,deflateStored} from './deflate.js';
+export * from './deflate.js';
 export const ZIP_LIMITS=Object.freeze({maxEntries:20000,maxFileBytes:64*1024*1024,maxTotalBytes:128*1024*1024,maxArchiveBytes:160*1024*1024,maxPathLength:1024,maxDepth:48});
 const encoder=new TextEncoder(),decoder=new TextDecoder('utf-8',{fatal:true});
 // The standard IBM437 upper half (not a locale-dependent platform decoder).

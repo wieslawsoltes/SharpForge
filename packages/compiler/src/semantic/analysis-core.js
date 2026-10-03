@@ -233,6 +233,8 @@ export class AnalysisCore {
     this.checkConstructions();
     for (const type of types) this.bindConstants(type);
     this.bindAttributes();
+    this.checkSpecialMembers();
+    this.checkConditionalMethods();
     this.bindBodies();
     // Constructed types written inside bodies (`new Box<int>()`) are checked once the bodies are bound.
     this.checkConstructions();

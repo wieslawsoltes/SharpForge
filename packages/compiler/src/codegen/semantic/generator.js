@@ -8,6 +8,7 @@
  *   patterns, switches -> sequential tests over shared evaluations   (lowering/decision-dag.js, translate-patterns.js)
  *   initialization     -> initializer methods run where .NET runs them (initialization.js)
  *   async functions    -> a kickoff and a body on the runtime's continuation ABI (lowering/async/async-methods.js)
+ *   rank-n arrays      -> a class over one flat array with computed indexing (lowering/arrays.js)
  *
  * A construct that needs an instruction the runtime does not have raises `UnsupportedConstruct`; the generator then
  * produces no image and names the construct, which `compile()` reports as SF2200.
@@ -24,7 +25,7 @@ import { AsyncMethods, asyncResultType } from '../../lowering/async/async-method
 import { TupleClasses } from '../../lowering/tuples/tuple-classes.js';
 import { StructuralMembers } from '../../lowering/tuples/structural-members.js';
 import { RecordMembers } from '../../lowering/records/record-members.js';
-import { GenericInstantiations, InstantiationTable, GenericDeclarations, FrameworkConstructions } from '../../lowering/generics/index.js';
+import { GenericInstantiations, InstantiationTable, GenericDeclarations, FrameworkConstructions, imageTypeNameText } from '../../lowering/generics/index.js';
 import { stateMachineTypeName, stateMachineParameterProxyFieldName, thisProxyFieldName } from '../../lowering/generated-names.js';
 import { JumpIrEmitter } from './jump-emitter.js';
 import { ProgramModel } from './program-model.js';
@@ -37,6 +38,7 @@ import { Frame } from './frame.js';
 import { UnsupportedConstruct } from './unsupported.js';
 import { n } from './node-factory.js';
 import { memberGenerators } from '../../lowering/members/index.js';
+import { MultiDimensionalArrays } from '../../lowering/arrays.js';
 
 class GeneratorCore {
   /**
@@ -51,6 +53,7 @@ class GeneratorCore {
     this.types = new TypeMapper(this);
     this.delegates = new DelegateClasses(this);
     this.iterators = new IteratorClasses(this);
+    this.arrays = new MultiDimensionalArrays(this);
     this.structural = new StructuralMembers(this);
     this.tuples = this.structural.register(new TupleClasses(this));
     this.records = this.structural.register(new RecordMembers(this));
@@ -91,7 +94,7 @@ class GeneratorCore {
   cellClass(type) {
     let cell = this.cells.get(type);
     if (!cell) {
-      const record = this.program.addClass(`<>Cell(${type})`);
+      const record = this.program.addClass(`<>Cell(${imageTypeNameText(type)})`);
       cell = { record, value: this.program.addField(record, 'Value', type) };
       this.cells.set(type, cell);
     }
@@ -264,7 +267,11 @@ const Members = Base =>
       const call = n.call(entry, null, args),
         invocation = result === entry.returnType ? call : this.awaitTask(call);
       const statement = result === 'void' ? n.expressionStatement(invocation) : n.returnStatement(invocation);
-      this.bodies.push({ method, body: n.block([statement]) });
+      // C# 9 module initializers run once, in declaration order, before anything else of the program.
+      const initializers = (this.analysis.assembly.moduleInitializers ?? []).map(symbol =>
+        n.expressionStatement(n.call(this.methodOf(symbol, symbol.locations?.[0]), null, [])),
+      );
+      this.bodies.push({ method, body: n.block([...initializers, statement]) });
       return method;
     }
     /** The entry point: top-level statements, else the single static Main. */
