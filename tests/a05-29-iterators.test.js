@@ -14,7 +14,7 @@ function iteratorFixture() {
       for(let index=0;index<2;index++)w.op('ldloc.0').op('callvirt',move).op('pop').op('ldloc.0').op('callvirt',current).op('unbox.any',c.resolve('System.Int32')).op('call',c.member('System.Console','WriteLine','void',['int']));
       w.op('ldloc.0').op('callvirt',move).op('call',c.member('System.Console','WriteLine','void',['bool']));
       w.op('ldloc.0').op('callvirt',dispose).op('ldloc.0').op('callvirt',move).op('call',c.member('System.Console','WriteLine','void',['bool'])).op('ret');
-    }]},
+    }}]},
     {name:'Iterator',interfaces:[enumerator,disposable],fields:[{name:'State',flags:6},{name:'Current',flags:6}],methods:[
       {name:'.ctor',static:false,flags:0x1886,body:(w,c)=>w.op('ldarg.0').op('call',c.member('System.Object','.ctor','void',[],false)).op('ret')},
       {name:'MoveNext',static:false,flags:0x1e6,result:'bool',body:(w,c)=>{
