@@ -16,6 +16,7 @@ import { frameworkBridge } from '../../symbols/registry-bridge.js';
 import { MethodKind } from '../../symbols/members.js';
 import { isSourceSymbol } from '../../semantic/analysis-helpers.js';
 import { analyzeCaptures } from '../../lowering/closures.js';
+import { markVariablesPassedByReference } from '../../lowering/by-reference.js';
 import { IteratorClasses, stateMachineBody } from '../../lowering/iterators.js';
 import { newHoist } from '../../lowering/iterators/try-regions.js';
 import { TASK } from '@sharpforge/framework';
@@ -119,6 +120,8 @@ class GeneratorCore {
   /** The frame for the body of a declared member (or of synthesized code that belongs to one). */
   memberFrame(method, symbol, uri, bound) {
     const captures = analyzeCaptures(bound);
+    // Variables declared in the arguments of `this(...)` live in the constructor's frame.
+    if (symbol?.initializerCall) markVariablesPassedByReference(symbol.initializerCall, captures);
     const root = { name: symbol?.name ?? 'Main', ordinal: this.methodOrdinal++, lambdas: 0, closures: 0, locals: 0, localFunctions: new Map() };
     const frame = new Frame({ uri, method, captures, root });
     if (!method.isStatic) frame.thisExpr = () => n.thisReference(method.owner.name);
@@ -130,7 +133,11 @@ class GeneratorCore {
     const translator = new BodyTranslator(this, frame);
     const entry = translator.declareParameters(parameters);
     // `prologue(translator)` builds statements that run after the parameters are in place (a constructor initializer).
-    if (prologue) entry.push(...prologue(translator));
+    // Variables the prologue's expressions declare (`: this(M(out var x))`) are created before it and live in the body.
+    if (prologue) {
+      const statements = prologue(translator);
+      entry.push(...translator.pending.splice(0), ...statements);
+    }
     this.bodies.push({ method: frame.method, body: translator.body(bound, { prologue: entry, returnsValue }) });
   }
   drain() {

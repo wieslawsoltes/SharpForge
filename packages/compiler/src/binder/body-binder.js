@@ -37,13 +37,13 @@ import { JumpBinding } from './jumps.js';
 import { ExceptionBinding } from './exceptions.js';
 import { AnonymousMethodBinding } from './anonymous-methods.js';
 import { languageRules } from './language-rules.js';
+import { CSharp6Binding } from './csharp6.js';
 
 const expressionFamilies = [
   ConversionBinding,
   NameBinding,
   CallBinding,
   CreationBinding,
-  ...memberBindings,
   OperatorBinding,
   TypeTestBinding,
   TupleBinding,
@@ -54,6 +54,8 @@ const expressionFamilies = [
   StructuralPatternBinding,
   StackAllocBinding,
   QueryBinding,
+  // Last: the member binders refine the creation, name, conversion and lambda families above.
+  ...memberBindings,
 ];
 const statementFamilies = [
   StatementBinding,
@@ -63,6 +65,7 @@ const statementFamilies = [
   JumpBinding,
   ExceptionBinding,
   AnonymousMethodBinding,
+  CSharp6Binding,
 ];
 const compose = (base, mixins) => mixins.reduce((composed, mixin) => mixin(composed), base);
 
