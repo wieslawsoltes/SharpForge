@@ -10,7 +10,8 @@
     "tests/examples13.test.js",
     "tests/examples14.test.js",
     "tests/project-runtime14.test.js",
-    "tests/conformance/**/*.test.js"
+    "tests/conformance/**/*.test.js",
+    "tests/a29-*.test.js"
   ],
   "browserScripts": [
     "tests/browser_release05_test.py",
