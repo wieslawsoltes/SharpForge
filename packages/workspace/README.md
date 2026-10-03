@@ -46,3 +46,28 @@ performs an explicit baseline comparison for an adapter.
 Focused validation: `node scripts/limited.js node --test
 tests/a24-vfs-memory.test.js tests/a24-path-encoding.test.js`. The shared provider
 conformance helper is reusable by each complete storage implementation.
+
+
+## Change observation
+
+`PollingFileWatcher(provider, listener, options)` scans metadata once, then
+prioritizes `watchedPaths` and rotates through the remaining inventory. A
+saturated priority set rotates too, retaining a bounded background share; a
+one-stat budget alternates priority and background work. Configure
+`maxStatsPerTick`, `maxDirectoryEntriesPerTick`, `maxEntries` and `intervalMs` to
+bound each interval. Open files receive exact-byte hashes so equal-size changes
+are visible. `start({schedule: false})` and `poll()` support deterministic hosts;
+`setWatchedPaths` changes priority without restarting. Dispose ends scheduled
+work and suppresses subsequent callbacks. Enumeration uses `iterateDirectory`
+when a provider supplies it, otherwise bounded provider directory results.
+
+`observeFileSystemHandle` adapts `FileSystemObserver` records and returns a
+disposable subscription, or `null` when the API is unavailable/unsupported so
+the caller can select polling. Permission failures remain explicit errors.
+`FileWatchCoalescer` collapses create/delete/rename save bursts and suppresses an
+own write only when its exact hash matches; an unrelated external write stays
+visible. Hosts call `markOwnWrite(path, hash)` after successful persistence.
+
+Focused validation: `node scripts/limited.js node --test tests/a24-vfs-watch.test.js`.
+The deterministic 20,000-file inventory checks per-interval operation budgets;
+it does not claim an operating-system notification latency measurement.
