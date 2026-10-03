@@ -59,7 +59,9 @@ worker and a 512 MB heap cap. The initial run passed 223/226; three legacy
 assertions were updated to check the native width tag and exact payload instead
 of a plain Number. Fixed-width and overflow assertions were retained. Required
 core handles static/manifests and build checks. Benchmarks and new native
-reference runs remain staged.
+reference runs remain staged. After integrating main's framework method-table
+helper, all 50 native-width, type-table and ABI regressions passed at
+`15246751`; the conflict resolution retained both imports and their behavior.
 
 Source C# `nint/nuint` binding/emission and source-image reload support remain
 open, as do Rust/Wasm and native 32/64 reference qualification. Generic/reference
