@@ -231,11 +231,12 @@ test('T09.3 every preview fixture names its proposal revision and the stamp matc
       id + ': a Roslyn tree exists exactly when the pinned Roslyn parses the feature'
     );
     assert.deepEqual(SyntaxTree.parseText(positive, { languageVersion: 'preview' }).getDiagnostics(), [], id);
+    // A feature with an older meaning is not rejected at C# 14: its syntax parses as what it used to mean.
     assert.deepEqual(
       SyntaxTree.parseText(positive, { languageVersion: '14' })
         .getDiagnostics()
         .map(d => d.code),
-      ['CS8652'],
+      languageFeatures.find(feature => feature.id === id).olderMeaning ? [] : ['CS8652'],
       id
     );
   }

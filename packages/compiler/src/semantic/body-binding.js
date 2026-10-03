@@ -10,6 +10,7 @@ import { isAccessible } from '../binder/accessibility.js';
 import { analyzeDefiniteAssignment } from '../flow/semantic-assignment.js';
 import { analyzeRefSafety } from '../flow/ref-safety.js';
 import { NullableWalker } from '../nullable/walker.js';
+import { checkIteratorBody } from '../binder/iterators.js';
 import { isSourceSymbol, isClosedType, containsAwait } from './analysis-helpers.js';
 
 /** Class mixin: Binding of bodies: methods, accessors, constructors with their initializers, field and property */
@@ -103,6 +104,7 @@ export const BodyBinding = Base =>
         body.locals = binder.locals;
         body.binder = binder;
         this.bound.set(method, body);
+        checkIteratorBody(method, body, (node, code, args) => this.report(context.uri, node, code, args));
         if (!context.parent) {
           for (const d of analyzeDefiniteAssignment(method, body, {
             core: this.core,

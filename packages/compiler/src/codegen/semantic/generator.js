@@ -16,6 +16,7 @@ import { MethodKind } from '../../symbols/members.js';
 import { isSourceSymbol } from '../../semantic/analysis-helpers.js';
 import { analyzeCaptures } from '../../lowering/closures.js';
 import { IteratorClasses, stateMachineBody } from '../../lowering/iterators.js';
+import { newHoist } from '../../lowering/iterators/try-regions.js';
 import { stateMachineTypeName, stateMachineParameterProxyFieldName, thisProxyFieldName } from '../../lowering/generated-names.js';
 import { JumpIrEmitter } from './jump-emitter.js';
 import { ProgramModel } from './program-model.js';
@@ -176,7 +177,7 @@ const Members = Base =>
         return pair.live;
       };
       const machineFrame = new Frame({ uri, method: machine.moveNext, captures: frame.captures, root: frame.root });
-      machineFrame.hoist = { info, machine, self, labels: [], slots: 0 };
+      machineFrame.hoist = newHoist(info, machine, self);
       if (!record.isStatic) {
         const live = proxy('this', record.owner.name, () => n.thisReference(record.owner.name));
         machineFrame.thisExpr = () => n.field(self(), live);
@@ -189,7 +190,7 @@ const Members = Base =>
       const translator = new BodyTranslator(this, machineFrame),
         prologue = translator.hoistParameters(symbol.parameters, liveParameters),
         lowered = translator.statement(bound);
-      this.bodies.push({ method: machine.moveNext, body: stateMachineBody(info, self, machineFrame.hoist.labels, n.block([...prologue, lowered])) });
+      this.bodies.push({ method: machine.moveNext, body: stateMachineBody(machineFrame.hoist, n.block([...prologue, lowered])) });
     }
     /** The accessors of an auto-property read and write its backing field. */
     synthesizeAccessor(symbol, record) {
