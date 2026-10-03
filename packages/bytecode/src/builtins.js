@@ -1,9 +1,10 @@
+import {runtimeBuiltinDefinitions} from './runtime-builtins.js';
 import {contracts} from '@sharpforge/framework';
 export const definitions = Object.freeze( [
  ['Console.WriteLine',0,1,'void',['any']],['Console.Write',1,1,'void',['any']],
  ['Math.Abs',1,1,'numeric',['number']],['Math.Min',2,2,'numeric',['number','number']],['Math.Max',2,2,'numeric',['number','number']],
  ['Math.Pow',2,2,'double',['number','number']],['Math.Sqrt',1,1,'double',['number']],['Math.Floor',1,1,'double',['number']],['Math.Ceiling',1,1,'double',['number']],['Math.Round',1,1,'double',['number']],
- ['GC.Collect',0,0,'void',[]],['GC.GetTotalMemory',0,1,'int',['bool']],['GC.CollectionCount',1,1,'int',['int']],
+ ['GC.Collect',0,0,'void',[]],['GC.GetTotalMemory',0,1,'long',['bool']],['GC.CollectionCount',1,1,'int',['int']],
  ['int.Parse',1,1,'int',['string']],['double.Parse',1,1,'double',['string']],['Convert.ToInt32',1,1,'int',['any']],['Convert.ToDouble',1,1,'double',['any']],['Convert.ToString',1,1,'string',['any']],
  ['string.Concat',2,2,'string',['string','string']],['string.IsNullOrEmpty',1,1,'bool',['string']],
  ['Array.Reverse',1,1,'void',['array']],['Array.Sort',1,1,'void',['array']],
@@ -15,6 +16,9 @@ export const definitions = Object.freeze( [
 export const CONTRACT_BUILTIN_OFFSET=definitions.length;
 const builtinEntries=definitions.map(([name,min,max,result,params],id)=>Object.freeze({id,name,min,max,result,params}));
 for(const contract of contracts){const id=CONTRACT_BUILTIN_OFFSET+contract.id,count=contract.parameters.length+(!contract.isStatic&&contract.kind!=='constructor'?1:0);builtinEntries[id]=Object.freeze({id,name:'$framework:'+contract.id,min:count,max:count,result:contract.result,params:Object.freeze([...(!contract.isStatic&&contract.kind!=='constructor'?[contract.owner]:[]),...contract.parameters]),contract});}
+for(const [name,min,max,result,params] of runtimeBuiltinDefinitions){
+  builtinEntries.push(Object.freeze({id:builtinEntries.length,name,min,max,result,params:Object.freeze(params)}));
+}
 // The released runtime table remains a frozen array on the VM's hot dispatch path.
 export const Builtins=Object.freeze(builtinEntries);
 export const frameworkBuiltin = contract=>contract?Builtins[CONTRACT_BUILTIN_OFFSET+contract.id]:null;

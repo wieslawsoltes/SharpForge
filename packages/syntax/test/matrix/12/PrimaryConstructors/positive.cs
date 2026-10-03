@@ -1,0 +1,3 @@
+class Point(int x)
+{
+}
