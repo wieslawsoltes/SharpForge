@@ -1,1 +1,2 @@
-*.log -text
+# Raw subprocess output includes protocol CRLF and blank-line fixtures; keep exact evidence bytes.
+*.log -text whitespace=-blank-at-eof,-blank-at-eol
