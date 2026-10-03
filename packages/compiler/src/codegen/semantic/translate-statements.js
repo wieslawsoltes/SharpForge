@@ -7,6 +7,7 @@ import { walk } from '../../bound/semantic-walker.js';
 import { yieldBreak } from '../../lowering/iterators.js';
 import { yieldReturn, openRegion, closeRegion } from '../../lowering/iterators/try-regions.js';
 import { n } from './node-factory.js';
+import { exceptionTypeName } from '../../symbols/exception-identity.js';
 
 /** True when a `yield return` of the enclosing iterator suspends inside `node`. */
 const suspendsInside = node => {
@@ -328,20 +329,20 @@ export const StatementTranslation = Base =>
     }
     stmtTry(node) {
       const catches = node.catches.map(clause => {
-        if (clause.filter) return this.unsupported('exception filters', node.syntax);
-        // The runtime keeps no type on a thrown object and enters the innermost handler for every exception.
-        if (!clause.type.equals(this.g.analysis.core.exception))
-          return this.unsupported(`a catch clause for '${clause.type.toDisplayString()}' (the runtime catches System.Exception only)`, clause.syntax);
+        const type = exceptionTypeName(clause.type);
         let variable = null;
+        let filter = null;
         const body = this.scoped(() => {
-          if (!clause.local) return this.statement(clause.block);
-          if (this.frame.captures.isCaptured(clause.local)) return this.unsupported('a captured catch variable', node.syntax);
-          variable = n.newLocal(clause.local.name, 'Exception', n.spanOf(clause.local.syntax, this.frame.uri), { hidden: false });
-          this.frame.vars.set(clause.local, () => n.local(variable));
+          if (clause.local) {
+            if (this.frame.captures.isCaptured(clause.local)) return this.unsupported('a captured catch variable', node.syntax);
+            variable = n.newLocal(clause.local.name, type, n.spanOf(clause.local.syntax, this.frame.uri), { hidden: false });
+            this.frame.vars.set(clause.local, () => n.local(variable));
+          }
+          filter = clause.filter ? this.expression(clause.filter) : null;
           return this.statement(clause.block);
         });
         body.syntax = this.span(clause.block.syntax);
-        return { kind: 'CatchBlock', exceptionType: null, local: variable, body };
+        return { kind: 'CatchBlock', exceptionType: type, local: variable, filter, body };
       });
       const span = this.span(node.syntax);
       if (!catches.length && node.finallyBlock) {

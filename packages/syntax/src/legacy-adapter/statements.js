@@ -117,12 +117,12 @@ export class LegacyStatementAdapter extends LegacyExpressionAdapter {
         return this.node('Try', red, {
           body: this.block(red.block),
           catches: red.catches.map(clause => {
-            if (clause.filter) this.fail(clause.filter, 'SF1018', 'Exception filters are not implemented in this profile');
             const id = clause.declaration?.identifier ?? null;
             return {
               type: clause.declaration ? this.type(clause.declaration.type) : 'Exception',
               name: id?.valueText,
               nameSpan: id ? this.nameSpan(id) : null,
+              filter: clause.filter ? this.expression(clause.filter.filterExpression) : null,
               body: this.block(clause.block)
             };
           }),
