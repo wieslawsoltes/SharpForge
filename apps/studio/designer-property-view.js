@@ -102,7 +102,8 @@ export class DesignerPropertyController {
     const error = propertyElement(document, 'p', '', 'design-editor-error');
     error.hidden = true;
     const model = this.modelDocument;
-    const commands = new DesignerPropertyCommands(model, {canEdit: (id, name) => !sourceBindings[id]?.properties?.[name]?.dynamic});
+    const readOnly = this.view.sourceSync?.session?.analysis?.readOnly === true;
+    const commands = new DesignerPropertyCommands(model, {canEdit: (id, name) => !readOnly && !sourceBindings[id]?.properties?.[name]?.dynamic});
     const source = sourceBindings[row.ids[0]]?.properties?.[row.name];
     const analysis = this.view.sourceSync?.session?.analysis;
     const context = {...row, row: root, document, modelDocument: model, view: this.view, commands,
@@ -125,9 +126,9 @@ export class DesignerPropertyController {
         error.setAttribute('role', 'alert');
       }
     }
-    if (row.protectedSource) {
+    if (row.protectedSource || readOnly) {
       body.querySelectorAll('input,select,button,textarea').forEach(input => { input.disabled = true; });
-      body.append(propertyElement(document, 'small', 'Controlled by protected C# source.'));
+      body.append(propertyElement(document, 'small', readOnly ? 'This inherited source preview is read-only.' : 'Controlled by protected C# source.'));
     }
     root.append(body, propertySourceMarker(context), error);
     return root;
