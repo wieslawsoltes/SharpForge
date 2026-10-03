@@ -65,13 +65,13 @@ export const InitializerLowering = Base =>
         const held = this.once(this.expression(bound), 'index');
         sink.locals.push(...held.locals);
         sink.effects.push(...held.effects);
-        return { kind: 'Lowered', syntax: bound.syntax, type: bound.type, read: held.read };
+        return { kind: 'SpilledOperand', syntax: bound.syntax, type: bound.type, read: held.read };
       };
       if (target.kind === 'ArrayAccess') return { ...target, indices: target.indices.map(spill) };
       return { ...target, args: target.args.map(argument => ({ ...argument, expression: spill(argument.expression) })) };
     }
     /** An operand that was already lowered (an index argument held in a temporary). */
-    exprLowered(node) {
+    exprSpilledOperand(node) {
       return node.read();
     }
     /** The object a collection element is added to, or an index initializer indexes. */

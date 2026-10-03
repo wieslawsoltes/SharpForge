@@ -90,6 +90,10 @@ export function checkIteratorBody(method, body, report) {
   });
   if (!yields) return;
   const returnType = method.returnType;
+  const location = method.locations?.[0] ?? method.syntax;
+  if (isIteratorInterface(returnType) && returnType.name.startsWith('IAsync') && !method.isAsync) {
+    report(location, 'CS8403', [displayOf(method), returnType.toDisplayString()]);
+  }
   if (returnType && !returnType.isErrorType?.() && !isIteratorInterface(returnType)) {
     const location = method.methodKind === MethodKind.PropertyGet && method.syntax?.keyword ? method.syntax.keyword : method.locations?.[0];
     report(location ?? method.syntax, 'CS1624', [displayOf(method), returnType.toDisplayString()]);
