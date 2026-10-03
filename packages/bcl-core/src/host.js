@@ -73,13 +73,20 @@ export function makeArray(platform, type, items) {
   return platform.heap.allocate('array', type + '[]', [...items]);
 }
 
-/** Legacy scalar equality, including NaN and generation-qualified references. */
-export function equal(platform, left, right) {
-  if (left === right) return true;
-  const first = bclScalar(platform, left);
-  const second = bclScalar(platform, right);
+function scalarEqual(platform, first, second) {
   if (first === second || typeof first === 'number' && typeof second === 'number' &&
       Number.isNaN(first) && Number.isNaN(second)) return true;
   return platform.bclHost.isReference(first) && platform.bclHost.isReference(second) &&
     first.h === second.h && first.g === second.g;
+}
+
+/** Legacy scalar equality, including NaN and generation-qualified references. */
+export function equal(platform, left, right) {
+  if (left === right) return true;
+  return scalarEqual(platform, bclScalar(platform, left), bclScalar(platform, right));
+}
+
+/** Legacy Array equality preserves each engine's native boxing interpretation. */
+export function nativeEqual(platform, left, right) {
+  return scalarEqual(platform, platform.native(left), platform.native(right));
 }
