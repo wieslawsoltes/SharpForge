@@ -74,6 +74,9 @@ jobs:
       - name: Verify accessible-name audit negative fixture
         if: matrix.suite == 'a11y'
         run: python tests/conformance/browser/accessibility_smoke.py --engine ${{ matrix.engine }}
+      - name: Verify editor and touch interaction regressions
+        if: matrix.suite == 'a11y'
+        run: python tests/conformance/browser/ui_regressions.py --engine ${{ matrix.engine }}
       - name: Measure correctness-gated cold and warm browser latency
         if: matrix.suite == 'smoke'
         run: python scripts/conformance/browser/latency.py --engine ${{ matrix.engine }}
