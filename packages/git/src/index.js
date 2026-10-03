@@ -6,3 +6,4 @@ export * from './object-format.js';
 export * from './objects.js';
 export * from './zlib.js';
 export * from './memory-odb.js';
+export * from './refspec.js';
