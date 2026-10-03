@@ -4,6 +4,10 @@ import { checkCancellation, loadError, LoadErrorCode } from '../load-errors.js';
 
 const fail = message => loadError(LoadErrorCode.TypeLoad, message);
 const requireType = type => { if (!(type instanceof TypeDesc)) throw new TypeError('Expected TypeDesc'); };
+const requireSignatureType = type => {
+  requireType(type);
+  if (type.kind === TypeKind.GenericParameter && !type.isLoaded) throw fail('Metadata generic parameter construction requires generic type services');
+};
 const method = (name, returnType, parameters) => Object.freeze({ name, returnType, parameters: Object.freeze(parameters), hasThis: true });
 
 /** Canonical constructed identities owned by one explicit context's type service. */
@@ -40,8 +44,12 @@ export class ConstructedTypes {
 
   element(kind, element, rank = 0) {
     requireType(element);
+    const elementKind = element.kind;
+    if (elementKind === TypeKind.GenericParameter && !element.isLoaded) {
+      throw fail('Metadata generic parameter construction requires generic type services');
+    }
     const array = kind === TypeKind.Array || kind === TypeKind.SZArray;
-    if (element.kind === TypeKind.ByRef || (array && ['System.Void', 'System.TypedReference']
+    if (elementKind === TypeKind.ByRef || (array && ['System.Void', 'System.TypedReference']
       .some(name => this.#loader.isIntrinsic(element, name)))) throw fail(`Invalid ${kind} element ${element.fullName}`);
     if (array && (!Number.isInteger(rank) || rank < 1 || rank > 32)) throw fail('Array rank must be between 1 and 32');
     const suffix = kind === TypeKind.SZArray ? '[]' : kind === TypeKind.Array ? `[${rank === 1 ? '*' : ','.repeat(rank - 1)}]`
@@ -49,7 +57,7 @@ export class ConstructedTypes {
     return this.#canonical(`${kind}:${this.#identity(element)}:${rank}`, () => {
       const baseType = array ? this.#loader.intrinsic('System.Array') : null;
       const interfaces = array ? [...baseType.interfaces] : [];
-      if (kind === TypeKind.SZArray && ![TypeKind.Pointer, TypeKind.FunctionPointer].includes(element.kind)) {
+      if (kind === TypeKind.SZArray && ![TypeKind.Pointer, TypeKind.FunctionPointer].includes(elementKind)) {
         for (const name of ['IEnumerable', 'ICollection', 'IList', 'IReadOnlyCollection', 'IReadOnlyList']) {
           const definition = this.#loader.intrinsic(`System.Collections.Generic.${name}\`1`);
           interfaces.push(this.#intrinsicInstance(definition, [element]));
@@ -89,9 +97,9 @@ export class ConstructedTypes {
 
   functionPointer({ returnType, parameters = [], callingConvention = 0, hasThis = false, explicitThis = false,
     genericArity = 0, sentinel = -1 } = {}) {
-    requireType(returnType);
+    requireSignatureType(returnType);
     if (parameters.length > 4096) throw loadError(LoadErrorCode.LimitExceeded, 'Function pointer parameter limit exceeded');
-    for (const parameter of parameters) requireType(parameter);
+    for (const parameter of parameters) requireSignatureType(parameter);
     if (parameters.some(parameter => this.#loader.isIntrinsic(parameter, 'System.Void'))) throw fail('Function pointer parameters cannot be void');
     if (![0, 1, 2, 3, 4, 5, 9, 11].includes(callingConvention) || (explicitThis && !hasThis) ||
         !Number.isInteger(genericArity) || genericArity < 0 || genericArity > 1024 ||

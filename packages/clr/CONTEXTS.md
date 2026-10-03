@@ -13,6 +13,24 @@ This API is metadata identity only. Graph loading uses the separate explicit
 context service below; no reference assembly is loaded and no method body is
 decoded by identity lookup. Layout and dispatch remain later batches.
 
+`typeDefinition.genericParameters` and `module.genericParameters(typeToken)`
+return the same frozen, position-ordered list of TypeDef-owned GenericParam
+descriptors. `module.genericParameter(parameterToken)` returns that canonical
+identity directly. Descriptors expose the name, namespace, null full name,
+owner/declaring type, position, raw `genericParameterAttributes`, and a frozen
+`genericParameterConstraintTokens` list. `String(parameter)` returns its name.
+Nested types keep their own metadata parameter owners, including redeclared
+enclosing parameters. No base graph or executable method body is loaded.
+
+Generic metadata indexing is linear, limited to 100,000 parameter/constraint
+rows, 1,024 parameters per owner and 4,096 name characters. Duplicate positions,
+gaps, invalid owners and invalid/duplicate constraint references fail explicitly.
+Constraints remain unresolved tokens: their semantic resolution/enforcement,
+generic instantiation and method-owned generic parameter identities are separate
+batches. Metadata generic parameters report `isLoaded: false`; constructing
+arrays/pointers/function pointers from them reports a TypeLoad diagnostic until
+generic type services are available.
+
 `context.types.load(module, token, {signal})` explicitly completes a TypeDef or
 TypeRef's inheritance graph on that same canonical descriptor. `find(module,
 fullName)` adds indexed exact-name lookup. Loaded descriptors expose `kind`,
