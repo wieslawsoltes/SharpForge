@@ -4,9 +4,12 @@ import {propertyAndKeyboard, singleCommandBar, nestedComponent} from './browser_
 import {authoredPreviews} from './browser_designer_gate_previews.mjs';
 import {largeScenePerformance, layoutReferences} from './browser_designer_gate_performance.mjs';
 import {defaultEventAndInline, layoutGestures} from './browser_designer_gate_editing.mjs';
+import {sourceAnalysisLatency} from './browser_designer_gate_source_latency.mjs';
+import {keyboardOnlyPage} from './browser_designer_gate_keyboard.mjs';
 
 const cases = [
   ['property', 'Actual property commit updates C# and repeated geometry keys form one undo transaction', gate => propertyAndKeyboard(gate.page)],
+  ['keyboard-page', 'An empty Page becomes a Grid with two TextBoxes and a Button through trusted keyboard input only', keyboardOnlyPage],
   ['chrome', 'One document command bar stays accessible at narrow and wide light/dark dimensions', gate => singleCommandBar(gate.page)],
   ['events', 'Default-event double-click creates or navigates C# while F2 and slow-click retain inline editing',
     gate => defaultEventAndInline(gate.page)],
@@ -15,6 +18,7 @@ const cases = [
   ['components', 'Nested component preview opens its own document by double-click and context command', gate => nestedComponent(gate.page)],
   ['references', 'Canvas/Grid/StackPanel/ScrollViewer/Viewbox DOM geometry matches both managed engines within 0.5px',
     gate => layoutReferences(gate.page)],
+  ['source-latency', '3000-line production analysis preserves trusted input latency and cancels obsolete source requests', sourceAnalysisLatency],
   ['performance', 'A real 5000-node scene stays within the 16 ms selection and drag main-thread budget', largeScenePerformance]
 ];
 const requested = [...new Set(process.env.SHARPFORGE_DESIGNER_CASES?.split(',').map(id => id.trim()).filter(Boolean) ?? cases.map(([id]) => id))];

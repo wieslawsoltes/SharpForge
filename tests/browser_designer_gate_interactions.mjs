@@ -13,9 +13,9 @@ export async function propertyAndKeyboard(page) {
   await width.fill('248');
   await width.press('Tab');
   await waitFor(page, uri => sharpforge.designerDocuments.get(uri).sourceSync.state === 'synced' &&
-    sharpforge.getState().files.find(file => file.uri === uri).text.includes('Width = 248.0'), sourceUri);
+    sharpforge.getState().files.find(file => file.uri === uri).text.includes('Width = 248'), sourceUri);
   const edited = await sourceText(page, sourceUri);
-  assert.equal(edited, sourceRecords[0].text.replace('Width = 160', 'Width = 248.0'), 'A property commit changed unrelated C# source.');
+  assert.equal(edited, sourceRecords[0].text.replace('Width = 160', 'Width = 248'), 'A property commit changed unrelated C# source.');
   assert.equal(authoredNode(await snapshot(page, sourceUri), 'action').properties.Width, 248);
   const surface = documentHost(page, sourceUri).locator('.design-scroll');
   await surface.focus();
