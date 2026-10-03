@@ -27,8 +27,7 @@ snapshot fields; a fresh VM reconstructs them after portable restore. No host ca
 Qualification is deferred until the complete E02 integration is ready. `tests/a05-decode-plan.test.js`
 prepares exact operand, warm-allocation, owner replacement, Hot Reload and portable restore cases.
 `node scripts/benchmarks/a05-decode.mjs [output.json]` prepares cold-decode and warm-dispatch evidence.
-No speedup or completed cross-platform qualification is claimed. Source superinstructions are a
-subsequent T07 slice; they consume the same epoch owner.
+No speedup or completed cross-platform qualification is claimed.
 
 `token-cache.js` caches raw tokens, user-string text, type names and resolved method/field descriptors.
 Closed caller methods and receiver MethodTables are separate substitution keys. Field entries contain
@@ -48,3 +47,19 @@ looking up a cached target; metadata entries cannot keep objects alive. Interfac
 still use the existing dispatch implementation on a miss. Code-owner and registry changes drop every site.
 The deferred `a05-inline-cache.mjs` benchmark records raw cached/uncached virtual and interface timings
 and fails its evidence result if the issue's 3× median threshold is unmet. That threshold has not been measured.
+
+Source fusion uses the same private code epoch. It prebinds local/local/binary, local/constant/binary/store,
+and comparison/conditional-branch groups without crossing a sequence point or an incoming branch. Protected
+methods keep ordinary dispatch. Every original instruction retains its budget charge and precise fault PC;
+the first operand remains visible when loading the second faults. Groups stop before the existing 256-work
+time check and never exceed the remaining slice or global instruction budget. Local stores retain value-copy,
+boxing and write-revision semantics. No executable plan enters snapshots.
+
+`sourceFusion:false`, a sequence callback, write/exception observer, instruction GC stress, profiling or an
+armed scheduler selects ordinary dispatch. Inactive scheduler instruction hooks are skipped; activation during
+an ordinary instruction is observed before its after-instruction hook. `executionCodeStatistics` additionally
+reports `sourcePlans`, `sourcePlanMilliseconds` and started `sourceFusionGroups` for the current epoch.
+`tests/a05-source-fusion.test.js` prepares slice/fault/observer/restore parity cases. The deferred
+`node scripts/benchmarks/a05-source-fusion.mjs [output.json]` records cold and warm source/reloaded Fibonacci
+and loop measurements, requiring the issue's 1.5× median target. Measurements remain pending; this is not a
+performance claim.
