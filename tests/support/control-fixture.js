@@ -33,7 +33,7 @@ export function controlFixture(types,{name='ControlFixture',entry='Program.Main'
   for(const method of definitions) {
     if(!method.body)continue;
     const writer=new CilWriter();method.body(writer,context);const code=writer.finish(),handlers=method.handlers?.(writer.labels,context)??[];
-    const localBytes=method.localBytes??(method.locals?.length?localSignature(method.locals,resolve):null),locals=localBytes?md.add(17,[md.blob(localBytes)]):0;
+    const localBytes=(typeof method.localBytes==='function'?method.localBytes(context):method.localBytes)??(method.locals?.length?localSignature(method.locals,resolve):null),locals=localBytes?md.add(17,[md.blob(localBytes)]):0;
     section.pad(4);md.rows[6][(method.token&0xffffff)-1][0]=TEXT_RVA+section.length;
     section.u16(0x3003|(method.initLocals===false?0:0x10)|(handlers.length?8:0)).u16(method.maxStack??16).u32(code.length).u32(locals).bytes(code);
     if(handlers.length){section.pad(4);const size=4+handlers.length*24;section.u8(0x41).u8(size).u8(size>>>8).u8(size>>>16);for(const handler of handlers)section.u32(handler.flags??0).u32(handler.start).u32(handler.end-handler.start).u32(handler.target).u32(handler.handlerEnd-handler.target).u32(handler.catchType??0);}

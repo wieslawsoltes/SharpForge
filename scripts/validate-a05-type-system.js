@@ -17,6 +17,8 @@ const usage=`Usage: node scripts/validate-a05-type-system.js [options]
   --expected expected.txt        Expected stdout for the preceding fixture.
   --casts                        Include native Type.IsAssignableFrom/CastCache parity.
   --unsafe                       Allow managed function-pointer C# fixtures.
+  --async                        Run scheduler-backed fixtures with virtual time.
+  --snapshot-await               Restore/GC/replay each observed state-machine await.
   --task identifier              Evidence task identifier (default SF-A05-E04).
   --output directory             Evidence directory (default artifacts/a05-type-system).
   --framework net10.0            Target framework (default installed SDK major).
@@ -24,12 +26,14 @@ const usage=`Usage: node scripts/validate-a05-type-system.js [options]
 With no --fixture/--casts, run all four E04 fixtures plus the casts oracle.
 Directories contribute their .cs files; expected.txt is required unless overridden.
 Line endings are normalized to LF; all other output bytes must match.`;
-const options={fixtures:[],casts:false,unsafe:false,task:'SF-A05-E04',output:resolve(root,'artifacts/a05-type-system'),dotnet:process.env.DOTNET_PATH??'dotnet',framework:process.env.DOTNET_TARGET_FRAMEWORK};
+const options={fixtures:[],casts:false,unsafe:false,async:false,snapshotAwait:false,task:'SF-A05-E04',output:resolve(root,'artifacts/a05-type-system'),dotnet:process.env.DOTNET_PATH??'dotnet',framework:process.env.DOTNET_TARGET_FRAMEWORK};
 const arguments_=process.argv.slice(2);
 for(let i=0;i<arguments_.length;i++) {
   const argument=arguments_[i];
   if(argument==='--help'){console.log(usage);process.exit(0);}
   if(argument==='--unsafe'){options.unsafe=true;continue;}
+  if(argument==='--async'){options.async=true;continue;}
+  if(argument==='--snapshot-await'){options.async=true;options.snapshotAwait=true;continue;}
   if(argument==='--casts'){options.casts=true;continue;}
   if(!['--fixture','--expected','--output','--framework','--dotnet','--task'].includes(argument)||!arguments_[i+1]||arguments_[i+1].startsWith('--'))throw new Error(usage);
   const value=arguments_[++i];
@@ -101,11 +105,30 @@ async function qualify(id,load) {
     report.native=execute(options.dotnet,[assemblyPath],{cwd:directory,allowFailure:true});
     if(fixture.compare)report.castCache=await fixture.compare();
     else {
-      const vm=new CilVirtualMachine(assembly),result=vm.run();
+      const vm=new CilVirtualMachine(assembly,{virtualTime:options.async}),snapshots=[],observed=new Set();
+      const onSlice=()=>{
+        if(!options.snapshotAwait||vm.state!=='waiting')return;
+        const awaited=[...vm.scheduler.tasks.values()].filter(task=>task.asyncState?.phase==='awaiting').map(task=>task.asyncState.awaitedTask).filter(Boolean);
+        const unseen=awaited.filter(task=>!observed.has(task.h+':'+task.g));if(!unseen.length)return;
+        assert(snapshots.length<64,'Native fixture produced more than 64 distinct await snapshots');
+        for(const task of unseen)observed.add(task.h+':'+task.g);
+        snapshots.push(vm.snapshot());
+      };
+      const result=options.async?await vm.runAsync({onSlice}):vm.run();
       report.cil={state:result.state,exitCode:result.exitCode,output:normalize(result.output),instructions:result.stats.instructions,...(result.fault?{fault:{name:result.fault.name,message:result.fault.message}}:{})};
       assert.equal(result.state,'terminated',result.fault?.stack);
       assert.equal(result.exitCode,report.native.exitCode,'CIL/native exit code');
       assert.equal(report.cil.output,report.native.output,'CIL/native stdout');
+      if(options.snapshotAwait) {
+        const stateMachines=vm.inspector.types.filter(type=>type.interfaces.some(token=>vm.inspector.metadata.typeName(token)==='System.Runtime.CompilerServices.IAsyncStateMachine'));
+        if(stateMachines.length)assert(snapshots.length>=2,'Async qualification must observe at least two suspended awaits');
+        report.snapshots={observed:snapshots.length,replayed:0,collectionBeforeReplay:true};
+        for(const snapshot of snapshots) {
+          vm.restore(snapshot);vm.heap.collect();const replay=await vm.runAsync();
+          assert.equal(replay.state,'terminated',replay.fault?.stack);assert.equal(replay.exitCode,report.native.exitCode,'Restored/native exit code');
+          assert.equal(normalize(replay.output),report.native.output,'Restored/native stdout');report.snapshots.replayed++;
+        }
+      }
     }
     assert.equal(report.native.exitCode,0,'Native exit code');
     assert.equal(report.native.output,fixture.expectedOutput,'Native/expected stdout');
