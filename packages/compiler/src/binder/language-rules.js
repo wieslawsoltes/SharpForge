@@ -8,5 +8,13 @@ import { CSharp70Binding } from './csharp70.js';
 import { CSharp7xBinding } from './csharp7x.js';
 import { CSharp8Binding } from './csharp8.js';
 import { IndexRangeBinding } from './index-range.js';
+import { ExtensionMemberBinding } from './extension-members.js';
 
-export const languageRules = [CSharp70Binding, CSharp7xBinding, ExpressionVariableBinding, IndexRangeBinding, CSharp8Binding];
+export const languageRules = [
+  CSharp70Binding,
+  CSharp7xBinding,
+  ExpressionVariableBinding,
+  IndexRangeBinding,
+  CSharp8Binding,
+  ExtensionMemberBinding,
+];
