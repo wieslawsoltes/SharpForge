@@ -28,6 +28,7 @@ export class DesignerTemplateScope {
     this.targetType = template.targetType;
     const nodes = [];
     flatten(template.root, nodes);
+    if (template.states) nodes[0].states = structuredClone(template.states);
     this.document = new DesignDocument({version: 1, name: key, root: template.root.id,
       width: ownerDocument.value.width, height: ownerDocument.value.height, nodes, styles: {}, templates: {},
       resources: structuredClone(ownerDocument.value.resources ?? {})});
@@ -60,6 +61,7 @@ export class DesignerTemplateScope {
       const node = design.nodes.find(candidate => candidate.id === partId);
       if (!node) authoringError('SFD1852', 'Unknown template part.');
       delete node.templatePropertyBindings?.[property];
+      delete node.resourceReferences?.[property];
       if (value === undefined) delete node.properties[property];
       else node.properties[property] = normalizeProperty(node.type, property, value);
     });
@@ -71,6 +73,9 @@ export class DesignerTemplateScope {
     const changed = this.ownerDocument.change('Edit template ' + this.key, design => {
       if (!design.templates[this.key]) authoringError('SFD1852', 'Template was removed while its editor was open.');
       design.templates[this.key].root = root;
+      if (this.document.node(this.document.value.root).states) {
+        design.templates[this.key].states = structuredClone(this.document.node(this.document.value.root).states);
+      } else delete design.templates[this.key].states;
       if (Object.keys(this.document.value.resources ?? {}).length) design.resources = structuredClone(this.document.value.resources);
     }, {expectedRevision: this.ownerRevision});
     this.closed = true;

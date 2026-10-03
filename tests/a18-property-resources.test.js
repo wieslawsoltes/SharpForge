@@ -5,11 +5,12 @@ import {
   normalizeDesignerBrush, designScene, projectDesignerAuthoringScene, designerPropertySource, renameDesignerResource,
   generateDesignCode, generateDesignProject, generateDesignXaml, createDesignerResourceDocument, generateDesignerResourceClass,
   addDesignerVisualState, recordDesignerStateProperty, projectDesignerState, designerInstancePreviews, interpolateDesignerStateValue,
-  designCodegenDiagnostics, csharpValue
+  designCodegenDiagnostics, csharpValue, DesignerStateTransition, setDesignerStateTransition
 } from '@sharpforge/designer';
 import {CONTROLS, XAML, MEDIA} from '@sharpforge/framework';
 import {compileToIL} from '@sharpforge/compiler';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
+import {DesignerStatePlayback} from '../apps/studio/designer-resource-playback.js';
 
 const fixture = () => new DesignDocument(createDesign('Resources'));
 
@@ -47,6 +48,19 @@ test('A18 collection cancellation and stale apply leave the live collection unto
   stale.add('Stale');
   document.setProperty('Width', 90, [id]);
   assert.throws(() => stale.apply(), /changed/);
+  assert.equal(document.node(id).collections, undefined);
+});
+
+test('A18 invalid collection draft edits and entry limits fail before changing the draft', () => {
+  const document = fixture();
+  const id = document.add('ComboBox', 'canvas');
+  const draft = new DesignerCollectionDraft(document, id, 'Items');
+  draft.add(17);
+  assert.throws(() => draft.set(0, 'x'.repeat(100001)), /limit/);
+  assert.equal(draft.items[0], 17);
+  for (let index = 1; index < 1000; index++) draft.add('Item');
+  assert.throws(() => draft.add('Overflow'), /1000/);
+  assert.equal(draft.items.length, 1000);
   assert.equal(document.node(id).collections, undefined);
 });
 
@@ -124,6 +138,89 @@ test('A18 recorded PointerOver states preview without document mutation and pres
   assert.equal(interpolateDesignerStateValue(black, white, 0.5).Color.R, 128);
 });
 
+test('A18 transition sampling interpolates double and color values and restores exact endpoints', () => {
+  const document = fixture();
+  document.setProperty('Width', 100, ['action']);
+  document.setProperty('Background', '#000000', ['action']);
+  addDesignerVisualState(document, {nodeId: 'action'}, 'CommonStates', 'PointerOver');
+  for (const [property, value] of Object.entries({Width: 200, Background: '#ffffff', Visibility: 1})) {
+    recordDesignerStateProperty(document, {nodeId: 'action'}, {group: 'CommonStates', state: 'PointerOver', nodeId: 'action', property, value});
+  }
+  setDesignerStateTransition(document, {nodeId: 'action'}, 'CommonStates', {to: 'PointerOver', duration: 200});
+  const before = document.serialize();
+  const base = designScene(document.value);
+  const target = projectDesignerState(base, document.node('action').states, {CommonStates: 'PointerOver'});
+  const session = new DesignerStateTransition(base, target, {duration: 200});
+  const commands = session.commandsAt(100);
+  assert.equal(commands.find(command => command.property === 'Width').value, 150);
+  assert.equal(commands.find(command => command.property === 'Background').value.Color.R, 128);
+  assert.equal(commands.find(command => command.property === 'Visibility').value, 0);
+  assert.equal(session.commandsAt(200), commands);
+  assert.equal(commands.find(command => command.property === 'Visibility').value, 1);
+  assert.equal(commands.find(command => command.property === 'Background').value.Color.R, 255);
+  assert.equal(base.nodes.find(node => node.id === 'action').properties.Width, 100);
+  assert.equal(document.serialize(), before);
+  assert.throws(() => session.commandsAt(-1), /between/);
+  session.dispose();
+  assert.throws(() => session.commandsAt(0), /closed/);
+  assert.throws(() => new DesignerStateTransition(base, {...target, nodes: target.nodes.slice(1)}), /same preview tree/);
+  assert.throws(() => new DesignerStateTransition(base, target, {duration: 60001}), /between/);
+  assert.throws(() => recordDesignerStateProperty(document, {nodeId: 'action'}, {group: 'CommonStates', state: 'PointerOver',
+    nodeId: 'action', property: 'Name', value: 'ChangedIdentity'}), /identity/);
+});
+
+test('A18 transition playback cancels stale frames and restores the base scene without document edits', () => {
+  const document = fixture();
+  const callbacks = new Map();
+  let serial = 0;
+  const clock = {requestAnimationFrame: callback => { callbacks.set(++serial, callback); return serial; },
+    cancelAnimationFrame: id => callbacks.delete(id)};
+  const applied = [];
+  let shown;
+  const view = {document, host: {document: {defaultView: clock}, elements: new Map(), load: scene => { shown = structuredClone(scene); },
+    flush() {}, apply: commands => applied.push(structuredClone(commands))}, drawAdorners() {}, error: error => { throw error; }};
+  const base = designScene(document.value);
+  const target = structuredClone(base);
+  target.nodes.find(node => node.id === 'action').properties.Width = 300;
+  const playback = new DesignerStatePlayback(view);
+  const advance = time => {
+    const [id, callback] = callbacks.entries().next().value;
+    callbacks.delete(id);
+    callback(time);
+  };
+  playback.play(base, base, target, {duration: 100});
+  advance(0);
+  advance(50);
+  assert.equal(applied.at(-1).find(command => command.property === 'Width').value, 230);
+  document.setProperty('Width', 240, ['action']);
+  advance(100);
+  assert.equal(callbacks.size, 0);
+  assert.equal(applied.length, 2);
+  assert.equal(playback.session, null);
+  playback.show(base, target);
+  playback.stop();
+  assert.equal(shown.nodes.find(node => node.id === 'action').properties.Width, 160);
+  assert.equal(document.node('action').properties.Width, 240);
+  playback.play(base, base, target, {duration: 100});
+  playback.dispose();
+  assert.equal(callbacks.size, 0);
+});
+
+test('A18 template states project all instance prefixes in one isolated scene', () => {
+  const document = fixture();
+  document.setTemplate('Frame', {targetType: 'Button', root: {id: 'frame', type: 'Border', properties: {Background: '#000000'}, children: []}});
+  document.setReference('template', 'Frame', ['action']);
+  const duplicate = document.duplicate('action');
+  addDesignerVisualState(document, {template: 'Frame'}, 'CommonStates', 'PointerOver');
+  recordDesignerStateProperty(document, {template: 'Frame'}, {group: 'CommonStates', state: 'PointerOver',
+    nodeId: 'frame', property: 'Background', value: '#ff0000'});
+  const base = designScene(document.value);
+  const scene = projectDesignerState(base, document.value.templates.Frame.states, {CommonStates: 'PointerOver'},
+    {prefixes: ['action::', duplicate + '::']});
+  assert.equal(scene.nodes.filter(node => node.id.endsWith('::frame') && node.properties.Background.Color.R === 255).length, 2);
+  assert.equal(base.nodes.find(node => node.id === 'action::frame').properties.Background.Color.R, 0);
+});
+
 test('A18 preview strip provides five independent states for both themes', () => {
   const document = fixture();
   const before = document.serialize();
@@ -152,4 +249,17 @@ test('A18 unsupported browser profile features report diagnostics; WinUI export 
   assert.match(generateDesignCode(document.value, {target: 'winui'}), /new Microsoft\.UI\.Xaml\.Media\.LinearGradientBrush/);
   assert.equal(csharpValue({valueType: XAML + 'Thickness', Left: 8, Top: 8, Right: 8, Bottom: 8}, XAML + 'Thickness'),
     'new Microsoft.UI.Xaml.Thickness(8)');
+});
+
+test('A18 rich WinUI markup exports retain adaptive methods alongside resource references', () => {
+  const document = fixture();
+  new DesignerPropertyCommands(document).convertToResource('Width', 'ActionWidth', {ids: ['action']});
+  document.change('Adaptive height', design => {
+    design.responsive = {version: 1, states: [{id: 'Wide', minWidth: 600, maxWidth: null, overrides: {action: {Height: 80}}}]};
+  });
+  const source = generateDesignCode(document.value, {target: 'winui'});
+  assert.match(source, /XamlReader.Load/);
+  assert.match(source, /public static void ApplyAdaptive\(double width\)/);
+  assert.match(source, /ApplyAdaptive\(960\.0\)/);
+  assert.match(source, /action.Height = 80\.0/);
 });
