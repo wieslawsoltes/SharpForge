@@ -9,6 +9,7 @@ import {collectionEnumerator} from './collection-enumerator.js';
 import {listRemoval} from './list-removal.js';
 import {clearList, removeListValue} from './list-value-removal.js';
 import {listInsertion} from './list-insertion.js';
+import {reverseList} from './list-reverse.js';
 import {reserveIndexed} from './indexed-storage.js';
 import {
   count, data, version, change, reserve, commitItems, write, queueItems, queueEnqueue, append
@@ -61,10 +62,10 @@ function mutate(p, descriptor, context) {
   if (descriptor.name === 'RemoveAt' || descriptor.name === 'RemoveRange') return listRemoval(p, descriptor, context);
   if (descriptor.name === 'Remove') return removeListValue(p, context.reference, context.values[0]);
   if (descriptor.name === 'Insert' || descriptor.name === 'AddRange') return listInsertion(p, descriptor, context);
+  if (descriptor.name === 'Reverse') return reverseList(p, context.reference);
   const {reference, values, size} = context;
   const items = data(p, reference).slice(0, size);
   switch (descriptor.name) {
-    case 'Reverse': items.reverse(); break;
     case 'Sort': sortItems(p, items, values[0] ?? null); break;
     default: fail(p, 'MissingMethodException', descriptor.owner + '.' + descriptor.name);
   }
