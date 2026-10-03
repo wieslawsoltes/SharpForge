@@ -311,23 +311,22 @@ export const NameBinding = Base =>
       }
       left = this.asValue(left);
       if (left.hasErrors) return this.bad(syntax);
+      if (left.kind === 'MethodGroup' && left.methods.length) {
+        this.report(syntax.expression, 'CS0119', [left.methods[0].toDisplayString(), 'method']);
+        return this.bad(syntax);
+      }
+      if (left.literal === 'default') {
+        this.report(syntax.expression, 'CS8716');
+        return this.bad(syntax);
+      }
       if (left.kind === 'MethodGroup' || left.form === 'lambda' || left.literal) {
-        this.report(syntax, 'CS0023', [
-          '.',
-          left.literal === 'null'
-            ? '<null>'
-            : left.literal === 'default'
-              ? 'default'
-              : left.form === 'lambda'
-                ? 'lambda expression'
-                : 'method group',
-        ]);
+        this.report(syntax, 'CS0023', ['.', left.literal === 'null' ? '<null>' : left.form === 'lambda' ? 'lambda expression' : 'method group']);
         return this.bad(syntax);
       }
       const type = left.type;
       if (!type) return this.bad(syntax);
       if (type.specialType === 'System_Void') {
-        this.report(syntax, 'CS0023', ['.', 'void']);
+        this.report(syntax.operatorToken ?? syntax, 'CS0023', ['.', 'void']);
         return this.bad(syntax);
       }
       return this.instanceMember(left, type, name, nameSyntax, syntax, typeArguments, options);

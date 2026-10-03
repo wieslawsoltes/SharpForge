@@ -1,0 +1,10 @@
+{
+  "generics/cs0305-wrong-arity": ["warnings"],
+  "generics/cs0308-non-generic-with-type-args": ["diagnostics", "warnings"],
+  "generics/cs0311-constraint-violated": ["diagnostics", "warnings"],
+  "generics/cs0315-value-type-constraint": ["diagnostics", "warnings"],
+  "generics/cs0411-and-explicit-arguments": ["diagnostics", "warnings"],
+  "generics/cs0411-cannot-infer": ["diagnostics", "warnings"],
+  "generics/cs0452-cs0453-constraints": ["diagnostics", "warnings"],
+  "generics/cs1961-variance": ["diagnostics", "warnings"]
+}

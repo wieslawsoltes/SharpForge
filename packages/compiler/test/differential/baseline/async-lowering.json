@@ -1,0 +1,14 @@
+{
+  "async-lowering/async-lambdas-and-local-functions": ["diagnostics", "warnings", "bytecode", "cil"],
+  "async-lowering/async-void-and-faulted-tasks": ["diagnostics", "warnings", "bytecode", "cil"],
+  "async-lowering/await-in-try-catch-finally": ["diagnostics", "warnings", "bytecode", "cil"],
+  "async-lowering/cs1061-await-of-a-value-without-awaiter": ["diagnostics", "warnings"],
+  "async-lowering/cs1988-by-reference-parameters": ["diagnostics", "warnings"],
+  "async-lowering/cs1996-await-in-lock": ["diagnostics", "warnings"],
+  "async-lowering/cs1997-value-from-task-method": ["diagnostics", "warnings"],
+  "async-lowering/cs4014-unawaited-call-in-async-lambda": ["diagnostics", "warnings"],
+  "async-lowering/cs4032-cs4034-await-outside-async": ["diagnostics", "warnings"],
+  "async-lowering/evaluation-order-around-await": ["diagnostics", "warnings", "bytecode", "cil"],
+  "async-lowering/methods-start-eagerly-and-return-results": ["diagnostics", "warnings", "bytecode", "cil"],
+  "async-lowering/top-level-await-value-tasks-and-loops": ["diagnostics", "warnings", "bytecode", "cil"]
+}
