@@ -19,7 +19,7 @@ import { Locations } from '../../lowering/tuples/locations.js';
 import { TupleTranslation } from '../../lowering/tuples/translate-tuples.js';
 import { SynthesizedTextTranslation } from '../../lowering/tuples/translate-text.js';
 import { DeconstructionTranslation } from '../../lowering/tuples/translate-deconstruction.js';
-import { InitializerLowering } from '../../lowering/members/initializers.js';
+import { memberLowerings } from '../../lowering/members/index.js';
 
 export { Frame } from './frame.js';
 
@@ -209,7 +209,7 @@ const families = [
   TupleTranslation,
   SynthesizedTextTranslation,
   DeconstructionTranslation,
-  InitializerLowering,
+  ...memberLowerings,
 ];
 
 export class BodyTranslator extends families.reduce(

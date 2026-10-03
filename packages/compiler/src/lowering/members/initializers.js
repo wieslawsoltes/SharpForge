@@ -39,11 +39,10 @@ export const InitializerLowering = Base =>
     }
     memberInitializer(entry, sink) {
       if (!entry.target || !entry.value) return this.unsupported('this object initializer form', entry.target?.syntax);
-      const target = indexKinds.has(entry.target.kind) ? this.spillIndexArguments(entry.target, sink) : entry.target;
+      // Index arguments are evaluated once, before the value; the object itself is already in a temporary.
+      const target = indexKinds.has(entry.target.kind) ? this.spillOperands(entry.target, sink, { receiver: false }) : entry.target;
       if (entry.value.kind === 'ObjectInitializer') return this.initializerEffects(entry.value, this.rereadIn(target), sink);
-      const value = this.expression(entry.value);
-      if (target.kind === 'IndexerAccess' && this.g.isSource(target.property)) sink.effects.push(this.sourceIndexerStore(target, value));
-      else sink.effects.push(n.assign(this.target(target), value));
+      sink.effects.push(this.storeIntoTarget(target, this.expression(entry.value)));
       return undefined;
     }
     /** A reader that evaluates `target` afresh on the object of the enclosing initializer. */
@@ -58,21 +57,6 @@ export const InitializerLowering = Base =>
           this.initializerReceiver = saved;
         }
       };
-    }
-    /** The target with its index arguments evaluated into temporaries, so they run once and before the value. */
-    spillIndexArguments(target, sink) {
-      const spill = bound => {
-        const held = this.once(this.expression(bound), 'index');
-        sink.locals.push(...held.locals);
-        sink.effects.push(...held.effects);
-        return { kind: 'SpilledOperand', syntax: bound.syntax, type: bound.type, read: held.read };
-      };
-      if (target.kind === 'ArrayAccess') return { ...target, indices: target.indices.map(spill) };
-      return { ...target, args: target.args.map(argument => ({ ...argument, expression: spill(argument.expression) })) };
-    }
-    /** An operand that was already lowered (an index argument held in a temporary). */
-    exprSpilledOperand(node) {
-      return node.read();
     }
     /** The object a collection element is added to, or an index initializer indexes. */
     exprImplicitReceiver(node) {
