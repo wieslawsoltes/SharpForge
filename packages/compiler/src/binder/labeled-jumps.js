@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 /**
  * Labeled `break` and `continue` (SF-A02-T93). PROVISIONAL: a C# 15 preview feature, bound as the pinned proposal
  * revision says (csharplang proposals/csharp-15.0/labeled-break-continue.md, revision 1 in
@@ -35,11 +36,11 @@ export function directlyLabeledStatement(node, loops, report) {
   let body = node;
   while (body.kind === 'Labeled') {
     // CS0140: the label is declared twice, here or on an enclosing loop.
-    if (labels.includes(body.label) || loops.some(loop => loop.labels?.includes(body.label))) report(body, 'CS0140', [body.label]);
+    if (labels.includes(body.label) || loops.some(loop => loop.labels?.includes(body.label))) report(body, DiagnosticId.CS0140, [body.label]);
     labels.push(body.label);
     body = body.body;
   }
-  if (!profileTargetKinds.has(body.kind)) report(node, 'SF2142');
+  if (!profileTargetKinds.has(body.kind)) report(node, DiagnosticId.SF2142);
   return { ...body, labels };
 }
 const profileTargetKinds = new Set(['While', 'Do', 'For', 'Foreach', 'Switch']);
@@ -91,11 +92,11 @@ export const LabeledJumpBinding = Base =>
         name = syntax.label.valueText,
         target = [...(this.labeledTargets ?? [])].reverse().find(candidate => candidate.name === name && (!isContinue || candidate.isLoop));
       if (!target) {
-        this.report(syntax, 'CS0139');
+        this.report(syntax, DiagnosticId.CS0139);
         // A jump without a target is an error statement: what follows it stays reachable.
         return { kind: isContinue ? 'Continue' : 'Break', syntax, completes: true };
       }
-      if (this.finallyDepth > target.finallyDepth) this.report(isContinue ? syntax.continueKeyword : syntax.breakKeyword, 'CS0157');
+      if (this.finallyDepth > target.finallyDepth) this.report(isContinue ? syntax.continueKeyword : syntax.breakKeyword, DiagnosticId.CS0157);
       if (isContinue) target.continues++;
       else target.breaks++;
       this.usesGoto = true;

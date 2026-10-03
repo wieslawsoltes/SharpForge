@@ -9,6 +9,7 @@
  *   conversion      converted to a delegate type that does not declare the same default, or does not declare
  *                   `params`, the lambda keeps working with the delegate's signature: warnings CS9099 and CS9100
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { RefKind } from '../symbols/types.js';
 import { naturalDelegateType } from '../conversions/method-group.js';
 import { delegateInvoke } from '../overload/type-inference.js';
@@ -93,9 +94,9 @@ export const LambdaSignatureBinding = Base =>
         if (!declared) return;
         if (parameter.isOptional && !(declared.isOptional && sameDefault(parameter.defaultValue, declared.explicitDefaultValue))) {
           const theirs = declared.isOptional ? defaultText(declared.explicitDefaultValue) : '<missing>';
-          this.report(parameter.syntax.identifier, 'CS9099', [index + 1, defaultText(parameter.defaultValue), theirs]);
+          this.report(parameter.syntax.identifier, DiagnosticId.CS9099, [index + 1, defaultText(parameter.defaultValue), theirs]);
         }
-        if (parameter.isParams && !declared.isParams) this.report(parameter.syntax.identifier, 'CS9100', [index + 1]);
+        if (parameter.isParams && !declared.isParams) this.report(parameter.syntax.identifier, DiagnosticId.CS9100, [index + 1]);
       });
     }
   };

@@ -19,6 +19,7 @@
  * `Task`, `Task<T>`, `ValueTask` and `ValueTask<T>` are awaited without looking the pattern up (the registry does not
  * list their awaiters); an operand of type `dynamic` is bound at run time (binder/dynamic.js).
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind } from '../symbols/types.js';
 import { implementsInterface } from '../symbols/substitution.js';
 import { lookupMembers } from './inheritance.js';
@@ -37,14 +38,14 @@ const failure = (code, args = []) => ({ error: { code, args } });
 function patternMethod(binder, type, name, missing) {
   const found = lookupMembers(type, name, binder.core, { within: binder.c.containingType });
   if (!found.members.length) {
-    if (found.inaccessible.length) return failure('CS0122', [found.inaccessible[0].toDisplayString()]);
+    if (found.inaccessible.length) return failure(DiagnosticId.CS0122, [found.inaccessible[0].toDisplayString()]);
     return missing();
   }
   const first = found.members[0];
-  if (!isMethod(first)) return failure('CS1955', [first.toDisplayString()]);
+  if (!isMethod(first)) return failure(DiagnosticId.CS1955, [first.toDisplayString()]);
   const method = found.members.find(member => isMethod(member) && takesNoArguments(member));
   if (method) return { method };
-  return failure('CS7036', [requiredParameter(first).name, first.toDisplayString()]);
+  return failure(DiagnosticId.CS7036, [requiredParameter(first).name, first.toDisplayString()]);
 }
 
 /**
@@ -60,12 +61,12 @@ export function resolveAwaitable(binder, operand) {
     if (extension) return { method: extension, isExtension: true };
     // A registry type may have an awaiter the registry does not list; a predefined type has none.
     if (!isSource(type) && !type.specialType && type.typeKind !== TypeKind.TypeParameter) return { isUnknown: true };
-    return failure('CS1061', [display(type), 'GetAwaiter']);
+    return failure(DiagnosticId.CS1061, [display(type), 'GetAwaiter']);
   });
   if (!awaiterMethod.method) return awaiterMethod;
   const getAwaiter = awaiterMethod.method,
     awaiter = getAwaiter.returnType;
-  const unsuitable = () => failure('CS1986', [display(type)]);
+  const unsuitable = () => failure(DiagnosticId.CS1986, [display(type)]);
   if ((getAwaiter.isStatic && !awaiterMethod.isExtension) || !awaiter || awaiter.specialType === 'System_Void') return unsuitable();
   if (awaiter.isErrorType?.()) return { isUnknown: true };
   if (awaiter.typeKind === TypeKind.Dynamic) return { getAwaiter, resultType: awaiter, isExtension: !!awaiterMethod.isExtension, isDynamic: true };
@@ -75,20 +76,20 @@ export function resolveAwaitable(binder, operand) {
     isCompleted = completed.members[0];
   const isKnown = isSource(awaiter) || !!awaiter.specialType || awaiter.originalDefinition === binder.core.taskAwaiterT || awaiter === binder.core.taskAwaiter;
   if (!isCompleted || isCompleted.kind !== SymbolKind.Property) {
-    if (!isCompleted && completed.inaccessible.length) return failure('CS0122', [completed.inaccessible[0].toDisplayString()]);
-    return isKnown ? failure('CS0117', [display(awaiter), 'IsCompleted']) : { isUnknown: true };
+    if (!isCompleted && completed.inaccessible.length) return failure(DiagnosticId.CS0122, [completed.inaccessible[0].toDisplayString()]);
+    return isKnown ? failure(DiagnosticId.CS0117, [display(awaiter), 'IsCompleted']) : { isUnknown: true };
   }
-  if (isCompleted.isStatic) return failure('CS0176', [isCompleted.toDisplayString()]);
-  const patternFailure = () => failure('CS4011', [display(awaiter), getAwaiter.toDisplayString()]);
+  if (isCompleted.isStatic) return failure(DiagnosticId.CS0176, [isCompleted.toDisplayString()]);
+  const patternFailure = () => failure(DiagnosticId.CS4011, [display(awaiter), getAwaiter.toDisplayString()]);
   if (!isCompleted.getMethod || isCompleted.type?.specialType !== 'System_Boolean') return patternFailure();
 
-  const result = patternMethod(binder, awaiter, 'GetResult', () => failure('CS0117', [display(awaiter), 'GetResult']));
-  if (!result.method) return result.error?.code === 'CS1955' ? patternFailure() : result;
-  if (result.method.isStatic) return failure('CS0176', [result.method.toDisplayString()]);
+  const result = patternMethod(binder, awaiter, 'GetResult', () => failure(DiagnosticId.CS0117, [display(awaiter), 'GetResult']));
+  if (!result.method) return result.error?.code === DiagnosticId.CS1955 ? patternFailure() : result;
+  if (result.method.isStatic) return failure(DiagnosticId.CS0176, [result.method.toDisplayString()]);
 
   const core = binder.core,
     notify = core.inotifyCompletion;
-  if (notify && !implementsInterface(awaiter, notify, core)) return failure('CS4027', [display(awaiter), notify.toDisplayString()]);
+  if (notify && !implementsInterface(awaiter, notify, core)) return failure(DiagnosticId.CS4027, [display(awaiter), notify.toDisplayString()]);
   return {
     getAwaiter,
     isCompleted,
