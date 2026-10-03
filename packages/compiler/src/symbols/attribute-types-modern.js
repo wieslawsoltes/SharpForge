@@ -17,7 +17,6 @@ export function modernAttributes(T) {
     [compilerServices, 'ModuleInitializerAttribute', T.Method, false, [[]], []],
     [compilerServices, 'SkipLocalsInitAttribute', skipLocalsInit, false, [[]], []],
     // C# 10
-    [compilerServices, 'CallerArgumentExpressionAttribute', T.Parameter, false, [[['parameterName', 's']]], []],
     [compilerServices, 'AsyncMethodBuilderAttribute', types | T.Method, false, [[['builderType', 't']]], []],
     [compilerServices, 'InterpolatedStringHandlerAttribute', T.Class | T.Struct, false, [[]], []],
     // C# 11

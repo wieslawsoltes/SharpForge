@@ -18,8 +18,10 @@ import { BodyBinding } from './semantic/body-binding.js';
 import { TopLevelPrograms } from './binder/top-level.js';
 import { UnusedSymbolWarnings } from './semantic/unused-symbols.js';
 import { AttributeBinding } from './binder/attributes.js';
+import { CallerInfoChecks } from './binder/caller-info.js';
 import { ObsoleteUses } from './binder/obsolete.js';
 import { SpecialMemberChecks } from './binder/special-members.js';
+import { ConditionalMethodChecks } from './binder/csharp2-misc.js';
 import { modernRules } from './binder/modern-rules.js';
 
 const phases = [
@@ -27,7 +29,9 @@ const phases = [
   MemberDeclarationChecks,
   ConstantBinding,
   AttributeBinding,
+  CallerInfoChecks,
   SpecialMemberChecks,
+  ConditionalMethodChecks,
   ...modernRules,
   BodyBinding,
   TopLevelPrograms,

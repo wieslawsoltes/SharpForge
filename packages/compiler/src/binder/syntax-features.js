@@ -115,11 +115,16 @@ function parameterFeatures(node, context, use) {
   if (has(node, 'params') && node.type && node.type.kind !== 'ArrayType') use('ParamsCollections', node);
 }
 
+/**
+ * Before C# 8 a stackalloc is the initializer of a local, directly or as an operand of the conditional operator that
+ * is; anywhere else it is 'stackalloc in nested expressions', which Roslyn reports on the keyword.
+ */
 function stackAllocFeatures(node, context, use) {
-  const parent = context.parent,
-    declarator = context.ancestors.at(-2);
-  const isLocalInitializer = parent?.kind === 'EqualsValueClause' && declarator?.kind === 'VariableDeclarator';
-  if (!isLocalInitializer) use('NestedStackalloc', node);
+  const ancestors = context.ancestors;
+  let depth = ancestors.length - 1;
+  while (depth >= 0 && ancestors[depth].kind === 'ConditionalExpression') depth--;
+  const isLocalInitializer = ancestors[depth]?.kind === 'EqualsValueClause' && ancestors[depth - 1]?.kind === 'VariableDeclarator';
+  if (!isLocalInitializer) use('NestedStackalloc', node.stackAllocKeyword ?? node);
 }
 
 function fieldFeatures(node, context, use) {

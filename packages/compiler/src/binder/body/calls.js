@@ -267,8 +267,8 @@ export const CallBinding = Base =>
           return { expression: a, parameter: p, refKind: a.refKind };
         }
         // A typeless target-typed argument (`new()`, a conditional or switch expression, a collection expression) gets its type
-        // here, and so does a `default` literal: unconverted it would be passed as a null reference.
-        const converts = conversion && !a.hasErrors && (a.type || a.materialize || a.literal === 'default');
+        // here, and so do a `default` literal (unconverted it would be passed as a null reference) and a method group.
+        const converts = conversion && !a.hasErrors && (a.type || a.materialize || a.literal === 'default' || a.kind === 'MethodGroup');
         const value = converts ? this.applyConversion(a, result.parameterTypes[i], conversion, a.syntax) : a;
         if (a.form === 'lambda' && !a.hasErrors) this.finishLambda(a, result.parameterTypes[i]);
         return { expression: value, parameter: p, refKind: a.refKind ?? null };
@@ -282,7 +282,6 @@ export const CallBinding = Base =>
         args: converted,
         expanded: result.expanded,
         mapping: result.mapping,
-        ...this.callerArgumentsOf(method.originalDefinition ?? method, result.mapping, args),
         isDelegateInvoke,
         isExtension,
         isVirtual:
@@ -301,7 +300,7 @@ export const CallBinding = Base =>
       if (receiver && receiver.type?.isValueType === true && !method.isStatic) {
         const passing = receiverPassing(receiver, method, this.variableContext);
         n.receiverPassing = passing.mode;
-        if (passing.warning) this.report(syntax, passing.warning.code, passing.warning.args);
+        if (passing.warning) this.report(nameNode, passing.warning.code, passing.warning.args);
       }
       if (type.isErrorType?.()) n.hasErrors = true;
       return n;
@@ -344,6 +343,7 @@ export const CallBinding = Base =>
           if (a.type && ['Index', 'Range'].includes(a.type.name)) return a;
           return this.convert(a, this.core.int);
         });
+        if (indices.some(i => i.hasErrors)) return this.bad(syntax);
         if (indices.some(i => i.type?.name === 'Range')) return this.node('ArrayAccess', syntax, type, { array: target, indices });
         return this.node('ArrayAccess', syntax, type.elementType, { array: target, indices });
       }
@@ -396,7 +396,7 @@ export const CallBinding = Base =>
         receiver: target,
         property,
         args: args.map((a, i) => ({
-          expression: r.conversions[i] && a.type ? this.applyConversion(a, r.parameterTypes[i], r.conversions[i]) : a,
+          expression: r.conversions[i] && (a.type || a.kind === 'MethodGroup') ? this.applyConversion(a, r.parameterTypes[i], r.conversions[i]) : a,
           parameter: property.parameters[r.mapping.parameterOf[i]],
         })),
         mapping: r.mapping,
