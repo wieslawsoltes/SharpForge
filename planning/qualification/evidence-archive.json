@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "scope": "Retained historical reports and generated binary evidence; original bytes are not requalified.",
   "paths": [
+    "docs/a20-insight-search-benchmark.json",
     "docs/benchmark-results-0.2.0.json",
     "docs/benchmark-results-0.6.0.json",
     "docs/benchmark-results.json",
@@ -93,12 +94,20 @@
   ],
   "preserved": [
     {
+      "path": "docs/a20-insight-coverage.json",
+      "reason": "Authored capability/acceptance ledger with validation context and deferred integration; not machine-generated execution output."
+    },
+    {
       "path": "docs/framework-api-0.10.json",
       "reason": "Authored API/reference inventory; not execution results."
     },
     {
       "path": "docs/runtime-a05-scope.json",
       "reason": "Planning scope and acceptance criteria; not execution results."
+    },
+    {
+      "path": "docs/vs-inventory.json",
+      "reason": "Authored keyboard-shortcut reference inventory; not execution results."
     }
   ]
 }
