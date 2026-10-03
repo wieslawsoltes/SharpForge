@@ -12,15 +12,17 @@ import {collectUsingDirectives,bindUsings} from './binder/usings.js';
 import {findEntryPoint} from './binder/entry-point.js';
 import {parseCompilationOptions} from './options.js';
 import {applySuppression} from './diagnostics/suppression.js';
+import {pragmaWarningsOf} from './diagnostics/pragma-trivia.js';
+import {parserDiagnosticsWithoutSuppressMessage} from './diagnostics/suppress-message-attributes.js';
 import {BuckStopsHereBinder,InContainerBinder,WithUsingsBinder} from './binder/binder.js';
-import {checkFeatures} from '@sharpforge/syntax';
+import {featureDiagnosticsOf} from './binder/feature-check.js';
 import {NullableContextMap} from './nullable/annotations.js';
 import {typeSyntaxSpan} from './binder/type-spans.js';
 import {reconcileWithSemanticAnalysis} from './semantic-integration.js';
 export class Compilation {
   constructor(parsedFiles, options={}) {
     this.inputFiles=parsedFiles;parsedFiles=lowerAsyncFiles(parsedFiles);this.files=parsedFiles;this.options=options;this.sources=new Map(parsedFiles.map(p=>[p.source.uri,p.source]));
-    this.diagnostics=parsedFiles.flatMap(p=>p.diagnostics);this.symbols=[];this.references=[];this.types=[];this.typeMap=new Map();this.methods=[];this.statics=[];this.constants=[];this.constantMap=new Map();this.sequencePoints=[];
+    this.diagnostics=parserDiagnosticsWithoutSuppressMessage(parsedFiles);this.symbols=[];this.references=[];this.types=[];this.typeMap=new Map();this.methods=[];this.statics=[];this.constants=[];this.constantMap=new Map();this.sequencePoints=[];
     // 'bound' binds to a bound tree, analyses flow, lowers and then emits; 'legacy' is the fused string-typed method compiler.
     this.nullableMaps=new Map();this.fullNames=new Map();this.simpleNames=new Map();this.fileUsings=new Map();this.binderChains=new Map();this.pipeline=options.pipeline??globalThis.process?.env?.SHARPFORGE_PIPELINE??Compilation.defaultPipeline;this.semantic=new CompilationSymbols(this);this.boundPipeline=null;
   }
@@ -104,7 +106,7 @@ export class Compilation {
     // Options are validated once, up front (options.js): invalid values report the Roslyn codes.
     const parsed=parseCompilationOptions(this.options);this.typedOptions=parsed.options;for(const d of parsed.diagnostics)this.report(this.files[0]?.root??{},d.code,d.args);
     // Parser-level language-version gating: every feature use the lexer and parser recorded is checked against the selected version.
-    const featureDiagnostics=this.inputFiles.flatMap(file=>file.features?.length?checkFeatures(file.source,file.features,this.selectedVersion({uri:file.source.uri})):[]);
+    const featureDiagnostics=this.inputFiles.flatMap(file=>featureDiagnosticsOf(file,this.selectedVersion({uri:file.source.uri})));
     // Two-pass declarations allow forward calls and references across source files.
     for(const file of this.files)for(const decl of file.root.members.filter(n=>n.kind==='Class')){
       const namespace=decl.namespace??'',fullName=(namespace?namespace+'.':'')+decl.name;
@@ -165,9 +167,9 @@ export class Compilation {
     // A feature the binder gates itself keeps the binder's diagnostic; the parser's is added where nothing covers it.
     for(const f of featureDiagnostics)if(!this.diagnostics.some(d=>d.uri===f.uri&&(d.code===f.code||d.code==='CS8652'||f.code==='CS8652')&&d.start<f.start+f.length&&f.start<d.start+d.length))this.diagnostics.push(f);
     // Programs outside the execution profile get the diagnostics of the type system (semantic-integration.js).
-    const reconciled=reconcileWithSemanticAnalysis(this,featureDiagnostics);if(reconciled){this.diagnostics=reconciled.diagnostics;this.semanticAnalysis=reconciled.semantic;}
-    const diagnostics=applySuppression(this.diagnostics,{sources:this.sources,directives:new Map(this.inputFiles.filter(f=>f.directives).map(f=>[f.source.uri,f.directives])),options:this.typedOptions}),errors=diagnostics.filter(d=>d.severity==='error').length;
-    return {success:errors===0,image:errors===0?image:null,diagnostics,symbols:this.symbols,references:this.references,...(this.semanticAnalysis?{semantic:{analysed:true,complete:!this.semanticAnalysis.incomplete}}:{}),
+    const reconciled=reconcileWithSemanticAnalysis(this,featureDiagnostics);if(reconciled){this.diagnostics=reconciled.diagnostics;this.semanticAnalysis=reconciled.semantic;}const finalImage=reconciled?.image??image;
+    const pragmas=pragmaWarningsOf(this.inputFiles),diagnostics=applySuppression(pragmas.withoutParserDiagnostics(this.diagnostics),{sources:this.sources,pragmas:pragmas.byUri,includeDirectiveDiagnostics:true,options:this.typedOptions}),errors=diagnostics.filter(d=>d.severity==='error').length;
+    return {success:errors===0,image:errors===0?finalImage:null,diagnostics,symbols:this.symbols,references:this.references,...(this.semanticAnalysis?{semantic:{analysed:true,complete:!this.semanticAnalysis.incomplete,...(reconciled?.image?{generated:true}:{})}}:{}),
       metrics:{compileMs:performance.now()-start,files:this.files.length,tokens:this.files.reduce((s,f)=>s+f.tokens.length,0),internedTokenHits:this.files.reduce((s,f)=>s+f.internedTokenHits,0),nodes:this.files.reduce((s,f)=>s+f.nodeCount,0),methods:this.methods.length,instructions:this.methods.reduce((s,m)=>s+(m.code?.length??0)/3,0),errors}};
   }
   declareField(owner,node){const type=this.resolveType(node.type,node,false,owner),isStatic=node.modifiers.includes('static')||node.modifiers.includes('const');
@@ -208,6 +210,7 @@ export class Compilation {
   declareMethod(owner,node,synthetic=false){
     if(!synthetic&&owner?.properties.some(p=>p.name===node.name))this.report(node,'CS0102',[owner.name,node.name]);
     if(!synthetic&&node.modifiers.includes('partial'))this.report(node,'SF2010');
+    if(!synthetic&&node.name==='.ctor'&&node.modifiers.includes('static'))this.report(node,'SF2014');
     const scope=owner??{owner:null,node},parameters=node.parameters.map(p=>({...p,type:this.resolveType(p.type,p,false,scope)})),returnType=this.resolveType(node.returnType,node,false,scope),isStatic=node.modifiers.includes('static')||!owner;
     const method={id:this.methods.length,name:node.name,qualifiedName:(owner?owner.name+'.':'')+node.name,returnType,parameters,isStatic,owner,node,synthetic};
     if(this.methods.some(m=>m.owner===owner&&m.name===method.name&&m.parameters.map(p=>p.type).join(',')===parameters.map(p=>p.type).join(',')))this.report(node,'CS0111',[node.name,owner?.name??'<top-level>']);
@@ -231,7 +234,9 @@ function verifyPipelines(files,options){
   try{bound=new Compilation(files,{...options,pipeline:'bound'}).build();}catch(error){fail({crash:error.stack,success:[legacy.success,null],sources,options,legacy,onlyLegacy:[],onlyBound:[]});return legacy;}
   const key=d=>[d.code,d.uri,d.start,d.length,d.severity,d.message].join('|'),count=list=>{const m=new Map();for(const d of list)m.set(key(d),(m.get(key(d))??0)+1);return m;},a=count(legacy.diagnostics),b=count(bound.diagnostics);
   const onlyLegacy=[...a].filter(([k,n])=>(b.get(k)??0)<n).map(([k])=>k),onlyBound=[...b].filter(([k,n])=>(a.get(k)??0)<n).map(([k])=>k),isFlow=k=>flowCodes.has(k.slice(0,6));
-  const image=legacy.success&&bound.success?serializeImage(legacy.image)===serializeImage(bound.image):null;
+  // An image generated from the semantic bound trees is not a product of either pipeline: there is nothing to compare.
+  const generated=legacy.semantic?.generated||bound.semantic?.generated;
+  const image=legacy.success&&bound.success&&!generated?serializeImage(legacy.image)===serializeImage(bound.image):null;
   const spread=new Set(legacy.symbols.filter(x=>x.name.startsWith('$spread')).map(x=>x.id)),symbols=JSON.stringify(legacy.symbols.filter(x=>!spread.has(x.id)))===JSON.stringify(bound.symbols),references=JSON.stringify(legacy.references.filter(r=>!spread.has(r.symbolId)))===JSON.stringify(bound.references);
   const flowOnly=onlyLegacy.every(isFlow)&&onlyBound.every(isFlow),successOk=legacy.success===bound.success||flowOnly&&(onlyLegacy.length>0||onlyBound.length>0);
   const mismatch={success:[legacy.success,bound.success],imageEqual:image,onlyLegacy,onlyBound,symbols,references,sources,options,legacy,bound,tolerated:successOk&&image!==false&&flowOnly&&symbols&&references};

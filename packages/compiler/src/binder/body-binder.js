@@ -22,6 +22,7 @@ import { OperatorBinding } from './body/operators.js';
 import { TypeTestBinding } from './body/type-tests.js';
 import { LambdaBinding } from './body/lambdas.js';
 import { PatternBinding } from './body/patterns.js';
+import { StackAllocBinding } from './body/stackalloc.js';
 import { StatementBinding } from './body/statements.js';
 import { DeclarationBinding } from './body/declarations.js';
 import { FlowStatementBinding } from './body/flow-statements.js';
@@ -36,6 +37,7 @@ const expressionFamilies = [
   TypeTestBinding,
   LambdaBinding,
   PatternBinding,
+  StackAllocBinding,
 ];
 const statementFamilies = [StatementBinding, DeclarationBinding, FlowStatementBinding, LocalFunctionBinding];
 const compose = (base, mixins) => mixins.reduce((composed, mixin) => mixin(composed), base);

@@ -1,4 +1,5 @@
-import {frameworkType,findContracts} from '@sharpforge/framework';
+import {frameworkType} from '@sharpforge/framework';
+import {frameworkMembers} from './framework-members.js';
 import {Binary} from '@sharpforge/bytecode';
 import {numeric,assignable} from '../type-utils.js';
 /**
@@ -11,7 +12,7 @@ import {numeric,assignable} from '../type-utils.js';
  */
 const vectorOperators=Object.freeze({'+':'Add','-':'Subtract','*':'Multiply','/':'Divide','&':'BitwiseAnd','^':'Xor','==':'EqualsAll','!=':'EqualsAll'});
 export function classifyBinary(operator,left,right){
-  if(frameworkType(left)?.family==='vector'&&left===right){const name=vectorOperators[operator],contract=name&&findContracts('System.Numerics.Vector',name,true).find(d=>d.parameters[0]===left);if(contract)return {result:contract.result,contract,negate:operator==='!=',errors:[],implemented:true};}
+  if(frameworkType(left)?.family==='vector'&&left===right){const name=vectorOperators[operator],members=frameworkMembers(),type=members.type(left),contract=name&&members.exactStaticMethod('System.Numerics.Vector',name,[type,type])?.contract;if(contract)return {result:contract.result,contract,negate:operator==='!=',errors:[],implemented:true};}
   const errors=[];let result;
   if(operator==='+'&&(left==='string'||right==='string'))result='string';
   else if(operator==='=='||operator==='!='){if(!assignable(left,right)&&!assignable(right,left))errors.push('compare');result='bool';}

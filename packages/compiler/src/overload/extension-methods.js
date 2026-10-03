@@ -9,7 +9,7 @@
  * The receiver must convert to the `this` parameter by an identity, implicit reference or boxing conversion
  * (C# 14 adds span conversions): numeric and user-defined conversions do not make an extension applicable.
  */
-import { SymbolKind, TypeKind } from '../symbols/types.js';
+import { SymbolKind, TypeKind, RefKind } from '../symbols/types.js';
 import { ConversionKind } from '../conversions/classify.js';
 
 /** Static, non-generic, non-nested classes can declare extension methods. */
@@ -39,6 +39,13 @@ export function isValidReceiverConversion(conversions, receiver, thisType) {
   return c.exists && receiverKinds.has(c.kind);
 }
 /**
+ * How the receiver is passed to the candidates of one scope: `ref` when every `this` parameter is `ref` (the
+ * receiver of a `ref this` extension is passed by reference without writing `ref`), by value otherwise.
+ */
+export function receiverRefKind(methods) {
+  return methods.length > 0 && methods.every(method => method.parameters[0]?.refKind === RefKind.Ref) ? RefKind.Ref : null;
+}
+/**
  * Resolves an extension invocation.
  * @param {string} name  @param receiver the bound receiver expression  @param {object[]} args the explicit arguments
  * @param {{methods:MethodSymbol[]}[]} scopes candidate sets ordered from the innermost scope outward (see `extensionScopes`)
@@ -47,13 +54,13 @@ export function isValidReceiverConversion(conversions, receiver, thisType) {
  *   extension of that name exists at all (callers report CS1061 when not)
  */
 export function resolveExtensionInvocation(name, receiver, args, scopes, resolver, options = {}) {
-  const all = [{ ...receiver, name: null, refKind: null }, ...args];
   let found = false,
     firstFailure = null;
   for (let i = 0; i < scopes.length; i++) {
     const methods = scopes[i].methods.filter(m => m.name === name);
     if (!methods.length) continue;
     found = true;
+    const all = [{ ...receiver, name: null, refKind: receiverRefKind(methods) }, ...args];
     const result = resolver.resolve(methods, all, { ...options, name, keepBaseCandidates: true });
     if (result.succeeded) {
       if (!isValidReceiverConversion(resolver.conversions, receiver, result.method.parameters[0].type)) {

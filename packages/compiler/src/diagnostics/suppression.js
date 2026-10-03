@@ -172,6 +172,8 @@ const defaultIsCompilerDiagnostic=d=>/^CS\d+$/.test(d.code)||hasDiagnosticCode(d
  * @param settings.directives Map uri -> the directive trivia the lexer recorded for that file (`parse().directives`); when
  *   present for a file, its `#pragma warning` directives come from the syntax tree (inactive regions already excluded)
  *   and the source text is not scanned again
+ * @param settings.pragmas Map uri -> `{directives,diagnostics}` already read for that file (diagnostics/pragma-trivia.js); takes
+ *   precedence over `directives` and over scanning the text
  * @param settings.options `{noWarn, warnAsError, warnNotAsError, warningLevel, treatWarningsAsErrors, preprocessorSymbols}`
  *   (a CompilationOptions works). Id lists are arrays or `;`/`,` separated strings of ids or numbers, normalised with
  *   `normalizeDiagnosticId`; `warnAsError:true` is the same as `treatWarningsAsErrors:true`; `warningLevel` defaults to 4.
@@ -183,9 +185,9 @@ const defaultIsCompilerDiagnostic=d=>/^CS\d+$/.test(d.code)||hasDiagnosticCode(d
  * @param settings.includeDirectiveDiagnostics also report the `#pragma` directive warnings of `sources` (CS1633, ...)
  * @param settings.isCompilerDiagnostic predicate for diagnostics SuppressMessage must not touch (default: catalog ids)
  */
-export function applySuppression(diagnostics,{sources=null,directives=null,options={},suppressions=[],resolveTarget=null,includeDirectiveDiagnostics=false,isCompilerDiagnostic=defaultIsCompilerDiagnostic}={}){
+export function applySuppression(diagnostics,{sources=null,directives=null,pragmas=null,options={},suppressions=[],resolveTarget=null,includeDirectiveDiagnostics=false,isCompilerDiagnostic=defaultIsCompilerDiagnostic}={}){
   const texts=sourceTexts(sources),preprocessorSymbols=options?.preprocessorSymbols??[],parsed=new Map(),maps=new Map();
-  const parse=uri=>{if(!parsed.has(uri))parsed.set(uri,directives?.has(uri)?{directives:pragmaDirectivesFromSyntax(directives.get(uri)),diagnostics:[]}:texts.has(uri)?parsePragmaDirectives(texts.get(uri),{preprocessorSymbols}):{directives:[],diagnostics:[]});return parsed.get(uri);};
+  const parse=uri=>{if(!parsed.has(uri))parsed.set(uri,pragmas?.has(uri)?pragmas.get(uri):directives?.has(uri)?{directives:pragmaDirectivesFromSyntax(directives.get(uri)),diagnostics:[]}:texts.has(uri)?parsePragmaDirectives(texts.get(uri),{preprocessorSymbols}):{directives:[],diagnostics:[]});return parsed.get(uri);};
   const mapOf=uri=>{if(!maps.has(uri))maps.set(uri,new PragmaWarningMap(parse(uri).directives));return maps.get(uri);};
   const warningLevel=options?.warningLevel??4,general=options?.treatWarningsAsErrors===true||options?.warnAsError===true;
   const specific=new Map();
