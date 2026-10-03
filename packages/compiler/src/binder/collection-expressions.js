@@ -72,11 +72,14 @@ export const CollectionExpressionBinding = Base =>
       if (to.specialType === 'System_String') return null;
       // The registry does not list the interfaces of framework collections: there, an `Add` method marks one.
       const isEnumerable = implementsInterface(to, this.core.ienumerable, this.core),
-        add = isSourceSymbol(to) ? null : to.getMembers('Add').find(member => member.kind === SymbolKind.Method && member.parameters.length === 1);
-      if (!isEnumerable && !add) return null;
+        adds = isSourceSymbol(to) ? [] : to.getMembers('Add').filter(member => member.kind === SymbolKind.Method),
+        add = adds.find(member => member.parameters.length === 1);
+      if (!isEnumerable && !adds.length) return null;
       const generic = findConstruction(to, this.core.ienumerableT, this.core),
         elementType = generic ? generic.typeArguments[0].type : (add?.parameters[0].type ?? this.core.object);
-      return { kind: attributesNamed(definition, collectionBuilderAttribute).length ? 'builder' : 'collection', elementType };
+      // A framework collection whose `Add` takes two arguments (a dictionary) can be created empty, not filled (CS9215).
+      const lacksElementAdd = !isSourceSymbol(to) && adds.length > 0 && !add;
+      return { kind: attributesNamed(definition, collectionBuilderAttribute).length ? 'builder' : 'collection', elementType, lacksElementAdd };
     }
     /** The iteration type of a spread operand, or null when it cannot be enumerated (or is not known). */
     spreadElementType(spread) {
@@ -121,6 +124,10 @@ export const CollectionExpressionBinding = Base =>
         hasSpread = node.elements.some(element => element.spread);
       // Arguments the target does not take are reported and then left out of the construction.
       if (node.withArguments && !this.checkCollectionArguments(node, to, target)) node = { ...node, withArguments: null };
+      if (target.lacksElementAdd && node.elements.length) {
+        this.report(syntax, 'CS9215', [this.display(to)]);
+        return this.bad(syntax);
+      }
       for (const element of node.elements)
         if (element.spread && !element.spread.hasErrors && !this.spreadElementType(element.spread) && element.spread.type)
           this.report(element.syntax.expression, 'CS9212', [this.display(element.spread.type), 'GetEnumerator']);

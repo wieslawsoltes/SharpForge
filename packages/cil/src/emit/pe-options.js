@@ -12,7 +12,8 @@ export function emissionPEOptions(image, options, framework) {
   const value = { platform: options.platform ?? 'anycpu', outputKind,
     subsystem: options.subsystem ?? (outputKind === 'windows' ? 'windows' : 'console'),
     prefer32Bit: options.prefer32Bit ?? false, nativeEntryStub: framework === 'mscorlib4',
-    managedResources: options.managedResources ?? [], win32Resources: options.win32Resources };
+    deterministic: options.deterministic ?? true, managedResources: options.managedResources ?? [],
+    win32Resources: options.win32Resources };
   peOptions(value);
   return value;
 }
@@ -20,6 +21,7 @@ export function emissionPEOptions(image, options, framework) {
 /** Serialize PE target choices only when they differ from the source profile defaults. */
 export function debugPEOptions(options) {
   const result = {};
+  if (!options.deterministic) result.deterministic = false;
   if (options.platform !== 'anycpu') result.platform = options.platform;
   if (options.prefer32Bit) result.prefer32Bit = true;
   if (options.subsystem !== 'console') result.subsystem = options.subsystem;
