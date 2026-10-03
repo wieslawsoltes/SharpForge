@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-9b422345baba09084230",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nstruct Counter\n{\n    int value;\n    public override string ToString() \n    {\n        value++;\n        return value.ToString();\n    }\n}\n\nclass Program\n{\n    static void Test<T>() where T : new()\n    {\n        T x = new T();\n        Console.WriteLine(x.ToString());\n        Console.WriteLine(x.ToString());\n        Console.WriteLine(x.ToString());\n    }\n\n    static void Main() => Test<Counter>();\n}",
+  "unsupported": [
+    "Runtime expectation requires upstream output/exception/argument extraction"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "b31cd154f3d363b5aa4ff846eac7204c116b1341a7f7f1952fa7b1a4ff383624",
+  "originalSource": "struct Counter\n{\n    int value;\n    public override string ToString() \n    {\n        value++;\n        return value.ToString();\n    }\n}\n\nclass Program\n{\n    static void Test<T>() where T : new()\n    {\n        T x = new T();\n        Console.WriteLine(x.ToString());\n        Console.WriteLine(x.ToString());\n        Console.WriteLine(x.ToString());\n    }\n\n    static void Main() => Test<Counter>();\n}",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "MeaningOfThis1",
+    "inferOutput": true
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-structs",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/structs.md",
+    "sha256": "53de26bf64c1dda02bf6edd00cbb816c260511bdd95d302f759970333c1ea663",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/structs.md",
+    "license": "MIT",
+    "example": "MeaningOfThis1",
+    "offsetInUnquotedMarkdown": 20475
+  }
+}

@@ -31,11 +31,15 @@ const receiverKinds = new Set([
   ConversionKind.Boxing,
   ConversionKind.ImplicitSpan,
 ]);
-/** True when `receiverType` can be the receiver of an extension method whose `this` parameter has type `thisType`. */
-export function isValidReceiverConversion(conversions, receiver, thisType) {
+/**
+ * True when `receiverType` can be the receiver of an extension method whose `this` parameter has type `thisType`.
+ * `forMethodGroup`: a span conversion (C# 14) is not considered for the receiver of a method group conversion.
+ */
+export function isValidReceiverConversion(conversions, receiver, thisType, { forMethodGroup = false } = {}) {
   if (receiver.literal === 'null') return thisType.isReferenceType === true || thisType.isNullableValueType;
   if (!receiver.type) return false;
   const c = conversions.classifyStandardImplicit(receiver.type, thisType);
+  if (forMethodGroup && c.kind === ConversionKind.ImplicitSpan) return false;
   return c.exists && receiverKinds.has(c.kind);
 }
 /**

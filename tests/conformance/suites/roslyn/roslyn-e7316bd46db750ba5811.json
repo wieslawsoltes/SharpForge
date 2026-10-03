@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e7316bd46db750ba5811",
+  "kind": "diagnostics",
+  "sourceText": "class Program\n{\n    static void Main()\n    {\n        IA a = new C();\n        _ = a;\n    }\n}",
+  "sourceSHA256": "9bc99e30ff1c7ad6615f378a28c33c9e1c9f77da59a6fae9f28ef9e70b83f6c0",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_NativeInteger.cs",
+    "sha256": "ba6cbd3462b4f24e7b1edcedb260b4b6046e0b9b58ff785f93c1b090d324064a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_NativeInteger.cs",
+    "license": "MIT",
+    "method": "EmitAttribute_LongTuples_02",
+    "offset": 56446
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "references: new[] { ref1 }, parseOptions: TestOptions.Regular9)",
+  "options": "(source2, references: new[] { ref1 }, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

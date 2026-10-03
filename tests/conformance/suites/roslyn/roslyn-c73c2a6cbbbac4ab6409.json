@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c73c2a6cbbbac4ab6409",
+  "kind": "diagnostics",
+  "sourceText": "\nclass X\n{\n    private Blah q;\n    public void Main()\n    {\n        const int x = 5;\n        x = x; // error; assigning to const.\n    }\n}",
+  "sourceSHA256": "14fbee69ffaf4429eb125818f43f6b68c8d4f5a1308681e16724a45fe1828ffd",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs",
+    "sha256": "a146aeb41311a33fd51733055804d5bdd45ba0e5302ca02348a06cb7e94dd243",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs",
+    "license": "MIT",
+    "method": "CompilationGetDiagnostics",
+    "offset": 4071
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0131",
+        "severity": "error"
+      },
+      {
+        "code": "CS0169",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,13): error CS0246: The type or namespace name 'Blah' could not be found (are you missing a using directive or an assembly reference?)\n                //     private Blah q;\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"Blah\").WithArguments(\"Blah\"),\n                // (8,9): error CS0131: The left-hand side of an assignment must be a variable, property or indexer\n                //         x = x; // error; assigning to const.\n                Diagnostic(ErrorCode.ERR_AssgLvalueExpected, \"x\"),\n                // (4,18): warning CS0169: The field 'X.q' is never used\n                //     private Blah q;\n                Diagnostic(ErrorCode.WRN_UnreferencedField, \"q\").WithArguments(\"X.q\")",
+  "unsupported": []
+}

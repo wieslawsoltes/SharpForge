@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-680bc404e516f8449860",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Runtime.CompilerServices;\n\nclass C\n{\n    public C(string s) => S = s;\n    public string S { get; }\n    public static implicit operator C(string s) => new C(s);\n}\n\nclass Program\n{\n    public static void Main()\n    {\n        Log(default(int));\n    }\n    const string p = nameof(p);\n    static void Log(int p, [CallerArgumentExpression(p)] C arg = null)\n    {\n        Console.WriteLine(arg.S);\n    }\n}\n",
+  "sourceSHA256": "3cf3663fd63bae87f214d4731ba3f0178c2d2f4879dd4ef2c156fee25a016041",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "sha256": "afc3ea7577c9e597760812239c750126e0cb09ea32cb52bdc8e9850a45ebeac9",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_CallerInfoAttributes.cs",
+    "license": "MIT",
+    "method": "TestCallerArgumentWithUserDefinedConversionFromString",
+    "offset": 38712
+  },
+  "langVersion": "10",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, targetFramework: TargetFramework.NetCoreApp, options: TestOptions.ReleaseExe, parseOptions: TestOptions.Regular10)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8959",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (19,29): error CS8959: CallerArgumentExpressionAttribute cannot be applied because there are no standard conversions from type 'string' to type 'C'\n                //     static void Log(int p, [CallerArgumentExpression(p)] C arg = null)\n                Diagnostic(ErrorCode.ERR_NoConversionForCallerArgumentExpressionParam, \"CallerArgumentExpression\").WithArguments(\"string\", \"C\").WithLocation(19, 29)\n                ",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

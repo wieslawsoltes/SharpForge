@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-180141996634f6e91054",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass A\n{\n    public void F() => Console.WriteLine(\"A.F\");\n    public virtual void G() => Console.WriteLine(\"A.G\");\n}\n\nclass B : A\n{\n    public new void F() => Console.WriteLine(\"B.F\");\n    public override void G() => Console.WriteLine(\"B.G\");\n}\n\nclass Test\n{\n    static void Main()\n    {\n        B b = new B();\n        A a = b;\n        a.F();\n        b.F();\n        a.G();\n        b.G();\n    }\n}",
+  "unsupported": [
+    "Runtime expectation requires upstream output/exception/argument extraction"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "0e2d243db01e07bd2490e356f92900b2f6063eca0a6dc845a5cf3208c75f3695",
+  "originalSource": "class A\n{\n    public void F() => Console.WriteLine(\"A.F\");\n    public virtual void G() => Console.WriteLine(\"A.G\");\n}\n\nclass B : A\n{\n    public new void F() => Console.WriteLine(\"B.F\");\n    public override void G() => Console.WriteLine(\"B.G\");\n}\n\nclass Test\n{\n    static void Main()\n    {\n        B b = new B();\n        A a = b;\n        a.F();\n        b.F();\n        a.G();\n        b.G();\n    }\n}",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "VirtualMethods1",
+    "inferOutput": true
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "VirtualMethods1",
+    "offsetInUnquotedMarkdown": 132613
+  }
+}

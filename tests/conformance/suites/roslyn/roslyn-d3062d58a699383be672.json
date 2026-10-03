@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d3062d58a699383be672",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Runtime.InteropServices;\n \n[ComImport]\n[Guid(\"69D3E2A0-BB0F-4FE3-9860-ED714C510756\")]    // valid (36 chars)\nclass A {}\n\n[Guid(\"69D3E2A0-BB0F-4FE3-9860-ED714C51075\")]    // incorrect length (35 chars)\nclass B {}\n\n[Guid(\"69D3E2A0BB0F--4FE3-9860-ED714C510756\")]    // invalid format\nclass C {}\n\n[Guid(\"\")]    // empty string\nclass D {}\n\n[Guid(null)]    // null\nclass E {}\n",
+  "sourceSHA256": "bb6e5665c3d0749f0a2ca6c890d6b8f9fce12735856d16f19dd2bc208c5c4477",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestInvalidGuidAttribute",
+    "offset": 175605
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (9,7): error CS0591: Invalid value for argument to 'Guid' attribute\n                // [Guid(\"69D3E2A0-BB0F-4FE3-9860-ED714C51075\")]    // incorrect length (35 chars)\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, @\"\"\"69D3E2A0-BB0F-4FE3-9860-ED714C51075\"\"\").WithArguments(\"Guid\").WithLocation(9, 7),\n                // (12,7): error CS0591: Invalid value for argument to 'Guid' attribute\n                // [Guid(\"69D3E2A0BB0F--4FE3-9860-ED714C510756\")]    // invalid format\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, @\"\"\"69D3E2A0BB0F--4FE3-9860-ED714C510756\"\"\").WithArguments(\"Guid\").WithLocation(12, 7),\n                // (15,7): error CS0591: Invalid value for argument to 'Guid' attribute\n                // [Guid(\"\")]    // empty string\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, @\"\"\"\"\"\").WithArguments(\"Guid\").WithLocation(15, 7),\n                // (18,7): error CS0591: Invalid value for argument to 'Guid' attribute\n                // [Guid(null)]    // null\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, \"null\").WithArguments(\"Guid\").WithLocation(18, 7)",
+  "unsupported": []
+}

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-fc136a7f18b535455a0c",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Runtime.InteropServices;\n \n// Following are alternate valid Guid formats, but disallowed by the native compiler. Ensure we disallow them.\n\n[Guid(\"69D3E2A0BB0F4FE39860ED714C510756\")]    // 32 digits, no hyphens\nclass A {}\n\n[Guid(\"{69D3E2A0-BB0F-4FE3-9860-ED714C510756}\")]    // 32 digits separated by hyphens, enclosed in braces\nclass B {}\n\n[Guid(\"(69D3E2A0-BB0F-4FE3-9860-ED714C510756)\")]    // 32 digits separated by hyphens, enclosed in parentheses\nclass C {}\n\n[Guid(\"{0x00000000,0x0000,0x0000,{0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}\")]    // Four hexadecimal values enclosed in braces, where the fourth value is a subset of eight hexadecimal values that is also enclosed in braces\nclass D {}\n",
+  "sourceSHA256": "dffe7008adcad4a0a32a0a0de5c3cc50a70f1183cc606c2f2ae1d8812ab19274",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestInvalidGuidAttribute_02",
+    "offset": 177781
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      },
+      {
+        "code": "CS0591",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,7): error CS0591: Invalid value for argument to 'Guid' attribute\n                // [Guid(\"69D3E2A0BB0F4FE39860ED714C510756\")]    // 32 digits, no hyphens\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, @\"\"\"69D3E2A0BB0F4FE39860ED714C510756\"\"\").WithArguments(\"Guid\").WithLocation(7, 7),\n                // (10,7): error CS0591: Invalid value for argument to 'Guid' attribute\n                // [Guid(\"{69D3E2A0-BB0F-4FE3-9860-ED714C510756}\")]    // 32 digits separated by hyphens, enclosed in braces\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, @\"\"\"{69D3E2A0-BB0F-4FE3-9860-ED714C510756}\"\"\").WithArguments(\"Guid\").WithLocation(10, 7),\n                // (13,7): error CS0591: Invalid value for argument to 'Guid' attribute\n                // [Guid(\"(69D3E2A0-BB0F-4FE3-9860-ED714C510756)\")]    // 32 digits separated by hyphens, enclosed in parentheses\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, @\"\"\"(69D3E2A0-BB0F-4FE3-9860-ED714C510756)\"\"\").WithArguments(\"Guid\").WithLocation(13, 7),\n                // (16,7): error CS0591: Invalid value for argument to 'Guid' attribute\n                // [Guid(\"{0x00000000,0x0000,0x0000,{0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}\")]    // Four hexadecimal values enclosed in braces, where the fourth value is a subset of eight hexadecimal values that is also enclosed in braces\n                Diagnostic(ErrorCode.ERR_InvalidAttributeArgument, @\"\"\"{0x00000000,0x0000,0x0000,{0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}\"\"\").WithArguments(\"Guid\").WithLocation(16, 7)",
+  "unsupported": []
+}

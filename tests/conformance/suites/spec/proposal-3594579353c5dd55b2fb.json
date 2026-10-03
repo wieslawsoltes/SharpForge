@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-3594579353c5dd55b2fb",
+  "kind": "spec",
+  "sourceText": "record R1(T1 P1);\nrecord R2(T1 P1, T2 P2) : R1(P1);\nrecord R3(T1 P1, T2 P2, T3 P3) : R2(P1, P2);",
+  "sourceSHA256": "ef0c8171f027bc040ca923dad984b34dda57e87e871a2ad05029e851c9e28e07",
+  "target": "library",
+  "featureId": "csharp-9-0-records",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/records.md",
+    "sha256": "a3198542cb3ddbad72e522fdf5442c5762254d2e6d571bf1dfba2a11110f15e6",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/records.md",
+    "license": "NOASSERTION",
+    "offset": 7224
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-2820f8c96b06914088d1",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass A\n{\n    static void F0(IntPtr x = default, UIntPtr y = default)\n    {\n    }\n    static void F1(IntPtr x = (IntPtr)(-1), UIntPtr y = (UIntPtr)2)\n    {\n    }\n    static void F2(IntPtr? x = null, UIntPtr? y = null)\n    {\n    }\n    static void F3(IntPtr? x = (IntPtr)(-3), UIntPtr? y = (UIntPtr)4)\n    {\n    }\n}",
+  "sourceSHA256": "77827cf575162932f94691588b14994ac958855f067245e7d53dd353f6db9556",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "sha256": "a7e54d8ce96a59177276eba5d802097c4cc4b2dee81cb9034e7dd309ad524cb8",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/NumericIntPtrTests.cs",
+    "license": "MIT",
+    "method": "ParameterDefaultValue_01",
+    "offset": 132000
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1736",
+        "severity": "error"
+      },
+      {
+        "code": "CS1736",
+        "severity": "error"
+      },
+      {
+        "code": "CS1736",
+        "severity": "error"
+      },
+      {
+        "code": "CS1736",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,31): error CS1736: Default parameter value for 'x' must be a compile-time constant\n                //     static void F1(IntPtr x = (IntPtr)(-1), UIntPtr y = (UIntPtr)2)\n                Diagnostic(ErrorCode.ERR_DefaultValueMustBeConstant, \"(IntPtr)(-1)\").WithArguments(\"x\").WithLocation(7, 31),\n                // (7,57): error CS1736: Default parameter value for 'y' must be a compile-time constant\n                //     static void F1(IntPtr x = (IntPtr)(-1), UIntPtr y = (UIntPtr)2)\n                Diagnostic(ErrorCode.ERR_DefaultValueMustBeConstant, \"(UIntPtr)2\").WithArguments(\"y\").WithLocation(7, 57),\n                // (13,32): error CS1736: Default parameter value for 'x' must be a compile-time constant\n                //     static void F3(IntPtr? x = (IntPtr)(-3), UIntPtr? y = (UIntPtr)4)\n                Diagnostic(ErrorCode.ERR_DefaultValueMustBeConstant, \"(IntPtr)(-3)\").WithArguments(\"x\").WithLocation(13, 32),\n                // (13,59): error CS1736: Default parameter value for 'y' must be a compile-time constant\n                //     static void F3(IntPtr? x = (IntPtr)(-3), UIntPtr? y = (UIntPtr)4)\n                Diagnostic(ErrorCode.ERR_DefaultValueMustBeConstant, \"(UIntPtr)4\").WithArguments(\"y\").WithLocation(13, 59)",
+  "unsupported": []
+}

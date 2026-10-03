@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-fa45825abfa255f5c096",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing N2 = N1;\n[N2::A<(int A, int B)>.B]\nclass C\n{\n}\nnamespace N1\n{\n    class A<T>\n    {\n        public class BAttribute : Attribute { }\n    }\n}\n",
+  "sourceSHA256": "7074c21f74af8db6f2db27b1f1eeb6a88c8f2ebf755d804785efe18a55924d01",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "GenericAttribute_NestedType04",
+    "offset": 452346
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8970",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,2): error CS8970: Type '(int A, int B)' cannot be used in this context because it cannot be represented in metadata.\n                // [N2::A<(int A, int B)>.B]\n                Diagnostic(ErrorCode.ERR_AttrDependentTypeNotAllowed, \"N2::A<(int A, int B)>.B\").WithArguments(\"(int A, int B)\").WithLocation(4, 2)",
+  "unsupported": []
+}

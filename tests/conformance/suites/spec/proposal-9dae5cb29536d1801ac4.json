@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-9dae5cb29536d1801ac4",
+  "kind": "spec",
+  "sourceText": "if (c?.M(out object obj3) == true)\n{\n    obj3.ToString(); // undesired error\n}",
+  "sourceSHA256": "e1163021706469e696b9dafb7a2015dd19154ed9994b9d98865c3ea35be15bbe",
+  "target": "library",
+  "featureId": "csharp-10-0-improved-definite-assignment",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/improved-definite-assignment.md",
+    "sha256": "ccd1c46e7e5bc593532b701677ef883e33a5d9c7c91f6cb198e37dd4f1732222",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/improved-definite-assignment.md",
+    "license": "NOASSERTION",
+    "offset": 2188
+  }
+}

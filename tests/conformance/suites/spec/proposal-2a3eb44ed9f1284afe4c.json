@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-2a3eb44ed9f1284afe4c",
+  "kind": "spec",
+  "sourceText": "{\n    E e = ((C)(x)).GetAsyncEnumerator();\n    try {\n        while (await e.MoveNextAsync()) {\n            V v = (V)(T)e.Current;\n            «embedded_statement»\n        }\n    }\n    finally {\n        ... // Dispose e\n    }\n}",
+  "sourceSHA256": "beff7474a6d80fa07d9419955b30c9fcaebfd6af056a9e571ab217501a347cb5",
+  "target": "library",
+  "featureId": "csharp-8-0-async-streams",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/async-streams.md",
+    "sha256": "944a31911115989c66e44f5c9e7eca2eeb960622f6f819166a48b91af8247c6a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/async-streams.md",
+    "license": "NOASSERTION",
+    "offset": 20384
+  }
+}

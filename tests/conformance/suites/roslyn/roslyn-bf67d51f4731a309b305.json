@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-bf67d51f4731a309b305",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n\nvar c = new C();\nc.E += () => { };\nc.E -= () => { };\n\npartial class C\n{\n    partial event Action E;\n    partial event Action E { add { } remove { } }\n\n    void M()\n    {\n        this.E += () => { };\n        this.E -= () => { };\n    }\n}",
+  "sourceSHA256": "dfa46bd6cb2fb2a2ed046ebd9dbcd6ca079f08bae77de0113a55e8b964bf1ef4",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "Use_EventAccessorsInaccessible",
+    "offset": 119286
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0122",
+        "severity": "error"
+      },
+      {
+        "code": "CS0122",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (4,3): error CS0122: 'C.E' is inaccessible due to its protection level\n            // c.E += () => { };\n            Diagnostic(ErrorCode.ERR_BadAccess, \"E\").WithArguments(\"C.E\").WithLocation(4, 3),\n            // (5,3): error CS0122: 'C.E' is inaccessible due to its protection level\n            // c.E -= () => { };\n            Diagnostic(ErrorCode.ERR_BadAccess, \"E\").WithArguments(\"C.E\").WithLocation(5, 3)",
+  "unsupported": []
+}
