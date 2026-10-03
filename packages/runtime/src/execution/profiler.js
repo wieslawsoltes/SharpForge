@@ -1,4 +1,5 @@
 import {RuntimeEventLog, RuntimeEventName} from './runtime-events.js';
+import {createProfilerClock} from './profiler-clock.js';
 
 function limit(value, fallback, name, maximum = 1_000_000) {
   value ??= fallback;
@@ -7,10 +8,11 @@ function limit(value, fallback, name, maximum = 1_000_000) {
 }
 
 function methodRecord(id, name) {
-  return {id, name, calls: 0, instructions: 0, inclusiveInstructions: 0, allocations: 0, allocatedBytes: 0};
+  return {id, name, calls: 0, instructions: 0, inclusiveInstructions: 0,
+    exclusiveMilliseconds: 0, inclusiveMilliseconds: 0, allocations: 0, allocatedBytes: 0};
 }
 
-/** Instruction-weighted profiling. Counts are host observations and do not rewind with VM snapshots. */
+/** Bounded instruction and duration observations; totals do not rewind with VM snapshots. */
 export class ExecutionProfiler {
   constructor(vm, options = {}) {
     this.vm = vm;
@@ -18,6 +20,7 @@ export class ExecutionProfiler {
     this.maxStacks = limit(options.maxStacks, 16384, 'stack limit');
     this.maxSites = limit(options.maxSites, 16384, 'allocation-site limit');
     this.sampleBudget = limit(options.sampleBudget, 256, 'sample budget');
+    this.durationClock = createProfilerClock(options);
     this.events = new RuntimeEventLog(options.events);
     this.methods = [methodRecord(0, '[runtime]'), methodRecord(1, '[profile capacity]')];
     this.methodIds = new WeakMap();
@@ -32,6 +35,7 @@ export class ExecutionProfiler {
     this.waitingContexts = new Set();
     this.methodOverflow = 0;
     this.stackOverflow = 0;
+    this.stackDurationOverflow = 0;
     this.siteOverflow = 0;
     this.lastState = vm.state;
   }
@@ -73,35 +77,48 @@ export class ExecutionProfiler {
   instruction(frame, weight = 1) {
     if (!weight) return;
     this.instructions += weight;
-    this.methods[this.method(frame)].instructions += weight;
+    const method = this.method(frame);
+    this.methods[method].instructions += weight;
     if (this.pending?.frame !== frame) this.flushSample();
     if (!this.pending) {
       const stack = this.vm.frames.filter(item => !item.filterSearch).map(item => this.method(item));
-      this.pending = {frame, stack: stack.length ? stack : [this.method(frame)], weight: 0};
+      this.pending = {frame, method, stack: stack.length ? stack : [method], weight: 0,
+        startedAt: this.durationClock?.read()};
     }
     this.pending.weight += weight;
-    if (this.pending.weight >= this.sampleBudget) this.flushSample();
+    if (this.pending.weight >= this.sampleBudget) this.flushSample(true);
   }
 
-  flushSample() {
+  flushSample(continueTiming = false) {
     const sample = this.pending;
     if (!sample) return;
-    this.pending = null;
-    for (const method of sample.stack) this.methods[method].inclusiveInstructions += sample.weight;
+    const now = this.durationClock?.read();
+    const milliseconds = this.durationClock ? now - sample.startedAt : 0;
+    if (this.durationClock) this.durationClock.record(milliseconds);
+    // Instruction hooks run before dispatch. A budget flush must keep measuring
+    // the following work even if call/return/boundary is the next profiler hook.
+    this.pending = continueTiming && this.durationClock ? {...sample, weight: 0, startedAt: now} : null;
+    this.methods[sample.method].exclusiveMilliseconds += milliseconds;
+    for (const method of sample.stack) {
+      this.methods[method].inclusiveInstructions += sample.weight;
+      this.methods[method].inclusiveMilliseconds += milliseconds;
+    }
     const key = sample.stack.join(',');
     let index = this.stackIds.get(key);
     if (index === undefined) {
       if (this.samples.length < this.maxStacks - 1) {
         index = this.samples.length;
-        this.samples.push({stack: sample.stack, weight: 0});
+        this.samples.push({stack: sample.stack, weight: 0, milliseconds: 0});
         this.stackIds.set(key, index);
       } else {
         this.stackOverflow += sample.weight;
+        this.stackDurationOverflow += milliseconds;
         index = this.maxStacks - 1;
-        this.samples[index] ??= {stack: [1], weight: 0};
+        this.samples[index] ??= {stack: [1], weight: 0, milliseconds: 0};
       }
     }
     this.samples[index].weight += sample.weight;
+    this.samples[index].milliseconds += milliseconds;
   }
 
   allocation(bytes, type, kind, resize = false) {
@@ -177,9 +194,12 @@ export class ExecutionProfiler {
     return {format: 'SharpForge.ExecutionProfile/1', clock: 'instructions',
       instructions: this.instructions, allocations: this.allocations, allocatedBytes: this.allocatedBytes,
       suspensions: this.suspensions, sampleBudget: this.sampleBudget,
-      overflow: {methods: this.methodOverflow, stackInstructions: this.stackOverflow, allocationBytes: this.siteOverflow},
+      duration: {enabled: !!this.durationClock, clock: this.durationClock ? 'monotonic' : null, unit: 'milliseconds',
+        totalMilliseconds: this.durationClock?.totalMilliseconds ?? 0, intervals: this.durationClock?.intervals ?? 0},
+      overflow: {methods: this.methodOverflow, stackInstructions: this.stackOverflow,
+        stackMilliseconds: this.stackDurationOverflow, allocationBytes: this.siteOverflow},
       methods: this.methods.map(method => ({...method})),
-      samples: this.samples.map(sample => ({stack: [...sample.stack], weight: sample.weight})),
+      samples: this.samples.map(sample => ({stack: [...sample.stack], weight: sample.weight, milliseconds: sample.milliseconds})),
       allocationSites: [...this.sites.values()].map(site => ({...site})), events: this.events.export()};
   }
 }
