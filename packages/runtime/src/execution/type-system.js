@@ -1,5 +1,6 @@
 import {exceptionMatches} from './exception-types.js';
-import {CilError,CilDispatchTable,decodeCoded} from '@sharpforge/cil';
+import {CilError,decodeCoded} from '@sharpforge/cil';
+import {VirtualDispatch} from './vtable.js';
 import {MethodTableRegistry} from './method-table.js';
 import {castCacheFor} from './casting.js';
 import {FieldResolutionCache} from './field-resolution-cache.js';
@@ -15,7 +16,7 @@ export class CilTypeSystem {
     this.layouts=new Map();
     this.fieldCache=new FieldResolutionCache(this);
     this.initializers=new Map();
-    this.dispatch=new CilDispatchTable(vm.inspector);
+    this.dispatch=new VirtualDispatch(vm.inspector);
     const metadata=vm.inspector.metadata;
     this.methodTables=new MethodTableRegistry({tokenResolver:token=>cachedTypeName(vm,token)});
     for(const type of this.types.values()) {

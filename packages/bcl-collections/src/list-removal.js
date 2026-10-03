@@ -1,7 +1,8 @@
 import {integer} from '@sharpforge/bcl-core';
 import {count, change, writeArray} from './legacy-storage.js';
 
-function removeSpan(p, reference, index, length) {
+/** Remove an already validated span without replacing storage; retain released version semantics. */
+export function removeListSpan(p, reference, index, length) {
   const size = count(p, reference);
   const remaining = size - length;
   if (length) {
@@ -22,9 +23,9 @@ function removeSpan(p, reference, index, length) {
 export function listRemoval(p, descriptor, context) {
   const {reference, native, size} = context;
   if (descriptor.name === 'RemoveAt') {
-    return removeSpan(p, reference, integer(p, native[0], 0, size - 1), 1);
+    return removeListSpan(p, reference, integer(p, native[0], 0, size - 1), 1);
   }
   const index = integer(p, native[0], 0, size);
   const length = integer(p, native[1], 0, size - index);
-  return removeSpan(p, reference, index, length);
+  return removeListSpan(p, reference, index, length);
 }
