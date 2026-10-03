@@ -18,7 +18,7 @@ export const workbenchMenus = Object.freeze([
     'tool:background-tasks', 'tool:notifications', 'workbench.commandWindow']},
   {id: 'extensions', title: 'Extensions', mnemonic: 'x', commands: ['extensions', 'generatedSources']},
   {id: 'window', title: 'Window', mnemonic: 'w', commands: ['window.saveLayout', 'window.manageLayouts', 'window.resetLayout',
-    'window.windows', 'window.autoHideAll', 'window.float', 'window.dock', 'window.new', 'window.fullscreen', 'window.closeAll']},
+    'window.windows', 'window.autoHideAll', 'window.float', 'window.dock', 'window.newWindow', 'window.fullscreen', 'window.closeAllDocuments']},
   {id: 'help', title: 'Help', mnemonic: 'h', commands: ['examples', 'shortcuts', 'architecture', 'profile', 'about']}
 ]);
 

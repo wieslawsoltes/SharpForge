@@ -6,10 +6,15 @@ export class WorkbenchPerformance {
     this.enabled = enabled;
     this.samples = [];
     this.offset = 0;
+    this.seen = new Map();
   }
   start(name, sessionId = 'workbench') {
     if (!this.enabled) return null;
-    return {name, sessionId, start: this.clock(), cold: !this.samples.some(item => item?.name === name && item.sessionId === sessionId)};
+    let names = this.seen.get(sessionId);
+    if (!names) this.seen.set(sessionId, names = new Set());
+    const cold = !names.has(name);
+    names.add(name);
+    return {name, sessionId, start: this.clock(), cold};
   }
   end(mark, metadata) {
     if (!mark) return;

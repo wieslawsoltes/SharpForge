@@ -81,7 +81,14 @@ export class ContextKeys extends WorkbenchEvents {
     this.emit({key, value, context: this.snapshot()});
   }
   update(values) {
-    for (const [key, value] of Object.entries(values)) this.set(key, value);
+    const changes = [];
+    for (const [key, value] of Object.entries(values)) {
+      assertId(key, 'Context key');
+      if (Object.is(this.values[key], value)) continue;
+      this.values[key] = value;
+      changes.push({key, value});
+    }
+    if (changes.length) this.emit({changes, context: this.snapshot()});
   }
   matches(expression) { return compileWhen(expression)(this.values); }
 }

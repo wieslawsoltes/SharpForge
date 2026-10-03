@@ -7,7 +7,8 @@ export const settingsDefaults = Object.freeze({
     theme: 'dark', density: 'compact', fontFamily: 'system-ui', fontSize: 12,
     showStartWindow: true, firstRunComplete: false, keymap: 'visual-studio'
   },
-  editor: {fontSize: 14, tabSize: 4, insertSpaces: true, wordWrap: false, lineNumbers: true, zoom: 100},
+  editor: {fontSize: 14, tabSize: 4, indentSize: 4, insertSpaces: true, wordWrap: false, lineNumbers: true, zoom: 100,
+    endOfLine: '\n', renderWhitespace: false, trimTrailingWhitespace: false, insertFinalNewline: false, virtualSpace: false},
   keyboard: {bindings: []},
   debugging: {stopOnEntry: true, breakOnUnhandled: true, recordHistory: true},
   designer: {snapToGrid: true, gridSize: 8},

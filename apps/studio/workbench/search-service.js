@@ -115,11 +115,12 @@ export class WorkspaceSymbolIndex {
     const result = [];
     for (const document of this.documents.list()) {
       signal?.throwIfAborted();
+      const version = document.version;
       const symbols = await cancellable(this.request('symbols', {uri: document.uri}, {signal}), signal);
       if (this.disposed || generation !== this.generation) throw abortError('Symbol query superseded');
-      if (this.documents.get(document.uri)?.version !== document.version) continue;
+      if (this.documents.get(document.uri)?.version !== version) continue;
       const batch = symbols.filter(symbol => fuzzyMatch(symbol.name, query)).map(symbol => ({...symbol,
-        uri: document.uri, version: document.version, projectId: document.projectId}));
+        uri: document.uri, version, projectId: document.projectId}));
       result.push(...batch);
       onBatch(batch);
       if (result.length >= 20000) return result.slice(0, 20000);

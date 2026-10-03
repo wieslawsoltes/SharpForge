@@ -30,6 +30,7 @@ export function mountCodeDefinition(host, {request, documents, context, readDocu
     const current = context();
     const file = documents.get(current.uri);
     if (!file) { title.textContent = 'No active source document'; source.value = ''; return; }
+    const version = file.version;
     try {
       const definition = await cancellable(request('definition', {uri: current.uri, offset: current.offset}), controller.signal);
       let target;
@@ -42,7 +43,7 @@ export function mountCodeDefinition(host, {request, documents, context, readDocu
         while (end < file.text.length && /[\w.]/u.test(file.text[end])) end++;
         target = await frameworkDefinition(hover?.symbol?.type ?? file.text.slice(start, end));
       }
-      if (serial !== generation || controller.signal.aborted || documents.get(file.uri)?.version !== file.version) return;
+      if (serial !== generation || controller.signal.aborted || documents.get(file.uri)?.version !== version) return;
       if (!target) { title.textContent = 'No bound source or framework metadata definition at the caret'; source.value = ''; return; }
       title.textContent = target.uri;
       source.value = target.text;

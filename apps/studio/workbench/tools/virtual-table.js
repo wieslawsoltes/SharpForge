@@ -15,6 +15,8 @@ export class VirtualTable {
     this.overscan = overscan;
     this.format = format;
     this.index = rows.length ? 0 : -1;
+    this.dataRevision = 0;
+    this.columnRevision = 0;
     this.controller = new AbortController();
     this.root = element(this.document, 'div', {className: 'wb-grid', role: 'grid', tabIndex: 0, 'aria-label': label});
     this.header = element(this.document, 'div', {className: 'wb-grid-header', role: 'row'});
@@ -39,10 +41,11 @@ export class VirtualTable {
       this.header.append(element(this.document, 'div', {role: 'columnheader', text: column.title}));
     }
   }
-  setColumns(columns) { this.columns = columns; this.renderHeader(); this.render(); }
+  setColumns(columns) { this.columns = columns; this.columnRevision++; this.renderHeader(); this.render(); }
   setRows(rows) {
     const selected = this.rows[this.index];
     this.rows = rows;
+    this.dataRevision++;
     const previous = selected ? rows.findIndex(row => this.key(row) === this.key(selected)) : -1;
     this.index = rows.length ? previous >= 0 ? previous : Math.min(Math.max(0, this.index), rows.length - 1) : -1;
     this.root.setAttribute('aria-rowcount', String(rows.length + 1));
@@ -75,12 +78,18 @@ export class VirtualTable {
     const start = Math.max(0, Math.floor(this.viewport.scrollTop / this.rowHeight) - this.overscan);
     const count = Math.ceil((this.viewport.clientHeight || 280) / this.rowHeight) + this.overscan * 2;
     const end = Math.min(this.rows.length, start + count);
+    const windowKey = `${start}:${end}:${this.dataRevision}:${this.columnRevision}`;
+    if (windowKey === this.windowKey) {
+      for (const row of this.body.children) row.setAttribute('aria-selected', String(Number(row.dataset.rowIndex) === this.index));
+      return;
+    }
+    this.windowKey = windowKey;
     this.body.style.transform = `translateY(${start * this.rowHeight}px)`;
     this.body.replaceChildren();
     for (let index = start; index < end; index++) {
       const data = this.rows[index];
       const row = element(this.document, 'div', {className: 'wb-grid-row', role: 'row',
-        'aria-rowindex': index + 2, 'aria-selected': index === this.index, 'data-row-key': this.key(data)});
+        'aria-rowindex': index + 2, 'aria-selected': index === this.index, 'data-row-key': this.key(data), 'data-row-index': index});
       row.style.height = this.rowHeight + 'px';
       row.style.gridTemplateColumns = this.template();
       for (const column of this.columns) {

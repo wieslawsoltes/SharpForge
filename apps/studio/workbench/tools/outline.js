@@ -29,11 +29,12 @@ export function mountOutline(host, {request, context, documents, navigate, desig
     }
     const file = documents.get(selection.uri);
     if (!file) { tree.setNodes([]); return; }
+    const version = file.version;
     try {
       const symbols = await cancellable(request('symbols', {uri: file.uri}), controller.signal);
-      if (current !== generation || documents.get(file.uri)?.version !== file.version) return;
+      if (current !== generation || documents.get(file.uri)?.version !== version) return;
       if (alphabetical) symbols.sort((left, right) => left.name.localeCompare(right.name));
-      tree.setNodes(hierarchicalSymbols(symbols.map(symbol => ({...symbol, uri: file.uri, version: file.version}))));
+      tree.setNodes(hierarchicalSymbols(symbols.map(symbol => ({...symbol, uri: file.uri, version}))));
       follow();
     } catch (error) { if (error.name !== 'AbortError') throw error; }
   }, onError);

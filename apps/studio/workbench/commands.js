@@ -6,7 +6,7 @@ export const commandAliases = Object.freeze({
   'Build.BuildSolution': 'build', 'File.SaveAll': 'save', 'File.OpenFile': 'open',
   'Edit.Find': 'find', 'Edit.FindInFiles': 'findFiles', 'Tools.Options': 'workbench.options',
   'View.ErrorList': 'tool:problems', 'View.Output': 'tool:output',
-  'View.CommandWindow': 'tool:command-window', 'Window.CloseAllDocuments': 'window.closeAll'
+  'View.CommandWindow': 'tool:command-window', 'Window.CloseAllDocuments': 'window.closeAllDocuments'
 });
 
 const policy = Object.freeze({
