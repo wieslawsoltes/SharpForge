@@ -1,6 +1,6 @@
 import {runtimeTypeRoots,clearRuntimeTypes,runtimeTypeText} from './execution/tokens.js';
 import {checkArrayStore} from './execution/casting.js';
-import {storageDefault,storageValue} from './execution/storage.js';
+import {storageDefault,storageValue,staticStorageType} from './execution/storage.js';
 import {enumToString} from './execution/enums.js';
 import {literalString,stringRoots,clearStrings} from './execution/strings.js';
 import {ManagedPlatform} from './platform.js';
@@ -75,22 +75,27 @@ export class CilVirtualMachine {
   address(kind,index,owner){return Object.freeze({byref:true,kind,index,owner,frameId:this.top.id});}
   dereference(address,write=false,value){
     if(!address?.byref)throw new ManagedFault('InvalidProgramException','A managed address is required');
-    let slots, old;
+    let slots, old, storageType;
     if(['box','field','array'].includes(address.kind)){
       const r=address.kind==='array'?this.indexed(address.owner,address.index):this.heap.get(address.owner);
       if(address.kind==='box'&&r.kind!=='box')throw new ManagedFault('InvalidProgramException','A boxed value address is required');
       slots=r.data;
+      storageType = address.kind === 'array' ? r.methodTable.elementType.name :
+        address.kind === 'box' ? r.methodTable.name : r.methodTable.fields[address.index]?.type.name;
     } else if(address.kind==='static') {
       if(!this.statics.has(address.index))throw new ManagedFault('InvalidProgramException','Unknown static slot');
+      if (write) storageType = staticStorageType(this, address.index);
     } else {
       if(!['arg','local'].includes(address.kind))throw new ManagedFault('InvalidProgramException','Unknown managed address');
       const frame=this.frames.find(f=>f.id===address.frameId);
       if(!frame)throw new ManagedFault('InvalidProgramException','Managed address outlived its frame');
       slots=address.kind==='arg'?frame.args:frame.locals;
+      storageType = this.slotType(frame, address.kind === 'arg', address.index);
     }
     if(slots&&(!Number.isInteger(address.index)||address.index<0||address.index>=slots.length))throw new ManagedFault('InvalidProgramException','Invalid managed address slot');
     old=slots?slots[address.index]:this.statics.get(address.index);
     if(write){
+      value = this.storage(value, storageType);
       if(address.kind==='array')checkArrayStore(this.heap,this.heap.get(address.owner),value);
       if(slots)slots[address.index]=value;else this.statics.set(address.index,value);
       this.writeRevision++;
