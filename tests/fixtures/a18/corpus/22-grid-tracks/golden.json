@@ -1,0 +1,121 @@
+{
+  "accepted": true,
+  "category": "layout",
+  "compilationSucceeded": true,
+  "diagnostics": [],
+  "document": {
+    "height": 480,
+    "name": "View",
+    "nodes": [
+      {
+        "children": [],
+        "events": {},
+        "id": "action",
+        "properties": {
+          "Column": 0,
+          "Content": "Run",
+          "Height": 40,
+          "Name": "Action",
+          "Row": 0,
+          "Width": 160
+        },
+        "type": "Microsoft.UI.Xaml.Controls.Button"
+      },
+      {
+        "children": [
+          "action"
+        ],
+        "columns": [
+          {
+            "GridUnitType": 1,
+            "Value": 240,
+            "valueType": "Microsoft.UI.Xaml.GridLength"
+          }
+        ],
+        "events": {},
+        "id": "root",
+        "properties": {
+          "Height": 480,
+          "Name": "Root",
+          "Width": 640
+        },
+        "rows": [
+          {
+            "GridUnitType": 2,
+            "Value": 1,
+            "valueType": "Microsoft.UI.Xaml.GridLength"
+          }
+        ],
+        "type": "Microsoft.UI.Xaml.Controls.Grid"
+      },
+      {
+        "children": [
+          "root"
+        ],
+        "events": {},
+        "id": "window",
+        "properties": {},
+        "type": "Microsoft.UI.Xaml.Window"
+      }
+    ],
+    "root": "window",
+    "styles": {},
+    "templates": {},
+    "version": 1,
+    "width": 640
+  },
+  "entry": {
+    "className": "View",
+    "methodName": "Create",
+    "uri": "View.cs"
+  },
+  "fixture": "22-grid-tracks",
+  "identity": [
+    {
+      "declaration": {
+        "end": 318,
+        "start": 312,
+        "uri": "View.cs"
+      },
+      "designId": "action",
+      "field": false,
+      "uri": "View.cs",
+      "variable": "action"
+    },
+    {
+      "declaration": {
+        "end": 239,
+        "start": 235,
+        "uri": "View.cs"
+      },
+      "designId": "root",
+      "field": false,
+      "uri": "View.cs",
+      "variable": "root"
+    },
+    {
+      "declaration": {
+        "end": 205,
+        "start": 199,
+        "uri": "View.cs"
+      },
+      "designId": "window",
+      "field": false,
+      "uri": "View.cs",
+      "variable": "window"
+    }
+  ],
+  "ownership": {
+    "designer": 10,
+    "handwritten": 0
+  },
+  "protectedStatements": 0,
+  "sources": [
+    {
+      "sha256": "48d251e9efe866743a514dd26eb2dbef2c83c3139cb5978e72dde82d1ca4e003",
+      "uri": "View.cs"
+    }
+  ],
+  "structuralEditable": true,
+  "unsupportedConstructs": []
+}

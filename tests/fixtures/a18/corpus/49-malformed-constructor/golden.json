@@ -1,0 +1,11 @@
+{
+  "accepted": false,
+  "code": "SFSYNC_PARSE",
+  "fixture": "49-malformed-constructor",
+  "sources": [
+    {
+      "sha256": "7ca18b6fc26f0ccf1c57a3e4072f507ad6204ef67df8574bd99cfa3cef9bf48d",
+      "uri": "View.cs"
+    }
+  ]
+}

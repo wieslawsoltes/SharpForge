@@ -1,0 +1,133 @@
+{
+  "accepted": true,
+  "category": "partial",
+  "compilationSucceeded": true,
+  "diagnostics": [],
+  "document": {
+    "height": 480,
+    "name": "View",
+    "nodes": [
+      {
+        "children": [],
+        "events": {},
+        "id": "action",
+        "properties": {
+          "Content": "Run",
+          "Height": 40,
+          "Left": 20,
+          "Name": "Action",
+          "Top": 30,
+          "Width": 160
+        },
+        "template": "frameTemplate",
+        "type": "Microsoft.UI.Xaml.Controls.Button"
+      },
+      {
+        "children": [
+          "action"
+        ],
+        "events": {},
+        "id": "root",
+        "properties": {
+          "Height": 480,
+          "Name": "Root",
+          "Width": 640
+        },
+        "type": "Microsoft.UI.Xaml.Controls.Canvas"
+      },
+      {
+        "children": [
+          "root"
+        ],
+        "events": {},
+        "id": "window",
+        "properties": {},
+        "type": "Microsoft.UI.Xaml.Window"
+      }
+    ],
+    "root": "window",
+    "styles": {},
+    "templates": {
+      "frameTemplate": {
+        "root": {
+          "bindings": {},
+          "children": [
+            {
+              "bindings": {},
+              "children": [],
+              "id": "label",
+              "properties": {
+                "Text": "Template"
+              },
+              "type": "Microsoft.UI.Xaml.Controls.TextBlock"
+            }
+          ],
+          "id": "frame",
+          "properties": {},
+          "type": "Microsoft.UI.Xaml.Controls.Border"
+        },
+        "targetType": "Microsoft.UI.Xaml.Controls.Button"
+      }
+    },
+    "version": 1,
+    "width": 640
+  },
+  "entry": {
+    "className": "View",
+    "methodName": "Create",
+    "uri": "View.cs"
+  },
+  "fixture": "35-template-partial",
+  "identity": [
+    {
+      "declaration": {
+        "end": 384,
+        "start": 378,
+        "uri": "View.cs"
+      },
+      "designId": "action",
+      "field": false,
+      "uri": "View.cs",
+      "variable": "action"
+    },
+    {
+      "declaration": {
+        "end": 303,
+        "start": 299,
+        "uri": "View.cs"
+      },
+      "designId": "root",
+      "field": false,
+      "uri": "View.cs",
+      "variable": "root"
+    },
+    {
+      "declaration": {
+        "end": 267,
+        "start": 261,
+        "uri": "View.cs"
+      },
+      "designId": "window",
+      "field": false,
+      "uri": "View.cs",
+      "variable": "window"
+    }
+  ],
+  "ownership": {
+    "designer": 10,
+    "handwritten": 0
+  },
+  "protectedStatements": 0,
+  "sources": [
+    {
+      "sha256": "c46b97889f7798f26817b2931c8774229896fe698ef90ff85476f12dd7ceedec",
+      "uri": "View.cs"
+    },
+    {
+      "sha256": "e113f7a54d1fa8bcd0f579ee34d9c85b5e443b9d0f6f3eb736526d74a986e1ef",
+      "uri": "Template.cs"
+    }
+  ],
+  "structuralEditable": true,
+  "unsupportedConstructs": []
+}
