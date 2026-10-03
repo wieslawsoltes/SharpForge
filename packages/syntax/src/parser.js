@@ -1,3 +1,4 @@
+import {arrayTypeSuffix, skipArrayType, memoryIndices, memoryAllocation, memoryPrefix} from './memory.js';
 import {operatorPrecedence as precedence, closeAngleCount, splitTypeClose} from './operators.js';
 import {parseSynchronizationStatement,parseSynchronizationPrefix,parseSynchronizationTypeArguments} from './synchronization.js';
 import { SourceText, diagnostic } from '@sharpforge/text';
@@ -44,8 +45,8 @@ export class Parser {
     if (typeKeywords.has(t.kind)) name=this.take().kind;
     else if (this.at('identifier')) name=this.parseName();
     else { this.error(t,'CS1031','Type expected'); name='error'; if(![';',')',',','}','eof'].includes(t.kind)) this.take(); }
-    if(this.match('<')){if(!/^(?:System\.(?:(?:Threading\.Tasks|Collections\.Generic|Numerics)\.)?)?(?:Task|Action|Func|List|Dictionary|HashSet|Queue|Stack|Vector)$/.test(name))this.error(t,'SF1012','Only registered closed framework generic types are supported');const args=[];do{args.push(this.type());}while(this.match(','));splitTypeClose(this);this.expect('>');name+='<'+args.join(', ')+'>'; }
-    while (this.at('[') && this.peek().kind === ']') { this.take(); this.take(); name += '[]'; }
+    if(this.match('<')){if(!/^(?:System\.(?:(?:Threading\.Tasks|Collections\.Generic|Numerics)\.)?)?(?:Task|Action|Func|List|Dictionary|HashSet|Queue|Stack|Vector|Span|ReadOnlySpan)$/.test(name))this.error(t,'SF1012','Only registered closed framework generic types are supported');const args=[];do{args.push(this.type());}while(this.match(','));splitTypeClose(this);this.expect('>');name+='<'+args.join(', ')+'>'; }
+    name = arrayTypeSuffix(this, name);
     if (this.match('?')) this.error(t,'SF1013','Nullable type annotations are not implemented');
     return name;
   }
@@ -60,7 +61,7 @@ export class Parser {
     let i=this.i; while(modifiers.has(this.tokens[i]?.kind)) i++;
     if(!typeKeywords.has(this.tokens[i]?.kind)&&this.tokens[i]?.kind!=='identifier')return false;
     i++; while(this.tokens[i]?.kind==='.'&&this.tokens[i+1]?.kind==='identifier')i+=2;
-    if(this.tokens[i]?.kind==='<'){let depth=0,steps=0;do{const k=this.tokens[i++]?.kind;depth+=k==='<'?1:-closeAngleCount(k);if(++steps>128)return false;}while(depth>0&&this.tokens[i]?.kind!=='eof');}while(this.tokens[i]?.kind==='['&&this.tokens[i+1]?.kind===']')i+=2;
+    if(this.tokens[i]?.kind==='<'){let depth=0,steps=0;do{const k=this.tokens[i++]?.kind;depth+=k==='<'?1:-closeAngleCount(k);if(++steps>128)return false;}while(depth>0&&this.tokens[i]?.kind!=='eof');}i=skipArrayType(this.tokens,i);
     return this.tokens[i]?.kind==='identifier'&&this.tokens[i+1]?.kind==='(';
   }
   looksLikeCast() {
@@ -112,7 +113,7 @@ export class Parser {
     let i=this.i;if(this.tokens[i]?.kind==='const')i++;
     if(!typeKeywords.has(this.tokens[i]?.kind)&&this.tokens[i]?.kind!=='identifier')return false;i++;
     while(this.tokens[i]?.kind==='.'&&this.tokens[i+1]?.kind==='identifier')i+=2;
-    if(this.tokens[i]?.kind==='<'){let depth=0,steps=0;do{const k=this.tokens[i++]?.kind;depth+=k==='<'?1:-closeAngleCount(k);if(++steps>128)return false;}while(depth>0&&this.tokens[i]?.kind!=='eof');}while(this.tokens[i]?.kind==='['&&this.tokens[i+1]?.kind===']')i+=2;
+    if(this.tokens[i]?.kind==='<'){let depth=0,steps=0;do{const k=this.tokens[i++]?.kind;depth+=k==='<'?1:-closeAngleCount(k);if(++steps>128)return false;}while(depth>0&&this.tokens[i]?.kind!=='eof');}i=skipArrayType(this.tokens,i);
     return this.tokens[i]?.kind==='identifier'&&['=',';',',',')'].includes(this.tokens[i+1]?.kind);
   }
   local(semicolon=true) {
@@ -149,7 +150,7 @@ export class Parser {
       if(this.match('?.')){const id=this.expect('identifier');left=this.node('ConditionalMember',left,{target:left,name:id.value,nameSpan:{start:id.start,end:id.end}});continue;}
       if(this.at('?')&&this.peek().kind==='['&&16>=min){this.take();this.take();const index=this.expression();this.expect(']');left=this.node('ConditionalIndex',left,{target:left,index});continue;}
       if(this.match('.')){const id=this.expect('identifier');left=this.node('Member',left,{target:left,name:id.value,nameSpan:{start:id.start,end:id.end}});continue;}
-      if(this.at('[')&&16>=min){this.take();const index=this.expression();this.expect(']');left=this.node('Index',left,{target:left,index});continue;}
+      if(this.at('[')&&16>=min){const indices=memoryIndices(this);left=this.node('Index',left,{target:left,index:indices[0],indices});continue;}
       if(['++','--'].includes(this.current.kind)&&16>=min){const op=this.take().kind;left=this.node('Unary',left,{operator:op,operand:left,postfix:true});continue;}
       if(this.at('switch')&&min<=2){this.take();this.expect('{');const arms=[];while(!this.at('}')&&!this.at('eof')){const before=this.i,armStart=this.current;const pattern=this.at('identifier')&&this.current.value==='_'?(this.take(),null):this.expression(2);this.expect('=>');const expression=this.expression();arms.push(this.node('SwitchArm',armStart,{pattern,expression}));if(!this.match(','))break;this.guardProgress(before);}this.expect('}');left=this.node('SwitchExpression',left,{expression:left,arms});continue;}
       if(this.at('?')&&min<=2){this.take();const whenTrue=this.expression();this.expect(':');const whenFalse=this.expression(2);left=this.node('Conditional',left,{condition:left,whenTrue,whenFalse});continue;}
@@ -158,7 +159,7 @@ export class Parser {
     this.depth--;return left;
   }
   prefix() {
-    const t=this.take();const synchronization=parseSynchronizationPrefix(this,t);if(synchronization)return synchronization;
+    const t=this.take();const memory=memoryPrefix(this,t);if(memory)return memory;const synchronization=parseSynchronizationPrefix(this,t);if(synchronization)return synchronization;
     if(t.kind==='interpolated'){
       const parts=t.value.map(part=>{if(part.text!==undefined)return {...part};const inner=lex(new SourceText(part.expression,this.source.uri)),p=new Parser({...inner,source:this.source,tokens:inner.tokens.map(x=>({...x,start:x.start+part.start,end:x.end+part.start,fullStart:x.fullStart+part.start})),diagnostics:[]});const expression=p.expression();if(!p.at('eof'))p.error(p.current,'CS1003','Unexpected trailing interpolation input');for(const d of inner.diagnostics)this.error({start:part.start,end:part.end},d.code,d.message);this.diagnostics.push(...p.diagnostics);return {...part,expression};});return this.node('InterpolatedString',t,{parts});
     }
@@ -178,8 +179,7 @@ export class Parser {
     }
     if(t.kind==='new'){
       let type=this.at('(')?'<target>':this.at('[')?'var':this.type();
-      if(this.match('[')){const length=this.at(']')?null:this.expression();this.expect(']');type+='[]';let values=null;if(this.at('{'))values=this.arrayInitializer();return this.node('NewArray',t,{type,length,values});}
-      if(type.endsWith('[]')){const values=this.at('{')?this.arrayInitializer():[];return this.node('NewArray',t,{type,length:null,values});}
+      const allocation=memoryAllocation(this,t,type);if(allocation)return allocation;
       const args=[];if(!this.at('{')){this.expect('(');while(!this.at(')')&&!this.at('eof')){args.push(this.expression());if(!this.match(','))break;}this.expect(')');}
       const initializers=[],collectionInitializers=[];
       if(this.match('{')){const object=this.at('identifier')&&this.peek().kind==='=';while(!this.at('}')&&!this.at('eof')){const before=this.i;if(object){const id=this.expect('identifier');this.expect('=');initializers.push(this.node('Initializer',id,{name:id.value,nameSpan:{start:id.start,end:id.end},expression:this.expression()}));}else if(this.match('{')){const values=[];while(!this.at('}')&&!this.at('eof')){values.push(this.expression());if(!this.match(','))break;}this.expect('}');collectionInitializers.push(values);}else collectionInitializers.push([this.expression()]);if(!this.match(','))break;this.guardProgress(before);}this.expect('}');}

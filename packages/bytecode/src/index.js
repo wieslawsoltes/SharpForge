@@ -1,3 +1,5 @@
+import {Op, OpName} from './opcodes.js';
+import {memoryStackEffect} from './memory-verification.js';
 import {numericIntrinsicDefinitions} from './numeric-intrinsic-profile.js';
 import {syncIntrinsicDefinitions} from './sync-intrinsic-profile.js';
 import {numericTypeNames,decodeNumericMode} from './numeric/numeric-types.js';
@@ -7,8 +9,7 @@ import {contracts,enumTypes,frameworkType} from '@sharpforge/framework';
 export const FORMAT_VERSION = 1;
 // Numeric conversion IDs occupy the low range; enum targets retain declared identity.
 export const EnumConvertBase = 65536;
-export const Op = Object.freeze(Object.fromEntries(['SEQ','CONST','LDLOC','STLOC','LDSTATIC','STSTATIC','LDFLD','STFLD','DUP','POP','BINARY','UNARY','JUMP','JFALSE','JTRUE','CALL','BUILTIN','RET','NEWOBJ','NEWARR','LDELEM','STELEM','LENGTH','THROW','RETHROW','CONVERT','NOP','ENDFINALLY','DELEGATE','ENUM','ADDRESS'].map((n,i)=>[n,i])));
-export const OpName = Object.freeze(Object.keys(Op));
+export {Op, OpName} from './opcodes.js';
 export const Binary = Object.freeze(Object.fromEntries(['+','-','*','/','%','==','!=','<','<=','>','>=','&','|','^','<<','>>','>>>'].map((n,i)=>[n,i])));
 export const BinaryName = Object.freeze(Object.keys(Binary));
 export const Unary = Object.freeze({ '-':0, '+':1, '!':2, '~':3 });
@@ -54,7 +55,9 @@ export function verifyImage(image){
     for(const h of m.handlers){if(h.start<0||h.end>n||h.start>=h.end||h.target<0||h.target>=n||(h.kind==='finally'?(!Number.isInteger(h.handlerEnd)||h.handlerEnd<=h.target||h.handlerEnd>n):(h.slot<0||h.slot>=m.locals.length)))fail(m,0,'Invalid exception handler');else queue.push([h.target,0]);}
     while(queue.length){const [pc,height]=queue.pop();if(pc<0||pc>=n){fail(m,pc,'Control flow leaves the method');continue;}if(heights.has(pc)){if(heights.get(pc)!==height)fail(m,pc,'Inconsistent stack height at join');continue;}heights.set(pc,height);
       const op=m.code[pc*3],a=m.code[pc*3+1],b=m.code[pc*3+2];let need=0,delta=0;
-      switch(op){
+      const memory=memoryStackEffect(op,a,b,image.constants);
+      if(memory){need=memory.need;delta=memory.delta;if(!memory.valid)fail(m,pc,'Invalid memory instruction');}
+      else switch(op){
         case Op.ENUM:if(!enumTypes[a])fail(m,pc,'Invalid enum type');delta=1;break;case Op.DELEGATE:need=1;if(!image.methods[a]||frameworkType(image.constants[b])?.kind!=='delegate')fail(m,pc,'Invalid delegate');break;case Op.NOP:break;case Op.ENDFINALLY:if(height!==0)fail(m,pc,'Finally must have an empty stack');break;
         case Op.SEQ:if(!image.sequencePoints[a])fail(m,pc,'Invalid sequence point');break;
         case Op.CONST:if(a<0||a>=image.constants.length)fail(m,pc,'Invalid constant');else if(image.constants[a]?.scalar){try{decodeScalar(image.constants[a]);}catch{fail(m,pc,'Invalid scalar constant');}}delta=1;break;
@@ -99,3 +102,5 @@ export {uint32Binary, uint32Compare} from './numeric/uint32.js';
 export {nativeBinary, nativeSize} from './numeric/native-int.js';
 export {floatBinary, floatCompare, finiteFloat, ieeeRemainder} from './numeric/float.js';
 export {conversionTargets} from './numeric/conversions.js';
+
+export {arrayType, spanType, memoryTypeName, memoryOpcodes} from './memory-types.js';

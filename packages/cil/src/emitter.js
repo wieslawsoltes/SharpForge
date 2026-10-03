@@ -1,3 +1,4 @@
+import {emitMemoryInstruction} from './memory-emission.js';
 import {emitScalarConstant,emitScalarConversion,emitScalarBinary,emitScalarUnary,scalarMarker} from './scalar-emission.js';
 import {frameworkType,enumTypes} from '@sharpforge/framework';
 import { numericTypeNames,numericTypeName,decodeNumericMode, EnumConvertBase, Op, BinaryName, UnaryName, Builtins } from '@sharpforge/bytecode';
@@ -72,7 +73,7 @@ function emitMethod(c,d) {
     const handler=handlers.find(h=>h.target===pc);if(handler){prefixes.set(pc,w.length);if(handler.kind!=='finally')w.local('stloc',handler.slot);}
     const begin=w.length;starts[pc]=begin;const op=m.code[pc*3],a=m.code[pc*3+1],b=m.code[pc*3+2],input=analysis.states[pc];
     const top=input.at(-1),left=input.at(-2);let terminal=false;
-    switch(op){
+    if(!emitMemoryInstruction(w,c,{op,a,b,input,scratch:getScratch}))switch(op){
       case Op.ENUM:w.integer(b).op('box',c.resolveType(enumTypes[a])).op('unbox.any',c.resolveType(enumTypes[a]));break;case Op.DELEGATE:{const type=c.image.constants[b];w.op('ldftn',c.methodTokens.get(a)).op('newobj',c.external(type,'.ctor','void',['object','nint'],false));break;}case Op.SEQ:w.op('nop');break;case Op.NOP:w.op('nop').op('nop');break;case Op.ENDFINALLY:w.op('endfinally');terminal=true;break;
       case Op.CONST:{const value=c.image.constants[a],type=constantType(value,b);if(value?.scalar)emitScalarConstant(w,c,value);else if(type==='null')w.op('ldnull');else if(type==='string')w.op('ldstr',0x70000000|c.metadata.userString(value));else if(type==='double')w.op('ldc.r8',value);else {w.integer(value===true?1:value===false?0:value);if(type==='bool')w.op('conv.u1');}break;}
       case Op.ADDRESS:{const kind=a&3;if(kind===0)w.op('ldloca',b);else if(kind===1)w.op('ldsflda',c.staticTokens[b]);else if(kind===2){const field=c.fieldTokens.get(top.replace(/&$/,'')+':'+b);if(!field)throw new CilError('Unknown addressed field');w.op('ldflda',field);}else {if(a&4)w.op('readonly.');w.op('ldelema',c.resolveType(left.slice(0,-2)));}if(a&4)w.integer(4).op('pop');break;}
