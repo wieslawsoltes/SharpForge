@@ -43,6 +43,21 @@ uses this for synthesized classes such as `<>Cell(int)` and `ValueTuple(int;stri
 byrefs and void); `decodeTypeSignature` defaults to the stricter TypeSpec context.
 `MetadataBuilder.typeSpec(ast)` interns TypeSpec rows by encoded bytes.
 
+`encodeCustomAttribute(parameterTypes, values, namedArguments, options)` emits
+ECMA-335 II.23.3 blobs. Types accept signature ASTs or primitive names; enums use
+`{ kind: 'enum', name, underlying }`, arrays use `{ kind: 'szarray', element }`,
+and boxed objects use `{ type, value }` (plain `null` encodes a null boxed string).
+Named arguments are `{ name, isField, type, value }`. `System.Type` values are
+serialized type-name strings or null. Integers outside JavaScript's safe range
+require `BigInt`. A constructor token can replace `parameterTypes` when `options.metadata`
+is supplied; external enum storage requires `options.enumUnderlyingType(name, token)`.
+Unknown enums, invalid values, cancellation and size/depth limits produce coded
+`CilError`s. The optional limits are `maxBytes`, `maxStringBytes`, `maxArrayLength`,
+`maxNodes` and `maxDepth`; work and storage are linear in the encoded argument data.
+This API writes attribute blobs; emitting source attributes and pseudo-attribute
+flags/tables is tracked separately. The native gate is
+`node packages/cil/tools/validate-custom-attributes.mjs`.
+
 | Capability | API | Evidence |
 | --- | --- | --- |
 | Primitive and constructed types | Type AST encoder/decoder | SRM BlobEncoder corpus |
@@ -59,3 +74,6 @@ example and `node --test tests/a03-02-signatures.test.js` for the offline corpus
 The [metadata API](METADATA.md) exposes all 53 named table schemas, typed row writers,
 deduplicated heaps, required sorting, uncompressed pointer lists and bounded II.22
 structural diagnostics. See `examples/metadata/table-builder.mjs` for a runnable example.
+
+The [PE API](PE.md) supports AnyCPU/x86/x64/ARM64 output, console/library headers,
+desktop CLR import stubs, aligned multi-section layouts and all PE/CLI data directories.

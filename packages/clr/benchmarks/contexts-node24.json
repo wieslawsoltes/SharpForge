@@ -1,0 +1,37 @@
+{
+  "node": "v24.21.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "cpu": "Apple M3 Pro",
+  "imageBytes": 4096,
+  "gcAvailable": true,
+  "results": [
+    {
+      "name": "cold context and stream metadata load",
+      "unit": "microseconds/operation",
+      "median": 27.112499999999784,
+      "p95": 114.10829999999946,
+      "p99": 263.1,
+      "retainedHeapBytes": 191160,
+      "exactAllocationCount": "not measured"
+    },
+    {
+      "name": "warm assembly identity binding",
+      "unit": "microseconds/operation",
+      "median": 0.25625000000019327,
+      "p95": 0.6075000000001296,
+      "p99": 1.0970900000000938,
+      "retainedHeapBytes": 43368,
+      "exactAllocationCount": "not measured"
+    },
+    {
+      "name": "cached method body defensive copy",
+      "unit": "microseconds/operation",
+      "median": 0.2720899999999915,
+      "p95": 0.4783299999999713,
+      "p99": 0.8329200000000014,
+      "retainedHeapBytes": -355232,
+      "exactAllocationCount": "not measured"
+    }
+  ]
+}
