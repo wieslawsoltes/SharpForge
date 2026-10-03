@@ -1,0 +1,16 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "strings/concat-and-length":{"hash":"26ca8c25abb13767","kind":"output","langVersion":"14.0","diagnostics":[],"output":"Hello, World!\n13\nn=51\n6=n\nb=True d=1.5\n"},
+  "strings/search-and-slice":{"hash":"6c81dc40546387db","kind":"output","langVersion":"14.0","diagnostics":[],"output":"quick\nbrown fox\n4\n-1\nTrue\nTrue\nFalse\n"},
+  "strings/transform":{"hash":"465b580735cf97e7","kind":"output","langVersion":"14.0","diagnostics":[],"output":"[Mixed Case]\n  MIXED CASE  \n  mixed case  \nUpper Case\n007\nab  |\n"},
+  "strings/split-and-join":{"hash":"3a4c6040e153c376","kind":"output","langVersion":"14.0","diagnostics":[],"output":"3\na-b-c\none two  three\n"},
+  "strings/equality-and-compare":{"hash":"a213e2d550761c8d","kind":"output","langVersion":"14.0","diagnostics":[],"output":"True\nTrue\nTrue\nTrue\nTrue\nFalse\n"},
+  "strings/chars":{"hash":"ed97c59ccf279953","kind":"output","langVersion":"14.0","diagnostics":[],"output":"e\n101\nf\nTrue\nE\n2\n"},
+  "strings/escapes-and-verbatim":{"hash":"bfbe2c459006c9d1","kind":"output","langVersion":"14.0","diagnostics":[],"output":"tab\there\nquote\"inside\nback\\slash\nC:\\temp\\file\nsay \"hi\"\nno newline\n"},
+  "strings/string-builder":{"hash":"0a22bfb0a8ae1ed3","kind":"output","langVersion":"14.0","diagnostics":[],"output":"start:0,1,2,end\n16\n"},
+  "strings/format-and-tostring":{"hash":"06c41b875b60c960","kind":"output","langVersion":"14.0","diagnostics":[],"output":"1 + 2 = 3\na-b\n42\n3.14\nFF\nTrue\n"},
+  "strings/null-concat":{"hash":"727ab9179d2dfa59","kind":"output","langVersion":"14.0","diagnostics":[],"output":"[]\n[]\nTrue\n"},
+  "strings/cs1061-misspelled-length":{"hash":"a6180287a6ac6fdd","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1061",52,6,"error"]]},
+  "strings/cs0200-assign-length":{"hash":"9abb17967e5dee26","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0200",32,8,"error"]]},
+  "strings/cs0200-assign-char-index":{"hash":"a6ef89d1c1ee31aa","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0200",32,4,"error"]]},
+  "strings/cs1012-too-many-chars":{"hash":"b8a7dbabe81b1005","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1012",23,0,"error"]]}
+}}

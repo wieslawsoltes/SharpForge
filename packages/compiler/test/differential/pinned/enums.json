@@ -1,0 +1,7 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "enums/values-and-names":{"hash":"601acb818257411f","kind":"output","langVersion":"14.0","diagnostics":[],"output":"Green\n1\nBlue\nTrue\nTrue\n5\n"},
+  "enums/explicit-values-and-switch":{"hash":"6fded31eee97d245","kind":"output","langVersion":"14.0","diagnostics":[],"output":"low 10\nhigh 40\nunknown 7\n"},
+  "enums/flags":{"hash":"f92ac921ab229303","kind":"output","langVersion":"14.0","diagnostics":[],"output":"Read, Write\nTrue\nFalse\nTrue\n"},
+  "enums/cs0266-enum-to-int":{"hash":"046e0461bb7b1115","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0266",22,9,"error"]]},
+  "enums/cs0117-missing-enum-member":{"hash":"452faa61963a9c1a","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0117",38,6,"error"]]}
+}}

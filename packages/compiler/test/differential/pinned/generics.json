@@ -1,0 +1,9 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "generics/generic-class":{"hash":"d4795a8e03a3da27","kind":"output","langVersion":"14.0","diagnostics":[],"output":"6\n4\nBox(5) Box(five)\n"},
+  "generics/generic-method":{"hash":"538b756e83933a72","kind":"output","langVersion":"14.0","diagnostics":[],"output":"3\nx\nrl\n"},
+  "generics/constraint-and-pair":{"hash":"89c63ec3aee44945","kind":"output","langVersion":"14.0","diagnostics":[],"output":"9\npear\nk2\n"},
+  "generics/cs0305-wrong-arity":{"hash":"fab84d78641e3a22","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0305",48,14,"error"]]},
+  "generics/cs0411-cannot-infer":{"hash":"8424bdb44e7891e6","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0411",103,4,"error"]]},
+  "generics/cs0311-constraint-violated":{"hash":"122e98af0e7d5d66","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0311",104,4,"error"]]},
+  "generics/cs0308-non-generic-with-type-args":{"hash":"825877c842c3e731","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0308",73,6,"error"]]}
+}}
