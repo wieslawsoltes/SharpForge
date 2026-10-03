@@ -16,3 +16,4 @@ export {resolveExecutionField,genericTypeParts,substituteTypeArguments} from './
 
 export {numericIntrinsicDefinitions} from './numeric-intrinsic-profile.js';
 export {analyzeMethod} from './analysis.js';
+export {substituteCallType,callStorageType,instantiateSignature,callSignatureKey,resolveExecutionMethod,methodGenericParameters,managedDelegateSignature,supportedDelegateCall} from './call-profile.js';
