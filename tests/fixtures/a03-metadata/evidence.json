@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "9e40334955213d0c9960a5649c975d80ada64496",
+  "baselineMetadataMatches": "be738ee1",
+  "implementationCommit": "ef88dc7b",
+  "dotnetSdk": "10.0.201",
+  "node": "24.21.0",
+  "oracle": "System.Reflection.Metadata bundled with .NET SDK 10.0.201",
+  "metadataSHA256": "112536cef6484c38f3854651d49ccf72316b17312c5a98020976f40806bd8c78",
+  "srmSHA256": "29f219f73739263ba25a96ea6e1bb50289a3b3d5fba86f24ea8ef6808e50985f",
+  "before": {
+    "node": "v24.21.0",
+    "os": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M3 Pro",
+    "measurement": "heapUsed delta is an allocation proxy; explicit GC before iterations when --expose-gc is passed",
+    "blobs100k": {
+      "coldMs": 146.612834,
+      "medianMs": 158.524791,
+      "p95Ms": 177.222708,
+      "p99Ms": 177.222708,
+      "medianHeapDeltaBytes": 62554392
+    },
+    "read": {
+      "coldMs": 1.0481669999999212,
+      "medianMs": 0.1841669999998885,
+      "p95Ms": 0.8950419999998758,
+      "p99Ms": 1.0481669999999212,
+      "medianHeapDeltaBytes": 44656
+    },
+    "read10000Rows": {
+      "coldMs": 5.26962500000036,
+      "medianMs": 3.874457999999777,
+      "p95Ms": 6.832499999999982,
+      "p99Ms": 6.832499999999982,
+      "medianHeapDeltaBytes": 4964304
+    },
+    "validate": null
+  },
+  "after": {
+    "node": "v24.21.0",
+    "os": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M3 Pro",
+    "measurement": "heapUsed delta is an allocation proxy; explicit GC before iterations when --expose-gc is passed",
+    "blobs100k": {
+      "coldMs": 100.489833,
+      "medianMs": 78.44962500000003,
+      "p95Ms": 104.79954100000003,
+      "p99Ms": 104.79954100000003,
+      "medianHeapDeltaBytes": 54807912
+    },
+    "read": {
+      "coldMs": 0.5826670000000149,
+      "medianMs": 0.2997920000000249,
+      "p95Ms": 0.6312920000000304,
+      "p99Ms": 0.8188749999999345,
+      "medianHeapDeltaBytes": 69000
+    },
+    "read10000Rows": {
+      "coldMs": 2.73758399999997,
+      "medianMs": 2.066833000000088,
+      "p95Ms": 3.0594169999999394,
+      "p99Ms": 3.0594169999999394,
+      "medianHeapDeltaBytes": 1826648
+    },
+    "validate": {
+      "coldMs": 1.555458999999928,
+      "medianMs": 0.5379159999999956,
+      "p95Ms": 1.5532090000001517,
+      "p99Ms": 1.555458999999928,
+      "medianHeapDeltaBytes": 172424
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "file-scoped-namespaces/cs1529-using-after-a-type": ["diagnostics", "warnings"],
+  "file-scoped-namespaces/cs8954-two-file-scoped-namespaces": ["diagnostics", "warnings"],
+  "file-scoped-namespaces/cs8955-cs8956-mixed-with-block-namespaces": ["diagnostics", "warnings"],
+  "file-scoped-namespaces/cs8956-after-a-member": ["diagnostics", "warnings"],
+  "file-scoped-namespaces/cs8956-after-top-level-statements": ["diagnostics", "warnings"],
+  "file-scoped-namespaces/file-scoped-namespace-in-csharp-9": ["diagnostics", "warnings"],
+  "file-scoped-namespaces/types-and-usings-inside": ["diagnostics", "warnings", "bytecode", "cil"]
+}

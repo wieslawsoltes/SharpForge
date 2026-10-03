@@ -63,7 +63,7 @@ export class BinderCore {
     this.checked = false;
     this.localFunctions = [];
     this.usesGoto = false;
-    for (const p of context.parameters ?? context.method?.parameters ?? []) if (p.name) this.scopes[0].set(p.name, p);
+    for (const p of context.parameters ?? context.method?.parameters ?? []) if (p.name && !p.isDiscard) this.scopes[0].set(p.name, p);
     // Expression variables of a constructor initializer are in scope in the constructor body.
     for (const [name, symbol] of context.outerLocals ?? []) this.scopes[0].set(name, symbol);
   }
