@@ -2,6 +2,7 @@ import { utf8, equalBytes } from '@sharpforge/cil';
 import { sha256, sha1 } from './hash.js';
 import { PdbGuids, fail } from './contracts.js';
 import { lineIndex } from './source-span.js';
+import { decodeSource } from './source-encoding.js';
 export function verifySource(document, input) {
   const bytes = typeof input === 'string' ? utf8(input) : input;
   if (!(bytes instanceof Uint8Array)) fail('Source must be text or bytes');
@@ -10,53 +11,32 @@ export function verifySource(document, input) {
   return false;
 }
 export async function verifySourceAsync(document, input) {
-  if ([PdbGuids.sha256, PdbGuids.sha1].includes(document.hashAlgorithm)) return verifySource(document, input);
-  const algorithm = { [PdbGuids.sha384]: 'SHA-384', [PdbGuids.sha512]: 'SHA-512' }[document.hashAlgorithm];
-  if (!algorithm || !globalThis.crypto?.subtle) return false;
   const bytes = typeof input === 'string' ? utf8(input) : input;
+  if (!(bytes instanceof Uint8Array)) fail('Source must be text or bytes');
+  const algorithm = {
+    [PdbGuids.sha1]: 'SHA-1',
+    [PdbGuids.sha256]: 'SHA-256',
+    [PdbGuids.sha384]: 'SHA-384',
+    [PdbGuids.sha512]: 'SHA-512',
+  }[document.hashAlgorithm];
+  if (!algorithm) return false;
+  if (!globalThis.crypto?.subtle) return verifySource(document, bytes);
   return equalBytes(new Uint8Array(await crypto.subtle.digest(algorithm, bytes)), document.hash);
 }
-export function sourceLinkUrl(symbols, documentName) {
-  const matches = [];
-  for (const [pattern, url] of Object.entries(symbols.sourceLink?.documents ?? {})) {
-    const pos = pattern.indexOf('*');
-    if (pos < 0) {
-      if (pattern === documentName) matches.push({ url, specificity: Infinity });
-    } else {
-      const begin = pattern.slice(0, pos),
-        end = pattern.slice(pos + 1);
-      if (documentName.startsWith(begin) && documentName.endsWith(end)) {
-        const middle = documentName.slice(begin.length, documentName.length - end.length),
-          encoded = middle.split(/[\\/]/).map(encodeURIComponent).join('/');
-        matches.push({ url: url.replace('*', encoded), specificity: begin.length + end.length });
-      }
-    }
-  }
-  matches.sort((a, b) => b.specificity - a.specificity);
-  const value = matches[0]?.url;
-  if (!value) return null;
-  const u = new URL(value);
-  if (u.protocol !== 'https:' || u.username || u.password) fail('Source Link must use credential-free HTTPS');
-  return u.href;
-}
+export { sourceLinkUrl } from './source-link.js';
 /** Attach only checksum-verified source; never fetch Source Link implicitly. */
-export function bindSources(symbols, sources = {}) {
+export function bindSources(symbols, sources = {}, options = {}) {
   const byName = sources instanceof Map ? sources : new Map(Object.entries(sources)),
     documents = symbols.documents.map((d) => {
       const raw = byName.get(d.name) ?? d.embedded,
         bytes = typeof raw === 'string' ? utf8(raw) : raw,
         verified = bytes ? verifySource(d, bytes) : false;
-      let content = null;
-      if (verified) {
-        const hasUtf16 = (bytes[0] === 255 && bytes[1] === 254) || (bytes[0] === 254 && bytes[1] === 255);
-        content = hasUtf16
-          ? new TextDecoder(bytes[0] === 255 ? 'utf-16le' : 'utf-16be', { fatal: true }).decode(bytes)
-          : new TextDecoder('utf-8', { fatal: true }).decode(bytes);
-      }
+      const decoded = verified ? decodeSource(bytes, options) : null;
       return {
         ...d,
         verified,
-        text: content,
+        text: decoded?.text ?? null,
+        encoding: decoded?.encoding ?? null,
         reason:
           raw === undefined
             ? 'Source not supplied'

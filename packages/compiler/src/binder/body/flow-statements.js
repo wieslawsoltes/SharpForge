@@ -33,7 +33,11 @@ export const FlowStatementBinding = Base =>
         const type = collection.type;
         if (syntax.awaitKeyword) reportAwaitOutsideAsync(this, syntax.awaitKeyword);
         if (!collection.hasErrors && type && !type.isErrorType()) {
-          if (syntax.awaitKeyword) {
+          if (type.typeKind === TypeKind.Dynamic) {
+            // The enumerator is found at run time; an asynchronous one cannot be.
+            if (syntax.awaitKeyword) this.report(syntax.expression, 'CS8416');
+            element = syntax.awaitKeyword ? unknown : type;
+          } else if (syntax.awaitKeyword) {
             enumeration = bindAsyncForEach(this, collection, syntax.expression);
             element = enumeration?.elementType ?? unknown;
           } else if (type instanceof ArrayTypeSymbol) element = type.elementType;

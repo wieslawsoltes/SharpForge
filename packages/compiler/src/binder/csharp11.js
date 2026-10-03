@@ -127,7 +127,7 @@ const hasTypeParameter = type =>
 
 /** The part of a type argument that metadata cannot represent in an attribute: `dynamic`, tuple names, `T?` on a reference. */
 function unrepresentable(syntax, type) {
-  if (syntax.kind === 'IdentifierName' && syntax.identifier.valueText === 'dynamic' && type?.specialType === 'System_Object') return true;
+  if (syntax.kind === 'IdentifierName' && syntax.identifier.valueText === 'dynamic' && type?.typeKind === 'dynamic') return true;
   if (syntax.kind === 'TupleType' && [...syntax.elements].some(element => element.identifier)) return true;
   if (syntax.kind === 'NullableType' && type?.isReferenceType === true) return true;
   return [...syntax.childNodes()].some(child => /Type$|Name$|TypeArgumentList$|TupleElement$/.test(child.kind) && unrepresentable(child, null));

@@ -59,6 +59,7 @@ export function deconstructionOf(binder, type, count, receiver) {
     if (partTypes.length !== count) return { isArity: true, error: [{ code: 'CS8132', args: [partTypes.length, count] }] };
     return { kind: 'tuple', partTypes };
   }
+  if (type.typeKind === 'dynamic') return { error: [{ code: 'CS8133', args: [] }] };
   const found = findDeconstruct(binder, type, count, receiver);
   if (found) return { kind: 'method', ...found };
   // No method of that name at all is CS1061; one with another number of parameters is CS1501.
