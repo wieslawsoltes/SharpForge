@@ -170,13 +170,13 @@ test('CIL numeric seam: checked conversions cover every signed and unsigned targ
   assert.equal(convert('conv.ovf.u8.un', -1n), -1n);
 });
 
-test('CIL numeric seam: non-finite and out-of-range float conversions retain deterministic profile behavior', () => {
-  for (const raw of [NaN, Infinity, -Infinity]) {
-    assert.equal(convert('conv.i4', float(raw)), -2147483648);
-    assert.equal(convert('conv.i8', float(raw)), -9223372036854775808n);
+test('CIL numeric seam: non-finite and out-of-range float conversions follow the .NET 10 profile', () => {
+  for (const [raw, int32, int64] of [[NaN, 0, 0n], [Infinity, 2147483647, 9223372036854775807n], [-Infinity, -2147483648, -9223372036854775808n]]) {
+    assert.equal(convert('conv.i4', float(raw)), int32);
+    assert.equal(convert('conv.i8', float(raw)), int64);
     throwsFault(() => convert('conv.ovf.i4', float(raw)), 'OverflowException', 'Non-finite integer conversion');
   }
-  assert.equal(convert('conv.i4', float(2147483648)), -2147483648);
+  assert.equal(convert('conv.i4', float(2147483648)), 2147483647);
   assert.equal(convert('conv.i4', float(-2147483649)), -2147483648);
   assert.equal(convert('conv.i4', float(2147483647)), 2147483647);
   assert.equal(convert('conv.i4', float(-2147483648)), -2147483648);
