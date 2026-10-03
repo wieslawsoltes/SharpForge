@@ -11,12 +11,13 @@ not the host's culture registry. Invalid values produce `CilError`, surfaced as 
 the compiler. Defaults retain the existing version `0.2.0.0` and invariant culture.
 
 Canonical source replay reads identity from actual metadata instead of an embedded copy.
-This batch adds explicit assembly definition options only. AssemblyVersion/AssemblyCulture
-source attributes, referenced assembly identities and net9/net10 reference-pack versions
-remain separate work under SF-A03-T03.8. Signing is independent of version/culture.
+Explicit definition and reference options are supported here. AssemblyVersion/AssemblyCulture
+source attributes remain separate work under SF-A03-T03.8. Signing is independent of version/culture.
 
-Native `AssemblyName.GetAssemblyName` reference generation and focused tests are prepared
-under `tests/fixtures/a03-assembly-definition`; validation is pending its serial slot.
+Native `AssemblyName.GetAssemblyName` on .NET 10.0.5 confirms all five fixture identities
+under `tests/fixtures/a03-assembly-definition`. Focused tests pass for both JavaScript engines
+and all four emitted platforms, including composition with signing and resources. Browser
+and wider platform qualification remain separate.
 
 ## Input reference identities
 
@@ -37,3 +38,6 @@ Existing `net8`/`mscorlib4` fallback identities are unchanged. New `net9` and `n
 require supplied identity data for each referenced framework assembly; missing input fails
 explicitly. Canonical replay reconstructs those records from actual AssemblyRef metadata.
 Native reference-pack/GetReferencedAssemblies validation remains pending its queued slot.
+
+
+The full-key flag follows the [AssemblyFlags.PublicKey contract](https://learn.microsoft.com/en-us/dotnet/api/system.reflection.assemblyflags).
