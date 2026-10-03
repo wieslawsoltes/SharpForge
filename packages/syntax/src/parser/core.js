@@ -58,8 +58,8 @@ export class Parser {
     const [code, message] = expected[kind] ?? ['CS1003', `Syntax error, '${kind}' expected`];
     this.error(this.errorAnchor(), code, message); return this.missing(kind);
   }
-  /** Missing-token errors point at the end of the previous token, where the token should have been. */
-  errorAnchor() { const previous = this.tokens[this.i - 1]; return previous && this.current.start > previous.end ? { start: previous.end, end: previous.end } : this.current; }
+  /** Roslyn: a missing-token error sits at the end of the previous token when a line break follows it, and on the current token otherwise. */
+  errorAnchor() { const previous = this.tokens[this.i - 1]; return previous && (this.current.kind === 'eof' || /[\r\n\u0085\u2028\u2029]/.test(this.source.text.slice(previous.end, this.current.start))) && this.current.start > previous.end ? { start: previous.end, end: previous.end } : this.current; }
   id() {
     if (this.isId()) return this.take('IdentifierToken');
     this.error(this.current, 'CS1001', 'Identifier expected'); return this.cache.missing('IdentifierToken');
