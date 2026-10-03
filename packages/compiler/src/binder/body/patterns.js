@@ -106,29 +106,32 @@ export const PatternBinding = Base =>
           };
         case 'RecursivePattern': {
           const type = syntax.type ? this.bindType(syntax.type).type : inputType,
-            p = syntax.type ? this.typePattern(syntax, type, inputType) : { kind: 'RecursivePattern', syntax };
+            p = syntax.type ? this.typePattern(syntax, type, inputType) : { kind: 'RecursivePattern', syntax },
+            properties = [];
           for (const sub of syntax.propertyPatternClause?.subpatterns ?? []) {
-            const nameNode = sub.expressionColon?.expression ?? sub.nameColon?.name;
-            let memberType = unknown;
+            const nameNode = sub.expressionColon?.expression ?? sub.expressionColon?.name ?? sub.nameColon?.name;
+            let memberType = unknown,
+              member = null;
             if (nameNode?.kind === 'IdentifierName' && type && !type.isErrorType()) {
               const found = lookupMembers(type, nameNode.identifier.valueText, this.core, { within: this.c.containingType }).members.find(
                 m => m.kind === SymbolKind.Field || m.kind === SymbolKind.Property,
               );
               if (found) {
+                member = found;
                 memberType = found.type;
                 if (found.kind === SymbolKind.Field)
                   (found.originalDefinition ?? found).reads = ((found.originalDefinition ?? found).reads ?? 0) + 1;
               } else if (isSource(type)) this.report(nameNode, 'CS0117', [this.display(type), nameNode.identifier.valueText]);
               else this.incomplete = this.d.incomplete = true;
             }
-            this.pattern(sub.pattern, memberType, null);
+            properties.push({ member, pattern: this.pattern(sub.pattern, memberType, null), syntax: sub });
           }
           if (syntax.positionalPatternClause) {
             this.incomplete = this.d.incomplete = true;
             for (const sub of syntax.positionalPatternClause.subpatterns) this.pattern(sub.pattern, unknown, null);
           }
           if (syntax.designation) this.designation(syntax.designation, type ?? unknown, p);
-          return { ...p, kind: 'RecursivePattern' };
+          return { ...p, kind: 'RecursivePattern', inputType: type, properties, hasPositional: !!syntax.positionalPatternClause };
         }
         default:
           this.incomplete = this.d.incomplete = true;

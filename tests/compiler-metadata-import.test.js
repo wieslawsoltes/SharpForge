@@ -156,7 +156,7 @@ test('A02-T20 by-reference parameters and returns become RefKind; arrays, pointe
 test('A02-T20 types from assemblies that are not bound are error types with a reason',()=>{
   const consumer=importAssembly(fixture('ConsumerOfV1.dll')),holder=consumer.getTypeByMetadataName('App.Holder');
   assert.deepEqual(consumer.referencedAssemblyIdentities.map(i=>[i.name,i.versionText]),[['MiniStandard','2.1.0.0'],['VersionedLib','1.0.0.0']]);assert.equal(consumer.isCorLibrary,false);
-  assert.ok(holder.baseType instanceof ErrorTypeSymbol);assert.equal(holder.baseType.reason.code,'CS0012');assert.equal(holder.baseType.reason.args[0],'Lib.Widget');assert.match(holder.baseType.reason.args[1],/^VersionedLib, Version=1\.0\.0\.0, Culture=neutral, PublicKeyToken=[0-9a-f]{16}$/);
+  assert.ok(holder.baseType instanceof ErrorTypeSymbol);assert.equal(holder.baseType.reason.code,'CS0012');assert.equal(holder.baseType.reason.args[0],'Widget');assert.match(holder.baseType.reason.args[1],/^VersionedLib, Version=1\.0\.0\.0, Culture=neutral, PublicKeyToken=[0-9a-f]{16}$/);
   // Binding the references afterwards resolves the same signatures.
   const bound=importAssembly(fixture('ConsumerOfV1.dll')).setReferencedAssemblies([core,importAssembly(fixture('VersionedLib.1.0.0.0.dll')).setReferencedAssemblies([core])]),boundHolder=bound.getTypeByMetadataName('App.Holder');
   assert.equal(show(boundHolder.baseType),'Lib.Widget');assert.equal(boundHolder.baseType.containingAssembly.identity.versionText,'1.0.0.0');

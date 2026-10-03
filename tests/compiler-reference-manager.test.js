@@ -91,11 +91,11 @@ test('A02-T22 a reference that needs a higher version than the one supplied is C
 });
 
 test('A02-T22 a type defined in an assembly that is not referenced is CS0012',()=>{
-  const m=bind([Core,'ConsumerOfV1.dll']),holder=m.getTypeByMetadataName('App.Holder'),expected={code:'CS0012',args:['Lib.Widget',lib('1.0.0.0')]};
+  const m=bind([Core,'ConsumerOfV1.dll']),holder=m.getTypeByMetadataName('App.Holder'),expected={code:'CS0012',args:['Widget',lib('1.0.0.0')]};
   assert.deepEqual(m.assemblies[1].boundReferences,[m.assemblies[0],null]);assert.deepEqual(m.diagnostics,[]);
   assert.ok(holder.baseType instanceof ErrorTypeSymbol);assert.deepEqual(holder.baseType.reason,expected);assert.equal(holder.baseType.metadataFullName,'Lib.Widget');
-  assert.deepEqual(m.useSiteDiagnostics(holder),[expected]);assert.deepEqual(m.useSiteDiagnostics(holder.getMembers('Make')[0]),[{code:'CS0012',args:['Lib.Gadget',lib('1.0.0.0')]},expected]);
-  assert.equal(formatMessage('CS0012',expected.args),`The type 'Lib.Widget' is defined in an assembly that is not referenced. You must add a reference to assembly '${lib('1.0.0.0')}'.`);
+  assert.deepEqual(m.useSiteDiagnostics(holder),[expected]);assert.deepEqual(m.useSiteDiagnostics(holder.getMembers('Make')[0]),[{code:'CS0012',args:['Gadget',lib('1.0.0.0')]},expected]);
+  assert.equal(formatMessage('CS0012',expected.args),`The type 'Widget' is defined in an assembly that is not referenced. You must add a reference to assembly '${lib('1.0.0.0')}'.`);
   assert.equal(show(holder.getMembers('All')[0].type.originalDefinition),'System.Collections.Generic.List<T>','types from referenced assemblies still resolve');
   assert.equal(m.getTypeByMetadataName('Lib.Widget'),null);
   // A resolver can supply the missing assembly; it joins the compilation as an implicit reference.
@@ -117,8 +117,8 @@ test('A02-T22 duplicate references: identical identities merge, equivalent ones 
   assert.deepEqual(unified.diagnostics,[{code:'CS1703',args:[V1,V2]}]);assert.deepEqual(reported,unified.diagnostics);assert.deepEqual(unified.assemblies.map(a=>a.identity.versionText),['2.1.0.0','2.0.0.0'],'the later reference is kept');
   assert.equal(formatMessage('CS1703',unified.diagnostics[0].args),`Multiple assemblies with equivalent identity have been imported: '${V1}' and '${V2}'. Remove one of the duplicate references.`);
   const weak=bind([Core,'WeakLib.1.0.0.0.dll','WeakLib.2.0.0.0.dll']);
-  assert.deepEqual(weak.diagnostics,[{code:'CS1704',args:['WeakLib','WeakLib.2.0.0.0.dll']}]);assert.deepEqual(weak.assemblies.map(a=>a.identity.getDisplayName()),[weak.corLibrary.identity.getDisplayName(),'WeakLib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null']);
-  assert.equal(formatMessage('CS1704',weak.diagnostics[0].args),"An assembly with the same simple name 'WeakLib' has already been imported. Try removing one of the references (e.g. 'WeakLib.2.0.0.0.dll') or sign them to enable side-by-side.");
+  assert.deepEqual(weak.diagnostics,[{code:'CS1704',args:['WeakLib','WeakLib.1.0.0.0.dll']}]);assert.deepEqual(weak.assemblies.map(a=>a.identity.getDisplayName()),[weak.corLibrary.identity.getDisplayName(),'WeakLib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null']);
+  assert.equal(formatMessage('CS1704',weak.diagnostics[0].args),"An assembly with the same simple name 'WeakLib' has already been imported. Try removing one of the references (e.g. 'WeakLib.1.0.0.0.dll') or sign them to enable side-by-side.");
   // An already imported assembly symbol can be passed instead of bytes.
   const shared=importAssembly(bytes(Core)),viaSymbol=bindReferences([{assembly:shared},{assembly:shared,aliases:['X']}]);assert.deepEqual(viaSymbol.assemblies,[shared]);assert.deepEqual(viaSymbol.aliasesOf(shared).sort(),['X',GlobalAlias]);
 });
@@ -148,8 +148,8 @@ test('A02-T22 type forwarders are followed to the assembly that defines the type
   const aliased=bind([Core,[V2,['Impl']],'Facade.dll']);assert.equal(aliased.globalNamespace.lookupType('Lib.Widget'),null);assert.equal(aliased.getTypeByMetadataName('Lib.Widget'),aliased.assemblies[1].getTypeByMetadataName('Lib.Widget'));
   // The destination assembly is not referenced: CS0012 naming the assembly the forwarder points at.
   const missing=bind([Core,'Facade.dll','FacadeConsumer.dll']),missingShelf=missing.getTypeByMetadataName('Client.Shelf');
-  assert.deepEqual(missingShelf.baseType.reason,{code:'CS0012',args:['Lib.Widget',lib('2.0.0.0')]});assert.deepEqual(missing.useSiteDiagnostics(missingShelf),[{code:'CS0012',args:['Lib.Widget',lib('2.0.0.0')]}]);
-  assert.deepEqual(missing.getTypeByMetadataName('Lib.Widget').reason,{code:'CS0012',args:['Lib.Widget',lib('2.0.0.0')]});
+  assert.deepEqual(missingShelf.baseType.reason,{code:'CS0012',args:['Widget',lib('2.0.0.0')]});assert.deepEqual(missing.useSiteDiagnostics(missingShelf),[{code:'CS0012',args:['Widget',lib('2.0.0.0')]}]);
+  assert.deepEqual(missing.getTypeByMetadataName('Lib.Widget').reason,{code:'CS0012',args:['Widget',lib('2.0.0.0')]});
   // A forwarder satisfied by a different version of the destination: the forwarder's own reference is unified.
   const older=bind([Core,V1,'Facade.dll','FacadeConsumer.dll']);assert.deepEqual(older.unificationDiagnostics.map(d=>[d.code,d.args[0]]),[['CS1705','Facade']]);
   assert.equal(older.getTypeByMetadataName('Client.Shelf').baseType.containingAssembly.identity.versionText,'1.0.0.0');

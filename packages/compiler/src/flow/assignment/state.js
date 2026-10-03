@@ -40,6 +40,12 @@ export function fieldKey(variable, field) {
   return `${variable.daId.toString()}#${definition.name}@${definition.locations?.[0]?.start ?? ''}`;
 }
 
+/** The key of a field nested inside another tracked field (`v.inner.x`): the parent's key extended by the field. */
+export function nestedFieldKey(parentKey, field) {
+  const definition = field.originalDefinition ?? field;
+  return `${parentKey}#${definition.name}@${definition.locations?.[0]?.start ?? ''}`;
+}
+
 const singleChildFields = [
   'receiver',
   'operand',
