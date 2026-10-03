@@ -591,6 +591,7 @@ export const roslynCodes=Object.freeze({
  CS8510:["ERR_SwitchArmSubsumed","error",0,"The pattern is unreachable. It has already been handled by a previous arm of the switch expression or it is impossible to match."],
  CS8514:["ERR_ExpressionTreeContainsSwitchExpression","error",0,"An expression tree may not contain a switch expression."],
  CS8524:["WRN_SwitchExpressionNotExhaustiveWithUnnamedEnumValue","warning",1,"The switch expression does not handle some values of its input type (it is not exhaustive) involving an unnamed enum value. For example, the pattern '{0}' is not covered."],
+ CS8597:["WRN_ThrowPossibleNull","warning",1,"Thrown value may be null."],
  CS8600:["WRN_ConvertingNullableToNonNullable","warning",1,"Converting null literal or possible null value to non-nullable type."],
  CS8601:["WRN_NullReferenceAssignment","warning",1,"Possible null reference assignment."],
  CS8602:["WRN_NullReferenceReceiver","warning",1,"Dereference of a possibly null reference."],
