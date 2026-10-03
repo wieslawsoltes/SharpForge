@@ -53,18 +53,23 @@ not change the event observer.
 | Profile sampling/totals and speedscope export | Separate T10 work |
 | Native/browser qualification and overhead measurements | Not performed for this slice |
 
-Prepared regressions cover actual calls, exceptional unwind, output/instruction
-equivalence, debugger pause, stop, overflow, malformed configuration, callback
-failures and snapshot replay. Independently assembled CIL additionally schedules
-a real `Task.Run(Action)` delegate, parks its nested call in `Thread.Sleep`, and
-covers both cancellation and normal virtual-time wake-up. Cancellation checks
-discarded frames, suppressed continuation effects, and balanced exact-once leaves.
-Root alone runs the serial validation queue through the resource limiter:
+The serial slot passed 63 tests at `23f28b6e`, covering actual calls, exceptional
+unwind, output/instruction equivalence, debugger pause, stop, overflow, malformed
+configuration, callback failures, snapshots, delegate integration and the value
+ABI. Independent CIL schedules a real `Task.Run(Action)` delegate, parks its
+nested call in `Thread.Sleep`, then verifies cancellation and natural virtual-time
+wake-up. Discarded frames close inner-first, exactly once, without continuation
+side effects.
 
 ```sh
-node scripts/limited.js node --test tests/a05-cil-method-events.test.js \
-  tests/a05-cil-method-events-cancellation.test.js tests/a05-runtime-events.test.js
+SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_TEST_CONCURRENCY=1 SHARPFORGE_MAX_OLD_SPACE_MB=512 \
+  node scripts/limited.js node --test --test-concurrency=1 \
+  tests/a05-cil-method-events.test.js tests/a05-cil-method-events-cancellation.test.js \
+  tests/a05-runtime-events.test.js tests/a05-delegate-targets.test.js tests/a00-01-value-abi.test.js
 ```
 
-Syntax/import and non-strict structure checks also completed in the serial slot.
-No native/browser qualification or performance measurement was performed.
+`npm run check` passed (1,829 syntax modules, no import errors). The non-strict
+structure report completed with 264 repository warnings. Final main integration
+at `f4696f74` resolves the stacked merge ancestry; it changes no runtime, bytecode,
+CIL or focused test files. No native/browser qualification or performance
+measurement was performed.
