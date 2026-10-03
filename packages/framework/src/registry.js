@@ -28,7 +28,7 @@ function canonicalType(type) {
   // Compiler/metadata descriptors already contain canonical registered names.
   if (types.has(type)) return type;
   if (type.endsWith('[]')) return canonicalType(type.slice(0, -2)) + '[]';
-  const collection = /^(?:System\.Collections\.Generic\.)?(List|Dictionary|HashSet|Queue|Stack)(?:`[12])?\s*<(.+)>$/.exec(type);
+  const collection = /^(?:System\.Collections\.Generic\.)?(List|Dictionary|HashSet|Queue|Stack|IComparer)(?:`[12])?\s*<(.+)>$/.exec(type);
   if(collection){const args=collection[2].split(',').map(x=>canonicalType(x.trim()));return 'System.Collections.Generic.'+collection[1]+'`'+args.length+'<'+args.join(', ')+'>';}
   const vector=/^(?:System\.Numerics\.)?Vector(?:`1)?\s*<(.+)>$/.exec(type);if(vector)return 'System.Numerics.Vector`1<'+canonicalType(vector[1].trim())+'>';
   const task = /^(?:System\.Threading\.Tasks\.)?Task(?:`1)?\s*<(.+)>$/.exec(type);

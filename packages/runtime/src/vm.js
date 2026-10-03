@@ -2,27 +2,19 @@ import {callSourceFrame,callSourceFromStack} from './execution/call-frames.js';
 import {flushFramePool} from './execution/frame-pool.js';
 import {stopExecution} from './execution/stop.js';
 import {formatSourceValue} from './value-formatting.js';
-import {createSourceMethodTables} from './execution/method-table.js';
-import {ManagedPlatform,SUSPENDED} from './platform.js';
-import {CooperativeScheduler} from './scheduler.js';
+import {SUSPENDED} from './platform.js';
 import {snapshotVM,restoreVM} from './snapshot.js';
-import { loadAssembly } from '@sharpforge/cil';
-import { Op, BinaryName, UnaryName, verifyImage } from '@sharpforge/bytecode';
-import { ManagedHeap, ManagedFault, isReference } from './heap.js';
+import { Op, BinaryName, UnaryName } from '@sharpforge/bytecode';
+import { ManagedFault, isReference } from './heap.js';
 import {builtin} from './execution/source-builtins.js';
 import {sourceValue} from './execution/source-values.js';
+import {initializeSourceVM} from './execution/initialize-source.js';
 import {literalString,stringRoots} from './execution/strings.js';
 import {binary,convert,unary,defaultValue,sourceEnum,checkSourceArrayStore,runtimeTypeRoots} from './execution/source-ops.js';
 import {roots as exceptionRoots,makeFault,enterCatch,finalizers,finishReturn,transfer,resumeUnwind,handleFault,rethrow} from './execution/source-eh.js';
 export class VirtualMachine {
   constructor(image,options={}){
-    if(image instanceof Uint8Array||image instanceof ArrayBuffer)image=loadAssembly(image,options.assemblyLimits);
-    if(image?.outputKind==='library')throw new Error('Library has no entry point. Invoke a static method with CilVirtualMachine instead.');
-    const errors=verifyImage(image);if(errors.length)throw new Error('Bytecode verification failed: '+errors.join('; '));
-    this.image=image;this.options={maxInstructions:20_000_000,maxFrames:512,maxOutputCharacters:1_000_000,...options};
-    this.heap=new ManagedHeap({...options,methodTables:createSourceMethodTables(image)});this.heap.rootProvider=()=>this.roots();this.stack=[];this.frames=[];this.statics=image.statics.map(s=>s.value===null?defaultValue(s.type,this):s.value);this.constantValues=new Map();this.strings=new Map();this.output=[];this.outputCharacters=0;
-    this.snapshotOwner=Object.freeze({});this.state='ready';this.instructions=0;this.writeRevision=0;this.sourcePause=false;this.elapsedMs=0;this.frameId=0;this.currentPoint=null;this.fault=null;this.pendingFault=null;this.exitCode=0;this.returnValue=null;this.onOutput=options.onOutput??(()=>{});this.onException=null;this.onWrite=null;
-    this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);this.call(image.entryPoint,[]);
+    initializeSourceVM(this,image,options);
   }
   *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots()??[];yield this.returnValue;yield* this.stack;yield* this.statics;yield* this.constantValues.values();yield* stringRoots(this);yield* runtimeTypeRoots(this);for(const f of this.frames)yield* f.locals;yield* exceptionRoots(this);}
   call(methodId,args){return callSourceFrame(this,methodId,args);}

@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "sources": {
     "packages/runtime/src/heap.js": "28b86fe51a4a4cd93b7701b682fa2363a07d8a9c6370fd734e96690b16fe853c",
-    "packages/runtime/src/vm.js": "c65057282051422206936ddb91a4272c31e9f10e9e803087eeaf83259b811440",
-    "packages/runtime/src/cil-vm.js": "e559652544d5380303fe8ee12f89564d28611f010df77fd5d8dce003f5ba2e27",
-    "packages/bytecode/src/index.js": "a14dc38176546f01930b1f1fca71ba071d819cb475dbda2f23aac5e8b5c2c6f6",
+    "packages/runtime/src/vm.js": "0933befbe5fbeb9254009bd092df831404a9edb113bd04a9a9c967c0900a6cd3",
+    "packages/runtime/src/cil-vm.js": "cfc6a650de2722f2a9851b8b0287c3af834481999010b19bee5e388865b8cf15",
+    "packages/bytecode/src/index.js": "f6a62093b29b607843c7a4721cd35b57fffa2e694a7b84c5601a87cb4fdf2a99",
     "packages/bytecode/src/builtins.js": "52bdae4e1dc6b2e0c418d6fa38cbb980e616891a03415143a656e6def8060d2b"
   },
   "resultKinds": {

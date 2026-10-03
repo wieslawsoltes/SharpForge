@@ -19,10 +19,13 @@ import {runCilSlice} from './execution/cil-slice.js';
 import {initializeCilMethodEvents,cilRuntimeEvents,restoreCilMethodEvents} from './execution/cil-method-events.js';
 import {invokeIntrinsic} from './execution/intrinsics.js';
 import {initializationRoots} from './execution/static-init.js';
+import {normalizeRuntimeLaunchOptions} from './launch-options.js';
+import {cilEntryArguments} from './execution/entry-arguments.js';
 /** Direct, cooperative CIL interpreter for a verified managed subset, independent of #SF.
  * No eval, native imports, network, files, threads, dynamic JS plugins or CLR loading. */
 export class CilVirtualMachine {
   constructor(bytes,options={}){
+    options=normalizeRuntimeLaunchOptions(options);
     const started=performance.now();this.options={maxInstructions:20_000_000,maxFrames:512,maxStackValues:65536,maxOutputCharacters:1_000_000,...options};
     bindNativeAbi(this.options);
     initializeCilMethodEvents(this, options.runtimeEvents);
@@ -32,9 +35,7 @@ export class CilVirtualMachine {
     this.heap=new ManagedHeap(options);this.heap.rootProvider=()=>this.roots();this.frames=[];this.statics=new Map();this.strings=new Map();this.initialized=new Map();this._typeSystem=null;this.layoutCache=this.typeSystem.layouts;this.frameId=0;
     this.snapshotOwner=Object.freeze({});this.writeRevision=0;this.onWrite=null;this.state='ready';this.instructions=0;this.elapsedMs=0;this.output=[];this.outputCharacters=0;this.fault=null;this.pendingFault=null;this.onException=null;this.returnValue=null;this.exitCode=0;this.onOutput=options.onOutput??(()=>{});this.loadMs=performance.now()-started;
     for(const f of this.inspector.fields.values())if(f.isStatic)this.statics.set(f.token,storageDefault(this,resolveExecutionField(this.inspector,f.token).signature.type));
-    const input=options.arguments??(entry.signature.parameters.length===1&&entry.signature.parameters[0]==='string[]'?[[]]:[]);
-    if(input.length!==entry.signature.parameters.length)throw new CilError('Argument count does not match selected method');
-    const args=[];this.heap.withRoots(args,()=>{for(let i=0;i<input.length;i++){const value=this.marshal(input[i],entry.signature.parameters[i]);args.push(value);this.heap.pins.push(value);}});
+    const args=cilEntryArguments(this,entry,options);
     this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);this.call(entry.token,args);this.ensureInitialized(entry.ownerToken,'static-method');
   }
   *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots()??[];

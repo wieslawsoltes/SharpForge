@@ -12,7 +12,7 @@ const modules = createBclRegistry([...bclModules, closedCollectionsModule]);
 const services = Object.freeze({
   frameworkType,
   isReference,
-  fault(type, message) { throw new ManagedFault(type, message); }
+  fault(type, message, reference = null) { throw new ManagedFault(type, message, reference); }
 });
 
 /** Attach immutable services; each platform retains its own managed state. */
