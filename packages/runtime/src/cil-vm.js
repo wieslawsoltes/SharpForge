@@ -1,6 +1,6 @@
 import {ManagedPlatform} from './platform.js';
 import {CooperativeScheduler} from './scheduler.js';
-import {copyExecution} from './snapshot.js';
+import {snapshotVM,restoreVM} from './snapshot.js';
 import { AssemblyInspector, verifyCilAssembly, CilError } from '@sharpforge/cil';
 import { ManagedHeap, ManagedFault, isReference } from './heap.js';
 import {float,number,defaults,compare as numericCompare,binary as numericBinary,convert as numericConvert,unary as numericUnary,storage as numericStorage,indirect as numericIndirect} from './execution/numeric-ops.js';
@@ -10,14 +10,6 @@ import {CilTypeSystem} from './execution/type-system.js';
 import {throwFault,continueUnwind,exceptionRoots,fatalFaults} from './execution/eh.js';
 import {invokeIntrinsic} from './execution/intrinsics.js';
 const numericContext=Object.freeze({fault:(name,message)=>new ManagedFault(name,message),error:message=>new CilError(message),isReference});
-// Snapshot state contains mutable unwind continuations and ManagedFault instances.
-// Use one memo across frames/faults so pending/unwinds/caught aliases survive a rewind.
-function copyFrames(frames, memo) {
-  return frames.map(frame => {
-    const {method, offsets, ...execution} = frame;
-    return {...copyExecution(execution, memo), method, offsets};
-  });
-}
 /** Direct, cooperative CIL interpreter for a verified managed subset, independent of #SF.
  * No eval, native imports, network, files, threads, dynamic JS plugins or CLR loading. */
 export class CilVirtualMachine {
@@ -101,26 +93,8 @@ export class CilVirtualMachine {
     }
     if(old===undefined)throw new ManagedFault('InvalidProgramException','Uninitialized address');return old;
   }
-  /** In-memory snapshots are scoped to this VM. No serialized host/native state is restored. */
-  snapshot(){
-    const memo=new Map();
-    return {hostRevision:this.platform.hostOperations.snapshotVersion(),owner:this.snapshotOwner,platform:this.platform.snapshot(),scheduler:this.scheduler.snapshot(),frames:copyFrames(this.frames,memo),heap:this.heap.snapshot(),
-      statics:new Map(this.statics),strings:new Map(this.strings),initialized:new Map(this.initialized),
-      fault:copyExecution(this.fault,memo),pendingFault:copyExecution(this.pendingFault,memo),
-      state:this.state,instructions:this.instructions,elapsedMs:this.elapsedMs,frameId:this.frameId,
-      output:[...this.output],outputCharacters:this.outputCharacters,returnValue:this.returnValue,
-      exitCode:this.exitCode,writeRevision:this.writeRevision,heapRevision:this.heap.mutationRevision};
-  }
-  restore(snapshot){
-    if(snapshot?.owner!==this.snapshotOwner)throw new TypeError('Snapshot belongs to another CIL VM');
-    this.platform.hostOperations.checkRestore(snapshot.hostRevision);
-    const memo=new Map();this.heap.restore(snapshot.heap);this.frames=copyFrames(snapshot.frames,memo);
-    this.statics=new Map(snapshot.statics);this.strings=new Map(snapshot.strings);this.initialized=new Map(snapshot.initialized);
-    this.fault=copyExecution(snapshot.fault,memo);this.pendingFault=copyExecution(snapshot.pendingFault,memo);
-    this.frameId=Math.max(this.frameId,snapshot.frameId);
-    for(const key of ['state','instructions','elapsedMs','outputCharacters','returnValue','exitCode','writeRevision'])this[key]=snapshot[key];
-    this.output=[...snapshot.output];this.scheduler.restore(snapshot.scheduler);this.platform.restore(snapshot.platform);
-  }
+  snapshot(){return snapshotVM(this,'cil');}
+  restore(snapshot){return restoreVM(this,snapshot,'cil');}
   indexed(ref,index){const r=this.heap.get(ref),n=number(index);if(r.kind!=='array'||!Number.isInteger(n)||n<0||n>=r.data.length)throw new ManagedFault('IndexOutOfRangeException','Array index out of range');return r;}
   emitOutput(s){if(this.outputCharacters+s.length>this.options.maxOutputCharacters)throw new ManagedFault('OutputLimitException','Program output limit exceeded');this.outputCharacters+=s.length;this.output.push(s);this.onOutput(s);}
   compare(a,b,op,unsigned=false){return numericCompare(a,b,op,unsigned,numericContext);}
