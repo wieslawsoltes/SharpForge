@@ -166,3 +166,44 @@ sources and scenario mappings remain identified in
 `docs/project16-shell-coverage.json`, `docs/project16-docking-coverage.md` and
 `docs/vs-workflow-matrix.md`. The shell ledger's `reviewSlice` distinguishes the
 102 included owned paths from its four deferred workflow/performance paths.
+
+## Reviewed lazy-import inventory
+
+The required static gate on review 04 found thirty unrecorded literal import
+sites in six workbench files. This follow-up reviews the source at `1ec96cea`
+against the exact-byte policy in `planning/qualification/threat-model.md` and
+records each file hash, operation count and source-specific rationale in
+`scripts/conformance/static/allowlist.json`.
+
+| Source under `apps/studio/workbench/` | Sites | Reviewed destinations and use |
+| --- | ---: | --- |
+| `comment-tasks.js` | 1 | Public `@sharpforge/syntax` entry for comment-trivia lexing |
+| `lazy-tools.js` | 5 | Fixed adjacent Designer, Assembly Explorer, Disassembly, MSBuild and Project Wizard controllers |
+| `shell-models.js` | 2 | Public editor and designer entries for bundled snippets and control metadata |
+| `shell-tools.js` | 20 | Literal relative imports from a closed tool-ID map into the adjacent `tools/` directory |
+| `tools/code-definition.js` | 1 | Public framework entry for read-only registered contract metadata |
+| `tools/object-browser.js` | 1 | Public framework entry for registered types, contracts, properties and events |
+
+All destinations are checked-in modules. Tool and instance identifiers select
+existing loader callbacks; source text, snippet contents, framework lookup names
+and inspected assemblies never form a module specifier. The browser build
+rewrites the four public package names to bundled same-origin module URLs, and
+the relative imports retain fixed same-origin targets. These sites use ordinary
+module loading permitted by the shipped CSP and introduce no JavaScript source
+evaluation or script-element injection.
+
+The scanner, linker, CI workflow, rejection rules and existing policy entries
+are unchanged. Any later source-byte or import-count change invalidates these
+entries and requires a new review. This source audit does not claim browser
+enforcement or standalone artifact qualification; those remain separately
+scheduled for the exact assembled application and its packaging layer.
+
+After completing the inventory correction, the affected gate passed with 2,299
+inspected files, 2,299 linked modules and zero errors:
+
+```text
+node scripts/limited.js node scripts/conformance/static/check-imports.js --output /tmp/project16-review04-static-imports.json
+```
+
+No runtime tests, builds, browser suites or native/oracle checks were rerun for
+this inventory-only correction. The earlier scope evidence remains unchanged.
