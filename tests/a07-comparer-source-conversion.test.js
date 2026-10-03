@@ -83,8 +83,8 @@ test('registered comparer: framework overload selection accepts only the registe
 
 test('registered comparer: wrong and unrelated interfaces remain compile-time errors', () => {
   const cases = [
-    ['IComparer<object> comparer = StringComparer.Ordinal;', 'CS0029'],
-    ['IDisposable value = StringComparer.Ordinal;', 'CS0029'],
+    ['IComparer<object> comparer = StringComparer.Ordinal;', 'CS0266'],
+    ['IDisposable value = StringComparer.Ordinal;', 'CS0266'],
     ['new List<string>().Sort(new object());', 'CS1503'],
     ['object comparer = StringComparer.Ordinal; new List<string>().Sort(comparer);', 'CS1503']
   ];
