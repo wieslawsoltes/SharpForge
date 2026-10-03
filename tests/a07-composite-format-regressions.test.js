@@ -132,9 +132,16 @@ test('B06 module extension hooks register separately and reject malformed or asy
   registry.register({}, {group: 'released'});
   registry.register({}, {group: 'extensions'});
   assert.deepEqual(calls, ['released', 'extended']);
+  calls.length = 0;
+  registry.register({});
+  assert.deepEqual(calls, ['released', 'extended']);
+  calls.length = 0;
+  registry.register({}, {names: ['sample']});
+  assert.deepEqual(calls, ['released', 'extended']);
   assert.throws(() => createBclRegistry([{...contribution, extensionContracts: true}]), TypeError);
   const asynchronous = createBclRegistry([{...contribution, extensionContracts: () => Promise.resolve()}]);
   assert.throws(() => asynchronous.register({}, {group: 'extensions'}), /must be synchronous/);
+  assert.throws(() => asynchronous.register({}), /must be synchronous/);
 });
 
 test('B06 composite parser follows pinned .NET whitespace and brace grammar', async () => {

@@ -31,9 +31,12 @@ export function createBclRegistry(contributions) {
       }) : modules.filter(module => group === undefined || (module.group ?? 'extensions') === group ||
         group === 'extensions' && module.extensionContracts);
       for (const module of selected) {
-        const hook = group === 'extensions' && module.extensionContracts ? module.extensionContracts : module.contracts;
-        const result = hook(registry);
-        if (result?.then) throw new TypeError(`BCL contracts must be synchronous: ${module.name}`);
+        const hooks = [group === 'extensions' && module.extensionContracts ? module.extensionContracts : module.contracts];
+        if (group === undefined && module.extensionContracts) hooks.push(module.extensionContracts);
+        for (const hook of hooks) {
+          const result = hook(registry);
+          if (result?.then) throw new TypeError(`BCL contracts must be synchronous: ${module.name}`);
+        }
       }
     },
     invoke(platform, descriptor, args, type = platform.bclHost.frameworkType(descriptor.owner)) {

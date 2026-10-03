@@ -22,7 +22,9 @@ module through the framework remains transactional.
 An existing module may provide `extensionContracts(registry)` for additional
 members in that reserved range. The `extensions` registration group invokes
 this hook separately from the module's released `contracts` hook; both hooks
-must be synchronous. This preserves the original members' IDs.
+must be synchronous. Registration without a group, including selection by
+module name, invokes both hooks in order. The caller supplies the ID reservation;
+framework composition uses the separate groups to preserve released IDs.
 
 Run `node packages/bcl-core/scripts/inventory.js` to regenerate the documented
 surface; `--check` compares the checked-in output. Public String, StringBuilder,
