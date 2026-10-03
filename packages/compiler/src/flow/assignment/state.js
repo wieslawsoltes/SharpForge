@@ -6,7 +6,10 @@ import { TypeKind } from '../../symbols/types.js';
 
 /** A user-declared struct, whose locals are assigned field by field. */
 export const isUserStruct = type =>
-  !!type && type.typeKind === TypeKind.Struct && !type.specialType && !type.isNullableValueType && type.isSource;
+  !!type && type.typeKind === TypeKind.Struct && !type.specialType && !type.isNullableValueType && (type.isSource || isTupleStruct(type));
+
+/** A tuple: its elements are fields that are assigned one by one, like the fields of a user-declared struct. */
+export const isTupleStruct = type => !!type?.isTupleType && !type.isDefinition;
 
 export class AssignmentState {
   constructor(assigned = new Set()) {

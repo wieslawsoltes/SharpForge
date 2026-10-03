@@ -1,4 +1,4 @@
-import {taskResult,frameworkType} from '@sharpforge/framework';
+import {frameworkType,taskResult} from '@sharpforge/framework';
 import {BuiltinMap} from '@sharpforge/bytecode';
 import {evaluateConstant,ConstantError} from '../constants.js';
 import {normalize,numeric,assignable,pathOf,typeText} from '../type-utils.js';

@@ -7,6 +7,7 @@
  *   delegates          -> a class per delegate type, numbered targets (delegates.js)
  *   patterns, switches -> sequential tests over shared evaluations   (lowering/decision-dag.js, translate-patterns.js)
  *   initialization     -> initializer methods run where .NET runs them (initialization.js)
+ *   async functions    -> a kickoff and a body on the runtime's continuation ABI (lowering/async/async-methods.js)
  *
  * A construct that needs an instruction the runtime does not have raises `UnsupportedConstruct`; the generator then
  * produces no image and names the construct, which `compile()` reports as SF2200.
@@ -17,6 +18,10 @@ import { isSourceSymbol } from '../../semantic/analysis-helpers.js';
 import { analyzeCaptures } from '../../lowering/closures.js';
 import { IteratorClasses, stateMachineBody } from '../../lowering/iterators.js';
 import { newHoist } from '../../lowering/iterators/try-regions.js';
+import { TASK } from '@sharpforge/framework';
+import { AsyncMethods, asyncResultType } from '../../lowering/async/async-methods.js';
+import { TupleClasses } from '../../lowering/tuples/tuple-classes.js';
+import { StructuralMembers } from '../../lowering/tuples/structural-members.js';
 import { stateMachineTypeName, stateMachineParameterProxyFieldName, thisProxyFieldName } from '../../lowering/generated-names.js';
 import { JumpIrEmitter } from './jump-emitter.js';
 import { ProgramModel } from './program-model.js';
@@ -42,6 +47,8 @@ class GeneratorCore {
     this.types = new TypeMapper(this);
     this.delegates = new DelegateClasses(this);
     this.iterators = new IteratorClasses(this);
+    this.structural = new StructuralMembers(this);
+    this.tuples = this.structural.register(new TupleClasses(this));
     this.classes = new Map();
     this.fields = new Map();
     this.methods = new Map();
@@ -141,11 +148,12 @@ const Members = Base =>
             continue;
           }
           const frame = this.memberFrame(record, symbol, this.uriOf(symbol), body);
+          if (symbol.isAsync) frame.method = this.asyncBody(record, this.asyncOrigin(symbol, frame));
           this.queueBody({
             frame,
             bound: body,
             parameters: symbol.parameters,
-            returnsValue: record.returnType !== 'void',
+            returnsValue: frame.method.returnType !== 'void',
             prologue: this.prologueOf(symbol, frame),
           });
         } else this.synthesizeAccessor(symbol, record);
@@ -204,12 +212,18 @@ const Members = Base =>
       else statements.push(n.expressionStatement(n.assign(slot(), n.parameter(n.newParameter('value', field.type, 0)))));
       this.addSynthesizedBody(record, n.block(statements));
     }
-    /** `<startup>` calls the entry point; its result is the exit code. */
+    /** The machine name and declaration of an async method, for `asyncBody`. */
+    asyncOrigin(symbol, frame) {
+      return { name: stateMachineTypeName(symbol.name, frame.root.ordinal), syntax: symbol.locations?.[0] ?? null, uri: frame.uri };
+    }
+    /** `<startup>` calls the entry point and awaits a task-returning one; the result is the exit code. */
     startup(entry) {
-      const method = this.program.addMethod(null, '<startup>', { isStatic: true, returnType: entry.returnType, parameters: [] });
+      const result = asyncResultType(entry.returnType) ?? entry.returnType,
+        method = this.program.addMethod(null, '<startup>', { isStatic: true, returnType: result, parameters: [] });
       const args = entry.parameters.length ? [n.newArray('string', n.literal(0, 'int'))] : [];
-      const invocation = n.call(entry, null, args);
-      const statement = entry.returnType === 'void' ? n.expressionStatement(invocation) : n.returnStatement(invocation);
+      const call = n.call(entry, null, args),
+        invocation = result === entry.returnType ? call : this.awaitTask(call);
+      const statement = result === 'void' ? n.expressionStatement(invocation) : n.returnStatement(invocation);
       this.bodies.push({ method, body: n.block([statement]) });
       return method;
     }
@@ -219,14 +233,16 @@ const Members = Base =>
       if (tops.length > 1) return this.unsupported('top-level statements in several files');
       if (tops.length) {
         const [file, body] = tops[0];
-        const method = this.program.addMethod(null, '<Main>', {
+        const isAsync = !!body.binder?.c?.isAsync,
+          method = this.program.addMethod(null, '<Main>', {
           isStatic: true,
-          returnType: 'void',
+          returnType: isAsync ? TASK : 'void',
           parameters: [{ name: 'args', type: 'string[]' }],
           node: { uri: file.source.uri, start: 0, end: file.source.length },
           hasSource: true,
         });
         const frame = this.memberFrame(method, { name: '<Main>$' }, file.source.uri, body);
+        if (isAsync) frame.method = this.asyncBody(method, this.asyncOrigin({ name: '<Main>$' }, frame));
         this.queueBody({ frame, bound: body, parameters: body.binder?.c?.parameters ?? [], returnsValue: false });
         this.drain();
         return method;
@@ -237,7 +253,7 @@ const Members = Base =>
     }
   };
 
-export class SemanticGenerator extends Members(Initialization(Declarations(GeneratorCore))) {
+export class SemanticGenerator extends Members(AsyncMethods(Initialization(Declarations(GeneratorCore)))) {
   /**
    * Generates the image.
    * @returns {{image: object}|{unsupported: {construct: string, syntax: object|null, uri: string|null}}}

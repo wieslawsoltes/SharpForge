@@ -37,8 +37,9 @@ export const Declarations = Base =>
       if (type.arity || type.typeParameters?.length) this.unsupported('user-defined generics', at);
       const base = type.baseType;
       if (base && base.specialType !== 'System_Object') this.unsupported('class inheritance', at);
-      // IDisposable is the one interface that needs no dispatch: `using` calls Dispose on the static type.
-      if (type.interfaces?.some(i => i.specialType !== 'System_IDisposable')) this.unsupported('interface implementation', at);
+      // IDisposable and IAsyncDisposable need no dispatch: `using` and `await using` call the method of the static type.
+      const needsDispatch = i => i.specialType !== 'System_IDisposable' && i !== this.analysis.core.iasyncDisposable;
+      if (type.interfaces?.some(needsDispatch)) this.unsupported('interface implementation', at);
     }
     /** The image class of a source class symbol. */
     classOf(type, syntax = null) {
@@ -116,7 +117,6 @@ export const Declarations = Base =>
       if (symbol.typeParameters?.length) this.unsupported('user-defined generics', at);
       if (symbol.isAbstract || symbol.isVirtual || symbol.isOverride) this.unsupported('virtual dispatch', at);
       if (symbol.isExtern) this.unsupported('extern methods', at);
-      if (symbol.isAsync) this.unsupported('async methods outside the execution profile', at);
       const isConstructor = symbol.methodKind === MethodKind.Constructor;
       // The implicit parameterless constructor has nothing to run: creation allocates and runs the field initializers.
       if (isConstructor && symbol.isImplicitlyDeclared) return undefined;

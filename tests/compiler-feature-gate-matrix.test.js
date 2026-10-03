@@ -33,7 +33,7 @@ const notGated = {
       'PragmaWarning PragmaChecksum AliasQualifiedNames ExpressionTrees QueryContinuation QueryJoin QueryGroupBy QueryOrderBy QueryLet ' +
       'EmbeddedInteropTypes IndexedProperties CallerInfoAttributes AwaitExpression AwaitInCatchAndFinally ExtensionAddMethods ' +
       'ParameterlessStructInitializers Deconstruction GeneralizedAsyncReturnTypes IsPatternExpression CaseGuards OverrideWithConstraints ' +
-      'PropertyPatterns PositionalPatterns NullForgivingOperator NullableDirective PragmaWarningEnable WithExpressions ' +
+      'PropertyPatterns PositionalPatterns NullForgivingOperator NullableDirective WithExpressions ' +
       'UnmanagedCallingConventions AsyncMethodBuilderOverride CallerArgumentExpression ExtendedNameofScope NumericIntPtr ScopedRef ' +
       'SlicePattern ExperimentalAttribute SpreadElement'
     )
@@ -67,7 +67,6 @@ const notGated = {
   AutoDefaultStructs: 'needs definite assignment of struct fields in constructors',
   CacheStaticMethodGroupConversion: 'only changes code generation in Roslyn; there is no diagnostic',
   SpanCharConstantPattern: needsOperandTypes,
-  FileTypes: 'the parser does not accept the `file` modifier on a type (syntax package defect)',
   InstanceMemberInNameof: needsOperandTypes,
   InlineArrays: needsOperandTypes,
   LockObject: needsOperandTypes,

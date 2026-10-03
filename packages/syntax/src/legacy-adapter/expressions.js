@@ -117,6 +117,8 @@ export class LegacyExpressionAdapter extends LegacyTypeAdapter {
         return red.identifier.isMissing ? this.node('Error', red, {}) : this.name(red.identifier);
       case 'ThisExpression':
       case 'BaseExpression':
+      // The back end finds the backing field of a property by the name `field`, as it did before the keyword was a node.
+      case 'FieldExpression':
         return this.name(red.token);
       case 'PredefinedType':
         return this.name(red.keyword);

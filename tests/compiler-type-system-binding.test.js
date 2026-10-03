@@ -246,7 +246,8 @@ test('A02-B01 semantic features are gated with the shared catalog', () => {
   assert.equal(checkSemanticFeature('asyncMain', '7').code, 'CS8107');
   assert.equal(checkSemanticFeature('asyncMain', '7.1'), null);
   assert.equal(checkSemanticFeature('covariantReturns', '8').code, 'CS8400');
-  assert.equal(checkSemanticFeature('staticAbstractMembers', '10').code, 'CS8936');
+  // Roslyn reports static abstract interface members below C# 11 as "the modifier 'abstract' is not valid" (CS8703).
+  assert.equal(checkSemanticFeature('staticAbstractMembers', '10').code, 'CS8703');
   assert.deepEqual(errorCodes('interface I { void M() { } }', { langVersion: '7.3' }), ['CS8370']);
   assert.deepEqual(
     errorCodes('class A { public virtual object F() { return null; } } class B : A { public override string F() { return null; } }', {

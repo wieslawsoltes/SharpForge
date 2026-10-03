@@ -102,6 +102,8 @@ export const OperatorBinding = Base =>
     binaryOperation(syntax, operator, left, right) {
       const delegate = this.delegateOperation(syntax, operator, left, right);
       if (delegate) return delegate;
+      const tuple = this.tupleEquality(syntax, operator, left, right);
+      if (tuple) return tuple;
       for (const e of [left, right])
         if (e.kind === 'MethodGroup' || e.form === 'lambda' || e.type?.specialType === 'System_Void') {
           this.report(syntax, 'CS0019', [operator, this.operandDisplay(left), this.operandDisplay(right)]);

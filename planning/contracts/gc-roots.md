@@ -8,6 +8,7 @@ The non-moving collector calls ManagedHeap.rootProvider, pins, extra allocation 
 | CIL active frames | cil-vm.js CilVirtualMachine.roots | args, locals, stack, constructor return object, byref owners, exceptions |
 | Source exception continuations | execution/source-eh.js roots | unwind return values/faults, current/caught frame exceptions, VM current/pending faults |
 | Static/cache | both VM roots | statics, cached constant references, interned strings and runtime type objects |
+| Runtime type objects | execution/tokens.js runtimeTypeRoots | canonical System.Type objects, scoped to the VM and cleared on stop |
 | Interned strings | execution/strings.js StringInternPool.roots / stringRoots | strong pool entries only; weak pool entries do not root referents |
 | Parked contexts | scheduler.js CooperativeScheduler.roots | task/thread/delegate, wait task, frame state, resume fault; terminal contexts excluded |
 | Pending tasks | scheduler.js CooperativeScheduler.roots | waiting task, dependencies, error reference |

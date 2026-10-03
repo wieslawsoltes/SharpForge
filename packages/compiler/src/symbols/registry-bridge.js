@@ -1,5 +1,6 @@
 import {types as frameworkTypes,contracts as frameworkContracts,canonicalType} from '@sharpforge/framework';
 import {Builtins} from '@sharpforge/bytecode';
+import {builtinOwners, builtinMemberShape, builtinParameterType} from './registry-builtins.js';
 import {NamedTypeSymbol,ConstructedNamedTypeSymbol,ArrayTypeSymbol,TypeWithAnnotations,TypeKind,Accessibility} from './types.js';
 import {MethodSymbol,FieldSymbol,PropertySymbol,EventSymbol,ParameterSymbol,MethodKind,DeclarationModifiers} from './members.js';
 import {NamespaceSymbol,NamespaceExtent} from './namespaces.js';
@@ -13,9 +14,7 @@ import {declareCoreTypes,TypeProvider,specialTypeFromKeyword,coreTypeDescriptor,
  * members are the registry contracts of exactly that instantiation. Each member symbol carries its `contract`
  * (framework members) or `builtin` (bytecode builtins) so code generation can find the ABI entry again.
  */
-const coreIds=['System_Object','System_Enum','System_MulticastDelegate','System_Delegate','System_ValueType','System_Void','System_Boolean','System_Char','System_SByte','System_Byte','System_Int16','System_UInt16','System_Int32','System_UInt32','System_Int64','System_UInt64','System_Decimal','System_Single','System_Double','System_String','System_IntPtr','System_UIntPtr','System_Array','System_IDisposable','System_Exception','System_Math','System_Console'];
-const builtinOwners=Object.freeze({Console:'System.Console',Math:'System.Math',GC:'System.GC',int:'System.Int32',double:'System.Double',Convert:'System.Convert',string:'System.String',Array:'System.Array',object:'System.Object',Exception:'System.Exception',Debug:'System.Diagnostics.Debug',Environment:'System.Environment',Enum:'System.Enum',Type:'System.Type'});
-const builtinParameterTypes=Object.freeze({any:'object',number:'double',array:'System.Array',exception:'Exception'});
+const coreIds=['System_Object','System_Enum','System_MulticastDelegate','System_Delegate','System_ValueType','System_Void','System_Boolean','System_Char','System_SByte','System_Byte','System_Int16','System_UInt16','System_Int32','System_UInt32','System_Int64','System_UInt64','System_Decimal','System_Single','System_Double','System_String','System_IntPtr','System_UIntPtr','System_Array','System_IDisposable','System_Exception','System_Math','System_Console','System_Type'];
 /** Splits "A.B.Name`2<x, y<z>>" into {path:'A.B.Name', arity:2, args:['x','y<z>']}. */
 export function parseRegistryName(name){
   const open=name.indexOf('<');if(open<0||!name.endsWith('>'))return {path:name.replace(/`\d+$/,''),arity:0,args:[]};
@@ -99,12 +98,14 @@ export class RegistryBridge {
     for(const getter of getters){const setter=members.find(m=>m.kind==='Method'&&m.name==='set_Item'&&m.parameters.length===getter.parameters.length+1&&getter.parameters.every((p,i)=>p.type.equals(m.parameters[i].type)))??null,indexer=new PropertySymbol({...pub,name:'this[]',type:getter.returnType,parameters:getter.parameters.map((p,i)=>new ParameterSymbol({name:p.name,type:p.type,ordinal:i}))});indexer.getMethod=getter;indexer.setMethod=setter;members.push(indexer);}
     if(entry?.kind==='enum')for(const [name,value] of Object.entries(entry.values??{}))members.push(new FieldSymbol({...pub,name,type:owner,modifiers:DeclarationModifiers.Const,constantValue:{value}}));
     for(const b of this.builtinsByOwner.get(registryName)??[]){
-      const short=b.name.slice(b.name.lastIndexOf('.')+1),prefix=b.name.slice(0,b.name.lastIndexOf('.')),result=b.result==='numeric'?'double':b.result;
+      const {name: short, instance, property} = builtinMemberShape(b);
+      const result = b.result === 'numeric' ? 'double' : b.result;
       // Instance builtins list the receiver as their first parameter; `string.Concat` and friends are static.
-      const instance=b.params[0]&&(prefix==='string'&&b.params[0]==='string'&&!['Concat','IsNullOrEmpty','Intern','IsInterned'].includes(short)||prefix==='object'&&short!=='ReferenceEquals'||prefix==='Exception'&&short==='Message'||prefix==='Enum'&&short==='HasFlag'||prefix==='Type'),params=instance?b.params.slice(1):b.params,required=b.min-(instance?1:0);
-      const parameters=params.map((p,i)=>new ParameterSymbol({name:'arg'+i,type:this.typeFromName(builtinParameterTypes[p]??p)??this.objectType,ordinal:i,...(i>=required?{explicitDefaultValue:{value:null}}:{})}));let symbol;
+      const params = instance ? b.params.slice(1) : b.params;
+      const required = b.min - (instance ? 1 : 0);
+      const parameters=params.map((p,i)=>new ParameterSymbol({name:'arg'+i,type:this.typeFromName(builtinParameterType(b,p))??this.objectType,ordinal:i,...(i>=required?{explicitDefaultValue:{value:null}}:{})}));let symbol;
       if(short==='new')symbol=new MethodSymbol({...pub,name:'.ctor',methodKind:MethodKind.Constructor,returnType:this.byName.get('void'),parameters});
-      else if(short==='Message'||short==='TickCount'||prefix==='Type'&&['Name','FullName'].includes(short)){const getter=new MethodSymbol({...pub,name:'get_'+short,methodKind:MethodKind.PropertyGet,returnType:this.typeFromName(result),modifiers:instance?0:DeclarationModifiers.Static});getter.builtin=b;symbol=new PropertySymbol({...pub,name:short,type:this.typeFromName(result),getMethod:getter,modifiers:instance?0:DeclarationModifiers.Static});members.push(getter);}
+      else if(property){const getter=new MethodSymbol({...pub,name:'get_'+short,methodKind:MethodKind.PropertyGet,returnType:this.typeFromName(result),modifiers:instance?0:DeclarationModifiers.Static});getter.builtin=b;symbol=new PropertySymbol({...pub,name:short,type:this.typeFromName(result),getMethod:getter,modifiers:instance?0:DeclarationModifiers.Static});members.push(getter);}
       else symbol=new MethodSymbol({...pub,name:short,returnType:this.typeFromName(result)??this.objectType,parameters,modifiers:instance?0:DeclarationModifiers.Static});
       symbol.builtin=b;this.builtinSymbols.set(b.id,symbol);members.push(symbol);
     }
