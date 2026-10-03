@@ -1,3 +1,4 @@
+import {SynchronizationCompiler} from './synchronization.js';
 import {ScalarCompiler} from './scalar-builtins.js';
 import {compileBinary} from './binary-expression.js';
 import {prepareMemoryReference, loadMemoryReference, storeMemoryReference} from './memory-expressions.js';
@@ -309,4 +310,4 @@ class CoreMethodCompiler {
   storeRef(ref){if(storeMemoryReference(this,ref))return;if(ref.kind==='framework'){this.storeFramework(ref);return;}if(ref.kind==='property'){const value=this.temp(ref.type);this.emit(Op.STLOC,value);this.emit(Op.POP);if(ref.property.set){if(!ref.property.isStatic)this.emit(Op.LDLOC,ref.receiver);this.emit(Op.LDLOC,value);this.emit(Op.CALL,ref.property.set.id,ref.property.isStatic?1:2);this.emit(Op.POP);}this.emit(Op.LDLOC,value);this.clear(value);if(ref.receiver!==null)this.clear(ref.receiver);}else if(ref.kind==='local'){this.emit(Op.STLOC,ref.slot);this.assigned.add(ref.slot);}else if(ref.kind==='static')this.emit(Op.STSTATIC,ref.index);else{const value=this.temp(ref.type);this.emit(Op.STLOC,value);this.emit(Op.POP);this.emit(Op.LDLOC,ref.receiver);if(ref.kind==='index')this.emit(Op.LDLOC,ref.index);this.emit(Op.LDLOC,value);this.emit(ref.kind==='field'?Op.STFLD:Op.STELEM,ref.kind==='field'?ref.index:0);this.clear(value);this.clear(ref.receiver);if(ref.kind==='index')this.clear(ref.index);}}
 }
 /** The complete method compiler: explicit class composition instead of prototype patching. */
-export class MethodCompiler extends ScalarCompiler(ModernCompiler(FrameworkCompiler(CoreMethodCompiler))) {}
+export class MethodCompiler extends SynchronizationCompiler(ScalarCompiler(ModernCompiler(FrameworkCompiler(CoreMethodCompiler)))) {}
