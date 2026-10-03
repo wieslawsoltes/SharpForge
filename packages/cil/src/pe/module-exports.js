@@ -2,6 +2,20 @@ import { CilError } from '../binary.js';
 
 export const moduleLimits = Object.freeze({ files: 128, bytes: 64 * 1024 * 1024, types: 65536, exports: 16384 });
 
+/** Bound heap scans before decoding names, including forged overlapping string offsets. */
+export function moduleMetadataName(metadata, index, allowEmpty = false) {
+  const bytes = metadata.streams?.get('#Strings');
+  if (bytes) {
+    if (!Number.isInteger(index) || index < 0 || index >= bytes.length) throw new CilError('Invalid linked metadata name index');
+    let end = index;
+    while (end < bytes.length && end - index <= 2048 && bytes[end]) end++;
+    if (end === bytes.length || end - index > 2048) throw new CilError('Linked metadata name size limit exceeded');
+  }
+  const name = metadata.string(index);
+  if (typeof name !== 'string' || !allowEmpty && !name || name.length > 512) throw new CilError('Invalid linked metadata name');
+  return name;
+}
+
 export function moduleFileName(name) {
   if (typeof name !== 'string' || !name || name.length > 512 || /[\0/\\]/.test(name) || name === '.' || name === '..') {
     throw new CilError('Invalid linked module file name');
@@ -29,7 +43,7 @@ export function moduleTypeExports(metadata, budget) {
       return null;
     }
     if (++budget.count > moduleLimits.exports) throw new CilError('Linked module exported type limit exceeded');
-    const name = metadata.string(row[1]), namespace = metadata.string(row[2]);
+    const name = moduleMetadataName(metadata, row[1]), namespace = moduleMetadataName(metadata, row[2], true);
     if (!name || name.length > 512 || namespace.length > 512 || parent && namespace) {
       throw new CilError('Invalid linked module exported type name');
     }

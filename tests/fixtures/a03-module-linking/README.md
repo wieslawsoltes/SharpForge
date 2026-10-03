@@ -1,6 +1,8 @@
 # Two-module manifest reference
 
-Prepared for the serial validation slot; native observations are not captured yet.
+Captured on SDK 10.0.201 / .NET 10.0.5, macOS ARM64. Native SRM confirms both
+SHA-256 hashes and actual TypeDef row hints; the nested export targets its parent.
+Roslyn reports version 5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a).
 The Alpha module is emitted by SharpForge. Beta is compiled with SDK 10.0.201 Roslyn
 from `Beta.cs`, including public/private nested types and an internal enclosing type.
 The generated manifest links both. Native SRM checks File hashes using .NET SHA256,

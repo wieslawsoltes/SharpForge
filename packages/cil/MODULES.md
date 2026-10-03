@@ -52,8 +52,10 @@ there is no new runtime dependency.
 
 This supplies manifest linking and inspection, not compiler external-type binding or CLR
 module resolution. Both JavaScript execution engines reject multi-module assemblies with
-an explicit unsupported diagnostic. Native SRM hash/type-row comparison is prepared under
-`tests/fixtures/a03-module-linking`; validation is pending its serial slot. Browser, native
+an explicit unsupported diagnostic. Native SRM on .NET 10.0.5 confirms both module hashes, TypeDef hints and the nested
+export chain; the fixture combines SharpForge Alpha with Roslyn 5.3.0 Beta. All 16
+linking/module tests pass, including legacy assembly visibility, malformed tables and
+Buffer ownership. Evidence is under `tests/fixtures/a03-module-linking`. Browser, native
 execution and inherited A00 qualification remain open under SF-A03-T03.10.
 
 Exported type implementation chains follow [ECMA-335 II.6.7 and II.22.14](https://ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf).

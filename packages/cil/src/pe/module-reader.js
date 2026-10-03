@@ -1,6 +1,6 @@
 import { CilError } from '../binary.js';
 import { decodeCoded } from '../metadata/indices.js';
-import { moduleFileName, moduleLimits } from './module-exports.js';
+import { moduleFileName, moduleLimits, moduleMetadataName } from './module-exports.js';
 
 /** Inspect linked metadata modules without loading files. Returned hashes are owned copies; exports retain real tokens. */
 export function readAssemblyModules(pe) {
@@ -9,12 +9,12 @@ export function readAssemblyModules(pe) {
   if (files.length > moduleLimits.files || exports.length > moduleLimits.exports || refs.length > moduleLimits.types) {
     throw new CilError('Linked module manifest limit exceeded');
   }
-  const moduleRefs = new Map(refs.map((row, index) => [metadata.string(row[0]), 0x1a000001 + index]));
+  const moduleRefs = new Map(refs.map((row, index) => [moduleMetadataName(metadata, row[0]), 0x1a000001 + index]));
   const modules = new Map(), names = new Set();
   files.forEach((row, index) => {
     if (row[0] & ~1) throw new CilError('Invalid linked File flags');
     if (row[0] & 1) return;
-    const name = moduleFileName(metadata.string(row[1])), hash = metadata.blob(row[2]), fileToken = 0x26000001 + index;
+    const name = moduleFileName(moduleMetadataName(metadata, row[1])), hash = metadata.blob(row[2]), fileToken = 0x26000001 + index;
     if (hash.length > 64) throw new CilError('Linked module file hash limit exceeded');
     if (names.has(name.toLowerCase())) throw new CilError('Duplicate linked module name');
     names.add(name.toLowerCase());
@@ -38,7 +38,7 @@ export function readAssemblyModules(pe) {
   exports.forEach((row, index) => {
     const module = owner(index + 1);
     if (!module) return;
-    const name = metadata.string(row[2]), namespace = metadata.string(row[3]);
+    const name = moduleMetadataName(metadata, row[2]), namespace = moduleMetadataName(metadata, row[3], true);
     if (!name || name.length > 512 || namespace.length > 512) throw new CilError('Invalid exported type name');
     module.exportedTypes.push({ token: 0x27000001 + index, name, namespace, flags: row[0], typeDefId: row[1],
       implementation: decodeCoded('Implementation', row[4]) });

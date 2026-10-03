@@ -1,7 +1,7 @@
 import { CilError } from '../binary.js';
 import { sha256 } from '../binary/hash.js';
 import { readPortableExecutable } from './reader.js';
-import { moduleFileName, moduleLimits, moduleTypeExports } from './module-exports.js';
+import { moduleFileName, moduleLimits, moduleMetadataName, moduleTypeExports } from './module-exports.js';
 
 function inspectInputs(inputs) {
   if (!Array.isArray(inputs) || inputs.length > moduleLimits.files) throw new CilError('Invalid linked module count');
@@ -20,7 +20,7 @@ function inspectInputs(inputs) {
     if (types > moduleLimits.types) throw new CilError('Linked module aggregate type limit exceeded');
     for (const row of metadata.rows[2] ?? []) if ([1, 2].includes(row[0] & 7)) exports++;
     if (exports > moduleLimits.exports) throw new CilError('Linked module exported type limit exceeded');
-    return { input, metadata, name: moduleFileName(metadata.string(metadata.rows[0][0][1])) };
+    return { input, metadata, name: moduleFileName(moduleMetadataName(metadata, metadata.rows[0][0][1])) };
   });
 }
 
@@ -36,7 +36,7 @@ export function linkAssemblyModules(builder, inputs) {
   const budget = { count: 0 }, names = new Set(), typeNames = new Set();
   const local = moduleTypeExports({ rows: builder.rows, string: index => strings.get(index) ?? '' }, { count: 0 });
   for (const type of local) typeNames.add(type.fullName);
-  const primaryName = strings.get(builder.rows[0][0][1]).toLowerCase();
+  const primaryName = moduleFileName(strings.get(builder.rows[0][0][1])).toLowerCase();
   for (const module of modules) {
     const name = module.name.toLowerCase();
     if (name === primaryName || names.has(name)) throw new CilError(`Duplicate linked module name: ${module.name}`);

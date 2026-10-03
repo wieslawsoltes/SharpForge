@@ -132,4 +132,7 @@ test('A03 module inspection preflights manifest counts, hash lengths and exporte
   const cyclic = new MetadataBuilder('Manifest');
   cyclic.manifest.exportedType({ Flags: 2, TypeDefId: 1, TypeName: 'Cycle', TypeNamespace: '', Implementation: 0x27000001 });
   assert.throws(() => readAssemblyModules(readPE(metadataPE(cyclic))), /Cyclic or excessive/);
+  const hugeName = new MetadataBuilder('Manifest');
+  hugeName.manifest.moduleRef({ Name: 'x'.repeat(2049) });
+  assert.throws(() => readAssemblyModules(readPE(metadataPE(hugeName))), /name size limit/);
 });
