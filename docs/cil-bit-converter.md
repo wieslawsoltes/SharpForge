@@ -32,7 +32,9 @@ open. Arbitrary NaN payload and signaling-NaN preservation through JavaScript
 floating operations are not claimed. This increment does not close #1348 or
 T01's cross-engine differential acceptance.
 
-No tests, builds or benchmarks were executed for this batch. The coordinator's
-serial slot should run `tests/a05-bit-converter.test.js`,
+Serial validation at `62363720` passed all 41 tests under Node 24.21.0,
+one worker and a 512 MB heap cap. This revision includes the landed native-width
+adapters. Static/manifests and build validation use the required core check;
+benchmarks and broader qualification remain staged. The focused run included `tests/a05-bit-converter.test.js`,
 `tests/a05-float-precision.test.js`, `tests/a05-seams-cil-intrinsics.test.js` and
 `tests/a00-01-value-abi.test.js` via `node scripts/limited.js node --test ...`.
