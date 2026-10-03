@@ -1,5 +1,6 @@
 import {affineMatrix, boundsOfPoints, designRectangle, DesignSpatialIndex, geometryInvariant, identityMatrix,
   inverseMatrix, multiplyMatrix, rectanglePoints, transformPoint, transformRectangle} from '@sharpforge/designer';
+import {DesignerTextBaselines} from './designer-surface-baseline.js';
 
 function cssMatrix(text) {
   if (!text || text === 'none') return identityMatrix();
@@ -34,6 +35,7 @@ export class DesignerSurfaceGeometry {
     this.pending = null;
     this.frame = null;
     this.ensureEntry = null;
+    this.baselines = new DesignerTextBaselines(view.stage.ownerDocument);
   }
 
   invalidate() {
@@ -98,6 +100,7 @@ export class DesignerSurfaceGeometry {
       const bounds = transformRectangle({Width: measured.width, Height: measured.height}, stageMatrix);
       const entry = {id: node.id, node, element, ...measured, stageMatrix, bounds,
         parentMatrix: parent?.matrix ?? this.stage.matrix};
+      entry.baseline = this.baselines.measure(entry);
       this.index.set(node.id, bounds);
       const position = transformPoint(inverseMatrix(entry.parentMatrix), transformPoint(entry.matrix, {x: 0, y: 0}));
       const parentIsCanvas = parent?.node.type.endsWith('.Canvas');
@@ -175,6 +178,7 @@ export class DesignerSurfaceGeometry {
 
   dispose() {
     this.invalidate();
+    this.baselines.dispose();
     this.entries.clear();
     this.index.clear();
     this.ensureEntry = null;

@@ -15,15 +15,23 @@ export class DesignerSurfaceGestures {
       && !(this.view.outline?.isLocked(id) ?? false) && (this.view.outline?.isVisible(id) ?? true));
   }
 
+  baseline(entry, origin, matrix = null) {
+    if (!Number.isFinite(entry.baseline)) return null;
+    matrix ??= this.controller.multiply(inverseMatrix(entry.parentMatrix), entry.matrix);
+    if (Math.abs(matrix[1]) > 1e-8) return null;
+    return matrix[3] * entry.baseline + matrix[5] - origin;
+  }
+
   session(ids, {start = {x: 0, y: 0}, handle = null} = {}) {
     const entries = ids.map(id => this.controller.geometry.get(id));
     geometryInvariant(entries.every(Boolean), 'SFD_GESTURE_LAYOUT', 'All edited controls must have rendered layout.');
     const rectangles = Object.fromEntries(entries.map(entry => [entry.id, entry.rectangle]));
     const matrices = Object.fromEntries(entries.map(entry => [entry.id, handle ? entry.matrix : entry.parentMatrix]));
+    const baselines = Object.fromEntries(entries.map(entry => [entry.id, this.baseline(entry, entry.rectangle.Top)]));
     const constraints = Object.fromEntries(entries.map(entry => [entry.id, {minWidth: entry.node.properties.MinWidth ?? 0,
       minHeight: entry.node.properties.MinHeight ?? 0, maxWidth: entry.node.properties.MaxWidth ?? Infinity,
       maxHeight: entry.node.properties.MaxHeight ?? Infinity}]));
-    return new DesignGeometrySession(this.view.document, {rectangles, matrices, constraints, start, handle});
+    return new DesignGeometrySession(this.view.document, {rectangles, matrices, constraints, baselines, start, handle});
   }
 
   properties(id) {
@@ -37,12 +45,11 @@ export class DesignerSurfaceGestures {
     const excludedIds = new Set(excluded);
     const matrix = inverseMatrix(parent.matrix);
     const siblings = settings.snapSiblings ? parent.node.children.filter(id => !excludedIds.has(id)
-      && (this.view.outline?.isVisible(id) ?? true)).map(id => this.controller.geometry.get(id)).filter(Boolean).map(entry => ({
-      id: entry.id,
-      bounds: transformRectangle({Width: entry.width, Height: entry.height},
-        this.controller.multiply(matrix, entry.matrix)),
-      baseline: Number.parseFloat(entry.style.fontSize) * .8 + (Number.parseFloat(entry.style.paddingTop) || 0)
-    })) : [];
+      && (this.view.outline?.isVisible(id) ?? true)).map(id => this.controller.geometry.get(id)).filter(Boolean).map(entry => {
+      const relative = this.controller.multiply(matrix, entry.matrix);
+      const bounds = transformRectangle({Width: entry.width, Height: entry.height}, relative);
+      return {id: entry.id, bounds, baseline: this.baseline(entry, bounds.Top, relative)};
+    }) : [];
     const guides = settings.snapGuides ? settings.guides.map(guide => {
       const axisAligned = Math.abs(parent.stageMatrix[1]) < 1e-9 && Math.abs(parent.stageMatrix[2]) < 1e-9;
       if (!axisAligned) return null;
