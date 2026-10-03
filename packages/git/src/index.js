@@ -11,5 +11,7 @@ export * from './config.js';
 export * from './index-file.js';
 export * from './worktree.js';
 export * from './ignore.js';
+export * from './attributes.js';
+export * from './eol.js';
 export * from './path-safety.js';
 export * from './refspec.js';
