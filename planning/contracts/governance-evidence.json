@@ -13,7 +13,7 @@
   },
   "tests": {
     "command": "node --test planning/contracts/tests/governance.test.js",
-    "passed": 11,
+    "passed": 16,
     "failed": 0
   },
   "liveSnapshot": {
@@ -28,7 +28,9 @@
   },
   "qualification": [
     "gen-ownership.js --check: passed",
-    "gen-codeowners.js --check: passed"
+    "gen-codeowners.js --check: passed",
+    "Live bootstrap created missing Area/Parity fields and labels; subsequent dry-run operations=[]",
+    "Review regressions: inherited parents, absent parents, directory overlaps, numeric project fields, rename source ownership, actual contract tree evidence"
   ],
   "limitations": [
     "Global DAG readiness remains blocked by two genuine duplicate IDs.",
