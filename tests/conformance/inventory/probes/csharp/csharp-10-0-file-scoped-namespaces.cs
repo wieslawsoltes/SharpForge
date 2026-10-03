@@ -1,1 +1,0 @@
-namespace Example; class C {}
