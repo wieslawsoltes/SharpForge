@@ -1,0 +1,3 @@
+{
+  "protected-access/through-a-base-typed-receiver": ["diagnostics", "warnings"]
+}
