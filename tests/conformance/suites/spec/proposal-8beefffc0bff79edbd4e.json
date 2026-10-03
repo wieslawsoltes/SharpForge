@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-8beefffc0bff79edbd4e",
+  "kind": "spec",
+  "sourceText": "namespace System.Runtime.CompilerServices\n{\n    [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = false)]\n    public sealed class InterpolatedStringHandlerArgumentAttribute : Attribute\n    {\n        public InterpolatedStringHandlerArgumentAttribute(string argument);\n        public InterpolatedStringHandlerArgumentAttribute(params string[] arguments);\n\n        public string[] Arguments { get; }\n    }\n}",
+  "sourceSHA256": "3a142efcac3919a67b4613259347a5adbea6b5ab638a39a71f7a132725418d01",
+  "target": "library",
+  "featureId": "csharp-10-0-interpolated-string-handlers",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/improved-interpolated-strings.md",
+    "sha256": "a9232653b4497eae44487404a0c446af954667024beea4be2ad9a642b257b02c",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/improved-interpolated-strings.md",
+    "license": "NOASSERTION",
+    "offset": 35227
+  }
+}

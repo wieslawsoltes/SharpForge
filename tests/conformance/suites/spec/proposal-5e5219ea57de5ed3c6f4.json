@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-5e5219ea57de5ed3c6f4",
+  "kind": "spec",
+  "sourceText": "ref int M1(ref int i) => ...\n\n// Maps to the following. \n\nref<$ro> int Identity<$ro>(ref<$ro> int i)\n{\n    // okay: has ref lifetime $ro which is equal to $ro\n    return ref i;\n\n    // okay: has ref lifetime $heap which convertible $ro\n    int[] array = new int[42];\n    return ref array[0];\n\n    // error: has ref lifetime $local which has no conversion to $a hence \n    // it's illegal\n    int local = 42;\n    return ref local;\n}",
+  "sourceSHA256": "1ae32ca7b4065acad6242fa84cc19f3e5ed8eef510d0fb88b6d23f9e7eb6e3a9",
+  "target": "library",
+  "featureId": "csharp-11-0-ref-fields",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [
+    "Ellipsis/pseudocode requires annotated completion"
+  ],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/low-level-struct-improvements.md",
+    "sha256": "48173c4aaa1ffb3cbd8f7602f52fbf0b38a57f1e4fc50a725ba5305f30a5ff54",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/low-level-struct-improvements.md",
+    "license": "NOASSERTION",
+    "offset": 65218
+  }
+}

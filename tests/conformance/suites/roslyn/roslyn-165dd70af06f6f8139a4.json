@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-165dd70af06f6f8139a4",
+  "kind": "diagnostics",
+  "sourceText": "\n[assembly: System.Reflection.AssemblyDelaySign(true)]\npublic class C {}",
+  "sourceSHA256": "505ceb37ee02e86d26771083f8efd395e8728fa3a02fc48f959b95b0bfe95f83",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "sha256": "9e10a51f7f673a0e4ecef9e74c9a16fba06fbe3b89f9e5f5374503377b2b2a09",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "license": "MIT",
+    "method": "PublicKeyFromOptions_DelaySigned",
+    "offset": 23168
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseDll.WithCryptoPublicKey(s_publicKey), parseOptions: parseOptions)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

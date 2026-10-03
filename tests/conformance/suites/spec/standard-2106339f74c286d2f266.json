@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-2106339f74c286d2f266",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\npublic class X\n{\n    [DoesNotReturn]\n    private void FailFast() =>\n        throw new InvalidOperationException();\n\n    public void SetState(object? containedField)\n    {\n        if ((!isInitialized) || (containedField == null))\n        {\n            FailFast();\n        }\n        // null check not needed.\n        _field = containedField;\n    }\n\n    private bool isInitialized = false;\n    private object _field;\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "6ea2c74347a4b0192e1cda77f62221531c08cd68b7520f8180ebde2370034c03",
+  "originalSource": "public class X\n{\n    [DoesNotReturn]\n    private void FailFast() =>\n        throw new InvalidOperationException();\n\n    public void SetState(object? containedField)\n    {\n        if ((!isInitialized) || (containedField == null))\n        {\n            FailFast();\n        }\n        // null check not needed.\n        _field = containedField;\n    }\n\n    private bool isInitialized = false;\n    private object _field;\n}",
+  "metadata": {
+    "template": "standalone-lib",
+    "name": "DoesNotReturnAttribute"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-attributes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/attributes.md",
+    "sha256": "9ab07c36a912273dd0eb341141ca62153c76e5f32f422e70950477a6b89c5242",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/attributes.md",
+    "license": "MIT",
+    "example": "DoesNotReturnAttribute",
+    "offsetInUnquotedMarkdown": 48862
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-0bee40cd350e5f62555e",
+  "kind": "spec",
+  "sourceText": "ref struct TwoSpans<T>\n{\n\t// can have ref-like instance fields\n\tpublic Span<T> first;\n\tpublic Span<T> second;\n} \n\n// error: arrays of ref-like types are not allowed. \nTwoSpans<T>[] arr = null;\n",
+  "sourceSHA256": "7a1f085fb95262af2d3b4d156020093a8b8a3a6aa89136ec875aa744b440b618",
+  "target": "library",
+  "featureId": "csharp-7-2-span-and-ref-like-types",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/span-safety.md",
+    "sha256": "73bc8deb74ee9ac75ab2d74292a7014712fd627abe8dcc3f61ad9cfd6c1cdc30",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/span-safety.md",
+    "license": "NOASSERTION",
+    "offset": 1804
+  }
+}

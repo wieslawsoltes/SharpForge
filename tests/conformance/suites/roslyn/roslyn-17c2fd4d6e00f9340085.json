@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-17c2fd4d6e00f9340085",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class Test\n{\n    private static int value = 5;\n\n    public static void Main()\n    {\n        Process(() => ref value);\n    }\n\n    private static void Process(D func)\n    {\n        System.Console.WriteLine(func());\n    }\n}",
+  "sourceSHA256": "1044e1e0e08a593f02218f86cce58d2a002db053421504178e7f1fff6a9f1a1f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/InAttributeModifierTests.cs",
+    "sha256": "fed7c6d5beeb0e3296094c4c3973b927e627482323c4609b726e7af2365eb925",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/InAttributeModifierTests.cs",
+    "license": "MIT",
+    "method": "InAttributeModReqIsNotAllowedInCustomModifiersPosition_Delegates_ReturnTypes",
+    "offset": 33263
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { reference })",
+  "options": "(code, references: new[] { reference })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0570",
+        "severity": "error"
+      },
+      {
+        "code": "CS0570",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,20): error CS0570: 'D.Invoke()' is not supported by the language\n                //         Process(() => ref value);\n                Diagnostic(ErrorCode.ERR_BindToBogus, \"=>\").WithArguments(\"D.Invoke()\").WithLocation(8, 20),\n                // (13,34): error CS0570: 'D.Invoke()' is not supported by the language\n                //         System.Console.WriteLine(func());\n                Diagnostic(ErrorCode.ERR_BindToBogus, \"func()\").WithArguments(\"D.Invoke()\").WithLocation(13, 34)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

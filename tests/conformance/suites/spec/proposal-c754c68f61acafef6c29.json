@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-c754c68f61acafef6c29",
+  "kind": "spec",
+  "sourceText": "void M1(int i = 1) { }\nvar m1 = M1; // Infers Action<int>\nm1(); // error CS7036: There is no argument given that corresponds to the required parameter 'obj' of 'Action<int>'\n\nvoid M2(params int[] xs) { }\nvar m2 = M2; // Infers Action<int[]>\nm2(); // error CS7036: There is no argument given that corresponds to the required parameter 'obj' of 'Action<int[]>'",
+  "sourceSHA256": "cda860149d795dbdcc206fa39b6ac62800a08d2d4d53f57d4040038230c8b592",
+  "target": "library",
+  "featureId": "csharp-12-0-lambda-optional-parameters",
+  "langVersion": "12.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "sha256": "663ca72db438d27be03c24504ddcfa11032e0e1acc2a7f996cff23c10f67dc6e",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/lambda-method-group-defaults.md",
+    "license": "NOASSERTION",
+    "offset": 3643
+  }
+}
