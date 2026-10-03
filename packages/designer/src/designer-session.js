@@ -1,4 +1,5 @@
 import {DesignDocument, createDesign} from './model.js';
+import {recoverSessionGuides, installSessionGuides} from './session-guide-state.js';
 
 export const designerViewModes = Object.freeze(['design', 'split', 'code']);
 export const designerSplitOrientations = Object.freeze(['vertical', 'horizontal']);
@@ -48,6 +49,9 @@ export class DesignerSession {
     this.status = 'Design document · no application code runs until Build & Run';
     this.viewState = normalizeDesignerViewState(options.viewState, this.kind === 'design' ? 'design' : 'code');
     this.pendingSelection = [...this.viewState.selection];
+    this.pendingGuides = recoverSessionGuides(options.viewState?.guides);
+    this.guideStateSource = null;
+    this.guideStateSignature = 'null';
     this.document = options.document instanceof DesignDocument
       ? options.document : new DesignDocument(options.document ?? createDesign(uri.split('/').at(-1).slice(0, 100)));
   }
@@ -56,10 +60,15 @@ export class DesignerSession {
   set document(value) {
     this.assertOpen();
     if (!(value instanceof DesignDocument)) throw new TypeError('DesignerSession.document must be a DesignDocument');
+    const retainedGuides = this.pendingGuides ?? (this.kind === 'design' ? null
+      : recoverSessionGuides(this._document?.value.designer?.guides));
     this.documentSubscription?.();
     this._document = value;
+    if (retainedGuides && (this.pendingGuides || !value.value.designer?.guides)) installSessionGuides(value, retainedGuides);
+    this.recordGuideState();
     this.documentSubscription = value.subscribe(event => {
       if (event.kind === 'selection' && !this.applyingRecoveredSelection) this.pendingSelection = [];
+      this.recordGuideState({notify: true});
       this.emit({kind: 'document', event});
     });
     this.applySelection();
@@ -114,16 +123,40 @@ export class DesignerSession {
     if (final) this.pendingSelection = [];
   }
 
+  /** Selection and guide recovery share the source-initialization boundary, after its placeholder model is replaced. */
+  applyRecovery({final = false} = {}) {
+    this.assertOpen();
+    if (this.pendingGuides && this._document) installSessionGuides(this.document, this.pendingGuides);
+    this.recordGuideState();
+    this.applySelection({final});
+    if (final) this.pendingGuides = null;
+  }
+
+  recordGuideState({notify = false} = {}) {
+    const source = this._document?.value.designer?.guides;
+    if (source === this.guideStateSource) return;
+    this.guideStateSource = source;
+    const signature = JSON.stringify(recoverSessionGuides(source));
+    if (signature === this.guideStateSignature) return;
+    this.guideStateSignature = signature;
+    if (notify) {
+      this.pendingGuides = null;
+      this.emit({kind: 'view', changed: ['guides']});
+    }
+  }
+
   snapshot() {
     const selection = this.pendingSelection.length ? this.pendingSelection : this.document.selection;
-    return {uri: this.uri, kind: this.kind, ...this.viewState, selection: [...selection]};
+    const guides = recoverSessionGuides(this.pendingGuides ?? this.document.value.designer?.guides);
+    return {uri: this.uri, kind: this.kind, ...this.viewState, selection: [...selection], ...(guides ? {guides} : {})};
   }
 
   restore(snapshot) {
     this.assertOpen();
     this.viewState = normalizeDesignerViewState(snapshot, this.kind === 'design' ? 'design' : 'code');
     this.pendingSelection = [...this.viewState.selection];
-    this.applySelection();
+    this.pendingGuides = recoverSessionGuides(snapshot?.guides);
+    this.applyRecovery();
     this.emit({kind: 'restore'});
   }
 
@@ -198,6 +231,9 @@ export class DesignerSession {
     }
     for (const name of [...this.resources.keys()].reverse()) attempt(() => this.release(name));
     attempt(() => this.document.dispose());
+    this.pendingGuides = null;
+    this.guideStateSource = null;
+    this.guideStateSignature = 'null';
     this.sourceSync = null;
     this.live = null;
     attempt(() => this.emit({kind: 'dispose'}));

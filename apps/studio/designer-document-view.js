@@ -59,6 +59,7 @@ export class DesignerDocumentView {
     this.unsubscribe = session.subscribe(event => {
       const viewportOnly = event.changed?.every(key => ['scrollLeft', 'scrollTop'].includes(key));
       if (['view', 'restore', 'replace'].includes(event.kind) && !viewportOnly) this.renderState();
+      if (event.kind === 'restore') this.tools?.update({kind: 'initialize'});
     });
     try {
       this.tools = createTools(session, {documentHost: this, panelResolver: id => this.panels.get(id)});
