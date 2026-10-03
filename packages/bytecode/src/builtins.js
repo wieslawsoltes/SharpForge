@@ -1,3 +1,4 @@
+import {runtimeBuiltinDefinitions} from './runtime-builtins.js';
 import {contracts} from '@sharpforge/framework';
 export const definitions = Object.freeze( [
  ['Console.WriteLine',0,1,'void',['any']],['Console.Write',1,1,'void',['any']],
@@ -15,6 +16,9 @@ export const definitions = Object.freeze( [
 export const CONTRACT_BUILTIN_OFFSET=definitions.length;
 const builtinEntries=definitions.map(([name,min,max,result,params],id)=>Object.freeze({id,name,min,max,result,params}));
 for(const contract of contracts){const id=CONTRACT_BUILTIN_OFFSET+contract.id,count=contract.parameters.length+(!contract.isStatic&&contract.kind!=='constructor'?1:0);builtinEntries[id]=Object.freeze({id,name:'$framework:'+contract.id,min:count,max:count,result:contract.result,params:Object.freeze([...(!contract.isStatic&&contract.kind!=='constructor'?[contract.owner]:[]),...contract.parameters]),contract});}
+for(const [name,min,max,result,params] of runtimeBuiltinDefinitions){
+  builtinEntries.push(Object.freeze({id:builtinEntries.length,name,min,max,result,params:Object.freeze(params)}));
+}
 // The released runtime table remains a frozen array on the VM's hot dispatch path.
 export const Builtins=Object.freeze(builtinEntries);
 export const frameworkBuiltin = contract=>contract?Builtins[CONTRACT_BUILTIN_OFFSET+contract.id]:null;
