@@ -1,3 +1,4 @@
+import {exceptionIntrinsicDefinitions} from './exception-profile.js';
 import {asyncMethodDefinition} from './async-profile.js';
 import {numericAliases} from '@sharpforge/bytecode';
 import {arrayMethodDefinition} from './array-profile.js';
@@ -40,11 +41,7 @@ for(const name of ['IsGenericType','IsGenericTypeDefinition','ContainsGenericPar
 add('System.Object','ReferenceEquals',['object','object'],'bool',true,'objectReferenceEquals');
 add('System.Enum','ToString',[],'string',false,'enumToString');
 add('System.Enum','HasFlag',['System.Enum'],'bool',false,'enumHasFlag');
-for(const owner of ['System.Exception','System.NotSupportedException','System.InvalidOperationException'])for(const parameters of [[],['string']])add(owner,'.ctor',parameters,'void',false,'exceptionCtor');
-add('System.Exception','get_Message',[],'string',false,'exceptionMessage');
-for(const result of ['Exception','System.Exception'])add('System.Exception','get_InnerException',[],result,false,'exceptionInner');
-add('System.TypeInitializationException','get_Message',[],'string',false,'exceptionMessage');
-for(const result of ['Exception','System.Exception'])add('System.TypeInitializationException','get_InnerException',[],result,false,'exceptionInner');
+for(const d of exceptionIntrinsicDefinitions)add(d.owner,d.name,d.parameters,d.returnType,d.isStatic,d.implementation);
 for(const name of ['Sort','Reverse'])add('System.Array',name,['System.Array'],'void',true,'arrayMutate');
 add('System.String','.ctor',['char[]'],'void',false,'stringCtor');
 for(const count of [2,3,4])add('System.String','Concat',Array(count).fill('string'),'string',true,'stringConcat');

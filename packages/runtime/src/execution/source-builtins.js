@@ -1,3 +1,4 @@
+import {createException, exceptionField} from './exception-object.js';
 import {invokeNumericIntrinsic} from './numeric-intrinsics.js';
 import {mutateArray} from './array-ops.js';
 import {Builtins} from '@sharpforge/bytecode';
@@ -89,8 +90,8 @@ export function builtin(vm, id, args,types=[]) {
         if (typeof a !== 'string') throw new ManagedFault('NullReferenceException', 'String is null');
         if (b === null || b === '') throw new ManagedFault('ArgumentException', 'Old value cannot be null or empty');
         return vm.heap.string(a.split(b).join(c ?? ''));
-      case 'Exception.new': return vm.heap.allocate('exception', 'Exception', [args[0]]);
-      case 'Exception.Message': return vm.heap.get(args[0]).data[0];
+      case 'Exception.new': return createException(vm, 'Exception', args[0]);
+      case 'Exception.Message': return exceptionField(vm, args[0], 'Message');
       case 'Debug.Assert':
         if (a !== true) throw new ManagedFault('AssertionException', args.length > 1 ? vm.format(args[1]) : 'Assertion failed');
         return null;

@@ -1,0 +1,11 @@
+True
+False
+True
+origin
+True
+42
+retained
+3
+c
+a
+b

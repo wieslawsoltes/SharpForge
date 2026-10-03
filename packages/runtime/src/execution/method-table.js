@@ -1,7 +1,8 @@
+import {exceptionTypeDefinition} from './exception-layout.js';
 import {genericTypeParts,asyncTypeDefinition} from '@sharpforge/cil';
 import {nativeIntegerBits} from '@sharpforge/bytecode';
 import {frameworkType, canonicalType} from '@sharpforge/framework';
-import {exceptionTypeName, exceptionBaseType} from './exception-types.js';
+import {exceptionTypeName} from './exception-types.js';
 
 const aliases = {object:'System.Object',string:'System.String',bool:'System.Boolean',char:'System.Char',sbyte:'System.SByte',byte:'System.Byte',short:'System.Int16',ushort:'System.UInt16',int:'System.Int32',uint:'System.UInt32',long:'System.Int64',ulong:'System.UInt64',float:'System.Single',double:'System.Double',decimal:'System.Decimal',nint:'System.IntPtr',nuint:'System.UIntPtr',void:'System.Void'};
 const primitiveSizes = {'System.Boolean':1,'System.Char':2,'System.SByte':1,'System.Byte':1,'System.Int16':2,'System.UInt16':2,'System.Int32':4,'System.UInt32':4,'System.Int64':8,'System.UInt64':8,'System.Single':4,'System.Double':8,'System.Decimal':16,'System.IntPtr':4,'System.UIntPtr':4,'System.Void':0};
@@ -67,8 +68,7 @@ function builtin(name) {
     return {base:'System.ValueType',flags:{valueType:true,primitive:!['System.Decimal','System.Void'].includes(name),sealed:true},valueSize:primitiveSizes[name],interfaces};
   }
   if(name==='System.String')return {base:'System.Object',instanceSize:24,flags:{sealed:true},interfaces:['System.IComparable','System.ICloneable','System.IConvertible','System.IComparable`1<System.String>','System.IEquatable`1<System.String>','System.Collections.IEnumerable',genericPrefix+'IEnumerable`1<System.Char>']};
-  const exceptionBase=exceptionBaseType(name);
-  if(exceptionBase)return {base:exceptionBase,flags:{exception:true}};
+  const exception=exceptionTypeDefinition(name);if(exception)return exception;
   if(name==='System.Nullable`1')return {base:'System.ValueType',flags:{valueType:true,nullable:true,sealed:true},variance:[0]};
   if(/^System\.(Action|Func)`\d+$/.test(name)) {
     const arity=Number(name.split('`')[1]);return {base:'System.MulticastDelegate',flags:{delegate:true,sealed:true},variance:Array.from({length:arity},(_,i)=>name.startsWith('System.Func')&&i===arity-1?1:-1)};

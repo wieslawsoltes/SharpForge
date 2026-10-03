@@ -22,3 +22,5 @@ export {arrayMethodDefinition} from './array-profile.js';
 export {syncIntrinsicDefinitions,isSynchronizationIntrinsic} from './sync-intrinsic-profile.js';
 export {numericFieldDefinition} from './numeric-field-profile.js';
 export {asyncIntrinsicDefinitions,asyncMethodDefinition,asyncTypeDefinition,reachableAsyncMethods} from './async-profile.js';
+
+export {exceptionIntrinsicDefinitions} from './exception-profile.js';

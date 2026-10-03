@@ -1,3 +1,4 @@
+import {exceptionConstructor, exceptionIntrinsic} from './exception-intrinsics.js';
 import {invokeAsyncIntrinsic} from './async-runtime.js';
 import {arrayCall} from './array-calls.js';
 import {invokeNumericIntrinsic} from './numeric-intrinsics.js';
@@ -32,9 +33,8 @@ const implementations={
   objectReferenceEquals:({parameters})=>referenceEquals(parameters[0],parameters[1])?1:0,
   enumToString:({vm,self})=>{const text=enumToString(vm,self);if(text===null)throw new ManagedFault('ArgumentException','Enum receiver required');return vm.heap.string(text);},
   enumHasFlag:({vm,self,parameters})=>enumHasFlag(vm,self,parameters[0])?1:0,
-  exceptionCtor:({vm,self,parameters})=>{vm.heap.get(self).data[0]=parameters[0]??vm.heap.string('Exception');return null;},
-  exceptionMessage:({vm,self})=>vm.heap.get(self).data[0],
-  exceptionInner:({vm,self})=>vm.heap.get(self).data[1]??null,
+  exceptionCtor:({vm,descriptor,self,parameters})=>exceptionConstructor(vm,descriptor,self,parameters),
+  exception:({vm,descriptor,self,parameters})=>exceptionIntrinsic(vm,descriptor,self,parameters),
   stringCtor:({vm,parameters})=>stringFromChars(vm,parameters[0]),
   stringConcat:({vm,parameters})=>vm.heap.string(parameters.map(value=>vm.format(value)).join('')),
   stringCompare:({descriptor,values})=>(values[0]===values[1])!==(descriptor.name==='op_Inequality')?1:0,
