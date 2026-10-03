@@ -355,7 +355,7 @@ export const NameBinding = Base =>
       if (found.members.length)
         return this.memberResult(found.members, syntax, left, type, name, typeArguments, options) ?? this.bad(syntax);
       if (found.inaccessible.length) {
-        this.report(nameSyntax, 'CS0122', [found.inaccessible[0].toDisplayString()]);
+        this.reportInaccessible(found.inaccessible[0], type, nameSyntax);
         return this.bad(syntax);
       }
       if (this.reportAccessorByName(lookupType, name, nameSyntax)) return this.bad(syntax);

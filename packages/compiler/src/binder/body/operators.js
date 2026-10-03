@@ -203,7 +203,7 @@ export const OperatorBinding = Base =>
         return this.bad(syntax);
       }
       if (this.hasInaccessibleSetter(left)) {
-        this.report(syntax.left, 'CS0272', [left.property.toDisplayString()]);
+        this.reportInaccessibleSetter(left, syntax.left);
         this.value(syntax.right);
         return this.bad(syntax);
       }
@@ -306,8 +306,10 @@ export const OperatorBinding = Base =>
       if (target.kind !== 'PropertyAccess' && target.kind !== 'IndexerAccess') return false;
       const setter = target.property.setMethod;
       if (!setter || setter.declaredAccessibility === target.property.declaredAccessibility) return false;
-      const within = this.c.containingType?.originalDefinition ?? null;
-      return !isAccessible(setter.originalDefinition ?? setter, within, { withinModule: this.d.assembly.module });
+      const within = this.c.containingType?.originalDefinition ?? null,
+        // A protected set accessor is only accessible through a receiver of the accessing class (`base.P` always is).
+        throughType = target.receiver && target.receiver.kind !== 'Base' ? target.receiver.type : null;
+      return !isAccessible(setter.originalDefinition ?? setter, within, { withinModule: this.d.assembly.module, throughType });
     }
     increment(syntax) {
       const operator = syntax.operatorToken.text,

@@ -423,6 +423,7 @@ export const roslynCodes=Object.freeze({
  CS1657:["ERR_RefReadonlyLocalCause","error",0,"Cannot use '{0}' as a ref or out value because it is a '{1}'"],
  CS1660:["ERR_AnonMethToNonDel","error",0,"Cannot convert {0} to type '{1}' because it is not a delegate type"],
  CS1661:["ERR_CantConvAnonMethParams","error",0,"Cannot convert {0} to type '{1}' because the parameter types do not match the delegate parameter types"],
+ CS1662:["ERR_CantConvAnonMethReturns","error",0,"Cannot convert {0} to intended delegate type because some of the return types in the block are not implicitly convertible to the delegate return type"],
  CS1663:["ERR_IllegalFixedType","error",0,"Fixed size buffer type must be one of the following: bool, byte, short, int, long, char, sbyte, ushort, uint, ulong, float or double"],
  CS1665:["ERR_InvalidFixedArraySize","error",0,"Fixed size buffers must have a length greater than zero"],
  CS1674:["ERR_NoConvToIDisp","error",0,"'{0}': type used in a using statement must implement 'System.IDisposable'."],
