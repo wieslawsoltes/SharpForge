@@ -1,0 +1,269 @@
+/**
+ * Definite assignment through expressions: reads, assignments, by-reference arguments, short-circuit
+ * operators and the when-true / when-false states of conditions.
+ */
+import { TypeKind, RefKind } from '../../symbols/types.js';
+import { isUserStruct, join, fieldKey, boundChildren } from './state.js';
+
+/** Class mixin: Definite assignment through expressions: reads, assignments, by-reference arguments, short-circuit */
+export const AssignmentExpressions = Base =>
+  class extends Base {
+    // ---- expressions ----
+    /** Evaluates an expression for its effects and returns the state after it. */
+    expr(e, state) {
+      if (!e || typeof e !== 'object' || !state) return state;
+      switch (e.kind) {
+        case 'Local':
+          this.read(e.local, e, state);
+          return state;
+        case 'Parameter':
+          if (e.parameter.refKind === RefKind.Out && this.outs.includes(e.parameter) && !this.isAssigned(e.parameter, state)) {
+            this.report(e.syntax, 'CS0269', [e.parameter.name], e.parameter);
+            state.add(e.parameter);
+          }
+          return state;
+        case 'This':
+          if (this.thisVariable && !this.isAssigned(this.thisVariable, state) && !e.isImplicit) {
+            this.report(e.syntax, 'CS0188', ['this'], 'this');
+            state.add(this.thisVariable);
+          }
+          return state;
+        case 'FieldAccess': {
+          const variable = this.variableOf(e.receiver);
+          if (variable && this.tracked(variable) && !e.field.isStatic && isUserStruct(variable.type)) {
+            if (!state.has(variable) && !state.has(fieldKey(variable, e.field))) {
+              this.report(e.syntax, 'CS0170', [e.field.name], fieldKey(variable, e.field));
+              state.add(fieldKey(variable, e.field));
+            }
+            return state;
+          }
+          return this.expr(e.receiver, state);
+        }
+        case 'Assignment':
+        case 'RefAssignment':
+          return this.assign(e.left, this.expr(e.right, this.target(e.left, state)));
+        case 'CoalesceAssignment': {
+          const after = this.expr(e.left, state),
+            right = this.expr(e.right, after.clone());
+          return join(after, right) ?? after;
+        }
+        case 'CompoundAssignment': {
+          let s = this.expr(e.left, state);
+          s = this.expr(e.right, s);
+          return s;
+        }
+        case 'Increment':
+          return this.expr(e.operand, state);
+        case 'Binary':
+          if (e.operator === '&&' || e.operator === '||') {
+            const c = this.cond(e, state);
+            return join(c.t, c.f);
+          }
+          return this.expr(e.right, this.expr(e.left, state));
+        case 'Unary':
+          return this.expr(e.operand, state);
+        case 'Conditional':
+        case 'RefConditional': {
+          const c = this.cond(e.condition, state);
+          return join(this.expr(e.whenTrue, c.t), this.expr(e.whenFalse, c.f));
+        }
+        case 'Coalesce': {
+          const s = this.expr(e.left, state);
+          this.expr(e.right, s.clone());
+          return s;
+        }
+        case 'ConditionalAccess': {
+          const s = this.expr(e.receiver, state);
+          this.expr(e.whenNotNull, s.clone());
+          return s;
+        }
+        case 'IsPattern': {
+          const c = this.cond(e, state);
+          return join(c.t, c.f);
+        }
+        case 'Call':
+        case 'ObjectCreation':
+        case 'IndexerAccess':
+        case 'Bad': {
+          let s = this.expr(e.receiver, state);
+          const outs = [];
+          if (e.kind === 'Bad') for (const k of ['operand', 'left', 'right']) s = this.expr(e[k], s);
+          for (const a of e.args ?? []) {
+            const value = a.expression ?? a;
+            if (a.refKind === RefKind.Out) {
+              s = this.target(value, s);
+              outs.push(value);
+            } else if (a.refKind === RefKind.Ref && value.kind === 'Local') {
+              this.read(value.local, value, s);
+            } else s = this.expr(value, s);
+          }
+          for (const o of outs) s = this.assign(o, s);
+          for (const i of e.initializers ?? []) s = this.expr(i.value, s);
+          for (const c of e.collectionInitializers ?? []) for (const a of c.args) s = this.expr(a, s);
+          return s;
+        }
+        case 'Lambda': {
+          // Captured variables must be assigned where the lambda is created; assignments inside do not flow out.
+          if (e.body) {
+            const inner = state.clone(),
+              saved = this.loops;
+            this.loops = [];
+            if (e.body.kind && 'completes' in e.body) this.stmt(e.body, inner);
+            else this.expr(e.body, inner);
+            this.loops = saved;
+          }
+          return state;
+        }
+        case 'DeclarationExpression':
+        case 'Discard':
+        case 'Literal':
+        case 'TypeExpression':
+        case 'Default':
+        case 'TypeOf':
+        case 'SizeOf':
+        case 'NameOf':
+        case 'ConditionalReceiver':
+        case 'MethodGroup':
+          return state;
+        default: {
+          let s = state;
+          for (const child of boundChildren(e)) s = this.expr(child, s);
+          return s;
+        }
+      }
+    }
+    /** The variable (local, out parameter or struct `this`) an expression denotes directly, or null. */
+    variableOf(e) {
+      if (!e) return null;
+      if (e.kind === 'Local') return e.local;
+      if (e.kind === 'Parameter') return e.parameter;
+      if (e.kind === 'This') return this.thisVariable ?? null;
+      return null;
+    }
+    read(local, node, state) {
+      if (!this.own.has(local) || this.isAssigned(local, state)) return;
+      this.report(node.syntax, 'CS0165', [local.name], local);
+      state.add(local);
+    }
+    /** Evaluates the sub-expressions of an assignment target that run before the right-hand side (receivers, indices). */
+    target(left, state) {
+      if (!left) return state;
+      switch (left.kind) {
+        case 'Local':
+        case 'Parameter':
+        case 'Discard':
+        case 'DeclarationExpression':
+        case 'This':
+          return state;
+        case 'FieldAccess': {
+          const v = this.variableOf(left.receiver);
+          if (v && this.tracked(v)) return state;
+          return this.expr(left.receiver, state);
+        }
+        case 'PropertyAccess':
+        case 'EventAccess':
+          return this.expr(left.receiver, state);
+        case 'ArrayAccess': {
+          let s = this.expr(left.array, state);
+          for (const i of left.indices) s = this.expr(i, s);
+          return s;
+        }
+        case 'IndexerAccess': {
+          let s = this.expr(left.receiver, state);
+          for (const a of left.args ?? []) s = this.expr(a.expression ?? a, s);
+          return s;
+        }
+        default:
+          return this.expr(left, state);
+      }
+    }
+    assign(left, state) {
+      if (!state || !left) return state;
+      if (left.kind === 'Local' || left.kind === 'DeclarationExpression') {
+        if (left.local) {
+          if (left.kind === 'DeclarationExpression') this.declare(left.local);
+          state.add(left.local);
+        }
+        return state;
+      }
+      if (left.kind === 'Parameter') {
+        state.add(left.parameter);
+        return state;
+      }
+      if (left.kind === 'This' && this.thisVariable) {
+        state.add(this.thisVariable);
+        return state;
+      }
+      if (left.kind === 'FieldAccess') {
+        const v = this.variableOf(left.receiver);
+        if (v && this.tracked(v) && !left.field.isStatic) state.add(fieldKey(v, left.field));
+      }
+      if (left.kind === 'PropertyAccess' && left.property.backingField && left.receiver?.kind === 'This' && this.thisVariable)
+        state.add(fieldKey(this.thisVariable, left.property.backingField));
+      return state;
+    }
+    /** Evaluates a boolean expression and returns the states when it is true and when it is false. */
+    cond(e, state) {
+      if (!state) return { t: null, f: null };
+      if (e.constantValue && e.constantValue.type === 'bool' && e.constantValue.value !== null) {
+        const s = this.expr(e, state);
+        return e.constantValue.value ? { t: s, f: null } : { t: null, f: s };
+      }
+      switch (e.kind) {
+        case 'Binary':
+          if (e.operator === '&&') {
+            const l = this.cond(e.left, state),
+              r = this.cond(e.right, l.t);
+            return { t: r.t, f: join(l.f, r.f) };
+          }
+          if (e.operator === '||') {
+            const l = this.cond(e.left, state),
+              r = this.cond(e.right, l.f);
+            return { t: join(l.t, r.t), f: r.f };
+          }
+          break;
+        case 'Unary':
+          if (e.operator === '!' && !e.method) {
+            const c = this.cond(e.operand, state);
+            return { t: c.f, f: c.t };
+          }
+          break;
+        case 'Conversion':
+          if (e.conversion?.kind === 'Identity') return this.cond(e.operand, state);
+          break;
+        case 'IsPattern': {
+          const s = this.expr(e.operand, state),
+            t = s.clone();
+          this.patternLocals(e.pattern, t, true);
+          // `x is not T t`: the variable is assigned when the test is false.
+          if (e.pattern?.kind === 'NotPattern') {
+            const f = s.clone();
+            this.patternLocals(e.pattern.pattern, f, true);
+            return { t: s.clone(), f };
+          }
+          return { t, f: s };
+        }
+        case 'Call': {
+          // A call's out arguments are assigned in both outcomes.
+          const s = this.expr(e, state);
+          return { t: s, f: s?.clone() ?? null };
+        }
+      }
+      const s = this.expr(e, state);
+      return { t: s, f: s?.clone() ?? null };
+    }
+    patternLocals(p, state, definite) {
+      if (!p) return;
+      if (p.local) {
+        this.declare(p.local);
+        if (definite && state) state.add(p.local);
+      }
+      if (p.kind === 'AndPattern') {
+        this.patternLocals(p.left, state, definite);
+        this.patternLocals(p.right, state, definite);
+      } else if (p.kind === 'OrPattern' || p.kind === 'NotPattern') {
+        this.patternLocals(p.left ?? p.pattern, state, false);
+        this.patternLocals(p.right, state, false);
+      }
+    }
+  };

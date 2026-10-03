@@ -1,0 +1,20 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "declarations/cs0101-duplicate-type":{"hash":"cd5aaa7924cd007a","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0101",54,1,"error"]]},
+  "declarations/cs0102-duplicate-field":{"hash":"59f1c85c8e99def1","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0169",50,1,"warning"],["CS0102",60,1,"error"],["CS0169",60,1,"warning"]]},
+  "declarations/cs0102-field-and-property":{"hash":"850987166c89e119","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0649",57,5,"warning"],["CS0102",75,5,"error"]]},
+  "declarations/cs0111-duplicate-method":{"hash":"647ff30459ee2496","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0111",69,1,"error"]]},
+  "declarations/cs0111-return-type-only":{"hash":"a8d473b10c09cc71","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0111",75,1,"error"]]},
+  "declarations/cs0111-duplicate-constructor":{"hash":"85aed57af44c7027","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0111",73,1,"error"]]},
+  "declarations/cs0100-duplicate-parameter":{"hash":"d306ff99570edd49","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0100",67,1,"error"]]},
+  "declarations/cs0128-duplicate-local":{"hash":"2049560238b6ab7e","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0128",29,1,"error"],["CS0219",29,1,"warning"]]},
+  "declarations/cs0128-different-types":{"hash":"c4bb534e52ca70a6","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0128",67,1,"error"],["CS0219",67,1,"warning"]]},
+  "declarations/cs0136-nested-scope":{"hash":"83dcb19b474e33d3","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0219",122,1,"warning"],["CS0136",135,1,"error"]]},
+  "declarations/cs0136-parameter-shadowed":{"hash":"4c13e90e66767afe","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0136",55,1,"error"]]},
+  "declarations/cs0136-declared-later-in-outer":{"hash":"2f5031c00db471fe","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0136",67,1,"error"]]},
+  "declarations/cs0542-member-named-as-type":{"hash":"1b8aa39fa70a58b4","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0169",50,1,"warning"],["CS0542",50,1,"error"]]},
+  "declarations/cs0841-use-before-declaration":{"hash":"500ae5e65b706cac","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0841",32,1,"error"]]},
+  "declarations/cs0815-var-null":{"hash":"1a036ae7ce110ab5","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0815",18,8,"error"]]},
+  "declarations/cs0818-var-without-initializer":{"hash":"8adf2aaffb5c670d","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0168",18,1,"warning"],["CS0818",18,1,"error"]]},
+  "declarations/cs0017-multiple-entry-points":{"hash":"5df32128ef588b73","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0017",36,4,"error"]]},
+  "declarations/cs5001-no-entry-point":{"hash":"70c89eb990ff1b25","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS5001",-1,0,"error"]]}
+}}
