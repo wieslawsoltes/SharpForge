@@ -82,6 +82,19 @@ function spanValue(context, value) {
   if (!record.methodTable.flags.szArray || !compatible || pointer.index > record.data.length - value.length) fail('Span array bounds or type');
 }
 
+function runtimeArgumentValue(context, value) {
+  if (!Object.isFrozen(value) || value.vmOwner !== context.snapshotOwner) fail('runtime argument ownership');
+  if (value.typedReference) {
+    if (snapshotAddress(context, value.pointer).type !== ownedTable(context, value.type)) fail('typed reference location type');
+    return;
+  }
+  const frame = context.frameIndex.get(value.frameId);
+  const method = context.inspector ? frame?.method?.signature : context.image.methods[frame?.methodId];
+  if (method?.callingConvention !== 5 || !Array.isArray(frame?.varargs)) fail('runtime argument frame');
+  if (value.argIterator && (!Number.isInteger(value.index) || value.index < 0 || value.index > frame.varargs.length ||
+      typeof value.ended !== 'boolean')) fail('runtime argument cursor');
+}
+
 /** Value wrappers are immutable; managed references inside them remain shared identities. */
 export function snapshotMemoryValue(context, value, {heapStorage = false} = {}) {
   if (heapStorage && (value.byref || value.span || value.typedReference || value.runtimeArgumentHandle || value.argIterator)) {
@@ -89,6 +102,7 @@ export function snapshotMemoryValue(context, value, {heapStorage = false} = {}) 
   }
   if (value.byref) snapshotAddress(context, value);
   if (value.span) spanValue(context, value);
+  if (value.typedReference || value.runtimeArgumentHandle || value.argIterator) runtimeArgumentValue(context, value);
   if (value.valueType) {
     const type = ownedTable(context, value.valueType);
     if (!type.flags.valueType || !Object.isFrozen(value) || !Array.isArray(value.fields) ||

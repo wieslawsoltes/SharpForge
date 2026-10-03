@@ -11,6 +11,9 @@ export function storageValue(vm,value,type,numericContext) {
   const opaque = name === 'typedref' || name === 'System.TypedReference' ? 'typedReference'
     : name === 'System.RuntimeArgumentHandle' ? 'runtimeArgumentHandle'
     : name === 'System.ArgIterator' ? 'argIterator' : null;
+  if ((value?.typedReference || value?.runtimeArgumentHandle || value?.argIterator) && (!opaque || !value[opaque])) {
+    throw new ManagedFault('InvalidProgramException', 'Runtime argument values require their exact stack storage type');
+  }
   if (opaque && value?.[opaque]) {
     if (!Object.isFrozen(value) || value.vmOwner !== vm.snapshotOwner) {
       throw new ManagedFault('InvalidProgramException', 'Malformed or foreign runtime argument value');
