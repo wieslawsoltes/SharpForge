@@ -224,6 +224,8 @@ export class BinderCore {
         return this.identifier(syntax, options);
       case 'GenericName':
         return this.identifier(syntax, options);
+      case 'AliasQualifiedName':
+        return this.aliasQualifiedName(syntax);
       case 'PredefinedType':
         return this.node('TypeExpression', syntax, null, { referencedType: this.core.keyword(syntax.keyword.text) ?? unknown });
       case 'ThisExpression': {
@@ -358,7 +360,7 @@ export class BinderCore {
         return this.conditionalAccess(syntax);
       case 'RefExpression': {
         const e = this.value(syntax.expression);
-        return e.hasErrors ? e : this.node('Ref', syntax, e.type, { operand: e, isRef: true });
+        return e.hasErrors ? e : this.node('Ref', syntax, e.type, { operand: this.markAliased(e), isRef: true });
       }
       case 'DeclarationExpression':
         return this.declarationExpression(syntax, null);
@@ -366,12 +368,13 @@ export class BinderCore {
         return this.switchExpression(syntax);
       case 'CollectionExpression':
         return this.collectionExpression(syntax);
+      case 'StackAllocArrayCreationExpression':
+      case 'ImplicitStackAllocArrayCreationExpression':
+        return this.stackAlloc(syntax);
       case 'AnonymousObjectCreationExpression':
       case 'QueryExpression':
       case 'RangeExpression':
       case 'WithExpression':
-      case 'StackAllocArrayCreationExpression':
-      case 'ImplicitStackAllocArrayCreationExpression':
       case 'IndexExpression':
         // Bound by later epics (anonymous types, queries, ranges, records): operands are still bound for their own diagnostics.
         for (const child of syntax.childNodes())
