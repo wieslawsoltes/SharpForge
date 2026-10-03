@@ -26,3 +26,11 @@ When merging main's new modular parser, retain its parser facade and lexer. Appl
 legacy-adapter numeric/memory mappings instead of restoring the previous parser.
 The new parser already recognizes unsigned shifts and rectangular/stackalloc syntax;
 its legacy profile adapters are the remaining boundary.
+
+Main compatibility helper `syntax/src/legacy-adapter/scalars-memory.js` is additive.
+In the new LegacyExpressionAdapter.expressionCore, call scalarMemoryExpression(this,
+red) before its existing cases and return a defined result. In LegacyTypeAdapter.type,
+call scalarMemoryType(this,red,prefix) first. Remove SF1003/SF1004 profile additions in
+lexer/numbers.js and SF1003/SF1005 profile additions in lexer/reals.js; retain actual
+syntax errors and feature gates. Main's scanner already preserves exact literal.value,
+so this adapter copies its BigInt and Decimal96 bits without Number conversion.
