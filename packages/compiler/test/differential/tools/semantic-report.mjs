@@ -8,7 +8,7 @@
 import { parse } from '@sharpforge/syntax';
 import { SourceText } from '@sharpforge/text';
 import { analyze } from '../../../src/semantic-analysis.js';
-import { loadFixtures, loadPinned } from '../corpus.js';
+import { loadFixtures, loadPinned } from '../corpus-store.js';
 
 const args = process.argv.slice(2),
   withWarnings = args.includes('--warnings'),
