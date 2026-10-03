@@ -297,7 +297,7 @@ export const CallBinding = Base =>
       if (receiver && receiver.type?.isValueType === true && !method.isStatic) {
         const passing = receiverPassing(receiver, method, this.variableContext);
         n.receiverPassing = passing.mode;
-        if (passing.warning) this.report(syntax, passing.warning.code, passing.warning.args);
+        if (passing.warning) this.report(nameNode, passing.warning.code, passing.warning.args);
       }
       if (type.isErrorType?.()) n.hasErrors = true;
       return n;

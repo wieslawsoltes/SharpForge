@@ -12,8 +12,10 @@
  *
  * Pattern-based disposal: a ref struct cannot implement IDisposable before C# 13, so `using` accepts an accessible
  * instance `void Dispose()` on it; the form is gated as 'pattern-based disposal' below C# 8.
+ *
+ * `a ?? b` whose left operand is an unconstrained type parameter is gated below C# 8.
  */
-import { SymbolKind } from '../symbols/types.js';
+import { SymbolKind, TypeParameterSymbol } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { implementsInterface } from '../symbols/substitution.js';
 import { lookupMembers } from './inheritance.js';
@@ -148,6 +150,15 @@ export const CSharp8Binding = Base =>
     variableDeclaration(syntax, options) {
       if (options.isUsing) for (const variable of syntax.variables) if (!variable.initializer) this.report(variable.identifier, 'CS0210');
       return super.variableDeclaration(syntax, options);
+    }
+    // ---- null coalescing ----
+    /** `a ?? b` over a type parameter that is not known to be a reference or a value type is a C# 8 form. */
+    coalesce(syntax) {
+      const bound = super.coalesce(syntax),
+        type = bound.hasErrors ? null : bound.left?.type;
+      if (type instanceof TypeParameterSymbol && type.isReferenceType !== true && type.isValueType !== true)
+        this.d.gate(this.c.uri, syntax, 'UnconstrainedTypeParameterInNullCoalescingOperator');
+      return bound;
     }
     // ---- disposal ----
     checkDisposable(type, node, isAwait, value) {
