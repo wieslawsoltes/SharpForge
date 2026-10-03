@@ -1,6 +1,0 @@
-{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
-  "closures/loop-capture-lifetimes":{"hash":"d3ae18f0446788db","kind":"output","langVersion":"14.0","diagnostics":[],"output":"10\n20\n30\n3\n3\n3\n0\n2\n4\n"},
-  "closures/shared-mutable-state":{"hash":"00150fc5fd67fd79","kind":"output","langVersion":"14.0","diagnostics":[],"output":"12\n3 110\n123\n"},
-  "closures/captured-this-and-parameters":{"hash":"135bc00c7eb46bf1","kind":"output","langVersion":"14.0","diagnostics":[],"output":"110\n170\n"},
-  "closures/local-functions":{"hash":"87574a0ffd252c39","kind":"output","langVersion":"14.0","diagnostics":[],"output":"55 177\n720\n51\n501\n1003\n81\n"}
-}}

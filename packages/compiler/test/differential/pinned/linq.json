@@ -1,7 +1,0 @@
-{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
-  "linq/where-select-sum":{"hash":"158b72ced97a1b96","kind":"output","langVersion":"14.0","diagnostics":[],"output":"12\n1,4,9,16,25,36\n3\nTrue False\n7\n3.5\n"},
-  "linq/ordering-and-first":{"hash":"02a8702b2d1a0acc","kind":"output","langVersion":"14.0","diagnostics":[],"output":"fig kiwi pear banana\npear\nTrue\nbanana\n3\nno match\n"},
-  "linq/query-syntax":{"hash":"5093dcaf5d2adfaf","kind":"output","langVersion":"14.0","diagnostics":[],"output":"30\n50\n80\n3\n"},
-  "linq/group-and-aggregate":{"hash":"8f1d67c6a442ea57","kind":"output","langVersion":"14.0","diagnostics":[],"output":"a:2\nb:2\nc:1\naabbc\n15\n"},
-  "linq/cs1061-linq-without-using":{"hash":"c4cffd3709f768ea","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1061",56,3,"error"]]}
-}}

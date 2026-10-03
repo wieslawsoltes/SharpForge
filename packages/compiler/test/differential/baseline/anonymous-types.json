@@ -1,5 +1,0 @@
-{
-  "anonymous-types/creation-identity-text-and-equality": ["diagnostics", "warnings", "bytecode", "cil"],
-  "anonymous-types/cs0746-cs0828-cs0833-member-declarators": ["diagnostics", "warnings"],
-  "anonymous-types/transparent-identifiers-of-a-query": ["diagnostics", "warnings", "bytecode", "cil"]
-}

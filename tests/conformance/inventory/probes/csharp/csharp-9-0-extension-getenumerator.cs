@@ -1,1 +1,0 @@
-class Bag {} static class E { public static System.Collections.Generic.IEnumerator<int> GetEnumerator(this Bag b)=>new System.Collections.Generic.List<int>().GetEnumerator(); } class C { void M(){foreach(int n in new Bag()) {}} }

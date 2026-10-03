@@ -1,6 +1,0 @@
-<Solution>
-  <Folder Name="/src/">
-    <Project Path="WinuiLibrarySolutionExample/WinuiLibrarySolutionExample.csproj" />
-      <Project Path="WinuiLibrarySolutionExample.Controls/WinuiLibrarySolutionExample.Controls.csproj" />
-</Folder>
-</Solution>
