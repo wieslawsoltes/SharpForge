@@ -43,7 +43,6 @@ const expressionFamilies = [
   NameBinding,
   CallBinding,
   CreationBinding,
-  ...memberBindings,
   OperatorBinding,
   TypeTestBinding,
   TupleBinding,
@@ -54,6 +53,8 @@ const expressionFamilies = [
   StructuralPatternBinding,
   StackAllocBinding,
   QueryBinding,
+  // Last: the member binders refine the creation, name, conversion and lambda families above.
+  ...memberBindings,
 ];
 const statementFamilies = [
   StatementBinding,
