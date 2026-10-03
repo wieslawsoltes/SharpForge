@@ -1,5 +1,6 @@
 import {canonicalType,taskResult,TASK} from '@sharpforge/framework';
 import {diagnostic} from '@sharpforge/text';
+import {formatMessage} from './diagnostics/codes.js';
 /**
  * Lower a bounded Task async profile to explicit delegate capture + verified calls
  * into the SharpForge continuation ABI. This is NOT Roslyn/CLR state-machine IL.
@@ -12,7 +13,7 @@ export function lowerAsyncFiles(files) {
     const lower=(method,owner)=>{
       if(method.kind!=='Method'||!method.modifiers.includes('async'))return [method];
       const returnType=canonicalType(method.returnType),result=returnType==='void'?'void':taskResult(returnType);
-      if(result===null){diagnostics.push(diagnostic(file.source,method.start,Math.max(1,method.end-method.start),'CS1983','An async method in this profile must return void, Task, or a supported Task<T>'));return [method];}
+      if(result===null){diagnostics.push(diagnostic(file.source,method.start,Math.max(1,method.end-method.start),'CS1983',formatMessage('CS1983')));return [method];}
       const id=ordinal++,closure=`<>AsyncCapture${id}`,bodyName=`<>AsyncBody${id}_${method.name}`,origin=(owner?owner+'.':'')+method.name;
       const N=(kind,extra={})=>({kind,uri:method.uri,start:method.start,end:method.end,debugHidden:true,...extra});
       const name=n=>N('Name',{name:n}),member=(target,n)=>N('Member',{target,name:n});

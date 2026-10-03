@@ -48,7 +48,7 @@ export const diagnosticCases=[
  ['type mismatch','int x="text";','CS0029'],
  ['unassigned','int x;Console.WriteLine(x);','CS0165'],
  ['short circuit definite assignment','int x;bool b=false && (x=2)>0;Console.WriteLine(x);','CS0165'],
- ['branch definite assignment','int x;if(true)x=1;Console.WriteLine(x);','CS0165'],
+ ['branch definite assignment','int x;bool b=false;if(b)x=1;Console.WriteLine(x);','CS0165'],
  ['unknown name','Console.WriteLine(missing);','CS0103'],
  ['duplicate type','class A{}class A{}Console.WriteLine(1);','CS0101'],
  ['duplicate member','class A{int X;int X;}Console.WriteLine(1);','CS0102'],
