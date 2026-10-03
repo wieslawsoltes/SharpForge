@@ -65,7 +65,7 @@ export const typeMethods = {
     if (this.kindAt(i) === '::') {
       if (!this.isId(this.tokens[i + 1])) return -1;
       i += 2;
-      if (info) info.must = true;
+      if (info) info.must = info.alias = true;
     }
     for (;;) {
       if (this.kindAt(i) === '<') {
@@ -117,7 +117,8 @@ export const typeMethods = {
   },
   /**
    * Scans a type at `i` without building nodes; returns the index after it or -1.
-   * `info.must` is set when the tokens can only be a type (predefined, array, nullable, pointer, alias-qualified).
+   * `info.must` is set when the tokens can only be a type (predefined, array, nullable, pointer, alias-qualified);
+   * `info.alias` and `info.suffix` say whether that came from an `alias::` prefix or a `?`, `*` or `[]` suffix.
    * `mode` 'afterIs' applies the `T ? a : b` rule: `?` and `*` extend the type only when no expression can follow.
    */
   scanType(i, info, mode) {
@@ -156,7 +157,7 @@ export const typeMethods = {
           if (mode === 'afterIs' && this.canStartExpression(this.tokens[i + 1] ?? this.tokens.at(-1))) break;
           i++;
           if (info) {
-            info.must = true;
+            info.must = info.suffix = true;
             if (kind === '?') info.nullable = true;
           }
           continue;
@@ -166,7 +167,7 @@ export const typeMethods = {
           while (this.kindAt(j) === ',') j++;
           if (this.kindAt(j) !== ']') break;
           i = j + 1;
-          if (info) info.must = true;
+          if (info) info.must = info.suffix = true;
           continue;
         }
         break;

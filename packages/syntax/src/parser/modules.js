@@ -66,6 +66,9 @@ import { literalMethods } from './expressions/literals.js';
 import { localFunctionMethods } from './statements/local-functions.js';
 import { structModifierMethods } from './declarations/struct-modifiers.js';
 import { csharp73Methods } from './csharp73.js';
+import { rangeMethods } from './expressions/ranges.js';
+import { asyncStatementMethods } from './statements/async-statements.js';
+import { interfaceMemberMethods } from './declarations/interface-members.js';
 export const parserModules = Object.freeze([
   typeMethods,
   modifierMethods,
@@ -129,5 +132,8 @@ export const parserModules = Object.freeze([
   literalMethods,
   localFunctionMethods,
   structModifierMethods,
-  csharp73Methods
+  csharp73Methods,
+  rangeMethods,
+  asyncStatementMethods,
+  interfaceMemberMethods
 ]);
