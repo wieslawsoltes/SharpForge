@@ -57,7 +57,11 @@ export function checkConstraints(parameters, typeArguments, { core, display, out
     if (argument.isRefLikeType || (argument.typeKind === TypeKind.TypeParameter && argument.allowsRefLikeType)) {
       if (!parameter.allowsRefLikeType) push('CS9244', [display, parameter.name, name]);
     }
-    if (argument.typeKind === TypeKind.Pointer || argument.specialType === 'System_Void' || argument.isStatic) {
+    if (argument.isStatic) {
+      push('CS0718', [name]);
+      return;
+    }
+    if (argument.typeKind === TypeKind.Pointer || argument.specialType === 'System_Void') {
       push('CS0306', [name]);
       return;
     }

@@ -1,0 +1,5328 @@
+{
+  "schemaVersion": 1,
+  "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+  "scope": "Actual timed 2ms/2.3ms controlled delay; validates statistics only, no product/native qualification",
+  "passed": true,
+  "trials": [
+    {
+      "trial": 0,
+      "base": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.188666000000012,
+              2.0005829999999776,
+              2.005375000000015,
+              2.0000409999999533,
+              2.0002079999999864,
+              2.0000409999999533,
+              2.0001250000000255,
+              2.000167000000033,
+              2.000083000000018,
+              2.0001669999999763,
+              2.00004100000001,
+              2.000208999999984,
+              2.0044579999999996,
+              2.0001249999999686,
+              2.0000420000000076,
+              2.000208999999984,
+              2.000083000000018,
+              2.0000420000000076,
+              2.0001250000000255,
+              2.000041999999951
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0001250000000255,
+              "p95": 2.005375000000015,
+              "p99": 2.188666000000012,
+              "min": 2.0000409999999533,
+              "max": 2.188666000000012
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "same": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.000499999999988,
+              2.0002920000000017,
+              2.000249999999994,
+              2.0001250000000255,
+              2.0001249999999686,
+              2.0000840000000153,
+              2.0001249999999686,
+              2.0001249999999686,
+              2.000082999999961,
+              2.000165999999979,
+              2.000165999999979,
+              2.0001669999999763,
+              2.0000840000000153,
+              2.0002079999999864,
+              2.0001250000000255,
+              2.0364999999999895,
+              2.0000420000000076,
+              2.0001669999999763,
+              2.0001250000000255,
+              2.000165999999979
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.000145500000002,
+              "p95": 2.000499999999988,
+              "p99": 2.0364999999999895,
+              "min": 2.0000420000000076,
+              "max": 2.0364999999999895
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "injected": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.3003750000000025,
+              2.366749999999996,
+              2.3002500000000055,
+              2.3002089999999953,
+              2.3001669999999876,
+              2.30012499999998,
+              2.3000829999999723,
+              2.300207999999998,
+              2.30012499999998,
+              2.30012499999998,
+              2.3002089999999953,
+              2.3002500000000055,
+              2.3057090000000358,
+              2.30016599999999,
+              2.3002089999999953,
+              2.30012499999998,
+              2.30016599999999,
+              2.300125000000037,
+              2.3003330000000233,
+              2.3000829999999723
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.3001874999999927,
+              "p95": 2.3057090000000358,
+              "p99": 2.366749999999996,
+              "min": 2.3000829999999723,
+              "max": 2.366749999999996
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "aa": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": true,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0001250000000255,
+              "p95": 2.005375000000015,
+              "p99": 2.188666000000012,
+              "min": 2.0000409999999533,
+              "max": 2.188666000000012
+            },
+            "head": {
+              "count": 20,
+              "median": 2.000145500000002,
+              "p95": 2.000499999999988,
+              "p99": 2.0364999999999895,
+              "min": 2.0000420000000076,
+              "max": 2.0364999999999895
+            },
+            "relative": 0.00001024935940341365,
+            "pValue": 0.8203582763671875,
+            "threshold": 0.05,
+            "verdict": "pass",
+            "quarantine": null
+          }
+        ]
+      },
+      "slowdown": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": false,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0001250000000255,
+              "p95": 2.005375000000015,
+              "p99": 2.188666000000012,
+              "min": 2.0000409999999533,
+              "max": 2.188666000000012
+            },
+            "head": {
+              "count": 20,
+              "median": 2.3001874999999927,
+              "p95": 2.3057090000000358,
+              "p99": 2.366749999999996,
+              "min": 2.3000829999999723,
+              "max": 2.366749999999996
+            },
+            "relative": 0.15002187363287955,
+            "pValue": 9.5367431640625e-7,
+            "threshold": 0.05,
+            "verdict": "regression",
+            "quarantine": null
+          }
+        ]
+      }
+    },
+    {
+      "trial": 1,
+      "base": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0002080000000433,
+              2.0002920000000017,
+              2.0002920000000017,
+              2.0001250000000255,
+              2.0100830000000087,
+              2.0002080000000433,
+              2.0001250000000255,
+              2.00004100000001,
+              2.000250000000051,
+              2.0002499999999372,
+              2.0001250000000255,
+              2.0001660000000356,
+              2.0039170000000013,
+              2.000083000000018,
+              2.0002499999999372,
+              2.0002090000000408,
+              2.0002079999999296,
+              2.0002080000000433,
+              2.0149169999999685,
+              2.0000420000000076
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0002080000000433,
+              "p95": 2.0100830000000087,
+              "p99": 2.0149169999999685,
+              "min": 2.00004100000001,
+              "max": 2.0149169999999685
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "same": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.000082999999961,
+              2.00004100000001,
+              2.0002079999999864,
+              2.0034580000000233,
+              2.0002499999999372,
+              2.0000420000000076,
+              2.0002920000000586,
+              2.000083000000018,
+              2.000291999999945,
+              2.0002080000000433,
+              2.0009169999999585,
+              2.0002090000000408,
+              2.0000420000000076,
+              2.007708999999977,
+              2.0162090000000035,
+              2.000124999999912,
+              2.0001250000000255,
+              2.000250000000051,
+              2.0000840000000153,
+              2.000167000000033
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.000208000000015,
+              "p95": 2.007708999999977,
+              "p99": 2.0162090000000035,
+              "min": 2.00004100000001,
+              "max": 2.0162090000000035
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "injected": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.300125000000037,
+              2.30012499999998,
+              2.300292000000013,
+              2.3166250000000446,
+              2.364708000000064,
+              2.3000829999999723,
+              2.30012499999998,
+              2.30112500000007,
+              2.3001669999999876,
+              2.3001669999999876,
+              2.3002500000000055,
+              2.30012499999998,
+              2.3002910000000156,
+              2.3001669999999876,
+              2.3000829999999723,
+              2.3001669999999876,
+              2.300207999999998,
+              2.3002910000000156,
+              2.300207999999998,
+              2.300042000000076
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.3001669999999876,
+              "p95": 2.3166250000000446,
+              "p99": 2.364708000000064,
+              "min": 2.300042000000076,
+              "max": 2.364708000000064
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "aa": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": true,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0002080000000433,
+              "p95": 2.0100830000000087,
+              "p99": 2.0149169999999685,
+              "min": 2.00004100000001,
+              "max": 2.0149169999999685
+            },
+            "head": {
+              "count": 20,
+              "median": 2.000208000000015,
+              "p95": 2.007708999999977,
+              "p99": 2.0162090000000035,
+              "min": 2.00004100000001,
+              "max": 2.0162090000000035
+            },
+            "relative": -1.4210854715202004e-14,
+            "pValue": 0.5880985260009766,
+            "threshold": 0.05,
+            "verdict": "pass",
+            "quarantine": null
+          }
+        ]
+      },
+      "slowdown": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": false,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0002080000000433,
+              "p95": 2.0100830000000087,
+              "p99": 2.0149169999999685,
+              "min": 2.00004100000001,
+              "max": 2.0149169999999685
+            },
+            "head": {
+              "count": 20,
+              "median": 2.3001669999999876,
+              "p95": 2.3166250000000446,
+              "p99": 2.364708000000064,
+              "min": 2.300042000000076,
+              "max": 2.364708000000064
+            },
+            "relative": 0.1499639037539786,
+            "pValue": 9.5367431640625e-7,
+            "threshold": 0.05,
+            "verdict": "regression",
+            "quarantine": null
+          }
+        ]
+      }
+    },
+    {
+      "trial": 2,
+      "base": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0000840000000153,
+              2.000083000000018,
+              2.0001250000000255,
+              2.0002079999999296,
+              2.0000840000000153,
+              2.0002090000000408,
+              2.000082999999904,
+              2.000124999999912,
+              2.0002499999999372,
+              2.000250000000051,
+              2.0001660000000356,
+              2.0002920000000586,
+              2.00004100000001,
+              2.0000420000000076,
+              2.00004100000001,
+              2.0002080000000433,
+              2.000250000000051,
+              2.0022089999999935,
+              2.0002090000000408,
+              2.0002080000000433
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0001869999999826,
+              "p95": 2.0002920000000586,
+              "p99": 2.0022089999999935,
+              "min": 2.00004100000001,
+              "max": 2.0022089999999935
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "same": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.000167000000033,
+              2.000291000000061,
+              2.061125000000061,
+              2.0001250000000255,
+              2.000250000000051,
+              2.0001250000000255,
+              2.0000839999999016,
+              2.000083000000018,
+              2.0002090000000408,
+              2.000167000000033,
+              2.0373749999999973,
+              2.000083000000018,
+              2.0002080000000433,
+              2.0001250000000255,
+              2.0002499999999372,
+              2.000083000000018,
+              2.0002079999999296,
+              2.0001250000000255,
+              2.0002499999999372,
+              2.000165999999922
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.000167000000033,
+              "p95": 2.0373749999999973,
+              "p99": 2.061125000000061,
+              "min": 2.000083000000018,
+              "max": 2.061125000000061
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "injected": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.30012499999998,
+              2.3002089999999953,
+              2.3002500000000055,
+              2.300207999999998,
+              2.3000829999999723,
+              2.3001669999999876,
+              2.3002500000000055,
+              2.3002500000000055,
+              2.300292000000013,
+              2.300207999999998,
+              2.3002500000000055,
+              2.3001669999999876,
+              2.3002500000000055,
+              2.3001669999999876,
+              2.30012499999998,
+              2.30016599999999,
+              2.300083000000086,
+              2.300042000000076,
+              2.30012499999998,
+              2.300083000000086
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.3001669999999876,
+              "p95": 2.3002500000000055,
+              "p99": 2.300292000000013,
+              "min": 2.300042000000076,
+              "max": 2.300292000000013
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "aa": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": true,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0001869999999826,
+              "p95": 2.0002920000000586,
+              "p99": 2.0022089999999935,
+              "min": 2.00004100000001,
+              "max": 2.0022089999999935
+            },
+            "head": {
+              "count": 20,
+              "median": 2.000167000000033,
+              "p95": 2.0373749999999973,
+              "p99": 2.061125000000061,
+              "min": 2.000083000000018,
+              "max": 2.061125000000061
+            },
+            "relative": -0.00000999906506216064,
+            "pValue": 0.5880985260009766,
+            "threshold": 0.05,
+            "verdict": "pass",
+            "quarantine": null
+          }
+        ]
+      },
+      "slowdown": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": false,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0001869999999826,
+              "p95": 2.0002920000000586,
+              "p99": 2.0022089999999935,
+              "min": 2.00004100000001,
+              "max": 2.0022089999999935
+            },
+            "head": {
+              "count": 20,
+              "median": 2.3001669999999876,
+              "p95": 2.3002500000000055,
+              "p99": 2.300292000000013,
+              "min": 2.300042000000076,
+              "max": 2.300292000000013
+            },
+            "relative": 0.14997597724613132,
+            "pValue": 9.5367431640625e-7,
+            "threshold": 0.05,
+            "verdict": "regression",
+            "quarantine": null
+          }
+        ]
+      }
+    },
+    {
+      "trial": 3,
+      "base": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0000840000000153,
+              2.0000840000000153,
+              2.0001250000000255,
+              2.00004100000001,
+              2.000208000000157,
+              2.000082999999904,
+              2.000250000000051,
+              2.0001250000000255,
+              2.000082999999904,
+              2.000250000000051,
+              2.000041999999894,
+              2.0001250000000255,
+              2.0001250000000255,
+              2.0001660000000356,
+              2.000082999999904,
+              2.0059590000000753,
+              2.000082999999904,
+              2.000082999999904,
+              2.0001250000000255,
+              2.0000840000000153
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0001045000000204,
+              "p95": 2.000250000000051,
+              "p99": 2.0059590000000753,
+              "min": 2.00004100000001,
+              "max": 2.0059590000000753
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "same": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.000291999999945,
+              2.002707999999984,
+              2.0001250000000255,
+              2.000041999999894,
+              2.0001250000000255,
+              2.0001660000000356,
+              2.000167000000147,
+              2.0001250000000255,
+              2.0001250000000255,
+              2.000250000000051,
+              2.0000420000001213,
+              2.0000420000001213,
+              2.0001669999999194,
+              2.0002090000000408,
+              2.0000830000001315,
+              2.0000420000001213,
+              2.0000420000001213,
+              2.000041999999894,
+              2.0002089999998134,
+              2.00004100000001
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0001250000000255,
+              "p95": 2.000291999999945,
+              "p99": 2.002707999999984,
+              "min": 2.00004100000001,
+              "max": 2.002707999999984
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "injected": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.300166999999874,
+              2.30016599999999,
+              2.30012499999998,
+              2.3001670000001013,
+              2.30016599999999,
+              2.443083000000115,
+              2.300207999999884,
+              2.30012499999998,
+              2.3001670000001013,
+              2.6705830000000788,
+              2.409208000000035,
+              2.3002080000001115,
+              2.3002910000000156,
+              2.3002089999999953,
+              2.3227079999999205,
+              2.300084000000197,
+              2.300083000000086,
+              2.300166999999874,
+              2.30012499999998,
+              2.300042000000076
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.3001669999999876,
+              "p95": 2.443083000000115,
+              "p99": 2.6705830000000788,
+              "min": 2.300042000000076,
+              "max": 2.6705830000000788
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "aa": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": true,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0001045000000204,
+              "p95": 2.000250000000051,
+              "p99": 2.0059590000000753,
+              "min": 2.00004100000001,
+              "max": 2.0059590000000753
+            },
+            "head": {
+              "count": 20,
+              "median": 2.0001250000000255,
+              "p95": 2.000291999999945,
+              "p99": 2.002707999999984,
+              "min": 2.00004100000001,
+              "max": 2.002707999999984
+            },
+            "relative": 0.000010249464468037317,
+            "pValue": 0.3145294189453125,
+            "threshold": 0.05,
+            "verdict": "pass",
+            "quarantine": null
+          }
+        ]
+      },
+      "slowdown": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": false,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0001045000000204,
+              "p95": 2.000250000000051,
+              "p99": 2.0059590000000753,
+              "min": 2.00004100000001,
+              "max": 2.0059590000000753
+            },
+            "head": {
+              "count": 20,
+              "median": 2.3001669999999876,
+              "p95": 2.443083000000115,
+              "p99": 2.6705830000000788,
+              "min": 2.300042000000076,
+              "max": 2.6705830000000788
+            },
+            "relative": 0.1500234112767429,
+            "pValue": 9.5367431640625e-7,
+            "threshold": 0.05,
+            "verdict": "regression",
+            "quarantine": null
+          }
+        ]
+      }
+    },
+    {
+      "trial": 4,
+      "base": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0000840000000153,
+              2.000208000000157,
+              2.0000840000000153,
+              2.0000830000001315,
+              2.0001250000000255,
+              2.000374999999849,
+              2.000082999999904,
+              2.000291999999945,
+              2.0001250000000255,
+              2.00004100000001,
+              2.0000420000001213,
+              2.000167000000147,
+              2.0000830000001315,
+              2.0001250000000255,
+              2.00004100000001,
+              2.0000840000000153,
+              2.0000830000001315,
+              2.0001250000000255,
+              2.0000840000000153,
+              2.000082999999904
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0000840000000153,
+              "p95": 2.000291999999945,
+              "p99": 2.000374999999849,
+              "min": 2.00004100000001,
+              "max": 2.000374999999849
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "same": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0001669999999194,
+              2.000208000000157,
+              2.0001250000000255,
+              2.0002499999998236,
+              2.000250000000051,
+              2.1004159999999956,
+              2.000250000000051,
+              2.000291000000061,
+              2.0001250000000255,
+              2.00004100000001,
+              2.0001250000000255,
+              2.0001250000000255,
+              2.000082999999904,
+              2.0001250000000255,
+              2.0033339999999953,
+              2.000250000000051,
+              2.0000830000001315,
+              2.0001669999999194,
+              2.000167000000147,
+              2.0001250000000255
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0001669999999194,
+              "p95": 2.0033339999999953,
+              "p99": 2.1004159999999956,
+              "min": 2.00004100000001,
+              "max": 2.1004159999999956
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "injected": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.3002919999998994,
+              2.300084000000197,
+              2.30008399999997,
+              2.3002919999998994,
+              2.30012499999998,
+              2.3002500000000055,
+              2.3002500000000055,
+              2.30012499999998,
+              2.3002500000000055,
+              2.300083000000086,
+              2.30012499999998,
+              2.300166999999874,
+              2.300207999999884,
+              2.3002500000000055,
+              2.300207999999884,
+              2.30008399999997,
+              2.30016599999999,
+              2.311625000000049,
+              2.3002500000000055,
+              2.3002910000000156
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.300207999999884,
+              "p95": 2.3002919999998994,
+              "p99": 2.311625000000049,
+              "min": 2.300083000000086,
+              "max": 2.311625000000049
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "aa": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": true,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0000840000000153,
+              "p95": 2.000291999999945,
+              "p99": 2.000374999999849,
+              "min": 2.00004100000001,
+              "max": 2.000374999999849
+            },
+            "head": {
+              "count": 20,
+              "median": 2.0001669999999194,
+              "p95": 2.0033339999999953,
+              "p99": 2.1004159999999956,
+              "min": 2.00004100000001,
+              "max": 2.1004159999999956
+            },
+            "relative": 0.00004149825702537413,
+            "pValue": 0.017578125,
+            "threshold": 0.05,
+            "verdict": "pass",
+            "quarantine": null
+          }
+        ]
+      },
+      "slowdown": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": false,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0000840000000153,
+              "p95": 2.000291999999945,
+              "p99": 2.000374999999849,
+              "min": 2.00004100000001,
+              "max": 2.000374999999849
+            },
+            "head": {
+              "count": 20,
+              "median": 2.300207999999884,
+              "p95": 2.3002919999998994,
+              "p99": 2.311625000000049,
+              "min": 2.300083000000086,
+              "max": 2.311625000000049
+            },
+            "relative": 0.15005569766063154,
+            "pValue": 9.5367431640625e-7,
+            "threshold": 0.05,
+            "verdict": "regression",
+            "quarantine": null
+          }
+        ]
+      }
+    },
+    {
+      "trial": 5,
+      "base": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0002090000000408,
+              2.0109580000000733,
+              2.0000420000001213,
+              2.0001250000000255,
+              2.000082999999904,
+              2.0001660000000356,
+              2.000332999999955,
+              2.0002499999998236,
+              2.0000840000000153,
+              2.0985829999999623,
+              2.0002079999999296,
+              2.0114169999999376,
+              2.0001669999999194,
+              2.0002090000000408,
+              2.000082999999904,
+              2.0000830000001315,
+              2.0002079999999296,
+              2.0002090000000408,
+              2.0002090000000408,
+              2.000083999999788
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0002079999999296,
+              "p95": 2.0114169999999376,
+              "p99": 2.0985829999999623,
+              "min": 2.0000420000001213,
+              "max": 2.0985829999999623
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "same": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0001660000000356,
+              2.0204580000001897,
+              2.0002079999999296,
+              2.000167000000147,
+              2.000250000000051,
+              2.0000420000001213,
+              2.0001669999999194,
+              2.030708000000004,
+              2.652041000000054,
+              2.0000840000000153,
+              2.0001250000000255,
+              2.0002920000001723,
+              2.000167000000147,
+              2.0691659999999956,
+              2.000124999999798,
+              2.0000840000000153,
+              2.0000840000000153,
+              2.0251250000001164,
+              2.1025829999998678,
+              2.0002079999999296
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.000187500000038,
+              "p95": 2.1025829999998678,
+              "p99": 2.652041000000054,
+              "min": 2.0000420000001213,
+              "max": 2.652041000000054
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "injected": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.3002500000000055,
+              2.300459000000046,
+              2.3002500000000055,
+              2.30012499999998,
+              2.3002080000001115,
+              2.30012499999998,
+              2.30012499999998,
+              2.300084000000197,
+              3.342582999999877,
+              2.30012499999998,
+              2.300249999999778,
+              2.300042000000076,
+              2.300083000000086,
+              2.30016599999999,
+              2.30012499999998,
+              2.3223330000000715,
+              2.3002500000000055,
+              2.30016599999999,
+              2.3106669999999667,
+              2.3312909999999647
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.300187000000051,
+              "p95": 2.3312909999999647,
+              "p99": 3.342582999999877,
+              "min": 2.300042000000076,
+              "max": 3.342582999999877
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "aa": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": true,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0002079999999296,
+              "p95": 2.0114169999999376,
+              "p99": 2.0985829999999623,
+              "min": 2.0000420000001213,
+              "max": 2.0985829999999623
+            },
+            "head": {
+              "count": 20,
+              "median": 2.000187500000038,
+              "p95": 2.1025829999998678,
+              "p99": 2.652041000000054,
+              "min": 2.0000420000001213,
+              "max": 2.652041000000054
+            },
+            "relative": -0.000010248934056544812,
+            "pValue": 0.13158798217773438,
+            "threshold": 0.05,
+            "verdict": "pass",
+            "quarantine": null
+          }
+        ]
+      },
+      "slowdown": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": false,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0002079999999296,
+              "p95": 2.0114169999999376,
+              "p99": 2.0985829999999623,
+              "min": 2.0000420000001213,
+              "max": 2.0985829999999623
+            },
+            "head": {
+              "count": 20,
+              "median": 2.300187000000051,
+              "p95": 2.3312909999999647,
+              "p99": 3.342582999999877,
+              "min": 2.300042000000076,
+              "max": 3.342582999999877
+            },
+            "relative": 0.14997390271418354,
+            "pValue": 9.5367431640625e-7,
+            "threshold": 0.05,
+            "verdict": "regression",
+            "quarantine": null
+          }
+        ]
+      }
+    },
+    {
+      "trial": 6,
+      "base": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.000082999999904,
+              2.000082999999904,
+              2.0000830000001315,
+              2.0001250000000255,
+              2.4633329999999205,
+              2.0001250000000255,
+              2.000082999999904,
+              2.000250000000051,
+              2.0000420000001213,
+              2.000041999999894,
+              2.000082999999904,
+              2.0001250000000255,
+              2.0089159999999993,
+              2.0001659999998083,
+              2.030958000000055,
+              2.0227500000000873,
+              2.000082999999904,
+              2.0002499999998236,
+              2.0001660000000356,
+              2.0002499999998236
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0001250000000255,
+              "p95": 2.030958000000055,
+              "p99": 2.4633329999999205,
+              "min": 2.000041999999894,
+              "max": 2.4633329999999205
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "same": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.000167000000147,
+              2.000167000000147,
+              2.000250000000051,
+              2.023916999999983,
+              2.000082999999904,
+              2.022292000000107,
+              2.000291999999945,
+              2.000167000000147,
+              2.000040999999783,
+              2.000082999999904,
+              2.0002090000000408,
+              2.0003750000000764,
+              2.0001669999999194,
+              2.0394999999998618,
+              2.0000420000001213,
+              2.0149169999999685,
+              2.000250000000051,
+              2.0001250000000255,
+              2.0001250000000255,
+              2.0000420000001213
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.000167000000147,
+              "p95": 2.023916999999983,
+              "p99": 2.0394999999998618,
+              "min": 2.000040999999783,
+              "max": 2.0394999999998618
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "injected": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.3001670000001013,
+              2.3002500000000055,
+              2.30008399999997,
+              2.3002080000001115,
+              2.3002500000000055,
+              2.3002500000000055,
+              2.300333000000137,
+              2.3000829999998587,
+              2.3002500000000055,
+              2.300207999999884,
+              2.30016599999999,
+              2.300166999999874,
+              2.3002500000000055,
+              2.30012499999998,
+              2.300083000000086,
+              2.3002089999999953,
+              2.3001670000001013,
+              2.3002500000000055,
+              2.3002080000001115,
+              2.300042000000076
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.300207999999998,
+              "p95": 2.3002500000000055,
+              "p99": 2.300333000000137,
+              "min": 2.300042000000076,
+              "max": 2.300333000000137
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "aa": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": true,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0001250000000255,
+              "p95": 2.030958000000055,
+              "p99": 2.4633329999999205,
+              "min": 2.000041999999894,
+              "max": 2.4633329999999205
+            },
+            "head": {
+              "count": 20,
+              "median": 2.000167000000147,
+              "p95": 2.023916999999983,
+              "p99": 2.0394999999998618,
+              "min": 2.000040999999783,
+              "max": 2.0394999999998618
+            },
+            "relative": 0.00002099868764271484,
+            "pValue": 0.41190147399902344,
+            "threshold": 0.05,
+            "verdict": "pass",
+            "quarantine": null
+          }
+        ]
+      },
+      "slowdown": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": false,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0001250000000255,
+              "p95": 2.030958000000055,
+              "p99": 2.4633329999999205,
+              "min": 2.000041999999894,
+              "max": 2.4633329999999205
+            },
+            "head": {
+              "count": 20,
+              "median": 2.300207999999998,
+              "p95": 2.3002500000000055,
+              "p99": 2.300333000000137,
+              "min": 2.300042000000076,
+              "max": 2.300333000000137
+            },
+            "relative": 0.15003212299229718,
+            "pValue": 0.00002002716064453125,
+            "threshold": 0.05,
+            "verdict": "regression",
+            "quarantine": null
+          }
+        ]
+      }
+    },
+    {
+      "trial": 7,
+      "base": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0000840000002427,
+              2.0002079999999296,
+              2.0001250000000255,
+              2.000082999999904,
+              2.000250000000051,
+              2.0004579999999805,
+              2.0001250000000255,
+              2.0002089999998134,
+              2.000166000000263,
+              2.0003340000002936,
+              2.0002920000001723,
+              2.0002920000001723,
+              2.0002080000003843,
+              2.0001250000000255,
+              2.0001659999998083,
+              2.0002079999999296,
+              2.0001250000000255,
+              2.000250000000051,
+              2.000415999999859,
+              2.0000420000001213
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0002079999999296,
+              "p95": 2.000415999999859,
+              "p99": 2.0004579999999805,
+              "min": 2.0000420000001213,
+              "max": 2.0004579999999805
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "same": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.000082999999904,
+              2.0002080000003843,
+              2.0002910000002885,
+              2.0084170000000086,
+              2.0002080000003843,
+              2.0000420000001213,
+              2.0002079999999296,
+              2.0002089999998134,
+              2.0002079999999296,
+              2.000250000000051,
+              2.0002079999999296,
+              2.0002089999998134,
+              2.000250000000051,
+              2.0001250000000255,
+              2.000250000000051,
+              2.000250000000051,
+              2.0001659999998083,
+              2.000166999999692,
+              2.0000419999996666,
+              2.0095839999999043
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0002080000003843,
+              "p95": 2.0084170000000086,
+              "p99": 2.0095839999999043,
+              "min": 2.0000419999996666,
+              "max": 2.0095839999999043
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "injected": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.300166999999874,
+              2.3002080000001115,
+              2.5172090000000935,
+              2.3002080000001115,
+              2.300332999999682,
+              2.30008399999997,
+              2.30016599999999,
+              2.3002089999999953,
+              2.300166999999874,
+              2.3001249999997526,
+              2.300249999999778,
+              2.3002089999999953,
+              2.3001250000002074,
+              2.3073749999998654,
+              2.30016599999999,
+              2.3002910000000156,
+              2.3002080000001115,
+              2.3000829999996313,
+              2.30008399999997,
+              2.30008399999997
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.3001874999999927,
+              "p95": 2.3073749999998654,
+              "p99": 2.5172090000000935,
+              "min": 2.3000829999996313,
+              "max": 2.5172090000000935
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "aa": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": true,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0002079999999296,
+              "p95": 2.000415999999859,
+              "p99": 2.0004579999999805,
+              "min": 2.0000420000001213,
+              "max": 2.0004579999999805
+            },
+            "head": {
+              "count": 20,
+              "median": 2.0002080000003843,
+              "p95": 2.0084170000000086,
+              "p99": 2.0095839999999043,
+              "min": 2.0000419999996666,
+              "max": 2.0095839999999043
+            },
+            "relative": 2.2737367544323206e-13,
+            "pValue": 0.40726470947265625,
+            "threshold": 0.05,
+            "verdict": "pass",
+            "quarantine": null
+          }
+        ]
+      },
+      "slowdown": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": false,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0002079999999296,
+              "p95": 2.000415999999859,
+              "p99": 2.0004579999999805,
+              "min": 2.0000420000001213,
+              "max": 2.0004579999999805
+            },
+            "head": {
+              "count": 20,
+              "median": 2.3001874999999927,
+              "p95": 2.3073749999998654,
+              "p99": 2.5172090000000935,
+              "min": 2.3000829999996313,
+              "max": 2.5172090000000935
+            },
+            "relative": 0.14997415268815728,
+            "pValue": 9.5367431640625e-7,
+            "threshold": 0.05,
+            "verdict": "regression",
+            "quarantine": null
+          }
+        ]
+      }
+    },
+    {
+      "trial": 8,
+      "base": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0001250000000255,
+              2.0002079999999296,
+              2.000040999999783,
+              2.012333000000126,
+              2.000250000000051,
+              2.000166000000263,
+              2.000040999999783,
+              2.0001250000000255,
+              2.0002079999999296,
+              2.000082999999904,
+              2.0000420000001213,
+              2.000166000000263,
+              2.0002919999997175,
+              2.000167000000147,
+              2.000166999999692,
+              2.000083999999788,
+              2.000542000000223,
+              3.575582999999824,
+              2.000332999999955,
+              2.0000419999996666
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0001664999999775,
+              "p95": 2.012333000000126,
+              "p99": 3.575582999999824,
+              "min": 2.000040999999783,
+              "max": 3.575582999999824
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "same": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0001250000000255,
+              2.0000419999996666,
+              2.0002079999999296,
+              2.000250000000051,
+              2.000209000000268,
+              2.0659999999998035,
+              2.000082999999904,
+              2.0000420000001213,
+              2.000250000000051,
+              2.0001249999995707,
+              2.092290999999932,
+              2.0001250000000255,
+              2.0001250000000255,
+              2.000250000000051,
+              2.0001250000000255,
+              2.01299999999992,
+              2.000082999999904,
+              2.000166999999692,
+              2.0002079999999296,
+              2.000333999999839
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.000187499999811,
+              "p95": 2.0659999999998035,
+              "p99": 2.092290999999932,
+              "min": 2.0000419999996666,
+              "max": 2.092290999999932
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "injected": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.3001249999997526,
+              2.30016599999999,
+              2.3001250000002074,
+              2.3107500000000982,
+              2.300249999999778,
+              2.3000419999998485,
+              2.3000420000003032,
+              2.300249999999778,
+              2.3002080000001115,
+              2.3002910000000156,
+              2.300166999999874,
+              2.3001249999997526,
+              2.3002089999999953,
+              2.300083000000086,
+              2.3000409999999647,
+              2.3000420000003032,
+              2.3000829999996313,
+              2.3002089999999953,
+              2.30008399999997,
+              2.3002080000001115
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.3001455000000988,
+              "p95": 2.3002910000000156,
+              "p99": 2.3107500000000982,
+              "min": 2.3000409999999647,
+              "max": 2.3107500000000982
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "aa": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": true,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0001664999999775,
+              "p95": 2.012333000000126,
+              "p99": 3.575582999999824,
+              "min": 2.000040999999783,
+              "max": 3.575582999999824
+            },
+            "head": {
+              "count": 20,
+              "median": 2.000187499999811,
+              "p95": 2.0659999999998035,
+              "p99": 2.092290999999932,
+              "min": 2.0000419999996666,
+              "max": 2.092290999999932
+            },
+            "relative": 0.00001049912586448265,
+            "pValue": 0.6761970520019531,
+            "threshold": 0.05,
+            "verdict": "pass",
+            "quarantine": null
+          }
+        ]
+      },
+      "slowdown": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": false,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0001664999999775,
+              "p95": 2.012333000000126,
+              "p99": 3.575582999999824,
+              "min": 2.000040999999783,
+              "max": 3.575582999999824
+            },
+            "head": {
+              "count": 20,
+              "median": 2.3001455000000988,
+              "p95": 2.3002910000000156,
+              "p99": 2.3107500000000982,
+              "min": 2.3000409999999647,
+              "max": 2.3107500000000982
+            },
+            "relative": 0.14997701441361233,
+            "pValue": 0.00002002716064453125,
+            "threshold": 0.05,
+            "verdict": "regression",
+            "quarantine": null
+          }
+        ]
+      }
+    },
+    {
+      "trial": 9,
+      "base": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0001250000000255,
+              2.000250000000051,
+              2.0001250000000255,
+              2.0429579999999987,
+              2.000250000000051,
+              2.0001250000000255,
+              2.0001250000000255,
+              2.000083999999788,
+              2.0000840000002427,
+              2.1163330000003953,
+              2.000083000000359,
+              2.000082999999904,
+              2.000167000000147,
+              2.0000420000001213,
+              2.0000410000002375,
+              2.0001249999995707,
+              2.000166999999692,
+              2.000250000000051,
+              2.0001250000000255,
+              2.0001659999998083
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0001250000000255,
+              "p95": 2.0429579999999987,
+              "p99": 2.1163330000003953,
+              "min": 2.0000410000002375,
+              "max": 2.1163330000003953
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "same": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.000167000000147,
+              2.000082999999904,
+              2.0003750000000764,
+              2.000083000000359,
+              2.0001250000000255,
+              2.0000840000002427,
+              2.4609169999998812,
+              2.000167000000147,
+              2.0000410000002375,
+              2.0002089999998134,
+              2.0000419999996666,
+              2.000167000000147,
+              2.000167000000147,
+              2.0001249999995707,
+              2.000167000000147,
+              2.000040999999783,
+              2.000040999999783,
+              2.000082999999904,
+              2.000082999999904,
+              2.0000410000002375
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0001044999999067,
+              "p95": 2.0003750000000764,
+              "p99": 2.4609169999998812,
+              "min": 2.000040999999783,
+              "max": 2.4609169999998812
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "injected": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.300166999999874,
+              2.30016599999999,
+              2.3000419999998485,
+              2.3001250000002074,
+              2.300083000000086,
+              2.3000419999998485,
+              2.300083000000086,
+              2.30016599999999,
+              2.30008399999997,
+              2.3002080000001115,
+              2.3000419999998485,
+              2.3002080000001115,
+              2.300583000000188,
+              2.3000420000003032,
+              2.30016599999999,
+              2.3001670000003287,
+              2.3001670000003287,
+              2.300166999999874,
+              2.3002080000001115,
+              2.300332999999682
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.30016599999999,
+              "p95": 2.300332999999682,
+              "p99": 2.300583000000188,
+              "min": 2.3000419999998485,
+              "max": 2.300583000000188
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "aa": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": true,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0001250000000255,
+              "p95": 2.0429579999999987,
+              "p99": 2.1163330000003953,
+              "min": 2.0000410000002375,
+              "max": 2.1163330000003953
+            },
+            "head": {
+              "count": 20,
+              "median": 2.0001044999999067,
+              "p95": 2.0003750000000764,
+              "p99": 2.4609169999998812,
+              "min": 2.000040999999783,
+              "max": 2.4609169999998812
+            },
+            "relative": -0.000010249359474467923,
+            "pValue": 0.9164657592773438,
+            "threshold": 0.05,
+            "verdict": "pass",
+            "quarantine": null
+          }
+        ]
+      },
+      "slowdown": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": false,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0001250000000255,
+              "p95": 2.0429579999999987,
+              "p99": 2.1163330000003953,
+              "min": 2.0000410000002375,
+              "max": 2.1163330000003953
+            },
+            "head": {
+              "count": 20,
+              "median": 2.30016599999999,
+              "p95": 2.300332999999682,
+              "p99": 2.300583000000188,
+              "min": 2.3000419999998485,
+              "max": 2.300583000000188
+            },
+            "relative": 0.1500111243047113,
+            "pValue": 9.5367431640625e-7,
+            "threshold": 0.05,
+            "verdict": "regression",
+            "quarantine": null
+          }
+        ]
+      }
+    },
+    {
+      "trial": 10,
+      "base": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0002920000001723,
+              2.000250000000051,
+              2.000082999999904,
+              2.0000420000001213,
+              2.0000410000002375,
+              2.000166999999692,
+              2.0001250000000255,
+              2.0002089999998134,
+              2.000082999999904,
+              2.0002080000003843,
+              2.0002079999999296,
+              2.000082999999904,
+              2.0001250000000255,
+              2.0001249999995707,
+              2.0002079999999296,
+              2.000082999999904,
+              2.0000420000001213,
+              2.000082999999904,
+              2.000166999999692,
+              2.0001250000000255
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0001250000000255,
+              "p95": 2.000250000000051,
+              "p99": 2.0002920000001723,
+              "min": 2.0000410000002375,
+              "max": 2.0002920000001723
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "same": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0000420000001213,
+              2.0001659999998083,
+              2.0003750000000764,
+              2.000083999999788,
+              2.000167000000147,
+              2.000250000000051,
+              2.0002079999999296,
+              2.0001250000000255,
+              2.000250000000051,
+              2.000166999999692,
+              2.000166000000263,
+              2.0002079999999296,
+              2.000332999999955,
+              2.000040999999783,
+              2.0002079999999296,
+              2.0001250000000255,
+              2.005999999999858,
+              2.000083000000359,
+              2.000250000000051,
+              2.0000420000001213
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0001669999999194,
+              "p95": 2.0003750000000764,
+              "p99": 2.005999999999858,
+              "min": 2.000040999999783,
+              "max": 2.005999999999858
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "injected": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.3001249999997526,
+              2.300166000000445,
+              2.324666999999863,
+              2.300083000000086,
+              2.3000409999999647,
+              2.3002079999996567,
+              2.3000419999998485,
+              2.300083000000086,
+              2.3001670000003287,
+              2.300249999999778,
+              2.3002080000001115,
+              2.3002080000001115,
+              2.3000419999998485,
+              2.30016599999999,
+              2.30016599999999,
+              2.3000419999998485,
+              2.300083000000086,
+              2.3001249999997526,
+              2.3002080000001115,
+              2.300083000000086
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.3001454999998714,
+              "p95": 2.300249999999778,
+              "p99": 2.324666999999863,
+              "min": 2.3000409999999647,
+              "max": 2.324666999999863
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "aa": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": true,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0001250000000255,
+              "p95": 2.000250000000051,
+              "p99": 2.0002920000001723,
+              "min": 2.0000410000002375,
+              "max": 2.0002920000001723
+            },
+            "head": {
+              "count": 20,
+              "median": 2.0001669999999194,
+              "p95": 2.0003750000000764,
+              "p99": 2.005999999999858,
+              "min": 2.000040999999783,
+              "max": 2.005999999999858
+            },
+            "relative": 0.000020998687529028004,
+            "pValue": 0.1796417236328125,
+            "threshold": 0.05,
+            "verdict": "pass",
+            "quarantine": null
+          }
+        ]
+      },
+      "slowdown": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": false,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0001250000000255,
+              "p95": 2.000250000000051,
+              "p99": 2.0002920000001723,
+              "min": 2.0000410000002375,
+              "max": 2.0002920000001723
+            },
+            "head": {
+              "count": 20,
+              "median": 2.3001454999998714,
+              "p95": 2.300249999999778,
+              "p99": 2.324666999999863,
+              "min": 2.3000409999999647,
+              "max": 2.324666999999863
+            },
+            "relative": 0.15000087494523706,
+            "pValue": 9.5367431640625e-7,
+            "threshold": 0.05,
+            "verdict": "regression",
+            "quarantine": null
+          }
+        ]
+      }
+    },
+    {
+      "trial": 11,
+      "base": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.000082999999904,
+              2.000166000000263,
+              2.000082999999904,
+              2.000166999999692,
+              2.000082999999904,
+              2.0000419999996666,
+              2.0000420000001213,
+              2.000040999999783,
+              2.0001250000000255,
+              2.0000419999996666,
+              2.000083000000359,
+              2.0000420000001213,
+              2.0000420000001213,
+              2.0000420000001213,
+              2.000040999999783,
+              2.000040999999783,
+              2.0001250000000255,
+              2.0001250000000255,
+              2.000040999999783,
+              2.000083999999788
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0000625000000127,
+              "p95": 2.000166000000263,
+              "p99": 2.000166999999692,
+              "min": 2.000040999999783,
+              "max": 2.000166999999692
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "same": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0001249999995707,
+              2.0000419999996666,
+              2.0000419999996666,
+              2.0000420000001213,
+              2.0000419999996666,
+              2.000083000000359,
+              2.000040999999783,
+              2.0002920000001723,
+              2.000083999999788,
+              2.0001250000000255,
+              2,
+              2.0000420000001213,
+              2.000082999999904,
+              2.000040999999783,
+              2.0000420000001213,
+              2.000083000000359,
+              2.0000410000002375,
+              2.0000419999996666,
+              2.0001250000000255,
+              2.000082999999904
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0000420000001213,
+              "p95": 2.0001250000000255,
+              "p99": 2.0002920000001723,
+              "min": 2,
+              "max": 2.0002920000001723
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "injected": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.3001250000002074,
+              2.3001249999997526,
+              2.3001249999997526,
+              2.3002079999996567,
+              2.300083000000086,
+              2.30016599999999,
+              2.3002079999996567,
+              2.30008399999997,
+              2.3003340000000208,
+              2.3000419999998485,
+              2.30016599999999,
+              2.3000419999998485,
+              2.3000420000003032,
+              2.300166999999874,
+              2.3001249999997526,
+              2.3156659999999647,
+              2.3001670000003287,
+              2.3000419999998485,
+              2.3000829999996313,
+              2.3000410000004194
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.3001249999997526,
+              "p95": 2.3003340000000208,
+              "p99": 2.3156659999999647,
+              "min": 2.3000410000004194,
+              "max": 2.3156659999999647
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "aa": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": true,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0000625000000127,
+              "p95": 2.000166000000263,
+              "p99": 2.000166999999692,
+              "min": 2.000040999999783,
+              "max": 2.000166999999692
+            },
+            "head": {
+              "count": 20,
+              "median": 2.0000420000001213,
+              "p95": 2.0001250000000255,
+              "p99": 2.0002920000001723,
+              "min": 2,
+              "max": 2.0002920000001723
+            },
+            "relative": -0.0000102496796432483,
+            "pValue": 0.8203582763671875,
+            "threshold": 0.05,
+            "verdict": "pass",
+            "quarantine": null
+          }
+        ]
+      },
+      "slowdown": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": false,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0000625000000127,
+              "p95": 2.000166000000263,
+              "p99": 2.000166999999692,
+              "min": 2.000040999999783,
+              "max": 2.000166999999692
+            },
+            "head": {
+              "count": 20,
+              "median": 2.3001249999997526,
+              "p95": 2.3003340000000208,
+              "p99": 2.3156659999999647,
+              "min": 2.3000410000004194,
+              "max": 2.3156659999999647
+            },
+            "relative": 0.15002656166981687,
+            "pValue": 9.5367431640625e-7,
+            "threshold": 0.05,
+            "verdict": "regression",
+            "quarantine": null
+          }
+        ]
+      }
+    },
+    {
+      "trial": 12,
+      "base": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.000082999999904,
+              2.0000420000001213,
+              2.0000410000002375,
+              2.0000410000002375,
+              2.0001659999998083,
+              2.000166999999692,
+              2.0001250000000255,
+              2.0000420000001213,
+              2.0001250000000255,
+              2.0000840000002427,
+              2.000082999999904,
+              2.0000420000001213,
+              2.0001659999998083,
+              2.0002089999998134,
+              2.000166000000263,
+              2.000040999999783,
+              2.000083000000359,
+              2.0000420000001213,
+              2.000250000000051,
+              2.0217079999997623
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0000835000003008,
+              "p95": 2.000250000000051,
+              "p99": 2.0217079999997623,
+              "min": 2.000040999999783,
+              "max": 2.0217079999997623
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "same": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0000420000001213,
+              2.0000419999996666,
+              2.0001250000000255,
+              2.000082999999904,
+              2.0000419999996666,
+              2.000040999999783,
+              2.000167000000147,
+              2.0000840000002427,
+              2.0001250000000255,
+              2.000040999999783,
+              2.0022079999998823,
+              2.0001250000000255,
+              2.0000410000002375,
+              2.000166999999692,
+              2.000082999999904,
+              2.04037500000004,
+              2.000082999999904,
+              2.0002079999999296,
+              2.000082999999904,
+              2.0002079999999296
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0000835000000734,
+              "p95": 2.0022079999998823,
+              "p99": 2.04037500000004,
+              "min": 2.000040999999783,
+              "max": 2.04037500000004
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "injected": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.3002919999998994,
+              2.300166999999874,
+              2.3001249999997526,
+              2.3000420000003032,
+              2.3000420000003032,
+              2.3002079999996567,
+              2.3002080000001115,
+              2.300083000000086,
+              2.3000420000003032,
+              2.3831669999999576,
+              2.3001249999997526,
+              2.3002089999999953,
+              2.30008399999997,
+              2.3000419999998485,
+              2.300083000000086,
+              2.300249999999778,
+              2.300166999999874,
+              2.3002080000001115,
+              2.30008399999997,
+              2.323208999999679
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.3001459999998133,
+              "p95": 2.323208999999679,
+              "p99": 2.3831669999999576,
+              "min": 2.3000419999998485,
+              "max": 2.3831669999999576
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "aa": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": true,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0000835000003008,
+              "p95": 2.000250000000051,
+              "p99": 2.0217079999997623,
+              "min": 2.000040999999783,
+              "max": 2.0217079999997623
+            },
+            "head": {
+              "count": 20,
+              "median": 2.0000835000000734,
+              "p95": 2.0022079999998823,
+              "p99": 2.04037500000004,
+              "min": 2.000040999999783,
+              "max": 2.04037500000004
+            },
+            "relative": -1.1368683772161603e-13,
+            "pValue": 0.8203582763671875,
+            "threshold": 0.05,
+            "verdict": "pass",
+            "quarantine": null
+          }
+        ]
+      },
+      "slowdown": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": false,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0000835000003008,
+              "p95": 2.000250000000051,
+              "p99": 2.0217079999997623,
+              "min": 2.000040999999783,
+              "max": 2.0217079999997623
+            },
+            "head": {
+              "count": 20,
+              "median": 2.3001459999998133,
+              "p95": 2.323208999999679,
+              "p99": 2.3831669999999576,
+              "min": 2.3000419999998485,
+              "max": 2.3831669999999576
+            },
+            "relative": 0.15002498645654905,
+            "pValue": 9.5367431640625e-7,
+            "threshold": 0.05,
+            "verdict": "regression",
+            "quarantine": null
+          }
+        ]
+      }
+    },
+    {
+      "trial": 13,
+      "base": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.000040999999783,
+              2.000082999999904,
+              2.000167000000147,
+              2.000167000000147,
+              2.0000420000001213,
+              2.0000840000002427,
+              2.0000410000002375,
+              2.0117079999999987,
+              2.0000419999996666,
+              2.0110829999998714,
+              2.000166000000263,
+              2.002124999999978,
+              2.000083999999788,
+              2.000040999999783,
+              2.000082999999904,
+              2.0002079999999296,
+              2.0000410000002375,
+              2.0002079999999296,
+              2.000083999999788,
+              2.000083999999788
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.000083999999788,
+              "p95": 2.0110829999998714,
+              "p99": 2.0117079999999987,
+              "min": 2.000040999999783,
+              "max": 2.0117079999999987
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "same": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.000166999999692,
+              2.0000420000001213,
+              2.000040999999783,
+              2.000082999999904,
+              2.000167000000147,
+              2.0001659999998083,
+              2.000166999999692,
+              2.0001250000000255,
+              2.000167000000147,
+              2.0000420000001213,
+              2.0001250000000255,
+              2.000040999999783,
+              2.0001250000000255,
+              2.000082999999904,
+              2.0000420000001213,
+              2.0767500000001746,
+              2.0000410000002375,
+              2.000250000000051,
+              2.0001250000000255,
+              2.0002909999998337
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0001250000000255,
+              "p95": 2.0002909999998337,
+              "p99": 2.0767500000001746,
+              "min": 2.000040999999783,
+              "max": 2.0767500000001746
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "injected": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.3001250000002074,
+              2.30016599999999,
+              2.300083000000086,
+              2.3001250000002074,
+              2.302874999999858,
+              2.3000419999998485,
+              2.300083000000086,
+              2.30016599999999,
+              2.3000409999999647,
+              2.3002080000001115,
+              2.30016599999999,
+              2.300166999999874,
+              2.3002080000001115,
+              2.30008399999997,
+              2.3001250000002074,
+              2.300166999999874,
+              2.3002080000001115,
+              2.300250000000233,
+              2.300249999999778,
+              2.3001670000003287
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.30016599999999,
+              "p95": 2.300250000000233,
+              "p99": 2.302874999999858,
+              "min": 2.3000409999999647,
+              "max": 2.302874999999858
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "aa": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": true,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.000083999999788,
+              "p95": 2.0110829999998714,
+              "p99": 2.0117079999999987,
+              "min": 2.000040999999783,
+              "max": 2.0117079999999987
+            },
+            "head": {
+              "count": 20,
+              "median": 2.0001250000000255,
+              "p95": 2.0002909999998337,
+              "p99": 2.0767500000001746,
+              "min": 2.000040999999783,
+              "max": 2.0767500000001746
+            },
+            "relative": 0.00002049913915502799,
+            "pValue": 0.3238029479980469,
+            "threshold": 0.05,
+            "verdict": "pass",
+            "quarantine": null
+          }
+        ]
+      },
+      "slowdown": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": false,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.000083999999788,
+              "p95": 2.0110829999998714,
+              "p99": 2.0117079999999987,
+              "min": 2.000040999999783,
+              "max": 2.0117079999999987
+            },
+            "head": {
+              "count": 20,
+              "median": 2.30016599999999,
+              "p95": 2.300250000000233,
+              "p99": 2.302874999999858,
+              "min": 2.3000409999999647,
+              "max": 2.302874999999858
+            },
+            "relative": 0.1500346985427783,
+            "pValue": 9.5367431640625e-7,
+            "threshold": 0.05,
+            "verdict": "regression",
+            "quarantine": null
+          }
+        ]
+      }
+    },
+    {
+      "trial": 14,
+      "base": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0000419999996666,
+              2.0000419999996666,
+              2.000166999999692,
+              2.0001250000000255,
+              2.000166999999692,
+              2.0000410000002375,
+              2.000167000000147,
+              2.0000410000002375,
+              2.000083999999788,
+              2.0000420000001213,
+              2.000250000000051,
+              2.0000420000001213,
+              2.000083999999788,
+              2.000083999999788,
+              2.0001249999995707,
+              2.0001250000000255,
+              2.000166999999692,
+              2.0001659999998083,
+              2.0001250000000255,
+              2.000082999999904
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0001044999996793,
+              "p95": 2.000167000000147,
+              "p99": 2.000250000000051,
+              "min": 2.0000410000002375,
+              "max": 2.000250000000051
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "same": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0001250000000255,
+              2.0001250000000255,
+              2.0000420000001213,
+              2.0001250000000255,
+              2.0000420000001213,
+              2.000167000000147,
+              2.0001250000000255,
+              2.000082999999904,
+              2.0000420000001213,
+              2.000040999999783,
+              2.000166000000263,
+              2.0001250000000255,
+              2.000083999999788,
+              2.0000419999996666,
+              2.0000420000001213,
+              2.000083999999788,
+              2.000167000000147,
+              2.000167000000147,
+              2.0001250000000255,
+              2.000166000000263
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0001250000000255,
+              "p95": 2.000167000000147,
+              "p99": 2.000167000000147,
+              "min": 2.000040999999783,
+              "max": 2.000167000000147
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "injected": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.3001670000003287,
+              2.30016599999999,
+              2.3002080000001115,
+              2.30008399999997,
+              2.300083000000086,
+              2.3002080000001115,
+              2.3000420000003032,
+              2.3001249999997526,
+              2.3001670000003287,
+              2.3000420000003032,
+              2.3000419999998485,
+              2.3002080000001115,
+              2.3000409999999647,
+              2.3002079999996567,
+              2.3000420000003032,
+              2.300249999999778,
+              2.3002910000000156,
+              2.3000410000004194,
+              2.3001670000003287,
+              2.300083000000086
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.3001454999998714,
+              "p95": 2.300249999999778,
+              "p99": 2.3002910000000156,
+              "min": 2.3000409999999647,
+              "max": 2.3002910000000156
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "aa": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": true,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0001044999996793,
+              "p95": 2.000167000000147,
+              "p99": 2.000250000000051,
+              "min": 2.0000410000002375,
+              "max": 2.000250000000051
+            },
+            "head": {
+              "count": 20,
+              "median": 2.0001250000000255,
+              "p95": 2.000167000000147,
+              "p99": 2.000167000000147,
+              "min": 2.000040999999783,
+              "max": 2.000167000000147
+            },
+            "relative": 0.000010249464638567574,
+            "pValue": 0.6854705810546875,
+            "threshold": 0.05,
+            "verdict": "pass",
+            "quarantine": null
+          }
+        ]
+      },
+      "slowdown": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": false,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0001044999996793,
+              "p95": 2.000167000000147,
+              "p99": 2.000250000000051,
+              "min": 2.0000410000002375,
+              "max": 2.000250000000051
+            },
+            "head": {
+              "count": 20,
+              "median": 2.3001454999998714,
+              "p95": 2.300249999999778,
+              "p99": 2.3002910000000156,
+              "min": 2.3000409999999647,
+              "max": 2.3002910000000156
+            },
+            "relative": 0.15001266183853912,
+            "pValue": 9.5367431640625e-7,
+            "threshold": 0.05,
+            "verdict": "regression",
+            "quarantine": null
+          }
+        ]
+      }
+    },
+    {
+      "trial": 15,
+      "base": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0000840000002427,
+              2.0002919999997175,
+              2.000082999999904,
+              2.0000840000002427,
+              2.000082999999904,
+              2.0000419999996666,
+              2.0001249999995707,
+              2.000042000000576,
+              2.0001249999995707,
+              2.000167000000147,
+              2.00012500000048,
+              2.004084000000148,
+              2.0000830000008136,
+              2.0001249999995707,
+              2.000040999999328,
+              2.0102090000000317,
+              2.000082999999904,
+              2.0000410000002375,
+              2.000167000000147,
+              2.00012500000048
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0001044999999067,
+              "p95": 2.004084000000148,
+              "p99": 2.0102090000000317,
+              "min": 2.000040999999328,
+              "max": 2.0102090000000317
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "same": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.000042000000576,
+              2.000042000000576,
+              2.000082999999904,
+              2.0000419999996666,
+              2.000167000000147,
+              2.000167000000147,
+              2.0000419999996666,
+              2.0000410000002375,
+              2.0000419999996666,
+              2.000042000000576,
+              2.0002919999997175,
+              2.0001659999998083,
+              2.0001659999998083,
+              2.0001249999995707,
+              2.0002089999998134,
+              2.0001249999995707,
+              2.000082999999904,
+              2.000207999999475,
+              2.004208999999719,
+              2.00012500000048
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0001249999995707,
+              "p95": 2.0002919999997175,
+              "p99": 2.004208999999719,
+              "min": 2.0000410000002375,
+              "max": 2.004208999999719
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "injected": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.3000419999998485,
+              2.3000419999998485,
+              2.300083000000086,
+              2.317417000000205,
+              2.3002080000005662,
+              2.3000410000004194,
+              2.3000419999998485,
+              2.3001670000003287,
+              2.300083000000086,
+              2.3002089999999953,
+              2.300083999999515,
+              2.3001249999997526,
+              2.3002499999993233,
+              2.300083000000086,
+              2.3002089999999953,
+              2.300083000000086,
+              2.3000410000004194,
+              2.300083000000086,
+              2.300125000000662,
+              2.3000410000004194
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.300083000000086,
+              "p95": 2.3002499999993233,
+              "p99": 2.317417000000205,
+              "min": 2.3000410000004194,
+              "max": 2.317417000000205
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "aa": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": true,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0001044999999067,
+              "p95": 2.004084000000148,
+              "p99": 2.0102090000000317,
+              "min": 2.000040999999328,
+              "max": 2.0102090000000317
+            },
+            "head": {
+              "count": 20,
+              "median": 2.0001249999995707,
+              "p95": 2.0002919999997175,
+              "p99": 2.004208999999719,
+              "min": 2.0000410000002375,
+              "max": 2.004208999999719
+            },
+            "relative": 0.00001024946429750706,
+            "pValue": 0.7727508544921875,
+            "threshold": 0.05,
+            "verdict": "pass",
+            "quarantine": null
+          }
+        ]
+      },
+      "slowdown": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": false,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0001044999999067,
+              "p95": 2.004084000000148,
+              "p99": 2.0102090000000317,
+              "min": 2.000040999999328,
+              "max": 2.0102090000000317
+            },
+            "head": {
+              "count": 20,
+              "median": 2.300083000000086,
+              "p95": 2.3002499999993233,
+              "p99": 2.317417000000205,
+              "min": 2.3000410000004194,
+              "max": 2.317417000000205
+            },
+            "relative": 0.14998141347124272,
+            "pValue": 9.5367431640625e-7,
+            "threshold": 0.05,
+            "verdict": "regression",
+            "quarantine": null
+          }
+        ]
+      }
+    },
+    {
+      "trial": 16,
+      "base": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.000082999999904,
+              2.0014159999991534,
+              2.000040999999328,
+              2.0000830000008136,
+              2.000207999999475,
+              2.0000840000002427,
+              2.000082999999904,
+              2.0000840000002427,
+              2.000207999999475,
+              2.0000419999996666,
+              2.0002080000003843,
+              2.0002080000003843,
+              2.0002080000003843,
+              2.0000419999996666,
+              2.000167000000147,
+              2.0000419999996666,
+              2.0001249999995707,
+              2.031417000000147,
+              2.000250000000051,
+              2.000082999999904
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0001044999999067,
+              "p95": 2.0014159999991534,
+              "p99": 2.031417000000147,
+              "min": 2.000040999999328,
+              "max": 2.031417000000147
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "same": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0000840000002427,
+              2.000082999999904,
+              2.000082999999904,
+              2.0002089999998134,
+              2.0002080000003843,
+              2.0308750000003783,
+              2.000042000000576,
+              2.000250000000051,
+              2.0002080000003843,
+              2.0000419999996666,
+              2.0000419999996666,
+              2.000042000000576,
+              2.000250000000051,
+              2.0001249999995707,
+              2.000207999999475,
+              2.000082999999904,
+              2.000250000000051,
+              2.000167000000147,
+              2.000209000000723,
+              2.000250000000051
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.000187499999811,
+              "p95": 2.000250000000051,
+              "p99": 2.0308750000003783,
+              "min": 2.0000419999996666,
+              "max": 2.0308750000003783
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "injected": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.3001670000003287,
+              2.3002079999996567,
+              2.300083000000086,
+              2.30016599999999,
+              2.300083000000086,
+              2.3001249999997526,
+              2.3002089999999953,
+              2.300250000000233,
+              2.3001249999997526,
+              2.3001249999997526,
+              2.3001249999997526,
+              2.30004099999951,
+              2.3000840000004246,
+              2.30016599999999,
+              2.3002079999996567,
+              2.3000419999998485,
+              2.300250000000233,
+              2.3002089999999953,
+              2.3002499999993233,
+              2.3002080000005662
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.30016599999999,
+              "p95": 2.300250000000233,
+              "p99": 2.300250000000233,
+              "min": 2.30004099999951,
+              "max": 2.300250000000233
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "aa": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": true,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0001044999999067,
+              "p95": 2.0014159999991534,
+              "p99": 2.031417000000147,
+              "min": 2.000040999999328,
+              "max": 2.031417000000147
+            },
+            "head": {
+              "count": 20,
+              "median": 2.000187499999811,
+              "p95": 2.000250000000051,
+              "p99": 2.0308750000003783,
+              "min": 2.0000419999996666,
+              "max": 2.0308750000003783
+            },
+            "relative": 0.000041497831690273657,
+            "pValue": 0.08353424072265625,
+            "threshold": 0.05,
+            "verdict": "pass",
+            "quarantine": null
+          }
+        ]
+      },
+      "slowdown": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": false,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0001044999999067,
+              "p95": 2.0014159999991534,
+              "p99": 2.031417000000147,
+              "min": 2.000040999999328,
+              "max": 2.031417000000147
+            },
+            "head": {
+              "count": 20,
+              "median": 2.30016599999999,
+              "p95": 2.300250000000233,
+              "p99": 2.300250000000233,
+              "min": 2.30004099999951,
+              "max": 2.300250000000233
+            },
+            "relative": 0.15002291130293322,
+            "pValue": 9.5367431640625e-7,
+            "threshold": 0.05,
+            "verdict": "regression",
+            "quarantine": null
+          }
+        ]
+      }
+    },
+    {
+      "trial": 17,
+      "base": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0000840000002427,
+              2.000040999999328,
+              2.0000419999996666,
+              2.00012500000048,
+              2.000083999999333,
+              2.0001659999998083,
+              2.0000840000002427,
+              2.0001249999995707,
+              2.0001659999998083,
+              2.000082999999904,
+              2.0071659999994154,
+              2.0000419999996666,
+              2.000040999999328,
+              2.000082999999904,
+              2.0001249999995707,
+              2.000082999999904,
+              2.0001249999995707,
+              2.0000410000002375,
+              2.00012500000048,
+              2.0001249999995707
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0000840000002427,
+              "p95": 2.0001659999998083,
+              "p99": 2.0071659999994154,
+              "min": 2.000040999999328,
+              "max": 2.0071659999994154
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "same": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.0001249999995707,
+              2.000250000000051,
+              2.0001659999998083,
+              2.000042000000576,
+              2.0000410000002375,
+              2.000167000000147,
+              2.003958999999668,
+              2.000250000000051,
+              2.000250000000051,
+              2.09375,
+              2.000250000000051,
+              2.0001249999995707,
+              2.0000840000002427,
+              2.00012500000048,
+              2.0002910000002885,
+              2.000082999999904,
+              2.000167000000147,
+              2.000042000000576,
+              2.000082999999904,
+              2.0001669999992373
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.000166499999523,
+              "p95": 2.003958999999668,
+              "p99": 2.09375,
+              "min": 2.0000410000002375,
+              "max": 2.09375
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "injected": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.3003340000004755,
+              2.3002919999998994,
+              2.300083000000086,
+              2.3003749999998035,
+              2.3002089999999953,
+              2.30004099999951,
+              2.30016599999999,
+              2.3002089999999953,
+              2.3001249999997526,
+              2.300083999999515,
+              2.300083999999515,
+              2.3000410000004194,
+              2.300083000000086,
+              2.3000419999998485,
+              2.300083000000086,
+              2.3002080000005662,
+              2.30016599999999,
+              2.3002499999993233,
+              2.300083999999515,
+              2.300250000000233
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.3001454999998714,
+              "p95": 2.3003340000004755,
+              "p99": 2.3003749999998035,
+              "min": 2.30004099999951,
+              "max": 2.3003749999998035
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "aa": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": true,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0000840000002427,
+              "p95": 2.0001659999998083,
+              "p99": 2.0071659999994154,
+              "min": 2.000040999999328,
+              "max": 2.0071659999994154
+            },
+            "head": {
+              "count": 20,
+              "median": 2.000166499999523,
+              "p95": 2.003958999999668,
+              "p99": 2.09375,
+              "min": 2.0000410000002375,
+              "max": 2.09375
+            },
+            "relative": 0.00004124826721274566,
+            "pValue": 0.00960540771484375,
+            "threshold": 0.05,
+            "verdict": "pass",
+            "quarantine": null
+          }
+        ]
+      },
+      "slowdown": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": false,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.0000840000002427,
+              "p95": 2.0001659999998083,
+              "p99": 2.0071659999994154,
+              "min": 2.000040999999328,
+              "max": 2.0071659999994154
+            },
+            "head": {
+              "count": 20,
+              "median": 2.3001454999998714,
+              "p95": 2.3003340000004755,
+              "p99": 2.3003749999998035,
+              "min": 2.30004099999951,
+              "max": 2.3003749999998035
+            },
+            "relative": 0.1500244489729392,
+            "pValue": 9.5367431640625e-7,
+            "threshold": 0.05,
+            "verdict": "regression",
+            "quarantine": null
+          }
+        ]
+      }
+    },
+    {
+      "trial": 18,
+      "base": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.000082999999904,
+              2.000250000000051,
+              2.00012500000048,
+              2.0001659999998083,
+              2.0000419999996666,
+              2.0002080000003843,
+              2.4758339999998498,
+              2.0000410000002375,
+              2.0002089999998134,
+              2.000250000000051,
+              2.000207999999475,
+              2.000082999999904,
+              2.00012500000048,
+              2.0000419999996666,
+              2.000082999999904,
+              2.00012500000048,
+              2.042124999999942,
+              2.0000410000002375,
+              2.000042000000576,
+              2.0001249999995707
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.00012500000048,
+              "p95": 2.042124999999942,
+              "p99": 2.4758339999998498,
+              "min": 2.0000410000002375,
+              "max": 2.4758339999998498
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "same": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.000040999999328,
+              2.000042000000576,
+              2.000250000000051,
+              2.000250000000051,
+              2.0000419999996666,
+              2.000167000000147,
+              2.0000840000002427,
+              2.000042000000576,
+              2.000167000000147,
+              2.0000840000002427,
+              2.000082999999904,
+              2.0001249999995707,
+              2.000250000000051,
+              2.000250000000051,
+              2.000082999999904,
+              2.0000410000002375,
+              2.000083999999333,
+              2.000083999999333,
+              2.000250000000051,
+              2.000207999999475
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0000840000002427,
+              "p95": 2.000250000000051,
+              "p99": 2.000250000000051,
+              "min": 2.000040999999328,
+              "max": 2.000250000000051
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "injected": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.3000840000004246,
+              2.3002919999998994,
+              2.3001670000003287,
+              2.300250000000233,
+              2.300250000000233,
+              2.82300000000032,
+              2.300083000000086,
+              2.3002079999996567,
+              2.3001249999997526,
+              2.300042000000758,
+              2.3000840000004246,
+              2.3000410000004194,
+              2.3000410000004194,
+              2.3001249999997526,
+              2.3001249999997526,
+              2.30016599999999,
+              2.3000840000004246,
+              2.3001249999997526,
+              2.3000419999998485,
+              2.3001249999997526
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.3001249999997526,
+              "p95": 2.3002919999998994,
+              "p99": 2.82300000000032,
+              "min": 2.3000410000004194,
+              "max": 2.82300000000032
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "aa": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": true,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.00012500000048,
+              "p95": 2.042124999999942,
+              "p99": 2.4758339999998498,
+              "min": 2.0000410000002375,
+              "max": 2.4758339999998498
+            },
+            "head": {
+              "count": 20,
+              "median": 2.0000840000002427,
+              "p95": 2.000250000000051,
+              "p99": 2.000250000000051,
+              "min": 2.000040999999328,
+              "max": 2.000250000000051
+            },
+            "relative": -0.000020498718948824823,
+            "pValue": 0.5927352905273438,
+            "threshold": 0.05,
+            "verdict": "pass",
+            "quarantine": null
+          }
+        ]
+      },
+      "slowdown": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": false,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.00012500000048,
+              "p95": 2.042124999999942,
+              "p99": 2.4758339999998498,
+              "min": 2.0000410000002375,
+              "max": 2.4758339999998498
+            },
+            "head": {
+              "count": 20,
+              "median": 2.3001249999997526,
+              "p95": 2.3002919999998994,
+              "p99": 2.82300000000032,
+              "min": 2.3000410000004194,
+              "max": 2.82300000000032
+            },
+            "relative": 0.14999062558550103,
+            "pValue": 0.00002002716064453125,
+            "threshold": 0.05,
+            "verdict": "regression",
+            "quarantine": null
+          }
+        ]
+      }
+    },
+    {
+      "trial": 19,
+      "base": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.000082999999904,
+              2,
+              2.0000419999996666,
+              2.0001659999998083,
+              2.0002080000003843,
+              2.0000410000002375,
+              2.0000419999996666,
+              2.0000419999996666,
+              2.227332999999817,
+              2.000082999999904,
+              2.0092500000000655,
+              2.000082999999904,
+              2.000207999999475,
+              2.000082999999904,
+              2.0001659999998083,
+              2.000250000000051,
+              2.000250000000051,
+              2.000082999999904,
+              2.0002080000003843,
+              2.0001669999992373
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.000124499999856,
+              "p95": 2.0092500000000655,
+              "p99": 2.227332999999817,
+              "min": 2,
+              "max": 2.227332999999817
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "same": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.000082999999904,
+              2.0000840000002427,
+              2.000082999999904,
+              2.0000410000002375,
+              2.000082999999904,
+              2.000042000000576,
+              2.000167000000147,
+              2.000082999999904,
+              2.0088749999995343,
+              2.0001249999995707,
+              2.000209000000723,
+              2.000082999999904,
+              2.000207999999475,
+              2.0001660000007178,
+              2.000167000000147,
+              2.000082999999904,
+              3.211207999999715,
+              2.0001249999995707,
+              2.003375000000233,
+              2.0001669999992373
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.0001249999995707,
+              "p95": 2.0088749999995343,
+              "p99": 3.211207999999715,
+              "min": 2.0000410000002375,
+              "max": 3.211207999999715
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "injected": {
+        "schemaVersion": 1,
+        "harnessCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "environment": {
+          "node": "v24.21.0",
+          "platform": "darwin",
+          "arch": "arm64",
+          "cpu": "Apple M3 Pro",
+          "logicalCpus": 11,
+          "osRelease": "25.6.0",
+          "runnerName": "MacBook-Pro.local",
+          "commit": "b62a94dbe484f0e9b8619915eb757037f07f2907"
+        },
+        "benchmarks": [
+          {
+            "id": "A29/timed-calibration",
+            "area": "A29",
+            "engine": "controlled-node-delay-not-product",
+            "unit": "ms",
+            "samples": [
+              2.3000410000004194,
+              2.3002499999993233,
+              2.3002919999998994,
+              2.300083000000086,
+              2.3000410000004194,
+              2.300083000000086,
+              2.3000829999991765,
+              2.30016599999999,
+              2.3001249999997526,
+              2.3002080000005662,
+              2.3002499999993233,
+              2.300125000000662,
+              2.3002499999993233,
+              2.3000419999998485,
+              2.3001670000003287,
+              2.3002079999996567,
+              2.3002079999996567,
+              2.3002079999996567,
+              2.300125000000662,
+              2.3003340000004755
+            ],
+            "coldSamples": [],
+            "statistics": {
+              "count": 20,
+              "median": 2.3001665000001594,
+              "p95": 2.3002919999998994,
+              "p99": 2.3003340000004755,
+              "min": 2.3000410000004194,
+              "max": 2.3003340000004755
+            },
+            "correctness": {
+              "passed": true,
+              "checksum": "4950"
+            },
+            "metrics": null
+          }
+        ],
+        "unsupported": []
+      },
+      "aa": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": true,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.000124499999856,
+              "p95": 2.0092500000000655,
+              "p99": 2.227332999999817,
+              "min": 2,
+              "max": 2.227332999999817
+            },
+            "head": {
+              "count": 20,
+              "median": 2.0001249999995707,
+              "p95": 2.0088749999995343,
+              "p99": 3.211207999999715,
+              "min": 2.0000410000002375,
+              "max": 3.211207999999715
+            },
+            "relative": 2.4998429570821656e-7,
+            "pValue": 0.1050567626953125,
+            "threshold": 0.05,
+            "verdict": "pass",
+            "quarantine": null
+          }
+        ]
+      },
+      "slowdown": {
+        "schemaVersion": 1,
+        "baseCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "headCommit": "b62a94dbe484f0e9b8619915eb757037f07f2907",
+        "runnerId": "0496ac14920a9c411b97ae8d",
+        "policy": {
+          "threshold": 0.05,
+          "alpha": 0.01,
+          "minSamples": 20,
+          "test": "one-sided paired sign test"
+        },
+        "passed": false,
+        "rows": [
+          {
+            "id": "A29/timed-calibration",
+            "engine": "controlled-node-delay-not-product",
+            "base": {
+              "count": 20,
+              "median": 2.000124499999856,
+              "p95": 2.0092500000000655,
+              "p99": 2.227332999999817,
+              "min": 2,
+              "max": 2.227332999999817
+            },
+            "head": {
+              "count": 20,
+              "median": 2.3001665000001594,
+              "p95": 2.3002919999998994,
+              "p99": 2.3003340000004755,
+              "min": 2.3000410000004194,
+              "max": 2.3003340000004755
+            },
+            "relative": 0.15001166177421688,
+            "pValue": 9.5367431640625e-7,
+            "threshold": 0.05,
+            "verdict": "regression",
+            "quarantine": null
+          }
+        ]
+      }
+    }
+  ]
+}

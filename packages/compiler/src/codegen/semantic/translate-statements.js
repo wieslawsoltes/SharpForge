@@ -336,25 +336,6 @@ export const StatementTranslation = Base =>
       if (method.contract || method.builtin) return n.frameworkCall(method, receiver, args, this.imageType(method.returnType, syntax));
       return this.unsupported(`'${method.toDisplayString()}' (not in the framework registry)`, syntax);
     }
-    /** The jump target of a label name; labels are scoped to the method body. */
-    labelOf(name) {
-      this.frame.labels ??= new Map();
-      let label = this.frame.labels.get(name);
-      if (!label) this.frame.labels.set(name, (label = { name }));
-      return label;
-    }
-    stmtLabeled(node) {
-      return n.block([{ kind: 'LabelStatement', syntax: n.hidden, label: this.labelOf(node.label) }, this.statement(node.statement)]);
-    }
-    /** `goto label;` is a jump; `goto case` and `goto default` need the switch to be a jump table and are not lowered. */
-    stmtGoto(node) {
-      const target = node.syntax.expression;
-      if (node.syntax.kind !== 'GotoStatement' || target?.kind !== 'IdentifierName') return this.unsupported('goto case and goto default', node.syntax);
-      return n.block([
-        n.expressionStatement(n.nullLiteral('object'), this.span(node.syntax)),
-        { kind: 'GotoStatement', syntax: n.hidden, label: this.labelOf(target.identifier.valueText) },
-      ]);
-    }
     stmtBreak(node) {
       if (node.syntax.label) return this.unsupported('labeled break and continue', node.syntax);
       return { kind: 'BreakStatement', syntax: this.span(node.syntax), label: null };
@@ -375,8 +356,9 @@ export const StatementTranslation = Base =>
     stmtTry(node) {
       const catches = node.catches.map(clause => {
         if (clause.filter) return this.unsupported('exception filters', node.syntax);
-        if (clause.type && clause.type.specialType !== 'System_Object' && this.imageType(clause.type, node.syntax) !== 'Exception')
-          return this.unsupported('typed exception handlers', node.syntax);
+        // The runtime keeps no type on a thrown object and enters the innermost handler for every exception.
+        if (!clause.type.equals(this.g.analysis.core.exception))
+          return this.unsupported(`a catch clause for '${clause.type.toDisplayString()}' (the runtime catches System.Exception only)`, clause.syntax);
         let variable = null;
         const body = this.scoped(() => {
           if (!clause.local) return this.statement(clause.block);
