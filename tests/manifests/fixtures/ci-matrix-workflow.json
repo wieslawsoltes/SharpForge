@@ -1,0 +1,17 @@
+{
+  "name": "Area matrix dry run",
+  "generate": [
+    "node",
+    "scripts/planning/ci-matrix.js"
+  ],
+  "strategy": {
+    "matrix": "${{ fromJSON(needs.discover.outputs.matrix) }}"
+  },
+  "run": [
+    "node",
+    "scripts/planning/run-tests.js",
+    "--area",
+    "${{ matrix.area }}",
+    "--list"
+  ]
+}

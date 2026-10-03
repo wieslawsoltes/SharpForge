@@ -1,0 +1,228 @@
+{
+  "schemaVersion": 1,
+  "tasks": {
+    "test": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "scripts/planning/run-tests.js"
+          ]
+        }
+      ]
+    },
+    "build": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "scripts/build.js"
+          ]
+        }
+      ]
+    },
+    "a29:bench": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "scripts/benchmark.js"
+          ]
+        }
+      ]
+    },
+    "check": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "scripts/planning/check-test-manifests.js"
+          ]
+        },
+        {
+          "command": "node",
+          "args": [
+            "scripts/check.js"
+          ]
+        }
+      ]
+    },
+    "a29:test:protocol": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "--test",
+            "tests/protocol.test.js"
+          ]
+        }
+      ]
+    },
+    "a29:standalone": {
+      "steps": [
+        {
+          "task": "build"
+        },
+        {
+          "command": "node",
+          "args": [
+            "scripts/standalone.js"
+          ]
+        }
+      ]
+    },
+    "a29:test:standalone": {
+      "steps": [
+        {
+          "command": "python",
+          "args": [
+            "tests/standalone_test.py"
+          ]
+        }
+      ]
+    },
+    "a29:bench:il": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "scripts/benchmark-il.js"
+          ]
+        }
+      ]
+    },
+    "a29:test:dotnet": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "scripts/validate-dotnet.js"
+          ]
+        }
+      ]
+    },
+    "a29:test:clr-wasm": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "scripts/validate-clr-wasm.js"
+          ]
+        }
+      ]
+    },
+    "a29:test:packages": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "scripts/verify-packages.js"
+          ]
+        }
+      ]
+    },
+    "a29:bench:release": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "scripts/benchmark-release06.js"
+          ]
+        }
+      ]
+    },
+    "a29:test:msbuild": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "--test",
+            "tests/msbuild-*.test.js",
+            "tests/project-msbuild-evaluation.test.js"
+          ]
+        }
+      ]
+    },
+    "a29:test:msbuild:native": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "scripts/validate-msbuild.js"
+          ]
+        }
+      ]
+    },
+    "a29:test:templates": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "--test",
+            "tests/templates-archive.test.js",
+            "tests/workspace-io.test.js"
+          ]
+        }
+      ]
+    },
+    "a29:test:designer": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "--test",
+            "tests/designer.test.js",
+            "tests/designer-examples.test.js",
+            "tests/edit-continue.test.js",
+            "tests/styles-templates.test.js"
+          ]
+        }
+      ]
+    },
+    "a29:test:release13": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "--test",
+            "tests/bcl13.test.js",
+            "tests/designer-sync13.test.js",
+            "tests/animation13.test.js",
+            "tests/examples13.test.js"
+          ]
+        }
+      ]
+    },
+    "a29:test:release14": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "--test",
+            "tests/*14.test.js"
+          ]
+        }
+      ]
+    },
+    "a29:bench:runtime": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "scripts/benchmark-release14.js"
+          ]
+        }
+      ]
+    },
+    "a29:bench:compute": {
+      "steps": [
+        {
+          "command": "node",
+          "args": [
+            "scripts/benchmark-compute14.js"
+          ]
+        }
+      ]
+    }
+  }
+}

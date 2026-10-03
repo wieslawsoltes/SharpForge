@@ -1,0 +1,20 @@
+{
+  "styles": [
+    "apps/studio/studio.css",
+    "packages/editor/src/vendor/classic.css",
+    "packages/editor/src/editor.css",
+    "packages/controls/src/controls.css",
+    "apps/studio/release08.css",
+    "apps/studio/release09.css",
+    "packages/winui/src/style.css",
+    "apps/studio/release10.css",
+    "apps/studio/release11.css",
+    "apps/studio/release12.css",
+    "apps/studio/release13.css",
+    "apps/studio/release14.css"
+  ],
+  "workers": [
+    "compiler.worker.js",
+    "runtime.worker.js"
+  ]
+}
