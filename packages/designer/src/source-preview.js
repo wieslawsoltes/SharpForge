@@ -104,7 +104,7 @@ export function designPreviewCapability(analysis) {
   const descriptor = {type: ownership.className, baseType: assignment.baseType, uri: analysis.uri,
     displayName: ownership.className.split('.').at(-1), previewOnly: true, readOnly: true, compilationSucceeded: false,
     rootAssignment: structuredClone(assignment)};
-  return {previewAvailable: true, readOnly: true, sourceWrites: false, descriptor,
+  return {previewAvailable: true, kind: 'component', readOnly: true, sourceWrites: false, descriptor,
     reason: 'Class inheritance is not executable on this runtime profile. The owned component body is available as a read-only preview.'};
 }
 

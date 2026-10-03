@@ -257,11 +257,27 @@ export class DesignSyncProtocol {
    * Source reads cannot alter text; design writes require text. Returns before/after snapshots for editor history.
    * The host must apply source edits atomically with the same token and its own source-version guard.
    */
-  accept(token, {document, text, sourceVersion, designRevision, preview, diagnostics = [], valid = true, success = true} = {}) {
+  accept(token, candidate = {}) { return this.#acceptCandidate(token, candidate); }
+
+  /** Qualified component or resource previews may advance while compiler errors keep source writes blocked. */
+  acceptPreview(token, candidate = {}) {
+    const capability = candidate.capability;
+    const permitsPreview = ['component', 'composition'].includes(capability?.kind) && capability.readOnly === true
+      || capability?.kind === 'resources'
+      && capability.readOnly === false && capability.stageDesign === true;
+    if (token?.kind !== 'source' || candidate.success !== false || capability?.previewAvailable !== true
+      || !permitsPreview || capability.sourceWrites !== false) {
+      fail('SFSYNC_ARGUMENT', 'Preview acceptance requires an explicit source preview capability and failed compilation.');
+    }
+    return this.#acceptCandidate(token, candidate, true);
+  }
+
+  #acceptCandidate(token, {document, text, sourceVersion, designRevision, preview, diagnostics = [], valid = true, success = true},
+    previewOnly = false) {
     const problem = this.#tokenProblem(token);
     if (problem) return problem;
     const errors = diagnostics.filter(diagnostic => diagnostic.severity === 'error');
-    if (!valid || !success || errors.length) {
+    if (!valid || !previewOnly && (!success || errors.length)) {
       return this.reject(token, errors[0] ?? {code: 'SFSYNC_INVALID', message: 'Candidate validation failed.'});
     }
     const currentText = text ?? this.#text;
@@ -290,7 +306,10 @@ export class DesignSyncProtocol {
     this.#preview = candidatePreview;
     this.#baseline = this.#captureBaseline();
     this.#changed(token.kind === 'source' ? 'source sync' : 'design sync');
-    return {accepted: true, state: this.state, token: {...token}, before, after: this.snapshot()};
+    if (previewOnly) {
+      this.#diagnostic = makeDiagnostic(errors[0]?.code ?? 'SFSYNC_COMPILE', errors[0]?.message ?? 'Source writes remain blocked for this preview.');
+    }
+    return {accepted: true, ...(previewOnly ? {previewOnly: true} : {}), state: this.state, token: {...token}, before, after: this.snapshot()};
   }
 
   /** Rejects only a current operation; stale errors cannot replace newer diagnostics or staged alternatives. */

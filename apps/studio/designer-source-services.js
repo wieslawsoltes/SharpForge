@@ -59,8 +59,10 @@ function planEdits(changes, files) {
 /** All affected source buffers commit together only after the complete candidate compiled in the worker. */
 export function createDesignerSourceServices({state, compiler, applyEdits, documents, history, projectTypes = () => []}) {
   const analyzeDesign = async params => {
+    const {signal, ...request} = params;
     const context = designerCompilationContext(state, params.uri);
-    const result = await compiler.request('designAnalyze', {...context, ...params, projectTypes: projectTypes()});
+    const result = await compiler.request('designAnalyze', {...context, ...request,
+      projectTypes: request.projectTypes ?? projectTypes()}, {signal});
     return {...result, workspaceRevision: context.revision};
   };
   const applySourceEdits = async (uri, plan, version, beforeApply = () => {}, ownerUri = uri) => {

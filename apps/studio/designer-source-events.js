@@ -26,7 +26,8 @@ export async function createDesignerSourceEvent(sync, request, {navigateOnly = f
     const plan = await sync.view.analyzeDesign({
       operation: 'event', uri: file.uri, nodeId: request.nodeId, event: request.event, navigateOnly,
       options: {name: request.methodName ?? request.name?.split('.').at(-1)},
-      baselineSources: baseline.sources, previous: {...baseline.analysis, document: sync.view.document.snapshot()}, generation
+      baselineSources: baseline.sources, previous: {...baseline.analysis, document: sync.view.document.snapshot()}, generation,
+      signal: operation.signal, workspaceId: sync.view.workspaceId?.()
     });
     if (plan.success === false) throw Object.assign(new Error(plan.diagnostics?.[0]?.message ?? 'Cannot edit this handler'), {
       diagnostics: plan.diagnostics ?? []
@@ -45,7 +46,7 @@ export async function createDesignerSourceEvent(sync, request, {navigateOnly = f
     return {...plan, ok: true};
   } catch (error) {
     protocol.reject(token, {code: error.code ?? 'SFSYNC_EVENT', message: error.message});
-    if (generation === sync.generation) sync.report('blocked', error.message, error.diagnostics ?? []);
+    if (generation === sync.generation && !operation.signal.aborted) sync.reportOperationError(error);
     throw error;
   } finally {
     sync.writing = false;

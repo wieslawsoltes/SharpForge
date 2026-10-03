@@ -2,13 +2,16 @@ import {DesignerSourceSync} from './designer-source-sync.js';
 
 /** Shares URI, conflict and history behavior with visual documents; resource classes remain explicit native-target previews. */
 export class DesignerResourceSourceSync extends DesignerSourceSync {
-  async analyze(file) {
+  async analyze(file, _previous = null, {signal} = {}) {
     const workspaceRevision = this.view.state.revision;
     const response = await this.view.compiler.request('designResourceAnalyze', {
       operation: 'analyze', uri: file.uri, files: this.view.sourceFiles(), generation: this.generation
-    });
+    }, {signal});
     if (!response.success) return {...response, workspaceRevision};
     const analysis = {...response.analysis, handlers: [], bindings: {}, structuralEditable: false};
+    analysis.readOnly = false;
+    analysis.previewCapability = {kind: 'resources', previewAvailable: analysis.previewReady === true,
+      readOnly: false, stageDesign: true, sourceWrites: false};
     return {...response, workspaceRevision, success: false, previewAvailable: analysis.previewReady, analysis,
       diagnostics: analysis.diagnostics, projectTypes: []};
   }

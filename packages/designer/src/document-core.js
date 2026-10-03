@@ -25,6 +25,8 @@ export class DesignDocumentCore {
     this.redoStack = [];
     this.listeners = new Set();
     this.disposed = false;
+    this.readOnly = false;
+    this.readOnlyReason = '';
     this.transaction = null;
     this.reindex();
   }
@@ -41,6 +43,22 @@ export class DesignDocumentCore {
 
   assertActive() {
     if (this.disposed) throw new Error('Design document is disposed');
+  }
+
+  /** Source previews may prohibit authoring without blocking selection, source refresh, or resource staging in other documents. */
+  setReadOnly(value, reason = 'This source preview is read-only.') {
+    this.assertActive();
+    if (typeof value !== 'boolean' || typeof reason !== 'string') throw new TypeError('Read-only state requires a Boolean and reason.');
+    const changed = this.readOnly !== value || this.readOnlyReason !== (value ? reason : '');
+    this.readOnly = value;
+    this.readOnlyReason = value ? reason : '';
+    if (value) this.transaction?.cancel();
+    if (changed) this.notify('capability');
+  }
+
+  assertWritable() {
+    this.assertActive();
+    if (this.readOnly) throw Object.assign(new Error(this.readOnlyReason), {code: 'SFD1865', severity: 'error', source: 'Designer'});
   }
 
   subscribe(listener) {
@@ -85,7 +103,7 @@ export class DesignDocumentCore {
 
   /** Validate an isolated candidate before publishing one revision and one history entry. */
   change(label, edit, { expectedRevision = this.revision } = {}) {
-    this.assertActive();
+    this.assertWritable();
     if (expectedRevision !== this.revision) throw new Error('Design changed; refresh before applying this edit');
     if (typeof edit !== 'function') throw new TypeError('Document edit must be a function');
     const candidate = this.snapshot();
@@ -120,7 +138,7 @@ export class DesignDocumentCore {
   }
 
   undo(redo = false) {
-    this.assertActive();
+    this.assertWritable();
     const source = redo ? this.redoStack : this.undoStack;
     const destination = redo ? this.undoStack : this.redoStack;
     const entry = source.pop();
@@ -137,13 +155,14 @@ export class DesignDocumentCore {
 
   /** A gesture stages arbitrary previews but publishes only its final candidate. */
   beginTransaction(label) {
-    this.assertActive();
+    this.assertWritable();
     if (this.transaction) throw new Error('A document transaction is already active');
     const startRevision = this.revision;
     let candidate = this.snapshot();
     let closed = false;
     const assertOpen = () => {
       if (closed || this.disposed) throw new Error('Document transaction is closed');
+      this.assertWritable();
       if (this.revision !== startRevision) throw new Error('Design changed during transaction');
     };
     const transaction = {

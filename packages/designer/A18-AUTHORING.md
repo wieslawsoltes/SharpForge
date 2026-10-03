@@ -139,6 +139,8 @@ navigation operation, including protected lambdas and multiple subscriptions. Cr
 transaction as other designer edits. Inherited read-only previews and template parts cannot create handlers. Enter on the event row
 performs the same action; double-click within a handler editor keeps that editor's normal selection behavior.
 
+## New document defaults
+
 `initializeDesignerDocumentOptions(value, options)` is a creation-only helper. It returns a cloned design with default guide settings
 and the chosen snap grid size only when guide metadata is absent. Callers must use it at new-document creation, never as a generic
 load or recovery normalization step. Existing serialized guide settings take precedence. Applying saved options to an active document

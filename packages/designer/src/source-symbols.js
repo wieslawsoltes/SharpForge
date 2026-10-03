@@ -24,7 +24,7 @@ export function prepareDesignSources(input, options = {}) {
   }
   const uris = new Set();
   let length = 0;
-  const parsedFiles = sources.map(file => {
+  for (const file of sources) {
     if (typeof file.uri !== 'string' || typeof file.text !== 'string' || uris.has(file.uri)) {
       failSource('Source URIs must be unique and source text must be a string', null, 'SFSYNC_SYMBOL');
     }
@@ -33,6 +33,11 @@ export function prepareDesignSources(input, options = {}) {
     if (file.text.length > (options.maxBytes ?? 2_000_000) || length > (options.maxTotalBytes ?? 8_000_000)) {
       failSource('C# design source size limit exceeded', null, 'SFSYNC_LIMIT');
     }
+  }
+  if (reusableSourceAnalysis(options.reuseAnalysis, sources, options)) {
+    return selectSourceConstruction(options.reuseAnalysis.context, options);
+  }
+  const parsedFiles = sources.map(file => {
     checkSourceCancellation(options.signal);
     return parse(new SourceText(file.text, file.uri, file.version ?? 0), undefined, {cancellationToken: options.signal});
   });
@@ -49,26 +54,6 @@ export function prepareDesignSources(input, options = {}) {
   }
   const semantic = options.semanticContext ?? SemanticModel.create(parsedFiles, {outputKind: 'library', ...options.compilationOptions});
   checkSourceCancellation(options.signal);
-  const methods = sourceMethods(parsedFiles);
-  let preferred = methods.filter(candidate => (!options.uri || candidate.parsed.source.uri === options.uri)
-    && (!options.className || ownerName(candidate.owner) === options.className || candidate.owner?.name === options.className)
-    && (!options.methodName || candidate.method.name === options.methodName));
-  if (options.uri && !preferred.some(candidate => ['Create', 'InitializeComponent', 'Main'].includes(candidate.method.name)
-    || options.methodName && candidate.method.name === options.methodName)) {
-    const active = parsedFiles.find(parsed => parsed.source.uri === options.uri);
-    const activeOwners = new Set((active?.root.members ?? []).filter(member => member.kind === 'Class').map(ownerName));
-    preferred = methods.filter(candidate => activeOwners.has(ownerName(candidate.owner))
-      && (!options.className || ownerName(candidate.owner) === options.className || candidate.owner?.name === options.className)
-      && (!options.methodName || candidate.method.name === options.methodName));
-  }
-  const chosen = chooseMethod(preferred, options.methodName);
-  if (!chosen) failSource('Select a C# file with a declarative Create, InitializeComponent or Main method', null, 'SFSYNC_SYMBOL');
-  if (chosen.method.body?.kind !== 'Block') failSource('A block-bodied construction method is required', chosen.method);
-  const ownerSymbol = semantic.model.getDeclaredSymbol(chosen.owner);
-  const methodSymbol = semantic.model.getDeclaredSymbol(chosen.method);
-  const partials = ownerSymbol?.legacy?.declarations ?? (chosen.owner ? [chosen.owner] : []);
-  const fields = new Map(partials.flatMap(partial => partial.members.filter(member => member.kind === 'Field')
-    .map(field => [field.name, field])));
   const symbols = semantic.result.symbols ?? [];
   const references = semantic.result.references ?? [];
   const symbolsByLocation = new Map();
@@ -84,8 +69,45 @@ export function prepareDesignSources(input, options = {}) {
     if (!referencesBySymbol.has(reference.symbolId)) referencesBySymbol.set(reference.symbolId, []);
     referencesBySymbol.get(reference.symbolId).push(reference);
   }
-  return {sources: sources.map(file => ({...file})), parsedFiles, methods, chosen, partials, fields,
-    model: semantic.model, result: semantic.result, ownerSymbol, methodSymbol, symbols, symbolsByLocation, symbolsByName, referencesBySymbol};
+  return selectSourceConstruction({sources: sources.map(file => ({...file})), parsedFiles, methods: sourceMethods(parsedFiles),
+    model: semantic.model, result: semantic.result, symbols, symbolsByLocation, symbolsByName, referencesBySymbol,
+    compilationOptionsKey: JSON.stringify({outputKind: 'library', ...options.compilationOptions})}, options);
+}
+
+function reusableSourceAnalysis(analysis, sources, options) {
+  if (!analysis?.context || options.semanticContext || analysis.sources.length !== sources.length) return false;
+  const nextOptions = {outputKind: 'library', ...options.compilationOptions};
+  if (analysis.context.compilationOptionsKey !== JSON.stringify(nextOptions)) return false;
+  const previous = new Map(analysis.sources.map(source => [source.uri, source]));
+  return sources.every(source => {
+    const old = previous.get(source.uri);
+    return old?.text === source.text && old.version === source.version
+      && !!(old.readOnly || old.readonly) === !!(source.readOnly || source.readonly);
+  });
+}
+
+function selectSourceConstruction(context, options) {
+  const {methods, parsedFiles, model} = context;
+  let preferred = methods.filter(candidate => (!options.uri || candidate.parsed.source.uri === options.uri)
+    && (!options.className || ownerName(candidate.owner) === options.className || candidate.owner?.name === options.className)
+    && (!options.methodName || candidate.method.name === options.methodName));
+  if (options.uri && !preferred.some(candidate => ['Create', 'InitializeComponent', 'Main'].includes(candidate.method.name)
+    || options.methodName && candidate.method.name === options.methodName)) {
+    const active = parsedFiles.find(parsed => parsed.source.uri === options.uri);
+    const activeOwners = new Set((active?.root.members ?? []).filter(member => member.kind === 'Class').map(ownerName));
+    preferred = methods.filter(candidate => activeOwners.has(ownerName(candidate.owner))
+      && (!options.className || ownerName(candidate.owner) === options.className || candidate.owner?.name === options.className)
+      && (!options.methodName || candidate.method.name === options.methodName));
+  }
+  const chosen = chooseMethod(preferred, options.methodName);
+  if (!chosen) failSource('Select a C# file with a declarative Create, InitializeComponent or Main method', null, 'SFSYNC_SYMBOL');
+  if (chosen.method.body?.kind !== 'Block') failSource('A block-bodied construction method is required', chosen.method);
+  const ownerSymbol = model.getDeclaredSymbol(chosen.owner);
+  const methodSymbol = model.getDeclaredSymbol(chosen.method);
+  const partials = ownerSymbol?.legacy?.declarations ?? (chosen.owner ? [chosen.owner] : []);
+  const fields = new Map(partials.flatMap(partial => partial.members.filter(member => member.kind === 'Field')
+    .map(field => [field.name, field])));
+  return {...context, chosen, ownerSymbol, methodSymbol, partials, fields};
 }
 
 function chooseMethod(candidates, requested) {

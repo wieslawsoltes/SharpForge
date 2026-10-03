@@ -1,6 +1,7 @@
 import {CONTROLS, canonicalType, frameworkAssignable} from '@sharpforge/framework';
 import {DesignDocument, designScene, validateDesign} from './model.js';
 import {authoringError, qualifiedIdentifier} from './property-diagnostics.js';
+import {designPreviewCapability, wrapDesignPreviewRoot} from './source-preview.js';
 
 export function createDesignerRoot(type = 'UserControl', {name = 'DesignedControl', width = 640, height = 480} = {}) {
   type = canonicalType(type);
@@ -19,7 +20,7 @@ function remapReference(value, ids) {
   return structuredClone(value);
 }
 
-/** Explicit per-workspace project controls; registration requires a successful compilation version. */
+/** Explicit per-workspace controls distinguish successful compilation from independently qualified read-only previews. */
 export class DesignerRootRegistry {
   constructor({maxDepth = 24, maxNodes = 10000} = {}) {
     this.entries = new Map();
@@ -28,10 +29,29 @@ export class DesignerRootRegistry {
   }
 
   register(descriptor, document, {analysisVersion, successful = true} = {}) {
+    if (!successful || descriptor.previewOnly || document?.previewOnly || document?.value?.previewOnly) {
+      authoringError('SFD1861', 'Executable project control metadata requires a successful compilation.');
+    }
+    return this.#store(descriptor, document, analysisVersion);
+  }
+
+  /** Rechecks the exact source capability and wraps only its proven instance content; this never claims executable support. */
+  registerPreview(descriptor, analysis, {analysisVersion} = {}) {
+    const capability = designPreviewCapability(analysis);
+    if (!capability.previewAvailable || descriptor.previewOnly !== true || descriptor.readOnly !== true
+      || descriptor.compilationSucceeded !== false) {
+      authoringError('SFD1861', 'Preview registration requires a source-proven read-only component.');
+    }
+    const preview = wrapDesignPreviewRoot(analysis, descriptor);
+    return this.#store({...descriptor, ...capability.descriptor}, preview.document, analysisVersion);
+  }
+
+  #store(descriptor, document, analysisVersion) {
     qualifiedIdentifier(descriptor.type, 'Project control type');
     const baseType = canonicalType(descriptor.baseType);
-    if (!successful || !Number.isSafeInteger(analysisVersion) || analysisVersion < 0) {
-      authoringError('SFD1861', 'Project control metadata requires a successful, versioned compilation.');
+    if (!Number.isSafeInteger(analysisVersion) || analysisVersion < 0
+      || descriptor.analysisVersion !== undefined && descriptor.analysisVersion !== analysisVersion) {
+      authoringError('SFD1861', 'Project control metadata requires the current, matching analysis version.');
     }
     if (!frameworkAssignable(CONTROLS + 'Control', baseType)) authoringError('SFD1861', 'Project type must derive from Control.');
     if ((this.entries.get(descriptor.type)?.descriptor.analysisVersion ?? -1) > analysisVersion) {
@@ -56,12 +76,15 @@ export class DesignerRootRegistry {
     const diagnostics = [];
     const expand = (document, mapping, ancestry, depth) => {
       if (depth > this.maxDepth) authoringError('SFD1861', 'Nested project-control depth limit.');
+      const descriptors = new Map((document.projectTypes ?? []).map(descriptor => [descriptor.type, descriptor]));
       for (const node of document.nodes) {
         if (!node.projectType) continue;
         const entry = this.entries.get(node.projectType);
-        if (!entry) {
+        const expected = descriptors.get(node.projectType);
+        if (!entry || expected?.uri && expected.uri !== entry.descriptor.uri
+          || expected?.baseType && canonicalType(expected.baseType) !== entry.descriptor.baseType) {
           diagnostics.push({code: 'SFD1862', severity: 'warning', span: null, nodeId: node.id,
-            message: `Preview for ${node.projectType} is unavailable until its project compiles successfully.`});
+            message: `Preview for ${node.projectType} is unavailable until its current construction is qualified.`});
           continue;
         }
         if (ancestry.has(node.projectType)) authoringError('SFD1861', 'Recursive project-control composition.');
