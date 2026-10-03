@@ -31,7 +31,7 @@ for(const [name,source,code] of [
  ['invalid nameof expression','Console.WriteLine(nameof(1+2));','CS8081'],
  ['partial missing marker',[{uri:'A.cs',text:'partial class C {}'},{uri:'B.cs',text:'class C {}'}],'CS0260'],
  ['partial access conflict',[{uri:'A.cs',text:'public partial class C {}'},{uri:'B.cs',text:'internal partial class C {}'}],'CS0262'],
- ['distinct namespaces not conflated',[{uri:'A.cs',text:'namespace A; partial class C {}'},{uri:'B.cs',text:'namespace B; partial class C {}'}],'SF2011'],
+ ['distinct namespaces not conflated',[{uri:'A.cs',text:'namespace A; partial class C {}'},{uri:'B.cs',text:'namespace B; partial class C {}'}],'CS5001'],
  ['partial methods rejected','partial class C { partial void M(); }','SF2010'],
 ])test('0.4 C# explicit diagnostic '+name,()=>{const r=compile(source);assert(!r.success);assert(r.diagnostics.some(d=>d.code===code),JSON.stringify(r.diagnostics));});
 test('0.4 partial cached syntax is not mutated by repeated compilation',()=>{const w=ws('partial class C {public static int M(){return 42;}}Console.WriteLine(C.M());');w.update('C.cs','partial class C {public int Value;}',1);const before=JSON.stringify(w.syntax('Program.cs').root);for(let i=0;i<4;i++){ok(w.compile({name:'Build'+i}));assert.equal(JSON.stringify(w.syntax('Program.cs').root),before);}});

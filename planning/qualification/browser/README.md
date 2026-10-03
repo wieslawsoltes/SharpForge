@@ -21,7 +21,7 @@ The separate workflow leaves the existing three-OS Chromium artifact contract un
 
 The self-signed loopback certificate is public test material. Certificate-error tolerance applies only to local HTTPS contexts. Production responses and CSP are preserved by a reverse proxy around `scripts/serve.js`; only isolation headers are added. `crossOriginIsolated`, secure context and the browser's SharedArrayBuffer primitive are asserted independently of the product's real transfer-buffer compute workload. The product has no SharedArrayBuffer compute path or non-isolated degradation notice; #1153's corresponding product acceptance item remains unsupported pending A10 implementation. The harness does not inject a notice.
 
-CSP events and console policy errors fail every shared-launcher session, including existing suites. The dedicated negative fixture injects inline script and inline event-handler violations and requires the shared launcher's teardown to reject them. These deliberate negatives do not count as clean product sessions. A deploy smoke opens the actual `deploy-pages` output only after deployment, verifies HTTP success and restrictive enforced CSP (header or a meta before every script), then compiles/runs/debugs. Missing policy fails even on an otherwise working Pages deployment. No publication is performed by local validation.
+CSP events and console policy errors fail every shared-launcher session, including existing suites. The dedicated negative fixture injects inline script and inline event-handler violations and requires the shared launcher's teardown to reject them. These deliberate negatives do not count as clean product sessions. A deploy smoke opens the actual `deploy-pages` output only after deployment, verifies HTTP success and restrictive enforced CSP (header or a meta before every script), then compiles/runs/debugs. It runs only when a manual Pages dispatch sets `qualify` to true; ordinary main pushes retain the existing build/deploy behavior. Missing policy fails even on an otherwise working Pages deployment. No publication is performed by local validation.
 
 Device descriptors qualify desktop browser touch input, layouts, touch docking controls, editor focus and a shrunken 390px viewport. They do not qualify physical phones, mobile operating systems, IME or an OS virtual keyboard. Firefox cannot emulate `is_mobile`; that limitation is separately recorded while viewport/has_touch paths still run. Accessibility uses browser-generated ARIA snapshots for every visible interactive control and retains selectors for unnamed controls; keyboard traversal exercises menus, docking, separators and editor, with forced colors/reduced motion. This is not a complete WCAG audit or assistive-technology qualification.
 
@@ -40,6 +40,17 @@ Cold navigation-to-compiler-ready and warm correctness-gated compile/run samples
 |1158|Post-deploy job using actual output URL|Existing deploy without enforced CSP fails|
 |1159|Validated report/category merger and negative unit tests|No hardware qualification without evidence|
 
-Use `python scripts/conformance/browser/latency.py --engine chromium --cold 3 --warm 10` for separately measured cold browser launches and warm compile/run percentiles. `accessibility_smoke.py` proves the name audit rejects an empty button and accepts a YAML-quoted named control on each real engine. Known failure catalogs currently identify only measured macOS cells; the Linux/Windows workflow does not inherit those findings as exemptions. Ordinary PRs keep the repository's minimal CI policy: the full browser workflow requires the `full-ci` label; manual and main runs execute it in full.
+Use `python scripts/conformance/browser/latency.py --engine chromium --cold 3 --warm 10` for separately measured cold browser launches and warm compile/run percentiles. `accessibility_smoke.py` proves the name audit rejects an empty button and accepts a YAML-quoted named control on each real engine. Known failure catalogs currently identify only measured macOS cells; the Linux/Windows workflow does not inherit those findings as exemptions. The full browser workflow requires manual dispatch or the `full-ci` PR label; ordinary PRs and main pushes do not start it.
+
+Workflow actions use the reviewed immutable pins from the A29 supply policy.
+Pages write permissions are confined to its deploy job; browser qualification is
+read-only. The retained macOS evidence at
+`f803047e4fb2d9056596dde26661631e36bb6c10` remains historical, including its
+known failures. The separate UI follow-up #2541 fixes the measured touch-toggle,
+accessible-name and keyboard-focus defects. WebKit file-mode nested compute,
+deployed CSP and the absent product SharedArrayBuffer path remain open concerns;
+physical devices and Linux/Windows browser execution remain unqualified.
+No local tests, builds or browser captures ran for these workflow readiness
+changes. Broader validation is deferred until the integrated scope is complete.
 
 The [mobile and accessibility follow-up](ui-fixes.md) records actual fixes and a separate revision-bound recapture. The [original qualification](qualification.md) remains the baseline for measurements not repeated by that follow-up.

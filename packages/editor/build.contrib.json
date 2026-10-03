@@ -3,11 +3,11 @@
   "styles": [
     {
       "source": "packages/editor/src/vendor/classic.css",
-      "order": 1
+      "order": 1000
     },
     {
       "source": "packages/editor/src/editor.css",
-      "order": 2
+      "order": 2000
     }
   ],
   "workers": [],
