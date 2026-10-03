@@ -4,7 +4,7 @@ import * as symbols from '@sharpforge/symbols';
 
 const publicExports = [
   'PdbGuids', 'PortablePdbBuilder', 'SymbolError', 'attachPortablePdb', 'bindSources',
-  'deflateStored', 'emitPortablePdb', 'guidBytes', 'guidString', 'hex', 'inflateRaw',
+  'decodeSource', 'deflateStored', 'emitPortablePdb', 'guidBytes', 'guidString', 'hex', 'inflateRaw',
   'loadSymbols', 'readDebugDirectory', 'readPortablePdb', 'readSequencePoints',
   'sha1', 'sha256', 'sourceLinkUrl', 'sourceSpan', 'verifySource', 'verifySourceAsync',
   'writeSequencePoints', 'readCustomDebugInformation', 'writeCustomDebugInformation',
