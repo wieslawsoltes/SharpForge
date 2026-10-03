@@ -26,6 +26,7 @@ export * from './resource-states.js';
 export * from './resource-preview.js';
 export * from './resource-instances.js';
 export * from './resource-documents.js';
+export * from './resource-source.js';
 export * from './resource-clipboard.js';
 export * from './resource-codegen.js';
 export * from './resource-xaml.js';
