@@ -11,6 +11,9 @@ export class SourceConstructionReader {
   constructor(context, options) {
     this.context = context;
     this.options = options;
+    this.projectTypes = new Map(Array.isArray(options.projectTypes)
+      ? options.projectTypes.map(descriptor => [descriptor.type, descriptor.baseType])
+      : Object.entries(options.projectTypes ?? {}));
     this.nodes = [];
     this.nodeMap = new Map();
     this.bindings = {};
@@ -41,9 +44,9 @@ export class SourceConstructionReader {
   controlType(expression) {
     if (expression?.kind !== 'New') return null;
     const symbol = this.context.model.getTypeInfo(expression).type;
-    const resolved = symbol ? this.context.model.symbols.nameOf(symbol) : expression.type;
-    return isDesignControl(resolved) ? canonicalType(resolved) : this.options.projectTypes?.[resolved]
-      ?? (isDesignControl(expression.type) ? canonicalType(expression.type) : this.options.projectTypes?.[expression.type]);
+    const resolved = symbol?.legacy?.fullName ?? (symbol ? this.context.model.symbols.nameOf(symbol) : expression.type);
+    return isDesignControl(resolved) ? canonicalType(resolved) : this.projectTypes.get(resolved)
+      ?? (isDesignControl(expression.type) ? canonicalType(expression.type) : this.projectTypes.get(expression.type));
   }
 
   read() {
@@ -110,7 +113,9 @@ export class SourceConstructionReader {
     if (this.nodes.length >= (this.options.maxNodes ?? 5000)) failSource('Design control count limit exceeded', expression, 'SFSYNC_LIMIT');
     const id = designIdentifier(name);
     if (this.bindings[id]) failSource('Ambiguous duplicate control variable ' + name, expression, 'SFSYNC_SYMBOL');
-    const previewType = this.options.projectTypes?.[expression.type];
+    const semanticType = this.context.model.getTypeInfo(expression).type;
+    const actualType = semanticType?.legacy?.fullName ?? expression.type;
+    const previewType = this.projectTypes.get(actualType) ?? this.projectTypes.get(expression.type);
     const type = canonicalType(previewType ?? this.controlType(expression));
     const symbol = controlSourceSymbol(this.context, name, expression, declaration);
     const binding = {id, name, uri: expression.uri, statement, creation: expression, properties: {}, events: {}, edges: [],
@@ -118,7 +123,7 @@ export class SourceConstructionReader {
       symbolKey: symbol.key, symbolId: symbol.record?.id ?? null, references: symbol.references, declaration: symbol.location,
       declarationOrder: this.nodes.length, sourceType: expression.type};
     const node = {id, type, properties: {}, children: [], events: {}};
-    if (previewType) node.projectType = expression.type;
+    if (previewType) node.projectType = actualType;
     this.nodes.push(node);
     this.nodeMap.set(id, node);
     this.bindings[id] = binding;

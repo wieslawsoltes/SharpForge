@@ -21,6 +21,7 @@ export function sourcePropertyEdits(base, next, names, edits) {
     const before = previous.get(node.id);
     if (!before) continue;
     const binding = base.bindings[node.id];
+    const inlineProperties = [];
     for (const key of new Set([...Object.keys(before.properties), ...Object.keys(node.properties)])) {
       if (sameSourceValue(before.properties[key], node.properties[key])) continue;
       const origin = binding.properties[key];
@@ -34,19 +35,40 @@ export function sourcePropertyEdits(base, next, names, edits) {
         }
       } else if (origin) {
         edits.push(sourceLiteralEdit(base.text, origin.expression, node.properties[key], propertySchema(node.type)[key].type));
+      } else if (binding.inline) {
+        const property = propertySchema(node.type)[key];
+        if (property.attached) failSource('Attached setters require a named control', binding.creation, 'SFSYNC_OWNERSHIP');
+        inlineProperties.push(`${key} = ${csharpValue(node.properties[key], property.type)}`);
       } else {
         insertions.push(propertyStatement(node, key, names.get(node.id)));
       }
     }
+    if (inlineProperties.length) edits.push(inlinePropertyInsertion(base, binding, inlineProperties));
     eventEdits(base, before, node, binding, names.get(node.id), edits, insertions);
   }
   edits.push(sourceInsertion(base, insertions));
+}
+
+function inlinePropertyInsertion(base, binding, properties) {
+  const creation = binding.creation;
+  const initializers = creation.initializers ?? [];
+  const last = initializers.at(-1);
+  if (last) {
+    const token = base.parsed.tokens.find(item => item.start >= last.expression.end);
+    const comma = token?.kind === ',';
+    const at = comma ? token.end : last.expression.end;
+    return {start: at, end: at, text: (comma ? ' ' : ', ') + properties.join(', ') + (comma ? ',' : '')};
+  }
+  const closed = base.text[creation.end - 1] === '}';
+  const at = creation.end - (closed ? 1 : 0);
+  return {start: at, end: at, text: closed ? ' ' + properties.join(', ') + ' ' : ' { ' + properties.join(', ') + ' }'};
 }
 
 function eventEdits(base, before, node, binding, name, edits, insertions) {
   for (const event of new Set([...Object.keys(before.events), ...Object.keys(node.events)])) {
     if (before.events[event] === node.events[event]) continue;
     const origin = binding.events[event];
+    if (binding.inline) failSource('Event subscriptions require a named control', binding.creation, 'SFSYNC_EVENT');
     if (origin?.dynamic) failSource('Multiple handlers and protected lambdas must be edited in C#', origin.expression, 'SFSYNC_EVENT');
     if (origin) {
       edits.push(node.events[event] ? {start: origin.expression.start, end: origin.expression.end, text: node.events[event]}

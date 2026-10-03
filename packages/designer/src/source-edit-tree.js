@@ -21,7 +21,15 @@ function referencedOutside(base, binding, allowed) {
 }
 
 function deleteNode(base, binding, edits, external) {
-  if (binding.inline) failSource('Inline constructed controls must be removed through their owning initializer', binding.creation, 'SFSYNC_OWNERSHIP');
+  if (binding.inline) {
+    const owner = Object.values(base.bindings).find(candidate => candidate.edges.some(edge => edge.child === binding.id));
+    const edge = owner?.edges.find(candidate => candidate.child === binding.id);
+    if (!edge) failSource('Inline construction has no owned parent edge', binding.creation, 'SFSYNC_OWNERSHIP');
+    if (edge.collection) edits.push(removeSourceInitializer(base, {initializer: {start: binding.creation.start, expression: binding.creation}}));
+    else if (edge.initializer) edits.push(removeSourceInitializer(base, edge));
+    else edits.push(removeSourceStatement(base, edge.statement));
+    return;
+  }
   if (binding.statement.kind === 'Local' && binding.statement.declarations.length > 1) {
     failSource('Split this multi-variable declaration before deleting a control', binding.statement, 'SFSYNC_OWNERSHIP');
   }
@@ -108,6 +116,8 @@ export function sourceTreeEdits(base, next, names, edits, external) {
     for (let index = 0; index < parent.children.length; index++) {
       const child = parent.children[index];
       if (kept.has(child)) continue;
+      if (base.bindings[parent.id]?.inline) failSource('Structural insertion requires a named container',
+        base.bindings[parent.id].creation, 'SFSYNC_OWNERSHIP');
       if (before.has(child) && oldParents.get(child)?.parent.id !== newParents.get(child)?.parent.id) {
         clearAttachedProperties(base, after.get(child), parent, edits);
       }
@@ -148,7 +158,7 @@ function insertNode(base, node, names, statements, external) {
 
 function clearAttachedProperties(base, node, parent, edits) {
   const old = base.bindings[node.id];
-  for (const key of ['Left', 'Top', 'ZIndex', 'Row', 'Column', 'RowSpan', 'ColumnSpan', 'WrapRowSpan', 'WrapColumnSpan']) {
+  for (const key of ['Left', 'Top', 'Row', 'Column', 'RowSpan', 'ColumnSpan', 'WrapRowSpan', 'WrapColumnSpan']) {
     const owner = key.startsWith('Wrap') ? 'VariableSizedWrapGrid' : ['Left', 'Top', 'ZIndex'].includes(key) ? 'Canvas' : 'Grid';
     if (parent?.type === CONTROLS + owner) continue;
     const property = old.properties[key];

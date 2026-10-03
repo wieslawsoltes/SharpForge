@@ -1,4 +1,4 @@
-import {XAML} from '@sharpforge/framework';
+import {XAML, canonicalType} from '@sharpforge/framework';
 import {validateDesign, childSlot} from './model.js';
 import {prepareDesignSources, ownerName} from './source-symbols.js';
 import {SourceConstructionReader} from './source-reader.js';
@@ -41,7 +41,8 @@ export function analyzeDesignSources(sources, options = {}) {
   };
   const document = validateDesign({version: 1, name: previous?.name ?? context.chosen.owner?.name ?? 'CSharpView',
     width: size('Width'), height: size('Height'), root, nodes, styles: reader.styles, templates: reader.templates,
-    ...(options.projectTypes ? {projectTypes: options.projectTypes} : {})});
+    ...(options.projectTypes ? {projectTypes: Array.isArray(options.projectTypes) ? options.projectTypes
+      : Object.entries(options.projectTypes).map(([type, baseType]) => ({type, baseType}))} : {})});
   const {method, owner, parsed} = context.chosen;
   const ownership = {version: 1, uri: parsed.source.uri, className: ownerName(owner), methodName: method.name,
     methodSymbol: context.methodSymbol?.name ?? method.name, span: {start: method.body.start, end: method.body.end}, regions: reader.regions};
@@ -71,6 +72,7 @@ export function designSourceSnapshot(analysis) {
       owner: analysis.owner?.name ?? null}, document: structuredClone(analysis.document), ownership: structuredClone(analysis.ownership),
     identityRemap: {...analysis.identityRemap}, structuralEditable: analysis.structuralEditable,
     compilationSucceeded: analysis.compilationSucceeded, diagnostics: designSourceDiagnostics(analysis),
+    handlers: sourceHandlerCandidates(analysis),
     bindings: Object.fromEntries(Object.entries(analysis.bindings).map(([id, binding]) => [id, {
       id, name: binding.name, symbolKey: binding.symbolKey, uri: binding.uri, declaration: binding.declaration,
       properties: Object.fromEntries(Object.entries(binding.properties).map(([key, property]) => [key, {
@@ -84,4 +86,21 @@ export function designSourceSnapshot(analysis) {
         }))
       }]))
     }]))};
+}
+
+/** Source method descriptors for delegate-signature filtering in the Events inspector. */
+export function sourceHandlerCandidates(analysis) {
+  const owner = analysis.ownership.className;
+  const staticConstruction = analysis.method.modifiers?.includes('static');
+  return analysis.context.methods.map(candidate => {
+    const method = candidate.method;
+    const sameOwner = ownerName(candidate.owner) === owner;
+    const isStatic = method.modifiers?.includes('static');
+    const accessible = (sameOwner || method.modifiers?.includes('public')) && (!staticConstruction || isStatic);
+    return {name: sameOwner ? method.name : ownerName(candidate.owner) + '.' + method.name,
+      className: ownerName(candidate.owner), methodName: method.name,
+      parameters: method.parameters.map(parameter => canonicalType(parameter.type)),
+      returnType: canonicalType(method.returnType ?? 'void'), accessible: !!accessible,
+      uri: method.uri, start: method.nameSpan?.start ?? method.start, end: method.nameSpan?.end ?? method.end};
+  });
 }

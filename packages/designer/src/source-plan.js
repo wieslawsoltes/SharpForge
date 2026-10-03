@@ -63,7 +63,7 @@ export function planDesignSourceUpdate(base, design, current = base.text, option
   const external = [];
   for (const node of next.nodes) {
     const old = before.get(node.id);
-    if (old && node.properties.Name && old.properties.Name !== node.properties.Name) {
+    if (old && !base.bindings[node.id].inline && node.properties.Name && old.properties.Name !== node.properties.Name) {
       const binding = base.bindings[node.id];
       external.push(...sourceRenameEdits(base, binding, node.properties.Name));
       names.set(node.id, node.properties.Name);

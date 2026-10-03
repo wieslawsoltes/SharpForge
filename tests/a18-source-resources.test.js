@@ -63,13 +63,42 @@ test('new BasedOn dependencies precede a rewritten existing style and every cont
   const next = edited(base);
   next.setStyle('NewBase', {targetType: 'Button', setters: {Height: 41}});
   next.setStyle('Accent', {targetType: 'Button', basedOn: 'NewBase', setters: {FontSize: 19}});
-  const plan = planDesignSourceUpdate(base, next.value);
+  const plan = planDesignSourceUpdate(base, next.value, base.text, {requireCompilation: true});
   const added = plan.text.indexOf('Style style_NewBase =');
   const dependent = plan.text.indexOf('Style style_Accent =');
   const control = plan.text.indexOf('v_window = new');
   assert(added >= 0 && added < dependent && dependent < control);
   assert.equal(plan.document.styles.Accent.basedOn, 'NewBase');
   assert.equal(plan.document.styles.NewBase.setters.Height, 41);
+});
+
+for (const type of ['Microsoft.UI.Xaml.Style', 'var']) {
+  test(`rewritten ${type} resource declarations preserve their type and compile with dependent styles and templates`, () => {
+    const text = source().replace('Microsoft.UI.Xaml.Style style_Base =', `${type} style_Base =`);
+    const base = read(text);
+    const next = edited(base);
+    next.setStyle('Base', {targetType: 'Button', setters: {Width: 130}});
+    const plan = planDesignSourceUpdate(base, next.value, base.text, {requireCompilation: true});
+    assert.equal(plan.compilationSucceeded, true);
+    assert(plan.text.includes(`${type} style_Base = new Microsoft.UI.Xaml.Style(`));
+    assert.equal(plan.document.styles.Base.setters.Width, 130);
+    assert.equal(plan.document.styles.Accent.basedOn, 'Base');
+    assert.equal(plan.document.templates.Frame.root.children[0].bindings.Foreground, 'Foreground');
+  });
+}
+
+test('using-alias declaration spelling survives resource edits without hiding existing compiler-profile diagnostics', () => {
+  const text = 'using StyleAlias = Microsoft.UI.Xaml.Style;\n'
+    + source().replace('Microsoft.UI.Xaml.Style style_Base =', 'StyleAlias style_Base =');
+  const base = read(text);
+  const next = edited(base);
+  next.setStyle('Base', {targetType: 'Button', setters: {Width: 130}});
+  const plan = planDesignSourceUpdate(base, next.value);
+  assert(plan.text.includes('StyleAlias style_Base = new Microsoft.UI.Xaml.Style('));
+  assert.equal(plan.document.styles.Base.setters.Width, 130);
+  assert.equal(plan.compilationSucceeded, base.compilationSucceeded);
+  const diagnostics = items => items.map(({code, message, severity}) => ({code, message, severity}));
+  assert.deepEqual(diagnostics(plan.diagnostics), diagnostics(base.compilerDiagnostics));
 });
 
 test('added style dependencies are emitted in topological order even when dictionary order differs', () => {

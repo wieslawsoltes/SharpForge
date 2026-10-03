@@ -138,7 +138,8 @@ function styleLines(context, key, entry) {
   const style = context.next.styles[key];
   const name = context.aliases.get(`style:${key}`);
   const statement = entry?.statements[0];
-  const type = statement?.kind === 'Local' ? statement.type : context.base.style.usesVar ? 'var' : XAML + 'Style';
+  const type = statement?.kind === 'Local' ? statement.declarations[0].type : context.base.style.usesVar ? 'var' : XAML + 'Style';
+  if (typeof type !== 'string' || !type.length) failSource('Resource declaration type is unavailable', statement, 'SFSYNC_OWNERSHIP');
   const declaration = statement && statement.kind !== 'Local' ? name : `${type} ${name}`;
   const lines = [`${declaration} = new ${XAML}Style(${JSON.stringify(style.targetType)});`];
   if (style.basedOn) lines.push(`${name}.BasedOn = ${context.aliases.get(`style:${style.basedOn}`)};`);

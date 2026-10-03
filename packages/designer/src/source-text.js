@@ -40,8 +40,8 @@ export function inferSourceStyle(text, method) {
   }).filter(Boolean);
   const indent = indents[0] ?? methodIndent + (text.includes('\t') ? '\t' : '    ');
   const unit = indent.startsWith(methodIndent) ? indent.slice(methodIndent.length) || '    ' : '    ';
-  const locals = statements.filter(statement => statement.kind === 'Local');
-  const usesVar = locals.filter(statement => statement.type === 'var').length > locals.length / 2;
+  const locals = statements.filter(statement => statement.kind === 'Local').flatMap(statement => statement.declarations);
+  const usesVar = locals.filter(declaration => declaration.type === 'var').length > locals.length / 2;
   return {newline, indent, methodIndent, unit, usesVar, braceOnNewLine: /\r?\n[ \t]*\{$/.test(text.slice(method.start, method.body.start + 1))};
 }
 

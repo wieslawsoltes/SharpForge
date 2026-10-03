@@ -20,7 +20,8 @@ export class CSharpDesignSession {
 
   read(text, options = {}) {
     this.ensureActive();
-    const analysis = readDesignSource(text, {...this.options, sources: this.analysis.sources, ...options, methodName: this.analysis.method.name, previous: this.analysis});
+    const analysis = readDesignSource(text, {...this.options, sources: this.analysis.sources, ...options,
+      methodName: this.analysis.method.name, previous: this.analysis});
     this.analysis = analysis;
     this.version++;
     return this.document;
