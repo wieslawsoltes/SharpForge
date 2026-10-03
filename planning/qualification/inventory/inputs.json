@@ -1,6 +1,6 @@
-{"sha256":"244d4acca02580cc3123737c880236a7bdf65c961d33f05406d62e630094422f","files":[
+{"sha256":"6b0a1654c6ddf8cfb19c565614384b4cf27c08547d3129f0e5754314021f9246","files":[
 {"path":"package-lock.json","sha256":"052d2964db7d6a8a0a1d89663b0b55e642b8de20b3fd8695c30300d89af674e5"},
-{"path":"package.json","sha256":"c2d925856f48ccbfae3e6e2a06a9c0b0eb4012a8ebb8e470568a9e909a2f9455"},
+{"path":"package.json","sha256":"9ed396895997e7afbdb0951b22f56210ed9a66efc19753609107d0a4240ecfe8"},
 {"path":"packages/archive/package.json","sha256":"e67cb79a2461944333ebe3f583705c2ba499dbc542f9ec34be8fa355e0264221"},
 {"path":"packages/archive/src/deflate.js","sha256":"eb553fb1ab3fc2375593ae83fa0fcdedd2c2074451754ad092156a7337386611"},
 {"path":"packages/archive/src/index.js","sha256":"dc90c38f147c3a9138d70a7373e7999d6d0af83ac13df2f8a5c0aca90a8054c9"},
