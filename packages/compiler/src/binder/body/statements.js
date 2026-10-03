@@ -2,6 +2,8 @@
  * Statement dispatch: blocks and scopes, control flow, labels and reachability (`completes`), which drives
  * CS0162 (unreachable code), CS0161 (not all paths return), CS0163 and CS8070 (switch fall-through).
  */
+import { reportYieldInLambda } from '../iterators.js';
+import { reportAwaitOutsideAsync } from '../async.js';
 import { ErrorTypeSymbol } from '../../symbols/types.js';
 import { LabelSymbol } from '../../symbols/members.js';
 
@@ -273,6 +275,7 @@ export const StatementBinding = Base =>
           this.pushScope();
           try {
             let resources = null;
+            if (syntax.awaitKeyword) reportAwaitOutsideAsync(this, syntax.awaitKeyword);
             if (syntax.declaration)
               resources = this.variableDeclaration(syntax.declaration, { isUsing: true, isAwait: !!syntax.awaitKeyword });
             else if (syntax.expression) {
@@ -281,7 +284,7 @@ export const StatementBinding = Base =>
               resources = e;
             }
             const body = this.embedded(syntax.statement);
-            return stmt('Using', syntax, body.completes, { resources, body });
+            return stmt('Using', syntax, body.completes, { resources, body, isAwait: !!syntax.awaitKeyword });
           } finally {
             this.popScope();
           }
@@ -290,8 +293,12 @@ export const StatementBinding = Base =>
           return this.tryStatement(syntax);
         case 'YieldReturnStatement':
         case 'YieldBreakStatement': {
-          this.c.isIterator = true;
-          this.rootBinder.isIterator = true;
+          // A yield in a lambda is an error (CS1621, binder/iterators.js) and does not make the method an iterator.
+          if (this.c.isLambda) reportYieldInLambda(this, syntax);
+          else {
+            this.c.isIterator = true;
+            this.rootBinder.isIterator = true;
+          }
           if (syntax.kind === 'YieldBreakStatement') return stmt('YieldBreak', syntax, false, {});
           const element = this.iteratorElementType(),
             e = this.value(syntax.expression);

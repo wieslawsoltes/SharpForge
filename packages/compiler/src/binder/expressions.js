@@ -42,7 +42,7 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
       case 'Await':{if(!this.m.node.asyncBody&&!this.m.name.startsWith('<startup>'))this.c.report(node,'CS4032',[typeText(this.m.returnType)]);const expression=this.bindExpression(node.expression),type=expression.legacyType,d=this.frameworkExactMethod('SharpForge.Runtime.Async','Await',[type]);if(!d){this.c.report(node,'CS1061',[typeText(type),'GetAwaiter']);return this.bad(node,[expression]);}return this.node(BoundAwaitExpression,node,{expression,awaiter:this.sym.contract(d)},d.result);}
       case 'Default':{const type=this.c.resolveType(node.type,node,false,this.m);if(type==='void')this.c.report(node,'CS1547');return this.node(BoundDefaultExpression,node,{},type);}
       case 'Checked':case 'Unchecked':return this.inCheckedContext(node.kind==='Checked',()=>this.bindExpression(node.expression));
-      case 'Cast':{const operand=this.bindExpression(node.expression),from=operand.legacyType,to=this.c.resolveType(node.type,node,false,this.m);if(!numeric(from)||!numeric(to))this.c.report(node,'CS0030',[typeText(from),typeText(to)]);return this.node(BoundConversion,node,{operand,conversion:{kind:from===to?'Identity':'ExplicitNumeric',from,to},isExplicit:true,isChecked:this.overflowChecked(node)&&to==='int'},to,constant);}
+      case 'Cast':{const operand=this.bindExpression(node.expression),from=operand.legacyType,to=this.c.resolveType(node.type,node,false,this.m);if((!numeric(from)&&frameworkType(from)?.kind!=='enum')||(!numeric(to)&&frameworkType(to)?.kind!=='enum'))this.c.report(node,'CS0030',[typeText(from),typeText(to)]);return this.node(BoundConversion,node,{operand,conversion:{kind:from===to?'Identity':'ExplicitNumeric',from,to},isExplicit:true,isChecked:this.overflowChecked(node)&&to!=='double'},to,constant);}
       case 'SwitchExpression':return this.bindSwitchExpression(node);
       case 'Error':return this.bad(node);
       case 'Literal':if(node.type==='char')this.c.report(node,'SF2003');if(node.type==='int'&&node.value>2147483647&&!this.c.reportedAt(node,'SF1004'))this.c.report(node,'SF2004');return this.node(BoundLiteral,node,{value:node.value},node.type,{constantValue:{value:node.value}});
@@ -54,6 +54,7 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
       case 'Member':{
         const type=this.infer(node.target);
         if(node.name==='Length'&&(type==='string'||type.endsWith('[]')))return this.node(BoundArrayLength,node,{expression:this.bindExpression(node.target)},'int');
+        if(['Name','FullName'].includes(node.name)&&type==='System.Type')return this.node(BoundPropertyAccess,node,{receiver:this.bindExpression(node.target),property:this.sym.builtin(BuiltinMap.get('Type.'+node.name))},'string');
         if(node.name==='Message'&&type==='Exception')return this.node(BoundPropertyAccess,node,{receiver:this.bindExpression(node.target),property:this.sym.builtin(BuiltinMap.get('Exception.Message'))},'string');
         if(pathOf(node)==='Environment.TickCount'||pathOf(node)==='System.Environment.TickCount')return this.node(BoundPropertyAccess,node,{receiver:null,property:this.sym.builtin(BuiltinMap.get('Environment.TickCount'))},'int');
         const property=this.property(node);if(property)return this.readProperty(property,node);
@@ -107,7 +108,7 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
       const args=node.args.map(a=>{const bound=this.bindExpression(a);types.push(bound.legacyType);count++;return bound;});
       if(count<builtin.min||count>builtin.max)this.c.report(node,'CS1501',[builtin.name,count]);
       types.forEach((type,i)=>{const target=builtin.params[i];if(target==='number'){if(!numeric(type))this.c.report(node,'CS1503',[i+1,typeText(type),'double']);}else if(target==='array'){if(!type.endsWith('[]'))this.c.report(node,'CS1503',[i+1,typeText(type),'System.Array']);}else if(target&&target!=='any'&&target!=='exception')this.checkAssign(target,type,node.args[Math.max(0,i-(count-node.args.length))]??node);});
-      return this.node(BoundCall,node,{receiver,method:this.sym.builtin(builtin),args,intrinsic:builtin.name==='Math.Abs'&&types[0]==='int'?BuiltinMap.get('$Math.Abs.Int32'):builtin},builtin.result==='numeric'?(types.includes('double')?'double':'int'):builtin.result);
+      return this.node(BoundCall,node,{receiver,method:this.sym.builtin(builtin),args,intrinsic:builtin.name==='object.GetType'&&['int','double','bool','long'].includes(types[0])?BuiltinMap.get('$type.'+types[0]+'.GetType'):builtin.name==='Math.Abs'&&types[0]==='int'?BuiltinMap.get('$Math.Abs.Int32'):builtin},builtin.result==='numeric'?(types.includes('double')?'double':'int'):builtin.result);
     }
     const method=this.findMethod(node);let receiver=null;
     if(method&&!method.isStatic)receiver=node.target.kind==='Member'?this.bindExpression(node.target.target):this.implicitThis(node);

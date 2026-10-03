@@ -10,13 +10,14 @@ export const objectCreationMethods = {
     if (this.isImplicitObjectCreation()) return this.implicitObjectCreation(start, keyword);
     if (this.at('{')) return this.anonymousObjectCreation(start, keyword);
     if (this.at('[')) return this.implicitArrayCreation(start, keyword);
-    const type = this.canStartNewType() ? this.type('new') : this.missingName();
+    const type = this.canStartType() ? this.type('new') : this.missingName();
     if (type.kind === 'ArrayType')
       return this.n('ArrayCreationExpression', keyword, type, this.at('{') ? this.initializerExpression('ArrayInitializerExpression') : null);
     const args = this.at('(') ? this.argumentList() : this.at('{') ? null : this.missingArgumentList();
     return this.n('ObjectCreationExpression', keyword, type, args, this.at('{') ? this.objectOrCollectionInitializer() : null);
   },
-  canStartNewType() {
+  /** True when a type can start at the cursor: a predefined type, a name, a tuple type or a function pointer. */
+  canStartType() {
     return this.isPredefined() || this.isId() || this.at('(') || (this.at('delegate') && this.peek().kind === '*');
   },
   /** `new T` with neither arguments nor an initializer: CS1526 and an argument list of two missing parentheses, as in Roslyn. */

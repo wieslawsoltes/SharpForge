@@ -100,12 +100,13 @@ export const lambdaMethods = {
     const open = this.take(),
       parameters = [];
     this.nested(() => {
-      while (!this.at(')') && !this.at('eof')) {
+      if (this.at(')') || this.at('eof')) return;
+      // After a comma a parameter is always parsed, so `(a, ) => a` reports the missing one.
+      for (;;) {
         const before = this.i;
         parameters.push(this.lambdaParameter());
-        if (this.at(',')) parameters.push(this.take());
-        else break;
-        if (before === this.i) break;
+        if (!this.at(',') || before === this.i) break;
+        parameters.push(this.take());
       }
     });
     return this.n('ParameterList', open, parameters, this.expect(')'));
@@ -113,11 +114,16 @@ export const lambdaMethods = {
   /** A lambda parameter: a bare name (implicitly typed) or `type name`, with optional attributes, modifiers and default value. */
   lambdaParameter() {
     const attributeLists = this.at('[') ? this.lambdaAttributeLists() : null,
-      modifiers = this.parameterModifiers(),
-      untyped = this.isId() && untypedParameterFollowers.has(this.peek().kind),
+      firstModifier = this.i,
+      modifiers = this.isSimpleLambdaScoped() ? [this.takeWord('scoped')] : this.parameterModifiers(),
+      afterModifiers = this.i,
+      untyped = this.isId() ? untypedParameterFollowers.has(this.peek().kind) : !this.canStartType(),
       type = untyped ? null : this.type(),
       identifier = this.id(),
-      defaultValue = this.at('=') ? this.n('EqualsValueClause', this.take(), this.expression()) : null;
+      equals = this.at('=') ? this.current : null,
+      defaultValue = equals ? this.n('EqualsValueClause', this.take(), this.expression()) : null;
+    this.lambdaParameterFeatures(firstModifier, afterModifiers, equals);
+    if (untyped && afterModifiers > firstModifier && !identifier.isMissing) this.simpleLambdaParameterModifiers(firstModifier);
     return this.n('Parameter', attributeLists, modifiers, type, identifier, defaultValue);
   }
 };

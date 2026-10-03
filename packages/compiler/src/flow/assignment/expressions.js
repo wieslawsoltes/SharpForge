@@ -45,6 +45,7 @@ export const AssignmentExpressions = Base =>
         }
         case 'Assignment':
         case 'RefAssignment':
+        case 'DeconstructionAssignment':
           return this.assign(e.left, this.expr(e.right, this.target(e.left, state)));
         case 'CoalesceAssignment': {
           const after = this.expr(e.left, state),
@@ -196,12 +197,22 @@ export const AssignmentExpressions = Base =>
           for (const a of left.args ?? []) s = this.expr(a.expression ?? a, s);
           return s;
         }
+        case 'Tuple': {
+          // The targets of a deconstruction, left to right.
+          let s = state;
+          for (const element of left.elements) s = this.target(element, s);
+          return s;
+        }
         default:
           return this.expr(left, state);
       }
     }
     assign(left, state) {
       if (!state || !left) return state;
+      if (left.kind === 'Tuple') {
+        for (const element of left.elements) this.assign(element, state);
+        return state;
+      }
       if (left.kind === 'Local' || left.kind === 'DeclarationExpression') {
         if (left.local) {
           if (left.kind === 'DeclarationExpression') this.declare(left.local);

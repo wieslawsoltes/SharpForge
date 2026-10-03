@@ -1,7 +1,7 @@
 /**
  * Single evaluation of the operands of a target that is read and written by one expression (`a[i] += x`, `o.P++`,
  * `[i] = { ... }`): the receiver and the index arguments are evaluated into temporaries, and the target is rebuilt
- * over `Lowered` nodes that read those temporaries, so the ordinary read and store lowering can be used on it.
+ * over `SpilledOperand` nodes that read those temporaries, so the ordinary read and store lowering can be used on it.
  */
 import { n } from '../../codegen/semantic/node-factory.js';
 
@@ -13,14 +13,14 @@ export const EvaluateOnce = Base =>
   class extends Base {
     /** A bound node standing for an already lowered value; `read()` yields it any number of times. */
     lowered(bound, read) {
-      return { kind: 'Lowered', syntax: bound.syntax, type: bound.type, read };
+      return { kind: 'SpilledOperand', syntax: bound.syntax, type: bound.type, read };
     }
-    exprLowered(node) {
+    exprSpilledOperand(node) {
       return node.read();
     }
     /** Evaluates a bound expression into a temporary of `sink` and returns the `Lowered` node that reads it. */
     spill(bound, sink, hint) {
-      if (bound.kind === 'Lowered' || bound.kind === 'ImplicitReceiver') return bound;
+      if (bound.kind === 'SpilledOperand' || bound.kind === 'ImplicitReceiver') return bound;
       const value = this.expression(bound);
       if (stableKinds.has(value.kind)) return this.lowered(bound, () => value);
       // A local is copied too: the right-hand side may change it before the store reads the operand again.
@@ -59,7 +59,7 @@ export const EvaluateOnce = Base =>
       }
     }
     /** Stores a lowered value into a bound target; the result is an expression that yields the stored value. */
-    storeInto(target, value) {
+    storeIntoTarget(target, value) {
       if (target.kind === 'IndexerAccess' && this.g.isSource(target.property)) return this.sourceIndexerStore(target, value);
       return this.assignStatic(target, n.assign(this.target(target), value));
     }

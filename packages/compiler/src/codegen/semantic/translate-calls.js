@@ -99,12 +99,15 @@ export const CallTranslation = Base =>
     iteratorCall(info, method, receiver, syntax) {
       switch (method.name) {
         case 'GetEnumerator':
+        case 'GetAsyncEnumerator':
           return n.call(info.getEnumerator, null, [receiver]);
+        case 'MoveNextAsync':
+        case 'DisposeAsync':
+          return this.iteratorTask(info, method.name, receiver);
         case 'MoveNext':
           return n.call(info.moveNext, null, [receiver]);
         case 'Dispose':
-          // No finally blocks are pending in a lowered iterator (yield inside try is not lowered): disposing ends it.
-          return n.sequence([], [n.assign(n.field(receiver, info.stateField), n.literal(-1, 'int'))], n.nullLiteral('object'));
+          return n.call(info.dispose, null, [receiver]);
         default:
           return this.unsupported(`'${method.toDisplayString()}' on an iterator`, syntax);
       }

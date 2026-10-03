@@ -7,6 +7,7 @@
 import { SymbolKind, TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { backingFieldName } from '../../lowering/generated-names.js';
+import { isByReference } from '../../lowering/by-reference.js';
 import { spanOf } from './node-factory.js';
 
 const definitionOf = symbol => symbol.originalDefinition ?? symbol;
@@ -37,10 +38,11 @@ export const Declarations = Base =>
       if (type.arity || type.typeParameters?.length) this.unsupported('user-defined generics', at);
       const base = type.baseType;
       if (base && base.specialType !== 'System_Object') this.unsupported('class inheritance', at);
-      // Two interfaces need no dispatch: `using` calls Dispose on the static type, and a collection initializer only
-      // requires IEnumerable to be listed (its Add calls are bound statically).
+      // Three interfaces need no dispatch: `using` and `await using` call the method of the static type, and a
+      // collection initializer only requires IEnumerable to be listed (its Add calls are bound statically).
       const core = this.analysis.core,
-        needsDispatch = i => i.specialType !== 'System_IDisposable' && i !== core.ienumerable;
+        dispatchFree = [core.iasyncDisposable, core.ienumerable],
+        needsDispatch = i => i.specialType !== 'System_IDisposable' && !dispatchFree.includes(i);
       if (type.interfaces?.some(needsDispatch)) this.unsupported('interface implementation', at);
     }
     /** The image class of a source class symbol. */
@@ -119,7 +121,6 @@ export const Declarations = Base =>
       if (symbol.typeParameters?.length) this.unsupported('user-defined generics', at);
       if (symbol.isAbstract || symbol.isVirtual || symbol.isOverride) this.unsupported('virtual dispatch', at);
       if (symbol.isExtern) this.unsupported('extern methods', at);
-      if (symbol.isAsync) this.unsupported('async methods outside the execution profile', at);
       const isConstructor = symbol.methodKind === MethodKind.Constructor;
       // The implicit parameterless constructor has nothing to run: creation allocates and runs the field initializers.
       if (isConstructor && symbol.isImplicitlyDeclared) return undefined;
@@ -137,9 +138,10 @@ export const Declarations = Base =>
     }
     parametersOf(symbol) {
       return symbol.parameters.map(p => {
-        if (p.refKind && p.refKind !== 'none') this.unsupported('ref, out and in parameters', p.locations?.[0] ?? symbol.locations?.[0]);
         if (p.isParams) this.paramsParameters.add(p);
-        return { name: p.name, type: this.types.imageType(p.type, p.locations?.[0] ?? symbol.locations?.[0]) };
+        const type = this.types.imageType(p.type, p.locations?.[0] ?? symbol.locations?.[0]);
+        // A by-reference parameter receives the cell that holds the argument variable (lowering/by-reference.js).
+        return { name: p.name, type: isByReference(p) ? this.cellClass(type).record.name : type };
       });
     }
     accessorOf(symbol) {
