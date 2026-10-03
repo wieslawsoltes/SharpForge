@@ -1,0 +1,6522 @@
+{
+  "specification": "ECMA-335 6th edition II.23.2",
+  "runtime": ".NET 10.0.5",
+  "srmVersion": "10.0.0.0",
+  "sourceSha256": {
+    "Program.cs": "DCAF2DDC2DD6E8F9B766B2EC63A34071AB5BD8926FE54F7FB50F93BB95E6F190",
+    "Provider.cs": "6D21CB1A0E5C89C40B64B08786CB7BCB350FE83AD86007BDCCB3442B6C86FA9F",
+    "RoslynFixture.cs": "F355DD5F2FCED12B0F52F85CB709392F36B1795ABE547BB643A5ABBEBF64FA73",
+    "SignatureOracle.csproj": "CE82BC6F4AD1BEE7F9841F154249541DFA79E31AF6AB5D62E2C4ADBC15C0D500"
+  },
+  "cases": [
+    {
+      "id": "field-Boolean",
+      "kind": "field",
+      "bytes": "0602",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "primitive",
+          "name": "bool"
+        }
+      }
+    },
+    {
+      "id": "array-Boolean",
+      "kind": "type",
+      "bytes": "1D02",
+      "shape": {
+        "kind": "szarray",
+        "element": {
+          "kind": "primitive",
+          "name": "bool"
+        }
+      }
+    },
+    {
+      "id": "pointer-Boolean",
+      "kind": "type",
+      "bytes": "0F02",
+      "shape": {
+        "kind": "pointer",
+        "element": {
+          "kind": "primitive",
+          "name": "bool"
+        }
+      }
+    },
+    {
+      "id": "local-Boolean",
+      "kind": "locals",
+      "bytes": "070102",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "primitive",
+            "name": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pinned-Boolean",
+      "kind": "locals",
+      "bytes": "0701451002",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "pinned",
+            "element": {
+              "kind": "byref",
+              "element": {
+                "kind": "primitive",
+                "name": "bool"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "byref-Boolean",
+      "kind": "method",
+      "bytes": "000110021002",
+      "shape": {
+        "kind": "method",
+        "hasThis": false,
+        "returnType": {
+          "kind": "byref",
+          "element": {
+            "kind": "primitive",
+            "name": "bool"
+          }
+        },
+        "parameters": [
+          {
+            "kind": "byref",
+            "element": {
+              "kind": "primitive",
+              "name": "bool"
+            }
+          }
+        ],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "property-Boolean",
+      "kind": "property",
+      "bytes": "28010208",
+      "shape": {
+        "kind": "property",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "bool"
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "shape-Boolean--268435456",
+      "kind": "type",
+      "bytes": "140202010502C000000100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "bool"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -268435456,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Boolean--8193",
+      "kind": "type",
+      "bytes": "140202010502DFFFBFFF00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "bool"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8193,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Boolean--8192",
+      "kind": "type",
+      "bytes": "140202010502800100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "bool"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Boolean--65",
+      "kind": "type",
+      "bytes": "140202010502BF7F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "bool"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -65,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Boolean--64",
+      "kind": "type",
+      "bytes": "1402020105020100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "bool"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Boolean--1",
+      "kind": "type",
+      "bytes": "1402020105027F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "bool"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -1,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Boolean-0",
+      "kind": "type",
+      "bytes": "1402020105020000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "bool"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Boolean-63",
+      "kind": "type",
+      "bytes": "1402020105027E00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "bool"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          63,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Boolean-64",
+      "kind": "type",
+      "bytes": "140202010502808000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "bool"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Boolean-8191",
+      "kind": "type",
+      "bytes": "140202010502BFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "bool"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8191,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Boolean-8192",
+      "kind": "type",
+      "bytes": "140202010502C000400000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "bool"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Boolean-268435455",
+      "kind": "type",
+      "bytes": "140202010502DFFFFFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "bool"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          268435455,
+          0
+        ]
+      }
+    },
+    {
+      "id": "field-Char",
+      "kind": "field",
+      "bytes": "0603",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "primitive",
+          "name": "char"
+        }
+      }
+    },
+    {
+      "id": "array-Char",
+      "kind": "type",
+      "bytes": "1D03",
+      "shape": {
+        "kind": "szarray",
+        "element": {
+          "kind": "primitive",
+          "name": "char"
+        }
+      }
+    },
+    {
+      "id": "pointer-Char",
+      "kind": "type",
+      "bytes": "0F03",
+      "shape": {
+        "kind": "pointer",
+        "element": {
+          "kind": "primitive",
+          "name": "char"
+        }
+      }
+    },
+    {
+      "id": "local-Char",
+      "kind": "locals",
+      "bytes": "070103",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "primitive",
+            "name": "char"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pinned-Char",
+      "kind": "locals",
+      "bytes": "0701451003",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "pinned",
+            "element": {
+              "kind": "byref",
+              "element": {
+                "kind": "primitive",
+                "name": "char"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "byref-Char",
+      "kind": "method",
+      "bytes": "000110031003",
+      "shape": {
+        "kind": "method",
+        "hasThis": false,
+        "returnType": {
+          "kind": "byref",
+          "element": {
+            "kind": "primitive",
+            "name": "char"
+          }
+        },
+        "parameters": [
+          {
+            "kind": "byref",
+            "element": {
+              "kind": "primitive",
+              "name": "char"
+            }
+          }
+        ],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "property-Char",
+      "kind": "property",
+      "bytes": "28010308",
+      "shape": {
+        "kind": "property",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "char"
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "shape-Char--268435456",
+      "kind": "type",
+      "bytes": "140302010502C000000100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "char"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -268435456,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Char--8193",
+      "kind": "type",
+      "bytes": "140302010502DFFFBFFF00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "char"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8193,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Char--8192",
+      "kind": "type",
+      "bytes": "140302010502800100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "char"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Char--65",
+      "kind": "type",
+      "bytes": "140302010502BF7F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "char"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -65,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Char--64",
+      "kind": "type",
+      "bytes": "1403020105020100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "char"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Char--1",
+      "kind": "type",
+      "bytes": "1403020105027F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "char"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -1,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Char-0",
+      "kind": "type",
+      "bytes": "1403020105020000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "char"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Char-63",
+      "kind": "type",
+      "bytes": "1403020105027E00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "char"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          63,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Char-64",
+      "kind": "type",
+      "bytes": "140302010502808000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "char"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Char-8191",
+      "kind": "type",
+      "bytes": "140302010502BFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "char"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8191,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Char-8192",
+      "kind": "type",
+      "bytes": "140302010502C000400000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "char"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Char-268435455",
+      "kind": "type",
+      "bytes": "140302010502DFFFFFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "char"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          268435455,
+          0
+        ]
+      }
+    },
+    {
+      "id": "field-SByte",
+      "kind": "field",
+      "bytes": "0604",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "primitive",
+          "name": "sbyte"
+        }
+      }
+    },
+    {
+      "id": "array-SByte",
+      "kind": "type",
+      "bytes": "1D04",
+      "shape": {
+        "kind": "szarray",
+        "element": {
+          "kind": "primitive",
+          "name": "sbyte"
+        }
+      }
+    },
+    {
+      "id": "pointer-SByte",
+      "kind": "type",
+      "bytes": "0F04",
+      "shape": {
+        "kind": "pointer",
+        "element": {
+          "kind": "primitive",
+          "name": "sbyte"
+        }
+      }
+    },
+    {
+      "id": "local-SByte",
+      "kind": "locals",
+      "bytes": "070104",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "primitive",
+            "name": "sbyte"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pinned-SByte",
+      "kind": "locals",
+      "bytes": "0701451004",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "pinned",
+            "element": {
+              "kind": "byref",
+              "element": {
+                "kind": "primitive",
+                "name": "sbyte"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "byref-SByte",
+      "kind": "method",
+      "bytes": "000110041004",
+      "shape": {
+        "kind": "method",
+        "hasThis": false,
+        "returnType": {
+          "kind": "byref",
+          "element": {
+            "kind": "primitive",
+            "name": "sbyte"
+          }
+        },
+        "parameters": [
+          {
+            "kind": "byref",
+            "element": {
+              "kind": "primitive",
+              "name": "sbyte"
+            }
+          }
+        ],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "property-SByte",
+      "kind": "property",
+      "bytes": "28010408",
+      "shape": {
+        "kind": "property",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "sbyte"
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "shape-SByte--268435456",
+      "kind": "type",
+      "bytes": "140402010502C000000100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "sbyte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -268435456,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-SByte--8193",
+      "kind": "type",
+      "bytes": "140402010502DFFFBFFF00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "sbyte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8193,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-SByte--8192",
+      "kind": "type",
+      "bytes": "140402010502800100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "sbyte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-SByte--65",
+      "kind": "type",
+      "bytes": "140402010502BF7F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "sbyte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -65,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-SByte--64",
+      "kind": "type",
+      "bytes": "1404020105020100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "sbyte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-SByte--1",
+      "kind": "type",
+      "bytes": "1404020105027F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "sbyte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -1,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-SByte-0",
+      "kind": "type",
+      "bytes": "1404020105020000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "sbyte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-SByte-63",
+      "kind": "type",
+      "bytes": "1404020105027E00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "sbyte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          63,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-SByte-64",
+      "kind": "type",
+      "bytes": "140402010502808000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "sbyte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-SByte-8191",
+      "kind": "type",
+      "bytes": "140402010502BFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "sbyte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8191,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-SByte-8192",
+      "kind": "type",
+      "bytes": "140402010502C000400000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "sbyte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-SByte-268435455",
+      "kind": "type",
+      "bytes": "140402010502DFFFFFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "sbyte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          268435455,
+          0
+        ]
+      }
+    },
+    {
+      "id": "field-Byte",
+      "kind": "field",
+      "bytes": "0605",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "primitive",
+          "name": "byte"
+        }
+      }
+    },
+    {
+      "id": "array-Byte",
+      "kind": "type",
+      "bytes": "1D05",
+      "shape": {
+        "kind": "szarray",
+        "element": {
+          "kind": "primitive",
+          "name": "byte"
+        }
+      }
+    },
+    {
+      "id": "pointer-Byte",
+      "kind": "type",
+      "bytes": "0F05",
+      "shape": {
+        "kind": "pointer",
+        "element": {
+          "kind": "primitive",
+          "name": "byte"
+        }
+      }
+    },
+    {
+      "id": "local-Byte",
+      "kind": "locals",
+      "bytes": "070105",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "primitive",
+            "name": "byte"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pinned-Byte",
+      "kind": "locals",
+      "bytes": "0701451005",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "pinned",
+            "element": {
+              "kind": "byref",
+              "element": {
+                "kind": "primitive",
+                "name": "byte"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "byref-Byte",
+      "kind": "method",
+      "bytes": "000110051005",
+      "shape": {
+        "kind": "method",
+        "hasThis": false,
+        "returnType": {
+          "kind": "byref",
+          "element": {
+            "kind": "primitive",
+            "name": "byte"
+          }
+        },
+        "parameters": [
+          {
+            "kind": "byref",
+            "element": {
+              "kind": "primitive",
+              "name": "byte"
+            }
+          }
+        ],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "property-Byte",
+      "kind": "property",
+      "bytes": "28010508",
+      "shape": {
+        "kind": "property",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "byte"
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "shape-Byte--268435456",
+      "kind": "type",
+      "bytes": "140502010502C000000100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "byte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -268435456,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Byte--8193",
+      "kind": "type",
+      "bytes": "140502010502DFFFBFFF00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "byte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8193,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Byte--8192",
+      "kind": "type",
+      "bytes": "140502010502800100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "byte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Byte--65",
+      "kind": "type",
+      "bytes": "140502010502BF7F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "byte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -65,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Byte--64",
+      "kind": "type",
+      "bytes": "1405020105020100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "byte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Byte--1",
+      "kind": "type",
+      "bytes": "1405020105027F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "byte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -1,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Byte-0",
+      "kind": "type",
+      "bytes": "1405020105020000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "byte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Byte-63",
+      "kind": "type",
+      "bytes": "1405020105027E00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "byte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          63,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Byte-64",
+      "kind": "type",
+      "bytes": "140502010502808000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "byte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Byte-8191",
+      "kind": "type",
+      "bytes": "140502010502BFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "byte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8191,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Byte-8192",
+      "kind": "type",
+      "bytes": "140502010502C000400000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "byte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Byte-268435455",
+      "kind": "type",
+      "bytes": "140502010502DFFFFFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "byte"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          268435455,
+          0
+        ]
+      }
+    },
+    {
+      "id": "field-Int16",
+      "kind": "field",
+      "bytes": "0606",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "primitive",
+          "name": "short"
+        }
+      }
+    },
+    {
+      "id": "array-Int16",
+      "kind": "type",
+      "bytes": "1D06",
+      "shape": {
+        "kind": "szarray",
+        "element": {
+          "kind": "primitive",
+          "name": "short"
+        }
+      }
+    },
+    {
+      "id": "pointer-Int16",
+      "kind": "type",
+      "bytes": "0F06",
+      "shape": {
+        "kind": "pointer",
+        "element": {
+          "kind": "primitive",
+          "name": "short"
+        }
+      }
+    },
+    {
+      "id": "local-Int16",
+      "kind": "locals",
+      "bytes": "070106",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "primitive",
+            "name": "short"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pinned-Int16",
+      "kind": "locals",
+      "bytes": "0701451006",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "pinned",
+            "element": {
+              "kind": "byref",
+              "element": {
+                "kind": "primitive",
+                "name": "short"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "byref-Int16",
+      "kind": "method",
+      "bytes": "000110061006",
+      "shape": {
+        "kind": "method",
+        "hasThis": false,
+        "returnType": {
+          "kind": "byref",
+          "element": {
+            "kind": "primitive",
+            "name": "short"
+          }
+        },
+        "parameters": [
+          {
+            "kind": "byref",
+            "element": {
+              "kind": "primitive",
+              "name": "short"
+            }
+          }
+        ],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "property-Int16",
+      "kind": "property",
+      "bytes": "28010608",
+      "shape": {
+        "kind": "property",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "short"
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "shape-Int16--268435456",
+      "kind": "type",
+      "bytes": "140602010502C000000100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "short"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -268435456,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int16--8193",
+      "kind": "type",
+      "bytes": "140602010502DFFFBFFF00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "short"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8193,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int16--8192",
+      "kind": "type",
+      "bytes": "140602010502800100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "short"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int16--65",
+      "kind": "type",
+      "bytes": "140602010502BF7F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "short"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -65,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int16--64",
+      "kind": "type",
+      "bytes": "1406020105020100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "short"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int16--1",
+      "kind": "type",
+      "bytes": "1406020105027F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "short"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -1,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int16-0",
+      "kind": "type",
+      "bytes": "1406020105020000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "short"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int16-63",
+      "kind": "type",
+      "bytes": "1406020105027E00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "short"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          63,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int16-64",
+      "kind": "type",
+      "bytes": "140602010502808000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "short"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int16-8191",
+      "kind": "type",
+      "bytes": "140602010502BFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "short"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8191,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int16-8192",
+      "kind": "type",
+      "bytes": "140602010502C000400000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "short"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int16-268435455",
+      "kind": "type",
+      "bytes": "140602010502DFFFFFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "short"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          268435455,
+          0
+        ]
+      }
+    },
+    {
+      "id": "field-UInt16",
+      "kind": "field",
+      "bytes": "0607",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "primitive",
+          "name": "ushort"
+        }
+      }
+    },
+    {
+      "id": "array-UInt16",
+      "kind": "type",
+      "bytes": "1D07",
+      "shape": {
+        "kind": "szarray",
+        "element": {
+          "kind": "primitive",
+          "name": "ushort"
+        }
+      }
+    },
+    {
+      "id": "pointer-UInt16",
+      "kind": "type",
+      "bytes": "0F07",
+      "shape": {
+        "kind": "pointer",
+        "element": {
+          "kind": "primitive",
+          "name": "ushort"
+        }
+      }
+    },
+    {
+      "id": "local-UInt16",
+      "kind": "locals",
+      "bytes": "070107",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "primitive",
+            "name": "ushort"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pinned-UInt16",
+      "kind": "locals",
+      "bytes": "0701451007",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "pinned",
+            "element": {
+              "kind": "byref",
+              "element": {
+                "kind": "primitive",
+                "name": "ushort"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "byref-UInt16",
+      "kind": "method",
+      "bytes": "000110071007",
+      "shape": {
+        "kind": "method",
+        "hasThis": false,
+        "returnType": {
+          "kind": "byref",
+          "element": {
+            "kind": "primitive",
+            "name": "ushort"
+          }
+        },
+        "parameters": [
+          {
+            "kind": "byref",
+            "element": {
+              "kind": "primitive",
+              "name": "ushort"
+            }
+          }
+        ],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "property-UInt16",
+      "kind": "property",
+      "bytes": "28010708",
+      "shape": {
+        "kind": "property",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "ushort"
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt16--268435456",
+      "kind": "type",
+      "bytes": "140702010502C000000100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ushort"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -268435456,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt16--8193",
+      "kind": "type",
+      "bytes": "140702010502DFFFBFFF00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ushort"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8193,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt16--8192",
+      "kind": "type",
+      "bytes": "140702010502800100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ushort"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt16--65",
+      "kind": "type",
+      "bytes": "140702010502BF7F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ushort"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -65,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt16--64",
+      "kind": "type",
+      "bytes": "1407020105020100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ushort"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt16--1",
+      "kind": "type",
+      "bytes": "1407020105027F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ushort"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -1,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt16-0",
+      "kind": "type",
+      "bytes": "1407020105020000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ushort"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt16-63",
+      "kind": "type",
+      "bytes": "1407020105027E00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ushort"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          63,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt16-64",
+      "kind": "type",
+      "bytes": "140702010502808000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ushort"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt16-8191",
+      "kind": "type",
+      "bytes": "140702010502BFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ushort"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8191,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt16-8192",
+      "kind": "type",
+      "bytes": "140702010502C000400000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ushort"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt16-268435455",
+      "kind": "type",
+      "bytes": "140702010502DFFFFFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ushort"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          268435455,
+          0
+        ]
+      }
+    },
+    {
+      "id": "field-Int32",
+      "kind": "field",
+      "bytes": "0608",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "primitive",
+          "name": "int"
+        }
+      }
+    },
+    {
+      "id": "array-Int32",
+      "kind": "type",
+      "bytes": "1D08",
+      "shape": {
+        "kind": "szarray",
+        "element": {
+          "kind": "primitive",
+          "name": "int"
+        }
+      }
+    },
+    {
+      "id": "pointer-Int32",
+      "kind": "type",
+      "bytes": "0F08",
+      "shape": {
+        "kind": "pointer",
+        "element": {
+          "kind": "primitive",
+          "name": "int"
+        }
+      }
+    },
+    {
+      "id": "local-Int32",
+      "kind": "locals",
+      "bytes": "070108",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pinned-Int32",
+      "kind": "locals",
+      "bytes": "0701451008",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "pinned",
+            "element": {
+              "kind": "byref",
+              "element": {
+                "kind": "primitive",
+                "name": "int"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "byref-Int32",
+      "kind": "method",
+      "bytes": "000110081008",
+      "shape": {
+        "kind": "method",
+        "hasThis": false,
+        "returnType": {
+          "kind": "byref",
+          "element": {
+            "kind": "primitive",
+            "name": "int"
+          }
+        },
+        "parameters": [
+          {
+            "kind": "byref",
+            "element": {
+              "kind": "primitive",
+              "name": "int"
+            }
+          }
+        ],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "property-Int32",
+      "kind": "property",
+      "bytes": "28010808",
+      "shape": {
+        "kind": "property",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "int"
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "shape-Int32--268435456",
+      "kind": "type",
+      "bytes": "140802010502C000000100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "int"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -268435456,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int32--8193",
+      "kind": "type",
+      "bytes": "140802010502DFFFBFFF00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "int"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8193,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int32--8192",
+      "kind": "type",
+      "bytes": "140802010502800100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "int"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int32--65",
+      "kind": "type",
+      "bytes": "140802010502BF7F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "int"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -65,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int32--64",
+      "kind": "type",
+      "bytes": "1408020105020100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "int"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int32--1",
+      "kind": "type",
+      "bytes": "1408020105027F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "int"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -1,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int32-0",
+      "kind": "type",
+      "bytes": "1408020105020000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "int"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int32-63",
+      "kind": "type",
+      "bytes": "1408020105027E00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "int"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          63,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int32-64",
+      "kind": "type",
+      "bytes": "140802010502808000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "int"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int32-8191",
+      "kind": "type",
+      "bytes": "140802010502BFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "int"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8191,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int32-8192",
+      "kind": "type",
+      "bytes": "140802010502C000400000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "int"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int32-268435455",
+      "kind": "type",
+      "bytes": "140802010502DFFFFFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "int"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          268435455,
+          0
+        ]
+      }
+    },
+    {
+      "id": "field-UInt32",
+      "kind": "field",
+      "bytes": "0609",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "primitive",
+          "name": "uint"
+        }
+      }
+    },
+    {
+      "id": "array-UInt32",
+      "kind": "type",
+      "bytes": "1D09",
+      "shape": {
+        "kind": "szarray",
+        "element": {
+          "kind": "primitive",
+          "name": "uint"
+        }
+      }
+    },
+    {
+      "id": "pointer-UInt32",
+      "kind": "type",
+      "bytes": "0F09",
+      "shape": {
+        "kind": "pointer",
+        "element": {
+          "kind": "primitive",
+          "name": "uint"
+        }
+      }
+    },
+    {
+      "id": "local-UInt32",
+      "kind": "locals",
+      "bytes": "070109",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "primitive",
+            "name": "uint"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pinned-UInt32",
+      "kind": "locals",
+      "bytes": "0701451009",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "pinned",
+            "element": {
+              "kind": "byref",
+              "element": {
+                "kind": "primitive",
+                "name": "uint"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "byref-UInt32",
+      "kind": "method",
+      "bytes": "000110091009",
+      "shape": {
+        "kind": "method",
+        "hasThis": false,
+        "returnType": {
+          "kind": "byref",
+          "element": {
+            "kind": "primitive",
+            "name": "uint"
+          }
+        },
+        "parameters": [
+          {
+            "kind": "byref",
+            "element": {
+              "kind": "primitive",
+              "name": "uint"
+            }
+          }
+        ],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "property-UInt32",
+      "kind": "property",
+      "bytes": "28010908",
+      "shape": {
+        "kind": "property",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "uint"
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt32--268435456",
+      "kind": "type",
+      "bytes": "140902010502C000000100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "uint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -268435456,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt32--8193",
+      "kind": "type",
+      "bytes": "140902010502DFFFBFFF00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "uint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8193,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt32--8192",
+      "kind": "type",
+      "bytes": "140902010502800100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "uint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt32--65",
+      "kind": "type",
+      "bytes": "140902010502BF7F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "uint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -65,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt32--64",
+      "kind": "type",
+      "bytes": "1409020105020100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "uint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt32--1",
+      "kind": "type",
+      "bytes": "1409020105027F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "uint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -1,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt32-0",
+      "kind": "type",
+      "bytes": "1409020105020000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "uint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt32-63",
+      "kind": "type",
+      "bytes": "1409020105027E00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "uint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          63,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt32-64",
+      "kind": "type",
+      "bytes": "140902010502808000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "uint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt32-8191",
+      "kind": "type",
+      "bytes": "140902010502BFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "uint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8191,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt32-8192",
+      "kind": "type",
+      "bytes": "140902010502C000400000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "uint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt32-268435455",
+      "kind": "type",
+      "bytes": "140902010502DFFFFFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "uint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          268435455,
+          0
+        ]
+      }
+    },
+    {
+      "id": "field-Int64",
+      "kind": "field",
+      "bytes": "060A",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "primitive",
+          "name": "long"
+        }
+      }
+    },
+    {
+      "id": "array-Int64",
+      "kind": "type",
+      "bytes": "1D0A",
+      "shape": {
+        "kind": "szarray",
+        "element": {
+          "kind": "primitive",
+          "name": "long"
+        }
+      }
+    },
+    {
+      "id": "pointer-Int64",
+      "kind": "type",
+      "bytes": "0F0A",
+      "shape": {
+        "kind": "pointer",
+        "element": {
+          "kind": "primitive",
+          "name": "long"
+        }
+      }
+    },
+    {
+      "id": "local-Int64",
+      "kind": "locals",
+      "bytes": "07010A",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "primitive",
+            "name": "long"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pinned-Int64",
+      "kind": "locals",
+      "bytes": "070145100A",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "pinned",
+            "element": {
+              "kind": "byref",
+              "element": {
+                "kind": "primitive",
+                "name": "long"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "byref-Int64",
+      "kind": "method",
+      "bytes": "0001100A100A",
+      "shape": {
+        "kind": "method",
+        "hasThis": false,
+        "returnType": {
+          "kind": "byref",
+          "element": {
+            "kind": "primitive",
+            "name": "long"
+          }
+        },
+        "parameters": [
+          {
+            "kind": "byref",
+            "element": {
+              "kind": "primitive",
+              "name": "long"
+            }
+          }
+        ],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "property-Int64",
+      "kind": "property",
+      "bytes": "28010A08",
+      "shape": {
+        "kind": "property",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "long"
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "shape-Int64--268435456",
+      "kind": "type",
+      "bytes": "140A02010502C000000100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "long"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -268435456,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int64--8193",
+      "kind": "type",
+      "bytes": "140A02010502DFFFBFFF00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "long"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8193,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int64--8192",
+      "kind": "type",
+      "bytes": "140A02010502800100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "long"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int64--65",
+      "kind": "type",
+      "bytes": "140A02010502BF7F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "long"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -65,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int64--64",
+      "kind": "type",
+      "bytes": "140A020105020100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "long"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int64--1",
+      "kind": "type",
+      "bytes": "140A020105027F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "long"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -1,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int64-0",
+      "kind": "type",
+      "bytes": "140A020105020000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "long"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int64-63",
+      "kind": "type",
+      "bytes": "140A020105027E00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "long"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          63,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int64-64",
+      "kind": "type",
+      "bytes": "140A02010502808000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "long"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int64-8191",
+      "kind": "type",
+      "bytes": "140A02010502BFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "long"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8191,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int64-8192",
+      "kind": "type",
+      "bytes": "140A02010502C000400000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "long"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Int64-268435455",
+      "kind": "type",
+      "bytes": "140A02010502DFFFFFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "long"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          268435455,
+          0
+        ]
+      }
+    },
+    {
+      "id": "field-UInt64",
+      "kind": "field",
+      "bytes": "060B",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "primitive",
+          "name": "ulong"
+        }
+      }
+    },
+    {
+      "id": "array-UInt64",
+      "kind": "type",
+      "bytes": "1D0B",
+      "shape": {
+        "kind": "szarray",
+        "element": {
+          "kind": "primitive",
+          "name": "ulong"
+        }
+      }
+    },
+    {
+      "id": "pointer-UInt64",
+      "kind": "type",
+      "bytes": "0F0B",
+      "shape": {
+        "kind": "pointer",
+        "element": {
+          "kind": "primitive",
+          "name": "ulong"
+        }
+      }
+    },
+    {
+      "id": "local-UInt64",
+      "kind": "locals",
+      "bytes": "07010B",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "primitive",
+            "name": "ulong"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pinned-UInt64",
+      "kind": "locals",
+      "bytes": "070145100B",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "pinned",
+            "element": {
+              "kind": "byref",
+              "element": {
+                "kind": "primitive",
+                "name": "ulong"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "byref-UInt64",
+      "kind": "method",
+      "bytes": "0001100B100B",
+      "shape": {
+        "kind": "method",
+        "hasThis": false,
+        "returnType": {
+          "kind": "byref",
+          "element": {
+            "kind": "primitive",
+            "name": "ulong"
+          }
+        },
+        "parameters": [
+          {
+            "kind": "byref",
+            "element": {
+              "kind": "primitive",
+              "name": "ulong"
+            }
+          }
+        ],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "property-UInt64",
+      "kind": "property",
+      "bytes": "28010B08",
+      "shape": {
+        "kind": "property",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "ulong"
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt64--268435456",
+      "kind": "type",
+      "bytes": "140B02010502C000000100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ulong"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -268435456,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt64--8193",
+      "kind": "type",
+      "bytes": "140B02010502DFFFBFFF00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ulong"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8193,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt64--8192",
+      "kind": "type",
+      "bytes": "140B02010502800100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ulong"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt64--65",
+      "kind": "type",
+      "bytes": "140B02010502BF7F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ulong"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -65,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt64--64",
+      "kind": "type",
+      "bytes": "140B020105020100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ulong"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt64--1",
+      "kind": "type",
+      "bytes": "140B020105027F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ulong"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -1,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt64-0",
+      "kind": "type",
+      "bytes": "140B020105020000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ulong"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt64-63",
+      "kind": "type",
+      "bytes": "140B020105027E00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ulong"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          63,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt64-64",
+      "kind": "type",
+      "bytes": "140B02010502808000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ulong"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt64-8191",
+      "kind": "type",
+      "bytes": "140B02010502BFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ulong"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8191,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt64-8192",
+      "kind": "type",
+      "bytes": "140B02010502C000400000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ulong"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UInt64-268435455",
+      "kind": "type",
+      "bytes": "140B02010502DFFFFFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "ulong"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          268435455,
+          0
+        ]
+      }
+    },
+    {
+      "id": "field-Single",
+      "kind": "field",
+      "bytes": "060C",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "primitive",
+          "name": "float"
+        }
+      }
+    },
+    {
+      "id": "array-Single",
+      "kind": "type",
+      "bytes": "1D0C",
+      "shape": {
+        "kind": "szarray",
+        "element": {
+          "kind": "primitive",
+          "name": "float"
+        }
+      }
+    },
+    {
+      "id": "pointer-Single",
+      "kind": "type",
+      "bytes": "0F0C",
+      "shape": {
+        "kind": "pointer",
+        "element": {
+          "kind": "primitive",
+          "name": "float"
+        }
+      }
+    },
+    {
+      "id": "local-Single",
+      "kind": "locals",
+      "bytes": "07010C",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "primitive",
+            "name": "float"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pinned-Single",
+      "kind": "locals",
+      "bytes": "070145100C",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "pinned",
+            "element": {
+              "kind": "byref",
+              "element": {
+                "kind": "primitive",
+                "name": "float"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "byref-Single",
+      "kind": "method",
+      "bytes": "0001100C100C",
+      "shape": {
+        "kind": "method",
+        "hasThis": false,
+        "returnType": {
+          "kind": "byref",
+          "element": {
+            "kind": "primitive",
+            "name": "float"
+          }
+        },
+        "parameters": [
+          {
+            "kind": "byref",
+            "element": {
+              "kind": "primitive",
+              "name": "float"
+            }
+          }
+        ],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "property-Single",
+      "kind": "property",
+      "bytes": "28010C08",
+      "shape": {
+        "kind": "property",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "float"
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "shape-Single--268435456",
+      "kind": "type",
+      "bytes": "140C02010502C000000100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "float"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -268435456,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Single--8193",
+      "kind": "type",
+      "bytes": "140C02010502DFFFBFFF00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "float"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8193,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Single--8192",
+      "kind": "type",
+      "bytes": "140C02010502800100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "float"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Single--65",
+      "kind": "type",
+      "bytes": "140C02010502BF7F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "float"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -65,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Single--64",
+      "kind": "type",
+      "bytes": "140C020105020100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "float"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Single--1",
+      "kind": "type",
+      "bytes": "140C020105027F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "float"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -1,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Single-0",
+      "kind": "type",
+      "bytes": "140C020105020000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "float"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Single-63",
+      "kind": "type",
+      "bytes": "140C020105027E00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "float"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          63,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Single-64",
+      "kind": "type",
+      "bytes": "140C02010502808000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "float"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Single-8191",
+      "kind": "type",
+      "bytes": "140C02010502BFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "float"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8191,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Single-8192",
+      "kind": "type",
+      "bytes": "140C02010502C000400000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "float"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Single-268435455",
+      "kind": "type",
+      "bytes": "140C02010502DFFFFFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "float"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          268435455,
+          0
+        ]
+      }
+    },
+    {
+      "id": "field-Double",
+      "kind": "field",
+      "bytes": "060D",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "primitive",
+          "name": "double"
+        }
+      }
+    },
+    {
+      "id": "array-Double",
+      "kind": "type",
+      "bytes": "1D0D",
+      "shape": {
+        "kind": "szarray",
+        "element": {
+          "kind": "primitive",
+          "name": "double"
+        }
+      }
+    },
+    {
+      "id": "pointer-Double",
+      "kind": "type",
+      "bytes": "0F0D",
+      "shape": {
+        "kind": "pointer",
+        "element": {
+          "kind": "primitive",
+          "name": "double"
+        }
+      }
+    },
+    {
+      "id": "local-Double",
+      "kind": "locals",
+      "bytes": "07010D",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "primitive",
+            "name": "double"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pinned-Double",
+      "kind": "locals",
+      "bytes": "070145100D",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "pinned",
+            "element": {
+              "kind": "byref",
+              "element": {
+                "kind": "primitive",
+                "name": "double"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "byref-Double",
+      "kind": "method",
+      "bytes": "0001100D100D",
+      "shape": {
+        "kind": "method",
+        "hasThis": false,
+        "returnType": {
+          "kind": "byref",
+          "element": {
+            "kind": "primitive",
+            "name": "double"
+          }
+        },
+        "parameters": [
+          {
+            "kind": "byref",
+            "element": {
+              "kind": "primitive",
+              "name": "double"
+            }
+          }
+        ],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "property-Double",
+      "kind": "property",
+      "bytes": "28010D08",
+      "shape": {
+        "kind": "property",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "double"
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "shape-Double--268435456",
+      "kind": "type",
+      "bytes": "140D02010502C000000100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "double"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -268435456,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Double--8193",
+      "kind": "type",
+      "bytes": "140D02010502DFFFBFFF00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "double"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8193,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Double--8192",
+      "kind": "type",
+      "bytes": "140D02010502800100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "double"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Double--65",
+      "kind": "type",
+      "bytes": "140D02010502BF7F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "double"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -65,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Double--64",
+      "kind": "type",
+      "bytes": "140D020105020100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "double"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Double--1",
+      "kind": "type",
+      "bytes": "140D020105027F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "double"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -1,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Double-0",
+      "kind": "type",
+      "bytes": "140D020105020000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "double"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Double-63",
+      "kind": "type",
+      "bytes": "140D020105027E00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "double"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          63,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Double-64",
+      "kind": "type",
+      "bytes": "140D02010502808000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "double"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Double-8191",
+      "kind": "type",
+      "bytes": "140D02010502BFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "double"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8191,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Double-8192",
+      "kind": "type",
+      "bytes": "140D02010502C000400000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "double"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Double-268435455",
+      "kind": "type",
+      "bytes": "140D02010502DFFFFFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "double"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          268435455,
+          0
+        ]
+      }
+    },
+    {
+      "id": "field-String",
+      "kind": "field",
+      "bytes": "060E",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "primitive",
+          "name": "string"
+        }
+      }
+    },
+    {
+      "id": "array-String",
+      "kind": "type",
+      "bytes": "1D0E",
+      "shape": {
+        "kind": "szarray",
+        "element": {
+          "kind": "primitive",
+          "name": "string"
+        }
+      }
+    },
+    {
+      "id": "pointer-String",
+      "kind": "type",
+      "bytes": "0F0E",
+      "shape": {
+        "kind": "pointer",
+        "element": {
+          "kind": "primitive",
+          "name": "string"
+        }
+      }
+    },
+    {
+      "id": "local-String",
+      "kind": "locals",
+      "bytes": "07010E",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "primitive",
+            "name": "string"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pinned-String",
+      "kind": "locals",
+      "bytes": "070145100E",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "pinned",
+            "element": {
+              "kind": "byref",
+              "element": {
+                "kind": "primitive",
+                "name": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "byref-String",
+      "kind": "method",
+      "bytes": "0001100E100E",
+      "shape": {
+        "kind": "method",
+        "hasThis": false,
+        "returnType": {
+          "kind": "byref",
+          "element": {
+            "kind": "primitive",
+            "name": "string"
+          }
+        },
+        "parameters": [
+          {
+            "kind": "byref",
+            "element": {
+              "kind": "primitive",
+              "name": "string"
+            }
+          }
+        ],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "property-String",
+      "kind": "property",
+      "bytes": "28010E08",
+      "shape": {
+        "kind": "property",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "string"
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "shape-String--268435456",
+      "kind": "type",
+      "bytes": "140E02010502C000000100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "string"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -268435456,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-String--8193",
+      "kind": "type",
+      "bytes": "140E02010502DFFFBFFF00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "string"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8193,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-String--8192",
+      "kind": "type",
+      "bytes": "140E02010502800100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "string"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-String--65",
+      "kind": "type",
+      "bytes": "140E02010502BF7F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "string"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -65,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-String--64",
+      "kind": "type",
+      "bytes": "140E020105020100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "string"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-String--1",
+      "kind": "type",
+      "bytes": "140E020105027F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "string"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -1,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-String-0",
+      "kind": "type",
+      "bytes": "140E020105020000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "string"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-String-63",
+      "kind": "type",
+      "bytes": "140E020105027E00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "string"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          63,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-String-64",
+      "kind": "type",
+      "bytes": "140E02010502808000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "string"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-String-8191",
+      "kind": "type",
+      "bytes": "140E02010502BFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "string"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8191,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-String-8192",
+      "kind": "type",
+      "bytes": "140E02010502C000400000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "string"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-String-268435455",
+      "kind": "type",
+      "bytes": "140E02010502DFFFFFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "string"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          268435455,
+          0
+        ]
+      }
+    },
+    {
+      "id": "field-Object",
+      "kind": "field",
+      "bytes": "061C",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "primitive",
+          "name": "object"
+        }
+      }
+    },
+    {
+      "id": "array-Object",
+      "kind": "type",
+      "bytes": "1D1C",
+      "shape": {
+        "kind": "szarray",
+        "element": {
+          "kind": "primitive",
+          "name": "object"
+        }
+      }
+    },
+    {
+      "id": "pointer-Object",
+      "kind": "type",
+      "bytes": "0F1C",
+      "shape": {
+        "kind": "pointer",
+        "element": {
+          "kind": "primitive",
+          "name": "object"
+        }
+      }
+    },
+    {
+      "id": "local-Object",
+      "kind": "locals",
+      "bytes": "07011C",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "primitive",
+            "name": "object"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pinned-Object",
+      "kind": "locals",
+      "bytes": "070145101C",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "pinned",
+            "element": {
+              "kind": "byref",
+              "element": {
+                "kind": "primitive",
+                "name": "object"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "byref-Object",
+      "kind": "method",
+      "bytes": "0001101C101C",
+      "shape": {
+        "kind": "method",
+        "hasThis": false,
+        "returnType": {
+          "kind": "byref",
+          "element": {
+            "kind": "primitive",
+            "name": "object"
+          }
+        },
+        "parameters": [
+          {
+            "kind": "byref",
+            "element": {
+              "kind": "primitive",
+              "name": "object"
+            }
+          }
+        ],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "property-Object",
+      "kind": "property",
+      "bytes": "28011C08",
+      "shape": {
+        "kind": "property",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "object"
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "shape-Object--268435456",
+      "kind": "type",
+      "bytes": "141C02010502C000000100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "object"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -268435456,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Object--8193",
+      "kind": "type",
+      "bytes": "141C02010502DFFFBFFF00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "object"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8193,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Object--8192",
+      "kind": "type",
+      "bytes": "141C02010502800100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "object"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Object--65",
+      "kind": "type",
+      "bytes": "141C02010502BF7F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "object"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -65,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Object--64",
+      "kind": "type",
+      "bytes": "141C020105020100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "object"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Object--1",
+      "kind": "type",
+      "bytes": "141C020105027F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "object"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -1,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Object-0",
+      "kind": "type",
+      "bytes": "141C020105020000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "object"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Object-63",
+      "kind": "type",
+      "bytes": "141C020105027E00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "object"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          63,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Object-64",
+      "kind": "type",
+      "bytes": "141C02010502808000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "object"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Object-8191",
+      "kind": "type",
+      "bytes": "141C02010502BFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "object"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8191,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Object-8192",
+      "kind": "type",
+      "bytes": "141C02010502C000400000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "object"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-Object-268435455",
+      "kind": "type",
+      "bytes": "141C02010502DFFFFFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "object"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          268435455,
+          0
+        ]
+      }
+    },
+    {
+      "id": "field-IntPtr",
+      "kind": "field",
+      "bytes": "0618",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "primitive",
+          "name": "nint"
+        }
+      }
+    },
+    {
+      "id": "array-IntPtr",
+      "kind": "type",
+      "bytes": "1D18",
+      "shape": {
+        "kind": "szarray",
+        "element": {
+          "kind": "primitive",
+          "name": "nint"
+        }
+      }
+    },
+    {
+      "id": "pointer-IntPtr",
+      "kind": "type",
+      "bytes": "0F18",
+      "shape": {
+        "kind": "pointer",
+        "element": {
+          "kind": "primitive",
+          "name": "nint"
+        }
+      }
+    },
+    {
+      "id": "local-IntPtr",
+      "kind": "locals",
+      "bytes": "070118",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "primitive",
+            "name": "nint"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pinned-IntPtr",
+      "kind": "locals",
+      "bytes": "0701451018",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "pinned",
+            "element": {
+              "kind": "byref",
+              "element": {
+                "kind": "primitive",
+                "name": "nint"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "byref-IntPtr",
+      "kind": "method",
+      "bytes": "000110181018",
+      "shape": {
+        "kind": "method",
+        "hasThis": false,
+        "returnType": {
+          "kind": "byref",
+          "element": {
+            "kind": "primitive",
+            "name": "nint"
+          }
+        },
+        "parameters": [
+          {
+            "kind": "byref",
+            "element": {
+              "kind": "primitive",
+              "name": "nint"
+            }
+          }
+        ],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "property-IntPtr",
+      "kind": "property",
+      "bytes": "28011808",
+      "shape": {
+        "kind": "property",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "nint"
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "shape-IntPtr--268435456",
+      "kind": "type",
+      "bytes": "141802010502C000000100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -268435456,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-IntPtr--8193",
+      "kind": "type",
+      "bytes": "141802010502DFFFBFFF00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8193,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-IntPtr--8192",
+      "kind": "type",
+      "bytes": "141802010502800100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-IntPtr--65",
+      "kind": "type",
+      "bytes": "141802010502BF7F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -65,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-IntPtr--64",
+      "kind": "type",
+      "bytes": "1418020105020100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-IntPtr--1",
+      "kind": "type",
+      "bytes": "1418020105027F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -1,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-IntPtr-0",
+      "kind": "type",
+      "bytes": "1418020105020000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-IntPtr-63",
+      "kind": "type",
+      "bytes": "1418020105027E00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          63,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-IntPtr-64",
+      "kind": "type",
+      "bytes": "141802010502808000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-IntPtr-8191",
+      "kind": "type",
+      "bytes": "141802010502BFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8191,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-IntPtr-8192",
+      "kind": "type",
+      "bytes": "141802010502C000400000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-IntPtr-268435455",
+      "kind": "type",
+      "bytes": "141802010502DFFFFFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          268435455,
+          0
+        ]
+      }
+    },
+    {
+      "id": "field-UIntPtr",
+      "kind": "field",
+      "bytes": "0619",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "primitive",
+          "name": "nuint"
+        }
+      }
+    },
+    {
+      "id": "array-UIntPtr",
+      "kind": "type",
+      "bytes": "1D19",
+      "shape": {
+        "kind": "szarray",
+        "element": {
+          "kind": "primitive",
+          "name": "nuint"
+        }
+      }
+    },
+    {
+      "id": "pointer-UIntPtr",
+      "kind": "type",
+      "bytes": "0F19",
+      "shape": {
+        "kind": "pointer",
+        "element": {
+          "kind": "primitive",
+          "name": "nuint"
+        }
+      }
+    },
+    {
+      "id": "local-UIntPtr",
+      "kind": "locals",
+      "bytes": "070119",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "primitive",
+            "name": "nuint"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pinned-UIntPtr",
+      "kind": "locals",
+      "bytes": "0701451019",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "pinned",
+            "element": {
+              "kind": "byref",
+              "element": {
+                "kind": "primitive",
+                "name": "nuint"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "byref-UIntPtr",
+      "kind": "method",
+      "bytes": "000110191019",
+      "shape": {
+        "kind": "method",
+        "hasThis": false,
+        "returnType": {
+          "kind": "byref",
+          "element": {
+            "kind": "primitive",
+            "name": "nuint"
+          }
+        },
+        "parameters": [
+          {
+            "kind": "byref",
+            "element": {
+              "kind": "primitive",
+              "name": "nuint"
+            }
+          }
+        ],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "property-UIntPtr",
+      "kind": "property",
+      "bytes": "28011908",
+      "shape": {
+        "kind": "property",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "nuint"
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "shape-UIntPtr--268435456",
+      "kind": "type",
+      "bytes": "141902010502C000000100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nuint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -268435456,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UIntPtr--8193",
+      "kind": "type",
+      "bytes": "141902010502DFFFBFFF00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nuint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8193,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UIntPtr--8192",
+      "kind": "type",
+      "bytes": "141902010502800100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nuint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UIntPtr--65",
+      "kind": "type",
+      "bytes": "141902010502BF7F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nuint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -65,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UIntPtr--64",
+      "kind": "type",
+      "bytes": "1419020105020100",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nuint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UIntPtr--1",
+      "kind": "type",
+      "bytes": "1419020105027F00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nuint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          -1,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UIntPtr-0",
+      "kind": "type",
+      "bytes": "1419020105020000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nuint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UIntPtr-63",
+      "kind": "type",
+      "bytes": "1419020105027E00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nuint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          63,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UIntPtr-64",
+      "kind": "type",
+      "bytes": "141902010502808000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nuint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          64,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UIntPtr-8191",
+      "kind": "type",
+      "bytes": "141902010502BFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nuint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8191,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UIntPtr-8192",
+      "kind": "type",
+      "bytes": "141902010502C000400000",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nuint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          8192,
+          0
+        ]
+      }
+    },
+    {
+      "id": "shape-UIntPtr-268435455",
+      "kind": "type",
+      "bytes": "141902010502DFFFFFFE00",
+      "shape": {
+        "kind": "array",
+        "element": {
+          "kind": "primitive",
+          "name": "nuint"
+        },
+        "rank": 2,
+        "sizes": [
+          5
+        ],
+        "lowerBounds": [
+          268435455,
+          0
+        ]
+      }
+    },
+    {
+      "id": "named-False",
+      "kind": "type",
+      "bytes": "1205",
+      "shape": {
+        "kind": "class",
+        "token": 16777217
+      }
+    },
+    {
+      "id": "generic-False",
+      "kind": "type",
+      "bytes": "151205020E1512090108",
+      "shape": {
+        "kind": "genericInstance",
+        "type": {
+          "kind": "class",
+          "token": 16777217
+        },
+        "arguments": [
+          {
+            "kind": "primitive",
+            "name": "string"
+          },
+          {
+            "kind": "genericInstance",
+            "type": {
+              "kind": "class",
+              "token": 16777218
+            },
+            "arguments": [
+              {
+                "kind": "primitive",
+                "name": "int"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "named-True",
+      "kind": "type",
+      "bytes": "1105",
+      "shape": {
+        "kind": "valuetype",
+        "token": 16777217
+      }
+    },
+    {
+      "id": "generic-True",
+      "kind": "type",
+      "bytes": "151105020E1512090108",
+      "shape": {
+        "kind": "genericInstance",
+        "type": {
+          "kind": "valuetype",
+          "token": 16777217
+        },
+        "arguments": [
+          {
+            "kind": "primitive",
+            "name": "string"
+          },
+          {
+            "kind": "genericInstance",
+            "type": {
+              "kind": "class",
+              "token": 16777218
+            },
+            "arguments": [
+              {
+                "kind": "primitive",
+                "name": "int"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "fnptr-Default",
+      "kind": "type",
+      "bytes": "1B00010108",
+      "shape": {
+        "kind": "functionPointer",
+        "signature": {
+          "kind": "method",
+          "hasThis": false,
+          "returnType": {
+            "kind": "primitive",
+            "name": "void"
+          },
+          "parameters": [
+            {
+              "kind": "primitive",
+              "name": "int"
+            }
+          ],
+          "callingConvention": 0,
+          "explicitThis": false,
+          "genericArity": 0,
+          "sentinel": -1
+        }
+      }
+    },
+    {
+      "id": "fnptr-CDecl",
+      "kind": "type",
+      "bytes": "1B01010108",
+      "shape": {
+        "kind": "functionPointer",
+        "signature": {
+          "kind": "method",
+          "hasThis": false,
+          "returnType": {
+            "kind": "primitive",
+            "name": "void"
+          },
+          "parameters": [
+            {
+              "kind": "primitive",
+              "name": "int"
+            }
+          ],
+          "callingConvention": 1,
+          "explicitThis": false,
+          "genericArity": 0,
+          "sentinel": -1
+        }
+      }
+    },
+    {
+      "id": "fnptr-StdCall",
+      "kind": "type",
+      "bytes": "1B02010108",
+      "shape": {
+        "kind": "functionPointer",
+        "signature": {
+          "kind": "method",
+          "hasThis": false,
+          "returnType": {
+            "kind": "primitive",
+            "name": "void"
+          },
+          "parameters": [
+            {
+              "kind": "primitive",
+              "name": "int"
+            }
+          ],
+          "callingConvention": 2,
+          "explicitThis": false,
+          "genericArity": 0,
+          "sentinel": -1
+        }
+      }
+    },
+    {
+      "id": "fnptr-ThisCall",
+      "kind": "type",
+      "bytes": "1B03010108",
+      "shape": {
+        "kind": "functionPointer",
+        "signature": {
+          "kind": "method",
+          "hasThis": false,
+          "returnType": {
+            "kind": "primitive",
+            "name": "void"
+          },
+          "parameters": [
+            {
+              "kind": "primitive",
+              "name": "int"
+            }
+          ],
+          "callingConvention": 3,
+          "explicitThis": false,
+          "genericArity": 0,
+          "sentinel": -1
+        }
+      }
+    },
+    {
+      "id": "fnptr-FastCall",
+      "kind": "type",
+      "bytes": "1B04010108",
+      "shape": {
+        "kind": "functionPointer",
+        "signature": {
+          "kind": "method",
+          "hasThis": false,
+          "returnType": {
+            "kind": "primitive",
+            "name": "void"
+          },
+          "parameters": [
+            {
+              "kind": "primitive",
+              "name": "int"
+            }
+          ],
+          "callingConvention": 4,
+          "explicitThis": false,
+          "genericArity": 0,
+          "sentinel": -1
+        }
+      }
+    },
+    {
+      "id": "fnptr-VarArgs",
+      "kind": "type",
+      "bytes": "1B05010108",
+      "shape": {
+        "kind": "functionPointer",
+        "signature": {
+          "kind": "method",
+          "hasThis": false,
+          "returnType": {
+            "kind": "primitive",
+            "name": "void"
+          },
+          "parameters": [
+            {
+              "kind": "primitive",
+              "name": "int"
+            }
+          ],
+          "callingConvention": 5,
+          "explicitThis": false,
+          "genericArity": 0,
+          "sentinel": -1
+        }
+      }
+    },
+    {
+      "id": "fnptr-Unmanaged",
+      "kind": "type",
+      "bytes": "1B09010108",
+      "shape": {
+        "kind": "functionPointer",
+        "signature": {
+          "kind": "method",
+          "hasThis": false,
+          "returnType": {
+            "kind": "primitive",
+            "name": "void"
+          },
+          "parameters": [
+            {
+              "kind": "primitive",
+              "name": "int"
+            }
+          ],
+          "callingConvention": 9,
+          "explicitThis": false,
+          "genericArity": 0,
+          "sentinel": -1
+        }
+      }
+    },
+    {
+      "id": "explicit-this",
+      "kind": "type",
+      "bytes": "1B600001",
+      "shape": {
+        "kind": "functionPointer",
+        "signature": {
+          "kind": "method",
+          "hasThis": true,
+          "returnType": {
+            "kind": "primitive",
+            "name": "void"
+          },
+          "parameters": [],
+          "callingConvention": 0,
+          "explicitThis": true,
+          "genericArity": 0,
+          "sentinel": -1
+        }
+      }
+    },
+    {
+      "id": "vararg-sentinel",
+      "kind": "method",
+      "bytes": "05020108410E",
+      "shape": {
+        "kind": "method",
+        "hasThis": false,
+        "returnType": {
+          "kind": "primitive",
+          "name": "void"
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          },
+          {
+            "kind": "primitive",
+            "name": "string"
+          }
+        ],
+        "callingConvention": 5,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": 1
+      }
+    },
+    {
+      "id": "generic-method",
+      "kind": "method",
+      "bytes": "1002011E011300",
+      "shape": {
+        "kind": "method",
+        "hasThis": false,
+        "returnType": {
+          "kind": "genericParameter",
+          "scope": "method",
+          "index": 1
+        },
+        "parameters": [
+          {
+            "kind": "genericParameter",
+            "scope": "type",
+            "index": 0
+          }
+        ],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 2,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "method-spec",
+      "kind": "methodSpec",
+      "bytes": "0A02081300",
+      "shape": {
+        "kind": "methodSpec",
+        "arguments": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          },
+          {
+            "kind": "genericParameter",
+            "scope": "type",
+            "index": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "modifiers",
+      "kind": "field",
+      "bytes": "061F05200908",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "modreq",
+          "token": 16777217,
+          "element": {
+            "kind": "modopt",
+            "token": 16777218,
+            "element": {
+              "kind": "primitive",
+              "name": "int"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "typedref-local",
+      "kind": "locals",
+      "bytes": "070116",
+      "shape": {
+        "kind": "locals",
+        "types": [
+          {
+            "kind": "primitive",
+            "name": "typedref"
+          }
+        ]
+      }
+    },
+    {
+      "id": "void-pointer",
+      "kind": "type",
+      "bytes": "0F01",
+      "shape": {
+        "kind": "pointer",
+        "element": {
+          "kind": "primitive",
+          "name": "void"
+        }
+      }
+    },
+    {
+      "id": "roslyn-field-Volatile",
+      "kind": "field",
+      "bytes": "061F816108",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "modreq",
+          "token": 16777304,
+          "element": {
+            "kind": "primitive",
+            "name": "int"
+          }
+        }
+      }
+    },
+    {
+      "id": "roslyn-field-Nested",
+      "kind": "field",
+      "bytes": "06151279020E15126D0108",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "genericInstance",
+          "type": {
+            "kind": "class",
+            "token": 16777246
+          },
+          "arguments": [
+            {
+              "kind": "primitive",
+              "name": "string"
+            },
+            {
+              "kind": "genericInstance",
+              "type": {
+                "kind": "class",
+                "token": 16777243
+              },
+              "arguments": [
+                {
+                  "kind": "primitive",
+                  "name": "int"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "roslyn-field-Nullable",
+      "kind": "field",
+      "bytes": "06151181650108",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "genericInstance",
+          "type": {
+            "kind": "valuetype",
+            "token": 16777305
+          },
+          "arguments": [
+            {
+              "kind": "primitive",
+              "name": "int"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "roslyn-field-Function",
+      "kind": "field",
+      "bytes": "061B01010108",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "functionPointer",
+          "signature": {
+            "kind": "method",
+            "hasThis": false,
+            "returnType": {
+              "kind": "primitive",
+              "name": "void"
+            },
+            "parameters": [
+              {
+                "kind": "primitive",
+                "name": "int"
+              }
+            ],
+            "callingConvention": 1,
+            "explicitThis": false,
+            "genericArity": 0,
+            "sentinel": -1
+          }
+        }
+      }
+    },
+    {
+      "id": "roslyn-field-Matrix",
+      "kind": "field",
+      "bytes": "0614080200020000",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "array",
+          "element": {
+            "kind": "primitive",
+            "name": "int"
+          },
+          "rank": 2,
+          "sizes": [],
+          "lowerBounds": [
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "roslyn-field-\u003CInit\u003Ek__BackingField",
+      "kind": "field",
+      "bytes": "0608",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "primitive",
+          "name": "int"
+        }
+      }
+    },
+    {
+      "id": "roslyn-field-backing",
+      "kind": "field",
+      "bytes": "0608",
+      "shape": {
+        "kind": "field",
+        "type": {
+          "kind": "primitive",
+          "name": "int"
+        }
+      }
+    },
+    {
+      "id": "roslyn-method-get_Init",
+      "kind": "method",
+      "bytes": "200008",
+      "shape": {
+        "kind": "method",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "int"
+        },
+        "parameters": [],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "roslyn-method-set_Init",
+      "kind": "method",
+      "bytes": "20011F81690108",
+      "shape": {
+        "kind": "method",
+        "hasThis": true,
+        "returnType": {
+          "kind": "modreq",
+          "token": 16777306,
+          "element": {
+            "kind": "primitive",
+            "name": "void"
+          }
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "roslyn-method-get_Readonly",
+      "kind": "method",
+      "bytes": "20001F81711008",
+      "shape": {
+        "kind": "method",
+        "hasThis": true,
+        "returnType": {
+          "kind": "modreq",
+          "token": 16777308,
+          "element": {
+            "kind": "byref",
+            "element": {
+              "kind": "primitive",
+              "name": "int"
+            }
+          }
+        },
+        "parameters": [],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "roslyn-method-get_Item",
+      "kind": "method",
+      "bytes": "20010808",
+      "shape": {
+        "kind": "method",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "int"
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "roslyn-method-Generic",
+      "kind": "method",
+      "bytes": "3001021E0013001E00",
+      "shape": {
+        "kind": "method",
+        "hasThis": true,
+        "returnType": {
+          "kind": "genericParameter",
+          "scope": "method",
+          "index": 0
+        },
+        "parameters": [
+          {
+            "kind": "genericParameter",
+            "scope": "type",
+            "index": 0
+          },
+          {
+            "kind": "genericParameter",
+            "scope": "method",
+            "index": 0
+          }
+        ],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 1,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "roslyn-method-.ctor",
+      "kind": "method",
+      "bytes": "200001",
+      "shape": {
+        "kind": "method",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "void"
+        },
+        "parameters": [],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "roslyn-property-Init",
+      "kind": "property",
+      "bytes": "280008",
+      "shape": {
+        "kind": "property",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "int"
+        },
+        "parameters": []
+      }
+    },
+    {
+      "id": "roslyn-property-Readonly",
+      "kind": "property",
+      "bytes": "28001F81711008",
+      "shape": {
+        "kind": "property",
+        "hasThis": true,
+        "returnType": {
+          "kind": "modreq",
+          "token": 16777308,
+          "element": {
+            "kind": "byref",
+            "element": {
+              "kind": "primitive",
+              "name": "int"
+            }
+          }
+        },
+        "parameters": []
+      }
+    },
+    {
+      "id": "roslyn-property-Item",
+      "kind": "property",
+      "bytes": "28010808",
+      "shape": {
+        "kind": "property",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "int"
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ]
+      }
+    },
+    {
+      "id": "roslyn-method-Vararg",
+      "kind": "method",
+      "bytes": "25010108",
+      "shape": {
+        "kind": "method",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "void"
+        },
+        "parameters": [
+          {
+            "kind": "primitive",
+            "name": "int"
+          }
+        ],
+        "callingConvention": 5,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    },
+    {
+      "id": "roslyn-method-.ctor",
+      "kind": "method",
+      "bytes": "200001",
+      "shape": {
+        "kind": "method",
+        "hasThis": true,
+        "returnType": {
+          "kind": "primitive",
+          "name": "void"
+        },
+        "parameters": [],
+        "callingConvention": 0,
+        "explicitThis": false,
+        "genericArity": 0,
+        "sentinel": -1
+      }
+    }
+  ]
+}
