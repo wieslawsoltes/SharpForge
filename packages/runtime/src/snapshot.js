@@ -15,12 +15,6 @@ export function copyExecution(value, memo = new Map()) {
     for (const item of value) copy.add(copyExecution(item, memo));
     return copy;
   }
-  if (Object.isFrozen(value)) return value;
-  if (value instanceof ManagedFault) {
-    const copy = new ManagedFault(value.name, value.message, value.reference); memo.set(value, copy);
-    for (const key of Object.keys(value)) copy[key] = copyExecution(value[key], memo);
-    return copy;
-  }
   if (value instanceof ArrayBuffer) {
     const copy = value.slice(0); memo.set(value, copy); return copy;
   }
@@ -30,6 +24,12 @@ export function copyExecution(value, memo = new Map()) {
       ? new DataView(buffer, value.byteOffset, value.byteLength)
       : new value.constructor(buffer, value.byteOffset, value.length);
     memo.set(value, copy); return copy;
+  }
+  if (Object.isFrozen(value)) return value;
+  if (value instanceof ManagedFault) {
+    const copy = new ManagedFault(value.name, value.message, value.reference); memo.set(value, copy);
+    for (const key of Object.keys(value)) copy[key] = copyExecution(value[key], memo);
+    return copy;
   }
   const copy = Array.isArray(value) ? [] : {}; memo.set(value, copy);
   for (const [key, item] of Object.entries(value)) copy[key] = copyExecution(item, memo);
@@ -62,6 +62,7 @@ const exclusions = {
   onOutput: 'Host callback, retained across restore.',
   onException: 'Debugger callback, retained across restore.',
   onWrite: 'Debugger callback, retained across restore.',
+  notifyWrite: 'Designer transaction callback override, retained across restore.',
   symbols: 'Debug metadata belongs to the current code generation.'
 };
 const schema = (engine, fields, excluded) => Object.freeze({

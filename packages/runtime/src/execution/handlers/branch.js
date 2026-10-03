@@ -22,4 +22,4 @@ for(const suffix of ['', '.s']) {
     });
   }
 }
-export default handlers;
+export {handlers};

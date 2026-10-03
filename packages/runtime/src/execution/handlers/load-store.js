@@ -31,4 +31,4 @@ for(const arg of [false,true]) {
     }
   }
 }
-export default handlers;
+export {handlers};
