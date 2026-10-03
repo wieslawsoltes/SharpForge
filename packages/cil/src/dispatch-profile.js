@@ -1,3 +1,4 @@
+import {indexDispatchTable, declarationSlot} from './vtable-profile.js';
 import {CilError} from './binary.js';
 import {decodeCoded,token} from './metadata.js';
 import {genericTypeParts} from './field-profile.js';
@@ -40,7 +41,7 @@ export class CilDispatchTable {
         const signature=instantiateSignature(method.signature,context.arguments),slot='external:'+name+'::'+method.name+'::'+signatureKey(signature);
         table.declarations.set(slot,{token:method.token,name:method.name,owner:name,slot,signature,external:true});
       }
-      this.tables.set(name,table);return table;
+      indexDispatchTable(table, (owner, slot) => this.resolveSlot(owner, slot));this.tables.set(name,table);return table;
     }
     if(this.building.has(name)||this.building.size>64)throw new CilError('Invalid virtual type hierarchy');
     this.building.add(name);
@@ -83,19 +84,18 @@ export class CilDispatchTable {
         const bodySlot=[...declarations.values()].find(item=>item.token===body.token&&item.owner===name)?.slot;
         explicit.add(slot);slots.set(slot,body.token);if(bodySlot!==undefined&&bodySlot!==slot)aliases.set(slot,bodySlot);else aliases.delete(slot);
       }
-      const table={slots,aliases,declarations,visible,ancestors,instances};this.tables.set(name,table);return table;
+      const table={slots,aliases,declarations,visible,ancestors,instances};indexDispatchTable(table, (owner, slot) => this.resolveSlot(owner, slot));this.tables.set(name,table);return table;
     } finally {this.building.delete(name);}
   }
   resolveSlot(table,slot) {
     const seen=new Set();while(table.aliases.has(slot)){if(seen.has(slot))throw new CilError('Cyclic MethodImpl slot mapping');seen.add(slot);slot=table.aliases.get(slot);}return table.slots.get(slot);
   }
-  resolve(type,methodToken,ownerInstance=null) {
-    const key=JSON.stringify([type,methodToken,ownerInstance]);if(this.resolutions.has(key))return this.resolutions.get(key);
-    const declaration=this.definition(methodToken);if(!(declaration.flags&virtual))return declaration.token;
-    const table=this.table(type),instance=ownerInstance?this.typeContext(ownerInstance).name:null;
-    const candidates=[...table.declarations.values()].filter(item=>item.token===declaration.token&&(!instance||item.owner===instance));
-    if(candidates.length!==1)throw new CilError('Virtual receiver is incompatible or ambiguous for the method declaration');
-    const target=this.resolveSlot(table,candidates[0].slot);if(target===undefined)throw new CilError('Virtual method has no implementation');this.resolutions.set(key,target);return target;
+  resolve(type, methodToken, ownerInstance = null) {
+    const declaration = this.definition(methodToken);
+    if (!(declaration.flags & virtual)) return declaration.token;
+    const table = this.table(type);
+    const owner = ownerInstance ? this.typeContext(ownerInstance).name : null;
+    return table.targets[declarationSlot(table, declaration.token, owner)];
   }
   externalTarget(type,descriptor) {
     const key=JSON.stringify([type,descriptor.ownerInstance??descriptor.owner,descriptor.name,signatureKey(descriptor.signature)]);if(this.externalResolutions.has(key))return this.externalResolutions.get(key);
