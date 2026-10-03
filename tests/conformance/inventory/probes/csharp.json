@@ -1,0 +1,1744 @@
+{
+  "schemaVersion": 1,
+  "reference": "csharp-history.json",
+  "features": [
+    {
+      "version": "15.0",
+      "title": "Collection expression arguments",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/collection-expression-arguments.md",
+      "id": "csharp-15-0-collection-expression-arguments",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-15-0-collection-expression-arguments.cs",
+      "langVersion": "preview",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "15.0",
+      "title": "Unions",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/unions.md",
+      "id": "csharp-15-0-unions",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-15-0-unions.cs",
+      "langVersion": "preview",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "15.0",
+      "title": "Closed hierarchies",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/closed-hierarchies.md",
+      "id": "csharp-15-0-closed-hierarchies",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-15-0-closed-hierarchies.cs",
+      "langVersion": "preview",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "15.0",
+      "title": "Extension indexers",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/extension-indexers.md",
+      "id": "csharp-15-0-extension-indexers",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-15-0-extension-indexers.cs",
+      "langVersion": "preview",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "15.0",
+      "title": "Labeled break and continue",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-15.0/labeled-break-continue.md",
+      "id": "csharp-15-0-labeled-break-and-continue",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-15-0-labeled-break-and-continue.cs",
+      "langVersion": "preview",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "14.0",
+      "title": "Extension methods and properties",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/extensions.md",
+      "id": "csharp-14-0-extension-methods-and-properties",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-14-0-extension-methods-and-properties.cs",
+      "langVersion": "14.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "14.0",
+      "title": "Extension operators",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/extension-operators.md",
+      "id": "csharp-14-0-extension-operators",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-14-0-extension-operators.cs",
+      "langVersion": "14.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "14.0",
+      "title": "field keyword in properties",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/field-keyword.md",
+      "id": "csharp-14-0-field-keyword-in-properties",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-14-0-field-keyword-in-properties.cs",
+      "langVersion": "14.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "14.0",
+      "title": "Partial events and constructors",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/partial-events-and-constructors.md",
+      "id": "csharp-14-0-partial-events-and-constructors",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-14-0-partial-events-and-constructors.cs",
+      "langVersion": "14.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "14.0",
+      "title": "User-defined compound assignment operators",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/user-defined-compound-assignment.md",
+      "id": "csharp-14-0-user-defined-compound-assignment-operators",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-14-0-user-defined-compound-assignment-operators.cs",
+      "langVersion": "14.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "14.0",
+      "title": "First-class Span types",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/first-class-span-types.md",
+      "id": "csharp-14-0-first-class-span-types",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-14-0-first-class-span-types.cs",
+      "langVersion": "14.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "14.0",
+      "title": "Null-conditional assignment",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/null-conditional-assignment.md",
+      "id": "csharp-14-0-null-conditional-assignment",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-14-0-null-conditional-assignment.cs",
+      "langVersion": "14.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "14.0",
+      "title": "Unbound generic types in nameof",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/unbound-generic-types-in-nameof.md",
+      "id": "csharp-14-0-unbound-generic-types-in-nameof",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-14-0-unbound-generic-types-in-nameof.cs",
+      "langVersion": "14.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "14.0",
+      "title": "Simple lambda parameters with modifiers",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/simple-lambda-parameters-with-modifiers.md",
+      "id": "csharp-14-0-simple-lambda-parameters-with-modifiers",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-14-0-simple-lambda-parameters-with-modifiers.cs",
+      "langVersion": "14.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "14.0",
+      "title": "Ignored directives",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/ignored-directives.md",
+      "id": "csharp-14-0-ignored-directives",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-14-0-ignored-directives.cs",
+      "langVersion": "14.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified",
+      "nativeFeatures": [
+        "FileBasedProgram"
+      ]
+    },
+    {
+      "version": "14.0",
+      "title": "Optional and named arguments in Expression trees",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/optional-and-named-parameters-in-expression-trees.md",
+      "id": "csharp-14-0-optional-and-named-arguments-in-expression-trees",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-14-0-optional-and-named-arguments-in-expression-trees.cs",
+      "langVersion": "14.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "13.0",
+      "title": "ESC escape sequence",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/esc-escape-sequence.md",
+      "id": "csharp-13-0-esc-escape-sequence",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-13-0-esc-escape-sequence.cs",
+      "langVersion": "13.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "13.0",
+      "title": "Method group natural type improvements",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/method-group-natural-type-improvements.md",
+      "id": "csharp-13-0-method-group-natural-type-improvements",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-13-0-method-group-natural-type-improvements.cs",
+      "langVersion": "13.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "13.0",
+      "title": "Lock object",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/lock-object.md",
+      "id": "csharp-13-0-lock-object",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-13-0-lock-object.cs",
+      "langVersion": "13.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "13.0",
+      "title": "Implicit indexer access in object initializers",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/Language-Version-History.md#c-130",
+      "id": "csharp-13-0-implicit-indexer-access-in-object-initializers",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-13-0-implicit-indexer-access-in-object-initializers.cs",
+      "langVersion": "13.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "13.0",
+      "title": "params collections",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/params-collections.md",
+      "id": "csharp-13-0-params-collections",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-13-0-params-collections.cs",
+      "langVersion": "13.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "13.0",
+      "title": "ref/unsafe in iterators/async",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/ref-unsafe-in-iterators-async.md",
+      "id": "csharp-13-0-ref-unsafe-in-iterators-async",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-13-0-ref-unsafe-in-iterators-async.cs",
+      "langVersion": "13.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "13.0",
+      "title": "ref struct interfaces",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/ref-struct-interfaces.md",
+      "id": "csharp-13-0-ref-struct-interfaces",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-13-0-ref-struct-interfaces.cs",
+      "langVersion": "13.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "13.0",
+      "title": "Overload resolution priority",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/overload-resolution-priority.md",
+      "id": "csharp-13-0-overload-resolution-priority",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-13-0-overload-resolution-priority.cs",
+      "langVersion": "13.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "13.0",
+      "title": "Partial properties",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/partial-properties.md",
+      "id": "csharp-13-0-partial-properties",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-13-0-partial-properties.cs",
+      "langVersion": "13.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "13.0",
+      "title": "Better conversion from collection expression element",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/collection-expressions-better-conversion.md",
+      "id": "csharp-13-0-better-conversion-from-collection-expression-element",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-13-0-better-conversion-from-collection-expression-element.cs",
+      "langVersion": "13.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "12.0",
+      "title": "Collection expressions",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/collection-expressions.md",
+      "id": "csharp-12-0-collection-expressions",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-12-0-collection-expressions.cs",
+      "langVersion": "12.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "12.0",
+      "title": "Primary Constructors",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/primary-constructors.md",
+      "id": "csharp-12-0-primary-constructors",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-12-0-primary-constructors.cs",
+      "langVersion": "12.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "12.0",
+      "title": "Inline Arrays",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/inline-arrays.md",
+      "id": "csharp-12-0-inline-arrays",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-12-0-inline-arrays.cs",
+      "langVersion": "12.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "12.0",
+      "title": "Using aliases for any type",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/using-alias-types.md",
+      "id": "csharp-12-0-using-aliases-for-any-type",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-12-0-using-aliases-for-any-type.cs",
+      "langVersion": "12.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "12.0",
+      "title": "Ref readonly parameters",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/ref-readonly-parameters.md",
+      "id": "csharp-12-0-ref-readonly-parameters",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-12-0-ref-readonly-parameters.cs",
+      "langVersion": "12.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "12.0",
+      "title": "Nameof accessing instance members",
+      "specSection": "https://github.com/dotnet/csharplang/issues/4037",
+      "id": "csharp-12-0-nameof-accessing-instance-members",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-12-0-nameof-accessing-instance-members.cs",
+      "langVersion": "12.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "12.0",
+      "title": "Lambda optional parameters",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-12.0/lambda-method-group-defaults.md",
+      "id": "csharp-12-0-lambda-optional-parameters",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-12-0-lambda-optional-parameters.cs",
+      "langVersion": "12.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "11.0",
+      "title": "Raw string literals",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/raw-string-literal.md",
+      "id": "csharp-11-0-raw-string-literals",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-11-0-raw-string-literals.cs",
+      "langVersion": "11.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "11.0",
+      "title": "UTF-8 string literals",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/utf8-string-literals.md",
+      "id": "csharp-11-0-utf-8-string-literals",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-11-0-utf-8-string-literals.cs",
+      "langVersion": "11.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "11.0",
+      "title": "Pattern match Span<char> on a constant string",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/pattern-match-span-of-char-on-string.md",
+      "id": "csharp-11-0-pattern-match-span-char-on-a-constant-string",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-11-0-pattern-match-span-char-on-a-constant-string.cs",
+      "langVersion": "11.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "11.0",
+      "title": "Newlines in interpolations",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/new-line-in-interpolation.md",
+      "id": "csharp-11-0-newlines-in-interpolations",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-11-0-newlines-in-interpolations.cs",
+      "langVersion": "11.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "11.0",
+      "title": "List patterns",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/list-patterns.md",
+      "id": "csharp-11-0-list-patterns",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-11-0-list-patterns.cs",
+      "langVersion": "11.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "11.0",
+      "title": "File-local types",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/file-local-types.md",
+      "id": "csharp-11-0-file-local-types",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-11-0-file-local-types.cs",
+      "langVersion": "11.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "11.0",
+      "title": "Ref fields",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/low-level-struct-improvements.md",
+      "id": "csharp-11-0-ref-fields",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-11-0-ref-fields.cs",
+      "langVersion": "11.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "11.0",
+      "title": "Required members",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/required-members.md",
+      "id": "csharp-11-0-required-members",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-11-0-required-members.cs",
+      "langVersion": "11.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "11.0",
+      "title": "Static abstract members in interfaces",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/static-abstracts-in-interfaces.md",
+      "id": "csharp-11-0-static-abstract-members-in-interfaces",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-11-0-static-abstract-members-in-interfaces.cs",
+      "langVersion": "11.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "11.0",
+      "title": "Unsigned right-shift operator",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/unsigned-right-shift-operator.md",
+      "id": "csharp-11-0-unsigned-right-shift-operator",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-11-0-unsigned-right-shift-operator.cs",
+      "langVersion": "11.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "11.0",
+      "title": "checked user-defined operators",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/checked-user-defined-operators.md",
+      "id": "csharp-11-0-checked-user-defined-operators",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-11-0-checked-user-defined-operators.cs",
+      "langVersion": "11.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "11.0",
+      "title": "Relaxing shift operator requirements",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/relaxing_shift_operator_requirements.md",
+      "id": "csharp-11-0-relaxing-shift-operator-requirements",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-11-0-relaxing-shift-operator-requirements.cs",
+      "langVersion": "11.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "11.0",
+      "title": "Numeric IntPtr",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/numeric-intptr.md",
+      "id": "csharp-11-0-numeric-intptr",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-11-0-numeric-intptr.cs",
+      "langVersion": "11.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "11.0",
+      "title": "Auto-default structs",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/auto-default-structs.md",
+      "id": "csharp-11-0-auto-default-structs",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-11-0-auto-default-structs.cs",
+      "langVersion": "11.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "11.0",
+      "title": "Generic attributes",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/generic-attributes.md",
+      "id": "csharp-11-0-generic-attributes",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-11-0-generic-attributes.cs",
+      "langVersion": "11.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "11.0",
+      "title": "Extended nameof scope in attributes",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/extended-nameof-scope.md",
+      "id": "csharp-11-0-extended-nameof-scope-in-attributes",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-11-0-extended-nameof-scope-in-attributes.cs",
+      "langVersion": "11.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "10.0",
+      "title": "Record structs",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/record-structs.md",
+      "id": "csharp-10-0-record-structs",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-10-0-record-structs.cs",
+      "langVersion": "10.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "10.0",
+      "title": "With expression",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/record-structs.md#allow-with-expression-on-structs",
+      "id": "csharp-10-0-with-expression",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-10-0-with-expression.cs",
+      "langVersion": "10.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "10.0",
+      "title": "Global using directives",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/GlobalUsingDirective.md",
+      "id": "csharp-10-0-global-using-directives",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-10-0-global-using-directives.cs",
+      "langVersion": "10.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "10.0",
+      "title": "Improved definite assignment",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/improved-definite-assignment.md",
+      "id": "csharp-10-0-improved-definite-assignment",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-10-0-improved-definite-assignment.cs",
+      "langVersion": "10.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "10.0",
+      "title": "Constant interpolated strings",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/constant_interpolated_strings.md",
+      "id": "csharp-10-0-constant-interpolated-strings",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-10-0-constant-interpolated-strings.cs",
+      "langVersion": "10.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "10.0",
+      "title": "Extended property patterns",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/extended-property-patterns.md",
+      "id": "csharp-10-0-extended-property-patterns",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-10-0-extended-property-patterns.cs",
+      "langVersion": "10.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "10.0",
+      "title": "Sealed record ToString",
+      "specSection": "https://github.com/dotnet/csharplang/issues/4174",
+      "id": "csharp-10-0-sealed-record-tostring",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-10-0-sealed-record-tostring.cs",
+      "langVersion": "10.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "10.0",
+      "title": "Incremental source generators",
+      "specSection": "https://github.com/dotnet/roslyn/blob/main/docs/features/incremental-generators.md",
+      "id": "csharp-10-0-incremental-source-generators",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-10-0-incremental-source-generators.cs",
+      "langVersion": "10.0",
+      "probeScope": "tooling/API declaration compile probe; does not qualify host services, reference-only emission, embedding or documentation publication",
+      "qualification": "unknown"
+    },
+    {
+      "version": "10.0",
+      "title": "Mixed deconstructions",
+      "specSection": "https://github.com/dotnet/csharplang/issues/125",
+      "id": "csharp-10-0-mixed-deconstructions",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-10-0-mixed-deconstructions.cs",
+      "langVersion": "10.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "10.0",
+      "title": "Method-level AsyncMethodBuilder",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/async-method-builders.md",
+      "id": "csharp-10-0-method-level-asyncmethodbuilder",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-10-0-method-level-asyncmethodbuilder.cs",
+      "langVersion": "10.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "10.0",
+      "title": "#line span directive",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/enhanced-line-directives.md",
+      "id": "csharp-10-0-line-span-directive",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-10-0-line-span-directive.cs",
+      "langVersion": "10.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "10.0",
+      "title": "Lambda improvements",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/lambda-improvements.md",
+      "id": "csharp-10-0-lambda-improvements",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-10-0-lambda-improvements.cs",
+      "langVersion": "10.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "10.0",
+      "title": "Interpolated string handlers",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/improved-interpolated-strings.md",
+      "id": "csharp-10-0-interpolated-string-handlers",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-10-0-interpolated-string-handlers.cs",
+      "langVersion": "10.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "10.0",
+      "title": "File-scoped namespaces",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/file-scoped-namespaces.md",
+      "id": "csharp-10-0-file-scoped-namespaces",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-10-0-file-scoped-namespaces.cs",
+      "langVersion": "10.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "10.0",
+      "title": "Parameterless struct constructors",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/parameterless-struct-constructors.md",
+      "id": "csharp-10-0-parameterless-struct-constructors",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-10-0-parameterless-struct-constructors.cs",
+      "langVersion": "10.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "10.0",
+      "title": "CallerArgumentExpression",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/caller-argument-expression.md",
+      "id": "csharp-10-0-callerargumentexpression",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-10-0-callerargumentexpression.cs",
+      "langVersion": "10.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "9.0",
+      "title": "Records",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/records.md",
+      "id": "csharp-9-0-records",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-9-0-records.cs",
+      "langVersion": "9.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "9.0",
+      "title": "Init-only setters",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/init.md",
+      "id": "csharp-9-0-init-only-setters",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-9-0-init-only-setters.cs",
+      "langVersion": "9.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "9.0",
+      "title": "Top-level statements",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/top-level-statements.md",
+      "id": "csharp-9-0-top-level-statements",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-9-0-top-level-statements.cs",
+      "langVersion": "9.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified",
+      "outputKind": "exe"
+    },
+    {
+      "version": "9.0",
+      "title": "Pattern matching enhancements",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/patterns3.md",
+      "id": "csharp-9-0-pattern-matching-enhancements",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-9-0-pattern-matching-enhancements.cs",
+      "langVersion": "9.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "9.0",
+      "title": "Native sized integers",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/native-integers.md",
+      "id": "csharp-9-0-native-sized-integers",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-9-0-native-sized-integers.cs",
+      "langVersion": "9.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "9.0",
+      "title": "Function pointers",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/function-pointers.md",
+      "id": "csharp-9-0-function-pointers",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-9-0-function-pointers.cs",
+      "langVersion": "9.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "9.0",
+      "title": "Suppress emitting localsinit flag",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/skip-localsinit.md",
+      "id": "csharp-9-0-suppress-emitting-localsinit-flag",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-9-0-suppress-emitting-localsinit-flag.cs",
+      "langVersion": "9.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "9.0",
+      "title": "Target-typed new expressions",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/target-typed-new.md",
+      "id": "csharp-9-0-target-typed-new-expressions",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-9-0-target-typed-new-expressions.cs",
+      "langVersion": "9.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "9.0",
+      "title": "Static anonymous functions",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/static-anonymous-functions.md",
+      "id": "csharp-9-0-static-anonymous-functions",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-9-0-static-anonymous-functions.cs",
+      "langVersion": "9.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "9.0",
+      "title": "Target-typed conditional expressions",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/target-typed-conditional-expression.md",
+      "id": "csharp-9-0-target-typed-conditional-expressions",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-9-0-target-typed-conditional-expressions.cs",
+      "langVersion": "9.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "9.0",
+      "title": "Covariant return types",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/covariant-returns.md",
+      "id": "csharp-9-0-covariant-return-types",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-9-0-covariant-return-types.cs",
+      "langVersion": "9.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "9.0",
+      "title": "Lambda discard parameters",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/lambda-discard-parameters.md",
+      "id": "csharp-9-0-lambda-discard-parameters",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-9-0-lambda-discard-parameters.cs",
+      "langVersion": "9.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "9.0",
+      "title": "Attributes on local functions",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/local-function-attributes.md",
+      "id": "csharp-9-0-attributes-on-local-functions",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-9-0-attributes-on-local-functions.cs",
+      "langVersion": "9.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "9.0",
+      "title": "Module initializers",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/module-initializers.md",
+      "id": "csharp-9-0-module-initializers",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-9-0-module-initializers.cs",
+      "langVersion": "9.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "9.0",
+      "title": "Extension GetEnumerator",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/extension-getenumerator.md",
+      "id": "csharp-9-0-extension-getenumerator",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-9-0-extension-getenumerator.cs",
+      "langVersion": "9.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "9.0",
+      "title": "Partial methods with returned values",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/extending-partial-methods.md",
+      "id": "csharp-9-0-partial-methods-with-returned-values",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-9-0-partial-methods-with-returned-values.cs",
+      "langVersion": "9.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "9.0",
+      "title": "Source Generators",
+      "specSection": "https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/",
+      "id": "csharp-9-0-source-generators",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-9-0-source-generators.cs",
+      "langVersion": "9.0",
+      "probeScope": "tooling/API declaration compile probe; does not qualify host services, reference-only emission, embedding or documentation publication",
+      "qualification": "unknown"
+    },
+    {
+      "version": "8.0",
+      "title": "Nullable reference types",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/nullable-reference-types-specification.md",
+      "id": "csharp-8-0-nullable-reference-types",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-8-0-nullable-reference-types.cs",
+      "langVersion": "8.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "8.0",
+      "title": "Default interface members",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/default-interface-methods.md",
+      "id": "csharp-8-0-default-interface-members",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-8-0-default-interface-members.cs",
+      "langVersion": "8.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "8.0",
+      "title": "Recursive patterns",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/patterns.md",
+      "id": "csharp-8-0-recursive-patterns",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-8-0-recursive-patterns.cs",
+      "langVersion": "8.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "8.0",
+      "title": "Async streams",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/async-streams.md",
+      "id": "csharp-8-0-async-streams",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-8-0-async-streams.cs",
+      "langVersion": "8.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "8.0",
+      "title": "Enhanced using",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/using.md",
+      "id": "csharp-8-0-enhanced-using",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-8-0-enhanced-using.cs",
+      "langVersion": "8.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "8.0",
+      "title": "Ranges and indexes",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/ranges.md",
+      "id": "csharp-8-0-ranges-and-indexes",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-8-0-ranges-and-indexes.cs",
+      "langVersion": "8.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "8.0",
+      "title": "Null-coalescing assignment",
+      "specSection": "https://github.com/dotnet/csharplang/issues/34",
+      "id": "csharp-8-0-null-coalescing-assignment",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-8-0-null-coalescing-assignment.cs",
+      "langVersion": "8.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "8.0",
+      "title": "Static local functions",
+      "specSection": "https://github.com/dotnet/csharplang/issues/1565",
+      "id": "csharp-8-0-static-local-functions",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-8-0-static-local-functions.cs",
+      "langVersion": "8.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "8.0",
+      "title": "Unmanaged generic structs",
+      "specSection": "https://github.com/dotnet/csharplang/issues/1744",
+      "id": "csharp-8-0-unmanaged-generic-structs",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-8-0-unmanaged-generic-structs.cs",
+      "langVersion": "8.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "8.0",
+      "title": "Readonly members",
+      "specSection": "https://github.com/dotnet/csharplang/issues/1710",
+      "id": "csharp-8-0-readonly-members",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-8-0-readonly-members.cs",
+      "langVersion": "8.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "8.0",
+      "title": "Stackalloc in nested contexts",
+      "specSection": "https://github.com/dotnet/csharplang/issues/1412",
+      "id": "csharp-8-0-stackalloc-in-nested-contexts",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-8-0-stackalloc-in-nested-contexts.cs",
+      "langVersion": "8.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "8.0",
+      "title": "Alternative interpolated verbatim strings",
+      "specSection": "https://github.com/dotnet/csharplang/issues/1630",
+      "id": "csharp-8-0-alternative-interpolated-verbatim-strings",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-8-0-alternative-interpolated-verbatim-strings.cs",
+      "langVersion": "8.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "8.0",
+      "title": "Obsolete on property accessors",
+      "specSection": "https://github.com/dotnet/csharplang/issues/2152",
+      "id": "csharp-8-0-obsolete-on-property-accessors",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-8-0-obsolete-on-property-accessors.cs",
+      "langVersion": "8.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "8.0",
+      "title": "Permit t is null on unconstrained type parameter",
+      "specSection": "https://github.com/dotnet/csharplang/issues/1284",
+      "id": "csharp-8-0-permit-t-is-null-on-unconstrained-type-parameter",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-8-0-permit-t-is-null-on-unconstrained-type-parameter.cs",
+      "langVersion": "8.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.3",
+      "title": "Enum Delegate unmanaged constraints",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.3/blittable.md",
+      "id": "csharp-7-3-enum-delegate-unmanaged-constraints",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-3-enum-delegate-unmanaged-constraints.cs",
+      "langVersion": "7.3",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.3",
+      "title": "Ref local re-assignment",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.3/ref-local-reassignment.md",
+      "id": "csharp-7-3-ref-local-re-assignment",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-3-ref-local-re-assignment.cs",
+      "langVersion": "7.3",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.3",
+      "title": "Stackalloc initializers",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.3/stackalloc-array-initializers.md",
+      "id": "csharp-7-3-stackalloc-initializers",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-3-stackalloc-initializers.cs",
+      "langVersion": "7.3",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.3",
+      "title": "Indexing movable fixed buffers",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.3/indexing-movable-fixed-fields.md",
+      "id": "csharp-7-3-indexing-movable-fixed-buffers",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-3-indexing-movable-fixed-buffers.cs",
+      "langVersion": "7.3",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.3",
+      "title": "Custom fixed statement",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.3/pattern-based-fixed.md",
+      "id": "csharp-7-3-custom-fixed-statement",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-3-custom-fixed-statement.cs",
+      "langVersion": "7.3",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.3",
+      "title": "Improved overload candidates",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.3/improved-overload-candidates.md",
+      "id": "csharp-7-3-improved-overload-candidates",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-3-improved-overload-candidates.cs",
+      "langVersion": "7.3",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.3",
+      "title": "Expression variables in initializers and queries",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.3/expression-variables-in-initializers.md",
+      "id": "csharp-7-3-expression-variables-in-initializers-and-queries",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-3-expression-variables-in-initializers-and-queries.cs",
+      "langVersion": "7.3",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.3",
+      "title": "Tuple comparison",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.3/tuple-equality.md",
+      "id": "csharp-7-3-tuple-comparison",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-3-tuple-comparison.cs",
+      "langVersion": "7.3",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.3",
+      "title": "Attributes on backing fields",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.3/auto-prop-field-attrs.md",
+      "id": "csharp-7-3-attributes-on-backing-fields",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-3-attributes-on-backing-fields.cs",
+      "langVersion": "7.3",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.2",
+      "title": "Span and ref-like types",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/span-safety.md",
+      "id": "csharp-7-2-span-and-ref-like-types",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-2-span-and-ref-like-types.cs",
+      "langVersion": "7.2",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.2",
+      "title": "In parameters and readonly references",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/readonly-ref.md",
+      "id": "csharp-7-2-in-parameters-and-readonly-references",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-2-in-parameters-and-readonly-references.cs",
+      "langVersion": "7.2",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.2",
+      "title": "Ref conditional",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/conditional-ref.md",
+      "id": "csharp-7-2-ref-conditional",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-2-ref-conditional.cs",
+      "langVersion": "7.2",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.2",
+      "title": "Non-trailing named arguments",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/non-trailing-named-arguments.md",
+      "id": "csharp-7-2-non-trailing-named-arguments",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-2-non-trailing-named-arguments.cs",
+      "langVersion": "7.2",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.2",
+      "title": "Private protected accessibility",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/private-protected.md",
+      "id": "csharp-7-2-private-protected-accessibility",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-2-private-protected-accessibility.cs",
+      "langVersion": "7.2",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.2",
+      "title": "Digit separator after base specifier",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/leading-separator.md",
+      "id": "csharp-7-2-digit-separator-after-base-specifier",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-2-digit-separator-after-base-specifier.cs",
+      "langVersion": "7.2",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.1",
+      "title": "Async main",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.1/async-main.md",
+      "id": "csharp-7-1-async-main",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-1-async-main.cs",
+      "langVersion": "7.1",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.1",
+      "title": "Default expressions",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.1/target-typed-default.md",
+      "id": "csharp-7-1-default-expressions",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-1-default-expressions.cs",
+      "langVersion": "7.1",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.1",
+      "title": "Reference assemblies",
+      "specSection": "https://github.com/dotnet/roslyn/blob/main/docs/features/refout.md",
+      "id": "csharp-7-1-reference-assemblies",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-1-reference-assemblies.cs",
+      "langVersion": "7.1",
+      "probeScope": "tooling/API declaration compile probe; does not qualify host services, reference-only emission, embedding or documentation publication",
+      "qualification": "unknown"
+    },
+    {
+      "version": "7.1",
+      "title": "Inferred tuple element names",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.1/infer-tuple-names.md",
+      "id": "csharp-7-1-inferred-tuple-element-names",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-1-inferred-tuple-element-names.cs",
+      "langVersion": "7.1",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.1",
+      "title": "Pattern-matching with generics",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.1/generics-pattern-match.md",
+      "id": "csharp-7-1-pattern-matching-with-generics",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-1-pattern-matching-with-generics.cs",
+      "langVersion": "7.1",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.0",
+      "title": "Out variables",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.0/out-var.md",
+      "id": "csharp-7-0-out-variables",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-0-out-variables.cs",
+      "langVersion": "7.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.0",
+      "title": "Pattern matching",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.0/pattern-matching.md",
+      "id": "csharp-7-0-pattern-matching",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-0-pattern-matching.cs",
+      "langVersion": "7.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.0",
+      "title": "Tuples",
+      "specSection": "https://github.com/dotnet/roslyn/blob/main/docs/features/tuples.md",
+      "id": "csharp-7-0-tuples",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-0-tuples.cs",
+      "langVersion": "7.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.0",
+      "title": "Deconstruction",
+      "specSection": "https://github.com/dotnet/roslyn/blob/main/docs/features/deconstruction.md",
+      "id": "csharp-7-0-deconstruction",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-0-deconstruction.cs",
+      "langVersion": "7.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.0",
+      "title": "Discards",
+      "specSection": "https://github.com/dotnet/roslyn/blob/main/docs/features/discards.md",
+      "id": "csharp-7-0-discards",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-0-discards.cs",
+      "langVersion": "7.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.0",
+      "title": "Local Functions",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.0/local-functions.md",
+      "id": "csharp-7-0-local-functions",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-0-local-functions.cs",
+      "langVersion": "7.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.0",
+      "title": "Binary Literals",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.0/binary-literals.md",
+      "id": "csharp-7-0-binary-literals",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-0-binary-literals.cs",
+      "langVersion": "7.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.0",
+      "title": "Digit Separators",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.0/digit-separators.md",
+      "id": "csharp-7-0-digit-separators",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-0-digit-separators.cs",
+      "langVersion": "7.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.0",
+      "title": "Ref returns and locals",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/ref-returns",
+      "id": "csharp-7-0-ref-returns-and-locals",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-0-ref-returns-and-locals.cs",
+      "langVersion": "7.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.0",
+      "title": "Generalized async return types",
+      "specSection": "https://github.com/dotnet/roslyn/blob/main/docs/features/task-types.md",
+      "id": "csharp-7-0-generalized-async-return-types",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-0-generalized-async-return-types.cs",
+      "langVersion": "7.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.0",
+      "title": "More expression-bodied members",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/statements-expressions-operators/expression-bodied-members",
+      "id": "csharp-7-0-more-expression-bodied-members",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-0-more-expression-bodied-members.cs",
+      "langVersion": "7.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "7.0",
+      "title": "Throw expressions",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.0/throw-expression.md",
+      "id": "csharp-7-0-throw-expressions",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-7-0-throw-expressions.cs",
+      "langVersion": "7.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "6",
+      "title": "Draft Specification online",
+      "specSection": "https://github.com/dotnet/csharpstandard/blob/draft-v6/standard/README.md",
+      "id": "csharp-6-draft-specification-online",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-6-draft-specification-online.cs",
+      "langVersion": "6",
+      "probeScope": "tooling/API declaration compile probe; does not qualify host services, reference-only emission, embedding or documentation publication",
+      "qualification": "unknown"
+    },
+    {
+      "version": "6",
+      "title": "Compiler-as-a-service (Roslyn)",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/Language-Version-History.md#c-6",
+      "id": "csharp-6-compiler-as-a-service-roslyn",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-6-compiler-as-a-service-roslyn.cs",
+      "langVersion": "6",
+      "probeScope": "tooling/API declaration compile probe; does not qualify host services, reference-only emission, embedding or documentation publication",
+      "qualification": "unknown"
+    },
+    {
+      "version": "6",
+      "title": "Import of static type members into namespace",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/keywords/using-static",
+      "id": "csharp-6-import-of-static-type-members-into-namespace",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-6-import-of-static-type-members-into-namespace.cs",
+      "langVersion": "6",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "6",
+      "title": "Exception filters",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/keywords/when",
+      "id": "csharp-6-exception-filters",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-6-exception-filters.cs",
+      "langVersion": "6",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "6",
+      "title": "Await in catch/finally blocks",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/Language-Version-History.md#c-6",
+      "id": "csharp-6-await-in-catch-finally-blocks",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-6-await-in-catch-finally-blocks.cs",
+      "langVersion": "6",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "6",
+      "title": "Auto property initializers",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/Language-Version-History.md#c-6",
+      "id": "csharp-6-auto-property-initializers",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-6-auto-property-initializers.cs",
+      "langVersion": "6",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "6",
+      "title": "Default values for getter-only properties",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/Language-Version-History.md#c-6",
+      "id": "csharp-6-default-values-for-getter-only-properties",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-6-default-values-for-getter-only-properties.cs",
+      "langVersion": "6",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "6",
+      "title": "Expression-bodied members",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/statements-expressions-operators/expression-bodied-members",
+      "id": "csharp-6-expression-bodied-members",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-6-expression-bodied-members.cs",
+      "langVersion": "6",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "6",
+      "title": "Null propagator (null-conditional operator, succinct null checking)",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/Language-Version-History.md#c-6",
+      "id": "csharp-6-null-propagator-null-conditional-operator-succinct-null-checking",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-6-null-propagator-null-conditional-operator-succinct-null-checking.cs",
+      "langVersion": "6",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "6",
+      "title": "String interpolation",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/tokens/interpolated",
+      "id": "csharp-6-string-interpolation",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-6-string-interpolation.cs",
+      "langVersion": "6",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "6",
+      "title": "nameof operator",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/operators/nameof",
+      "id": "csharp-6-nameof-operator",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-6-nameof-operator.cs",
+      "langVersion": "6",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "6",
+      "title": "Dictionary initializer",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/Language-Version-History.md#c-6",
+      "id": "csharp-6-dictionary-initializer",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-6-dictionary-initializer.cs",
+      "langVersion": "6",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "5",
+      "title": "Asynchronous methods",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/concepts/async/",
+      "id": "csharp-5-asynchronous-methods",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-5-asynchronous-methods.cs",
+      "langVersion": "5",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "5",
+      "title": "Caller info attributes",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/attributes/caller-information",
+      "id": "csharp-5-caller-info-attributes",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-5-caller-info-attributes.cs",
+      "langVersion": "5",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "5",
+      "title": "foreach loop was changed to generates a new loop variable rather than closing over the same variable every time",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/Language-Version-History.md#c-5",
+      "id": "csharp-5-foreach-loop-was-changed-to-generates-a-new-loop-variable-rather-than-closing-over-the-same-variable-every-time",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-5-foreach-loop-was-changed-to-generates-a-new-loop-variable-rather-than-closing-over-the-same-variable-every-time.cs",
+      "langVersion": "5",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "4",
+      "title": "Dynamic binding",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/types/using-type-dynamic",
+      "id": "csharp-4-dynamic-binding",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-4-dynamic-binding.cs",
+      "langVersion": "4",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "4",
+      "title": "Named and optional arguments",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments",
+      "id": "csharp-4-named-and-optional-arguments",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-4-named-and-optional-arguments.cs",
+      "langVersion": "4",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "4",
+      "title": "Co- and Contra-variance for generic delegates and interfaces",
+      "specSection": "https://docs.microsoft.com/dotnet/standard/generics/covariance-and-contravariance",
+      "id": "csharp-4-co-and-contra-variance-for-generic-delegates-and-interfaces",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-4-co-and-contra-variance-for-generic-delegates-and-interfaces.cs",
+      "langVersion": "4",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "4",
+      "title": "Embedded interop types (\"NoPIA\")",
+      "specSection": "https://docs.microsoft.com/dotnet/framework/interop/type-equivalence-and-embedded-interop-types",
+      "id": "csharp-4-embedded-interop-types-nopia",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-4-embedded-interop-types-nopia.cs",
+      "langVersion": "4",
+      "probeScope": "tooling/API declaration compile probe; does not qualify host services, reference-only emission, embedding or documentation publication",
+      "qualification": "unknown"
+    },
+    {
+      "version": "3",
+      "title": "Implicitly typed local variables",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/implicitly-typed-local-variables",
+      "id": "csharp-3-implicitly-typed-local-variables",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-3-implicitly-typed-local-variables.cs",
+      "langVersion": "3",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "3",
+      "title": "Object and collection initializers",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/object-and-collection-initializers",
+      "id": "csharp-3-object-and-collection-initializers",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-3-object-and-collection-initializers.cs",
+      "langVersion": "3",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "3",
+      "title": "Auto-Implemented properties",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/auto-implemented-properties",
+      "id": "csharp-3-auto-implemented-properties",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-3-auto-implemented-properties.cs",
+      "langVersion": "3",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "3",
+      "title": "Anonymous types",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/anonymous-types",
+      "id": "csharp-3-anonymous-types",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-3-anonymous-types.cs",
+      "langVersion": "3",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "3",
+      "title": "Extension methods",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/extension-methods",
+      "id": "csharp-3-extension-methods",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-3-extension-methods.cs",
+      "langVersion": "3",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "3",
+      "title": "Query expressions, a.k.a LINQ (Language Integrated Query)",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/linq/query-expression-basics",
+      "id": "csharp-3-query-expressions-a-k-a-linq-language-integrated-query",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-3-query-expressions-a-k-a-linq-language-integrated-query.cs",
+      "langVersion": "3",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "3",
+      "title": "Lambda expression",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/statements-expressions-operators/lambda-expressions",
+      "id": "csharp-3-lambda-expression",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-3-lambda-expression.cs",
+      "langVersion": "3",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "3",
+      "title": "Expression trees",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/concepts/expression-trees/",
+      "id": "csharp-3-expression-trees",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-3-expression-trees.cs",
+      "langVersion": "3",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "3",
+      "title": "Partial methods",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/keywords/partial-method",
+      "id": "csharp-3-partial-methods",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-3-partial-methods.cs",
+      "langVersion": "3",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "3",
+      "title": "Lock statement",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/keywords/lock-statement",
+      "id": "csharp-3-lock-statement",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-3-lock-statement.cs",
+      "langVersion": "3",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "2",
+      "title": "Generics",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/generics/",
+      "id": "csharp-2-generics",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-2-generics.cs",
+      "langVersion": "2",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "2",
+      "title": "Partial types",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/keywords/partial-type",
+      "id": "csharp-2-partial-types",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-2-partial-types.cs",
+      "langVersion": "2",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "2",
+      "title": "Anonymous methods",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/statements-expressions-operators/anonymous-functions",
+      "id": "csharp-2-anonymous-methods",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-2-anonymous-methods.cs",
+      "langVersion": "2",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "2",
+      "title": "Iterators, a.k.a yield statement",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/keywords/yield",
+      "id": "csharp-2-iterators-a-k-a-yield-statement",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-2-iterators-a-k-a-yield-statement.cs",
+      "langVersion": "2",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "2",
+      "title": "Nullable types",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/builtin-types/nullable-value-types",
+      "id": "csharp-2-nullable-types",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-2-nullable-types.cs",
+      "langVersion": "2",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "2",
+      "title": "Getter/setter separate accessibility",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/Language-Version-History.md#c-2",
+      "id": "csharp-2-getter-setter-separate-accessibility",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-2-getter-setter-separate-accessibility.cs",
+      "langVersion": "2",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "2",
+      "title": "Method group conversions (delegates)",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/Language-Version-History.md#c-2",
+      "id": "csharp-2-method-group-conversions-delegates",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-2-method-group-conversions-delegates.cs",
+      "langVersion": "2",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "2",
+      "title": "Static classes",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/static-classes-and-static-class-members",
+      "id": "csharp-2-static-classes",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-2-static-classes.cs",
+      "langVersion": "2",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "2",
+      "title": "Delegate inference",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/Language-Version-History.md#c-2",
+      "id": "csharp-2-delegate-inference",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-2-delegate-inference.cs",
+      "langVersion": "2",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "2",
+      "title": "Type and namespace aliases",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/Language-Version-History.md#c-2",
+      "id": "csharp-2-type-and-namespace-aliases",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-2-type-and-namespace-aliases.cs",
+      "langVersion": "2",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "2",
+      "title": "Covariance and contravariance",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/concepts/covariance-contravariance/",
+      "id": "csharp-2-covariance-and-contravariance",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-2-covariance-and-contravariance.cs",
+      "langVersion": "2",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.2",
+      "title": "Dispose in foreach",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/Language-Version-History.md#c-12",
+      "id": "csharp-1-2-dispose-in-foreach",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-2-dispose-in-foreach.cs",
+      "langVersion": "1.2",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.2",
+      "title": "foreach over string specialization",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/Language-Version-History.md#c-12",
+      "id": "csharp-1-2-foreach-over-string-specialization",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-2-foreach-over-string-specialization.cs",
+      "langVersion": "1.2",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "Classes",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/classes",
+      "id": "csharp-1-0-classes",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-classes.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "Structs",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/builtin-types/struct",
+      "id": "csharp-1-0-structs",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-structs.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "Enums",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/builtin-types/enum",
+      "id": "csharp-1-0-enums",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-enums.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "Interfaces",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/interfaces/",
+      "id": "csharp-1-0-interfaces",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-interfaces.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "Events",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/keywords/event",
+      "id": "csharp-1-0-events",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-events.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "Operator overloading",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/operators/operator-overloading",
+      "id": "csharp-1-0-operator-overloading",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-operator-overloading.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "User-defined conversion operators",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/operators/user-defined-conversion-operators",
+      "id": "csharp-1-0-user-defined-conversion-operators",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-user-defined-conversion-operators.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "Properties",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/properties",
+      "id": "csharp-1-0-properties",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-properties.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "Indexers",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/indexers/",
+      "id": "csharp-1-0-indexers",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-indexers.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "out",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/keywords/out",
+      "id": "csharp-1-0-out",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-out.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "params arrays",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/keywords/params",
+      "id": "csharp-1-0-params-arrays",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-params-arrays.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "Delegates",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/delegates/",
+      "id": "csharp-1-0-delegates",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-delegates.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "Expressions",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/Language-Version-History.md#c-10",
+      "id": "csharp-1-0-expressions",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-expressions.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "using statement",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/keywords/using-statement",
+      "id": "csharp-1-0-using-statement",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-using-statement.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "goto statement",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/keywords/goto",
+      "id": "csharp-1-0-goto-statement",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-goto-statement.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "Preprocessor directives",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/preprocessor-directives/",
+      "id": "csharp-1-0-preprocessor-directives",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-preprocessor-directives.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "Unsafe code and pointers",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/unsafe-code-pointers/",
+      "id": "csharp-1-0-unsafe-code-and-pointers",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-unsafe-code-and-pointers.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "Attributes",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/concepts/attributes/",
+      "id": "csharp-1-0-attributes",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-attributes.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "Literals",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/Language-Version-History.md#c-10",
+      "id": "csharp-1-0-literals",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-literals.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "Verbatim identifier",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/language-reference/tokens/verbatim",
+      "id": "csharp-1-0-verbatim-identifier",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-verbatim-identifier.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "Unsigned integer types",
+      "specSection": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/Language-Version-History.md#c-10",
+      "id": "csharp-1-0-unsigned-integer-types",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-unsigned-integer-types.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    },
+    {
+      "version": "1.0",
+      "title": "Boxing and unboxing",
+      "specSection": "https://docs.microsoft.com/dotnet/csharp/programming-guide/types/boxing-and-unboxing",
+      "id": "csharp-1-0-boxing-and-unboxing",
+      "probe": "tests/conformance/inventory/probes/csharp/csharp-1-0-boxing-and-unboxing.cs",
+      "langVersion": "1.0",
+      "probeScope": "compile acceptance smoke; execution, lowering, overload choice and full spec behavior remain unqualified"
+    }
+  ]
+}

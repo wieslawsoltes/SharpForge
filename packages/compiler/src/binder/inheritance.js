@@ -110,16 +110,12 @@ export function resolveBases(type, { typeBinder, core, report }) {
       }
       if (baseType) {
         if (!baseType.equals(bound))
-          rep(
-            entry.type,
-            type.declarations.length > 1 && index === 0 ? 'CS0263' : 'CS1721',
-            type.declarations.length > 1 && index === 0
-              ? [type.toDisplayString()]
-              : [type.toDisplayString(), baseType.toDisplayString(), bound.toDisplayString()],
-          );
+          if (type.declarations.length > 1 && index === 0)
+            report(type.declarations[0].uri, type.declarations[0].syntax.identifier, 'CS0263', [type.toDisplayString()]);
+          else rep(entry.type, 'CS1721', [type.toDisplayString(), baseType.toDisplayString(), bound.toDisplayString()]);
         return;
       }
-      if (type.isStatic) {
+      if (type.isStatic && bound.specialType !== 'System_Object') {
         rep(entry.type, 'CS0713', [type.toDisplayString(), bound.toDisplayString()]);
         return;
       }
@@ -128,7 +124,7 @@ export function resolveBases(type, { typeBinder, core, report }) {
         return;
       }
       if (bound.isStatic) {
-        rep(entry.type, 'CS0709', [type.toDisplayString(), bound.toDisplayString()]);
+        rep(declaration.syntax.identifier, 'CS0709', [type.toDisplayString(), bound.toDisplayString()]);
         return;
       }
       if (bound.isSealed) {

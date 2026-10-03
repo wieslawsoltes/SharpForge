@@ -1,0 +1,1587 @@
+{
+  "schemaVersion": 1,
+  "revision": "sharpforge-surface-2026-10-03",
+  "scope": "Concrete product surface checklist, including Visual Studio workflows; not a claim of an exhaustive Visual Studio SKU API inventory. Missing behavioral evidence remains unknown.",
+  "rows": [
+    {
+      "id": "value-scalar-widths",
+      "name": "Value ABI scalar widths and signedness",
+      "area": "A00",
+      "leafId": "SF-A00-T01.2",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "value-handle-ownership",
+      "name": "Reference handle generation, ownership and null identity",
+      "area": "A00",
+      "leafId": "SF-A00-T01.3",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "fault-transfer",
+      "name": "Fault type, message and stack transfer",
+      "area": "A00",
+      "leafId": "SF-A00-T01.4",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "framework-id-stability",
+      "name": "Framework contract ID stability across builds",
+      "area": "A00",
+      "leafId": "SF-A00-T02.1",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "source-container-schema",
+      "name": "Source bytecode container version and bounds",
+      "area": "A00",
+      "leafId": "SF-A00-T05.1",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "pdb-sequence-points",
+      "name": "Portable PDB sequence points and hidden statements",
+      "area": "A13",
+      "leafId": "SF-A13-T01",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "pdb-async",
+      "name": "Portable PDB await suspension and resumption mapping",
+      "area": "A13",
+      "leafId": "SF-A13-T03",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "pdb-scopes",
+      "name": "Portable PDB nested scopes and constants",
+      "area": "A13",
+      "leafId": "SF-A13-T04",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "decompiler-cfg",
+      "name": "Decompiler exceptional control-flow edges",
+      "area": "A13",
+      "leafId": "SF-A13-T07",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "decompiler-structured",
+      "name": "Decompiler structured loops and conditional expressions",
+      "area": "A13",
+      "leafId": "SF-A13-T08",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "designer-document",
+      "name": "Designer document Design/Split/Code state",
+      "area": "A18",
+      "leafId": "SF-A18-T01",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "designer-trivia",
+      "name": "Designer edits preserve user comments and trivia",
+      "area": "A18",
+      "leafId": "SF-A18-T03",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "designer-atomic",
+      "name": "Designer source round-trip is atomic on diagnostics",
+      "area": "A18",
+      "leafId": "SF-A18-T04",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "designer-reparent",
+      "name": "Designer reparenting updates generated C# ownership",
+      "area": "A18",
+      "leafId": "SF-A18-T05",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "designer-multiselect",
+      "name": "Designer move and resize multi-selection",
+      "area": "A18",
+      "leafId": "SF-A18-T06",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "designer-dpi",
+      "name": "Designer DPI and responsive constraint preview",
+      "area": "A18",
+      "leafId": "SF-A18-T07",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "designer-properties",
+      "name": "Designer property reset and resource binding",
+      "area": "A18",
+      "leafId": "SF-A18-T08",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "designer-isolation",
+      "name": "Designer attachment isolation across app instances",
+      "area": "A18",
+      "leafId": "SF-A18-T10",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "designer-accessibility",
+      "name": "Designer keyboard selection and screen-reader labels",
+      "area": "A18",
+      "leafId": "SF-A18-T11",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "workbench-multistart",
+      "name": "Independent multi-startup launch and cancellation",
+      "area": "A19",
+      "leafId": "SF-A19-T02",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "workbench-tabs",
+      "name": "Document tab move, split and close recovery",
+      "area": "A19",
+      "leafId": "SF-A19-T03",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "workbench-docking",
+      "name": "Tool-window docking and layout restore",
+      "area": "A19",
+      "leafId": "SF-A19-T04",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "workbench-routing",
+      "name": "Context-specific command routing and enablement",
+      "area": "A19",
+      "leafId": "SF-A19-T05",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "workbench-output",
+      "name": "Build diagnostics navigate to exact document span",
+      "area": "A19",
+      "leafId": "SF-A19-T06",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "workbench-profile",
+      "name": "Settings profile export and import",
+      "area": "A19",
+      "leafId": "SF-A19-T08",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "workbench-focus",
+      "name": "Workbench keyboard focus traversal and modal restoration",
+      "area": "A19",
+      "leafId": "SF-A19-T10",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "editor-undo",
+      "name": "Grouped text edits and undo/redo identity",
+      "area": "A20",
+      "leafId": "SF-A20-T01",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "editor-viewport",
+      "name": "Virtualized viewport selection across unloaded lines",
+      "area": "A20",
+      "leafId": "SF-A20-T02",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "editor-multicursor",
+      "name": "Multiple cursors and rectangular editing",
+      "area": "A20",
+      "leafId": "SF-A20-T03",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "editor-ime",
+      "name": "IME composition and grapheme navigation",
+      "area": "A20",
+      "leafId": "SF-A20-T04",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "editor-fold",
+      "name": "Semantic folding preserves hidden text",
+      "area": "A20",
+      "leafId": "SF-A20-T05",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "editor-vs-keys",
+      "name": "Visual Studio keybinding chords and conflicts",
+      "area": "A20",
+      "leafId": "SF-A20-T07",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "editor-vim",
+      "name": "Vim modes, motions and registers",
+      "area": "A20",
+      "leafId": "SF-A20-T08",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "editor-emacs",
+      "name": "Emacs keymap platform modifier semantics",
+      "area": "A20",
+      "leafId": "SF-A20-T09",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "editor-merge",
+      "name": "Three-way merge resolution preserves line endings",
+      "area": "A20",
+      "leafId": "SF-A20-T10",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "analyzer-api",
+      "name": "Analyzer compilation and symbol API signatures",
+      "area": "A22",
+      "leafId": "SF-A22-T01",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "analyzer-cancel",
+      "name": "Analyzer cancellation and diagnostic snapshot isolation",
+      "area": "A22",
+      "leafId": "SF-A22-T03",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "generator-addsource",
+      "name": "Source generator AddSource hint-name identity",
+      "area": "A22",
+      "leafId": "SF-A22-T04",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "generator-incremental",
+      "name": "Incremental generator invalidation and cache reuse",
+      "area": "A22",
+      "leafId": "SF-A22-T05",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "analyzer-suppression",
+      "name": "EditorConfig severity and pragma suppression",
+      "area": "A22",
+      "leafId": "SF-A22-T06",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "extension-isolation",
+      "name": "Extension host permissions and failure isolation",
+      "area": "A22",
+      "leafId": "SF-A22-T07",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "msbuild-native",
+      "name": "Native SDK build diagnostics and output path",
+      "area": "A23",
+      "leafId": "SF-A23-T01",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "msbuild-design",
+      "name": "Design-time references, generated files and properties",
+      "area": "A23",
+      "leafId": "SF-A23-T02",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "msbuild-multitarget",
+      "name": "Independent target-framework evaluation",
+      "area": "A23",
+      "leafId": "SF-A23-T03",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "msbuild-incremental",
+      "name": "Inputs/outputs incremental target skipping",
+      "area": "A23",
+      "leafId": "SF-A23-T05",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "msbuild-cancel",
+      "name": "Build cancellation reaps descendants",
+      "area": "A23",
+      "leafId": "SF-A23-T06",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "nuget-locked",
+      "name": "NuGet locked restore validates transitive content hashes",
+      "area": "A23",
+      "leafId": "SF-A23-T07",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "project-xml",
+      "name": "Project XML edit retains comments and conditions",
+      "area": "A23",
+      "leafId": "SF-A23-T09",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "workspace-transaction",
+      "name": "Workspace transaction rollback preserves documents",
+      "area": "A24",
+      "leafId": "SF-A24-T01",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "explorer-rename",
+      "name": "Explorer rename updates references atomically",
+      "area": "A24",
+      "leafId": "SF-A24-T03",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "workspace-watch",
+      "name": "External file updates reconcile dirty editor state",
+      "area": "A24",
+      "leafId": "SF-A24-T04",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "archive-zip64",
+      "name": "ZIP64 import/export and archive path traversal rejection",
+      "area": "A24",
+      "leafId": "SF-A24-T06",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "template-parameters",
+      "name": "Project template parameters and replacement boundaries",
+      "area": "A24",
+      "leafId": "SF-A24-T07",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "template-winui",
+      "name": "WinUI page and resource dictionary generation",
+      "area": "A24",
+      "leafId": "SF-A24-T08",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "git-fetch",
+      "name": "Git shallow fetch and remote history",
+      "area": "A25",
+      "leafId": "SF-A25-T02",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "auth-pkce",
+      "name": "OAuth PKCE state and callback binding",
+      "area": "A25",
+      "leafId": "SF-A25-T03",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "auth-revoke",
+      "name": "Credential expiry and revocation",
+      "area": "A25",
+      "leafId": "SF-A25-T04",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "git-index",
+      "name": "Git stage, unstage and commit exact index state",
+      "area": "A25",
+      "leafId": "SF-A25-T05",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "git-push",
+      "name": "Git push rejection and remote branch identity",
+      "area": "A25",
+      "leafId": "SF-A25-T06",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "git-merge",
+      "name": "Merge conflict presentation and resolution",
+      "area": "A25",
+      "leafId": "SF-A25-T07",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "collab-cursors",
+      "name": "Concurrent edit convergence and remote cursors",
+      "area": "A25",
+      "leafId": "SF-A25-T11",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "publish-closure",
+      "name": "Published application dependency closure",
+      "area": "A26",
+      "leafId": "SF-A26-T02",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "publish-html",
+      "name": "Standalone HTML runs without a server",
+      "area": "A26",
+      "leafId": "SF-A26-T03",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "publish-winui",
+      "name": "Standalone WinUI dispatcher, properties and events",
+      "area": "A26",
+      "leafId": "SF-A26-T04",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "publish-backend",
+      "name": "Publish backend selection matches emitted runtime",
+      "area": "A26",
+      "leafId": "SF-A26-T06",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "publish-csp",
+      "name": "CSP-safe workers and embedded assets",
+      "area": "A26",
+      "leafId": "SF-A26-T07",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "publish-secrets",
+      "name": "Publish rejects embedded credentials and undeclared network grants",
+      "area": "A26",
+      "leafId": "SF-A26-T08",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "publish-symbols",
+      "name": "Published failures preserve source and PDB mapping",
+      "area": "A26",
+      "leafId": "SF-A26-T10",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "rust-numeric",
+      "name": "Rust managed Int32/Int64 overflow and conversions",
+      "area": "A27",
+      "leafId": "SF-A27-T02.4",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "rust-wasm",
+        "rust-native"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "rust-opcodes",
+      "name": "Rust CIL opcode decoding and malformed operand bounds",
+      "area": "A27",
+      "leafId": "SF-A27-T03.6",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "rust-wasm",
+        "rust-native"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "rust-calls",
+      "name": "Rust managed call, virtual dispatch and return",
+      "area": "A27",
+      "leafId": "SF-A27-T04.6",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "rust-wasm",
+        "rust-native"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "rust-eh",
+      "name": "Rust two-pass exception search and unwind",
+      "area": "A27",
+      "leafId": "SF-A27-T05.6",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "rust-wasm",
+        "rust-native"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "rust-suspend",
+      "name": "Rust async suspend/resume preserves precise roots",
+      "area": "A27",
+      "leafId": "SF-A27-T07.4",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "rust-wasm",
+        "rust-native"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "rust-isolation",
+      "name": "Rust/Wasm multiple instance heap isolation",
+      "area": "A27",
+      "leafId": "SF-A27-T08.3",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "rust-wasm",
+        "rust-native"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "rust-threading",
+      "name": "Rust/Wasm shared-memory managed thread semantics",
+      "area": "A27",
+      "leafId": "SF-A27-T10.3",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "rust-wasm",
+        "rust-native"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "rust-gc-mark",
+      "name": "Rust GC transitive precise marking",
+      "area": "A28",
+      "leafId": "SF-A28-T02.5",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "rust-wasm",
+        "rust-native"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "rust-gc-sweep",
+      "name": "Rust GC reclamation preserves live handles",
+      "area": "A28",
+      "leafId": "SF-A28-T02.6",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "rust-wasm",
+        "rust-native"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "rust-gc-handles",
+      "name": "Rust GC strong, weak and pinned handle lifetime",
+      "area": "A28",
+      "leafId": "SF-A28-T03.3",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "rust-wasm",
+        "rust-native"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "rust-gc-finalizer",
+      "name": "Rust GC finalization and resurrection",
+      "area": "A28",
+      "leafId": "SF-A28-T04",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "rust-wasm",
+        "rust-native"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "rust-gc-barrier",
+      "name": "Rust GC remembered-set write barrier",
+      "area": "A28",
+      "leafId": "SF-A28-T05",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "rust-wasm",
+        "rust-native"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "rust-gc-move",
+      "name": "Rust GC compaction retains stable managed identity",
+      "area": "A28",
+      "leafId": "SF-A28-T08",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "rust-wasm",
+        "rust-native"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "rust-gc-modes",
+      "name": "Rust GC latency-mode transition contract",
+      "area": "A28",
+      "leafId": "SF-A28-T14",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "rust-wasm",
+        "rust-native"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "ci-clean",
+      "name": "Qualification rejects tracked checkout mutations",
+      "area": "A29",
+      "leafId": "SF-A29-T01.1",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "ci-artifacts",
+      "name": "Browser failure and cancellation retain trace, screenshot and console",
+      "area": "A29",
+      "leafId": "SF-A29-T01.3",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "oracle-compiler",
+      "name": "Pinned native Roslyn diagnostic and assembly capture",
+      "area": "A29",
+      "leafId": "SF-A29-T02.1",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "oracle-clr",
+      "name": "Pinned native CoreCLR execution result capture",
+      "area": "A29",
+      "leafId": "SF-A29-T02.2",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    },
+    {
+      "id": "inventory-gap-id",
+      "name": "Gap identity retention and removal tombstones",
+      "area": "A29",
+      "leafId": "SF-A29-T03.8",
+      "platforms": [
+        "browser-chromium",
+        "browser-firefox",
+        "browser-webkit",
+        "node-linux-x64",
+        "node-win32-x64",
+        "node-darwin-arm64"
+      ],
+      "engines": [
+        "sharpforge-product"
+      ],
+      "reference": "planning/catalog.json at inventory baseline; concrete product checklist revision 2026-10-03"
+    }
+  ]
+}

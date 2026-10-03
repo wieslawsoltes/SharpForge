@@ -68,6 +68,7 @@ export const PropertySymbolBuilder = Base =>
           declaredAccessibility: access,
           modifiers: flags | (own.includes('readonly') ? DeclarationModifiers.ReadOnly : 0),
           syntax: a ?? syntax,
+          locations: a ? [{ uri, ...spanOf(a.keyword) }] : [],
           isInitOnly: keyword === 'init',
         });
         method.scope = scope;
