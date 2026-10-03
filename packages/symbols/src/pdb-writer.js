@@ -3,6 +3,7 @@ import { writeDocument } from './document-writer.js';
 import { PdbGuids, fail } from './contracts.js';
 import { PortablePdbBuilder } from './pdb-builder.js';
 import { writeSequencePoints } from './sequence-points.js';
+import { writeStateMachines, appendCustomRecords } from './custom-debug-writer.js';
 import { writeImportScopes } from './import-writer.js';
 import { writeMethodScopes } from './scope-writer.js';
 import { lineIndex, sourceSpan } from './source-span.js';
@@ -66,7 +67,7 @@ export function emitPortablePdb(assembly, debug, { embedSources = true, sourceLi
       b.guid(PdbGuids.sourceLink),
       b.blob(utf8(JSON.stringify(sourceLink))),
     ]);
-  cdi.sort((a, c) => a[0] - c[0]);
-  for (const r of cdi) b.add(55, r);
+  writeStateMachines(b, debug.stateMachines ?? [], pe.metadata.counts);
+  appendCustomRecords(b, debug.custom ?? [], pe.metadata.counts, cdi);
   return b.finish(pe.metadata.counts, pe.entryPoint);
 }

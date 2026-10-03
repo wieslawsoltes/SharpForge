@@ -11,6 +11,7 @@ export const PdbGuids = Object.freeze({
   hoistedScopes: '6da9a61e-f8c7-4874-be62-68bc5630df71',
   dynamicLocals: '83c563c4-b4f3-47d5-b824-ba5441477ea8',
   encSlots: '755f52a8-91c5-45be-b4b8-209571e552bd',
+  encStates: '8b78cd68-2ede-420b-980b-e15884b8aaa3',
   encLambdas: 'a643004c-0240-496f-a783-30d64f4979de',
   defaultNamespace: '58b2eab6-209f-4e4e-a22c-b2d0f910c782',
   compilationOptions: 'b5feec05-8cd0-4a83-96da-466284bb4bd8',

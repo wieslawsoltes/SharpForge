@@ -1,7 +1,7 @@
 import { Reader, readMetadata, token, text, decodeCoded } from '@sharpforge/cil';
 import { PdbGuids, fail, guidString } from './contracts.js';
 import { hex } from './hash.js';
-import { inflateRaw } from './deflate.js';
+import { readCustomDebugInformation } from './custom-debug.js';
 import { readSequencePoints } from './sequence-points.js';
 import { decodeConstant } from './constant-reader.js';
 import { rejectUnsupportedSymbolFormat } from './symbol-format.js';
@@ -140,53 +140,11 @@ export function readPortablePdb(input, { maxBytes = 64 * 1024 * 1024, maxSourceB
       kind: guid(r[1]),
       bytes: md.blob(r[2]).slice(),
     };
+    Object.assign(c, readCustomDebugInformation(c.kind, c.bytes, { maxBytes, maxSourceBytes }));
     if (c.kind === PdbGuids.embeddedSource) {
-      const er = new Reader(c.bytes),
-        size = er.i32();
-      if (size < 0 || size > maxSourceBytes) fail('Invalid embedded source size');
-      const content = er.take(er.end - er.position);
-      if (content.length > maxSourceBytes) fail('Embedded source size exceeds budget');
-      c.source = size ? inflateRaw(content, size, maxSourceBytes) : content.slice();
       if (c.parent >>> 24 !== 48 || !documents[(c.parent & 0xffffff) - 1])
         fail('Embedded source parent is not a document');
       documents[(c.parent & 0xffffff) - 1].embedded = c.source;
-    } else if (c.kind === PdbGuids.sourceLink) {
-      try {
-        c.sourceLink = JSON.parse(text(c.bytes));
-      } catch {
-        fail('Invalid Source Link JSON');
-      }
-      if (
-        !c.sourceLink ||
-        typeof c.sourceLink.documents !== 'object' ||
-        Array.isArray(c.sourceLink.documents) ||
-        !c.sourceLink.documents
-      )
-        fail('Invalid Source Link document map');
-      for (const [k, v] of Object.entries(c.sourceLink.documents))
-        if (typeof v !== 'string' || k.split('*').length > 2 || v.split('*').length > 2)
-          fail('Invalid Source Link mapping');
-    } else if (c.kind === PdbGuids.asyncSteps) {
-      const ar = new Reader(c.bytes);
-      c.catchHandlerOffset = ar.u32() - 1;
-      c.awaits = [];
-      while (ar.position < ar.end)
-        c.awaits.push({ yieldOffset: ar.u32(), resumeOffset: ar.u32(), resumeMethod: token(6, ar.compressed()) });
-    } else if (c.kind === PdbGuids.hoistedScopes) {
-      if (c.bytes.length % 8) fail('Malformed hoisted scopes');
-      const hr = new Reader(c.bytes);
-      c.scopes = [];
-      while (hr.position < hr.end) {
-        const start = hr.u32(),
-          length = hr.u32();
-        c.scopes.push({ start, end: start + length });
-      }
-    } else if (c.kind === PdbGuids.defaultNamespace) c.namespace = text(c.bytes);
-    else if (c.kind === PdbGuids.compilationOptions) {
-      const vals = text(c.bytes).split('\0');
-      if (vals.at(-1) === '') vals.pop();
-      if (vals.length % 2) fail('Invalid compilation options');
-      c.options = Object.fromEntries(Array.from({ length: vals.length / 2 }, (_, i) => [vals[i * 2], vals[i * 2 + 1]]));
     }
     return c;
   });

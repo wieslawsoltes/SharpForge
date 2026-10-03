@@ -41,3 +41,13 @@ for SF-A13-T01.8; it must pass before interoperability is claimed.
 Known Windows PDB MSF 7.00/2.00 and legacy CodeView NB09/NB10/NB11 inputs fail
 with `SymbolError.code === 'SF_SYMBOL_UNSUPPORTED_FORMAT'` and a descriptive
 `format`. They are not parsed as corrupt Portable PDB metadata.
+
+`readCustomDebugInformation(kind, bytes, limits)` and
+`writeCustomDebugInformation(kind, record)` expose bounded CDI codecs. EnC slot
+maps use `slots` (`kind: null` for a temporary); lambda maps expose
+`methodOrdinal`, `closures` and `lambdas`; state maps expose `states` with signed
+`stateNumber`, `syntaxOffset` and `relativeOrdinal`. The optional
+`syntaxOffsetBaseline` preserves Roslyn's encoded baseline. Unknown CDI kinds
+retain `bytes`. A supplied `bytes` property requests exact raw preservation.
+`debug.custom` accepts records with `parent` metadata tokens and `kind` GUIDs;
+`debug.stateMachines` accepts `moveNext`/`kickoff` MethodDef token pairs.

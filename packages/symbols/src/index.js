@@ -9,3 +9,4 @@ export { sourceSpan } from './source-span.js';
 export { readDebugDirectory, attachPortablePdb } from './debug-directory.js';
 export { loadSymbols } from './symbol-loader.js';
 export { verifySource, verifySourceAsync, sourceLinkUrl, bindSources } from './source-binding.js';
+export { readCustomDebugInformation, writeCustomDebugInformation } from './custom-debug.js';
