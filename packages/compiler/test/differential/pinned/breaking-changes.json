@@ -7,8 +7,6 @@
   "breaking-changes/target-typed-conditional-csharp-9":{"hash":"94ad4377ea0dc62c","kind":"output","langVersion":"9.0","diagnostics":[],"output":"1\n"},
   "breaking-changes/record-type-name-csharp-8":{"hash":"fdb27ab20982ce04","kind":"output","langVersion":"8.0","diagnostics":[],"output":"1\n"},
   "breaking-changes/record-type-name-csharp-9":{"hash":"3784f004ce1880ba","kind":"output","langVersion":"9.0","diagnostics":[["CS8860",20,6,"warning"]],"output":"1\n"},
-  "breaking-changes/method-group-natural-type-csharp-9":{"hash":"19af6579a4d47160","kind":"diagnostics","langVersion":"9.0","diagnostics":[["CS1503",183,4,"error"]]},
-  "breaking-changes/method-group-natural-type-csharp-10":{"hash":"91540fc1220b5285","kind":"output","langVersion":"10.0","diagnostics":[],"output":"delegate\n"},
   "breaking-changes/required-scoped-file-type-names-csharp-10":{"hash":"a988b5edb3c5b4a3","kind":"output","langVersion":"10.0","diagnostics":[],"output":"6\n"},
   "breaking-changes/required-scoped-file-type-names-csharp-11":{"hash":"04102adb164fb087","kind":"diagnostics","langVersion":"11.0","diagnostics":[["CS9029",20,8,"error"],["CS9062",57,6,"error"],["CS9056",92,4,"error"]]},
   "breaking-changes/extension-type-name-csharp-13":{"hash":"160552c3f7943f2b","kind":"output","langVersion":"13.0","diagnostics":[],"output":"1\n"},

@@ -180,7 +180,8 @@ export const BodyBinding = Base =>
             member.writes = (member.writes ?? 0) + 1;
             if (!(value.constantValue || value.literal || value.kind === 'Default')) member.nonConstantWrite = true;
           }
-          if (member.kind === SymbolKind.Property && !member.isAutoProperty) this.reportAt(member, 'CS8050');
+          // An interface property with an initializer has a diagnostic of its own (CS8053, binder/member-bodies.js).
+          if (member.kind === SymbolKind.Property && !member.isAutoProperty && type.typeKind !== TypeKind.Interface) this.reportAt(member, 'CS8050');
           this.bound.set(member, { kind: 'Initializer', syntax: init, expression: value, binder });
         }
       }

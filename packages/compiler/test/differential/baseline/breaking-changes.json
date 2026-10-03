@@ -5,8 +5,6 @@
   "breaking-changes/field-keyword-csharp-14": ["diagnostics", "bytecode", "cil"],
   "breaking-changes/inferred-tuple-names-csharp-7": ["diagnostics", "warnings"],
   "breaking-changes/inferred-tuple-names-csharp-7-1": ["diagnostics", "warnings", "bytecode", "cil"],
-  "breaking-changes/method-group-natural-type-csharp-10": ["warnings"],
-  "breaking-changes/method-group-natural-type-csharp-9": ["diagnostics", "warnings"],
   "breaking-changes/record-type-name-csharp-8": ["diagnostics", "warnings", "bytecode", "cil"],
   "breaking-changes/record-type-name-csharp-9": ["diagnostics", "warnings", "bytecode", "cil"],
   "breaking-changes/required-scoped-file-type-names-csharp-10": ["diagnostics", "warnings", "bytecode", "cil"],

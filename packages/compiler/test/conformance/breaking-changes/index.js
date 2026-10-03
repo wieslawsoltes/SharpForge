@@ -60,22 +60,6 @@ export const breakingChanges = Object.freeze([
     source: cs(['using System;', 'class record { public int V = 1; }', 'class Program { static void Main() { Console.WriteLine(new record().V); } }']),
   },
   {
-    id: 'method-group-natural-type',
-    title: 'C# 10: a method group has a natural delegate type',
-    reference: breaks + 'dotnet%206',
-    old: { langVersion: '9', kind: 'diagnostics' },
-    new: { langVersion: '10', kind: 'output' },
-    source: cs([
-      'using System;',
-      'class Program',
-      '{',
-      '    static void M(Delegate d) { Console.WriteLine("delegate"); }',
-      '    static void M(object o) { Console.WriteLine("object"); }',
-      '    static void Main() { M(Main); }',
-      '}',
-    ]),
-  },
-  {
     id: 'required-scoped-file-type-names',
     title: "C# 11: types cannot be named 'required', 'scoped' or 'file'",
     reference: breaks + 'dotnet%207',

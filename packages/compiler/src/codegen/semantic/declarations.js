@@ -4,6 +4,7 @@
  * Bodies are produced later (generator.js); this pass only fixes names, slots and signatures so that bodies can
  * refer to members declared after them.
  */
+import { fileLocalClassName } from '../../binder/csharp11.js';
 import { SymbolKind, TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { backingFieldName } from '../../lowering/generated-names.js';
@@ -32,7 +33,10 @@ export const Declarations = Base =>
       for (const type of this.classes.keys()) this.declareMembers(type);
     }
     classNameOf(type) {
-      return type.toDisplayString();
+      if (!type.isFileLocal) return type.toDisplayString();
+      // Two files may declare a file-local type of the same name: the image class is named after the file too.
+      const uri = type.declarations?.[0]?.uri;
+      return fileLocalClassName(type, this.files.findIndex(file => file.source.uri === uri));
     }
     /** Classes the runtime can represent today: no base class but object and no interface that needs dispatch. */
     checkClassShape(type) {
@@ -164,7 +168,8 @@ export const Declarations = Base =>
     }
     /** The image method of a source method symbol. */
     methodOf(symbol, syntax = null) {
-      const record = this.methods.get(symbol) ?? this.records.methodOf(definitionOf(symbol), syntax);
+      // The key is resolved here so that a construction declared by this reference is reported at the reference.
+      const record = this.methods.get(this.generics.keyOf(symbol, syntax)) ?? this.records.methodOf(definitionOf(symbol), syntax);
       if (!record && definitionOf(symbol).isExtern)
         return this.unsupported(`a call to the extern method '${symbol.toDisplayString()}' (the runtime has no platform invoke)`, syntax);
       return record ?? this.unsupported(`method '${symbol.toDisplayString()}'`, syntax);

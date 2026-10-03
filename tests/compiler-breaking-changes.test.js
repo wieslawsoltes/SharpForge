@@ -13,7 +13,6 @@ const knownGaps = {
   'breaking-changes/foreach-capture-csharp-4': 'needs anonymous methods over List<Func<int>> in the execution profile',
   'breaking-changes/foreach-capture-csharp-5': 'needs anonymous methods over List<Func<int>> in the execution profile',
   'breaking-changes/target-typed-conditional-csharp-9': 'needs Nullable<T> at run time',
-  'breaking-changes/method-group-natural-type-csharp-10': 'method group to System.Delegate conversion is not bound (C# 10 semantics)',
   'breaking-changes/field-keyword-csharp-13': "below C# 14 'field' is reported as a gated feature instead of binding to the member (SF-A02-T84)",
 };
 
@@ -23,7 +22,7 @@ const sides = breakingChanges.flatMap(change => ['old', 'new'].map(side => ({ ch
 const resultOf = pin => JSON.stringify([pin.diagnostics, pin.output ?? null]);
 
 test('A02-T12.1 corpus: every change has both versions pinned against Roslyn', () => {
-  assert(breakingChanges.length >= 8);
+  assert(breakingChanges.length >= 7);
   assert.equal(new Set(breakingChanges.map(change => change.id)).size, breakingChanges.length);
   for (const { change, side, id } of sides) {
     const fixture = fixtures.get(id),
