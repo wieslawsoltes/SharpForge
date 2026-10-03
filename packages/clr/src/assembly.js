@@ -31,7 +31,9 @@ export class RuntimeModule {
     this.#assembly = assembly;
     this.#pe = pe;
     const moduleRow = pe.metadata.row(1);
-    this.name = pe.metadata.string(moduleRow[1]);
+    this.scopeName = pe.metadata.string(moduleRow[1]);
+    // Stream-loaded assemblies have no filesystem module name, matching CoreCLR Module.Name.
+    this.name = '<Unknown>';
     this.moduleVersionId = guidText(pe.metadata.guid(moduleRow[2]));
     Object.freeze(this);
   }

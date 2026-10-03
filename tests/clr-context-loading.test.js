@@ -68,6 +68,7 @@ test('CLR 50-assembly load keeps method bodies lazy and caches each requested bo
   for (let index = 0; index < 50; index++) assemblies.push(await context.loadFromStream(contextFixture(`Library${index}`)));
   assert.equal(assemblies.reduce((total, assembly) => total + assembly.manifestModule.methodBodyReadCount, 0), 0);
   const module = assemblies[0].manifestModule;
+  assert.equal(module.scopeName, 'Library0.dll');
   const first = module.methodBody(0x06000001);
   first.code.fill(0);
   assert.ok(module.methodBody(0x06000001).code.some(byte => byte !== 0));
