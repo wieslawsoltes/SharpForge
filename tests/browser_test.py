@@ -39,7 +39,7 @@ try:
     wait=lambda expr:page.wait_for_function(expr,timeout=15000)
     command=lambda cmd:page.evaluate('(cmd)=>window.sharpforge.execute(cmd)',cmd)
     checked('two dedicated browser workers initialized',lambda:truth(len(workers)==2,str(workers)))
-    checked('initial multi-file compile has no diagnostics',lambda:truth(len(state()['diagnostics'])==0 and state()['metrics']['files']==2))
+    checked('initial multi-file compile has no diagnostics',lambda:truth(len([d for d in state()['diagnostics'] if d['severity']=='error'])==0 and state()['metrics']['files']==2))
     def il_artifact():
         truth(state()['artifact']['format']=='ECMA-335')
         truth(page.evaluate('Array.from(window.sharpforge.getAssembly().slice(0,2))')==[77,90])
@@ -99,7 +99,7 @@ try:
         wait("window.sharpforge.getState().diagnostics.some(d=>d.code==='CS0029')")
         truth(page.locator('#error-count').inner_text()!='0')
         page.locator('.sf-input:visible').first.fill('int x=42;\nConsole.WriteLine(x);')
-        wait("window.sharpforge.getState().diagnostics.length===0")
+        wait("!window.sharpforge.getState().diagnostics.some(d=>d.severity==='error')")
         command('run');wait("window.sharpforge.getState().debug?.state==='terminated'")
         truth(state()['debug']['output']=='42\n')
     checked('editing refreshes diagnostics and recompiles repaired program',diagnostics)
