@@ -2,6 +2,7 @@ import {parse} from '@sharpforge/syntax';
 import {SourceText} from '@sharpforge/text';
 import {SemanticModel} from '@sharpforge/compiler';
 import {resourceSourceCheck, resourceSourceFail, resourceSourceLocation} from './resource-source-errors.js';
+import {sourceSyntaxCancellationToken} from './source-cancellation.js';
 
 const dictionaryType = 'Microsoft.UI.Xaml.ResourceDictionary';
 const loaderName = 'Microsoft.UI.Xaml.Markup.XamlReader.Load';
@@ -29,6 +30,7 @@ export function discoverResourceSource(input, options = {}) {
   const sources = input.map(source => ({...source}));
   let characters = 0;
   const uris = new Set();
+  const cancellationToken = sourceSyntaxCancellationToken(options.signal);
   const parsed = sources.map(source => {
     resourceSourceCheck(options.signal);
     if (typeof source.uri !== 'string' || !/\.cs$/i.test(source.uri) || uris.has(source.uri) || typeof source.text !== 'string') {
@@ -39,7 +41,7 @@ export function discoverResourceSource(input, options = {}) {
     if (source.text.length > (options.maxCharacters ?? 2_000_000) || characters > (options.maxTotalCharacters ?? 8_000_000)) {
       resourceSourceFail('SFD1881', 'Resource source character limit exceeded.', {uri: source.uri});
     }
-    const result = parse(new SourceText(source.text, source.uri, source.version ?? 0), undefined, {cancellationToken: options.signal});
+    const result = parse(new SourceText(source.text, source.uri, source.version ?? 0), undefined, {cancellationToken});
     const diagnostic = result.diagnostics.find(item => item.severity === 'error');
     if (diagnostic) resourceSourceFail('SFD1880', diagnostic.message, {
       uri: source.uri, span: {start: diagnostic.start, length: diagnostic.length}});

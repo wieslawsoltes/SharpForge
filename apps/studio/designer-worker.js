@@ -26,6 +26,7 @@ export function registerDesignerWorker(protocol, {maxCachedDocuments = 4, maxCac
   };
   const serializePlan = plan => ({
     success: plan.compilationSucceeded !== false,
+    compilationSucceeded: plan.compilationSucceeded,
     text: plan.text, edits: plan.edits, changes: plan.changes, sources: plan.sources, expectedSources: plan.expectedSources,
     document: plan.document, analysis: designSourceSnapshot(plan.analysis),
     structural: plan.structural, warnings: plan.warnings, diagnostics: plan.diagnostics ?? []
@@ -59,7 +60,8 @@ export function registerDesignerWorker(protocol, {maxCachedDocuments = 4, maxCac
         ...params.options, currentSources: params.files, requireCompilation: true, signal: params.signal
       });
       return {...serializePlan(plan), navigation: plan.navigation, existing: plan.existing,
-        readOnly: plan.readOnly, handler: plan.handler};
+        navigationAvailable: !!params.navigateOnly && !!plan.existing && !plan.changes.length,
+        readOnly: plan.readOnly || plan.compilationSucceeded === false, handler: plan.handler};
     }
   };
   const unregister = protocol.registerHandler('designAnalyze', async (params, _method, context = {}) => {

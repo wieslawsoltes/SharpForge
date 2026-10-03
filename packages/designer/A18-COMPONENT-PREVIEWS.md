@@ -10,6 +10,7 @@ errors. A visual preview does not remove, downgrade, or convert either error int
 | Closed supported construction | Required | Enabled | Compiler-validated atomic transaction |
 | Proven direct inherited component | False, errors retained | Read-only | Blocked |
 | Closed factory composing proven components | False, errors retained | Read-only | Blocked |
+| Closed construction with only owned lowered-event profile errors | False, errors retained | Read-only; existing handlers navigate | Blocked |
 | Guarded native resource class | False, errors retained | Staging and export enabled | Blocked pending native-target qualification |
 | Other errors or unproven construction | False | Last accepted preview retained | Blocked |
 
@@ -57,13 +58,21 @@ source refresh through `load`, and explicit unlock remain available. Studio sets
 
 `DesignSyncProtocol.accept` retains its original strict validation. The separate
 `acceptPreview(token, {document, success: false, capability, diagnostics, ...versions})` accepts only a source-read token and a
-capability that prohibits source writes. Component/composition modes require read-only authoring. Resource mode requires
+capability that prohibits source writes. Component/composition/event modes require read-only authoring. Resource mode requires
 `kind: 'resources'`, `readOnly: false`, and `stageDesign: true`. Errors continue to keep the synchronization state blocked, while the
 source baseline and visible preview advance to the accepted revision. Source-write tokens cannot use this route. Repairing C# to a
 supported compilation takes the normal strict acceptance route and unlocks authoring.
 
-Existing handler navigation in a read-only component uses the retained subscription location only when every source URI, text,
-version, and edit permission still matches the analyzed snapshot. Navigation never creates a handler or source transaction.
+`designProtectedEventPreviewCapability(rawAnalysis)` also permits a narrowly defined `kind: 'events'` preview. Every compiler error must
+be the exact `SF2200` framework-events-with-lowered-delegates profile diagnostic, and its URI/span must fit an independently owned event
+statement in the selected construction. There must be at least one protected subscription. The construction cannot contain project
+nodes, dynamic properties/collections, detached nodes, or other handwritten statements. At most 4096 subscriptions are considered.
+Other C# errors, other profile errors, and diagnostics outside those statements remain barriers. The event handlers are not executed.
+
+Existing handler navigation returns `navigationAvailable: true` separately from compiler `success`. Studio checks the actual worker's
+zero-edit result and current source URI/text/version/permission set before opening the subscription. Failed compilation stays failed,
+and navigation neither accepts a source transaction nor clears blocked status. Hosts without worker services can navigate an exact
+retained source location. Both paths report `existing: true` and preserve the actual compilation result.
 
 ## Cache identity and cancellation
 
@@ -115,6 +124,12 @@ The current integration adds focused source/worker/Studio tests in:
 - `tests/a18-studio-normalized-write.test.js`: the production compiler worker, source services, editor transaction history, and
   Canvas-to-Grid normalized write/undo/redo with retained guide/runtime metadata.
 
-These tests are prepared but intentionally unrun before the single combined validation gate requested for the complete scope.
+The first combined gate exposed the native parser-token versus AbortSignal mismatch and the protected lowered-event profile gap.
+The follow-up adds `tests/a18-source-cancellation-adapter.test.js` and `tests/a18-source-protected-event-preview.test.js`. Native syntax
+tokens retain their polling/deadline behavior; AbortSignal is adapted through the syntax package's exported `CancellationToken`.
+The follow-up regressions cover live/canceled signals, cancellation during parser polling, exact profile/span rejection, protected
+worker navigation with compiler errors retained, and source-repair unlock. Follow-up tests remain pending the next coordinated run.
+
+These tests were prepared before the single combined validation gate requested for the complete scope.
 The compiler-worker tests require the async cancellable transport commit `53653c52`. Browser responsiveness and native WinUI execution
 are separate qualification targets; inherited/native-resource source is not reported as executable on SharpForge's current profile.

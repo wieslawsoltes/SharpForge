@@ -7,4 +7,5 @@ export {DesignSyncProtocol, DesignSyncState} from './source-protocol.js';
 export {retainDesignMetadata} from './source-design-metadata.js';
 export {designInheritancePreviewProfile, designPreviewCapability, wrapDesignPreviewRoot} from './source-preview.js';
 export {designComposedPreviewCapability} from './source-composed-preview.js';
+export {designProtectedEventPreviewCapability} from './source-event-preview.js';
 export {copyDesignSelection, planDesignPaste} from './source-clipboard.js';

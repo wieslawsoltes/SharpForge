@@ -4,6 +4,7 @@ import {SemanticModel} from '@sharpforge/compiler';
 import {frameworkType} from '@sharpforge/framework';
 import {mapDesignInitializers} from './source-initializers.js';
 import {checkSourceCancellation, failSource} from './source-errors.js';
+import {sourceSyntaxCancellationToken} from './source-cancellation.js';
 
 export function isDesignControl(type) {
   return ['control', 'shape', 'window'].includes(frameworkType(type)?.kind);
@@ -37,9 +38,10 @@ export function prepareDesignSources(input, options = {}) {
   if (reusableSourceAnalysis(options.reuseAnalysis, sources, options)) {
     return selectSourceConstruction(options.reuseAnalysis.context, options);
   }
+  const cancellationToken = sourceSyntaxCancellationToken(options.signal);
   const parsedFiles = sources.map(file => {
     checkSourceCancellation(options.signal);
-    return parse(new SourceText(file.text, file.uri, file.version ?? 0), undefined, {cancellationToken: options.signal});
+    return parse(new SourceText(file.text, file.uri, file.version ?? 0), undefined, {cancellationToken});
   });
   const supportedInitializers = new Map(parsedFiles.map(parsed => [parsed.source.uri, mapDesignInitializers(parsed)]));
   const syntaxErrors = parsedFiles.flatMap(parsed => parsed.diagnostics.filter(diagnostic => diagnostic.severity === 'error'
