@@ -82,7 +82,7 @@ export const CallBinding = Base =>
     errorNode(error, args, nameNode, offset = 0) {
       if (error.argument !== undefined && args[error.argument - offset]?.argumentSyntax) {
         const a = args[error.argument - offset].argumentSyntax;
-        return error.code === 'CS1739' || error.code === 'CS1740' || error.code === 'CS1744'
+        return error.code === 'CS1739' || error.code === 'CS1740' || error.code === 'CS1744' || error.code === 'CS8323'
           ? a.nameColon.name
           : error.code === 'CS1620' || error.code === 'CS1615'
             ? a.expression
@@ -265,8 +265,9 @@ export const CallBinding = Base =>
           }
           return { expression: a, parameter: p, refKind: a.refKind };
         }
-        // A typeless target-typed argument (`new()`, a conditional or switch expression, a collection expression) gets its type here.
-        const converts = conversion && !a.hasErrors && (a.type || a.materialize);
+        // A typeless target-typed argument (`new()`, a conditional or switch expression, a collection expression) gets its type
+        // here, and so does a `default` literal: unconverted it would be passed as a null reference.
+        const converts = conversion && !a.hasErrors && (a.type || a.materialize || a.literal === 'default');
         const value = converts ? this.applyConversion(a, result.parameterTypes[i], conversion, a.syntax) : a;
         if (a.form === 'lambda' && !a.hasErrors) this.finishLambda(a, result.parameterTypes[i]);
         return { expression: value, parameter: p, refKind: a.refKind ?? null };
@@ -296,7 +297,7 @@ export const CallBinding = Base =>
       if (receiver && receiver.type?.isValueType === true && !method.isStatic) {
         const passing = receiverPassing(receiver, method, this.variableContext);
         n.receiverPassing = passing.mode;
-        if (passing.warning) this.report(syntax, passing.warning.code, passing.warning.args);
+        if (passing.warning) this.report(nameNode, passing.warning.code, passing.warning.args);
       }
       if (type.isErrorType?.()) n.hasErrors = true;
       return n;

@@ -63,7 +63,7 @@ export const CallTranslation = Base =>
       }
       // A default that was never bound must not silently become zero.
       if (parameter.defaultSyntax && !parameter.defaultBound) return this.unsupported('this optional parameter default', node.syntax);
-      if (value === undefined || value === null) return this.defaultValue(type);
+      if (value === undefined || value === null || value.isNull) return this.defaultValue(type);
       const raw = value.value ?? value;
       if (raw !== null && typeof raw === 'object') return this.unsupported('this optional parameter default', node.syntax);
       return n.literal(typeof raw === 'bigint' ? Number(raw) : raw, type);

@@ -19,6 +19,7 @@ import { TopLevelPrograms } from './binder/top-level.js';
 import { UnusedSymbolWarnings } from './semantic/unused-symbols.js';
 import { AttributeBinding } from './binder/attributes.js';
 import { ObsoleteUses } from './binder/obsolete.js';
+import { SpecialMemberChecks } from './binder/special-members.js';
 import { CallerInfoChecks } from './binder/caller-info.js';
 
 const phases = [
@@ -26,6 +27,7 @@ const phases = [
   MemberDeclarationChecks,
   ConstantBinding,
   AttributeBinding,
+  SpecialMemberChecks,
   CallerInfoChecks,
   BodyBinding,
   TopLevelPrograms,

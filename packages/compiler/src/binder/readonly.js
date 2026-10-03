@@ -28,13 +28,22 @@ export function isEffectivelyReadOnly(method) {
     (method.methodKind === MethodKind.PropertyGet && method.isAutoAccessor === true)
   );
 }
+const hasReadOnlyModifier = syntax => [...(syntax?.modifiers ?? [])].some(token => token.text === 'readonly');
+/** True when the property declaration itself carries `readonly`. */
+const declaredReadOnly = property => (property.modifierWords ?? []).includes('readonly') || hasReadOnlyModifier(property.syntax);
+/** True when a property has a get and a set accessor and each of them carries `readonly`. */
+function everyAccessorDeclaredReadOnly(property) {
+  const accessors = [...(property.syntax?.accessorList?.accessors ?? [])];
+  return accessors.length > 1 && accessors.every(hasReadOnlyModifier);
+}
 /** Declaration diagnostics of a readonly struct and of readonly members. @returns [{code,args,member}] */
 export function checkReadOnlyDeclarations(type) {
   const results = [];
   if (type.typeKind !== TypeKind.Struct) {
-    for (const m of type.getMembers())
-      if (m.kind === SymbolKind.Method && m.isReadOnly && !m.isAccessor && m.methodKind === MethodKind.Ordinary)
-        results.push({ code: 'CS0106', args: ['readonly'], member: m });
+    for (const m of type.getMembers()) {
+      const onMethod = m.kind === SymbolKind.Method && m.isReadOnly && !m.isAccessor && m.methodKind === MethodKind.Ordinary;
+      if (onMethod || (m.kind === SymbolKind.Property && declaredReadOnly(m))) results.push({ code: 'CS0106', args: ['readonly'], member: m });
+    }
     return results;
   }
   for (const m of type.getMembers()) {
@@ -49,11 +58,14 @@ export function checkReadOnlyDeclarations(type) {
       if (m.isStatic) results.push({ code: 'CS8657', args: [m.toDisplayString()], member: m });
       else if (m.methodKind === MethodKind.Constructor) results.push({ code: 'CS0106', args: ['readonly'], member: m });
     }
-    if (m.kind === SymbolKind.Property && (m.modifierWords ?? m.syntax?.modifiers?.map(t => t.text) ?? []).includes('readonly')) {
+    if (m.kind === SymbolKind.Property && declaredReadOnly(m)) {
       m.isReadOnlyMember = true;
       if (m.isStatic) results.push({ code: 'CS8657', args: [m.toDisplayString()], member: m });
       else if (m.isAutoProperty && m.setMethod && !m.setMethod.isInitOnly)
         results.push({ code: 'CS8659', args: [m.toDisplayString()], member: m });
+    } else if (m.kind === SymbolKind.Property && everyAccessorDeclaredReadOnly(m)) {
+      // `readonly` on both accessors says what `readonly` on the property says.
+      results.push({ code: 'CS8661', args: [m.toDisplayString()], member: m });
     }
   }
   return results;
