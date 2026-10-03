@@ -14,7 +14,15 @@ export function reserveIndexed(p, reference, needed, width) {
   // Accept a restored dense snapshot as well as newly constructed indexed collections.
   if (!previous) next.fill(ACTIVE_SLOT, 0, count(p, reference));
   const storage = makeArray(p, 'int', next);
-  p.heap.withRoots([storage], () => p.set(reference, '$slots', storage));
+  p.heap.withRoots([storage], () => {
+    // Old dense snapshots may need allocating property writes. Publish the slot layout last,
+    // so a failed metadata attachment still leaves every dense entry visible to readers.
+    if (!previous) {
+      p.set(reference, '$used', p.get(reference, '$used', count(p, reference)));
+      p.set(reference, '$free', p.get(reference, '$free', -1));
+    }
+    p.set(reference, '$slots', storage);
+  });
 }
 
 export function insertIndexed(p, reference, values, map) {
@@ -53,6 +61,7 @@ export function removeIndexed(p, reference, lookup, width) {
 export function clearIndexed(p, reference, width) {
   const used = p.get(reference, '$used', count(p, reference));
   if (!used) return;
+  if (!p.get(reference, '$slots')) reserveIndexed(p, reference, used, width);
   const map = indexMap(p, reference, width);
   for (let index = 0; index < used * width; index++) write(p, reference, index, null);
   const size = count(p, reference);
