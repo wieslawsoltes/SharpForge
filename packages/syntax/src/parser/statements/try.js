@@ -17,10 +17,7 @@ export const tryStatementMethods = {
           type = this.type();
         declaration = this.n('CatchDeclaration', open, type, this.isId() ? this.take('IdentifierToken') : null, this.expect(')'));
       }
-      if (this.atWord('when') && this.peek().kind === '(') {
-        this.feature('ExceptionFilter', this.current);
-        filter = this.n('CatchFilterClause', this.takeWord('when'), this.take(), this.expression(), this.expect(')'));
-      }
+      if (this.atWord('when')) filter = this.catchFilter();
       catches.push(this.n('CatchClause', catchKeyword, declaration, filter, this.block()));
     }
     const final = this.at('finally') ? this.n('FinallyClause', this.take(), this.block()) : null;
