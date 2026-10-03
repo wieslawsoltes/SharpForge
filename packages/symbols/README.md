@@ -1,6 +1,6 @@
 # @sharpforge/symbols
 
-Portable PDB read/write, embedded symbols, source validation and PE binding. Pure ES modules; depends on @sharpforge/cil. Main exports include readPortablePdb, emitPortablePdb, loadSymbols, attachPortablePdb, bindSources, readDebugDirectory, sourceLinkUrl and SHA/DEFLATE helpers.
+Portable PDB read/write, embedded symbols, source validation and PE binding. Pure ES modules; depends on @sharpforge/cil and @sharpforge/archive. Main exports include readPortablePdb, emitPortablePdb, loadSymbols, attachPortablePdb, bindSources, readDebugDirectory, sourceLinkUrl and SHA/DEFLATE helpers.
 
 ```js
 import {loadSymbols,bindSources} from '@sharpforge/symbols';
@@ -9,7 +9,7 @@ const binding=bindSources(symbols,{'/src/Program.cs':sourceBytes});
 // Only checksum-verified source enters binding.sources.
 ```
 
-All eight debug tables are parsed; unknown CDI retains raw bytes. PE CodeView/embedded identity and SHA256 checksum are checked. SHA1/SHA256 automatic source binding; SHA384/512 through verifySourceAsync. Source Link does not implicitly access the network. Writer interoperability with native Visual Studio/CLR has not been qualified. See the source distribution's docs/advanced-debugging-winui.md and tests/portable-pdb.test.js for contracts, limits and provenance.
+All eight debug tables are parsed; unknown CDI retains raw bytes. PE CodeView/embedded identity and SHA256/SHA384/SHA512 checksums are checked. SHA1/SHA256 automatic source binding; SHA384/512 through verifySourceAsync. Source Link does not implicitly access the network. Writer interoperability with native Visual Studio/CLR has not been qualified. See the source distribution's docs/advanced-debugging-winui.md and tests/portable-pdb.test.js for contracts, limits and provenance.
 
 Implementation is separated into sequence point codecs, metadata reader and builder, PDB writer, PE debug directory, identity binding and source binding modules. The package entry point remains the public contract; consumers do not import these internal modules directly.
 
@@ -34,9 +34,10 @@ language column and no vendor column. References: the
 [Portable PDB v1.0 specification](https://github.com/dotnet/runtime/blob/main/docs/design/specs/PortablePdb-Metadata.md)
 and [SRM document-name encoder](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Reflection.Metadata/src/System/Reflection/Metadata/Ecma335/MetadataBuilder.Heaps.cs).
 
-The new import/constant/document writer batch has not yet been validated with
-System.Reflection.Metadata. The independent native readback gate remains work
-for SF-A13-T01.8; it must pass before interoperability is claimed.
+The independent [native gate](interop/README.md) checks emitted imports, constants,
+document-name bytes, hashes and debug directories with System.Reflection.Metadata.
+Its checked-in report records the exact tools and cases; this qualification does
+not cover native debugger behavior or the rest of the A13 workstream.
 
 Known Windows PDB MSF 7.00/2.00 and legacy CodeView NB09/NB10/NB11 inputs fail
 with `SymbolError.code === 'SF_SYMBOL_UNSUPPORTED_FORMAT'` and a descriptive
@@ -74,5 +75,19 @@ file pointers. `checksum` accepts `true` (SHA256), `false`, or SHA256/SHA384/SHA
 following any PE mutation. `readDebugDirectory(assembly, { maxBytes })` exposes an
 embedded entry's `pdb` through a lazy, per-entry cached getter; declared sizes are
 checked before decompression. `loadSymbols` applies the same budget and verifies
-all three standardized checksum algorithms. Document `pdbOffset` records the
+all three standardized checksum algorithms. The parsed result's `pdbOffset` records the
 zero-based #Pdb stream position used to zero the identity while hashing.
+
+| Capability | Writer and reader coverage |
+| --- | --- |
+| Documents | Deduplicated names; SHA-1/256/384/512; arbitrary language GUIDs |
+| Locals and imports | Lexical scopes, primitive/raw constants, import kinds 1–9 |
+| State machines and CDI | Async/iterator links, EnC maps, seven compilation records, raw unknown records |
+| PE binding | CodeView, reproducible, checksums, embedded PDB, existing entries/overlays |
+| Native formats | Windows MSF and legacy CodeView detected with explicit unsupported errors |
+
+The native gate and `tests/a13-01-*.test.js` provide runnable writer examples.
+Recorded validation covers Node 24 on macOS arm64 and native SRM on .NET 10 with
+Roslyn 4.8/5.3. Browser, Windows/Linux host, Rust/Wasm and Visual Studio debugger
+qualification were not run for this batch. The symbols library has no native
+execution backend and does not by itself establish VM execution parity.

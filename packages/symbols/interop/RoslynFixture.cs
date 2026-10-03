@@ -5,6 +5,8 @@ using Text = System.String;
 
 namespace Interop;
 
+public enum DeclarationOnly { First, Second }
+
 public class Primary(int value)
 {
     public int Value => value;

@@ -22,6 +22,9 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dotnet = process.env.DOTNET_PATH ?? 'dotnet';
 const outputIndex = process.argv.indexOf('--output');
 const output = resolve(outputIndex >= 0 ? process.argv[outputIndex + 1] : join(root, 'artifacts/pdb-srm/results.json'));
+const captureIndex = process.argv.indexOf('--capture-fixtures');
+const capture = captureIndex >= 0 ? resolve(process.argv[captureIndex + 1]) : null;
+const captured = [];
 const allowSingle = process.argv.includes('--allow-single-compiler');
 const run = (command, args, options = {}) => {
   const result = spawnSync(command, args, {
@@ -61,9 +64,41 @@ function verifyNative(native, symbols, assembly) {
     native.constants.map((constant) => constant.signature.toLowerCase()),
     symbols.constants.map((constant) => Buffer.from(constant.signature).toString('hex')),
   );
-  assert.equal(native.scopes.length, symbols.scopes.length);
-  assert.equal(native.methods.length, symbols.methods.length);
-  assert.equal(native.custom.length, symbols.custom.length);
+  assert.deepEqual(
+    native.scopes,
+    symbols.scopes.map((scope) => ({
+      method: scope.methodToken,
+      StartOffset: scope.start,
+      Length: scope.end - scope.start,
+      importScope: scope.importScope,
+      variables: scope.variables.map((variable) => variable.id),
+      constants: scope.constants.map((constant) => constant.id),
+    })),
+  );
+  assert.deepEqual(
+    native.methods,
+    symbols.methods.map((method) => ({
+      token: method.token,
+      kickoff: symbols.stateMachines.find((state) => state.moveNext === method.token)?.kickoff ?? 0x06000000,
+      points: method.points.map((point) => ({
+        Offset: point.offset,
+        document: point.document,
+        StartLine: point.startLine,
+        StartColumn: point.startColumn,
+        EndLine: point.endLine,
+        EndColumn: point.endColumn,
+        IsHidden: point.hidden,
+      })),
+    })),
+  );
+  assert.deepEqual(
+    native.custom.map((record) => ({ ...record, bytes: record.bytes.toLowerCase() })),
+    symbols.custom.map((record) => ({
+      parent: record.parent,
+      kind: record.kind,
+      bytes: Buffer.from(record.bytes).toString('hex'),
+    })),
+  );
   if (assembly) assert.equal(loadSymbols(assembly, symbols.bytes).idHex, symbols.idHex);
   for (const document of native.documents) {
     const expected = symbols.documents[document.id - 1];
@@ -176,58 +211,111 @@ async function readback(tool) {
   results.push({ name: 'SRM document name byte identity', status: 'passed' });
 }
 
+async function compileFixture(compiler, language, references, fixtureName, sourceLink) {
+  const source = join(temporary, 'RoslynFixture.' + language);
+  const sourceText = await readFile(join(root, 'packages/symbols/interop/RoslynFixture.' + language), 'utf8');
+  await writeFile(source, sourceText.replaceAll('\r\n', '\n'));
+  const compilerPath = language === 'cs' ? compiler.path : join(dirname(compiler.path), 'vbc.dll');
+  const pePath = join(temporary, fixtureName + '.dll');
+  const pdbPath = join(temporary, fixtureName + '.pdb');
+  const response = join(temporary, fixtureName + '.rsp');
+  const args = [
+    '/nologo',
+    '/target:library',
+    '/debug:portable',
+    '/deterministic+',
+    '/optimize-',
+    ...(language === 'cs'
+      ? ['/langversion:12']
+      : ['/rootnamespace:RootSymbols', '/nostdlib', '/vbruntime*', '/define:_MYTYPE=\"Empty\"']),
+    '/sourcelink:' + sourceLink,
+    '/out:' + pePath,
+    ...(language === 'cs' ? ['/pdb:' + pdbPath] : []),
+    '/embed:' + source,
+    '/pathmap:' + temporary + '=/src',
+    ...references.map((reference) => '/reference:' + reference),
+    source,
+  ];
+  await writeFile(response, args.map((argument) => '"' + argument.replaceAll('"', '\\"') + '"').join('\n'));
+  run(dotnet, [compilerPath, '@' + response]);
+  return { source, compilerPath, pePath, pdbPath };
+}
+
+async function verifyFixture(tool, compiler, language, paths, fixtureName) {
+  const { source, compilerPath, pePath, pdbPath } = paths;
+  const version = run(dotnet, [compilerPath, '/version']);
+  const pdb = await readFile(pdbPath);
+  const assembly = await readFile(pePath);
+  const symbols = readPortablePdb(pdb);
+  verifyNative(JSON.parse(run(dotnet, [tool, 'inspect', pdbPath, pePath])), symbols, assembly);
+  const kinds = [];
+  const records = [];
+  for (const record of symbols.custom) {
+    kinds.push(record.kind);
+    if (record.kind === PdbGuids.embeddedSource) continue;
+    const structured = readCustomDebugInformation(record.kind, record.bytes);
+    records.push({ kind: record.kind, parent: record.parent, bytes: Buffer.from(record.bytes).toString('hex') });
+    assert(
+      equalBytes(writeCustomDebugInformation(record.kind, structured), record.bytes),
+      'CDI mismatch: ' + record.kind,
+    );
+  }
+  assert(kinds.includes(PdbGuids.sourceLink), 'Source Link fixture missing');
+  assert(kinds.includes(PdbGuids.typeDocuments), 'Declaration-only type document fixture missing');
+  if (language === 'vb') {
+    assert.equal(symbols.custom.find((record) => record.kind === PdbGuids.defaultNamespace)?.namespace, 'RootSymbols');
+  }
+  captured.push({
+    compiler: compiler.name,
+    version,
+    language,
+    compilerSha256: digest(await readFile(compilerPath)),
+    pdbSha256: digest(pdb),
+    sourceSha256: digest(await readFile(source)),
+    records,
+  });
+  const rebound = attachPortablePdb(assembly, pdb, { embedded: true });
+  const reboundPath = join(temporary, fixtureName + '-rebound.dll');
+  await writeFile(reboundPath, rebound);
+  verifyNative(JSON.parse(run(dotnet, [tool, 'inspect', pdbPath, reboundPath])), symbols, rebound);
+  if (language === 'cs') await verifyStateWriter(tool, assembly, symbols, fixtureName);
+  results.push({
+    name: compiler.name + ' ' + language,
+    status: 'passed',
+    compilerVersion: version,
+    compilerSha256: digest(await readFile(compilerPath)),
+    pdbSha256: digest(pdb),
+    kinds: [...new Set(kinds)].sort(),
+  });
+  return version;
+}
+
+async function verifyStateWriter(tool, assembly, symbols, fixtureName) {
+  assert(symbols.stateMachines.length >= 2, 'Expected async and iterator pairs');
+  const emitted = emitPortablePdb(assembly, {
+    stateMachines: symbols.stateMachines,
+    custom: [{ parent: token(0, 1), kind: PdbGuids.sourceLink, sourceLink: symbols.sourceLink }],
+  });
+  const pdbPath = join(temporary, fixtureName + '-state-writer.pdb');
+  const pePath = join(temporary, fixtureName + '-state-writer.dll');
+  const rebound = attachPortablePdb(assembly, emitted.bytes);
+  await writeFile(pdbPath, emitted.bytes);
+  await writeFile(pePath, rebound);
+  const written = readPortablePdb(emitted.bytes);
+  assert.deepEqual(written.stateMachines, symbols.stateMachines);
+  verifyNative(JSON.parse(run(dotnet, [tool, 'inspect', pdbPath, pePath])), written, rebound);
+}
+
 async function roslynFixtures(tool, compilers, references) {
-  const source = join(temporary, 'RoslynFixture.cs');
-  await cp(join(root, 'packages/symbols/interop/RoslynFixture.cs'), source);
+  const sourceLink = join(temporary, 'source-link.json');
+  await writeFile(sourceLink, JSON.stringify({ documents: { '/src/*': 'https://example.test/source/*' } }));
   const versions = new Set();
   for (const [index, compiler] of compilers.entries()) {
-    const version = run(dotnet, [compiler.path, '/version']);
-    versions.add(version);
-    const pePath = join(temporary, 'roslyn-' + index + '.dll');
-    const pdbPath = join(temporary, 'roslyn-' + index + '.pdb');
-    const response = join(temporary, 'compiler-' + index + '.rsp');
-    const args = [
-      '/nologo',
-      '/target:library',
-      '/debug:portable',
-      '/deterministic+',
-      '/optimize-',
-      '/langversion:12',
-      '/out:' + pePath,
-      '/pdb:' + pdbPath,
-      '/embed:' + source,
-      '/pathmap:' + temporary + '=/src',
-      ...references.map((reference) => '/reference:' + reference),
-      source,
-    ];
-    await writeFile(response, args.map((argument) => '"' + argument + '"').join('\n'));
-    run(dotnet, [compiler.path, '@' + response]);
-    const pdb = await readFile(pdbPath);
-    const assembly = await readFile(pePath);
-    const symbols = readPortablePdb(pdb);
-    verifyNative(JSON.parse(run(dotnet, [tool, 'inspect', pdbPath, pePath])), symbols, assembly);
-    const kinds = [];
-    for (const record of symbols.custom) {
-      kinds.push(record.kind);
-      if ([PdbGuids.embeddedSource, PdbGuids.sourceLink].includes(record.kind)) continue;
-      const structured = readCustomDebugInformation(record.kind, record.bytes);
-      assert(
-        equalBytes(writeCustomDebugInformation(record.kind, structured), record.bytes),
-        'CDI mismatch: ' + record.kind,
-      );
+    for (const language of ['cs', 'vb']) {
+      const fixtureName = 'roslyn-' + index + '-' + language;
+      const paths = await compileFixture(compiler, language, references, fixtureName, sourceLink);
+      versions.add(await verifyFixture(tool, compiler, language, paths, fixtureName));
     }
-    const rebound = attachPortablePdb(assembly, pdb, { embedded: true });
-    const reboundPath = join(temporary, 'rebound-' + index + '.dll');
-    await writeFile(reboundPath, rebound);
-    verifyNative(JSON.parse(run(dotnet, [tool, 'inspect', pdbPath, reboundPath])), symbols, rebound);
-    results.push({
-      name: compiler.name,
-      status: 'passed',
-      compilerVersion: version,
-      compilerSha256: digest(await readFile(compiler.path)),
-      pdbSha256: digest(pdb),
-      kinds: [...new Set(kinds)].sort(),
-    });
   }
   if (!allowSingle)
     assert(versions.size >= 2, 'Full interoperability gate requires at least two distinct Roslyn compiler versions');
@@ -287,6 +375,10 @@ try {
     compilerVersions: versions,
     results,
   };
+  if (capture) {
+    await mkdir(dirname(capture), { recursive: true });
+    await writeFile(capture, JSON.stringify({ schemaVersion: 1, sdk, fixtures: captured }, null, 2) + '\n');
+  }
   await mkdir(dirname(output), { recursive: true });
   await writeFile(output, JSON.stringify(report, null, 2) + '\n');
   console.log(JSON.stringify(report, null, 2));
