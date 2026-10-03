@@ -26,8 +26,11 @@ stay unsupported, while the existing ECMA `no.` binary encoding remains availabl
 claiming CoreCLR Reflection.Emit or execution support. Aliases are not added. `ldc.i4.s`
 keeps signed `i8` encoding; byte-valued prefixes keep `u8` despite sharing ShortInlineI.
 
-One catalog now owns all names, values and effects; table construction moves out of opcodes.js. Native reference and exhaustive binary round-trip validation
-are prepared under `tests/fixtures/a03-opcodes`; their serial validation is pending.
+One catalog now owns all names, values and effects; table construction moves out of
+opcodes.js. The .NET 10.0.5 reference matches every field of all 218 active native
+descriptors. All 219 supported encodings pass binary round trips, including `no.`.
+The 8 reserved internal native prefix entries remain unsupported. Fixtures and
+capture source are under `tests/fixtures/a03-opcodes`.
 Broader browser/runtime/verifier qualification remains open.
 
 Reference facts: [dotnet/runtime opcode.def, v10.0.5](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/inc/opcode.def)
