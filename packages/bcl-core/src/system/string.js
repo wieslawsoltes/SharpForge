@@ -1,5 +1,6 @@
 import {MAX, array, bclScalar, bounded, fail, integer, makeArray, string, text} from '../host.js';
 import {compositeFormat} from '../formatting/composite-format.js';
+import {isNullOrWhiteSpace, trimWhiteSpace} from './whitespace.js';
 
 const owner = 'System.String';
 
@@ -54,13 +55,11 @@ function splitString(platform, receiver, values, scalars) {
   const limit = scalars.length === 2 ? integer(platform, scalars[1]) : MAX;
   let parts;
   if (!limit) parts = [];
-  else if (limit === 1 || separator === '') parts = [receiver];
+  else if (limit === 1 || separator === null || separator === '') parts = [receiver];
   else {
-    parts = separator === null ? receiver.split(/\s/) : receiver.split(separator);
-    if (parts.length > limit && separator !== null) {
+    parts = receiver.split(separator);
+    if (parts.length > limit) {
       parts = [...parts.slice(0, limit - 1), parts.slice(limit - 1).join(separator)];
-    } else if (parts.length > limit) {
-      fail(platform, 'NotSupportedException', 'Whitespace Split with a bounded count is not supported');
     }
   }
   const references = [];
@@ -78,7 +77,7 @@ function staticString(platform, descriptor, values, scalars) {
   switch (descriptor.name) {
     case 'get_Empty': return '';
     case 'IsNullOrEmpty': return scalars[0] === null || scalars[0] === '';
-    case 'IsNullOrWhiteSpace': return scalars[0] === null || /^\s*$/.test(scalars[0]);
+    case 'IsNullOrWhiteSpace': return isNullOrWhiteSpace(scalars[0]);
     case 'Concat':
       return descriptor.parameters[0].endsWith('[]')
         ? array(platform, values[0]).map(value => text(platform, value)).join('')
@@ -116,9 +115,9 @@ function instanceString(platform, name, receiver, values, scalars) {
     case 'IndexOf':
       return receiver.indexOf(string(platform, values[0]), values.length === 2 ? integer(platform, scalars[1], 0, receiver.length) : 0);
     case 'LastIndexOf': return receiver.lastIndexOf(string(platform, values[0]));
-    case 'Trim': return receiver.trim();
-    case 'TrimStart': return receiver.trimStart();
-    case 'TrimEnd': return receiver.trimEnd();
+    case 'Trim': return trimWhiteSpace(receiver);
+    case 'TrimStart': return trimWhiteSpace(receiver, true, false);
+    case 'TrimEnd': return trimWhiteSpace(receiver, false, true);
     case 'ToUpper':
     case 'ToUpperInvariant': return receiver.toUpperCase();
     case 'ToLower':
