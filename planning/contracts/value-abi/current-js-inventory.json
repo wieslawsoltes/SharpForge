@@ -2,15 +2,19 @@
   "schemaVersion": 1,
   "sources": {
     "packages/runtime/src/heap.js": "28b86fe51a4a4cd93b7701b682fa2363a07d8a9c6370fd734e96690b16fe853c",
-    "packages/runtime/src/vm.js": "20aa8d7f297fd2f9e7107ea64a0b5b687402e9a39cc04b060ccee6b97b01fcb5",
-    "packages/runtime/src/cil-vm.js": "80b1f3dcb85858c035003c9d2a98a243a3fb60219f014340077a80e3ed0aef8e",
-    "packages/bytecode/src/index.js": "c6173fe05b9b64f28f2907ee2e1cd715fec774649ccd72e5dcd40e53f3a5fac0",
+    "packages/runtime/src/vm.js": "4fdca4d2d1e42b8c34c5e4afa676d316c52d12ead54ce0fe13e1d96e0cd57a1d",
+    "packages/runtime/src/cil-vm.js": "c9471f46dd0ef60c7142d6667911efcb7f93ac19af955a225efbf2b1e8f91b84",
+    "packages/bytecode/src/index.js": "d6c313db3a1fd8b53801d427676cc73055803ee4cfe2cdc68f2eb8bb699656aa",
     "packages/bytecode/src/builtins.js": "6fdacdea89188845cec3fead149a251b6f56cff3c5382f7aa0f1a2bf213217e7"
   },
   "resultKinds": {
     "int": {
       "source": "number (Int32 narrowed by bitwise operations)",
       "cil": "number (Int32 stack category)"
+    },
+    "enum": {
+      "source": "frozen {enumType, underlyingType, value: number | bigint}",
+      "cil": "underlying stack integer or boxed managed enum"
     },
     "long": {
       "source": "bigint (signed Int64)",
@@ -41,11 +45,15 @@
       "cil": "ManagedFault with optional reference, frames"
     },
     "any": {
-      "source": "number | bigint | boolean | null | undefined | {h,g}",
+      "source": "number | bigint | boolean | null | undefined | {h,g} | enum carrier",
       "cil": "number | bigint | null | undefined | {h,g} | float | byref | methodPointer"
     }
   },
   "additionalShapes": [
+    {
+      "shape": "{enumType, underlyingType, value}",
+      "meaning": "source enum identity with signed or unsigned integer storage; not a heap reference"
+    },
     {
       "shape": "null",
       "meaning": "null reference and default reference storage"

@@ -21,9 +21,7 @@
       "input": "examples/designer/CanvasCounter/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0131: The left-hand side of an assignment must be a variable, property or indexer",
-        "CS1061: 'error' does not contain a definition for 'Text' and no accessible extension method 'Text' accepting a first argument of type 'error' could be found (are you missing a using directive or an assembly reference?)",
-        "CS1501: No overload for method 'Create' takes 0 arguments"
+        "CS0103: The name 'DesignedView' does not exist in the current context"
       ]
     },
     {
@@ -310,7 +308,7 @@
       "input": "examples/msbuild/LocalPackages/Consumer/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS1061: 'error' does not contain a definition for 'Answer' and no accessible extension method 'Answer' accepting a first argument of type 'error' could be found (are you missing a using directive or an assembly reference?)"
+        "CS0103: The name 'LocalPackage' does not exist in the current context"
       ]
     },
     {
@@ -623,8 +621,9 @@
       "input": "examples/release14/CsharpPreviewCollections/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS8652: The feature 'Collection expression constructor arguments' is currently in Preview and *unsupported*. To use Preview features, use the 'preview' language version.",
-        "CS8652: The feature 'Labeled break and continue' is currently in Preview and *unsupported*. To use Preview features, use the 'preview' language version."
+        "CS0103: The name 'with' does not exist in the current context",
+        "CS8652: The feature 'labeled break and continue' is currently in Preview and *unsupported*. To use Preview features, use the 'preview' language version. (pinned to csharplang/proposals/csharp-15.0/labeled-break-continue.md revision 1, .NET SDK 10.0.201 (Roslyn 5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a))",
+        "SF1017: Named and by-reference arguments are not implemented in this profile"
       ]
     },
     {
@@ -808,8 +807,7 @@
       "input": "examples/templates/winui-blank/WinuiBlankExample/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0246: The type or namespace name 'MainPage' could not be found (are you missing a using directive or an assembly reference?)",
-        "CS1061: 'MainPage' does not contain a definition for 'View' and no accessible extension method 'View' accepting a first argument of type 'MainPage' could be found (are you missing a using directive or an assembly reference?)"
+        "CS0246: The type or namespace name 'MainPage' could not be found (are you missing a using directive or an assembly reference?)"
       ]
     },
     {
@@ -859,8 +857,7 @@
       "input": "examples/templates/winui-navigation/WinuiNavigationExample/Program.cs",
       "status": "not-emitted",
       "diagnostics": [
-        "CS0246: The type or namespace name 'Shell' could not be found (are you missing a using directive or an assembly reference?)",
-        "CS1061: 'Shell' does not contain a definition for 'View' and no accessible extension method 'View' accepting a first argument of type 'Shell' could be found (are you missing a using directive or an assembly reference?)"
+        "CS0246: The type or namespace name 'Shell' could not be found (are you missing a using directive or an assembly reference?)"
       ]
     },
     {

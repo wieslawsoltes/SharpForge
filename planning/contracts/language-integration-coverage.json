@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "head": "c72a487b30dd12543a4a1f3e221e742bee5fb786",
+  "source": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37137275627",
+  "scope": "Compiler example coverage extracted from the actual hosted failing comparison. All 62 emitted and 72 intentionally un-emitted classifications remain unchanged. Only the four reviewed diagnostic records below changed.",
+  "finalValidation": "Deferred until the combined implementation scope is ready, per user request. This hosted run failed and is not represented as a qualification pass.",
+  "coverageSha256": "01adcfb97c8556041d3a8be4ff921ee7331ab823eecefe406a94d61510258b85",
+  "changes": [
+    {
+      "input": "examples/msbuild/SdkWorkspace/App/Program.cs",
+      "before": {
+        "input": "examples/msbuild/SdkWorkspace/App/Program.cs",
+        "status": "not-emitted",
+        "diagnostics": [
+          "CS1061: 'error' does not contain a definition for 'Answer' and no accessible extension method 'Answer' accepting a first argument of type 'error' could be found (are you missing a using directive or an assembly reference?)",
+          "CS1501: No overload for method 'Sum' takes 2 arguments",
+          "SF2098: Expression 'SimpleLambdaExpression' is not implemented by this profile"
+        ]
+      },
+      "after": {
+        "input": "examples/msbuild/SdkWorkspace/App/Program.cs",
+        "status": "not-emitted",
+        "diagnostics": [
+          "CS0103: The name 'BuildTag' does not exist in the current context",
+          "CS0103: The name 'Numbers' does not exist in the current context",
+          "CS0246: The type or namespace name 'NativeExample' could not be found (are you missing a using directive or an assembly reference?)",
+          "SF2098: Expression 'SimpleLambdaExpression' is not implemented by this profile"
+        ]
+      }
+    },
+    {
+      "input": "examples/particles/Program.cs",
+      "before": {
+        "input": "examples/particles/Program.cs",
+        "status": "not-emitted",
+        "diagnostics": [
+          "CS0019: Operator '*' cannot be applied to operands of type 'error' and 'int'",
+          "CS0019: Operator '+' cannot be applied to operands of type 'error' and 'int'",
+          "CS0131: The left-hand side of an assignment must be a variable, property or indexer",
+          "CS0246: The type or namespace name 'Particle' could not be found (are you missing a using directive or an assembly reference?)",
+          "CS0246: The type or namespace name 'Particle[]' could not be found (are you missing a using directive or an assembly reference?)",
+          "CS1061: 'Particle' does not contain a definition for 'Position' and no accessible extension method 'Position' accepting a first argument of type 'Particle' could be found (are you missing a using directive or an assembly reference?)",
+          "CS1061: 'Particle' does not contain a definition for 'Velocity' and no accessible extension method 'Velocity' accepting a first argument of type 'Particle' could be found (are you missing a using directive or an assembly reference?)"
+        ]
+      },
+      "after": {
+        "input": "examples/particles/Program.cs",
+        "status": "not-emitted",
+        "diagnostics": [
+          "CS0019: Operator '*' cannot be applied to operands of type 'error' and 'int'",
+          "CS0019: Operator '+' cannot be applied to operands of type 'error' and 'int'",
+          "CS0131: The left-hand side of an assignment must be a variable, property or indexer",
+          "CS0246: The type or namespace name 'Particle' could not be found (are you missing a using directive or an assembly reference?)",
+          "CS1061: 'Particle' does not contain a definition for 'Position' and no accessible extension method 'Position' accepting a first argument of type 'Particle' could be found (are you missing a using directive or an assembly reference?)",
+          "CS1061: 'Particle' does not contain a definition for 'Velocity' and no accessible extension method 'Velocity' accepting a first argument of type 'Particle' could be found (are you missing a using directive or an assembly reference?)"
+        ]
+      }
+    },
+    {
+      "input": "examples/projects/ExplorerWorkshop/App/Scratch.cs",
+      "before": {
+        "input": "examples/projects/ExplorerWorkshop/App/Scratch.cs",
+        "status": "not-emitted",
+        "diagnostics": [
+          "CS0103: The name 'not' does not exist in the current context",
+          "CS0201: Only assignment, call, increment, decrement, await, and new object expressions can be used as a statement",
+          "CS0246: The type or namespace name 'valid' could not be found (are you missing a using directive or an assembly reference?)",
+          "CS1002: ; expected",
+          "CS1040: Preprocessor directives must appear as the first non-whitespace character on a line",
+          "CS1525: Invalid expression term ','",
+          "SF2098: Expression 'IsPatternExpression' is not implemented by this profile"
+        ]
+      },
+      "after": {
+        "input": "examples/projects/ExplorerWorkshop/App/Scratch.cs",
+        "status": "not-emitted",
+        "diagnostics": [
+          "CS0103: The name 'This' does not exist in the current context",
+          "CS0103: The name 'not' does not exist in the current context",
+          "CS0201: Only assignment, call, increment, decrement, await, and new object expressions can be used as a statement",
+          "CS0246: The type or namespace name 'a' could not be found (are you missing a using directive or an assembly reference?)",
+          "CS0246: The type or namespace name 'valid' could not be found (are you missing a using directive or an assembly reference?)",
+          "CS1002: ; expected",
+          "CS1040: Preprocessor directives must appear as the first non-whitespace character on a line",
+          "CS1525: Invalid expression term ','",
+          "SF2098: Expression 'IsPatternExpression' is not implemented by this profile"
+        ]
+      }
+    },
+    {
+      "input": "examples/release14/CsharpPreviewCollections/Program.cs",
+      "before": {
+        "input": "examples/release14/CsharpPreviewCollections/Program.cs",
+        "status": "not-emitted",
+        "diagnostics": [
+          "CS8652: The feature 'collection expression arguments' is currently in Preview and *unsupported*. To use Preview features, use the 'preview' language version. (pinned to csharplang/proposals/collection-expression-arguments.md revision 1, .NET SDK 10.0.201 (Roslyn 5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a))",
+          "CS8652: The feature 'labeled break and continue' is currently in Preview and *unsupported*. To use Preview features, use the 'preview' language version. (pinned to csharplang/proposals/labeled-break-continue.md revision 1, .NET SDK 10.0.201 (Roslyn 5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a))"
+        ]
+      },
+      "after": {
+        "input": "examples/release14/CsharpPreviewCollections/Program.cs",
+        "status": "not-emitted",
+        "diagnostics": [
+          "CS8652: The feature 'collection expression arguments' is currently in Preview and *unsupported*. To use Preview features, use the 'preview' language version. (pinned to csharplang/proposals/csharp-15.0/collection-expression-arguments.md revision 1, .NET SDK 10.0.201 (Roslyn 5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a))",
+          "CS8652: The feature 'labeled break and continue' is currently in Preview and *unsupported*. To use Preview features, use the 'preview' language version. (pinned to csharplang/proposals/csharp-15.0/labeled-break-continue.md revision 1, .NET SDK 10.0.201 (Roslyn 5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a))"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "a3093d496861383e0b26b4aaab7dfced552251b9",
+  "headCommit": "dbe9f50f648b1c44f05f773f0f50e6a3b3c92969",
+  "runnerId": "0496ac14920a9c411b97ae8d",
+  "policy": {
+    "threshold": 0.05,
+    "alpha": 0.01,
+    "minSamples": 20,
+    "test": "one-sided paired sign test"
+  },
+  "passed": true,
+  "rows": [
+    {
+      "id": "A05/vm-cil",
+      "engine": "cil",
+      "base": {
+        "count": 20,
+        "median": 13.748583499999995,
+        "p95": 24.755083999999897,
+        "p99": 27.208082999999988,
+        "min": 10.307916999999975,
+        "max": 27.208082999999988
+      },
+      "head": {
+        "count": 20,
+        "median": 10.238021000000032,
+        "p95": 18.797833000000082,
+        "p99": 18.938499999999976,
+        "min": 9.236458999999968,
+        "max": 18.938499999999976
+      },
+      "relative": -0.25533994102010327,
+      "pValue": 1,
+      "threshold": 0.05,
+      "verdict": "pass",
+      "quarantine": null
+    },
+    {
+      "id": "A08/dictionary-cil",
+      "engine": "cil",
+      "base": {
+        "count": 20,
+        "median": 8.061146500000035,
+        "p95": 9.244332999999983,
+        "p99": 9.569582999999966,
+        "min": 7.401042000000018,
+        "max": 9.569582999999966
+      },
+      "head": {
+        "count": 20,
+        "median": 8.063270500000016,
+        "p95": 8.915458000000001,
+        "p99": 9.852125000000001,
+        "min": 7.404333000000008,
+        "max": 9.852125000000001
+      },
+      "relative": 0.00026348609344606366,
+      "pValue": 0.8684120178222657,
+      "threshold": 0.05,
+      "verdict": "pass",
+      "quarantine": null
+    }
+  ]
+}

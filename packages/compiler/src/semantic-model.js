@@ -1,5 +1,5 @@
-import {SourceText} from '@sharpforge/text';
-import {parse,parseExpression} from '@sharpforge/syntax';
+import {parseExpression} from '@sharpforge/syntax';
+import {parseCompilerInput} from './parse-input.js';
 import {Compilation} from './compilation.js';
 import {MethodBodyBinder} from './binder/method-body.js';
 import {LookupOptions} from './binder/binder.js';
@@ -35,7 +35,8 @@ export class SemanticModel {
   }
   /** Compiles `input` (source text or `{uri,text}` files) with the bound pipeline and returns `{model,result,compilation}`. */
   static create(input,options={}){
-    const files=typeof input==='string'?[parse(new SourceText(input))]:input.map(f=>f.root?f:parse(new SourceText(f.text,f.uri,f.version))),compilation=new Compilation(files,{...options,pipeline:'bound'}),result=compilation.build();
+    const compilation = new Compilation(parseCompilerInput(input, options), {...options, pipeline: 'bound'});
+    const result = compilation.build();
     return {model:new SemanticModel(compilation),result,compilation};
   }
   /** The bound node a syntax node produced, or null. */

@@ -1,6 +1,6 @@
+import {typeText} from './type-utils.js';
 import {Op,Binary} from '@sharpforge/bytecode';
 import {canonicalType,frameworkType,findContracts} from '@sharpforge/framework';
-import {typeText} from './type-utils.js';
 import {languageVersion as parseLangVersion} from '@sharpforge/syntax';
 
 /** Feature selection is not a claim that all features of that C# version are implemented. LangVersion spellings are parsed by @sharpforge/syntax. */
