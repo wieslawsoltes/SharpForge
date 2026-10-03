@@ -61,3 +61,8 @@ counts and payload sizes are checked. EnC wire details follow Roslyn's
 `EditAndContinueMethodDebugInformation`; primary-constructor markers follow its
 `MetadataWriter.PortablePdb` emitter. Native fixture qualification is separate
 from synthetic codec round trips.
+
+Embedded sources of at least 200 bytes use the archive package's bounded
+fixed-Huffman DEFLATE encoder when smaller; short/incompressible sources retain
+raw representation. Embedded Portable PDB entries use the same encoder. This is
+real compression, independent of platform CompressionStream availability.

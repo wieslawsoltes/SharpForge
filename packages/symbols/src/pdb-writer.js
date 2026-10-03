@@ -1,4 +1,5 @@
-import { Writer, readPE, utf8, token, codedIndex } from '@sharpforge/cil';
+import { readPE, utf8, token, codedIndex } from '@sharpforge/cil';
+import { writeEmbeddedSource } from './cdi-core.js';
 import { writeDocument } from './document-writer.js';
 import { PdbGuids, fail } from './contracts.js';
 import { PortablePdbBuilder } from './pdb-builder.js';
@@ -17,11 +18,11 @@ export function emitPortablePdb(assembly, debug, { embedSources = true, sourceLi
     if (docs.has(s.uri)) fail('Duplicate document names');
     const { id, bytes: raw } = writeDocument(b, s);
     docs.set(s.uri, id);
-    if (embedSources && s.text !== undefined)
+    if (embedSources && (s.text !== undefined || s.bytes !== undefined))
       cdi.push([
         codedIndex('HasCustomDebugInformation', token(48, id)),
         b.guid(PdbGuids.embeddedSource),
-        b.blob(new Writer().u32(0).bytes(raw).finish()),
+        b.blob(writeEmbeddedSource({ source: raw })),
       ]);
   }
   const sourceIndexes = new Map(

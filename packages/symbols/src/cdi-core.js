@@ -1,6 +1,6 @@
 import { Reader, Writer, token, text, utf8 } from '@sharpforge/cil';
 import { fail } from './contracts.js';
-import { inflateRaw } from './deflate.js';
+import { inflateRaw, deflateRaw } from './deflate.js';
 
 export function readEmbeddedSource(bytes, { maxSourceBytes }) {
   const reader = new Reader(bytes);
@@ -12,6 +12,10 @@ export function readEmbeddedSource(bytes, { maxSourceBytes }) {
 }
 export function writeEmbeddedSource({ source }) {
   if (!(source instanceof Uint8Array)) fail('Embedded source must be bytes');
+  if (source.length >= 200) {
+    const compressed = deflateRaw(source, { maxBytes: 16 * 1024 * 1024 });
+    if (compressed.length < source.length) return new Writer().u32(source.length).bytes(compressed).finish();
+  }
   return new Writer().u32(0).bytes(source).finish();
 }
 export function readSourceLink(bytes) {

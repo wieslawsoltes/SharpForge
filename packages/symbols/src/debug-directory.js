@@ -2,7 +2,7 @@ import { Reader, Writer, readPE, text, utf8, align } from '@sharpforge/cil';
 import { rejectUnsupportedSymbolFormat } from './symbol-format.js';
 import { fail } from './contracts.js';
 import { sha256 } from './hash.js';
-import { inflateRaw, deflateStored } from './deflate.js';
+import { inflateRaw, deflateRaw } from './deflate.js';
 import { readPortablePdb } from './pdb-reader.js';
 export function readDebugDirectory(assembly) {
   const pe = readPE(assembly, { inspection: true }),
@@ -75,7 +75,7 @@ export function attachPortablePdb(assembly, pdb, { path = 'Application.pdb', emb
       major: 0x100,
       minor: 0x100,
       stamp: 0,
-      bytes: new Writer().u32(0x4244504d).u32(pdb.length).bytes(deflateStored(pdb)).finish(),
+      bytes: new Writer().u32(0x4244504d).u32(pdb.length).bytes(deflateRaw(pdb)).finish(),
     });
   if (checksum) {
     const zero = pdb.slice(),
