@@ -374,6 +374,7 @@ export const roslynCodes=Object.freeze({
  CS1955:["ERR_NonInvocableMemberCalled","error",0,"Non-invocable member '{0}' cannot be used like a method."],
  CS1961:["ERR_UnexpectedVariance","error",0,"Invalid variance: The type parameter '{1}' must be {3} valid on '{0}'. '{1}' is {2}."],
  CS1983:["ERR_BadAsyncReturn","error",0,"The return type of an async method must be void, Task, Task<T>, a task-like type, IAsyncEnumerable<T>, or IAsyncEnumerator<T>"],
+ CS1988:["ERR_BadAsyncArgType","error",0,"Async methods cannot have ref, in or out parameters"],
  CS1994:["ERR_BadAsyncLacksBody","error",0,"The 'async' modifier can only be used in methods that have a body."],
  CS1996:["ERR_BadAwaitInLock","error",0,"Cannot await in the body of a lock statement"],
  CS1997:["ERR_TaskRetNoObjectRequired","error",0,"Since '{0}' is an async method that returns '{1}', a return keyword must not be followed by an object expression"],

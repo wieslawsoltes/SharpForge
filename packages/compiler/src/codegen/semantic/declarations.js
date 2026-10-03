@@ -119,7 +119,6 @@ export const Declarations = Base =>
       if (symbol.typeParameters?.length) this.unsupported('user-defined generics', at);
       if (symbol.isAbstract || symbol.isVirtual || symbol.isOverride) this.unsupported('virtual dispatch', at);
       if (symbol.isExtern) this.unsupported('extern methods', at);
-      if (symbol.isAsync) this.unsupported('async methods outside the execution profile', at);
       const isConstructor = symbol.methodKind === MethodKind.Constructor;
       // The implicit parameterless constructor has nothing to run: creation allocates and runs the field initializers.
       if (isConstructor && symbol.isImplicitlyDeclared) return undefined;
