@@ -61,18 +61,20 @@ export function setDesignerStateTransition(document, target, groupName, {from = 
 }
 
 /** State projection operates on a clone; stored base values and undo history never change. */
-export function projectDesignerState(scene, states, activeStates, {prefix = ''} = {}) {
+export function projectDesignerState(scene, states, activeStates, {prefix = '', prefixes = [prefix]} = {}) {
   const result = structuredClone(scene);
   const nodes = new Map(result.nodes.map(node => [node.id, node]));
   const assigned = new Set();
   for (const group of states ?? []) {
     const state = group.states.find(candidate => candidate.name === (activeStates[group.name] ?? activeStates['*']));
     if (!state) continue;
-    for (const setter of state.setters) {
-      const node = nodes.get(prefix + setter.target);
-      if (node) {
-        node.properties[setter.property] = structuredClone(setter.value);
-        assigned.add(node.id + ':' + setter.property);
+    for (const instance of prefixes) {
+      for (const setter of state.setters) {
+        const node = nodes.get(instance + setter.target);
+        if (node) {
+          node.properties[setter.property] = structuredClone(setter.value);
+          assigned.add(node.id + ':' + setter.property);
+        }
       }
     }
   }

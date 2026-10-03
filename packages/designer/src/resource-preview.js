@@ -41,10 +41,6 @@ export function projectDesignerAuthoringScene(design, input, {theme = 'default',
       preview.properties[property] = structuredClone(value);
     }
     for (const [property, items] of Object.entries(node.collections ?? {})) addCollectionItems(scene, preview, property, items);
-    if (resolveAsset && node.properties.Source) {
-      const source = resolveAsset(node.properties.Source);
-      if (source) preview.properties.Source = source;
-    }
     if (node.template) {
       const visit = part => {
         const instance = nodes.get(node.id + '::' + part.id);
@@ -64,7 +60,13 @@ export function projectDesignerAuthoringScene(design, input, {theme = 'default',
     const samples = node.collections.Items;
     if (samples?.some(item => item && typeof item === 'object' && item.type)) addCollectionItems(scene, node, 'Items', samples);
   }
-  return refreshDesignerTemplateBindings(scene);
+  refreshDesignerTemplateBindings(scene);
+  if (resolveAsset) {
+    for (const node of scene.nodes) {
+      if (node.properties.Source) node.properties.Source = resolveAsset(node.properties.Source) ?? node.properties.Source;
+    }
+  }
+  return scene;
 }
 
 /** Refresh already instantiated template parts after a resource, sample or state changes an owner value. */

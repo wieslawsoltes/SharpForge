@@ -1,24 +1,31 @@
 import {
-  DesignerStyleCommands, DesignerTemplateScope, designScene, designerPropertySchema, designerResourceEntries,
+  DesignerAuthoringError, DesignerStyleCommands, DesignerTemplateScope, designScene, designerPropertySchema, designerResourceEntries,
   formatDesignerProperty, projectDesignerAuthoringScene, projectDesignerState, renameDesignerResource,
   createDesignerSampleItems, setDesignerSampleData
 } from '../../packages/designer/src/index.js';
-import {propertyButton, propertyElement, propertyField, propertyInput, propertySelect, runPropertyAction} from './designer-property-dom.js';
+import {
+  parseDesignerPropertyText, propertyButton, propertyElement, propertyField, propertyInput, propertySelect, runPropertyAction
+} from './designer-property-dom.js';
 import {brushPropertyEditor} from './designer-property-brush.js';
 import {DesignerInstancePreviewController} from './designer-resource-preview.js';
 import {
   openCreateDesignerBrush, openCreateDesignerStyle, openCreateDesignerTemplate, openDesignerResourceName
 } from './designer-resource-dialogs.js';
 import {renderDesignerStates} from './designer-resource-states.js';
+import {DesignerStatePlayback} from './designer-resource-playback.js';
 
 /** Resources compose transactional package commands with explicit template-scope entry/exit. */
 export class DesignerResourceController {
-  constructor(view) {
+  constructor(view, {createScene = design => view.buildPreviewScene?.() ?? projectDesignerAuthoringScene(design, designScene(design), {
+    resolveAsset: uri => view.assetPreviews?.resolve(uri)
+  })} = {}) {
     this.view = view;
     this.selectedKey = 'Accent';
     this.search = '';
     this.scope = null;
     this.previewOpen = false;
+    this.createScene = createScene;
+    this.playback = new DesignerStatePlayback(view);
     this.previews = new DesignerInstancePreviewController({onError: error => view.error(error)});
   }
 
@@ -27,6 +34,7 @@ export class DesignerResourceController {
   render(panel = this.view.panel('designer-styles')) {
     if (!panel) return;
     this.panel = panel;
+    this.playback.stop();
     this.previews.dispose();
     panel.replaceChildren();
     const document = panel.ownerDocument;
@@ -120,7 +128,7 @@ export class DesignerResourceController {
       error.hidden = true;
       const input = propertyInput(document, {value: formatDesignerProperty(value), label: property});
       input.addEventListener('change', () => runPropertyAction(() => commands.setSetter(selected.key, property,
-        schema[property].type === 'bool' ? input.value === 'true' : input.value), error));
+        parseDesignerPropertyText(input.value, schema[property].type)), error));
       const row = propertyElement(document, 'div', '', 'design-style-setter');
       row.append(propertyField(document, property, input), propertyButton(document, 'Remove', () => this.view.safe(() =>
         commands.setSetter(selected.key, property, undefined))), error);
@@ -131,7 +139,7 @@ export class DesignerResourceController {
     const property = propertySelect(document, properties.map(([name]) => name), properties[0]?.[0], 'New setter property');
     const value = propertyInput(document, {value: '', label: 'New setter value'});
     parent.append(property, value, propertyButton(document, 'Add setter', () => this.view.safe(() => commands.setSetter(selected.key,
-      property.value, schema[property.value].type === 'bool' ? value.value === 'true' : value.value))));
+      property.value, parseDesignerPropertyText(value.value, schema[property.value].type)))));
   }
 
   renderBrush(parent, selected) {
@@ -202,20 +210,26 @@ export class DesignerResourceController {
     ]};
   }
 
-  previewState(target, activeStates) {
+  stateScene(scene, target, activeStates) {
     const design = this.view.document.value;
     const owner = target.template ? design.templates[target.template] : this.view.document.node(target.nodeId);
-    let scene = projectDesignerAuthoringScene(design, designScene(design));
-    if (target.template) {
-      for (const node of design.nodes.filter(node => node.template === target.template)) {
-        scene = projectDesignerState(scene, owner.states, activeStates, {prefix: node.id + '::'});
-      }
-    } else scene = projectDesignerState(scene, owner.states, activeStates);
-    this.view.host.load(scene);
-    this.view.host.flush();
-    this.view.drawAdorners();
+    if (!owner) throw new DesignerAuthoringError('SFD1853', 'Visual-state owner was not found.');
+    const prefixes = target.template ? design.nodes.filter(node => node.template === target.template).map(node => node.id + '::') : [''];
+    if (!prefixes.length) throw new DesignerAuthoringError('SFD1853', 'Apply this template to an instance before previewing it on the surface.');
+    return projectDesignerState(scene, owner.states, activeStates, {prefixes});
+  }
+
+  previewState(target, activeStates) {
+    const base = this.createScene(this.view.document.value);
+    const scene = this.stateScene(base, target, activeStates);
+    this.playback.show(base, scene);
     return scene;
   }
 
-  dispose() { this.previews.dispose(); this.scope?.cancel(); this.scope = null; }
+  previewTransition(target, group, {from = '', to = '', duration = 150}) {
+    const base = this.createScene(this.view.document.value);
+    this.playback.play(base, this.stateScene(base, target, {[group]: from}), this.stateScene(base, target, {[group]: to}), {duration});
+  }
+
+  dispose() { this.playback.dispose(); this.previews.dispose(); this.scope?.cancel(); this.scope = null; }
 }

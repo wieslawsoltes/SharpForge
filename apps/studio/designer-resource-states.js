@@ -1,7 +1,9 @@
 import {
   addDesignerVisualState, designerPropertySchema, formatDesignerProperty, recordDesignerStateProperty, setDesignerStateTransition
 } from '../../packages/designer/src/index.js';
-import {propertyButton, propertyDialog, propertyElement, propertyField, propertyInput, propertySelect} from './designer-property-dom.js';
+import {
+  parseDesignerPropertyText, propertyButton, propertyDialog, propertyElement, propertyField, propertyInput, propertySelect
+} from './designer-property-dom.js';
 
 function stateTargetNodes(controller, target) {
   if (!target.template) return controller.view.document.value.nodes;
@@ -25,7 +27,7 @@ export function renderDesignerStates(controller, parent, target) {
       row.append(propertyElement(document, 'span', state.name + ` · ${state.setters.length} setters`),
         propertyButton(document, 'Record property…', () => openRecordState(controller, target, group.name, state.name)),
         propertyButton(document, 'Preview', () => controller.view.safe(() => controller.previewState(target, {[group.name]: state.name}))),
-        propertyButton(document, 'Transition…', () => openTransition(controller, target, group)));
+        propertyButton(document, 'Transition…', () => openTransition(controller, target, group, state.name)));
       for (const setter of state.setters) row.append(propertyElement(document, 'small',
         `${setter.target}.${setter.property} = ${formatDesignerProperty(setter.value)}`));
       details.append(row);
@@ -54,7 +56,7 @@ function openRecordState(controller, target, group, state) {
   const updateProperties = () => {
     property.replaceChildren();
     for (const [name, schema] of Object.entries(designerPropertySchema(nodes.find(item => item.id === node.value).type))) {
-      if (schema.readOnly || schema.isStatic) continue;
+      if (schema.readOnly || schema.isStatic || name === 'Name') continue;
       const option = propertyElement(document, 'option', name);
       option.value = name;
       property.append(option);
@@ -66,24 +68,31 @@ function openRecordState(controller, target, group, state) {
   modal.body.append(propertyField(document, 'Target', node), propertyField(document, 'Property', property), propertyField(document, 'Value', value));
   modal.footer.append(propertyButton(document, 'Record setter', () => modal.run(() => {
     const schema = designerPropertySchema(nodes.find(item => item.id === node.value).type)[property.value];
-    const parsed = schema.type === 'bool' ? value.value === 'true' : value.value;
+    const parsed = parseDesignerPropertyText(value.value, schema.type);
     recordDesignerStateProperty(controller.view.document, target, {group, state, nodeId: node.value, property: property.value, value: parsed});
     modal.close();
   })));
 }
 
-function openTransition(controller, target, group) {
+function openTransition(controller, target, group, stateName) {
   const document = controller.panel.ownerDocument;
   const modal = propertyDialog(document, 'Edit transition');
   const choices = [{value: '', label: '(Any state)'}, ...group.states.map(state => ({value: state.name, label: state.name}))];
   const from = propertySelect(document, choices, '', 'From state');
-  const to = propertySelect(document, choices, '', 'To state');
+  const to = propertySelect(document, choices, stateName, 'To state');
   const duration = propertyInput(document, {type: 'number', value: 150, label: 'Duration milliseconds'});
   duration.min = 0;
   duration.max = 60000;
   modal.body.append(propertyField(document, 'From', from), propertyField(document, 'To', to), propertyField(document, 'Duration (ms)', duration));
+  modal.body.append(propertyElement(document, 'p', 'An empty endpoint previews the base values and matches any state in generated transitions.'));
   modal.footer.append(propertyButton(document, 'Apply transition', () => modal.run(() => {
     setDesignerStateTransition(controller.view.document, target, group.name, {from: from.value, to: to.value, duration: Number(duration.value)});
+    modal.close();
+  })));
+  modal.footer.append(propertyButton(document, 'Save and preview', () => modal.run(() => {
+    const transition = {from: from.value, to: to.value, duration: Number(duration.value)};
+    setDesignerStateTransition(controller.view.document, target, group.name, transition);
+    controller.previewTransition(target, group.name, transition);
     modal.close();
   })));
 }

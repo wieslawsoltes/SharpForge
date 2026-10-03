@@ -192,7 +192,7 @@ export function generateDesignResourceXaml(input) {
 }
 
 /** Generated C# loads declarative WinUI markup and wires only explicitly named managed handlers. */
-export function generateWinuiXamlCode(design, {className = 'DesignedView', activate = true} = {}) {
+export function generateWinuiXamlCode(design, {className = 'DesignedView', activate = true, responsive = {initialize: [], methods: []}} = {}) {
   const nodes = new Map(design.nodes.map(node => [node.id, node]));
   const root = nodes.get(design.root);
   const content = root.type === XAML + 'Window' ? nodes.get(root.children[0]) : root;
@@ -210,7 +210,8 @@ export function generateWinuiXamlCode(design, {className = 'DesignedView', activ
   const window = root.type === XAML + 'Window' ? designerSymbol(root.id) : 'window';
   if (root.type !== XAML + 'Window') lines.push(`        ${XAML}Window window = new ${XAML}Window();`);
   lines.push(`        ${window}.Content = root;`, `        ${window}.Title = ${quoteDesignerString(root.properties.Title ?? design.name)};`);
+  lines.push(...responsive.initialize.map(line => '        ' + line.trim()));
   if (activate) lines.push(`        ${window}.Activate();`);
-  lines.push(`        return ${window};`, '    }', '}');
+  lines.push(`        return ${window};`, '    }', ...responsive.methods, '}');
   return lines.join('\n') + '\n';
 }

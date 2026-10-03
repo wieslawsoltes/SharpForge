@@ -156,6 +156,7 @@ function visualStates(owner, nodes, services) {
       for (const setter of state.setters) {
         const node = nodes.get(setter.target);
         if (!node) authoringError('SFD1824', `Unknown state target ${setter.target}.`);
+        if (setter.property === 'Name') authoringError('SFD1824', 'A visual state cannot change a control identity.');
         const identity = setter.target + ':' + setter.property;
         if (targets.has(identity)) authoringError('SFD1824', 'A state cannot set the same property twice.');
         targets.add(identity);

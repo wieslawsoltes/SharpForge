@@ -5,6 +5,7 @@ export function openDesignerCollectionEditor(context) {
   const draft = new DesignerCollectionDraft(context.modelDocument, context.ids[0], context.name);
   const modal = propertyDialog(context.document, 'Edit ' + context.name, {onCancel: () => draft.cancel()});
   let selected = draft.items.length ? 0 : -1;
+  const edit = action => modal.run(() => { action(); render(); });
   const render = () => {
     modal.body.replaceChildren();
     const list = propertyElement(context.document, 'div', '', 'design-collection-items');
@@ -18,22 +19,26 @@ export function openDesignerCollectionEditor(context) {
       list.append(row);
     }
     modal.body.append(list);
-    if (selected >= 0) renderItem(draft, selected, modal.body, context);
+    if (selected >= 0) renderItem(draft, selected, modal.body, {...context, run: modal.run});
     const actions = propertyElement(context.document, 'div', '', 'design-collection-actions');
-    actions.append(propertyButton(context.document, 'Add text', () => { draft.add(draft.axis ? '*' : 'New item'); selected = draft.items.length - 1; render(); }),
-      propertyButton(context.document, 'Remove', () => { draft.remove(selected); selected = Math.min(selected, draft.items.length - 1); render(); },
+    actions.append(propertyButton(context.document, draft.axis ? 'Add track' : 'Add text', () => edit(() => {
+      draft.add(draft.axis ? '*' : 'New item');
+      selected = draft.items.length - 1;
+    })),
+      propertyButton(context.document, 'Remove', () => edit(() => { draft.remove(selected); selected = Math.min(selected, draft.items.length - 1); }),
         {disabled: selected < 0}),
-      propertyButton(context.document, 'Move up', () => { draft.move(selected, selected - 1); selected--; render(); }, {disabled: selected <= 0}),
-      propertyButton(context.document, 'Move down', () => { draft.move(selected, selected + 1); selected++; render(); },
+      propertyButton(context.document, 'Move up', () => edit(() => { draft.move(selected, selected - 1); selected--; }), {disabled: selected <= 0}),
+      propertyButton(context.document, 'Move down', () => edit(() => { draft.move(selected, selected + 1); selected++; }),
         {disabled: selected < 0 || selected >= draft.items.length - 1}));
     if (!draft.axis) {
       const types = propertySelect(context.document, designerMetadata.filter(item => item.type.endsWith('Item'))
         .map(item => ({value: item.type, label: item.name})), undefined, 'Collection item type');
-      actions.append(types, propertyButton(context.document, 'Add object', () => {
-        draft.add({type: types.value, properties: {Content: 'New item'}});
+      actions.append(types, propertyButton(context.document, 'Add object', () => edit(() => {
+        const schema = designerPropertySchema(types.value);
+        const property = schema.Content ? 'Content' : schema.Text ? 'Text' : null;
+        draft.add({type: types.value, properties: property ? {[property]: 'New item'} : {}});
         selected = draft.items.length - 1;
-        render();
-      }));
+      })));
     }
     modal.body.append(actions);
   };
@@ -45,8 +50,11 @@ export function openDesignerCollectionEditor(context) {
 function renderItem(draft, index, root, context) {
   const item = draft.items[index];
   if (!item || typeof item !== 'object' || draft.axis) {
-    const input = propertyInput(context.document, {value: formatDesignerProperty(item), label: 'Item value'});
-    input.addEventListener('change', () => draft.set(index, input.value));
+    const type = typeof item === 'boolean' ? 'checkbox' : typeof item === 'number' ? 'number' : 'text';
+    const input = propertyInput(context.document, {value: formatDesignerProperty(item), type, label: 'Item value'});
+    input.checked = item === true;
+    input.addEventListener('change', () => context.run(() =>
+      draft.set(index, type === 'checkbox' ? input.checked : type === 'number' ? Number(input.value) : input.value)));
     root.append(propertyField(context.document, 'Value', input));
     return;
   }
@@ -56,13 +64,13 @@ function renderItem(draft, index, root, context) {
     const input = propertyInput(context.document, {value: formatDesignerProperty(item.properties[name]),
       type: property.type === 'bool' ? 'checkbox' : ['int', 'double'].includes(property.type) ? 'number' : 'text', label: name});
     input.checked = !!item.properties[name];
-    input.addEventListener('change', () => {
+    input.addEventListener('change', () => context.run(() => {
       const updated = structuredClone(draft.items[index]);
       if (property.type === 'bool') updated.properties[name] = input.checked;
       else if (!input.value) delete updated.properties[name];
       else updated.properties[name] = ['double', 'int'].includes(property.type) ? Number(input.value) : input.value;
       draft.set(index, updated);
-    });
+    }));
     root.append(propertyField(context.document, name, input));
   }
 }

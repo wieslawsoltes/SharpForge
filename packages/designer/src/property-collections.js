@@ -13,16 +13,24 @@ export class DesignerCollectionDraft {
     const node = document.node(id);
     if (!node) authoringError('SFD1843', 'Unknown collection owner.');
     this.axis = property === 'RowDefinitions' ? 'rows' : property === 'ColumnDefinitions' ? 'columns' : null;
+    this.maximum = this.axis ? 64 : 1000;
+    this.owner = {type: node.type, children: [...node.children]};
     this.items = structuredClone(this.axis ? node[this.axis] ?? [] : node.collections?.[property] ?? []);
     if (!this.axis) normalizeDesignerCollection(node, property, this.items, {normalizeProperty, propertySchema, childSlot});
   }
 
   ensure() { if (this.closed) authoringError('SFD1843', 'The collection editor has closed.'); }
 
+  normalize(value) {
+    return this.axis ? track(value) : normalizeDesignerCollection(this.owner, this.property, [value],
+      {normalizeProperty, propertySchema, childSlot})[0];
+  }
+
   add(item, index = this.items.length) {
     this.ensure();
     if (!Number.isInteger(index) || index < 0 || index > this.items.length) authoringError('SFD1843', 'Invalid insertion index.');
-    this.items.splice(index, 0, structuredClone(item));
+    if (this.items.length >= this.maximum) authoringError('SFD1843', `Collection limit: ${this.maximum} entries.`);
+    this.items.splice(index, 0, this.normalize(item));
   }
 
   remove(index) {
@@ -42,7 +50,7 @@ export class DesignerCollectionDraft {
   set(index, value) {
     this.ensure();
     if (!Number.isInteger(index) || index < 0 || index >= this.items.length) authoringError('SFD1843', 'Invalid collection index.');
-    this.items[index] = structuredClone(value);
+    this.items[index] = this.normalize(value);
   }
 
   apply() {
