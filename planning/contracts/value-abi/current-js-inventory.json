@@ -4,7 +4,7 @@
     "packages/runtime/src/heap.js": "28b86fe51a4a4cd93b7701b682fa2363a07d8a9c6370fd734e96690b16fe853c",
     "packages/runtime/src/vm.js": "4fdca4d2d1e42b8c34c5e4afa676d316c52d12ead54ce0fe13e1d96e0cd57a1d",
     "packages/runtime/src/cil-vm.js": "c9471f46dd0ef60c7142d6667911efcb7f93ac19af955a225efbf2b1e8f91b84",
-    "packages/bytecode/src/index.js": "605b63090ff77c4e9a0a6cfb148343c90d4d42cd825cc3339d1f9734ee1c5cbc",
+    "packages/bytecode/src/index.js": "5e50e4e82d4921ca3aadedfd32ca6668770591e4a382fbf3b86c33672c5fa456",
     "packages/bytecode/src/builtins.js": "5d58c7a4d87f01f65370c7b87a60a0cbfc8e67eb0568675a29f8f159049ec7bf"
   },
   "resultKinds": {
