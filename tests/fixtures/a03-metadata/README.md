@@ -15,7 +15,8 @@ Regenerate using .NET SDK 10.0.201 and Node 24.21.0, sequentially:
 
 ```sh
 node tests/fixtures/a03-metadata/oracle/prepare.js /tmp/a03-metadata.bin
-dotnet run --project tests/fixtures/a03-metadata/oracle/MetadataOracle.csproj --disable-build-servers -m:1 -p:BaseIntermediateOutputPath=/tmp/a03-srm-obj/ -p:OutputPath=/tmp/a03-srm-bin/ -- /tmp/a03-metadata.bin > tests/fixtures/a03-metadata/srm.json
+dotnet build tests/fixtures/a03-metadata/oracle/MetadataOracle.csproj --disable-build-servers -m:1 -p:BaseIntermediateOutputPath=/tmp/a03-srm-obj/ -p:OutputPath=/tmp/a03-srm-bin/
+dotnet /tmp/a03-srm-bin/MetadataOracle.dll /tmp/a03-metadata.bin > tests/fixtures/a03-metadata/srm.json
 node --test --test-concurrency=1 tests/a03-01-*.test.js tests/cil-table-widths.test.js
 ```
 
