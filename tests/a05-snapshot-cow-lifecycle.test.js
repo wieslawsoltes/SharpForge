@@ -62,3 +62,22 @@ test('T06 COW collection releases cache entries while saved snapshots retain iso
   assert.equal(heap.snapshotRecords.size, 0);
   assert.equal(saved.records[first.h].data.read(0), 17);
 });
+
+for (const changedFirst of [false, true]) {
+  test(`T06 COW changed record first=${changedFirst}: aliases survive mixed reused and copied records`, () => {
+    const heap = new ManagedHeap();
+    const payload = Object.freeze({value: 42});
+    const references = [heap.object('object', [payload, 0]), heap.object('object', [payload, 0])];
+    heap.rootProvider = () => references;
+    const first = heap.snapshot();
+    heap.writeData(references[changedFirst ? 0 : 1], 1, 7);
+    const changed = heap.snapshot();
+    const left = changed.records[references[0].h].data[0];
+    const right = changed.records[references[1].h].data[0];
+    assert.equal(left, right);
+    heap.restore(changed);
+    assert.equal(heap.get(references[0]).data[0], heap.get(references[1]).data[0]);
+    assert.equal(first.records[references[0].h].data[1], 0);
+    assert.equal(first.records[references[1].h].data[1], 0);
+  });
+}
