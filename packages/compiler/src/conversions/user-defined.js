@@ -37,8 +37,18 @@ export function resolveUserDefinedConversion(from, to, { explicit = false } = {}
       const p = method.parameters[0].type,
         r = method.returnType;
       if (!p || !r) continue;
-      const sourceOk = (src, par) => standard.implicit(src, par) || (explicit && standard.explicit(par, src)) || src.equals(par);
-      const targetOk = (ret, dst) => standard.implicit(ret, dst) || (explicit && standard.explicit(dst, ret)) || ret.equals(dst);
+      // Implicit: S is encompassed by the parameter type and the return type by T. Explicit also accepts the reverse
+      // (S encompasses the parameter type, the return type encompasses T) when the standard explicit conversion that
+      // then has to run exists: `double` and `decimal` encompass each other in neither direction.
+      const sourceOk = (src, par) => src.equals(par) || standard.implicit(src, par) || (explicit && encompasses(src, par, standard));
+      const targetOk = (ret, dst) => ret.equals(dst) || standard.implicit(ret, dst) || (explicit && encompasses(ret, dst, standard));
+      // Roslyn (beyond the specification) lets S? use an operator declared for S when the result type can hold null.
+      const valueParameter = p.isValueType === true && !isNullableType(p);
+      const resultHoldsNull = r.isValueType !== true || isNullableType(r);
+      if (isNullableType(from) && valueParameter && resultHoldsNull && sourceOk(s0, p) && targetOk(r, to)) {
+        candidates.push({ method, source: p, target: r, isLifted: false, fromUnderlying: true });
+        continue;
+      }
       if (sourceOk(from, p) && targetOk(r, to)) {
         candidates.push({ method, source: p, target: r, isLifted: false });
         continue;
@@ -81,12 +91,19 @@ export function resolveUserDefinedConversion(from, to, { explicit = false } = {}
   return finish(chosen[0], explicit, standard, from, to);
 }
 function finish(c, explicit, standard, from, to) {
+  // A lifted operator (and one whose result can hold null) takes the underlying type of S?; otherwise S itself must
+  // reach the parameter type implicitly, so S? -> T unwraps explicitly.
+  const source = c.isLifted || c.fromUnderlying ? stripNullable(from) : from;
   const isImplicit =
     c.method.name === 'op_Implicit' &&
     !c.unwraps &&
-    (standard.implicit(stripNullable(from), c.source) || from.equals(c.source) || stripNullable(from).equals(c.source)) &&
+    (standard.implicit(source, c.source) || source.equals(c.source)) &&
     (standard.implicit(c.target, to) || c.target.equals(to) || c.target.equals(stripNullable(to)));
   return { method: c.method, isLifted: !!c.isLifted, isImplicit, sourceType: c.source, targetType: c.target };
+}
+/** A encompasses B (a standard implicit conversion leads from B to A) and the standard explicit conversion A -> B exists. */
+function encompasses(a, b, standard) {
+  return standard.implicit(b, a) && standard.explicit(a, b);
 }
 function dedupe(types) {
   const out = [];

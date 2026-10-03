@@ -19,7 +19,9 @@ import { createFeatureGate } from '../binder/feature-check.js';
 import { formatMessage, defaultSeverity, hasDiagnosticCode } from '../diagnostics/codes.js';
 import { NullableContextMap } from '../nullable/annotations.js';
 import { bindCompilationReferences } from '../metadata-import/compilation-references.js';
-import { spanOf, knownNamespaces, frameworkNames, isSourceSymbol } from './analysis-helpers.js';
+import { spanOf, frameworkNames, isSourceSymbol } from './analysis-helpers.js';
+import { isBclNamespace } from '../symbols/bcl-namespaces.js';
+import { bindAllUsings } from '../binder/using-directives.js';
 
 export class AnalysisCore {
   /**
@@ -48,9 +50,14 @@ export class AnalysisCore {
       report: (uri, node, code, args) => this.report(uri, node, code, args),
       constructions: this.constructions,
       tolerateNamespace: name => this.tolerateNamespace(name),
-      useSite: (symbol, uri, node) => {
-        for (const d of this.references.useSiteDiagnostics(symbol)) this.report(uri, node, d.code, d.args);
+      isFrameworkGap: (namespaceName, name) => this.isFrameworkGap(namespaceName, name),
+      useFeature: (uri, node, feature) => this.gate(uri, node, feature),
+      unknownUsing: () => {
+        this.hasUnknownUsings = true;
       },
+      useSite: (symbol, uri, node, options) => this.reportUseSite(symbol, uri, node, options),
+      externAlias: name => this.references.externAlias(name),
+      forwardedToMissingAssembly: metadataName => this.references.forwardedToMissingAssembly(metadataName),
       isKnownFrameworkName: name => this.isKnownFrameworkName(name),
       get module() {
         return self.assembly.module;
@@ -80,6 +87,23 @@ export class AnalysisCore {
     this.globalNamespace = mergeGlobalNamespaces(this.assembly.globalNamespace, ...this.references.globalNamespaces);
     for (const d of this.references.diagnostics) this.report(this.files[0]?.source.uri, { start: 0, end: 0 }, d.code, d.args);
   }
+  /**
+   * Reports the use-site diagnostics of an imported symbol. A unified assembly reference (CS1701, CS1702, CS1705)
+   * is reported once for the compilation and without a source location, as Roslyn does; the others at `node`.
+   */
+  reportUseSite(symbol, uri, node, options) {
+    for (const d of this.references.useSiteDiagnostics(symbol, options)) {
+      if (this.references.isUnification(d.code)) this.report(this.files[0]?.source.uri, { start: 0, end: 0 }, d.code, d.args);
+      else this.report(uri, node, d.code, d.args);
+    }
+  }
+  /** The reason (`{code,args}`) the nearest unresolved base type of an imported type is missing, or null. */
+  missingBaseReason(type) {
+    for (let t = type, depth = 0; t && depth < 64; t = t.baseType, depth++) {
+      if (t.isErrorType?.()) return t.reason ?? null;
+    }
+    return null;
+  }
   versionOf(uri) {
     try {
       return parseVersion(this.options.langVersionByUri?.[uri] ?? this.options.langVersion ?? 'default');
@@ -98,15 +122,25 @@ export class AnalysisCore {
     }
     return map.stateAt(position);
   }
-  /** Namespaces of the BCL the closed registry does not model are accepted in using directives and qualified names. */
+  /**
+   * A namespace of the base class library that the closed registry does not model is accepted in a using directive.
+   * Only namespaces that exist in the BCL are: `System.Nope` is as unknown here as it is to Roslyn.
+   */
   tolerateNamespace(name) {
+    if (this.references.hasCoreLibrary || !isBclNamespace(name)) return false;
+    this.incomplete = true;
+    return true;
+  }
+  /**
+   * True when `name` is missing from the registry's `namespaceName` although the BCL has it: a child namespace of
+   * the BCL, or one of the common BCL type names in a BCL namespace. Such a name is not an error; the analysis is
+   * incomplete instead.
+   */
+  isFrameworkGap(namespaceName, name) {
     if (this.references.hasCoreLibrary) return false;
-    if (knownNamespaces.test(name)) {
-      this.incomplete = true;
-      this.hasUnknownUsings = true;
-      return true;
-    }
-    return false;
+    const isGap = isBclNamespace(namespaceName + '.' + name) || (isBclNamespace(namespaceName) && frameworkNames.has(name));
+    if (isGap) this.incomplete = true;
+    return isGap;
   }
   /** Names of common BCL types the registry does not model: using one is not an error, it only makes the analysis incomplete. */
   isKnownFrameworkName(name) {
@@ -153,6 +187,15 @@ export class AnalysisCore {
     if (this.diagnostics.some(d => d.code === code && d.uri === source.uri && d.start === start && d.message === message)) return;
     this.diagnostics.push(diagnostic(source, start, length || 1, code, message, severity));
   }
+  /**
+   * Declares the types and binds only the using and extern alias directives: enough for their diagnostics, without
+   * binding a single member or body. Returns the `run()` shape with `usingsOnly: true`.
+   */
+  runUsings() {
+    this.assembly.declare(this.globalNamespace);
+    for (const scope of this.assembly.usingScopes) bindAllUsings(this.typeBinder, scope);
+    return { diagnostics: this.diagnostics, incomplete: true, usingsOnly: true, assembly: this.assembly, bound: this.bound, core: this.core };
+  }
   /** Runs every phase and returns `{diagnostics,incomplete,assembly,bound,unexecutable}`. */
   run() {
     this.assembly.declare(this.globalNamespace);
@@ -168,6 +211,8 @@ export class AnalysisCore {
         unexecutable: this.unexecutable,
       };
     const types = this.assembly.types;
+    // Using and extern alias directives are bound (and checked) whether or not a lookup reaches them.
+    for (const scope of this.assembly.usingScopes) bindAllUsings(this.typeBinder, scope);
     for (const type of types) type.baseType;
     for (const type of types) type.getMembers();
     for (const type of types) this.bindExplicitInterfaces(type);
