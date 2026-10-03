@@ -1,0 +1,10 @@
+{
+  "syntax/cs1002-missing-semicolon": ["warnings"],
+  "syntax/cs1003-missing-comma-or-colon": ["diagnostics", "warnings"],
+  "syntax/cs1003-missing-semicolon-before-statement": ["warnings"],
+  "syntax/cs1010-newline-in-constant": ["warnings"],
+  "syntax/cs1026-missing-close-paren": ["warnings"],
+  "syntax/cs1513-missing-close-brace": ["warnings"],
+  "syntax/cs1525-invalid-expression-term": ["diagnostics", "warnings"],
+  "syntax/cs8803-statement-after-type": ["warnings"]
+}

@@ -1,0 +1,12 @@
+{
+  "switch/cs0029-case-type-mismatch": ["diagnostics", "warnings"],
+  "switch/cs0152-duplicate-case": ["warnings"],
+  "switch/cs0163-fall-through": ["diagnostics", "warnings"],
+  "switch/cs8070-fall-out-of-last": ["diagnostics", "warnings"],
+  "switch/cs8509-non-exhaustive-expression": ["diagnostics"],
+  "switch/cs8510-subsumed-arm": ["warnings"],
+  "switch/string-switch": ["diagnostics", "warnings", "bytecode", "cil"],
+  "switch/switch-expression": ["diagnostics", "warnings", "bytecode", "cil"],
+  "switch/switch-expression-unmatched-throws": ["diagnostics"],
+  "switch/switch-return-in-method": ["diagnostics", "warnings", "bytecode", "cil"]
+}

@@ -1,0 +1,13 @@
+{
+  "operators/comparison-and-logic": ["diagnostics", "warnings", "bytecode", "cil"],
+  "operators/cs0019-and-on-ints": ["warnings"],
+  "operators/cs0019-int-plus-bool": ["diagnostics", "warnings"],
+  "operators/cs0019-string-minus": ["warnings"],
+  "operators/cs0023-minus-on-string": ["diagnostics", "warnings"],
+  "operators/cs0023-not-on-int": ["warnings"],
+  "operators/cs0131-assign-to-expression": ["diagnostics", "warnings"],
+  "operators/cs0173-ternary-mismatch": ["diagnostics", "warnings"],
+  "operators/null-coalescing": ["diagnostics", "warnings", "bytecode", "cil"],
+  "operators/short-circuit": ["diagnostics", "warnings", "bytecode", "cil"],
+  "operators/ternary-chain": ["diagnostics", "warnings", "bytecode", "cil"]
+}

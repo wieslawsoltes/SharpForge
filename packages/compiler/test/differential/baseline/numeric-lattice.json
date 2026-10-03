@@ -1,0 +1,7 @@
+{
+  "numeric-lattice/cs0019-decimal-double": ["warnings"],
+  "numeric-lattice/cs0023-negate-ulong": ["warnings"],
+  "numeric-lattice/cs0034-ulong-plus-int": ["warnings"],
+  "numeric-lattice/cs0220-checked-constant-overflow": ["warnings"],
+  "numeric-lattice/cs0266-narrowing": ["diagnostics", "warnings"]
+}

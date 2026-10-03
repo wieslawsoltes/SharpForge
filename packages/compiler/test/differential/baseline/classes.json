@@ -1,0 +1,16 @@
+{
+  "classes/constructor-chaining": ["diagnostics", "warnings", "bytecode", "cil"],
+  "classes/cs0026-this-in-static": ["warnings"],
+  "classes/cs0120-instance-member-from-static": ["diagnostics", "warnings"],
+  "classes/cs0120-instance-method-from-static": ["warnings"],
+  "classes/cs0144-instantiate-abstract": ["diagnostics", "warnings"],
+  "classes/cs0176-static-through-instance": ["warnings"],
+  "classes/cs1729-no-matching-constructor": ["warnings"],
+  "classes/field-initializers-and-defaults": ["diagnostics", "bytecode", "cil"],
+  "classes/fields-ctor-methods": ["diagnostics", "warnings", "bytecode", "cil"],
+  "classes/linked-list": ["diagnostics", "warnings", "bytecode", "cil"],
+  "classes/nested-and-static-class": ["diagnostics", "warnings", "bytecode", "cil"],
+  "classes/object-initializer": ["diagnostics", "warnings", "bytecode", "cil"],
+  "classes/reference-semantics": ["diagnostics", "bytecode", "cil"],
+  "classes/static-members": ["diagnostics", "warnings", "bytecode", "cil"]
+}

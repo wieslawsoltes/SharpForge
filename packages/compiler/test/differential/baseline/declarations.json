@@ -1,0 +1,14 @@
+{
+  "declarations/cs0017-multiple-entry-points": ["diagnostics", "warnings"],
+  "declarations/cs0100-duplicate-parameter": ["warnings"],
+  "declarations/cs0101-duplicate-type": ["warnings"],
+  "declarations/cs0111-duplicate-constructor": ["warnings"],
+  "declarations/cs0111-duplicate-method": ["warnings"],
+  "declarations/cs0111-return-type-only": ["warnings"],
+  "declarations/cs0136-declared-later-in-outer": ["warnings"],
+  "declarations/cs0136-nested-scope": ["warnings"],
+  "declarations/cs0136-parameter-shadowed": ["warnings"],
+  "declarations/cs0815-var-null": ["warnings"],
+  "declarations/cs0818-var-without-initializer": ["diagnostics"],
+  "declarations/cs5001-no-entry-point": ["diagnostics", "warnings"]
+}
