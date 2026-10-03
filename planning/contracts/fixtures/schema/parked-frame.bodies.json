@@ -1,0 +1,4167 @@
+[
+  {
+    "encoding": "bytecode",
+    "exceptionRegions": [],
+    "instructions": [
+      {
+        "inputTypes": [],
+        "offset": 0,
+        "opcode": "new-object",
+        "operands": [
+          {
+            "constructor": null,
+            "type": "<>AsyncCapture0"
+          }
+        ],
+        "outputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "resultType": "ref:<>AsyncCapture0",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 0,
+        "sourceOpcode": "NEWOBJ",
+        "stackIn": [],
+        "stackOut": [
+          "ref:<>AsyncCapture0"
+        ],
+        "successors": [
+          1
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "offset": 1,
+        "opcode": "store-local",
+        "operands": [
+          0,
+          {
+            "retainValue": true
+          }
+        ],
+        "outputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "resultType": "ref:<>AsyncCapture0",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 1,
+        "sourceOpcode": "STLOC",
+        "stackIn": [
+          "ref:<>AsyncCapture0"
+        ],
+        "stackOut": [
+          "ref:<>AsyncCapture0"
+        ],
+        "successors": [
+          2
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "offset": 2,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 2,
+        "sourceOpcode": "POP",
+        "stackIn": [
+          "ref:<>AsyncCapture0"
+        ],
+        "stackOut": [],
+        "successors": [
+          3
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 3,
+        "opcode": "load-local",
+        "operands": [
+          0
+        ],
+        "outputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "resultType": "ref:<>AsyncCapture0",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 3,
+        "sourceOpcode": "LDLOC",
+        "stackIn": [],
+        "stackOut": [
+          "ref:<>AsyncCapture0"
+        ],
+        "successors": [
+          4
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 4,
+        "opcode": "constant",
+        "operands": [
+          null
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 4,
+        "sourceOpcode": "CONST",
+        "stackIn": [
+          "ref:<>AsyncCapture0"
+        ],
+        "stackOut": [
+          "ref:<>AsyncCapture0",
+          "null"
+        ],
+        "successors": [
+          5
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 5,
+        "opcode": "store-local",
+        "operands": [
+          0,
+          {
+            "retainValue": true
+          }
+        ],
+        "outputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "resultType": "ref:<>AsyncCapture0",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 5,
+        "sourceOpcode": "STLOC",
+        "stackIn": [
+          "ref:<>AsyncCapture0",
+          "null"
+        ],
+        "stackOut": [
+          "ref:<>AsyncCapture0",
+          "ref:<>AsyncCapture0"
+        ],
+        "successors": [
+          6
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "offset": 6,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 6,
+        "sourceOpcode": "POP",
+        "stackIn": [
+          "ref:<>AsyncCapture0",
+          "ref:<>AsyncCapture0"
+        ],
+        "stackOut": [
+          "ref:<>AsyncCapture0"
+        ],
+        "successors": [
+          7
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "offset": 7,
+        "opcode": "store-local",
+        "operands": [
+          1,
+          {
+            "retainValue": true
+          }
+        ],
+        "outputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "resultType": "ref:<>AsyncCapture0",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 7,
+        "sourceOpcode": "STLOC",
+        "stackIn": [
+          "ref:<>AsyncCapture0"
+        ],
+        "stackOut": [
+          "ref:<>AsyncCapture0"
+        ],
+        "successors": [
+          8
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "offset": 8,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 8,
+        "sourceOpcode": "POP",
+        "stackIn": [
+          "ref:<>AsyncCapture0"
+        ],
+        "stackOut": [],
+        "successors": [
+          9
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 9,
+        "opcode": "load-local",
+        "operands": [
+          1
+        ],
+        "outputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "resultType": "ref:<>AsyncCapture0",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 9,
+        "sourceOpcode": "LDLOC",
+        "stackIn": [],
+        "stackOut": [
+          "ref:<>AsyncCapture0"
+        ],
+        "successors": [
+          10
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "offset": 10,
+        "opcode": "new-delegate",
+        "operands": [
+          {
+            "id": "2",
+            "name": "Invoke",
+            "owner": "<>AsyncCapture0",
+            "parameterStorage": [
+              "<>AsyncCapture0"
+            ],
+            "parameters": [
+              "ref:<>AsyncCapture0"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void"
+          },
+          "System.Action"
+        ],
+        "outputTypes": [
+          "ref:System.Action"
+        ],
+        "resultType": "ref:System.Action",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 10,
+        "sourceOpcode": "DELEGATE",
+        "stackIn": [
+          "ref:<>AsyncCapture0"
+        ],
+        "stackOut": [
+          "ref:System.Action"
+        ],
+        "successors": [
+          11
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.Action"
+        ],
+        "offset": 11,
+        "opcode": "call",
+        "operands": [
+          {
+            "id": "builtin:450",
+            "name": "$framework:413",
+            "owner": "SharpForge.Runtime.Async",
+            "parameters": [
+              "ref:System.Action"
+            ],
+            "returnType": "ref:System.Threading.Tasks.Task",
+            "voidResult": "null"
+          }
+        ],
+        "outputTypes": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "resultType": "ref:System.Threading.Tasks.Task",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 11,
+        "sourceOpcode": "BUILTIN",
+        "stackIn": [
+          "ref:System.Action"
+        ],
+        "stackOut": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "successors": [
+          12
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "offset": 12,
+        "opcode": "return",
+        "operands": [
+          {
+            "discardPadding": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 12,
+        "sourceOpcode": "RET",
+        "stackIn": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "stackOut": [],
+        "successors": []
+      },
+      {
+        "inputTypes": [],
+        "offset": 13,
+        "opcode": "constant",
+        "operands": [
+          null
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 13,
+        "sourceOpcode": "CONST",
+        "stackIn": [],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          14
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 14,
+        "opcode": "store-local",
+        "operands": [
+          1,
+          {
+            "retainValue": true
+          }
+        ],
+        "outputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "resultType": "ref:<>AsyncCapture0",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 14,
+        "sourceOpcode": "STLOC",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [
+          "ref:<>AsyncCapture0"
+        ],
+        "successors": [
+          15
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "offset": 15,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 15,
+        "sourceOpcode": "POP",
+        "stackIn": [
+          "ref:<>AsyncCapture0"
+        ],
+        "stackOut": [],
+        "successors": [
+          16
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 16,
+        "opcode": "constant",
+        "operands": [
+          null
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 16,
+        "sourceOpcode": "CONST",
+        "stackIn": [],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          17
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 17,
+        "opcode": "return",
+        "operands": [
+          {
+            "discardPadding": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 17,
+        "sourceOpcode": "RET",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [],
+        "successors": []
+      }
+    ],
+    "localStorageTypes": [
+      "<>AsyncCapture0",
+      "<>AsyncCapture0"
+    ],
+    "locals": [
+      "ref:<>AsyncCapture0",
+      "ref:<>AsyncCapture0"
+    ],
+    "maxStack": 2,
+    "methodId": "0",
+    "offsetUnit": "instruction",
+    "parameterStorageTypes": [],
+    "parameters": [],
+    "returnStorageType": "System.Threading.Tasks.Task",
+    "returnType": "ref:System.Threading.Tasks.Task",
+    "safepoints": [
+      {
+        "kind": 3,
+        "offset": 0
+      },
+      {
+        "kind": 3,
+        "offset": 10
+      },
+      {
+        "kind": 2,
+        "offset": 11
+      },
+      {
+        "kind": 2,
+        "offset": 12
+      },
+      {
+        "kind": 2,
+        "offset": 17
+      }
+    ],
+    "schemaVersion": 1,
+    "typeState": "resolved"
+  },
+  {
+    "encoding": "bytecode",
+    "exceptionRegions": [],
+    "instructions": [
+      {
+        "inputTypes": [],
+        "offset": 0,
+        "opcode": "nop",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 0,
+        "sourceOpcode": "SEQ",
+        "stackIn": [],
+        "stackOut": [],
+        "successors": [
+          1
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 1,
+        "opcode": "constant",
+        "operands": [
+          1
+        ],
+        "outputTypes": [
+          "i32"
+        ],
+        "resultType": "i32",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 1,
+        "sourceOpcode": "CONST",
+        "stackIn": [],
+        "stackOut": [
+          "i32"
+        ],
+        "successors": [
+          2
+        ]
+      },
+      {
+        "inputTypes": [
+          "i32"
+        ],
+        "offset": 2,
+        "opcode": "new-array",
+        "operands": [
+          "System.String"
+        ],
+        "outputTypes": [
+          "ref:System.String[]"
+        ],
+        "resultType": "ref:System.String[]",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 2,
+        "sourceOpcode": "NEWARR",
+        "stackIn": [
+          "i32"
+        ],
+        "stackOut": [
+          "ref:System.String[]"
+        ],
+        "successors": [
+          3
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.String[]"
+        ],
+        "offset": 3,
+        "opcode": "duplicate",
+        "operands": [],
+        "outputTypes": [
+          "ref:System.String[]",
+          "ref:System.String[]"
+        ],
+        "resultType": "ref:System.String[]",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 3,
+        "sourceOpcode": "DUP",
+        "stackIn": [
+          "ref:System.String[]"
+        ],
+        "stackOut": [
+          "ref:System.String[]",
+          "ref:System.String[]"
+        ],
+        "successors": [
+          4
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 4,
+        "opcode": "constant",
+        "operands": [
+          0
+        ],
+        "outputTypes": [
+          "i32"
+        ],
+        "resultType": "i32",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 4,
+        "sourceOpcode": "CONST",
+        "stackIn": [
+          "ref:System.String[]",
+          "ref:System.String[]"
+        ],
+        "stackOut": [
+          "ref:System.String[]",
+          "ref:System.String[]",
+          "i32"
+        ],
+        "successors": [
+          5
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 5,
+        "opcode": "constant",
+        "operands": [
+          "parked-root"
+        ],
+        "outputTypes": [
+          "ref:System.String"
+        ],
+        "resultType": "ref:System.String",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 5,
+        "sourceOpcode": "CONST",
+        "stackIn": [
+          "ref:System.String[]",
+          "ref:System.String[]",
+          "i32"
+        ],
+        "stackOut": [
+          "ref:System.String[]",
+          "ref:System.String[]",
+          "i32",
+          "ref:System.String"
+        ],
+        "successors": [
+          6
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.String[]",
+          "i32",
+          "ref:System.String"
+        ],
+        "offset": 6,
+        "opcode": "store-element",
+        "operands": [
+          "ref:System.String",
+          {
+            "retainValue": true
+          }
+        ],
+        "outputTypes": [
+          "ref:System.String"
+        ],
+        "resultType": "ref:System.String",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 6,
+        "sourceOpcode": "STELEM",
+        "stackIn": [
+          "ref:System.String[]",
+          "ref:System.String[]",
+          "i32",
+          "ref:System.String"
+        ],
+        "stackOut": [
+          "ref:System.String[]",
+          "ref:System.String"
+        ],
+        "successors": [
+          7
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.String"
+        ],
+        "offset": 7,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 7,
+        "sourceOpcode": "POP",
+        "stackIn": [
+          "ref:System.String[]",
+          "ref:System.String"
+        ],
+        "stackOut": [
+          "ref:System.String[]"
+        ],
+        "successors": [
+          8
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.String[]"
+        ],
+        "offset": 8,
+        "opcode": "store-local",
+        "operands": [
+          0,
+          {
+            "retainValue": true
+          }
+        ],
+        "outputTypes": [
+          "ref:System.String[]"
+        ],
+        "resultType": "ref:System.String[]",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 8,
+        "sourceOpcode": "STLOC",
+        "stackIn": [
+          "ref:System.String[]"
+        ],
+        "stackOut": [
+          "ref:System.String[]"
+        ],
+        "successors": [
+          9
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.String[]"
+        ],
+        "offset": 9,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 9,
+        "sourceOpcode": "POP",
+        "stackIn": [
+          "ref:System.String[]"
+        ],
+        "stackOut": [],
+        "successors": [
+          10
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 10,
+        "opcode": "nop",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 10,
+        "sourceOpcode": "SEQ",
+        "stackIn": [],
+        "stackOut": [],
+        "successors": [
+          11
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 11,
+        "opcode": "constant",
+        "operands": [
+          5
+        ],
+        "outputTypes": [
+          "i32"
+        ],
+        "resultType": "i32",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 11,
+        "sourceOpcode": "CONST",
+        "stackIn": [],
+        "stackOut": [
+          "i32"
+        ],
+        "successors": [
+          12
+        ]
+      },
+      {
+        "inputTypes": [
+          "i32"
+        ],
+        "offset": 12,
+        "opcode": "call",
+        "operands": [
+          {
+            "id": "builtin:491",
+            "name": "$framework:454",
+            "owner": "System.Threading.Tasks.Task",
+            "parameters": [
+              "i32"
+            ],
+            "returnType": "ref:System.Threading.Tasks.Task",
+            "voidResult": "null"
+          }
+        ],
+        "outputTypes": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "resultType": "ref:System.Threading.Tasks.Task",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 12,
+        "sourceOpcode": "BUILTIN",
+        "stackIn": [
+          "i32"
+        ],
+        "stackOut": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "successors": [
+          13
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "offset": 13,
+        "opcode": "call",
+        "operands": [
+          {
+            "id": "builtin:449",
+            "name": "$framework:412",
+            "owner": "SharpForge.Runtime.Async",
+            "parameters": [
+              "ref:System.Threading.Tasks.Task"
+            ],
+            "returnType": "void",
+            "voidResult": "null"
+          }
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 13,
+        "sourceOpcode": "BUILTIN",
+        "stackIn": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          14
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 14,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 14,
+        "sourceOpcode": "POP",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [],
+        "successors": [
+          15
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 15,
+        "opcode": "nop",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 15,
+        "sourceOpcode": "SEQ",
+        "stackIn": [],
+        "stackOut": [],
+        "successors": [
+          16
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 16,
+        "opcode": "call",
+        "operands": [
+          {
+            "id": "builtin:10",
+            "name": "GC.Collect",
+            "owner": null,
+            "parameters": [],
+            "returnType": "void",
+            "voidResult": "null"
+          }
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 16,
+        "sourceOpcode": "BUILTIN",
+        "stackIn": [],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          17
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 17,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 17,
+        "sourceOpcode": "POP",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [],
+        "successors": [
+          18
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 18,
+        "opcode": "nop",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 18,
+        "sourceOpcode": "SEQ",
+        "stackIn": [],
+        "stackOut": [],
+        "successors": [
+          19
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 19,
+        "opcode": "load-local",
+        "operands": [
+          0
+        ],
+        "outputTypes": [
+          "ref:System.String[]"
+        ],
+        "resultType": "ref:System.String[]",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 19,
+        "sourceOpcode": "LDLOC",
+        "stackIn": [],
+        "stackOut": [
+          "ref:System.String[]"
+        ],
+        "successors": [
+          20
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 20,
+        "opcode": "constant",
+        "operands": [
+          0
+        ],
+        "outputTypes": [
+          "i32"
+        ],
+        "resultType": "i32",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 20,
+        "sourceOpcode": "CONST",
+        "stackIn": [
+          "ref:System.String[]"
+        ],
+        "stackOut": [
+          "ref:System.String[]",
+          "i32"
+        ],
+        "successors": [
+          21
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.String[]",
+          "i32"
+        ],
+        "offset": 21,
+        "opcode": "load-element",
+        "operands": [
+          "ref:System.String"
+        ],
+        "outputTypes": [
+          "ref:System.String"
+        ],
+        "resultType": "ref:System.String",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 21,
+        "sourceOpcode": "LDELEM",
+        "stackIn": [
+          "ref:System.String[]",
+          "i32"
+        ],
+        "stackOut": [
+          "ref:System.String"
+        ],
+        "successors": [
+          22
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.String"
+        ],
+        "offset": 22,
+        "opcode": "call",
+        "operands": [
+          {
+            "id": "builtin:0",
+            "name": "Console.WriteLine",
+            "owner": null,
+            "parameters": [
+              "any"
+            ],
+            "returnType": "void",
+            "voidResult": "null"
+          }
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 22,
+        "sourceOpcode": "BUILTIN",
+        "stackIn": [
+          "ref:System.String"
+        ],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          23
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 23,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 23,
+        "sourceOpcode": "POP",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [],
+        "successors": [
+          24
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 24,
+        "opcode": "constant",
+        "operands": [
+          null
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 24,
+        "sourceOpcode": "CONST",
+        "stackIn": [],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          25
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 25,
+        "opcode": "store-local",
+        "operands": [
+          0,
+          {
+            "retainValue": true
+          }
+        ],
+        "outputTypes": [
+          "ref:System.String[]"
+        ],
+        "resultType": "ref:System.String[]",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 25,
+        "sourceOpcode": "STLOC",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [
+          "ref:System.String[]"
+        ],
+        "successors": [
+          26
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.String[]"
+        ],
+        "offset": 26,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 26,
+        "sourceOpcode": "POP",
+        "stackIn": [
+          "ref:System.String[]"
+        ],
+        "stackOut": [],
+        "successors": [
+          27
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 27,
+        "opcode": "constant",
+        "operands": [
+          null
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 27,
+        "sourceOpcode": "CONST",
+        "stackIn": [],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          28
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 28,
+        "opcode": "return",
+        "operands": [
+          {
+            "discardPadding": true
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 28,
+        "sourceOpcode": "RET",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [],
+        "successors": []
+      }
+    ],
+    "localStorageTypes": [
+      "System.String[]"
+    ],
+    "locals": [
+      "ref:System.String[]"
+    ],
+    "maxStack": 4,
+    "methodId": "1",
+    "offsetUnit": "instruction",
+    "parameterStorageTypes": [],
+    "parameters": [],
+    "returnStorageType": "System.Void",
+    "returnType": "void",
+    "safepoints": [
+      {
+        "kind": 3,
+        "offset": 2
+      },
+      {
+        "kind": 2,
+        "offset": 12
+      },
+      {
+        "kind": 2,
+        "offset": 13
+      },
+      {
+        "kind": 2,
+        "offset": 16
+      },
+      {
+        "kind": 2,
+        "offset": 22
+      },
+      {
+        "kind": 2,
+        "offset": 28
+      }
+    ],
+    "schemaVersion": 1,
+    "typeState": "resolved"
+  },
+  {
+    "encoding": "bytecode",
+    "exceptionRegions": [],
+    "instructions": [
+      {
+        "inputTypes": [],
+        "offset": 0,
+        "opcode": "call",
+        "operands": [
+          {
+            "id": "1",
+            "name": "<>AsyncBody0_Main",
+            "owner": "Program",
+            "parameterStorage": [],
+            "parameters": [],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "null"
+          }
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 0,
+        "sourceOpcode": "CALL",
+        "stackIn": [],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          1
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 1,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 1,
+        "sourceOpcode": "POP",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [],
+        "successors": [
+          2
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 2,
+        "opcode": "constant",
+        "operands": [
+          null
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 2,
+        "sourceOpcode": "CONST",
+        "stackIn": [],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          3
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 3,
+        "opcode": "return",
+        "operands": [
+          {
+            "discardPadding": true
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 3,
+        "sourceOpcode": "RET",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [],
+        "successors": []
+      }
+    ],
+    "localStorageTypes": [
+      "<>AsyncCapture0"
+    ],
+    "locals": [
+      "ref:<>AsyncCapture0"
+    ],
+    "maxStack": 1,
+    "methodId": "2",
+    "offsetUnit": "instruction",
+    "parameterStorageTypes": [
+      "<>AsyncCapture0"
+    ],
+    "parameters": [
+      "ref:<>AsyncCapture0"
+    ],
+    "returnStorageType": "System.Void",
+    "returnType": "void",
+    "safepoints": [
+      {
+        "kind": 2,
+        "offset": 0
+      },
+      {
+        "kind": 2,
+        "offset": 3
+      }
+    ],
+    "schemaVersion": 1,
+    "typeState": "resolved"
+  },
+  {
+    "encoding": "bytecode",
+    "exceptionRegions": [],
+    "instructions": [
+      {
+        "inputTypes": [],
+        "offset": 0,
+        "opcode": "call",
+        "operands": [
+          {
+            "id": "0",
+            "name": "Main",
+            "owner": "Program",
+            "parameterStorage": [],
+            "parameters": [],
+            "returnStorage": "System.Threading.Tasks.Task",
+            "returnType": "ref:System.Threading.Tasks.Task",
+            "voidResult": "null"
+          }
+        ],
+        "outputTypes": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "resultType": "ref:System.Threading.Tasks.Task",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 0,
+        "sourceOpcode": "CALL",
+        "stackIn": [],
+        "stackOut": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "successors": [
+          1
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "offset": 1,
+        "opcode": "call",
+        "operands": [
+          {
+            "id": "builtin:449",
+            "name": "$framework:412",
+            "owner": "SharpForge.Runtime.Async",
+            "parameters": [
+              "ref:System.Threading.Tasks.Task"
+            ],
+            "returnType": "void",
+            "voidResult": "null"
+          }
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 1,
+        "sourceOpcode": "BUILTIN",
+        "stackIn": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          2
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 2,
+        "opcode": "return",
+        "operands": [
+          {
+            "discardPadding": true
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "bytecode",
+        "sourceOffset": 2,
+        "sourceOpcode": "RET",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [],
+        "successors": []
+      }
+    ],
+    "localStorageTypes": [],
+    "locals": [],
+    "maxStack": 1,
+    "methodId": "3",
+    "offsetUnit": "instruction",
+    "parameterStorageTypes": [],
+    "parameters": [],
+    "returnStorageType": "System.Void",
+    "returnType": "void",
+    "safepoints": [
+      {
+        "kind": 2,
+        "offset": 0
+      },
+      {
+        "kind": 2,
+        "offset": 1
+      },
+      {
+        "kind": 2,
+        "offset": 2
+      }
+    ],
+    "schemaVersion": 1,
+    "typeState": "resolved"
+  },
+  {
+    "encoding": "cil",
+    "exceptionRegions": [],
+    "instructions": [
+      {
+        "inputTypes": [],
+        "offset": 0,
+        "opcode": "call",
+        "operands": [
+          {
+            "id": "100663299",
+            "isStatic": true,
+            "name": "Main",
+            "owner": "Program",
+            "parameterStorage": [],
+            "parameters": [],
+            "returnStorage": "System.Threading.Tasks.Task",
+            "returnType": "ref:System.Threading.Tasks.Task",
+            "voidResult": "none"
+          }
+        ],
+        "outputTypes": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "resultType": "ref:System.Threading.Tasks.Task",
+        "sourceEncoding": "cil",
+        "sourceOffset": 0,
+        "sourceOpcode": "call",
+        "stackIn": [],
+        "stackOut": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "successors": [
+          1
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "offset": 1,
+        "opcode": "call",
+        "operands": [
+          {
+            "id": "167772161",
+            "isStatic": true,
+            "name": "Await",
+            "owner": "SharpForge.Runtime.Async",
+            "parameterStorage": [
+              "System.Threading.Tasks.Task"
+            ],
+            "parameters": [
+              "ref:System.Threading.Tasks.Task"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 5,
+        "sourceOpcode": "call",
+        "stackIn": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "stackOut": [],
+        "successors": [
+          2
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 2,
+        "opcode": "constant",
+        "operands": [
+          null
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "cil",
+        "sourceOffset": 10,
+        "sourceOpcode": "ldnull",
+        "stackIn": [],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          3
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 3,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 11,
+        "sourceOpcode": "pop",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [],
+        "successors": [
+          4
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 4,
+        "opcode": "return",
+        "operands": [
+          {
+            "discardPadding": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 12,
+        "sourceOpcode": "ret",
+        "stackIn": [],
+        "stackOut": [],
+        "successors": []
+      }
+    ],
+    "localStorageTypes": [],
+    "locals": [],
+    "maxStack": 1,
+    "methodId": "100663297",
+    "offsetUnit": "instruction",
+    "parameterStorageTypes": [],
+    "parameters": [],
+    "returnStorageType": "System.Void",
+    "returnType": "void",
+    "safepoints": [
+      {
+        "kind": 2,
+        "offset": 0
+      },
+      {
+        "kind": 2,
+        "offset": 1
+      },
+      {
+        "kind": 5,
+        "offset": 1
+      },
+      {
+        "kind": 2,
+        "offset": 4
+      }
+    ],
+    "schemaVersion": 1,
+    "typeState": "resolved"
+  },
+  {
+    "encoding": "cil",
+    "exceptionRegions": [],
+    "instructions": [
+      {
+        "inputTypes": [],
+        "offset": 0,
+        "opcode": "load-argument",
+        "operands": [
+          0
+        ],
+        "outputTypes": [
+          "i32"
+        ],
+        "resultType": "i32",
+        "sourceEncoding": "cil",
+        "sourceOffset": 0,
+        "sourceOpcode": "ldarg",
+        "stackIn": [],
+        "stackOut": [
+          "i32"
+        ],
+        "successors": [
+          1
+        ]
+      },
+      {
+        "inputTypes": [
+          "i32"
+        ],
+        "offset": 1,
+        "opcode": "branch-if",
+        "operands": [
+          5,
+          true
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 4,
+        "sourceOpcode": "brtrue",
+        "stackIn": [
+          "i32"
+        ],
+        "stackOut": [],
+        "successors": [
+          5,
+          2
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 2,
+        "opcode": "load-argument",
+        "operands": [
+          1
+        ],
+        "outputTypes": [
+          "ref:System.String"
+        ],
+        "resultType": "ref:System.String",
+        "sourceEncoding": "cil",
+        "sourceOffset": 9,
+        "sourceOpcode": "ldarg",
+        "stackIn": [],
+        "stackOut": [
+          "ref:System.String"
+        ],
+        "successors": [
+          3
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.String"
+        ],
+        "offset": 3,
+        "opcode": "new-object",
+        "operands": [
+          {
+            "id": "167772163",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Exception",
+            "parameterStorage": [
+              "System.Exception",
+              "System.String"
+            ],
+            "parameters": [
+              "ref:System.Exception",
+              "ref:System.String"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        ],
+        "outputTypes": [
+          "ref:System.Exception"
+        ],
+        "resultType": "ref:System.Exception",
+        "sourceEncoding": "cil",
+        "sourceOffset": 13,
+        "sourceOpcode": "newobj",
+        "stackIn": [
+          "ref:System.String"
+        ],
+        "stackOut": [
+          "ref:System.Exception"
+        ],
+        "successors": [
+          4
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.Exception"
+        ],
+        "offset": 4,
+        "opcode": "throw",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 18,
+        "sourceOpcode": "throw",
+        "stackIn": [
+          "ref:System.Exception"
+        ],
+        "stackOut": [],
+        "successors": []
+      },
+      {
+        "inputTypes": [],
+        "offset": 5,
+        "opcode": "return",
+        "operands": [
+          {
+            "discardPadding": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 19,
+        "sourceOpcode": "ret",
+        "stackIn": [],
+        "stackOut": [],
+        "successors": []
+      }
+    ],
+    "localStorageTypes": [],
+    "locals": [],
+    "maxStack": 1,
+    "methodId": "100663298",
+    "offsetUnit": "instruction",
+    "parameterStorageTypes": [
+      "System.Boolean",
+      "System.String"
+    ],
+    "parameters": [
+      "i32",
+      "ref:System.String"
+    ],
+    "returnStorageType": "System.Void",
+    "returnType": "void",
+    "safepoints": [
+      {
+        "kind": 3,
+        "offset": 3
+      },
+      {
+        "kind": 2,
+        "offset": 5
+      }
+    ],
+    "schemaVersion": 1,
+    "typeState": "resolved"
+  },
+  {
+    "encoding": "cil",
+    "exceptionRegions": [],
+    "instructions": [
+      {
+        "inputTypes": [],
+        "offset": 0,
+        "opcode": "constant",
+        "operands": [
+          null
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "cil",
+        "sourceOffset": 0,
+        "sourceOpcode": "ldnull",
+        "stackIn": [],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          1
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 1,
+        "opcode": "new-object",
+        "operands": [
+          {
+            "id": "100663304",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "<>AsyncCapture0",
+            "parameterStorage": [
+              "<>AsyncCapture0",
+              "SharpForge.<>AllocationToken"
+            ],
+            "parameters": [
+              "ref:<>AsyncCapture0",
+              "ref:SharpForge.<>AllocationToken"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        ],
+        "outputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "resultType": "ref:<>AsyncCapture0",
+        "sourceEncoding": "cil",
+        "sourceOffset": 1,
+        "sourceOpcode": "newobj",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [
+          "ref:<>AsyncCapture0"
+        ],
+        "successors": [
+          2
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "offset": 2,
+        "opcode": "duplicate",
+        "operands": [],
+        "outputTypes": [
+          "ref:<>AsyncCapture0",
+          "ref:<>AsyncCapture0"
+        ],
+        "resultType": "ref:<>AsyncCapture0",
+        "sourceEncoding": "cil",
+        "sourceOffset": 6,
+        "sourceOpcode": "dup",
+        "stackIn": [
+          "ref:<>AsyncCapture0"
+        ],
+        "stackOut": [
+          "ref:<>AsyncCapture0",
+          "ref:<>AsyncCapture0"
+        ],
+        "successors": [
+          3
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "offset": 3,
+        "opcode": "store-local",
+        "operands": [
+          0,
+          {
+            "retainValue": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 7,
+        "sourceOpcode": "stloc",
+        "stackIn": [
+          "ref:<>AsyncCapture0",
+          "ref:<>AsyncCapture0"
+        ],
+        "stackOut": [
+          "ref:<>AsyncCapture0"
+        ],
+        "successors": [
+          4
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "offset": 4,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 11,
+        "sourceOpcode": "pop",
+        "stackIn": [
+          "ref:<>AsyncCapture0"
+        ],
+        "stackOut": [],
+        "successors": [
+          5
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 5,
+        "opcode": "load-local",
+        "operands": [
+          0
+        ],
+        "outputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "resultType": "ref:<>AsyncCapture0",
+        "sourceEncoding": "cil",
+        "sourceOffset": 12,
+        "sourceOpcode": "ldloc",
+        "stackIn": [],
+        "stackOut": [
+          "ref:<>AsyncCapture0"
+        ],
+        "successors": [
+          6
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 6,
+        "opcode": "constant",
+        "operands": [
+          null
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "cil",
+        "sourceOffset": 16,
+        "sourceOpcode": "ldnull",
+        "stackIn": [
+          "ref:<>AsyncCapture0"
+        ],
+        "stackOut": [
+          "ref:<>AsyncCapture0",
+          "null"
+        ],
+        "successors": [
+          7
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 7,
+        "opcode": "duplicate",
+        "operands": [],
+        "outputTypes": [
+          "null",
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "cil",
+        "sourceOffset": 17,
+        "sourceOpcode": "dup",
+        "stackIn": [
+          "ref:<>AsyncCapture0",
+          "null"
+        ],
+        "stackOut": [
+          "ref:<>AsyncCapture0",
+          "null",
+          "null"
+        ],
+        "successors": [
+          8
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 8,
+        "opcode": "store-local",
+        "operands": [
+          0,
+          {
+            "retainValue": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 18,
+        "sourceOpcode": "stloc",
+        "stackIn": [
+          "ref:<>AsyncCapture0",
+          "null",
+          "null"
+        ],
+        "stackOut": [
+          "ref:<>AsyncCapture0",
+          "null"
+        ],
+        "successors": [
+          9
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 9,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 22,
+        "sourceOpcode": "pop",
+        "stackIn": [
+          "ref:<>AsyncCapture0",
+          "null"
+        ],
+        "stackOut": [
+          "ref:<>AsyncCapture0"
+        ],
+        "successors": [
+          10
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "offset": 10,
+        "opcode": "duplicate",
+        "operands": [],
+        "outputTypes": [
+          "ref:<>AsyncCapture0",
+          "ref:<>AsyncCapture0"
+        ],
+        "resultType": "ref:<>AsyncCapture0",
+        "sourceEncoding": "cil",
+        "sourceOffset": 23,
+        "sourceOpcode": "dup",
+        "stackIn": [
+          "ref:<>AsyncCapture0"
+        ],
+        "stackOut": [
+          "ref:<>AsyncCapture0",
+          "ref:<>AsyncCapture0"
+        ],
+        "successors": [
+          11
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "offset": 11,
+        "opcode": "store-local",
+        "operands": [
+          1,
+          {
+            "retainValue": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 24,
+        "sourceOpcode": "stloc",
+        "stackIn": [
+          "ref:<>AsyncCapture0",
+          "ref:<>AsyncCapture0"
+        ],
+        "stackOut": [
+          "ref:<>AsyncCapture0"
+        ],
+        "successors": [
+          12
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "offset": 12,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 28,
+        "sourceOpcode": "pop",
+        "stackIn": [
+          "ref:<>AsyncCapture0"
+        ],
+        "stackOut": [],
+        "successors": [
+          13
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 13,
+        "opcode": "load-local",
+        "operands": [
+          1
+        ],
+        "outputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "resultType": "ref:<>AsyncCapture0",
+        "sourceEncoding": "cil",
+        "sourceOffset": 29,
+        "sourceOpcode": "ldloc",
+        "stackIn": [],
+        "stackOut": [
+          "ref:<>AsyncCapture0"
+        ],
+        "successors": [
+          14
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 14,
+        "opcode": "function-address",
+        "operands": [
+          {
+            "id": "100663303",
+            "isStatic": false,
+            "name": "Invoke",
+            "owner": "<>AsyncCapture0",
+            "parameterStorage": [
+              "<>AsyncCapture0"
+            ],
+            "parameters": [
+              "ref:<>AsyncCapture0"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void"
+          }
+        ],
+        "outputTypes": [
+          "nativeint"
+        ],
+        "resultType": "nativeint",
+        "sourceEncoding": "cil",
+        "sourceOffset": 33,
+        "sourceOpcode": "ldftn",
+        "stackIn": [
+          "ref:<>AsyncCapture0"
+        ],
+        "stackOut": [
+          "ref:<>AsyncCapture0",
+          "nativeint"
+        ],
+        "successors": [
+          15
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:<>AsyncCapture0",
+          "nativeint"
+        ],
+        "offset": 15,
+        "opcode": "new-object",
+        "operands": [
+          {
+            "id": "167772164",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Action",
+            "parameterStorage": [
+              "System.Action",
+              "System.Object",
+              "System.IntPtr"
+            ],
+            "parameters": [
+              "ref:System.Action",
+              "ref:System.Object",
+              "nativeint"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        ],
+        "outputTypes": [
+          "ref:System.Action"
+        ],
+        "resultType": "ref:System.Action",
+        "sourceEncoding": "cil",
+        "sourceOffset": 39,
+        "sourceOpcode": "newobj",
+        "stackIn": [
+          "ref:<>AsyncCapture0",
+          "nativeint"
+        ],
+        "stackOut": [
+          "ref:System.Action"
+        ],
+        "successors": [
+          16
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.Action"
+        ],
+        "offset": 16,
+        "opcode": "call",
+        "operands": [
+          {
+            "id": "167772165",
+            "isStatic": true,
+            "name": "Start",
+            "owner": "SharpForge.Runtime.Async",
+            "parameterStorage": [
+              "System.Action"
+            ],
+            "parameters": [
+              "ref:System.Action"
+            ],
+            "returnStorage": "System.Threading.Tasks.Task",
+            "returnType": "ref:System.Threading.Tasks.Task",
+            "voidResult": "none"
+          }
+        ],
+        "outputTypes": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "resultType": "ref:System.Threading.Tasks.Task",
+        "sourceEncoding": "cil",
+        "sourceOffset": 44,
+        "sourceOpcode": "call",
+        "stackIn": [
+          "ref:System.Action"
+        ],
+        "stackOut": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "successors": [
+          17
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "offset": 17,
+        "opcode": "return",
+        "operands": [
+          {
+            "discardPadding": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 49,
+        "sourceOpcode": "ret",
+        "stackIn": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "stackOut": [],
+        "successors": []
+      },
+      {
+        "inputTypes": [],
+        "offset": 18,
+        "opcode": "constant",
+        "operands": [
+          null
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "cil",
+        "sourceOffset": 50,
+        "sourceOpcode": "ldnull",
+        "stackIn": [],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          19
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 19,
+        "opcode": "duplicate",
+        "operands": [],
+        "outputTypes": [
+          "null",
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "cil",
+        "sourceOffset": 51,
+        "sourceOpcode": "dup",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [
+          "null",
+          "null"
+        ],
+        "successors": [
+          20
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 20,
+        "opcode": "store-local",
+        "operands": [
+          1,
+          {
+            "retainValue": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 52,
+        "sourceOpcode": "stloc",
+        "stackIn": [
+          "null",
+          "null"
+        ],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          21
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 21,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 56,
+        "sourceOpcode": "pop",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [],
+        "successors": [
+          22
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 22,
+        "opcode": "constant",
+        "operands": [
+          null
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "cil",
+        "sourceOffset": 57,
+        "sourceOpcode": "ldnull",
+        "stackIn": [],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          23
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 23,
+        "opcode": "return",
+        "operands": [
+          {
+            "discardPadding": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 58,
+        "sourceOpcode": "ret",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [],
+        "successors": []
+      }
+    ],
+    "localStorageTypes": [
+      "<>AsyncCapture0",
+      "<>AsyncCapture0"
+    ],
+    "locals": [
+      "ref:<>AsyncCapture0",
+      "ref:<>AsyncCapture0"
+    ],
+    "maxStack": 3,
+    "methodId": "100663299",
+    "offsetUnit": "instruction",
+    "parameterStorageTypes": [],
+    "parameters": [],
+    "returnStorageType": "System.Threading.Tasks.Task",
+    "returnType": "ref:System.Threading.Tasks.Task",
+    "safepoints": [
+      {
+        "kind": 3,
+        "offset": 1
+      },
+      {
+        "kind": 3,
+        "offset": 15
+      },
+      {
+        "kind": 2,
+        "offset": 16
+      },
+      {
+        "kind": 2,
+        "offset": 17
+      },
+      {
+        "kind": 2,
+        "offset": 23
+      }
+    ],
+    "schemaVersion": 1,
+    "typeState": "resolved"
+  },
+  {
+    "encoding": "cil",
+    "exceptionRegions": [],
+    "instructions": [
+      {
+        "inputTypes": [],
+        "offset": 0,
+        "opcode": "nop",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 0,
+        "sourceOpcode": "nop",
+        "stackIn": [],
+        "stackOut": [],
+        "successors": [
+          1
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 1,
+        "opcode": "constant",
+        "operands": [
+          1
+        ],
+        "outputTypes": [
+          "i32"
+        ],
+        "resultType": "i32",
+        "sourceEncoding": "cil",
+        "sourceOffset": 1,
+        "sourceOpcode": "ldc.i4",
+        "stackIn": [],
+        "stackOut": [
+          "i32"
+        ],
+        "successors": [
+          2
+        ]
+      },
+      {
+        "inputTypes": [
+          "i32"
+        ],
+        "offset": 2,
+        "opcode": "new-array",
+        "operands": [
+          "System.String"
+        ],
+        "outputTypes": [
+          "ref:System.String[]"
+        ],
+        "resultType": "ref:System.String[]",
+        "sourceEncoding": "cil",
+        "sourceOffset": 6,
+        "sourceOpcode": "newarr",
+        "stackIn": [
+          "i32"
+        ],
+        "stackOut": [
+          "ref:System.String[]"
+        ],
+        "successors": [
+          3
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.String[]"
+        ],
+        "offset": 3,
+        "opcode": "duplicate",
+        "operands": [],
+        "outputTypes": [
+          "ref:System.String[]",
+          "ref:System.String[]"
+        ],
+        "resultType": "ref:System.String[]",
+        "sourceEncoding": "cil",
+        "sourceOffset": 11,
+        "sourceOpcode": "dup",
+        "stackIn": [
+          "ref:System.String[]"
+        ],
+        "stackOut": [
+          "ref:System.String[]",
+          "ref:System.String[]"
+        ],
+        "successors": [
+          4
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 4,
+        "opcode": "constant",
+        "operands": [
+          0
+        ],
+        "outputTypes": [
+          "i32"
+        ],
+        "resultType": "i32",
+        "sourceEncoding": "cil",
+        "sourceOffset": 12,
+        "sourceOpcode": "ldc.i4",
+        "stackIn": [
+          "ref:System.String[]",
+          "ref:System.String[]"
+        ],
+        "stackOut": [
+          "ref:System.String[]",
+          "ref:System.String[]",
+          "i32"
+        ],
+        "successors": [
+          5
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 5,
+        "opcode": "constant",
+        "operands": [
+          "parked-root"
+        ],
+        "outputTypes": [
+          "ref:System.String"
+        ],
+        "resultType": "ref:System.String",
+        "sourceEncoding": "cil",
+        "sourceOffset": 17,
+        "sourceOpcode": "ldstr",
+        "stackIn": [
+          "ref:System.String[]",
+          "ref:System.String[]",
+          "i32"
+        ],
+        "stackOut": [
+          "ref:System.String[]",
+          "ref:System.String[]",
+          "i32",
+          "ref:System.String"
+        ],
+        "successors": [
+          6
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.String"
+        ],
+        "offset": 6,
+        "opcode": "store-local",
+        "operands": [
+          1,
+          {
+            "retainValue": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 22,
+        "sourceOpcode": "stloc",
+        "stackIn": [
+          "ref:System.String[]",
+          "ref:System.String[]",
+          "i32",
+          "ref:System.String"
+        ],
+        "stackOut": [
+          "ref:System.String[]",
+          "ref:System.String[]",
+          "i32"
+        ],
+        "successors": [
+          7
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 7,
+        "opcode": "load-local",
+        "operands": [
+          1
+        ],
+        "outputTypes": [
+          "ref:System.String"
+        ],
+        "resultType": "ref:System.String",
+        "sourceEncoding": "cil",
+        "sourceOffset": 26,
+        "sourceOpcode": "ldloc",
+        "stackIn": [
+          "ref:System.String[]",
+          "ref:System.String[]",
+          "i32"
+        ],
+        "stackOut": [
+          "ref:System.String[]",
+          "ref:System.String[]",
+          "i32",
+          "ref:System.String"
+        ],
+        "successors": [
+          8
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.String[]",
+          "i32",
+          "ref:System.String"
+        ],
+        "offset": 8,
+        "opcode": "store-element",
+        "operands": [
+          "ref:System.String",
+          {
+            "retainValue": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 30,
+        "sourceOpcode": "stelem",
+        "stackIn": [
+          "ref:System.String[]",
+          "ref:System.String[]",
+          "i32",
+          "ref:System.String"
+        ],
+        "stackOut": [
+          "ref:System.String[]"
+        ],
+        "successors": [
+          9
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 9,
+        "opcode": "load-local",
+        "operands": [
+          1
+        ],
+        "outputTypes": [
+          "ref:System.String"
+        ],
+        "resultType": "ref:System.String",
+        "sourceEncoding": "cil",
+        "sourceOffset": 35,
+        "sourceOpcode": "ldloc",
+        "stackIn": [
+          "ref:System.String[]"
+        ],
+        "stackOut": [
+          "ref:System.String[]",
+          "ref:System.String"
+        ],
+        "successors": [
+          10
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.String"
+        ],
+        "offset": 10,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 39,
+        "sourceOpcode": "pop",
+        "stackIn": [
+          "ref:System.String[]",
+          "ref:System.String"
+        ],
+        "stackOut": [
+          "ref:System.String[]"
+        ],
+        "successors": [
+          11
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.String[]"
+        ],
+        "offset": 11,
+        "opcode": "duplicate",
+        "operands": [],
+        "outputTypes": [
+          "ref:System.String[]",
+          "ref:System.String[]"
+        ],
+        "resultType": "ref:System.String[]",
+        "sourceEncoding": "cil",
+        "sourceOffset": 40,
+        "sourceOpcode": "dup",
+        "stackIn": [
+          "ref:System.String[]"
+        ],
+        "stackOut": [
+          "ref:System.String[]",
+          "ref:System.String[]"
+        ],
+        "successors": [
+          12
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.String[]"
+        ],
+        "offset": 12,
+        "opcode": "store-local",
+        "operands": [
+          0,
+          {
+            "retainValue": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 41,
+        "sourceOpcode": "stloc",
+        "stackIn": [
+          "ref:System.String[]",
+          "ref:System.String[]"
+        ],
+        "stackOut": [
+          "ref:System.String[]"
+        ],
+        "successors": [
+          13
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.String[]"
+        ],
+        "offset": 13,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 45,
+        "sourceOpcode": "pop",
+        "stackIn": [
+          "ref:System.String[]"
+        ],
+        "stackOut": [],
+        "successors": [
+          14
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 14,
+        "opcode": "nop",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 46,
+        "sourceOpcode": "nop",
+        "stackIn": [],
+        "stackOut": [],
+        "successors": [
+          15
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 15,
+        "opcode": "constant",
+        "operands": [
+          5
+        ],
+        "outputTypes": [
+          "i32"
+        ],
+        "resultType": "i32",
+        "sourceEncoding": "cil",
+        "sourceOffset": 47,
+        "sourceOpcode": "ldc.i4",
+        "stackIn": [],
+        "stackOut": [
+          "i32"
+        ],
+        "successors": [
+          16
+        ]
+      },
+      {
+        "inputTypes": [
+          "i32"
+        ],
+        "offset": 16,
+        "opcode": "call",
+        "operands": [
+          {
+            "id": "167772166",
+            "isStatic": true,
+            "name": "Delay",
+            "owner": "System.Threading.Tasks.Task",
+            "parameterStorage": [
+              "System.Int32"
+            ],
+            "parameters": [
+              "i32"
+            ],
+            "returnStorage": "System.Threading.Tasks.Task",
+            "returnType": "ref:System.Threading.Tasks.Task",
+            "voidResult": "none"
+          }
+        ],
+        "outputTypes": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "resultType": "ref:System.Threading.Tasks.Task",
+        "sourceEncoding": "cil",
+        "sourceOffset": 52,
+        "sourceOpcode": "call",
+        "stackIn": [
+          "i32"
+        ],
+        "stackOut": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "successors": [
+          17
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "offset": 17,
+        "opcode": "call",
+        "operands": [
+          {
+            "id": "167772161",
+            "isStatic": true,
+            "name": "Await",
+            "owner": "SharpForge.Runtime.Async",
+            "parameterStorage": [
+              "System.Threading.Tasks.Task"
+            ],
+            "parameters": [
+              "ref:System.Threading.Tasks.Task"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 57,
+        "sourceOpcode": "call",
+        "stackIn": [
+          "ref:System.Threading.Tasks.Task"
+        ],
+        "stackOut": [],
+        "successors": [
+          18
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 18,
+        "opcode": "constant",
+        "operands": [
+          null
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "cil",
+        "sourceOffset": 62,
+        "sourceOpcode": "ldnull",
+        "stackIn": [],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          19
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 19,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 63,
+        "sourceOpcode": "pop",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [],
+        "successors": [
+          20
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 20,
+        "opcode": "nop",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 64,
+        "sourceOpcode": "nop",
+        "stackIn": [],
+        "stackOut": [],
+        "successors": [
+          21
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 21,
+        "opcode": "call",
+        "operands": [
+          {
+            "id": "167772167",
+            "isStatic": true,
+            "name": "Collect",
+            "owner": "System.GC",
+            "parameterStorage": [],
+            "parameters": [],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 65,
+        "sourceOpcode": "call",
+        "stackIn": [],
+        "stackOut": [],
+        "successors": [
+          22
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 22,
+        "opcode": "constant",
+        "operands": [
+          null
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "cil",
+        "sourceOffset": 70,
+        "sourceOpcode": "ldnull",
+        "stackIn": [],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          23
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 23,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 71,
+        "sourceOpcode": "pop",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [],
+        "successors": [
+          24
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 24,
+        "opcode": "nop",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 72,
+        "sourceOpcode": "nop",
+        "stackIn": [],
+        "stackOut": [],
+        "successors": [
+          25
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 25,
+        "opcode": "load-local",
+        "operands": [
+          0
+        ],
+        "outputTypes": [
+          "ref:System.String[]"
+        ],
+        "resultType": "ref:System.String[]",
+        "sourceEncoding": "cil",
+        "sourceOffset": 73,
+        "sourceOpcode": "ldloc",
+        "stackIn": [],
+        "stackOut": [
+          "ref:System.String[]"
+        ],
+        "successors": [
+          26
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 26,
+        "opcode": "constant",
+        "operands": [
+          0
+        ],
+        "outputTypes": [
+          "i32"
+        ],
+        "resultType": "i32",
+        "sourceEncoding": "cil",
+        "sourceOffset": 77,
+        "sourceOpcode": "ldc.i4",
+        "stackIn": [
+          "ref:System.String[]"
+        ],
+        "stackOut": [
+          "ref:System.String[]",
+          "i32"
+        ],
+        "successors": [
+          27
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.String[]",
+          "i32"
+        ],
+        "offset": 27,
+        "opcode": "load-element",
+        "operands": [
+          "ref:System.String"
+        ],
+        "outputTypes": [
+          "ref:System.String"
+        ],
+        "resultType": "ref:System.String",
+        "sourceEncoding": "cil",
+        "sourceOffset": 82,
+        "sourceOpcode": "ldelem",
+        "stackIn": [
+          "ref:System.String[]",
+          "i32"
+        ],
+        "stackOut": [
+          "ref:System.String"
+        ],
+        "successors": [
+          28
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:System.String"
+        ],
+        "offset": 28,
+        "opcode": "call",
+        "operands": [
+          {
+            "id": "167772168",
+            "isStatic": true,
+            "name": "WriteLine",
+            "owner": "System.Console",
+            "parameterStorage": [
+              "System.String"
+            ],
+            "parameters": [
+              "ref:System.String"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 87,
+        "sourceOpcode": "call",
+        "stackIn": [
+          "ref:System.String"
+        ],
+        "stackOut": [],
+        "successors": [
+          29
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 29,
+        "opcode": "constant",
+        "operands": [
+          null
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "cil",
+        "sourceOffset": 92,
+        "sourceOpcode": "ldnull",
+        "stackIn": [],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          30
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 30,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 93,
+        "sourceOpcode": "pop",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [],
+        "successors": [
+          31
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 31,
+        "opcode": "constant",
+        "operands": [
+          null
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "cil",
+        "sourceOffset": 94,
+        "sourceOpcode": "ldnull",
+        "stackIn": [],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          32
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 32,
+        "opcode": "duplicate",
+        "operands": [],
+        "outputTypes": [
+          "null",
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "cil",
+        "sourceOffset": 95,
+        "sourceOpcode": "dup",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [
+          "null",
+          "null"
+        ],
+        "successors": [
+          33
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 33,
+        "opcode": "store-local",
+        "operands": [
+          0,
+          {
+            "retainValue": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 96,
+        "sourceOpcode": "stloc",
+        "stackIn": [
+          "null",
+          "null"
+        ],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          34
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 34,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 100,
+        "sourceOpcode": "pop",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [],
+        "successors": [
+          35
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 35,
+        "opcode": "constant",
+        "operands": [
+          null
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "cil",
+        "sourceOffset": 101,
+        "sourceOpcode": "ldnull",
+        "stackIn": [],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          36
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 36,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 102,
+        "sourceOpcode": "pop",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [],
+        "successors": [
+          37
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 37,
+        "opcode": "return",
+        "operands": [
+          {
+            "discardPadding": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 103,
+        "sourceOpcode": "ret",
+        "stackIn": [],
+        "stackOut": [],
+        "successors": []
+      }
+    ],
+    "localStorageTypes": [
+      "System.String[]",
+      "System.String"
+    ],
+    "locals": [
+      "ref:System.String[]",
+      "ref:System.String"
+    ],
+    "maxStack": 4,
+    "methodId": "100663300",
+    "offsetUnit": "instruction",
+    "parameterStorageTypes": [],
+    "parameters": [],
+    "returnStorageType": "System.Void",
+    "returnType": "void",
+    "safepoints": [
+      {
+        "kind": 3,
+        "offset": 2
+      },
+      {
+        "kind": 2,
+        "offset": 16
+      },
+      {
+        "kind": 2,
+        "offset": 17
+      },
+      {
+        "kind": 5,
+        "offset": 17
+      },
+      {
+        "kind": 2,
+        "offset": 21
+      },
+      {
+        "kind": 2,
+        "offset": 28
+      },
+      {
+        "kind": 2,
+        "offset": 37
+      }
+    ],
+    "schemaVersion": 1,
+    "typeState": "resolved"
+  },
+  {
+    "encoding": "cil",
+    "exceptionRegions": [],
+    "instructions": [
+      {
+        "inputTypes": [],
+        "offset": 0,
+        "opcode": "load-argument",
+        "operands": [
+          0
+        ],
+        "outputTypes": [
+          "ref:Program"
+        ],
+        "resultType": "ref:Program",
+        "sourceEncoding": "cil",
+        "sourceOffset": 0,
+        "sourceOpcode": "ldarg",
+        "stackIn": [],
+        "stackOut": [
+          "ref:Program"
+        ],
+        "successors": [
+          1
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:Program"
+        ],
+        "offset": 1,
+        "opcode": "call",
+        "operands": [
+          {
+            "id": "167772162",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Object",
+            "parameterStorage": [
+              "System.Object"
+            ],
+            "parameters": [
+              "ref:System.Object"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 4,
+        "sourceOpcode": "call",
+        "stackIn": [
+          "ref:Program"
+        ],
+        "stackOut": [],
+        "successors": [
+          2
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 2,
+        "opcode": "return",
+        "operands": [
+          {
+            "discardPadding": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 9,
+        "sourceOpcode": "ret",
+        "stackIn": [],
+        "stackOut": [],
+        "successors": []
+      }
+    ],
+    "localStorageTypes": [],
+    "locals": [],
+    "maxStack": 1,
+    "methodId": "100663301",
+    "offsetUnit": "instruction",
+    "parameterStorageTypes": [
+      "Program",
+      "SharpForge.<>AllocationToken"
+    ],
+    "parameters": [
+      "ref:Program",
+      "ref:SharpForge.<>AllocationToken"
+    ],
+    "returnStorageType": "System.Void",
+    "returnType": "void",
+    "safepoints": [
+      {
+        "kind": 2,
+        "offset": 1
+      },
+      {
+        "kind": 2,
+        "offset": 2
+      }
+    ],
+    "schemaVersion": 1,
+    "typeState": "resolved"
+  },
+  {
+    "encoding": "cil",
+    "exceptionRegions": [],
+    "instructions": [
+      {
+        "inputTypes": [],
+        "offset": 0,
+        "opcode": "load-argument",
+        "operands": [
+          0
+        ],
+        "outputTypes": [
+          "ref:Program"
+        ],
+        "resultType": "ref:Program",
+        "sourceEncoding": "cil",
+        "sourceOffset": 0,
+        "sourceOpcode": "ldarg",
+        "stackIn": [],
+        "stackOut": [
+          "ref:Program"
+        ],
+        "successors": [
+          1
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:Program"
+        ],
+        "offset": 1,
+        "opcode": "call",
+        "operands": [
+          {
+            "id": "167772162",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Object",
+            "parameterStorage": [
+              "System.Object"
+            ],
+            "parameters": [
+              "ref:System.Object"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 4,
+        "sourceOpcode": "call",
+        "stackIn": [
+          "ref:Program"
+        ],
+        "stackOut": [],
+        "successors": [
+          2
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 2,
+        "opcode": "return",
+        "operands": [
+          {
+            "discardPadding": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 9,
+        "sourceOpcode": "ret",
+        "stackIn": [],
+        "stackOut": [],
+        "successors": []
+      }
+    ],
+    "localStorageTypes": [],
+    "locals": [],
+    "maxStack": 1,
+    "methodId": "100663302",
+    "offsetUnit": "instruction",
+    "parameterStorageTypes": [
+      "Program"
+    ],
+    "parameters": [
+      "ref:Program"
+    ],
+    "returnStorageType": "System.Void",
+    "returnType": "void",
+    "safepoints": [
+      {
+        "kind": 2,
+        "offset": 1
+      },
+      {
+        "kind": 2,
+        "offset": 2
+      }
+    ],
+    "schemaVersion": 1,
+    "typeState": "resolved"
+  },
+  {
+    "encoding": "cil",
+    "exceptionRegions": [],
+    "instructions": [
+      {
+        "inputTypes": [],
+        "offset": 0,
+        "opcode": "load-argument",
+        "operands": [
+          0
+        ],
+        "outputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "resultType": "ref:<>AsyncCapture0",
+        "sourceEncoding": "cil",
+        "sourceOffset": 0,
+        "sourceOpcode": "ldarg",
+        "stackIn": [],
+        "stackOut": [
+          "ref:<>AsyncCapture0"
+        ],
+        "successors": [
+          1
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "offset": 1,
+        "opcode": "store-local",
+        "operands": [
+          0,
+          {
+            "retainValue": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 4,
+        "sourceOpcode": "stloc",
+        "stackIn": [
+          "ref:<>AsyncCapture0"
+        ],
+        "stackOut": [],
+        "successors": [
+          2
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 2,
+        "opcode": "call",
+        "operands": [
+          {
+            "id": "100663300",
+            "isStatic": true,
+            "name": "<>AsyncBody0_Main",
+            "owner": "Program",
+            "parameterStorage": [],
+            "parameters": [],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 8,
+        "sourceOpcode": "call",
+        "stackIn": [],
+        "stackOut": [],
+        "successors": [
+          3
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 3,
+        "opcode": "constant",
+        "operands": [
+          null
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "cil",
+        "sourceOffset": 13,
+        "sourceOpcode": "ldnull",
+        "stackIn": [],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          4
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 4,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 14,
+        "sourceOpcode": "pop",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [],
+        "successors": [
+          5
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 5,
+        "opcode": "constant",
+        "operands": [
+          null
+        ],
+        "outputTypes": [
+          "null"
+        ],
+        "resultType": "null",
+        "sourceEncoding": "cil",
+        "sourceOffset": 15,
+        "sourceOpcode": "ldnull",
+        "stackIn": [],
+        "stackOut": [
+          "null"
+        ],
+        "successors": [
+          6
+        ]
+      },
+      {
+        "inputTypes": [
+          "null"
+        ],
+        "offset": 6,
+        "opcode": "discard",
+        "operands": [],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 16,
+        "sourceOpcode": "pop",
+        "stackIn": [
+          "null"
+        ],
+        "stackOut": [],
+        "successors": [
+          7
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 7,
+        "opcode": "return",
+        "operands": [
+          {
+            "discardPadding": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 17,
+        "sourceOpcode": "ret",
+        "stackIn": [],
+        "stackOut": [],
+        "successors": []
+      }
+    ],
+    "localStorageTypes": [
+      "<>AsyncCapture0"
+    ],
+    "locals": [
+      "ref:<>AsyncCapture0"
+    ],
+    "maxStack": 1,
+    "methodId": "100663303",
+    "offsetUnit": "instruction",
+    "parameterStorageTypes": [
+      "<>AsyncCapture0"
+    ],
+    "parameters": [
+      "ref:<>AsyncCapture0"
+    ],
+    "returnStorageType": "System.Void",
+    "returnType": "void",
+    "safepoints": [
+      {
+        "kind": 2,
+        "offset": 2
+      },
+      {
+        "kind": 2,
+        "offset": 7
+      }
+    ],
+    "schemaVersion": 1,
+    "typeState": "resolved"
+  },
+  {
+    "encoding": "cil",
+    "exceptionRegions": [],
+    "instructions": [
+      {
+        "inputTypes": [],
+        "offset": 0,
+        "opcode": "load-argument",
+        "operands": [
+          0
+        ],
+        "outputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "resultType": "ref:<>AsyncCapture0",
+        "sourceEncoding": "cil",
+        "sourceOffset": 0,
+        "sourceOpcode": "ldarg",
+        "stackIn": [],
+        "stackOut": [
+          "ref:<>AsyncCapture0"
+        ],
+        "successors": [
+          1
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "offset": 1,
+        "opcode": "call",
+        "operands": [
+          {
+            "id": "167772162",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Object",
+            "parameterStorage": [
+              "System.Object"
+            ],
+            "parameters": [
+              "ref:System.Object"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 4,
+        "sourceOpcode": "call",
+        "stackIn": [
+          "ref:<>AsyncCapture0"
+        ],
+        "stackOut": [],
+        "successors": [
+          2
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 2,
+        "opcode": "return",
+        "operands": [
+          {
+            "discardPadding": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 9,
+        "sourceOpcode": "ret",
+        "stackIn": [],
+        "stackOut": [],
+        "successors": []
+      }
+    ],
+    "localStorageTypes": [],
+    "locals": [],
+    "maxStack": 1,
+    "methodId": "100663304",
+    "offsetUnit": "instruction",
+    "parameterStorageTypes": [
+      "<>AsyncCapture0",
+      "SharpForge.<>AllocationToken"
+    ],
+    "parameters": [
+      "ref:<>AsyncCapture0",
+      "ref:SharpForge.<>AllocationToken"
+    ],
+    "returnStorageType": "System.Void",
+    "returnType": "void",
+    "safepoints": [
+      {
+        "kind": 2,
+        "offset": 1
+      },
+      {
+        "kind": 2,
+        "offset": 2
+      }
+    ],
+    "schemaVersion": 1,
+    "typeState": "resolved"
+  },
+  {
+    "encoding": "cil",
+    "exceptionRegions": [],
+    "instructions": [
+      {
+        "inputTypes": [],
+        "offset": 0,
+        "opcode": "load-argument",
+        "operands": [
+          0
+        ],
+        "outputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "resultType": "ref:<>AsyncCapture0",
+        "sourceEncoding": "cil",
+        "sourceOffset": 0,
+        "sourceOpcode": "ldarg",
+        "stackIn": [],
+        "stackOut": [
+          "ref:<>AsyncCapture0"
+        ],
+        "successors": [
+          1
+        ]
+      },
+      {
+        "inputTypes": [
+          "ref:<>AsyncCapture0"
+        ],
+        "offset": 1,
+        "opcode": "call",
+        "operands": [
+          {
+            "id": "167772162",
+            "isStatic": false,
+            "name": ".ctor",
+            "owner": "System.Object",
+            "parameterStorage": [
+              "System.Object"
+            ],
+            "parameters": [
+              "ref:System.Object"
+            ],
+            "returnStorage": "System.Void",
+            "returnType": "void",
+            "voidResult": "none"
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 4,
+        "sourceOpcode": "call",
+        "stackIn": [
+          "ref:<>AsyncCapture0"
+        ],
+        "stackOut": [],
+        "successors": [
+          2
+        ]
+      },
+      {
+        "inputTypes": [],
+        "offset": 2,
+        "opcode": "return",
+        "operands": [
+          {
+            "discardPadding": false
+          }
+        ],
+        "outputTypes": [],
+        "resultType": "void",
+        "sourceEncoding": "cil",
+        "sourceOffset": 9,
+        "sourceOpcode": "ret",
+        "stackIn": [],
+        "stackOut": [],
+        "successors": []
+      }
+    ],
+    "localStorageTypes": [],
+    "locals": [],
+    "maxStack": 1,
+    "methodId": "100663305",
+    "offsetUnit": "instruction",
+    "parameterStorageTypes": [
+      "<>AsyncCapture0"
+    ],
+    "parameters": [
+      "ref:<>AsyncCapture0"
+    ],
+    "returnStorageType": "System.Void",
+    "returnType": "void",
+    "safepoints": [
+      {
+        "kind": 2,
+        "offset": 1
+      },
+      {
+        "kind": 2,
+        "offset": 2
+      }
+    ],
+    "schemaVersion": 1,
+    "typeState": "resolved"
+  }
+]

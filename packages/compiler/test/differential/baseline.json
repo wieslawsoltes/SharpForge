@@ -228,6 +228,7 @@
     "lambdas/func-and-action",
     "language-version/default-literal-in-7-0",
     "language-version/expression-bodied-member-in-5",
+    "language-version/file-scoped-namespace-in-9",
     "language-version/gate-auto-properties-at-2",
     "language-version/gate-expression-bodied-accessor-at-6",
     "language-version/gate-params-collections-at-12",

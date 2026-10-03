@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "area": "A21",
+  "nodeGlobs": [
+    "tests/language.test.js",
+    "tests/language14.test.js",
+    "tests/language-ide-extensions.test.js",
+    "tests/protocol.test.js",
+    "tests/release05-language.test.js",
+    "tests/release06-language.test.js",
+    "tests/release05-msil-protocol.test.js"
+  ],
+  "browserScripts": [],
+  "requiredServices": [],
+  "timeout": 300000,
+  "tags": [
+    "legacy"
+  ]
+}

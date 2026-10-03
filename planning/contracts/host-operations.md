@@ -1,0 +1,9 @@
+# External operations and cancellation
+
+HostOperations.start(resultType, begin, convert, roots, tag) owns its task reference and copied roots until completion. `begin(signal)` runs in a Promise microtask; `convert(value)` executes synchronously inside heap.withRoots(task + captured roots). Complete removes the active entry, marks task nonexternal, converts/completes, then invokes onExternalComplete. Task completion is idempotent. Managed callbacks and conversions must publish any newly produced references before another allocation.
+
+For parked await, roots include context task/delegate/receiver, args/locals/evaluation stacks, pending/caught/unwind faults, awaited task and dependencies, plus host task and retained operation arguments. Fixture: parked-frame. Callback fixture uses the actual JS HostOperations path, not a native FFI simulator.
+
+Cancel(tag) signals AbortController; current behavior does **not** immediately settle the task. A begin implementation must honor abort to obtain TaskCanceledException. If begin ignores abort and resolves successfully, the current runtime accepts successful completion. This boundary is covered explicitly, not relabeled as cancellation winning the race. Disposal completes all active tasks canceled and clears active identities; any late completion sees an inactive entry and is ignored. Fixtures: host-cancel, host-dispose, host-late-success.
+
+Closing a platform disposes host operations and compute workers; termination must release roots after settling waiters and prevent new operations. Snapshot is forbidden while operations are pending; restore is forbidden across changed host revision even after completion. Fixtures check pending and changed-revision barriers. Actual browser worker/native termination is not qualified by Node callbacks.
