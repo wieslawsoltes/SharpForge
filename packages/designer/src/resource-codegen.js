@@ -32,15 +32,15 @@ export function designCodegenDiagnostics(design, {target = 'sharpforge'} = {}) {
   return diagnostics;
 }
 
-/** Ordered collection and protected-reference assignments share this source-planning seam. */
-export function generateDesignerNodeStatements(design, node, variable, {target = 'sharpforge', value = csharpValue} = {}) {
+/** Emits ordered item statements; itemName may allocate collision-free locals within the caller's source scope. */
+export function generateDesignerNodeStatements(design, node, variable, {target = 'sharpforge', value = csharpValue, itemName = null} = {}) {
   const lines = [];
   for (const [property, items] of Object.entries(node.collections ?? {})) {
     for (let index = 0; index < items.length; index++) {
       const item = items[index];
       if (item === null || typeof item !== 'object') lines.push(`${variable}.${property}.Add(${value(item, 'object')});`);
       else {
-        const name = `item_${designerSymbol(node.id)}_${property}_${index}`;
+        const name = itemName ? itemName(node, property, index) : `item_${designerSymbol(node.id)}_${property}_${index}`;
         lines.push(`${item.type} ${name} = new ${item.type}();`);
         for (const [member, itemValue] of Object.entries(item.properties)) {
           lines.push(`${name}.${member} = ${value(itemValue, propertySchema(item.type)[member].type)};`);

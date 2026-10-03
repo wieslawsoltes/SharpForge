@@ -5,6 +5,7 @@ import {controlSourceSymbol, isDesignControl} from './source-symbols.js';
 import {DesignSyncError, checkSourceCancellation, failSource} from './source-errors.js';
 import {readSourceValue, readSourceStyleType} from './source-values.js';
 import {readSourceTemplate} from './source-templates.js';
+import {readSourceCollection, protectSourceCollectionCall, finishSourceCollections} from './source-collections.js';
 
 /** Construction reader indexes nodes and classifies each direct method statement exactly once. */
 export class SourceConstructionReader {
@@ -60,6 +61,7 @@ export class SourceConstructionReader {
       if (region.kind === 'designer') region.capabilities.push('remove', 'move');
       this.regions.push(region);
     }
+    finishSourceCollections(this);
     return this;
   }
 
@@ -251,7 +253,10 @@ export class SourceConstructionReader {
       this.own(receiver.node);
       return true;
     }
-    if (target.name === 'Add' && target.target?.kind === 'Member') return this.add(expression, statement);
+    if (target.name === 'Add' && target.target?.kind === 'Member') {
+      return this.add(expression, statement) || protectSourceCollectionCall(this, expression, statement);
+    }
+    if (protectSourceCollectionCall(this, expression, statement)) return true;
     const attached = /^(Canvas|Grid|VariableSizedWrapGrid)$/.test(sourcePath(target.target)?.split('.').at(-1) ?? '');
     if (attached && /^Set(?:Left|Top|ZIndex|Row|Column|RowSpan|ColumnSpan)$/.test(target.name) && expression.args.length === 2) {
       const value = this.lookup(expression.args[0]);
@@ -270,6 +275,7 @@ export class SourceConstructionReader {
     if (parent?.node && expression.args.length === 1) {
       const node = this.nodeMap.get(parent.node);
       const binding = this.bindings[node.id];
+      if (readSourceCollection(this, binding, key, expression.args[0], statement)) return true;
       if (key === childSlot(node.type)?.property) return this.edge(binding, key, expression.args[0], statement);
       if (['RowDefinitions', 'ColumnDefinitions'].includes(key)) {
         const value = this.readValue(expression.args[0]);

@@ -6,6 +6,7 @@ import {sourceResourceEdits} from './source-edit-resources.js';
 import {applySourceEdits, coalesceSourceEdits, sameSourceValue, sourceIdentifier} from './source-text.js';
 import {checkSourceCancellation, failSource} from './source-errors.js';
 import {retainSourceDesignMetadata} from './source-design-metadata.js';
+import {sourceCollectionEdits} from './source-edit-collections.js';
 
 function namesFor(base, document) {
   const names = new Map();
@@ -42,7 +43,10 @@ export function planDesignSourceUpdate(base, design, current = base.text, option
   }
   const before = new Map(base.document.nodes.map(node => [node.id, node]));
   for (const node of next.nodes) {
-    for (const key of ['bindings', 'resourceReferences', 'collections']) {
+    if (Object.keys(node.collections ?? {}).some(property => property !== 'Items')) {
+      failSource('Source collection editing currently supports the registered Items property', base.bindings[node.id]?.creation, 'SFSYNC_OWNERSHIP');
+    }
+    for (const key of ['bindings', 'resourceReferences', 'states']) {
       const oldValue = before.get(node.id)?.[key];
       const newValue = node[key];
       if (!sameSourceValue(oldValue ?? {}, newValue ?? {})) {
@@ -54,7 +58,7 @@ export function planDesignSourceUpdate(base, design, current = base.text, option
       failSource('Changing a constructed control type requires delete and insert', base.bindings[node.id].creation, 'SFSYNC_OWNERSHIP');
     }
   }
-  for (const key of ['resources', 'themeResources', 'visualStates']) {
+  for (const key of ['resources', 'themeResources', 'visualStates', 'responsive']) {
     if (!sameSourceValue(base.document[key] ?? {}, next[key] ?? {})) {
       failSource(`Source emission for '${key}' requires an explicit framework resource provider`, null, 'SFSYNC_OWNERSHIP');
     }
@@ -72,6 +76,7 @@ export function planDesignSourceUpdate(base, design, current = base.text, option
   }
   if (structural) sourceTreeEdits(base, next, names, edits, external);
   sourcePropertyEdits(base, next, names, edits);
+  sourceCollectionEdits(base, next, names, edits);
   sourceResourceEdits(base, next, names, edits, external);
   return finishSourcePlan(base, [...edits.filter(Boolean).map(edit => ({...edit, uri: base.uri})), ...external], {
     ...options, document: next, structural, identityHints: Object.fromEntries([...names].map(([id, name]) => [name, id]))

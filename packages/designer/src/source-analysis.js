@@ -80,6 +80,10 @@ export function designSourceSnapshot(analysis) {
         dynamic: !!property.dynamic, span: {start: property.expression.start, end: property.expression.end},
         capability: property.dynamic ? 'navigate' : 'edit'
       }])),
+      collections: Object.fromEntries(Object.entries(binding.collections ?? {}).map(([key, collection]) => [key, {
+        capability: collection.dynamic ? 'navigate' : 'edit', reason: collection.reason,
+        spans: collection.entries.map(entry => ({start: entry.statement.start, end: entry.statement.end}))
+      }])),
       events: Object.fromEntries(Object.entries(binding.events).map(([key, event]) => [key, {
         capability: event.capability, reason: event.reason, subscriptions: event.subscriptions.map(subscription => ({
           handler: subscription.handler, protected: subscription.protected, location: subscription.location,
