@@ -1,3 +1,4 @@
+import {notifyFirstChance, continueExceptionEvent, exceptionEventRoots, failedExceptionEvent} from './exception-events.js';
 import {prepareException} from './exception-object.js';
 import {cancelArrayOperation} from './array-ops.js';
 import {ManagedFault} from '../heap.js';
@@ -11,6 +12,7 @@ export function frameState() { return {exception: null, caught: [], unwinds: []}
 /** Exception continuations can own the only live reference to a return value or fault. */
 export function* roots(vm) {
   for (const frame of vm.frames) {
+    yield* exceptionEventRoots(frame);
     for (const unwind of frame.unwinds ?? []) {
       yield unwind.value;
       yield unwind.error?.reference;
@@ -54,6 +56,14 @@ export function finalizers(vm, frame, source, target = Infinity) {
 export function finishReturn(vm, frame, value) {
   vm.stack.length = frame.base;
   popFrame(vm);
+  const event = continueExceptionEvent(vm, frame);
+  if (event) {
+    if (!event.continued) {
+      if (event.phase === 'unhandled') markUnhandled(vm, event.fault);
+      else handleFault(vm, event.fault);
+    }
+    return;
+  }
   if (vm.frames.length) vm.stack.push(value);
   else {
     vm.returnValue = value;
@@ -136,6 +146,10 @@ function searchStep(vm, search) {
       search.selection = {kind: 'catch', frameId: frame.id, handler};
       return {phase: 'unwind', search};
     }
+    if (frame.exceptionEventContinuation) {
+      search.selection = {kind: 'event-failure', frameId: frame.id};
+      return {phase: 'unwind', search};
+    }
     if (frame.filterSearch) {
       search.selection = {kind: 'filter-failure', frameId: frame.id};
       return {phase: 'unwind', search};
@@ -163,6 +177,13 @@ function finishPending(vm, frame) {
   if (unwind.catch) { enterCatch(vm, frame, unwind.catch, unwind.error); return null; }
   if (unwind.search.selection?.kind === 'filter-failure' && unwind.search.selection.frameId === frame.id) {
     return {phase: 'search', search: finishFilter(vm, 0)};
+  }
+  if (unwind.search.selection?.kind === 'event-failure' && unwind.search.selection.frameId === frame.id) {
+    const fault = failedExceptionEvent(frame, unwind.error);
+    popFrame(vm);
+    vm.stack.length = frame.base;
+    markUnhandled(vm, fault);
+    return null;
   }
   popFrame(vm);
   vm.stack.length = frame.base;
@@ -211,7 +232,10 @@ export function handleFault(vm, error) {
   const fault = makeFault(error);
   vm.fault = fault;
   if (isFatalFault(fault)) { markUnhandled(vm, fault); return; }
-  try { prepareException(vm, fault); } catch (failure) { markUnhandled(vm, makeFault(failure)); return; }
+  try {
+    prepareException(vm, fault);
+    if (notifyFirstChance(vm, fault)) return;
+  } catch (failure) { markUnhandled(vm, makeFault(failure)); return; }
   fault.phase = 'search';
   vm.fault = null;
   drive(vm, {phase: 'search', search: createSearch(vm, fault)});

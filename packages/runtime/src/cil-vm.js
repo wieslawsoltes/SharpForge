@@ -1,4 +1,3 @@
-import {isFatalFault} from './execution/unhandled.js';
 import {collectAtInstruction} from './execution/gc-stress.js';
 import {verificationFault} from './execution/verification-fault.js';
 import {asyncRoots} from './execution/async-runtime.js';
@@ -118,9 +117,9 @@ export class CilVirtualMachine {
   runSlice({instructionBudget=15000,timeBudgetMs=8,onInstruction=null}={}){
     validateSliceBudget(instructionBudget,timeBudgetMs);
     this.scheduler.beforeSlice();if(this.state==='ready')this.state='running';if(this.state!=='running')return this.state;const started=performance.now();let n=0;
-    if(this.pendingFault){const pending=this.pendingFault;this.pendingFault=null;this.raise(pending);}
+    if(this.pendingFault){const pending=this.pendingFault;this.pendingFault=null;pending.exceptionDebuggerResume=true;this.raise(pending);}
     while(this.state==='running'&&this.frames.length&&n<instructionBudget){if((n&255)===0&&performance.now()-started>=timeBudgetMs)break;this.scheduler.beforeInstruction();if(this.state!=='running'||!this.frames.length)break;const frame=this.top,continuing=!!frame.intrinsicContinuation,instruction=frame.method.instructions[frame.pc];if(!continuing&&instruction&&onInstruction?.(instruction,frame)){this.state='paused';break;}if(!continuing){n++;this.instructions++;}
-      try{if(this.instructions>this.options.maxInstructions||continuing&&this.instructions>=this.options.maxInstructions)throw new ManagedFault('InstructionLimitException','Program exceeded its instruction budget');if(continuing){const result=resumeArrayOperation(this,frame,{deadline:started+timeBudgetMs,workBudget:1});n+=result.work;this.instructions+=result.work;if(!result.work)break;}else this.step();}catch(error){const fault=error instanceof ManagedFault?error:new ManagedFault('InvalidProgramException',error.message??String(error));fault.phase='first-chance';fault.frames??=[...this.frames].reverse().map(f=>({method:f.method.owner+'::'+f.method.name,methodToken:f.method.token,ilOffset:f.lastOffset}));if(!isFatalFault(fault)&&this.onException?.(fault)){this.pendingFault=fault;this.state='paused';}else this.raise(fault);}
+      try{if(this.instructions>this.options.maxInstructions||continuing&&this.instructions>=this.options.maxInstructions)throw new ManagedFault('InstructionLimitException','Program exceeded its instruction budget');if(continuing){const result=resumeArrayOperation(this,frame,{deadline:started+timeBudgetMs,workBudget:1});n+=result.work;this.instructions+=result.work;if(!result.work)break;}else this.step();}catch(error){const fault=error instanceof ManagedFault?error:new ManagedFault('InvalidProgramException',error.message??String(error));fault.phase='first-chance';fault.frames??=[...this.frames].reverse().map(f=>({method:f.method.owner+'::'+f.method.name,methodToken:f.method.token,ilOffset:f.lastOffset}));this.raise(fault);}
       collectAtInstruction(this);
       this.scheduler.afterInstruction();
     }

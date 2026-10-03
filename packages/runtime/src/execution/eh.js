@@ -1,3 +1,4 @@
+import {notifyFirstChance,failedExceptionEvent} from './exception-events.js';
 import {prepareException, faultFromException} from './exception-object.js';
 import {ManagedFault} from '../heap.js';
 import {failInitialization} from './static-init.js';
@@ -43,6 +44,10 @@ function searchStep(vm, search) {
         return null;
       }
     }
+    if (frame.exceptionEventContinuation) {
+      search.selection = {kind: 'event-failure', frameId: frame.id};
+      return {phase: 'unwind', search};
+    }
     if (frame.initializes || frame.filterSearch) {
       search.selection = {kind: frame.initializes ? 'initializer' : 'filter-failure', frameId: frame.id};
       return {phase: 'unwind', search};
@@ -72,6 +77,12 @@ function finishPending(vm, frame) {
   if (search?.selection?.kind === 'filter-failure' && search.selection.frameId === frame.id) {
     return {phase: 'search', search: finishFilter(vm, 0)};
   }
+  if (search?.selection?.kind === 'event-failure' && search.selection.frameId === frame.id) {
+    const fault = failedExceptionEvent(frame, pending.error);
+    popFrame(vm);
+    markUnhandled(vm, fault);
+    return null;
+  }
   const error = frame.initializes ? failInitialization(vm, frame, pending.error) : pending.error;
   popFrame(vm);
   return frame.initializes || !search ? {phase: 'raise', error} : {phase: 'unwind', search};
@@ -89,6 +100,7 @@ function raiseStep(vm, fault) {
   vm.fault = fault;
   if (isFatalFault(fault)) { markUnhandled(vm, fault); return null; }
   prepareException(vm, fault);
+  if (notifyFirstChance(vm, fault)) return null;
   fault.phase = 'search';
   if (!vm.top) { markUnhandled(vm, fault); return null; }
   vm.top.volatileAccess = false;

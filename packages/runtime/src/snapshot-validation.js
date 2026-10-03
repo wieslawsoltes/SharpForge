@@ -1,3 +1,4 @@
+import {validateExceptionEventsSnapshot} from './execution/exception-events-snapshot.js';
 import {validateVarargsSnapshot} from './execution/varargs-snapshot-validation.js';
 import {validateStackSnapshot} from './execution/stack-budget.js';
 import {validateMemorySnapshot} from './execution/memory-snapshot-validation.js';
@@ -147,6 +148,7 @@ export function validateSnapshotState(vm,s,engine) {
   pairs(platform.windows,'platform windows');pairs(platform.singletons??[],'platform singletons');
   const animations=platform.animations;
   if(!Array.isArray(animations.states)||!Array.isArray(animations.bases))fail('animation state');
+  validateExceptionEventsSnapshot(vm,s);
   validateAsyncSnapshot(vm,s);
   validateMemorySnapshot(vm,s);
   validateStackSnapshot(vm,s);

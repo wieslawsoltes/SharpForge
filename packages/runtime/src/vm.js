@@ -57,7 +57,7 @@ export class VirtualMachine {
     validateSliceBudget(instructionBudget,timeBudgetMs);
     this.scheduler.beforeSlice();if(this.state==='ready')this.state='running';if(this.state!=='running')return this.state;
     const started=performance.now();let count=0;
-    if(this.pendingFault){const pending=this.pendingFault;this.pendingFault=null;this.handleFault(pending);}
+    if(this.pendingFault){const pending=this.pendingFault;this.pendingFault=null;pending.exceptionDebuggerResume=true;this.handleFault(pending);}
     while(this.state==='running'&&this.frames.length&&count<instructionBudget){
       if((count&255)===0&&performance.now()-started>=timeBudgetMs)break;
       this.scheduler.beforeInstruction();if(this.state!=='running'||!this.frames.length)break;const frame=this.top,continuing=!!frame.intrinsicContinuation,method=this.image.methods[frame.methodId],code=method.code,base=frame.pc*3,op=code[base],a=code[base+1],b=code[base+2];
@@ -91,7 +91,7 @@ export class VirtualMachine {
           case Op.RETHROW:rethrow(frame);break;
           default:if(!executeSourceMemory(this,op,a,b))throw new ManagedFault('InvalidProgramException','Unknown instruction');
         }
-      }catch(error){const fault=this.makeFault(error);if(isFatalFault(fault)){markUnhandled(this,fault);this.scheduler.cancelAll({preserveCurrent:true});break;}if(this.onException?.(fault)){this.pendingFault=fault;this.state='paused';}else this.handleFault(fault);}
+      }catch(error){const fault=this.makeFault(error);if(isFatalFault(fault)){markUnhandled(this,fault);this.scheduler.cancelAll({preserveCurrent:true});break;}this.handleFault(fault);}
       collectAtInstruction(this);
       this.scheduler.afterInstruction();
     }
