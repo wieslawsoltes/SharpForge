@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-27f8372fa50ec1db168d",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    void M(object o)\n    {\n        System.Func<int, string> filter = new C(o?.ToString()).Method;\n        filter(0);\n    }\n    string Method(int x)\n    {\n        throw null;\n    }\n    C(string x)\n    {\n    }\n}\n",
+  "sourceSHA256": "bb84382ac1ba66dc3f8f463f402bf6b751e1a0cf1da7e488bc67c1ba42209aab",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenConditionalOperatorTests.cs",
+    "sha256": "6d45fbbe3fc5109cce9899d727581e9917ee2d0b15759d2928e9ecc61ef5094d",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenConditionalOperatorTests.cs",
+    "license": "MIT",
+    "method": "ConditionalAccessInMethodGroupConversion",
+    "offset": 28114
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

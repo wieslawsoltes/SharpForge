@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c59871c5533a492249ce",
+  "kind": "diagnostics",
+  "sourceText": "using System.Runtime.InteropServices;\nclass Program\n{\n    static void F([DefaultParameterValue(() => { return 0; })] object obj)\n    {\n    }\n}",
+  "sourceSHA256": "175478a3deadd1110c976b8b8cb9109516fc7c74cf6facfaaf87b2a6d89110f6",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/RegionAnalysisTests.cs",
+    "sha256": "ede4ad7870eb13fc1b41cf8dfa93369f828c8146ac3ad88e361e120b9a79ad41",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/RegionAnalysisTests.cs",
+    "license": "MIT",
+    "method": "AttributeArgumentWithLambdaBody_01",
+    "offset": 302214
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0182",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,42): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                //     static void F([DefaultParameterValue(() => { return 0; })] object obj)\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"() => { return 0; }\").WithLocation(4, 42)",
+  "unsupported": []
+}

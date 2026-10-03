@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-2ed87f89d863c918e9f2",
+  "kind": "spec",
+  "sourceText": "decimal AddPercent(decimal x, double percent) =>\n    x * (1.0 + percent / 100.0);",
+  "unsupported": [],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0019",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": [
+      "CS8321"
+    ]
+  },
+  "sourceSHA256": "bb09ac7a58aebed453e9340b20291ac1fe17481f99134d721062b64a3faa8abb",
+  "originalSource": "decimal AddPercent(decimal x, double percent) =>\n    x * (1.0 + percent / 100.0);",
+  "metadata": {
+    "template": "standalone-console-without-using",
+    "name": "BinaryNumericPromotions1",
+    "expectedErrors": [
+      "CS0019"
+    ],
+    "ignoredWarnings": [
+      "CS8321"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-expressions",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/expressions.md",
+    "sha256": "86fd8ab8c2608d09cc5267e037ef05a81a46241c464078f7ee9cbb6328c04e92",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/expressions.md",
+    "license": "MIT",
+    "example": "BinaryNumericPromotions1",
+    "offsetInUnquotedMarkdown": 33202
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "library-2aebc7eeee5cd3170d0c",
+  "kind": "library",
+  "namespace": "System.Runtime",
+  "sourceText": "using System;\nusing System.Collections;\nusing System.Collections.Generic;\nusing System.Linq;\nusing Xunit;\nclass SuiteProgram { static int Main() {\n\n            var categories = new UnicodeCategory[]\n            {\n            UnicodeCategory.ConnectorPunctuation,\n            UnicodeCategory.DashPunctuation,\n            UnicodeCategory.OpenPunctuation,\n            UnicodeCategory.ClosePunctuation,\n            UnicodeCategory.InitialQuotePunctuation,\n            UnicodeCategory.FinalQuotePunctuation,\n            UnicodeCategory.OtherPunctuation\n            };\n            foreach (char c in GetTestChars(categories))\n                Assert.True(char.IsPunctuation(c.ToString(), 0));\n\n            foreach (char c in GetTestCharsNotInCategory(categories))\n                Assert.False(char.IsPunctuation(c.ToString(), 0));\n        \nreturn 0; } }\n// SharpForge's deliberately small test adapter. Assertions fail by throwing.\n\nnamespace Xunit\n{\n    public static class Assert\n    {\n        public static void True(bool value) { if (!value) throw new Exception(\"Assert.True\"); }\n        public static void False(bool value) { if (value) throw new Exception(\"Assert.False\"); }\n        public static void Null(object value) { if (value != null) throw new Exception(\"Assert.Null\"); }\n        public static void NotNull(object value) { if (value == null) throw new Exception(\"Assert.NotNull\"); }\n        public static void Same(object expected, object actual)\n        { if (!object.ReferenceEquals(expected, actual)) throw new Exception(\"Assert.Same\"); }\n        public static void Equal<T>(T expected, T actual)\n        {\n            if (expected is System.Collections.IEnumerable && !(expected is string))\n                throw new NotSupportedException(\"Shim Equal supports scalar values only, not sequence equality\");\n            if (!object.Equals(expected, actual)) throw new Exception(\"Assert.Equal\");\n        }\n        public static T Throws<T>(Action action) where T : Exception\n        {\n            try { action(); }\n            catch (Exception error)\n            {\n                if (error.GetType() != typeof(T)) throw new Exception(\"Assert.Throws: wrong exception type\");\n                return (T)error;\n            }\n            throw new Exception(\"Assert.Throws: no exception\");\n        }\n    }\n}\n",
+  "sourceSHA256": "e1551013c87e03fa08cf04e2751e1ab92dad7e33af71e7bda74cf130c9773502",
+  "originalSource": "public static void IsPunctuation_String_Int()\n        {\n            var categories = new UnicodeCategory[]\n            {\n            UnicodeCategory.ConnectorPunctuation,\n            UnicodeCategory.DashPunctuation,\n            UnicodeCategory.OpenPunctuation,\n            UnicodeCategory.ClosePunctuation,\n            UnicodeCategory.InitialQuotePunctuation,\n            UnicodeCategory.FinalQuotePunctuation,\n            UnicodeCategory.OtherPunctuation\n            };\n            foreach (char c in GetTestChars(categories))\n                Assert.True(char.IsPunctuation(c.ToString(), 0));\n\n            foreach (char c in GetTestCharsNotInCategory(categories))\n                Assert.False(char.IsPunctuation(c.ToString(), 0));\n        }",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/libraries/System.Runtime/tests/System.Runtime.Tests/System/CharTests.cs",
+    "sha256": "5eb09f3536b5ed7da6538669737a8ffe73d57b6d976bb3c32c8bec3b89bd8e96",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/libraries/System.Runtime/tests/System.Runtime.Tests/System/CharTests.cs",
+    "license": "MIT",
+    "method": "IsPunctuation_String_Int",
+    "offset": 23262
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack",
+    "local XunitShim.cs"
+  ],
+  "expected": {
+    "exitCode": 0
+  },
+  "unsupported": [],
+  "adaptation": "Original method body in standalone Main; no base fixture/helpers imported. Native compilation preflight detects unresolved dependencies; scalar assertions, reference identity and exact exception assertions execute."
+}

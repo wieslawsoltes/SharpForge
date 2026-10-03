@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5d756dcf22d9d7e074c9",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public object M1(object p1, object p2, object p3)\n    {\n         S v1 = new S();\n         S v2 = v1;\n         S v3 = v1.M1(v2);\n         object v4 = M1(3, this, v1);\n         object v5 = v3;\n         if (p1 == null)\n         {\n             return 3;\n         }\n         if (p2 == null)\n         {\n             return v3;\n         }\n         if (p3 == null)\n         {\n             return v4;\n         }\n         return v5;\n    }\n}\n\nstruct S\n{\n    public int X;\n    public int Y;\n    public object Z;\n\n    public S M1(S p1)\n    {\n        p1.GetType();\n        Z = this;\n        X = 1;\n        Y = 2;\n        return p1;\n    }\n}\n\nclass D\n{\n    object OField = 33;\n    object SField = \"Zap\";\n}",
+  "sourceSHA256": "e190aa216e19a3955ea3fe8004ffef8267ae200747ecae9aa768d70c92b18de7",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "sha256": "eb33d60956503b30bec29f823f9033347fac98a9029a70b139e6a57a3ad1abef",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "BoxingCSharp",
+    "offset": 3411
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

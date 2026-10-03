@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-98dbfed15e08abb4579b",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\ndelegate void D(int x);\n\nclass C\n{\n    public static void M1(int i) => Console.WriteLine(\"C.M1: \" + i);\n\n    public static void M2(int i) => Console.WriteLine(\"C.M2: \" + i);\n\n    public void M3(int i) => Console.WriteLine(\"C.M3: \" + i);\n}\n\nclass Test\n{\n    static void Main()\n    {\n        D cd1 = new D(C.M1);\n        cd1(-1);             // call M1\n        D cd2 = new D(C.M2);\n        cd2(-2);             // call M2\n        D cd3 = cd1 + cd2;\n        cd3(10);             // call M1 then M2\n        cd3 += cd1;\n        cd3(20);             // call M1, M2, then M1\n        C c = new C();\n        D cd4 = new D(c.M3);\n        cd3 += cd4;\n        cd3(30);             // call M1, M2, M1, then M3\n        cd3 -= cd1;          // remove last M1\n        cd3(40);             // call M1, M2, then M3\n        cd3 -= cd4;\n        cd3(50);             // call M1 then M2\n        cd3 -= cd2;\n        cd3(60);             // call M1\n        cd3 -= cd2;          // impossible removal is benign\n        cd3(60);             // call M1\n        cd3 -= cd1;          // invocation list is empty so cd3 is null\n        // cd3(70);          // System.NullReferenceException thrown\n        cd3 -= cd1;          // impossible removal is benign\n    }\n}",
+  "unsupported": [
+    "Runtime expectation requires upstream output/exception/argument extraction"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "c9e052b10eead953ed7484abec52cf3880db02ded13a8df16b2d62495ee6c70e",
+  "originalSource": "delegate void D(int x);\n\nclass C\n{\n    public static void M1(int i) => Console.WriteLine(\"C.M1: \" + i);\n\n    public static void M2(int i) => Console.WriteLine(\"C.M2: \" + i);\n\n    public void M3(int i) => Console.WriteLine(\"C.M3: \" + i);\n}\n\nclass Test\n{\n    static void Main()\n    {\n        D cd1 = new D(C.M1);\n        cd1(-1);             // call M1\n        D cd2 = new D(C.M2);\n        cd2(-2);             // call M2\n        D cd3 = cd1 + cd2;\n        cd3(10);             // call M1 then M2\n        cd3 += cd1;\n        cd3(20);             // call M1, M2, then M1\n        C c = new C();\n        D cd4 = new D(c.M3);\n        cd3 += cd4;\n        cd3(30);             // call M1, M2, M1, then M3\n        cd3 -= cd1;          // remove last M1\n        cd3(40);             // call M1, M2, then M3\n        cd3 -= cd4;\n        cd3(50);             // call M1 then M2\n        cd3 -= cd2;\n        cd3(60);             // call M1\n        cd3 -= cd2;          // impossible removal is benign\n        cd3(60);             // call M1\n        cd3 -= cd1;          // invocation list is empty so cd3 is null\n        // cd3(70);          // System.NullReferenceException thrown\n        cd3 -= cd1;          // impossible removal is benign\n    }\n}",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "DelegateInvocation",
+    "inferOutput": true
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-delegates",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/delegates.md",
+    "sha256": "9455f48c0c2b89946fa49f010b25134e63d575781fea98dcd54cdba081865907",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/delegates.md",
+    "license": "MIT",
+    "example": "DelegateInvocation",
+    "offsetInUnquotedMarkdown": 17819
+  }
+}

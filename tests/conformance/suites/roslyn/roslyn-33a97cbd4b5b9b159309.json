@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-33a97cbd4b5b9b159309",
+  "kind": "diagnostics",
+  "sourceText": "\nunsafe class C\n{\n    fixed int F[G];\n    fixed int G[1];\n}\n",
+  "sourceSHA256": "0624e2a1890246e1021e87b5cfc5b1246b19a83da5e73fef2fcd552bb222eb67",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/FixedSizeBufferTests.cs",
+    "sha256": "5f39ababded2b14153c2b7df0aba5621d48ffeb53005371ba6aad3896c37e080",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/FixedSizeBufferTests.cs",
+    "license": "MIT",
+    "method": "FixedSizeBufferInFixedSizeBufferSize_Class",
+    "offset": 16385
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.UnsafeReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1642",
+        "severity": "error"
+      },
+      {
+        "code": "CS1642",
+        "severity": "error"
+      },
+      {
+        "code": "CS0120",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,15): error CS1642: Fixed size buffer fields may only be members of structs\n                //     fixed int G[1];\n                Diagnostic(ErrorCode.ERR_FixedNotInStruct, \"G\"),\n                // (4,15): error CS1642: Fixed size buffer fields may only be members of structs\n                //     fixed int F[G];\n                Diagnostic(ErrorCode.ERR_FixedNotInStruct, \"F\"),\n                // (4,17): error CS0120: An object reference is required for the non-static field, method, or property 'C.G'\n                //     fixed int F[G];\n                Diagnostic(ErrorCode.ERR_ObjectRequired, \"G\").WithArguments(\"C.G\")",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

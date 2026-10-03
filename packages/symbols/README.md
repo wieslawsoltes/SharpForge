@@ -101,6 +101,35 @@ not verify a document. `bindSources(symbols, sources, options)` accepts the same
 options, verifies exact raw bytes including BOMs and line endings first, and only
 then decodes trusted text; bound documents expose their selected `encoding`.
 
+`createSourceFetcher({ fetch, requestPermission, allowedOrigins })` creates an
+explicit source client. Both the transport and permission callback are injected;
+construction does not fetch. `await client.fetch(document, url, { signal })`
+returns a `SourceStatus` result with verified bytes/text only after its raw-byte
+SHA-1/256/384/512 checksum matches. Verification prefers WebCrypto; SHA-1/256
+also have a portable fallback, while SHA-384/512 require WebCrypto. For example,
+allowlist an exact HTTPS origin
+and have the host's existing origin-grant service answer
+`requestPermission({ origin, url, purpose, signal })`. Permission must return
+literal `true` before every request, including redirects. Requests omit credentials,
+referrers and caching; an injected transport must honor these Fetch options.
+
+Defaults are 16 MiB per response, 15 seconds including permission/verification,
+three redirects and four concurrent requests. Options `maxBytes`, `timeoutMs`,
+`maxRedirects` and `maxConcurrent` tune these bounded limits. At most 65,536 stream
+chunks are accepted; byte and time limits remain enforced without Content-Length.
+Bodies must expose a readable byte stream so the client can enforce limits before
+allocating a full response. Temporary chunk copies plus the result use at most
+roughly twice `maxBytes`, plus bounded chunk bookkeeping. Cancellation and
+`client.dispose()` stop pending waits even if a transport ignores AbortSignal.
+Cleanup rejections are retained in the client's last 16 `cleanupErrors` strings.
+
+Denied, mismatched, timed-out, malformed and unavailable sources return unverified
+results with null bytes/text and an explicit status/reason. Invalid construction
+options throw `SymbolError`. `fallbackEncoding` is opt-in and is used only after
+raw checksums pass. Browser CORS restrictions still apply; opaque redirects cannot
+be approved and are rejected. Network requests are never initiated by the reader
+or by source mapping alone.
+
 `sourceLinkUrl(symbols, documentName, { ignoreCase: true, maxMappings: 10000 })`
 resolves the [Source Link mapping specification](https://github.com/dotnet/designs/blob/main/accepted/2020/diagnostics/source-link.md)
 without network access. Both path separators are normalized; exact matches win,
@@ -113,3 +142,20 @@ Ambiguous normalized patterns, invalid Unicode, dot segments and selected URLs
 outside credential-free HTTPS raise `SymbolError`. Paths/URLs are limited to
 32,768 UTF-16 code units; `maxMappings` bounds a linear scan of the mapping table.
 This mapping capability does not fetch or grant access to an origin.
+
+`await resolveSources(symbols, { sources, fetcher, signal })` tries workspace
+sources (a Map or name-keyed object), embedded bytes, then an explicitly supplied
+source client in that order. Missing, mismatched or undecodable candidates fall
+through. Each document reports `status`, `verified`, `provenance` (`workspace`,
+`embedded`, `source-link` or null), `attempts`, and verified `bytes`/`text` only.
+Results reuse the debugger binding shape (`documents`, `sources`, `sequencePoints`,
+`methods`); unverified documents have no sequence points. Even an injected fetcher's
+claimed verified bytes are checked again at the resolution boundary.
+
+Resolution is sequential, abortable and bounded by `maxDocuments` (10,000),
+`maxBytes` per candidate (16 MiB), `maxTotalBytes` across attempted verification
+(64 MiB), and `timeoutMs` for the whole operation (30 seconds). Remote response
+allocation is separately bounded by the source client's own limit before the
+resolution verification budget is applied. `fallbackEncoding` controls decoding;
+`mapping` passes options to `sourceLinkUrl`. Cancellation and timeout leave pending
+documents unverified. The caller owns the supplied fetch client's lifetime.

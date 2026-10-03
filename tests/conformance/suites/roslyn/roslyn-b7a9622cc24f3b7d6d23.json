@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b7a9622cc24f3b7d6d23",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\npublic class Test\n{\n    public static void Main()\n    {\n        ObsoleteMethod1();\n        ObsoleteMethod2();\n        ObsoleteMethod3();\n        ObsoleteMethod5();\n\n        Test t = new Test();\n\n        t.ObsoleteMethod4();\n        var f = t.field1;\n        var p1 = t.Property1;\n        var p2 = t.Property2;\n        \n        var p3 = t.Prop2;\n        t.Prop2 = p3;\n\n        var p4 = t.Prop3;\n        t.Prop3 = p4;\n\n        var p5 = t.Prop4;\n        t.Prop4 = p5;\n        \n        t.event1();\n        t.event1 += () => { };\n\n        t.ObsoleteExtensionMethod1();\n\n        Action<int> func = t.ObsoleteMethod4;\n        func(1);\n        Action func1 = t.ObsoleteMethod4;\n        func1();\n        Test t1 = new Test { Property1 = 10, Property2 =20};\n        var i1 = t1[10];\n\n        GenericTest<int> gt = new GenericTest<int>();\n        gt.ObsoleteMethod1<double>();\n        var gf = gt.field1;\n        var gp1 = gt.Property1;\n        gt.event1 += (i) => { };\n    }\n\n    [Obsolete]\n    public static void ObsoleteMethod1() { }\n\n    [Obsolete(\"Do not call this method\")]\n    public static void ObsoleteMethod2() { }\n\n    [Obsolete(\"\", true)]\n    public static void ObsoleteMethod3() { }\n\n    [Obsolete(\"Do not call this method\")]\n    public void ObsoleteMethod4() { }\n\n    [Obsolete(\"Do not call this method\")]\n    public void ObsoleteMethod4(int x) { }\n\n    [Obsolete(null, true)]\n    public static void ObsoleteMethod5() { }\n\n    [Obsolete(\"Do not use this field\")]\n    public int field1 = 0;\n\n    [Obsolete(\"Do not use this property\")]\n    public int Property1 { get; set; }\n\n    [Obsolete(\"Do not use this property\")]\n    public int Property2 { get { return 10; } set { } }\n\n    [Obsolete(\"Do not use this event\")]\n    public event Action event1;\n\n    public int Prop2\n    {\n        [Obsolete] get { return 10; }\n        set {}\n    }\n\n    public int Prop3\n    {\n        get { return 10; }\n        [Obsolete] set { }\n    }\n\n    public int Prop4\n    {\n        [Obsolete] get { return 10; }\n        [Obsolete] set { }\n    }\n\n    public event Action event2\n    {\n        [Obsolete] add {}\n        [Obsolete(\"Don't use remove accessor\")] remove {}\n    }\n\n    [Obsolete]\n    public int this[int x]\n    {\n        get { return 10; }\n    }\n}\n\npublic class GenericTest<T>\n{\n    [Obsolete]\n    public void ObsoleteMethod1<U>() { }\n\n    [Obsolete(\"Do not use this field\")]\n    public T field1 = default(T);\n\n    [Obsolete(\"Do not use this property\")]\n    public T Property1 { get; set; }\n\n    [Obsolete(\"Do not use this event\")]\n    public event Action<T> event1;\n}\n\npublic static class TestExtension\n{\n    [Obsolete(\"Do not call this extension method\")]\n    public static void ObsoleteExtensionMethod1(this Test t) { }\n}\n",
+  "sourceSHA256": "c61cd2067f2740e5eb3db6a1f4ab9a9fe3fd24e03b8d168293d1a7951fb4d468",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestObsoleteAttributeOnMembersAndAccessors",
+    "offset": 230684
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, new[] { Net40.References.SystemCore })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8423",
+        "severity": "error"
+      },
+      {
+        "code": "CS8423",
+        "severity": "error"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0619",
+        "severity": "error"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0067",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (98,10): error CS8423: Attribute 'System.ObsoleteAttribute' is not valid on event accessors. It is only valid on 'class, struct, enum, constructor, method, property, indexer, field, event, interface, delegate' declarations.\n                //         [Obsolete] add {}\n                Diagnostic(ErrorCode.ERR_AttributeNotOnEventAccessor, \"Obsolete\").WithArguments(\"System.ObsoleteAttribute\", \"class, struct, enum, constructor, method, property, indexer, field, event, interface, delegate\").WithLocation(98, 10),\n                // (99,10): error CS8423: Attribute 'System.ObsoleteAttribute' is not valid on event accessors. It is only valid on 'class, struct, enum, constructor, method, property, indexer, field, event, interface, delegate' declarations.\n                //         [Obsolete(\"Don't use remove accessor\")] remove {}\n                Diagnostic(ErrorCode.ERR_AttributeNotOnEventAccessor, \"Obsolete\").WithArguments(\"System.ObsoleteAttribute\", \"class, struct, enum, constructor, method, property, indexer, field, event, interface, delegate\").WithLocation(99, 10),\n                // (8,9): warning CS0612: 'Test.ObsoleteMethod1()' is obsolete\n                //         ObsoleteMethod1();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"ObsoleteMethod1()\").WithArguments(\"Test.ObsoleteMethod1()\").WithLocation(8, 9),\n                // (9,9): warning CS0618: 'Test.ObsoleteMethod2()' is obsolete: 'Do not call this method'\n                //         ObsoleteMethod2();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"ObsoleteMethod2()\").WithArguments(\"Test.ObsoleteMethod2()\", \"Do not call this method\").WithLocation(9, 9),\n                // (10,9): error CS0619: 'Test.ObsoleteMethod3()' is obsolete: ''\n                //         ObsoleteMethod3();\n                Diagnostic(ErrorCode.ERR_DeprecatedSymbolStr, \"ObsoleteMethod3()\").WithArguments(\"Test.ObsoleteMethod3()\", \"\").WithLocation(10, 9),\n                // (11,9): warning CS0612: 'Test.ObsoleteMethod5()' is obsolete\n                //         ObsoleteMethod5();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"ObsoleteMethod5()\").WithArguments(\"Test.ObsoleteMethod5()\").WithLocation(11, 9),\n                // (15,9): warning CS0618: 'Test.ObsoleteMethod4()' is obsolete: 'Do not call this method'\n                //         t.ObsoleteMethod4();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"t.ObsoleteMethod4()\").WithArguments(\"Test.ObsoleteMethod4()\", \"Do not call this method\").WithLocation(15, 9),\n                // (16,17): warning CS0618: 'Test.field1' is obsolete: 'Do not use this field'\n                //         var f = t.field1;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"t.field1\").WithArguments(\"Test.field1\", \"Do not use this field\").WithLocation(16, 17),\n                // (17,18): warning CS0618: 'Test.Property1' is obsolete: 'Do not use this property'\n                //         var p1 = t.Property1;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"t.Property1\").WithArguments(\"Test.Property1\", \"Do not use this property\").WithLocation(17, 18),\n                // (18,18): warning CS0618: 'Test.Property2' is obsolete: 'Do not use this property'\n                //         var p2 = t.Property2;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"t.Property2\").WithArguments(\"Test.Property2\", \"Do not use this property\").WithLocation(18, 18),\n                // (20,18): warning CS0612: 'Test.Prop2.get' is obsolete\n                //         var p3 = t.Prop2;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"t.Prop2\").WithArguments(\"Test.Prop2.get\").WithLocation(20, 18),\n                // (24,9): warning CS0612: 'Test.Prop3.set' is obsolete\n                //         t.Prop3 = p4;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"t.Prop3\").WithArguments(\"Test.Prop3.set\").WithLocation(24, 9),\n                // (26,18): warning CS0612: 'Test.Prop4.get' is obsolete\n                //         var p5 = t.Prop4;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"t.Prop4\").WithArguments(\"Test.Prop4.get\").WithLocation(26, 18),\n                // (27,9): warning CS0612: 'Test.Prop4.set' is obsolete\n                //         t.Prop4 = p5;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"t.Prop4\").WithArguments(\"Test.Prop4.set\").WithLocation(27, 9),\n                // (32,9): warning CS0618: 'TestExtension.ObsoleteExtensionMethod1(Test)' is obsolete: 'Do not call this extension method'\n                //         t.ObsoleteExtensionMethod1();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"t.ObsoleteExtensionMethod1()\").WithArguments(\"TestExtension.ObsoleteExtensionMethod1(Test)\", \"Do not call this extension method\").WithLocation(32, 9),\n                // (34,28): warning CS0618: 'Test.ObsoleteMethod4(int)' is obsolete: 'Do not call this method'\n                //         Action<int> func = t.ObsoleteMethod4;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"t.ObsoleteMethod4\").WithArguments(\"Test.ObsoleteMethod4(int)\", \"Do not call this method\").WithLocation(34, 28),\n                // (36,24): warning CS0618: 'Test.ObsoleteMethod4()' is obsolete: 'Do not call this method'\n                //         Action func1 = t.ObsoleteMethod4;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"t.ObsoleteMethod4\").WithArguments(\"Test.ObsoleteMethod4()\", \"Do not call this method\").WithLocation(36, 24),\n                // (38,30): warning CS0618: 'Test.Property1' is obsolete: 'Do not use this property'\n                //         Test t1 = new Test { Property1 = 10, Property2 =20};\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"Property1\").WithArguments(\"Test.Property1\", \"Do not use this property\").WithLocation(38, 30),\n                // (38,46): warning CS0618: 'Test.Property2' is obsolete: 'Do not use this property'\n                //         Test t1 = new Test { Property1 = 10, Property2 =20};\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"Property2\").WithArguments(\"Test.Property2\", \"Do not use this property\").WithLocation(38, 46),\n                // (39,18): warning CS0612: 'Test.this[int]' is obsolete\n                //         var i1 = t1[10];\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"t1[10]\").WithArguments(\"Test.this[int]\").WithLocation(39, 18),\n                // (42,9): warning CS0612: 'GenericTest<int>.ObsoleteMethod1<U>()' is obsolete\n                //         gt.ObsoleteMethod1<double>();\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"gt.ObsoleteMethod1<double>()\").WithArguments(\"GenericTest<int>.ObsoleteMethod1<U>()\").WithLocation(42, 9),\n                // (43,18): warning CS0618: 'GenericTest<int>.field1' is obsolete: 'Do not use this field'\n                //         var gf = gt.field1;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"gt.field1\").WithArguments(\"GenericTest<int>.field1\", \"Do not use this field\").WithLocation(43, 18),\n                // (44,19): warning CS0618: 'GenericTest<int>.Property1' is obsolete: 'Do not use this property'\n                //         var gp1 = gt.Property1;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"gt.Property1\").WithArguments(\"GenericTest<int>.Property1\", \"Do not use this property\").WithLocation(44, 19),\n                // (30,9): warning CS0618: 'Test.event1' is obsolete: 'Do not use this event'\n                //         t.event1 += () => { };\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"t.event1\").WithArguments(\"Test.event1\", \"Do not use this event\").WithLocation(30, 9),\n                // (45,9): warning CS0618: 'GenericTest<int>.event1' is obsolete: 'Do not use this event'\n                //         gt.event1 += (i) => { };\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"gt.event1\").WithArguments(\"GenericTest<int>.event1\", \"Do not use this event\").WithLocation(45, 9),\n                // (121,28): warning CS0067: The event 'GenericTest<T>.event1' is never used\n                //     public event Action<T> event1;\n                Diagnostic(ErrorCode.WRN_UnreferencedEvent, \"event1\").WithArguments(\"GenericTest<T>.event1\").WithLocation(121, 28)",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

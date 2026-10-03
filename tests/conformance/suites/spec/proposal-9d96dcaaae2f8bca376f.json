@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-9d96dcaaae2f8bca376f",
+  "kind": "spec",
+  "sourceText": "Dictionary<string, List<int>> field = new() {\n    { \"item1\", new() { 1, 2, 3 } }\n};",
+  "sourceSHA256": "cd63211fed805b299f03708dd13bb896b8f6d02860f51b504746f7bba20a9d81",
+  "target": "library",
+  "featureId": "csharp-9-0-target-typed-new-expressions",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/target-typed-new.md",
+    "sha256": "57832c908e368a18ab43b20db3fe4bde28b595af56d0fe5b4ae3740b54318e4e",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/target-typed-new.md",
+    "license": "NOASSERTION",
+    "offset": 365
+  }
+}

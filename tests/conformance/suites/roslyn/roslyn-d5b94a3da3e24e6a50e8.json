@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d5b94a3da3e24e6a50e8",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Security;\nusing System.Security.Permissions;\n\nclass MySecurityAttribute : SecurityAttribute\n{\n    public MySecurityAttribute(SecurityAction a) : base(a) { }\n    public override IPermission CreatePermission() { return null; }\n}\n\nclass MyCodeAccessSecurityAttribute : CodeAccessSecurityAttribute\n{\n    public MyCodeAccessSecurityAttribute(SecurityAction a) : base(a) { }\n    public override IPermission CreatePermission() { return null; }\n}\n\n[MySecurityAttribute(SecurityAction.RequestMinimum)]\n[MySecurityAttribute(SecurityAction.RequestOptional)]\n[MySecurityAttribute(SecurityAction.RequestRefuse)]\n[MyCodeAccessSecurityAttribute(SecurityAction.RequestMinimum)]\n[MyCodeAccessSecurityAttribute(SecurityAction.RequestOptional)]\n[MyCodeAccessSecurityAttribute(SecurityAction.RequestRefuse)]\nclass Test\n{\n    [MySecurityAttribute(SecurityAction.RequestMinimum)]\n    [MySecurityAttribute(SecurityAction.RequestOptional)]\n    [MySecurityAttribute(SecurityAction.RequestRefuse)]\n    [MyCodeAccessSecurityAttribute(SecurityAction.RequestMinimum)]\n    [MyCodeAccessSecurityAttribute(SecurityAction.RequestOptional)]\n    [MyCodeAccessSecurityAttribute(SecurityAction.RequestRefuse)]\n    public static void Main() {}\n}",
+  "sourceSHA256": "ddca89adb3c75499e1432553d72eb1bc9d0852110834baa49b226dfe7f5d8732",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Security.cs",
+    "sha256": "995f9a35982f60a6e97828d01cb24f09a40124463d1f9e4c6b48f42ec012d8ff",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_Security.cs",
+    "license": "MIT",
+    "method": "CS7051ERR_SecurityAttributeInvalidActionTypeOrMethod",
+    "offset": 29327
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS7051",
+        "severity": "error"
+      },
+      {
+        "code": "CS7051",
+        "severity": "error"
+      },
+      {
+        "code": "CS7051",
+        "severity": "error"
+      },
+      {
+        "code": "CS7051",
+        "severity": "error"
+      },
+      {
+        "code": "CS7051",
+        "severity": "error"
+      },
+      {
+        "code": "CS7051",
+        "severity": "error"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0618",
+        "severity": "warning"
+      },
+      {
+        "code": "CS7051",
+        "severity": "error"
+      },
+      {
+        "code": "CS7051",
+        "severity": "error"
+      },
+      {
+        "code": "CS7051",
+        "severity": "error"
+      },
+      {
+        "code": "CS7051",
+        "severity": "error"
+      },
+      {
+        "code": "CS7051",
+        "severity": "error"
+      },
+      {
+        "code": "CS7051",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (17,22): warning CS0618: 'System.Security.Permissions.SecurityAction.RequestMinimum' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'\n                // [MySecurityAttribute(SecurityAction.RequestMinimum)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SecurityAction.RequestMinimum\").WithArguments(\"System.Security.Permissions.SecurityAction.RequestMinimum\", \"Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.\"),\n                // (18,22): warning CS0618: 'System.Security.Permissions.SecurityAction.RequestOptional' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'\n                // [MySecurityAttribute(SecurityAction.RequestOptional)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SecurityAction.RequestOptional\").WithArguments(\"System.Security.Permissions.SecurityAction.RequestOptional\", \"Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.\"),\n                // (19,22): warning CS0618: 'System.Security.Permissions.SecurityAction.RequestRefuse' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'\n                // [MySecurityAttribute(SecurityAction.RequestRefuse)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SecurityAction.RequestRefuse\").WithArguments(\"System.Security.Permissions.SecurityAction.RequestRefuse\", \"Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.\"),\n                // (20,32): warning CS0618: 'System.Security.Permissions.SecurityAction.RequestMinimum' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'\n                // [MyCodeAccessSecurityAttribute(SecurityAction.RequestMinimum)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SecurityAction.RequestMinimum\").WithArguments(\"System.Security.Permissions.SecurityAction.RequestMinimum\", \"Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.\"),\n                // (21,32): warning CS0618: 'System.Security.Permissions.SecurityAction.RequestOptional' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'\n                // [MyCodeAccessSecurityAttribute(SecurityAction.RequestOptional)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SecurityAction.RequestOptional\").WithArguments(\"System.Security.Permissions.SecurityAction.RequestOptional\", \"Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.\"),\n                // (22,32): warning CS0618: 'System.Security.Permissions.SecurityAction.RequestRefuse' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'\n                // [MyCodeAccessSecurityAttribute(SecurityAction.RequestRefuse)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SecurityAction.RequestRefuse\").WithArguments(\"System.Security.Permissions.SecurityAction.RequestRefuse\", \"Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.\"),\n                // (17,22): error CS7051: SecurityAction value 'SecurityAction.RequestMinimum' is invalid for security attributes applied to a type or a method\n                // [MySecurityAttribute(SecurityAction.RequestMinimum)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionTypeOrMethod, \"SecurityAction.RequestMinimum\").WithArguments(\"SecurityAction.RequestMinimum\"),\n                // (18,22): error CS7051: SecurityAction value 'SecurityAction.RequestOptional' is invalid for security attributes applied to a type or a method\n                // [MySecurityAttribute(SecurityAction.RequestOptional)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionTypeOrMethod, \"SecurityAction.RequestOptional\").WithArguments(\"SecurityAction.RequestOptional\"),\n                // (19,22): error CS7051: SecurityAction value 'SecurityAction.RequestRefuse' is invalid for security attributes applied to a type or a method\n                // [MySecurityAttribute(SecurityAction.RequestRefuse)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionTypeOrMethod, \"SecurityAction.RequestRefuse\").WithArguments(\"SecurityAction.RequestRefuse\"),\n                // (20,32): error CS7051: SecurityAction value 'SecurityAction.RequestMinimum' is invalid for security attributes applied to a type or a method\n                // [MyCodeAccessSecurityAttribute(SecurityAction.RequestMinimum)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionTypeOrMethod, \"SecurityAction.RequestMinimum\").WithArguments(\"SecurityAction.RequestMinimum\"),\n                // (21,32): error CS7051: SecurityAction value 'SecurityAction.RequestOptional' is invalid for security attributes applied to a type or a method\n                // [MyCodeAccessSecurityAttribute(SecurityAction.RequestOptional)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionTypeOrMethod, \"SecurityAction.RequestOptional\").WithArguments(\"SecurityAction.RequestOptional\"),\n                // (22,32): error CS7051: SecurityAction value 'SecurityAction.RequestRefuse' is invalid for security attributes applied to a type or a method\n                // [MyCodeAccessSecurityAttribute(SecurityAction.RequestRefuse)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionTypeOrMethod, \"SecurityAction.RequestRefuse\").WithArguments(\"SecurityAction.RequestRefuse\"),\n                // (25,26): warning CS0618: 'System.Security.Permissions.SecurityAction.RequestMinimum' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'\n                //     [MySecurityAttribute(SecurityAction.RequestMinimum)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SecurityAction.RequestMinimum\").WithArguments(\"System.Security.Permissions.SecurityAction.RequestMinimum\", \"Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.\"),\n                // (26,26): warning CS0618: 'System.Security.Permissions.SecurityAction.RequestOptional' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'\n                //     [MySecurityAttribute(SecurityAction.RequestOptional)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SecurityAction.RequestOptional\").WithArguments(\"System.Security.Permissions.SecurityAction.RequestOptional\", \"Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.\"),\n                // (27,26): warning CS0618: 'System.Security.Permissions.SecurityAction.RequestRefuse' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'\n                //     [MySecurityAttribute(SecurityAction.RequestRefuse)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SecurityAction.RequestRefuse\").WithArguments(\"System.Security.Permissions.SecurityAction.RequestRefuse\", \"Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.\"),\n                // (28,36): warning CS0618: 'System.Security.Permissions.SecurityAction.RequestMinimum' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'\n                //     [MyCodeAccessSecurityAttribute(SecurityAction.RequestMinimum)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SecurityAction.RequestMinimum\").WithArguments(\"System.Security.Permissions.SecurityAction.RequestMinimum\", \"Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.\"),\n                // (29,36): warning CS0618: 'System.Security.Permissions.SecurityAction.RequestOptional' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'\n                //     [MyCodeAccessSecurityAttribute(SecurityAction.RequestOptional)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SecurityAction.RequestOptional\").WithArguments(\"System.Security.Permissions.SecurityAction.RequestOptional\", \"Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.\"),\n                // (30,36): warning CS0618: 'System.Security.Permissions.SecurityAction.RequestRefuse' is obsolete: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'\n                //     [MyCodeAccessSecurityAttribute(SecurityAction.RequestRefuse)]\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbolStr, \"SecurityAction.RequestRefuse\").WithArguments(\"System.Security.Permissions.SecurityAction.RequestRefuse\", \"Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.\"),\n                // (25,26): error CS7051: SecurityAction value 'SecurityAction.RequestMinimum' is invalid for security attributes applied to a type or a method\n                //     [MySecurityAttribute(SecurityAction.RequestMinimum)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionTypeOrMethod, \"SecurityAction.RequestMinimum\").WithArguments(\"SecurityAction.RequestMinimum\"),\n                // (26,26): error CS7051: SecurityAction value 'SecurityAction.RequestOptional' is invalid for security attributes applied to a type or a method\n                //     [MySecurityAttribute(SecurityAction.RequestOptional)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionTypeOrMethod, \"SecurityAction.RequestOptional\").WithArguments(\"SecurityAction.RequestOptional\"),\n                // (27,26): error CS7051: SecurityAction value 'SecurityAction.RequestRefuse' is invalid for security attributes applied to a type or a method\n                //     [MySecurityAttribute(SecurityAction.RequestRefuse)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionTypeOrMethod, \"SecurityAction.RequestRefuse\").WithArguments(\"SecurityAction.RequestRefuse\"),\n                // (28,36): error CS7051: SecurityAction value 'SecurityAction.RequestMinimum' is invalid for security attributes applied to a type or a method\n                //     [MyCodeAccessSecurityAttribute(SecurityAction.RequestMinimum)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionTypeOrMethod, \"SecurityAction.RequestMinimum\").WithArguments(\"SecurityAction.RequestMinimum\"),\n                // (29,36): error CS7051: SecurityAction value 'SecurityAction.RequestOptional' is invalid for security attributes applied to a type or a method\n                //     [MyCodeAccessSecurityAttribute(SecurityAction.RequestOptional)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionTypeOrMethod, \"SecurityAction.RequestOptional\").WithArguments(\"SecurityAction.RequestOptional\"),\n                // (30,36): error CS7051: SecurityAction value 'SecurityAction.RequestRefuse' is invalid for security attributes applied to a type or a method\n                //     [MyCodeAccessSecurityAttribute(SecurityAction.RequestRefuse)]\n                Diagnostic(ErrorCode.ERR_SecurityAttributeInvalidActionTypeOrMethod, \"SecurityAction.RequestRefuse\").WithArguments(\"SecurityAction.RequestRefuse\")",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

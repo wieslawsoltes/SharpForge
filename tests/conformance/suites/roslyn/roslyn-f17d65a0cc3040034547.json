@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-f17d65a0cc3040034547",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    const string S = \"abc\";\n\n    public static string M1()\n    {\n        switch (S)\n        {\n            case \"abc\":\n                return S;\n        }\n    }\n\n    public static string M2()\n    {\n        const string S2 = S + \"\";\n        switch (S)\n        {\n            case S2:\n                return S;\n        }\n    }\n\n    public static string M3()\n    {\n        const int I = 11;\n        switch (I)\n        {\n            case 11:\n                return S;\n        }\n    }\n\n    public static string M4()\n    {\n        switch (S)\n        {\n            case \"def\":\n                return S; // 1\n            default:\n                return S;\n        }\n    }\n\n    public static string M5()\n    {\n        switch (S)\n        {\n            case \"def\":\n                return S; // 2\n        }\n        // error\n    }\n}",
+  "sourceSHA256": "1745996d0264c17492799f704d30a6bef7e78e47ab1b00a35e80958b3e1a8e1e",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "SwitchConstantUnreachable",
+    "offset": 4543
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(src)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0162",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0161",
+        "severity": "error"
+      },
+      {
+        "code": "CS0162",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (40,17): warning CS0162: Unreachable code detected\n                //                 return S; // 1\n                Diagnostic(ErrorCode.WRN_UnreachableCode, \"return\").WithLocation(40, 17),\n                // (46,26): error CS0161: 'C.M5()': not all code paths return a value\n                //     public static string M5()\n                Diagnostic(ErrorCode.ERR_ReturnExpected, \"M5\").WithArguments(\"C.M5()\").WithLocation(46, 26),\n                // (51,17): warning CS0162: Unreachable code detected\n                //                 return S; // 2\n                Diagnostic(ErrorCode.WRN_UnreachableCode, \"return\").WithLocation(51, 17)",
+  "unsupported": []
+}

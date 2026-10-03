@@ -40,11 +40,18 @@ for (const engine of ['source', 'cil']) {
     const formatType = platform.heap.string('int');
     const boxed = formattingModule.invoke(platform, {name: 'BoxValue'}, [42, formatType]).value;
     assert.equal(compositeFormat(platform, '{{{0,6:D4}}}:{1}', [boxed, null]), '{  0042}:');
-    for (const format of ['{', '}', '{1}', '{0:bad}', '{0,100001}']) {
+    for (const format of ['{', '}', '{1}', '{0:bad}']) {
       assert.throws(() => compositeFormat(platform, format, [boxed]), ManagedFault);
     }
+    // The pinned .NET 10.0.5 corpus accepts composite width 1,000,000, beyond the direct helper's alignment limit.
+    const aligned = compositeFormat(platform, '{0,100001}', [boxed]);
+    assert.equal(aligned.length, 100001);
+    assert.equal(aligned.slice(-2), '42');
+    assert.equal(aligned.slice(0, -2), ' '.repeat(99999));
+    assert.throws(() => compositeFormat(platform, '{0,1000001}', [boxed]), {name: 'OutOfMemoryException'});
     assert.throws(() => formatBclValue(platform, platform.managed(1, 'double'), 'D', 0, 'double'), {name: 'FormatException'});
     assert.throws(() => formatBclValue(platform, 1, '', -100001), {name: 'ArgumentOutOfRangeException'});
+    assert.throws(() => formatBclValue(platform, 1, '', 100001), {name: 'ArgumentOutOfRangeException'});
     assert.throws(() => compositeFormat(platform, 'x'.repeat(1000001), []), {name: 'OutOfMemoryException'});
     const unknownType = platform.heap.string('unsupported');
     assert.throws(() => formattingModule.invoke(platform, {name: 'BoxValue'}, [1, unknownType]), {name: 'InvalidOperationException'});

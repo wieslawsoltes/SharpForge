@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-b4d41f4c191091591b3f",
+  "kind": "spec",
+  "sourceText": "public struct S\n{\n    private List<string> messages;\n\n    public S(IEnumerable<string> messages) =>\n        this.messages = new List<string>(messages);\n\n    public void InitializeMessages() =>\n        messages = new List<string>();\n\n    public readonly void AddMessage(string message)\n    {\n        if (messages == null)\n        {\n            throw new InvalidOperationException(\"Messages collection is not initialized.\");\n        }\n        messages.Add(message);\n    }\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "b081a1453135017aa0c2fd9f24ff25194e99d11b50233bb53606d7b2ecf1eb8c",
+  "originalSource": "public struct S\n{\n    private List<string> messages;\n\n    public S(IEnumerable<string> messages) =>\n        this.messages = new List<string>(messages);\n\n    public void InitializeMessages() =>\n        messages = new List<string>();\n\n    public readonly void AddMessage(string message)\n    {\n        if (messages == null)\n        {\n            throw new InvalidOperationException(\"Messages collection is not initialized.\");\n        }\n        messages.Add(message);\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "ReadonlyMember"
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-structs",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/structs.md",
+    "sha256": "53de26bf64c1dda02bf6edd00cbb816c260511bdd95d302f759970333c1ea663",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/structs.md",
+    "license": "MIT",
+    "example": "ReadonlyMember",
+    "offsetInUnquotedMarkdown": 9610
+  }
+}
