@@ -15,7 +15,8 @@
   "browserScripts": [
     "tests/browser_release05_test.py",
     "tests/browser_release06_test.py",
-    "tests/conformance/browser/test_launch.py"
+    "tests/conformance/browser/test_launch.py",
+    "tests/conformance/supply/test_tooling.py"
   ],
   "requiredServices": [
     "studio-http",
