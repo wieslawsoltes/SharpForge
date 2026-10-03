@@ -38,3 +38,15 @@ test('A03 library desktop stubs use CorDllMain and unsupported ARM64 is explicit
   assert.equal(rejected.success, false);
   assert(rejected.diagnostics.some(diagnostic => diagnostic.message.includes('ARM64')));
 });
+
+test('A03 canonical multi-section loading rejects modified desktop import/stub bytes', () => {
+  const compiled = compileToIL('Console.WriteLine(7);', { framework: 'mscorlib4' });
+  assert(compiled.success, JSON.stringify(compiled.diagnostics));
+  for (const kind of ['stub', 'imports']) {
+    const bytes = compiled.assembly.slice();
+    const pe = readPE(bytes);
+    const at = kind === 'stub' ? pe.offsetOf(pe.addressOfEntryPoint) : pe.offsetOf(pe.directories.importAddressTable.rva);
+    bytes[at] ^= 1;
+    assert.throws(() => loadAssembly(bytes), /not canonical/);
+  }
+});

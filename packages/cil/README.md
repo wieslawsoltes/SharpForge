@@ -54,3 +54,6 @@ example and `node --test tests/a03-02-signatures.test.js` for the offline corpus
 The [metadata API](METADATA.md) exposes all 53 named table schemas, typed row writers,
 deduplicated heaps, required sorting, uncompressed pointer lists and bounded II.22
 structural diagnostics. See `examples/metadata/table-builder.mjs` for a runnable example.
+
+The [PE API](PE.md) supports AnyCPU/x86/x64/ARM64 output, console/library headers,
+desktop CLR import stubs, aligned multi-section layouts and all PE/CLI data directories.
