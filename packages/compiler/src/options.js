@@ -10,9 +10,10 @@
  *   CS2017 /main with a library       CS8203 invalid assembly name       CS7088 invalid option value (API)
  *   CS2007 unrecognized switch value (MSBuild booleans)
  * Two SharpForge codes remain: SF2009 when `checkOverflow` is not a boolean in the JavaScript API, and - with
- * `profile:true`, the default - SF2008 for values Roslyn accepts but this execution profile cannot produce
- * (output kinds other than exe/library). Every Roslyn language version, including 7.1-7.3 and ISO-1/2, is selectable.
+ * `profile:true`, the default - SF2008 for output kinds other than exe/library.
+ * Language spellings and feature selection use the shared syntax language-version table.
  */
+import {parseLanguageVersion as syntaxLanguageVersion,displayLanguageVersion} from '@sharpforge/syntax';
 import {normalizeDiagnosticId} from './diagnostics/suppression.js';
 
 /** Roslyn output kinds by /target name. */
@@ -22,7 +23,6 @@ export const profileOutputKinds=Object.freeze(['exe','library']);
 export const nullableContexts=Object.freeze(['disable','enable','warnings','annotations']);
 export const optimizationLevels=Object.freeze(['debug','release']);
 const msbuildOutputTypes=Object.freeze({exe:'Exe',winexe:'WinExe',library:'Library',module:'Module',appcontainerexe:'AppContainerExe',winmdobj:'WinMDObj'});
-const versionDisplay=n=>n===7?'7.0':n>=8&&Number.isInteger(n)?n+'.0':String(n);
 
 /**
  * Parses a /langversion value the way Roslyn does (case-insensitive): 1-14 with an optional `.0`, 7.1, 7.2, 7.3,
@@ -30,14 +30,8 @@ const versionDisplay=n=>n===7?'7.0':n>=8&&Number.isInteger(n)?n+'.0':String(n);
  * preview, 14 for default/latest) or null when the value is not a language version.
  */
 export function parseLanguageVersion(value){
-  const name=String(value??'').trim().toLowerCase();
-  if(name==='preview')return {name,number:15,preview:true,display:'preview'};
-  if(['default','latest','latestmajor'].includes(name))return {name,number:14,preview:false,display:'14.0'};
-  if(name==='iso-1'||name==='iso-2')return {name,number:Number(name.slice(4)),preview:false,display:name.slice(4)};
-  const m=/^(\d{1,2})(?:\.(\d))?$/.exec(name);if(!m)return null;
-  const major=Number(m[1]),minor=Number(m[2]??0);
-  if(major<1||major>14||minor!==0&&!(major===7&&minor<=3))return null;
-  const number=major+minor/10;return {name,number,preview:false,display:versionDisplay(number)};
+  const parsed=syntaxLanguageVersion(value??'');
+  return parsed?{...parsed,display:displayLanguageVersion(parsed.number)}:null;
 }
 
 const FIELDS=Object.freeze(['name','outputKind','checkOverflow','checkOverflowByUri','allowUnsafe','nullableContext','optimizationLevel','deterministic','preprocessorSymbols','mainTypeName','langVersion','langVersionByUri','warningLevel','noWarn','warnAsError','warnNotAsError','treatWarningsAsErrors']);

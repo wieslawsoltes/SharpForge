@@ -111,3 +111,11 @@ test('SF-A02-T08.7 with: the receiver is evaluated once, the copy is a new objec
     }`);
   assert.deepEqual(lines, ['Box { Size = 1, Label = a }', 'Box { Size = 2, Label = b }', '1', 'True']);
 });
+
+test('SF-A02-T08.6 a record struct binds like a record but is not executable: the image has no value types', () => {
+  const source = 'record struct Size(int W, int H);\nclass P { static void Main() { var s = new Size(1, 2); var (w, h) = s; System.Console.WriteLine(w + h); } }';
+  const analysis = analysisOf(source);
+  assert.deepEqual(analysis.diagnostics, []);
+  assert.equal(analysis.incomplete, false);
+  assert.match(notExecutable(source).message, /struct types/);
+});

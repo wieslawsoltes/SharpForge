@@ -75,7 +75,7 @@ test('A02-T19 every registry type is reachable as a symbol',()=>{
   assert.equal(bridge.typeFromName('Microsoft.UI.Xaml.Controls.Button').baseType,bridge.typeFromName('Microsoft.UI.Xaml.Controls.ContentControl'));assert.equal(bridge.typeFromName('Microsoft.UI.Xaml.Visibility').baseType.specialType,'System_Enum');
   same(bridge.typeFromName('Button'),bridge.typeFromName('Microsoft.UI.Xaml.Controls.Button'),'registry aliases resolve');same(bridge.typeFromName('List<int>'),bridge.typeFromName('System.Collections.Generic.List`1<int>'));same(bridge.typeFromName('NoSuchType'),null);
   const list=bridge.typeFromName('List<int>');assert.equal(list.toDisplayString(),'System.Collections.Generic.List<int>');same(list.originalDefinition.construct(bridge.typeFromName('int')),list,'constructing the definition finds the registry instantiation');
-  assert.equal(list.originalDefinition.construct(bridge.typeFromName('long')).getMembers().length,0,'an instantiation outside the closed registry has no members');
+  const unlisted=list.originalDefinition.construct(bridge.typeFromName('long')).getMembers();assert(unlisted.length>0&&unlisted.every(m=>!m.contract),'an instantiation outside the closed registry has the open members, none of them a contract');
   assert(bridge.typeFromName('int[]') instanceof ArrayTypeSymbol);same(bridge.typeFromName('int[]'),bridge.typeFromName('int[]'));assert.equal(bridge.registryName(bridge.typeFromName('double[]')),'double[]');
 });
 test('A02-T19 every registry contract and builtin is reachable as a member symbol',()=>{
@@ -92,6 +92,18 @@ test('A02-T19 every registry contract and builtin is reachable as a member symbo
   assert.equal(bridge.typeFromName('System.Console').getMembers('WriteLine')[0].parameters[0].isOptional,true,'Console.WriteLine() and WriteLine(value) share one builtin');
   const custom=new RegistryBridge({types:new Map([['Demo.Widget',{name:'Demo.Widget',base:'object',properties:{},events:{},kind:'object'}]]),contracts:[{id:0,owner:'Demo.Widget',name:'Ping',parameters:['int'],result:'bool',isStatic:false,kind:'method'}],builtins:[]});
   assert.equal(custom.typeFromName('Demo.Widget').getMembers('Ping')[0].toDisplayString(),'Demo.Widget.Ping(int)');
+});
+test('integrated runtime type properties and static identity helpers have correct symbol signatures',()=>{
+  for(const name of ['Type.Name','Type.FullName']){
+    const symbol=bridge.symbolForBuiltin(BuiltinMap.get(name));
+    assert.equal(symbol.kind,SymbolKind.Property);assert.equal(symbol.isStatic,false);
+    assert.equal(symbol.getMethod.parameters.length,0);assert.equal(symbol.type.specialType,'System_String');
+  }
+  assert.equal(bridge.typeFromName('System.Type').isStatic,false);
+  for(const [name,count] of [['string.Intern',1],['string.IsInterned',1],['object.ReferenceEquals',2]]){
+    const symbol=bridge.symbolForBuiltin(BuiltinMap.get(name));assert.equal(symbol.isStatic,true,name);assert.equal(symbol.parameters.length,count,name);
+  }
+  const flag=bridge.symbolForBuiltin(BuiltinMap.get('Enum.HasFlag'));assert.equal(flag.isStatic,false);assert.equal(flag.parameters.length,1);
 });
 test('A02-T14 the legacy adapter keeps string-typed call sites working',()=>{
   const userType=new NamedTypeSymbol({name:'Foo'}),adapter=new LegacyTypeAdapter({bridge,sourceType:name=>name==='Foo'?userType:null});

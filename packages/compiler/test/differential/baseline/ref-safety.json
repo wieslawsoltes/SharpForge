@@ -1,0 +1,20 @@
+{
+  "ref-safety/cs8156-in-argument-temporary": ["diagnostics", "warnings"],
+  "ref-safety/cs8157-ref-local-not-returnable": ["diagnostics", "warnings"],
+  "ref-safety/cs8166-cs8167-parameter-by-reference": ["diagnostics", "warnings"],
+  "ref-safety/cs8166-local-function": ["diagnostics", "warnings"],
+  "ref-safety/cs8168-cs8169-local-by-reference": ["diagnostics", "warnings"],
+  "ref-safety/cs8168-unscoped-ref-receiver": ["diagnostics", "warnings"],
+  "ref-safety/cs8170-struct-this": ["diagnostics", "warnings"],
+  "ref-safety/cs8347-call-exposes-argument": ["diagnostics", "warnings"],
+  "ref-safety/cs8350-argument-mixing": ["diagnostics", "warnings"],
+  "ref-safety/cs8351-ref-conditional-mixed-scopes": ["diagnostics", "warnings"],
+  "ref-safety/cs8352-assign-to-wider-variable": ["diagnostics", "warnings"],
+  "ref-safety/cs8352-conditional-and-slice": ["diagnostics", "warnings"],
+  "ref-safety/cs8352-return-stackalloc-local": ["diagnostics", "warnings"],
+  "ref-safety/cs8353-return-stackalloc": ["diagnostics", "warnings"],
+  "ref-safety/cs8374-ref-assign-narrower": ["diagnostics", "warnings"],
+  "ref-safety/cs9075-cs9076-scoped-parameter": ["diagnostics", "warnings"],
+  "ref-safety/cs9077-ref-parameter-through-ref-parameter": ["diagnostics", "warnings"],
+  "ref-safety/cs9079-ref-assign-return-only": ["diagnostics", "warnings"]
+}

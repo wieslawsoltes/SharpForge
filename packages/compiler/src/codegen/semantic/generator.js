@@ -8,6 +8,7 @@
  *   patterns, switches -> sequential tests over shared evaluations   (lowering/decision-dag.js, translate-patterns.js)
  *   initialization     -> initializer methods run where .NET runs them (initialization.js)
  *   async functions    -> a kickoff and a body on the runtime's continuation ABI (lowering/async/async-methods.js)
+ *   rank-n arrays      -> a class over one flat array with computed indexing (lowering/arrays.js)
  *
  * A construct that needs an instruction the runtime does not have raises `UnsupportedConstruct`; the generator then
  * produces no image and names the construct, which `compile()` reports as SF2200.
@@ -16,6 +17,7 @@ import { frameworkBridge } from '../../symbols/registry-bridge.js';
 import { MethodKind } from '../../symbols/members.js';
 import { isSourceSymbol } from '../../semantic/analysis-helpers.js';
 import { analyzeCaptures } from '../../lowering/closures.js';
+import { markVariablesPassedByReference } from '../../lowering/by-reference.js';
 import { IteratorClasses, stateMachineBody } from '../../lowering/iterators.js';
 import { newHoist } from '../../lowering/iterators/try-regions.js';
 import { TASK } from '@sharpforge/framework';
@@ -23,6 +25,8 @@ import { AsyncMethods, asyncResultType } from '../../lowering/async/async-method
 import { TupleClasses } from '../../lowering/tuples/tuple-classes.js';
 import { StructuralMembers } from '../../lowering/tuples/structural-members.js';
 import { RecordMembers } from '../../lowering/records/record-members.js';
+import { AnonymousClasses } from '../../lowering/anonymous-types.js';
+import { GenericInstantiations, InstantiationTable, GenericDeclarations, FrameworkConstructions, imageTypeNameText } from '../../lowering/generics/index.js';
 import { stateMachineTypeName, stateMachineParameterProxyFieldName, thisProxyFieldName } from '../../lowering/generated-names.js';
 import { JumpIrEmitter } from './jump-emitter.js';
 import { ProgramModel } from './program-model.js';
@@ -34,6 +38,8 @@ import { BodyTranslator } from './body-translator.js';
 import { Frame } from './frame.js';
 import { UnsupportedConstruct } from './unsupported.js';
 import { n } from './node-factory.js';
+import { memberGenerators } from '../../lowering/members/index.js';
+import { MultiDimensionalArrays } from '../../lowering/arrays.js';
 
 class GeneratorCore {
   /**
@@ -48,18 +54,24 @@ class GeneratorCore {
     this.types = new TypeMapper(this);
     this.delegates = new DelegateClasses(this);
     this.iterators = new IteratorClasses(this);
+    this.arrays = new MultiDimensionalArrays(this);
     this.structural = new StructuralMembers(this);
     this.tuples = this.structural.register(new TupleClasses(this));
     this.records = this.structural.register(new RecordMembers(this));
+    this.anonymous = this.structural.register(new AnonymousClasses(this));
+    // Records are kept per construction: a table resolves a symbol to its key first (lowering/generics).
+    this.generics = new GenericInstantiations(this);
+    this.frameworkConstructions = new FrameworkConstructions(this);
+    const table = () => new InstantiationTable(this.generics);
     this.classes = new Map();
-    this.fields = new Map();
-    this.methods = new Map();
-    this.autoProperties = new Map();
-    this.eventFields = new Map();
+    this.fields = table();
+    this.methods = table();
+    this.autoProperties = table();
+    this.eventFields = table();
     this.paramsParameters = new Set();
-    this.instanceInits = new Map();
-    this.implicitConstructors = new Map();
-    this.typeInits = new Map();
+    this.instanceInits = table();
+    this.implicitConstructors = table();
+    this.typeInits = table();
     this.typeInitializing = null;
     this.cells = new Map();
     this.queue = [];
@@ -84,19 +96,18 @@ class GeneratorCore {
   cellClass(type) {
     let cell = this.cells.get(type);
     if (!cell) {
-      const record = this.program.addClass(`<>Cell(${type})`);
+      const record = this.program.addClass(`<>Cell(${imageTypeNameText(type)})`);
       cell = { record, value: this.program.addField(record, 'Value', type) };
       this.cells.set(type, cell);
     }
     return cell;
   }
   fieldOf(symbol, syntax) {
-    const definition = symbol.originalDefinition ?? symbol;
-    const record = this.fields.get(definition);
+    const record = this.fields.get(symbol);
     return record ?? this.unsupported(`field '${symbol.toDisplayString()}' (not in the framework registry)`, syntax);
   }
   eventFieldOf(symbol, syntax) {
-    const record = this.eventFields.get(symbol.originalDefinition ?? symbol);
+    const record = this.eventFields.get(symbol);
     return record ?? this.unsupported(`event '${symbol.toDisplayString()}' in this position`, syntax);
   }
   /** The accessors of a source property in the shape the IR emitter reads and writes properties through. */
@@ -109,7 +120,9 @@ class GeneratorCore {
       set: symbol.setMethod ? this.methodOf(symbol.setMethod, syntax) : null,
     };
   }
+  /** Queues a body; it is lowered under the substitution that is active now (the construction being lowered). */
   queueBody(work) {
+    work.typeMap = this.generics.active;
     this.queue.push(work);
   }
   addSynthesizedBody(method, body) {
@@ -118,18 +131,27 @@ class GeneratorCore {
   /** The frame for the body of a declared member (or of synthesized code that belongs to one). */
   memberFrame(method, symbol, uri, bound) {
     const captures = analyzeCaptures(bound);
+    // Variables declared in the arguments of `this(...)` live in the constructor's frame.
+    if (symbol?.initializerCall) markVariablesPassedByReference(symbol.initializerCall, captures);
     const root = { name: symbol?.name ?? 'Main', ordinal: this.methodOrdinal++, lambdas: 0, closures: 0, locals: 0, localFunctions: new Map() };
     const frame = new Frame({ uri, method, captures, root });
     if (!method.isStatic) frame.thisExpr = () => n.thisReference(method.owner.name);
     return frame;
   }
   /** Lowers one queued body and records it for emission; a queued `run` thunk lowers its body itself. */
-  translate({ frame, bound, parameters = [], returnsValue = true, prologue = null, run = null }) {
+  translate(work) {
+    return this.generics.withMap(work.typeMap, () => this.translateBody(work));
+  }
+  translateBody({ frame, bound, parameters = [], returnsValue = true, prologue = null, run = null }) {
     if (run) return run();
     const translator = new BodyTranslator(this, frame);
     const entry = translator.declareParameters(parameters);
     // `prologue(translator)` builds statements that run after the parameters are in place (a constructor initializer).
-    if (prologue) entry.push(...prologue(translator));
+    // Variables the prologue's expressions declare (`: this(M(out var x))`) are created before it and live in the body.
+    if (prologue) {
+      const statements = prologue(translator);
+      entry.push(...translator.pending.splice(0), ...statements);
+    }
     this.bodies.push({ method: frame.method, body: translator.body(bound, { prologue: entry, returnsValue }) });
   }
   drain() {
@@ -142,27 +164,33 @@ const Members = Base =>
   class extends Base {
     translateMembers() {
       const bound = this.analysis.bound;
-      for (const [symbol, record] of this.methods) {
-        const body = bound.get(symbol);
-        if (body) {
-          // The context of the body itself decides: a yield in a local function makes that function the iterator.
-          if (body.binder?.c?.isIterator) {
-            this.translateIterator(symbol, record, body);
-            this.drain();
-            continue;
-          }
-          const frame = this.memberFrame(record, symbol, this.uriOf(symbol), body);
-          if (symbol.isAsync) frame.method = this.asyncBody(record, this.asyncOrigin(symbol, frame));
-          this.queueBody({
-            frame,
-            bound: body,
-            parameters: symbol.parameters,
-            returnsValue: frame.method.returnType !== 'void',
-            prologue: this.prologueOf(symbol, frame),
-          });
-        } else if (!this.records.buildConstructor(symbol, record)) this.synthesizeAccessor(symbol, record);
+      // Constructions declared while a body is lowered add their methods to the table; the loop reaches them too.
+      for (const [key, record] of this.methods) {
+        const { definition, map } = this.generics.describe(key);
+        this.generics.withMap(map, () => this.translateMember(definition, record, bound.get(definition)));
         this.drain();
       }
+    }
+    /** Lowers the body of one declared method (or synthesizes it) under the active substitution. */
+    translateMember(symbol, record, body) {
+      if (!body) {
+        if (!this.records.buildConstructor(symbol, record)) this.synthesizeAccessor(symbol, record);
+        return;
+      }
+      // The context of the body itself decides: a yield in a local function makes that function the iterator.
+      if (body.binder?.c?.isIterator) {
+        this.translateIterator(symbol, record, body);
+        return;
+      }
+      const frame = this.memberFrame(record, symbol, this.uriOf(symbol), body);
+      if (symbol.isAsync) frame.method = this.asyncBody(record, this.asyncOrigin(symbol, frame));
+      this.queueBody({
+        frame,
+        bound: body,
+        parameters: symbol.parameters,
+        returnsValue: frame.method.returnType !== 'void',
+        prologue: this.prologueOf(symbol, frame),
+      });
     }
     /**
      * An iterator method becomes a kickoff (the method itself: it creates the iterator object and stores the
@@ -241,7 +269,11 @@ const Members = Base =>
       const call = n.call(entry, null, args),
         invocation = result === entry.returnType ? call : this.awaitTask(call);
       const statement = result === 'void' ? n.expressionStatement(invocation) : n.returnStatement(invocation);
-      this.bodies.push({ method, body: n.block([statement]) });
+      // C# 9 module initializers run once, in declaration order, before anything else of the program.
+      const initializers = (this.analysis.assembly.moduleInitializers ?? []).map(symbol =>
+        n.expressionStatement(n.call(this.methodOf(symbol, symbol.locations?.[0]), null, [])),
+      );
+      this.bodies.push({ method, body: n.block([...initializers, statement]) });
       return method;
     }
     /** The entry point: top-level statements, else the single static Main. */
@@ -270,7 +302,12 @@ const Members = Base =>
     }
   };
 
-export class SemanticGenerator extends Members(AsyncMethods(Initialization(Declarations(GeneratorCore)))) {
+const GeneratorBase = [GenericDeclarations, AsyncMethods, Members, ...memberGenerators].reduce(
+  (composed, mixin) => mixin(composed),
+  Initialization(Declarations(GeneratorCore)),
+);
+
+export class SemanticGenerator extends GeneratorBase {
   /**
    * Generates the image.
    * @returns {{image: object}|{unsupported: {construct: string, syntax: object|null, uri: string|null}}}

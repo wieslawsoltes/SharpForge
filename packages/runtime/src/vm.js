@@ -20,6 +20,7 @@ import { loadAssembly } from '@sharpforge/cil';
 import { Op, BinaryName, UnaryName, verifyImage } from '@sharpforge/bytecode';
 import { ManagedHeap, ManagedFault, isReference } from './heap.js';
 import {builtin} from './execution/source-builtins.js';
+import {sourceValue} from './execution/source-values.js';
 import {literalString,stringRoots,clearStrings} from './execution/strings.js';
 import {binary,convert,unary,defaultValue,sourceEnum,enumToString,checkSourceArrayStore,runtimeTypeRoots,clearRuntimeTypes,runtimeTypeText} from './execution/source-ops.js';
 import {roots as exceptionRoots,makeFault,enterCatch,finalizers,finishReturn,transfer,resumeUnwind,handleFault,rethrow,endSourceFilter} from './execution/source-eh.js';
@@ -37,7 +38,7 @@ export class VirtualMachine {
   call(methodId,args,types=[]){return callSource(this,methodId,args,types);}
   notifyWrite(write){this.writeRevision++;if(['field','array','box'].includes(write.kind))this.heap.mutationRevision++;this.onWrite?.(write);}
   get top(){return this.frames.at(-1);}
-  value(ref){if(ref?.enumType)return ref.value;if(ref?.float||isNativeInteger(ref))return number(ref);if(isReference(ref)){const record=this.heap.get(ref);if(record.kind==='string')return record.data;if(record.kind==='box')return this.value(record.data[0]);}return ref;}
+  value(ref){return sourceValue(this.heap,ref);}
   format(value,type=null){const name=runtimeTypeText(this,value)??enumToString(this,value);if(name!==null)return name;if(value===null)return '';if(value===undefined)return '<unassigned>';if(type==='bool'||type==='System.Boolean')return number(value)?'True':'False';if(value===true)return 'True';if(value===false)return 'False';if(isReference(value)){const r=this.heap.get(value);if(r.kind==='string')return r.data;if(r.kind==='box')return this.format(r.data[0],numericTypeName(r.methodTable.name));if(r.kind==='exception')return r.type+': '+this.format(r.data[0]);return r.type;}if(type&&numericTypeNames.includes(numericTypeName(type))||value?.float||isNativeInteger(value)||isDecimal(value)||typeof value==='bigint')return scalarFormat(value,type??undefined,this.options);return String(value);}
   display(value){if(value===null)return 'null';if(isReference(value)){const r=this.heap.get(value);if(r.kind==='string')return JSON.stringify(r.data);if(r.kind==='array')return `${r.type} [${r.data.length}]`;return `${r.type} {#${value.h}}`;}return this.format(value);}
   constant(index){const raw=this.image.constants[index];return typeof raw==='string'?literalString(this,raw):raw?.scalar?decodeScalar(raw,this.options):raw;}

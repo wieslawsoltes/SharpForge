@@ -134,7 +134,7 @@ export const MemberSymbolBuilder = Base =>
           syntax.constraintClauses,
           t => this.bindType(t, mscope).type,
           (n, c, a) => this.report(uri, n, c, a),
-          { ownerDisplay: name },
+          { ownerDisplay: name, useFeature: (node, feature) => this.host.useFeature?.(uri, node, feature) },
         );
       } else if (typeParameters.length && (flags & DeclarationModifiers.Override || syntax.explicitInterfaceSpecifier))
         method.inheritsConstraints = true;

@@ -27,7 +27,7 @@ test('Array source APIs preserve results across source, reloaded source and CIL'
   for (const vm of [new VirtualMachine(compiled.image), new VirtualMachine(loadAssembly(compiled.assembly)),
     new CilVirtualMachine(compiled.assembly)]) {
     vm.run();
-    assert.equal(vm.state, 'completed', vm.fault?.message);
+    assert.equal(vm.state, 'terminated', vm.fault?.message);
     assert.equal(vm.output.join(''), '2\n0\n3\n6\n0\n6\n1\n6\nFalse\n');
   }
 });

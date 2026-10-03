@@ -7,6 +7,7 @@ import { ParameterSymbol } from '../../symbols/members.js';
 import { Conversion, ConversionKind } from '../../conversions/classify.js';
 import { naturalDelegateType } from '../../conversions/method-group.js';
 import { delegateInvoke } from '../../overload/type-inference.js';
+import { anonymousFunctionAnchor, anonymousMethodSignatureErrors } from '../anonymous-methods.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 
@@ -24,11 +25,14 @@ export const LambdaBinding = Base =>
             ? []
             : null;
       const isAsync = (syntax.modifiers ?? []).some(m => m.text === 'async'),
+        isStaticFunction = (syntax.modifiers ?? []).some(m => m.text === 'static'),
         cache = new Map();
       const node = this.node('Lambda', syntax, null, { form: 'lambda', isAnonymousMethod, parameterSyntax, isAsync });
       const bindWith = (parameterTypes, returnType, quiet, refKinds = null) => {
         const key = parameterTypes.map(t => t.toDisplayString()).join(',') + '=>' + (returnType ? returnType.toDisplayString() : '?');
         if (quiet && cache.has(key)) return cache.get(key);
+        // C# 9: when more than one parameter is named `_` they are discards, and `_` names none of them.
+        const hasDiscards = (parameterSyntax ?? []).filter(p => p.identifier.valueText === '_').length > 1;
         const parameters = (parameterSyntax ?? []).map((p, i) => {
           const mods = p.modifiers?.map(m => m.text) ?? [];
           const s = new ParameterSymbol({
@@ -44,6 +48,7 @@ export const LambdaBinding = Base =>
                   : (refKinds?.[i] ?? RefKind.None),
             syntax: p,
           });
+          s.isDiscard = hasDiscards && s.name === '_';
           return s;
         });
         const diagnostics = [],
@@ -56,6 +61,7 @@ export const LambdaBinding = Base =>
             isAsync,
             isIterator: false,
             isLambda: true,
+            staticFunction: isStaticFunction ? 'lambda' : null,
             isFieldInitializer: false,
             isStatic: this.c.isStatic,
             quiet: quiet ? diagnostics : this.quiet,
@@ -124,15 +130,25 @@ export const LambdaBinding = Base =>
           return null;
         }
         const errors = [];
+        const anchor = anonymousFunctionAnchor(syntax);
         if (parameterSyntax && parameterSyntax.length !== invoke.parameters.length) {
-          node.lastConversionError = [{ code: 'CS1593', args: [this.display(to), parameterSyntax.length] }];
+          node.lastConversionError = [{ node: anchor, code: 'CS1593', args: [this.display(to), parameterSyntax.length] }];
+          return null;
+        }
+        const signatureErrors = anonymousMethodSignatureErrors(syntax, parameterSyntax, invoke);
+        if (signatureErrors) {
+          node.lastConversionError = signatureErrors;
           return null;
         }
         if (explicit && !explicit.every((t, i) => t.equals(invoke.parameters[i].type))) {
           const i = explicit.findIndex((t, k) => !t.equals(invoke.parameters[k].type));
           node.lastConversionError = [
-            { code: 'CS1661', args: [isAnonymousMethod ? 'anonymous method' : 'lambda expression', this.display(to)] },
-            { node: parameterSyntax[i], code: 'CS1678', args: [i + 1, this.display(explicit[i]), this.display(invoke.parameters[i].type)] },
+            { node: anchor, code: 'CS1661', args: [isAnonymousMethod ? 'anonymous method' : 'lambda expression', this.display(to)] },
+            {
+              node: isAnonymousMethod ? (parameterSyntax[i].identifier ?? parameterSyntax[i]) : parameterSyntax[i],
+              code: 'CS1678',
+              args: [i + 1, this.display(explicit[i]), this.display(invoke.parameters[i].type)],
+            },
           ];
           return null;
         }
@@ -212,20 +228,7 @@ export const LambdaBinding = Base =>
         { isExpression: true, node: syntax.switchKeyword },
       );
       const type = this.bestCommonType(arms.map(a => a.value));
-      if (!type) {
-        const n = this.node('SwitchExpression', syntax, null, { governing, arms, form: 'implicitNew' });
-        n.convert = to =>
-          arms.every(a => {
-            const c = this.conversions.classifyFromExpression(a.value, to);
-            return c.exists && c.isImplicit;
-          })
-            ? new Conversion(ConversionKind.Identity)
-            : null;
-        n.materialize = to =>
-          this.node('SwitchExpression', syntax, to, { governing, arms: arms.map(a => ({ ...a, value: this.convert(a.value, to) })) });
-        n.isTargetTypedSwitch = true;
-        return n;
-      }
+      if (!type) return this.targetTypedSwitch(syntax, governing, arms);
       return this.node('SwitchExpression', syntax, type, {
         governing,
         arms: arms.map(a => ({ ...a, value: this.convert(a.value, type) })),

@@ -15,5 +15,9 @@
   "license": "MIT",
   "engines": {
     "node": ">=22"
+  },
+  "dependencies": {
+    "@sharpforge/bcl-core": "0.14.0",
+    "@sharpforge/bcl-collections": "0.14.0"
   }
 }

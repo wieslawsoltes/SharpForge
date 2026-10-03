@@ -1,0 +1,50 @@
+name: Planning contract gates
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
+  merge_group:
+    types: [checks_requested]
+  workflow_dispatch:
+    inputs:
+      flake_files:
+        description: Optional comma-separated Node test files for explicit failure retries
+        required: false
+        type: string
+  workflow_call:
+permissions:
+  contents: read
+  pull-requests: read
+concurrency:
+  group: planning-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+jobs:
+  gates:
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24.21.0'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Ownership, DAG, manifests, contracts and combined-tree regression
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/conformance/ci-planning/gates.js
+      - name: Explicit flake measurement
+        if: always() && github.event_name == 'workflow_dispatch' && inputs.flake_files != ''
+        env:
+          FLAKE_FILES: ${{ inputs.flake_files }}
+        run: node scripts/conformance/flaky/detect.js --files "$FLAKE_FILES" --output artifacts/flaky.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: planning-gates-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            artifacts/planning-gates.json
+            artifacts/flaky.json
+          if-no-files-found: error

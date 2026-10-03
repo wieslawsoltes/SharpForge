@@ -7,7 +7,7 @@ import {numericTypeNames,decodeNumericMode} from './numeric/numeric-types.js';
 import {decodeScalar} from './numeric/scalar-ops.js';
 import {enumTypes,frameworkType} from '@sharpforge/framework';
 /** Versioned, structured-cloneable stack bytecode. Each instruction is three signed 32-bit words. */
-export const FORMAT_VERSION = 1;
+export const FORMAT_VERSION = 2;
 // Numeric conversion IDs occupy the low range; enum targets retain declared identity.
 export const EnumConvertBase = 65536;
 export {Op, OpName} from './opcodes.js';

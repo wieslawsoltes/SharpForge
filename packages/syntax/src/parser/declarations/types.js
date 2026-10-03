@@ -21,12 +21,13 @@ export const typeDeclarationMethods = {
     return null;
   },
   typeDeclaration(attributeLists, modifiers) {
-    const keywordToken = this.current,
+    const keywordIndex = this.i,
+      keywordToken = this.current,
       keyword = this.take(),
       kind = kinds[keywordToken.kind],
       nameToken = this.current,
       identifier = this.id();
-    this.typeModifierFeatures(modifiers, kind, keywordToken);
+    this.typeModifierFeatures(modifiers, kind, keywordToken, keywordIndex);
     this.closedModifier(modifiers, kind);
     const typeParameters = this.at('<') ? this.typeParameterList() : null,
       parameterList = this.primaryConstructorParameters();

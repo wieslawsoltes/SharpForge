@@ -1,0 +1,64 @@
+name: Queued area manifests
+on:
+  merge_group:
+    types: [checks_requested]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  matrix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24.21.0'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - id: plan
+        run: node scripts/conformance/ci-planning/impact.js
+  areas:
+    needs: matrix
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24.21.0'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        if: toJSON(matrix.browserScripts) != '[]'
+        with:
+          python-version: '3.12'
+      - name: Prepare the actual browser prerequisites for this area
+        if: toJSON(matrix.browserScripts) != '[]'
+        run: |
+          python -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt
+          python -m playwright install --with-deps chromium
+          npm run build
+          node scripts/standalone.js
+      - name: Execute this area on the queued combined tree
+        env:
+          AREA: ${{ matrix.area }}
+        run: node scripts/planning/run-tests.js --area "$AREA" --browser
+  area-gate:
+    if: always()
+    needs: [matrix, areas]
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Require every queued area
+        env:
+          MATRIX_RESULT: ${{ needs.matrix.result }}
+          AREA_RESULT: ${{ needs.areas.result }}
+        run: test "$MATRIX_RESULT" = success && test "$AREA_RESULT" = success

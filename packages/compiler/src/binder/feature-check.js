@@ -17,6 +17,8 @@ export const newestLanguageVersion = Math.max(...languageFeatures.filter(row => 
 export const featureDiagnosticCodes = new Set(
   'CS8022 CS8023 CS8024 CS8025 CS8026 CS8059 CS8107 CS8302 CS8320 CS8370 CS8400 CS8773 CS8936 CS9058 CS9202 CS9260 CS9327 CS8652'.split(' '),
 );
+// Non-trailing named arguments have a diagnostic of their own that names the version (binder/csharp7x.js).
+featureDiagnosticCodes.add('CS1738');
 
 /**
  * The language-version diagnostics of one parsed file: the features the parser recorded and, when a version below

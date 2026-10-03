@@ -1,11 +1,11 @@
 /**
- * Object, delegate and array creation and target-typed `new`; initializers are bound in ../members/initializers.js.
+ * Object, delegate and array creation; initializers are bound in ../members/initializers.js and target-typed `new()`
+ * in ../target-typing.js.
  */
 import { SymbolKind, TypeKind, ArrayTypeSymbol } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
-import { Conversion, ConversionKind } from '../../conversions/classify.js';
 import { numericKind } from '../../conversions/numeric.js';
-import { isNullableType, stripNullable } from '../../conversions/nullable.js';
+import { isNullableType } from '../../conversions/nullable.js';
 import { isAccessible } from '../accessibility.js';
 
 const isSource = symbol => {
@@ -17,7 +17,7 @@ const keywordOf = type =>
   { System_Boolean: 'bool', System_String: 'string', System_Char: 'char', System_Object: 'object' }[type?.specialType] ??
   null;
 
-/** Class mixin: Object, delegate and array creation with object and collection initializers and target-typed `new`. */
+/** Class mixin: object, delegate and array creation. */
 export const CreationBinding = Base =>
   class extends Base {
     objectCreation(syntax) {
@@ -29,27 +29,15 @@ export const CreationBinding = Base =>
       }
       return this.create(type, args, syntax, syntax.type, syntax.initializer);
     }
-    implicitCreation(syntax) {
-      const args = this.arguments(syntax.argumentList);
-      return this.node('ImplicitNew', syntax, null, {
-        form: 'implicitNew',
-        args,
-        convert: to => {
-          const t = stripNullable(to);
-          return t.typeKind === TypeKind.Interface ||
-            (t.typeKind === TypeKind.TypeParameter && !t.hasConstructorConstraint) ||
-            t instanceof ArrayTypeSymbol
-            ? null
-            : new Conversion(ConversionKind.ObjectCreation);
-        },
-        materialize: to => this.create(stripNullable(to), args, syntax, syntax.newKeyword, syntax.initializer),
-      });
-    }
     create(type, args, syntax, typeNode, initializer) {
       const anyBad = args.some(a => a.hasErrors);
       if (type.typeKind === TypeKind.Delegate) {
-        if (args.length !== 1) {
-          this.report(syntax, 'CS0149');
+        if (!args.length) {
+          this.report(syntax, 'CS1729', [this.display(type), 0]);
+          return this.bad(syntax);
+        }
+        if (args.length > 1) {
+          this.report({ span: { start: args[0].syntax.span.start, end: args.at(-1).syntax.span.end } }, 'CS0149');
           return this.bad(syntax);
         }
         const a = args[0];
@@ -69,7 +57,7 @@ export const CreationBinding = Base =>
         return this.bad(syntax);
       }
       if (type.isStatic) {
-        this.report(typeNode === syntax.newKeyword ? typeNode : syntax, 'CS0712', [this.display(type)]);
+        this.report(typeNode === syntax ? syntax.newKeyword : syntax, 'CS0712', [this.display(type)]);
         return this.bad(syntax);
       }
       if (type.typeKind === TypeKind.TypeParameter) {
@@ -90,6 +78,10 @@ export const CreationBinding = Base =>
         // Scalar runtime profiles expose real constructors (for example Decimal's
         // five-part payload constructor). Resolve them before declaring a registry gap.
         if (!isSource(type) && !all.length) return this.lenient(syntax);
+      }
+      if (type.specialType === 'System_String' && !args.length) {
+        this.report(typeNode, 'CS1729', [this.display(type), 0]);
+        return this.bad(syntax);
       }
       if (!all.length) {
         if (type.isValueType === true && !args.length)
@@ -134,9 +126,22 @@ export const CreationBinding = Base =>
       }
       const call = this.finishCall(r, null, args, syntax, {});
       return this.withInitializer(
-        this.node('ObjectCreation', syntax, type, { constructor: r.method, args: call.args, expanded: r.expanded }),
+        // The mapping and the caller info let code generation place named arguments and fill in omitted optional ones.
+        this.node('ObjectCreation', syntax, type, {
+          constructor: r.method,
+          args: call.args,
+          expanded: r.expanded,
+          mapping: call.mapping,
+          callerInfo: call.callerInfo,
+        }),
         initializer,
       );
+    }
+    /** An element of `new[] { ... }` converted to the best common type; a failed conversion is reported on the element. */
+    implicitArrayElement(value, elementType) {
+      const converted = this.convert(value, elementType, value.syntax);
+      if (value.form === 'lambda' && !converted.hasErrors) this.finishLambda(value, elementType);
+      return converted;
     }
     arrayCreation(syntax) {
       const implicit = syntax.kind === 'ImplicitArrayCreationExpression',
@@ -144,6 +149,7 @@ export const CreationBinding = Base =>
       let elementType,
         rank = 1,
         sizes = [];
+      if (implicit && syntax.commas.length) return this.implicitMultiDimensionalArray(syntax);
       if (implicit) {
         rank = syntax.commas.length + 1;
         const values = init.expressions.map(e => (e.kind === 'ArrayInitializerExpression' ? null : this.value(e)));
@@ -155,7 +161,7 @@ export const CreationBinding = Base =>
           return this.bad(syntax);
         }
         return this.node('ArrayCreation', syntax, this.core.arrayOf(elementType, rank), {
-          elements: values.map(v => this.convert(v, elementType)),
+          elements: values.map(v => this.implicitArrayElement(v, elementType)),
         });
       }
       const typeSyntax = syntax.type,
@@ -187,15 +193,15 @@ export const CreationBinding = Base =>
       if (!init && !sizes.length && ranks[0].sizes.every(s => s.kind === 'OmittedArraySizeExpression')) {
         this.report(typeSyntax.rankSpecifiers[0], 'CS1586');
       }
+      if (init && sizes.length) this.checkArrayInitializer(init, rank, sizes);
       const elements = init ? this.arrayInitializer(init, elementType, rank) : null;
       return this.node('ArrayCreation', syntax, full, { sizes, elements });
     }
-    arrayInitializer(init, elementType, rank, shape = []) {
-      if (shape[rank] === undefined) shape[rank] = init.expressions.length;
-      else if (shape[rank] !== init.expressions.length) this.report(init, 'CS0847', [shape[rank]]);
+    arrayInitializer(init, elementType, rank, isNested = false) {
+      if (!isNested) this.checkArrayInitializer(init, rank);
       return init.expressions.map(e => {
         if (e.kind === 'ArrayInitializerExpression') {
-          if (rank > 1) return this.arrayInitializer(e, elementType, rank - 1, shape);
+          if (rank > 1) return this.arrayInitializer(e, elementType, rank - 1, true);
           if (elementType instanceof ArrayTypeSymbol)
             return this.node('ArrayCreation', e, elementType, {
               elements: this.arrayInitializer(e, elementType.elementType, elementType.rank),
@@ -209,13 +215,5 @@ export const CreationBinding = Base =>
         }
         return this.convert(this.value(e), elementType, e);
       });
-    }
-    materializeNew(e, type) {
-      const c = e.convert(type);
-      if (!c) {
-        this.reportConversionFailure(e, type, e.syntax, null);
-        return this.bad(e.syntax);
-      }
-      return e.materialize(type);
     }
   };
