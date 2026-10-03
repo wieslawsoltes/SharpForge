@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "area": "A26",
+  "nodeGlobs": [],
+  "browserScripts": [
+    "tests/standalone_test.py"
+  ],
+  "requiredServices": [
+    "studio-http",
+    "chromium"
+  ],
+  "timeout": 1200000,
+  "tags": [
+    "legacy"
+  ]
+}
