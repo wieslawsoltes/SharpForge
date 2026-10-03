@@ -1,3 +1,6 @@
+import {numericAliases,nativeIntegerBits} from './numeric-types.js';
+import {isDecimal,decimalZero,decimalToInteger,decimalToFloat} from './decimal-ops.js';
+
 /** Pure operations on CIL evaluation-stack values.
  *
  * The optional context supplies fault(type, message), error(message), and
@@ -9,23 +12,32 @@ const fault = (type, message) => Object.assign(new Error(message), {name: type})
 const error = message => Object.assign(new Error(message), {name: 'CilError'});
 const reference = value => value !== null && typeof value === 'object' && Number.isInteger(value.h) && Number.isInteger(value.g);
 
-export const float = (value, kind = 'r8') => Object.freeze({float: kind, value: kind === 'r4' ? Math.fround(value) : Number(value)});
-export const number = value => value?.float ? value.value : value;
-export const isNumber = value => typeof value === 'number' || typeof value === 'bigint' || !!value?.float;
-const numericAliases = {'System.SByte': 'sbyte', 'System.Byte': 'byte', 'System.Int16': 'short', 'System.UInt16': 'ushort', 'System.Char': 'char', 'System.Boolean': 'bool', 'System.Int32': 'int', 'System.UInt32': 'uint', 'System.Int64': 'long', 'System.UInt64': 'ulong', 'System.Single': 'float', 'System.Double': 'double', 'System.IntPtr':'nint', 'System.UIntPtr':'nuint'};
-export const defaults = input => { const type=numericAliases[input]??input; return type === 'long' || type === 'ulong' ? 0n : type === 'double' ? float(0) : type === 'float' ? float(0, 'r4') : ['int', 'uint', 'short', 'ushort', 'byte', 'sbyte', 'char', 'bool', 'nint', 'nuint'].includes(type) ? 0 : null; };
+export const float = (value, kind = 'r8') => {if(kind!=='r4'&&kind!=='r8')throw new TypeError('Invalid floating-point kind');return Object.freeze({float: kind, value: kind === 'r4' ? Math.fround(value) : Number(value)});};
+export const isNativeInteger=value=>value?.nativeInt===32||value?.nativeInt===64;
+export function nativeInteger(value,bits=32) {
+  nativeIntegerBits({nativeIntBits:bits});const n=BigInt.asIntN(bits,BigInt(value));
+  return Object.freeze({nativeInt:bits,value:bits===64?n:Number(n)});
+}
+export const number = value => value?.float||isNativeInteger(value) ? value.value : value;
+export const isNumber = value => typeof value === 'number' || typeof value === 'bigint' || !!value?.float || isNativeInteger(value);
+export const defaults = (input,context) => { const type=numericAliases[input]??input; return type==='decimal'?decimalZero:type==='nint'||type==='nuint'?nativeInteger(0,nativeIntegerBits(context)):type === 'long' || type === 'ulong' ? 0n : type === 'double' ? float(0) : type === 'float' ? float(0, 'r4') : ['int', 'uint', 'short', 'ushort', 'byte', 'sbyte', 'char', 'bool'].includes(type) ? 0 : null; };
 
 export function compare(a, b, op, unsigned = false, {fault: createFault = fault, isReference = reference} = {}) {
+  if(!['eq','ne','gt','ge','lt','le'].includes(op))throw createFault('InvalidProgramException','Invalid comparison operation');
   if (isReference(a) || isReference(b) || a === null || b === null) {
-    const equal = a === b || isReference(a) && isReference(b) && a.h === b.h && a.g === b.g;
+    const equal = a === b || isReference(a) && isReference(b) && a.h === b.h && a.g === b.g && (a.heapOwner===undefined||b.heapOwner===undefined||a.heapOwner===b.heapOwner);
     if (op === 'eq') return equal;
     if (op === 'ne') return !equal;
     if (unsigned && op === 'gt' && b === null) return a !== null;
     throw createFault('InvalidProgramException', 'Invalid reference comparison');
   }
   if (!isNumber(a) || !isNumber(b)) throw createFault('InvalidProgramException', 'Numeric comparison expected');
-  const floating = !!(a?.float || b?.float);
+  const floating = !!(a?.float || b?.float),nativeBits=isNativeInteger(a)?a.nativeInt:isNativeInteger(b)?b.nativeInt:0;
+  if(isNativeInteger(a)&&isNativeInteger(b)&&a.nativeInt!==b.nativeInt)throw createFault('InvalidProgramException','Mismatched native integer ABIs');
+  if(nativeBits&&(floating||typeof a==='bigint'||typeof b==='bigint'))throw createFault('InvalidProgramException','Mismatched numeric comparison categories');
   a = number(a); b = number(b);
+  if(nativeBits===64){a=BigInt(a);b=BigInt(b);}
+  if(typeof a!==typeof b)throw createFault('InvalidProgramException','Mismatched numeric comparison categories');
   if (floating && (Number.isNaN(a) || Number.isNaN(b))) return op === 'ne' || unsigned;
   if (unsigned && !floating) {
     a = typeof a === 'bigint' ? BigInt.asUintN(64, a) : a >>> 0;
@@ -36,23 +48,28 @@ export function compare(a, b, op, unsigned = false, {fault: createFault = fault,
 
 export function binary(name, a, b, {fault: createFault = fault, error: createError = error} = {}) {
   if (!isNumber(a) || !isNumber(b)) throw createFault('InvalidProgramException', 'Arithmetic requires numeric operands');
-  const floating = !!(a?.float || b?.float), checked = name.includes('.ovf'), unsigned = name.endsWith('.un'), op = name.split('.')[0];
+  const floating = !!(a?.float || b?.float),floatKind=a?.float==='r4'&&b?.float==='r4'?'r4':'r8',nativeBits=isNativeInteger(a)?a.nativeInt:isNativeInteger(b)?b.nativeInt:0,checked = name.includes('.ovf'), unsigned = name.endsWith('.un'), op = name.split('.')[0];
+  if(isNativeInteger(a)&&isNativeInteger(b)&&a.nativeInt!==b.nativeInt)throw createFault('InvalidProgramException','Mismatched native integer ABIs');
+  if(nativeBits&&(typeof a==='bigint'||typeof b==='bigint')&&!['shl','shr'].includes(op))throw createFault('InvalidProgramException','Native int and Int64 require an explicit conversion');
   a = number(a); b = number(b);
   if (floating) {
     if (!['add', 'sub', 'mul', 'div', 'rem'].includes(op) || checked || unsigned) throw createFault('InvalidProgramException', 'Invalid floating-point operation');
-    return float({add: () => a + b, sub: () => a - b, mul: () => a * b, div: () => a / b, rem: () => a % b}[op]());
+    if(typeof a!=='number'||typeof b!=='number'||nativeBits)throw createFault('InvalidProgramException','Mismatched floating-point operands');
+    return float({add: () => a + b, sub: () => a - b, mul: () => a * b, div: () => a / b, rem: () => a % b}[op](),floatKind);
   }
   const wide = typeof a === 'bigint';
-  if (typeof b === 'bigint' !== wide && !['shl', 'shr'].includes(op)) throw createFault('InvalidProgramException', 'Mismatched integer widths');
-  if (wide || checked) {
-    let x = BigInt(a), y = BigInt(b), bits = wide ? 64 : 32;
+  if (!nativeBits&&typeof b === 'bigint' !== wide && !['shl', 'shr'].includes(op)) throw createFault('InvalidProgramException', 'Mismatched integer widths');
+  if (wide || checked || nativeBits) {
+    let x = BigInt(a), y = BigInt(b), bits = nativeBits || (wide ? 64 : 32);
     if (unsigned) { x = BigInt.asUintN(bits, x); y = BigInt.asUintN(bits, y); }
     if (['div', 'rem'].includes(op) && y === 0n) throw createFault('DivideByZeroException', 'Attempted to divide by zero');
     if (op === 'div' && !unsigned && x === -(1n << BigInt(bits - 1)) && y === -1n) throw createFault('OverflowException', 'Integer division overflow');
     const shift = y & BigInt(bits - 1);
-    const value = {add: () => x + y, sub: () => x - y, mul: () => x * y, div: () => x / y, rem: () => x % y, and: () => x & y, or: () => x | y, xor: () => x ^ y, shl: () => x << shift, shr: () => x >> shift}[op]();
+    const operation={add: () => x + y, sub: () => x - y, mul: () => x * y, div: () => x / y, rem: () => x % y, and: () => x & y, or: () => x | y, xor: () => x ^ y, shl: () => x << shift, shr: () => x >> shift}[op];
+    if(!operation)throw createError('Unknown arithmetic opcode');
+    const value=operation();
     if (checked && (value < (unsigned ? 0n : -(1n << BigInt(bits - 1))) || value > (unsigned ? (1n << BigInt(bits)) - 1n : (1n << BigInt(bits - 1)) - 1n))) throw createFault('OverflowException', 'Checked arithmetic overflow');
-    return wide ? BigInt.asIntN(64, value) : Number(BigInt.asIntN(32, value));
+    return nativeBits?nativeInteger(value,nativeBits):wide ? BigInt.asIntN(64, value) : Number(BigInt.asIntN(32, value));
   }
   if (unsigned) { a >>>= 0; b >>>= 0; }
   if (['div', 'rem'].includes(op) && b === 0) throw createFault('DivideByZeroException', 'Attempted to divide by zero');
@@ -74,23 +91,31 @@ export function binary(name, a, b, {fault: createFault = fault, error: createErr
 
 export function unary(name, value, {fault: createFault = fault, error: createError = error} = {}) {
   if (!isNumber(value)) throw createFault('InvalidProgramException', 'Numeric operand required');
+  if(name!=='neg'&&name!=='not')throw createError('Unknown unary opcode');
   const raw = number(value);
   if (value?.float) {
-    if (name === 'neg') return float(-raw);
+    if (name === 'neg') return float(-raw,value.float);
     throw createError('not requires integer');
   }
-  return typeof raw === 'bigint' ? BigInt.asIntN(64, name === 'neg' ? -raw : ~raw) : name === 'neg' ? (-raw) | 0 : ~raw;
+  const result=typeof raw === 'bigint' ? BigInt.asIntN(64, name === 'neg' ? -raw : ~raw) : name === 'neg' ? (-raw) | 0 : ~raw;
+  return isNativeInteger(value)?nativeInteger(result,value.nativeInt):result;
 }
 
-export function convert(name, value, {fault: createFault = fault, error: createError = error} = {}) {
-  if (!isNumber(value)) throw createFault('InvalidProgramException', 'Numeric conversion required');
+export function convert(name, value, context = {}) {
+  const {fault: createFault = fault, error: createError = error}=context;
+  if (!isNumber(value)&&!isDecimal(value)) throw createFault('InvalidProgramException', 'Numeric conversion required');
   const checked = name.includes('.ovf.'), unsignedSource = name.endsWith('.un'), target = name.replace(/^conv\.(ovf\.)?/, '').replace(/\.un$/, ''), raw = number(value);
   if (['r', 'r4', 'r8'].includes(target)) {
+    if(isDecimal(value))return float(decimalToFloat(value,target==='r4'?'r4':'r8',context),target==='r4'?'r4':'r8');
     const n = unsignedSource && !value?.float ? (typeof raw === 'bigint' ? BigInt.asUintN(64, raw) : raw >>> 0) : raw;
     return float(Number(n), target === 'r4' ? 'r4' : 'r8');
   }
-  const bits = {i1: 8, u1: 8, i2: 16, u2: 16, i4: 32, u4: 32, i8: 64, u8: 64, i: 32, u: 32}[target], signed = target.startsWith('i');
+  const nativeTarget=target==='i'||target==='u',bits = {i1: 8, u1: 8, i2: 16, u2: 16, i4: 32, u4: 32, i8: 64, u8: 64, i: nativeIntegerBits(context), u: nativeIntegerBits(context)}[target], signed = target.startsWith('i');
   if (!bits) throw createError('Invalid conversion');
+  if(isDecimal(value)) {
+    const n=decimalToInteger(value,{...context,bits,unsigned:!signed});
+    return nativeTarget?nativeInteger(n,bits):bits===64?BigInt.asIntN(64,BigInt(n)):Number(n)|0;
+  }
   // CIL F values are tagged. Direct callers can also supply bare host Numbers;
   // only values outside the signed/unsigned Int32 domain are treated as floats.
   // In particular, -1 and 0xffffffff remain integer bit patterns, never F values.
@@ -113,17 +138,19 @@ export function convert(name, value, {fault: createFault = fault, error: createE
   else {
     // conv.u8 zero-extends an Int32 source. Checked conversions use the signed
     // source unless .un is explicit; an Int64 source already supplies 64 bits.
-    n = BigInt(unsignedSource || !checked && target === 'u8' ? raw >>> 0 : raw);
+    n = BigInt(unsignedSource || !checked && (target === 'u8'||target==='u'&&bits===64) ? raw >>> 0 : raw);
   }
   if (checked && (n < (signed ? -(1n << BigInt(bits - 1)) : 0n) || n > (signed ? (1n << BigInt(bits - 1)) - 1n : (1n << BigInt(bits)) - 1n))) throw createFault('OverflowException', 'Checked conversion overflow');
   n = signed ? BigInt.asIntN(bits, n) : BigInt.asUintN(bits, n);
-  return bits === 64 ? BigInt.asIntN(64, n) : Number(n) | 0;
+  return nativeTarget?nativeInteger(n,bits):bits === 64 ? BigInt.asIntN(64, n) : Number(n) | 0;
 }
 
 /** CLI storage locations narrow integers and round single precision on write/load. */
 export function storage(value, type, context) {
   type = numericAliases[type] ?? type;
-  const conversion = {sbyte: 'i1', byte: 'u1', short: 'i2', ushort: 'u2', char: 'u2', bool: 'u1', int: 'i4', uint: 'u4', long: 'i8', ulong: 'u8', float: 'r4', double: 'r8'}[type];
+  if((type==='nint'||type==='nuint')&&isNativeInteger(value)&&context?.nativeIntBits===undefined)context={...context,nativeIntBits:value.nativeInt};
+  if(type==='decimal'){if(!isDecimal(value))throw (context?.fault??fault)('InvalidProgramException','Decimal storage requires a Decimal value');return value;}
+  const conversion = {sbyte: 'i1', byte: 'u1', short: 'i2', ushort: 'u2', char: 'u2', bool: 'u1', int: 'i4', uint: 'u4', long: 'i8', ulong: 'u8', nint:'i',nuint:'u',float: 'r4', double: 'r8'}[type];
   return conversion ? convert('conv.' + conversion, value, context) : value;
 }
 
