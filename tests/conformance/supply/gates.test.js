@@ -160,7 +160,7 @@ test('attestation policy binds repository, signer workflow, source commit, tag a
 test('secret scanner indexes large line sets, preserves leading placeholders and caps findings', () => {
   const token = 'gh' + 'p_' + 'Ab12'.repeat(9);
   assert.equal(scanText('\n'.repeat(10000) + token, 'large.js')[0].line, 10001);
-  assert.throws(() => scanText(token.repeat(2), 'limited.js', {maxFindings: 0}), /SECRET_LIMIT/);
+  assert.throws(() => scanText(token + '\n' + token, 'limited.js', {maxFindings: 0}), /SECRET_LIMIT/);
   assert.throws(() => scanText('', 'invalid.js', {maxFindings: -1}), /SECRET_LIMIT/);
   assert.equal(scanText('secret="example' + 'Ab19Cd28Ef37Gh46Ij55' + '"', 'prefix.js').length, 1);
   assert.deepEqual(scanText(token, 'stable.js'), scanText(token, 'stable.js'));

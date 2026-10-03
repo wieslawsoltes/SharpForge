@@ -66,7 +66,7 @@ class SupplyToolingTests(unittest.TestCase):
             altered['components'][0][field] = value
             with self.assertRaises(Exception):
                 sbom.validate(altered)
-        document['components'].append(document['components'][0])
+        document['components'].append({**document['components'][0], 'name': 'different owned fixture'})
         with self.assertRaises(ValueError):
             sbom.validate(document)
 

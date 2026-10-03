@@ -180,7 +180,7 @@ jobs:
             ~/Library/Caches/ms-playwright
             ~/AppData/Local/ms-playwright
           key: playwright-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('tests/requirements.txt') }}
-      - run: python -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt
+      - run: "python -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt"
       - run: python -m playwright install --with-deps chromium
       - name: Verify failure and cancellation artifacts
         if: matrix.suite == 'browser'

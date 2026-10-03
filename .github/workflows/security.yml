@@ -33,7 +33,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: npm ci --ignore-scripts --no-audit --no-fund
-      - run: python -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt
+      - run: "python -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt"
       - name: Workflow, vendor, license and source secret gates
         run: |
           python scripts/conformance/supply/workflow-lint.py
