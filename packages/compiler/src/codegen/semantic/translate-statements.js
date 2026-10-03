@@ -4,6 +4,7 @@
  */
 import { SymbolKind } from '../../symbols/types.js';
 import { walk } from '../../bound/semantic-walker.js';
+import { implementsInterface } from '../../symbols/substitution.js';
 import { yieldBreak } from '../../lowering/iterators.js';
 import { yieldReturn, openRegion, closeRegion } from '../../lowering/iterators/try-regions.js';
 import { n } from './node-factory.js';
@@ -282,16 +283,24 @@ export const StatementTranslation = Base =>
     forEachEnumerator(node) {
       const type = node.collection.type,
         member = (owner, name) => owner.getMembers(name).find(m => m.kind === SymbolKind.Method && !m.parameters.length && !m.isStatic),
-        getEnumerator = type && member(type, 'GetEnumerator');
+        extension = node.extensionGetEnumerator ?? null,
+        getEnumerator = extension ?? (type && member(type, 'GetEnumerator'));
       if (!getEnumerator) return this.unsupported('foreach over a type without an accessible GetEnumerator method', node.syntax);
       const enumeratorType = getEnumerator.returnType,
         moveNext = member(enumeratorType, 'MoveNext'),
         current = enumeratorType.getMembers('Current').find(m => m.kind === SymbolKind.Property),
-        dispose = member(enumeratorType, 'Dispose');
+        // Only an enumerator that is IDisposable is disposed: a class that merely has a Dispose method is not (the
+        // image has no subclasses, so the static type decides).
+        core = this.g.analysis.core,
+        dispose = implementsInterface(enumeratorType, core.idisposable, core) ? member(enumeratorType, 'Dispose') : null;
       if (!moveNext || !current) return this.unsupported('foreach over this enumerator type', node.syntax);
       // A GetEnumerator that is itself an iterator returns the shared iterator class.
       const iterator = this.g.iterators.infoOf(this.imageType(enumeratorType, node.syntax));
-      const start = () => this.memberCall(getEnumerator, this.expression(node.collection), [], node.syntax);
+      // An extension GetEnumerator is a static method that takes the collection as its argument.
+      const start = () =>
+        extension
+          ? this.memberCall(extension, null, [this.expression(node.collection)], node.syntax)
+          : this.memberCall(getEnumerator, this.expression(node.collection), [], node.syntax);
       if (iterator) return this.forEachIterator(node, iterator, start);
       return this.scoped(() => {
         const span = this.span(node.syntax),
@@ -306,7 +315,7 @@ export const StatementTranslation = Base =>
           return [...this.declareVariable(node.local, value, span), this.embedded(node.body)];
         });
         const loop = () => n.whileStatement(callOn(moveNext), body(), span);
-        const statements = [holder.init(this.memberCall(getEnumerator, this.expression(node.collection), [], node.syntax), span)];
+        const statements = [holder.init(start(), span)];
         if (dispose) statements.push(this.protect(node.body, loop, () => n.block([n.expressionStatement(callOn(dispose))])));
         else statements.push(loop());
         return statements;

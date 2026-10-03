@@ -1,3 +1,4 @@
+import {fileURLToPath} from 'node:url';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,readdirSync} from 'node:fs';
@@ -11,7 +12,7 @@ import {IrEmitter} from '../packages/compiler/src/codegen/ir-emitter.js';
 import {BoundUsingStatement,BoundBlock,BoundInterpolatedString} from '../packages/compiler/src/bound/nodes.js';
 import {loadFixtures} from '../packages/compiler/test/differential/corpus.js';
 import {boundFixtures} from '../packages/compiler/test/bound/fixtures.js';
-const root=new URL('../',import.meta.url).pathname;
+const root=fileURLToPath(new URL('../',import.meta.url));
 const walk=dir=>readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(join(dir,e.name)):e.name.endsWith('.cs')?[join(dir,e.name)]:[]);
 const examples=walk(join(root,'examples')).map(path=>({name:path.slice(root.length),text:readFileSync(path,'utf8')}));
 /** Compiles with both pipelines; `verify` throws unless images are byte-identical and non-flow diagnostics agree. */

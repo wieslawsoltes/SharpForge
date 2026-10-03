@@ -10,7 +10,13 @@ import { checkInitAccessors } from './init-accessors.js';
 import { checkPrimaryConstructorChaining, primaryParameterWarnings } from './primary-constructors.js';
 
 /** The member rules, in the order their diagnostics are produced. Add a rule here to have it run for every source type. */
-export const memberChecks = [checkIndexerDeclarations, checkOperatorDeclarations, checkInitAccessors, checkRequiredDeclarations, checkPrimaryConstructorChaining];
+export const memberChecks = [
+  checkIndexerDeclarations,
+  checkOperatorDeclarations,
+  checkInitAccessors,
+  checkRequiredDeclarations,
+  checkPrimaryConstructorChaining,
+];
 
 /** Class mixin (analysis phase): member declaration rules. */
 export const MemberDeclarationChecks = Base =>

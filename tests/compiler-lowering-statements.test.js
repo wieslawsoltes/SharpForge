@@ -40,7 +40,8 @@ test('SF-A02-T09.6 foreach over arrays, framework collections and the GetEnumera
         Console.WriteLine(total);
       }
     }`);
-  assert.deepEqual(lines, ['6ab321', '3']);
+  // Cursor has a Dispose method but is not IDisposable: foreach does not call it (.NET prints the same).
+  assert.deepEqual(lines, ['6ab320', '3']);
 });
 
 test('using statements dispose in reverse order, also when the body throws', () => {

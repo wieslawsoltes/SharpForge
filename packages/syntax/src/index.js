@@ -10,6 +10,7 @@ export * from './langversion.js';
 export * from './feature-gate.js';
 export * from './bound-phase-codes.js';
 export * from './preview-revisions.js';
+export * from './preview-watchlist.js';
 export * from './syntax-tree.js';
 export * from './visitor.js';
 export * from './cancellation.js';
