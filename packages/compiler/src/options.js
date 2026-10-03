@@ -131,7 +131,7 @@ export function parseCompilationOptions(raw={},{profile=true}={}){
     else fields.outputKind=kind;
   }
   // The JavaScript API takes real booleans here; SF2009 is the existing code for that typing error.
-  if(given('checkOverflow')){if(typeof raw.checkOverflow==='boolean')fields.checkOverflow=raw.checkOverflow;else report('SF2009',['checkOverflow']);}
+  if(given('checkOverflow')||raw.checkOverflow===null){if(typeof raw.checkOverflow==='boolean')fields.checkOverflow=raw.checkOverflow;else report('SF2009',['checkOverflow']);}
   if(given('checkOverflowByUri')){if(isPlainObject(raw.checkOverflowByUri)&&Object.values(raw.checkOverflowByUri).every(v=>typeof v==='boolean'))fields.checkOverflowByUri={...raw.checkOverflowByUri};else if(!diagnostics.some(d=>d.code==='SF2009'))report('SF2009',['checkOverflow']);}
   boolean('allowUnsafe','AllowUnsafe');boolean('deterministic','Deterministic');boolean('treatWarningsAsErrors','TreatWarningsAsErrors');
 
