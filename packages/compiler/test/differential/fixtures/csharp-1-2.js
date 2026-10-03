@@ -4,5 +4,6 @@
  */
 import { fixtures as jumps } from './jumps.js';
 import { fixtures as exceptionHandling } from './exception-handling.js';
+import { fixtures as statementLowering } from './statement-lowering.js';
 
-export const fixtures = [...jumps, ...exceptionHandling];
+export const fixtures = [...jumps, ...exceptionHandling, ...statementLowering];

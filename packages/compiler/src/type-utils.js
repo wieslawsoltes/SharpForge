@@ -11,3 +11,5 @@ export function alwaysReturns(s){return (s?.kind==='Using'||s?.kind==='OverflowC
 export function pathOf(e){return e.kind==='Name'?e.name:e.kind==='Member'?`${pathOf(e.target)}.${e.name}`:null;}
 /** Display text of a legacy type name in diagnostics: CLR arity markers are dropped (List`1<int> prints as List<int>). */
 export function typeText(type){return String(type??'error').replace(/`\d+/g,'');}
+/** What CS1674 points at: the whole resource declaration of a using statement (type and declarators), else the resource itself. */
+export const usingSpan=(node,resource)=>node.resources?.kind==='Local'?node.resources:resource;

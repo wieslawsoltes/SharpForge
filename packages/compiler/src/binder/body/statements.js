@@ -251,7 +251,8 @@ export const StatementBinding = Base =>
         }
         case 'LockStatement': {
           const e = this.value(syntax.expression);
-          if (!e.hasErrors && e.type && e.type.isReferenceType !== true) this.report(syntax.expression, 'CS0185', [this.display(e.type)]);
+          // A type parameter that is not known to be a value type is accepted, as in Roslyn.
+          if (!e.hasErrors && e.type && e.type.isValueType === true) this.report(syntax.expression, 'CS0185', [this.display(e.type)]);
           const body = this.embedded(syntax.statement);
           return stmt('Lock', syntax, body.completes, { expression: e, body });
         }

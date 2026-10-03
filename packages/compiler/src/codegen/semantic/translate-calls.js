@@ -131,6 +131,7 @@ export const CallTranslation = Base =>
       return this.withInitializers(node, creation);
     }
     frameworkCreation(node) {
+      if (node.type.specialType === 'System_Object') return this.plainObject();
       const ctor = node.constructor,
         exception = this.g.analysis.core.exception;
       if (!node.type.equals(exception) && derivesFrom(node.type, exception))

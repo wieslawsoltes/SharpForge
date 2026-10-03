@@ -13,6 +13,7 @@ import { FunctionTranslation } from './translate-functions.js';
 import { PatternTranslation } from './translate-patterns.js';
 import { StatementTranslation } from './translate-statements.js';
 import { JumpTranslation } from './translate-jumps.js';
+import { RuntimeGapTranslation } from './runtime-gaps.js';
 
 export { Frame } from './frame.js';
 
@@ -196,6 +197,7 @@ export class BodyTranslator extends [
   PatternTranslation,
   StatementTranslation,
   JumpTranslation,
+  RuntimeGapTranslation,
 ].reduce(
   (composed, mixin) => mixin(composed),
   TranslatorCore,

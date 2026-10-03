@@ -115,6 +115,10 @@ export class CoreTypes {
     method(o, 'Equals', this.bool, [['obj', o]], V);
     method(o, 'GetHashCode', this.int, [], V);
     method(o, 'GetType', bridge.coreType('System_Type'));
+    if (!o.getMembers('.ctor').length) {
+      const constructor = { name: '.ctor', methodKind: MethodKind.Constructor, returnType: this.void, parameters: [] };
+      o.addMember(new MethodSymbol({ ...constructor, declaredAccessibility: Accessibility.Public, isImplicitlyDeclared: true }));
+    }
     method(
       o,
       'Equals',

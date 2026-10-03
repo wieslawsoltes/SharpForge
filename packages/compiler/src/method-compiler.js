@@ -1,7 +1,7 @@
 import {canonicalType,frameworkType,taskResult,findContracts} from '@sharpforge/framework';
 import {Op,Binary,Unary,BuiltinMap,frameworkBuiltin} from '@sharpforge/bytecode';
 import {evaluateConstant,ConstantError} from './constants.js';
-import {normalize,numeric,isReference,assignable,defaultValue,alwaysReturns,pathOf,typeText} from './type-utils.js';
+import {normalize,numeric,isReference,assignable,defaultValue,alwaysReturns,pathOf,typeText,usingSpan} from './type-utils.js';
 import {FrameworkCompiler} from './framework.js';
 import {ModernCompiler} from './modern.js';
 /** Core statement/expression compiler for the string-typed profile; framework and modern layers are composed below. */
@@ -83,7 +83,7 @@ class CoreMethodCompiler {
       if(index>=declarations.length)return node.body;
       const d=declarations[index],type=d.type==='var'?this.infer(d.initializer):this.c.typeName(d.type,this.m),owner=this.c.findType(type,this.m);
       if(!d.initializer)this.c.report(d,'CS0210');
-      if(!owner?.interfaces.includes('System.IDisposable')&&!(['network','bcl','bcl14'].includes(frameworkType(type)?.kind)&&findContracts(type,'Dispose',false).some(c=>!c.parameters.length)))this.c.report(d,'CS1674',[typeText(type)]);
+      if(!owner?.interfaces.includes('System.IDisposable')&&!(['network','bcl','bcl14'].includes(frameworkType(type)?.kind)&&findContracts(type,'Dispose',false).some(c=>!c.parameters.length)))this.c.report(usingSpan(node,d),'CS1674',[typeText(type)]);
       const name={...d,kind:'Name',name:d.name},nil={...d,kind:'Literal',type:'null',value:null};
       const dispose={...d,debugHidden:true,kind:'ExpressionStatement',expression:{...d,kind:'Call',target:{...d,kind:'Member',target:name,name:'Dispose'},args:[]}};
       return {...node,kind:'Block',statements:[{...d,kind:'Local',declarations:[{...d,isUsing:true}]},{...node,kind:'Try',body:lower(index+1),catches:[],finallyBody:{...d,kind:'Block',statements:[{...d,debugHidden:true,kind:'If',condition:{...d,kind:'Binary',operator:'!=',left:name,right:nil},then:dispose,otherwise:null}]}}]};
