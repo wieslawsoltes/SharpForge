@@ -9,6 +9,7 @@
  *   CS8608            nullability of a field-like type (property, event) does not match the overridden member
  * Oblivious types (declared where annotations are disabled) match anything.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { NullableAnnotation, SymbolKind, TypeKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 
@@ -62,9 +63,9 @@ export function compareMethodNullability(derived, base, codes) {
   return results;
 }
 
-const overrideCodes = Object.freeze({ returnCode: 'CS8764', parameterCode: 'CS8765' });
-const implicitImplementationCodes = Object.freeze({ returnCode: 'CS8766', parameterCode: 'CS8767' });
-const explicitImplementationCodes = Object.freeze({ returnCode: 'CS8768', parameterCode: 'CS8769' });
+const overrideCodes = Object.freeze({ returnCode: DiagnosticId.CS8764, parameterCode: DiagnosticId.CS8765 });
+const implicitImplementationCodes = Object.freeze({ returnCode: DiagnosticId.CS8766, parameterCode: DiagnosticId.CS8767 });
+const explicitImplementationCodes = Object.freeze({ returnCode: DiagnosticId.CS8768, parameterCode: DiagnosticId.CS8769 });
 
 function implementationArgs(diagnostic, implemented) {
   // The implementation diagnostics name the parameter (when there is one) and the interface member.
@@ -90,7 +91,7 @@ export function checkNullableSignatures(type) {
       const relation = compareTopLevel(member.typeWithAnnotations, base.typeWithAnnotations);
       const mismatch = position === 'both' ? relation !== 'same' : relation === 'saferInput';
       if (mismatch || nestedMismatch(member.typeWithAnnotations, base.typeWithAnnotations))
-        results.push({ code: 'CS8608', args: [], member });
+        results.push({ code: DiagnosticId.CS8608, args: [], member });
     }
   }
   for (const [declaration, implementation] of type.interfaceImplementations ?? []) {
