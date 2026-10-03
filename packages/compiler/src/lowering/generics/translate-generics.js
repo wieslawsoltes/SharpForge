@@ -100,7 +100,7 @@ export const GenericTranslation = Base =>
           const target = this.memberOfClosedReceiver(method, receiverType, node.syntax);
           if (target !== method) return super.exprCall({ ...node, method: target });
         }
-        if (this.isConstruction(receiverType) && !this.g.isSource(method))
+        if (this.isConstruction(receiverType) && !this.g.isSource(method) && !this.isFrameworkGenericMember(method))
           return this.unsupported(`'${method.toDisplayString()}' on a constructed generic type`, node.syntax);
       }
       return super.exprCall(node);
