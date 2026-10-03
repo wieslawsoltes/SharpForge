@@ -1,3 +1,4 @@
+import {callSource} from './execution/source-calls.js';
 import {createArray,arrayAddress} from './execution/arrays.js';
 import {SyncPrimitives} from './execution/sync-primitives.js';
 import {resumeArrayOperation,arrayContinuationRoots} from './execution/array-ops.js';
@@ -15,19 +16,19 @@ import { ManagedHeap, ManagedFault, isReference } from './heap.js';
 import {builtin} from './execution/source-builtins.js';
 import {literalString,stringRoots,clearStrings} from './execution/strings.js';
 import {binary,convert,unary,defaultValue,sourceEnum,enumToString,checkSourceArrayStore,runtimeTypeRoots,clearRuntimeTypes,runtimeTypeText} from './execution/source-ops.js';
-import {roots as exceptionRoots,frameState,makeFault,enterCatch,finalizers,finishReturn,transfer,resumeUnwind,handleFault,rethrow} from './execution/source-eh.js';
+import {roots as exceptionRoots,makeFault,enterCatch,finalizers,finishReturn,transfer,resumeUnwind,handleFault,rethrow} from './execution/source-eh.js';
 export class VirtualMachine {
   constructor(image,options={}){
     if(image instanceof Uint8Array||image instanceof ArrayBuffer)image=loadAssembly(image,options.assemblyLimits);
     if(image?.outputKind==='library')throw new Error('Library has no entry point. Invoke a static method with CilVirtualMachine instead.');
     const errors=verifyImage(image);if(errors.length)throw new Error('Bytecode verification failed: '+errors.join('; '));
-    this.image=image;this.options={maxInstructions:20_000_000,maxFrames:512,maxOutputCharacters:1_000_000,...options};
+    this.image=image;this.options={maxInstructions:20_000_000,maxOutputCharacters:1_000_000,...options};
     this.heap=new ManagedHeap({...options,methodTables:createSourceMethodTables(image,options)});this.heap.rootProvider=()=>this.roots();this.stack=[];this.frames=[];this.statics=image.statics.map(s=>s.value===null?defaultValue(s.type,this):s.value?.scalar?decodeScalar(s.value,this.options):s.value);this.constantValues=new Map();this.strings=new Map();this.output=[];this.outputCharacters=0;
     this.snapshotOwner=Object.freeze({});this.state='ready';this.instructions=0;this.writeRevision=0;this.sourcePause=false;this.elapsedMs=0;this.frameId=0;this.currentPoint=null;this.fault=null;this.pendingFault=null;this.exitCode=0;this.returnValue=null;this.onOutput=options.onOutput??(()=>{});this.onException=null;this.onWrite=null;
     this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);this.sync=new SyncPrimitives(this);this.call(image.entryPoint,[]);
   }
   *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots()??[];yield* this.sync?.roots()??[];yield this.returnValue;yield* this.stack;yield* this.statics;yield* this.constantValues.values();yield* stringRoots(this);yield* runtimeTypeRoots(this);for(const f of this.frames){yield* f.locals;yield* arrayContinuationRoots(f);}yield* exceptionRoots(this);}
-  call(methodId,args,types=[]){if(this.frames.length>=this.options.maxFrames)throw new ManagedFault('StackOverflowException','Maximum managed call depth exceeded');const method=this.image.methods[methodId],locals=Array(method.locals.length).fill(undefined);this.heap.withRoots(args,()=>args.forEach((v,i)=>{locals[i]=sourceStore(this,v,method.locals[i].type,types[i]);this.heap.pins.push(locals[i]);}));if(!method.isStatic&&args[0]===null)throw new ManagedFault('NullReferenceException','Cannot call an instance method on null');this.frames.push({id:++this.frameId,methodId,pc:0,base:this.stack.length,locals,point:null,...frameState()});}
+  call(methodId,args,types=[]){return callSource(this,methodId,args,types);}
   notifyWrite(write){this.writeRevision++;if(['field','array','box'].includes(write.kind))this.heap.mutationRevision++;this.onWrite?.(write);}
   get top(){return this.frames.at(-1);}
   value(ref){if(ref?.enumType)return ref.value;if(ref?.float||isNativeInteger(ref))return number(ref);if(isReference(ref)){const record=this.heap.get(ref);if(record.kind==='string')return record.data;if(record.kind==='box')return this.value(record.data[0]);}return ref;}
@@ -86,7 +87,7 @@ export class VirtualMachine {
           case Op.RETHROW:rethrow(frame);break;
           default:throw new ManagedFault('InvalidProgramException','Unknown instruction');
         }
-      }catch(error){const fault=this.makeFault(error);if(fault.name==='InstructionLimitException'){this.fault=fault;this.scheduler.cancelAll();this.state='faulted';break;}if(this.onException?.(fault)){this.pendingFault=fault;this.state='paused';}else this.handleFault(fault);}
+      }catch(error){const fault=this.makeFault(error);if(fault.fatal||fault.name==='InstructionLimitException'){this.fault=fault;this.scheduler.cancelAll();this.state='faulted';break;}if(this.onException?.(fault)){this.pendingFault=fault;this.state='paused';}else this.handleFault(fault);}
       this.scheduler.afterInstruction();
     }
     this.currentPoint=this.top?.point??null;this.elapsedMs+=performance.now()-started;return this.state;

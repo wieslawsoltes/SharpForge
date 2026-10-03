@@ -12,11 +12,30 @@ import {instantiatedMethod,bindCallArguments,resolveCallType} from './generic-ca
 import {constructDelegate,invokeDelegateOperation} from './delegate-calls.js';
 import {address,validatePointer,pointerType} from './managed-pointers.js';
 import {boxValue} from './value-types.js';
+import {pushFrame, popFrame} from './frame-stack.js';
 
-export function call(vm,token,args,extra={}) {
-  if(vm.frames.length>=vm.options.maxFrames)throw new ManagedFault('StackOverflowException','Managed call depth exceeded');
-  const method=instantiatedMethod(vm,token,extra.genericIdentity??null,extra.methodArguments??[]),values=bindCallArguments(vm,method,args);
-  vm.frames.push({id:++vm.frameId,method,args:values,locals:method.locals.map(type=>method.initLocals?storageDefault(vm,type):undefined),stack:[],pc:0,lastOffset:0,offsets:methodOffsets(method),...createExceptionState(),needsInitialization:method.name!=='.cctor',...extra});
+export function call(vm, token, args, extra = {}) {
+  if (vm.options.maxFrames !== undefined && vm.frames.length >= vm.options.maxFrames) {
+    const fault = new ManagedFault('StackOverflowException', 'Explicit managed frame limit exceeded');
+    fault.fatal = true;
+    fault.runtimeOrigin = true;
+    throw fault;
+  }
+  const method = instantiatedMethod(vm, token, extra.genericIdentity ?? null, extra.methodArguments ?? []);
+  const values = bindCallArguments(vm, method, args);
+  pushFrame(vm, {
+    id: ++vm.frameId,
+    method,
+    args: values,
+    locals: method.locals.map(type => method.initLocals ? storageDefault(vm, type) : undefined),
+    stack: [],
+    pc: 0,
+    lastOffset: 0,
+    offsets: methodOffsets(method),
+    ...createExceptionState(),
+    needsInitialization: method.name !== '.cctor',
+    ...extra
+  });
 }
 export function ensureInitialized(vm,typeToken,trigger='field',genericIdentity=null) {
   return ensureTypeInitialized(vm,typeToken,trigger,genericIdentity);
@@ -69,7 +88,7 @@ function startManagedCall(vm,descriptor,args,extra={}) {
     const caller=vm.top;
     if(args.some(value=>value?.byref&&value.frameId===caller.id))throw new ManagedFault('InvalidProgramException','Tail call would invalidate a managed reference');
     const inherited={delegateContinuation:caller.delegateContinuation,returnObject:caller.returnObject,valueConstructor:caller.valueConstructor,valueConstructorType:caller.valueConstructorType};
-    vm.frames.pop();extra={...inherited,...extra};
+    popFrame(vm);extra={...inherited,...extra};
   }
   vm.call(token,args,{...extra,genericIdentity,methodArguments:descriptor.methodArguments??[]});return SUSPENDED;
 }
