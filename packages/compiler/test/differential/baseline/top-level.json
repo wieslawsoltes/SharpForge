@@ -1,0 +1,17 @@
+{
+  "top-level/args-local-functions-and-return-value": ["diagnostics", "warnings", "bytecode", "cil"],
+  "top-level/await-and-return-value": ["diagnostics", "warnings", "bytecode", "cil"],
+  "top-level/cs0029-cs0026-return-and-this": ["diagnostics", "warnings"],
+  "top-level/cs0101-program-must-be-a-class": ["diagnostics", "warnings"],
+  "top-level/cs0136-args-is-already-a-parameter": ["diagnostics", "warnings"],
+  "top-level/cs0260-program-must-be-partial": ["diagnostics", "warnings"],
+  "top-level/cs7022-main-is-not-the-entry-point": ["diagnostics"],
+  "top-level/cs8321-a-program-of-one-unused-local-function": ["diagnostics", "warnings"],
+  "top-level/cs8801-locals-are-not-visible-in-types": ["diagnostics", "warnings"],
+  "top-level/cs8803-statement-after-a-declaration": ["diagnostics", "warnings"],
+  "top-level/cs8803-statement-after-a-type": ["diagnostics", "warnings"],
+  "top-level/cs8937-only-empty-statements": ["diagnostics", "warnings"],
+  "top-level/labels-and-goto": ["diagnostics", "warnings", "bytecode", "cil"],
+  "top-level/statements-are-members-of-partial-program": ["diagnostics", "warnings", "bytecode", "cil"],
+  "top-level/types-after-the-statements": ["diagnostics", "warnings", "bytecode", "cil"]
+}

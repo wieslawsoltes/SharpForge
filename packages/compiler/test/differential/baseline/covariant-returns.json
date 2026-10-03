@@ -1,0 +1,5 @@
+{
+  "covariant-returns/calls-have-the-return-type-of-the-override": ["diagnostics", "warnings"],
+  "covariant-returns/covariant-returns-in-csharp-8": ["diagnostics", "warnings"],
+  "covariant-returns/override-return-type-rules": ["diagnostics", "warnings"]
+}

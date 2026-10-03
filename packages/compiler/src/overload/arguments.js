@@ -25,12 +25,11 @@ export function mapArguments(parameters, args, { expanded = false } = {}) {
   if (expanded && !hasParams) return { ok: false, error: { code: 'CS1501', kind: 'notExpandable' } };
   const parameterOf = new Array(args.length).fill(-1),
     taken = new Array(parameters.length).fill(false);
-  let paramsCount = 0,
-    positional = true;
+  let paramsCount = 0;
+  const positionalAfter = i => args.slice(i + 1).some(later => (later.name ?? null) === null);
   for (let i = 0; i < args.length; i++) {
     const name = args[i].name ?? null;
     if (name === null) {
-      if (!positional) return { ok: false, error: { code: 'CS8323', kind: 'badNonTrailingName', argument: i } };
       if (expanded && i >= last) {
         parameterOf[i] = last;
         paramsCount++;
@@ -45,6 +44,8 @@ export function mapArguments(parameters, args, { expanded = false } = {}) {
     // The parameters of a partial method are named by its defining declaration (symbols/source/partial-members.js).
     const index = parameters.findIndex(p => ((p.originalDefinition ?? p).callerName ?? p.name) === name);
     if (index < 0) return { ok: false, error: { code: 'CS1739', kind: 'noSuchName', argument: i, name } };
+    // A named argument may be followed by positional ones only when it stands in its parameter's position (C# 7.2).
+    if (index !== i && positionalAfter(i)) return { ok: false, error: { code: 'CS8323', kind: 'badNonTrailingName', argument: i, name } };
     if (taken[index])
       return {
         ok: false,
@@ -56,8 +57,6 @@ export function mapArguments(parameters, args, { expanded = false } = {}) {
           parameter: parameters[index],
         },
       };
-    // A named argument out of position ends the positional part (C# 7.2 allows named arguments in position to be followed by positional ones).
-    if (index !== i) positional = false;
     parameterOf[i] = index;
     taken[index] = true;
     if (expanded && index === last) paramsCount++;
