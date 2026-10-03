@@ -52,6 +52,7 @@ Their synthetic `Get`, `Set`, `Address` and `.ctor` descriptors expose return an
 parameter types plus the declaring array. `resolveArrayMethod` matches an exact
 signature; `types.resolveArrayMember(module, memberRefToken)` decodes array
 TypeSpec/MemberRef metadata, including multidimensional lower-bound constructors.
+Jagged vectors expose length constructors for each consecutive vector level.
 
 `pointer(element)`, `byRef(element)` and `functionPointer(signature)` preserve
 canonical structural identity. Function pointer signatures use TypeDesc return
@@ -73,6 +74,17 @@ array methods, allocate instances, perform assignability or generate layout.
 The constructed-type oracle compares native .NET array interfaces and synthetic
 method/constructor signatures. Regenerate with `node
 packages/clr/tools/capture-constructed-types.mjs tests/fixtures/clr-constructed-types`.
+The .NET 10.0.5 / SDK 10.0.201 capture covers five array shapes and an actual
+C# multidimensional-array constructor MemberRef. Thirteen focused type tests
+passed on Node 24.21.0. This qualifies the JavaScript metadata service; array
+execution on source VM, direct CIL and Rust/Wasm is not part of this batch.
+
+`node packages/clr/tools/benchmark-constructed-types.mjs` measured cold vector
+descriptor construction at median 12.083 µs / p95 33.667 µs, and cached lookup at
+median 0.0926 µs / p95 0.1092 µs on Apple M3 Pro, darwin-arm64, Node 24.21.0.
+The machine is shared, allocations were not measured, and no equivalent previous
+implementation exists. Construction materializes its interface and method
+signatures once; cached identities avoid rebuilding them.
 
 `AssemblyLoadSession` owns a Default context and a registry of custom contexts.
 No process-global assembly registry is used. `createContext` accepts a name,

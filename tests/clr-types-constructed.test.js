@@ -21,6 +21,9 @@ test('CLR constructed elements preserve rank, vector identity and exact accessor
   assert.equal(md.fullName, 'System.Int32[,]');
   assert.equal(md.methods.filter(method => method.name === '.ctor').length, 2);
   assert.ok(md.methods.every(method => method.declaringType === md));
+  const constructorArities = type => type.methods.filter(method => method.name === '.ctor').map(method => method.parameters.length);
+  assert.deepEqual(constructorArities(types.szArray(types.szArray(vector))), [1, 2, 3]);
+  assert.deepEqual(constructorArities(types.szArray(md)), [1]);
   assert.equal(resolveArrayMethod(md, 'Get', integer, [integer, integer]).returnType, integer);
   assert.throws(() => resolveArrayMethod(md, 'Get', integer, [integer]), /does not exist/);
   assert.equal(types.pointer(integer), types.pointer(integer));

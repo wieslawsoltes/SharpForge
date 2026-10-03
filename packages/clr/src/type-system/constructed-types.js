@@ -77,6 +77,13 @@ export class ConstructedTypes {
     const methods = [method('Get', element, indices), method('Set', voidType, [...indices, element]),
       method('Address', this.#loader.byRef(element), indices), method('.ctor', voidType, indices)];
     if (!szarray) methods.push(method('.ctor', voidType, Array(rank * 2).fill(integer)));
+    else {
+      let arity = 1;
+      // CoreCLR exposes one length constructor for each consecutive vector level.
+      for (let nested = element; nested.kind === TypeKind.SZArray; nested = nested.elementType) {
+        methods.push(method('.ctor', voidType, Array(++arity).fill(integer)));
+      }
+    }
     return Object.freeze(methods);
   }
 
