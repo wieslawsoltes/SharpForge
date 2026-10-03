@@ -41,3 +41,20 @@ const legacy = parse('class C { int x; }');      // the plain AST consumed by th
 
 Reference data under `test/` is dumped from Roslyn with `node packages/syntax/tools/update-reference.js` (requires the .NET SDK);
 the tests compare node kinds, spans, trivia, token values and error codes against those dumps.
+
+## Incremental parsing, documentation comments and budgets
+
+- `tree.withChangedText(changes)` is incremental: `incremental/relex.js` rescans only a window of tokens around the edit
+  (resuming from recorded preprocessor state) and `incremental/blender.js` reuses old members and statements that lie
+  outside it, carry no diagnostics and were parsed in the same context. `tree.reusedNodeCount` reports the reuse;
+  `relex(oldLexed, source, change)` is the token-level API. `{ incremental: false }` forces full parses.
+- Documentation comment trivia have a `structure`: an XML tree with cref and name syntax (`lexer/doc-comments.js`).
+  `documentationMode: 'diagnose'` reports malformed XML (CS1570) and crefs (CS1584) as warnings.
+- `parser/budget.js` is the one recursion budget (200 levels, SF1099 - the equivalent of CS8078) for every recursive
+  parser entry; `cancellation.js` provides `CancellationToken`, polled every 256 tokens by the scanner and the parser.
+- `languageVersion` also steers parsing where a contextual keyword changed meaning by version (`record` from C# 9,
+  `extension` from C# 14). C# 15 preview grammar (unions, closed classes and enums, `safe`, `unsafe(...)`, extension
+  indexers) is provisional: it is gated behind `preview`, pinned to csharplang proposal revisions in
+  `preview-revisions.js`, and unsupported forms report SF1098.
+- `bench/incremental.bench.js` and `bench/parse.bench.js` measure keystroke reparse cost, throughput and heap against
+  the committed baselines (`--check` fails on a regression).
