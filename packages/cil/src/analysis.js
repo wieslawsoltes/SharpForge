@@ -1,5 +1,5 @@
 import {enumTypes,frameworkAssignable} from '@sharpforge/framework';
-import { Op, BinaryName, Builtins, verifyImage } from '@sharpforge/bytecode';
+import { EnumConvertBase, Op, BinaryName, Builtins, verifyImage } from '@sharpforge/bytecode';
 import { CilError } from './binary.js';
 export function constantType(value,flags=0) { return value===null?'null':typeof value==='boolean'?'bool':typeof value==='string'?'string':flags===1||!Number.isInteger(value)?'double':'int'; }
 export function defaultValue(type) { return type==='bool'?false:type==='int'||type==='double'?0:null; }
@@ -16,7 +16,7 @@ export function analyzeMethod(image,method) {
       case Op.STFLD:{pop();const receiver=pop(),field=typeMap.get(receiver)?.fields[a];if(!field)throw new CilError('Unknown store field');stack.push(field.type);break;}
       case Op.DUP:stack.push(stack.at(-1));break;case Op.POP:pop();break;
       case Op.BINARY:{const right=pop(),left=pop(),operator=BinaryName[a];stack.push(b===2?'string':['==','!=','<','<=','>','>='].includes(operator)?'bool':b===3?'bool':(b===1||b===5)?'int':'double');break;}
-      case Op.CONVERT:pop();stack.push(a===0?'int':'double');break;
+      case Op.CONVERT:pop();stack.push(a>=EnumConvertBase?enumTypes[a-EnumConvertBase]:a===0?'int':'double');break;
       case Op.UNARY:{const old=pop();stack.push(a===2?'bool':a===3?'int':(b===1||b===5)?'int':old==='int'?'int':'double');break;}
       case Op.JFALSE:case Op.JTRUE:pop();break;
       case Op.CALL:for(let i=0;i<b;i++)pop();stack.push(image.methods[a].returnType==='void'?'null':image.methods[a].returnType);break;

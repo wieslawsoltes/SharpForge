@@ -101,7 +101,11 @@ export const CallTranslation = Base =>
     iteratorCall(info, method, receiver, syntax) {
       switch (method.name) {
         case 'GetEnumerator':
+        case 'GetAsyncEnumerator':
           return n.call(info.getEnumerator, null, [receiver]);
+        case 'MoveNextAsync':
+        case 'DisposeAsync':
+          return this.iteratorTask(info, method.name, receiver);
         case 'MoveNext':
           return n.call(info.moveNext, null, [receiver]);
         case 'Dispose':

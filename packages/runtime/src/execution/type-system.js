@@ -1,6 +1,8 @@
 import {exceptionMatches} from './exception-types.js';
-import {CilError,systemType,CilDispatchTable} from '@sharpforge/cil';
+import {CilError,CilDispatchTable,decodeCoded,resolveExecutionField} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
+import {MethodTableRegistry} from './method-table.js';
+import {castCacheFor} from './casting.js';
 
 /** Assembly-derived metadata indexes. They are rebuilt on load, never snapshotted. */
 export class CilTypeSystem {
@@ -10,47 +12,56 @@ export class CilTypeSystem {
     this.types=new Map(vm.inspector.types.map(type=>[type.token,type]));
     this.names=new Map(vm.inspector.types.map(type=>[type.name,type.token]));
     this.layouts=new Map();
-    this.assignable=new Map();
     this.initializers=new Map();
     this.dispatch=new CilDispatchTable(vm.inspector);
+    const metadata=vm.inspector.metadata;
+    this.methodTables=new MethodTableRegistry({tokenResolver:token=>metadata.typeName(token)});
     for(const type of this.types.values()) {
       this.initializers.set(type.token,type.methods.find(method=>method.name==='.cctor')??null);
-      const targets=new Set([systemType(type.name)]);
-      let current=type,depth=0;
-      while(current&&depth++<64) {
-        for(const token of current.interfaces)targets.add(systemType(vm.inspector.metadata.typeName(token)));
-        if(!current.baseToken)break;
-        targets.add(systemType(vm.inspector.metadata.typeName(current.baseToken)));
-        current=this.types.get(current.baseToken);
-      }
-      this.assignable.set(type.name,targets);
+      const base=type.baseToken?metadata.typeName(type.baseToken):null;
+      const parameters=(metadata.rows?.[42]??[]).filter(row=>decodeCoded('TypeOrMethodDef',row[2])===type.token).sort((a,b)=>a[0]-b[0]);
+      const fields=type.fields.filter(field=>!field.isStatic).map(field=>{
+        const storageType=vm.inspector.signature(field.token).type.replace(/\s+mod(?:req|opt)\([^)]*\)/g,'').replace(/\s+pinned$/,'');
+        return {...field,type:storageType,storageType};
+      });
+      const underlying=base==='System.Enum'?fields.find(field=>field.name==='value__')?.type??'int':null;
+      const dispatch=this.dispatch.table(type.token);
+      this.methodTables.define({name:type.name,token:type.token,base,interfaces:type.interfaces.map(token=>metadata.typeName(token)),fields,
+        flags:{interface:!!(type.flags&0x20),abstract:!!(type.flags&0x80),sealed:!!(type.flags&0x100),enum:base==='System.Enum',valueType:base==='System.ValueType'||base==='System.Enum'},
+        enumUnderlyingType:underlying,variance:parameters.map(row=>(row[1]&3)===1?1:(row[1]&3)===2?-1:0),
+        vtable:[...[...dispatch.slots.keys()].map(slot=>[slot,this.dispatch.resolveSlot(dispatch,slot)]),...[...dispatch.declarations].map(([declaration,slot])=>[declaration,this.dispatch.resolveSlot(dispatch,slot)])]});
     }
+    // Complete the metadata graph before execution so casts never scan name lists.
+    for(const type of this.types.values())this.methodTables.get(type.token);
+    vm.heap.methodTables=this.methodTables;
+    for(const record of vm.heap.records)if(record)record.methodTable=this.methodTables.get(record.methodTable?.name??record.type);
+    this.castCache=castCacheFor(this.methodTables);
   }
+  table(type){return this.methodTables.get(type);}
   layout(typeToken,depth=0) {
     if(this.layouts.has(typeToken))return this.layouts.get(typeToken);
     if(depth>64)throw new CilError('Inheritance depth exceeded');
-    const type=this.types.get(typeToken);
+    const methodTable=this.table(typeToken),type=this.types.get(methodTable.definitionToken);
     if(!type)throw new CilError('External type allocation is not implemented');
     if(type.flags&0x20)throw new CilError('Cannot instantiate an interface');
-    const base=type.baseToken>>>24===2?this.layout(type.baseToken,depth+1):{fields:[]};
-    const fields=[...base.fields,...type.fields.filter(field=>!field.isStatic).map(field=>({...field,type:this.vm.inspector.signature(field.token).type}))];
-    const layout={name:type.name,token:typeToken,fields,index:new Map(fields.map((field,index)=>[field.token,index]))};
+    const fields=methodTable.fields.map(field=>({...field,type:field.storageType??field.type.name}));
+    const layout={name:methodTable.name,token:methodTable.token,methodTable,fields,index:new Map(fields.map((field,index)=>[field.token,index]))};
     this.layouts.set(typeToken,layout);
     return layout;
   }
-  typeOf(ref) {return ref===null?null:this.names.get(this.vm.heap.get(ref).type)??null;}
+  typeOf(ref) {if(ref===null)return null;const token=this.vm.heap.get(ref).methodTable.definitionToken;return this.types.has(token)?token:null;}
   matches(ref,typeName) {
     if(ref===null)return false;
-    const record=this.vm.heap.get(ref),target=systemType(typeName);
-    if(target==='System.Object')return true;
-    if(record.kind==='exception')return exceptionMatches(record.type,target);
-    return systemType(record.type)===target||!!this.assignable.get(record.type)?.has(target);
+    const record=this.vm.heap.get(ref),target=this.table(typeName);
+    if(record.kind==='exception'&&exceptionMatches(record.methodTable.name,target.name))return true;
+    return this.castCache.isAssignableFrom(target,record.methodTable);
   }
   field(token,ref) {
-    const field=this.vm.inspector.resolveToken(token),resolved=field.resolvedToken??token;
+    const record=ref===undefined?null:this.vm.heap.get(ref),arguments_=record?.methodTable.typeArguments.map(type=>type.name)??[];
+    const field=resolveExecutionField(this.vm.inspector,token,arguments_),resolved=field.resolvedToken;
     if(field.kind!=='field')throw new CilError('Invalid field token');
     if(ref===undefined)return {field,token:resolved};
-    const record=this.vm.heap.get(ref),layout=this.layout(this.typeOf(ref)),index=layout.index.get(resolved);
+    const layout=this.layout(record.methodTable),index=layout.index.get(resolved);
     if(index===undefined)throw new ManagedFault('InvalidProgramException','Field is not part of this object');
     return {field,token:resolved,record,index};
   }
