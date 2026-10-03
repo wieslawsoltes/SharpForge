@@ -80,6 +80,7 @@ export class AnalysisCore {
       typeBinder: this.typeBinder,
       name: options.name,
       report: (uri, node, code, args) => this.report(uri, node, code, args),
+      useFeature: (uri, node, feature) => this.gate(uri, node, feature),
       resolveBases: type =>
         resolveBases(type, {
           typeBinder: this.typeBinder,
