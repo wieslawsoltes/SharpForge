@@ -8,7 +8,7 @@ import {inferSourceStyle} from './source-text.js';
 import {designSourceDiagnostics, failSource} from './source-errors.js';
 import {sourceRootBaseEvidence} from './source-preview.js';
 
-/** Analyzes all files together so fields and handlers resolve across partial class declarations. */
+/** Analyze all files together; reuseAnalysis may share immutable compiler data for another owner in the exact same source context. */
 export function analyzeDesignSources(sources, options = {}) {
   const context = prepareDesignSources(sources, options);
   const reader = new SourceConstructionReader(context, options).read();
@@ -57,7 +57,7 @@ export function analyzeDesignSources(sources, options = {}) {
     style: inferSourceStyle(parsed.source.text, method), ownership, identityRemap: remap, sources: context.sources,
     compilerDiagnostics: context.result.diagnostics ?? [], compilationSucceeded: context.result.success,
     structuralEditable: !reader.unmanaged.length && !reader.warnings.some(warning => ['SFSYNC_DYNAMIC', 'SFSYNC_EVENT'].includes(warning.code))
-      && !detached.length, options: {...options, previous: undefined, semanticContext: undefined, signal: undefined}};
+      && !detached.length, options: {...options, previous: undefined, reuseAnalysis: undefined, semanticContext: undefined, signal: undefined}};
   Object.defineProperty(analysis, 'context', {value: context, enumerable: false});
   return analysis;
 }
