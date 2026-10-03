@@ -164,8 +164,7 @@ export class DesignerSurfaceGestures {
     this.controller.trackPointer(event, pointer => {
       const point = this.controller.geometry.stagePoint({x: pointer.clientX, y: pointer.clientY});
       rectangle = boundsOfPoints([start, point]);
-      const stageParent = {id: this.view.document.value.root};
-      this.controller.drawing.show(stageParent, rectangle);
+      this.controller.drawing.show(null, rectangle);
     }, () => {
       this.controller.drawing.clear();
       if (!rectangle) return;

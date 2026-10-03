@@ -65,7 +65,7 @@ export async function runDesignerLayoutReferences(root, {tolerance = .5} = {}) {
         runtimeHost.flush();
         geometry = new DesignerSurfaceGeometry({stage: designerRoot, scroller: designerRoot,
           document: new DesignDocument(document), host: designerHost});
-        geometry.refresh();
+        geometry.refresh({all: true});
         const runtimeNames = new Map([...runtimeHost.nodes.values()].filter(item => item.properties.Name)
           .map(item => [item.properties.Name, runtimeHost.elements.get(item.id)]));
         const origin = runtimeRoot.getBoundingClientRect();

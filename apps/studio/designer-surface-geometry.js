@@ -31,15 +31,26 @@ export class DesignerSurfaceGeometry {
     this.valid = false;
     this.document = null;
     this.revision = -1;
+    this.pending = null;
+    this.frame = null;
+    this.ensureEntry = null;
   }
 
   invalidate() {
     this.valid = false;
+    if (this.frame !== null) this.view.stage.ownerDocument.defaultView.cancelAnimationFrame(this.frame);
+    this.frame = null;
+    this.pending = null;
   }
 
-  refresh() {
+  refresh({all = false} = {}) {
     const view = this.view;
-    if (this.valid && this.document === view.document && this.revision === view.document.revision) return;
+    if (this.valid && this.document === view.document && this.revision === view.document.revision) {
+      for (const id of view.document.selection.slice(0, 32)) this.ensureEntry(id);
+      if (all && this.pending) this.measurePending(Infinity);
+      return;
+    }
+    this.invalidate();
     this.entries.clear();
     this.index.clear();
     const window = view.stage.ownerDocument.defaultView;
@@ -73,32 +84,63 @@ export class DesignerSurfaceGeometry {
     };
     this.stage = measure(view.stage);
     this.stageInverse = inverseMatrix(this.stage.matrix);
-    for (const node of view.document.value.nodes) {
+    const nodes = new Map(view.document.value.nodes.map(node => [node.id, node]));
+    this.ensureEntry = id => {
+      if (this.entries.has(id)) return this.entries.get(id);
+      const node = nodes.get(id);
+      if (!node) return null;
       const element = view.host.elements.get(node.id);
-      if (!element || !element.isConnected) continue;
+      if (!element || !element.isConnected) return null;
+      const parentId = view.document.parent(node.id)?.id;
+      const parent = parentId ? this.ensureEntry(parentId) : null;
       const measured = measure(element);
       const stageMatrix = multiplyMatrix(this.stageInverse, measured.matrix);
       const bounds = transformRectangle({Width: measured.width, Height: measured.height}, stageMatrix);
-      this.entries.set(node.id, {id: node.id, node, element, ...measured, stageMatrix, bounds});
+      const entry = {id: node.id, node, element, ...measured, stageMatrix, bounds,
+        parentMatrix: parent?.matrix ?? this.stage.matrix};
       this.index.set(node.id, bounds);
-    }
-    for (const entry of this.entries.values()) {
-      const parent = this.entries.get(view.document.parent(entry.id)?.id);
-      entry.parentMatrix = parent?.matrix ?? this.stage.matrix;
       const position = transformPoint(inverseMatrix(entry.parentMatrix), transformPoint(entry.matrix, {x: 0, y: 0}));
       const parentIsCanvas = parent?.node.type.endsWith('.Canvas');
       entry.rectangle = designRectangle({Left: parentIsCanvas ? entry.node.properties.Left ?? position.x : position.x,
         Top: parentIsCanvas ? entry.node.properties.Top ?? position.y : position.y,
         Width: entry.width, Height: entry.height});
-    }
+      this.entries.set(id, entry);
+      return entry;
+    };
     this.document = view.document;
     this.revision = view.document.revision;
     this.valid = true;
+    this.pending = {nodes: [...nodes.keys()], offset: 0};
+    if (all || nodes.size <= 128) this.measurePending(Infinity);
+    else {
+      for (const id of view.document.selection.slice(0, 32)) this.ensureEntry(id);
+      this.scheduleMeasurements();
+    }
+  }
+
+  measurePending(budgetMs) {
+    const clock = this.view.stage.ownerDocument.defaultView.performance;
+    const start = clock.now();
+    while (this.pending && this.pending.offset < this.pending.nodes.length) {
+      this.ensureEntry(this.pending.nodes[this.pending.offset++]);
+      if (clock.now() - start >= budgetMs) break;
+    }
+    if (this.pending?.offset === this.pending?.nodes.length) this.pending = null;
+  }
+
+  scheduleMeasurements() {
+    if (!this.pending || this.frame !== null) return;
+    this.frame = this.view.stage.ownerDocument.defaultView.requestAnimationFrame(() => {
+      this.frame = null;
+      this.view.safe(() => this.measurePending(4));
+      this.view.surface?.drawAdorners();
+      this.scheduleMeasurements();
+    });
   }
 
   get(id) {
     this.refresh();
-    return this.entries.get(id);
+    return this.entries.get(id) ?? this.ensureEntry(id);
   }
 
   rect(id) {
@@ -132,8 +174,9 @@ export class DesignerSurfaceGeometry {
   }
 
   dispose() {
+    this.invalidate();
     this.entries.clear();
     this.index.clear();
-    this.valid = false;
+    this.ensureEntry = null;
   }
 }

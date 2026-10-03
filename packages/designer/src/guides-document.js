@@ -5,7 +5,9 @@ export const defaultGuideSettings = Object.freeze({version: 1, gridSize: 8, grid
 
 /** Guide settings are document metadata; they never become runtime properties. */
 export function validateGuideSettings(value = {}) {
-  const settings = {...defaultGuideSettings, ...structuredClone(value)};
+  geometryInvariant(value && typeof value === 'object' && !Array.isArray(value),
+    'SFD_GUIDE_SETTINGS', 'Guide settings must be an object.');
+  const settings = structuredClone({...defaultGuideSettings, ...value});
   geometryInvariant(settings.version === 1, 'SFD_GUIDE_VERSION', 'Unsupported guide settings version.');
   geometryInvariant(Number.isFinite(settings.gridSize) && settings.gridSize >= .25 && settings.gridSize <= 1024,
     'SFD_GUIDE_GRID', 'Grid size must be between 0.25 and 1024 design pixels.');

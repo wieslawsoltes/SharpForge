@@ -16,6 +16,10 @@ export class DesignerSurfaceCommands {
       register(action, action === 'copy' ? () => selected().length > 0 : childSelection, () => this.view.action(action));
     }
     register('paste', () => {
+      if (this.view.toolbox?.insertionParent) {
+        try { return Boolean(this.view.clipboard && this.view.toolbox.insertionParent()); }
+        catch { return false; }
+      }
       const node = document().node();
       const parent = childSlot(node?.type) ? node : document().parent(node?.id);
       const slot = parent ? childSlot(parent.type) : null;

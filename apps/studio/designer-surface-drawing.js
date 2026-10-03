@@ -27,11 +27,21 @@ export class DesignerDrawCreate {
       if (slot && (slot.many || !node.children.length) && !(this.view.outline?.isLocked(node.id) ?? false)) return node;
       node = this.view.document.parent(node.id);
     }
+    if (this.view.toolbox?.insertionParent) return this.view.toolbox.insertionParent();
     throw new Error('Select an unlocked container with an available child slot.');
   }
 
+  create(type, options) {
+    if (this.view.toolbox?.createDrawn) {
+      const bounds = options.bounds;
+      return this.view.toolbox.createDrawn(type, {...options, index: options.index ?? undefined,
+        bounds: {x: bounds.Left, y: bounds.Top, width: bounds.Width, height: bounds.Height}});
+    }
+    return createDrawnControl(this.view.document, {type, ...options});
+  }
+
   show(parent, bounds) {
-    const entry = this.controller.geometry.get(parent.id);
+    const entry = parent ? this.controller.geometry.get(parent.id) : {stageMatrix: [1, 0, 0, 1, 0, 0]};
     if (!this.ghost) {
       this.ghost = this.view.overlay.ownerDocument.createElement('div');
       this.ghost.className = 'design-marquee';
@@ -79,7 +89,7 @@ export class DesignerDrawCreate {
       this.clear();
       this.choose(null);
       geometryInvariant(revision === this.view.document.revision, 'SFD_CREATE_STALE', 'The document changed while drawing.');
-      if (bounds?.Width > 0 && bounds?.Height > 0) createDrawnControl(this.view.document, {type, parentId: parent.id, bounds});
+      if (bounds?.Width > 0 && bounds?.Height > 0) this.create(type, {parentId: parent.id, bounds});
     }, () => { this.clear(); this.choose(null); });
     return true;
   }
@@ -92,18 +102,10 @@ export class DesignerDrawCreate {
     const toolbox = this.view.panel('designer-toolbox');
     listen(toolbox, 'click', event => {
       const button = event.target.closest('[data-control]');
-      if (!button || event.detail > 1) return;
+      if (!button || event.detail > 1 || !event.altKey) return;
       event.preventDefault();
       event.stopPropagation();
       this.choose(button.dataset.control);
-    }, true);
-    listen(toolbox, 'dblclick', event => {
-      const button = event.target.closest('[data-control]');
-      if (!button) return;
-      event.preventDefault();
-      event.stopPropagation();
-      this.choose(null);
-      this.view.safe(() => this.view.insert(button.dataset.control));
     }, true);
     listen(toolbox, 'dragstart', event => {
       const button = event.target.closest('[data-control]');
@@ -143,7 +145,7 @@ export class DesignerDrawCreate {
         const result = this.controller.snaplines(parent.id, []).snap({Left: point.x, Top: point.y, Width: 120, Height: 36},
           {disabled: event.altKey});
         this.clear();
-        createDrawnControl(this.view.document, {type, parentId: parent.id, bounds: result.bounds, index: insertion?.index ?? null});
+        this.create(type, {parentId: parent.id, bounds: result.bounds, index: insertion?.index ?? null});
       });
     });
     listen(this.view.stage.ownerDocument, 'dragend', () => this.clear());

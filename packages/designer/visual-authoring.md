@@ -6,7 +6,7 @@ The A18 surface consumes `@sharpforge/designer` and the retained `WinUIHost`. Th
 
 | Capability | Public API or controller | Contract |
 |---|---|---|
-| Nested transforms | `coordinateStack`, `localPointerDelta`, `DesignerSurfaceGeometry` | Six-coefficient affine matrices compose layout, scroll, scale, rotation, origin and viewport zoom. Singular and perspective transforms produce diagnostics. |
+| Nested transforms | `coordinateStack`, `localPointerDelta`, `DesignerSurfaceGeometry` | Six-coefficient affine matrices compose layout, scroll, scale, rotation, origin and viewport zoom. Singular and perspective transforms produce diagnostics. Large trees measure selected controls first, then fill the cache in 4ms background slices. |
 | Smart guides | `DesignSnaplines` | Edge, center, baseline, parent, user-guide and neighboring equal-spacing targets; default tolerance is six design pixels; Alt disables all snapping. |
 | Spatial queries | `DesignSpatialIndex` | Bounded uniform cells; oversized entries and queries use a bounded linear fallback. |
 | Outline windows | `DesignOutlineIndex` | Flatten once, then obtain viewport rows with fixed overscan. |
@@ -20,6 +20,7 @@ The A18 surface consumes `@sharpforge/designer` and the retained `WinUIHost`. Th
 | Preview environment | `DesignPreviewEnvironment` | Session-only resolution, scale, light/dark palette, high-contrast palette and RTL. Source serialization and history remain untouched. |
 | Adaptive authoring | `setResponsiveState`, `applyResponsivePreview`, `generateResponsiveMethods` | Up to 64 bounded width ranges and normalized property overrides. The highest matching minimum width wins. |
 | Inline text | `DesignerInlineText` | F2/double-click edits Text or scalar Content with rendered font properties; Enter commits once, Escape cancels. |
+| Draw tool | `DesignerDrawCreate` | Alt+click a Toolbox item to select its drawing tool. A normal click inserts immediately. Dragging from the Toolbox previews insertion before committing. |
 | Surface navigation | `anchoredDesignZoom`, `fitDesignBounds`, `DesignerSurfaceZoom` | 10–800% zoom, pointer anchor, fit with 10% padding, Ctrl+0, middle-button or Space-drag pan. |
 | Context commands | `DesignerSurfaceCommands` | One registry supplies menu and keyboard enablement, including order, align, layout, resources, semantic source navigation and clipboard commands. |
 
@@ -95,3 +96,9 @@ npm run check:structure
 The example creates a two-state Grid design with persisted guides, then reports cold index construction and warm median/p95/p99 geometry latency for 5,000 nodes. Heap delta is reported as retained/GC-sensitive memory, not an allocation-count claim.
 
 Browser qualification uses `runDesignerLayoutReferences(root)` from `apps/studio/designer-layout-reference.js`. It compiles Canvas, Grid, StackPanel, ScrollViewer and Viewbox scenes, executes source VM and direct CIL independently, renders their runtime scenes with `WinUIHost`, and compares against designer geometry with a 0.5px tolerance. A Node scene execution test is not browser layout qualification. Native Windows/macOS/Linux rendering, WebGPU and Canvas2D must be recorded separately from DOM results.
+
+## Recorded local evidence
+
+On Linux x64, AMD EPYC 9V74, Node v24.19.0, the 5,000-node/200-sample geometry benchmark measured 31.25ms cold construction, 0.050ms warm median, 0.109ms p95 and 0.715ms p99, with a 4,047,928-byte retained/GC-sensitive heap delta. This is JavaScript geometry and spatial-query timing, not an end-to-end browser frame budget or a native rendering result. Duplicate target compaction bounds repeated aligned snap targets.
+
+The browser build completed. A local Playwright browser run was attempted, but the Chromium executable was absent; the executable reference harness remains available for the integration environment. The full repository check currently needs A18 test-manifest registration by the shared-file owner. The repository structure report contains inherited warnings; no new visual-owned source file exceeds the declared source limits.
