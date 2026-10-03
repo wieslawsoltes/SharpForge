@@ -41,7 +41,7 @@ export function runtimeTypeName(input) {
   const stem=name.replace(/`\d+$/,'');
   if(/[<>\[\]]/.test(name.replace(/<[^<>]*>(?=[A-Za-z0-9_])/g,'')))throw new TypeError('Unbalanced runtime type name');
   if(genericNames.has(stem))return genericPrefix+name;
-  if(/^(Nullable|Action|Func|IComparable|IEquatable)`\d+$/.test(name))return 'System.'+name;
+  if(/^(Nullable|Span|ReadOnlySpan|Action|Func|IComparable|IEquatable)`\d+$/.test(name))return 'System.'+name;
   return aliases[name]??exceptionTypeName(canonicalType(name));
 }
 
@@ -69,6 +69,7 @@ function builtin(name) {
   if(name==='System.String')return {base:'System.Object',instanceSize:24,flags:{sealed:true},interfaces:['System.IComparable','System.ICloneable','System.IConvertible','System.IComparable`1<System.String>','System.IEquatable`1<System.String>','System.Collections.IEnumerable',genericPrefix+'IEnumerable`1<System.Char>']};
   const exceptionBase=exceptionBaseType(name);
   if(exceptionBase)return {base:exceptionBase,flags:{exception:true}};
+  if(['System.Span`1','System.ReadOnlySpan`1'].includes(name))return {base:'System.ValueType',flags:{valueType:true,refStruct:true,sealed:true},variance:[0]};
   if(name==='System.Nullable`1')return {base:'System.ValueType',flags:{valueType:true,nullable:true,sealed:true},variance:[0]};
   if(/^System\.(Action|Func)`\d+$/.test(name)) {
     const arity=Number(name.split('`')[1]);return {base:'System.MulticastDelegate',flags:{delegate:true,sealed:true},variance:Array.from({length:arity},(_,i)=>name.startsWith('System.Func')&&i===arity-1?1:-1)};
@@ -172,7 +173,7 @@ export class MethodTableRegistry {
       for(const type of table.interfaces){table.interfaceMap.set(type,type.vtable??new Map());for(const [parent,slots] of type.interfaceMap??[])table.interfaceMap.set(parent,slots);}
       for(const [type,slots] of table.interfaceMap)table.interfaceMap.set(type,new Map([...slots].map(([declaration,body])=>[declaration,table.vtable.get(declaration)??body])));
       table.declaredFields=Object.freeze((descriptor.fields??[]).map(field=>Object.freeze({...field,type:this.get(field.type)})));
-      table.fields=Object.freeze([...(table.base?.fields??[]),...table.declaredFields]);
+      table.fields=Object.freeze(table.nullableType?[{name:'hasValue',type:this.get('bool')},{name:'value',type:table.nullableType}]:[...(table.base?.fields??[]),...table.declaredFields]);
       const referenceSlot=type=>!type.flags.valueType||type.gcBitmap?.some(Boolean)||false;
       table.gcBitmap=Object.freeze(table.flags.array?[referenceSlot(table.elementType)]:table.fields.map(field=>referenceSlot(field.type)));
       table.instanceSize=descriptor.instanceSize??32+table.fields.length*8;

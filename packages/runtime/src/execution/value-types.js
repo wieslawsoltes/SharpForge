@@ -26,6 +26,8 @@ export function createValue(vm,type,fields=null,depth=0) {
 }
 export function valueDefault(vm,type,depth=0) {
   checkDepth(depth);const table=tableFor(vm,type);
+  if(table.flags.refStruct)return Object.freeze({span:true,vmOwner:vm.snapshotOwner,elementType:table.typeArguments[0],pointer:null,length:0,readonly:table.name.startsWith('System.ReadOnlySpan')});
+  if(table.flags.nullable)return nullableValue(vm,table);
   if(isAggregateType(table))return createValue(vm,table,null,depth+1);
   const info=table.flags.enum?enumInfo(vm,table.name):null;
   if(info)return vm.image&&!vm.inspector?enumValue(vm,table.name,0):enumUnderlying(0,info.underlyingType);
@@ -36,6 +38,13 @@ export function valueDefault(vm,type,depth=0) {
 export function copyValue(vm,value,type=null,numericContext,depth=0) {
   checkDepth(depth);
   const table=type===null?(isValueTypeValue(value)?tableFor(vm,value.valueType):null):tableFor(vm,type);
+  if(value?.span) {
+    if(!table?.flags.refStruct||table.typeArguments[0]!==value.elementType||value.vmOwner!==vm.snapshotOwner)throw new ManagedFault('InvalidCastException','Span type mismatch');
+    return value;
+  }
+  if(value?.nullableType&&table!==value.nullableType)throw new ManagedFault('InvalidCastException','Nullable type identity mismatch');
+  if(table?.flags.nullable)return nullableValue(vm,table,value?.nullableType?value.value:value,value?.nullableType?value.hasValue:value!==null);
+  if(value?.nullableType)throw new ManagedFault('InvalidCastException','Nullable type identity mismatch');
   if(value?.byref)throw new ManagedFault('InvalidProgramException','Managed pointers cannot be stored in value fields or boxes');
   if(isValueTypeValue(value)) {
     let actual;try{actual=tableFor(vm,value.valueType);}catch{throw new ManagedFault('InvalidProgramException','Value belongs to another VM');}
@@ -71,16 +80,36 @@ export function replaceValueField(vm,value,index,replacement) {
 }
 export function boxValue(vm,value,type) {
   const table=tableFor(vm,type);
+  if(table.flags.refStruct)throw new ManagedFault('InvalidProgramException','Ref structs cannot be boxed');
+  if(table.flags.nullable) {
+    const nullable=copyValue(vm,value,table);
+    return nullable.hasValue?boxValue(vm,nullable.value,table.nullableType):null;
+  }
   if(!table.flags.valueType) {
     if(value!==null&&!isReference(value))throw new ManagedFault('InvalidCastException','Reference boxing requires a managed reference');
     if(value!==null)vm.heap.get(value);return value;
   }
   return vm.heap.withRoots([value],()=>{const copied=copyValue(vm,value,table);return vm.heap.allocate('box',table,[copied],[copied]);});
 }
+export function unboxCompatible(boxed, requested) {
+  if(boxed===requested)return true;
+  return boxed.flags.enum&&boxed.enumUnderlyingType===requested || requested.flags.enum&&requested.enumUnderlyingType===boxed;
+}
 export function unboxValue(vm,reference,type) {
-  const table=tableFor(vm,type),record=vm.heap.get(reference);
-  if(record.kind!=='box'||record.methodTable!==table)throw new ManagedFault('InvalidCastException','Boxed type mismatch');
+  const table=tableFor(vm,type);
+  if(table.flags.nullable) {
+    if(reference===null)return nullableValue(vm,table);
+    return nullableValue(vm,table,unboxValue(vm,reference,table.nullableType),true);
+  }
+  const record=vm.heap.get(reference);
+  if(record.kind!=='box'||!unboxCompatible(record.methodTable,table))throw new ManagedFault('InvalidCastException','Boxed type mismatch');
   return copyValue(vm,record.data[0],table);
+}
+export function nullableValue(vm,type,value=null,hasValue=value!==null) {
+  const table=tableFor(vm,type);
+  if(!table.nullableType)throw new ManagedFault('InvalidProgramException','Closed Nullable<T> type required');
+  if(value?.nullableType&&value.nullableType!==table)throw new ManagedFault('InvalidCastException','Nullable type identity mismatch');
+  return Object.freeze({nullableType:table,hasValue:!!hasValue,value:hasValue?copyValue(vm,value,table.nullableType):null});
 }
 
 /** Source IR can opt into value storage before struct syntax is implemented. */
