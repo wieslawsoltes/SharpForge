@@ -47,7 +47,7 @@ test('A03 PE layout rejects invalid sections, directories and alignment combinat
 test('A03 writer rejects missing sections and non-token entry points explicitly', () => {
   const { data, metadata } = section();
   assert.throws(() => writePortableExecutable(null), /section count/);
-  const sections = [{ name: '.text', data }, { name: '.rsrc', data }];
+  const sections = [{ name: '.text', data }, { name: '.rsrc', data }, { name: '.reloc', data }, { name: '.extra', data }];
   assert.throws(() => writePortableExecutable(sections,
     { fileAlignment: 512, sectionAlignment: 512, firstSectionRva: 512 }), /overlap image headers/);
   for (const value of [-1, 0.5, 0x100000000, undefined]) assert.throws(() => writePE(data, 72, metadata.length, value), /entry point/);
