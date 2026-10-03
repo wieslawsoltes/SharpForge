@@ -2,7 +2,7 @@ import {declareVarargsTypes} from './varargs-types.js';
 import {types as frameworkTypes,contracts as frameworkContracts,canonicalType} from '@sharpforge/framework';
 import {Builtins} from '@sharpforge/bytecode';
 import {sourceBuiltinCatalog, runtimeBuiltinOwner, runtimeProfileSymbols, scalarConstantFields} from './runtime-profiles.js';
-import {builtinMemberShape, builtinParameterType} from './registry-builtins.js';
+import {builtinMemberShape, builtinParameterType, existingStringContract} from './registry-builtins.js';
 import {NamedTypeSymbol,ConstructedNamedTypeSymbol,ArrayTypeSymbol,TypeWithAnnotations,TypeKind,Accessibility} from './types.js';
 import {MethodSymbol,FieldSymbol,PropertySymbol,EventSymbol,ParameterSymbol,MethodKind,DeclarationModifiers} from './members.js';
 import {NamespaceSymbol,NamespaceExtent} from './namespaces.js';
@@ -113,6 +113,8 @@ export class RegistryBridge {
       if(short==='new')symbol=new MethodSymbol({...pub,name:'.ctor',methodKind:MethodKind.Constructor,returnType:this.byName.get('void'),parameters});
       else if(property){const getter=new MethodSymbol({...pub,name:'get_'+short,methodKind:MethodKind.PropertyGet,returnType:this.typeFromName(result),modifiers:instance?0:DeclarationModifiers.Static});getter.builtin=b;symbol=new PropertySymbol({...pub,name:short,type:this.typeFromName(result),getMethod:getter,modifiers:instance?0:DeclarationModifiers.Static});members.push(getter);}
       else symbol=new MethodSymbol({...pub,name:short,returnType:this.typeFromName(result)??this.objectType,parameters,modifiers:instance?0:DeclarationModifiers.Static});
+      const existing=registryName==='System.String'?existingStringContract(members,symbol):null;
+      if(existing){existing.builtin=b;this.builtinSymbols.set(b.id,existing);continue;}
       symbol.builtin=b;this.builtinSymbols.set(b.id,symbol);members.push(symbol);
     }
     if(registryName==='System.IDisposable')members.push(new MethodSymbol({...pub,name:'Dispose',returnType:this.byName.get('void'),modifiers:DeclarationModifiers.Abstract}));
