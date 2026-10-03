@@ -1,4 +1,4 @@
-import { AssemblyName } from './assembly-name.js';
+import { AssemblyName, asAssemblyName } from './assembly-name.js';
 import { checkCancellation, loadError, LoadErrorCode } from './load-errors.js';
 
 const hex = bytes => Array.from(bytes, value => value.toString(16).padStart(2, '0')).join('');
@@ -17,7 +17,7 @@ export async function computePublicKeyToken(publicKey, { signal } = {}) {
 
 /** Resolve a parsed full public key to an immutable token-bearing identity. */
 export async function normalizeAssemblyIdentity(value, options) {
-  const identity = typeof value === 'string' ? AssemblyName.parse(value) : new AssemblyName(value);
+  const identity = asAssemblyName(value);
   if (identity.publicKey === null) return identity;
   const key = Uint8Array.from(identity.publicKey.match(/../g) ?? [], pair => parseInt(pair, 16));
   const publicKeyToken = await computePublicKeyToken(key, options);
@@ -61,8 +61,8 @@ export function compareAssemblyVersions(left, right) {
 export function compareAssemblyIdentity(reference, definition, { versionPolicy = 'exact', rollForward = 'minor' } = {}) {
   if (!['exact', 'higher', 'roll-forward'].includes(versionPolicy)) throw new TypeError('Unknown version policy');
   if (!['patch', 'minor', 'major'].includes(rollForward)) throw new TypeError('Unknown roll-forward policy');
-  const requested = typeof reference === 'string' ? AssemblyName.parse(reference) : new AssemblyName(reference);
-  const candidate = typeof definition === 'string' ? AssemblyName.parse(definition) : new AssemblyName(definition);
+  const requested = asAssemblyName(reference);
+  const candidate = asAssemblyName(definition);
   if (requested.publicKey !== null && requested.publicKeyToken === null) {
     throw loadError(LoadErrorCode.InvalidName, 'Normalize full public keys before comparison');
   }
