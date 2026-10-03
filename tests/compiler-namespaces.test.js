@@ -43,7 +43,7 @@ test('A02-T24 using aliases name types and are scoped to their file',()=>{
   assert.deepEqual(errors({...lib,'Q.cs':'using First = A.Item; class Q { }','P.cs':'First f = null; Console.WriteLine(f == null);'}),["CS0246: The type or namespace name 'First' could not be found (are you missing a using directive or an assembly reference?)"]);
 });
 test('A02-T16 a user type hides a framework type with the same simple name',()=>{
-  assert.equal(run({'P.cs':'class Shape { public int Sides; public Shape(int s){ Sides = s; } } class Button { public string Text = "mine"; } var p = new Shape(3); var b = new Button(); Console.WriteLine(p.Sides + b.Text);'}).output,'3mine\n');
+  assert.equal(run({'P.cs':'var p = new Shape(3); var b = new Button(); Console.WriteLine(p.Sides + b.Text); class Shape { public int Sides; public Shape(int s){ Sides = s; } } class Button { public string Text = "mine"; }'}).output,'3mine\n');
   assert.equal(compile('using Microsoft.UI.Xaml.Controls; var b = new Button(); b.Content = "x"; Console.WriteLine(1);').success,true,'the framework type is still found when no user type shadows it');
 });
 test('A02-T16 partial declarations merge per namespace and duplicates report per namespace',()=>{

@@ -1,15 +1,21 @@
 name: Validate SharpForge
-# Ordinary PRs run one core job. Full qualification requires main/manual/merge queue
-# execution or the full-ci PR label; tag releases call this workflow in full.
+# Ordinary PRs and main pushes run one core job without unit qualification.
+# Tests are dispatched, labelled full-ci, queued, or requested by the release caller.
 on:
   push:
     branches: [main]
   pull_request:
-    types: [opened, synchronize, reopened, labeled]
+    types: [opened, synchronize, reopened, labeled, unlabeled]
   workflow_dispatch:
   merge_group:
     types: [checks_requested]
   workflow_call:
+    inputs:
+      qualification:
+        description: Run the full serial qualification for a reusable release caller
+        type: boolean
+        default: false
+        required: false
 permissions:
   contents: read
 concurrency:
@@ -24,13 +30,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
           cache: npm
+      - name: Review contract changes and seam lock against the PR snapshot
+        if: github.event_name == 'pull_request'
+        run: node scripts/planning/review-gates.js
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npm run check
       - name: Plan affected areas with conservative fallback
@@ -39,25 +48,20 @@ jobs:
       - name: Reject expired test quarantines
         run: node scripts/conformance/flaky/detect.js --check-quarantine
       - run: npm test
-        if: steps.impact.outputs.mode != 'impacted'
-      - name: Run impacted consumers and shared checks
-        if: steps.impact.outputs.mode == 'impacted'
-        run: node scripts/conformance/ci-planning/impact.js --run artifacts/ci-plan.json
+        if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
       - run: npm run build
       - name: Require a clean checkout
         if: always()
         run: node scripts/conformance/clean-checkout.js
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
-        if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
         with:
           python-version: '3.12'
-      - name: Full qualification infrastructure regressions
-        if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
-        run: |
-          node --test tests/conformance/*.test.js
-          python -m unittest discover -s tests/conformance/browser -p 'test_*.py'
+      - name: Full qualification Python infrastructure regressions
+        if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+        run: python -m unittest discover -s tests/conformance/browser -p 'test_*.py'
       - uses: ./.github/actions/qualification-evidence
-        if: ${{ always() && (github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')) }}
+        if: ${{ always() && (inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')) }}
         with:
           name: core-ubuntu-latest
       - name: Record provenance for the existing PR preview build
@@ -77,40 +81,42 @@ jobs:
           if-no-files-found: error
           retention-days: 7
   core-platforms:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+    needs: core
+    if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         os: [windows-latest, macos-latest]
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Capture starting environment
         run: node scripts/conformance/env-report.js
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
           cache: npm
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npm run check
       - run: npm test
       - run: npm run build
-      - run: node --test tests/conformance/*.test.js
       - run: python -m unittest discover -s tests/conformance/browser -p 'test_*.py'
       - uses: ./.github/actions/qualification-evidence
         if: always()
         with:
           name: core-${{ matrix.os }}
   build:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+    needs: core-platforms
+    if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Capture starting environment
         run: node scripts/conformance/env-report.js
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
@@ -119,7 +125,7 @@ jobs:
           cache: npm
       - name: Require the reviewed release toolchain
         run: node --input-type=module -e "import {assertToolchain} from './scripts/conformance/repro/build.js'; await assertToolchain(process.cwd());"
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
       - run: npm ci --ignore-scripts --no-audit --no-fund
@@ -140,15 +146,17 @@ jobs:
         with:
           name: build
   packages:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+    needs: build
+    if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Capture starting environment
         run: node scripts/conformance/env-report.js
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
@@ -157,7 +165,7 @@ jobs:
           cache: npm
       - name: Require the reviewed release toolchain
         run: node --input-type=module -e "import {assertToolchain} from './scripts/conformance/repro/build.js'; await assertToolchain(process.cwd());"
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
       - run: npm ci --ignore-scripts --no-audit --no-fund
@@ -177,29 +185,30 @@ jobs:
         with:
           name: packages-${{ matrix.os }}
   browser:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
-    needs: build
+    needs: packages
+    if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     name: browser (${{ matrix.os }}, ${{ matrix.suite }})
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         suite: [browser, managed, workspace, release05, release06, msbuild, release08, native-explorer, release09, release10, release11, release12, release13, release14, standalone]
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Capture starting environment
         run: node scripts/conformance/env-report.js
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
           cache: npm
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
       - run: npm ci --ignore-scripts --no-audit --no-fund
-      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: sharpforge-browser
           path: .
@@ -226,23 +235,25 @@ jobs:
         with:
           name: browser-${{ matrix.os }}-${{ matrix.suite }}
   native-il:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+    needs: browser
+    if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         dotnet: ['8.0.x', '10.0.x']
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Capture starting environment
         run: node scripts/conformance/env-report.js
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
           cache: npm
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
       - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
@@ -255,23 +266,25 @@ jobs:
         with:
           name: native-il-${{ matrix.os }}-${{ matrix.dotnet }}
   native-msbuild:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+    needs: native-il
+    if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     # Actual SDKs/processes only; browser test doubles cannot satisfy this gate.
     runs-on: ${{ matrix.os }}
     timeout-minutes: 25
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Capture starting environment
         run: node scripts/conformance/env-report.js
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
           cache: npm
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
       - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
@@ -286,18 +299,19 @@ jobs:
         with:
           name: native-msbuild-${{ matrix.os }}
   clr-wasm:
-    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')
+    needs: native-msbuild
+    if: inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Capture starting environment
         run: node scripts/conformance/env-report.js
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
           cache: npm
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
       - name: Record explicit CLR Wasm exclusion
@@ -307,19 +321,19 @@ jobs:
         with:
           name: clr-wasm
   ci-ok:
-    if: ${{ always() && (github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci')) }}
+    if: ${{ always() && (inputs.qualification || github.event_name == 'workflow_dispatch' || github.event_name == 'merge_group' || contains(github.event.pull_request.labels.*.name, 'full-ci')) }}
     needs: [core, core-platforms, build, packages, browser, native-il, native-msbuild, clr-wasm]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Capture starting environment
         run: node scripts/conformance/env-report.js
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
           cache: npm
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
       - name: Require every qualification job to succeed

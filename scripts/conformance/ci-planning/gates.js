@@ -68,7 +68,7 @@ export async function runGates({ root = process.cwd(), event = {}, client, execu
     ['DAG', 'scripts/planning/dag.js'],
     ['test manifests', 'scripts/planning/check-test-manifests.js'],
     ['contracts', 'scripts/planning/contract-gate.js'],
-    ['combined-tree compatibility', '--test', 'planning/contracts/tests/merge-pair.test.js'],
+    ['combined-tree compatibility', '--test', '--test-concurrency=1', 'planning/contracts/tests/merge-pair.test.js'],
   ];
   for (const [name, ...args] of commands) {
     const child = execute(process.execPath, args, { cwd: root, encoding: 'utf8', timeout: 180000, maxBuffer: 16 * 1024 * 1024 });
