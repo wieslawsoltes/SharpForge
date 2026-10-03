@@ -1,0 +1,18 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "classes/fields-ctor-methods":{"hash":"bbe663b8cb53ede5","kind":"output","langVersion":"14.0","diagnostics":[],"output":"3,4\n25\n"},
+  "classes/static-members":{"hash":"399e8a298ab351e2","kind":"output","langVersion":"14.0","diagnostics":[],"output":"3\ncount=3\n"},
+  "classes/constructor-chaining":{"hash":"9633d4eccc72dc15","kind":"output","langVersion":"14.0","diagnostics":[],"output":"1x1\n2x2\n2x3\n"},
+  "classes/tostring-override":{"hash":"0d28b255a0a2865d","kind":"output","langVersion":"14.0","diagnostics":[],"output":"5 EUR\ntotal: 5 EUR\n5 EUR!\n5 EUR\n"},
+  "classes/object-initializer":{"hash":"b64e360e62dfd6ae","kind":"output","langVersion":"14.0","diagnostics":[],"output":"Ann 30\nBob 41\n"},
+  "classes/reference-semantics":{"hash":"7f03852a12109267","kind":"output","langVersion":"14.0","diagnostics":[["CS0649",267,4,"warning"]],"output":"2\nTrue\nFalse\nTrue\n"},
+  "classes/nested-and-static-class":{"hash":"007861afbeba9c3d","kind":"output","langVersion":"14.0","diagnostics":[],"output":"42\ninner\n"},
+  "classes/linked-list":{"hash":"8cca86110f1a01ab","kind":"output","langVersion":"14.0","diagnostics":[],"output":"1 2 3 \n6\n"},
+  "classes/field-initializers-and-defaults":{"hash":"95b0a8670468901a","kind":"output","langVersion":"14.0","diagnostics":[["CS0649",218,6,"warning"],["CS0649",238,4,"warning"],["CS0649",258,4,"warning"],["CS0649",278,5,"warning"]],"output":"0\nFalse\nTrue\n0\n42\n"},
+  "classes/cs1729-no-matching-constructor":{"hash":"06eefe33cc4e2325","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1729",26,1,"error"]]},
+  "classes/cs0144-instantiate-abstract":{"hash":"471d1e5a49a4a1ac","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0144",22,11,"error"]]},
+  "classes/cs0120-instance-member-from-static":{"hash":"271231fec34c5a76","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0120",86,5,"error"]]},
+  "classes/cs0120-instance-method-from-static":{"hash":"e60bfaa1cb0c5e8c","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0120",95,5,"error"]]},
+  "classes/cs0176-static-through-instance":{"hash":"648fd83ad89edd3c","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0176",49,7,"error"]]},
+  "classes/cs0026-this-in-static":{"hash":"b574825b793082fd","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0026",82,4,"error"]]},
+  "classes/cs0708-instance-member-in-static-class":{"hash":"d9b70f6dc1b1bb68","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0649",64,1,"warning"],["CS0708",64,1,"error"]]}
+}}

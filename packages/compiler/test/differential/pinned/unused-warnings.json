@@ -1,0 +1,11 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "unused-warnings/cs0168-declared-never-used":{"hash":"8eeaf3e870c37d4b","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0168",53,6,"warning"]]},
+  "unused-warnings/cs0219-assigned-never-used":{"hash":"4676df5f16362290","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0219",53,6,"warning"]]},
+  "unused-warnings/cs0168-catch-variable":{"hash":"daea02e1b14b43c0","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0168",116,1,"warning"]]},
+  "unused-warnings/cs0219-string-constant":{"hash":"430a5c49dc2e4ab1","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0219",56,1,"warning"],["CS0219",70,1,"warning"]]},
+  "unused-warnings/cs0169-unused-private-field":{"hash":"5237eb8d11ad765d","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0169",40,5,"warning"]]},
+  "unused-warnings/cs0414-assigned-private-field":{"hash":"1fd4d1ff61943a81","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0414",40,7,"warning"]]},
+  "unused-warnings/cs0649-never-assigned-field":{"hash":"3186e4f232ffe48a","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0649",43,4,"warning"]]},
+  "unused-warnings/cs8321-unused-local-function":{"hash":"3c4db839fe79a807","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS8321",54,6,"warning"]]},
+  "unused-warnings/cs1717-self-assignment":{"hash":"9c277fc4286cb4ed","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1717",60,5,"warning"]]}
+}}
